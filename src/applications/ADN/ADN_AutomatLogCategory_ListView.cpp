@@ -107,7 +107,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                 // Unit
                 uint nUnitInAutomat = 0;
                 uint nCompInAutomat = 0;
-                for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); )
+                for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nUnitInAutomat == 0 || it2 != automaton.vSubUnits_.end(); )
                 {
                     ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
                     ADN_Units_Data::UnitInfos*    pUnit;
@@ -197,31 +197,27 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
             if( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped )
                 continue;
 
-            double rAutonomy = 0.;
-            double rDisplayedAutonomy = std::numeric_limits< double >::max();
+            double rAutonomy = std::numeric_limits< double >::max();
             if( conso.nQuantityUsedPerHour_.GetData() > 0 )
-            {
                 rAutonomy = (*itCategory)->rNbr_.GetData() / conso.nQuantityUsedPerHour_.GetData();
-                rDisplayedAutonomy = rAutonomy;
-            }
 
             if( conso.nConsumptionType_ == eMoving )
             {
-                item.SetValueGreaterThan( eColumnMoveAutonomy, rDisplayedAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+                item.SetValueGreaterThan( eColumnMoveAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
                 item.setText( eColumnMoveConso, QString::number( conso.nQuantityUsedPerHour_.GetData(), 'f', 2 ) );
                 compTotal_.rMoveAutonomy_            = rAutonomy;
                 compTotal_.rMoveQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
             }
             else if( conso.nConsumptionType_ == eEngineStopped )
             {
-                item.SetValueGreaterThan( eColumnEngineStoppedAutonomy, rDisplayedAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+                item.SetValueGreaterThan( eColumnEngineStoppedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
                 item.setText( eColumnEngineStoppedConso, QString::number( conso.nQuantityUsedPerHour_.GetData(), 'f', 2 ) );
                 compTotal_.rEngineStoppedAutonomy_            = rAutonomy;
                 compTotal_.rEngineStoppedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
             }
             else if( conso.nConsumptionType_ == eEngineStarted )
             {
-                item.SetValueGreaterThan( eColumnEngineStartedAutonomy, rDisplayedAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+                item.SetValueGreaterThan( eColumnEngineStartedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
                 item.setText( eColumnEngineStartedConso, QString::number( conso.nQuantityUsedPerHour_.GetData(), 'f', 2 ) );
                 compTotal_.rEngineStartedAutonomy_            = rAutonomy;
                 compTotal_.rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();

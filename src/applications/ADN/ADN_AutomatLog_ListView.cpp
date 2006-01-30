@@ -96,7 +96,7 @@ void ADN_AutomatLog_ListView::BuildBody()
         // Unit
         uint nUnitInAutomat = 0;
         uint nCompInAutomat = 0;
-        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); )
+        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nUnitInAutomat == 0 || it2 != automaton.vSubUnits_.end(); )
         {
             ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
             ADN_Units_Data::UnitInfos*    pUnit;
