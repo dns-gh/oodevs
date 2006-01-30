@@ -69,7 +69,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     // Display panel
     QWidget* pDisplayPanel = new QWidget( pTabWidget );
     pTabWidget->addTab( pDisplayPanel, tr( "Affichage" ) );
-    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 8, 2, 5 );
+    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 9, 2, 5 );
     pSubLayout2->setMargin( 5 );
 
     QLabel* pL2 = new QLabel( tr( "Taille police" ), pDisplayPanel );
@@ -78,7 +78,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
 
     pSubLayout2->addWidget( pL2, 1, 0 );
     pSubLayout2->addWidget( pFontSpinbox_, 1, 1 );
-    pSubLayout2->setRowStretch( 8, 10 );
+    pSubLayout2->setRowStretch( 9, 10 );
 
     pDrawObjectIcons_ = new QCheckBox( tr( "Afficher les icones des objets"), pDisplayPanel );
     pDrawObjectIcons_->setChecked( options.bDrawObjetIcons_ );
@@ -92,17 +92,21 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     pDisplayRCOnMap_->setChecked( options.bDisplayRConMap_ );
     pSubLayout2->addWidget( pDisplayRCOnMap_, 4, 0 );
 
+    pDisplayOnlySubscribedAgentsRC_ = new QCheckBox( tr("Afficher uniquement les RC des unités abonnées"), pDisplayPanel );
+    pDisplayOnlySubscribedAgentsRC_->setChecked( options.bDisplayOnlySubscribedAgentsRC_ );
+    pSubLayout2->addWidget( pDisplayOnlySubscribedAgentsRC_, 5, 0 );
+
     pDisplayMessagesOnMap_ = new QCheckBox( tr("Afficher aussi les messages"), pDisplayPanel );
     pDisplayMessagesOnMap_->setChecked( options.bDisplayMessagesOnMap_ );
-    pSubLayout2->addWidget( pDisplayMessagesOnMap_, 5, 0 );
+    pSubLayout2->addWidget( pDisplayMessagesOnMap_, 6, 0 );
 
     pDisplayTracesOnMap_ = new QCheckBox( tr("Afficher aussi les traces"), pDisplayPanel );
     pDisplayTracesOnMap_->setChecked( options.bDisplayTracesOnMap_ );
-    pSubLayout2->addWidget( pDisplayTracesOnMap_, 6, 0 );
+    pSubLayout2->addWidget( pDisplayTracesOnMap_, 7, 0 );
 
     pDisplayIdentificationLevelOnMap_ = new QCheckBox( tr("Afficher aussi les RC d'identification"), pDisplayPanel );
     pDisplayIdentificationLevelOnMap_->setChecked( options.bDisplayIdentificationLevelOnMap_ );
-    pSubLayout2->addWidget( pDisplayIdentificationLevelOnMap_, 7, 0 );
+    pSubLayout2->addWidget( pDisplayIdentificationLevelOnMap_, 8, 0 );
 
     // Other panel
     QWidget* pOtherPanel = new QWidget( pTabWidget );
@@ -185,6 +189,7 @@ void MOS_OptionsPanel::Apply()
     options.bDisplayMessagesOnMap_ = pDisplayMessagesOnMap_->isChecked();
     options.bDisplayTracesOnMap_ = pDisplayTracesOnMap_->isChecked();
     options.bDisplayIdentificationLevelOnMap_ = pDisplayIdentificationLevelOnMap_->isChecked();
+    options.bDisplayOnlySubscribedAgentsRC_ = pDisplayOnlySubscribedAgentsRC_->isChecked();
 
 }
 
@@ -199,11 +204,13 @@ void MOS_OptionsPanel::OnDisplayRC()
         pDisplayMessagesOnMap_->setEnabled( true );
         pDisplayTracesOnMap_->setEnabled( true );
         pDisplayIdentificationLevelOnMap_->setEnabled( true );
+        pDisplayOnlySubscribedAgentsRC_->setEnabled( true );
     }
     else
     {
         pDisplayMessagesOnMap_->setEnabled( false );
         pDisplayTracesOnMap_->setEnabled( false );
         pDisplayIdentificationLevelOnMap_->setEnabled( false );
+        pDisplayOnlySubscribedAgentsRC_->setEnabled( false );
     }
 }

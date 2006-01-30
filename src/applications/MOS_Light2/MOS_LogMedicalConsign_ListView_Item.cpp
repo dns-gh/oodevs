@@ -65,35 +65,7 @@ void MOS_LogMedicalConsign_ListView_Item::Update()
     else
         pListViewItemLogPionHandling_->setText( 0, tr( "Pas de pion log. traitant la consigne" ) );
 
-    MOS_LogMedicalConsign::E_State nState = pConsign_->GetState();
-
-    QString strState( tr( "Aucun" ) );
-    switch( nState ) 
-    {        
-        case MOS_LogMedicalConsign::eWaitingForEvacuation               : strState = tr( "En attente d'évacuation" )                    ; break;
-        case MOS_LogMedicalConsign::eEvacuationGoingTo                  : strState = tr( "Ambulance en route" )                         ; break;
-        case MOS_LogMedicalConsign::eEvacuationLoading                  : strState = tr( "Ambulance en cours de chargement" )           ; break;
-        case MOS_LogMedicalConsign::eEvacuationWaitingForFullLoading    : strState = tr( "Ambulance en attente de fin de chargement" )  ; break;
-        case MOS_LogMedicalConsign::eEvacuationGoingFrom                : strState = tr( "Ambulance en retour" )                        ; break;
-        case MOS_LogMedicalConsign::eEvacuationUnloading                : strState = tr( "Ambulance en cours de déchargement" )         ; break;
-        case MOS_LogMedicalConsign::eWaitingForDiagnostic               : strState = tr( "En attente de diagnostique" )                 ; break;
-        case MOS_LogMedicalConsign::eDiagnosing                         : strState = tr( "Diagnostique en cours" )                      ; break;
-        case MOS_LogMedicalConsign::eSearchingForSortingArea            : strState = tr( "Recherche d'un secteur de tri" )              ; break;
-        case MOS_LogMedicalConsign::eWaitingForSorting                  : strState = tr( "En attente de tri" )                          ; break;
-        case MOS_LogMedicalConsign::eSorting                            : strState = tr( "Tri en cours" )                               ; break;
-        case MOS_LogMedicalConsign::eSearchingForHealingArea            : strState = tr( "Recherche d'un secteur de soin" )             ; break;
-        case MOS_LogMedicalConsign::eWaitingForHealing                  : strState = tr( "En attente de soins" )                        ; break;
-        case MOS_LogMedicalConsign::eHealing                            : strState = tr( "Soins en cours" )                             ; break;
-        case MOS_LogMedicalConsign::eWaitingForCollection               : strState = tr( "En attente de ramassage" )                    ; break;
-        case MOS_LogMedicalConsign::eCollectionLoading                  : strState = tr( "Ramassage en cours" )                         ; break;
-        case MOS_LogMedicalConsign::eCollectionWaitingForFullLoading    : strState = tr( "En attente de fin de ramassage" )             ; break;
-        case MOS_LogMedicalConsign::eCollectionGoingTo                  : strState = tr( "Ramassage en route" )                         ; break;
-        case MOS_LogMedicalConsign::eCollectionUnloading                : strState = tr( "Dechargement du ramassage en cours" )         ; break;
-        case MOS_LogMedicalConsign::eFinished                           : strState = tr( "Terminé" )                                    ; break;
-        default:
-            assert( false );
-    }
-    pListViewItemState_->setText( 0, tr( "Etat : " ) + strState );
+    pListViewItemState_->setText( 0, tr( "Etat : " ) + QString( pConsign_->GetStateString().c_str() ) );
 
     pListViewItemWound_->setText ( 0, tr( "Blessure : " ) + tr( pConsign_->GetWoundAsString().c_str() ) );
     pListViewItemMental_->setText( 0, pConsign_->IsMentalDeceased() ? tr( "Reac. mental" ) : tr( "Non reac. mental" ) );

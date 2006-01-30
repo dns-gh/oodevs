@@ -22,6 +22,7 @@ class MOS_Report_ABC;
 class MOS_AgentKnowledge;
 class MOS_Team;
 class MOS_Report_ABC;
+class MOS_TacticalLine_ABC;
 
 // =============================================================================
 // Created: HME 2005-10-05
@@ -34,6 +35,9 @@ public:
     typedef std::vector< MOS_Report_ABC* >     T_ReportVector;
     typedef T_ReportVector::iterator           IT_ReportVector;
     typedef T_ReportVector::const_iterator     CIT_ReportVector;
+
+    typedef std::map< uint, ASN1T_MsgPionOrder >      T_MissionOrders;
+    typedef T_MissionOrders::iterator                 IT_MissionOrders;
     //@}
 
 public:
@@ -55,13 +59,22 @@ public:
 
     //! @name Reports
     //@{
-    T_ReportVector& GetReports       ();
-    void            DeleteAllRCs     ();
-    void            DeleteAllTraces  ();
-    void            DeleteReport     ( MOS_Report_ABC& );
+    T_ReportVector& GetReports                          ();
+    void            DeleteAllRCs                        ();
+    void            DeleteAllTraces                     ();
+    void            DeleteReport                        ( MOS_Report_ABC& );
 
-    void            OnReceiveMsgCR   ( const ASN1T_MsgCR& msg );
-    void            OnReceiveTraceMsg( DIN::DIN_Input&    msg );
+    void            OnReceiveMsgCR                      ( const ASN1T_MsgCR& msg );
+    void            OnReceiveTraceMsg                   ( DIN::DIN_Input&    msg );
+
+    void            OnReceiveMsgWaitForOrderConduite    ( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
+	int             GetCurrentMission                   () const;
+	void            OnReceiveMission                    ( const ASN1T_MsgPionOrder& asnMsg );
+    void            OnReceiveMission                    ( const ASN1T_MsgPionOrderAck& asnMsg );
+    void            OnSendMissionOrder                  ( ASN1T_MsgPionOrder order );
+    
+    MOS_TacticalLine_ABC* GetRightLimit           () const;
+    MOS_TacticalLine_ABC* GetLeftLimit            () const;
     //@}
 
     //! @name Debug draw points
@@ -82,13 +95,19 @@ public:
     //@{
     virtual MOS_AgentKnowledge*  FindAgentKnowledge( uint nId ) = 0;
     //@}
-
+public:
+    bool    bListened_;
 protected:
     T_ReportVector				reportVector_;
 
 private:
     std::vector< MT_Vector2D >	reportPoints_;
     T_FireResults				fireResults_;
+
+    int nCurrentMission_;
+    T_MissionOrders sentOrders_;
+    int nCurrentRightLimit_;
+    int nCurrentLeftLimit_;
     
 };
 

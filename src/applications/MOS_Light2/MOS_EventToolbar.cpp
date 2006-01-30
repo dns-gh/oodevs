@@ -115,7 +115,7 @@ void MOS_EventToolbar::SubscribeToAgent()
 {
     MOS_EventToolButton* pButton = new MOS_EventToolButton( QIconSet(), pSelectedAgent_->GetName().c_str(), this, pSelectedAgent_->GetID() );
     pButton->SetSignalsSlots( this, SIGNAL( ReportCreated( int ) ), SIGNAL( ReadingReports( int ) ), SLOT( FocusOnAgent( int, bool ) ) );
-
+    pSelectedAgent_->bListened_ = true;
     agentButtons_.push_back( pButton );
 }
 
@@ -132,6 +132,7 @@ void MOS_EventToolbar::UnsubscribeFromAgent()
         {
             delete *it;
             agentButtons_.erase( it );
+            pSelectedAgent_->bListened_ = false;
             return;
         }
     }

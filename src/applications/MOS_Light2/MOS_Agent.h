@@ -193,13 +193,6 @@ public:
     void OnSuperiorChanged( MOS_Gtia& superior );
     //@}
 
-    //! @name Reports
-    //@{
-    void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
-	int  MOS_Agent::GetCurrentMission() const;
-	void OnReceiveMission                ( const ASN1T_MsgPionOrder& asnMsg );
-    //@}
-
     //! @name Vision
     //@{
     void GetVisionCones         ( T_VisionConeVector& res ) const;
@@ -277,6 +270,7 @@ public:
 
     typedef std::vector< std::pair< uint, uint > >    T_LogisticAvailabilities;
     typedef T_LogisticAvailabilities::const_iterator  CIT_LogisticAvailabilities;
+
     //@}
 
 
@@ -418,7 +412,6 @@ public:
     uint nLogMedicalSuperior_;
     uint nLogSupplySuperior_;
 
-    int nCurrentMission_;
 
 private:
     static MIL_AgentID nMaxId_;

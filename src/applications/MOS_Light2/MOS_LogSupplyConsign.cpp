@@ -127,3 +127,32 @@ void MOS_LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementT
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogSupplyConsign::GetStateString
+// Created: HME 2006-01-30
+// -----------------------------------------------------------------------------
+std::string MOS_LogSupplyConsign::GetStateString() const
+{
+    std::string strState;
+
+    switch( nState_ )
+    {     
+    case eConvoyWaitingForCommander         : strState = std::string( "Convoi en attente d'un chef de convoi" ); break;
+        case eConvoyWaitingForTransporters  : strState = std::string( "Convoi en attente de camions" ); break;
+        case eConvoyForming                 : strState = std::string( "Convoi en cours de constitution" ); break;
+        
+        case eConvoyGoingToLoadingPoint     : strState = std::string( "Convoi en déplacement vers point de chargement" ); break;
+        case eConvoyLoading                 : strState = std::string( "Convoi en cours de chargement" ); break;
+        
+        case eConvoyGoingToUnloadingPoint   : strState = std::string( "Convoi en déplacement vers point de déchargement" ); break;
+        case eConvoyUnloading               : strState = std::string( "Convoi en cours de déchargement" ); break;
+        
+        case eConvoyGoingBackToFormingPoint : strState = std::string( "Convoi en retour" ); break;
+        case eFinished                      : strState = std::string( "Terminé" ); break;
+        default:
+            assert( false );
+    }
+
+    return strState;
+}

@@ -72,6 +72,7 @@ public:
           MOS_Agent*     GetAutomateLogProvidingConvoyResources() const;
           E_State        GetState           () const;
     const T_DotationMap& GetDotations       () const;
+          std::string    GetStateString     () const;
     //@}
 
     //! @name Network events

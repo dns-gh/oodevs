@@ -58,6 +58,7 @@ MOS_Options::MOS_Options()
     , bDisplayMessagesOnMap_    ( false )
     , bDisplayTracesOnMap_      ( false )
     , bDisplayIdentificationLevelOnMap_ ( false )
+    , bDisplayOnlySubscribedAgentsRC_   (false )
 {
     MT_CommandLine arguments( qApp->argc(), qApp->argv() );
     bNoList_ = arguments.IsOptionSet( "-nolist" );
@@ -104,6 +105,7 @@ void MOS_Options::WriteSettings( MT_Settings& settings )
     settings.writeEntry( "/dislayTracesOnMap",                  bDisplayTracesOnMap_ );
     settings.writeEntry( "/displayLogLinks",                    nDisplayLogLinks_ );
     settings.writeEntry( "/displayMissingLogLinks",             nDisplayMissingLogLinks_ );
+    settings.writeEntry( "/DisplayOnlySubscribedAgentsRC_",     bDisplayOnlySubscribedAgentsRC_ );
     settings.endGroup();
 }
 
@@ -139,6 +141,8 @@ void MOS_Options::ReadSettings( MT_Settings& settings )
     bDisplayRealTimeLog_                = settings.readBoolEntry( "/displayRealTimeLog", false );
     nDisplayLogLinks_                   = (E_State)settings.readNumEntry( "/displayLogLinks", eNone );
     nDisplayMissingLogLinks_            = (E_State)settings.readNumEntry( "/displayMissingLogLinks", eNone );
+    bDisplayOnlySubscribedAgentsRC_     = settings.readBoolEntry( "/DisplayOnlySubscribedAgentsRC_", false );
+
     
     settings.endGroup();
 }

@@ -63,29 +63,7 @@ void MOS_LogMaintenanceConsign_ListView_Item::Update()
     else
         pListViewItemLogPionHandling_->setText( 0, tr( "Pas de pion log. traitant la consigne" ) );
 
-    MOS_LogMaintenanceConsign::E_State nState = pConsign_->GetState();
-
-    QString strState( tr( "Aucun" ) );
-    switch( nState ) 
-    {        
-        case MOS_LogMaintenanceConsign::eGoingFrom               : strState = tr( "En déplacement vers la chaine" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForCarrier       : strState = tr( "En attente d'un remorqueur" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierGoingTo          : strState = tr( "Remorqueur en route" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierLoading          : strState = tr( "Remorqueur en cours de chargement" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierGoingFrom        : strState = tr( "Remorqueur en retour" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierUnloading        : strState = tr( "Remorqueur en cours de déchargement" ); break;         
-        case MOS_LogMaintenanceConsign::eDiagnosing              : strState = tr( "Diagnostique en cours" ); break;         
-        case MOS_LogMaintenanceConsign::eSearchingForUpperLevel  : strState = tr( "En attente de prise en charge par le niveau supérieur" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForParts         : strState = tr( "En attente de pièces" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForRepairer      : strState = tr( "En attente d'un réparateur" ); break;         
-        case MOS_LogMaintenanceConsign::eRepairing               : strState = tr( "En cours de réparation" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForGoingBackToWar: strState = tr( "En attente de retour" ); break;         
-        case MOS_LogMaintenanceConsign::eGoingBackToWar          : strState = tr( "Retour en cours" ); break;         
-        case MOS_LogMaintenanceConsign::eFinished                : strState = tr( "Terminé" ); break;         
-        default:
-            assert( false );
-    }
-    pListViewItemState_->setText( 0, tr( "Etat : " ) +  strState );
+    pListViewItemState_->setText( 0, tr( "Etat : " ) +  QString( pConsign_->GetStateString().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------

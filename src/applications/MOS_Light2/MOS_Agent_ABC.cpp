@@ -15,6 +15,7 @@
 #include "MOS_Trace.h"
 #include "MOS_Net_Def.h"
 #include "MOS_FireResult.h"
+#include "MOS_LineManager.h"
 
 using namespace DIN;
 
@@ -26,6 +27,10 @@ MOS_Agent_ABC::MOS_Agent_ABC()
 : reportVector_ ()
 , reportPoints_ ()
 , fireResults_  ()
+, bListened_    ( false )
+, nCurrentMission_    ( 0 )
+, nCurrentLeftLimit_  ( 0 )
+, nCurrentRightLimit_ ( 0 )
 {
 }
 // -----------------------------------------------------------------------------
@@ -171,4 +176,100 @@ void MOS_Agent_ABC::DeleteAllFireResults()
     for( CIT_FireResults it = fireResults_.begin(); it != fireResults_.end(); ++it )
         delete *it;
     fireResults_.clear();
+}
+
+//-----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::OnReceiveMsgWaitForOrderConduite
+// Created: NLD 2003-04-04
+//-----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
+{
+    MOS_RC& rc = *new MOS_RC( *this );
+    rc.Initialize( asnMsg );
+    reportVector_.push_back( &rc );
+
+    MOS_App::GetApp().NotifyReportCreated( *this, rc );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::OnSendMissionOrder
+// Created: HME 2006-01-30
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnSendMissionOrder( ASN1T_MsgPionOrder order )
+{
+    sentOrders_[ order.order_id ] = order;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::OnReceiveMission
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnReceiveMission( const ASN1T_MsgPionOrderAck& asnMsg )
+{
+    if( (int)asnMsg.error_code == 0 )
+    {
+        IT_MissionOrders itOrder = sentOrders_.find( asnMsg.order_id );
+        if( itOrder != sentOrders_.end() )
+        {
+            nCurrentMission_ =  itOrder->second.mission.t;
+            if( itOrder->second.m.oid_limite_droitePresent )
+                nCurrentLeftLimit_ = itOrder->second.oid_limite_gauche;
+            else
+                nCurrentLeftLimit_ = 0;
+            if( itOrder->second.m.oid_limite_gauchePresent )
+                nCurrentRightLimit_ = itOrder->second.oid_limite_droite;
+            else
+                nCurrentRightLimit_ = 0;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::GetCurrentMission
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+int MOS_Agent_ABC::GetCurrentMission() const
+{
+    return nCurrentMission_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMission
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnReceiveMission( const ASN1T_MsgPionOrder& asnMsg )
+{
+    nCurrentMission_ = asnMsg.mission.t;
+    if( asnMsg.m.oid_limite_droitePresent )
+        nCurrentLeftLimit_ = asnMsg.oid_limite_gauche;
+    else
+        nCurrentLeftLimit_ = 0;
+    if( asnMsg.m.oid_limite_gauchePresent )
+        nCurrentRightLimit_ = asnMsg.oid_limite_droite;
+    else
+        nCurrentRightLimit_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::RightLimit
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+MOS_TacticalLine_ABC* MOS_Agent_ABC::GetRightLimit() const 
+{
+    if( nCurrentRightLimit_ == 0 )
+        return 0;
+
+    return MOS_App::GetApp().GetLineManager().FindLine( nCurrentRightLimit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::LeftLimit
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+MOS_TacticalLine_ABC* MOS_Agent_ABC::GetLeftLimit() const
+{
+    if( nCurrentRightLimit_ == 0 )
+        return 0;
+
+    return MOS_App::GetApp().GetLineManager().FindLine( nCurrentLeftLimit_ );
 }

@@ -65,6 +65,7 @@ public:
     uint        GetEquipmentTypeID() const;
     uint        GetBreakdownTypeID() const;
     E_State     GetState() const;
+    std::string GetStateString() const;
     //@}
 
     //! @name Network events

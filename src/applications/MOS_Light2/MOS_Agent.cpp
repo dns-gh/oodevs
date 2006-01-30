@@ -53,7 +53,6 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
 	, nLogMaintenanceSuperior_ ( 0 )
 	, nLogMedicalSuperior_ ( 0 )
 	, nLogSupplySuperior_ ( 0 )
-    , nCurrentMission_    ( 0 )
 {
     Initialize();
     sName_ = asnMsg.nom;
@@ -92,7 +91,6 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
 	, nLogMaintenanceSuperior_ ( 0 )
 	, nLogMedicalSuperior_ ( 0 )
 	, nLogSupplySuperior_ ( 0 )
-    , nCurrentMission_    ( 0 )
 {
     Initialize();
 	sName_ = asnMsg.nom;
@@ -122,7 +120,6 @@ MOS_Agent::MOS_Agent( bool bGenerateId )
 	, nLogMaintenanceSuperior_ ( 0 )
 	, nLogMedicalSuperior_ ( 0 )
 	, nLogSupplySuperior_ ( 0 )
-    , nCurrentMission_    ( 0 )
 {
     Initialize();
 }
@@ -760,18 +757,7 @@ void MOS_Agent::ClearOldPath()
 }
 
 
-//-----------------------------------------------------------------------------
-// Name: MOS_Agent::OnReceiveMsgWaitForOrderConduite
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-void MOS_Agent::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
-{
-    MOS_RC& rc = *new MOS_RC( *this );
-    rc.Initialize( asnMsg );
-    reportVector_.push_back( &rc );
 
-    MOS_App::GetApp().NotifyReportCreated( *this, rc );
-}
 
 
 
@@ -1217,24 +1203,6 @@ void MOS_Agent::InitializeStocks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Agent::OnReceiveMission
-// Created: HME 2005-11-30
-// -----------------------------------------------------------------------------
-void MOS_Agent::OnReceiveMission( const ASN1T_MsgPionOrder& asnMsg )
-{
-    nCurrentMission_ = asnMsg.mission.t;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetCurrentMission
-// Created: HME 2005-11-30
-// -----------------------------------------------------------------------------
-int MOS_Agent::GetCurrentMission() const
-{
-    return nCurrentMission_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MOS_Agent::Aggregate
 // Created: HME 2005-11-30
 // -----------------------------------------------------------------------------
@@ -1262,3 +1230,4 @@ const MT_Vector2D MOS_Agent::GetAggregatedPos() const
     else
         return vPos_;
 }
+

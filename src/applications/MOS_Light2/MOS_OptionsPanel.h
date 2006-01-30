@@ -68,6 +68,7 @@ private:
     QCheckBox* pDisplayMessagesOnMap_;
     QCheckBox* pDisplayTracesOnMap_;
     QCheckBox* pDisplayIdentificationLevelOnMap_ ;
+    QCheckBox* pDisplayOnlySubscribedAgentsRC_ ;
     
     //@}
 };

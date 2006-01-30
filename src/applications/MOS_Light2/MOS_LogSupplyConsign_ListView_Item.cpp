@@ -73,28 +73,7 @@ void MOS_LogSupplyConsign_ListView_Item::Update()
     else
         pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Pas d'automate fournissant les moyens (camions/chef) du convoi" ) );
 
-    MOS_LogSupplyConsign::E_State nState = pConsign_->GetState();
-
-    QString strState( tr( "Aucun" ) );
-
-    switch( nState ) 
-    {     
-        case MOS_LogSupplyConsign::eConvoyWaitingForCommander    : strState = tr( "Convoi en attente d'un chef de convoi" ); break;
-        case MOS_LogSupplyConsign::eConvoyWaitingForTransporters: strState = tr( "Convoi en attente de camions" ); break;
-        case MOS_LogSupplyConsign::eConvoyForming    : strState = tr( "Convoi en cours de constitution" ); break;
-        
-        case MOS_LogSupplyConsign::eConvoyGoingToLoadingPoint: strState = tr( "Convoi en déplacement vers point de chargement" ); break;
-        case MOS_LogSupplyConsign::eConvoyLoading    : strState = tr( "Convoi en cours de chargement" ); break;
-        
-        case MOS_LogSupplyConsign::eConvoyGoingToUnloadingPoint: strState = tr( "Convoi en déplacement vers point de déchargement" ); break;
-        case MOS_LogSupplyConsign::eConvoyUnloading  : strState = tr( "Convoi en cours de déchargement" ); break;
-        
-        case MOS_LogSupplyConsign::eConvoyGoingBackToFormingPoint  : strState = tr( "Convoi en retour" ); break;
-        case MOS_LogSupplyConsign::eFinished         : strState = tr( "Terminé" ); break;
-        default:
-            assert( false );
-    }
-    pListViewItemState_->setText( 0, tr( "Etat : " ) + strState );
+    pListViewItemState_->setText( 0, tr( "Etat : " ) + QString( pConsign_->GetStateString().c_str() ) );
 
     delete pListViewItemDotations_;
     pListViewItemDotations_ = new QListViewItem( this, pListViewItemState_, tr( "Dotations demandées/accordées/convoyées" ) );

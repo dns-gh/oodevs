@@ -88,6 +88,7 @@ public:
     bool    bDisplayMessagesOnMap_;
     bool    bDisplayTracesOnMap_;
     bool    bDisplayIdentificationLevelOnMap_;
+    bool    bDisplayOnlySubscribedAgentsRC_;
 
     MT_Float rGridStep_;
 

@@ -108,3 +108,40 @@ std::string MOS_LogMedicalConsign::GetWoundAsString() const
             return "Fussoir";
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogMedicalConsign::GetStateString
+// Created: HME 2006-01-30
+// -----------------------------------------------------------------------------
+std::string MOS_LogMedicalConsign::GetStateString() const
+{
+    std::string strState;
+
+    switch( nState_ )
+    {        
+    case eWaitingForEvacuation                   : strState = std::string( "En attente d'évacuation" )                    ; break;
+        case eEvacuationGoingTo                  : strState = std::string( "Ambulance en route" )                         ; break;
+        case eEvacuationLoading                  : strState = std::string( "Ambulance en cours de chargement" )           ; break;
+        case eEvacuationWaitingForFullLoading    : strState = std::string( "Ambulance en attente de fin de chargement" )  ; break;
+        case eEvacuationGoingFrom                : strState = std::string( "Ambulance en retour" )                        ; break;
+        case eEvacuationUnloading                : strState = std::string( "Ambulance en cours de déchargement" )         ; break;
+        case eWaitingForDiagnostic               : strState = std::string( "En attente de diagnostique" )                 ; break;
+        case eDiagnosing                         : strState = std::string( "Diagnostique en cours" )                      ; break;
+        case eSearchingForSortingArea            : strState = std::string( "Recherche d'un secteur de tri" )              ; break;
+        case eWaitingForSorting                  : strState = std::string( "En attente de tri" )                          ; break;
+        case eSorting                            : strState = std::string( "Tri en cours" )                               ; break;
+        case eSearchingForHealingArea            : strState = std::string( "Recherche d'un secteur de soin" )             ; break;
+        case eWaitingForHealing                  : strState = std::string( "En attente de soins" )                        ; break;
+        case eHealing                            : strState = std::string( "Soins en cours" )                             ; break;
+        case eWaitingForCollection               : strState = std::string( "En attente de ramassage" )                    ; break;
+        case eCollectionLoading                  : strState = std::string( "Ramassage en cours" )                         ; break;
+        case eCollectionWaitingForFullLoading    : strState = std::string( "En attente de fin de ramassage" )             ; break;
+        case eCollectionGoingTo                  : strState = std::string( "Ramassage en route" )                         ; break;
+        case eCollectionUnloading                : strState = std::string( "Dechargement du ramassage en cours" )         ; break;
+        case eFinished                           : strState = std::string( "Terminé" )                                    ; break;
+        default:
+            assert( false );
+    }
+
+    return strState;
+}

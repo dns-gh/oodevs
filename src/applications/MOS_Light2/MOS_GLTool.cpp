@@ -557,6 +557,8 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     bool bAggregated = false;
     if( ( ! agent.IsAutomate() ) && agent.GetParent() && agent.GetParent()->IsAggregated() )
         bAggregated = true;
+
+    MT_Vector2D agentPos = agent.GetAggregatedPos();
     
     // Vision surfaces
     if( options.nDrawVisionSurfaces_ == MOS_Options::eOn
@@ -567,7 +569,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     // Vision cones
     if( options.nDrawVisionCones_ == MOS_Options::eOn
        || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eSelected )
-       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
+       || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
        DrawVisionCones( agent );
 
     // Draw the path if necessary
@@ -590,7 +592,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
                     bIsIn = true;
                     break;
                 }
-            if( (! bIsIn) || !  viewRect_.IsInside( agent.GetAggregatedPos() ) )
+            if( (! bIsIn) || !  viewRect_.IsInside( agentPos ) )
                 return;
 
         }
@@ -623,14 +625,14 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if( agent.bNbcProtectionSuitWorn_ )
         {
             glColor4d( MOS_COLOR_NBCSUIT );
-            DrawCircle( agent.vPos_, MOS_GL_CROSSSIZE * 0.8f , true );
+            DrawCircle( agentPos, MOS_GL_CROSSSIZE * 0.8f , true );
         }
 
         //Death
         if( agent.IsDead() )
         {
             glColor4d( MOS_COLOR_WHITE );
-            DrawIcon( eSkullIcon, agent.GetPos() );
+            DrawIcon( eSkullIcon, agentPos );
         }
 
         
@@ -638,28 +640,28 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if( (! agent.IsAutomate()) && agent.pParent_->IsEmbraye() )
         {
             glColor4d( MOS_COLOR_WHITE );
-            DrawIcon( cadenas, agent.GetPos() + MT_Vector2D( - 200 , 270  ) );
+            DrawIcon( cadenas, agentPos + MT_Vector2D( - 200 , 270  ) );
         }
         
         //radars on
         if( agent.bRadarEnabled_ )
         {
             glColor4d( MOS_COLOR_WHITE );
-            DrawIcon( radars_on, agent.GetPos() + MT_Vector2D(  200 , 270  ) );
+            DrawIcon( radars_on, agentPos + MT_Vector2D(  200 , 270  ) );
         }
 
         //jamming
         if( agent.bCommJammed_ )
         {
             glColor4d( MOS_COLOR_WHITE );
-            DrawIcon( brouillage, agent.GetPos() + MT_Vector2D(  200 , 50  ) );
+            DrawIcon( brouillage, agentPos + MT_Vector2D(  200 , 50  ) );
         }
 
         //radio silence
         if( agent. bRadioSilence_ )
         {
             glColor4d( MOS_COLOR_WHITE );
-            DrawIcon( talkie_interdit, agent.GetPos() + MT_Vector2D(  120 , 50  ) );
+            DrawIcon( talkie_interdit, agentPos + MT_Vector2D(  120 , 50  ) );
         }
         
     }
@@ -683,22 +685,22 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             if ( agent.nTC2_ == 0 && ( ! agent.IsLogisticTC2() ) )
             {
                 glColor4d( MOS_COLOR_YELLOW );
-                DrawCircle( agent.GetAggregatedPos() + translation, 300, false );
+                DrawCircle( agentPos + translation, 300, false );
             }
             if ( agent.nLogMedicalSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticSante() ) )
             {
                 glColor4d( MOS_COLOR_PINK );
-                DrawCircle( agent.GetAggregatedPos() + translation, 375, false );
+                DrawCircle( agentPos + translation, 375, false );
             }
             if ( agent.nLogMaintenanceSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() ) )
             {
                 glColor4d( MOS_COLOR_MAROON );
-                DrawCircle( agent.GetAggregatedPos() + translation, 450, false );
+                DrawCircle( agentPos + translation, 450, false );
             }
             if ( agent.nLogSupplySuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() ) )
             {
                 glColor4d( MOS_COLOR_ORANGE );
-                DrawCircle( agent.GetAggregatedPos() + translation, 525, false );
+                DrawCircle( agentPos + translation, 525, false );
             }
         }
         else
@@ -718,37 +720,41 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if ( agent.nTC2_ != 0 )
         {
             glColor4d( MOS_COLOR_YELLOW );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset, true );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetAggregatedPos(), agentPos, offset, true );
             offset += 100.0;
         }
         if ( agent.nLogMaintenanceSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_MAROON );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset , true );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetAggregatedPos(), agentPos, offset , true );
             offset += 100.0;
         }
         if ( agent.nLogMedicalSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_PINK );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset, true );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetAggregatedPos(), agentPos, offset, true );
             offset += 100.0;
         }
         if ( agent.nLogSupplySuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_ORANGE );
-            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset, true );
+            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetAggregatedPos(), agentPos, offset, true );
             offset += 100.0;
         }
     }
 
     //Draw the RC tooltips
-    if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_ )
+    if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_
+        && ( agent.bListened_ || ! MOS_MainWindow::GetMainWindow().GetOptions().bDisplayOnlySubscribedAgentsRC_ ) )
     {
         QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
         const MOS_Agent::T_ReportVector& reports = agent.GetReports();
         bool bTodo = false;
         MT_GLToolTip tooltip = MT_GLToolTip( pWidget );
-        tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
+        if( ! agent.bListened_ )
+            tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
+        else
+            tooltip.SetBackgroundColor( 255.0, 150.0, 10.0, 0.5 );
         uint duration = 4 * MOS_App::GetApp().GetTickDuration(); //4 seconds
         for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
         {
@@ -767,6 +773,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             else if ( time  > 4 )
                 break;
         }
+
         if( bTodo )
             tooltip.Draw( viewRect_, agent.GetPos() + MT_Vector2D( 250,330 ) , rClicksPerPix_ );
     }
@@ -809,7 +816,10 @@ void MOS_GLTool::Draw( MOS_Population& population, E_State nState /*= eNormal*/ 
         const MOS_Agent::T_ReportVector& reports = population.GetReports();
         bool bTodo = false;
         MT_GLToolTip tooltip = MT_GLToolTip( pWidget );
-        tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
+        if( ! population.bListened_ )
+            tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
+        else
+            tooltip.SetBackgroundColor( 255.0, 150.0, 10.0, 0.5 );
         uint duration = 4 * MOS_App::GetApp().GetTickDuration(); //4 seconds
         for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
         {
@@ -1331,7 +1341,7 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
     {
         //Draw a white background
         glColor4d( 1.0, 1.0, 1.0, 1.0 );
-        glLineWidth( 7.0 );
+        glLineWidth( 5.0 );
         DrawLine( pointList );
         glColor4d( 0.1, 0.1, 0.1, 1.0 );
         glLineWidth( 3.0 );
@@ -1346,7 +1356,7 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
     if( nState == eSelected )
         glColor4d( 1.0, 0.5, 0.05, 1.0 );
     else if( nState == eHighlighted )
-        glColor4d( 1.0, 1.0, 0.0, 1.0 );
+        glColor4d( 0.6, 0.0, 0.6, 1.0 );
 
     DrawLine( pointList );
 
@@ -1765,6 +1775,13 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
     {
         MOS_Agent* pSelectedAgent = eventHandler.selectedElement_.pAgent_;
 
+        // Draw the limits of the mission if they exist
+        MOS_TacticalLine_ABC* pRight = pSelectedAgent->GetRightLimit();
+        if( pRight )
+            Draw( *pRight, eHighlighted );
+        MOS_TacticalLine_ABC* pLeft = pSelectedAgent->GetLeftLimit();
+        if( pLeft )
+            Draw( *pLeft, eHighlighted );
         // Draw the parents, siblilings and children of selected agents with highlighted colors
         MOS_AgentManager& manager = MOS_App::GetApp().GetAgentManager();
         for( MOS_AgentManager::IT_AgentMap itAgent = manager.agentMap_.begin(); itAgent != manager.agentMap_.end(); ++itAgent )
@@ -1858,7 +1875,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
             //write the current mission
             if( pAgent->GetCurrentMission() != 0 )
             {
-                //ok, not proud of it...
+                //ok, not proud of this...
                 QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)( pAgent->GetCurrentMission() - 1 ) ).c_str() );
                 color.SetRGB( 255.0, 255.0, 255.0 );
                 toolTip.AddLine( strMission, color );
@@ -1907,7 +1924,46 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
                 if ( i > 5 )
                     break;
             }
-            
+
+            //write the current consigns
+            if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
+            {
+                const MOS_AgentManager::T_MaintenanceConsigns& consignsMain = MOS_App::GetApp().GetAgentManager().GetMaintenanceConsigns();
+                for( MOS_AgentManager::CIT_MaintenanceConsigns itMain = consignsMain.begin(); itMain != consignsMain.end(); ++itMain )
+                {
+                    const MOS_LogMaintenanceConsign* con = itMain->second;
+                    if ( con->GetPion().GetID() == pAgent->GetID() )
+                    {
+                        QString strCon = QString( "Equipement: " ) + MOS_App::GetApp().GetEquipmentName( con->GetEquipmentTypeID() ).c_str()
+                        + " panne: " + MOS_App::GetApp().GetBreakDownName( con->GetBreakdownTypeID() ).c_str()
+                        + " état: " + con->GetStateString().c_str();
+                        toolTip.AddLine( strCon, 220.0 , 100.0 , 100.0, 1.0 , false );
+                    }
+                }
+                const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
+                for( MOS_AgentManager::CIT_MedicalConsigns itSan = consignsSan.begin(); itSan != consignsSan.end(); ++itSan )
+                {
+                    const MOS_LogMedicalConsign* con = itSan->second;
+                    if ( con->GetPion().GetID() == pAgent->GetID() )
+                    {
+                        QString strCon = QString( "Blessure: " ) + con->GetWoundAsString().c_str()
+                            + " état: " + con->GetStateString().c_str();
+                        toolTip.AddLine( strCon, 255.0 , 164.0 , 199.0, 1.0 , false );
+                    }
+                }
+                const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
+                for( MOS_AgentManager::CIT_SupplyConsigns itRav = consignsRav.begin(); itRav != consignsRav.end(); ++itRav )
+                {
+                    const MOS_LogSupplyConsign* con = itRav->second;
+                    if ( con->GetPion().GetID() == pAgent->GetID() )
+                    {
+                        QString strCon = QString( "Convoi: " ) + con->GetPionLogConvoying()->GetName().c_str();
+                            + " état: " + con->GetStateString();
+                        toolTip.AddLine( strCon, 255.0 , 153.0 , 10.0, 1.0 , false );
+                    }
+                }              
+            }
+
             //draw the tooltip
             toolTip.Draw( viewRect_, pos, zoom  );
         }
@@ -1933,6 +1989,14 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
             //write the name of the population
             color.SetRGB( 255.0, 255.0, 255.0 );
             toolTip.AddLine( QString( pPopulation->GetPopulation().GetName().c_str() ), color ,true, 1.3f );
+
+            if( pPopulation->GetPopulation().GetCurrentMission() != 0 )
+            {
+                //ok, not proud of this...
+                QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromPopulationMission( (E_PopulationMission)( pPopulation->GetPopulation().GetCurrentMission() - 1 ) ).c_str() );
+                color.SetRGB( 255.0, 255.0, 255.0 );
+                toolTip.AddLine( strMission, color );
+            }
 
             //write the attitude
             if( pPopulation->GetAttitude() == ePopulationAttitude_Calme )
@@ -2706,7 +2770,7 @@ namespace
         std::map< std::string, GFX_Color > colors;
         colors.insert( std::make_pair( "rouge",   GFX_Color( 255, 50, 50 ) ) );
         colors.insert( std::make_pair( "bleu",    GFX_Color( 100, 125, 255 ) ) );
-        colors.insert( std::make_pair( "vert",    GFX_Color( 0, 128, 0 ) ) );
+        colors.insert( std::make_pair( "vert",    GFX_Color( 0, 170, 0 ) ) );
         colors.insert( std::make_pair( "cyan",    GFX_Color( 000, 230, 230 ) ) );
         colors.insert( std::make_pair( "magenta", GFX_Color( 255, 000, 255 ) ) );
         colors.insert( std::make_pair( "orange",  GFX_Color( 255, 150, 10 ) ) );

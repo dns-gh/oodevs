@@ -44,7 +44,7 @@ const std::vector< MT_Vector2D >& MOS_Agent_ABC::GetDebugDrawPoints() const
 // Created: HME 2006-01-24
 // -----------------------------------------------------------------------------
 inline
-const MT_Vector2D MOS_Agent_ABC::GetConflictPos( const MT_Vector2D& origin ) const
+const MT_Vector2D MOS_Agent_ABC::GetConflictPos( const MT_Vector2D& /*origin*/ ) const
 {
     return GetAggregatedPos();
 }

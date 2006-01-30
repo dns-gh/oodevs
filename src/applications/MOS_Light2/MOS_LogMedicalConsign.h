@@ -84,6 +84,7 @@ public:
 
     E_State     GetState() const;
     std::string GetWoundAsString() const;
+    std::string GetStateString() const;
     //@}
 
     //! @name Network events

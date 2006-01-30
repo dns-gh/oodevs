@@ -178,6 +178,12 @@ bool MOS_AgentCreationMapFilter::OnMouseMove( const MOS_MapMouseEvent& mapMouseE
 {
     if( selectedElement_.pAgent_ != 0 && mapMouseEvent.state() == (LeftButton | ShiftButton) )
     {
+        if( selectedElement_.pAgent_->IsAutomate() && selectedElement_.pAgent_->IsEmbraye() && selectedElement_.pAgent_->IsAggregated() )
+        {
+            MOS_Agent::T_AgentVector children = selectedElement_.pAgent_->GetChildren();
+            for( MOS_Agent::CIT_AgentVector it = children.begin(); it != children.end(); ++it )
+                (*it)->SetPos( (*it)->GetPos() + mapMouseEvent.GetMapPos() - vOldMousePos_ );
+        }
         selectedElement_.pAgent_->SetPos( selectedElement_.pAgent_->GetPos() + mapMouseEvent.GetMapPos() - vOldMousePos_ );
         vOldMousePos_ = mapMouseEvent.GetMapPos();
         return true;

@@ -1163,6 +1163,9 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAc
     strOutputMsg << MT_FormatString( "Agent[%d]", asnMsg.oid_unite_executante );
     strOutputMsg << "PionOrderAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.oid_unite_executante );
+    pAgent->OnReceiveMission( asnMsg );
+
 }
 
 //-----------------------------------------------------------------------------
