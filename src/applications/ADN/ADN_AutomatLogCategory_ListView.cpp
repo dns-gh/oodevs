@@ -128,7 +128,10 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                         nUnit += QString( pUnitInfos->strNbrRegExp_.GetData().c_str() ).toUInt();
                     }
                     ADN_Units_Data::UnitInfos& unit = *pUnit;
-                    pUnitItem->setText( eColumnTarget, unit.strName_.GetData().c_str() );
+                    if( nUnitInAutomat == 0 )
+                        pUnitItem->setText( eColumnTarget, QString( "[PC] - " ) + unit.strName_.GetData().c_str() );
+                    else
+                        pUnitItem->setText( eColumnTarget, unit.strName_.GetData().c_str() );
                     pUnitItem->setText( eColumnNbrUnit, QString::number( nUnit ) );
                     nUnitInAutomat += nUnit;
 
