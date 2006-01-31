@@ -377,17 +377,6 @@ bool PHY_ComposantePion::CanBeFired() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanTransportHumans
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposantePion::CanTransportHumans() const
-{
-    assert( pType_ );
-    return pState_->CanTransport() && pType_->CanTransportHumans() && CanBeUsed(); //$$$ && !bLoadable_ ??
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
@@ -396,6 +385,17 @@ bool PHY_ComposantePion::CanTransport() const
 {
     assert( pType_ );
     return pState_->CanTransport() && pType_->CanTransport() && CanBeUsed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanTransportHumans
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposantePion::CanTransportHumans() const
+{
+    assert( pType_ );
+    return !bLoadable_ && pState_->CanTransport() && pType_->CanTransportHumans() && CanBeUsed();
 }
 
 // -----------------------------------------------------------------------------
