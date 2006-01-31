@@ -37,7 +37,7 @@ DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const T
     , lima_            ( lima )
 {
     SetValue( nDIAIdxTypeLima_, (int)lima_.GetLimaFunction() );
-    SetValue( nDIAIdxLima_    , (void*)&lima_                );
+    GetVariable( nDIAIdxLima_ ).SetValue( (void*)&lima_, &DEC_Tools::GetTypeLima(), 1 );
 }
 
 //-----------------------------------------------------------------------------
