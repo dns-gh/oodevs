@@ -27,8 +27,6 @@
 #include "pathfind/SpatialContainerTraits.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
-#include "MT/MT_Archive/MT_FlatBinaryInputArchive.h"
-#include "MT/MT_Archive/MT_FlatBinaryOutputArchive.h"
 #include "MT/MT_Logger/MT_LogManager.h"
 #include "MT/MT_Logger/MT_LogDefines.h"
 #include "MT/MT_IO/MT_Dir.h"
@@ -44,14 +42,7 @@ TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, 
     : tools::thread::RequestProcessor_ABC< TER_PathFindRequest_ABC* >( queue )
     , pPathfinder_( 0 )
 {
-    MT_FlatBinaryInputArchive graph, nodes, links;
-    if( !graph.Open( strGraphArchive ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strGraphArchive.c_str() ) );
-    if( !nodes.Open( strNodeArchive ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strNodeArchive.c_str() ) );
-    if( !links.Open( strLinkArchive ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strLinkArchive.c_str() ) );
-    pPathfinder_ = new TerrainPathfinder( graph, nodes, links );
+    pPathfinder_ = new TerrainPathfinder( strGraphArchive, strNodeArchive, strLinkArchive );
     pPathfinder_->SetGraphConfiguration( 10, 1000, 10000 ); // precision, minpicking, maxpicking
     Start();
 }
@@ -238,12 +229,9 @@ void TER_PathFinderThread::Dump() const
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::Dump( const std::string& strBaseArchiveName ) const
 {
-    MT_FlatBinaryOutputArchive graph, nodes, links;
-    graph.EnableExceptions( true ); nodes.EnableExceptions( true ); links.EnableExceptions( true );
-    graph.OpenOutputFile( strBaseArchiveName + "Graph.bin" );
-    nodes.OpenOutputFile( strBaseArchiveName + "Nodes.bin" );
-    links.OpenOutputFile( strBaseArchiveName + "Links.bin" );
-    pPathfinder_->Dump( graph, nodes, links );
+    pPathfinder_->Dump( strBaseArchiveName + "Graph.bin", 
+                        strBaseArchiveName + "Nodes.bin", 
+                        strBaseArchiveName + "Links.bin" );
 }
 
 
