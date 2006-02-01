@@ -1322,30 +1322,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion InterdireFranchissementPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion FilterPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RenseignerSurPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion CanaliserPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SecuriserPopulationDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SecuriserZoneContreMenacesAsymetriques</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion Generique</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1635,6 +1611,30 @@
     </message>
     <message>
         <source>Pion ABC RASIT RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion InterdireFranchissementPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion FiltrerPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion RenseignerSurPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion CanaliserPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ControlerPopulationsDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserZoneContrePopulations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3157,7 +3157,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>convoi en attente camions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi en attente chef convoi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi constitution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi deplacement vers point chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>convoi chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi deplacement vers point dechargement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3341,15 +3361,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tir sommation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tir dissuasion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tir neutralisation</source>
+        <source>maintien a distance par moyens non letaux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3421,6 +3433,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>surete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vitesse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>grenade</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3453,31 +3473,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>convoi en attente camions</source>
+        <source>armes letales autorisees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>convoi en attente chef convoi</source>
+        <source>emploi force interdit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>convoi constitution</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi deplacement vers point chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi deplacement vers point dechargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>surete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vitesse</source>
+        <source>dispersion par moyens de defense actifs</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

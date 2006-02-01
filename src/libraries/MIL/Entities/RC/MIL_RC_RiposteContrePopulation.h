@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_RC_RiposteSurPopulation_h_
-#define __MIL_RC_RiposteSurPopulation_h_
+#ifndef __MIL_RC_RiposteContrePopulation_h_
+#define __MIL_RC_RiposteContrePopulation_h_
 
 #include "MIL.h"
 
@@ -20,13 +20,13 @@
 // @class  MIL_RC_UniteRecueillie
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_RC_RiposteSurPopulation : public MIL_RC
+class MIL_RC_RiposteContrePopulation : public MIL_RC
 {
-    MT_COPYNOTALLOWED( MIL_RC_RiposteSurPopulation )
+    MT_COPYNOTALLOWED( MIL_RC_RiposteContrePopulation )
 
 public:   
-    MIL_RC_RiposteSurPopulation( E_RC nRC, int nAsnID );
-    virtual ~MIL_RC_RiposteSurPopulation();
+    MIL_RC_RiposteContrePopulation( E_RC nRC, int nAsnID );
+    virtual ~MIL_RC_RiposteContrePopulation();
     
     //! @name Operations
     //@{
@@ -36,4 +36,4 @@ public:
     //@}
 };
 
-#endif // __MIL_RC_RiposteSurPopulation_h_
+#endif // __MIL_RC_RiposteContrePopulation_h_

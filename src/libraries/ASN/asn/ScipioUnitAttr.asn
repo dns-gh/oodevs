@@ -115,11 +115,11 @@ EnumRoe ::= ENUMERATED
 
 EnumRoePopulation ::= ENUMERATED
 {
-    none              (0),
-    tir-interdit      (1),
-    tir-sommation     (2),
-    tir-dissuasion    (3),
-    tir-neutralisation(4)
+    none                                        (0),
+    emploi-force-interdit                       (1),
+    maintien-a-distance-par-moyens-non-letaux   (2),
+    dispersion-par-moyens-de-defense-actifs     (3),
+    armes-letales-autorisees                    (4)
 }
 
 EnumEtatCombatRencontre ::= ENUMERATED

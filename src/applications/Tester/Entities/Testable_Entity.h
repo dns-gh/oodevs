@@ -91,6 +91,7 @@ public:
     virtual T_IdVector&        GetTestParam_Limas              () const;
     virtual T_EntityId         GetTestParam_LeftLimit          ();
     virtual T_EntityId         GetTestParam_RightLimit         ();
+
     //@}
 
 private:

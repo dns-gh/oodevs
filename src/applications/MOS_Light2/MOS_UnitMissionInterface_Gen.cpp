@@ -206,12 +206,12 @@ MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
         case T_Mission_Pion_mission_pion_decrocher : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_decrocher; break;
         case T_Mission_Pion_mission_pion_stationner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_stationner; break;
         case T_Mission_Pion_mission_pion_se_faire_transporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_se_faire_transporter; break;
-        case T_Mission_Pion_mission_pion_interdire_franchissement_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_interdire_franchissement_population; break;
-        case T_Mission_Pion_mission_pion_filter_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_filter_population; break;
-        case T_Mission_Pion_mission_pion_renseigner_sur_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_renseigner_sur_population; break;
-        case T_Mission_Pion_mission_pion_canaliser_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_population; break;
-        case T_Mission_Pion_mission_pion_securiser_population_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_population_dans_zone; break;
-        case T_Mission_Pion_mission_pion_securiser_zone_contre_menaces_asymetriques : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_menaces_asymetriques; break;
+        case T_Mission_Pion_mission_pion_interdire_franchissement_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_interdire_franchissement_populations; break;
+        case T_Mission_Pion_mission_pion_filtrer_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_filtrer_populations; break;
+        case T_Mission_Pion_mission_pion_renseigner_sur_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_renseigner_sur_populations; break;
+        case T_Mission_Pion_mission_pion_canaliser_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_populations; break;
+        case T_Mission_Pion_mission_pion_controler_populations_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_controler_populations_dans_zone; break;
+        case T_Mission_Pion_mission_pion_securiser_zone_contre_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_populations; break;
         case T_Mission_Pion_mission_pion_generique : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_generique; break;
         case T_Mission_Pion_mission_pion_milice_provoquer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_milice_provoquer; break;
         case T_Mission_Pion_mission_pion_milice_prendre_et_tenir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_milice_prendre_et_tenir; break;
@@ -437,12 +437,12 @@ void MOS_UnitMissionInterface::CreateInterface()
         case eMission_Pion_Decrocher : CreateMission_Decrocher(); break;
         case eMission_Pion_Stationner : CreateMission_Stationner(); break;
         case eMission_Pion_SeFaireTransporter : CreateMission_SeFaireTransporter(); break;
-        case eMission_Pion_InterdireFranchissementPopulation : CreateMission_InterdireFranchissementPopulation(); break;
-        case eMission_Pion_FilterPopulation : CreateMission_FilterPopulation(); break;
-        case eMission_Pion_RenseignerSurPopulation : CreateMission_RenseignerSurPopulation(); break;
-        case eMission_Pion_CanaliserPopulation : CreateMission_CanaliserPopulation(); break;
-        case eMission_Pion_SecuriserPopulationDansZone : CreateMission_SecuriserPopulationDansZone(); break;
-        case eMission_Pion_SecuriserZoneContreMenacesAsymetriques : CreateMission_SecuriserZoneContreMenacesAsymetriques(); break;
+        case eMission_Pion_InterdireFranchissementPopulations : CreateMission_InterdireFranchissementPopulations(); break;
+        case eMission_Pion_FiltrerPopulations : CreateMission_FiltrerPopulations(); break;
+        case eMission_Pion_RenseignerSurPopulations : CreateMission_RenseignerSurPopulations(); break;
+        case eMission_Pion_CanaliserPopulations : CreateMission_CanaliserPopulations(); break;
+        case eMission_Pion_ControlerPopulationsDansZone : CreateMission_ControlerPopulationsDansZone(); break;
+        case eMission_Pion_SecuriserZoneContrePopulations : CreateMission_SecuriserZoneContrePopulations(); break;
         case eMission_Pion_Generique : CreateMission_Generique(); break;
         case eMission_Pion_MILICE_Provoquer : CreateMission_MILICE_Provoquer(); break;
         case eMission_Pion_MILICE_PrendreEtTenir : CreateMission_MILICE_PrendreEtTenir(); break;
@@ -3117,75 +3117,75 @@ void MOS_UnitMissionInterface::CreateMission_SeFaireTransporter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_InterdireFranchissementPopulation
+// Name: MOS_UnitMissionInterface::CreateMission_InterdireFranchissementPopulations
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_InterdireFranchissementPopulation()
+void MOS_UnitMissionInterface::CreateMission_InterdireFranchissementPopulations()
 {
-    ASN1T_Mission_Pion_InterdireFranchissementPopulation& asnMission = *new ASN1T_Mission_Pion_InterdireFranchissementPopulation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_interdire_franchissement_population;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_interdire_franchissement_population = &asnMission;
-    CreateLocation( asnMission.ligne, "Ligne", false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_FilterPopulation
-// Created: AGR
-// -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_FilterPopulation()
-{
-    ASN1T_Mission_Pion_FilterPopulation& asnMission = *new ASN1T_Mission_Pion_FilterPopulation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_filter_population;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_filter_population = &asnMission;
+    ASN1T_Mission_Pion_InterdireFranchissementPopulations& asnMission = *new ASN1T_Mission_Pion_InterdireFranchissementPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_interdire_franchissement_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_interdire_franchissement_populations = &asnMission;
     CreatePoint( asnMission.point, "Point", false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_RenseignerSurPopulation
+// Name: MOS_UnitMissionInterface::CreateMission_FiltrerPopulations
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_RenseignerSurPopulation()
+void MOS_UnitMissionInterface::CreateMission_FiltrerPopulations()
 {
-    ASN1T_Mission_Pion_RenseignerSurPopulation& asnMission = *new ASN1T_Mission_Pion_RenseignerSurPopulation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_renseigner_sur_population;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_renseigner_sur_population = &asnMission;
+    ASN1T_Mission_Pion_FiltrerPopulations& asnMission = *new ASN1T_Mission_Pion_FiltrerPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_filtrer_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_filtrer_populations = &asnMission;
     CreatePoint( asnMission.point, "Point", false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_CanaliserPopulation
+// Name: MOS_UnitMissionInterface::CreateMission_RenseignerSurPopulations
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_CanaliserPopulation()
+void MOS_UnitMissionInterface::CreateMission_RenseignerSurPopulations()
 {
-    ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *new ASN1T_Mission_Pion_CanaliserPopulation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_canaliser_population;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_population = &asnMission;
+    ASN1T_Mission_Pion_RenseignerSurPopulations& asnMission = *new ASN1T_Mission_Pion_RenseignerSurPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_renseigner_sur_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_renseigner_sur_populations = &asnMission;
+    CreatePoint( asnMission.point, "Point", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_CanaliserPopulations
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_CanaliserPopulations()
+{
+    ASN1T_Mission_Pion_CanaliserPopulations& asnMission = *new ASN1T_Mission_Pion_CanaliserPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_canaliser_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_populations = &asnMission;
     CreateLocation( asnMission.zone, "Zone", false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_SecuriserPopulationDansZone
+// Name: MOS_UnitMissionInterface::CreateMission_ControlerPopulationsDansZone
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_SecuriserPopulationDansZone()
+void MOS_UnitMissionInterface::CreateMission_ControlerPopulationsDansZone()
 {
-    ASN1T_Mission_Pion_SecuriserPopulationDansZone& asnMission = *new ASN1T_Mission_Pion_SecuriserPopulationDansZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_securiser_population_dans_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_population_dans_zone = &asnMission;
+    ASN1T_Mission_Pion_ControlerPopulationsDansZone& asnMission = *new ASN1T_Mission_Pion_ControlerPopulationsDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_controler_populations_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_controler_populations_dans_zone = &asnMission;
     CreateLocation( asnMission.zone, "Zone", false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_SecuriserZoneContreMenacesAsymetriques
+// Name: MOS_UnitMissionInterface::CreateMission_SecuriserZoneContrePopulations
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_SecuriserZoneContreMenacesAsymetriques()
+void MOS_UnitMissionInterface::CreateMission_SecuriserZoneContrePopulations()
 {
-    ASN1T_Mission_Pion_SecuriserZoneContreMenacesAsymetriques& asnMission = *new ASN1T_Mission_Pion_SecuriserZoneContreMenacesAsymetriques();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_securiser_zone_contre_menaces_asymetriques;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_menaces_asymetriques = &asnMission;
-    CreateLocation( asnMission.zone, "Zone", false );
+    ASN1T_Mission_Pion_SecuriserZoneContrePopulations& asnMission = *new ASN1T_Mission_Pion_SecuriserZoneContrePopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_securiser_zone_contre_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_populations = &asnMission;
+    CreatePoint( asnMission.point, "Point", false );
 }
 
 // -----------------------------------------------------------------------------

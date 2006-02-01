@@ -362,3 +362,4 @@ T_EntityId Testable_Entity::GetTestParam_RightLimit()
         throw std::runtime_error( "Unable to generate required limit parameter" );
     return nRightLimit_;
 }
+

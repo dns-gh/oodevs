@@ -224,22 +224,22 @@ typedef enum E_TypeRC
     eRC_ObjetDetecte, // Parametre : T_ConnaissanceObjet
     eRC_Trace, // Parametre : message
     eRC_TraceID, // Parametre : float
-    eRC_TirInterditSurPopulation,
-    eRC_TirSommationSurPopulation,
-    eRC_TirDissuasionSurPopulation,
-    eRC_TirNeutralisationSurPopulation,
+    eRC_EmploiForceInterdit,
+    eRC_MaintienADistanceParMoyensNonLetaux,
+    eRC_DispersionParMoyensDeDefenseActifs,
+    eRC_ArmesLetalesAutorisees,
     eRC_PopulationDetectee, // Parametre : T_ConnaissancePopulation
     eRC_PriseAPartieParPopulation, // Parametre : T_ConnaissancePopulation
-    eRC_RiposteSurPopulation, // Parametre : T_ConnaissancePopulation
+    eRC_RiposteContrePopulation, // Parametre : T_ConnaissancePopulation
     eRC_PopulationDangereuseAProximite,
-    eRC_EsquiveDeLaPopulation,
+    eRC_EsquiveFaceAPopulation,
     eRC_DecrochageFaceAPopulation,
     eRC_MiseEnPlaceControleDeFoule,
     eRC_MiseEnPlaceFiltrage,
     eRC_AnimationBarrage,
     eRC_AnimationCanalisation,
     eRC_CollecteRenseignementsSurPopulations,
-    eRC_PopulationTotalementReconnue,
+    eRC_PopulationReconnue,
     eRC_AttitudeCalme,
     eRC_AttitudeAgitee,
     eRC_AttitudeExcitee,

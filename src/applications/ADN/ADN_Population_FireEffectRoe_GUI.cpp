@@ -36,7 +36,7 @@ public:
         assert(obj);
         
         E_RoePopulation nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
-        uint nNbrHiddenRoe = (uint)eRoePopulation_TirInterdit + 1;
+        uint nNbrHiddenRoe = (uint)eRoePopulation_EmploiForceInterdit + 1;
 
         if( (uint)nRoe < nNbrHiddenRoe )
             return;

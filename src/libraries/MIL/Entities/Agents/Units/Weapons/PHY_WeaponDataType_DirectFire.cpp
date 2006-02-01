@@ -324,7 +324,10 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_PopulationEl
     const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
     const MT_Float           rPH  = target.GetPopulation().GetType().GetDamagePH( roe );
 
-    const uint               nHit = (uint)randomGenerator_.rand_oi( 0., nNbrAmmoReserved * rPH );
+    uint               nHit = 0;
+    for( uint i = 1; i <= nNbrAmmoReserved; ++i )
+        if( randomGenerator_.rand_oi() > rPH )
+            ++nHit;
 
     MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );

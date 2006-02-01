@@ -2571,27 +2571,27 @@
     </message>
     <message>
         <source>Pion InterdireFranchissementPopulation</source>
-        <translation>Pion InterdireFranchissementPopulation</translation>
+        <translation type="obsolete">Pion InterdireFranchissementPopulation</translation>
     </message>
     <message>
         <source>Pion FilterPopulation</source>
-        <translation>Pion FiltrerPopulation</translation>
+        <translation type="obsolete">Pion FiltrerPopulation</translation>
     </message>
     <message>
         <source>Pion RenseignerSurPopulation</source>
-        <translation>Pion RenseignerSurPopulation</translation>
+        <translation type="obsolete">Pion RenseignerSurPopulation</translation>
     </message>
     <message>
         <source>Pion CanaliserPopulation</source>
-        <translation>Pion CanaliserPopulation</translation>
+        <translation type="obsolete">Pion CanaliserPopulation</translation>
     </message>
     <message>
         <source>Pion SecuriserPopulationDansZone</source>
-        <translation>Pion SecuriserPopulationDansZone</translation>
+        <translation type="obsolete">Pion SecuriserPopulationDansZone</translation>
     </message>
     <message>
         <source>Pion SecuriserZoneContreMenacesAsymetriques</source>
-        <translation>Pion SecuriserZoneContreMenacesAsymetriques</translation>
+        <translation type="obsolete">Pion SecuriserZoneContreMenacesAsymetriques</translation>
     </message>
     <message>
         <source>Population Manifester</source>
@@ -2683,6 +2683,30 @@
     </message>
     <message>
         <source>Pion ABC RASIT RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion InterdireFranchissementPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion FiltrerPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion RenseignerSurPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion CanaliserPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ControlerPopulationsDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserZoneContrePopulations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

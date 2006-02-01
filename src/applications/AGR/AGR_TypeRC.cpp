@@ -537,10 +537,10 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_UniteEnnemieIdentifiee" ] = "eReportEnemy";
 	rcTypes_[ "eRC_UniteNeutreIdentifiee" ] = "eReportEnemy";
 
-	rcTypes_[ "eRC_TirInterditSurPopulation" ] = "eReportMission";
-	rcTypes_[ "eRC_TirSommationSurPopulation" ] = "eReportMission";
-	rcTypes_[ "eRC_TirDissuasionSurPopulation" ] = "eReportMission";
-	rcTypes_[ "eRC_TirNeutralisationSurPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_EmploiForceInterdit" ] = "eReportMission";
+	rcTypes_[ "eRC_MaintienADistanceParMoyensNonLetaux" ] = "eReportMission";
+	rcTypes_[ "eRC_DispersionParMoyensDeDefenseActifs" ] = "eReportMission";
+	rcTypes_[ "eRC_ArmesLetalesAutorisees" ] = "eReportMission";
 	rcTypes_[ "eRC_PopulationDetectee" ] = "eReportMission";
 	rcTypes_[ "eRC_PriseAPartieParPopulation" ] = "eReportMission";
 	rcTypes_[ "eRC_RiposteSurPopulation" ] = "eReportMission";

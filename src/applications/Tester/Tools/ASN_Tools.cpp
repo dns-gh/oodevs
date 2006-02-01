@@ -379,6 +379,15 @@ void ASN_Tools::CopyGDH( uint nTime, ASN1T_GDH& asn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPopulationKnowledge
+// Created: HME 2006-01-03
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPopulationKnowledge( uint nIdPopulation , ASN1T_KnowledgePopulation   asn )
+{
+    asn = nIdPopulation;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------

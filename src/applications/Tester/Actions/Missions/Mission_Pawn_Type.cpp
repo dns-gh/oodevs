@@ -204,12 +204,12 @@
 #include "Pawn/Mission_Pawn_Decrocher.cpp"
 #include "Pawn/Mission_Pawn_Stationner.cpp"
 #include "Pawn/Mission_Pawn_SeFaireTransporter.cpp"
-#include "Pawn/Mission_Pawn_InterdireFranchissementPopulation.cpp"
-#include "Pawn/Mission_Pawn_FilterPopulation.cpp"
-#include "Pawn/Mission_Pawn_RenseignerSurPopulation.cpp"
-#include "Pawn/Mission_Pawn_CanaliserPopulation.cpp"
-#include "Pawn/Mission_Pawn_SecuriserPopulationDansZone.cpp"
-#include "Pawn/Mission_Pawn_SecuriserZoneContreMenacesAsymetriques.cpp"
+#include "Pawn/Mission_Pawn_InterdireFranchissementPopulations.cpp"
+#include "Pawn/Mission_Pawn_FiltrerPopulations.cpp"
+#include "Pawn/Mission_Pawn_RenseignerSurPopulations.cpp"
+#include "Pawn/Mission_Pawn_CanaliserPopulations.cpp"
+#include "Pawn/Mission_Pawn_ControlerPopulationsDansZone.cpp"
+#include "Pawn/Mission_Pawn_SecuriserZoneContrePopulations.cpp"
 #include "Pawn/Mission_Pawn_Generique.cpp"
 #include "Pawn/Mission_Pawn_MILICE_Provoquer.cpp"
 #include "Pawn/Mission_Pawn_MILICE_PrendreEtTenir.cpp"
@@ -452,12 +452,12 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_Decrocher >( "Pion Decrocher" );
     Register< Mission_Pawn_Stationner >( "Pion Stationner" );
     Register< Mission_Pawn_SeFaireTransporter >( "Pion SeFaireTransporter" );
-    Register< Mission_Pawn_InterdireFranchissementPopulation >( "Pion InterdireFranchissementPopulation" );
-    Register< Mission_Pawn_FilterPopulation >( "Pion FilterPopulation" );
-    Register< Mission_Pawn_RenseignerSurPopulation >( "Pion RenseignerSurPopulation" );
-    Register< Mission_Pawn_CanaliserPopulation >( "Pion CanaliserPopulation" );
-    Register< Mission_Pawn_SecuriserPopulationDansZone >( "Pion SecuriserPopulationDansZone" );
-    Register< Mission_Pawn_SecuriserZoneContreMenacesAsymetriques >( "Pion SecuriserZoneContreMenacesAsymetriques" );
+    Register< Mission_Pawn_InterdireFranchissementPopulations >( "Pion InterdireFranchissementPopulations" );
+    Register< Mission_Pawn_FiltrerPopulations >( "Pion FiltrerPopulations" );
+    Register< Mission_Pawn_RenseignerSurPopulations >( "Pion RenseignerSurPopulations" );
+    Register< Mission_Pawn_CanaliserPopulations >( "Pion CanaliserPopulations" );
+    Register< Mission_Pawn_ControlerPopulationsDansZone >( "Pion ControlerPopulationsDansZone" );
+    Register< Mission_Pawn_SecuriserZoneContrePopulations >( "Pion SecuriserZoneContrePopulations" );
     Register< Mission_Pawn_Generique >( "Pion Generique" );
     Register< Mission_Pawn_MILICE_Provoquer >( "Pion MILICE Provoquer" );
     Register< Mission_Pawn_MILICE_PrendreEtTenir >( "Pion MILICE PrendreEtTenir" );

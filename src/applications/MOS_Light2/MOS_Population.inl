@@ -128,6 +128,7 @@ bool MOS_Population::IsEmpty() const
     return flowMap_.size() == 0 && concentrationMap_.size() == 0;
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: MOS_Population::GetAggregatedPos
 // Created: HME 2006-01-24

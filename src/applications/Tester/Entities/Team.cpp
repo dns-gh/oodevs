@@ -187,3 +187,12 @@ T_EntityId Team::GetTestParam_Object() const
         return knownObjects_.begin()->second->GetId();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Team::GetTestParam_Population
+// Created: HME 2006-01-03
+// -----------------------------------------------------------------------------
+T_EntityId  Team::GetTestParam_Population() const
+{
+
+}

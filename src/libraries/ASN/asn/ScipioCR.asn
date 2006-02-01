@@ -268,22 +268,22 @@ CR-UniteNeutreIdentifiee                                 ::= KnowledgeAgent
 CR-ObjetDetecte                                          ::= KnowledgeObject
 
 -- Reaction Populations
-CR-TirInterditSurPopulation                              ::= NULL
-CR-TirSommationSurPopulation                             ::= NULL
-CR-TirDissuasionSurPopulation                            ::= NULL
-CR-TirNeutralisationSurPopulation                        ::= NULL
+CR-EmploiForceInterdit                               ::= NULL
+CR-MaintienADistanceParMoyensNonLetaux                   ::= NULL
+CR-DispersionParMoyensDeDefenseActifs           ::= NULL
+CR-ArmesLetalesAutorisees                                ::= NULL
 CR-PopulationDetectee                                    ::= KnowledgePopulation
 CR-PriseAPartieParPopulation                             ::= KnowledgePopulation
-CR-RiposteSurPopulation                                  ::= KnowledgePopulation
+CR-RiposteContrePopulation                               ::= KnowledgePopulation
 CR-PopulationDangereuseAProximite                        ::= NULL
-CR-EsquiveDeLaPopulation                                 ::= NULL
+CR-EsquiveFaceAPopulation                                ::= NULL
 CR-DecrochageFaceAPopulation                             ::= NULL
 CR-MiseEnPlaceControleDeFoule                            ::= NULL
 CR-MiseEnPlaceFiltrage                                   ::= NULL
 CR-AnimationBarrage                                      ::= NULL
 CR-AnimationCanalisation                                 ::= NULL
 CR-CollecteRenseignementsSurPopulations                  ::= NULL
-CR-PopulationTotalementReconnue                          ::= NULL
+CR-PopulationReconnue                                    ::= NULL
 
 -- Populations provisions
 CR-AttitudeCalme                                         ::= NULL
@@ -564,22 +564,22 @@ MsgCR ::= SEQUENCE
         cr-trace-id                                                     CR-TraceID,
        
         -- Reaction Populations
-        cr-tir-interdit-sur-population                                  CR-TirInterditSurPopulation,
-        cr-tir-sommation-sur-population                                 CR-TirSommationSurPopulation,
-        cr-tir-dissuasion-sur-population                                CR-TirDissuasionSurPopulation,
-        cr-tir-neutralisation-sur-population                            CR-TirNeutralisationSurPopulation,
+        cr-emploi-force-interdit                                        CR-EmploiForceInterdit,                 
+        cr-maintien-a-distance-par-moyens-non-letaux                    CR-MaintienADistanceParMoyensNonLetaux ,       
+        cr-dispersion-par-moyens-de-defense-actifs                      CR-DispersionParMoyensDeDefenseActifs,
+        cr-armes-letales-autorisees                                     CR-ArmesLetalesAutorisees,          
         cr-population-detectee                                          CR-PopulationDetectee,
         cr-prise-a-partie-par-population                                CR-PriseAPartieParPopulation,
-        cr-riposte-sur_population                                       CR-RiposteSurPopulation,
+        cr-riposte-contre-population                                    CR-RiposteContrePopulation,
         cr-population-dangereuse-a-proximite                            CR-PopulationDangereuseAProximite,
-        cr-esquive-de-la-population                                     CR-EsquiveDeLaPopulation,
+        cr-esquive-face-a-population                                    CR-EsquiveFaceAPopulation,
         cr-decrochage-face-a-population                                 CR-DecrochageFaceAPopulation,
         cr-mise-en-place-controle-de-foule                              CR-MiseEnPlaceControleDeFoule,
         cr-mise-en-place-filtrage                                       CR-MiseEnPlaceFiltrage,
         cr-animation-barrage                                            CR-AnimationBarrage,
         cr-animation-canalisation                                       CR-AnimationCanalisation,
         cr-collecte-renseignements-sur-populations                      CR-CollecteRenseignementsSurPopulations,
-        cr-population-totalement-reconnue                               CR-PopulationTotalementReconnue,
+        cr-population-reconnue                                          CR-PopulationReconnue,
 
         -- Populations provisions
         cr-attitude-calme                                               CR-AttitudeCalme,

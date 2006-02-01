@@ -27,10 +27,10 @@ const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoeP
 void PHY_RoePopulation::Initialize()
 {
     roePopulations_[ none_.GetName()  ] = &none_;
-    roePopulations_[ "tir interdit"       ] = new PHY_RoePopulation( "Interdit"      , eInterdit      , EnumRoePopulation::tir_interdit       );
-    roePopulations_[ "tir sommation"      ] = new PHY_RoePopulation( "Sommation"     , eSommation     , EnumRoePopulation::tir_sommation      ); 
-    roePopulations_[ "tir dissuasion"     ] = new PHY_RoePopulation( "Dissuasion"    , eDissuasion    , EnumRoePopulation::tir_dissuasion     );
-    roePopulations_[ "tir neutralisation" ] = new PHY_RoePopulation( "Neutralisation", eNeutralisation, EnumRoePopulation::tir_neutralisation );
+    roePopulations_[ "emploi force interdit"       ] = new PHY_RoePopulation( "Emploi force interdit"      , eEmploiForceInterdit      , EnumRoePopulation::emploi_force_interdit );
+    roePopulations_[ "maintien a distance par moyens non letaux"      ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux"     , eMaintienADistanceParMoyensNonLetaux     , EnumRoePopulation::maintien_a_distance_par_moyens_non_letaux ); 
+    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"    , eDispersionParMoyensDeDefenseActifs    , EnumRoePopulation::dispersion_par_moyens_de_defense_actifs );
+    roePopulations_[ "armes letales autorisees" ] = new PHY_RoePopulation( "Armes létales autorisées", eArmesLetalesAutorisees, EnumRoePopulation::armes_letales_autorisees );
 }
 
 // -----------------------------------------------------------------------------

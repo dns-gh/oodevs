@@ -63,11 +63,11 @@ private:
     //@{
     enum E_Type
     {
-        eNone            = 0,
-        eInterdit        = 1,
-        eSommation       = 2,
-        eDissuasion      = 3,
-        eNeutralisation  = 4
+        eNone                                  = 0,
+        eEmploiForceInterdit                   = 1,
+        eMaintienADistanceParMoyensNonLetaux   = 2,
+        eDispersionParMoyensDeDefenseActifs    = 3,
+        eArmesLetalesAutorisees                = 4
     };
     //@}
 

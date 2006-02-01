@@ -1,4 +1,4 @@
-    // *****************************************************************************
+// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -473,8 +473,11 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
+
+
             if( con->GetPionLogHandling() )
                 DrawArc( con->GetPionLogHandling()->GetAggregatedPos() ,con->GetPion().GetAggregatedPos(), 40.0, true );
+
         }
         const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
         glColor4d( MOS_COLOR_PINK );
@@ -504,8 +507,10 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
+
             if( con->GetPionLogHandling() )
                 DrawArc( con->GetPionLogHandling()->GetAggregatedPos() ,con->GetPion().GetAggregatedPos(), 0.0, true );
+
         }
         const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
         glColor4d( MOS_COLOR_ORANGE );
@@ -532,8 +537,10 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
+
             if( con->GetAutomateLogHandling() )
                 DrawArc( con->GetAutomateLogHandling()->GetAggregatedPos() ,con->GetPion().GetAggregatedPos(), 20.0, true );
+
         }
         glDisable( GL_LINE_STIPPLE );
     }
@@ -548,6 +555,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 {
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
 
+
     //Is this unit hidden in an aggregation ?
     bool bAggregated = false;
     if( ( ! agent.IsAutomate() ) && agent.GetParent() && agent.GetParent()->IsAggregated() )
@@ -555,6 +563,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 
     MT_Vector2D agentPos = agent.GetAggregatedPos();
     
+
     // Vision surfaces
     if( options.nDrawVisionSurfaces_ == MOS_Options::eOn
        || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eSelected )
@@ -568,10 +577,12 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
        DrawVisionCones( agent );
 
     // Draw the path if necessary
+
     if( (! bAggregated )
         && ( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
         && ( options.nDrawPaths_ == MOS_Options::eOn
             || (options.nDrawPaths_ == MOS_Options::eAuto && nState != eNormal) ) )
+
         DrawPath( agent );
         //Logistic links
     
@@ -615,6 +626,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
                 DrawIcon( eGasIcon, agent.vPos_ );
         }
 
+
         
         //// Draw specific NBC parameters
         if( agent.bNbcProtectionSuitWorn_ )
@@ -623,12 +635,16 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             DrawCircle( agentPos, MOS_GL_CROSSSIZE * 0.8f , true );
         }
 
+
+
         //Death
         if( agent.IsDead() )
         {
             glColor4d( MOS_COLOR_WHITE );
             DrawIcon( eSkullIcon, agentPos );
         }
+
+
 
         
         //embrayage
@@ -645,12 +661,16 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             DrawIcon( radars_on, agentPos + MT_Vector2D(  200 , 270  ) );
         }
 
+
+
         //jamming
         if( agent.bCommJammed_ )
         {
             glColor4d( MOS_COLOR_WHITE );
             DrawIcon( brouillage, agentPos + MT_Vector2D(  200 , 50  ) );
         }
+
+
 
         //radio silence
         if( agent. bRadioSilence_ )
@@ -659,7 +679,9 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             DrawIcon( talkie_interdit, agentPos + MT_Vector2D(  120 , 50  ) );
         }
         
+
     }
+
 
 
 
@@ -668,6 +690,8 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
    || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal )
    || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
        DrawVisionLines( agent );
+
+
     if ( agent.IsAutomate() && (
             MOS_MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == MOS_Options::eOn
             || ( nState == eSelected && (MOS_MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == MOS_Options::eAuto ))))
@@ -680,22 +704,30 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             if ( agent.nTC2_ == 0 && ( ! agent.IsLogisticTC2() ) )
             {
                 glColor4d( MOS_COLOR_YELLOW );
+
                 DrawCircle( agentPos + translation, 300, false );
+
             }
             if ( agent.nLogMedicalSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticSante() ) )
             {
                 glColor4d( MOS_COLOR_PINK );
+
                 DrawCircle( agentPos + translation, 375, false );
+
             }
             if ( agent.nLogMaintenanceSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() ) )
             {
                 glColor4d( MOS_COLOR_MAROON );
+
                 DrawCircle( agentPos + translation, 450, false );
+
             }
             if ( agent.nLogSupplySuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() ) )
             {
                 glColor4d( MOS_COLOR_ORANGE );
+
                 DrawCircle( agentPos + translation, 525, false );
+
             }
         }
         else
@@ -715,25 +747,33 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if ( agent.nTC2_ != 0 )
         {
             glColor4d( MOS_COLOR_YELLOW );
+
             DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetAggregatedPos(), agentPos, offset, true );
+
             offset += 100.0;
         }
         if ( agent.nLogMaintenanceSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_MAROON );
+
             DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetAggregatedPos(), agentPos, offset , true );
+
             offset += 100.0;
         }
         if ( agent.nLogMedicalSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_PINK );
+
             DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetAggregatedPos(), agentPos, offset, true );
+
             offset += 100.0;
         }
         if ( agent.nLogSupplySuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_ORANGE );
+
             DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetAggregatedPos(), agentPos, offset, true );
+
             offset += 100.0;
         }
     }

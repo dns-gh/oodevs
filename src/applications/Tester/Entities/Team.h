@@ -84,6 +84,7 @@ public:
     //@{
     T_EntityId  GetTestParam_Object () const;
     T_IdVector& GetTestParam_Objects() const;
+    T_EntityId  GetTestParam_Population() const;
     //@}
 
 private:

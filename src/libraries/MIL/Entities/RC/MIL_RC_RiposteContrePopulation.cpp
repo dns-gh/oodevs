@@ -1,17 +1,17 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_RiposteSurPopulation.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_RiposteContrePopulation.cpp $
 // $Author: Nld $
 // $Modtime: 9/03/05 15:21 $
 // $Revision: 5 $
-// $Workfile: MIL_RC_RiposteSurPopulation.cpp $
+// $Workfile: MIL_RC_RiposteContrePopulation.cpp $
 //
 // *****************************************************************************
 
 #include "MIL_pch.h"
 
-#include "MIL_RC_RiposteSurPopulation.h"
+#include "MIL_RC_RiposteContrePopulation.h"
 
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
@@ -22,10 +22,10 @@
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RC_RiposteSurPopulation constructor
+// Name: MIL_RC_RiposteContrePopulation constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-MIL_RC_RiposteSurPopulation::MIL_RC_RiposteSurPopulation( E_RC nRC, int nAsnID )
+MIL_RC_RiposteContrePopulation::MIL_RC_RiposteContrePopulation( E_RC nRC, int nAsnID )
     : MIL_RC( nRC, nAsnID )
 {
 }
@@ -34,7 +34,7 @@ MIL_RC_RiposteSurPopulation::MIL_RC_RiposteSurPopulation( E_RC nRC, int nAsnID )
 // Name: MIL_RC destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-MIL_RC_RiposteSurPopulation::~MIL_RC_RiposteSurPopulation()
+MIL_RC_RiposteContrePopulation::~MIL_RC_RiposteContrePopulation()
 {
 }
 
@@ -44,39 +44,40 @@ MIL_RC_RiposteSurPopulation::~MIL_RC_RiposteSurPopulation()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RC_RiposteSurPopulation destructor
+// Name: MIL_RC_RiposteContrePopulation destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_RiposteSurPopulation::Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+void MIL_RC_RiposteContrePopulation::Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& diaParams ) const
 {
     assert( DEC_Tools::CheckTypeConnaissancePopulation( diaParams[ 1 ] ) );
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyID( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_sur_population );
+    NET_ASN_Tools::CopyID( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_population );
     asnMsg.Send();   
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RC_RiposteSurPopulation destructor
+// Name: MIL_RC_RiposteContrePopulation destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_RiposteSurPopulation::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+void MIL_RC_RiposteContrePopulation::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parameters& diaParams ) const
 {
     assert( DEC_Tools::CheckTypeConnaissancePopulation( diaParams[ 1 ] ) );
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyID( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_sur_population );
+    NET_ASN_Tools::CopyID( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_population );
     asnMsg.Send();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RC_RiposteSurPopulation::Send
+// Name: MIL_RC_RiposteContrePopulation::Send
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_RiposteSurPopulation::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+void MIL_RC_RiposteContrePopulation::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
 {
     assert( false );
 }
+
 

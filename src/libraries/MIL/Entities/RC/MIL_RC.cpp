@@ -54,7 +54,7 @@
 #include "MIL_RC_TraceID.h"
 #include "MIL_RC_PopulationDetectee.h"
 #include "MIL_RC_PriseAPartieParPopulation.h"
-#include "MIL_RC_RiposteSurPopulation.h"
+#include "MIL_RC_RiposteContrePopulation.h"
 #include "MIL_RC_RecuperationProgressive.h"
 #include "MIL_RC_AgressionDePopulation.h"
 #include "MIL_RC_AgressionParPopulation.h"
@@ -329,22 +329,22 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_ObjetDetecte ] = new MIL_RC_ObjetDetecte( eRC_ObjetDetecte, T_MsgCR_cr_cr_objet_detecte );
 	rcs_[ eRC_Trace ] = new MIL_RC_Trace( eRC_Trace, T_MsgCR_cr_cr_trace );
 	rcs_[ eRC_TraceID ] = new MIL_RC_TraceID( eRC_TraceID, T_MsgCR_cr_cr_trace_id );
-	rcs_[ eRC_TirInterditSurPopulation ] = new MIL_RC( eRC_TirInterditSurPopulation, T_MsgCR_cr_cr_tir_interdit_sur_population );
-	rcs_[ eRC_TirSommationSurPopulation ] = new MIL_RC( eRC_TirSommationSurPopulation, T_MsgCR_cr_cr_tir_sommation_sur_population );
-	rcs_[ eRC_TirDissuasionSurPopulation ] = new MIL_RC( eRC_TirDissuasionSurPopulation, T_MsgCR_cr_cr_tir_dissuasion_sur_population );
-	rcs_[ eRC_TirNeutralisationSurPopulation ] = new MIL_RC( eRC_TirNeutralisationSurPopulation, T_MsgCR_cr_cr_tir_neutralisation_sur_population );
+	rcs_[ eRC_EmploiForceInterdit ] = new MIL_RC( eRC_EmploiForceInterdit, T_MsgCR_cr_cr_emploi_force_interdit );
+	rcs_[ eRC_MaintienADistanceParMoyensNonLetaux ] = new MIL_RC( eRC_MaintienADistanceParMoyensNonLetaux, T_MsgCR_cr_cr_maintien_a_distance_par_moyens_non_letaux );
+	rcs_[ eRC_DispersionParMoyensDeDefenseActifs ] = new MIL_RC( eRC_DispersionParMoyensDeDefenseActifs, T_MsgCR_cr_cr_dispersion_par_moyens_de_defense_actifs );
+	rcs_[ eRC_ArmesLetalesAutorisees ] = new MIL_RC( eRC_ArmesLetalesAutorisees, T_MsgCR_cr_cr_armes_letales_autorisees );
 	rcs_[ eRC_PopulationDetectee ] = new MIL_RC_PopulationDetectee( eRC_PopulationDetectee, T_MsgCR_cr_cr_population_detectee );
 	rcs_[ eRC_PriseAPartieParPopulation ] = new MIL_RC_PriseAPartieParPopulation( eRC_PriseAPartieParPopulation, T_MsgCR_cr_cr_prise_a_partie_par_population );
-	rcs_[ eRC_RiposteSurPopulation ] = new MIL_RC_RiposteSurPopulation( eRC_RiposteSurPopulation, T_MsgCR_cr_cr_riposte_sur_population );
+	rcs_[ eRC_RiposteContrePopulation ] = new MIL_RC_RiposteContrePopulation( eRC_RiposteContrePopulation, T_MsgCR_cr_cr_riposte_contre_population );
 	rcs_[ eRC_PopulationDangereuseAProximite ] = new MIL_RC( eRC_PopulationDangereuseAProximite, T_MsgCR_cr_cr_population_dangereuse_a_proximite );
-	rcs_[ eRC_EsquiveDeLaPopulation ] = new MIL_RC( eRC_EsquiveDeLaPopulation, T_MsgCR_cr_cr_esquive_de_la_population );
+	rcs_[ eRC_EsquiveFaceAPopulation ] = new MIL_RC( eRC_EsquiveFaceAPopulation, T_MsgCR_cr_cr_esquive_face_a_population );
 	rcs_[ eRC_DecrochageFaceAPopulation ] = new MIL_RC( eRC_DecrochageFaceAPopulation, T_MsgCR_cr_cr_decrochage_face_a_population );
 	rcs_[ eRC_MiseEnPlaceControleDeFoule ] = new MIL_RC( eRC_MiseEnPlaceControleDeFoule, T_MsgCR_cr_cr_mise_en_place_controle_de_foule );
 	rcs_[ eRC_MiseEnPlaceFiltrage ] = new MIL_RC( eRC_MiseEnPlaceFiltrage, T_MsgCR_cr_cr_mise_en_place_filtrage );
 	rcs_[ eRC_AnimationBarrage ] = new MIL_RC( eRC_AnimationBarrage, T_MsgCR_cr_cr_animation_barrage );
 	rcs_[ eRC_AnimationCanalisation ] = new MIL_RC( eRC_AnimationCanalisation, T_MsgCR_cr_cr_animation_canalisation );
 	rcs_[ eRC_CollecteRenseignementsSurPopulations ] = new MIL_RC( eRC_CollecteRenseignementsSurPopulations, T_MsgCR_cr_cr_collecte_renseignements_sur_populations );
-	rcs_[ eRC_PopulationTotalementReconnue ] = new MIL_RC( eRC_PopulationTotalementReconnue, T_MsgCR_cr_cr_population_totalement_reconnue );
+	rcs_[ eRC_PopulationReconnue ] = new MIL_RC( eRC_PopulationReconnue, T_MsgCR_cr_cr_population_reconnue );
 	rcs_[ eRC_AttitudeCalme ] = new MIL_RC( eRC_AttitudeCalme, T_MsgCR_cr_cr_attitude_calme );
 	rcs_[ eRC_AttitudeAgitee ] = new MIL_RC( eRC_AttitudeAgitee, T_MsgCR_cr_cr_attitude_agitee );
 	rcs_[ eRC_AttitudeExcitee ] = new MIL_RC( eRC_AttitudeExcitee, T_MsgCR_cr_cr_attitude_excitee );

@@ -782,10 +782,10 @@ ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
 ENT_Tr::T_ConverterRoePopulation ENT_Tr::RoePopulationConverter_[] =
 {
     T_ConverterRoePopulation( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eRoePopulation_None ),
-    T_ConverterRoePopulation( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "tir interdit" ), eRoePopulation_TirInterdit ),
-    T_ConverterRoePopulation( "tir sommation", QT_TRANSLATE_NOOP( "ENT_Tr", "tir sommation" ), eRoePopulation_TirSommation ),
-    T_ConverterRoePopulation( "tir dissuasion", QT_TRANSLATE_NOOP( "ENT_Tr", "tir dissuasion" ), eRoePopulation_TirDissuasion ),
-    T_ConverterRoePopulation( "tir neutralisation", QT_TRANSLATE_NOOP( "ENT_Tr", "tir neutralisation" ), eRoePopulation_TirNeutralisation ),
+    T_ConverterRoePopulation( "emploi force interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "emploi force interdit" ), eRoePopulation_EmploiForceInterdit ),
+    T_ConverterRoePopulation( "maintien a distance par moyens non letaux", QT_TRANSLATE_NOOP( "ENT_Tr", "maintien a distance par moyens non letaux" ), eRoePopulation_MaintienADistanceParMoyensNonLetaux ),
+    T_ConverterRoePopulation( "dispersion par moyens de defense actifs", QT_TRANSLATE_NOOP( "ENT_Tr", "dispersion par moyens de defense actifs" ), eRoePopulation_DispersionParMoyensDeDefenseActifs ),
+    T_ConverterRoePopulation( "armes letales autorisees", QT_TRANSLATE_NOOP( "ENT_Tr", "armes letales autorisees" ), eRoePopulation_ArmesLetalesAutorisees ),
     T_ConverterRoePopulation( "", "", (E_RoePopulation)-1 )
 };
 
@@ -1225,12 +1225,12 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion Decrocher", QT_TRANSLATE_NOOP( "ENT", "Pion Decrocher" ), eMission_Pion_Decrocher ),
     T_ConverterUnitMission( "Pion Stationner", QT_TRANSLATE_NOOP( "ENT", "Pion Stationner" ), eMission_Pion_Stationner ),
     T_ConverterUnitMission( "Pion SeFaireTransporter", QT_TRANSLATE_NOOP( "ENT", "Pion SeFaireTransporter" ), eMission_Pion_SeFaireTransporter ),
-    T_ConverterUnitMission( "Pion InterdireFranchissementPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion InterdireFranchissementPopulation" ), eMission_Pion_InterdireFranchissementPopulation ),
-    T_ConverterUnitMission( "Pion FilterPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion FilterPopulation" ), eMission_Pion_FilterPopulation ),
-    T_ConverterUnitMission( "Pion RenseignerSurPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion RenseignerSurPopulation" ), eMission_Pion_RenseignerSurPopulation ),
-    T_ConverterUnitMission( "Pion CanaliserPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion CanaliserPopulation" ), eMission_Pion_CanaliserPopulation ),
-    T_ConverterUnitMission( "Pion SecuriserPopulationDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion SecuriserPopulationDansZone" ), eMission_Pion_SecuriserPopulationDansZone ),
-    T_ConverterUnitMission( "Pion SecuriserZoneContreMenacesAsymetriques", QT_TRANSLATE_NOOP( "ENT", "Pion SecuriserZoneContreMenacesAsymetriques" ), eMission_Pion_SecuriserZoneContreMenacesAsymetriques ),
+    T_ConverterUnitMission( "Pion InterdireFranchissementPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion InterdireFranchissementPopulations" ), eMission_Pion_InterdireFranchissementPopulations ),
+    T_ConverterUnitMission( "Pion FiltrerPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion FiltrerPopulations" ), eMission_Pion_FiltrerPopulations ),
+    T_ConverterUnitMission( "Pion RenseignerSurPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion RenseignerSurPopulations" ), eMission_Pion_RenseignerSurPopulations ),
+    T_ConverterUnitMission( "Pion CanaliserPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion CanaliserPopulations" ), eMission_Pion_CanaliserPopulations ),
+    T_ConverterUnitMission( "Pion ControlerPopulationsDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion ControlerPopulationsDansZone" ), eMission_Pion_ControlerPopulationsDansZone ),
+    T_ConverterUnitMission( "Pion SecuriserZoneContrePopulations", QT_TRANSLATE_NOOP( "ENT", "Pion SecuriserZoneContrePopulations" ), eMission_Pion_SecuriserZoneContrePopulations ),
     T_ConverterUnitMission( "Pion Generique", QT_TRANSLATE_NOOP( "ENT", "Pion Generique" ), eMission_Pion_Generique ),
     T_ConverterUnitMission( "Pion MILICE Provoquer", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE Provoquer" ), eMission_Pion_MILICE_Provoquer ),
     T_ConverterUnitMission( "Pion MILICE PrendreEtTenir", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE PrendreEtTenir" ), eMission_Pion_MILICE_PrendreEtTenir ),

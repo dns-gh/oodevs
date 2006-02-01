@@ -326,10 +326,10 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagementPopulatio
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
     MOS_ParamComboBox< ASN1T_EnumRoePopulation >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population", false );
     pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumRoePopulation::none );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir interdit", EnumRoePopulation::tir_interdit );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir sommation", EnumRoePopulation::tir_sommation );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir dissuasion", EnumRoePopulation::tir_dissuasion );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir neutralisation", EnumRoePopulation::tir_neutralisation );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Emploi force interdit", EnumRoePopulation::emploi_force_interdit );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Maintien a distance par moyens non letaux", EnumRoePopulation::maintien_a_distance_par_moyens_non_letaux );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Dispersion par moyens de defense actifs", EnumRoePopulation::dispersion_par_moyens_de_defense_actifs );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Armes letales autorisees", EnumRoePopulation::armes_letales_autorisees );
 #undef asnMission
 }
 

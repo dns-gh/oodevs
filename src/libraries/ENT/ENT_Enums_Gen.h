@@ -839,10 +839,10 @@ enum E_Roe
 enum E_RoePopulation
 {
     eRoePopulation_None,
-    eRoePopulation_TirInterdit,
-    eRoePopulation_TirSommation,
-    eRoePopulation_TirDissuasion,
-    eRoePopulation_TirNeutralisation,
+    eRoePopulation_EmploiForceInterdit,
+    eRoePopulation_MaintienADistanceParMoyensNonLetaux,
+    eRoePopulation_DispersionParMoyensDeDefenseActifs,
+    eRoePopulation_ArmesLetalesAutorisees,
     eNbrRoePopulation
 };
 
@@ -1294,12 +1294,12 @@ enum E_UnitMission
     eMission_Pion_Decrocher,
     eMission_Pion_Stationner,
     eMission_Pion_SeFaireTransporter,
-    eMission_Pion_InterdireFranchissementPopulation,
-    eMission_Pion_FilterPopulation,
-    eMission_Pion_RenseignerSurPopulation,
-    eMission_Pion_CanaliserPopulation,
-    eMission_Pion_SecuriserPopulationDansZone,
-    eMission_Pion_SecuriserZoneContreMenacesAsymetriques,
+    eMission_Pion_InterdireFranchissementPopulations,
+    eMission_Pion_FiltrerPopulations,
+    eMission_Pion_RenseignerSurPopulations,
+    eMission_Pion_CanaliserPopulations,
+    eMission_Pion_ControlerPopulationsDansZone,
+    eMission_Pion_SecuriserZoneContrePopulations,
     eMission_Pion_Generique,
     eMission_Pion_MILICE_Provoquer,
     eMission_Pion_MILICE_PrendreEtTenir,

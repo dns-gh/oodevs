@@ -189,34 +189,34 @@ Mission-Pion-SeFaireTransporter ::= SEQUENCE
 
 -- Population
 
-Mission-Pion-InterdireFranchissementPopulation ::= SEQUENCE
-{
-    ligne Line
-}
-
-Mission-Pion-FilterPopulation ::= SEQUENCE
+Mission-Pion-InterdireFranchissementPopulations ::= SEQUENCE
 {
     point Point
 }
 
-Mission-Pion-RenseignerSurPopulation ::= SEQUENCE
+Mission-Pion-FiltrerPopulations ::= SEQUENCE
 {
     point Point
 }
 
-Mission-Pion-CanaliserPopulation ::= SEQUENCE
+Mission-Pion-RenseignerSurPopulations ::= SEQUENCE
+{
+    point Point
+}
+
+Mission-Pion-CanaliserPopulations ::= SEQUENCE
 {
     zone Localisation
 }
 
-Mission-Pion-SecuriserPopulationDansZone ::= SEQUENCE
+Mission-Pion-ControlerPopulationsDansZone ::= SEQUENCE
 {
     zone Polygon
 }
 
-Mission-Pion-SecuriserZoneContreMenacesAsymetriques ::= SEQUENCE
+Mission-Pion-SecuriserZoneContrePopulations ::= SEQUENCE
 {
-    zone Polygon
+    point Point
 }
 
 -- ASY
