@@ -13,18 +13,22 @@
 #define __MOS_World_h_
 
 #include "MOS_Types.h"
+#include "MOS_GraphicSetup.h"
 #include "MT_Tools/MT_Rect.h"
 #include "geocoord/MGRS.h"
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/Geodetic.h"
+#include "graphics/GraphicManager_ABC.h"
+#include "graphics/GraphicShapeProxy.h"
 
 class GraphicShape_ABC;
 class DrawDetection;
+class TesselatedShape;
 
 // =============================================================================
 // Created: APE 2004-07-19
 // =============================================================================
-class MOS_World
+class MOS_World : private GraphicManager_ABC
 {
     MT_COPYNOTALLOWED( MOS_World )   
     friend class MOS_GLTool;
@@ -68,12 +72,15 @@ private:
     void ReadGraphics( const std::string& strArchive );
     void ReadGraphicFile( const std::string& strName );
     void ReadDetection( const std::string& strName );
+
+    virtual void AddShape( const GraphicShapeProxy& shape );
+    virtual bool ShouldUseList( const std::string& filename );
     //@}
     
     //! @name Types
     //@{
-    typedef std::vector< GraphicShape_ABC* > T_Shapes;
-    typedef T_Shapes::const_iterator   CIT_Shapes;
+    typedef std::vector< GraphicShapeProxy > T_Shapes;
+    typedef T_Shapes::const_iterator       CIT_Shapes;
     //@}
     
 private:
@@ -82,6 +89,7 @@ private:
     bool           isInitialized_;
     MT_Rect        extent_;
     MT_Vector2D    translation_;
+    MOS_GraphicSetup setup_;
 
     T_Shapes       lodshapes_[ 3 ];
 

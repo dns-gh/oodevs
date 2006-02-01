@@ -23,6 +23,9 @@
 #include "graphics/GraphicShapeProxy.h"
 #include "graphics/DrawDetection.h"
 #include "graphics/DataFactory.h"
+#include "graphics/GraphicFactory.h"
+
+#include "terrain/TesselatedShape.h"
 
 #include "MOS_GraphicSetup.h"
 #include "MOS_MainWindow.h"
@@ -48,9 +51,6 @@ MOS_World::MOS_World( const std::string& strArchive )
 // -----------------------------------------------------------------------------
 MOS_World::~MOS_World()
 {
-    for( unsigned int i = 0; i < 3; ++i )
-        for( CIT_Shapes it = lodshapes_[i].begin(); it != lodshapes_[i].end(); ++it )
-            delete *it;
     delete pDetection_;
 }
 
@@ -237,25 +237,34 @@ void MOS_World::ReadGraphics( const std::string& strArchive )
 // -----------------------------------------------------------------------------
 void MOS_World::ReadGraphicFile( const std::string& strName )
 {
-    static MOS_GraphicSetup setup; // $$$$ AGE 2005-10-20: 
     DataFactory factory;
+    GraphicFactory graphicfactory( *this, setup_, factory );
     try
     {
-        MT_FlatBinaryInputArchive archive;
-        archive.EnableExceptions( true );
-        archive.Open( strName );
-        while( ! archive.EndOfBuffer() )
-        {
-            bool useLists = ! MOS_MainWindow::GetMainWindow().GetOptions().bNoList_ &&
-                              strName.find( "list" ) != std::string::npos;
-            GraphicShape_ABC* pShape = new GraphicShapeProxy( archive, factory, setup, useLists );
-            lodshapes_[ setup.GetLastLevelOfDetail() ].push_back( pShape );
-        }
+        graphicfactory.LoadGraphicFile( strName );
     } 
     catch( ... )
     {
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_World::AddShape
+// -----------------------------------------------------------------------------
+void MOS_World::AddShape( const GraphicShapeProxy& shape )
+{
+    lodshapes_[ setup_.GetLastLevelOfDetail() ].push_back( shape );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_World::ShouldUseList
+// Created: AGE 2006-02-01
+// -----------------------------------------------------------------------------
+bool MOS_World::ShouldUseList( const std::string& filename )
+{
+    return ! MOS_MainWindow::GetMainWindow().GetOptions().bNoList_ && filename.find( "list" ) != std::string::npos;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_World::ReadDetection
@@ -274,3 +283,4 @@ std::string MOS_World::GetTerrainDirectory() const
 {
     return strTerrainDirectory_;
 }
+
