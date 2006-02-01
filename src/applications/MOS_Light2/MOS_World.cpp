@@ -263,10 +263,7 @@ void MOS_World::ReadGraphicFile( const std::string& strName )
 // -----------------------------------------------------------------------------
 void MOS_World::ReadDetection( const std::string& strName )
 {
-    MT_FlatBinaryInputArchive archive;
-    archive.EnableExceptions( true );
-    archive.Open( strName );    
-    pDetection_ = new DrawDetection( archive, geometry::Rectangle2f( extent_.GetLeft(), extent_.GetBottom(), extent_.GetRight(), extent_.GetTop() ) );
+    pDetection_ = new DrawDetection( strName, geometry::Rectangle2f( extent_.GetLeft(), extent_.GetBottom(), extent_.GetRight(), extent_.GetTop() ) );
 }
 
 // -----------------------------------------------------------------------------
