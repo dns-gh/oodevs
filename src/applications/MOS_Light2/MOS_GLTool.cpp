@@ -286,8 +286,7 @@ void MOS_GLTool::DrawAreas( MOS_World& world, unsigned int nMaxLod )
     {
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            assert( *it );
-            const GraphicShape_ABC& shape = **it;
+            const GraphicShape_ABC& shape = *it;
             shape.DrawArea( extent );
             glTranslatef( 0.f, 0.f, 0.0001f );
         }
@@ -311,8 +310,7 @@ void MOS_GLTool::DrawBorders( MOS_World& world, unsigned int nMaxLod )
     {
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            assert( *it );
-            const GraphicShape_ABC& shape = **it;
+            const GraphicShape_ABC& shape = *it;
             shape.DrawBorders( extent );
         }
     }
@@ -322,8 +320,7 @@ void MOS_GLTool::DrawBorders( MOS_World& world, unsigned int nMaxLod )
     {
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            assert( *it );
-            const GraphicShape_ABC& shape = **it;
+            const GraphicShape_ABC& shape = *it;
             shape.DrawBorders( extent );
         }
     }
@@ -343,8 +340,7 @@ void MOS_GLTool::DrawLines( MOS_World& world, unsigned int nMaxLod )
     {
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            assert( *it );
-            const GraphicShape_ABC& shape = **it;
+            const GraphicShape_ABC& shape = *it;
             shape.DrawLines( extent );
         }
     }
@@ -379,8 +375,7 @@ void MOS_GLTool::DrawNameObjects( MOS_World& world )
     {
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            assert( *it );
-            const GraphicShape_ABC& shape = **it;
+            const GraphicShape_ABC& shape = *it;
             glColor3f( 0, 0, 0 );
             shape.DrawName( extent, widget );
         }
