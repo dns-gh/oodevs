@@ -64,6 +64,7 @@ public:
           bool                   IsSurrendered                 () const;
           bool                   IsPrisoner                    () const;
           bool                   IsRefugeeManaged              () const;
+          bool                   IsDead                        () const;
     //@}
 
     //! @name Network
@@ -89,6 +90,7 @@ private:
     bool        bSurrendered_;
     bool        bPrisoner_; 
     bool        bRefugeeManaged_;
+    bool        bDead_;
 
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;

@@ -129,6 +129,7 @@ signatures
     B                                       A::DEC_Agent_SEstRendu                       ();
     B                                       A::DEC_Agent_EstRefugie                      ();
     B                                       A::DEC_Agent_EstMilice                       ();    
+    B                                       A::DEC_Agent_EstMort                         ();    
     B                                       A::DEC_Agent_EstPrisonnier                   ();
     B                                       A::DEC_Agent_EstContamine                    ();
     B                                       A::DEC_Agent_EstEnTenueProtectionNBC         ();
@@ -199,6 +200,7 @@ signatures
     B                                       A::DEC_ConnaissanceAgent_SEstRendu                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceAgent_EstPrisonnier                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceAgent_EstMilice                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstMort                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceAgent_EstRefugie                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanteAgent_EstRefugiePrisEnCompte         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     V                                       A::DEC_ConnaissanceAgent_Verrouiller                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );

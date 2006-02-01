@@ -40,6 +40,7 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , bSurrendered_                ( false )
     , bPrisoner_                   ( false ) 
     , bRefugeeManaged_             ( false )
+    , bDead_                       ( false )
 {
 
 }
@@ -72,6 +73,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> bSurrendered_
          >> bPrisoner_
          >> bRefugeeManaged_
+         >> bDead_
          >> rPostureCompletionPercentage_;
          
     // Desérialisation des volumes par nom ( données "statiques" )
@@ -106,6 +108,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << bSurrendered_
          << bPrisoner_
          << bRefugeeManaged_
+         << bDead_
          << rPostureCompletionPercentage_;
          
     // Serialisation des volumes par nom ( données "statiques" )
@@ -167,4 +170,5 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
     bPrisoner_    = roleSurrender.IsPrisoner   ();
 
     bRefugeeManaged_ = agentPerceived.GetRole< PHY_RoleInterface_Refugee >().IsManaged();
+    bDead_           = agentPerceived.IsDead();
 }

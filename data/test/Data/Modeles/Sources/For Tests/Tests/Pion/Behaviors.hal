@@ -11,9 +11,15 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+    if( DEC_Agent_EstMort() )
+        DEC_Debug( "OMG, I'M DEAD !!" );    
+    if( DEC_Agent_EtatOps() == 0 )
+        DEC_Debug( "Shit, I'm broken !!" );
+        
     T_ListeConnaissancesPopulation popus = DEC_Connaissances_CollisionsPopulations();
     if( DIA_Size( popus ) > 0 )
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
+             
 
     E_ValiditeRequete   nValidite;
     
@@ -151,8 +157,6 @@ default Default()
     */    
     // DEC_Debug( BoolToString( DEC_Agent_PeutConstruireObjet( eTypeObjectBouchonMines ) ) );
     
-    if( DEC_Agent_EtatOps() == 0 )
-        DEC_Debug( "Shit, I'm dead" );
 /*
     DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Explosif ) ) );
     DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Explosif ) ) );
@@ -440,6 +444,11 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 {
     when updated:
     {
+    
+        T_ListeConnaissancesAgent fusse = DEC_Connaissances_AgentsPotentiellementDangereux();
+        DEC_Debug( FloatToString( DIA_Size( fusse ) ) + " unites potentiellement dangereuse" );
+    
+    
         //T_Point cock = DEC_ListePoints_GetAt( mission.itineraire_, 0 );
         //DEC_Debug( DEC_PointToString( cock ) );
                   
@@ -808,13 +817,16 @@ action ACT_TirDirect( T_ConnaissanceAgent target, bool bOnlyTransporteurs )
         rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0 );
         DEC_Debug( "Portee max eni=>myself (PH 0): " + FloatToString( rPorteeLuiSurMoi ) );        
 
-         float rEtatOpsMoi= DEC_Agent_EtatOps();
+        float rEtatOpsMoi= DEC_Agent_EtatOps();
         DEC_Debug( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
         DEC_Trace( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
     
         float rEtatOpsEni = DEC_ConnaissanceAgent_EtatOps( target, nValidite );
         DEC_Debug( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
         DEC_Trace( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
+        
+        DEC_Debug( "ENI Mort: " + BoolToString( DEC_ConnaissanceAgent_EstMort( target, nValidite ) ) );
+        DEC_Trace( "ENI Mort: " + BoolToString( DEC_ConnaissanceAgent_EstMort( target, nValidite ) ) );
     
         float rRapForLocal = DEC_RapportDeForceLocal();
         DEC_Debug( "Rapfor Local: " + FloatToString( rRapForLocal ) );

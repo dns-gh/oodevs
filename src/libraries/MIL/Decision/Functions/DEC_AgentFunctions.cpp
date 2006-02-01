@@ -209,6 +209,15 @@ void DEC_AgentFunctions::IsMilita( DIA_Call_ABC& call, const MIL_AgentPion& call
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsDead
+// Created: NLD 2006-02-01
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::IsDead( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    call.GetResult().SetValue( callerAgent.IsDead() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsPC
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------

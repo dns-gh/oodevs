@@ -158,7 +158,7 @@ MT_Float DEC_Knowledge_Agent::GetMajorOperationalState() const
 inline
 bool DEC_Knowledge_Agent::IsDead() const
 {
-    return dataRecognition_.GetOperationalState() <= 0.;
+    return dataDetection_.IsDead();
 }
 
 // -----------------------------------------------------------------------------

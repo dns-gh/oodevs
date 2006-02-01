@@ -799,7 +799,7 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
 void PHY_RolePion_Composantes::NotifyComposanteRepaired()
 {
     assert( pPion_ );
-    if( pPion_->IsDead() ) // == IsUsable()
+    if( !IsUsable() )
     {
         pPion_->MagicMove( pPion_->GetAutomate().GetAlivePionsBarycenter() );   
         MIL_RC::pRcANouveauDisponibleApresReparation_->Send( *pPion_, MIL_RC::eRcTypeOperational );

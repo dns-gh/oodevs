@@ -51,6 +51,7 @@ public:
     template< typename T > static void IsRefugee                             ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsRefugeeManaged                      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsMilita                              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsDead                                ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void Lock                                  ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void Unlock                                ( DIA_Call_ABC& call, const T& caller );
     //@}

@@ -10,6 +10,16 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsDead
+// Created: NLD 2006-02-01
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_AgentPerceptionDataDetection::IsDead() const
+{
+    return bDead_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------

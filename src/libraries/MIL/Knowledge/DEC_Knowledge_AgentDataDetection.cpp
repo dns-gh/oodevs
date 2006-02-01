@@ -35,6 +35,7 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     , bSurrendered_                ( false )
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
+    , bDead_                       ( false )
     , pLastPosture_                ( 0 )
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
@@ -73,7 +74,8 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> rAltitude_
          >> bSurrendered_
          >> bPrisoner_
-         >> bRefugeeManaged_;
+         >> bRefugeeManaged_
+         >> bDead_;
          
     uint nID;
     uint nNbr;
@@ -112,7 +114,8 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << rAltitude_
          << bSurrendered_
          << bPrisoner_
-         << bRefugeeManaged_;
+         << bRefugeeManaged_
+         << bDead_;
     
     file << visionVolumes_.size();
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
@@ -198,6 +201,10 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         bRefugeeManaged_        = bNewRefugeeManaged;
         bRefugeeManagedUpdated_ = true;
     }
+
+    const bool bNewDead = data.IsDead();
+    if( bDead_ != bNewDead )
+        bDead_ = bNewDead;  //$$$ NETWORK
     
     rAltitude_                    =  data.GetAltitude();
     pLastPosture_                 = &data.GetLastPosture();
@@ -311,4 +318,6 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( ASN1T_MsgUnitKnowledgeU
         asnMsg.m.refugie_pris_en_comptePresent = 1;
         asnMsg.refugie_pris_en_compte = bRefugeeManaged_;
     }
+
+    //$$$ bDead_
 }
