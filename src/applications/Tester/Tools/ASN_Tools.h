@@ -77,7 +77,7 @@ public:
     static void CopyPolygonList        ( const T_LocationVector&  locations     , ASN1T_ListPolygon&          asn );
     static void CopyNatureAtlas        ( uint                     nValue        , ASN1T_NatureAtlas&          asn );
     static void CopyGDH                ( uint                     nTime         , ASN1T_GDH&                  asn );
-    static void CopyPopulationKnowledge( uint                     nIdPopulation , ASN1T_KnowledgePopulation   asn );
+    static void CopyPopulationKnowledge( uint                     nIdPopulation , ASN1T_KnowledgePopulation&  asn );
     //@}
 
     template< typename T >

@@ -194,5 +194,5 @@ T_EntityId Team::GetTestParam_Object() const
 // -----------------------------------------------------------------------------
 T_EntityId  Team::GetTestParam_Population() const
 {
-
+    return 0;
 }

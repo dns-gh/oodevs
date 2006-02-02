@@ -120,22 +120,14 @@ void ASN_Tools::CopyAutomateList( const T_IdVector& ids, ASN1T_ListAutomate& asn
         CopyAutomate( *it, asn.elem[ i++ ] );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ASN_Tools::CopyPopulation
-// Created: SBO 2006-01-03
-// -----------------------------------------------------------------------------
-void ASN_Tools::CopyPopulation( uint nIdValue, ASN1T_Population& asn )
-{
-    asn = nIdValue;
-}
-    
+   
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyPopulationKnowledge
 // Created: SBO 2006-01-03
 // -----------------------------------------------------------------------------
-void ASN_Tools::CopyPopulationKnowledge( uint nIdPopu, ASN1T_KnowledgePopulation& asn )
+void ASN_Tools::CopyPopulationKnowledge( uint nIdPopulation , ASN1T_KnowledgePopulation&  asn )
 {
-    asn = nIdPopu;
+    asn = nIdPopulation;
 }
 
 // -----------------------------------------------------------------------------
@@ -378,14 +370,6 @@ void ASN_Tools::CopyGDH( uint nTime, ASN1T_GDH& asn )
     asn.qualificatif = EnumGDH_Qualificatif::at;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ASN_Tools::CopyPopulationKnowledge
-// Created: HME 2006-01-03
-// -----------------------------------------------------------------------------
-void ASN_Tools::CopyPopulationKnowledge( uint nIdPopulation , ASN1T_KnowledgePopulation   asn )
-{
-    asn = nIdPopulation;
-}
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
