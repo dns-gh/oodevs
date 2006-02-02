@@ -21,7 +21,7 @@
 #endif
 
 #include "Tester_pch.h"
-#include "Mission_Pawn_FilterPopulation.h"
+#include "Mission_Pawn_InterdireFranchissementPopulations.h"
 #include "Entities/Pawn.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/ASN_Tools.h"
@@ -29,36 +29,36 @@
 using namespace TEST;
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_FilterPopulation constructor
+// Name: Mission_Pawn_InterdireFranchissementPopulations constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_FilterPopulation::Mission_Pawn_FilterPopulation( Pawn& pawn )
+Mission_Pawn_InterdireFranchissementPopulations::Mission_Pawn_InterdireFranchissementPopulations( Pawn& pawn )
     : Mission_Pawn_ABC ( pawn )
 {
-    strName_ = "Pawn_FilterPopulation";
+    strName_ = "Pawn_InterdireFranchissementPopulations";
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_FilterPopulation destructor
+// Name: Mission_Pawn_InterdireFranchissementPopulations destructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_FilterPopulation::~Mission_Pawn_FilterPopulation()
+Mission_Pawn_InterdireFranchissementPopulations::~Mission_Pawn_InterdireFranchissementPopulations()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_FilterPopulation::Serialize
+// Name: Mission_Pawn_InterdireFranchissementPopulations::Serialize
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-void Mission_Pawn_FilterPopulation::Serialize()
+void Mission_Pawn_InterdireFranchissementPopulations::Serialize()
 {
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_FilterPopulation& asnMission = *new ASN1T_Mission_Pion_FilterPopulation();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_filter_population;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_filter_population = &asnMission;
+    ASN1T_Mission_Pion_InterdireFranchissementPopulations& asnMission = *new ASN1T_Mission_Pion_InterdireFranchissementPopulations();
+    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_interdire_franchissement_populations;
+    asnMsg_.GetAsnMsg().mission.u.mission_pion_interdire_franchissement_populations = &asnMission;
 
     const Position& point_ = pTarget_->GetTestParam_Point();
 
@@ -69,13 +69,13 @@ void Mission_Pawn_FilterPopulation::Serialize()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_FilterPopulation::Clean
+// Name: Mission_Pawn_InterdireFranchissementPopulations::Clean
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Mission_Pawn_FilterPopulation::Clean()
+void Mission_Pawn_InterdireFranchissementPopulations::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_filter_population );
-    ASN1T_Mission_Pion_FilterPopulation& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_filter_population;
+    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_interdire_franchissement_populations );
+    ASN1T_Mission_Pion_InterdireFranchissementPopulations& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_interdire_franchissement_populations;
 
     ASN_Tools::Delete( asnMission.point );
 

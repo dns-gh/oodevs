@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_SecuriserZoneContreMenacesAsymetriques_h_
-#define __Mission_Pawn_SecuriserZoneContreMenacesAsymetriques_h_
+#ifndef __Mission_Pawn_RenseignerSurPopulations_h_
+#define __Mission_Pawn_RenseignerSurPopulations_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_SecuriserZoneContreMenacesAsymetriques
-    @brief  Mission_Pawn_SecuriserZoneContreMenacesAsymetriques
+/** @class  Mission_Pawn_RenseignerSurPopulations
+    @brief  Mission_Pawn_RenseignerSurPopulations
     @par    Using example
     @code
-    Mission_Pawn_SecuriserZoneContreMenacesAsymetriques;
+    Mission_Pawn_RenseignerSurPopulations;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_SecuriserZoneContreMenacesAsymetriques : public Mission_Pawn_ABC
+class Mission_Pawn_RenseignerSurPopulations : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_SecuriserZoneContreMenacesAsymetriques( Pawn& target );
-    virtual ~Mission_Pawn_SecuriserZoneContreMenacesAsymetriques();
+             Mission_Pawn_RenseignerSurPopulations( Pawn& target );
+    virtual ~Mission_Pawn_RenseignerSurPopulations();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_SecuriserZoneContreMenacesAsymetriques( const Mission_Pawn_SecuriserZoneContreMenacesAsymetriques& );            //!< Copy constructor
-    Mission_Pawn_SecuriserZoneContreMenacesAsymetriques& operator=( const Mission_Pawn_SecuriserZoneContreMenacesAsymetriques& ); //!< Assignment operator
+    Mission_Pawn_RenseignerSurPopulations( const Mission_Pawn_RenseignerSurPopulations& );            //!< Copy constructor
+    Mission_Pawn_RenseignerSurPopulations& operator=( const Mission_Pawn_RenseignerSurPopulations& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_SecuriserZoneContreMenacesAsymetriques_h_
+#endif // __Mission_Pawn_RenseignerSurPopulations_h_

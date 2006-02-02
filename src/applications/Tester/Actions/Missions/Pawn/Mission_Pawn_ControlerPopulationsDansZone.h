@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_SecuriserPopulationDansZone_h_
-#define __Mission_Pawn_SecuriserPopulationDansZone_h_
+#ifndef __Mission_Pawn_ControlerPopulationsDansZone_h_
+#define __Mission_Pawn_ControlerPopulationsDansZone_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_SecuriserPopulationDansZone
-    @brief  Mission_Pawn_SecuriserPopulationDansZone
+/** @class  Mission_Pawn_ControlerPopulationsDansZone
+    @brief  Mission_Pawn_ControlerPopulationsDansZone
     @par    Using example
     @code
-    Mission_Pawn_SecuriserPopulationDansZone;
+    Mission_Pawn_ControlerPopulationsDansZone;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_SecuriserPopulationDansZone : public Mission_Pawn_ABC
+class Mission_Pawn_ControlerPopulationsDansZone : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_SecuriserPopulationDansZone( Pawn& target );
-    virtual ~Mission_Pawn_SecuriserPopulationDansZone();
+             Mission_Pawn_ControlerPopulationsDansZone( Pawn& target );
+    virtual ~Mission_Pawn_ControlerPopulationsDansZone();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_SecuriserPopulationDansZone( const Mission_Pawn_SecuriserPopulationDansZone& );            //!< Copy constructor
-    Mission_Pawn_SecuriserPopulationDansZone& operator=( const Mission_Pawn_SecuriserPopulationDansZone& ); //!< Assignment operator
+    Mission_Pawn_ControlerPopulationsDansZone( const Mission_Pawn_ControlerPopulationsDansZone& );            //!< Copy constructor
+    Mission_Pawn_ControlerPopulationsDansZone& operator=( const Mission_Pawn_ControlerPopulationsDansZone& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_SecuriserPopulationDansZone_h_
+#endif // __Mission_Pawn_ControlerPopulationsDansZone_h_

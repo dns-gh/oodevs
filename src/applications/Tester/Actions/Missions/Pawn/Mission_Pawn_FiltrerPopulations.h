@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_RenseignerSurPopulation_h_
-#define __Mission_Pawn_RenseignerSurPopulation_h_
+#ifndef __Mission_Pawn_FiltrerPopulations_h_
+#define __Mission_Pawn_FiltrerPopulations_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_RenseignerSurPopulation
-    @brief  Mission_Pawn_RenseignerSurPopulation
+/** @class  Mission_Pawn_FiltrerPopulations
+    @brief  Mission_Pawn_FiltrerPopulations
     @par    Using example
     @code
-    Mission_Pawn_RenseignerSurPopulation;
+    Mission_Pawn_FiltrerPopulations;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_RenseignerSurPopulation : public Mission_Pawn_ABC
+class Mission_Pawn_FiltrerPopulations : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_RenseignerSurPopulation( Pawn& target );
-    virtual ~Mission_Pawn_RenseignerSurPopulation();
+             Mission_Pawn_FiltrerPopulations( Pawn& target );
+    virtual ~Mission_Pawn_FiltrerPopulations();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_RenseignerSurPopulation( const Mission_Pawn_RenseignerSurPopulation& );            //!< Copy constructor
-    Mission_Pawn_RenseignerSurPopulation& operator=( const Mission_Pawn_RenseignerSurPopulation& ); //!< Assignment operator
+    Mission_Pawn_FiltrerPopulations( const Mission_Pawn_FiltrerPopulations& );            //!< Copy constructor
+    Mission_Pawn_FiltrerPopulations& operator=( const Mission_Pawn_FiltrerPopulations& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_RenseignerSurPopulation_h_
+#endif // __Mission_Pawn_FiltrerPopulations_h_

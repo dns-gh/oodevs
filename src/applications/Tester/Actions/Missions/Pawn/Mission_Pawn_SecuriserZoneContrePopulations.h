@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_FilterPopulation_h_
-#define __Mission_Pawn_FilterPopulation_h_
+#ifndef __Mission_Pawn_SecuriserZoneContrePopulations_h_
+#define __Mission_Pawn_SecuriserZoneContrePopulations_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_FilterPopulation
-    @brief  Mission_Pawn_FilterPopulation
+/** @class  Mission_Pawn_SecuriserZoneContrePopulations
+    @brief  Mission_Pawn_SecuriserZoneContrePopulations
     @par    Using example
     @code
-    Mission_Pawn_FilterPopulation;
+    Mission_Pawn_SecuriserZoneContrePopulations;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_FilterPopulation : public Mission_Pawn_ABC
+class Mission_Pawn_SecuriserZoneContrePopulations : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_FilterPopulation( Pawn& target );
-    virtual ~Mission_Pawn_FilterPopulation();
+             Mission_Pawn_SecuriserZoneContrePopulations( Pawn& target );
+    virtual ~Mission_Pawn_SecuriserZoneContrePopulations();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_FilterPopulation( const Mission_Pawn_FilterPopulation& );            //!< Copy constructor
-    Mission_Pawn_FilterPopulation& operator=( const Mission_Pawn_FilterPopulation& ); //!< Assignment operator
+    Mission_Pawn_SecuriserZoneContrePopulations( const Mission_Pawn_SecuriserZoneContrePopulations& );            //!< Copy constructor
+    Mission_Pawn_SecuriserZoneContrePopulations& operator=( const Mission_Pawn_SecuriserZoneContrePopulations& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_FilterPopulation_h_
+#endif // __Mission_Pawn_SecuriserZoneContrePopulations_h_

@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_CanaliserPopulation_h_
-#define __Mission_Pawn_CanaliserPopulation_h_
+#ifndef __Mission_Pawn_CanaliserPopulations_h_
+#define __Mission_Pawn_CanaliserPopulations_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_CanaliserPopulation
-    @brief  Mission_Pawn_CanaliserPopulation
+/** @class  Mission_Pawn_CanaliserPopulations
+    @brief  Mission_Pawn_CanaliserPopulations
     @par    Using example
     @code
-    Mission_Pawn_CanaliserPopulation;
+    Mission_Pawn_CanaliserPopulations;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_CanaliserPopulation : public Mission_Pawn_ABC
+class Mission_Pawn_CanaliserPopulations : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_CanaliserPopulation( Pawn& target );
-    virtual ~Mission_Pawn_CanaliserPopulation();
+             Mission_Pawn_CanaliserPopulations( Pawn& target );
+    virtual ~Mission_Pawn_CanaliserPopulations();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_CanaliserPopulation( const Mission_Pawn_CanaliserPopulation& );            //!< Copy constructor
-    Mission_Pawn_CanaliserPopulation& operator=( const Mission_Pawn_CanaliserPopulation& ); //!< Assignment operator
+    Mission_Pawn_CanaliserPopulations( const Mission_Pawn_CanaliserPopulations& );            //!< Copy constructor
+    Mission_Pawn_CanaliserPopulations& operator=( const Mission_Pawn_CanaliserPopulations& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_CanaliserPopulation_h_
+#endif // __Mission_Pawn_CanaliserPopulations_h_

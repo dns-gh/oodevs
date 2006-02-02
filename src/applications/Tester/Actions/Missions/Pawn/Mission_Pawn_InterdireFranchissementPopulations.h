@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_InterdireFranchissementPopulation_h_
-#define __Mission_Pawn_InterdireFranchissementPopulation_h_
+#ifndef __Mission_Pawn_InterdireFranchissementPopulations_h_
+#define __Mission_Pawn_InterdireFranchissementPopulations_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_InterdireFranchissementPopulation
-    @brief  Mission_Pawn_InterdireFranchissementPopulation
+/** @class  Mission_Pawn_InterdireFranchissementPopulations
+    @brief  Mission_Pawn_InterdireFranchissementPopulations
     @par    Using example
     @code
-    Mission_Pawn_InterdireFranchissementPopulation;
+    Mission_Pawn_InterdireFranchissementPopulations;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_InterdireFranchissementPopulation : public Mission_Pawn_ABC
+class Mission_Pawn_InterdireFranchissementPopulations : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_InterdireFranchissementPopulation( Pawn& target );
-    virtual ~Mission_Pawn_InterdireFranchissementPopulation();
+             Mission_Pawn_InterdireFranchissementPopulations( Pawn& target );
+    virtual ~Mission_Pawn_InterdireFranchissementPopulations();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_InterdireFranchissementPopulation( const Mission_Pawn_InterdireFranchissementPopulation& );            //!< Copy constructor
-    Mission_Pawn_InterdireFranchissementPopulation& operator=( const Mission_Pawn_InterdireFranchissementPopulation& ); //!< Assignment operator
+    Mission_Pawn_InterdireFranchissementPopulations( const Mission_Pawn_InterdireFranchissementPopulations& );            //!< Copy constructor
+    Mission_Pawn_InterdireFranchissementPopulations& operator=( const Mission_Pawn_InterdireFranchissementPopulations& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_InterdireFranchissementPopulation_h_
+#endif // __Mission_Pawn_InterdireFranchissementPopulations_h_
