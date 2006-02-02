@@ -10,7 +10,7 @@
 // *****************************************************************************
 
 #include "Missions_pch.h"
-#include "MIL_PionMission_CanaliserPopulation.h"
+#include "MIL_PionMission_SecuriserZoneContrePopulations.h"
 
 #include "MIL/Entities/Orders/Pion/MIL_PionOrderManager.h"
 #include "MIL/Entities/Orders/Pion/MIL_PionMissionType.h"
@@ -20,27 +20,27 @@
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_PionMission_CanaliserPopulation::nDIAZoneIdx_ = 0 ;
+int MIL_PionMission_SecuriserZoneContrePopulations::nDIAPointIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::InitializeDIA
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::InitializeDIA
 // Created: 
 //-----------------------------------------------------------------------------
 // static
-void MIL_PionMission_CanaliserPopulation::InitializeDIA( const MIL_PionMissionType& type )
+void MIL_PionMission_SecuriserZoneContrePopulations::InitializeDIA( const MIL_PionMissionType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
-    nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
+    nDIAPointIdx_ = DEC_Tools::InitializeDIAField( "point_", diaType );
 
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation constructor
+// Name: MIL_PionMission_SecuriserZoneContrePopulations constructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_PionMission_CanaliserPopulation::MIL_PionMission_CanaliserPopulation( MIL_AgentPion& pion, const MIL_PionMissionType& type )
+MIL_PionMission_SecuriserZoneContrePopulations::MIL_PionMission_SecuriserZoneContrePopulations( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
 {
     // NOTHING    
@@ -48,27 +48,27 @@ MIL_PionMission_CanaliserPopulation::MIL_PionMission_CanaliserPopulation( MIL_Ag
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation destructor
+// Name: MIL_PionMission_SecuriserZoneContrePopulations destructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_PionMission_CanaliserPopulation::~MIL_PionMission_CanaliserPopulation()
+MIL_PionMission_SecuriserZoneContrePopulations::~MIL_PionMission_SecuriserZoneContrePopulations()
 {
     // NOTHING
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::Initialize
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_PionMission_CanaliserPopulation::Initialize( const ASN1T_MsgPionOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_PionMission_SecuriserZoneContrePopulations::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_PionMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
-    const ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *asnMsg.mission.u.mission_pion_canaliser_population;
-    if( !NET_ASN_Tools::CopyLocation( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
+    const ASN1T_Mission_Pion_SecuriserZoneContrePopulations& asnMission = *asnMsg.mission.u.mission_pion_securiser_zone_contre_populations;
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point, GetVariable( nDIAPointIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -76,10 +76,10 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_CanaliserPopulation::Initialize( const 
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::Initialize
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-bool MIL_PionMission_CanaliserPopulation::Initialize( const MIL_AutomateMission_ABC& parentMission )
+bool MIL_PionMission_SecuriserZoneContrePopulations::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
@@ -89,25 +89,25 @@ bool MIL_PionMission_CanaliserPopulation::Initialize( const MIL_AutomateMission_
 }
 
 // ------------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::Initialize
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::Initialize
 // Created: 
 // -----------------------------------------------------------------------------
-bool MIL_PionMission_CanaliserPopulation::Initialize( MIL_PionMission_ABC& missionTmp )
+bool MIL_PionMission_SecuriserZoneContrePopulations::Initialize( MIL_PionMission_ABC& missionTmp )
 {
     if( !MIL_PionMission_ABC::Initialize( missionTmp ) )
         return false;
-    MIL_PionMission_CanaliserPopulation& mission = static_cast< MIL_PionMission_CanaliserPopulation& >( missionTmp );
+    MIL_PionMission_SecuriserZoneContrePopulations& mission = static_cast< MIL_PionMission_SecuriserZoneContrePopulations& >( missionTmp );
 
-    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), GetVariable( nDIAPointIdx_ ) );
 
     return true;
 }                                                                    
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::Terminate
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::Terminate
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_CanaliserPopulation::Terminate()
+void MIL_PionMission_SecuriserZoneContrePopulations::Terminate()
 {
     
     MIL_PionMission_ABC::Terminate();    
@@ -118,31 +118,31 @@ void MIL_PionMission_CanaliserPopulation::Terminate()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::Serialize
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_CanaliserPopulation::Serialize( ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionMission_SecuriserZoneContrePopulations::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
     MIL_PionMission_ABC::Serialize( asnMsg );
     
-    ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *new ASN1T_Mission_Pion_CanaliserPopulation();
-    asnMsg.mission.t                           = T_Mission_Pion_mission_pion_canaliser_population;
-    asnMsg.mission.u.mission_pion_canaliser_population  = &asnMission;
+    ASN1T_Mission_Pion_SecuriserZoneContrePopulations& asnMission = *new ASN1T_Mission_Pion_SecuriserZoneContrePopulations();
+    asnMsg.mission.t                           = T_Mission_Pion_mission_pion_securiser_zone_contre_populations;
+    asnMsg.mission.u.mission_pion_securiser_zone_contre_populations  = &asnMission;
 
-    NET_ASN_Tools::CopyLocation( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
+    NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointIdx_ ), asnMission.point );
 
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulation::CleanAfterSerialization
+// Name: MIL_PionMission_SecuriserZoneContrePopulations::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_CanaliserPopulation::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionMission_SecuriserZoneContrePopulations::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
-    assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_canaliser_population );
-    ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *asnMsg.mission.u.mission_pion_canaliser_population;
+    assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_securiser_zone_contre_populations );
+    ASN1T_Mission_Pion_SecuriserZoneContrePopulations& asnMission = *asnMsg.mission.u.mission_pion_securiser_zone_contre_populations;
 
-    NET_ASN_Tools::Delete( asnMission.zone );
+    NET_ASN_Tools::Delete( asnMission.point );
 
     delete &asnMission;
 

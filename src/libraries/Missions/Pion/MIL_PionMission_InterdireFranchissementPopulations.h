@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_FilterPopulation_h_
-#define __MIL_PionMission_FilterPopulation_h_
+#ifndef __MIL_PionMission_InterdireFranchissementPopulations_h_
+#define __MIL_PionMission_InterdireFranchissementPopulations_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_FilterPopulation: public MIL_PionMission_ABC
+class MIL_PionMission_InterdireFranchissementPopulations: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_FilterPopulation )
+    MT_COPYNOTALLOWED( MIL_PionMission_InterdireFranchissementPopulations )
 
 public:
 
-             MIL_PionMission_FilterPopulation( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_FilterPopulation();
+             MIL_PionMission_InterdireFranchissementPopulations( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_InterdireFranchissementPopulations();
 
     //! @name Init
     //@{
@@ -48,4 +48,4 @@ private:
 };
 
 
-#endif // __MIL_PionMission_FilterPopulation_h_
+#endif // __MIL_PionMission_InterdireFranchissementPopulations_h_

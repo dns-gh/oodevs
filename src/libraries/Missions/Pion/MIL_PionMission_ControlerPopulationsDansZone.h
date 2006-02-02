@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_SecuriserZoneContreMenacesAsymetriques_h_
-#define __MIL_PionMission_SecuriserZoneContreMenacesAsymetriques_h_
+#ifndef __MIL_PionMission_ControlerPopulationsDansZone_h_
+#define __MIL_PionMission_ControlerPopulationsDansZone_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_SecuriserZoneContreMenacesAsymetriques: public MIL_PionMission_ABC
+class MIL_PionMission_ControlerPopulationsDansZone: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_SecuriserZoneContreMenacesAsymetriques )
+    MT_COPYNOTALLOWED( MIL_PionMission_ControlerPopulationsDansZone )
 
 public:
 
-             MIL_PionMission_SecuriserZoneContreMenacesAsymetriques( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_SecuriserZoneContreMenacesAsymetriques();
+             MIL_PionMission_ControlerPopulationsDansZone( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_ControlerPopulationsDansZone();
 
     //! @name Init
     //@{
@@ -48,4 +48,4 @@ private:
 };
 
 
-#endif // __MIL_PionMission_SecuriserZoneContreMenacesAsymetriques_h_
+#endif // __MIL_PionMission_ControlerPopulationsDansZone_h_

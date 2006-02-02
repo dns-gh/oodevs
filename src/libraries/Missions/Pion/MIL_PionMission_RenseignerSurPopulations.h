@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_InterdireFranchissementPopulation_h_
-#define __MIL_PionMission_InterdireFranchissementPopulation_h_
+#ifndef __MIL_PionMission_RenseignerSurPopulations_h_
+#define __MIL_PionMission_RenseignerSurPopulations_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_InterdireFranchissementPopulation: public MIL_PionMission_ABC
+class MIL_PionMission_RenseignerSurPopulations: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_InterdireFranchissementPopulation )
+    MT_COPYNOTALLOWED( MIL_PionMission_RenseignerSurPopulations )
 
 public:
 
-             MIL_PionMission_InterdireFranchissementPopulation( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_InterdireFranchissementPopulation();
+             MIL_PionMission_RenseignerSurPopulations( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_RenseignerSurPopulations();
 
     //! @name Init
     //@{
@@ -43,9 +43,9 @@ public:
     //@}
 
 private:
-    static int nDIALigneIdx_;
+    static int nDIAPointIdx_;
 
 };
 
 
-#endif // __MIL_PionMission_InterdireFranchissementPopulation_h_
+#endif // __MIL_PionMission_RenseignerSurPopulations_h_

@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_RenseignerSurPopulation_h_
-#define __MIL_PionMission_RenseignerSurPopulation_h_
+#ifndef __MIL_PionMission_CanaliserPopulations_h_
+#define __MIL_PionMission_CanaliserPopulations_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_RenseignerSurPopulation: public MIL_PionMission_ABC
+class MIL_PionMission_CanaliserPopulations: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_RenseignerSurPopulation )
+    MT_COPYNOTALLOWED( MIL_PionMission_CanaliserPopulations )
 
 public:
 
-             MIL_PionMission_RenseignerSurPopulation( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_RenseignerSurPopulation();
+             MIL_PionMission_CanaliserPopulations( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_CanaliserPopulations();
 
     //! @name Init
     //@{
@@ -43,9 +43,9 @@ public:
     //@}
 
 private:
-    static int nDIAPointIdx_;
+    static int nDIAZoneIdx_;
 
 };
 
 
-#endif // __MIL_PionMission_RenseignerSurPopulation_h_
+#endif // __MIL_PionMission_CanaliserPopulations_h_
