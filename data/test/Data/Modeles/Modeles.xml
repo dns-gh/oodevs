@@ -58,7 +58,7 @@
         <Mission nom="Pion Test Reinforce"/>
         <Mission nom="Pion Test Fire"/>
         <Mission nom="Pion ALAT Freiner"/>
-        <Mission nom="Pion CanaliserPopulation"/>
+        <Mission nom="Pion CanaliserPopulations"/>
       </Missions>
     </Modele>
     <Modele nom="Pion Test 2">

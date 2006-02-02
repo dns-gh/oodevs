@@ -88,11 +88,11 @@
                 </Tireur>
                 <Cible>
 	          <ReglesEngagementTireur>
-	            <RegleEngagementTireur nom="emploi de la force interdit">
+	            <RegleEngagementTireur nom="emploi force interdit">
 	              <SurfaceAttrition>0.1</SurfaceAttrition>
 	              <PH>0</PH>
 	            </RegleEngagementTireur>
-	            <RegleEngagementTireur nom="dispersion autorisee par moyens de defense actifs">
+	            <RegleEngagementTireur nom="dispersion par moyens de defense actifs">
 	              <SurfaceAttrition>0.1</SurfaceAttrition>
 	              <PH>0</PH>
 	            </RegleEngagementTireur>
