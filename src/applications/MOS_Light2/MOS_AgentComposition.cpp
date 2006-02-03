@@ -151,9 +151,7 @@ void MOS_AgentComposition::SetResources( const ASN1T_MsgUnitDotations& asnMsg )
         MIL_AgentID equipId = value.ressource_id;
         uint qty = value.quantite_disponible;
         resources_[ equipId ] = qty;
-        if(    MOS_App::GetApp().GetResourceName( equipId ) == "essence"
-            || MOS_App::GetApp().GetResourceName( equipId ) == "gasoil"
-            || MOS_App::GetApp().GetResourceName( equipId ) == "kerosene" )    //$$$ It should be the server's job to tell us that the unit is out of gas.
+        if( MOS_App::GetApp().GetResource( equipId ).GetDotationName() == "carburant" )
             bEmptyGasTank_ = (qty == 0);
     }
 }

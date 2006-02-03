@@ -2531,7 +2531,7 @@ void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
 {
     GFX_Color color = MOS_GLTool::GetColorForTeam( agent.GetTeam() );
     color.AddRGB( 20, 20, 20 );
-    color.SetAlpha( 0.5 );
+    color.SetAlpha( 0.4 );
     GFX_Color lightColor = color;
     lightColor.AddRGB( 100, 100, 100 );
     
