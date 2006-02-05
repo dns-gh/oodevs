@@ -158,7 +158,7 @@ signatures
     B                                       A::DEC_Agent_TransporteursPret               ();
     I /*E_EtatROEPopulation*/               A::DEC_Agent_RoePopulation                   ();
     R /* ratio alive/total */               A::DEC_Agent_OfficiersTues                   ();
-    V                                       A::DEC_Agent_CanaliserPopulation             ( U /*T_Point*/ );
+    V                                       A::DEC_Agent_CanaliserPopulation             ( U /*T_Localisation*/ );
                                             
     // Effets population
     V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();

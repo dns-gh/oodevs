@@ -90,10 +90,10 @@ typedef enum E_EtatROE
 typedef enum E_EtatROEPopulation
 {
     eEtatROEPopulation_None,
-    eEtatROEPopulation_TirInterdit,
-    eEtatROEPopulation_TirSommation,
-    eEtatROEPopulation_TirDissuasion,
-    eEtatROEPopulation_TirNeutralisation    
+    eEtatROEPopulation_EmploiForceInterdit,
+    eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux,
+    eEtatROEPopulation_DispersionParMoyensDeDefenseActifs,
+    eEtatROEPopulation_ArmesLetalesAutorisees    
 };
 
 typedef enum E_AttitudePopulation
