@@ -124,6 +124,7 @@ void PHY_ActionMove::AvoidObstacles()
     }
     else
     {
+        assert( pMainPath_ );
         DEC_Agent_Path* pNewMainPath = new DEC_Agent_Path( *pMainPath_ );
         pNewMainPath->IncRef();
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pNewMainPath ); // $$$ à déplacer dans DEC_Agent_Path::Initialize()
@@ -152,6 +153,8 @@ void PHY_ActionMove::Execute()
         return;
     }
 
+    AvoidObstacles();
+    
     DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
     int nReturn = role_.Move( *pCurrentPath );
 
@@ -171,7 +174,6 @@ void PHY_ActionMove::Execute()
         nReturn      = DEC_PathWalker::eRunning;
     }
 
-    AvoidObstacles();
     diaReturnCode_.SetValue( nReturn );
 }
 

@@ -348,6 +348,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
         return true;
 
     assert( rCurrentSpeed_ > 0. );
+//    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );    
     bool bFirstMove = ( vNewPos_ == (*path.GetResult().begin())->GetPos() );
 
 	sMoveStepCmp  cmp( vNewPos_ );
