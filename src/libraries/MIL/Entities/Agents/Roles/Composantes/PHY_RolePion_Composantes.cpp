@@ -77,7 +77,7 @@ bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes(
 // Name: PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-template< typename Archive > 
+template< typename Archive >
 void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& file, const uint )
 {
     file & nbrsPerState_
@@ -164,15 +164,15 @@ namespace boost
         {
             split_free( file, vector, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_ComposantePionVector& vector, const uint )
         {
             file << vector.size();
-            for ( PHY_RolePion_Composantes::CIT_ComposantePionVector it = vector.begin(); it != vector.end(); ++it )
+            for(  PHY_RolePion_Composantes::CIT_ComposantePionVector it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
         }
-    
+
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Composantes::T_ComposantePionVector& vector, const uint )
         {
@@ -185,19 +185,19 @@ namespace boost
                 vector.push_back( pComp );
             }
         }
-    
+
         template< typename Archive >
         inline
         void serialize( Archive& file, PHY_RolePion_Composantes::T_LentComposanteMap& map, const uint nVersion )
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_LentComposanteMap& map, const uint )
         {
             file << map.size();
-            for ( PHY_RolePion_Composantes::CIT_LentComposanteMap it = map.begin(); it != map.end(); ++it )
+            for(  PHY_RolePion_Composantes::CIT_LentComposanteMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 file << it->second;
@@ -223,18 +223,18 @@ namespace boost
         {
             split_free( file, map, nVersion );
         }
-        
+
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const uint )
         {
             file << map.size();
-            for ( PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
+            for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first->GetMosID();
                 file << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const uint )
         {
@@ -265,10 +265,10 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
          & composanteTypes_
          & nNbrComposanteChanged_
          & nNbrUsableComposantes_
-         & nNbrUndamagedMajorComposantes_ 
+         & nNbrUndamagedMajorComposantes_
          & nNbrUndamagedNonMajorComposantes_
-         & nNbrMajorComposantes_            
-         & nNbrNonMajorComposantes_         
+         & nNbrMajorComposantes_
+         & nNbrNonMajorComposantes_
          & rOperationalState_
          & rMajorOperationalState_
          & pMajorComposante_
@@ -303,9 +303,9 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 
         while( nNbr-- )
         {
-            if(  (*itCurrentComp)->ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
+            if( (*itCurrentComp)->ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
             {
-                if(  ++itCurrentComp == composantes_.end() )
+                if( ++itCurrentComp == composantes_.end() )
                     itCurrentComp = composantes_.begin();
             }
             else
@@ -328,7 +328,7 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
     while( nNbr )
     {
         nNbr -= (*itCurrentComp)->WoundHumans( rank, nNbr, newWound );
-        if(  ++itCurrentComp == composantes_.end() )
+        if( ++itCurrentComp == composantes_.end() )
             itCurrentComp = composantes_.begin();
         if( itCurrentComp == itEndComp && nNbr > 0 )
         {
@@ -344,7 +344,7 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& archive )
 {
-    if(  !archive.BeginList( "Equipements", MIL_InputArchive::eNothing ) )
+    if( !archive.BeginList( "Equipements", MIL_InputArchive::eNothing ) )
         return;
 
     while( archive.NextListElement() )
@@ -384,7 +384,7 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& arc
             else
                 break;
         }
-        
+
         if( nNbrDead || nNbrRepairable )
             MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the composantes states overloading specified in ODB" );
 
@@ -399,7 +399,7 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& arc
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadHumansOverloading( MIL_InputArchive& archive )
 {
-    if(  !archive.BeginList( "Personnels", MIL_InputArchive::eNothing ) )
+    if( !archive.BeginList( "Personnels", MIL_InputArchive::eNothing ) )
         return;
 
     CIT_ComposantePionVector itCurrentComp = composantes_.begin();
@@ -457,7 +457,7 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
         const PHY_ComposantePion& composante = **it;
         if( composante.GetType() != composanteType )
             continue;
-        
+
         ++ nNbrComposantes;
         if( composante.GetState() == PHY_ComposanteState::undamaged_ )
             ++ nNbrUndamagedComposantes;
@@ -582,7 +582,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         rMajorOperationalState_ = rRatioMajorComposantes;
         rNewOpState             = rRatioMajorComposantes    * rOpStateWeightMajorComposante_
                                 + rRatioNonMajorComposantes * rOpStateWeightNonMajorComposante_;
-    }    
+    }
 
     // Impact des humains sur état ops
     if( GetRole< PHY_RolePion_Humans >().GetNbrHumans() > 0 )
@@ -752,7 +752,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
-    assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );  
+    assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     UpdateDataWhenComposanteRemoved( composante.GetState(), composante.IsMajor(), composanteTypes_[ &composante.GetType() ] );
 
     IT_ComposantePionVector it = std::find( composantes_.begin(), composantes_.end(), &composante );
@@ -801,7 +801,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
     assert( pPion_ );
     if( !IsUsable() )
     {
-        pPion_->MagicMove( pPion_->GetAutomate().GetAlivePionsBarycenter() );   
+        pPion_->MagicMove( pPion_->GetAutomate().GetAlivePionsBarycenter() );
         MIL_RC::pRcANouveauDisponibleApresReparation_->Send( *pPion_, MIL_RC::eRcTypeOperational );
     }
 }
@@ -965,7 +965,7 @@ void PHY_RolePion_Composantes::ApplyExplosion( const MIL_RealObjectType& objectT
 void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
     assert( pPion_ );
-    
+
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *pPion_ );
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
@@ -1143,66 +1143,6 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& 
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetHaulersUse
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetHaulersUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanHaul() && (**itComposante).GetState().IsUsable() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanHaul() )
-                ++ data.nNbrUsed_;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetRepairersUse
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanRepair() && (**itComposante).GetState().IsUsable() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanRepair() )
-                ++ data.nNbrUsed_;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetRepairersUse
-// Created: NLD 2005-11-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse, const PHY_Breakdown& breakdown ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanRepair( breakdown ) && (**itComposante).GetState().IsUsable() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanRepair( breakdown ) )
-                ++ data.nNbrUsed_;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::SendLogisticChangedState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
@@ -1227,9 +1167,9 @@ void PHY_RolePion_Composantes::SendLogisticFullState() const
 // Created: NLD 2005-01-18
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendFullLends( NET_ASN_MsgUnitDotations& asn ) const
-{    
+{
     asn.GetAsnMsg().m.prets_equipementPresent = 1;
- 
+
     typedef std::pair< const MIL_AgentPion*, const PHY_ComposanteTypePion* > T_Key;
     typedef std::map < T_Key, uint >                                         T_LentMap;
     typedef T_LentMap::const_iterator                                        CIT_LentMap;
@@ -1266,7 +1206,7 @@ void PHY_RolePion_Composantes::SendFullLends( NET_ASN_MsgUnitDotations& asn ) co
 // Created: NLD 2005-01-18
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedLends( NET_ASN_MsgUnitDotations& asn ) const
-{    
+{
     // Prets
     if( bLendsChanged_ )
         SendFullLends( asn );
@@ -1429,7 +1369,7 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agen
         return std::numeric_limits< MT_Float >::max();
 
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
-    for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for(  CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         rRange = std::min( rRange, (**it).GetMinRangeToFireOn( *pTargetComposante, rWantedPH ) );
     return rRange;
 }
@@ -1463,7 +1403,7 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_K
         return std::numeric_limits< MT_Float >::max();
 
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
-    for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         rRange = std::min( rRange, (**it).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
@@ -1476,7 +1416,7 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_Indirect
 {
     MT_Float rRange = -1.;
 
-    for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( ammoClass, bCheckDotationsAvailability ) );
     return rRange;
 }
@@ -1489,7 +1429,7 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_Indirect
 {
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
 
-    for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( ammoClass, bCheckDotationsAvailability ) );
     return rRange;
 }
@@ -1501,8 +1441,8 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_Indirect
 MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& target ) const
 {
     assert( pPion_ );
-    
-    if(     pPion_->GetArmy().IsAFriend( target ) == eTristate_True 
+
+    if( pPion_->GetArmy().IsAFriend( target ) == eTristate_True
         ||  pPion_->GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
         return 0.;
 
@@ -1517,8 +1457,8 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
     const PHY_RolePion_Location& myLocation = GetRole< PHY_RolePion_Location >();
     const MT_Vector3D sourcePosition( myLocation.GetPosition().rX_, myLocation.GetPosition().rY_, myLocation.GetAltitude() );
     const MT_Vector3D targetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
-    const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition ); 
-    
+    const MT_Float    rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
+
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
         rDangerosity = std::max( rDangerosity, (**itComposante).GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
 
@@ -1555,7 +1495,7 @@ void PHY_RolePion_Composantes::PreprocessRandomBreakdowns( uint nEndDayTimeStep 
 PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante )
 {
     assert( pPion_ );
-    
+
     MIL_AutomateLOG* pTC2 = pPion_->GetAutomate().GetTC2();
     if( !pTC2 )
         return 0;
@@ -1653,6 +1593,78 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableRepairer( const PHY_Br
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetHaulersUse
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetHaulersUse( T_ComposanteUseMap& composanteUse ) const
+{
+    composanteUse.clear();
+    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        if( (**itComposante).GetType().CanHaul() )
+        {
+            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
+
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanHaul() )
+                    ++ data.nNbrUsed_;
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetRepairersUse
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse ) const
+{
+    composanteUse.clear();
+    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        if( (**itComposante).GetType().CanRepair() )
+        {
+            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
+
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanRepair() )
+                    ++ data.nNbrUsed_;
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetRepairersUse
+// Created: NLD 2005-11-18
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse, const PHY_Breakdown& breakdown ) const
+{
+    composanteUse.clear();
+    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        if( (**itComposante).GetType().CanRepair( breakdown ) )
+        {
+            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
+
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanRepair( breakdown ) )
+                    ++ data.nNbrUsed_;
+            }
+        }
+    }
+}
+
 // =============================================================================
 // LOGISTIC - MEDICAL
 // =============================================================================
@@ -1745,13 +1757,17 @@ void PHY_RolePion_Composantes::GetEvacuationAmbulancesUse( T_ComposanteUseMap& c
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanEvacuateCasualties() && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanEvacuateCasualties() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanEvacuateCasualties() )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanEvacuateCasualties() )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }
@@ -1793,13 +1809,17 @@ void PHY_RolePion_Composantes::GetCollectionAmbulancesUse( T_ComposanteUseMap& c
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanCollectCasualties() && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanCollectCasualties() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanCollectCasualties() )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {   
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanCollectCasualties() )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }
@@ -1827,13 +1847,17 @@ void PHY_RolePion_Composantes::GetDoctorsUse( T_ComposanteUseMap& composanteUse 
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanDiagnoseHumans() && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanDiagnoseHumans() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanDiagnoseHumans() )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanDiagnoseHumans() )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }
@@ -1875,13 +1899,17 @@ void PHY_RolePion_Composantes::GetDoctorsUseForSorting( T_ComposanteUseMap& comp
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanSortHumans() && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanSortHumans() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanSortHumans() )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanSortHumans() )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }
@@ -1937,13 +1965,17 @@ void PHY_RolePion_Composantes::GetDoctorsUseForHealing( T_ComposanteUseMap& comp
      composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanHealHuman( human ) && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanHealHuman( human )  )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanHealHuman( human ) )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanHealHuman( human ) )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }
@@ -1980,7 +2012,7 @@ void PHY_RolePion_Composantes::UndoLendComposante( PHY_RolePion_Composantes& rol
     composante.TransfertComposante( *this );
 
     lentComps.erase( itComp );
-    if ( lentComps.empty() )
+    if( lentComps.empty() )
         lentComposantes_.erase( lentComposantes_.find( &role ) );
     bLendsChanged_ = true;
 }
@@ -1992,14 +2024,14 @@ void PHY_RolePion_Composantes::UndoLendComposante( PHY_RolePion_Composantes& rol
 uint PHY_RolePion_Composantes::LendCollectionComposantes( PHY_RolePion_Composantes& newRole, uint nNbr )
 {
     uint nNbrDone = 0;
-    
-    for ( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr && composantes_.size() > 1; )
+
+    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr && composantes_.size() > 1; )
     {
         assert( *it );
-        
+
         PHY_ComposantePion& composante = **it;
-        
-        if ( composante.CanBeLent() && composante.CanCollectCasualties() )
+
+        if( composante.CanBeLent() && composante.CanCollectCasualties() )
         {
             ++nNbrDone;
             lentComposantes_[ &newRole ].push_back( &composante );
@@ -2010,7 +2042,7 @@ uint PHY_RolePion_Composantes::LendCollectionComposantes( PHY_RolePion_Composant
             ++it;
     }
     if( nNbrDone > 0 )
-        bLendsChanged_ = true;   
+        bLendsChanged_ = true;
     return nNbrDone;
 }
 
@@ -2022,17 +2054,17 @@ uint PHY_RolePion_Composantes::GetLendCollectionComposantesTime( PHY_RolePion_Co
 {
     uint nNbrDone = 0;
     uint nTime    = 0;
-    
+
     const MT_Vector2D& srcPos  =         GetRole< PHY_RolePion_Location >().GetPosition();
     const MT_Vector2D& destPos = newRole.GetRole< PHY_RolePion_Location >().GetPosition();
-    
-    for ( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
+
+    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         assert( *it );
-        
+
         PHY_ComposantePion& composante = **it;
-        
-        if ( composante.CanBeLent() && composante.CanCollectCasualties() )
+
+        if( composante.CanBeLent() && composante.CanCollectCasualties() )
         {
             ++nNbrDone;
             nTime = std::max( nTime, composante.ApproximateTravelTime( srcPos, destPos ) );
@@ -2049,15 +2081,15 @@ uint PHY_RolePion_Composantes::UndoLendCollectionComposantes( PHY_RolePion_Compo
 {
     T_ComposantePionVector& lentComps = lentComposantes_[ &role ];
 
-    const uint nNbrDone = std::min( nNbr, lentComps.size() );    
-    
-    for ( CIT_ComposantePionVector it = lentComps.end() - nNbrDone; it != lentComps.end(); ++it )
+    const uint nNbrDone = std::min( nNbr, lentComps.size() );
+
+    for( CIT_ComposantePionVector it = lentComps.end() - nNbrDone; it != lentComps.end(); ++it )
         (*it)->TransfertComposante( *this );
-        
+
     lentComps.erase( lentComps.end() - nNbrDone, lentComps.end() );
-    if ( lentComps.empty() )
+    if( lentComps.empty() )
         lentComposantes_.erase( lentComposantes_.find( &role ) );
-        
+
     if( nNbrDone > 0 )
         bLendsChanged_ = true;
     return nNbrDone;
@@ -2090,13 +2122,17 @@ void PHY_RolePion_Composantes::GetConvoyTransporters( T_ComposanteUseMap& compos
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanConvoyTransport() && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanConvoyTransport()  )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanConvoyTransport() )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanConvoyTransport() )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }
@@ -2125,13 +2161,17 @@ void PHY_RolePion_Composantes::GetConvoyCommanders( T_ComposanteUseMap& composan
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanConvoyCommand() && (**itComposante).GetState().IsUsable() )
+        if( (**itComposante).GetType().CanConvoyCommand() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+            ++ data.nNbrTotal_;
 
-            ++ data.nNbrAvailable_;
-            if( !(**itComposante).CanConvoyCommand() )
-                ++ data.nNbrUsed_;
+            if( (**itComposante).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**itComposante).CanConvoyCommand() )
+                    ++ data.nNbrUsed_;
+            }
         }
     }
 }

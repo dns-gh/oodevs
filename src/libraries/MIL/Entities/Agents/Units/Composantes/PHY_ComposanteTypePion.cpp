@@ -1057,21 +1057,21 @@ uint PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) const
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
 {
-    if ( human.IsContaminated() )
+    if( human.IsContaminated() )
     {
         assert( bCanHealContaminated_  );
         human.HealContamination();
         return;
     }
 
-    if ( human.IsWounded() )
+    if( human.IsWounded() )
     {
         assert( woundHealingCapabilities_[ human.GetWound().GetID() ] );
         human.HealWound();
         return;
     }
 
-    if ( human.IsMentalDiseased() )
+    if( human.IsMentalDiseased() )
     {
         assert( bCanHealMentalDiseases_ );
         human.HealMentalDisease();

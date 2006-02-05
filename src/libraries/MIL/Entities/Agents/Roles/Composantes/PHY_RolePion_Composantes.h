@@ -51,6 +51,7 @@ public:
     {
         uint nNbrAvailable_;
         uint nNbrUsed_;
+        uint nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
     };
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;

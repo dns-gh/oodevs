@@ -316,8 +316,8 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
 
     UpdatePerceptionSources( perception );
 
-    // CRs auto
-    if( bMaxPerceptionLevelUpdated_ )
+    // CRs auto - $$$$ IDEE STUPIDE DSRO - A VIRER UN JOUR
+    if( bMaxPerceptionLevelUpdated_ && !IsDead() )
     {
         if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
             MIL_RC::pRcUniteDetectee_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );

@@ -48,6 +48,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
 // Name: PHY_ComposantePion::CheckViability
 // Created: NLD 2005-08-08
 // -----------------------------------------------------------------------------
+inline
 void PHY_ComposantePion::CheckViability()
 {
     assert( pRole_ );

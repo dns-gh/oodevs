@@ -758,8 +758,9 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
     {
         ASN1T_SanteDisponibiliteMoyens& data = pData[ i++ ];
         data.type_equipement           = itData->first->GetMosID();
-        assert( itData->second.nNbrAvailable_ );
-        data.pourcentage_disponibilite = 100 - (uint)( itData->second.nNbrUsed_ * 100. / itData->second.nNbrAvailable_ );
+        assert( itData->second.nNbrTotal_ );
+        const uint nNbrUsable = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
+        data.pourcentage_disponibilite = (uint)( nNbrUsable * 100. / itData->second.nNbrTotal_ );
     }
     asn.elem = pData;
 }
