@@ -206,12 +206,9 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             if( knowledge.GetLocalisation().Intersect2D( lineTmp, collisions ) )
             {
                 assert( !collisions.empty() );
-                if( !knowledge.GetLocalisation().IsInside( vStartPos ) )
-                {
-                    //$$$ Distance fausse (distance en ligne droite)
-                    const MT_Float rColDist = vStartPos.Distance( *collisions.begin() );
-                    objectsOnPathMap.insert( std::make_pair( rColDist, &knowledge ) );
-                }
+                //$$$ Distance fausse (distance en ligne droite)
+                const MT_Float rColDist = vStartPos.Distance( *collisions.begin() );
+                objectsOnPathMap.insert( std::make_pair( rColDist, &knowledge ) );
                 break;
             }
             pPrevPos = &(*itPathPoint)->GetPos();
