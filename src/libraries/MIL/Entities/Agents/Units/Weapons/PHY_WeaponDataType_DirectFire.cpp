@@ -326,7 +326,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_PopulationEl
 
     uint               nHit = 0;
     for( uint i = 1; i <= nNbrAmmoReserved; ++i )
-        if( randomGenerator_.rand_oi() > rPH )
+        if( randomGenerator_.rand_oi() <= rPH )
             ++nHit;
 
     MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
