@@ -350,6 +350,8 @@ void MOS_MainWindow::OnConnexionStatusChanged( bool b )
         pLagTimer_->stop();
         pTickLabel_->setPixmap( MAKE_PIXMAP( tickoff ) );
         pTimeLabel_->setText( "---" );
+
+//        pOptions_
     }
     else
     {

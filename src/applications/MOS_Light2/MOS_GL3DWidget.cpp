@@ -49,6 +49,7 @@ MOS_GL3DWidget::MOS_GL3DWidget( QWidget* pParent )
     , rMetersPerPixel_( 100 )  // $$$$ AGE 2005-05-19: 
     , viewport_( -std::numeric_limits< MT_Float >::infinity(), -std::numeric_limits< MT_Float >::infinity(), 
                   std::numeric_limits< MT_Float >::infinity(),  std::numeric_limits< MT_Float >::infinity() )
+    , nRulerState_      ( eNone )
 {
     SetZRatio( rZFactor_ );
 

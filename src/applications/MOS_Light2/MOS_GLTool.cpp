@@ -407,9 +407,12 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     // otherwise most knowledges and agents would overlap)
     if( nPlayedTeam != MOS_Options::eController )
     {
-        const MOS_Team& team = *manager.FindTeamFromIdx( nPlayedTeam );
-        for( MOS_Team::CIT_GtiaMap itGtia = team.gtias_.begin(); itGtia != team.gtias_.end(); ++itGtia )
-            Draw( *(itGtia->second) );
+        const MOS_Team* pTeam = manager.FindTeamFromIdx( nPlayedTeam );
+        if( pTeam )
+        {
+            for( MOS_Team::CIT_GtiaMap itGtia = pTeam->gtias_.begin(); itGtia != pTeam->gtias_.end(); ++itGtia )
+                Draw( *(itGtia->second) );
+        }
     }
 
     // Draw all agents. Selected / highlighted agents are redrawn on top by the selection

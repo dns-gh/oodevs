@@ -95,6 +95,7 @@ void MOS_ControllerToolbar::OnTeamChanged( int nValue )
 // -----------------------------------------------------------------------------
 void MOS_ControllerToolbar::OnTeamCreated( MOS_Team& team )
 {
+    MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = MOS_Options::eController;
     pTeamCombo_->insertItem( team.GetName().c_str(), team.GetIdx() + 1 );
 }
 
@@ -104,6 +105,7 @@ void MOS_ControllerToolbar::OnTeamCreated( MOS_Team& team )
 // -----------------------------------------------------------------------------
 void MOS_ControllerToolbar::OnTeamDeleted( MOS_Team& team )
 {
+    MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = MOS_Options::eController;
     int nIndex = 0;
     while( nIndex < pTeamCombo_->count() && pTeamCombo_->text( nIndex ) != team.GetName().c_str() )
         ++nIndex;

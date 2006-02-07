@@ -14,7 +14,6 @@
 #include "PHY_StockConvoy.h"
 #include "PHY_SupplyStockConsign.h"
 #include "PHY_Conveyor.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
@@ -69,7 +68,7 @@ PHY_StockConvoy::~PHY_StockConvoy()
         pCommanderPion_->GetRole< PHY_RolePion_Supply      >().StartUsingForLogistic( *pCommanderComp_ );
 
         pPionConvoy_->GetRole< PHY_RolePion_Supply >().UnassignConvoy( *this );
-        MIL_AgentServer::GetWorkspace().GetEntityManager().DestroyPion( *pPionConvoy_ );
+        pPionConvoy_->GetAutomate().DestroyPion( *pPionConvoy_ );
     }
 }
 
@@ -119,7 +118,7 @@ bool PHY_StockConvoy::Form()
     assert( !pPionConvoy_ );
     assert( pConsign_ );
     
-    pPionConvoy_ = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate(), pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() );
+    pPionConvoy_ = &pConsign_->GetConvoyingAutomate().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() );
     pPionConvoy_->GetRole< PHY_RolePion_Supply >().AssignConvoy( *this );
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
         it->second->LendTo( *pPionConvoy_ );

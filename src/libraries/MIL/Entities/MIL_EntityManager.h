@@ -137,7 +137,6 @@ public:
     //! @name Dynamic pions
     //@{
     MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
-    void           DestroyPion( MIL_AgentPion& pion );
     //@}
 
     //! @name Population channeling
@@ -205,8 +204,6 @@ private:
     T_PionMap       pions_;   // Contient le pion PC
     T_AutomateMap   automates_;
     T_PopulationMap populations_;
-
-    T_PionVector  recycledPions_;
 
     // Profiling
     MT_Profiler   profiler_;

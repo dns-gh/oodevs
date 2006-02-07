@@ -783,18 +783,6 @@ void MIL_EntityManager::Clean()
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
-    {
-        MIL_AgentPion& pion = **it;
-        if( pion.GetType() == type )
-        {
-            recycledPions_.erase( it.base() - 1 );
-            pion.ChangeAutomate( automate );
-            pion.GetRole< PHY_RolePion_Location >().MagicMove( vPosition );
-            return pion;
-        }
-    }
-
     MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::units_.GetFreeSimID(), automate, vPosition );
     assert( pions_[ pion.GetID() ] == 0 );
     pions_[ pion.GetID() ] = &pion;
@@ -806,16 +794,6 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
     pion.SendFullState();
     pion.SendKnowledge();
     return pion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::DestroyPion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::DestroyPion( MIL_AgentPion& pion )
-{
-    assert( pion.IsDead() );
-    recycledPions_.push_back( &pion );
 }
 
 // =============================================================================
@@ -1179,7 +1157,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> automates_
          >> populations_
          >> pObjectManager_
-         >> recycledPions_
          >> rKnowledgesTime_
          >> rDecisionsTime_
          >> rActionsTime_
@@ -1200,7 +1177,6 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          << automates_
          << populations_
          << pObjectManager_
-         << recycledPions_ 
          << rKnowledgesTime_
          << rDecisionsTime_
          << rActionsTime_

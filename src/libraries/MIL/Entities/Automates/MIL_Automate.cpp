@@ -36,17 +36,14 @@
 #include "Entities/RC/MIL_RC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
-
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
-
 #include "Decision/DEC_ModelAutomate.h"
-
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_AutomateQuerier.h"
-
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 
@@ -211,6 +208,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> pDecision_
          >> pPionPC_
          >> pions_
+         >> recycledPions_
          >> bAutomateModeChanged_
          >> bDotationSupplyNeeded_
          >> bDotationSupplyExplicitlyRequested_
@@ -258,6 +256,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pDecision_
          << pPionPC_
          << pions_
+         << recycledPions_
          << bAutomateModeChanged_
          << bDotationSupplyNeeded_
          << bDotationSupplyExplicitlyRequested_
@@ -392,6 +391,41 @@ void MIL_Automate::Clean()
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->Clean();
     pDecision_->Clean();
+}
+
+// =============================================================================
+// DYNAMIC PIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreatePion
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition )
+{
+    for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
+    {
+        MIL_AgentPion& pion = **it;
+        if( pion.GetType() == type )
+        {
+            recycledPions_.erase( it.base() - 1 );
+            pion.ChangeAutomate( *this );
+            pion.GetRole< PHY_RolePion_Location >().MagicMove( vPosition );
+            return pion;
+        }
+    }
+
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::DestroyPion
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+void MIL_Automate::DestroyPion( MIL_AgentPion& pion )
+{
+    assert( pion.IsDead() );
+    recycledPions_.push_back( &pion );
 }
 
 // =============================================================================
@@ -582,7 +616,6 @@ void MIL_Automate::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& /*camp*/ )
     if ( pType_->IsRefugee() )
         pTC2_ = 0;
 }
-
 
 // =============================================================================
 // PRISONERS

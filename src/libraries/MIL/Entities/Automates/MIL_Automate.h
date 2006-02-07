@@ -27,6 +27,7 @@ class MIL_Fuseau;
 class MIL_AutomateLOG;
 class MIL_CampPrisonniers;
 class MIL_CampRefugies;
+class MIL_AgentTypePion;
 class NET_AS_MOSServer;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
@@ -46,9 +47,10 @@ class MIL_Automate : public PHY_Actor
 public:
     //! @name Types
     //@{
-    typedef std::vector< MIL_AgentPion* > T_PionVector;
-    typedef T_PionVector::iterator        IT_PionVector;
-    typedef T_PionVector::const_iterator  CIT_PionVector;
+    typedef std::vector< MIL_AgentPion* >  T_PionVector;
+    typedef T_PionVector::iterator         IT_PionVector;
+    typedef T_PionVector::const_iterator   CIT_PionVector;
+    typedef T_PionVector::reverse_iterator RIT_PionVector;
 
     typedef std::map< const MIL_AutomateLOG*, PHY_SupplyDotationState* > T_SupplyDotationStateMap;
     typedef T_SupplyDotationStateMap::iterator                           IT_SupplyDotationStateMap;
@@ -157,6 +159,12 @@ public:
     MT_Vector2D GetAlivePionsBarycenter() const;
     //@}
 
+    //! @name Dynamic pions
+    //@{
+    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition );
+    void           DestroyPion( MIL_AgentPion& pion );
+    //@}
+
     //! @name Logistic : supply
     //@{
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
@@ -193,6 +201,7 @@ private:
     MIL_AutomateOrderManager orderManager_;
     MIL_AgentPion*           pPionPC_;
     T_PionVector             pions_; // Including pion PC
+    T_PionVector             recycledPions_; // Dynamic pions
 
     bool                     bAutomateModeChanged_;
 
