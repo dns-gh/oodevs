@@ -11,9 +11,6 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_AgentServerMsgMgr.h"
-
-#include "MOS_AgentServerController.h"
-#include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_Agent.h"
 #include "MOS_Agent_ABC.h"
 #include "MOS_AgentManager.h"
@@ -21,7 +18,6 @@
 #include "MOS_ObjectManager.h"
 #include "MOS_Object_Factory.h"
 #include "MOS_App.h"
-#include "MOS_MOSServer.h"
 #include "MOS_LineManager.h"
 #include "MOS_Lima.h"
 #include "MOS_Limit.h"
@@ -45,14 +41,15 @@ using namespace DIN;
 // Name: MOS_AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-MOS_AgentServerMsgMgr::MOS_AgentServerMsgMgr( MOS_AgentServerController& controller )
-    : MOS_AgentServerMgr_ABC( controller )
-    , bPaused_              ( false )
-    , bReceivingState_      ( true )
-    , msgRecorder_          ( * new MOS_MsgRecorder( *this ) )
+MOS_AgentServerMsgMgr::MOS_AgentServerMsgMgr( DIN::DIN_Engine& engine )
+    : session_         ( 0 )
+    , bPaused_         ( false )
+    , bReceivingState_ ( true )
+    , msgRecorder_     ( * new MOS_MsgRecorder( *this ) )
 {
     DIN_ConnectorGuest connector( eConnector_SIM_MOS );
-    pMessageService_ = new DIN_MessageServiceUserCbk<MOS_AgentServerMsgMgr>( *this, controller.GetDINEngine(), connector, "Msgs MOS Server -> Agent Server" );
+    pMessageService_ = new DIN_MessageServiceUserCbk<MOS_AgentServerMsgMgr>(
+        *this, engine, connector, "Msgs MOS Server -> Agent Server" );
 
     pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgInit                );
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
@@ -88,30 +85,41 @@ MOS_AgentServerMsgMgr::~MOS_AgentServerMsgMgr()
 // SERVICE ACTIVATION
 //=============================================================================
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::Enable
-// Created: NLD 2002-07-12
-//-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::Enable( MOS_AgentServer& agentServer )
+// Created: AGE 2006-02-08
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::Enable( DIN::DIN_Link& session )
 {
-    pMessageService_->Enable( agentServer.GetSession() );
+    pMessageService_->Enable( session );
+    session_ = &session;
 }
-
-
-//-----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::Disable
-// Created: NLD 2002-07-12
-//-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::Disable( MOS_AgentServer& agentServer )
-{
-    pMessageService_->Disable( agentServer.GetSession() );
-}
-
-
 
 //=============================================================================
 // MESSAGES : MISC
 //=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::Send
+// Created: AGE 2006-02-08
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message )
+{
+    if( ! session_ )
+        throw std::runtime_error( "Not connected" );
+    pMessageService_->Send( *session_, id, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::Send
+// Created: AGE 2006-02-08
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::Send( unsigned int id )
+{
+    if( ! session_ )
+        throw std::runtime_error( "Not connected" );
+    pMessageService_->Send( *session_, id );
+}   
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::SendMsgEnableUnitVisionCones
@@ -119,8 +127,7 @@ void MOS_AgentServerMsgMgr::Disable( MOS_AgentServer& agentServer )
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgEnableUnitVisionCones()
 {
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-    pMessageService_->Send( agentServer.GetSession(), eMsgEnableUnitVisionCones );
+    Send( eMsgEnableUnitVisionCones );
 }
 
 
@@ -130,8 +137,7 @@ void MOS_AgentServerMsgMgr::SendMsgEnableUnitVisionCones()
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgDisableUnitVisionCones()
 {
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-    pMessageService_->Send( agentServer.GetSession(), eMsgDisableUnitVisionCones );
+    Send( eMsgDisableUnitVisionCones );
 }
 
 enum E_UnitMagicAction
@@ -145,13 +151,11 @@ enum E_UnitMagicAction
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const MOS_Agent& agent )
 {
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg << agent.GetID();
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
-    pMessageService_->Send( agentServer.GetSession(), eMsgUnitMagicAction, dinMsg );
+    Send( eMsgUnitMagicAction, dinMsg );
 
     std::stringstream strOutputMsg;
     strOutputMsg << "Demande endommagement pion "  << agent.GetName();
@@ -373,7 +377,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 {
-    if( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if( !MOS_App::GetApp().GetNetwork().IsConnected() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -390,8 +394,7 @@ void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-    pMessageService_->Send( agentServer.GetSession(), eMsgMosSim, dinMsg );
+    Send( eMsgMosSim, dinMsg );
 
     msgRecorder_.OnNewMsg( asnMsg.t, asnPEREncodeBuffer );
 }
@@ -403,7 +406,7 @@ void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, MIL_MOSContextID nCtx )
 {
-    if( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if( !MOS_App::GetApp().GetNetwork().IsConnected() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -422,38 +425,24 @@ void MOS_AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContex
 
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-    pMessageService_->Send( agentServer.GetSession(), eMsgMosSimWithContext, dinMsg );
+    Send( eMsgMosSimWithContext, dinMsg );
 
     msgRecorder_.OnNewMsgWithContext( asnMsg.t, nCtx, asnPEREncodeBuffer );
 }
 
-
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::SendMsgMosSim
-/** @param  pMsg
-    @param  nMsgLength
-    */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1OCTET* pMsg, int nMsgLength )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( pMsg, nMsgLength );
-
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-    pMessageService_->Send( agentServer.GetSession(), eMsgMosSim, dinMsg );
+    Send( eMsgMosSim, dinMsg );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::SendMsgMosSimWithContext
-/** @param  pMsg
-    @param  nMsgLength
-    @param  nCtx
-*/
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx )
@@ -463,8 +452,7 @@ void MOS_AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgL
 
     dinMsg.GetOutput().Append( pMsg, nMsgLength );
 
-    MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
-    pMessageService_->Send( agentServer.GetSession(), eMsgMosSimWithContext, dinMsg );
+    Send( eMsgMosSimWithContext, dinMsg );
 }
 
 

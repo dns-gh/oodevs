@@ -13,7 +13,7 @@
 #include "MOS_App.h"
 #include "moc_MOS_App.cpp"
 
-#include "MOS_MOSServer.h"
+#include "MOS_Network.h"
 #include "MOS_AgentManager.h"
 #include "MOS_LineManager.h"
 #include "MOS_World.h"
@@ -66,7 +66,7 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     }
 
     SetSplashText( tr("Démarrage...") );
-    pMOSServer_      = new MOS_MOSServer    ();
+    pMOSServer_      = new MOS_Network    ();
     pAgentManager_   = new MOS_AgentManager ();
     pLineManager_    = new MOS_LineManager  ();
     pObjectManager_  = new MOS_ObjectManager();
@@ -603,6 +603,19 @@ void MOS_App::NotifyTickStartEnd( bool bTickStart )
     emit TickStartEnd( bTickStart );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyConnexionLost
+// Created: AGE 2006-02-08
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyConnexionLost()
+{
+    NotifyConnexionStatusChanged( false );
+    GetAgentManager().DeleteAllConflicts();
+    GetAgentManager().DeleteAllAgents();
+    GetAgentManager().DeleteAllTeams();
+    GetLineManager ().OnDeconnexion();
+    GetObjectManager().DeleteAllObjects();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyConnexionStatusChanged

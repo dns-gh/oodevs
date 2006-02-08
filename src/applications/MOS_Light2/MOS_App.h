@@ -19,7 +19,7 @@
 
 #include <qapplication.h>
 
-class MOS_MOSServer;
+class MOS_Network;
 class MOS_AgentManager;
 class MOS_LineManager;
 class MOS_World;
@@ -89,6 +89,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     void NotifyConnexionStatusChanged( bool bConnected );
+    void NotifyConnexionLost();
     void NotifyPauseStatusChanged( bool bPaused );
     void NotifySpeedChanged( int nSpeed );
     void NotifyTimeChanged( uint nTimeInSeconds );
@@ -160,7 +161,7 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    MOS_MOSServer&     GetMOSServer     () const;
+    MOS_Network&       GetNetwork       () const;
     MOS_AgentManager&  GetAgentManager  () const;
     MOS_LineManager&   GetLineManager   () const;
     MOS_World&         GetWorld         () const;
@@ -287,7 +288,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MOS_MOSServer*     pMOSServer_;
+    MOS_Network*       pMOSServer_;
     MOS_World*         pWorld_;
     MOS_AgentManager*  pAgentManager_;
     MOS_LineManager*   pLineManager_;

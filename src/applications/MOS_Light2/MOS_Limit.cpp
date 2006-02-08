@@ -14,10 +14,7 @@
 
 #include "MOS_App.h"
 #include "MOS_AgentServerMsgMgr.h"
-#include "MOS_AgentServerController.h"
-#include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_ASN_Messages.h"
-#include "MOS_MOSServer.h"
 #include "MOS_LineManager.h"
 #include "MOS_World.h"
 
@@ -93,7 +90,7 @@ MOS_Limit::~MOS_Limit()
 //-----------------------------------------------------------------------------
 bool MOS_Limit::UpdateToSim()
 {
-    if ( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if ( !MOS_App::GetApp().GetNetwork().IsConnected() )
         return false;
 
     uint i;

@@ -27,5 +27,4 @@ public:
 
 #   include "MOS_ASN_Tools.inl"
 
-
 #endif // __MOS_ASN_Tools_h_

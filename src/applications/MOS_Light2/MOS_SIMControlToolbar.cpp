@@ -16,10 +16,6 @@
 
 #include "MOS_App.h"
 #include "MOS_MainWindow.h"
-#include "MOS_AgentServerMsgMgr.h"
-#include "MOS_AgentServerController.h"
-#include "MOS_AgentServerConnectionMgr.h"
-#include "MOS_MOSServer.h"
 #include "MOS_ASN_Messages.h"
 #include "MOS_ConnectDialog.h"
 #include "MOS_DisconnectDialog.h"
@@ -90,7 +86,7 @@ MOS_SIMControlToolbar::~MOS_SIMControlToolbar()
 //-----------------------------------------------------------------------------
 void MOS_SIMControlToolbar::SlotConnectDisconnect()
 {
-    if ( MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if ( MOS_App::GetApp().GetNetwork().IsConnected() )
     {
         pDisconnectDlg_->show();
     }
@@ -114,7 +110,7 @@ void MOS_SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void MOS_SIMControlToolbar::SlotPlayPause()
 {
-    if ( MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().IsPaused() )
+    if ( MOS_App::GetApp().GetNetwork().GetMessageMgr().IsPaused() )
     {
         MOS_ASN_MsgCtrlResume asnMsg;
         asnMsg.Send();
@@ -137,7 +133,7 @@ void MOS_SIMControlToolbar::SlotPlayPause()
 // -----------------------------------------------------------------------------
 void MOS_SIMControlToolbar::SlotSpeedChange()
 {
-    if( MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if( MOS_App::GetApp().GetNetwork().IsConnected() )
     {
         MOS_ASN_MsgCtrlChangeTimeFactor asnMsg;
         asnMsg.GetAsnMsg() = pSpeedSpinBox_->value();

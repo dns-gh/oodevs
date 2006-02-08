@@ -14,8 +14,7 @@
 #include "MOS_ConnectDialog.h"
 #include "moc_MOS_ConnectDialog.cpp"
 #include "MOS_App.h"
-#include "MOS_MOSServer.h"
-
+#include "MOS_Network.h"
 
 //-----------------------------------------------------------------------------
 // Name: MOS_ConnectDialog constructor
@@ -91,7 +90,7 @@ void MOS_ConnectDialog::Validate()
 {
     try
     {
-        MOS_App::GetApp().GetMOSServer().Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
+        MOS_App::GetApp().GetNetwork().Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
     }
     catch ( std::exception& e )
     {

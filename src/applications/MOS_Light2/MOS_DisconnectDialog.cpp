@@ -15,10 +15,8 @@
 #include "moc_MOS_DisconnectDialog.cpp"
 
 #include "MOS_App.h"
-#include "MOS_MOSServer.h"
-#include "MOS_Config.h"
 #include "MOS_MainWindow.h"
-
+#include "MOS_Network.h"
 
 //-----------------------------------------------------------------------------
 // Name: MOS_DisconnectDialog constructor
@@ -65,7 +63,7 @@ MOS_DisconnectDialog::~MOS_DisconnectDialog()
 void MOS_DisconnectDialog::Validate()
 {
     accept();
-    MOS_App::GetApp().GetMOSServer().Disconnect();
+    MOS_App::GetApp().GetNetwork().Disconnect();
 }
 
 

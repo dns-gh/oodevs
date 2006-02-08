@@ -10,7 +10,6 @@
 //*****************************************************************************
 
 #include "MOS_Light2_pch.h"
-#include "MOS_AgentServer.h"
 #include "MOS_RawVisionData.h"
 #include "MOS_App.h"
 #include "MOS_World.h"

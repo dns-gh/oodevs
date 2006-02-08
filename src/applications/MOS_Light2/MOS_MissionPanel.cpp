@@ -41,7 +41,6 @@
 #include "MOS_Tools.h"
 #include "MOS_Options.h"
 #include "MOS_World.h"
-#include "MOS_AgentServer.h"
 #include "MOS_AgentManager.h"
 #include "MOS_ChangeDiplomacyDialog.h"
 #include "MOS_ChangeLogisticLinksDialog.h"
@@ -660,7 +659,7 @@ void MOS_MissionPanel::MagicDestroyAll()
 void MOS_MissionPanel::MagicDestroyComponent()
 {
     assert( pPopupAgent_ != 0 );
-    MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgUnitMagicActionDestroyComposante( *pPopupAgent_ );
+    MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgUnitMagicActionDestroyComposante( *pPopupAgent_ );
 
     std::stringstream strMsg;
     strMsg << "Demande destruction composante pour agent #" << pPopupAgent_->GetID();

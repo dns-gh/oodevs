@@ -25,8 +25,6 @@
 #include "moc_MOS_ObjectCreationPanel.cpp"
 
 #include "MOS_App.h"
-#include "MOS_AgentServerController.h"
-#include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_MainWindow.h"
 #include "MOS_ParamLocation.h"
 #include "MOS_ParamAgent.h"
@@ -287,7 +285,7 @@ void MOS_ObjectCreationPanel::OnOk()
 {
     if( ! pLocation_->CheckValidity() )
         return;
-    if( ! MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer()
+    if( ! MOS_App::GetApp().GetNetwork().IsConnected()
      && ! MOS_App::GetApp().IsODBEdition() )
         return;
         

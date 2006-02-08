@@ -13,8 +13,6 @@
 #define __MOS_AgentServerMsgMgr_h_
 
 #include "MOS_Types.h"
-#include "MOS_AgentServerMgr_ABC.h"
-
 #include "MOS_ASN_Types.h"
 
 class MOS_AgentServerController;
@@ -29,7 +27,7 @@ namespace DIN
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class MOS_AgentServerMsgMgr : public MOS_AgentServerMgr_ABC
+class MOS_AgentServerMsgMgr
 {
     MT_COPYNOTALLOWED( MOS_AgentServerMsgMgr );
 
@@ -72,7 +70,7 @@ public:
     //@}
     
 public:
-    MOS_AgentServerMsgMgr( MOS_AgentServerController& controller ); 
+    explicit MOS_AgentServerMsgMgr( DIN::DIN_Engine& engine ); 
     virtual ~MOS_AgentServerMsgMgr();
 
     //-------------------------------------------------------------------------
@@ -88,8 +86,7 @@ public:
     /** @name Service activation */
     //-------------------------------------------------------------------------
     //@{
-    void Enable ( MOS_AgentServer& agentServer );
-    void Disable( MOS_AgentServer& agentServer );
+    void Enable( DIN::DIN_Link& session );
     //@}
 
     //-------------------------------------------------------------------------
@@ -270,9 +267,16 @@ private:
 	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
     void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID nCtx );
     //@}
+
+    //! @name Helpers
+    //@{
+    void Send( unsigned int id, DIN::DIN_BufferedMessage& message );
+    void Send( unsigned int id );
+    //@}
     
 private:
     MOS_MsgRecorder& msgRecorder_;
+    DIN::DIN_Link* session_;
 
     DIN::DIN_MessageServiceUserCbk<MOS_AgentServerMsgMgr>*  pMessageService_;
     bool                                                    bPaused_;

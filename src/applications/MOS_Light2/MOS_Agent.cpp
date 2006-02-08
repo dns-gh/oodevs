@@ -13,7 +13,6 @@
 #include "MOS_Agent.h"
 
 #include "MOS_App.h"
-#include "MOS_MOSServer.h"
 #include "MOS_AgentManager.h"
 #include "MOS_World.h"
 #include "MOS_RC.h"
@@ -36,7 +35,6 @@
 #include "MOS_PopulationConcentration.h"
 #include "MOS_PopulationFlow.h"
 #include "MOS_Resource.h"
-
 
 using namespace DIN;
 

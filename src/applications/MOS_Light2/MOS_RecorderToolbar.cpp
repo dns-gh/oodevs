@@ -24,10 +24,9 @@
 #include "MOS_RecorderToolbar.h"
 #include "moc_MOS_RecorderToolbar.cpp"
 
+#include "MOS_Network.h"
 #include "MOS_MsgRecorder.h"
 #include "MOS_App.h"
-#include "MOS_MOSServer.h"
-#include "MOS_AgentServerController.h"
 #include "MOS_AgentServerMsgMgr.h"
 #include "resources.h"
 
@@ -43,7 +42,7 @@
 // -----------------------------------------------------------------------------
 MOS_RecorderToolbar::MOS_RecorderToolbar( QMainWindow* pParent )
     : QToolBar      ( pParent )
-    , msgRecorder_  ( MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().GetMsgRecorder() )
+    , msgRecorder_  ( MOS_App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() )
 {
     this->setCaption( tr("Enregisteur d'ordres") );
     // $$$$ AGE 2005-03-14: icons

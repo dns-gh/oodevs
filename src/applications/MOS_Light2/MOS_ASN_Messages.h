@@ -15,10 +15,9 @@
 #include "MOS_Types.h"
 
 #include "MOS_App.h"
-#include "MOS_AgentServerController.h"
+#include "MOS_Network.h"
 #include "MOS_AgentServerMsgMgr.h"
 #include "MOS_ASN_Types.h"
-#include "MOS_MOSServer.h"
 
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS
@@ -35,7 +34,7 @@ public:                                                                     \
                                                                             \
         globalAsnMsg.t              = T_MsgsMosSim_msg_##ASNVAR;            \
         globalAsnMsg.u.msg_##ASNVAR  = asnMsg_;                              \
-        MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -59,7 +58,7 @@ public:                                                                     \
                                                                             \
         globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;              \
         globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                              \
-        MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -82,7 +81,7 @@ public:                                                                         
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
         globalAsnMsg.u.msg_##ASNVAR = asnMsg_;                                       \
-        MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
                                                                                     \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
@@ -105,7 +104,7 @@ public:                                                                         
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
         globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                                      \
-        MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
                                                                                     \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
@@ -127,7 +126,7 @@ public:                                                                         
         ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
-        MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
 };
 
@@ -141,7 +140,7 @@ public:                                                                         
         ASN1T_MsgsMosSim    globalAsnMsg;                                           \
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;                     \
-        MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        MOS_App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
     }                                                                               \
 };                                                      
 

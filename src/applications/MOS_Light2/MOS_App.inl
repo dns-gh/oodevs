@@ -36,7 +36,7 @@ MOS_App& MOS_App::GetApp()
 // Created: NLD 2002-07-15
 //-----------------------------------------------------------------------------
 inline
-MOS_MOSServer& MOS_App::GetMOSServer() const
+MOS_Network& MOS_App::GetNetwork() const
 {
     assert( pMOSServer_ );
     return *pMOSServer_;

@@ -19,20 +19,12 @@
 #ifndef __MOS_MsgRecorder_h_
 #define __MOS_MsgRecorder_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MOS_ASN_Types.h"
 class MOS_AgentServerMsgMgr;
 
 // =============================================================================
 /** @class  MOS_MsgRecorder
     @brief  MOS_MsgRecorder
-    @par    Using example
-    @code
-    MOS_MsgRecorder;
-    @endcode
 */
 // Created: APE 2004-10-20
 // =============================================================================
@@ -101,18 +93,6 @@ public:
 
     void ReadArchive( MT_InputArchive_ABC& archive );
     void WriteArchive( MT_OutputArchive_ABC& archive ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
     //@}
 
 private:
