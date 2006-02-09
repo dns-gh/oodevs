@@ -19,10 +19,6 @@
 #ifndef __MOS_PopulationKnowledgePanel_h_
 #define __MOS_PopulationKnowledgePanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MOS_Types.h"
 #include "MOS_InfoPanel_ABC.h"
 
@@ -34,6 +30,7 @@ class MOS_ActionContext;
 class MOS_SelectedElement;
 class QCheckBox;
 class QTable;
+class MOS_Display;
 
 // =============================================================================
 // Created: SBO 2005-10-19
@@ -117,36 +114,9 @@ private:
     QListView* pKnowledgeListView_;
     QListView* pPerceptionListView_;
     QCheckBox* pOwnTeamCheckBox_;
-    QLabel*    pIdLabel_;
-    QLabel*    pAssociatedPopulationLabel_;
-    QLabel*    pDirectionLabel_;
-    QLabel*    pSpeedLabel_;
-    QLabel*    pPerceptionLabel_;
-    QLabel*    pPerceptionMaxLabel_;
-    QLabel*    pTeamLabel_;
-    QLabel*    pRelevanceLabel_;
+    
+    MOS_Display* display_;
 
-    // Concentration info
-    QGroupBox* pConcentrationBox_;
-    QLabel*    pConcentrationIdLabel_;
-    QLabel*    pConcentrationAssociatedLabel_;
-    QLabel*    pConcentrationPosition_;
-    QLabel*    pConcentrationAliveHumans_;
-    QLabel*    pConcentrationDeadHumans_;
-    QLabel*    pConcentrationAttitude_;
-    QLabel*    pConcentrationPerceived_;
-    QLabel*    pConcentrationRelevance_;
-
-    // Flow info
-    QGroupBox* pFlowBox_;
-    QLabel*    pFlowIdLabel_;
-    QLabel*    pFlowAssociatedLabel_;
-    QLabel*    pFlowDirection_;
-    QLabel*    pFlowSpeed_;
-    QLabel*    pFlowAliveHumans_;
-    QLabel*    pFlowDeadHumans_;
-    QLabel*    pFlowAttitude_;
-    QLabel*    pFlowPerceived_;
     QGroupBox* pFlowPartBox_;
     QLabel*    pFlowPartNbr_;
     QTable*    pFlowPartTable_;

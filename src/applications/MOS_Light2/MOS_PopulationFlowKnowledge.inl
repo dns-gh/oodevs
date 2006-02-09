@@ -57,7 +57,7 @@ const MOS_PopulationFlow* MOS_PopulationFlowKnowledge::GetFlow() const
 inline
 MT_Float MOS_PopulationFlowKnowledge::GetDirection() const
 {
-    return rDirection_.value_;
+    return rDirection_;
 }
     
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ MT_Float MOS_PopulationFlowKnowledge::GetDirection() const
 inline
 MT_Float MOS_PopulationFlowKnowledge::GetSpeed() const
 {
-    return rSpeed_.value_;
+    return rSpeed_;
 }
     
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ MT_Float MOS_PopulationFlowKnowledge::GetSpeed() const
 inline
 uint MOS_PopulationFlowKnowledge::GetNbrAliveHumans() const
 {
-    return nNbrAliveHumans_.value_;
+    return nNbrAliveHumans_;
 }
     
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ uint MOS_PopulationFlowKnowledge::GetNbrAliveHumans() const
 inline
 uint MOS_PopulationFlowKnowledge::GetNbrDeadHumans() const
 {
-    return nNbrDeadHumans_.value_;
+    return nNbrDeadHumans_;
 }
     
 // -----------------------------------------------------------------------------
@@ -97,19 +97,9 @@ uint MOS_PopulationFlowKnowledge::GetNbrDeadHumans() const
 inline
 E_PopulationAttitude MOS_PopulationFlowKnowledge::GetAttitude() const
 {
-    return eAttitude_.value_;
+    return eAttitude_;
 }
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::GetRelevance
-// Created: SBO 2005-10-21
-// -----------------------------------------------------------------------------
-inline
-MT_Float MOS_PopulationFlowKnowledge::GetRelevance() const
-{
-    return rRelevance_;
-}
-    
+        
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationFlowKnowledge::IsPerceived
 // Created: SBO 2005-10-21
@@ -117,7 +107,7 @@ MT_Float MOS_PopulationFlowKnowledge::GetRelevance() const
 inline
 bool MOS_PopulationFlowKnowledge::IsPerceived() const
 {
-    return bIsPerceived_.value_;
+    return bIsPerceived_;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,75 +117,6 @@ bool MOS_PopulationFlowKnowledge::IsPerceived() const
 inline
 const MOS_PopulationFlowKnowledge::T_FlowParts& MOS_PopulationFlowKnowledge::GetFlowParts() const
 {
-    return flowParts_.value_;
+    return flowParts_;
 }
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidDirection
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidDirection() const
-{
-    return rDirection_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidSpeed
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidSpeed() const
-{
-    return rSpeed_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidNbrAliveHumans
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidNbrAliveHumans() const
-{
-    return nNbrAliveHumans_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidNbrDeadHumans
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidNbrDeadHumans() const
-{
-    return nNbrDeadHumans_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidAttitude
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidAttitude() const
-{
-    return eAttitude_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidPerceived
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidPerceived() const
-{
-    return bIsPerceived_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::IsValidFlowParts
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationFlowKnowledge::IsValidFlowParts() const
-{
-    return flowParts_.bIsValid_;
-}
+

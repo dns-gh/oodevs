@@ -14,6 +14,7 @@
 
 #include "MOS_ASN_Types.h"
 #include "MOS_IDManager.h"
+#include "OptionalValue.h"
 
 class MOS_Gtia;
 class MOS_PopulationConcentration;
@@ -25,6 +26,8 @@ class MOS_PopulationKnowledge;
 class MOS_PopulationConcentrationKnowledge
 {
     MT_COPYNOTALLOWED( MOS_PopulationConcentrationKnowledge );
+    friend class MOS_PopulationKnowledgePanel;
+    friend class MOS_GLTool;
         
 public:
     //! @name Constructor/Destructor
@@ -48,43 +51,9 @@ public:
     MT_Float                           GetArea               () const;
     //@}
 
-    //! @name Validity Accessors
-    //@{
-    bool IsValidNbrAliveHumans() const;
-    bool IsValidNbrDeadHumans () const;
-    bool IsValidAttitude      () const;
-    bool IsValidPerceived     () const;
-    //@}
-
     //! @name Network
     //@{
     void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    template< typename T >
-    struct sValidableData
-    {
-        template< typename T >
-        sValidableData( T val, bool bIsValid )
-            : value_    ( val )
-            , bIsValid_ ( bIsValid )
-        {
-        }
-
-        template< typename T >
-        sValidableData< typename T >& operator=( const T& val )
-        {
-            value_    = val;
-            bIsValid_ = true;
-            return *this;
-        }
-
-        bool bIsValid_;
-        T    value_;
-    };
     //@}
 
 private:
@@ -93,10 +62,10 @@ private:
     const MOS_PopulationKnowledge*               pPopulationKnowledge_;
     const MOS_PopulationConcentration*           pConcentration_;
           MT_Vector2D                            position_;
-          sValidableData< uint >                 nNbrAliveHumans_;
-          sValidableData< uint >                 nNbrDeadHumans_;
-          sValidableData< E_PopulationAttitude > eAttitude_;
-          sValidableData< bool >                 bIsPerceived_;
+          OptionalValue< uint >                  nNbrAliveHumans_;
+          OptionalValue< uint >                  nNbrDeadHumans_;
+          OptionalValue< E_PopulationAttitude >  eAttitude_;
+          OptionalValue< bool >                  bIsPerceived_;
           MT_Float                               rRelevance_;
 };
 

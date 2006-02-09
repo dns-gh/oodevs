@@ -28,10 +28,6 @@ MOS_PopulationConcentrationKnowledge::MOS_PopulationConcentrationKnowledge( cons
     , pGtia_               ( MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pConcentration_      ( 0 )
-    , nNbrAliveHumans_     ( 0, false )
-    , nNbrDeadHumans_      ( 0, false )
-    , eAttitude_           ( ePopulationAttitude_Calme, false )
-    , bIsPerceived_        ( false, false )
 {
     assert( pGtia_ );
     pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );

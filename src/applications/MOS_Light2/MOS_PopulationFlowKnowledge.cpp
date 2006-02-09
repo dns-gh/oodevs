@@ -28,8 +28,7 @@
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
 MOS_PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
-: flowPart_   ()
-, rRelevance_ ( asn.pertinence )
+     : rRelevance_ ( asn.pertinence )
 {
     for( uint i = 0; i < asn.forme.vecteur_point.n; ++i )
 	{
@@ -38,34 +37,6 @@ MOS_PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
         flowPart_.push_back( point );
 	}
 }
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::FlowPart::~FlowPart
-// Created: SBO 2005-10-25
-// -----------------------------------------------------------------------------
-MOS_PopulationFlowKnowledge::FlowPart::~FlowPart()
-{
-    flowPart_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::FlowPart::GetPart
-// Created: SBO 2005-10-25
-// -----------------------------------------------------------------------------
-const T_PointVector& MOS_PopulationFlowKnowledge::FlowPart::GetPart() const
-{
-    return flowPart_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::FlowPart::GetRelevance
-// Created: SBO 2005-10-25
-// -----------------------------------------------------------------------------
-const MT_Float MOS_PopulationFlowKnowledge::FlowPart::GetRelevance() const
-{
-    return rRelevance_;
-}
-
 
 // =============================================================================
 // MOS_PopulationFlowKnowledge
@@ -80,14 +51,6 @@ MOS_PopulationFlowKnowledge::MOS_PopulationFlowKnowledge( const ASN1T_MsgPopulat
     , pGtia_               ( MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pFlow_               ( 0 )
-    , rDirection_          ( 0., false )
-    , rSpeed_              ( 0., false )
-    , nNbrAliveHumans_     ( 0, false )
-    , nNbrDeadHumans_      ( 0, false )
-    , eAttitude_           ( ePopulationAttitude_Calme, false )
-    , bIsPerceived_        ( false, false )
-    , rRelevance_          ( 0. )
-    , flowParts_           ( *new T_FlowParts(), false )
 {
     assert( pGtia_ );
     pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
@@ -102,8 +65,6 @@ MOS_PopulationFlowKnowledge::MOS_PopulationFlowKnowledge( const ASN1T_MsgPopulat
         assert( pFlow_ );
     }
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationFlowKnowledge::~MOS_PopulationFlowKnowledge
@@ -146,10 +107,8 @@ void MOS_PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledge
     }
     if( asnMsg.m.portions_fluxPresent )
     {
+        flowParts_.Set();
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
-            flowParts_.value_.push_back( new FlowPart( asnMsg.portions_flux.elem[ i ] ) );
-        flowParts_.bIsValid_ = true;
+            flowParts_.Data().push_back( FlowPart( asnMsg.portions_flux.elem[ i ] ) );
     }
-//    if( asnMsg.m.pertinencePresent )
-//        rRelevance_ = asnMsg.pertinence;
 }

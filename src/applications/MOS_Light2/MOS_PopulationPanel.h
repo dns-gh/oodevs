@@ -13,6 +13,7 @@
 #include "MOS_InfoPanel_ABC.h"
 
 class QListViewItem;
+class MOS_Display;
 
 // =============================================================================
 // Created: HME 2005-10-03
@@ -77,11 +78,8 @@ private:
 
 private:
     const MOS_Population* pPopulation_;
-
-    QLabel*         pNameLabel_;
-    QLabel*         pLivingLabel_;
-    QLabel*         pDeadLabel_;
-	QListView*      pPartsListView_;
+    MOS_Display* display_;
+    QListView* pPartsListView_;
 };
 
 #endif // __MOS_PopulationPanel_h_

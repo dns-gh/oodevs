@@ -203,6 +203,11 @@ namespace
     {
         return value.IsSet() ? message.c_str() : "";
     }
+    template< typename T >
+    QString IfSet( const T& value )
+    {
+        return value.IsSet() ? QString::number( value ) : "";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -225,9 +230,9 @@ void MOS_AgentKnowledgePanel::UpdateSelected()
                 .Display( "Id:", MOS_Display::Id(  k.GetID() ) )
                 .Display( "Agent associé:", MOS_Display::Id( k.GetRealAgent().GetID() ) )
                 .Display( "Position:", IfSet( k.strPosition_, k.strPosition_ ) )
-                .Display( "Direction:", IfSet( k.nDirection_, QString::number( k.nDirection_ ) ) )
-                .Display( "Vitesse:", IfSet( k.nSpeed_, QString::number( k.nSpeed_ ) ) )
-                .Display( "Etat ops.:", IfSet( k.nEtatOps_, QString::number( k.nEtatOps_ ) ) )
+                .Display( "Direction:", IfSet( k.nDirection_ ) )
+                .Display( "Vitesse:", IfSet( k.nSpeed_ ) )
+                .Display( "Etat ops.:", IfSet( k.nEtatOps_ ) )
                 .Display( "Niveau de perception:", IfSet( k.nCurrentPerceptionLevel_, MOS_Tools::ToString( k.nCurrentPerceptionLevel_ ) ) )
                 .Display( "Niveau max de perception:", IfSet( k.nCurrentPerceptionLevel_, MOS_Tools::ToString( k.nMaxPerceptionLevel_ ) ) )
                 .Display( "Camp:", IfSet( k.nTeam_, MOS_App::GetApp().GetAgentManager().FindTeam( k.nTeam_)->GetName() ) )
@@ -242,7 +247,7 @@ void MOS_AgentKnowledgePanel::UpdateSelected()
                 .Display( "Fait prisonnier:", IfSet( k.bPrisonner_, MOS_Display::YesNo( k.bPrisonner_ ) ) )
                 .Display( "Réfugiés pris en compte:", IfSet( k.bRefugies_, MOS_Display::YesNo( k.bRefugies_ ) ) )
                 .Display( "PC:", IfSet( k.bIsPC_, MOS_Display::YesNo( k.bIsPC_ ) ) )
-                .Display( "Pertinence:", IfSet( k.nRelevance_, QString::number( k.nRelevance_ ) ) );
+                .Display( "Pertinence:", IfSet( k.nRelevance_ ) );
 
     if( k.automatePerceptionMap_.IsSet() )
     {

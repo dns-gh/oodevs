@@ -14,6 +14,7 @@
 
 #include "MOS_ASN_Types.h"
 #include "MOS_IDManager.h"
+#include "OptionalValue.h"
 
 class MOS_Gtia;
 class MOS_PopulationFlow;
@@ -25,31 +26,19 @@ class MOS_PopulationKnowledge;
 class MOS_PopulationFlowKnowledge
 {
     MT_COPYNOTALLOWED( MOS_PopulationFlowKnowledge );
+    friend class MOS_PopulationKnowledgePanel;
 
 public:
     //! @name Types
     //@{
-    class FlowPart
+    struct FlowPart
     {
-    public:
-        //! @name Constructor/Destructor
-        //@{
-         FlowPart( ASN1T_PortionFlux& asn );
-        ~FlowPart();
-        //@}
-
-        //! @name Accessors
-        //@{
-        const T_PointVector& GetPart     () const;
-        const MT_Float       GetRelevance() const;
-        //@}
-
-    private:
+        FlowPart( ASN1T_PortionFlux& asn );
         T_PointVector flowPart_;
         MT_Float      rRelevance_;
     };
 
-    typedef std::vector< FlowPart* >    T_FlowParts;
+    typedef std::vector< FlowPart >       T_FlowParts;
     typedef T_FlowParts::const_iterator CIT_FlowParts;
     //@}
 
@@ -76,16 +65,6 @@ public:
     const T_FlowParts&             GetFlowParts          () const;
     //@}
 
-    //! @name Validity accessors
-    //@{
-    bool IsValidDirection     () const;
-    bool IsValidSpeed         () const;
-    bool IsValidNbrAliveHumans() const;
-    bool IsValidNbrDeadHumans () const;
-    bool IsValidAttitude      () const;
-    bool IsValidPerceived     () const;
-    bool IsValidFlowParts     () const;
-    //@}
 
     //! @name Network
     //@{
@@ -93,44 +72,17 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    template< typename T >
-    struct sValidableData
-    {
-        template< typename T >
-        sValidableData( T val, bool bIsValid )
-            : value_    ( val )
-            , bIsValid_ ( bIsValid )
-        {
-        }
-
-        template< typename T >
-        sValidableData< typename T >& operator=( const T& val )
-        {
-            value_    = val;
-            bIsValid_ = true;
-            return *this;
-        }
-
-        bool bIsValid_;
-        T    value_;
-    };
-    //@}
-
-private:
-    const uint                                    nID_;
-          MOS_Gtia*                               pGtia_;
-    const MOS_PopulationKnowledge*                pPopulationKnowledge_;
-    const MOS_PopulationFlow*                     pFlow_;
-          sValidableData< MT_Float >              rDirection_;
-          sValidableData< MT_Float >              rSpeed_;
-          sValidableData< uint     >              nNbrAliveHumans_;
-          sValidableData< uint     >              nNbrDeadHumans_;
-          sValidableData< E_PopulationAttitude >  eAttitude_;
-          sValidableData< bool     >              bIsPerceived_;
-          MT_Float                                rRelevance_;
-          sValidableData< T_FlowParts >           flowParts_;
+    const uint                                   nID_;
+          MOS_Gtia*                              pGtia_;
+    const MOS_PopulationKnowledge*               pPopulationKnowledge_;
+    const MOS_PopulationFlow*                    pFlow_;
+          OptionalValue< MT_Float >              rDirection_;
+          OptionalValue< MT_Float >              rSpeed_;
+          OptionalValue< uint     >              nNbrAliveHumans_;
+          OptionalValue< uint     >              nNbrDeadHumans_;
+          OptionalValue< E_PopulationAttitude >  eAttitude_;
+          OptionalValue< bool     >              bIsPerceived_;
+          OptionalValue< T_FlowParts >           flowParts_;
 };
 
 

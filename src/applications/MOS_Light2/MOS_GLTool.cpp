@@ -1211,7 +1211,7 @@ void MOS_GLTool::Draw( MOS_PopulationConcentrationKnowledge& knowledge, E_State 
     if( nState == eHighlighted )
         color.AddRGB( 50, 100, 50 );
     color.SetAlpha( 0.8 );
-    if( knowledge.IsValidNbrAliveHumans() )
+    if( knowledge.nNbrAliveHumans_.IsSet() )
     {
         color.SetGLColor();
         MT_Float rSurface = knowledge.GetArea();
@@ -1243,7 +1243,7 @@ void MOS_GLTool::Draw( MOS_PopulationFlowKnowledge& knowledge, E_State nState /*
 
     const MOS_PopulationFlowKnowledge::T_FlowParts& parts = knowledge.GetFlowParts();
     for( MOS_PopulationFlowKnowledge::CIT_FlowParts it = parts.begin(); it != parts.end(); ++it )
-        DrawLine( ( *it )->GetPart() );
+        DrawLine( it->flowPart_ );
 }
 
 

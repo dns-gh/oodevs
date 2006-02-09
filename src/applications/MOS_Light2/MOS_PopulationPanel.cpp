@@ -20,6 +20,9 @@
 #include "MOS_Population.h"
 #include "MOS_PopulationConcentration.h"
 #include "MOS_PopulationFlow.h"
+#include "MOS_Display.h"
+#include "MOS_DisplayGroup.h"
+#include "MOS_DisplayItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationPanel constructor
@@ -29,21 +32,11 @@ MOS_PopulationPanel::MOS_PopulationPanel( QWidget* pParent )
     : MOS_InfoPanel_ABC ( pParent )
     , pPopulation_      ( 0 )
 {
-    QFont boldFont = this->font();
-    boldFont.setBold( true );
-
-    // Info groupbox
-    QGroupBox* pInfoGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Info" ), this );
-
-    new QLabel( tr( "Nom:" ), pInfoGroupBox );
-    pNameLabel_ = new QLabel( pInfoGroupBox );
-    pNameLabel_->setFont( boldFont );
-
-    new QLabel( tr( "Nombre de personnes vivantes:" ), pInfoGroupBox );
-    pLivingLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Morts:" ), pInfoGroupBox );
-    pDeadLabel_ = new QLabel( pInfoGroupBox );
+    display_ = new MOS_Display( this );
+    display_->AddGroup( "Informations" )
+                .AddItem( "Nom:", true )
+                .AddItem( "Nombre de personnes vivantes:" )
+                .AddItem( "Morts:" );
 
     pPartsListView_ = new QListView( this );
     pPartsListView_->addColumn( tr( "Morceau" ) );
@@ -69,6 +62,7 @@ MOS_PopulationPanel::MOS_PopulationPanel( QWidget* pParent )
 // -----------------------------------------------------------------------------
 MOS_PopulationPanel::~MOS_PopulationPanel()
 {
+    delete display_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,9 +71,7 @@ MOS_PopulationPanel::~MOS_PopulationPanel()
 // -----------------------------------------------------------------------------
 void MOS_PopulationPanel::OnClearSelection()
 {
-    pNameLabel_    ->setText( "" );
-    pLivingLabel_  ->setText( "" );
-    pDeadLabel_    ->setText( "" );
+    display_->Clear();
     pPartsListView_->clear();
     pPopulation_ = 0;
 }
@@ -107,9 +99,10 @@ void MOS_PopulationPanel::OnUpdate()
 // -----------------------------------------------------------------------------
 void MOS_PopulationPanel::OnPopulationUpdated( const MOS_Population& population )
 {
-    pNameLabel_  ->setText( population.GetName().c_str() );
-    pLivingLabel_->setText( QString::number( population.GetLivingHumans() ) );
-    pDeadLabel_  ->setText( QString::number( population.GetDeadHumans  () ) );
+    display_->Group( "Informations" )
+                .Display( "Nom:", population.GetName() )
+                .Display( "Nombre de personnes vivantes:", population.GetLivingHumans() )
+                .Display( "Morts:",  population.GetDeadHumans() );
 
     if( pPopulation_ == &population )
     {

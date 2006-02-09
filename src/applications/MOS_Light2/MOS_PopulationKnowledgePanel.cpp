@@ -6,19 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-03 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_PopulationKnowledgePanel.cpp $
-// $Author: Age $
-// $Modtime: 5/04/05 18:35 $
-// $Revision: 8 $
-// $Workfile: MOS_PopulationKnowledgePanel.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationKnowledgePanel.h"
@@ -39,6 +26,9 @@
 #include "MOS_PopulationFlow.h"
 #include "MOS_PopulationFlowKnowledge.h"
 #include "MOS_ActionContext.h"
+#include "MOS_Display.h"
+#include "MOS_DisplayGroup.h"
+#include "MOS_DisplayItem.h"
 
 #include <qtable.h>
 
@@ -61,78 +51,32 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
-    // Population
-    QGroupBox* pDetails = new QGroupBox( 2, Qt::Horizontal, tr( "Détails" ), this );
+    display_ = new MOS_Display( this );
+    display_->AddGroup( "Détails" )
+                .AddItem( "Id:" )
+                .AddItem( "Population associée:" )
+                .AddItem( "Camp:" );
 
-    new QLabel( tr( "Id:" ), pDetails );
-    pIdLabel_ = new QLabel( pDetails );
+    display_->AddGroup( "Concentration" )
+                .AddItem( "Id:" )
+                .AddItem( "Concentration associée:" )
+                .AddItem( "Position:" )
+                .AddItem( "Humains vivants:" )
+                .AddItem( "Humains morts:" )
+                .AddItem( "Attitude:" )
+                .AddItem( "Percue:" )
+                .AddItem( "Pertinence:" );
 
-    new QLabel( tr( "Population associée:" ), pDetails );
-    pAssociatedPopulationLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Camp:" ), pDetails );
-    pTeamLabel_ = new QLabel( pDetails );
-
-    // Concentration
-    pConcentrationBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Concentration" ), this );
-
-    new QLabel( tr( "Id:" ), pConcentrationBox_ );
-    pConcentrationIdLabel_ = new QLabel( pConcentrationBox_ );
-
-    new QLabel( tr( "Concentration associée:" ), pConcentrationBox_ );
-    pConcentrationAssociatedLabel_ = new QLabel( pConcentrationBox_ );
-
-    new QLabel( tr( "Position:" ), pConcentrationBox_ );
-    pConcentrationPosition_ = new QLabel( pConcentrationBox_ );
-
-    new QLabel( tr( "Humains vivants:" ), pConcentrationBox_ );
-    pConcentrationAliveHumans_ = new QLabel( pConcentrationBox_ );
-
-    new QLabel( tr( "Humains morts:" ), pConcentrationBox_ );
-    pConcentrationDeadHumans_ = new QLabel( pConcentrationBox_ );
-
-    new QLabel( tr( "Attitude:" ), pConcentrationBox_ );
-    pConcentrationAttitude_ = new QLabel( pConcentrationBox_ );
- 
-    new QLabel( tr( "Percue:" ), pConcentrationBox_ );
-    pConcentrationPerceived_ = new QLabel( pConcentrationBox_ );
-
-    new QLabel( tr( "Pertinence:" ), pConcentrationBox_ );
-    pConcentrationRelevance_ = new QLabel( pConcentrationBox_ );
-
-    pConcentrationBox_->hide();
-
-    // Flow
-    pFlowBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Flux" ), this );
-    
-    new QLabel( tr( "Id:" ), pFlowBox_ );
-    pFlowIdLabel_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Flux associé:" ), pFlowBox_ );
-    pFlowAssociatedLabel_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Direction:" ), pFlowBox_ );
-    pFlowDirection_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Speed:" ), pFlowBox_ );
-    pFlowSpeed_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Humains vivants:" ), pFlowBox_ );
-    pFlowAliveHumans_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Humains morts:" ), pFlowBox_ );
-    pFlowDeadHumans_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Attitude:" ), pFlowBox_ );
-    pFlowAttitude_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Percu:" ), pFlowBox_ );
-    pFlowPerceived_ = new QLabel( pFlowBox_ );
-
-    new QLabel( tr( "Portions connues:" ), pFlowBox_ );
-    pFlowPartNbr_ = new QLabel( pFlowBox_ );
-
-    pFlowBox_->hide();
+    display_->AddGroup( "Flux" )
+                .AddItem( "Id:" )
+                .AddItem( "Flux associée:" )
+                .AddItem( "Direction:" )
+                .AddItem( "Vitesse:" )
+                .AddItem( "Humains vivants:" )
+                .AddItem( "Humains morts:" )
+                .AddItem( "Attitude:" )
+                .AddItem( "Percue:" )
+                .AddItem( "Portions connues:" );
 
     pFlowPartBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Portions de flux" ), this );
     pFlowPartTable_ = new QTable( 0, 2, pFlowPartBox_ );
@@ -192,6 +136,7 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
 // -----------------------------------------------------------------------------
 MOS_PopulationKnowledgePanel::~MOS_PopulationKnowledgePanel()
 {
+    delete display_;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,6 +159,7 @@ void MOS_PopulationKnowledgePanel::OnClearSelection()
 {
     pGtia_ = 0;
     pKnowledgeListView_->clear();
+    display_->Clear();
     pSelectedKnowledge_              = 0;
     pSelectedConcentrationKnowledge_ = 0;
     pSelectedFlowKnowledge_          = 0;
@@ -279,6 +225,26 @@ void MOS_PopulationKnowledgePanel::UpdateList()
     }
 }
 
+namespace
+{
+    // $$$$ AGE 2006-02-09: HIé
+    template< typename T >
+    QString IfSet( const T& value, const QString& message )
+    {
+        return value.IsSet() ? message : "";
+    }
+    template< typename T >
+    QString IfSet( const T& value, const std::string& message )
+    {
+        return value.IsSet() ? message.c_str() : "";
+    }
+    template< typename T >
+    QString IfSet( const T& value )
+    {
+        return value.IsSet() ? QString::number( value ) : "";
+    }
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationKnowledgePanel::UpdateSelected
@@ -286,61 +252,54 @@ void MOS_PopulationKnowledgePanel::UpdateList()
 // -----------------------------------------------------------------------------
 void MOS_PopulationKnowledgePanel::UpdateSelected()
 {
-    pIdLabel_                  ->setText( "-" );
-    pAssociatedPopulationLabel_->setText( "-" );
-    pTeamLabel_                ->setText( "-" );
-    pConcentrationBox_         ->hide   ();
-    pFlowBox_                  ->hide   ();
-    pFlowPartBox_              ->hide   ();
+    display_->Clear();
+    display_->Group( "Concentration" ).hide();
+    display_->Group( "Flux" ).hide();
+
+    pFlowPartBox_->hide   ();
 
     if( pSelectedKnowledge_ == 0 )
         return;
+    MOS_PopulationKnowledge& k = *pSelectedKnowledge_;
 
-    pIdLabel_                  ->setText( QString::number( pSelectedKnowledge_->GetID() ) );
-    pAssociatedPopulationLabel_->setText( QString::number( pSelectedKnowledge_->GetPopulation().GetID() ) );
-
-    const MOS_Team* pTeam = pSelectedKnowledge_->GetTeam();
-    if( pTeam )
-        pTeamLabel_->setText( pTeam->GetName().c_str() );
+    display_->Group( "Détails" )
+                .Display( "Id:", MOS_Display::Id( k.GetID() ) )
+                .Display( "Population associée:", MOS_Display::Id( k.GetPopulation().GetID() ) )
+                .Display( "Camp:", k.GetTeam() ? k.GetTeam()->GetName() : "" );
 
     if( pSelectedConcentrationKnowledge_ != 0 )
     {
-        pConcentrationIdLabel_->setText( QString::number( pSelectedConcentrationKnowledge_->GetID() ) );
-        if( pSelectedConcentrationKnowledge_->GetConcentration() != 0 )
-            pConcentrationAssociatedLabel_->setText( QString::number( pSelectedConcentrationKnowledge_->GetConcentration()->GetID() ) );
-        else
-            pConcentrationAssociatedLabel_->setText( tr( "-" ) );
+        MOS_PopulationConcentrationKnowledge& ck = *pSelectedConcentrationKnowledge_;
         std::string strPos;
-        MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( pSelectedConcentrationKnowledge_->GetPosition(), strPos );
-        pConcentrationPosition_   ->setText( strPos.c_str() );
-        pConcentrationAliveHumans_->setText( pSelectedConcentrationKnowledge_->IsValidNbrAliveHumans() ? QString::number( pSelectedConcentrationKnowledge_->GetNbrAliveHumans() )                         : tr( "n/d" ) );
-        pConcentrationDeadHumans_ ->setText( pSelectedConcentrationKnowledge_->IsValidNbrDeadHumans()  ? QString::number( pSelectedConcentrationKnowledge_->GetNbrDeadHumans() )                          : tr( "n/d" ) );
-        pConcentrationAttitude_   ->setText( pSelectedConcentrationKnowledge_->IsValidAttitude()       ? ENT_Tr::ConvertFromPopulationAttitude( pSelectedConcentrationKnowledge_->GetAttitude() ).c_str() : tr( "n/d" ) );
-        pConcentrationPerceived_  ->setText( pSelectedConcentrationKnowledge_->IsValidPerceived()      ? pSelectedConcentrationKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" )                      : tr( "n/d" ) );
-        pConcentrationRelevance_  ->setText( QString::number( pSelectedConcentrationKnowledge_->GetRelevance() ) );
-
-        pConcentrationBox_->show();
+        MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( ck.GetPosition(), strPos );
+        display_->Group( "Concentration" )
+                    .Display( "Id:", MOS_Display::Id( ck.GetID() ) )
+                    .Display( "Concentration associée:", MOS_Display::Id( ck.GetConcentration() ? ck.GetConcentration()->GetID() : 0 ) )
+                    .Display( "Position:", strPos )
+                    .Display( "Humains vivants:", IfSet( ck.nNbrAliveHumans_ ) )
+                    .Display( "Humains morts:", IfSet( ck.nNbrDeadHumans_ ) )
+                    .Display( "Attitude:", IfSet( ck.eAttitude_, ENT_Tr::ConvertFromPopulationAttitude( ck.eAttitude_ ) ) )
+                    .Display( "Percue:", IfSet( ck.bIsPerceived_, MOS_Display::YesNo( ck.bIsPerceived_ ) ) )
+                    .Display( "Pertinence:", ck.rRelevance_ );
     }
     else if( pSelectedFlowKnowledge_ != 0 )
     {
-        pFlowIdLabel_->setText( QString::number( pSelectedFlowKnowledge_->GetID() ) );
-        if( pSelectedFlowKnowledge_->GetFlow() != 0 )
-            pFlowAssociatedLabel_->setText( QString::number( pSelectedFlowKnowledge_->GetFlow()->GetID() ) );
-        else
-            pFlowAssociatedLabel_->setText( tr( "-" ) );
-        pFlowDirection_  ->setText( pSelectedFlowKnowledge_->IsValidDirection()      ? QString::number( pSelectedFlowKnowledge_->GetDirection() )                              : tr( "n/d" ) );
-        pFlowSpeed_      ->setText( pSelectedFlowKnowledge_->IsValidSpeed()          ? QString::number( pSelectedFlowKnowledge_->GetSpeed() )                                  : tr( "n/d" ) );
-        pFlowAliveHumans_->setText( pSelectedFlowKnowledge_->IsValidNbrAliveHumans() ? QString::number( pSelectedFlowKnowledge_->GetNbrAliveHumans() )                         : tr( "n/d" ) );
-        pFlowDeadHumans_ ->setText( pSelectedFlowKnowledge_->IsValidNbrDeadHumans()  ? QString::number( pSelectedFlowKnowledge_->GetNbrDeadHumans() )                          : tr( "n/d" ) );
-        pFlowAttitude_   ->setText( pSelectedFlowKnowledge_->IsValidAttitude()       ? ENT_Tr::ConvertFromPopulationAttitude( pSelectedFlowKnowledge_->GetAttitude() ).c_str() : tr( "n/d" ) );
-        pFlowPerceived_  ->setText( pSelectedFlowKnowledge_->IsValidPerceived()      ? pSelectedFlowKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" )                      : tr( "n/d" ) );
-        pFlowPartNbr_    ->setText( pSelectedFlowKnowledge_->IsValidFlowParts()      ? QString::number( pSelectedFlowKnowledge_->GetFlowParts().size() )                       : tr( "n/d" ) );
+        MOS_PopulationFlowKnowledge& fk = *pSelectedFlowKnowledge_;
 
-        pFlowBox_->show();
+        display_->Group( "Flux" )
+                .Display( "Id:", MOS_Display::Id( fk.GetID() ) )
+                .Display( "Flux associée:", MOS_Display::Id( fk.GetFlow() ? fk.GetFlow()->GetID() : 0 ) )
+                .Display( "Direction:", IfSet( fk.rDirection_ ) )
+                .Display( "Vitesse:", IfSet( fk.rSpeed_ ) )
+                .Display( "Humains vivants:", IfSet( fk.nNbrAliveHumans_ ) )
+                .Display( "Humains morts:", IfSet( fk.nNbrDeadHumans_ ) )
+                .Display( "Attitude:", IfSet( fk.eAttitude_, ENT_Tr::ConvertFromPopulationAttitude( fk.eAttitude_ ) ) )
+                .Display( "Percue:", IfSet( fk.bIsPerceived_, MOS_Display::YesNo( fk.bIsPerceived_ ) ) )
+                .Display( "Portions connues:", IfSet( fk.flowParts_, QString::number( fk.flowParts_.Data().size() ) ) );
 
-        if( pSelectedFlowKnowledge_->IsValidFlowParts() && pSelectedFlowKnowledge_->GetFlowParts().size() > 0 )
+        if( fk.flowParts_.IsSet() && ! fk.flowParts_.Data().empty() )
         {
-            const MOS_PopulationFlowKnowledge::T_FlowParts& parts = pSelectedFlowKnowledge_->GetFlowParts();
+            const MOS_PopulationFlowKnowledge::T_FlowParts& parts = fk.flowParts_.Data();
             pFlowPartTable_->setNumRows( parts.size() );
             uint nNbr = 0;
             for( MOS_PopulationFlowKnowledge::CIT_FlowParts it = parts.begin(); it != parts.end(); ++it, ++nNbr )
@@ -349,7 +308,7 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
                 if( pFlowPartTable_->item( nNbr, 0 ) )
                 {
                     pFlowPartTable_->item( nNbr, 0 )->setText( QString::number( nNbr ) );
-                    pFlowPartTable_->item( nNbr, 1 )->setText( QString::number( ( *it )->GetRelevance() ) );
+                    pFlowPartTable_->item( nNbr, 1 )->setText( QString::number( it->rRelevance_ ) );
                 }
                 else
                 {
@@ -357,7 +316,7 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
                     pItem->setText( QString::number( nNbr ) );
                     pFlowPartTable_->setItem( nNbr, 0, pItem );
                     pItem = new QTableItem( pFlowPartTable_, QTableItem::EditType::Never );
-                    pItem->setText( QString::number( ( *it )->GetRelevance() ) );
+                    pItem->setText( QString::number( it->rRelevance_ ) );
                     pFlowPartTable_->setItem( nNbr, 1, pItem );
                 }
             }
@@ -426,9 +385,6 @@ void MOS_PopulationKnowledgePanel::OnRequestCenter()
     QListViewItem* pItem = pKnowledgeListView_->selectedItem();
     if( pItem == 0 )
         return;
-
-//    MT_ValuedListViewItem< MOS_PopulationKnowledge* >* pCastItem = ( MT_ValuedListViewItem< MOS_PopulationKnowledge* >* )pItem;
-//    emit CenterOnPoint( pCastItem->GetValue()->GetPosition() );
 }
 
 
@@ -649,7 +605,6 @@ void MOS_PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* pItem,
     if( pPopupMenu_->count() > 0 )
         pPopupMenu_->popup( pos );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationKnowledgePanel::ToggleDisplayOwnTeam

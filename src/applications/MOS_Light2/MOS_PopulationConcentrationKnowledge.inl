@@ -67,7 +67,7 @@ const MT_Vector2D& MOS_PopulationConcentrationKnowledge::GetPosition() const
 inline
 uint MOS_PopulationConcentrationKnowledge::GetNbrAliveHumans() const
 {
-    return nNbrAliveHumans_.value_;
+    return nNbrAliveHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ uint MOS_PopulationConcentrationKnowledge::GetNbrAliveHumans() const
 inline
 uint MOS_PopulationConcentrationKnowledge::GetNbrDeadHumans() const
 {
-    return nNbrDeadHumans_.value_;
+    return nNbrDeadHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ uint MOS_PopulationConcentrationKnowledge::GetNbrDeadHumans() const
 inline
 E_PopulationAttitude MOS_PopulationConcentrationKnowledge::GetAttitude() const
 {
-    return eAttitude_.value_;
+    return eAttitude_;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,45 +107,5 @@ MT_Float MOS_PopulationConcentrationKnowledge::GetRelevance() const
 inline
 bool MOS_PopulationConcentrationKnowledge::IsPerceived() const
 {
-    return bIsPerceived_.value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::IsValidNbrAliveHumans
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationConcentrationKnowledge::IsValidNbrAliveHumans() const
-{
-    return nNbrAliveHumans_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::IsValidNbrDeadHumans
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationConcentrationKnowledge::IsValidNbrDeadHumans() const
-{
-    return nNbrDeadHumans_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::IsValidAttitude
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationConcentrationKnowledge::IsValidAttitude() const
-{
-    return eAttitude_.bIsValid_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::IsValidPerceived
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-inline
-bool MOS_PopulationConcentrationKnowledge::IsValidPerceived() const
-{
-    return bIsPerceived_.bIsValid_;
+    return bIsPerceived_;
 }
