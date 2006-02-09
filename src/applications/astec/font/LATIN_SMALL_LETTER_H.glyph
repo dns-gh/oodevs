@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_SMALL_LETTER_H</title>
+<unicode>68</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<include href="LATIN_SMALL_LETTER_F.glyph">
+<invoke>
+<pos>
+<point2d x="300.0" y="0.0"/>
+</pos>
+</invoke>
+</include>
+</body>
+</glyphElement>
