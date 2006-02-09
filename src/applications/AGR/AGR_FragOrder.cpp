@@ -315,7 +315,7 @@ std::string AGR_FragOrder::MosLight2ImplementationCode() const
 {
     std::stringstream strResult;
 
-    const std::string strFunctionName = "MOS_FragmentaryOrderInterface::CreateOrder_" + BaseName();
+    const std::string strFunctionName = "FragmentaryOrderInterface::CreateOrder_" + BaseName();
 
     strResult << "// -----------------------------------------------------------------------------\n"
               << "// Name: " << strFunctionName << "\n"
@@ -323,7 +323,7 @@ std::string AGR_FragOrder::MosLight2ImplementationCode() const
               << "// -----------------------------------------------------------------------------\n";
     
 
-    // model : void MOS_FragmentaryOrderInterface::CreateOrder_AutomateMouvementZoneImplantation() {
+    // model : void FragmentaryOrderInterface::CreateOrder_AutomateMouvementZoneImplantation() {
     strResult << "void " << strFunctionName << "()\n"
               << "{\n";
 

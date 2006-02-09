@@ -418,11 +418,11 @@ std::string AGR_Mission::GenerateMos2Implementation() const
     std::stringstream strResult;
     std::string strFunctionName;
     if( eMissionType_ == eMissionAutomate )
-        strFunctionName = "MOS_AutomateMissionInterface::CreateMission_" + BaseName();
+        strFunctionName = "AutomateMissionInterface::CreateMission_" + BaseName();
     else if( eMissionType_ == eMissionPopulation )
-        strFunctionName = "MOS_PopulationMissionInterface::CreateMission_" + BaseName();
+        strFunctionName = "PopulationMissionInterface::CreateMission_" + BaseName();
     else
-        strFunctionName = "MOS_UnitMissionInterface::CreateMission_" + BaseName();
+        strFunctionName = "UnitMissionInterface::CreateMission_" + BaseName();
 
     strResult << "// -----------------------------------------------------------------------------\n"
               << "// Name: " << strFunctionName << "\n"
@@ -430,7 +430,7 @@ std::string AGR_Mission::GenerateMos2Implementation() const
               << "// -----------------------------------------------------------------------------\n";
 
 
-    // model : void MOS_MissionPion::CreateMission_DestroyObject() {
+    // model : void MissionPion::CreateMission_DestroyObject() {
     strResult << "void " << strFunctionName << "()\n"
               << "{\n";
 

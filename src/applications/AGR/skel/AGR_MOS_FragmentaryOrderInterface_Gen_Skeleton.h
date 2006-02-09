@@ -6,15 +6,5 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE  $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.h $
-// $Author: Ape $
-// $Modtime: 13/05/04 18:03 $
-// $Revision: 2 $
-// $Workfile: AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.h $
-//
-// *****************************************************************************
-
 
 $OrderCreatorDeclarations$

@@ -20,7 +20,7 @@
 #   pragma implementation
 #endif
 
-#include "MOS_Light2_pch.h"
+#include "astec_pch.h"
 #include "MT_GLDLayerDialog.h"
 #include "moc_MT_GLDLayerDialog.cpp"
 

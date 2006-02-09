@@ -83,7 +83,7 @@
 
     <!-- SCIPIO -->
     <target name="applications.SCIPIO" description="build SCIPIO executables"
-            depends="application.SIM,application.ADN,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
+            depends="application.SIM,application.ADN,application.astec,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
 
     <target name="application.TIC_XmlExporter" description="build TIC_XmlExporter executable" depends="library.TIC_Export,library.MT_Tools_Scipio">
         <build-app name="TIC_XmlExporter"
@@ -125,11 +125,11 @@
         </build-app>
     </target>
 
-    <target name="application.MOS_Light2" description="build MOS_Light2 executable" depends="library.ASN,library.ENT,library.GFX,library.MT_Tools_Scipio">
-        <!-- A corriger excludes="**/MOS_**_Gen.*" -->
-        <build-app name="MOS_Light2"
+    <target name="application.astec" description="build astec executable" depends="library.ASN,library.ENT,library.GFX,library.MT_Tools_Scipio">
+        <!-- A corriger excludes="**/**_Gen.*" -->
+        <build-app name="astec"
                    subsystem="gui"
-                   excludes="**/font/*,**/MOS_**_Gen.*"
+                   excludes="**/font/*,**/**_Gen.*"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools_SCIPIO,ASN,GFX,ENT,
@@ -243,7 +243,7 @@
         <clean name="TIC_XmlExporter"/>
         <clean name="SIM"/>
         <clean name="ADN"/>
-        <clean name="MOS_Light2"/>
+        <clean name="astec"/>
         <clean name="Tester"/>
         <clean name="HLA_Manager"/>
         <clean name="AGR"/>

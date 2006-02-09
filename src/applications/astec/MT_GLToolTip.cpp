@@ -11,10 +11,10 @@
 #   pragma implementation
 #endif
 
-#include "MOS_Light2_pch.h"
+#include "astec_pch.h"
 #include "MT_GLToolTip.h"
-#include "MOS_App.h"
-#include "MOS_MainWindow.h"
+#include "App.h"
+#include "MainWindow.h"
 #include "MT_GLToolTipLine.h"
 
 // -----------------------------------------------------------------------------

@@ -23,7 +23,7 @@
 #   pragma interface
 #endif
 
-#include "MOS_Types.h"
+#include "Types.h"
 
 // =============================================================================
 // Created: APE 2004-07-02

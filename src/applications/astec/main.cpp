@@ -1,6 +1,6 @@
 
-#include "MOS_Light2_pch.h"
-#include "MOS_App.h"
+#include "astec_pch.h"
+#include "App.h"
 
 #include "MT_Tools/MT_Version.h"
 
@@ -20,7 +20,7 @@ int main( int argc, char** argv )
 
     try
     {
-        MOS_App a( argc, argv );
+        App a( argc, argv );
         a.processEvents();
         a.exec();
     }

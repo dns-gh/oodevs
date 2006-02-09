@@ -6,22 +6,13 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE  $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_UnitMissionInterface_Gen_Skeleton.cpp $
-// $Author: Ape $
-// $Modtime: 25/10/04 10:45 $
-// $Revision: 3 $
-// $Workfile: AGR_MOS_UnitMissionInterface_Gen_Skeleton.cpp $
-//
-// *****************************************************************************
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface destructor
+// Name: UnitMissionInterface destructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
+UnitMissionInterface::~UnitMissionInterface()
 {
     switch( pASNMsgOrder_->GetAsnMsg().mission.t )
     {
@@ -33,10 +24,10 @@ $AsnMissionDeletion$
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateInterface
+// Name: UnitMissionInterface::CreateInterface
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateInterface()
+void UnitMissionInterface::CreateInterface()
 {
     switch( nMissionId_ )
     {

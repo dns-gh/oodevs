@@ -14,7 +14,7 @@
 #   pragma interface
 #endif
 
-#include "MOS_Types.h"
+#include "Types.h"
 
 // =============================================================================
 /** @class  MT_GLToolTipLine

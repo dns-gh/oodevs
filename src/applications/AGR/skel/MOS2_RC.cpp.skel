@@ -1,49 +1,45 @@
 //*****************************************************************************
 //
 // $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_RC.cpp $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/RC.cpp $
 // $Author: Nld $
 // $Modtime: 4/07/05 12:33 $
 // $Revision: 16 $
-// $Workfile: MOS_RC.cpp $
+// $Workfile: RC.cpp $
 //
 //*****************************************************************************
 
-#ifdef __GNUG__
-#    pragma implementation
-#endif
+#include "astec_pch.h"
+#include "RC.h"
 
-#include "MOS_Light2_pch.h"
-#include "MOS_RC.h"
-
-#include "MOS_App.h"
-#include "MOS_AgentManager.h"
-#include "MOS_Agent.h"
+#include "App.h"
+#include "AgentManager.h"
+#include "Agent.h"
 
 //-----------------------------------------------------------------------------
-// Name: MOS_RC constructor
+// Name: RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_RC::MOS_RC( MOS_Agent_ABC& agent )
-    : MOS_Report_ABC( agent.GetPos() )
+RC::RC( Agent_ABC& agent )
+    : Report_ABC( agent.GetPos() )
     , agent_        ( agent )
 {
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MOS_RC destructor
+// Name: RC destructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_RC::~MOS_RC()
+RC::~RC()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Name: MOS_RC::Initialize
+// Name: RC::Initialize
 // Created: NLD 2002-10-07
 //-----------------------------------------------------------------------------
-void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
+void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 {
     std::stringstream strMsg;
     switch( asnMsg.cr.t )
@@ -64,20 +60,20 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
 
     strTitle_ = strMsg.str();
     
-    // conversion from ASN 'type_cr' to MOS_Report_ABC::E_Type
+    // conversion from ASN 'type_cr' to Report_ABC::E_Type
     switch( asnMsg.type_cr )
     {
     case EnumTypeCR::message:
-        eType_ = MOS_Report_ABC::eMessage;
+        eType_ = Report_ABC::eMessage;
         break;
     case EnumTypeCR::operationel:
-        eType_ = MOS_Report_ABC::eRC;
+        eType_ = Report_ABC::eRC;
         break;
     case EnumTypeCR::evenement_exceptionnel:
-        eType_ = MOS_Report_ABC::eEvent;
+        eType_ = Report_ABC::eEvent;
         break;
     case EnumTypeCR::warning:
-        eType_ = MOS_Report_ABC::eWarning;
+        eType_ = Report_ABC::eWarning;
         break;
     default:
         assert( false );
@@ -87,10 +83,10 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
 
 
 //-----------------------------------------------------------------------------
-// Name: MOS_RC::Initialize
+// Name: RC::Initialize
 // Created: NLD 2003-04-04
 //-----------------------------------------------------------------------------
-void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
+void RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
 {
     strTitle_ = "Attente d'ordre";
 
@@ -111,17 +107,17 @@ void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
         }
         fragOrderVector_.push_back( nOrderConduiteID );
     }
-    eType_ = MOS_Report_ABC::eRC;
+    eType_ = Report_ABC::eRC;
 }
 
 
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_RC::ObjectKnowledgeLink
+// Name: RC::ObjectKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
+std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
     std::stringstream str;
     str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
@@ -130,10 +126,10 @@ std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_RC::AgentKnowledgeLink
+// Name: RC::AgentKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
+std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
     std::stringstream str;
     str << "<a href=\"AgentKnowledge:" << nId << "\">" << nId << "</a>";
@@ -141,10 +137,10 @@ std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_RC::PopulationKnowledgeLink
+// Name: RC::PopulationKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::PopulationKnowledgeLink( ASN1T_OID nId )
+std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 {
     std::stringstream str;
     str << "<a href=\"PopulationKnowledge:" << nId << "\">" << nId << "</a>";
@@ -152,12 +148,12 @@ std::string MOS_RC::PopulationKnowledgeLink( ASN1T_OID nId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_RC::AgentLink
+// Name: RC::AgentLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::AgentLink( ASN1T_OID nId )
+std::string RC::AgentLink( ASN1T_OID nId )
 {
-    MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAllAgent( nId );
+    Agent_ABC* pAgent = App::GetApp().GetAgentManager().FindAllAgent( nId );
     if( pAgent == 0 )
         return std::string( " !Agent non trouvé! " );
 

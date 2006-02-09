@@ -20,7 +20,7 @@
 #   pragma implementation
 #endif
 
-#include "MOS_Light2_pch.h"
+#include "astec_pch.h"
 #include "MT_GLDShapeDialog.h"
 #include "moc_MT_GLDShapeDialog.cpp"
 
