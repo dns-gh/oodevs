@@ -33,6 +33,10 @@
 #include "MOS_Gtia.h"
 #include "MOS_AgentKnowledge.h"
 #include "MOS_ActionContext.h"
+#include "MOS_Display.h"
+#include "MOS_DisplayGroup.h"
+#include "MOS_DisplayItem.h"
+#include "OptionalValue.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel constructor
@@ -45,6 +49,7 @@ MOS_AgentKnowledgePanel::MOS_AgentKnowledgePanel( QWidget* pParent )
     , pPopupMenu_           ( new QPopupMenu( this ) )
     , pSelectedKnowledge_   ( 0 )
     , pGtia_                ( 0 )
+    , display_              ( 0 )
 {
     pKnowledgeListView_ = new QListView( this );
     pKnowledgeListView_->addColumn( tr( "Agents connus" ) );
@@ -53,70 +58,29 @@ MOS_AgentKnowledgePanel::MOS_AgentKnowledgePanel( QWidget* pParent )
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
-    QGroupBox* pDetails = new QGroupBox( 2, Qt::Horizontal, tr( "Détails" ), this );
-
-    new QLabel( tr( "Id:" ), pDetails );
-    pIdLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Agent associé:" ), pDetails );
-    pAssociatedAgentLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Position:" ), pDetails );
-    pPositionLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Direction:" ), pDetails );
-    pDirectionLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Vitesse:" ), pDetails );
-    pSpeedLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Etat ops.:" ), pDetails );
-    pStateLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Niveau de perception:" ), pDetails );
-    pPerceptionLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Niveau max de perception:" ), pDetails );
-    pPerceptionMaxLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Camp:" ), pDetails );
-    pTeamLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Niveau:" ), pDetails );
-    pLevelLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Arme:" ), pDetails );
-    pWeaponLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Spécialisation:" ), pDetails );
-    pSpecializationLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Qualification:" ), pDetails );
-    pQualifierLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Catégorie:" ), pDetails );
-    pCategoryLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Mobilité:" ), pDetails );
-    pMobilityLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Capacité mission:" ), pDetails );
-    pCapacityLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Rendu:" ), pDetails );
-    pSurrenderedLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Fait prisonnier:" ), pDetails );
-    pPrisonnerLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Réfugiés pris en compte:" ), pDetails );
-    pRefugiesLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "PC:" ), pDetails );
-    pIsHQLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Pertinence:" ), pDetails );
-    pRelevanceLabel_ = new QLabel( pDetails );
+    display_ = new MOS_Display( this );
+    display_->AddGroup( "Détails" )
+                .AddItem( "Id:" )
+                .AddItem( "Agent associé:" )
+                .AddItem( "Position:" )
+                .AddItem( "Direction:" )
+                .AddItem( "Vitesse:" )
+                .AddItem( "Etat ops.:" )
+                .AddItem( "Niveau de perception:" )
+                .AddItem( "Niveau max de perception:" )
+                .AddItem( "Camp:" )
+                .AddItem( "Niveau:" )
+                .AddItem( "Arme:" )
+                .AddItem( "Spécialisation:" )
+                .AddItem( "Qualification:" )
+                .AddItem( "Catégorie:" )
+                .AddItem( "Mobilité:" )
+                .AddItem( "Capacité mission:" )
+                .AddItem( "Rendu:" )
+                .AddItem( "Fait prisonnier:" )
+                .AddItem( "Réfugiés pris en compte:" )
+                .AddItem( "PC:" )
+                .AddItem( "Pertinence:"  );
 
     pPerceptionListView_ = new QListView( this );
     pPerceptionListView_->addColumn( tr( "Agent" ) );
@@ -148,6 +112,7 @@ MOS_AgentKnowledgePanel::MOS_AgentKnowledgePanel( QWidget* pParent )
 // -----------------------------------------------------------------------------
 MOS_AgentKnowledgePanel::~MOS_AgentKnowledgePanel()
 {
+    delete display_;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,6 +135,7 @@ void MOS_AgentKnowledgePanel::OnClearSelection()
 {
     pGtia_ = 0;
     pKnowledgeListView_->clear();
+    display_->Clear();
     pSelectedKnowledge_ = 0;
     UpdateSelected();
 }
@@ -224,6 +190,20 @@ void MOS_AgentKnowledgePanel::UpdateList()
     }
 }
 
+namespace
+{
+    // $$$$ AGE 2006-02-09: HIé
+    template< typename T >
+    QString IfSet( const T& value, const QString& message )
+    {
+        return value.IsSet() ? message : "";
+    }
+    template< typename T >
+    QString IfSet( const T& value, const std::string& message )
+    {
+        return value.IsSet() ? message.c_str() : "";
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel::UpdateSelected
@@ -233,96 +213,40 @@ void MOS_AgentKnowledgePanel::UpdateList()
 // -----------------------------------------------------------------------------
 void MOS_AgentKnowledgePanel::UpdateSelected()
 {
-    pIdLabel_               ->setText( "-" );
-    pAssociatedAgentLabel_  ->setText( "-" );
-    pPositionLabel_         ->setText( "-" );
-    pDirectionLabel_        ->setText( "-" );
-    pSpeedLabel_            ->setText( "-" );
-    pStateLabel_            ->setText( "-" );
-    pPerceptionLabel_       ->setText( "-" );
-    pPerceptionMaxLabel_    ->setText( "-" );
-    pTeamLabel_             ->setText( "-" );
-    pLevelLabel_            ->setText( "-" );
-    pWeaponLabel_           ->setText( "-" );
-    pSpecializationLabel_   ->setText( "-" );
-    pQualifierLabel_        ->setText( "-" );
-    pCategoryLabel_         ->setText( "-" );
-    pMobilityLabel_         ->setText( "-" );
-    pCapacityLabel_         ->setText( "-" );
-    pRefugiesLabel_         ->setText( "-" );
-    pPrisonnerLabel_        ->setText( "-" );
-    pSurrenderedLabel_      ->setText( "-" );
-    pIsHQLabel_             ->setText( "-" );
-    pRelevanceLabel_        ->setText( "-" );
+    display_->Clear();
 
     pPerceptionListView_->clear();
 
     if( pSelectedKnowledge_ == 0 )
         return;
 
-    pIdLabel_             ->setText( QString::number( pSelectedKnowledge_->GetID() ) );
-    pAssociatedAgentLabel_->setText( QString::number( pSelectedKnowledge_->GetRealAgent().GetID() ) );
+    MOS_AgentKnowledge& k = *pSelectedKnowledge_;
+    display_->Group( "Détails" )
+                .Display( "Id:", MOS_Display::Id(  k.GetID() ) )
+                .Display( "Agent associé:", MOS_Display::Id( k.GetRealAgent().GetID() ) )
+                .Display( "Position:", IfSet( k.strPosition_, k.strPosition_ ) )
+                .Display( "Direction:", IfSet( k.nDirection_, QString::number( k.nDirection_ ) ) )
+                .Display( "Vitesse:", IfSet( k.nSpeed_, QString::number( k.nSpeed_ ) ) )
+                .Display( "Etat ops.:", IfSet( k.nEtatOps_, QString::number( k.nEtatOps_ ) ) )
+                .Display( "Niveau de perception:", IfSet( k.nCurrentPerceptionLevel_, MOS_Tools::ToString( k.nCurrentPerceptionLevel_ ) ) )
+                .Display( "Niveau max de perception:", IfSet( k.nCurrentPerceptionLevel_, MOS_Tools::ToString( k.nMaxPerceptionLevel_ ) ) )
+                .Display( "Camp:", IfSet( k.nTeam_, MOS_App::GetApp().GetAgentManager().FindTeam( k.nTeam_)->GetName() ) )
+                .Display( "Niveau:", IfSet( k.nLevel_, ENT_Tr::ConvertFromNatureLevel( k.nLevel_ ) ) )
+                .Display( "Arme:", IfSet( k.nWeapon_, ENT_Tr::ConvertFromUnitNatureWeapon( k.nWeapon_ ) ) )
+                .Display( "Spécialisation:", IfSet( k.nSpecialization_, ENT_Tr::ConvertFromUnitNatureSpecialization( k.nSpecialization_ ) ) )
+                .Display( "Qualification:", IfSet( k.nQualifier_, ENT_Tr::ConvertFromUnitNatureQualifier( k.nQualifier_ ) ) )
+                .Display( "Catégorie:", IfSet( k.nCategory_, ENT_Tr::ConvertFromUnitNatureCategory( k.nCategory_ ) ) )
+                .Display( "Mobilité:", IfSet( k.nMobility_, ENT_Tr::ConvertFromUnitNatureMobility( k.nMobility_ ) ) )
+                .Display( "Capacité mission:", IfSet( k.nCapacity_, ENT_Tr::ConvertFromUnitCapaciteMission( k.nCapacity_ ) ) )
+                .Display( "Rendu:", IfSet( k.bSurrendered_, MOS_Display::YesNo( k.bSurrendered_ ) ) )
+                .Display( "Fait prisonnier:", IfSet( k.bPrisonner_, MOS_Display::YesNo( k.bPrisonner_ ) ) )
+                .Display( "Réfugiés pris en compte:", IfSet( k.bRefugies_, MOS_Display::YesNo( k.bRefugies_ ) ) )
+                .Display( "PC:", IfSet( k.bIsPC_, MOS_Display::YesNo( k.bIsPC_ ) ) )
+                .Display( "Pertinence:", IfSet( k.nRelevance_, QString::number( k.nRelevance_ ) ) );
 
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Team ) )
-        pTeamLabel_->setText(  MOS_App::GetApp().GetAgentManager().FindTeam( pSelectedKnowledge_->nTeam_)->GetName().c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Level ) )
-        pLevelLabel_->setText(  ENT_Tr::ConvertFromNatureLevel( pSelectedKnowledge_->nLevel_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Weapon ) )
-        pWeaponLabel_->setText(  ENT_Tr::ConvertFromUnitNatureWeapon( pSelectedKnowledge_->nWeapon_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Category ) )
-        pCategoryLabel_->setText(  ENT_Tr::ConvertFromUnitNatureCategory( pSelectedKnowledge_->nCategory_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Qualifier ) )
-        pQualifierLabel_->setText(  ENT_Tr::ConvertFromUnitNatureQualifier( pSelectedKnowledge_->nQualifier_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Specialization ) )
-        pSpecializationLabel_->setText(  ENT_Tr::ConvertFromUnitNatureSpecialization( pSelectedKnowledge_->nSpecialization_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Mobility ) )
-        pMobilityLabel_->setText(  ENT_Tr::ConvertFromUnitNatureMobility( pSelectedKnowledge_->nMobility_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Capacity ) )
-        pCapacityLabel_->setText(  ENT_Tr::ConvertFromUnitCapaciteMission( pSelectedKnowledge_->nCapacity_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_IsPC ) )
-        pIsHQLabel_->setText(  pSelectedKnowledge_->bIsPC_ ? tr("Oui") : tr("Non") );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_CurrentPerceptionLevel ) )
-        pPerceptionLabel_->setText(  MOS_Tools::ToString( pSelectedKnowledge_->nCurrentPerceptionLevel_ ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_MaxPerceptionLevel ) )
-        pPerceptionMaxLabel_->setText(  MOS_Tools::ToString( pSelectedKnowledge_->nMaxPerceptionLevel_ ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_EtatOps ) )
-        pStateLabel_->setText( MT_FormatString( "%d", pSelectedKnowledge_->nEtatOps_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Speed) )
-        pSpeedLabel_->setText( MT_FormatString( "%d", pSelectedKnowledge_->nSpeed_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Direction ) )
-        pDirectionLabel_->setText( MT_FormatString( "%d", pSelectedKnowledge_->nDirection_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Position ) )
-        pPositionLabel_->setText( pSelectedKnowledge_->strPosition_.c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Relevance ) )
-        pRelevanceLabel_->setText( MT_FormatString( "%d", pSelectedKnowledge_->nRelevance_ ).c_str() );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Prisonner) )
-        pPrisonnerLabel_->setText( pSelectedKnowledge_->bPrisonner_ ? tr("Oui") : tr("Non") );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Surrendered ) )
-        pSurrenderedLabel_->setText( pSelectedKnowledge_->bSurrendered_ ? tr("Oui") : tr("Non") );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Refugies ) )
-        pRefugiesLabel_->setText( pSelectedKnowledge_->bRefugies_ ? tr("Oui") : tr("Non") );
-
-    if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_AutomatePerception ) )
+    if( k.automatePerceptionMap_.IsSet() )
     {
-        for( MOS_AgentKnowledge::CIT_AutomatePerceptionMap it = pSelectedKnowledge_->automatePerceptionMap_.begin(); it != pSelectedKnowledge_->automatePerceptionMap_.end(); ++it )
+        for( MOS_AgentKnowledge::CIT_AutomatePerceptionMap it = k.automatePerceptionMap_.Data().begin(); it != k.automatePerceptionMap_.Data().end(); ++it )
             new QListViewItem( pPerceptionListView_, it->first->GetName().c_str(), MOS_Tools::ToString( it->second )  );
     }
 }

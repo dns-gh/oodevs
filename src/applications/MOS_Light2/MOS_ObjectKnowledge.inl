@@ -21,18 +21,6 @@ uint MOS_ObjectKnowledge::GetID() const
     return nID_;    
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_ObjectKnowledge::IsUpdated
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-inline
-bool MOS_ObjectKnowledge::IsValid( E_AttributeUpdated nAttr ) const
-{
-    return nAttrUpdated_ & nAttr;
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledge::GetCenter
 // Created: NLD 2004-03-18

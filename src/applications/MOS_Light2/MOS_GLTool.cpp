@@ -1334,10 +1334,10 @@ void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
         else
             glColor4d( MOS_COLOR_KNOWLEDGE );
 
-        if( knowledge.points_.size() == 1 )
-            DrawCross( knowledge.points_.front(), 300, 1.0 );
+        if( knowledge.points_.Data().size() == 1 )
+            DrawCross( knowledge.points_.Data().front(), 300, 1.0 );
         else
-            DrawLine( knowledge.points_ );
+            DrawLine( knowledge.points_.Data() );
     }
 
 }

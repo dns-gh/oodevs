@@ -36,6 +36,9 @@
 #include "MOS_SelectedElement.h"
 #include "MOS_Gtia.h"
 #include "MOS_AgentKnowledge.h"
+#include "MOS_Display.h"
+#include "MOS_DisplayGroup.h"
+#include "MOS_DisplayItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel constructor
@@ -54,88 +57,36 @@ MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
-    QGroupBox* pDetails = new QGroupBox( 2, Qt::Horizontal, tr( "Détails" ), this );
-
-    new QLabel( tr( "Id:" ), pDetails );
-    pIdLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Objet associé:" ), pDetails );
-    pAssociatedObjectLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Position:" ), pDetails );
-    pPositionLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Type:" ), pDetails );
-    pObjectTypeLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Construction:" ), pDetails );
-    pPercentBuiltLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Valeur:" ), pDetails );
-    pPercentValueLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Contournement:" ), pDetails );
-    pPercentAroundLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "En préparation:" ), pDetails );
-    pIsUnderPrepLabel_ = new QLabel( pDetails );
-
-    //! @name crossing
-    //@{
-    pCrossingGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Site de franchissement" ), this );
-    new QLabel( tr( "Largeur:" ), pCrossingGroup_ );
-    pCrossingWidthLabel_ = new QLabel( pCrossingGroup_ );
-    new QLabel( tr( "Profondeur:" ), pCrossingGroup_ );
-    pCrossingDepthLabel_ = new QLabel( pCrossingGroup_ );
-    new QLabel( tr( "Vitesse courant:" ), pCrossingGroup_ );
-    pCrossingRiverSpeedLabel_ = new QLabel( pCrossingGroup_ );
-    new QLabel( tr( "Berges à aménager:" ), pCrossingGroup_ );
-    pCrossingBanksNeedWorkLabel_ = new QLabel( pCrossingGroup_ );
-    //@}
-    
-    //! @name NBC
-    //@{
-    pNBCGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Nuage/zone NBC" ), this );
-    new QLabel( tr( "Agent NBC:" ), pNBCGroup_ );
-    pNBCAgentLabel_ = new QLabel( pNBCGroup_ );
-    //@}
-
-    //! @name ROTA
-    //@{
-    pROTAGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "ROTA" ), this );
-    new QLabel( tr( "Danger:" ), pROTAGroup_ );
-    pROTADangerLabel_ = new QLabel( pROTAGroup_ );
-    new QLabel( tr( "Agents NBC:" ), pROTAGroup_ );
-    pROTANBCAgentsLabel_ = new QLabel( pROTAGroup_ );
-    //@}
-
-    //! @name prisoner/refugee camp
-    //@{
-    pCampGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Camp de prisonniers/réfugiés" ), this );
-    new QLabel( tr( "TC2:" ), pCampGroup_ );
-    pCampTC2ID_ = new QLabel( pCampGroup_ );
-    //@}
-
-    //! @name logistic route
-    //@{
-    pLogRouteGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Itinéraire logistique" ), this );
-    new QLabel( tr( "Largeur:" ), pLogRouteGroup_ );
-    pLogRouteWidth_ = new QLabel( pLogRouteGroup_ );
-    new QLabel( tr( "Longueur:" ), pLogRouteGroup_ );
-    pLogRouteLength_ = new QLabel( pLogRouteGroup_ );
-    new QLabel( tr( "Débit:" ), pLogRouteGroup_ );
-    pLogRouteFlow_ = new QLabel( pLogRouteGroup_ );
-    new QLabel( tr( "Poids maximum:" ), pLogRouteGroup_ );
-    pLogRouteMaxWeight_ = new QLabel( pLogRouteGroup_ );
-    new QLabel( tr( "Equipé:" ), pLogRouteGroup_ );
-    pLogRouteEquipped_ = new QLabel( pLogRouteGroup_ );
-    //@}
-
-    new QLabel( tr( "Perçu:" ), pDetails );
-    pIsPreceivedLabel_ = new QLabel( pDetails );
-
-    new QLabel( tr( "Pertinence:" ), pDetails );
-    pRevelanceLabel_ = new QLabel( pDetails );
+    display_ = new MOS_Display( this );
+    display_->AddGroup( "Détails" )
+                .AddItem( "Id:" )
+                .AddItem( "Objet associé:" )
+                .AddItem( "Position:" )
+                .AddItem( "Type:" )
+                .AddItem( "Construction:" )
+                .AddItem( "Valeur:" )
+                .AddItem( "Contournement:" )
+                .AddItem( "En préparation:" )
+                .AddItem( "Perçu:" )
+                .AddItem( "Pertinence:" );
+    display_->AddGroup( "Site de franchissement" )
+                .AddItem( "Largeur:" )
+                .AddItem( "Profondeur:" )
+                .AddItem( "Vitesse courant:" )
+                .AddItem( "Berges à aménager:" );
+    display_->AddGroup( "Nuage/zone NBC" )
+                .AddItem( "Agent NBC:" );
+    display_->AddGroup( "ROTA" )
+                .AddItem( "Danger:" )
+                .AddItem( "Agents NBC:" );
+    display_->AddGroup( "Camp de prisonniers/réfugiés" )
+                .AddItem( "TC2:" );
+    display_->AddGroup( "Itinéraire logistique" )
+                .AddItem( "Largeur:" )
+                .AddItem( "Longueur:" )
+                .AddItem( "Débit:" )
+                .AddItem( "Poids maximum:" )
+                .AddItem( "Equipé:" );
 
     pPerceptionListView_ = new QListView( this );
     pPerceptionListView_->addColumn( tr( "Agent" ) );
@@ -190,7 +141,7 @@ void MOS_ObjectKnowledgePanel::OnUpdate()
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::OnClearSelection()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -245,6 +196,19 @@ void MOS_ObjectKnowledgePanel::UpdateList()
     }
 }
 
+namespace
+{
+    template< typename T >
+    QString IfSet( const T& value, const QString& message )
+    {
+        return value.IsSet() ? message : "";
+    }
+    template< typename T >
+    QString IfSet( const T& value, const std::string& message )
+    {
+        return value.IsSet() ? message.c_str() : "";
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel::UpdateSelected
@@ -252,110 +216,75 @@ void MOS_ObjectKnowledgePanel::UpdateList()
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::UpdateSelected()
 {
-    pIdLabel_               ->setText( "-" );
-    pAssociatedObjectLabel_ ->setText( "-" );
-    pPositionLabel_         ->setText( "-" );
-    pObjectTypeLabel_       ->setText( "-" );
-    pPercentBuiltLabel_     ->setText( "-" );
-    pPercentValueLabel_     ->setText( "-" );
-    pPercentAroundLabel_    ->setText( "-" );
-    pIsUnderPrepLabel_      ->setText( "-" );
-    pIsPreceivedLabel_      ->setText( "-" );
-    pRevelanceLabel_        ->setText( "-" );
-
-    pCrossingGroup_->hide();
-    pNBCGroup_->hide();
-    pROTAGroup_->hide();
-    pCampGroup_->hide();
-    pLogRouteGroup_->hide();
+    display_->Clear();
+    
+    display_->Group( "Site de franchissement" ).hide();
+    display_->Group( "Nuage/zone NBC" ).hide();
+    display_->Group( "ROTA" ).hide();
+    display_->Group( "Camp de prisonniers/réfugiés"  ).hide();
+    display_->Group( "Itinéraire logistique" ).hide();
 
     pPerceptionListView_->clear();
 
     if( pSelectedKnowledge_ == 0 )
         return;
 
-    pIdLabel_->setText( QString::number( pSelectedKnowledge_->GetID() ) );
-    pObjectTypeLabel_->setText( ENT_Tr::ConvertFromObjectType( (E_ObjectType)pSelectedKnowledge_->nObjectTypeID_ ).c_str() );
-    
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_RealObject ) && pSelectedKnowledge_->GetRealObject() != 0 )
-        pAssociatedObjectLabel_->setText( QString::number( pSelectedKnowledge_->GetRealObject()->GetID() ) );
+    MOS_ObjectKnowledge& k = *pSelectedKnowledge_;
 
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_Localisation ) )
+    display_->Group( "Détails" )
+                .Display( "Id:", MOS_Display::Id( k.nID_) )
+                .Display( "Objet associé:", ( k.pRealObject_.IsSet() && k.pRealObject_ != 0 ) ? MOS_Display::Id( k.pRealObject_->GetID() ) : "" )
+                .Display( "Position:", IfSet( k.strPos_, k.strPos_ ) )
+                .Display( "Type:", ENT_Tr::ConvertFromObjectType( (E_ObjectType)k.nObjectTypeID_ ) )
+                .Display( "Construction:", IfSet( k.nPourcentageConstruction_, QString::number( k.nPourcentageConstruction_ ) + "%" ) )
+                .Display( "Valeur:", IfSet( k.nPourcentageValorisation_, QString::number( k.nPourcentageValorisation_ ) + "%" ) )
+                .Display( "Contournement:", IfSet( k.nPourcentageContournement_, QString::number( k.nPourcentageContournement_ ) + "%" ) )
+                .Display( "En préparation:", IfSet( k.bEnPreparation_, MOS_Display::YesNo( k.bEnPreparation_ ) ) )
+                .Display( "Perçu:", IfSet( k.bIsPerceived_, MOS_Display::YesNo( k.bIsPerceived_ ) ) )
+                .Display( "Pertinence:", IfSet( k.nRelevance_, QString::number( k.nRelevance_ ) ) );
+
+    if( k.automatePerceptionSet_.IsSet() )
     {
-        std::string strPos;
-        MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( pSelectedKnowledge_->GetCenter(), strPos );
-        pPositionLabel_->setText( strPos.c_str() );
-    }
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_PourcentageConstruction ) )
-        pPercentBuiltLabel_->setText( QString::number( pSelectedKnowledge_->nPourcentageConstruction_ ) + QString( "%" ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_PourcentageValorisation ) )
-        pPercentValueLabel_->setText( QString::number( pSelectedKnowledge_->nPourcentageValorisation_ ) + QString( "%" ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_PourcentageContournement ) )
-        pPercentAroundLabel_->setText( QString::number( pSelectedKnowledge_->nPourcentageContournement_ ) + QString( "%" ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_EnPreparation ) )
-        pIsUnderPrepLabel_->setText( pSelectedKnowledge_->bEnPreparation_ ? tr( "Oui" ) : tr( "Non" ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_IsPerceived ) )
-        pIsPreceivedLabel_->setText( pSelectedKnowledge_->bIsPerceived_ ? tr( "Oui" ) : tr( "Non" ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_Relevance ) )
-        pRevelanceLabel_->setText( QString::number( pSelectedKnowledge_->nRelevance_ ) );
-
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_AutomatePerception ) )
-    {
-        for( MOS_ObjectKnowledge::IT_AutomatePerceptionSet it = pSelectedKnowledge_->automatePerceptionSet_.begin(); it != pSelectedKnowledge_->automatePerceptionSet_.end(); ++it )
+        for( MOS_ObjectKnowledge::IT_AutomatePerceptionSet it = k.automatePerceptionSet_.Data().begin(); it != k.automatePerceptionSet_.Data().end(); ++it )
             new QListViewItem( pPerceptionListView_, (*it)->GetName().c_str() );
     }
 
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_RiverCrossing ) )
-    {
-        pCrossingGroup_->show();
-        pCrossingWidthLabel_->setText( QString::number( pSelectedKnowledge_->GetSiteFranchissementLargeur() ) );
-        pCrossingDepthLabel_->setText( QString::number( pSelectedKnowledge_->GetSiteFranchissementProfondeur() ) );
-        pCrossingRiverSpeedLabel_->setText( QString::number( pSelectedKnowledge_->GetSiteFranchissementVitesseCourant() ) );
-        pCrossingBanksNeedWorkLabel_->setText( pSelectedKnowledge_->GetSiteFranchissementBergesAAmenager() ? tr( "Oui" ) : tr( "Non" ) );
-    }
+    if( k.nSiteFranchissementLargeur_.IsSet() )
+        display_->Group( "Site de franchissement" )
+                    .Display( "Largeur:", k.nSiteFranchissementLargeur_ )
+                    .Display( "Profondeur:", k.nSiteFranchissementProfondeur_ )
+                    .Display( "Vitesse courant:", k.nSiteFranchissementVitesseCourant_ )
+                    .Display( "Berges à aménager:", MOS_Display::YesNo( k.nSiteFranchissementBergesAAmenager_ ) );
 
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_NBCCloud ) )
-    {
-        pNBCGroup_->show();
-        pNBCAgentLabel_->setText( (MOS_App::GetApp().GetNBCName( pSelectedKnowledge_->GetNuageNBCAgentNbcId() )).c_str() );
-    }
+    if( k.nNuageNBCAgentNbcID_.IsSet() )
+        display_->Group( "Nuage/zone NBC" ).Display( "Agent NBC:", MOS_App::GetApp().GetNBCName( k.nNuageNBCAgentNbcID_ ) );
 
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_ROTA ) )
+    if( k.nROTADanger_.IsSet() )
     {
-        pROTAGroup_->show();
-        pROTADangerLabel_->setText( QString::number( pSelectedKnowledge_->GetROTADanger() ) );
-        const std::vector< uint >& nbcAgents = pSelectedKnowledge_->GetROTANBCAgents();
+        const std::vector< uint >& nbcAgents = k.rotaNBCAgents_.Data();
         std::stringstream ss;
-        for( uint i = 0; i < nbcAgents.size(); ++i )
-        {
+        for( uint i = 0; i < nbcAgents.size(); ++i ) {
             if( i > 0 )
                 ss << ", ";
             ss << MOS_App::GetApp().GetNBCName( nbcAgents[ i ] );
         }
-        pROTANBCAgentsLabel_->setText( ss.str().c_str() );
+
+        display_->Group( "ROTA" )
+                    .Display( "Danger:", k.nROTADanger_ )
+                    .Display( "Agents NBC:", ss.str() );
     }
 
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_Camp ) )
-    {
-        pCampGroup_->show();
-        pCampTC2ID_->setText( QString::number( pSelectedKnowledge_->GetCampTC2ID() ) );
-    }
+    if( k.nCampTC2ID_.IsSet() )
+        display_->Group( "Camp de prisonniers/réfugiés" )
+                    .Display( "TC2:", k.nCampTC2ID_ );
 
-    if( pSelectedKnowledge_->IsValid( MOS_ObjectKnowledge::eUpdated_LogisticRoute ) )
-    {
-        pLogRouteGroup_->show();
-        pLogRouteWidth_->setText( QString::number( pSelectedKnowledge_->GetLogRouteWidth() ) );
-        pLogRouteLength_->setText( QString::number( pSelectedKnowledge_->GetLogRouteLength() ) );
-        pLogRouteFlow_->setText( QString::number( pSelectedKnowledge_->GetLogRouteFlow() ) );
-        pLogRouteMaxWeight_->setText( QString::number( pSelectedKnowledge_->GetLogRouteMaxWeight() ) );
-        pLogRouteEquipped_->setText( pSelectedKnowledge_->GetLogRouteEquipped() ? tr( "oui" ) : tr( "non" ) );
-    }
+    if( k.nLogRouteFlow_.IsSet() ) 
+        display_->Group( "Itinéraire logistique" )
+                    .Display( "Largeur:",       k.nLogRouteWidth_ )
+                    .Display( "Longueur:",      k.nLogRouteLength_ )
+                    .Display( "Débit:",         k.nLogRouteFlow_ )
+                    .Display( "Poids maximum:", k.nLogRouteMaxWeight_ )
+                    .Display( "Equipé:",        MOS_Display::YesNo( k.bLogRouteEquipped_ ) );
 }
 
 
@@ -390,8 +319,8 @@ void MOS_ObjectKnowledgePanel::OnRequestCenter()
         return;
 
     MT_ValuedListViewItem<MOS_ObjectKnowledge*>* pCastItem = (MT_ValuedListViewItem<MOS_ObjectKnowledge*>*)pItem;
-    if( pCastItem->GetValue()->nAttrUpdated_ & MOS_ObjectKnowledge::eUpdated_Localisation )
-        emit CenterOnPoint( pCastItem->GetValue()->GetCenter() );
+    if( pCastItem && pCastItem->GetValue()->strPos_.IsSet() )
+        emit CenterOnPoint( pCastItem->GetValue()->vCenter_ );
 }
 
 

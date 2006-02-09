@@ -32,6 +32,7 @@ class MOS_Object_ABC
 {
     MT_COPYNOTALLOWED( MOS_Object_ABC );
     friend class MOS_GLTool;
+    friend class MOS_ObjectPanel;
 
 public:
     //! @name Constructors/Destructor

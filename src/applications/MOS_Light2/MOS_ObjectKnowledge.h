@@ -14,6 +14,7 @@
 
 #include "MOS_ASN_Types.h"
 #include "MOS_IDManager.h"
+#include "OptionalValue.h"
 
 class MOS_Object_ABC;
 class MOS_Agent;
@@ -32,25 +33,6 @@ class MOS_ObjectKnowledge
     friend class MOS_GLTool;
     friend class MOS_ObjectKnowledgePanel;  //$$$$ Beurk.
 
-private:
-    enum E_AttributeUpdated
-    {
-        eUpdated_RealObject               = 0x00000001,
-        eUpdated_Relevance                = 0x00000002,
-        eUpdated_Localisation             = 0x00000004,  
-        eUpdated_PourcentageConstruction  = 0x00000008,
-        eUpdated_PourcentageValorisation  = 0x00000010,
-        eUpdated_PourcentageContournement = 0x00000020,
-        eUpdated_EnPreparation            = 0x00000040,
-        eUpdated_IsPerceived              = 0x00000080,
-        eUpdated_AutomatePerception       = 0x00000100,
-        eUpdated_RiverCrossing            = 0x00000200,
-        eUpdated_NBCCloud                 = 0x00000400,
-        eUpdated_ROTA                     = 0x00000800,
-        eUpdated_LogisticRoute            = 0x00001000,
-        eUpdated_Camp                     = 0x00002000,
-    };
-
 public:
      MOS_ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& asnMsg, MOS_Team& owner );
     ~MOS_ObjectKnowledge();
@@ -64,7 +46,6 @@ public:
     //@{
     uint                 GetID                  () const;
     ASN1T_EnumObjectType GetObjectTypeID        () const;
-    bool                 IsValid                ( E_AttributeUpdated ) const;
     const MT_Vector2D&   GetCenter              () const;
     MOS_Object_ABC*      GetRealObject          () const;
     MOS_Team&            GetOwner               () const;
@@ -92,7 +73,6 @@ public:
 
     // prisoner/refugee camp
     uint GetCampTC2ID() const;
-
     //@}
 
 private:
@@ -105,46 +85,45 @@ private:
 
 private:
     MOS_Team&            owner_;
-    uint                 nAttrUpdated_;
-
     uint                 nID_;
-    MOS_Object_ABC*  pRealObject_;
     MT_Vector2D          vCenter_;
     ASN1T_EnumObjectType nObjectTypeID_;
-    
-    T_PointVector        points_;
-    
-    uint                 nPourcentageConstruction_;
-    uint                 nPourcentageValorisation_;
-    uint                 nPourcentageContournement_;
-    bool                 bEnPreparation_;
-    bool                 bIsPerceived_;
 
-    T_AutomatePerceptionSet automatePerceptionSet_;
-    uint nRelevance_;
+    OptionalValue< MOS_Object_ABC* >     pRealObject_;
+    OptionalValue< T_PointVector >       points_;
+    OptionalValue< std::string >         strPos_;
+    OptionalValue< uint >                nPourcentageConstruction_;
+    OptionalValue< uint >                nPourcentageValorisation_;
+    OptionalValue< uint >                nPourcentageContournement_;
+    OptionalValue< bool >                bEnPreparation_;
+    OptionalValue< bool >                bIsPerceived_;
+    OptionalValue< uint >                nRelevance_;
+
+    OptionalValue< T_AutomatePerceptionSet > automatePerceptionSet_;
+    
     
     // Attributs spécifiques sites de franchissement - $$$ CRADE POUR L'INSTANT
-    uint nSiteFranchissementLargeur_;
-    uint nSiteFranchissementProfondeur_;
-    uint nSiteFranchissementVitesseCourant_;
-    bool nSiteFranchissementBergesAAmenager_;
+    OptionalValue< uint > nSiteFranchissementLargeur_;
+    OptionalValue< uint > nSiteFranchissementProfondeur_;
+    OptionalValue< uint > nSiteFranchissementVitesseCourant_;
+    OptionalValue< bool > nSiteFranchissementBergesAAmenager_;
     
     // Attributs spécifiques nuage NBC
-    uint nNuageNBCAgentNbcID_;
+    OptionalValue< uint > nNuageNBCAgentNbcID_;
 
     // rota
-    uint                nROTADanger_;
-    std::vector< uint > rotaNBCAgents_;
+    OptionalValue< uint >                nROTADanger_;
+    OptionalValue< std::vector< uint > > rotaNBCAgents_;
 
     // logistic route
-    uint nLogRouteFlow_;
-    uint nLogRouteWidth_;
-    uint nLogRouteLength_;
-    uint nLogRouteMaxWeight_;
-    bool bLogRouteEquipped_;
+    OptionalValue< uint > nLogRouteFlow_;
+    OptionalValue< uint > nLogRouteWidth_;
+    OptionalValue< uint > nLogRouteLength_;
+    OptionalValue< uint > nLogRouteMaxWeight_;
+    OptionalValue< bool > bLogRouteEquipped_;
 
     // prisoner/refugee camp
-    uint nCampTC2ID_;
+    OptionalValue< uint > nCampTC2ID_;
 };
 
 #	include "MOS_ObjectKnowledge.inl"

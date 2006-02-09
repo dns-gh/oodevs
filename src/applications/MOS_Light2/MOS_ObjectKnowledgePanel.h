@@ -19,10 +19,6 @@
 #ifndef __MOS_ObjectKnowledgePanel_h_
 #define __MOS_ObjectKnowledgePanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MOS_Types.h"
 #include "MOS_InfoPanel_ABC.h"
 
@@ -31,14 +27,11 @@ class MOS_ObjectKnowledge;
 class MOS_ActionContext;
 class MOS_SelectedElement;
 class QCheckBox;
+class MOS_Display;
 
 // =============================================================================
 /** @class  MOS_ObjectKnowledgePanel
     @brief  MOS_ObjectKnowledgePanel
-    @par    Using example
-    @code
-    MOS_ObjectKnowledgePanel;
-    @endcode
 */
 // Created: APE 2004-05-04
 // =============================================================================
@@ -95,44 +88,7 @@ private:
 
     MOS_ObjectKnowledge* pSelectedKnowledge_;
 
-    QLabel*    pIdLabel_;
-    QLabel*    pAssociatedObjectLabel_;
-    QLabel*    pPositionLabel_;
-    QLabel*    pObjectTypeLabel_;
-    QLabel*    pPercentBuiltLabel_;
-    QLabel*    pPercentValueLabel_;
-    QLabel*    pPercentAroundLabel_;
-    QLabel*    pIsUnderPrepLabel_;
-    QLabel*    pIsPreceivedLabel_;
-    QLabel*    pRevelanceLabel_;
-
-    // Crossing
-    QGroupBox* pCrossingGroup_;
-    QLabel*    pCrossingWidthLabel_;
-    QLabel*    pCrossingDepthLabel_;
-    QLabel*    pCrossingRiverSpeedLabel_;
-    QLabel*    pCrossingBanksNeedWorkLabel_;
-
-    // NBC
-    QGroupBox* pNBCGroup_;
-    QLabel*    pNBCAgentLabel_;
-
-    // ROTA
-    QGroupBox* pROTAGroup_;
-    QLabel*    pROTADangerLabel_;
-    QLabel*    pROTANBCAgentsLabel_;
-
-    // Camp
-    QGroupBox* pCampGroup_;
-    QLabel*    pCampTC2ID_;
-
-    // Logistic route
-    QGroupBox* pLogRouteGroup_;
-    QLabel*    pLogRouteWidth_;
-    QLabel*    pLogRouteLength_;
-    QLabel*    pLogRouteFlow_;
-    QLabel*    pLogRouteMaxWeight_;
-    QLabel*    pLogRouteEquipped_;
+    MOS_Display* display_;
 
     QListView* pPerceptionListView_;
     QPopupMenu* pPopupMenu_;

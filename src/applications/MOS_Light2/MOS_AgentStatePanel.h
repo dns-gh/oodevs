@@ -28,8 +28,7 @@
 
 class MOS_Agent;
 class MOS_ReportListView;
-
-class QGroupBox;
+class MOS_Display;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -57,53 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QLabel*    pNameLabel_;
-    QLabel*    pRawOpStateLabel_;
-    QLabel*    pIndirectFireAvailabilityPanel_;
-    QLabel*    pDeadLabel_;
-    QLabel*    pNeutralizedLabel_;
-    QLabel*    pSpeedLabel_;
-    QLabel*    pDirectionLabel_;
-    QLabel*    pAltitudeLabel_;
-    
-    QLabel*    pOldStanceLabel_;
-    QLabel*    pStanceLabel_;
-
-    QLabel*    pROELabel_;
-    QLabel*    pROEPopulationLabel_;
-    QLabel*    pCloseCombatLabel_;
-    QLabel*    pFightRateLabel_;
-    QLabel*    pOpStateLabel_;
-
-    QGroupBox* pReinforcementsGroupBox_;
-    QLabel*    pReinforcementsLabel_;
-    QLabel*    pReinforcedLabel_;
-
-    QLabel*    pBoardingStateLabel_;
-    QLabel*    pHumanTransportersReadyLabel_;
-    QLabel*    pNBCSuitLabel_;
-    QLabel*    pNBCAgentsLabel_;
-    QLabel*    pContaminationLabel_;
-
-    QLabel*    pCommJammedLabel_;
-    QLabel*    pRadioSilenceLabel_;
-
-    QLabel*    pExperienceLabel_;
-    QLabel*    pMoraleLabel_;
-    QLabel*    pTirednessLabel_;
-     
-    QGroupBox* pTransportedGroupBox_;
-    QLabel*    pTransportedLabel_;
-
-    QLabel*    pPrisonnerLabel_;
-    QLabel*    pSurrenderedLabel_;
-    QLabel*    pRefugeeLabel_;
-
-    QGroupBox* pLogLinksGroupBox_;
-    QLabel*    pTC2_;
-    QLabel*    pLogMaintenanceSuperior_;
-    QLabel*    pLogMedicalSuperior_;
-    QLabel*    pLogSupplySuperior_;
+    MOS_Display* display_;
     //@}
 };
 

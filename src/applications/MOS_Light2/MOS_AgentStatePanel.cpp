@@ -30,6 +30,9 @@
 #include "MOS_Experience.h"
 #include "MOS_Tiredness.h"
 #include "MOS_Morale.h"
+#include "MOS_Display.h"
+#include "MOS_DisplayGroup.h"
+#include "MOS_DisplayItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentStatePanel constructor
@@ -38,143 +41,73 @@
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
-    : MOS_InfoPanel_ABC     ( pParent )
+    : MOS_InfoPanel_ABC( pParent )
+    , display_( 0 )
 {
-    QFont boldFont = this->font();
-    boldFont.setBold( true );
+    display_ = new MOS_Display( this );
+    display_->AddGroup( "Info" )
+                .AddItem( "Nom:", true )
+                .AddItem( "Etat Opérationnel:" )
+                .AddItem( "Mort:" )
+                .AddItem( "Neutralisé:" )
+                .AddItem( "Vitesse:" )
+                .AddItem( "Direction:" )
+                .AddItem( "Altitude:" )
+                .AddItem( "Troupes:" )
+                .AddItem( "Transporteurs d'hommes disponibles:" );
+    display_->AddGroup( "NBC" )
+                .AddItem( "Agents contaminants:" )
+                .AddItem( "Contamination:" );
+    display_->AddGroup( "Postures" )
+                .AddItem( "Ancienne posture:" )
+                .AddItem( "Nouvelle posture:" );
+    display_->AddGroup( "Communications" )
+                .AddItem( "Brouillé:" )
+                .AddItem( "Silence radio:" );
+    display_->AddGroup( "Facteurs humains" )
+                .AddItem( "Experience:" )
+                .AddItem( "Moral:" )
+                .AddItem( "Fatigue:" );
+    display_->AddGroup( "Etat décisionnel" )
+                .AddItem( "Etat opérationnel:" )
+                .AddItem( "RoE:" )
+                .AddItem( "RoE Population:" )
+                .AddItem( "Rapport de force:" )
+                .AddItem( "Disponibilité au tir indirect:" )
+                .AddItem( "Tenue NBC:" ) // $$$$ AGE 2006-02-09: Déplacer dans nbc ?
+                .AddItem( "Contact combat:" );
+    display_->AddGroup( "Renforts" )
+                .AddItem( "Renforce:" );
 
-    // Info groupbox
-    QGroupBox* pInfoGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Info" ), this );
+    // $$$$ AGE 2006-02-09: Fusses
+    display_->AddGroup( "Renforts " )
+                .AddItem( "" );
+    display_->AddGroup( "Pions Transportés" )
+                .AddItem( "" );
 
-    new QLabel( tr( "Nom:" ), pInfoGroupBox );
-    pNameLabel_ = new QLabel( pInfoGroupBox );
-    pNameLabel_->setFont( boldFont );
+    display_->AddGroup( "Liens logistiques" )
+                .AddItem( "TC2:" )
+                .AddItem( "Supérieur maintenance:" )
+                .AddItem( "Supérieur santé:" )
+                .AddItem( "Supérieur ravitaillement:" );
 
-    new QLabel( tr( "Etat Opérationnel:" ), pInfoGroupBox );
-    pRawOpStateLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Mort:" ), pInfoGroupBox );
-    pDeadLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Neutralisé:" ), pInfoGroupBox );
-    pNeutralizedLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Vitesse:" ), pInfoGroupBox );
-    pSpeedLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Direction:" ), pInfoGroupBox );
-    pDirectionLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Altitude:" ), pInfoGroupBox );
-    pAltitudeLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Troupes:" ), pInfoGroupBox );
-    pBoardingStateLabel_ = new QLabel( pInfoGroupBox );
-
-    new QLabel( tr( "Transporteurs d'hommes disponibles:" ), pInfoGroupBox );
-    pHumanTransportersReadyLabel_ = new QLabel( pInfoGroupBox );
-
-    // NBC groupbox
-    QGroupBox* pNbcGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "NBC" ), this );
-
-    new QLabel( tr( "Agents contaminants:" ), pNbcGroupBox );
-    pNBCAgentsLabel_ = new QLabel( pNbcGroupBox );
-
-    new QLabel( tr( "Contamination:" ), pNbcGroupBox );
-    pContaminationLabel_ = new QLabel( pNbcGroupBox );
-
-    // Stance groupbox
-    QGroupBox* pStanceGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Postures" ), this );
-
-    new QLabel( tr( "Ancienne posture:" ), pStanceGroupBox );
-    pOldStanceLabel_ = new QLabel( pStanceGroupBox );
-
-    new QLabel( tr( "Nouvelle posture:" ), pStanceGroupBox );
-    pStanceLabel_ = new QLabel( pStanceGroupBox );
-
-    // Comm groupbox
-    QGroupBox* pCommGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Communications" ), this );
-
-    new QLabel( tr( "Brouillé:" ), pCommGroupBox );
-    pCommJammedLabel_ = new QLabel( pCommGroupBox );
-
-    new QLabel( tr( "Silence radio:" ), pCommGroupBox );
-    pRadioSilenceLabel_ = new QLabel( pCommGroupBox );
-
-    // Human crap group box
-    QGroupBox* pHumanFactorsBox = new QGroupBox( 2, Qt::Horizontal, tr( "Facteurs humains" ), this );
-
-    new QLabel( tr( "Experience:" ), pHumanFactorsBox );
-    pExperienceLabel_ = new QLabel( pHumanFactorsBox );
-
-    new QLabel( tr( "Moral:" ), pHumanFactorsBox );
-    pMoraleLabel_ = new QLabel( pHumanFactorsBox );
-
-    new QLabel( tr( "Fatigue:" ), pHumanFactorsBox );
-    pTirednessLabel_ = new QLabel( pHumanFactorsBox );
-
-    // AI groupbox
-    QGroupBox* pAIGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Etat décisionnel" ), this );
-
-    new QLabel( tr( "Etat opérationnel:" ), pAIGroupBox );
-    pOpStateLabel_ = new QLabel( pAIGroupBox );   
-
-    new QLabel( tr( "RoE:" ), pAIGroupBox );
-    pROELabel_ = new QLabel( pAIGroupBox );
-
-    new QLabel( tr( "RoE Population:" ), pAIGroupBox );
-    pROEPopulationLabel_ = new QLabel( pAIGroupBox );
-
-    new QLabel( tr( "Rapport de force:" ), pAIGroupBox );
-    pFightRateLabel_ = new QLabel( pAIGroupBox );
-
-    new QLabel( tr( "Disponibilité au tir indirect:" ), pAIGroupBox );
-    pIndirectFireAvailabilityPanel_ = new QLabel( pAIGroupBox );       
-
-    new QLabel( tr( "Tenue NBC:" ), pAIGroupBox );
-    pNBCSuitLabel_ = new QLabel( pAIGroupBox );
-
-    new QLabel( tr( "Contact combat:" ), pAIGroupBox );
-    pCloseCombatLabel_ = new QLabel( pAIGroupBox );
-    pCloseCombatLabel_->setFont( boldFont );
-
-    // Reinforcements
-    QGroupBox* pGlobalReinforcementsGB = new QGroupBox( 2, Qt::Horizontal, tr( "Renforts" ), this );
-    new QLabel( tr( "Renforce:" ), pGlobalReinforcementsGB );
-    pReinforcedLabel_ = new QLabel( pGlobalReinforcementsGB );
+    display_->AddGroup( "Etat martial" )
+                .AddItem( "Fait prisonnier:" )
+                .AddItem( "Rendu:" )
+                .AddItem( "Réfugiés pris en compte:" );
 
     // Reinforcements groupbox (hidden when there are no reinforcements)
-    pReinforcementsGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Renforts" ), this );
-    pReinforcementsGroupBox_->hide();
-    pReinforcementsLabel_ = new QLabel( pReinforcementsGroupBox_ );
+//    pReinforcementsGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Renforts" ), this );
+//    pReinforcementsGroupBox_->hide();
+//    pReinforcementsLabel_ = new QLabel( pReinforcementsGroupBox_ );
 
     // Transport (hidden when there are no transported)
-    pTransportedGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Pions Transportés" ), this );
-    pTransportedGroupBox_->hide();
-    pTransportedLabel_ = new QLabel( pTransportedGroupBox_ );
+//    pTransportedGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Pions Transportés" ), this );
+//    pTransportedGroupBox_->hide();
+//    pTransportedLabel_ = new QLabel( pTransportedGroupBox_ );
 
     // Logistic links (shown only for automates)
-    pLogLinksGroupBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Liens logistiques" ), this );
-    pLogLinksGroupBox_->hide();
-    new QLabel( tr( "TC2:" ), pLogLinksGroupBox_ );
-    pTC2_ = new QLabel( pLogLinksGroupBox_ );
-    new QLabel( tr( "Supérieur maintenance:" ), pLogLinksGroupBox_ );
-    pLogMaintenanceSuperior_ = new QLabel( pLogLinksGroupBox_ );
-    new QLabel( tr( "Supérieur santé:" ), pLogLinksGroupBox_ );
-    pLogMedicalSuperior_ = new QLabel( pLogLinksGroupBox_ );
-    new QLabel( tr( "Supérieur ravitaillement:" ), pLogLinksGroupBox_ );
-    pLogSupplySuperior_ = new QLabel( pLogLinksGroupBox_ );
-
-    // Status
-    QGroupBox* pWarStatus = new QGroupBox( 2, Qt::Horizontal, tr( "Etat martial" ), this ); // $$$$ AGE 2005-03-23: ?
-    new QLabel( tr( "Fait prisonnier:" ), pWarStatus );
-    pPrisonnerLabel_ = new QLabel( pWarStatus );
-    new QLabel( tr( "Rendu:" ), pWarStatus );
-    pSurrenderedLabel_ = new QLabel( pWarStatus );
-    new QLabel( tr( "Réfugiés pris en compte:" ), pWarStatus );
-    pRefugeeLabel_ = new QLabel( pWarStatus );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentStatePanel destructor
@@ -182,6 +115,7 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
 // -----------------------------------------------------------------------------
 MOS_AgentStatePanel::~MOS_AgentStatePanel()
 {
+    delete display_;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +130,6 @@ void MOS_AgentStatePanel::OnUpdate()
         OnClearSelection();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentStatePanel::OnAgentUpdated
 // Created: APE 2004-05-10
@@ -207,121 +140,96 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
         return;
 
     if( agent.IsAutomate() )
+        display_->Group( "Liens logistiques" )
+                    .Display( "TC2:",                       MOS_Display::Id( agent.nTC2_  ) ) 
+                    .Display( "Supérieur maintenance:",     MOS_Display::Id( agent.nLogMaintenanceSuperior_  ) )
+                    .Display( "Supérieur santé:",           MOS_Display::Id( agent.nLogMedicalSuperior_ ) )
+                    .Display( "Supérieur ravitaillement:",  MOS_Display::Id( agent.nLogSupplySuperior_ ) );
+    else 
+        display_->Group( "Liens logistiques" ).hide();
+
+    display_->Group( "Info" )
+                .Display( "Nom:",               (agent.GetName()).c_str() )
+                .Display( "Etat Opérationnel:", QString( "%1 %" ).arg( agent.GetRawOpState() ) )
+                .Display( "Mort:",       MOS_Display::YesNo( agent.IsDead() ) )
+                .Display( "Neutralisé:", MOS_Display::YesNo( agent.IsNeutralized() ) )
+                .Display( "Vitesse:", QString::number( agent.GetSpeed() ) )
+                .Display( "Direction:", QString::number( agent.GetDirection() ) + "°"  )
+                .Display( "Altitude:", QString::number( agent.GetAltitude() ) + "m" )
+                .Display( "Troupes:", agent.IsLoaded() ? tr( "Embarqué" ) : tr( "Débarqué" ) )
+                .Display( "Transporteurs d'hommes disponibles:", MOS_Display::YesNo( agent.AreHumanTransportersReady() ) );
+
+    const MOS_Agent::T_NbcAgentVector& contaminatingAgents = agent.GetContaminatingNBCAgents();
+    std::stringstream strNBCAgents;
+    for( MOS_Agent::CIT_NbcAgentVector it = contaminatingAgents.begin(); it != contaminatingAgents.end(); ++it )
     {
-        if( agent.nTC2_ == 0 )
-            pTC2_->setText( tr( "aucun" ) );
-        else
-            pTC2_->setText( QString::number( agent.nTC2_ ) );
-
-        if( agent.nLogMaintenanceSuperior_ == 0 )
-            pLogMaintenanceSuperior_->setText( tr( "aucun" ) );
-        else
-            pLogMaintenanceSuperior_->setText( QString::number( agent.nLogMaintenanceSuperior_ ) );
-
-        if( agent.nLogMedicalSuperior_ == 0 )
-            pLogMedicalSuperior_->setText( tr( "aucun" ) );
-        else
-            pLogMedicalSuperior_->setText( QString::number( agent.nLogMedicalSuperior_ ) );
-
-        if( agent.nLogSupplySuperior_ == 0 )
-            pLogSupplySuperior_->setText( tr( "aucun" ) );
-        else
-            pLogSupplySuperior_->setText( QString::number( agent.nLogSupplySuperior_ ) );
-        pLogLinksGroupBox_->show();
+        if( it != contaminatingAgents.begin() )
+            strNBCAgents << ", ";
+        strNBCAgents << *it;
     }
-
-    pNameLabel_       ->setText( (agent.GetName()).c_str() );
-
-    pRawOpStateLabel_ ->setText( QString( "%1 %" ).arg( agent.GetRawOpState() ) );
-
-    pDeadLabel_       ->setText( agent.IsDead() ? tr( "Oui" ) : tr( "Non" ) );
-    pNeutralizedLabel_->setText( agent.IsNeutralized() ? tr( "Oui" ) : tr( "Non" ) );
-
-    pSpeedLabel_      ->setText( QString::number( agent.GetSpeed() ) );
-    pDirectionLabel_  ->setText( QString::number( agent.GetDirection() ) + "°" );
-    pAltitudeLabel_   ->setText( QString::number( agent.GetAltitude() ) + "m" );
+    display_->Group( "NBC" )
+                .Display( "Agents contaminants:", contaminatingAgents.empty() ? tr( "Aucun" ) : strNBCAgents.str().c_str() )
+                .Display( "Contamination:", QString::number( agent.GetContamination() ) );
 
     QString strStance = MOS_Tools::ToString( agent.GetStance() );
     strStance         = strStance + " (" + QString::number( agent.GetStanceCompletion() ) + "%)";
-    pOldStanceLabel_  ->setText( MOS_Tools::ToString( agent.GetOldStance() ) );
-    pStanceLabel_     ->setText( strStance );
+    display_->Group( "Postures" )
+                .Display( "Ancienne posture:", MOS_Tools::ToString( agent.GetOldStance() ) )
+                .Display( "Nouvelle posture:", strStance );
 
-    pROELabel_                     ->setText( ENT_Tr::ConvertFromRoe                ( agent.nRulesOfEngagementState_ ).c_str() );
-    pROEPopulationLabel_           ->setText( ENT_Tr::ConvertFromRoePopulation      ( agent.nRulesOfEngagementPopulationState_ ).c_str() );
-    pCloseCombatLabel_             ->setText( ENT_Tr::ConvertFromEtatCombatRencontre( agent.nCloseCombatState_ ).c_str() );
-    pFightRateLabel_               ->setText( ENT_Tr::ConvertFromEtatRapFor         ( agent.nFightRateState_ ).c_str() );
-    pOpStateLabel_                 ->setText( ENT_Tr::ConvertFromEtatOperationnel   ( agent.nOpState_ ).c_str() );
-    pIndirectFireAvailabilityPanel_->setText( ENT_Tr::ConvertFromDisponibiliteAuTir ( agent.nIndirectFireAvailability_ ).c_str() );
+    display_->Group( "Communications" )
+                .Display( "Brouillé:", MOS_Display::YesNo( agent.bCommJammed_ ) )
+                .Display( "Silence radio:", MOS_Display::YesNo( agent.bRadioSilence_ ) );
     
-    uint nReinforced = agent.GetReinforced();
-    if( nReinforced )
-        pReinforcedLabel_->setText( QString( "[%1]" ).arg( nReinforced ) );
-    else
-        pReinforcedLabel_->setText( "-" );
+    display_->Group( "Facteurs humains" )
+                .Display( "Experience:", tr( agent.GetExperience().GetName().c_str() ) )
+                .Display( "Moral:", tr( agent.GetMorale().GetName().c_str() ) )
+                .Display( "Fatigue:", tr( agent.GetTiredness().GetName().c_str() ) );
+
+    display_->Group( "Etat décisionnel" )
+                .Display( "Etat opérationnel:", ENT_Tr::ConvertFromEtatOperationnel( agent.nOpState_ ) )
+                .Display( "RoE:", ENT_Tr::ConvertFromRoe( agent.nRulesOfEngagementState_ ) )
+                .Display( "RoE Population:", ENT_Tr::ConvertFromRoePopulation( agent.nRulesOfEngagementPopulationState_ ) )
+                .Display( "Rapport de force:", ENT_Tr::ConvertFromEtatRapFor( agent.nFightRateState_ ) )
+                .Display( "Disponibilité au tir indirect:", ENT_Tr::ConvertFromDisponibiliteAuTir ( agent.nIndirectFireAvailability_ ) )
+                .Display( "Tenue NBC:", agent.IsNBSSuitOn() ? tr( "Mise" ) : tr( "Non mise" ) )
+                .Display( "Contact combat:", ENT_Tr::ConvertFromEtatCombatRencontre( agent.nCloseCombatState_ ) );
+
+    display_->Group( "Renforts" )
+        .Display( "Renforce:", agent.GetReinforced() ? QString( "[%1]" ).arg( agent.GetReinforced() ) : "-" );
 
     const MOS_Agent::T_AgentIdVector& reinforcements = agent.GetReinforcements();
     if( reinforcements.empty() )
-        pReinforcementsGroupBox_->hide();
+        display_->Group( "Renforts " ).hide();
     else
     {
-        pReinforcementsGroupBox_->show();
         std::stringstream strReinforcements;
-        for( MOS_Agent::CIT_AgentIdVector itr = reinforcements.begin(); itr != reinforcements.end(); ++itr )
-        {
+        for( MOS_Agent::CIT_AgentIdVector itr = reinforcements.begin(); itr != reinforcements.end(); ++itr ) {
             if( itr != reinforcements.begin() )
                 strReinforcements << ", ";
             strReinforcements << "[" << *itr << "]";
         }
-        pReinforcementsLabel_->setText( strReinforcements.str().c_str() );
+        display_->Group( "Renforts " ).Display( "", strReinforcements.str().c_str() );
     }
 
     const MOS_Agent::T_AgentIdVector& transported = agent.GetTransportees();
     if( transported.empty() )
-        pTransportedGroupBox_->hide();
+       display_->Group( "Pions Transportés" ).hide();
     else
     {
-        pTransportedGroupBox_->show();
         std::stringstream strTransports;
-        for( MOS_Agent::CIT_AgentIdVector itr = transported.begin(); itr != transported.end(); ++itr )
-        {
+        for( MOS_Agent::CIT_AgentIdVector itr = transported.begin(); itr != transported.end(); ++itr ) {
             if( itr != transported.begin() )
                 strTransports << ", ";
             strTransports << "[" << *itr << "]";
         }
-        pTransportedLabel_->setText( strTransports.str().c_str() );
+        display_->Group( "Pions Transportés" ).Display( "", strTransports.str().c_str() );
     }
 
-    pPrisonnerLabel_->setText( agent.bPrisoner_ ? tr( "Oui" ) : tr( "Non" ) );
-    pSurrenderedLabel_->setText( agent.bSurrendered_ ? tr( "Oui" ) : tr( "Non" ) );
-    pRefugeeLabel_->setText( agent.bRefugeesManaged_ ? tr( "Oui" ) : tr( "Non" ) );
-
-    pBoardingStateLabel_->setText( agent.IsLoaded() ? tr( "Embarqué" ) : tr( "Débarqué" ) );
-    pHumanTransportersReadyLabel_->setText( agent.AreHumanTransportersReady() ? tr( "Oui" ) : tr( "Non" ) );
-
-    pNBCSuitLabel_->setText( agent.IsNBSSuitOn() ? tr( "Mise" ) : tr( "Non mise" ) );
-    pContaminationLabel_->setText( QString::number( agent.GetContamination() ) );
-    
-    pCommJammedLabel_->setText( agent.bCommJammed_ ? tr("Oui") : tr("Non") );
-    pRadioSilenceLabel_->setText( agent.bRadioSilence_ ? tr("Oui") : tr("Non") );
-
-    pExperienceLabel_->setText( tr( agent.GetExperience().GetName().c_str() ) );
-    pMoraleLabel_->setText( tr( agent.GetMorale().GetName().c_str() ) );
-    pTirednessLabel_->setText( tr( agent.GetTiredness().GetName().c_str() ) );
-
-    const MOS_Agent::T_NbcAgentVector& contaminatingAgents = agent.GetContaminatingNBCAgents();
-    if( ! contaminatingAgents.empty() )
-    {
-        std::stringstream strNBCAgents;
-        for( MOS_Agent::CIT_NbcAgentVector it = contaminatingAgents.begin(); it != contaminatingAgents.end(); ++it )
-        {
-            if( it != contaminatingAgents.begin() )
-                strNBCAgents << ", ";
-            strNBCAgents << *it;
-        }
-        pNBCAgentsLabel_->setText( strNBCAgents.str().c_str() );
-    }
-    else
-        pNBCAgentsLabel_->setText( tr( "Aucun" ) );
+    display_->Group( "Etat martial" )
+            .Display( "Fait prisonnier:", MOS_Display::YesNo( agent.bPrisoner_ ) )
+            .Display( "Rendu:", MOS_Display::YesNo( agent.bSurrendered_ ) )
+            .Display( "Réfugiés pris en compte:", MOS_Display::YesNo( agent.bRefugeesManaged_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,46 +238,8 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
 // -----------------------------------------------------------------------------
 void MOS_AgentStatePanel::OnClearSelection()
 {
-    pNameLabel_                  ->setText( "" );
-    pRawOpStateLabel_            ->setText( "" );
-    pDeadLabel_                  ->setText( "" );
-    pNeutralizedLabel_           ->setText( "" );
-    pSpeedLabel_                 ->setText( "" );
-    pDirectionLabel_             ->setText( "" );
-    pAltitudeLabel_              ->setText( "" );
-
-    pOldStanceLabel_             ->setText( "" );
-    pStanceLabel_                ->setText( "" );
-
-    pROELabel_                   ->setText( "" );
-    pROEPopulationLabel_         ->setText( "" );
-    pCloseCombatLabel_           ->setText( "" );
-    pFightRateLabel_             ->setText( "" );
-    pOpStateLabel_               ->setText( "" );
-    pIndirectFireAvailabilityPanel_->setText( "" );
-
-    pReinforcedLabel_            ->setText( "" );
-    pReinforcementsGroupBox_     ->hide();
-
-    pTransportedGroupBox_        ->hide();
-
-    pPrisonnerLabel_             ->setText( "" );
-    pSurrenderedLabel_           ->setText( "" );
-    pRefugeeLabel_               ->setText( "" );
-
-    pBoardingStateLabel_         ->setText( "" );
-    pHumanTransportersReadyLabel_->setText( "" );
-    pNBCSuitLabel_               ->setText( "" );
-    pContaminationLabel_         ->setText( "" );
-
-    pCommJammedLabel_            ->setText( "" );
-    pRadioSilenceLabel_          ->setText( "" );
-
-    pExperienceLabel_            ->setText( "" );
-    pMoraleLabel_                ->setText( "" );
-    pTirednessLabel_             ->setText( "" );
-
-    pNBCAgentsLabel_             ->setText( "" );
-
-    pLogLinksGroupBox_           ->hide();
+    display_->Clear();
+    display_->Group( "Renforts " ).hide();
+    display_->Group( "Pions Transportés" ).hide();
+    display_->Group( "Liens logistiques" ).hide();
 }

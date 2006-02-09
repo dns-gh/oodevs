@@ -20,18 +20,6 @@ uint MOS_AgentKnowledge::GetID() const
     return nID_;    
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_AgentKnowledge::IsUpdated
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-inline
-bool MOS_AgentKnowledge::IsValid( E_AttributeUpdated nAttr ) const
-{
-    return nAttrUpdated_ & nAttr;
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledge::GetPosition
 // Created: NLD 2004-03-18

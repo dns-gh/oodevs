@@ -19,15 +19,12 @@
 #ifndef __MOS_ObjectPanel_h_
 #define __MOS_ObjectPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MOS_InfoPanel_ABC.h"
 
 class MOS_Object_ABC;
 class QCheckBox;
 class QGrid;
+class MOS_Display;
 
 // =============================================================================
 /** @class  MOS_ObjectPanel
@@ -66,13 +63,6 @@ private slots:
 private:
     //! @name Object types Helpers
     //@{
-    void InitializeGeneric             ( QWidget* pParent );
-    void InitializeSiteFranchissement  ( QWidget* pParent );
-    void InitializeCamp                ( QWidget* pParent );
-    void InitializeNBC                 ( QWidget* pParent );
-    void InitializeROTA                ( QWidget* pParent );
-    void InitializeItineraireLogistique( QWidget* pParent );
-
     void UpdateGeneric             ( MOS_Object_ABC& object );
     void UpdateSiteFranchissement  ( MOS_Object_ABC& object );
     void UpdateCamp                ( MOS_Object_ABC& object );
@@ -81,56 +71,14 @@ private:
     void UpdateItineraireLogistique( MOS_Object_ABC& object );    
     //@}
 
-    //! @name Widget construction Helpers
-    //@{
-    void AddRow( const QString& strLabel, QLabel*&    pValueLabel   , QWidget* pParent );
-    void AddRow( const QString& strLabel, QSpinBox*&  pValueSpinBox , QWidget* pParent );
-    void AddRow( const QString& strLabel, QCheckBox*& pValueCheckBox, QWidget* pParent );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    QGroupBox* pGenericGroup_;
-
-    QLabel*    pIdLabel_;
-    QLabel*    pNameLabel_;
-    QLabel*    pObjectTypeLabel_;
-    QLabel*    pPositionLabel_;
+    MOS_Display* display_;
     QSpinBox*  pPercentBuiltEdit_;
     QSpinBox*  pPercentValueEdit_;
     QSpinBox*  pPercentAroundEdit_;
     QCheckBox* pIsUnderPrepCheckBox_;
-    QLabel*    pDotationConstructionLabel_;
-    QLabel*    pDotationValorisationLabel_;
-
-    // crossing
-    QGroupBox* pCrossingGroup_;
-    QLabel*    pCrossingWidthLabel_;
-    QLabel*    pCrossingDepthLabel_;
-    QLabel*    pCrossingRiverSpeedLabel_;
-    QLabel*    pCrossingBanksNeedWorkLabel_;
-
-    // NBC
-    QGroupBox* pNBCGroup_;
-    QLabel*    pNBCAgentLabel_;
-
-    // Camp
-    QGroupBox* pCampGroup_;
-	QLabel*    pTC2Label_;
-
-    // ROTA
-    QGroupBox* pROTAGroup_;
-    QLabel*    pROTADangerLabel_;
-    QLabel*    pROTAAgentsNbcLabel_;
-
-    // Logistic route
-    QGroupBox* pItLogGroup_;
-    QLabel*    pItLogEquippedLabel_;
-    QLabel*    pItLogFlowLabel_;
-    QLabel*    pItLogWidthLabel_;
-    QLabel*    pItLogLengthLabel_;
-    QLabel*    pItLogMaxWeightLabel_;
 
     QPushButton* pApplyButton_;
     QPushButton* pCancelButton_;

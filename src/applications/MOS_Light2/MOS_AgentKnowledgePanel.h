@@ -31,6 +31,7 @@ class MOS_AgentKnowledge;
 class MOS_ActionContext;
 class MOS_SelectedElement;
 class QCheckBox;
+class MOS_Display;
 
 // =============================================================================
 /** @class  MOS_AgentKnowledgePanel
@@ -84,27 +85,7 @@ private:
     QCheckBox* pOwnTeamCheckBox_;
     MOS_AgentKnowledge* pSelectedKnowledge_;
 
-    QLabel* pIdLabel_;
-    QLabel* pAssociatedAgentLabel_;
-    QLabel* pPositionLabel_;
-    QLabel* pDirectionLabel_;
-    QLabel* pSpeedLabel_;
-    QLabel* pStateLabel_;
-    QLabel* pPerceptionLabel_;
-    QLabel* pPerceptionMaxLabel_;
-    QLabel* pTeamLabel_;
-    QLabel* pLevelLabel_;
-    QLabel* pWeaponLabel_;
-    QLabel* pSpecializationLabel_;
-    QLabel* pQualifierLabel_;
-    QLabel* pCategoryLabel_;
-    QLabel* pMobilityLabel_;
-    QLabel* pCapacityLabel_;
-    QLabel* pPrisonnerLabel_;
-    QLabel* pSurrenderedLabel_;
-    QLabel* pRefugiesLabel_;
-    QLabel* pIsHQLabel_;
-    QLabel* pRelevanceLabel_;
+    MOS_Display* display_;
 
     QListView* pPerceptionListView_;
 
