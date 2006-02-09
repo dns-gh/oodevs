@@ -98,7 +98,7 @@ void PHY_HumanWound::InitializeMedicalData( MIL_InputArchive& archive )
     MT_Float rValue = 0.;
     archive.Section( "ReacMental" );
     archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreater( 0. ) );
-    nMentalDiseaseHealingTime_ = (uint)MIL_Tools::ConvertHoursToSim( rValue );
+    nMentalDiseaseHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
     archive.ReadAttribute( "pourcentage", rValue, CheckValueBound( 0., 100. ) );
     rMentalDiseaseFactor_      = rValue / 100.;
     archive.EndSection(); // ReacMental
