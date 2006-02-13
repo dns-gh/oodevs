@@ -369,18 +369,18 @@ void AgentListView::OnTeamChanged()
     // In ODB mode, show all teams & gtias
     if( App::GetApp().IsODBEdition() )
     {
-        const AgentManager::T_TeamMap& teams = App::GetApp().GetAgentManager().GetTeams();
-        for( AgentManager::CIT_TeamMap it = teams.begin(); it != teams.end(); ++it )
-        {
-            Team& team = *((*it).second);
-            QListViewItem* pTeamItem = new MT_ValuedListViewItem< Team*, eTeam >( &team, this, team.GetName().c_str() );
-            pTeamItem->setDropEnabled( false );
-            pTeamItem->setDragEnabled( false );
-
-            const Team::T_GtiaMap& gtias = team.GetGtias();
-            for( Team::CIT_GtiaMap it2 = gtias.begin(); it2 != gtias.end(); ++it2 )
-                this->AddGtia( *((*it2).second) );
-        }
+//        const AgentManager::T_TeamMap& teams = App::GetApp().GetAgentManager().GetTeams();
+//        for( AgentManager::CIT_TeamMap it = teams.begin(); it != teams.end(); ++it )
+//        {
+//            Team& team = *((*it).second);
+//            QListViewItem* pTeamItem = new MT_ValuedListViewItem< Team*, eTeam >( &team, this, team.GetName().c_str() );
+//            pTeamItem->setDropEnabled( false );
+//            pTeamItem->setDragEnabled( false );
+//
+//            const Team::T_GtiaMap& gtias = team.GetGtias();
+//            for( Team::CIT_GtiaMap it2 = gtias.begin(); it2 != gtias.end(); ++it2 )
+//                this->AddGtia( *((*it2).second) );
+//        }
     }
 
     AgentManager::CT_AgentMap agentMap = App::GetApp().GetAgentManager().GetAgentList();

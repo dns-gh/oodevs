@@ -7,47 +7,57 @@
 //
 // *****************************************************************************
 
-#ifndef __Agent_h_
-#define __Agent_h_
+#ifndef __HumanFactors_h_
+#define __HumanFactors_h_
 
-#include "Agent_ABC.h"
+#include "ASN_Types.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+class Experience;
+class Tiredness;
+class Morale;
 
 // =============================================================================
-/** @class  Agent
-    @brief  Agent
+/** @class  HumanFactors
+    @brief  HumanFactors
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public Agent_ABC
+class HumanFactors : public Extension_ABC
+                   , public Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent();
-    virtual ~Agent();
+             HumanFactors( Controller& controller );
+    virtual ~HumanFactors();
     //@}
 
     //! @name Operations
     //@{
-
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignement operator
+    HumanFactors( const HumanFactors& );            //!< Copy constructor
+    HumanFactors& operator=( const HumanFactors& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Update( const ASN1T_MsgUnitAttributes& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
+    const Experience* pExperience_;
+    const Tiredness*  pTiredness_;
+    const Morale*     pMorale_;
     //@}
 };
 
-#endif // __Agent_h_
+#endif // __HumanFactors_h_

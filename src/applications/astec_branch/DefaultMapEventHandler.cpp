@@ -544,58 +544,59 @@ bool DefaultMapEventHandler::GetPopulationConcentrationAtPos( PopulationConcentr
 {
     bool bRescan = false;
     int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    return false;
 
-    AgentManager::CT_PopulationMap& populationMap = App::GetApp().GetAgentManager().GetPopulationList();
-    if( ! populationMap.size() )
-        return false;
-
-    AgentManager::RCIT_PopulationMap rit;
-    Population::RCIT_ConcentrationMap ritConcentration;
-
-    if( selectedElement_.pPopulationConcentration_ == 0 )
-    {
-        rit = populationMap.rbegin();
-        assert( rit->second );
-        ritConcentration = rit->second->GetConcentrations().rbegin();
-    }
-    else
-    {
-        // get the next concentration from population
-        AgentManager::CIT_PopulationMap it = populationMap.find( selectedElement_.pPopulationConcentration_->GetPopulation().GetID() );
-        assert( it != populationMap.end() );
-        rit = AgentManager::RCIT_PopulationMap( it );
-        Population::CIT_ConcentrationMap itConcentration = rit->second->GetConcentrations().find( selectedElement_.pPopulationConcentration_->GetID() );
-        ritConcentration = Population::RCIT_ConcentrationMap( ++itConcentration );
-    }
-
-    for( uint nPopulation = 0; nPopulation < populationMap.size(); ++nPopulation )
-    {
-        if( rit == populationMap.rend() )
-        {
-            bRescan = true;
-            rit = populationMap.rbegin();
-        }
-        const Population* pPopulation = (*rit).second;
-        if( nPopulation > 0 )
-            ritConcentration = pPopulation->GetConcentrations().rbegin();
-        for( uint nConcentration = 0; nConcentration < pPopulation->GetConcentrations().size(); ++nConcentration )
-        {
-            if( ritConcentration == pPopulation->GetConcentrations().rend() )
-                break;
-            PopulationConcentration* pConcentration = (*ritConcentration).second;
-            if( nPlayedTeam == Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
-            {
-                if( IsPopulationConcentrationAtPos( *pConcentration, vGLPos ) )
-                {
-                    pPopulationConcentrationReturned = pConcentration;
-                    return bRescan;
-                }
-            }
-            ++ritConcentration;
-        }
-        ++rit;
-    }
-    return bRescan;
+//    AgentManager::CT_PopulationMap& populationMap = App::GetApp().GetAgentManager().GetPopulationList();
+//    if( ! populationMap.size() )
+//        return false;
+//
+//    AgentManager::RCIT_PopulationMap rit;
+//    Population::RCIT_ConcentrationMap ritConcentration;
+//
+//    if( selectedElement_.pPopulationConcentration_ == 0 )
+//    {
+//        rit = populationMap.rbegin();
+//        assert( rit->second );
+//        ritConcentration = rit->second->GetConcentrations().rbegin();
+//    }
+//    else
+//    {
+//        // get the next concentration from population
+//        AgentManager::CIT_PopulationMap it = populationMap.find( selectedElement_.pPopulationConcentration_->GetPopulation().GetID() );
+//        assert( it != populationMap.end() );
+//        rit = AgentManager::RCIT_PopulationMap( it );
+//        Population::CIT_ConcentrationMap itConcentration = rit->second->GetConcentrations().find( selectedElement_.pPopulationConcentration_->GetID() );
+//        ritConcentration = Population::RCIT_ConcentrationMap( ++itConcentration );
+//    }
+//
+//    for( uint nPopulation = 0; nPopulation < populationMap.size(); ++nPopulation )
+//    {
+//        if( rit == populationMap.rend() )
+//        {
+//            bRescan = true;
+//            rit = populationMap.rbegin();
+//        }
+//        const Population* pPopulation = (*rit).second;
+//        if( nPopulation > 0 )
+//            ritConcentration = pPopulation->GetConcentrations().rbegin();
+//        for( uint nConcentration = 0; nConcentration < pPopulation->GetConcentrations().size(); ++nConcentration )
+//        {
+//            if( ritConcentration == pPopulation->GetConcentrations().rend() )
+//                break;
+//            PopulationConcentration* pConcentration = (*ritConcentration).second;
+//            if( nPlayedTeam == Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
+//            {
+//                if( IsPopulationConcentrationAtPos( *pConcentration, vGLPos ) )
+//                {
+//                    pPopulationConcentrationReturned = pConcentration;
+//                    return bRescan;
+//                }
+//            }
+//            ++ritConcentration;
+//        }
+//        ++rit;
+//    }
+//    return bRescan;
 }
     
 // -----------------------------------------------------------------------------

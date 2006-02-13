@@ -8,52 +8,48 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "AgentFactory.h"
-#include "Agent.h"
-#include "Population.h"
+#include "Limits.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory constructor
+// Name: Limits constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory()
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentFactory destructor
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-AgentFactory::~AgentFactory()
+Limits::Limits( const Resolver_ABC< TacticalLine_ABC >& resolver )
+    : resolver_( resolver )
+    , acknowledged_( false )
+    , left_( 0 )
+    , right_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Limits destructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
+Limits::~Limits()
 {
-    Agent* result = new Agent( asnMsg );
-    result->Attach( *new Reports( *result, controller_ ) ); // $$$$ AGE 2006-02-13: ...
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Limits::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
+void Limits::Update( const ASN1T_MsgPionOrder& message )
 {
-    return new Agent( asnMsg );
+    acknowledged_ = false;
+    if( asnMsg.m.oid_limite_droitePresent )
+        right_ = resolver_.Find( asnMsg.oid_limite_droite );
+    if( asnMsg.m.oid_limite_gauchePresent )
+        left_  = resolver_.Find( asnMsg.oid_limite_gauche );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Limits::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
+void Limits::Update( const ASN1T_MsgPionOrderAck& message )
 {
-    return new Population( asnMsg );
+    acknowledged_ = message.error_code == no_error;
 }

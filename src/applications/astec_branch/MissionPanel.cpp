@@ -609,10 +609,10 @@ void MissionPanel::MagicMoveDone()
     
     if( pPopupAgent_->IsAutomate() && pPopupAgent_->IsEmbraye() )
     {
-        const AgentManager::T_AgentMap& agents = App::GetApp().GetAgentManager().GetAgentList();
-        for( AgentManager::CIT_AgentMap it = agents.begin(); it != agents.end(); ++it )
-            if( (it->second)->GetParent() == pPopupAgent_ )
-            (it->second)->ClearPath();
+//        const AgentManager::T_AgentMap& agents = App::GetApp().GetAgentManager().GetAgentList();
+//        for( AgentManager::CIT_AgentMap it = agents.begin(); it != agents.end(); ++it )
+//            if( (it->second)->GetParent() == pPopupAgent_ )
+//            (it->second)->ClearPath();
     }
 }
 

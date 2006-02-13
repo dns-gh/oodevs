@@ -175,8 +175,6 @@ ObjectCreationPanel::ObjectCreationPanel( QTabWidget* pParent )
     QPushButton* pOkButton = new QPushButton( tr( "Créer" ), this );
     pLayout->addWidget( pOkButton, 6, 1, Qt::AlignRight );
 
-    App::GetApp().GetModel().ApplyOnTeams( TeamComboFill( pTeamCombo_, &Team::GetID ) );
-
     // sorted object list
     pObjectTypeCombo_->setSorting( true );
     for( uint n = 0; n < eNbrObjectType; ++n )
@@ -545,7 +543,6 @@ void ObjectCreationPanel::OnDeleteObject()
 void ObjectCreationPanel::OnTeamCreated( Team& /*team*/ )
 {
     pTeamCombo_->Clear();
-    App::GetApp().GetModel().ApplyOnTeams( TeamComboFill( pTeamCombo_ ) );
 }
 
 namespace

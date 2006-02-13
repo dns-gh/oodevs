@@ -8,52 +8,60 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "AgentFactory.h"
-#include "Agent.h"
-#include "Population.h"
+#include "Reports.h"
+#include "RC.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory constructor
+// Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory()
+Reports::Reports( Agent_ABC& agent, Controller& controller )
+    : agent_( agent )
+    , controller_( controller )
 {
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentFactory destructor
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-AgentFactory::~AgentFactory()
-{
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Reports destructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
+Reports::~Reports()
 {
-    Agent* result = new Agent( asnMsg );
-    result->Attach( *new Reports( *result, controller_ ) ); // $$$$ AGE 2006-02-13: ...
+    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Reports::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
-{
-    return new Agent( asnMsg );
+void Reports::Update( const ASN1T_MsgCR& message )
+{   
+    RC& rc = *new RC( *this, message );
+    reports_.push_back( &rc );
+    controller_.Create( rc );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Reports::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
+void Reports::Update( const ASN1T_MsgAttenteOrdreConduite& message )
 {
-    return new Population( asnMsg );
+    RC& rc = *new RC( *this, message );
+    reports_.push_back( &rc );
+    controller_.Create( rc );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reports::Update
+// Created: AGE 2006-02-13
+// -----------------------------------------------------------------------------
+void Reports::Update( const TraceMessage& msg )
+{
+    Trace& trace = *new Trace( *this, msg );
+    reports_.push_back( &rc );
+    controller_.Create( rc );
 }

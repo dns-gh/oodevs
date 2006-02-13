@@ -212,19 +212,19 @@ void PopulationListView::OnTeamChanged()
     // In ODB mode, show all teams
     if( App::GetApp().IsODBEdition() )
     {
-        const AgentManager::T_TeamMap& teams = App::GetApp().GetAgentManager().GetTeams();
-        for( AgentManager::CIT_TeamMap it = teams.begin(); it != teams.end(); ++it )
-        {
-            Team& team = *((*it).second);
-            QListViewItem* pTeamItem = new MT_ValuedListViewItem< Team*, eTeam >( &team, this, team.GetName().c_str() );
-            pTeamItem->setDropEnabled( false );
-            pTeamItem->setDragEnabled( false );
-        }
+//        const AgentManager::T_TeamMap& teams = App::GetApp().GetAgentManager().GetTeams();
+//        for( AgentManager::CIT_TeamMap it = teams.begin(); it != teams.end(); ++it )
+//        {
+//            Team& team = *((*it).second);
+//            QListViewItem* pTeamItem = new MT_ValuedListViewItem< Team*, eTeam >( &team, this, team.GetName().c_str() );
+//            pTeamItem->setDropEnabled( false );
+//            pTeamItem->setDragEnabled( false );
+//        }
     }
 
-    AgentManager::CT_PopulationMap popMap = App::GetApp().GetAgentManager().GetPopulationList();
-    for( AgentManager::CIT_PopulationMap it = popMap.begin(); it != popMap.end(); ++it )
-        AddPopulation( *(it->second) );
+//    AgentManager::CT_PopulationMap popMap = App::GetApp().GetAgentManager().GetPopulationList();
+//    for( AgentManager::CIT_PopulationMap it = popMap.begin(); it != popMap.end(); ++it )
+//        AddPopulation( *(it->second) );
 }
 
 

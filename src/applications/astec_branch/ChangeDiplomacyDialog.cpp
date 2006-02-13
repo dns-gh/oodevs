@@ -94,14 +94,14 @@ void ChangeDiplomacyDialog::FillArmyComboBox( QComboBox& comboBox, Team* pSelect
 {
     comboBox.clear();
     unsigned int nSelected = 0;
-    const AgentManager::T_TeamMap& teams = App::GetApp().GetAgentManager().GetTeams();
-    for( AgentManager::CIT_TeamMap itTeam = teams.begin(); itTeam != teams.end(); ++itTeam )
-    {
-        Team* pTeam = itTeam->second;
-        if( pTeam == pSelectedTeam )
-            nSelected = comboBox.count();
-        comboBox.insertItem( pTeam->GetName().c_str() );
-    }
+//    const AgentManager::T_TeamMap& teams = App::GetApp().GetAgentManager().GetTeams();
+//    for( AgentManager::CIT_TeamMap itTeam = teams.begin(); itTeam != teams.end(); ++itTeam )
+//    {
+//        Team* pTeam = itTeam->second;
+//        if( pTeam == pSelectedTeam )
+//            nSelected = comboBox.count();
+//        comboBox.insertItem( pTeam->GetName().c_str() );
+//    }
     comboBox.setCurrentItem( nSelected );
 }
 

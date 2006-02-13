@@ -64,13 +64,4 @@ private:
     //@}
 };
 
-DECLARE_MESSAGE_WRAPPER( TraceMessage );
-DECLARE_MESSAGE_WRAPPER( DebugPointsMessage );
-DECLARE_MESSAGE_WRAPPER( VisionConesMessage );
-DECLARE_MESSAGE_WRAPPER( DetectionMessage );
-DECLARE_MESSAGE_WRAPPER( ConcentrationDetectionMessage );
-DECLARE_MESSAGE_WRAPPER( FlowDetectionMessage );
-DECLARE_MESSAGE_WRAPPER( PopulationCollisionMessage );
-DECLARE_MESSAGE_WRAPPER( ObjectDetectionMessage );
-
 #endif // __DinMessageWrapper_h_

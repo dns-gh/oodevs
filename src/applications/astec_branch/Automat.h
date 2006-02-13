@@ -7,37 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __Agent_h_
-#define __Agent_h_
+#ifndef __Automat_h_
+#define __Automat_h_
 
-#include "Agent_ABC.h"
+#include "Agent.h"
 
 // =============================================================================
-/** @class  Agent
-    @brief  Agent
+/** @class  Automat
+    @brief  Automat
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public Agent_ABC
+class Automat : public Agent
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent();
-    virtual ~Agent();
+             Automat();
+    virtual ~Automat();
     //@}
 
     //! @name Operations
     //@{
-
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignement operator
+    Automat( const Automat& );            //!< Copy constructor
+    Automat& operator=( const Automat& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -50,4 +49,4 @@ private:
     //@}
 };
 
-#endif // __Agent_h_
+#endif // __Automat_h_

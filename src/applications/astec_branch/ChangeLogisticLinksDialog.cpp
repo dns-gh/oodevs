@@ -85,34 +85,34 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* pParent  )
     pMedicalComboBox_    ->insertItem( "Aucun" );
     pSupplyComboBox_     ->insertItem( "Aucun" );
 
-    AgentManager::CT_AgentMap& agents = App::GetApp().GetAgentManager().GetAgentList();
-    for( AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
-    {
-        const Agent& agent = *itAgent->second;
-        if( !agent.IsAutomate() )
-            continue;
-
-        if( agent.IsLogisticTC2() || agent.IsLogisticBLD() || agent.IsLogisticBLT() )
-        {
-            tc2ComboBoxIDs_.insert( std::make_pair( pTC2ComboBox_->count(), &agent ) );
-            pTC2ComboBox_->insertItem( agent.GetName().c_str() );
-        }
-        if( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() )
-        {
-            maintenanceComboBoxIDs_.insert( std::make_pair( pMaintenanceComboBox_->count(), &agent ) );
-            pMaintenanceComboBox_->insertItem( agent.GetName().c_str() );
-        }
-        if( agent.IsLogisticTC2() || agent.IsLogisticSante() )  
-        {
-            medicalComboBoxIDs_.insert( std::make_pair( pMedicalComboBox_->count(), &agent ) );
-            pMedicalComboBox_->insertItem( agent.GetName().c_str() );
-        }
-        if( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() )
-        {
-            supplyComboBoxIDs_.insert( std::make_pair( pSupplyComboBox_->count(), &agent ) );
-            pSupplyComboBox_->insertItem( agent.GetName().c_str() );
-        }
-    }
+//    AgentManager::CT_AgentMap& agents = App::GetApp().GetAgentManager().GetAgentList();
+//    for( AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
+//    {
+//        const Agent& agent = *itAgent->second;
+//        if( !agent.IsAutomate() )
+//            continue;
+//
+//        if( agent.IsLogisticTC2() || agent.IsLogisticBLD() || agent.IsLogisticBLT() )
+//        {
+//            tc2ComboBoxIDs_.insert( std::make_pair( pTC2ComboBox_->count(), &agent ) );
+//            pTC2ComboBox_->insertItem( agent.GetName().c_str() );
+//        }
+//        if( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() )
+//        {
+//            maintenanceComboBoxIDs_.insert( std::make_pair( pMaintenanceComboBox_->count(), &agent ) );
+//            pMaintenanceComboBox_->insertItem( agent.GetName().c_str() );
+//        }
+//        if( agent.IsLogisticTC2() || agent.IsLogisticSante() )  
+//        {
+//            medicalComboBoxIDs_.insert( std::make_pair( pMedicalComboBox_->count(), &agent ) );
+//            pMedicalComboBox_->insertItem( agent.GetName().c_str() );
+//        }
+//        if( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() )
+//        {
+//            supplyComboBoxIDs_.insert( std::make_pair( pSupplyComboBox_->count(), &agent ) );
+//            pSupplyComboBox_->insertItem( agent.GetName().c_str() );
+//        }
+//    }
 }
 
 // -----------------------------------------------------------------------------

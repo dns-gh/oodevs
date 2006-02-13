@@ -38,16 +38,11 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-     RC( Agent_ABC& agent );
+     RC( Agent_ABC& agent, const ASN1T_MsgCR& asnMsg );
+     RC( Agent_ABC& agent, const ASN1T_MsgAttenteOrdreConduite& asnMsg );
     ~RC();
     //@}
 
-    //! @name
-    //@{
-    void Initialize( const ASN1T_MsgCR& asnMsg );
-    void Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
-    //@}
-    
     //! @name Accessors
     //@{
     Agent_ABC&           GetAgent     ();
@@ -59,6 +54,9 @@ private:
     std::string AgentKnowledgeLink ( ASN1T_OID nId );
     std::string PopulationKnowledgeLink ( ASN1T_OID nId );
     std::string AgentLink          ( ASN1T_OID nId );
+
+    void Initialize( const ASN1T_MsgCR& asnMsg );
+    void Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
 
 private:
     Agent_ABC&      agent_;

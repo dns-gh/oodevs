@@ -21,10 +21,20 @@
 // Name: RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-RC::RC( Agent_ABC& agent )
+RC::RC( Agent_ABC& agent, const ASN1T_MsgCR& asnMsg )
     : Report_ABC( agent.GetPos() )
     , agent_        ( agent )
 {
+    Initialize( asnMsg  );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RC constructor
+// Created: AGE 2006-02-13
+// -----------------------------------------------------------------------------
+RC::RC( Agent_ABC& agent, const ASN1T_MsgAttenteOrdreConduite& asnMsg )
+{
+    Initialize( asnMsg  );
 }
 
 
@@ -352,9 +362,6 @@ void RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
     }
     eType_ = Report_ABC::eRC;
 }
-
-
-
 
 // -----------------------------------------------------------------------------
 // Name: RC::ObjectKnowledgeLink

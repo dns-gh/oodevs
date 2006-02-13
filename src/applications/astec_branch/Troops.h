@@ -7,47 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __Agent_h_
-#define __Agent_h_
+#ifndef __Troops_h_
+#define __Troops_h_
 
-#include "Agent_ABC.h"
+#include "ASN_Types.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
 
 // =============================================================================
-/** @class  Agent
-    @brief  Agent
+/** @class  Troops
+    @brief  Troops
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public Agent_ABC
+class Troops : public Extension_ABC
+             , public Updatable_ABC< ASN1T_MsgUnitDotations >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent();
-    virtual ~Agent();
+             Troops( Controller& controller );
+    virtual ~Troops();
     //@}
 
     //! @name Operations
     //@{
-
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignement operator
+    Troops( const Troops& );            //!< Copy constructor
+    Troops& operator=( const Troops& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Update( const ASN1T_MsgUnitDotations& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
+    unsigned officers_   [eTroopHealthStateNbrStates];
+    unsigned subOfficers_[eTroopHealthStateNbrStates];
+    unsigned troopers_   [eTroopHealthStateNbrStates];
     //@}
 };
 
-#endif // __Agent_h_
+#endif // __Troops_h_

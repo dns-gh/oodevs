@@ -7,47 +7,58 @@
 //
 // *****************************************************************************
 
-#ifndef __Agent_h_
-#define __Agent_h_
+#ifndef __Dotations_h_
+#define __Dotations_h_
 
-#include "Agent_ABC.h"
+#include "ASN_Types.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
 
 // =============================================================================
-/** @class  Agent
-    @brief  Agent
+/** @class  Dotations
+    @brief  Dotations. Resources actually
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public Agent_ABC
+class Dotations : public Extension_ABC
+                , public Updatable_ABC< ASN1T_MsgUnitDotations >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent();
-    virtual ~Agent();
+             Dotations( Controller& controller );
+    virtual ~Dotations();
     //@}
 
     //! @name Operations
     //@{
-
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignement operator
+    Dotations( const Dotations& );            //!< Copy constructor
+    Dotations& operator=( const Dotations& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Update( const ASN1T_MsgUnitDotations& message );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, unsigned > T_Dotations;
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
+    bool bEmptyGasTank_;
+    T_Dotations dotations_;
     //@}
 };
 
-#endif // __Agent_h_
+#endif // __Dotations_h_

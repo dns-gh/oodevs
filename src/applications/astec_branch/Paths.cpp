@@ -8,52 +8,55 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "AgentFactory.h"
-#include "Agent.h"
-#include "Population.h"
+#include "Paths.h"
+#include "App.h"
+#include "World.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory constructor
+// Name: Paths constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory()
+Paths::Paths()
 {
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentFactory destructor
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-AgentFactory::~AgentFactory()
-{
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Paths destructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
+Paths::~Paths()
 {
-    Agent* result = new Agent( asnMsg );
-    result->Attach( *new Reports( *result, controller_ ) ); // $$$$ AGE 2006-02-13: ...
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Paths::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
+void Paths::Update( const ASN1T_MsgUnitAttributes& message )
 {
-    return new Agent( asnMsg );
-}
+    // $$$$ AGE 2006-02-13: Jamais vidé ??
+    if( message.m.positionPresent )
+    {
+        MT_Vector2D vNewPos;
+        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.position.data, vNewPos );
+        previousPath_.push_back( vNewPos );
+    }
+}   
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: Paths::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
+void Paths::Update( const ASN1T_MsgUnitPathFind& message )
 {
-    return new Population( asnMsg );
+    plannedPath_.clear(); plannedPath_.reserve( message.itineraire.vecteur_point.n );
+    for( uint i = 0; i < message.itineraire.vecteur_point.n; ++i )
+    {
+        MT_Vector2D vPos;
+        // $$$$ AGE 2006-02-13: 
+        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.itineraire.vecteur_point.elem[i].data, vPos );
+        plannedPath_.push_back( vPos );
+    }
 }
