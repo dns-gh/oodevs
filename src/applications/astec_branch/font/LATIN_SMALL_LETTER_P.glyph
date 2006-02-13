@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_SMALL_LETTER_P</title>
+<unicode>70</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<contour type="cubic">
+<contourPoint type="on" rounded="false">
+<point2d x="458.0" y="0.0"/>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="498.0" y="0.0"/>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="498.0" y="300.0"/>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="458.0" y="300.0"/>
+</contourPoint>
+</contour>
+<include href="LATIN_SMALL_LETTER_N.glyph">
+<invoke>
+<pos>
+<point2d x="0.0" y="0.0"/>
+</pos>
+</invoke>
+</include>
+</body>
+</glyphElement>

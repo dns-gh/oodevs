@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_CAPITAL_LETTER_S</title>
+<unicode>53</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="367.0" y="179.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="406.0" y="179.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="406.0" y="76.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="433.0" y="76.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="433.0" y="178.5"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="470.0" y="179.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="470.0" y="207.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="367.0" y="207.0"/>
+</contourPoint>
+</contour>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="515.0" y="80.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="538.0" y="80.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="583.5" y="185.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="624.703125" y="79.96875"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="648.0" y="80.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="596.0" y="208.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="571.0" y="208.0"/>
+</contourPoint>
+</contour>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="554.0" y="119.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="609.0" y="119.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="602.0" y="139.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="563.0" y="139.0"/>
+</contourPoint>
+</contour>
+<include href="LATIN_SMALL_LETTER_V.glyph">
+<invoke>
+<pos>
+<point2d x="0.0" y="0.0"/>
+</pos>
+</invoke>
+</include>
+</body>
+</glyphElement>

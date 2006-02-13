@@ -1,0 +1,23 @@
+/* XPM */
+static const char * xpm_stop[] = {
+"16 16 3 1",
+"a c #000000008080",
+"b c None",
+"c c #00000000ffff",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb",
+"bbbccccccccccbbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcccccccccabbb",
+"bbbcaaaaaaaaabbb",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb"
+};

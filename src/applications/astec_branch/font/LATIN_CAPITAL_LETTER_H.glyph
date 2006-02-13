@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_CAPITAL_LETTER_H</title>
+<unicode>48</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="318.0" y="282.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="676.0" y="282.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="676.0" y="322.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="318.0" y="322.0"/>
+</contourPoint>
+</contour>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="302.0" y="302.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="300.31593717721853" y="338.0085577880382"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="303.7737832019792" y="264.0730449791491"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="246.0" y="202.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="336.0" y="302.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="333.5048685537928" y="238.07789686068446"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="338.5011418491107" y="366.0760820388592"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="250.0" y="404.0"/>
+</contourPoint>
+</contour>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="692.0" y="302.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="690.8963303842409" y="338.20472225248045"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="692.9568473925153" y="270.6116265326382"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="746.0" y="204.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="656.0" y="302.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="657.4990442815213" y="260.026760117403"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="654.0" y="358.0"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="754.0" y="408.0"/>
+</contourPoint>
+</contour>
+<include href="LATIN_SMALL_LETTER_A.glyph">
+<invoke>
+<pos>
+<point2d x="0.0" y="0.0"/>
+</pos>
+</invoke>
+</include>
+</body>
+</glyphElement>
