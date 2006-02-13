@@ -7,57 +7,41 @@
 //
 // *****************************************************************************
 
-#include "mvw_pch.h"
-#include "Options.h"
-#include "OptionsObserver_ABC.h"
-#include "OptionVariant.h"
-#include <algorithm>
+#include "astec_pch.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
-// Name: Options constructor
+// Name: Controller constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Options::Options()
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Options destructor
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-Options::~Options()
+Controller::Controller()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::Register
+// Name: Controller destructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Register( OptionsObserver_ABC& observer )
+Controller::~Controller()
 {
-    observers_.push_back( &observer );
-    for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
-        observer.OptionChanged( it->first, it->second );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::Remove
+// Name: Controller::Register
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Remove( OptionsObserver_ABC& observer )
+void Controller::Register( Observer_ABC& observer )
 {
-    observers_.erase( std::find( observers_.begin(), observers_.end(), &observer ) );
+    InterfaceContainer< Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::Change
+// Name: Controller::Remove
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Change( const std::string& name, const OptionVariant& value )
+void Controller::Remove( Observer_ABC& observer )
 {
-    options_[ name ] = value;
-    for( CIT_Observers it = observers_.begin(); it != observers_.end(); ++it )
-        (*it)->OptionChanged( name, value );
+    InterfaceContainer< Observer_ABC >::Remove( observer );
 }
