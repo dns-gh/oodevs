@@ -105,7 +105,7 @@ private:
     uint32              nID_;
 
     T_GtiaMap            gtias_;
-    T_DiplomatyVector    diplomaty_;
+//    T_DiplomatyVector    diplomaty_;
     T_ObjectKnowledgeMap objectKnowledges_;
     T_AgentKnowledgeMap  agentKnowledges_;    // Concatenation of the gtias' agent knowledges for easy browsing.
 

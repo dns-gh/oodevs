@@ -40,44 +40,13 @@ Population::Population( const ASN1T_MsgPopulationCreation& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population constructor
-// Created: HME 2005-10-18
-// -----------------------------------------------------------------------------
-Population::Population()
-    : nPopulationID_( nMaxId_++ )
-    , pType_        ( 0 )
-    , pTeam_        ( 0 )
-    , strName_      ()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population constructor
-// Created: HME 2005-10-18
-// -----------------------------------------------------------------------------
-Population::Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, Team& team , std::string name, TypePopulation* type )
-    : nPopulationID_( nMaxId_++ )
-    , pType_        ( type )
-    , pTeam_        ( &team )
-    , strName_      ( name )
-{
-    CreatePopulationConcentration( point, attitude, persons );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Population destructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
-	for( IT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
-		delete itCon->second;
-	concentrationMap_.clear();
-
-	for( IT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
-		delete itFlow->second;
-	flowMap_.clear();
+    Resolver< PopulationConcentration >::DeleteAll();
+    Resolver< PopulationFlow >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +55,7 @@ Population::~Population()
 // -----------------------------------------------------------------------------
 void Population::UpdatePopulationFlow( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	flowMap_[ asnMsg.oid_flux ]->Update( asnMsg );
+	Resolver< PopulationFlow >::Get( asnMsg.oid_flux ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +64,7 @@ void Population::UpdatePopulationFlow( const ASN1T_MsgPopulationFluxUpdate& asnM
 // -----------------------------------------------------------------------------
 void Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	concentrationMap_[ asnMsg.oid_concentration ]->Update( asnMsg );
+	Resolver< PopulationConcentration >::Get( asnMsg.oid_concentration ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,8 +73,7 @@ void Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationConcent
 // -----------------------------------------------------------------------------
 void Population::CreatePopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-	PopulationFlow* pFlow = new PopulationFlow( asnMsg, *this );
-	flowMap_[ asnMsg.oid_flux ] = pFlow;
+    Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,18 +82,7 @@ void Population::CreatePopulationFlow( const ASN1T_MsgPopulationFluxCreation& as
 // -----------------------------------------------------------------------------
 void Population::CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-	PopulationConcentration* pCon = new PopulationConcentration( asnMsg, *this );
-	concentrationMap_[ asnMsg.oid_concentration ] = pCon ;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::CreatePopulationConcentration
-// Created: HME 2005-10-18
-// -----------------------------------------------------------------------------
-void Population::CreatePopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude, int persons )
-{
-    PopulationConcentration* pCon = new PopulationConcentration( point, attitude, persons, *this );
-    concentrationMap_[ nMaxId_  ] = pCon ;
+    Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,10 +91,8 @@ void Population::CreatePopulationConcentration( MT_Vector2D point, E_PopulationA
 // -----------------------------------------------------------------------------
 void Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
-    IT_FlowMap it = flowMap_.find( asnMsg.oid_flux );
-    assert( it != flowMap_.end() );
-//    App::GetApp().NotifyPopulationFlowDeleted( *it->second );
-    flowMap_.erase( it );
+    delete Resolver< PopulationFlow >::Find( asnMsg.oid_flux );
+    Resolver< PopulationFlow >::Remove( asnMsg.oid_flux );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,10 +101,8 @@ void Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruction&
 // -----------------------------------------------------------------------------
 void Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-    IT_ConcentrationMap it = concentrationMap_.find( asnMsg.oid_concentration );
-    assert( it != concentrationMap_.end() );
-//    App::GetApp().NotifyPopulationConcentrationDeleted( *it->second );
-    concentrationMap_.erase( it );
+    delete Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration );
+    Resolver< PopulationConcentration >::Remove( asnMsg.oid_concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,6 +111,7 @@ void Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcent
 // -----------------------------------------------------------------------------
 void Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
 {
+    // NOTHING
 } 
 
 
@@ -165,15 +119,15 @@ void Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
 // Name: Population::MT_Vector2D& GetPos
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-const MT_Vector2D& Population::GetPos() const
+const MT_Vector2D Population::GetPos() const
 {
-	if ( concentrationMap_.size() == 0 && flowMap_.size() == 0 )
-		assert( false );
-	if( flowMap_.size() != 0 )
-        return flowMap_.begin()->second->GetHeadPosition();
-	else
-        return concentrationMap_.begin()->second->GetPos();
-		
+//	if ( concentrationMap_.size() == 0 && flowMap_.size() == 0 )
+//		assert( false );
+//	if( flowMap_.size() != 0 )
+//        return flowMap_.begin()->second->GetHeadPosition();
+//	else
+//        return concentrationMap_.begin()->second->GetPos();
+    return MT_Vector2D();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,10 +137,10 @@ const MT_Vector2D& Population::GetPos() const
 uint Population::GetLivingHumans() const
 {
 	uint sum = 0;
-	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
-		sum += itCon->second->GetLivingHumans();
-	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
-		sum += itFlow->second->GetLivingHumans();
+//	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
+//		sum += itCon->second->GetLivingHumans();
+//	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
+//		sum += itFlow->second->GetLivingHumans();
 	return sum;
 }
 
@@ -197,10 +151,10 @@ uint Population::GetLivingHumans() const
 uint Population::GetDeadHumans() const
 {
 	uint sum = 0;
-	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
-		sum += itCon->second->GetDeadHumans();
-	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
-		sum += itFlow->second->GetDeadHumans();
+//	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
+//		sum += itCon->second->GetDeadHumans();
+//	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
+//		sum += itFlow->second->GetDeadHumans();
 	return sum;
 }
 
@@ -211,5 +165,23 @@ uint Population::GetDeadHumans() const
 unsigned long Population::GetId() const
 {
     return nPopulationID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetConcentration
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+const PopulationConcentration& Population::GetConcentration( uint nID ) const
+{
+    return Resolver< PopulationConcentration >::Get( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetFlow
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+const PopulationFlow& Population::GetFlow( uint nID ) const
+{
+    return Resolver< PopulationFlow >::Get( nID );
 }
 

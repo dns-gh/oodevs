@@ -39,13 +39,13 @@ Model::Model( AgentFactory_ABC& agentFactory, ObjectFactory_ABC& objectFactory )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    Resolver_ABC< Object_ABC >::DeleteAll();
-    Resolver_ABC< LogMaintenanceConsign >::DeleteAll();
-    Resolver_ABC< LogMedicalConsign >::DeleteAll();
-    Resolver_ABC< LogSupplyConsign >::DeleteAll();
-    Resolver_ABC< Agent >::DeleteAll();
-    Resolver_ABC< Gtia >::DeleteAll(); 
-    Resolver_ABC< Team >::DeleteAll();
+    Resolver< Object_ABC >::DeleteAll();
+    Resolver< LogMaintenanceConsign >::DeleteAll();
+    Resolver< LogMedicalConsign >::DeleteAll();
+    Resolver< LogSupplyConsign >::DeleteAll();
+    Resolver< Agent >::DeleteAll();
+    Resolver< Gtia >::DeleteAll(); 
+    Resolver< Team >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,8 +55,8 @@ Model::~Model()
 template< typename Type >
 void Model::Delete( unsigned long id )
 {
-    delete Resolver_ABC< Type >::Find( id );
-    Resolver_ABC< Type >::Remove( id );
+    delete Resolver< Type >::Find( id );
+    Resolver< Type >::Remove( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +67,10 @@ void Model::CreateTeam( DIN::DIN_Input& input )
 {
     unsigned long id;
     input >> id;
-    if( ! Resolver_ABC< Team >::Find( id ) )
+    if( ! Resolver< Team >::Find( id ) )
     {
         Team* team = new Team( id, input );
-        Resolver_ABC< Team >::Register( id, *team );
+        Resolver< Team >::Register( id, *team );
 //    application_.NotifyTeamCreated( *team );
     }
 }
@@ -81,7 +81,7 @@ void Model::CreateTeam( DIN::DIN_Input& input )
 // -----------------------------------------------------------------------------
 Team& Model::GetTeam( unsigned long id )
 {
-    return Resolver_ABC< Team >::Get( id );
+    return Resolver< Team >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ Team& Model::GetTeam( unsigned long id )
 // -----------------------------------------------------------------------------
 Team* Model::FindTeam( const std::string& team )
 {
-    for( Resolver_ABC< Team >::CIT_Elements it = Resolver_ABC< Team >::elements_.begin(); it != Resolver_ABC< Team >::elements_.end(); ++it )
+    for( Resolver< Team >::CIT_Elements it = Resolver< Team >::elements_.begin(); it != Resolver< Team >::elements_.end(); ++it )
         if( it->second->GetName() == team )
             return it->second;
     return 0;
@@ -104,11 +104,11 @@ void Model::CreateGtia( DIN::DIN_Input& input )
 {
     unsigned long id, teamId;
     input >> id >> teamId;
-    if( ! Resolver_ABC< Gtia >::Find( id ) )
+    if( ! Resolver< Gtia >::Find( id ) )
     {
         Team& team = GetTeam( teamId );
         Gtia* gtia = team.CreateGtia( id );
-        Resolver_ABC< Gtia >::Register( id, *gtia );
+        Resolver< Gtia >::Register( id, *gtia );
 //    application_.NotifyGtiaCreated( *gtia );
     }
 }
@@ -119,7 +119,7 @@ void Model::CreateGtia( DIN::DIN_Input& input )
 // -----------------------------------------------------------------------------
 Gtia& Model::GetGtia( unsigned long id )
 {
-    return Resolver_ABC< Gtia >::Get( id );
+    return Resolver< Gtia >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,10 +128,10 @@ Gtia& Model::GetGtia( unsigned long id )
 // -----------------------------------------------------------------------------
 void Model::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    if( !Resolver_ABC< Agent >::Find( asnMsg.oid_automate ) )
+    if( !Resolver< Agent >::Find( asnMsg.oid_automate ) )
     {
         Agent* pAgent = agentFactory_.Create( asnMsg );
-        Resolver_ABC< Agent >::Register( asnMsg.oid_automate, *pAgent );
+        Resolver< Agent >::Register( asnMsg.oid_automate, *pAgent );
 //        application_.NotifyAgentCreated( *pAgent );
     }
 }
@@ -142,10 +142,10 @@ void Model::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Model::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
 {
-    if( !Resolver_ABC< Agent >::Find( asnMsg.oid_pion ) )
+    if( !Resolver< Agent >::Find( asnMsg.oid_pion ) )
     {
         Agent* pAgent = agentFactory_.Create( asnMsg );
-        Resolver_ABC< Agent >::Register( asnMsg.oid_pion, *pAgent );
+        Resolver< Agent >::Register( asnMsg.oid_pion, *pAgent );
 //        application_.NotifyAgentCreated( *pAgent );
     }
 }
@@ -156,7 +156,7 @@ void Model::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Agent& Model::GetAgent( unsigned long id )
 {
-    return Resolver_ABC< Agent >::Get( id );
+    return Resolver< Agent >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ Agent& Model::GetAgent( unsigned long id )
 // -----------------------------------------------------------------------------
 Agent* Model::FindAgent( unsigned long id )
 {
-    return Resolver_ABC< Agent >::Find( id );
+    return Resolver< Agent >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,9 +174,9 @@ Agent* Model::FindAgent( unsigned long id )
 // -----------------------------------------------------------------------------
 Agent_ABC* Model::FindAllAgent( unsigned long id )
 {
-    Agent_ABC* agent = Resolver_ABC< Agent >::Find( id );
+    Agent_ABC* agent = Resolver< Agent >::Find( id );
     if( ! agent )
-        agent = Resolver_ABC< Population >::Find( id );
+        agent = Resolver< Population >::Find( id );
     return agent;
 }
 
@@ -186,10 +186,10 @@ Agent_ABC* Model::FindAllAgent( unsigned long id )
 // -----------------------------------------------------------------------------
 void Model::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    if( !Resolver_ABC< Population >::Find( asnMsg.oid_population ) )
+    if( !Resolver< Population >::Find( asnMsg.oid_population ) )
     {
         Population* popu = agentFactory_.Create( asnMsg );
-        Resolver_ABC< Population >::Register( asnMsg.oid_population, *popu );
+        Resolver< Population >::Register( asnMsg.oid_population, *popu );
 //        application_.NotifyPopulationCreated( *popu );
     }
 }
@@ -200,7 +200,7 @@ void Model::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Population& Model::GetPopulation( unsigned long id )
 {
-    return Resolver_ABC< Population >::Get( id );
+    return Resolver< Population >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ Population& Model::GetPopulation( unsigned long id )
 // -----------------------------------------------------------------------------
 Population* Model::FindPopulation( unsigned long id )
 {
-    return Resolver_ABC< Population >::Find( id );
+    return Resolver< Population >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,10 +219,10 @@ Population* Model::FindPopulation( unsigned long id )
 void Model::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 {
     MT_LOG_INFO( "ObjectCreation - ID: " << asnMsg.oid, eReceived, 0 );
-    if( ! Resolver_ABC< Object_ABC >::Find( asnMsg.oid ) )
+    if( ! Resolver< Object_ABC >::Find( asnMsg.oid ) )
     {
         Object_ABC* pObject = objectFactory_.Create( asnMsg );
-        Resolver_ABC< Object_ABC >::Register( asnMsg.oid, *pObject );
+        Resolver< Object_ABC >::Register( asnMsg.oid, *pObject );
 //        application_.NotifyObjectCreated( *pObject );
     }
 }
@@ -233,7 +233,7 @@ void Model::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Object_ABC& Model::GetObject( unsigned long id )
 {
-    return Resolver_ABC< Object_ABC >::Get( id );
+    return Resolver< Object_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void Model::DeleteObject( unsigned long id )
 // -----------------------------------------------------------------------------
 void Model::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg )
 {
-    Resolver_ABC< LogMaintenanceConsign >::Register( asnMsg.oid_consigne, *new LogMaintenanceConsign( asnMsg ) );
+    Resolver< LogMaintenanceConsign >::Register( asnMsg.oid_consigne, *new LogMaintenanceConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ void Model::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEqu
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign& Model::GetMaintenanceConsign( unsigned long id )
 {
-    return Resolver_ABC< LogMaintenanceConsign >::Get( id );
+    return Resolver< LogMaintenanceConsign >::Get( id );
 }
  
 // -----------------------------------------------------------------------------
@@ -280,7 +280,7 @@ void Model::DeleteMaintenanceConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void Model::CreateMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& asnMsg )
 {
-    Resolver_ABC< LogMedicalConsign >::Register( asnMsg.oid_consigne, *new LogMedicalConsign( asnMsg ) );
+    Resolver< LogMedicalConsign >::Register( asnMsg.oid_consigne, *new LogMedicalConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,7 +289,7 @@ void Model::CreateMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreatio
 // -----------------------------------------------------------------------------
 LogMedicalConsign& Model::GetMedicalConsign( unsigned long id )
 {
-    return Resolver_ABC< LogMedicalConsign >::Get( id );
+    return Resolver< LogMedicalConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void Model::DeleteMedicalConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void Model::CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asnMsg )
 {
-    Resolver_ABC< LogSupplyConsign >::Register( asnMsg.oid_consigne, *new LogSupplyConsign( asnMsg ) );
+    Resolver< LogSupplyConsign >::Register( asnMsg.oid_consigne, *new LogSupplyConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ void Model::CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreat
 // -----------------------------------------------------------------------------
 LogSupplyConsign& Model::GetSupplyConsign( unsigned long id )
 {
-    return Resolver_ABC< LogSupplyConsign >::Get( id );
+    return Resolver< LogSupplyConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------

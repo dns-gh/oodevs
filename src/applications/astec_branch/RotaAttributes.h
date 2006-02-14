@@ -7,29 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectKnowledge_h_
-#define __ObjectKnowledge_h_
+#ifndef __RotaAttributes_h_
+#define __RotaAttributes_h_
 
 #include "ASN_Types.h"
-#include "Entity_ABC.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+#include "OptionalValue.h"
 #include "Resolver_ABC.h"
 
+class Controller;
 class Object_ABC;
 
 // =============================================================================
-/** @class  ObjectKnowledge
-    @brief  ObjectKnowledge
+/** @class  RotaAttributes
+    @brief  RotaAttributes
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public Entity_ABC
+class RotaAttributes : public Extension_ABC
+                    , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, const Resolver_ABC< Object_ABC >& resolver );
-    virtual ~ObjectKnowledge();
+             RotaAttributes();
+    virtual ~RotaAttributes();
     //@}
 
     //! @name Operations
@@ -39,21 +43,27 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectKnowledge( const ObjectKnowledge& );            //!< Copy constructor
-    ObjectKnowledge& operator=( const ObjectKnowledge& ); //!< Assignement operator
+    RotaAttributes( const RotaAttributes& );            //!< Copy constructor
+    RotaAttributes& operator=( const RotaAttributes& ); //!< Assignement operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< unsigned long > T_NbcIds;
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< Object_ABC >& resolver_;
-    unsigned long id_;
-    unsigned long type_;
+    bool set_;
+    unsigned int danger_;
+    T_NbcIds agents_;
     //@}
 };
 
-#endif // __ObjectKnowledge_h_
+#endif // __RotaAttributes_h_

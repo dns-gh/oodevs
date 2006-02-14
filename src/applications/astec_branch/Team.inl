@@ -95,21 +95,6 @@ ObjectKnowledge* Team::FindObjectKnowledge( int nId )
 
 
 // -----------------------------------------------------------------------------
-// Name: Team::FindKnowledgeOnObject
-// Created: APE 2004-08-05
-// -----------------------------------------------------------------------------
-inline
-ObjectKnowledge* Team::FindKnowledgeOnObject( const Object_ABC& object )
-{
-    for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
-        if( it->second->GetRealObject() == &object )
-            return it->second;
-
-    return 0;
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: Team::GetAgentKnowledges
 /** @return 
 */

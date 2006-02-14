@@ -7,29 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectKnowledge_h_
-#define __ObjectKnowledge_h_
+#ifndef __CrossingSiteAttributes_h_
+#define __CrossingSiteAttributes_h_
 
 #include "ASN_Types.h"
-#include "Entity_ABC.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+#include "OptionalValue.h"
 #include "Resolver_ABC.h"
 
+class Controller;
 class Object_ABC;
 
 // =============================================================================
-/** @class  ObjectKnowledge
-    @brief  ObjectKnowledge
+/** @class  CrossingSiteAttributes
+    @brief  CrossingSiteAttributes
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public Entity_ABC
+class CrossingSiteAttributes : public Extension_ABC
+                    , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, const Resolver_ABC< Object_ABC >& resolver );
-    virtual ~ObjectKnowledge();
+             CrossingSiteAttributes();
+    virtual ~CrossingSiteAttributes();
     //@}
 
     //! @name Operations
@@ -39,21 +43,24 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectKnowledge( const ObjectKnowledge& );            //!< Copy constructor
-    ObjectKnowledge& operator=( const ObjectKnowledge& ); //!< Assignement operator
+    CrossingSiteAttributes( const CrossingSiteAttributes& );            //!< Copy constructor
+    CrossingSiteAttributes& operator=( const CrossingSiteAttributes& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< Object_ABC >& resolver_;
-    unsigned long id_;
-    unsigned long type_;
+    bool set_;
+    unsigned int width_;
+    unsigned int depth_;
+    unsigned int speed_;
+    bool         needsConstruction_;
     //@}
 };
 
-#endif // __ObjectKnowledge_h_
+#endif // __CrossingSiteAttributes_h_

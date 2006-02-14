@@ -10,7 +10,7 @@
 #ifndef __AgentTypes_h_
 #define __AgentTypes_h_
 
-#include "Resolver_ABC.h"
+#include "Resolver.h"
 namespace xml { class xistream; };
 class AgentType;
 class ComponentType;
@@ -24,12 +24,12 @@ class AutomatType;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentTypes : public Resolver_ABC< AgentType >
-                 , public Resolver_ABC< AgentType, std::string >
-                 , public Resolver_ABC< AutomatType >
-                 , public Resolver_ABC< ComponentType, std::string >
-                 , public Resolver_ABC< SensorType, std::string >
-                 , public Resolver_ABC< DecisionalModel, std::string >
+class AgentTypes : public Resolver< AgentType >
+                 , public Resolver< AgentType, std::string >
+                 , public Resolver< AutomatType >
+                 , public Resolver< ComponentType, std::string >
+                 , public Resolver< SensorType, std::string >
+                 , public Resolver< DecisionalModel, std::string >
 {
 
 public:

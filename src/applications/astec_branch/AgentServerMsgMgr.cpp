@@ -1174,8 +1174,8 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
     case EnumChangeDiplomatieErrorCode::error_invalid_camp : strOutputMsg << "error_invalid_camp"; break;
     }
 
-    if( asnMsg.error_code == EnumChangeDiplomatieErrorCode::no_error )
-        model_.GetTeam( asnMsg.oid_camp1 ).ChangeDiplomaty( model_.GetTeam( asnMsg.oid_camp2 ), asnMsg.diplomatie );
+    model_.GetTeam( asnMsg.oid_camp1 ).Update( asnMsg );
+    model_.GetTeam( asnMsg.oid_camp2 ).Update( asnMsg );
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }

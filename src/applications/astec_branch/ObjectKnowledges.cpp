@@ -9,12 +9,17 @@
 
 #include "astec_pch.h"
 #include "ObjectKnowledges.h"
+#include "Controller.h"
+#include "ObjectKnowledge.h"
+#include "ObjectKnowledgeFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledges constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledges::ObjectKnowledges()
+ObjectKnowledges::ObjectKnowledges( Controller& controller, ObjectKnowledgeFactory& factory )
+    : controller_( controller )
+    , factory_( factory )
 {
 
 }
@@ -25,50 +30,37 @@ ObjectKnowledges::ObjectKnowledges()
 // -----------------------------------------------------------------------------
 ObjectKnowledges::~ObjectKnowledges()
 {
-
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledges::Update
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg )
+void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    Gtia*& gtia = knowledgeGroups_[ asnMsg.oid_connaissance ];
-    if( ! gtia )
-    {
-    }
-
-
-    ObjectKnowledge* pObjectKnowledge = new ObjectKnowledge( asnMsg, *this );
-    objectKnowledges_.insert( std::make_pair( pObjectKnowledge->GetID(), pObjectKnowledge ) );
-
-    return true;
+    if( ! Find( message.oid_connaissance ) )
+        Register( message.oid_connaissance, * factory_.Create( message ) );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledges::Update
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg )
+void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-IT_ObjectKnowledgeMap itObjectKnowledge = objectKnowledges_.find( asnMsg.oid_connaissance );
-    assert( itObjectKnowledge != objectKnowledges_.end() );
-
-    itObjectKnowledge->second->Update( asnMsg );
-//    App::GetApp().NotifyObjectKnowledgeUpdated( *this, *(itObjectKnowledge->second) );
+    Get( message.oid_connaissance ).Update( message );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledges::Update
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
+void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeDestruction& message )
 {
-    IT_ObjectKnowledgeMap itObjectKnowledge = objectKnowledges_.find( asnMsg.oid_connaissance );
-    assert( itObjectKnowledge != objectKnowledges_.end() );
-//    App::GetApp().NotifyObjectKnowledgeDeleted( *this, *(itObjectKnowledge->second) );
-    Object_ABC::GetIDManagerForObjectType( itObjectKnowledge->second->GetObjectTypeID() ).ReleaseIdentifier( itObjectKnowledge->second->GetID() ) ;
-    delete itObjectKnowledge->second;
-    objectKnowledges_.erase( itObjectKnowledge );
+    delete Find( message.oid_connaissance );
+    Remove( message.oid_connaissance );
+    controller_.Update( *this );
 }

@@ -11,7 +11,7 @@
 #define __Model_h_
 
 #include "ASN_Types.h"
-#include "Resolver_ABC.h"
+#include "Resolver.h"
 
 class Agent;
 class Agent_ABC;
@@ -40,15 +40,15 @@ namespace DIN {
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class Model : public Resolver_ABC< Team >
-            , public Resolver_ABC< Gtia > 
-            , public Resolver_ABC< Agent > // $$$$ AGE 2006-02-13: eventualy Agent_ABC
-            , public Resolver_ABC< Object_ABC >
-            , public Resolver_ABC< LogMaintenanceConsign >
-            , public Resolver_ABC< LogMedicalConsign >
-            , public Resolver_ABC< LogSupplyConsign >
-            , public Resolver_ABC< Population >
-            , public Resolver_ABC< TacticalLine_ABC >
+class Model : public Resolver< Team >
+            , public Resolver< Gtia > 
+            , public Resolver< Agent > // $$$$ AGE 2006-02-13: eventualy Agent_ABC
+            , public Resolver< Object_ABC >
+            , public Resolver< LogMaintenanceConsign >
+            , public Resolver< LogMedicalConsign >
+            , public Resolver< LogSupplyConsign >
+            , public Resolver< Population >
+            , public Resolver< TacticalLine_ABC >
 {
 
 public:
@@ -65,7 +65,7 @@ public:
     Team* FindTeam( const std::string& team );
     template< typename Functor >
     void ApplyOnTeams( const Functor& f ) {
-        Resolver_ABC< Team >::Apply( f );
+        Resolver< Team >::Apply( f );
     }
 
 
@@ -79,7 +79,7 @@ public:
 
     template< typename Functor >
     void ApplyOnAgents( const Functor& f ) {
-        Resolver_ABC< Agent >::Apply( f );
+        Resolver< Agent >::Apply( f );
     }
 
     Agent_ABC* FindAllAgent( unsigned long id ); // $$$$ AGE 2006-02-13: 

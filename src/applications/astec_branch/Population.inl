@@ -8,16 +8,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: Population::GetID
-// Created: HME 2005-10-05
-// -----------------------------------------------------------------------------
-inline
-const MIL_AgentID Population::GetID() const
-{
-	return nPopulationID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Population::GetTeam
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
@@ -71,63 +61,6 @@ AgentKnowledge* Population::FindAgentKnowledge( uint nId )
         return it->second;
     return 0;
 }
-
-// -----------------------------------------------------------------------------
-// Name: mos_population::FindConcentration
-// Created: NLD 2005-10-12
-// -----------------------------------------------------------------------------
-inline
-const PopulationConcentration* Population::FindConcentration( uint nID ) const
-{
-    CIT_ConcentrationMap it = concentrationMap_.find( nID );
-    if( it == concentrationMap_.end() )
-        return 0;
-    return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::FindFlow
-// Created: NLD 2005-10-13
-// -----------------------------------------------------------------------------
-inline
-const PopulationFlow* Population::FindFlow( uint nID ) const
-{
-    CIT_FlowMap it = flowMap_.find( nID );
-    if( it == flowMap_.end() )
-        return 0;
-    return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetConcentrations
-// Created: SBO 2005-10-26
-// -----------------------------------------------------------------------------
-inline
-const Population::T_ConcentrationMap& Population::GetConcentrations() const
-{
-    return concentrationMap_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Population::GetFlows
-// Created: SBO 2005-10-26
-// -----------------------------------------------------------------------------
-inline
-const Population::T_FlowMap& Population::GetFlows() const
-{
-    return flowMap_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::IsEmpty
-// Created: SBO 2005-11-14
-// -----------------------------------------------------------------------------
-inline
-bool Population::IsEmpty() const
-{
-    return flowMap_.size() == 0 && concentrationMap_.size() == 0;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: Population::GetAggregatedPos

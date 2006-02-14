@@ -45,11 +45,11 @@ AgentTypes::AgentTypes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 AgentTypes::~AgentTypes()
 {
-    Resolver_ABC< AgentType >::DeleteAll();
-    Resolver_ABC< AutomatType >::DeleteAll();
-    Resolver_ABC< ComponentType, std::string >::DeleteAll();
-    Resolver_ABC< DecisionalModel, std::string >::DeleteAll();
-    Resolver_ABC< SensorType, std::string >::DeleteAll();
+    Resolver< AgentType >::DeleteAll();
+    Resolver< AutomatType >::DeleteAll();
+    Resolver< ComponentType, std::string >::DeleteAll();
+    Resolver< DecisionalModel, std::string >::DeleteAll();
+    Resolver< SensorType, std::string >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void AgentTypes::ReadComponents( const std::string& components )
 void AgentTypes::ReadComponent( xml::xistream& xis )
 {
     ComponentType* component = new ComponentType( xis );
-    Resolver_ABC< ComponentType, std::string >::Register( component->GetName(), *component );
+    Resolver< ComponentType, std::string >::Register( component->GetName(), *component );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolve
 {
     T_Resolver fragResolver = T_Resolver( ENT_Tr::ConvertToFragOrder );
     DecisionalModel* model = new DecisionalModel( xis, missionResolver, fragResolver );
-    Resolver_ABC< DecisionalModel, std::string >::Register( model->GetName(), *model );
+    Resolver< DecisionalModel, std::string >::Register( model->GetName(), *model );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void AgentTypes::ReadSensors( const std::string& sensors )
 void AgentTypes::ReadSensor( xml::xistream& xis )
 {
     SensorType* type = new SensorType( xis );
-    Resolver_ABC< SensorType, std::string >::Register( type->GetName(), *type );
+    Resolver< SensorType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,8 +166,8 @@ void AgentTypes::ReadAgents( const std::string& agents )
 void AgentTypes::ReadAgentType( xml::xistream& xis )
 {
     AgentType* type = new AgentType( xis, *this, *this );
-    Resolver_ABC< AgentType >             ::Register( type->GetId(), *type );
-    Resolver_ABC< AgentType, std::string >::Register( type->GetName(), *type );
+    Resolver< AgentType >             ::Register( type->GetId(), *type );
+    Resolver< AgentType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +188,6 @@ void AgentTypes::ReadAutomats( const std::string& automats )
 void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
     AutomatType* type = new AutomatType( xis, *this, *this );
-    Resolver_ABC< AutomatType >::Register( type->GetId(), *type );
+    Resolver< AutomatType >::Register( type->GetId(), *type );
 }
 

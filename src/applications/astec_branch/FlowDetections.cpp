@@ -11,6 +11,7 @@
 #include "FlowDetections.h"
 #include "Controller.h"
 #include "Population.h"
+#include "Net_Def.h"
 
 // -----------------------------------------------------------------------------
 // Name: FlowDetections constructor

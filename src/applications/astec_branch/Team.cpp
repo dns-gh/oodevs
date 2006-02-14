@@ -82,3 +82,16 @@ Gtia* Team::CreateGtia( uint32 nId )
     return gtia;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Team::FindKnowledgeOnObject
+// Created: APE 2004-08-05
+// -----------------------------------------------------------------------------
+ObjectKnowledge* Team::FindKnowledgeOnObject( const Object_ABC& object )
+{
+    for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
+        if( it->second->GetRealObject() == &object )
+            return it->second;
+
+    return 0;
+}
+

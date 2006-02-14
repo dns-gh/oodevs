@@ -13,9 +13,11 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
-#include "Resolver_ABC.h"
+#include "Resolver.h"
 
 class ObjectKnowledge;
+class Controller;
+class ObjectKnowledgeFactory;
 
 // =============================================================================
 /** @class  ObjectKnowledges
@@ -27,12 +29,13 @@ class ObjectKnowledges : public Extension_ABC
                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
+                       , private Resolver< ObjectKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledges();
+             ObjectKnowledges( Controller& controller, ObjectKnowledgeFactory& factory );
     virtual ~ObjectKnowledges();
     //@}
 
@@ -47,22 +50,18 @@ private:
     ObjectKnowledges& operator=( const ObjectKnowledges& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, ObjectKnowledge* > T_ObjectKnowledges;
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg );
-    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg );
-    virtual void Update( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
+    virtual void Update( const ASN1T_MsgObjectKnowledgeCreation&    message );
+    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate&      message );
+    virtual void Update( const ASN1T_MsgObjectKnowledgeDestruction& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_ObjectKnowledges knowledgeGroups_;
+    Controller& controller_;
+    ObjectKnowledgeFactory& factory_;
     //@}
 };
 

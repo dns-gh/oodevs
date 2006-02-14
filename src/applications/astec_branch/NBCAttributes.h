@@ -7,29 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectKnowledge_h_
-#define __ObjectKnowledge_h_
+#ifndef __NBCAttributes_h_
+#define __NBCAttributes_h_
 
 #include "ASN_Types.h"
-#include "Entity_ABC.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+#include "OptionalValue.h"
 #include "Resolver_ABC.h"
 
+class Controller;
 class Object_ABC;
 
 // =============================================================================
-/** @class  ObjectKnowledge
-    @brief  ObjectKnowledge
+/** @class  NBCAttributes
+    @brief  NBCAttributes
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public Entity_ABC
+class NBCAttributes : public Extension_ABC
+                    , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, const Resolver_ABC< Object_ABC >& resolver );
-    virtual ~ObjectKnowledge();
+             NBCAttributes();
+    virtual ~NBCAttributes();
     //@}
 
     //! @name Operations
@@ -39,21 +43,21 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectKnowledge( const ObjectKnowledge& );            //!< Copy constructor
-    ObjectKnowledge& operator=( const ObjectKnowledge& ); //!< Assignement operator
+    NBCAttributes( const NBCAttributes& );            //!< Copy constructor
+    NBCAttributes& operator=( const NBCAttributes& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< Object_ABC >& resolver_;
-    unsigned long id_;
-    unsigned long type_;
+    bool set_;
+    unsigned long nbcId_; // $$$$ AGE 2006-02-14: resolve
     //@}
 };
 
-#endif // __ObjectKnowledge_h_
+#endif // __NBCAttributes_h_
