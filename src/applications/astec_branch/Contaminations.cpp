@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Contaminations.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Contaminations constructor

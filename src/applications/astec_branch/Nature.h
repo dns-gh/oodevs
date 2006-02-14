@@ -21,6 +21,8 @@
 
 #include "Types.h"
 
+namespace xml { class xistream; };
+
 // =============================================================================
 /** @class  Nature
     @brief  Nature
@@ -33,7 +35,8 @@ class Nature
 public:
     //! @name Constructors/Destructor
     //@{
-             Nature( InputArchive& archive );
+//             Nature( InputArchive& archive );
+             Nature( xml::xistream& xis );
     virtual ~Nature();
     //@}
 private:

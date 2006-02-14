@@ -16,13 +16,14 @@
 #include "AgentManager.h"
 #include "Agent.h"
 #include "Model.h"
+#include "Attributes.h"
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
 RC::RC( Agent_ABC& agent, const ASN1T_MsgCR& asnMsg )
-    : Report_ABC( agent.GetPos() )
+    : Report_ABC( agent.Get< Attributes >().vPos_ )
     , agent_        ( agent )
 {
     Initialize( asnMsg  );
@@ -33,6 +34,8 @@ RC::RC( Agent_ABC& agent, const ASN1T_MsgCR& asnMsg )
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 RC::RC( Agent_ABC& agent, const ASN1T_MsgAttenteOrdreConduite& asnMsg )
+    : Report_ABC( MT_Vector2D() ) // $$$$ AGE 2006-02-14: 
+    , agent_        ( agent )
 {
     Initialize( asnMsg  );
 }

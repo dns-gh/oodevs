@@ -33,10 +33,10 @@ MIL_AgentID Population::nMaxId_ = 200;
 Population::Population( const ASN1T_MsgPopulationCreation& asnMsg )
     : nPopulationID_( asnMsg.oid_population )
     , strName_      ( asnMsg.nom )
-    , pType_        ( App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population ) )
+    , pType_        ( 0 ) // App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population ) )
     , pTeam_        ( & App::GetApp().GetModel().GetTeam( asnMsg.oid_camp ) )
 {
-    assert( pType_ );
+//    assert( pType_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruction&
 {
     IT_FlowMap it = flowMap_.find( asnMsg.oid_flux );
     assert( it != flowMap_.end() );
-    App::GetApp().NotifyPopulationFlowDeleted( *it->second );
+//    App::GetApp().NotifyPopulationFlowDeleted( *it->second );
     flowMap_.erase( it );
 }
 
@@ -148,7 +148,7 @@ void Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcent
 {
     IT_ConcentrationMap it = concentrationMap_.find( asnMsg.oid_concentration );
     assert( it != concentrationMap_.end() );
-    App::GetApp().NotifyPopulationConcentrationDeleted( *it->second );
+//    App::GetApp().NotifyPopulationConcentrationDeleted( *it->second );
     concentrationMap_.erase( it );
 }
 
@@ -205,68 +205,11 @@ uint Population::GetDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::ReadODB
-// Created: HME 2005-10-18
+// Name: Population::GetId
+// Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Population::ReadODB( InputArchive& archive )
+unsigned long Population::GetId() const
 {
-    archive.Section( "Population" );
-
-    std::string strCategory;
-    
-    archive.ReadAttribute( "type", strCategory );
-    pType_ = App::GetApp().GetAgentManager().FindTypePopulation( strCategory );
-    assert( pType_ );
-
-    archive.ReadAttribute( "id", nPopulationID_ );
-    if( nPopulationID_ > nMaxId_ )
-        nMaxId_ = nPopulationID_;
-
-    if( ! archive.ReadField( "Nom", strName_, InputArchive::eNothing ) )
-        strName_ = strCategory;
-
-    std::string strPos;
-    MT_Vector2D vPos;
-    archive.ReadField( "Position", strPos );
-    App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vPos );
-
-    std::string strAtt;
-    E_PopulationAttitude eAttitude;
-    archive.ReadField( "Attitude", strAtt );
-    eAttitude = ENT_Tr::ConvertToPopulationAttitude( strAtt );
-
-    std::string strTeam;
-    archive.ReadField( "Camp", strTeam );
-    pTeam_ = App::GetApp().GetModel().FindTeam( strTeam ); // $$$$ AGE 2006-02-13: 
-
-    uint nPersons;
-    archive.ReadField( "NombreHumains", nPersons );
-
-    CreatePopulationConcentration( vPos, eAttitude , nPersons );
-    
-    archive.EndSection();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::WriteODB
-// Created: HME 2005-10-18
-// -----------------------------------------------------------------------------
-void Population::WriteODB( MT_XXmlOutputArchive& archive )
-{
-    archive.Section( "Population" );
-
-    archive.WriteAttribute( "type", pType_->GetName() );
-    archive.WriteAttribute( "id", nPopulationID_ );
-    archive.WriteField    ( "Nom", strName_ );
-    archive.WriteField    ( "Camp", pTeam_->GetName() );
-
-    PopulationConcentration* pCon = concentrationMap_.begin()->second;
-    std::string strPos;
-    App::GetApp().GetWorld().SimToMosMgrsCoord( pCon->GetPos() , strPos );
-    archive.WriteField( "Position"     , strPos );
-    archive.WriteField( "NombreHumains", pCon->GetLivingHumans() );
-    archive.WriteField( "Attitude"     , ENT_Tr::ConvertFromPopulationAttitude( pCon->GetAttitude() ) );
-    
-    archive.EndSection();
+    return nPopulationID_;
 }
 

@@ -12,7 +12,7 @@
 
 #include "ASN_Types.h"
 
-class App;
+class Controller;
 
 // =============================================================================
 /** @class  Simulation
@@ -26,7 +26,7 @@ class Simulation
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Simulation( App& application ); // $$$$ AGE 2006-02-10: 
+    explicit Simulation(); // $$$$ AGE 2006-02-14: autre chose que juste controller ?
     virtual ~Simulation();
     //@}
 
@@ -52,10 +52,12 @@ private:
 private:
     //! @name Member data
     //@{
-    App& application_;
+//    Controller& controller_;
     unsigned int tickDuration_;
+    unsigned int timeFactor_;
     int time_;
     bool paused_;
+    bool tickStart_;
     //@}
 };
 

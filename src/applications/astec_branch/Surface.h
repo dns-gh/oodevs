@@ -8,7 +8,7 @@
 #include "Types.h"
 #include "MT_Tools/MT_Sector.h"
 #include "RawVisionData.h"
-#include "DinMessageWrapper.h"
+#include "DIN_Types.h"
 
 class SensorType;
 class GFX_Color;

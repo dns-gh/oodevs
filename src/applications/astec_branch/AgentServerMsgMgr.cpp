@@ -36,7 +36,7 @@
 #include "Model.h"
 #include "Simulation.h"
 #include "App.h"
-#include "DinMessageWrapper.h"
+#include "DIN_Types.h"
 
 using namespace DIN;
 
@@ -164,7 +164,7 @@ enum E_UnitMagicAction
 void AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const Agent& agent )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg << agent.GetID();
+    dinMsg << agent.GetId();
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     Send( eMsgUnitMagicAction, dinMsg );
@@ -723,8 +723,8 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
     bReceivingState_ = false;
 
     // If we are using our own lines, upload them to the sim.
-    if( bUseMosLimits_ )
-        App::GetApp().GetLineManager().UpdateToSim();
+//    if( bUseMosLimits_ )
+//        App::GetApp().GetLineManager().UpdateToSim();
 }
 
 
@@ -800,14 +800,14 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
         // limit_;
-        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-        if( pLimit )
-        {
-            pLimit->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-            pLimit->SetState( TacticalLine_ABC::eStateOk );
-        }
-        else
-            Limit::idManager_.LockIdentifier( asnMsg.oid );
+//        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
+//        if( pLimit )
+//        {
+//            pLimit->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
+//            pLimit->SetState( TacticalLine_ABC::eStateOk );
+//        }
+//        else
+//            Limit::idManager_.LockIdentifier( asnMsg.oid );
     }
 }
 
@@ -824,12 +824,12 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-        if( pLimit )
-        {
-            pLimit->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-            pLimit->SetState( TacticalLine_ABC::eStateOk );
-        }
+//        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
+//        if( pLimit )
+//        {
+//            pLimit->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
+//            pLimit->SetState( TacticalLine_ABC::eStateOk );
+//        }
         // If the limit was not found, it's a message for another MOS
     }
 }
@@ -847,14 +847,14 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDes
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-        if( pLimit )
-        {
-            App::GetApp().NotifyTacticalLineDeleted( *pLimit );
-            App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
-        }
-        else
-            Limit::idManager_.ReleaseIdentifier( asnMsg.oid );
+//        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
+//        if( pLimit )
+//        {
+//            App::GetApp().NotifyTacticalLineDeleted( *pLimit );
+//            App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
+//        }
+//        else
+//            Limit::idManager_.ReleaseIdentifier( asnMsg.oid );
     }
 }
 
@@ -870,17 +870,17 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreation
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-        if( pLima )
-        {
-            pLima->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-            pLima->SetState( TacticalLine_ABC::eStateOk );
-        }
-        else
-        {
-            // If the limit was not found, it's a message for another MOS. Lock the identifier.
-            Lima::idManager_.LockIdentifier( asnMsg.oid );
-        }
+//        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
+//        if( pLima )
+//        {
+//            pLima->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
+//            pLima->SetState( TacticalLine_ABC::eStateOk );
+//        }
+//        else
+//        {
+//            // If the limit was not found, it's a message for another MOS. Lock the identifier.
+//            Lima::idManager_.LockIdentifier( asnMsg.oid );
+//        }
     }
 }
 
@@ -896,13 +896,13 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck&
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-        if( pLima )
-        {
-            pLima->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-            pLima->SetState( TacticalLine_ABC::eStateOk );
-        }
-        // If the limit was not found, it's a message for another MOS.
+//        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
+//        if( pLima )
+//        {
+//            pLima->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
+//            pLima->SetState( TacticalLine_ABC::eStateOk );
+//        }
+//        // If the limit was not found, it's a message for another MOS.
     }
 }
 
@@ -918,14 +918,14 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestr
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-        if( pLima )
-        {
-            App::GetApp().NotifyTacticalLineDeleted( *pLima );
-            App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
-        }
-        else
-            Lima::idManager_.ReleaseIdentifier( asnMsg.oid );
+//        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
+//        if( pLima )
+//        {
+//            App::GetApp().NotifyTacticalLineDeleted( *pLima );
+//            App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
+//        }
+//        else
+//            Lima::idManager_.ReleaseIdentifier( asnMsg.oid );
     }
 }
 
@@ -939,11 +939,11 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation&
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
-        App::GetApp().GetLineManager().UseSimTacticalLines();
+//        App::GetApp().GetLineManager().UseSimTacticalLines();
     }
 
-    Limit* pLimit = new Limit( asnMsg );
-    App::GetApp().GetLineManager().RegisterLine( *pLimit );
+//    Limit* pLimit = new Limit( asnMsg );
+//    App::GetApp().GetLineManager().RegisterLine( *pLimit );
 }
 
 
@@ -953,12 +953,12 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestruction& asnMsg )
 {
-    TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg );
-    if( pLimit )
-    {
-        App::GetApp().NotifyTacticalLineDeleted( *pLimit );
-        App::GetApp().GetLineManager().DeleteLine( asnMsg );
-    }
+//    TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg );
+//    if( pLimit )
+//    {
+//        App::GetApp().NotifyTacticalLineDeleted( *pLimit );
+//        App::GetApp().GetLineManager().DeleteLine( asnMsg );
+//    }
 }
 
 
@@ -972,11 +972,11 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& a
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
-        App::GetApp().GetLineManager().UseSimTacticalLines();
+//        App::GetApp().GetLineManager().UseSimTacticalLines();
     }
 
-    Lima* pLimit = new Lima( asnMsg );
-    App::GetApp().GetLineManager().RegisterLine( *pLimit );
+//    Lima* pLimit = new Lima( asnMsg );
+//    App::GetApp().GetLineManager().RegisterLine( *pLimit );
 }
 
 
@@ -986,12 +986,12 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& a
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruction& asnMsg )
 {
-    TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg );
-    if( pLima )
-    {
-        App::GetApp().NotifyTacticalLineDeleted( *pLima );
-        App::GetApp().GetLineManager().DeleteLine( asnMsg );
-    }
+//    TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg );
+//    if( pLima )
+//    {
+//        App::GetApp().NotifyTacticalLineDeleted( *pLima );
+//        App::GetApp().GetLineManager().DeleteLine( asnMsg );
+//    }
 }
 
 //=============================================================================
@@ -1272,7 +1272,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUni
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
 {
-    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeCreation( asnMsg );
+//    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeCreation( asnMsg );
     // $$$$ AGE 2006-02-10: 
 //        MT_LOG_ERROR_MSG( "Duplicate object knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
@@ -1284,7 +1284,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObje
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 {
-    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeUpdate( asnMsg );
+//    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeUpdate( asnMsg );
 }
 
 
@@ -1294,7 +1294,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObject
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
 {
-    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeDestruction( asnMsg );
+//    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeDestruction( asnMsg );
 }
 
 // =============================================================================
@@ -1427,43 +1427,43 @@ void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDest
 void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire& asnMsg )
 {
     // $$$$ AGE 2006-02-13: 
-    std::stringstream strOutputMsg;
-    strOutputMsg << "StartPionFire - ID: " << asnMsg.oid_tir
-                 << " - ID source " << asnMsg.tireur;
-
-    AgentManager& agentManager = App::GetApp().GetAgentManager();
-    Agent* pAgentSrc = agentManager.FindAgent( asnMsg.tireur );
-    assert( pAgentSrc );
-
-    if( asnMsg.m.munitionPresent )
-        strOutputMsg << " - Munition : " << App::GetApp().GetResourceName( asnMsg.munition );
-
-    if( asnMsg.cible.t == T_MsgStartPionFire_cible_pion )
-    {
-        strOutputMsg << " - ID pion cible " << asnMsg.cible.u.pion;
-        
-        Agent* pTarget = agentManager.FindAgent( asnMsg.cible.u.pion );
-        assert( pTarget );
-        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
-    }
-    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_position )
-    {
-        std::string strTmp( (const char*)asnMsg.cible.u.position->data, asnMsg.cible.u.position->numocts );
-        MT_Vector2D vPos;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( strTmp, vPos );
-        strOutputMsg << " - Position " << strTmp;
-        agentManager.AddIndirectConflict( asnMsg.oid_tir, *pAgentSrc, vPos );
-    }
-    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_population )
-    {
-        strOutputMsg << " - ID population cible " << asnMsg.cible.u.population;
-        
-        Population* pTarget = agentManager.FindPopulation( asnMsg.cible.u.population );
-        assert( pTarget );
-        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
-    }
-
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );   
+//    std::stringstream strOutputMsg;
+//    strOutputMsg << "StartPionFire - ID: " << asnMsg.oid_tir
+//                 << " - ID source " << asnMsg.tireur;
+//
+//    AgentManager& agentManager = App::GetApp().GetAgentManager();
+//    Agent* pAgentSrc = agentManager.FindAgent( asnMsg.tireur );
+//    assert( pAgentSrc );
+//
+//    if( asnMsg.m.munitionPresent )
+//        strOutputMsg << " - Munition : " << App::GetApp().GetResourceName( asnMsg.munition );
+//
+//    if( asnMsg.cible.t == T_MsgStartPionFire_cible_pion )
+//    {
+//        strOutputMsg << " - ID pion cible " << asnMsg.cible.u.pion;
+//        
+//        Agent* pTarget = agentManager.FindAgent( asnMsg.cible.u.pion );
+//        assert( pTarget );
+//        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
+//    }
+//    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_position )
+//    {
+//        std::string strTmp( (const char*)asnMsg.cible.u.position->data, asnMsg.cible.u.position->numocts );
+//        MT_Vector2D vPos;
+//        App::GetApp().GetWorld().MosToSimMgrsCoord( strTmp, vPos );
+//        strOutputMsg << " - Position " << strTmp;
+//        agentManager.AddIndirectConflict( asnMsg.oid_tir, *pAgentSrc, vPos );
+//    }
+//    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_population )
+//    {
+//        strOutputMsg << " - ID population cible " << asnMsg.cible.u.population;
+//        
+//        Population* pTarget = agentManager.FindPopulation( asnMsg.cible.u.population );
+//        assert( pTarget );
+//        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
+//    }
+//
+//    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );   
 }
 
 //-----------------------------------------------------------------------------
@@ -1472,19 +1472,19 @@ void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& asnMsg )
 {
-    MT_LOG_INFO( "StopPionFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
-
-    // fire results
-    Agent_ABC* pOrigin = App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
-
-    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when Light2 is disconnected after a StartFire
-        return;
-    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
-    for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
-        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
-
-    App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
+//    MT_LOG_INFO( "StopPionFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
+//
+//    // fire results
+//    Agent_ABC* pOrigin = App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
+//
+//    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when Light2 is disconnected after a StartFire
+//        return;
+//    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
+//        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
+//    for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
+//        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
+//
+//    App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
 
 //-----------------------------------------------------------------------------
@@ -1493,8 +1493,8 @@ void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& a
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEffect& asnMsg )
 {
-    MT_LOG_INFO( "Start ammunition meteo effect - ID: " << asnMsg.oid_effet << " Type:" << asnMsg.type, eReceived, 0 );
-    App::GetApp().GetWeatherManager().RegisterAmmoMeteoEffect( asnMsg );
+//    MT_LOG_INFO( "Start ammunition meteo effect - ID: " << asnMsg.oid_effet << " Type:" << asnMsg.type, eReceived, 0 );
+//    App::GetApp().GetWeatherManager().RegisterAmmoMeteoEffect( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1503,8 +1503,8 @@ void AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEff
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffect& asnMsg )
 {
-    MT_LOG_INFO( "Stop ammunition meteo effect - ID: " << asnMsg, eReceived, 0 );
-    App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( asnMsg );
+//    MT_LOG_INFO( "Stop ammunition meteo effect - ID: " << asnMsg, eReceived, 0 );
+//    App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1524,11 +1524,11 @@ void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asnMsg 
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPopulationFire& asnMsg )
 {
-    MT_LOG_INFO( "StartPopulationFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src );
-    Population& popu = model_.GetPopulation( asnMsg.oid_src );
+//    MT_LOG_INFO( "StartPopulationFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src );
+//    Population& popu = model_.GetPopulation( asnMsg.oid_src );
 
-    AgentManager& agentManager = App::GetApp().GetAgentManager();
-    agentManager.AddIndirectConflict( asnMsg.oid_tir, *pPopulationSrc, pPopulationSrc->GetPos() );
+//    AgentManager& agentManager = App::GetApp().GetAgentManager();
+//    agentManager.AddIndirectConflict( asnMsg.oid_tir, *pPopulationSrc, pPopulationSrc->GetPos() );
 }
     
 // -----------------------------------------------------------------------------
@@ -1539,19 +1539,19 @@ void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopul
 {
     MT_LOG_INFO( "StopPopulationFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
 
-    // fire results
-    Agent_ABC* pOrigin = App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
-
-    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when Light2 is disconnected after a StartFire
-        return;
-    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
+//    // fire results
+//    Agent_ABC* pOrigin = App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
+//
+//    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when Light2 is disconnected after a StartFire
+//        return;
+//    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
+//        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
     /* population => population
     for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
         pAgent->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
     */
 
-    App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
+//    App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
 
 // -----------------------------------------------------------------------------
@@ -1611,7 +1611,7 @@ void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& 
 	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulation( asnMsg );
-    App::GetApp().NotifyPopulationUpdated( *pop );
+//    App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1628,8 +1628,8 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPop
 	if ( pop != 0 )
 		pop->CreatePopulationConcentration( asnMsg );
     const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
-    if( concentration != 0 )
-        App::GetApp().NotifyPopulationConcentrationCreated( *concentration );
+//    if( concentration != 0 )
+//        App::GetApp().NotifyPopulationConcentrationCreated( *concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -1646,8 +1646,8 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_Msg
     if ( pop != 0 )
     {
         const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
-        if( concentration != 0 )
-            App::GetApp().NotifyPopulationConcentrationDeleted( *concentration );
+//        if( concentration != 0 )
+//            App::GetApp().NotifyPopulationConcentrationDeleted( *concentration );
 		pop->DeletePopulationConcentration( asnMsg );
     }
 }
@@ -1666,8 +1666,8 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopul
 	if ( pop != 0 )
 		pop->UpdatePopulationConcentration( asnMsg );
     const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
-    if( concentration != 0 )
-        App::GetApp().NotifyPopulationConcentrationUpdated( *concentration );
+//    if( concentration != 0 )
+//        App::GetApp().NotifyPopulationConcentrationUpdated( *concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -1684,8 +1684,8 @@ void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFl
 	if ( pop != 0 )
 		pop->CreatePopulationFlow( asnMsg );
     const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
-    if( flow != 0 )
-        App::GetApp().NotifyPopulationFlowCreated( *flow );
+//    if( flow != 0 )
+//        App::GetApp().NotifyPopulationFlowCreated( *flow );
 }
 
 // -----------------------------------------------------------------------------
@@ -1702,8 +1702,8 @@ void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulat
     if ( pop != 0 )
     {
         const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
-        if( flow != 0 )
-            App::GetApp().NotifyPopulationFlowDeleted( *flow );
+//        if( flow != 0 )
+//            App::GetApp().NotifyPopulationFlowDeleted( *flow );
 		pop->DeletePopulationFlow( asnMsg );
     }
 }
@@ -1722,8 +1722,8 @@ void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFlux
 	if ( pop != 0 )
 		pop->UpdatePopulationFlow( asnMsg );
     const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
-    if( flow != 0 )
-        App::GetApp().NotifyPopulationFlowUpdated( *flow );
+//    if( flow != 0 )
+//        App::GetApp().NotifyPopulationFlowUpdated( *flow );
 }
 
 // -----------------------------------------------------------------------------

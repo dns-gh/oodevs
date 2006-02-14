@@ -16,6 +16,7 @@
 #include "Resolver_ABC.h"
 
 class Agent;
+class Controller;
 
 // =============================================================================
 /** @class  Lends

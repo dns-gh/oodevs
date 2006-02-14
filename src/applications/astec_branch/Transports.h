@@ -15,6 +15,9 @@
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
 
+class Agent;
+class Controller;
+
 // =============================================================================
 /** @class  Transports
     @brief  Transports

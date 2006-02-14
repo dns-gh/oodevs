@@ -18,6 +18,6 @@
 inline
 void ASN_Tools::BuildAsnGDH( ASN1T_GDH& asnGDH )
 {
-    asnGDH.datation     = App::GetApp().GetTime();
+//    asnGDH.datation     = App::GetApp().GetTime();
     asnGDH.qualificatif = EnumGDH_Qualificatif::at;
 }

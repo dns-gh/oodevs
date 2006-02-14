@@ -39,7 +39,7 @@ LogMedicalConsign::LogMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCre
     , bContaminated_   ( asn.contamine_nbc )
     , nState_          ( eFinished )
 {
-    pion_.AddConsign( *this );
+//    pion_.AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +48,9 @@ LogMedicalConsign::LogMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCre
 // -----------------------------------------------------------------------------
 LogMedicalConsign::~LogMedicalConsign()
 {
-    pion_.RemoveConsign( *this );
-    if( pPionLogHandling_ )
-        pPionLogHandling_->TerminateConsign( *this );
+//    pion_.RemoveConsign( *this );
+//    if( pPionLogHandling_ )
+//        pPionLogHandling_->TerminateConsign( *this );
 }
 
 // =============================================================================
@@ -63,15 +63,15 @@ LogMedicalConsign::~LogMedicalConsign()
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asn )
 {
-    assert( pion_.GetID() == asn.oid_pion );
+    assert( pion_.GetId() == asn.oid_pion );
     if( asn.m.oid_pion_log_traitantPresent )
     {
-        if( pPionLogHandling_ )
-            pPionLogHandling_->TerminateConsign( *this );
+//        if( pPionLogHandling_ )
+//            pPionLogHandling_->TerminateConsign( *this );
         if( asn.oid_pion_log_traitant != 0 )
         {
             pPionLogHandling_ = & App::GetApp().GetModel().GetAgent( asn.oid_pion_log_traitant );
-            pPionLogHandling_->HandleConsign( *this );
+//            pPionLogHandling_->HandleConsign( *this );
         }        
         else 
             pPionLogHandling_ = 0;
@@ -87,7 +87,7 @@ void LogMedicalConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogSanteTraitementHum
     if( asn.m.etatPresent )
         nState_ = (E_State)asn.etat;
 
-    App::GetApp().NotifyLogisticConsignUpdated( *this );
+//    App::GetApp().NotifyLogisticConsignUpdated( *this );
 }
 
 // -----------------------------------------------------------------------------

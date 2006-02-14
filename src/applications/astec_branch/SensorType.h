@@ -11,6 +11,8 @@
 class Agent;
 enum E_PerceptionResult;
 
+namespace xml { class xistream; };
+
 //*****************************************************************************
 // Created: JVT 02-08-30
 // Last modified: JVT 02-12-13
@@ -20,7 +22,8 @@ class SensorType
     MT_COPYNOTALLOWED( SensorType )
 
 public:
-    SensorType( const std::string& strName, InputArchive& archive );
+    SensorType( xml::xistream& xis );
+//    SensorType( const std::string& strName, InputArchive& archive );
     ~SensorType();
 
     //! @name Accessors
@@ -62,7 +65,7 @@ private:
     //@}
 
 private:
-    const std::string strName_;
+    std::string strName_;
     MT_Float rAngle_;
     bool     bScanningAllowed_;
 

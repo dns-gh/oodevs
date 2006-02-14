@@ -88,13 +88,6 @@ public:
     QGLWidget* GetQGLWidget( bool b3Dmode ) const;
     //@}
 
-public slots:
-    void DisplayTime( uint nTimeInSeconds );
-    void DisplayMouseLocation( QMouseEvent* pEvent, const MT_Vector2D& vGLPos );
-    void OnTickStartEnd( bool bTickStart );
-    void OnLag();
-    void OnConnexionStatusChanged( bool b );
-    void DimensionsChanged();
 
 signals:
     void ElementSelected( SelectedElement& selectedElement );
@@ -106,8 +99,6 @@ signals:
     void ODBNewAgent( const std::string& strCategory, Gtia& gtia, Agent* pParent );
 
 private:
-    void closeEvent( QCloseEvent* pEvent );
-
     void WriteSettings();
     void ReadSettings();
 
@@ -117,20 +108,6 @@ private:
 private:
     //! @name Member data
     //@{
-    GL3DWidget*	pGL3DWidget_;
-    GLWidget*	pGLWidget_;
-
-    InfoPanel*				 pInfoPanel_;
-    AgentListView*			 pAgentList_;
-    ObjectListView*			 pObjectList_;
-	PopulationListView*		 pPopulationList_;
-    MissionPanel*			 pMissionPanel_;
-    Logger*					 pLogPanel_;
-    WeatherPanel*			 pWeatherPanel_;
-    ObjectCreationPanel*	 pObjCreationPanel_;
-    AgentCreationPanel*		 pAgentCreationPanel_;
-    PopulationCreationPanel* pPopulationCreationPanel_;
-
     QDockWindow* pListDockWnd_;
     QDockWindow* pInfoDockWnd_;
     QDockWindow* pLogDockWnd_;

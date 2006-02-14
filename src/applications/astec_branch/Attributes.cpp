@@ -11,6 +11,7 @@
 #include "Attributes.h"
 #include "App.h"
 #include "World.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Attributes constructor

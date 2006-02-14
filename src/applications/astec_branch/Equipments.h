@@ -14,6 +14,8 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 
+class Controller;
+
 // =============================================================================
 /** @class  Equipments
     @brief  Equipments

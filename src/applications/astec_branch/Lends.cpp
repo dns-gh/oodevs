@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Lends.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Lends constructor

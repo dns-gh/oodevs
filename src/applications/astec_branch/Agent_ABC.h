@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const = 0;
+    virtual unsigned long GetId() const = 0;
     //@}
 };
 

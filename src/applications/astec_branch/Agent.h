@@ -10,7 +10,12 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "ASN_Types.h"
 #include "Agent_ABC.h"
+#include "Resolver_ABC.h"
+
+class AgentType;
+class AutomatType;
 
 // =============================================================================
 /** @class  Agent
@@ -24,13 +29,15 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent();
+             Agent( const ASN1T_MsgAutomateCreation& message, const Resolver_ABC< AutomatType >& resolver );
+    explicit Agent( const ASN1T_MsgPionCreation& message, const Resolver_ABC< AgentType >& resolver );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
-
+    virtual std::string GetName() const;
+    virtual unsigned long GetId() const;
     //@}
 
 private:
@@ -47,6 +54,10 @@ private:
 private:
     //! @name Member data
     //@{
+    AutomatType*  automatType_;
+    AgentType*    type_;
+    std::string   name_;
+    unsigned long id_;
     //@}
 };
 

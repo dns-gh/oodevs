@@ -95,6 +95,6 @@ Extension& Extendable< BaseType >::Get()
 {
     BaseType*& ext = Find< Extension >();
     if( ! ext )
-        AddExtension( ext, new Extension() );
+        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist" );;
     return * static_cast< Extension* >( ext );
 }

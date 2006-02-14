@@ -15,30 +15,44 @@
 #include "Experience.h"
 #include "Tiredness.h"
 
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+
 // -----------------------------------------------------------------------------
 // Name: SensorType constructor
 // Created: NLD 2004-09-10
 // Modified: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-SensorType::SensorType( const std::string& strName, InputArchive& archive )
-    : strName_             ( strName )
-    , postureSourceFactors_( eNbrUnitPosture, 0. )
-    , weatherFactors_      ( eNbrWeatherType, 0. )
-    , lightingFactors_     ( eNbrLightingType, 0. )
-    , environementFactors_ ( RawVisionData::eNbrVisionObjects, 0. )
+//SensorType::SensorType( const std::string& strName, InputArchive& archive )
+//    : strName_             ( strName )
+//    , postureSourceFactors_( eNbrUnitPosture, 0. )
+//    , weatherFactors_      ( eNbrWeatherType, 0. )
+//    , lightingFactors_     ( eNbrLightingType, 0. )
+//    , environementFactors_ ( RawVisionData::eNbrVisionObjects, 0. )
+//{
+//    InitializeAngle    ( archive );
+//    InitializeDistances( archive );
+//
+//    archive.Section( "ModificateursDeDistance" );
+//
+//    InitializePostureSourceFactors( archive );
+//    InitializeWeatherFactors      ( archive );
+//    InitializeLightingFactors     ( archive );
+//    InitializeEnvironnementFactors( archive );
+//    InitializePopulationFactors   ( archive );
+//    
+//    archive.EndSection(); // ModificateursDeDistance
+//}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType constructor
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+SensorType::SensorType( xml::xistream& xis )
 {
-    InitializeAngle    ( archive );
-    InitializeDistances( archive );
-
-    archive.Section( "ModificateursDeDistance" );
-
-    InitializePostureSourceFactors( archive );
-    InitializeWeatherFactors      ( archive );
-    InitializeLightingFactors     ( archive );
-    InitializeEnvironnementFactors( archive );
-    InitializePopulationFactors   ( archive );
-    
-    archive.EndSection(); // ModificateursDeDistance
+    xis >> attribute( "nom", strName_ );
+    // $$$$ AGE 2006-02-14: 
 }
 
 // -----------------------------------------------------------------------------
@@ -194,9 +208,9 @@ void SensorType::InitializePostureSourceFactors( InputArchive& archive )
 // -----------------------------------------------------------------------------
 MT_Float SensorType::GetPostureSourceFactor( const Agent& agent ) const
 {
-    E_UnitPosture nOldPosture     = agent.GetOldStance();
-    E_UnitPosture nCurrentPosture = agent.GetStance();
-    MT_Float      rPourcentage    = agent.GetStanceCompletion() / 100.;
+    E_UnitPosture nOldPosture     ; //= agent.GetOldStance();
+    E_UnitPosture nCurrentPosture ; //= agent.GetStance();
+    MT_Float      rPourcentage    ; //= agent.GetStanceCompletion() / 100.;
 
     assert( postureSourceFactors_.size() > (uint)nOldPosture );
     assert( postureSourceFactors_.size() > (uint)nCurrentPosture );
@@ -209,15 +223,16 @@ MT_Float SensorType::GetPostureSourceFactor( const Agent& agent ) const
 // -----------------------------------------------------------------------------
 MT_Float SensorType::GetDistanceModificator( const Agent& agent ) const
 {
-    const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
-          MT_Float rPopulationFactor = 1.;
-    if( rPopulationCollisionDensity != 0. )
-        rPopulationFactor = std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
-       
-    return    GetPostureSourceFactor( agent ) * agent.GetElongationFactor()
-            * agent.GetTiredness ().GetCoefSensorDistanceModificator()
-            * agent.GetExperience().GetCoefSensorDistanceModificator()
-            * rPopulationFactor;
+//    const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
+//          MT_Float rPopulationFactor = 1.;
+//    if( rPopulationCollisionDensity != 0. )
+//        rPopulationFactor = std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
+//       
+//    return    GetPostureSourceFactor( agent ) * agent.GetElongationFactor()
+//            * agent.GetTiredness ().GetCoefSensorDistanceModificator()
+//            * agent.GetExperience().GetCoefSensorDistanceModificator()
+//            * rPopulationFactor;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

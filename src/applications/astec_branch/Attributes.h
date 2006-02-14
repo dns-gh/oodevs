@@ -49,7 +49,7 @@ private:
     virtual void Update( const ASN1T_MsgUnitAttributes& message );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;

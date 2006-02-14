@@ -31,6 +31,8 @@
 #include "Team.h"
 #include "FireResult.h"
 #include "Model.h"
+#include "xeumeuleu/xml.h"
+using namespace xml;
 
 Object_ABC::T_ObjectIDs Object_ABC::objectIds_;
 Object_ABC::T_Managers  Object_ABC::managers_;
@@ -91,13 +93,13 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
 
     if( asnMsg.m.type_dotation_constructionPresent )
     {
-        strTypeDotationConstruction_ = App::GetApp().GetResourceName( asnMsg.type_dotation_construction );
+//        strTypeDotationConstruction_ = App::GetApp().GetResourceName( asnMsg.type_dotation_construction );
         nNbrDotationConstruction_    = 0;
     }
     
     if( asnMsg.m.type_dotation_valorisationPresent )
     {
-        strTypeDotationValorization_ = App::GetApp().GetResourceName( asnMsg.type_dotation_valorisation );
+//        strTypeDotationValorization_ = App::GetApp().GetResourceName( asnMsg.type_dotation_valorisation );
         nNbrDotationValorization_    = 0;
     }
 }
@@ -158,7 +160,7 @@ void Object_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
                  << " Contournement :" << rBypassConstructionPercentage_ << "%";
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    App::GetApp().NotifyObjectUpdated( *this );
+//    App::GetApp().NotifyObjectUpdated( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +169,10 @@ void Object_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Object_ABC::Update( const ASN1T_MsgExplosion& asnMsg )
 {
-    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-        OnReceiveMsgExplosion( asnMsg.degats_pions.elem[ i ] );
+//    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
+//        OnReceiveMsgExplosion( asnMsg.degats_pions.elem[ i ] );
 
-    App::GetApp().NotifyObjectExplosion( *this );
+//    App::GetApp().NotifyObjectExplosion( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,50 +280,59 @@ IDManager& Object_ABC::GetIDManagerForObjectType( uint nType )
     return *managers_[ nType ];
 }
 
+namespace 
+{
+    struct ReadClass
+    {
+        void Read( xistream& xis )
+        {
+            std::string strObjectName;
+            int nId;
+
+            xis >> attribute( "nom", strObjectName )
+                >> attribute( "id", nId );
+            
+            ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strObjectName );
+            if( nType != -1 )
+            {
+                Object_ABC::objectIds_[ nType ] = nId;
+                IDManager*& pManager = Object_ABC::managers_[ nId ];
+                if( ! pManager )
+                    pManager = new IDManager( nId );
+            }
+        };
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Object_ABC::InitializeObjectIds
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-void Object_ABC::InitializeObjectIds( InputArchive& archive )
+void Object_ABC::InitializeObjectIds( xistream& xis )
 {
-    archive.BeginList( "Classes" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Classe" );
-        std::string strObjectName;
-        archive.ReadAttribute( "nom", strObjectName );
-        unsigned int nId;
-        archive.ReadAttribute( "id", nId );
-        ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strObjectName );
-        if( nType != -1 )
-        {
-            objectIds_[ nType ] = nId;
-            IDManager*& pManager = managers_[ nId ];
-            if( ! pManager )
-                pManager = new IDManager( nId );
-        }
-        archive.EndSection(); // Classe
-    };
+    ReadClass readclass;
+    xis >> start( "Classes" )
+        >> list( "Classe", readclass, &ReadClass::Read );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Object_ABC::OnReceiveMsgExplosion
 // Created: SBO 2005-09-07
 // -----------------------------------------------------------------------------
-void Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& asnMsg )
-{
-    explosionResults_.push_back( new FireResult( asnMsg ) );
-    if( explosionResults_.size() > 20 )
-        explosionResults_.erase( explosionResults_.begin() );
-}
+//void Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& asnMsg )
+//{
+//    explosionResults_.push_back( new FireResult( asnMsg ) );
+//    if( explosionResults_.size() > 20 )
+//        explosionResults_.erase( explosionResults_.begin() );
+//}
     
 // -----------------------------------------------------------------------------
 // Name: Object_ABC::DeleteAllFireResults
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-void Object_ABC::DeleteAllExplosionResults()
-{
-    for( CIT_FireResults it = explosionResults_.begin(); it != explosionResults_.end(); ++it )
-        delete *it;
-    explosionResults_.clear();
-}
+//void Object_ABC::DeleteAllExplosionResults()
+//{
+//    for( CIT_FireResults it = explosionResults_.begin(); it != explosionResults_.end(); ++it )
+//        delete *it;
+//    explosionResults_.clear();
+//}

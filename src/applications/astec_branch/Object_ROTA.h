@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void ReadODB ( InputArchive&  archive );
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+//    void ReadODB ( InputArchive&  archive );
+//    void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Accessors

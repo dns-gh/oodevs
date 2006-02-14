@@ -58,39 +58,4 @@ Object_NBC::~Object_NBC()
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: Object_NBC::ReadODB
-// Created: SBO 2005-09-02
-// -----------------------------------------------------------------------------
-void Object_NBC::ReadODB( InputArchive& archive )
-{
-    Object_ABC::ReadODB( archive );
-
-    archive.Section( "AgentNBC" );
-    std::string strNBCAgent;
-    archive.ReadAttribute( "type", strNBCAgent );
-    nAgentNbcId_ = ( uint )-1;
-    const T_MosId_String_Map& nbcMap = App::GetApp().GetNBCNames();
-    for( CIT_MosId_String_Map it = nbcMap.begin(); it != nbcMap.end(); ++it )
-        if( it->second == strNBCAgent )
-            nAgentNbcId_ = it->first;
-    assert( nAgentNbcId_ != (uint)-1 );
-    archive.EndSection(); // AgentNBC
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object_NBC::WriteODB
-// Created: SBO 2005-09-02
-// -----------------------------------------------------------------------------
-void Object_NBC::WriteODB( MT_XXmlOutputArchive& archive ) const
-{
-    archive.Section( "Objet" );
-    Object_ABC::WriteODB( archive );
-
-    archive.Section( "AgentNBC" );
-    archive.WriteAttribute( "type", App::GetApp().GetNBCName( nAgentNbcId_ ) );
-    archive.EndSection(); // AgentNBC
-
-    archive.EndSection(); // Object
-}
+//

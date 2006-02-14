@@ -37,7 +37,9 @@ public:
     template< typename T >
     void Update( const T& updateMessage ) 
     {
-        Apply( Updatable_ABC< T >::Update, updateMessage );
+        const unsigned int applied = Apply( Updatable_ABC< T >::Update, updateMessage );
+        if( ! applied )
+            throw std::runtime_error( "Nothing could be updated with message type " + std::string( typeid( T ).name() ) );
     }
     //@}
 

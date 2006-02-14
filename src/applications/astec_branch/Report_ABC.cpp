@@ -31,7 +31,7 @@
 // -----------------------------------------------------------------------------
 Report_ABC::Report_ABC( const MT_Vector2D& vPos )
     : vPos_   ( vPos )
-    , nTime_  ( App::GetApp().GetTime() )
+    , nTime_  ( 0 ) // App::GetApp().GetTime() )
     , bNew_   ( true )
 {
     

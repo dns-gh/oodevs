@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "DebugPoints.h"
+#include "Net_Def.h"
 
 // -----------------------------------------------------------------------------
 // Name: DebugPoints constructor
@@ -34,12 +35,12 @@ DebugPoints::~DebugPoints()
 // -----------------------------------------------------------------------------
 void DebugPoints::Update( const DebugPointsMessage& message )
 {
-    uint32 size;
+    unsigned long size;
     message >> size;
 
     points_.clear();
     points_.reserve( size );
-    for( uint i = 0; i < size; ++i )
+    for( unsigned i = 0; i < size; ++i )
     {
         MT_Vector2D vPos;
         message >> vPos;

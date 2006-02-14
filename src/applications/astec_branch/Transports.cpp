@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Transports.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Transports constructor
@@ -40,8 +41,8 @@ void Transports::Update( const ASN1T_MsgUnitAttributes& message )
     if( message.m.pions_transportesPresent )
     {
         transported_.clear();
-        transported_.resize( message.pions_transportes.n )
-        for( uint i = 0; i < message.pions_transportes.n; ++i )
+        transported_.resize( message.pions_transportes.n );
+        for( unsigned i = 0; i < message.pions_transportes.n; ++i )
             transported_.push_back( resolver_.Find( message.pions_transportes.elem[i] ) );
     }
 

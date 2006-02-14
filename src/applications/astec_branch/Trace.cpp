@@ -36,7 +36,7 @@ using namespace DIN;
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
 Trace::Trace( Agent_ABC& agent, const TraceMessage& input )
-    : Report_ABC( agent.GetPos() )
+    : Report_ABC( MT_Vector2D() )//agent.GetPos() ) // $$$$ AGE 2006-02-14: 
 {
     eType_ = Report_ABC::eTrace;
     input >> strTitle_;

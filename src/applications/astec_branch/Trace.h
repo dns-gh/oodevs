@@ -13,7 +13,7 @@
 #define __Trace_h_
 
 #include "Report_ABC.h"
-#include "DinMessageWrapper.h"
+#include "DIN_Types.h"
 
 class Agent_ABC;
 

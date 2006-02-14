@@ -53,17 +53,17 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( const ASN1T_MsgPopulationFluxK
     , pPopulationKnowledge_( 0 )
     , pFlow_               ( 0 )
 {
-    pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
-    assert( pPopulationKnowledge_ );
-    const Population& population = pPopulationKnowledge_->GetPopulation();
-    
-    if( asnMsg.oid_flux_reel == 0 )
-        pFlow_ = 0;
-    else
-    {
-        pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
-        assert( pFlow_ );
-    }
+//    pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+//    assert( pPopulationKnowledge_ );
+//    const Population& population = pPopulationKnowledge_->GetPopulation();
+//    
+//    if( asnMsg.oid_flux_reel == 0 )
+//        pFlow_ = 0;
+//    else
+//    {
+//        pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
+//        assert( pFlow_ );
+//    }
 }
 
 // -----------------------------------------------------------------------------

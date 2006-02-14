@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "LogisticLinks.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
@@ -35,10 +36,11 @@ LogisticLinks::~LogisticLinks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::Update
-// Created: AGE 2006-02-13
+// Name: LogisticLinks::DoUpdate
+// Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void LogisticLinks::Update( const ASN1T_MsgChangeLiensLogistiquesAck& message )
+template< typename T >
+void LogisticLinks::DoUpdate( const T& message )
 {
     if( message.m.oid_tc2Present )
 		tc2_ = resolver_.Find( message.oid_tc2 );
@@ -49,4 +51,22 @@ void LogisticLinks::Update( const ASN1T_MsgChangeLiensLogistiquesAck& message )
     if( message.m.oid_ravitaillementPresent )
         supplySuperior_ = resolver_.Find( message.oid_ravitaillement );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::Update
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+void LogisticLinks::Update( const ASN1T_MsgAutomateCreation& message )
+{
+    DoUpdate( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::Update
+// Created: AGE 2006-02-13
+// -----------------------------------------------------------------------------
+void LogisticLinks::Update( const ASN1T_MsgChangeLiensLogistiquesAck& message )
+{
+    DoUpdate( message );        
 }

@@ -120,7 +120,7 @@ bool Gtia::Update( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 
     //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ App dans le code reseau mais bon...
-    App::GetApp().NotifyAgentKnowledgeCreated( *this, *pAgentKnowledge );
+//    App::GetApp().NotifyAgentKnowledgeCreated( *this, *pAgentKnowledge );
     return true;
 }
 
@@ -138,7 +138,7 @@ void Gtia::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 
     //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ App dans le code reseau mais bon...
-    App::GetApp().NotifyAgentKnowledgeUpdated( *this, *(itAgentKnowledge->second) );
+//    App::GetApp().NotifyAgentKnowledgeUpdated( *this, *(itAgentKnowledge->second) );
 }
 
 
@@ -153,7 +153,7 @@ void Gtia::Update( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
 
     //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ App dans le code reseau mais bon...
-    App::GetApp().NotifyAgentKnowledgeDeleted( *this, *(itAgentKnowledge->second) );
+//    App::GetApp().NotifyAgentKnowledgeDeleted( *this, *(itAgentKnowledge->second) );
 
     pTeam_->RemoveAgentKnowledge( *(itAgentKnowledge->second) );
     delete itAgentKnowledge->second;
@@ -263,7 +263,7 @@ bool Gtia::Update( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 
     PopulationKnowledge* pKnowledge = new PopulationKnowledge( asnMsg );
     populationKnowledges_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
-    App::GetApp().NotifyPopulationKnowledgeCreated( *this, *pKnowledge );
+//    App::GetApp().NotifyPopulationKnowledgeCreated( *this, *pKnowledge );
     return true;
 }
 
@@ -276,7 +276,7 @@ void Gtia::Update( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
     IT_PopulationKnowledgeMap it = populationKnowledges_.find( asnMsg.oid_connaissance );
     assert( it != populationKnowledges_.end() );
     it->second->Update( asnMsg );
-    App::GetApp().NotifyPopulationKnowledgeUpdated( *this, *( it->second ) );
+//    App::GetApp().NotifyPopulationKnowledgeUpdated( *this, *( it->second ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +287,7 @@ void Gtia::Update( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
 {
     IT_PopulationKnowledgeMap it = populationKnowledges_.find( asnMsg.oid_connaissance );
     assert( it != populationKnowledges_.end() );
-    App::GetApp().NotifyPopulationKnowledgeDeleted( *this, *( it->second ) );
+//    App::GetApp().NotifyPopulationKnowledgeDeleted( *this, *( it->second ) );
     delete it->second;
     populationKnowledges_.erase( it );
 }

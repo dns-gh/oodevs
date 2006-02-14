@@ -37,7 +37,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( const ASN1T_MsgLogMaintenanceTrait
     , nBreakdownTypeID_( asn.type_panne )
     , nState_          ( eFinished )
 {
-    pion_.AddConsign( *this );
+//    pion_.AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,9 +46,9 @@ LogMaintenanceConsign::LogMaintenanceConsign( const ASN1T_MsgLogMaintenanceTrait
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
-    pion_.RemoveConsign( *this );
-    if( pPionLogHandling_ )
-        pPionLogHandling_->TerminateConsign( *this );
+//    pion_.RemoveConsign( *this );
+//    if( pPionLogHandling_ )
+//        pPionLogHandling_->TerminateConsign( *this );
 }
 
 // =============================================================================
@@ -61,18 +61,18 @@ LogMaintenanceConsign::~LogMaintenanceConsign()
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asn )
 {
-    assert( pion_.GetID() == asn.oid_pion );
-    if( pPionLogHandling_ )
-        pPionLogHandling_->TerminateConsign( *this );
+    assert( pion_.GetId() == asn.oid_pion );
+//    if( pPionLogHandling_ )
+//        pPionLogHandling_->TerminateConsign( *this );
     if( asn.oid_pion_log_traitant != 0 )
     {
         pPionLogHandling_ = & App::GetApp().GetModel().GetAgent( asn.oid_pion_log_traitant );
-        pPionLogHandling_->HandleConsign( *this );
+//        pPionLogHandling_->HandleConsign( *this );
     }        
     else 
         pPionLogHandling_ = 0;
     nState_ = (E_State)asn.etat;
-    App::GetApp().NotifyLogisticConsignUpdated( *this );
+//    App::GetApp().NotifyLogisticConsignUpdated( *this );
 }
 
 // -----------------------------------------------------------------------------

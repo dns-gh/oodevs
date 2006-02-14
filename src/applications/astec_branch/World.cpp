@@ -33,7 +33,7 @@
 // Name: World constructor
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
-World::World( const std::string& strArchive )
+World::World( const std::string& strArchive, const std::string&  )
     : planar_              ( parameters_ )
     , strArchiveName_      ( strArchive )
     , pDetection_          ( 0 )
@@ -260,7 +260,7 @@ void World::AddShape( const GraphicShapeProxy& shape )
 // -----------------------------------------------------------------------------
 bool World::ShouldUseList( const std::string& filename )
 {
-    return ! MainWindow::GetMainWindow().GetOptions().bNoList_ && filename.find( "list" ) != std::string::npos;
+    return false;
 }
 
 

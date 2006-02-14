@@ -39,10 +39,10 @@ Limits::~Limits()
 void Limits::Update( const ASN1T_MsgPionOrder& message )
 {
     acknowledged_ = false;
-    if( asnMsg.m.oid_limite_droitePresent )
-        right_ = resolver_.Find( asnMsg.oid_limite_droite );
-    if( asnMsg.m.oid_limite_gauchePresent )
-        left_  = resolver_.Find( asnMsg.oid_limite_gauche );
+    if( message.m.oid_limite_droitePresent )
+        right_ = resolver_.Find( message.oid_limite_droite );
+    if( message.m.oid_limite_gauchePresent )
+        left_  = resolver_.Find( message.oid_limite_gauche );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,5 +51,5 @@ void Limits::Update( const ASN1T_MsgPionOrder& message )
 // -----------------------------------------------------------------------------
 void Limits::Update( const ASN1T_MsgPionOrderAck& message )
 {
-    acknowledged_ = message.error_code == no_error;
+    acknowledged_ = message.error_code == EnumObjectErrorCode::no_error;
 }

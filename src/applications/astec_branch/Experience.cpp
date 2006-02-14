@@ -10,8 +10,9 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-
 #include "Experience.h"
+#include "xeumeuleu/xml.h"
+using namespace xml;
 
 Experience::T_ExperienceMap Experience::experiences_;
 
@@ -27,26 +28,25 @@ const Experience Experience::veteran_    ( "Veteran"    , eVeteran    , EnumUnit
 // Name: Experience::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void Experience::Initialize( InputArchive& archive )
+void Experience::Initialize( xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing experiences" );
     experiences_[ conscrit_    .GetName() ] = &conscrit_;
     experiences_[ experimente_ .GetName() ] = &experimente_;
     experiences_[ veteran_     .GetName() ] = &veteran_;
 
-    archive.Section( "FacteursHumains" );
-    archive.Section( "Experience" );
+    xis >> start( "FacteursHumains" )
+            >>start( "Experience" );
 
     for( CIT_ExperienceMap it = experiences_.begin(); it != experiences_.end(); ++it )
     {
         Experience& experience = const_cast< Experience& >( *it->second );
-        archive.Section( experience.GetName() );
-        experience.Read( archive );
-        archive.EndSection(); // experience.GetName()
+        xis >> start( experience.GetName() );
+            experience.Read( xis );
+        xis >> end();
     }
-
-    archive.EndSection(); // Experience
-    archive.EndSection(); // FacteursHumains
+    xis >> end()
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,11 +91,11 @@ Experience::~Experience()
 // Name: Experience::Read
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void Experience::Read( InputArchive& archive )
+void Experience::Read( xistream& xis )
 {
-    archive.ReadField( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_       );
-    archive.ReadField( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_  );
-    archive.ReadField( "CoefModificationPH"                , rCoefPhModificator_             );
-    archive.ReadField( "CoefModificationTempsMiseEnPosture", rCoefPostureTimeModificator_    );
-    archive.ReadField( "CoefModificationDistanceCapteurs"  , rCoefSensorDistanceModificator_ );
+    xis >> content( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_       )
+        >> content( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_  )
+        >> content( "CoefModificationPH"                , rCoefPhModificator_             )
+        >> content( "CoefModificationTempsMiseEnPosture", rCoefPostureTimeModificator_    )
+        >> content( "CoefModificationDistanceCapteurs"  , rCoefSensorDistanceModificator_ );
 }

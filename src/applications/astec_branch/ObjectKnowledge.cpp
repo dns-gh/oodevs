@@ -30,7 +30,7 @@ ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& asnMsg
     : owner_                    ( owner )
     , nID_                      ( asnMsg.oid_connaissance ) 
     , nObjectTypeID_            ( asnMsg.type )
-    , pRealObject_              ( asnMsg.oid_objet_reel == 0 ? 0 : App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet_reel ) ) 
+    , pRealObject_              ( 0 )// asnMsg.oid_objet_reel == 0 ? 0 : App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet_reel ) ) 
 {
     Object_ABC::GetIDManagerForObjectType( asnMsg.type ).LockIdentifier( asnMsg.oid_connaissance ) ;
 }
@@ -53,10 +53,10 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 {
     if( asnMsg.m.oid_objet_reelPresent )
     {
-        if( asnMsg.oid_objet_reel )
-            pRealObject_ = App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet_reel );
-        else
-            pRealObject_ = 0;
+//        if( asnMsg.oid_objet_reel )
+//            pRealObject_ = App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet_reel );
+//        else
+//            pRealObject_ = 0;
     }
 
     if( asnMsg.m.pertinencePresent )

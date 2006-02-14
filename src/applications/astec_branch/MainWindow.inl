@@ -44,16 +44,3 @@ Options& MainWindow::GetOptions() const
 {
     return *pOptions_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::GetQGLWidget
-// Created: HME 2005-11-25
-// -----------------------------------------------------------------------------
-inline
-QGLWidget* MainWindow::GetQGLWidget( bool b3Dmode) const
-{
-    if ( b3Dmode )
-        return (QGLWidget*)pGL3DWidget_;
-    else
-        return (QGLWidget*)pGLWidget_;
-}

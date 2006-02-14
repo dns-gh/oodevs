@@ -12,6 +12,7 @@
 
 #include "InterfaceContainer.h"
 #include "ExtensionObserver_ABC.h"
+#include "Observer_ABC.h"
 
 // =============================================================================
 /** @class  Controller

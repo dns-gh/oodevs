@@ -11,6 +11,7 @@
 #define __Resolver_ABC_h_
 
 #include <stdexcept>
+#include <sstream>
 
 // =============================================================================
 /** @class  Resolver_ABC
@@ -18,7 +19,7 @@
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-template< typename T >
+template< typename T, typename Identifier = unsigned long >
 class Resolver_ABC
 {
 
@@ -38,14 +39,14 @@ public:
             functor( *it->second );
     };
 
-    void Register( unsigned long identifier, T& element )
+    void Register( const Identifier& identifier, T& element )
     {
         T*& p = elements_[ identifier ];
         if( p )
-            throw std::runtime_error( std::string( "Element type '" ) + typeid( T ).name() + "' already registered" );
+            Error( identifier, "already registered" );
         p = &element;
     }
-    void Remove( unsigned long identifier )
+    void Remove( const Identifier& identifier )
     {
         elements_.erase( identifier );
     }
@@ -58,32 +59,42 @@ public:
     };
 
 
-    T* Find( unsigned long identifier ) const
+    T* Find( const Identifier& identifier ) const
     {
         CIT_Elements it = elements_.find( identifier );
         if( it != elements_.end() )
             return it->second;
         return 0;
     }
-    T& Get ( unsigned long identifier ) const
+    T& Get ( const Identifier& identifier ) const
     {
         T* element = Find( identifier );
         if( ! element )
-            throw std::runtime_error( std::string( "Element type '" ) + typeid( T ).name() + "' does not exist" );
+            Error( identifier, "does not exist" );
         return *element;
     }
     //@}
-
-protected: // $$$$ AGE 2006-02-13: 
+    // $$$$ AGE 2006-02-14: 
+protected:
     //! @name Copy/Assignement
     //@{
     Resolver_ABC( const Resolver_ABC& );            //!< Copy constructor
     Resolver_ABC& operator=( const Resolver_ABC& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void Error( const Identifier& identifier, const std::string& message ) const
+    {
+        std::stringstream str;
+        str << "Element type '" << typeid( T ).name() << "' '" << identifier << "' " << message;
+        throw std::runtime_error( str.str() );
+    }
+    //@}
+
     //! @name Types
     //@{
-    typedef std::map< unsigned long, T* >          T_Elements;
+    typedef std::map< Identifier, T* >             T_Elements;
     typedef typename T_Elements::iterator         IT_Elements;
     typedef typename T_Elements::const_iterator  CIT_Elements;
     //@}

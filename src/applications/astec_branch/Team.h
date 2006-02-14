@@ -24,6 +24,7 @@
 #endif
 
 #include "ASN_Types.h"
+#include "Entity_ABC.h"
 
 class ObjectKnowledge;
 class AgentKnowledge;
@@ -38,7 +39,7 @@ class Gtia;
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Team
+class Team : public Entity_ABC
 {
     MT_COPYNOTALLOWED( Team );
     friend class GLTool;
@@ -46,11 +47,6 @@ class Team
 public:
     //! @name Types
     //@{
-    typedef std::pair< std::string, ASN1T_EnumDiplomatie> T_Diplomaty;
-    typedef std::vector< T_Diplomaty >           T_DiplomatyVector;
-    typedef T_DiplomatyVector::iterator          IT_DiplomatyVector;
-    typedef T_DiplomatyVector::const_iterator    CIT_DiplomatyVector;
-
     typedef std::map< uint, Gtia* > T_GtiaMap;
     typedef T_GtiaMap::iterator         IT_GtiaMap;
     typedef T_GtiaMap::const_iterator   CIT_GtiaMap;
@@ -75,9 +71,6 @@ public:
     ~Team();
     //@}
 
-    void ReadODB( InputArchive& archive, bool bReadGtias );
-    void WriteODB( MT_OutputArchive_ABC& archive );
-
     Gtia* CreateGtia     ( uint32 nId );
     void RegisterGtia   ( Gtia& gtia );
     void RemoveGtia     ( Gtia& gtia );
@@ -94,19 +87,9 @@ public:
 
     void               SetIdx( uint nIdx );
 
-    void ChangeDiplomaty( Team& team, ASN1T_EnumDiplomatie nRelationship );
-
-
     const T_ObjectKnowledgeMap& GetObjectKnowledges() const;
     ObjectKnowledge*    FindObjectKnowledge( int nId );
     ObjectKnowledge*    FindKnowledgeOnObject( const Object_ABC& object );
-    //@}
-
-    //! @name Network events
-    //@{
-    bool OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
     //@}
 
     //! @name Knowledges

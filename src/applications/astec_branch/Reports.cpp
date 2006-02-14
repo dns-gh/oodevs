@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Reports.h"
 #include "RC.h"
+#include "Trace.h"
 #include "Controller.h"
 
 // -----------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Reports::~Reports()
 // -----------------------------------------------------------------------------
 void Reports::Update( const ASN1T_MsgCR& message )
 {   
-    RC& rc = *new RC( *this, message );
+    RC& rc = *new RC( agent_, message );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }
@@ -50,7 +51,7 @@ void Reports::Update( const ASN1T_MsgCR& message )
 // -----------------------------------------------------------------------------
 void Reports::Update( const ASN1T_MsgAttenteOrdreConduite& message )
 {
-    RC& rc = *new RC( *this, message );
+    RC& rc = *new RC( agent_, message );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }
@@ -61,7 +62,7 @@ void Reports::Update( const ASN1T_MsgAttenteOrdreConduite& message )
 // -----------------------------------------------------------------------------
 void Reports::Update( const TraceMessage& msg )
 {
-    Trace& trace = *new Trace( *this, msg );
-    reports_.push_back( &rc );
-    controller_.Create( rc );
+    Trace& trace = *new Trace( agent_, msg );
+    reports_.push_back( &trace );
+    controller_.Create( trace );
 }

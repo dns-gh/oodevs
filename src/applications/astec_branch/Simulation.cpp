@@ -10,14 +10,14 @@
 #include "astec_pch.h"
 #include "Simulation.h"
 #include "App.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Simulation::Simulation( App& application )
-    : application_( application )
-    , tickDuration_( 10 )
+Simulation::Simulation( )
+    : tickDuration_( 10 )
     , time_( 0 )
     , paused_( false )
 {
@@ -40,7 +40,7 @@ Simulation::~Simulation()
 void Simulation::Pause( bool paused )
 {
     paused_ = paused;
-    application_.NotifyPauseStatusChanged( paused );
+//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,8 @@ void Simulation::Pause( bool paused )
 void Simulation::ChangeSpeed( int timeFactor )
 {
     MT_LOG_INFO( "Facteur temps: " << timeFactor, eReceived, 0 );
-    application_.NotifySpeedChanged( timeFactor );
+    timeFactor_ = timeFactor;
+//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,8 +77,8 @@ void Simulation::Update( const ASN1T_MsgCtrlInfo& asnMsg )
 void Simulation::BeginTick( int tick )
 {
     time_ = tick * tickDuration_;
-    application_.NotifyTimeChanged( time_ );
-    application_.NotifyTickStartEnd( true );
+    tickStart_ = true; // $$$$ AGE 2006-02-14: 
+//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +87,8 @@ void Simulation::BeginTick( int tick )
 // -----------------------------------------------------------------------------
 void Simulation::EndTick()
 {
-    application_.NotifyTickStartEnd( false );
+    tickStart_ = false;
+//    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

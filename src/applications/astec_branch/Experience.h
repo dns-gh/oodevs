@@ -15,6 +15,8 @@
 #include "Types.h"
 #include "ASN_Types.h"
 
+namespace xml { class xistream; };
+
 // =============================================================================
 // @class  Experience
 // Created: JVT 2004-08-03
@@ -41,7 +43,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static       void             Initialize( InputArchive& archive );
+    static       void             Initialize( xml::xistream& xis );
     static       void             Terminate ();
     static const Experience*  Find      ( const std::string& strName );
     static const Experience*  Find      ( ASN1T_EnumUnitExperience nAsnID );    
@@ -83,7 +85,7 @@ private:
 
     //! @name Init
     //@{
-    void Read( InputArchive& archive );
+    void Read( xml::xistream& xis );
     //@}
 
 private:

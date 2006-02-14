@@ -38,7 +38,7 @@ LogSupplyConsign::LogSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCr
     , pAutomateLogProvidingConvoyResources_( 0 )
     , nState_           ( eFinished )
 {
-    pion_.AddConsign( *this );
+//    pion_.AddConsign( *this );
 
     for( uint i = 0; i < asn.dotations.n; ++i )
     {
@@ -55,11 +55,11 @@ LogSupplyConsign::LogSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCr
 // -----------------------------------------------------------------------------
 LogSupplyConsign::~LogSupplyConsign()
 {
-    pion_.RemoveConsign( *this );
-    if( pAutomateLogHandling_ )
-        pAutomateLogHandling_->TerminateConsign( *this );
-    if( pPionLogConvoying_ )
-        pPionLogConvoying_->TerminateConsign( *this );
+//    pion_.RemoveConsign( *this );
+//    if( pAutomateLogHandling_ )
+//        pAutomateLogHandling_->TerminateConsign( *this );
+//    if( pPionLogConvoying_ )
+//        pPionLogConvoying_->TerminateConsign( *this );
 }
 
 // =============================================================================
@@ -72,16 +72,16 @@ LogSupplyConsign::~LogSupplyConsign()
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asn )
 {
-    assert( pion_.GetID() == asn.oid_automate );
+    assert( pion_.GetId() == asn.oid_automate );
 
     if( asn.m.oid_automate_log_traitantPresent )
     {
-        if( pAutomateLogHandling_ )
-            pAutomateLogHandling_->TerminateConsign( *this );
+//        if( pAutomateLogHandling_ )
+//            pAutomateLogHandling_->TerminateConsign( *this );
         if( asn.oid_automate_log_traitant != 0 )
         {
             pAutomateLogHandling_ = & App::GetApp().GetModel().GetAgent( asn.oid_automate_log_traitant );
-            pAutomateLogHandling_->HandleConsign( *this );
+//            pAutomateLogHandling_->HandleConsign( *this );
         }        
         else 
             pAutomateLogHandling_ = 0;
@@ -89,12 +89,12 @@ void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTrait
     
     if( asn.m.oid_pion_convoyantPresent )
     {
-        if( pPionLogConvoying_ )
-            pPionLogConvoying_->TerminateConsign( *this );
+//        if( pPionLogConvoying_ )
+//            pPionLogConvoying_->TerminateConsign( *this );
         if( asn.oid_pion_convoyant != 0 )
         {
             pPionLogConvoying_ = &App::GetApp().GetModel().GetAgent( asn.oid_pion_convoyant );
-            pPionLogConvoying_->HandleConsign( *this );
+//            pPionLogConvoying_->HandleConsign( *this );
         }        
         else 
             pPionLogConvoying_ = 0;
@@ -122,7 +122,7 @@ void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTrait
         }
     }
 
-    App::GetApp().NotifyLogisticConsignUpdated( *this );
+//    App::GetApp().NotifyLogisticConsignUpdated( *this );
 }
 
 // -----------------------------------------------------------------------------

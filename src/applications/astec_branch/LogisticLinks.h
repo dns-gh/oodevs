@@ -26,6 +26,7 @@ class Agent;
 // =============================================================================
 class LogisticLinks : public Extension_ABC
                     , public Updatable_ABC< ASN1T_MsgChangeLiensLogistiquesAck >
+                    , public Updatable_ABC< ASN1T_MsgAutomateCreation >
 {
 
 public:
@@ -49,6 +50,9 @@ private:
     //! @name Helpers
     //@{
     virtual void Update( const ASN1T_MsgChangeLiensLogistiquesAck& message );
+    virtual void Update( const ASN1T_MsgAutomateCreation& message );
+    template< typename T >
+    void DoUpdate( const T& message );
     //@}
 
 private:

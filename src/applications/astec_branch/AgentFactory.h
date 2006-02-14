@@ -12,6 +12,11 @@
 
 #include "AgentFactory_ABC.h"
 
+class Controller;
+class Model;
+class AgentTypes;
+class Agent_ABC;
+
 // =============================================================================
 /** @class  AgentFactory
     @brief  Agent factory
@@ -24,12 +29,14 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory();
+             AgentFactory( Controller& controller, AgentTypes& types );
     virtual ~AgentFactory();
     //@}
 
     //! @name Operations
     //@{
+    void SetModel( Model& model );
+
     virtual Agent* Create( const ASN1T_MsgAutomateCreation& asnMsg );
     virtual Agent* Create( const ASN1T_MsgPionCreation& asnMsg );
     virtual Population* Create( const ASN1T_MsgPopulationCreation& asnMsg );
@@ -44,11 +51,15 @@ private:
 
     //! @name Helpers
     //@{
+    void AttachExtensions( Agent_ABC& agent );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
+    Model* model_;
+    AgentTypes& types_;
     //@}
 };
 

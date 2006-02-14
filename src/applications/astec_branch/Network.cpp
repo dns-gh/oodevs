@@ -88,7 +88,7 @@ bool Network::Disconnect()
         return false;
     }
     session_->Close( false );
-    App::GetApp().NotifyConnexionStatusChanged( false );
+//    App::GetApp().NotifyConnexionStatusChanged( false );
     return true;
 }
 
@@ -133,7 +133,7 @@ void Network::OnConnected( DIN::DIN_Link& link )
     asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
     asnMsg.Send();
     
-    App::GetApp().NotifyConnexionStatusChanged( true );
+//    App::GetApp().NotifyConnexionStatusChanged( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ void Network::OnNotConnected( DIN::DIN_Link& link, const DIN::DIN_ErrorDescripti
 {
     MT_LOG_INFO_MSG( "Non connecté à " << link.GetRemoteAddress().GetAddressAsString() << " (raison :" << reason.GetInfo() << ")" );   
 
-    App::GetApp().NotifyConnexionStatusChanged( false );
+//    App::GetApp().NotifyConnexionStatusChanged( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,5 +156,5 @@ void Network::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescrip
     MT_LOG_INFO_MSG( "Connexion à " << link.GetRemoteAddress().GetAddressAsString() << " perdue (raison: " << reason.GetInfo() << ")" );    
     session_ = 0;
 
-    App::GetApp().NotifyConnexionLost();
+//    App::GetApp().NotifyConnexionLost();
 }

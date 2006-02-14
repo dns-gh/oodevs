@@ -30,19 +30,19 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const ASN1T_
     , pPopulationKnowledge_( 0 )
     , pConcentration_      ( 0 )
 {
-    pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
-    assert( pPopulationKnowledge_ );
-    const Population& population = pPopulationKnowledge_->GetPopulation();
-
-    if( asnMsg.oid_concentration_reelle == 0 )
-        pConcentration_ = 0;
-    else
-    {
-        pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
-        assert( pConcentration_ );
-    }
-    
-    App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
+//    pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+//    assert( pPopulationKnowledge_ );
+//    const Population& population = pPopulationKnowledge_->GetPopulation();
+//
+//    if( asnMsg.oid_concentration_reelle == 0 )
+//        pConcentration_ = 0;
+//    else
+//    {
+//        pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
+//        assert( pConcentration_ );
+//    }
+//    
+//    App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
 }
 
 // -----------------------------------------------------------------------------

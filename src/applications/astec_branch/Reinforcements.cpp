@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Reinforcements.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Reinforcements constructor

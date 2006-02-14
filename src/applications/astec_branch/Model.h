@@ -25,6 +25,7 @@ class Gtia;
 class Object_ABC;
 class App;
 class Population;
+class TacticalLine_ABC;
 
 namespace DIN {
     class DIN_Input;
@@ -34,23 +35,26 @@ namespace DIN {
 // =============================================================================
 /** @class  Model
     @brief  Model
+
+    // $$$$ AGE 2006-02-14: revoir 
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class Model : private Resolver_ABC< Team >
-            , private Resolver_ABC< Gtia > 
-            , private Resolver_ABC< Agent > // $$$$ AGE 2006-02-13: eventualy Agent_ABC
-            , private Resolver_ABC< Object_ABC >
-            , private Resolver_ABC< LogMaintenanceConsign >
-            , private Resolver_ABC< LogMedicalConsign >
-            , private Resolver_ABC< LogSupplyConsign >
-            , private Resolver_ABC< Population >
+class Model : public Resolver_ABC< Team >
+            , public Resolver_ABC< Gtia > 
+            , public Resolver_ABC< Agent > // $$$$ AGE 2006-02-13: eventualy Agent_ABC
+            , public Resolver_ABC< Object_ABC >
+            , public Resolver_ABC< LogMaintenanceConsign >
+            , public Resolver_ABC< LogMedicalConsign >
+            , public Resolver_ABC< LogSupplyConsign >
+            , public Resolver_ABC< Population >
+            , public Resolver_ABC< TacticalLine_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( App& application, AgentFactory_ABC& agentFactory, ObjectFactory_ABC& objectFactory ); // $$$$ AGE 2006-02-10: eventually a controller
+             Model( AgentFactory_ABC& agentFactory, ObjectFactory_ABC& objectFactory ); // $$$$ AGE 2006-02-10: eventually a controller
     virtual ~Model();
     //@}
 
@@ -117,7 +121,6 @@ private:
 private:
     //! @name Member data
     //@{
-    App& application_;
     AgentFactory_ABC& agentFactory_;
     ObjectFactory_ABC& objectFactory_;
     //@}

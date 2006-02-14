@@ -15,12 +15,12 @@ namespace DIN {
 };
 
 #define DECLARE_MESSAGE_WRAPPER( name )         \
-struct name : public DinMessageWrapper< name >  \
+struct name : public DinMessageWrapper< name >   \
 {                                               \
     name( DIN::DIN_Input& input )               \
         : DinMessageWrapper< name >( input )    \
     {};                                         \
-};
+}
 
 // =============================================================================
 /** @class  DinMessageWrapper

@@ -88,7 +88,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
     assert( pKnowledge );
     concentrations_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
 
-    App::GetApp().NotifyPopulationConcentrationKnowledgeCreated( *pGtia_, *pKnowledge );
+//    App::GetApp().NotifyPopulationConcentrationKnowledgeCreated( *pGtia_, *pKnowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
     IT_ConcentrationKnowledgeMap it = concentrations_.find( asnMsg.oid_connaissance_concentration );
     assert( it != concentrations_.end() );
     it->second->Update( asnMsg );
-    App::GetApp().NotifyPopulationConcentrationKnowledgeUpdated( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationConcentrationKnowledgeUpdated( *pGtia_, *( it->second ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 {
     IT_ConcentrationKnowledgeMap it = concentrations_.find( asnMsg.oid_connaissance_concentration );
     assert( it != concentrations_.end() );
-    App::GetApp().NotifyPopulationConcentrationKnowledgeDeleted( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationConcentrationKnowledgeDeleted( *pGtia_, *( it->second ) );
     delete it->second;
     concentrations_.erase( it );
 }
@@ -128,7 +128,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
     assert( pKnowledge );
     flows_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
 
-    App::GetApp().NotifyPopulationFlowKnowledgeCreated( *pGtia_, *pKnowledge );
+//    App::GetApp().NotifyPopulationFlowKnowledgeCreated( *pGtia_, *pKnowledge );
 }
     
 // -----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& 
     IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
     assert( it != flows_.end() );
     it->second->Update( asnMsg );
-    App::GetApp().NotifyPopulationFlowKnowledgeUpdated( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationFlowKnowledgeUpdated( *pGtia_, *( it->second ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 {
     IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
     assert( it != flows_.end() );
-    App::GetApp().NotifyPopulationFlowKnowledgeDeleted( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationFlowKnowledgeDeleted( *pGtia_, *( it->second ) );
     delete it->second;
     flows_.erase( it );
 }

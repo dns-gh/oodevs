@@ -305,7 +305,7 @@ void ObjectCreationPanel::OnOk()
 		
 		if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
         {
-            static_cast< Object_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetID() );
+            static_cast< Object_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetId() );
         }
 		pAgent_->Clear();
         

@@ -16,6 +16,7 @@
 class Experience;
 class Tiredness;
 class Morale;
+class Controller;
 
 // =============================================================================
 /** @class  HumanFactors

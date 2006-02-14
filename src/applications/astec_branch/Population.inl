@@ -32,7 +32,7 @@ Team& Population::GetTeam() const
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 inline
-const std::string Population::GetName() const
+std::string Population::GetName() const
 {
 	return strName_;
 }

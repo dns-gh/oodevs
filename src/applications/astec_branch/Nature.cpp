@@ -24,28 +24,37 @@
 // Name: Nature constructor
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-Nature::Nature( InputArchive& archive )
-    : level_( eNatureLevel_None )
-    , weapon_( eUnitNatureWeapon_None )
-    , specialization_( eUnitNatureSpecialization_None )
-    , qualifier_( eUnitNatureQualifier_None )
-    , category_( eUnitNatureCategory_None )
-    , mobility_( eUnitNatureMobility_None )
-    , capacity_( eUnitCapaciteMission_CivilianLawEnforcement )
-{
-    if( ! archive.Section( "Nature", InputArchive::eNothing ) )
-        return;
-    Read( archive, "Niveau",          std::ptr_fun( ConvertToNatureLevel ),              level_ );
-    Read( archive, "Arme",            std::ptr_fun( ConvertToUnitNatureWeapon ),         weapon_ );
-    Read( archive, "Specialisation",  std::ptr_fun( ConvertToUnitNatureSpecialization ), specialization_ );
-    Read( archive, "Qualificatif",    std::ptr_fun( ConvertToUnitNatureQualifier ),      qualifier_ );
-    Read( archive, "Categorie",       std::ptr_fun( ConvertToUnitNatureCategory ),       category_ );
-    Read( archive, "TypeMobilite",    std::ptr_fun( ConvertToUnitNatureMobility ),       mobility_ );
-    Read( archive, "CapaciteMission", std::ptr_fun( ConvertToUnitCapaciteMission ),      capacity_ );
-    archive.EndSection(); // nature
+//Nature::Nature( InputArchive& archive )
+//    : level_( eNatureLevel_None )
+//    , weapon_( eUnitNatureWeapon_None )
+//    , specialization_( eUnitNatureSpecialization_None )
+//    , qualifier_( eUnitNatureQualifier_None )
+//    , category_( eUnitNatureCategory_None )
+//    , mobility_( eUnitNatureMobility_None )
+//    , capacity_( eUnitCapaciteMission_CivilianLawEnforcement )
+//{
+//    if( ! archive.Section( "Nature", InputArchive::eNothing ) )
+//        return;
+//    Read( archive, "Niveau",          std::ptr_fun( ConvertToNatureLevel ),              level_ );
+//    Read( archive, "Arme",            std::ptr_fun( ConvertToUnitNatureWeapon ),         weapon_ );
+//    Read( archive, "Specialisation",  std::ptr_fun( ConvertToUnitNatureSpecialization ), specialization_ );
+//    Read( archive, "Qualificatif",    std::ptr_fun( ConvertToUnitNatureQualifier ),      qualifier_ );
+//    Read( archive, "Categorie",       std::ptr_fun( ConvertToUnitNatureCategory ),       category_ );
+//    Read( archive, "TypeMobilite",    std::ptr_fun( ConvertToUnitNatureMobility ),       mobility_ );
+//    Read( archive, "CapaciteMission", std::ptr_fun( ConvertToUnitCapaciteMission ),      capacity_ );
+//    archive.EndSection(); // nature
+//
+//    symbol_      = Symbol( *this );
+//    levelSymbol_ = LevelSymbol( *this );
+//}
 
-    symbol_      = Symbol( *this );
-    levelSymbol_ = LevelSymbol( *this );
+// -----------------------------------------------------------------------------
+// Name: Nature constructor
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+Nature::Nature( xml::xistream& xis )
+{
+    // $$$$ AGE 2006-02-14: 
 }
 
 // $$$$ AGE 2005-04-08: Try to organize symbols

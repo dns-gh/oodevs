@@ -9,12 +9,14 @@
 
 #include "astec_pch.h"
 #include "Troops.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Troops constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 Troops::Troops( Controller& controller )
+    : controller_( controller )
 {
     // NOTHING
 }

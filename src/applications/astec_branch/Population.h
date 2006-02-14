@@ -70,12 +70,15 @@ public:
     //! @name Network
     //@{
 	void CreatePopulationFlow         ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
-	void CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
+	
     void CreatePopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons );
-    void UpdatePopulation             ( const ASN1T_MsgPopulationUpdate&                   asnMsg );
     void UpdatePopulationFlow         ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
+    void DeletePopulationFlow         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
+
+    void UpdatePopulation             ( const ASN1T_MsgPopulationUpdate&                   asnMsg );
+    
+    void CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
 	void UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
-	void DeletePopulationFlow         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
 	void DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
     //@}
 
@@ -85,9 +88,10 @@ public:
 
     //! @name Accessors
     //@{
+    virtual unsigned long GetId() const;
 	virtual const MIL_AgentID          GetID  () const;
 	virtual Team&                  GetTeam() const;
-	virtual const std::string          GetName() const;
+	virtual std::string          GetName() const;
 	virtual const MT_Vector2D&         GetPos () const;
     virtual const MT_Vector2D          GetAggregatedPos() const;
     virtual const MT_Vector2D          GetConflictPos  ( const MT_Vector2D& origin ) const;
@@ -104,6 +108,8 @@ public:
     //@}
 
 private:
+    Population( const Population& );
+    Population& operator=( const Population& );
 	MIL_AgentID               nPopulationID_;
 	std::string               strName_;
     const TypePopulation* pType_;

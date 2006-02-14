@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Dotations.h"
 #include "App.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
@@ -49,8 +50,8 @@ void Dotations::Update( const ASN1T_MsgUnitDotations& message )
         dotations_[ equipId ] = qty;
 
         // $$$$ AGE 2006-02-13: 
-        if( App::GetApp().GetResource( equipId ).GetDotationName() == "carburant" )
-            bEmptyGasTank_ = (qty == 0);
+//        if( App::GetApp().GetResource( equipId ).GetDotationName() == "carburant" )
+//            bEmptyGasTank_ = (qty == 0);
     }
 
     controller_.Update( *this );

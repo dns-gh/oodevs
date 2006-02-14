@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DIN_Types_h_
-#define __DIN_Types_h_
+#ifndef __DIN_Astec_Types_h_
+#define __DIN_Astec_Types_h_
 
 #include "DinMessageWrapper.h"
 
@@ -21,4 +21,4 @@ DECLARE_MESSAGE_WRAPPER( FlowDetectionMessage );
 DECLARE_MESSAGE_WRAPPER( PopulationCollisionMessage );
 DECLARE_MESSAGE_WRAPPER( ObjectDetectionMessage );
 
-#endif // __DIN_Types_h_
+#endif // __DIN_Astec_Types_h_

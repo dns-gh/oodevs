@@ -26,9 +26,8 @@
 // Name: Model constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Model::Model( App& application, AgentFactory_ABC& agentFactory, ObjectFactory_ABC& objectFactory )
-    : application_( application )
-    , agentFactory_( agentFactory )
+Model::Model( AgentFactory_ABC& agentFactory, ObjectFactory_ABC& objectFactory )
+    : agentFactory_( agentFactory )
     , objectFactory_( objectFactory )
 {
     // NOTHING
@@ -68,9 +67,12 @@ void Model::CreateTeam( DIN::DIN_Input& input )
 {
     unsigned long id;
     input >> id;
-    Team* team = new Team( id, input );
-    Resolver_ABC< Team >::Register( id, *team );
-    application_.NotifyTeamCreated( *team );
+    if( ! Resolver_ABC< Team >::Find( id ) )
+    {
+        Team* team = new Team( id, input );
+        Resolver_ABC< Team >::Register( id, *team );
+//    application_.NotifyTeamCreated( *team );
+    }
 }
  
 // -----------------------------------------------------------------------------
@@ -102,10 +104,13 @@ void Model::CreateGtia( DIN::DIN_Input& input )
 {
     unsigned long id, teamId;
     input >> id >> teamId;
-    Team& team = GetTeam( teamId );
-    Gtia* gtia = team.CreateGtia( id );
-    Resolver_ABC< Gtia >::Register( id, *gtia );
-    application_.NotifyGtiaCreated( *gtia );
+    if( ! Resolver_ABC< Gtia >::Find( id ) )
+    {
+        Team& team = GetTeam( teamId );
+        Gtia* gtia = team.CreateGtia( id );
+        Resolver_ABC< Gtia >::Register( id, *gtia );
+//    application_.NotifyGtiaCreated( *gtia );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +132,7 @@ void Model::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
     {
         Agent* pAgent = agentFactory_.Create( asnMsg );
         Resolver_ABC< Agent >::Register( asnMsg.oid_automate, *pAgent );
-        application_.NotifyAgentCreated( *pAgent );
+//        application_.NotifyAgentCreated( *pAgent );
     }
 }
 
@@ -141,7 +146,7 @@ void Model::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
     {
         Agent* pAgent = agentFactory_.Create( asnMsg );
         Resolver_ABC< Agent >::Register( asnMsg.oid_pion, *pAgent );
-        application_.NotifyAgentCreated( *pAgent );
+//        application_.NotifyAgentCreated( *pAgent );
     }
 }
 
@@ -185,7 +190,7 @@ void Model::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
     {
         Population* popu = agentFactory_.Create( asnMsg );
         Resolver_ABC< Population >::Register( asnMsg.oid_population, *popu );
-        application_.NotifyPopulationCreated( *popu );
+//        application_.NotifyPopulationCreated( *popu );
     }
 }
 
@@ -218,7 +223,7 @@ void Model::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
     {
         Object_ABC* pObject = objectFactory_.Create( asnMsg );
         Resolver_ABC< Object_ABC >::Register( asnMsg.oid, *pObject );
-        application_.NotifyObjectCreated( *pObject );
+//        application_.NotifyObjectCreated( *pObject );
     }
 }
  
@@ -238,7 +243,7 @@ Object_ABC& Model::GetObject( unsigned long id )
 void Model::DeleteObject( unsigned long id )
 {
     MT_LOG_INFO( "ObjectDestruction - ID: " << id, eReceived, 0 );
-    application_.NotifyObjectDeleted( GetObject( id ) );
+//    application_.NotifyObjectDeleted( GetObject( id ) );
     Delete< Object_ABC >( id );
 }
 

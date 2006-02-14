@@ -12,6 +12,7 @@
 #include "Experience.h"
 #include "Tiredness.h"
 #include "Morale.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: HumanFactors constructor

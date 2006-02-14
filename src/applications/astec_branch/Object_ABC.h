@@ -24,6 +24,7 @@
 #include "FireResult.h"
 
 class Team;
+namespace xml { class xistream; };
 
 // =============================================================================
 // Created: SBO 2005-09-02
@@ -44,7 +45,7 @@ public:
 
     //! @name Static Operations
     //@{
-    static void           InitializeObjectIds      ( InputArchive& classeIds );
+    static void           InitializeObjectIds      ( xml::xistream& xis );
     static IDManager& GetIDManagerForObjectType( ASN1T_EnumObjectType nType );
     static IDManager& GetIDManagerForObjectType( uint );
     //@}
@@ -88,8 +89,8 @@ public:
     virtual void WriteODB(       MT_XXmlOutputArchive&  archive ) const;
 
     // explosion results
-    void OnReceiveMsgExplosion    ( const ASN1T_FireDamagesPion& asnMsg );
-    void DeleteAllExplosionResults();
+//    void OnReceiveMsgExplosion    ( const ASN1T_FireDamagesPion& asnMsg );
+//    void DeleteAllExplosionResults();
     //@}
 
 public:
@@ -135,7 +136,7 @@ private:
     typedef std::map< unsigned int, IDManager* >        T_Managers;
     //@}
 
-private:
+public:
     //! @name Static members
     //@{
     static T_ObjectIDs objectIds_;

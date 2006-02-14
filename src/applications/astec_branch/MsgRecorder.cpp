@@ -217,9 +217,9 @@ void MsgRecorder::OnNewMsgWithContext( int nType, MIL_MOSContextID nContext, ASN
         && nType != T_MsgsMosSimWithContext_msg_automate_order )
         return;
 
-    int nTime = App::GetApp().GetTime();
-    Msg* pNewMsg = new Msg( nContext, asnPEREncodeBuffer, nTime, nTime - nTimeStart_);
-    messages_.push_back( pNewMsg );
+//    int nTime = App::GetApp().GetTime();
+//    Msg* pNewMsg = new Msg( nContext, asnPEREncodeBuffer, nTime, nTime - nTimeStart_);
+//    messages_.push_back( pNewMsg );
 }
 
 
@@ -247,7 +247,7 @@ void MsgRecorder::Record()
 {
     this->Clear();
     nState_ = eRecording;
-    nTimeStart_ = App::GetApp().GetTime();
+//    nTimeStart_ = App::GetApp().GetTime();
 }
 
 

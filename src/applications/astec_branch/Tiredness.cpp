@@ -10,8 +10,9 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-
 #include "Tiredness.h"
+#include "xeumeuleu/xml.h"
+using namespace xml;
 
 Tiredness::T_TirednessMap Tiredness::tirednesses_;
 
@@ -27,26 +28,26 @@ const Tiredness Tiredness::epuise_ ( "Epuise" , eEpuise , EnumUnitFatigue::epuis
 // Name: Tiredness::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void Tiredness::Initialize( InputArchive& archive )
+void Tiredness::Initialize( xistream& xis  )
 {
     MT_LOG_INFO_MSG( "Initializing tirenesses" );
     tirednesses_[ normal_  .GetName() ] = &normal_;
     tirednesses_[ fatigue_ .GetName() ] = &fatigue_;
     tirednesses_[ epuise_  .GetName() ] = &epuise_;
 
-    archive.Section( "FacteursHumains" );
-    archive.Section( "Fatigue" );
+    xis >> start( "FacteursHumains" )
+         >> start( "Fatigue" );
 
     for( CIT_TirednessMap it = tirednesses_.begin(); it != tirednesses_.end(); ++it )
     {
         Tiredness& tiredness = const_cast< Tiredness& >( *it->second );
-        archive.Section( tiredness.GetName() );
-        tiredness.Read( archive );
-        archive.EndSection(); // tiredness.GetName()
+        xis >> start( tiredness.GetName() );
+            tiredness.Read( xis );
+        xis >> end();
     }
 
-    archive.EndSection(); // Fatigue
-    archive.EndSection(); // FacteursHumains
+    xis >> end()
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,11 +91,11 @@ Tiredness::~Tiredness()
 // Name: Tiredness::Read
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void Tiredness::Read( InputArchive& archive )
+void Tiredness::Read( xistream& xis  )
 {
-    archive.ReadField( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_      );
-    archive.ReadField( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_ );
-    archive.ReadField( "CoefModificationPH"                , rCoefPhModificator_            );
-    archive.ReadField( "CoefModificationTempsMiseEnPosture", rCoefPostureTimeModificator_   );
-    archive.ReadField( "CoefModificationDistanceCapteurs"  , rCoefSensorDistanceModificator_);
+    xis >> content( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_      );
+    xis >> content( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_ );
+    xis >> content( "CoefModificationPH"                , rCoefPhModificator_            );
+    xis >> content( "CoefModificationTempsMiseEnPosture", rCoefPostureTimeModificator_   );
+    xis >> content( "CoefModificationDistanceCapteurs"  , rCoefSensorDistanceModificator_);
 }

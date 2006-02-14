@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Equipments.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor
