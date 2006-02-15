@@ -35,10 +35,10 @@ Reports::~Reports()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Reports::Update
+// Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::Update( const ASN1T_MsgCR& message )
+void Reports::DoUpdate( const ASN1T_MsgCR& message )
 {   
     RC& rc = *new RC( agent_, message );
     reports_.push_back( &rc );
@@ -46,10 +46,10 @@ void Reports::Update( const ASN1T_MsgCR& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Reports::Update
+// Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::Update( const ASN1T_MsgAttenteOrdreConduite& message )
+void Reports::DoUpdate( const ASN1T_MsgAttenteOrdreConduite& message )
 {
     RC& rc = *new RC( agent_, message );
     reports_.push_back( &rc );
@@ -57,10 +57,10 @@ void Reports::Update( const ASN1T_MsgAttenteOrdreConduite& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Reports::Update
+// Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::Update( const TraceMessage& msg )
+void Reports::DoUpdate( const TraceMessage& msg )
 {
     Trace& trace = *new Trace( agent_, msg );
     reports_.push_back( &trace );

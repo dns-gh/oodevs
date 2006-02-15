@@ -54,7 +54,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const DetectionMessage& message );
+    virtual void DoUpdate( const DetectionMessage& message );
     //@}
 
 private:

@@ -33,10 +33,10 @@ Reinforcements::~Reinforcements()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Reinforcements::Update
+// Name: Reinforcements::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reinforcements::Update( const ASN1T_MsgUnitAttributes& message )
+void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.pions_renforcantPresent )
     {

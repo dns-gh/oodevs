@@ -9,13 +9,15 @@
 
 #include "astec_pch.h"
 #include "CampAttributes.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: CampAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( const Resolver_ABC< Agent >& resolver )
-    : resolver_( resolver )
+CampAttributes::CampAttributes( Controller& controller, const Resolver_ABC< Agent >& resolver )
+    : controller_( controller )
+    , resolver_( resolver )
     , tc2_( 0 )
 {
 
@@ -31,43 +33,49 @@ CampAttributes::~CampAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::DoUpdate
+// Name: CampAttributes::UpdateData
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void CampAttributes::DoUpdate( const T& message )
+void CampAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent 
      && message.attributs_specifiques.t == T_AttrObjectSpecific_camp_prisonniers )
+    {
         tc2_ = resolver_.Find( message.attributs_specifiques.u.camp_prisonniers->tc2 );
+        controller_.Update( *this );
+    }
     if( message.m.attributs_specifiquesPresent 
      && message.attributs_specifiques.t == T_AttrObjectSpecific_camp_refugies )
+    {
         tc2_ = resolver_.Find( message.attributs_specifiques.u.camp_refugies->tc2 );
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::Update
+// Name: CampAttributes::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void CampAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void CampAttributes::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::Update
+// Name: CampAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CampAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+void CampAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::Update
+// Name: CampAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CampAttributes::Update( const ASN1T_MsgObjectCreation& message )
+void CampAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }

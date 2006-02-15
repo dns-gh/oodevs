@@ -37,16 +37,19 @@ public:
 
     template< typename T >
     void Create( const T& extension ) {
+        MT_LOG_INFO_MSG( "Creating " << typeid( T ).name() );
         Apply( ExtensionObserver_ABC< T >::NotifyCreated, extension );
     };
 
     template< typename T >
     void Update( const T& extension ) {
+        MT_LOG_INFO_MSG( "Updating " << typeid( T ).name() );
         Apply( ExtensionObserver_ABC< T >::NotifyUpdated, extension );
     };
 
     template< typename T >
     void Delete( const T& extension ) {
+        MT_LOG_INFO_MSG( "Deleting " << typeid( T ).name() );
         Apply( ExtensionObserver_ABC< T >::NotifyDeleted, extension );
     };
     //@}

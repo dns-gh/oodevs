@@ -16,33 +16,21 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "Team.h"
-
-#include "App.h"
 #include "KnowledgeGroup.h"
-#include "Tools.h"
-#include "ObjectKnowledge.h"
-#include "Object_ABC.h"
-// -----------------------------------------------------------------------------
-// Name: Team constructor
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-Team::Team()
-{
-}
+#include "KnowledgeGroupFactory_ABC.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( uint nID, DIN::DIN_Input& input )
-: strName_              ()
-, nID_                  ( nID  )
+Team::Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory )
+    : controller_( controller )
+    , factory_( factory )
+    , strName_()
+    , nID_    ( nID  )
 {
     input >> strName_;
 }
@@ -53,45 +41,37 @@ Team::Team( uint nID, DIN::DIN_Input& input )
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    this->DestroyAllObjectKnowledges();
-//    this->DeleteAllKnowledgeGroups();
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::DestroyAllObjectKnowledges
-// Created: NLD 2004-03-26
-// -----------------------------------------------------------------------------
-void Team::DestroyAllObjectKnowledges()
-{
-    for( CIT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
-        delete it->second;
-    objectKnowledges_.clear();
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Team::CreateKnowledgeGroup
-// Created: AGE 2005-09-21
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup* Team::CreateKnowledgeGroup( uint32 nId )
+void Team::CreateKnowledgeGroup( unsigned int id )
 {
-    if( FindKnowledgeGroup( nId ) )
-        return FindKnowledgeGroup( nId );
-    KnowledgeGroup* gtia = new KnowledgeGroup( nId );
-    RegisterKnowledgeGroup( *gtia );
-    return gtia;
+    if( ! Resolver< KnowledgeGroup >::Find( id ) )
+    {
+        KnowledgeGroup* group = factory_.CreateKnowledgeGroup( id );
+        Resolver< KnowledgeGroup >::Register( id, *group );
+        controller_.Update( *this );
+    };
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::FindKnowledgeOnObject
-// Created: APE 2004-08-05
+// Name: Team::GetId
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ObjectKnowledge* Team::FindKnowledgeOnObject( const Object_ABC& object )
+unsigned long Team::GetId() const
 {
-    for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
-        if( it->second->GetRealObject() == &object )
-            return it->second;
-
-    return 0;
+    return nID_;
 }
-
+    
+// -----------------------------------------------------------------------------
+// Name: Team::GetName
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+std::string Team::GetName() const
+{
+    return strName_;
+}

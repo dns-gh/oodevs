@@ -13,13 +13,14 @@
 #define __AgentKnowledge_h_
 
 #include "ASN_Types.h"
+#include "Entity_ABC.h"
 #include "IDManager.h"
 #include "Perception_Def.h"
 #include "OptionalValue.h"
+#include "Resolver_ABC.h"
 
 class Agent;
-class KnowledgeGroup;
-
+class Controller;
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -27,29 +28,23 @@ class KnowledgeGroup;
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentKnowledge
+class AgentKnowledge : public Entity_ABC
+                     , private Extension_ABC
+                     , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
 {
 
-private:
-    MT_COPYNOTALLOWED( AgentKnowledge );
-    friend class GLTool;
-    friend class AgentKnowledgePanel;
-
 public:
-     AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, KnowledgeGroup& owner );
-    ~AgentKnowledge();
-
-    //! @name Events
+    //! @name Constructor / Destructor
     //@{
-    void Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg );
+             AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const Resolver_ABC< Agent >& resolver );
+    virtual ~AgentKnowledge();
     //@}
 
     //! @name Accessors
     //@{
-    uint               GetID       () const;
+    unsigned long      GetId       () const;
     const MT_Vector2D& GetPosition () const;
-    Agent&         GetRealAgent() const;
-    KnowledgeGroup&          GetOwner() const;
+    Agent&             GetRealAgent() const;
     //@}
 
 private:
@@ -60,13 +55,18 @@ private:
     typedef T_AutomatePerceptionMap::const_iterator    CIT_AutomatePerceptionMap;
     //@}
 
-private:
-    KnowledgeGroup&         owner_;
-    Agent&        realAgent_;
-    
-    MT_Vector2D vPosition_;
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
+    //@}
 
-    OptionalValue< uint >                       nID_;
+private:
+    Controller& controller_;
+    const Resolver_ABC< Agent >& resolver_;
+    unsigned long nID_;
+    Agent&      realAgent_;
+    MT_Vector2D vPosition_;
+    
     OptionalValue< std::string >                strPosition_;
     OptionalValue< uint >                       nDirection_;
     OptionalValue< uint >                       nSpeed_;
@@ -91,8 +91,5 @@ private:
 private:
     static IDManager idManager_;
 };
-
-
-#	include "AgentKnowledge.inl"
 
 #endif // __AgentKnowledge_h_

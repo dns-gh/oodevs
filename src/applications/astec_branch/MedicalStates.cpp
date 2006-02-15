@@ -32,10 +32,10 @@ MedicalStates::~MedicalStates()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalStates::Update
+// Name: MedicalStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MedicalStates::Update( const ASN1T_MsgLogSanteEtat& message )
+void MedicalStates::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
 {
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;

@@ -7,30 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __Updatable_ABC_h_
-#define __Updatable_ABC_h_
+#ifndef __AgentKnowledgeFactory_ABC_h_
+#define __AgentKnowledgeFactory_ABC_h_
+
+#include "ASN_Types.h"
+
+class AgentKnowledge;
 
 // =============================================================================
-/** @class  Updatable_ABC
-    @brief  Updatable definition
+/** @class  AgentKnowledgeFactory_ABC
+    @brief  AgentKnowledgeFactory_ABC
 */
-// Created: AGE 2006-02-07
+// Created: AGE 2006-02-15
 // =============================================================================
-template< typename T >
-class Updatable_ABC
+class AgentKnowledgeFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Updatable_ABC() {};
-    virtual ~Updatable_ABC() {};
+             AgentKnowledgeFactory_ABC() {};
+    virtual ~AgentKnowledgeFactory_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const T& updateMessage ) = 0; // $$$$ AGE 2006-02-15: 
+    virtual AgentKnowledge* CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message ) = 0;
     //@}
 };
 
-#endif // __Updatable_ABC_h_
+#endif // __AgentKnowledgeFactory_ABC_h_

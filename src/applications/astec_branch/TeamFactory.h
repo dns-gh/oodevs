@@ -11,6 +11,7 @@
 #define __TeamFactory_h_
 
 #include "TeamFactory_ABC.h"
+#include "KnowledgeGroupFactory_ABC.h"
 
 class Controller;
 class Model;
@@ -21,7 +22,7 @@ class Model;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class TeamFactory : public TeamFactory_ABC
+class TeamFactory : public TeamFactory_ABC, public KnowledgeGroupFactory_ABC
 {
 
 public:
@@ -34,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual Team* CreateTeam( unsigned long id, DIN::DIN_Input& input );
+    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id );
     //@}
 
 private:

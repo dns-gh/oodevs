@@ -22,19 +22,15 @@
 #include "Model.h"
 #include "TeamsModel.h"
 #include "AgentsModel.h"
-
-// $$$$ AGE 2006-02-15: 
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
-    : nID_        ( asnMsg.oid_connaissance )
-    , pKnowledgeGroup_      ( & App::GetApp().GetModel().teams_.GetKnowledgeGroup      ( asnMsg.oid_groupe_possesseur ) )
-    , pTeam_      ( & App::GetApp().GetModel().teams_.GetTeam      ( asnMsg.camp                  ) )
-    , pPopulation_( & App::GetApp().GetModel().agents_.GetPopulation( asnMsg.oid_population_reelle ) )
-    , pType_      ( &pPopulation_->GetType() )
+PopulationKnowledge::PopulationKnowledge( Controller& controller, const ASN1T_MsgPopulationKnowledgeCreation& message )
+    : controller_( controller )
+    , nID_        ( message.oid_connaissance )
 {
     // NOTHING
 }
@@ -45,35 +41,26 @@ PopulationKnowledge::PopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCrea
 // -----------------------------------------------------------------------------
 PopulationKnowledge::~PopulationKnowledge()
 {
-    // NOTHING
+    Resolver< PopulationConcentrationKnowledge >::DeleteAll();
+    Resolver< PopulationFlowKnowledge >::DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetId
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+unsigned long PopulationKnowledge::GetId() const
+{
+    return nID_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& /*asnMsg*/ )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& /*message*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetPopulation
-// Created: SBO 2005-10-17
-// -----------------------------------------------------------------------------
-const Population& PopulationKnowledge::GetPopulation() const
-{
-    assert( pPopulation_ );
-    return *pPopulation_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetTeam
-// Created: SBO 2005-10-19
-// -----------------------------------------------------------------------------
-const Team* PopulationKnowledge::GetTeam() const
-{
-    return pTeam_;
 }
 
 // =============================================================================
@@ -84,115 +71,68 @@ const Team* PopulationKnowledge::GetTeam() const
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    if( concentrations_.find( asnMsg.oid_connaissance_concentration ) != concentrations_.end() )
-        return;
-    PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( asnMsg );
-    assert( pKnowledge );
-    concentrations_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
-
-//    App::GetApp().NotifyPopulationConcentrationKnowledgeCreated( *pKnowledgeGroup_, *pKnowledge );
+    if( ! Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
+    {
+        PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, message );
+        Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
+    };
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    IT_ConcentrationKnowledgeMap it = concentrations_.find( asnMsg.oid_connaissance_concentration );
-    assert( it != concentrations_.end() );
-    it->second->Update( asnMsg );
-//    App::GetApp().NotifyPopulationConcentrationKnowledgeUpdated( *pKnowledgeGroup_, *( it->second ) );
+    Resolver< PopulationConcentrationKnowledge >::
+        Get( message.oid_connaissance_concentration ).Update( message );
 }
     
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    IT_ConcentrationKnowledgeMap it = concentrations_.find( asnMsg.oid_connaissance_concentration );
-    assert( it != concentrations_.end() );
-//    App::GetApp().NotifyPopulationConcentrationKnowledgeDeleted( *pKnowledgeGroup_, *( it->second ) );
-    delete it->second;
-    concentrations_.erase( it );
+    delete Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
+    Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
 {
-    if( flows_.find( asnMsg.oid_connaissance_flux ) != flows_.end() )
-        return;
-    PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( asnMsg );
-    assert( pKnowledge );
-    flows_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
-
-//    App::GetApp().NotifyPopulationFlowKnowledgeCreated( *pKnowledgeGroup_, *pKnowledge );
+    if( ! Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
+    {
+        PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, message );
+        Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
+    };
+    controller_.Update( *this );
 }
     
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
 {
-    IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
-    assert( it != flows_.end() );
-    it->second->Update( asnMsg );
-//    App::GetApp().NotifyPopulationFlowKnowledgeUpdated( *pKnowledgeGroup_, *( it->second ) );
+    Resolver< PopulationFlowKnowledge >::
+        Get( message.oid_connaissance_flux ).Update( message );
 }
     
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
 {
-    IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
-    assert( it != flows_.end() );
-//    App::GetApp().NotifyPopulationFlowKnowledgeDeleted( *pKnowledgeGroup_, *( it->second ) );
-    delete it->second;
-    flows_.erase( it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetConcentrations
-// Created: SBO 2005-10-19
-// -----------------------------------------------------------------------------
-const PopulationKnowledge::T_ConcentrationKnowledgeMap& PopulationKnowledge::GetConcentrations() const
-{
-    return concentrations_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetFlows
-// Created: SBO 2005-10-21
-// -----------------------------------------------------------------------------
-const PopulationKnowledge::T_FlowKnowledgeMap& PopulationKnowledge::GetFlows() const
-{
-    return flows_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetKnowledgeGroup
-// Created: SBO 2005-10-19
-// -----------------------------------------------------------------------------
-KnowledgeGroup* PopulationKnowledge::GetKnowledgeGroup() const
-{
-    return pKnowledgeGroup_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetType
-// Created: SBO 2005-10-25
-// -----------------------------------------------------------------------------
-const TypePopulation& PopulationKnowledge::GetType() const
-{
-    assert( pType_ );
-    return *pType_;
+    delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
+    Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
+    controller_.Update( *this );
 }

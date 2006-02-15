@@ -10,21 +10,17 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-#include "PopulationPart_ABC.h"
-
-class Population;
-
+#include "ASN_Types.h"
 
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class PopulationConcentration : public PopulationPart_ABC
+class PopulationConcentration
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , const Population& pop );
-             PopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons , const Population& parent  );
+    explicit PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg );
     virtual ~PopulationConcentration();
     //@}
 
@@ -37,7 +33,6 @@ public:
     //@{
 	virtual const MT_Vector2D& GetPos    () const;
 	virtual const std::string& GetName   () const;
-    virtual MT_Float           GetDensity() const;
             MT_Float           GetArea   () const;
     //@}
 
@@ -52,7 +47,12 @@ private:
     //! @name Member data
     //@{
     const std::string strName_;
-	      MT_Vector2D position_;
+    MT_Vector2D position_;
+
+    uint                 nID_;
+    int                  nLivingHumans_;
+    int                  nDeadHumans_;
+    E_PopulationAttitude attitude_;
     //@}			
 };
 

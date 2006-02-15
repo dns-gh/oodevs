@@ -8,48 +8,45 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Limits.h"
+#include "KnowledgeGroupsModel.h"
+#include "TeamsModel.h"
 
 // -----------------------------------------------------------------------------
-// Name: Limits constructor
-// Created: AGE 2006-02-13
+// Name: KnowledgeGroupsModel constructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Limits::Limits( const Resolver_ABC< TacticalLine_ABC >& resolver )
-    : resolver_( resolver )
-    , acknowledged_( false )
-    , left_( 0 )
-    , right_( 0 )
+KnowledgeGroupsModel::KnowledgeGroupsModel( TeamsModel& teams )
+    : teams_( teams )
 {
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limits destructor
-// Created: AGE 2006-02-13
+// Name: KnowledgeGroupsModel destructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Limits::~Limits()
+KnowledgeGroupsModel::~KnowledgeGroupsModel()
 {
-    // NOTHING
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limits::DoUpdate
-// Created: AGE 2006-02-13
+// Name: KnowledgeGroupsModel::Find
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void Limits::DoUpdate( const ASN1T_MsgPionOrder& message )
+KnowledgeGroup* KnowledgeGroupsModel::Find( const unsigned long& identifier ) const
 {
-    acknowledged_ = false;
-    if( message.m.oid_limite_droitePresent )
-        right_ = resolver_.Find( message.oid_limite_droite );
-    if( message.m.oid_limite_gauchePresent )
-        left_  = resolver_.Find( message.oid_limite_gauche );
+    return teams_.FindKnowledgeGroup( identifier );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limits::DoUpdate
-// Created: AGE 2006-02-13
+// Name: KnowledgeGroupsModel::Get
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void Limits::DoUpdate( const ASN1T_MsgPionOrderAck& message )
+KnowledgeGroup& KnowledgeGroupsModel::Get( const unsigned long& identifier ) const
 {
-    acknowledged_ = message.error_code == EnumObjectErrorCode::no_error;
+    KnowledgeGroup* group = Find( identifier );
+    if( ! group )
+        throw std::runtime_error( "KnowledgeGroup not found" );
+    return *group;
 }

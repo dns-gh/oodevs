@@ -7,30 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __Updatable_ABC_h_
-#define __Updatable_ABC_h_
+#ifndef __KnowledgeGroupFactory_ABC_h_
+#define __KnowledgeGroupFactory_ABC_h_
+
+class KnowledgeGroup;
 
 // =============================================================================
-/** @class  Updatable_ABC
-    @brief  Updatable definition
+/** @class  KnowledgeGroupFactory_ABC
+    @brief  KnowledgeGroupFactory_ABC
 */
-// Created: AGE 2006-02-07
+// Created: AGE 2006-02-15
 // =============================================================================
-template< typename T >
-class Updatable_ABC
+class KnowledgeGroupFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Updatable_ABC() {};
-    virtual ~Updatable_ABC() {};
+             KnowledgeGroupFactory_ABC() {};
+    virtual ~KnowledgeGroupFactory_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const T& updateMessage ) = 0; // $$$$ AGE 2006-02-15: 
+    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id ) = 0; // $$$$ AGE 2006-02-15: team
     //@}
 };
 
-#endif // __Updatable_ABC_h_
+#endif // __KnowledgeGroupFactory_ABC_h_

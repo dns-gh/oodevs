@@ -44,7 +44,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const DebugPointsMessage& message );
+    virtual void DoUpdate( const DebugPointsMessage& message );
     //@}
 
 private:

@@ -11,6 +11,9 @@
 #include "TeamFactory.h"
 #include "Model.h"
 #include "ObjectKnowledges.h"
+#include "AgentKnowledges.h"
+#include "PopulationKnowledges.h"
+#include "KnowledgeGroup.h"
 #include "Team.h"
 
 // -----------------------------------------------------------------------------
@@ -39,7 +42,19 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 {
-    Team* result = new Team( id, input );
+    Team* result = new Team( id, input, controller_, *this );
     result->Attach( *new ObjectKnowledges( controller_, model_.objectKnowledgeFactory_ ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::CreateKnowledgeGroup
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id )
+{
+    KnowledgeGroup* result = new KnowledgeGroup( id );
+    result->Attach( *new AgentKnowledges( controller_, model_.agentsKnowledgeFactory_ ) );
+    result->Attach( *new PopulationKnowledges( controller_ ) );
     return result;
 }

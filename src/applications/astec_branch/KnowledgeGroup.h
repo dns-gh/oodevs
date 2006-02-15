@@ -20,6 +20,7 @@
 #define __KnowledgeGroup_h_
 
 #include "ASN_Types.h"
+#include "Entity_ABC.h"
 #include "IDManager.h"
 
 class Team;
@@ -36,93 +37,33 @@ class PopulationKnowledge;
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class KnowledgeGroup
+class KnowledgeGroup : public Entity_ABC
 {
-    MT_COPYNOTALLOWED( KnowledgeGroup );
-    friend class GLTool;
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< uint, AgentKnowledge* >      T_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::iterator              IT_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::const_iterator        CIT_AgentKnowledgeMap;
-
-    typedef std::map< uint, PopulationKnowledge* > T_PopulationKnowledgeMap;
-    typedef T_PopulationKnowledgeMap::iterator         IT_PopulationKnowledgeMap;
-    typedef T_PopulationKnowledgeMap::const_iterator   CIT_PopulationKnowledgeMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( bool bGenerateId = false );
              KnowledgeGroup( uint32 nId );
     virtual ~KnowledgeGroup();
     //@}
 
-    //! @name ODB operations
-    //@{
-    void ReadODB ( InputArchive&     archive );
-    void WriteODB( MT_OutputArchive_ABC& archive );
-    //@}
-
     //! @name Accessors & Modifiers
     //@{
-    uint      GetID() const;
-    Team& GetTeam() const;
-
-    const T_AgentKnowledgeMap& GetAgentKnowledges     () const;
-    AgentKnowledge*        FindAgentKnowledge     ( int nId );
-    AgentKnowledge*        FindKnowledgeOnAgent   ( const Agent& agent );
-
-    const T_PopulationKnowledgeMap& GetPopulationKnowledges() const;
-    PopulationKnowledge*        FindPopulationKnowledge( int nId );
-    PopulationKnowledge*        FindKnowledgeOnPopulation( const Population& population );
-    //@}
-    
-    //! @name Modifiers
-    //@{
-    void      SetTeam( Team& team );
-    void      SetType( const std::string& strType );
-    //@}
-
-    //! @name Network events
-    //@{
-    bool Update( const ASN1T_MsgUnitKnowledgeCreation&          asnMsg );
-    void Update( const ASN1T_MsgUnitKnowledgeUpdate&            asnMsg );
-    void Update( const ASN1T_MsgUnitKnowledgeDestruction&       asnMsg );
-
-    bool Update( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
-    void Update( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
-    void Update( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg );
-    //@}
-
-    //! @name Helpers
-    //@{
-    template< typename T >
-    void UpdatePopulationKnowledge( const T& message );
+    unsigned long GetId() const;
     //@}
 
 private:
-    uint32                   nID_;
-    Team*                pTeam_;
-    std::string              strType_;
+    //! @name Copy/Assignment
+    //@{
+    KnowledgeGroup( const KnowledgeGroup& );
+    KnowledgeGroup& operator=( const KnowledgeGroup& );
+    //@}
 
-    T_AgentKnowledgeMap      agentKnowledges_;
-    T_PopulationKnowledgeMap populationKnowledges_;
+
+private:
+    uint32      nID_;
 
 private:
     static IDManager     idManager_;
 };
-
-
-#   include "KnowledgeGroup.inl"
 
 #endif // __KnowledgeGroup_h_

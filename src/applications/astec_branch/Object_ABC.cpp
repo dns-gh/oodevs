@@ -111,10 +111,10 @@ const std::string& Object_ABC::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::Update
+// Name: Object_ABC::DoUpdate
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void Object_ABC::Update( const ASN1T_MsgObjectUpdate& message )
+void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
     bPrepared_ = message.en_preparation;
 
@@ -147,14 +147,13 @@ void Object_ABC::Update( const ASN1T_MsgObjectUpdate& message )
             center_ /= pointVector_.size();
     }
     controller_.Update( *this );
-//    App::GetApp().NotifyObjectUpdated( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::Update
+// Name: Object_ABC::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Object_ABC::Update( const ASN1T_MsgExplosion& message )
+void Object_ABC::DoUpdate( const ASN1T_MsgExplosion& message )
 {
 //    for( uint i = 0; i < message.degats_pions.n; ++i )
 //        OnReceiveMsgExplosion( message.degats_pions.elem[ i ] );
@@ -163,12 +162,14 @@ void Object_ABC::Update( const ASN1T_MsgExplosion& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::Update
+// Name: Object_ABC::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void Object_ABC::Update( const ASN1T_FireDamagesPion& message )
+void Object_ABC::DoUpdate( const ASN1T_FireDamagesPion& message )
 {
-
+//    explosionResults_.push_back( new FireResult( message ) );
+//    if( explosionResults_.size() > 20 )
+//        explosionResults_.erase( explosionResults_.begin() );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,21 +225,6 @@ void Object_ABC::InitializeObjectIds( xistream& xis )
         >> list( "Classe", readclass, &ReadClass::Read );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Object_ABC::OnReceiveMsgExplosion
-// Created: SBO 2005-09-07
-// -----------------------------------------------------------------------------
-//void Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& message )
-//{
-//    explosionResults_.push_back( new FireResult( message ) );
-//    if( explosionResults_.size() > 20 )
-//        explosionResults_.erase( explosionResults_.begin() );
-//}
-    
-// -----------------------------------------------------------------------------
-// Name: Object_ABC::DeleteAllFireResults
-// Created: SBO 2005-08-30
-// -----------------------------------------------------------------------------
 //void Object_ABC::DeleteAllExplosionResults()
 //{
 //    for( CIT_FireResults it = explosionResults_.begin(); it != explosionResults_.end(); ++it )

@@ -48,8 +48,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgPionOrder& message );
-    virtual void Update( const ASN1T_MsgPionOrderAck& message );
+    virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgPionOrderAck& message );
     //@}
 
 private:

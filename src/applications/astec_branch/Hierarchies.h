@@ -53,11 +53,11 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgChangeAutomateAck& message );
-    virtual void Update( const ASN1T_MsgChangeAutomate& message );
-    virtual void Update( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
-    virtual void Update( const ASN1T_MsgAutomateCreation& message );
-    virtual void Update( const ASN1T_MsgPionCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeAutomateAck& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeAutomate& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgPionCreation& message );
 
     void ChangeKnowledgeGroup( unsigned long id );
     void ChangeKnowledgeGroup( const KnowledgeGroup& gtia );

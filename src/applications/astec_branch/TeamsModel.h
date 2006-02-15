@@ -14,8 +14,8 @@
 #include "Resolver.h"
 
 class Team;
-class KnowledgeGroup;
 class TeamFactory_ABC;
+class KnowledgeGroup;
 
 namespace DIN {
     class DIN_Input;
@@ -25,12 +25,10 @@ namespace DIN {
 // =============================================================================
 /** @class  TeamsModel
     @brief  TeamsModel
-    // $$$$ AGE 2006-02-15: TeamFactory
 */
 // Created: AGE 2006-02-10
 // =============================================================================
 class TeamsModel : public Resolver< Team >
-                 , public Resolver< KnowledgeGroup > 
 {
 
 public:
@@ -46,8 +44,7 @@ public:
     Team& GetTeam( unsigned long id );
     Team* FindTeam( const std::string& team );
 
-    void CreateKnowledgeGroup( DIN::DIN_Input& );
-    KnowledgeGroup& GetKnowledgeGroup( unsigned long id );
+    KnowledgeGroup* FindKnowledgeGroup( const unsigned long& identifier ) const;
     //@}
 
 private:

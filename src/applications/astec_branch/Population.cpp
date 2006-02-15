@@ -50,113 +50,70 @@ Population::~Population()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::UpdatePopulationFlow			
+// Name: Population::Update			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::UpdatePopulationFlow( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void Population::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
 	Resolver< PopulationFlow >::Get( asnMsg.oid_flux ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::UpdatePopulationConcentration	
+// Name: Population::Update	
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
 	Resolver< PopulationConcentration >::Get( asnMsg.oid_concentration ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::CreatePopulationFlow			
+// Name: Population::Update			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::CreatePopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void Population::Update( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-    Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, *this ) );
+    Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::CreatePopulationConcentration	
+// Name: Population::Update	
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, *this ) );
+    Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::DeletePopulationFlow			
+// Name: Population::Update			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void Population::Update( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
     delete Resolver< PopulationFlow >::Find( asnMsg.oid_flux );
     Resolver< PopulationFlow >::Remove( asnMsg.oid_flux );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::DeletePopulationConcentration	
+// Name: Population::Update	
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
     delete Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration );
     Resolver< PopulationConcentration >::Remove( asnMsg.oid_concentration );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::UpdatePopulation				
+// Name: Population::Update				
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
+void Population::Update( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
 {
     // NOTHING
 } 
 
-
-// -----------------------------------------------------------------------------
-// Name: Population::MT_Vector2D& GetPos
-// Created: HME 2005-10-03
-// -----------------------------------------------------------------------------
-const MT_Vector2D Population::GetPos() const
-{
-//	if ( concentrationMap_.size() == 0 && flowMap_.size() == 0 )
-//		assert( false );
-//	if( flowMap_.size() != 0 )
-//        return flowMap_.begin()->second->GetHeadPosition();
-//	else
-//        return concentrationMap_.begin()->second->GetPos();
-    return MT_Vector2D();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetLivingHumans
-// Created: HME 2005-10-03
-// -----------------------------------------------------------------------------
-uint Population::GetLivingHumans() const
-{
-	uint sum = 0;
-//	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
-//		sum += itCon->second->GetLivingHumans();
-//	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
-//		sum += itFlow->second->GetLivingHumans();
-	return sum;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetDeadHumans
-// Created: HME 2005-10-03
-// -----------------------------------------------------------------------------
-uint Population::GetDeadHumans() const
-{
-	uint sum = 0;
-//	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
-//		sum += itCon->second->GetDeadHumans();
-//	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
-//		sum += itFlow->second->GetDeadHumans();
-	return sum;
-}
 
 // -----------------------------------------------------------------------------
 // Name: Population::GetId
@@ -201,5 +158,14 @@ const PopulationConcentration& Population::GetConcentration( uint nID ) const
 const PopulationFlow& Population::GetFlow( uint nID ) const
 {
     return Resolver< PopulationFlow >::Get( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetName
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+std::string Population::GetName() const
+{
+    return strName_;
 }
 

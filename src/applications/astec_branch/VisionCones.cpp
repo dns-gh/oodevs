@@ -31,10 +31,10 @@ VisionCones::~VisionCones()
 }
 
 // -----------------------------------------------------------------------------
-// Name: VisionCones::Update
+// Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::Update( const VisionConesMessage& message )
+void VisionCones::DoUpdate( const VisionConesMessage& message )
 {
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
@@ -51,10 +51,10 @@ void VisionCones::Update( const VisionConesMessage& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: VisionCones::Update
+// Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::Update( const ASN1T_MsgUnitAttributes& message )
+void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.positionPresent 
      || message.m.experiencePresent 

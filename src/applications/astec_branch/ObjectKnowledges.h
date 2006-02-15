@@ -52,9 +52,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgObjectKnowledgeCreation&    message );
-    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate&      message );
-    virtual void Update( const ASN1T_MsgObjectKnowledgeDestruction& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeCreation&    message );
+    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate&      message );
+    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message );
     //@}
 
 private:

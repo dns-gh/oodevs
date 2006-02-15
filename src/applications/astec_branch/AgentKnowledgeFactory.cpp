@@ -3,41 +3,41 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "PopulationPart_ABC.h"
- 
+#include "AgentKnowledgeFactory.h"
+#include "AgentKnowledge.h"
+#include "Model.h"
+#include "AgentsModel.h"
 
 // -----------------------------------------------------------------------------
-// Name: PopulationPart_ABC constructor
-// Created: HME 2005-10-18
+// Name: AgentKnowledgeFactory constructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-PopulationPart_ABC::PopulationPart_ABC( uint nID, const Population& parent , E_PopulationAttitude attitude, int persons )
-    : parent_       ( parent )
-    , nID_          ( nID    )
-    , nLivingHumans_( persons )
-    , nDeadHumans_  ( 0 )
-    , attitude_     ( attitude )
-    , rDensity_     ( 0. )
+AgentKnowledgeFactory::AgentKnowledgeFactory( Controller& controller, Model& model )
+    : controller_( controller )
+    , model_( model )
 {
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationPart_ABC destructor
-// Created: HME 2005-10-04
+// Name: AgentKnowledgeFactory destructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-PopulationPart_ABC::~PopulationPart_ABC()
+AgentKnowledgeFactory::~AgentKnowledgeFactory()
 {
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationPart_ABC::GetPopulation
-// Created: SBO 2005-10-26
+// Name: AgentKnowledgeFactory::CreateAgentKnowledge
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-const Population& PopulationPart_ABC::GetPopulation() const
+AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    return parent_;
+    return new AgentKnowledge( message, controller_, model_.agents_ );
 }

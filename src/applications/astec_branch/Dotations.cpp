@@ -33,10 +33,10 @@ Dotations::~Dotations()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Dotations::Update
+// Name: Dotations::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Dotations::Update( const ASN1T_MsgUnitDotations& message )
+void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
 {
     if( ! message.m.dotation_eff_ressourcePresent  )
         return;

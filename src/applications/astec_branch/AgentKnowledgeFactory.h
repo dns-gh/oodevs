@@ -7,56 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __Troops_h_
-#define __Troops_h_
+#ifndef __AgentKnowledgeFactory_h_
+#define __AgentKnowledgeFactory_h_
 
-#include "ASN_Types.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
+#include "AgentKnowledgeFactory_ABC.h"
 
 class Controller;
+class Model;
 
 // =============================================================================
-/** @class  Troops
-    @brief  Troops
+/** @class  AgentKnowledgeFactory
+    @brief  AgentKnowledgeFactory
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-02-15
 // =============================================================================
-class Troops : public Extension_ABC
-             , public Updatable_ABC< ASN1T_MsgUnitDotations >
+class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Troops( Controller& controller );
-    virtual ~Troops();
+             AgentKnowledgeFactory( Controller& controller, Model& model );
+    virtual ~AgentKnowledgeFactory();
     //@}
 
     //! @name Operations
     //@{
+    virtual AgentKnowledge* CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Troops( const Troops& );            //!< Copy constructor
-    Troops& operator=( const Troops& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
+    AgentKnowledgeFactory( const AgentKnowledgeFactory& );            //!< Copy constructor
+    AgentKnowledgeFactory& operator=( const AgentKnowledgeFactory& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
     Controller& controller_;
-    unsigned officers_   [eTroopHealthStateNbrStates];
-    unsigned subOfficers_[eTroopHealthStateNbrStates];
-    unsigned troopers_   [eTroopHealthStateNbrStates];
+    Model& model_;
     //@}
 };
 
-#endif // __Troops_h_
+#endif // __AgentKnowledgeFactory_h_

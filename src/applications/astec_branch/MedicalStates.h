@@ -47,7 +47,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgLogSanteEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
     //@}
 
     //! @name Types

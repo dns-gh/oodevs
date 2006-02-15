@@ -14,7 +14,9 @@
 
 #include "ASN_Types.h"
 #include "IDManager.h"
+#include "Resolver.h"
 
+class Controller;
 class KnowledgeGroup;
 class Team;
 class Population;
@@ -25,38 +27,23 @@ class TypePopulation;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge
+class PopulationKnowledge : public Resolver< PopulationConcentrationKnowledge >
+                          , public Resolver< PopulationFlowKnowledge >
 {
-    MT_COPYNOTALLOWED( PopulationKnowledge );
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< uint, PopulationConcentrationKnowledge* > T_ConcentrationKnowledgeMap;
-    typedef T_ConcentrationKnowledgeMap::iterator                   IT_ConcentrationKnowledgeMap;
-    typedef T_ConcentrationKnowledgeMap::const_iterator             CIT_ConcentrationKnowledgeMap;
-
-    typedef std::map< uint, PopulationFlowKnowledge* >          T_FlowKnowledgeMap;
-    typedef T_FlowKnowledgeMap::iterator                            IT_FlowKnowledgeMap;
-    typedef T_FlowKnowledgeMap::const_iterator                      CIT_FlowKnowledgeMap;
-    //@}
-
 public:
     //! @name Constructor/Destructor
     //@{
-     PopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg );
-    ~PopulationKnowledge();
+             PopulationKnowledge( Controller& controller, const ASN1T_MsgPopulationKnowledgeCreation& asnMsg );
+    virtual ~PopulationKnowledge();
     //@}
 
     //! @name Accessors
     //@{
-    const uint                         GetID            () const;
-    const Team*                    GetTeam          () const;
-    const Population&              GetPopulation    () const;
-          KnowledgeGroup*                    GetKnowledgeGroup          () const;
-    const TypePopulation&          GetType          () const;
-    const T_ConcentrationKnowledgeMap& GetConcentrations() const;
-    const T_FlowKnowledgeMap&          GetFlows         () const;
+    unsigned long GetId() const;
+//    const Team*                    GetTeam          () const;
+//    const Population&              GetPopulation    () const;
+//          KnowledgeGroup*                    GetKnowledgeGroup          () const;
+//    const TypePopulation&          GetType          () const;
     //@}
 
     //! @name Network
@@ -72,17 +59,15 @@ public:
     //@}
 
 private:
-    const uint                          nID_;
-    const Team*                     pTeam_;
-    const Population*               pPopulation_;
-    const TypePopulation*           pType_;
-          KnowledgeGroup*                     pKnowledgeGroup_;
+    //! @name Copy/Assignment
+    //@{
+    PopulationKnowledge( const PopulationKnowledge& );
+    PopulationKnowledge& operator=( const PopulationKnowledge& );
+    //@}
 
-          T_ConcentrationKnowledgeMap   concentrations_;
-          T_FlowKnowledgeMap            flows_;
+private:
+    Controller& controller_;
+    unsigned long nID_;
 };
-
-
-#	include "PopulationKnowledge.inl"
 
 #endif // __PopulationKnowledge_h_

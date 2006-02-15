@@ -48,7 +48,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ObjectDetectionMessage& message );
+    virtual void DoUpdate( const ObjectDetectionMessage& message );
     //@}
 
     //! @name Types

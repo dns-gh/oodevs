@@ -16,6 +16,7 @@
 #include "Resolver_ABC.h"
 
 class Team;
+class Controller;
 
 // =============================================================================
 /** @class  Diplomacies
@@ -31,7 +32,7 @@ class Diplomacies : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacies( const Resolver_ABC< Team >& resolver );
+             Diplomacies( Controller& controller, const Resolver_ABC< Team >& resolver );
     virtual ~Diplomacies();
     //@}
 
@@ -53,15 +54,16 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgChangeDiplomatieAck& message );
-    virtual void Update( const ASN1T_MsgChangeDiplomatie& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeDiplomatie& message );
     template< typename T >
-    void DoUpdate( const T& message );
+    void UpdateData( const T& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
     const Resolver_ABC< Team >& resolver_;
     T_Diplomacies diplomacies_;
     //@}

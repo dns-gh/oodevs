@@ -36,6 +36,7 @@
 #include "Model.h"
 #include "AgentsModel.h"
 #include "TeamsModel.h"
+#include "KnowledgeGroupsModel.h"
 #include "ObjectsModel.h"
 #include "LogisticsModel.h"
 #include "App.h"
@@ -211,7 +212,9 @@ void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& a
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    model_.teams_.CreateKnowledgeGroup( input );
+    unsigned long id, team;
+    input >> id >> team; // $$$$ AGE 2006-02-15: Pkoi dans cet ordre la ndd ?
+    model_.teams_.Get( team ).CreateKnowledgeGroup( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -1246,7 +1249,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgCh
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
     // $$$$ AGE 2006-02-10: Knowledge group
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
     // $$$$ AGE 2006-02-10: 
 //        MT_LOG_ERROR_MSG( "Duplicate agent knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
@@ -1257,7 +1260,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKn
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1266,7 +1269,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnow
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1275,7 +1278,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUni
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
 {
-    model_.teams_.GetTeam( asnMsg.oid_camp_possesseur ).Update( asnMsg );
+    model_.teams_.Get( asnMsg.oid_camp_possesseur ).Update( asnMsg );
 }
 
 
@@ -1285,7 +1288,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObje
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 {
-    model_.teams_.GetTeam( asnMsg.oid_camp_possesseur ).Update( asnMsg );
+    model_.teams_.Get( asnMsg.oid_camp_possesseur ).Update( asnMsg );
 }
 
 
@@ -1295,7 +1298,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObject
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
 {
-    model_.teams_.GetTeam( asnMsg.oid_camp_possesseur ).Update( asnMsg );
+    model_.teams_.Get( asnMsg.oid_camp_possesseur ).Update( asnMsg );
 }
 
 // =============================================================================
@@ -1308,7 +1311,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgO
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 //        MT_LOG_ERROR_MSG( "Duplicate population knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
     
@@ -1318,7 +1321,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
     
 // -----------------------------------------------------------------------------
@@ -1327,7 +1330,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1336,7 +1339,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1345,7 +1348,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( co
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1354,7 +1357,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1363,7 +1366,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction(
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1372,7 +1375,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1381,7 +1384,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
 {
-    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 //=============================================================================
@@ -1405,7 +1408,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreatio
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& asnMsg )
 {
-    model_.objects_.GetObject( asnMsg.oid ).UpdateObject( asnMsg );
+    model_.objects_.GetObject( asnMsg.oid ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1515,7 +1518,7 @@ void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffec
 void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asnMsg )
 {
     // fire results
-    model_.objects_.GetObject( asnMsg.oid_objet ).UpdateObject( asnMsg );
+    model_.objects_.GetObject( asnMsg.oid_objet ).Update( asnMsg );
     MT_LOG_INFO( "Explosion" << " - ID objet " << asnMsg.oid_objet, eReceived, 0 );
 }
 
@@ -1605,14 +1608,7 @@ void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreati
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
-	//std::stringstream strOutputMsg;
-    //strOutputMsg << "Population Update"
-    //             << " - ID  " << asnMsg.oid_population;
-	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-	if ( pop != 0 )
-		pop->UpdatePopulation( asnMsg );
-//    App::GetApp().NotifyPopulationUpdated( *pop );
+	model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1621,17 +1617,8 @@ void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& 
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Creation d'une concentration"
-                 << " - ID  " << asnMsg.oid_concentration;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-	if ( pop != 0 )
-		pop->CreatePopulationConcentration( asnMsg );
-    const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
-//    if( concentration != 0 )
-//        App::GetApp().NotifyPopulationConcentrationCreated( *concentration );
-}
+    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+	}
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
@@ -1639,18 +1626,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPop
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Destruction d'une concentration"
-                 << " - ID  " << asnMsg.oid_population;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-    if ( pop != 0 )
-    {
-        const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
-//        if( concentration != 0 )
-//            App::GetApp().NotifyPopulationConcentrationDeleted( *concentration );
-		pop->DeletePopulationConcentration( asnMsg );
-    }
+    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1659,16 +1635,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	//std::stringstream strOutputMsg;
-    //strOutputMsg << "Update d'une concentration"
-    //             << " - ID  " << asnMsg.oid_concentration;
-	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-	if ( pop != 0 )
-		pop->UpdatePopulationConcentration( asnMsg );
-    const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
-//    if( concentration != 0 )
-//        App::GetApp().NotifyPopulationConcentrationUpdated( *concentration );
+    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1677,16 +1644,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopul
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Creation d'un flux"
-                 << " - ID  " << asnMsg.oid_flux;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-	if ( pop != 0 )
-		pop->CreatePopulationFlow( asnMsg );
-    const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
-//    if( flow != 0 )
-//        App::GetApp().NotifyPopulationFlowCreated( *flow );
+    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1695,18 +1653,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFl
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Destruction d'un flux"
-                 << " - ID  " << asnMsg.oid_flux;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-    if ( pop != 0 )
-    {
-        const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
-//        if( flow != 0 )
-//            App::GetApp().NotifyPopulationFlowDeleted( *flow );
-		pop->DeletePopulationFlow( asnMsg );
-    }
+    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1715,16 +1662,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulat
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	//std::stringstream strOutputMsg;
-    //strOutputMsg << "Update d'un flux"
-    //             << " - ID  " << asnMsg.oid_flux;
-	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
-	if ( pop != 0 )
-		pop->UpdatePopulationFlow( asnMsg );
-    const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
-//    if( flow != 0 )
-//        App::GetApp().NotifyPopulationFlowUpdated( *flow );
+    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 class KnowledgeGroup;
 class PopulationConcentration;
 class PopulationKnowledge;
+class Controller;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -32,8 +33,8 @@ class PopulationConcentrationKnowledge
 public:
     //! @name Constructor/Destructor
     //@{
-     PopulationConcentrationKnowledge( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
-    ~PopulationConcentrationKnowledge();
+    explicit PopulationConcentrationKnowledge( Controller& controller, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
+    virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Accessors
@@ -48,7 +49,6 @@ public:
     E_PopulationAttitude               GetAttitude           () const;
     MT_Float                           GetRelevance          () const;
     bool                               IsPerceived           () const;
-    MT_Float                           GetArea               () const;
     //@}
 
     //! @name Network
@@ -57,6 +57,7 @@ public:
     //@}
 
 private:
+    Controller& controller_;
     const uint                                   nID_;
           KnowledgeGroup*                              pKnowledgeGroup_;
     const PopulationKnowledge*               pPopulationKnowledge_;

@@ -36,48 +36,48 @@ Hierarchies::~Hierarchies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::Update
+// Name: Hierarchies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::Update( const ASN1T_MsgAutomateCreation& message )
+void Hierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 {
     ChangeSuperior( message.oid_automate );
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::Update
+// Name: Hierarchies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::Update( const ASN1T_MsgPionCreation& message )
+void Hierarchies::DoUpdate( const ASN1T_MsgPionCreation& message )
 {
     ChangeSuperior( message.oid_automate );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::Update
+// Name: Hierarchies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::Update( const ASN1T_MsgChangeAutomateAck& message )
+void Hierarchies::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error ) 
         ChangeSuperior( message.oid_automate );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::Update
+// Name: Hierarchies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::Update( const ASN1T_MsgChangeAutomate& message )
+void Hierarchies::DoUpdate( const ASN1T_MsgChangeAutomate& message )
 {
     ChangeSuperior( message.oid_automate );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::Update
+// Name: Hierarchies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::Update( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
+void Hierarchies::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error ) 
         ChangeKnowledgeGroup( message.oid_groupe_connaissance );

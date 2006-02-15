@@ -9,13 +9,15 @@
 
 #include "astec_pch.h"
 #include "RotaAttributes.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: RotaAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-RotaAttributes::RotaAttributes()
-    : set_( false )
+RotaAttributes::RotaAttributes( Controller& controller )
+    : controller_( controller )
+    , set_( false )
 {
 
 }
@@ -30,11 +32,11 @@ RotaAttributes::~RotaAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RotaAttributes::DoUpdate
+// Name: RotaAttributes::UpdateData
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void RotaAttributes::DoUpdate( const T& message )
+void RotaAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent 
      && message.attributs_specifiques.t == T_AttrObjectSpecific_rota )
@@ -44,6 +46,7 @@ void RotaAttributes::DoUpdate( const T& message )
         agents_.resize( message.attributs_specifiques.u.rota->agents_nbc.n );
         for( uint i = 0; i < message.attributs_specifiques.u.rota->agents_nbc.n; ++i )
             agents_[ i ] = message.attributs_specifiques.u.rota->agents_nbc.elem[ i ];
+        controller_.Update( *this );
     }
 }
 
@@ -51,25 +54,25 @@ void RotaAttributes::DoUpdate( const T& message )
 // Name: RotaAttributes::Update
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void RotaAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void RotaAttributes::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RotaAttributes::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void RotaAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+void RotaAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RotaAttributes::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void RotaAttributes::Update( const ASN1T_MsgObjectCreation& message )
+void RotaAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }

@@ -9,13 +9,15 @@
 
 #include "astec_pch.h"
 #include "NBCAttributes.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-NBCAttributes::NBCAttributes()
-    : set_( false )
+NBCAttributes::NBCAttributes( Controller& controller )
+    : controller_( controller )
+    , set_( false )
 {
 
 }
@@ -30,11 +32,11 @@ NBCAttributes::~NBCAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::DoUpdate
+// Name: NBCAttributes::UpdateData
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void NBCAttributes::DoUpdate( const T& message )
+void NBCAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent )
     {
@@ -42,37 +44,39 @@ void NBCAttributes::DoUpdate( const T& message )
         {
             set_ = true;
             nbcId_  = message.attributs_specifiques.u.nuage_nbc->agent_nbc;
+            controller_.Update( *this );
         }
         else if( message.attributs_specifiques.t == T_AttrObjectSpecific_zone_nbc )
         {   set_ = true;
             nbcId_  = message.attributs_specifiques.u.zone_nbc->agent_nbc;
+            controller_.Update( *this );
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::Update
+// Name: NBCAttributes::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void NBCAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void NBCAttributes::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::Update
+// Name: NBCAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void NBCAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+void NBCAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::Update
+// Name: NBCAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void NBCAttributes::Update( const ASN1T_MsgObjectCreation& message )
+void NBCAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }

@@ -49,17 +49,17 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const ASN1T_MsgObjectKnowledgeC
     switch( message.type )
     {
     case EnumObjectType::itineraire_logistique:
-        knowledge->Attach( *new LogisticRouteAttributes() );
+        knowledge->Attach( *new LogisticRouteAttributes( controller_ ) );
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        knowledge->Attach( *new NBCAttributes() );
+        knowledge->Attach( *new NBCAttributes( controller_ ) );
         break;
     case EnumObjectType::rota:
-        knowledge->Attach( *new RotaAttributes() );
+        knowledge->Attach( *new RotaAttributes( controller_ ) );
         break;
     case EnumObjectType::site_franchissement:
-        knowledge->Attach( *new CrossingSiteAttributes() );
+        knowledge->Attach( *new CrossingSiteAttributes( controller_ ) );
     default:
         ;
     };

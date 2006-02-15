@@ -11,13 +11,15 @@
 #include "LogisticRouteAttributes.h"
 #include "App.h"
 #include "World.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRouteAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-LogisticRouteAttributes::LogisticRouteAttributes()
+LogisticRouteAttributes::LogisticRouteAttributes( Controller& controller )
     : set_( false )
+    , controller_( controller )
 {
 
 }
@@ -32,11 +34,11 @@ LogisticRouteAttributes::~LogisticRouteAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRouteAttributes::DoUpdate
+// Name: LogisticRouteAttributes::UpdateData
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void LogisticRouteAttributes::DoUpdate( const T& message )
+void LogisticRouteAttributes::UpdateData( const T& message )
 {
     if( message.m.attributs_specifiquesPresent
      && message.attributs_specifiques.t == T_AttrObjectSpecific_itineraire_logistique )
@@ -47,32 +49,33 @@ void LogisticRouteAttributes::DoUpdate( const T& message )
         nLogRouteWidth_     = message.attributs_specifiques.u.itineraire_logistique->largeur;
         nLogRouteMaxWeight_ = message.attributs_specifiques.u.itineraire_logistique->poids_max_supporte;
         bLogRouteEquipped_  = message.attributs_specifiques.u.itineraire_logistique->itineraire_equipe;
+        controller_.Update( *this );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRouteAttributes::Update
+// Name: LogisticRouteAttributes::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void LogisticRouteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRouteAttributes::Update
+// Name: LogisticRouteAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LogisticRouteAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRouteAttributes::Update
+// Name: LogisticRouteAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LogisticRouteAttributes::Update( const ASN1T_MsgObjectCreation& message )
+void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }

@@ -31,10 +31,10 @@ MaintenanceStates::~MaintenanceStates()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::Update
+// Name: MaintenanceStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MaintenanceStates::Update( const ASN1T_MsgLogMaintenanceEtat& message )
+void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
 {
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;

@@ -19,17 +19,15 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-#include "ASN_Types.h"
+#include "DIN_Types.h"
 #include "Entity_ABC.h"
+#include "Resolver.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
 
-class ObjectKnowledge;
-class AgentKnowledge;
-class Object_ABC;
 class KnowledgeGroup;
+class KnowledgeGroupFactory_ABC;
+class Controller;
 
 // =============================================================================
 /** @class  Team
@@ -39,79 +37,48 @@ class KnowledgeGroup;
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Team : public Entity_ABC
+class Team : public Entity_ABC, 
+             public Resolver< KnowledgeGroup >
 {
-    MT_COPYNOTALLOWED( Team );
-    friend class GLTool;
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< uint, KnowledgeGroup* > T_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::iterator         IT_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
-
-    typedef std::map< uint, ObjectKnowledge* >   T_ObjectKnowledgeMap;
-    typedef T_ObjectKnowledgeMap::iterator               IT_ObjectKnowledgeMap;
-    typedef T_ObjectKnowledgeMap::const_iterator         CIT_ObjectKnowledgeMap;
-    typedef T_ObjectKnowledgeMap::const_reverse_iterator RCIT_ObjectKnowledgeMap;
-
-    typedef std::map< uint, AgentKnowledge* >       T_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::iterator               IT_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::const_iterator         CIT_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::const_reverse_iterator RCIT_AgentKnowledgeMap;
-    //@}
-    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-     Team();
-     Team( uint nID, DIN::DIN_Input& input );
-    ~Team();
+             Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory );
+    virtual ~Team();
     //@}
 
-    KnowledgeGroup* CreateKnowledgeGroup     ( uint32 nId );
-    void RegisterKnowledgeGroup   ( KnowledgeGroup& gtia );
-    void RemoveKnowledgeGroup     ( KnowledgeGroup& gtia );
-    void DeleteAllKnowledgeGroups ();
-    KnowledgeGroup* FindKnowledgeGroup( uint nID );
-    const T_KnowledgeGroupMap& GetKnowledgeGroups() const;
-
+    //! @name Operations
+    //@{
+    void CreateKnowledgeGroup( unsigned int id );
+    //@}
 
     //! @name Accessors
     //@{
-    uint               GetID  () const;
-    const std::string& GetName() const;
-    uint               GetIdx() const;
-
-    void               SetIdx( uint nIdx );
-
-    const T_ObjectKnowledgeMap& GetObjectKnowledges() const;
-    ObjectKnowledge*    FindObjectKnowledge( int nId );
-    ObjectKnowledge*    FindKnowledgeOnObject( const Object_ABC& object );
-    //@}
-
-    //! @name Knowledges
-    //@{
-    void RegisterAgentKnowledge( AgentKnowledge& knowledge );
-    void RemoveAgentKnowledge( AgentKnowledge& knowledge );
-    void DestroyAllObjectKnowledges();
-    const T_AgentKnowledgeMap&  GetAgentKnowledges() const;
+    unsigned long GetId  () const;
+    std::string GetName() const;
     //@}
 
 private:
+    //! @name Copy / Assignement
+    //@{
+    Team( const Team& );
+    Team& operator=( const Team& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Controller& controller_;
+    KnowledgeGroupFactory_ABC& factory_;
     std::string         strName_;
     uint32              nID_;
-
-    T_KnowledgeGroupMap            gtias_;
-//    T_DiplomatyVector    diplomaty_;
-    T_ObjectKnowledgeMap objectKnowledges_;
-    T_AgentKnowledgeMap  agentKnowledges_;    // Concatenation of the gtias' agent knowledges for easy browsing.
-
-    uint nIdx_;
+    //@}
 };
-
-#   include "Team.inl"
 
 #endif // __Team_h_

@@ -10,20 +10,18 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
-#include "PopulationPart_ABC.h"
-
-class Population;
+#include "ASN_Types.h"
 
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class PopulationFlow : public PopulationPart_ABC
+class PopulationFlow
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const Population& );
-    ~PopulationFlow();
+    explicit PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg );
+    virtual ~PopulationFlow();
     //@}
 
     //! @name Operations
@@ -52,12 +50,18 @@ private:
 private:
     //! @name Member data
     //@{
+    uint                 nID_;
     const std::string strName_;
 
 	T_PointVector	  itineraire_;
 	T_PointVector	  flow_;
 	int				  nDirection_;
 	int				  nSpeed_;
+    
+    int                  nLivingHumans_;
+    int                  nDeadHumans_;
+    E_PopulationAttitude attitude_;
+    MT_Float             rDensity_;
     //@}
 };
 

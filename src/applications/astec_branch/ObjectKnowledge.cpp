@@ -29,7 +29,6 @@ ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& messag
 {
     // $$$$ AGE 2006-02-14: Team !
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
-
     InterfaceContainer< Extension_ABC >::Register( *this );
 }
 
@@ -44,10 +43,10 @@ ObjectKnowledge::~ObjectKnowledge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Update
+// Name: ObjectKnowledge::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
     if( message.m.oid_objet_reelPresent )
         pRealObject_ = objectResolver_.Find( message.oid_objet_reel );

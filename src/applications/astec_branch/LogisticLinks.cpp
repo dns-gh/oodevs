@@ -36,11 +36,11 @@ LogisticLinks::~LogisticLinks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::DoUpdate
+// Name: LogisticLinks::UpdateData
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void LogisticLinks::DoUpdate( const T& message )
+void LogisticLinks::UpdateData( const T& message )
 {
     if( message.m.oid_tc2Present )
 		tc2_ = resolver_.Find( message.oid_tc2 );
@@ -54,19 +54,19 @@ void LogisticLinks::DoUpdate( const T& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::Update
+// Name: LogisticLinks::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void LogisticLinks::Update( const ASN1T_MsgAutomateCreation& message )
+void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::Update
+// Name: LogisticLinks::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void LogisticLinks::Update( const ASN1T_MsgChangeLiensLogistiquesAck& message )
+void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message )
 {
-    DoUpdate( message );        
+    UpdateData( message );        
 }

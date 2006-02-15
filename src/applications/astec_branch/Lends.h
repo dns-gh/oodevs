@@ -59,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgUnitDotations& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
     //@}
 
 private:

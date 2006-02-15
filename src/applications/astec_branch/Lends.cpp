@@ -32,10 +32,10 @@ Lends::~Lends()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lends::Update
+// Name: Lends::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Lends::Update( const ASN1T_MsgUnitDotations& message )
+void Lends::DoUpdate( const ASN1T_MsgUnitDotations& message )
 {
     if( ! message.m.prets_equipementPresent )
         return;

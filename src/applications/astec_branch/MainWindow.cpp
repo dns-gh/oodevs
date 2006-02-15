@@ -23,8 +23,7 @@
 #include "astec_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
-
-
+#include "Logger.h"
 #include "Options.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
@@ -43,6 +42,8 @@ MainWindow::MainWindow()
     this->setCaption( APP_NAME );
 
     pOptions_ = new Options();
+
+    setCentralWidget( new Logger( this ) );
 }
 
 

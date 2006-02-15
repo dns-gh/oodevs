@@ -34,7 +34,7 @@ class CrossingSiteAttributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossingSiteAttributes();
+             CrossingSiteAttributes( Controller& controller );
     virtual ~CrossingSiteAttributes();
     //@}
 
@@ -51,16 +51,17 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
-    virtual void Update( const ASN1T_MsgObjectUpdate& message );
-    virtual void Update( const ASN1T_MsgObjectCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
     template< typename T >
-    void DoUpdate( const T& message );
+    void UpdateData( const T& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
     bool set_;
     unsigned int width_;
     unsigned int depth_;

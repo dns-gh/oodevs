@@ -52,13 +52,6 @@ public:
     static IDManager& GetIDManagerForObjectType( ASN1T_EnumObjectType nType );
     static IDManager& GetIDManagerForObjectType( uint );
 
-    // $$$$ AGE 2006-02-15: Crap ! Change Updatable::Update to Updatable::Something ?
-    template< typename T >
-    void UpdateObject( const T& message ) {
-        Entity_ABC::Update( message );
-    }
-    //@}
-
     //! @name Accessors
     //@{
     unsigned long GetId() const;
@@ -75,9 +68,9 @@ private:
 private:
     //! @name Operations
     //@{
-    virtual void Update( const ASN1T_MsgObjectUpdate& message );
-    virtual void Update( const ASN1T_MsgExplosion& message );
-    virtual void Update( const ASN1T_FireDamagesPion& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgExplosion& message );
+    virtual void DoUpdate( const ASN1T_FireDamagesPion& message );
     //@}
 
 private:

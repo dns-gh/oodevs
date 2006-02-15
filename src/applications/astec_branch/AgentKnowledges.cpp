@@ -8,57 +8,60 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "ObjectKnowledges.h"
+#include "AgentKnowledges.h"
+#include "AgentKnowledge.h"
+#include "AgentKnowledgeFactory_ABC.h"
 #include "Controller.h"
-#include "ObjectKnowledge.h"
-#include "ObjectKnowledgeFactory.h"
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledges constructor
-// Created: AGE 2006-02-14
+// Name: AgentKnowledges constructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ObjectKnowledges::ObjectKnowledges( Controller& controller, ObjectKnowledgeFactory& factory )
+AgentKnowledges::AgentKnowledges( Controller& controller, AgentKnowledgeFactory_ABC& factory )
     : controller_( controller )
     , factory_( factory )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledges destructor
-// Created: AGE 2006-02-14
+// Name: AgentKnowledges destructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ObjectKnowledges::~ObjectKnowledges()
+AgentKnowledges::~AgentKnowledges()
 {
-    DeleteAll();
+    Resolver< AgentKnowledge >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledges::DoUpdate
-// Created: AGE 2006-02-14
+// Name: AgentKnowledges::DoUpdate
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message )
+void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation&    message )
 {
     if( ! Find( message.oid_connaissance ) )
-        Register( message.oid_connaissance, * factory_.Create( message ) );
-    controller_.Update( *this );
+    {
+        AgentKnowledge* pAgentKnowledge = factory_.CreateAgentKnowledge( message );
+        Register( message.oid_connaissance, *pAgentKnowledge );
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledges::DoUpdate
-// Created: AGE 2006-02-14
+// Name: AgentKnowledges::DoUpdate
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate&      message )
 {
     Get( message.oid_connaissance ).Update( message );
     controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledges::DoUpdate
-// Created: AGE 2006-02-14
+// Name: AgentKnowledges::DoUpdate
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message )
+void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeDestruction& message )
 {
     delete Find( message.oid_connaissance );
     Remove( message.oid_connaissance );

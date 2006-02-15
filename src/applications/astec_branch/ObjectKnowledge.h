@@ -44,14 +44,6 @@ public:
 
     //! @name Operations
     //@{
-    template< typename T >
-    void UpdateKnowledge( const T& message ) {
-        Entity_ABC::Update( message );
-    }
-    //@}
-
-    //! @name Operations
-    //@{
     Object_ABC* GetRealObject() const;
     //@}
 
@@ -69,7 +61,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:

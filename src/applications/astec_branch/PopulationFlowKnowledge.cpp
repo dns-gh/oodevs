@@ -20,6 +20,8 @@
 #include "AgentManager.h"
 #include "Model.h"
 #include "TeamsModel.h"
+#include "KnowledgeGroupsModel.h"
+#include "Controller.h"
 
 // =============================================================================
 // FlowPart
@@ -48,9 +50,10 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
-    : nID_                 ( asnMsg.oid_connaissance_flux )
-    , pKnowledgeGroup_               ( & App::GetApp().GetModel().teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ) )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+    : controller_( controller )
+    , nID_                 ( asnMsg.oid_connaissance_flux )
+    , pKnowledgeGroup_               ( & App::GetApp().GetModel().knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pFlow_               ( 0 )
 {
@@ -96,15 +99,15 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
         nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
     if( asnMsg.m.oid_flux_reelPresent )
     {
-        assert( pPopulationKnowledge_ );
-        const Population& population = pPopulationKnowledge_->GetPopulation();
-        if( asnMsg.oid_flux_reel == 0 )
-            pFlow_ = 0;
-        else
-        {
-            pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
-            assert( pFlow_ );
-        }
+//        assert( pPopulationKnowledge_ );
+//        const Population& population = pPopulationKnowledge_->GetPopulation();
+//        if( asnMsg.oid_flux_reel == 0 )
+//            pFlow_ = 0;
+//        else
+//        {
+//            pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
+//            assert( pFlow_ );
+//        }
     }
     if( asnMsg.m.portions_fluxPresent )
     {
@@ -112,4 +115,5 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
             flowParts_.Data().push_back( FlowPart( asnMsg.portions_flux.elem[ i ] ) );
     }
+    controller_.Update( *this );
 }

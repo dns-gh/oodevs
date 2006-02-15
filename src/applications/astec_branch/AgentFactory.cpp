@@ -39,6 +39,7 @@
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
 #include "TeamsModel.h"
+#include "KnowledgeGroupsModel.h"
 #include "LogisticsModel.h"
 #include "LimitsModel.h"
 #include "AgentFactory.h"
@@ -125,7 +126,7 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new MaintenanceStates( controller_ ) );
     agent.Attach( *new MedicalStates( controller_ ) );
     agent.Attach( *new SupplyStates( controller_ ) );
-    agent.Attach( *new Hierarchies( controller_, model_.agents_, model_.teams_ ) );
+    agent.Attach( *new Hierarchies( controller_, model_.agents_, model_.knowledgeGroups_ ) );
     agent.Attach( *new ObjectDetections( controller_, model_.objects_ ) );
     agent.Attach( *new AgentDetections( controller_, model_.agents_ ) );
     agent.Attach( *new VisionCones() );

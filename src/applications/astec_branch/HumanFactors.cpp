@@ -34,10 +34,10 @@ HumanFactors::~HumanFactors()
 }
 
 // -----------------------------------------------------------------------------
-// Name: HumanFactors::Update
+// Name: HumanFactors::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void HumanFactors::Update( const ASN1T_MsgUnitAttributes& message )
+void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.moralPresent )
         pMorale_ = Morale::Find( message.moral );

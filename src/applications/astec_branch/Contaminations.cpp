@@ -31,10 +31,10 @@ Contaminations::~Contaminations()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Contaminations::Update
+// Name: Contaminations::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Contaminations::Update( const ASN1T_MsgUnitAttributes& message )
+void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.etat_contaminationPresent )
         nContamination_ = message.etat_contamination;

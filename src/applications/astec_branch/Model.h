@@ -13,6 +13,7 @@
 class AgentsModel;
 class ObjectsModel;
 class TeamsModel;
+class KnowledgeGroupsModel;
 class LogisticsModel;
 class LimitsModel;
 class AgentFactory_ABC;
@@ -20,6 +21,7 @@ class ObjectFactory_ABC;
 class Controller;
 class AgentTypes;
 class ObjectKnowledgeFactory;
+class AgentKnowledgeFactory_ABC;
 class TeamFactory_ABC;
 
 // =============================================================================
@@ -49,7 +51,9 @@ public:
 
     AgentTypes& types_;
 
-    ObjectKnowledgeFactory & objectKnowledgeFactory_;// $$$$ AGE 2006-02-15: ABC
+    ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
+    AgentKnowledgeFactory_ABC& agentsKnowledgeFactory_;
+
     TeamFactory_ABC&         teamFactory_;
     AgentFactory_ABC&        agentFactory_;
     ObjectFactory_ABC&       objectFactory_;
@@ -57,6 +61,7 @@ public:
     AgentsModel&    agents_;
     ObjectsModel&   objects_;
     TeamsModel&     teams_;
+    KnowledgeGroupsModel& knowledgeGroups_;
     LogisticsModel& logistics_;
     LimitsModel&    limits_;
     //@}

@@ -15,8 +15,9 @@
 // Name: Diplomacies constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies(  const Resolver_ABC< Team >& resolver )
-    : resolver_( resolver )
+Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team >& resolver )
+    : controller_( controller )
+    , resolver_( resolver )
 {
     // NOTHING
 }
@@ -31,11 +32,11 @@ Diplomacies::~Diplomacies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacies::DoUpdate
+// Name: Diplomacies::UpdateData
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void Diplomacies::DoUpdate( const T& message )
+void Diplomacies::UpdateData( const T& message )
 {
     Team* team1 = & resolver_.Get( message.oid_camp1 );
     Team* team2 = & resolver_.Get( message.oid_camp2 );
@@ -43,23 +44,24 @@ void Diplomacies::DoUpdate( const T& message )
         diplomacies_[ & team1->Get< Diplomacies >() ] = message.diplomatie;
     if( & team2->Get< Diplomacies >() != this )
         diplomacies_[ & team2->Get< Diplomacies >() ] = message.diplomatie;
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacies::Update
+// Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::Update( const ASN1T_MsgChangeDiplomatieAck& message )
+void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
 {
     if( message.error_code == EnumChangeDiplomatieErrorCode::no_error )
         DoUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacies::Update
+// Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::Update( const ASN1T_MsgChangeDiplomatie& message )
+void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatie& message )
 {
     DoUpdate( message );
 }

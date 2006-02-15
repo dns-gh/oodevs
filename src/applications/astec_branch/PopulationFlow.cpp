@@ -13,8 +13,6 @@
 
 #include "astec_pch.h"
 #include "PopulationFlow.h"
-
-#include "PopulationPart_ABC.h"
 #include "App.h"
 #include "World.h"
 
@@ -23,9 +21,8 @@
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const Population& parent )
-    : PopulationPart_ABC( asnMsg.oid_flux, parent )	
-    , strName_              ( "Flow" )
+PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+    : strName_              ( "Flow" )
     , itineraire_           ( )
     , flow_                 ( 2, MT_Vector2D( 0, 0 ) )
     , nDirection_           ( 0 )
@@ -86,7 +83,7 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
             rLength += (*itCur).Distance( *itNext );
 
         if( rLength > 0. )
-            rDensity_ = GetLivingHumans() / rLength;
+            rDensity_ = nLivingHumans_ / rLength;
         else 
             rDensity_ = 0.;
 	}

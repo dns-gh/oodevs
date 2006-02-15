@@ -33,10 +33,10 @@ Transports::~Transports()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Transports::Update
+// Name: Transports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Transports::Update( const ASN1T_MsgUnitAttributes& message )
+void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.pions_transportesPresent )
     {

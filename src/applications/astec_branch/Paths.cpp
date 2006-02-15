@@ -31,10 +31,10 @@ Paths::~Paths()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Paths::Update
+// Name: Paths::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Paths::Update( const ASN1T_MsgUnitAttributes& message )
+void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     // $$$$ AGE 2006-02-13: Jamais vidé ??
     if( message.m.positionPresent )
@@ -46,10 +46,10 @@ void Paths::Update( const ASN1T_MsgUnitAttributes& message )
 }   
 
 // -----------------------------------------------------------------------------
-// Name: Paths::Update
+// Name: Paths::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Paths::Update( const ASN1T_MsgUnitPathFind& message )
+void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 {
     plannedPath_.clear(); plannedPath_.reserve( message.itineraire.vecteur_point.n );
     for( uint i = 0; i < message.itineraire.vecteur_point.n; ++i )

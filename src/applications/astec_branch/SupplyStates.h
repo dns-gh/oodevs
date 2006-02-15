@@ -47,8 +47,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgLogRavitaillementEtat& message );
-    virtual void Update( const ASN1T_MsgLogRavitaillementQuotas& message );
+    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     //@}
 
     //! @name Types

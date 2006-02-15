@@ -19,6 +19,8 @@
 #include "AgentTypes.h"
 #include "ObjectKnowledgeFactory.h"
 #include "TeamFactory.h"
+#include "AgentKnowledgeFactory.h"
+#include "KnowledgeGroupsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -28,12 +30,14 @@ Model::Model( Controller& controller, const std::string& scipioXml )
     : controller_( controller )
     , types_( * new AgentTypes( scipioXml ) )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controller_, *this ) )
+    , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controller_, *this ) )
     , teamFactory_( *new TeamFactory( controller_, *this ) )
     , agentFactory_( *new AgentFactory( controller_,types_, *this ) )
     , objectFactory_( *new ObjectFactory( controller_ ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
+    , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , logistics_( *new LogisticsModel() )
     , limits_( *new LimitsModel() )
 {

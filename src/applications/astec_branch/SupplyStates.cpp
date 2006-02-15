@@ -31,10 +31,10 @@ SupplyStates::~SupplyStates()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::Update
+// Name: SupplyStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyStates::Update( const ASN1T_MsgLogRavitaillementEtat& message )
+void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
 {
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;
@@ -65,10 +65,10 @@ void SupplyStates::Update( const ASN1T_MsgLogRavitaillementEtat& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::Update
+// Name: SupplyStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyStates::Update( const ASN1T_MsgLogRavitaillementQuotas& message )
+void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message )
 {
     quotas_.resize( message.quotas.n );
     for( uint i = 0; i < message.quotas.n; ++i )

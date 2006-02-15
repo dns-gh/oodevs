@@ -7,36 +7,41 @@
 //
 // *****************************************************************************
 
-#ifndef __Automat_h_
-#define __Automat_h_
+#ifndef __KnowledgeGroupsModel_h_
+#define __KnowledgeGroupsModel_h_
 
-#include "Agent.h"
+#include "Resolver_ABC.h"
+
+class KnowledgeGroup;
+class TeamsModel;
 
 // =============================================================================
-/** @class  Automat
-    @brief  Automat
+/** @class  KnowledgeGroupsModel
+    @brief  KnowledgeGroupsModel
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-02-15
 // =============================================================================
-class Automat : public Agent
+class KnowledgeGroupsModel : public Resolver_ABC< KnowledgeGroup >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat();
-    virtual ~Automat();
+             KnowledgeGroupsModel( TeamsModel& teams );
+    virtual ~KnowledgeGroupsModel();
     //@}
 
     //! @name Operations
     //@{
+    virtual KnowledgeGroup* Find( const unsigned long& identifier ) const;
+    virtual KnowledgeGroup& Get( const unsigned long& identifier ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Automat( const Automat& );            //!< Copy constructor
-    Automat& operator=( const Automat& ); //!< Assignement operator
+    KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
+    KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -46,7 +51,8 @@ private:
 private:
     //! @name Member data
     //@{
+    TeamsModel& teams_;
     //@}
 };
 
-#endif // __Automat_h_
+#endif // __KnowledgeGroupsModel_h_

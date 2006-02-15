@@ -30,10 +30,10 @@ DebugPoints::~DebugPoints()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DebugPoints::Update
+// Name: DebugPoints::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void DebugPoints::Update( const DebugPointsMessage& message )
+void DebugPoints::DoUpdate( const DebugPointsMessage& message )
 {
     unsigned long size;
     message >> size;

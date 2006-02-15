@@ -32,10 +32,10 @@ AgentDetections::~AgentDetections()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentDetections::Update
+// Name: AgentDetections::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentDetections::Update( const DetectionMessage& message )
+void AgentDetections::DoUpdate( const DetectionMessage& message )
 {
     unsigned long id;
     unsigned char nVisType;

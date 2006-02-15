@@ -58,9 +58,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgCR& message );
-    virtual void Update( const ASN1T_MsgAttenteOrdreConduite& message );
-    virtual void Update( const TraceMessage& msg );
+    virtual void DoUpdate( const ASN1T_MsgCR& message );
+    virtual void DoUpdate( const ASN1T_MsgAttenteOrdreConduite& message );
+    virtual void DoUpdate( const TraceMessage& msg );
     //@}
 
 private:

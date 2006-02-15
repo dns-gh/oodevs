@@ -19,6 +19,7 @@
 class KnowledgeGroup;
 class PopulationFlow;
 class PopulationKnowledge;
+class Controller;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -45,8 +46,8 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-     PopulationFlowKnowledge( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
-    ~PopulationFlowKnowledge();
+             PopulationFlowKnowledge( Controller& controller, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
+    virtual ~PopulationFlowKnowledge();
     //@}
 
     //! @name Accessors
@@ -72,6 +73,7 @@ public:
     //@}
 
 private:
+    Controller& controller_;
     const uint                                   nID_;
           KnowledgeGroup*                              pKnowledgeGroup_;
     const PopulationKnowledge*               pPopulationKnowledge_;
@@ -83,6 +85,7 @@ private:
           OptionalValue< E_PopulationAttitude >  eAttitude_;
           OptionalValue< bool     >              bIsPerceived_;
           OptionalValue< T_FlowParts >           flowParts_;
+
 };
 
 

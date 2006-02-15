@@ -33,10 +33,10 @@ ObjectDetections::~ObjectDetections()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectDetections::Update
+// Name: ObjectDetections::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectDetections::Update( const ObjectDetectionMessage& message )
+void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
 {
     unsigned long  id;
     unsigned char  nObjectVisType;

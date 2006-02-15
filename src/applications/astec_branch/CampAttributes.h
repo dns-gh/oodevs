@@ -35,7 +35,7 @@ class CampAttributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CampAttributes( const Resolver_ABC< Agent >& resolver );
+             CampAttributes( Controller& controller, const Resolver_ABC< Agent >& resolver );
     virtual ~CampAttributes();
     //@}
 
@@ -57,16 +57,17 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
-    virtual void Update( const ASN1T_MsgObjectUpdate& message );
-    virtual void Update( const ASN1T_MsgObjectCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
     template< typename T >
-    void DoUpdate( const T& message );
+    void UpdateData( const T& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
     Agent* tc2_;
     //@}

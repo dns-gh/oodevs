@@ -55,8 +55,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const VisionConesMessage& message );
-    virtual void Update( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const VisionConesMessage& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
 private:

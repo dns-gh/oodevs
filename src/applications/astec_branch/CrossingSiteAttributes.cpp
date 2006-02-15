@@ -9,13 +9,15 @@
 
 #include "astec_pch.h"
 #include "CrossingSiteAttributes.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CrossingSiteAttributes::CrossingSiteAttributes()
-    : set_( false )
+CrossingSiteAttributes::CrossingSiteAttributes( Controller& controller )
+    : controller_( controller )
+    , set_( false )
 {
 
 }
@@ -30,11 +32,11 @@ CrossingSiteAttributes::~CrossingSiteAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttributes::DoUpdate
+// Name: CrossingSiteAttributes::UpdateData
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void CrossingSiteAttributes::DoUpdate( const T& message )
+void CrossingSiteAttributes::UpdateData( const T& message )
 {
     set_ = true;
     if( message.m.attributs_specifiquesPresent 
@@ -44,32 +46,33 @@ void CrossingSiteAttributes::DoUpdate( const T& message )
         depth_ = message.attributs_specifiques.u.site_franchissement->profondeur;
         speed_ = message.attributs_specifiques.u.site_franchissement->vitesse_courant;
         needsConstruction_ = message.attributs_specifiques.u.site_franchissement->berges_a_amenager;
+        controller_.Update( *this );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttributes::Update
+// Name: CrossingSiteAttributes::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void CrossingSiteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttributes::Update
+// Name: CrossingSiteAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttributes::Update
+// Name: CrossingSiteAttributes::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttributes::Update( const ASN1T_MsgObjectCreation& message )
+void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }

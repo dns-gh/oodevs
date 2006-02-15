@@ -49,10 +49,10 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update( const ASN1T_MsgChangeLiensLogistiquesAck& message );
-    virtual void Update( const ASN1T_MsgAutomateCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
     template< typename T >
-    void DoUpdate( const T& message );
+    void UpdateData( const T& message );
     //@}
 
 private:

@@ -12,15 +12,6 @@
 #include "DIN/DIN_Input.h"
 #include "Team.h"
 #include "App.h"
-#include "ObjectFactory_ABC.h"
-#include "AgentFactory_ABC.h"
-#include "Agent.h"
-#include "LogMaintenanceConsign.h"
-#include "LogMedicalConsign.h"
-#include "LogSupplyConsign.h"
-#include "Agent.h"
-#include "Population.h"
-#include "Object_ABC.h"
 #include "TeamFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -39,7 +30,6 @@ TeamsModel::TeamsModel( TeamFactory_ABC& factory )
 // -----------------------------------------------------------------------------
 TeamsModel::~TeamsModel()
 {
-    Resolver< KnowledgeGroup >::DeleteAll(); 
     Resolver< Team >::DeleteAll();
 }
 
@@ -55,7 +45,6 @@ void TeamsModel::CreateTeam( DIN::DIN_Input& input )
     {
         Team* team = factory_.CreateTeam( id, input );
         Resolver< Team >::Register( id, *team );
-//    application_.NotifyTeamCreated( *team );
     }
 }
  
@@ -81,27 +70,17 @@ Team* TeamsModel::FindTeam( const std::string& team )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamsModel::CreateKnowledgeGroup
-// Created: AGE 2006-02-10
+// Name: TeamsModel::FindKnowledgeGroup
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateKnowledgeGroup( DIN::DIN_Input& input )
+KnowledgeGroup* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
 {
-    unsigned long id, teamId;
-    input >> id >> teamId;
-    if( ! Resolver< KnowledgeGroup >::Find( id ) )
+    for( Resolver< Team >::CIT_Elements it = Resolver< Team >::elements_.begin(); it != Resolver< Team >::elements_.end(); ++it )
     {
-        Team& team = GetTeam( teamId );
-        KnowledgeGroup* gtia = team.CreateKnowledgeGroup( id );
-        Resolver< KnowledgeGroup >::Register( id, *gtia );
-//    application_.NotifyKnowledgeGroupCreated( *gtia );
+        Resolver_ABC< KnowledgeGroup >& team = *it->second;
+        KnowledgeGroup* group = team.Find( id );
+        if( group )
+            return group;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::GetKnowledgeGroup
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-KnowledgeGroup& TeamsModel::GetKnowledgeGroup( unsigned long id )
-{
-    return Resolver< KnowledgeGroup >::Get( id );
+    return 0;
 }

@@ -31,10 +31,10 @@ Equipments::~Equipments()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Equipments::Update
+// Name: Equipments::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Equipments::Update( const ASN1T_MsgUnitDotations& message )
+void Equipments::DoUpdate( const ASN1T_MsgUnitDotations& message )
 {
     if ( message.m.dotation_eff_materielPresent != 1 )
         return;

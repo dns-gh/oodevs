@@ -20,14 +20,17 @@
 #include "AgentManager.h"
 #include "Model.h"
 #include "TeamsModel.h"
+#include "KnowledgeGroupsModel.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
-    : nID_                 ( asnMsg.oid_connaissance_concentration )
-    , pKnowledgeGroup_               ( & App::GetApp().GetModel().teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ) )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+    : controller_( controller )
+    , nID_                 ( asnMsg.oid_connaissance_concentration )
+    , pKnowledgeGroup_               ( & App::GetApp().GetModel().knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pConcentration_      ( 0 )
 {
@@ -71,25 +74,17 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
         nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
     if( asnMsg.m.oid_concentration_reellePresent )
     {
-        const Population& population = pPopulationKnowledge_->GetPopulation();
-        if( asnMsg.oid_concentration_reelle == 0 )
-            pConcentration_ = 0;
-        else
-        {
-            pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
-            assert( pConcentration_ );
-        }
+//        const Population& population = pPopulationKnowledge_->GetPopulation();
+//        if( asnMsg.oid_concentration_reelle == 0 )
+//            pConcentration_ = 0;
+//        else
+//        {
+//            pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
+//            assert( pConcentration_ );
+//        }
     }
     if( asnMsg.m.pertinencePresent )
         rRelevance_ = asnMsg.pertinence;
+    controller_.Update( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentrationKnowledge::GetArea
-// Created: NLD 2005-10-28
-// -----------------------------------------------------------------------------
-MT_Float PopulationConcentrationKnowledge::GetArea() const
-{
-    assert( pPopulationKnowledge_ );
-    return GetNbrAliveHumans() / pPopulationKnowledge_->GetType().GetConcentrationDensity();
-}

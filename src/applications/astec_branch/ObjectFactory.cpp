@@ -44,21 +44,21 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     switch( message.type )
     {
     case EnumObjectType::itineraire_logistique:
-        result->Attach( *new LogisticRouteAttributes() );
-        result->UpdateObject( message );
+        result->Attach( *new LogisticRouteAttributes( controller_ ) );
+        result->Update( message );
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        result->Attach( *new NBCAttributes() );
-        result->UpdateObject( message );
+        result->Attach( *new NBCAttributes( controller_ ) );
+        result->Update( message );
         break;
     case EnumObjectType::rota:
-        result->Attach( *new RotaAttributes() );
-        result->UpdateObject( message );
+        result->Attach( *new RotaAttributes( controller_ ) );
+        result->Update( message );
         break;
     case EnumObjectType::site_franchissement:
-        result->Attach( *new CrossingSiteAttributes() );
-        result->UpdateObject( message );
+        result->Attach( *new CrossingSiteAttributes( controller_ ) );
+        result->Update( message );
     default:
         ;
     };
