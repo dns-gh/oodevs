@@ -16,14 +16,13 @@
 #include "AgentManager.h"
 #include "Object_ABC.h"
 #include "ObjectManager.h"
-#include "Object_Factory.h"
 #include "LineManager.h"
 #include "Lima.h"
 #include "Limit.h"
 #include "World.h"
 #include "ASN_Messages.h"
 #include "Net_Def.h"
-#include "Gtia.h"
+#include "KnowledgeGroup.h"
 #include "Team.h"
 #include "Meteo_Manager.h"
 #include "Tools.h"
@@ -33,8 +32,12 @@
 #include "LogSupplyConsign.h"
 #include "Population.h"
 #include "PopulationKnowledge.h"
-#include "Model.h"
 #include "Simulation.h"
+#include "Model.h"
+#include "AgentsModel.h"
+#include "TeamsModel.h"
+#include "ObjectsModel.h"
+#include "LogisticsModel.h"
 #include "App.h"
 #include "DIN_Types.h"
 
@@ -190,7 +193,7 @@ void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& inp
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    model_.CreateAgent( asnMsg );
+    model_.agents_.CreateAgent( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +202,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCre
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& asnMsg )
 {
-    model_.CreateAgent( asnMsg );
+    model_.agents_.CreateAgent( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +211,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& a
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    model_.CreateGtia( input );
+    model_.teams_.CreateKnowledgeGroup( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +220,7 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/,
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input )
 {
-    model_.CreateTeam( input );
+    model_.teams_.CreateTeam( input );
 }
 
 //-----------------------------------------------------------------------------
@@ -246,7 +249,7 @@ void AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& in
 {
     uint32 nAgentID;
     input >> nAgentID;
-    model_.FindAllAgent( nAgentID )->Update( TraceMessage( input ) );
+    model_.agents_.FindAllAgent( nAgentID )->Update( TraceMessage( input ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +260,7 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.FindAllAgent( nAgentID )->Update( DebugPointsMessage( input ) );
+    model_.agents_.FindAllAgent( nAgentID )->Update( DebugPointsMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -268,7 +271,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( DIN_Link& /*linkFrom*/, DIN
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.GetAgent( nAgentID ).Update( VisionConesMessage( input ) );
+    model_.agents_.GetAgent( nAgentID ).Update( VisionConesMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -279,7 +282,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*linkFr
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.GetAgent( nAgentID ).Update( DetectionMessage( input ) );
+    model_.agents_.GetAgent( nAgentID ).Update( DetectionMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -290,7 +293,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN:
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.GetAgent( nAgentID ).Update( ConcentrationDetectionMessage( input ) );
+    model_.agents_.GetAgent( nAgentID ).Update( ConcentrationDetectionMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -301,7 +304,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.GetAgent( nAgentID ).Update( FlowDetectionMessage( input ) );
+    model_.agents_.GetAgent( nAgentID ).Update( FlowDetectionMessage( input ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +315,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::D
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.GetAgent( nAgentID ).Update( PopulationCollisionMessage( input ) );
+    model_.agents_.GetAgent( nAgentID ).Update( PopulationCollisionMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -323,7 +326,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*link
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
-    model_.GetAgent( nAgentID ).Update( ObjectDetectionMessage( input ) );
+    model_.agents_.GetAgent( nAgentID ).Update( ObjectDetectionMessage( input ) );
 }
 
 //=============================================================================
@@ -488,7 +491,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*a
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 
@@ -498,7 +501,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttribute
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -507,7 +510,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations&
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg )
 {
-    model_.CreateMaintenanceConsign( asnMsg );
+    model_.logistics_.CreateMaintenanceConsign( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +519,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation( 
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( const ASN1T_MsgLogMaintenanceTraitementEquipementDestruction& asnMsg )
 {
-    model_.DeleteMaintenanceConsign( asnMsg.oid_consigne );
+    model_.logistics_.DeleteMaintenanceConsign( asnMsg.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
@@ -525,7 +528,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestructio
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asnMsg )
 {
-    model_.GetMaintenanceConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
+    model_.logistics_.GetMaintenanceConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -534,7 +537,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate( co
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -543,7 +546,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMainte
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const ASN1T_MsgLogSanteTraitementHumainCreation& asnMsg )
 {
-    model_.CreateMedicalConsign( asnMsg );
+    model_.logistics_.CreateMedicalConsign( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -552,7 +555,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const ASN1
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const ASN1T_MsgLogSanteTraitementHumainDestruction& asnMsg )
 {
-    model_.DeleteMedicalConsign( asnMsg.oid_consigne );
+    model_.logistics_.DeleteMedicalConsign( asnMsg.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
@@ -561,7 +564,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const A
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asnMsg )
 {
-    model_.GetMedicalConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
+    model_.logistics_.GetMedicalConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,7 +573,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const ASN1T_
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSanteEtat( const ASN1T_MsgLogSanteEtat& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -579,7 +582,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSanteEtat( const ASN1T_MsgLogSanteEtat& a
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation( const ASN1T_MsgLogRavitaillementTraitementCreation& asnMsg )
 {
-    model_.CreateSupplyConsign( asnMsg );
+    model_.logistics_.CreateSupplyConsign( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -588,7 +591,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation( const A
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( const ASN1T_MsgLogRavitaillementTraitementDestruction& asnMsg )
 {
-    model_.DeleteSupplyConsign( asnMsg.oid_consigne );
+    model_.logistics_.DeleteSupplyConsign( asnMsg.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
@@ -597,7 +600,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asnMsg )
 {
-    model_.GetSupplyConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
+    model_.logistics_.GetSupplyConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -606,7 +609,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const ASN
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLogRavitaillementEtat&  asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -615,7 +618,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLogRav
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogRavitaillementQuotas& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -663,7 +666,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1018,7 +1021,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
 void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
 {
     MT_LOG_INFO( "Agent[" << asnMsg.oid_unite_executante << "] PionOrderAck - Code: " << Tools::ToString( asnMsg.error_code ), eReceived, 0 );
-    model_.FindAllAgent( asnMsg.oid_unite_executante )->Update( asnMsg );
+    model_.agents_.FindAllAgent( asnMsg.oid_unite_executante )->Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1036,7 +1039,7 @@ void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderCondui
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg )
 {    
-    model_.FindAllAgent( asnMsg.unit_id )->Update( asnMsg );
+    model_.agents_.FindAllAgent( asnMsg.unit_id )->Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1074,7 +1077,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& asn
         strOutputMsg2 << "Pion " << asnPionOrder.oid_unite_executante
                      << " - Mission " << asnPionOrder.mission.t << endl;
 
-        model_.FindAllAgent( asnPionOrder.oid_unite_executante )->Update( asnPionOrder );
+        model_.agents_.FindAllAgent( asnPionOrder.oid_unite_executante )->Update( asnPionOrder );
     }
     MT_LOG_INFO( strOutputMsg.str(), eReceived, strOutputMsg2.str().c_str() );
 }
@@ -1087,7 +1090,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& asn
 void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnMsg )
 {
     MT_LOG_INFO( "PionOrder - Mission " << asnMsg.mission.t, eReceived, 0 );
-    model_.FindAllAgent( asnMsg.oid_unite_executante )->Update( asnMsg );
+    model_.agents_.FindAllAgent( asnMsg.oid_unite_executante )->Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1096,7 +1099,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnMsg 
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
 {
-    model_.FindAllAgent( asnMsg.unit_id )->Update( asnMsg );
+    model_.agents_.FindAllAgent( asnMsg.unit_id )->Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1139,7 +1142,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAuto
 
     if( asnMsg.error_code == EnumOrderErrorCode::no_error )
     {
-        model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+        model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
     }
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
@@ -1154,7 +1157,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAuto
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomate& asnMsg )
 {
-    model_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1174,8 +1177,8 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
     case EnumChangeDiplomatieErrorCode::error_invalid_camp : strOutputMsg << "error_invalid_camp"; break;
     }
 
-    model_.GetTeam( asnMsg.oid_camp1 ).Update( asnMsg );
-    model_.GetTeam( asnMsg.oid_camp2 ).Update( asnMsg );
+    model_.teams_.GetTeam( asnMsg.oid_camp1 ).Update( asnMsg );
+    model_.teams_.GetTeam( asnMsg.oid_camp2 ).Update( asnMsg );
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }
@@ -1202,7 +1205,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 
     if( asnMsg.error_code == EnumChangeGroupeConnaissanceErrorCode::no_error )
     {
-        model_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
+        model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
     }
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
@@ -1228,7 +1231,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgCh
     }
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 
-    model_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
+    model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
 //    App::GetApp().NotifyAgentUpdated( *pAutomate );
 }
 
@@ -1243,7 +1246,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgCh
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
     // $$$$ AGE 2006-02-10: Knowledge group
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
     // $$$$ AGE 2006-02-10: 
 //        MT_LOG_ERROR_MSG( "Duplicate agent knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
@@ -1254,7 +1257,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKn
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1263,7 +1266,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnow
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1272,9 +1275,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUni
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
 {
-//    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeCreation( asnMsg );
-    // $$$$ AGE 2006-02-10: 
-//        MT_LOG_ERROR_MSG( "Duplicate object knowledge #" + QString::number( asnMsg.oid_connaissance ) );
+    model_.teams_.GetTeam( asnMsg.oid_camp_possesseur ).Update( asnMsg );
 }
 
 
@@ -1284,7 +1285,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObje
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 {
-//    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeUpdate( asnMsg );
+    model_.teams_.GetTeam( asnMsg.oid_camp_possesseur ).Update( asnMsg );
 }
 
 
@@ -1294,7 +1295,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObject
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
 {
-//    model_.GetTeam( asnMsg.oid_camp_possesseur ).OnReceiveMsgObjectKnowledgeDestruction( asnMsg );
+    model_.teams_.GetTeam( asnMsg.oid_camp_possesseur ).Update( asnMsg );
 }
 
 // =============================================================================
@@ -1307,7 +1308,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgO
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 //        MT_LOG_ERROR_MSG( "Duplicate population knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
     
@@ -1317,7 +1318,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
     
 // -----------------------------------------------------------------------------
@@ -1326,7 +1327,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1335,7 +1336,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1344,7 +1345,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( co
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1353,7 +1354,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1362,7 +1363,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction(
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1371,7 +1372,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1380,7 +1381,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_M
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
 {
-    model_.GetGtia( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
 }
 
 //=============================================================================
@@ -1393,7 +1394,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const AS
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
 {
-    model_.CreateObject( asnMsg );
+    model_.objects_.CreateObject( asnMsg );
     // $$$$ AGE 2006-02-10: 
 //    MT_LOG_INFO( "ObjectCreation - ID: " << asnMsg.oid, eReceived, 0 );
 }
@@ -1404,7 +1405,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreatio
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& asnMsg )
 {
-    model_.GetObject( asnMsg.oid ).Update( asnMsg );
+    model_.objects_.GetObject( asnMsg.oid ).UpdateObject( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1413,7 +1414,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& a
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruction& asnMsg )
 {
-    model_.DeleteObject( asnMsg );
+    model_.objects_.DeleteObject( asnMsg );
 }
 
 //=============================================================================
@@ -1514,7 +1515,7 @@ void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffec
 void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asnMsg )
 {
     // fire results
-    model_.GetObject( asnMsg.oid_objet ).Update( asnMsg );
+    model_.objects_.GetObject( asnMsg.oid_objet ).UpdateObject( asnMsg );
     MT_LOG_INFO( "Explosion" << " - ID objet " << asnMsg.oid_objet, eReceived, 0 );
 }
 
@@ -1563,11 +1564,11 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplo
     std::stringstream strOutputMsg;
     strOutputMsg << "MSG Received : ChangeDiplomatie - ";
 
-    Team* pArmy = & model_.GetTeam( asnMsg.oid_camp1 );
+    Team* pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp1 );
     assert( pArmy );
     strOutputMsg << pArmy->GetName() << " -> ";
 
-    pArmy = & model_.GetTeam( asnMsg.oid_camp2 );
+    pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp2 );
     assert( pArmy );
     strOutputMsg << pArmy->GetName() << " = ";
 
@@ -1595,7 +1596,7 @@ void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreati
                  << " - ID  " << asnMsg.oid_population;
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 
-	model_.CreatePopulation( asnMsg );
+	model_.agents_.CreatePopulation( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1608,7 +1609,7 @@ void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& 
     //strOutputMsg << "Population Update"
     //             << " - ID  " << asnMsg.oid_population;
 	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulation( asnMsg );
 //    App::GetApp().NotifyPopulationUpdated( *pop );
@@ -1624,7 +1625,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPop
     strOutputMsg << "Creation d'une concentration"
                  << " - ID  " << asnMsg.oid_concentration;
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->CreatePopulationConcentration( asnMsg );
     const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
@@ -1642,7 +1643,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_Msg
     strOutputMsg << "Destruction d'une concentration"
                  << " - ID  " << asnMsg.oid_population;
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
     if ( pop != 0 )
     {
         const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
@@ -1662,7 +1663,7 @@ void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopul
     //strOutputMsg << "Update d'une concentration"
     //             << " - ID  " << asnMsg.oid_concentration;
 	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulationConcentration( asnMsg );
     const PopulationConcentration* concentration = pop->FindConcentration( asnMsg.oid_concentration );
@@ -1680,7 +1681,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFl
     strOutputMsg << "Creation d'un flux"
                  << " - ID  " << asnMsg.oid_flux;
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->CreatePopulationFlow( asnMsg );
     const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
@@ -1698,7 +1699,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulat
     strOutputMsg << "Destruction d'un flux"
                  << " - ID  " << asnMsg.oid_flux;
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
     if ( pop != 0 )
     {
         const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );
@@ -1718,7 +1719,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFlux
     //strOutputMsg << "Update d'un flux"
     //             << " - ID  " << asnMsg.oid_flux;
 	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-	Population* pop = & model_.GetPopulation( asnMsg.oid_population );
+	Population* pop = & model_.agents_.GetPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulationFlow( asnMsg );
     const PopulationFlow* flow = pop->FindFlow( asnMsg.oid_flux );

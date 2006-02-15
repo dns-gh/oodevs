@@ -16,6 +16,7 @@
 #include "AgentManager.h"
 #include "Agent.h"
 #include "Model.h"
+#include "AgentsModel.h"
 #include "Attributes.h"
 
 //-----------------------------------------------------------------------------
@@ -406,7 +407,8 @@ std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentLink( ASN1T_OID nId )
 {
-    Agent_ABC* pAgent = App::GetApp().GetModel().FindAllAgent( nId );
+    // $$$$ AGE 2006-02-15: 
+    Agent_ABC* pAgent = App::GetApp().GetModel().agents_.FindAllAgent( nId );
     if( pAgent == 0 )
         return std::string( " !Agent non trouvé! " );
 

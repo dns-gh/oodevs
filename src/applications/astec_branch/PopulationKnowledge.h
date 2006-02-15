@@ -15,7 +15,7 @@
 #include "ASN_Types.h"
 #include "IDManager.h"
 
-class Gtia;
+class KnowledgeGroup;
 class Team;
 class Population;
 class PopulationConcentrationKnowledge;
@@ -53,7 +53,7 @@ public:
     const uint                         GetID            () const;
     const Team*                    GetTeam          () const;
     const Population&              GetPopulation    () const;
-          Gtia*                    GetGtia          () const;
+          KnowledgeGroup*                    GetKnowledgeGroup          () const;
     const TypePopulation&          GetType          () const;
     const T_ConcentrationKnowledgeMap& GetConcentrations() const;
     const T_FlowKnowledgeMap&          GetFlows         () const;
@@ -76,7 +76,7 @@ private:
     const Team*                     pTeam_;
     const Population*               pPopulation_;
     const TypePopulation*           pType_;
-          Gtia*                     pGtia_;
+          KnowledgeGroup*                     pKnowledgeGroup_;
 
           T_ConcentrationKnowledgeMap   concentrations_;
           T_FlowKnowledgeMap            flows_;

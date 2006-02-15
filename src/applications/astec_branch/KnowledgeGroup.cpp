@@ -8,11 +8,11 @@
 // *****************************************************************************
 //
 // $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Gtia.cpp $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/KnowledgeGroup.cpp $
 // $Author: Ape $
 // $Modtime: 24/11/04 10:03 $
 // $Revision: 7 $
-// $Workfile: Gtia.cpp $
+// $Workfile: KnowledgeGroup.cpp $
 //
 // *****************************************************************************
 
@@ -21,7 +21,7 @@
 #endif
 
 #include "astec_pch.h"
-#include "Gtia.h"
+#include "KnowledgeGroup.h"
 
 #include "Team.h"
 #include "App.h"
@@ -31,13 +31,13 @@
 #include "PopulationKnowledge.h"
 #include "AgentManager.h"
 
-IDManager Gtia::idManager_( 0 );
+IDManager KnowledgeGroup::idManager_( 0 );
 
 // -----------------------------------------------------------------------------
-// Name: Gtia constructor
+// Name: KnowledgeGroup constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-Gtia::Gtia( bool bGenerateId )
+KnowledgeGroup::KnowledgeGroup( bool bGenerateId )
     : pTeam_    ( 0 )
     , nID_      ( bGenerateId ? idManager_.GetFreeIdentifier() : 0 )
 {
@@ -45,10 +45,10 @@ Gtia::Gtia( bool bGenerateId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia constructor
+// Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-Gtia::Gtia( uint32 nId )
+KnowledgeGroup::KnowledgeGroup( uint32 nId )
     : pTeam_    ( 0 )
     , nID_      ( nId )
 {
@@ -56,10 +56,10 @@ Gtia::Gtia( uint32 nId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia destructor
+// Name: KnowledgeGroup destructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-Gtia::~Gtia()
+KnowledgeGroup::~KnowledgeGroup()
 {
     for( CIT_AgentKnowledgeMap it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )
     {
@@ -71,10 +71,10 @@ Gtia::~Gtia()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::ReadODB
+// Name: KnowledgeGroup::ReadODB
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
-void Gtia::ReadODB( InputArchive& archive )
+void KnowledgeGroup::ReadODB( InputArchive& archive )
 {
     archive.Section( "GroupeConnaissance" );
     archive.ReadAttribute( "id", nID_ );
@@ -85,10 +85,10 @@ void Gtia::ReadODB( InputArchive& archive )
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::WriteODB
+// Name: KnowledgeGroup::WriteODB
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
-void Gtia::WriteODB( MT_OutputArchive_ABC& archive )
+void KnowledgeGroup::WriteODB( MT_OutputArchive_ABC& archive )
 {
     archive.Section( "GroupeConnaissance" );
     archive.WriteAttribute( "id", nID_ );
@@ -106,10 +106,10 @@ void Gtia::WriteODB( MT_OutputArchive_ABC& archive )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-bool Gtia::Update( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
+bool KnowledgeGroup::Update( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
     if( agentKnowledges_.find( asnMsg.oid_connaissance ) != agentKnowledges_.end() )
         return false;
@@ -126,10 +126,10 @@ bool Gtia::Update( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 {
     IT_AgentKnowledgeMap itAgentKnowledge = agentKnowledges_.find( asnMsg.oid_connaissance );
     assert( itAgentKnowledge != agentKnowledges_.end() );
@@ -143,10 +143,10 @@ void Gtia::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
 {
     IT_AgentKnowledgeMap itAgentKnowledge = agentKnowledges_.find( asnMsg.oid_connaissance );
     assert( itAgentKnowledge != agentKnowledges_.end() );
@@ -161,74 +161,74 @@ void Gtia::Update( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::UpdatePopulationKnowledg
+// Name: KnowledgeGroup::UpdatePopulationKnowledg
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void Gtia::UpdatePopulationKnowledge( const T& message )
+void KnowledgeGroup::UpdatePopulationKnowledge( const T& message )
 {
     populationKnowledges_[ message.oid_connaissance_population ]->Update( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
 {
     UpdatePopulationKnowledge( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
 {
     UpdatePopulationKnowledge( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
 {
     UpdatePopulationKnowledge( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
 {
     UpdatePopulationKnowledge( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
 {
     UpdatePopulationKnowledge( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
 {
     UpdatePopulationKnowledge( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::FindAgentKnowledge
+// Name: KnowledgeGroup::FindAgentKnowledge
 // Created: APE 2004-09-10
 // -----------------------------------------------------------------------------
-AgentKnowledge* Gtia::FindAgentKnowledge( int nId )
+AgentKnowledge* KnowledgeGroup::FindAgentKnowledge( int nId )
 {
     IT_AgentKnowledgeMap it = agentKnowledges_.find( nId );    
     if( it != agentKnowledges_.end() )
@@ -237,10 +237,10 @@ AgentKnowledge* Gtia::FindAgentKnowledge( int nId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::FindKnowledgeOnAgent
+// Name: KnowledgeGroup::FindKnowledgeOnAgent
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-AgentKnowledge* Gtia::FindKnowledgeOnAgent( const Agent& agent )
+AgentKnowledge* KnowledgeGroup::FindKnowledgeOnAgent( const Agent& agent )
 {
     for( IT_AgentKnowledgeMap it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )
         if( &(it->second->GetRealAgent()) == &agent )
@@ -253,10 +253,10 @@ AgentKnowledge* Gtia::FindKnowledgeOnAgent( const Agent& agent )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-bool Gtia::Update( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+bool KnowledgeGroup::Update( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 {
     if( populationKnowledges_.find( asnMsg.oid_connaissance ) != populationKnowledges_.end() )
         return false;
@@ -268,10 +268,10 @@ bool Gtia::Update( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
 {
     IT_PopulationKnowledgeMap it = populationKnowledges_.find( asnMsg.oid_connaissance );
     assert( it != populationKnowledges_.end() );
@@ -280,10 +280,10 @@ void Gtia::Update( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::Update
+// Name: KnowledgeGroup::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void Gtia::Update( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+void KnowledgeGroup::Update( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
 {
     IT_PopulationKnowledgeMap it = populationKnowledges_.find( asnMsg.oid_connaissance );
     assert( it != populationKnowledges_.end() );
@@ -293,10 +293,10 @@ void Gtia::Update( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::FindPopulationKnowledge
+// Name: KnowledgeGroup::FindPopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge* Gtia::FindPopulationKnowledge( int nId )
+PopulationKnowledge* KnowledgeGroup::FindPopulationKnowledge( int nId )
 {
     CIT_PopulationKnowledgeMap it = populationKnowledges_.find( nId );    
     if( it != populationKnowledges_.end() )
@@ -305,10 +305,10 @@ PopulationKnowledge* Gtia::FindPopulationKnowledge( int nId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::FindKnowledgeOnPopulation
+// Name: KnowledgeGroup::FindKnowledgeOnPopulation
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-PopulationKnowledge* Gtia::FindKnowledgeOnPopulation( const Population& population )
+PopulationKnowledge* KnowledgeGroup::FindKnowledgeOnPopulation( const Population& population )
 {
     for( CIT_PopulationKnowledgeMap it = populationKnowledges_.begin(); it != populationKnowledges_.end(); ++it )
         if( &( it->second->GetPopulation() ) == &population )

@@ -16,7 +16,7 @@
 #include "IDManager.h"
 #include "OptionalValue.h"
 
-class Gtia;
+class KnowledgeGroup;
 class PopulationConcentration;
 class PopulationKnowledge;
 
@@ -39,7 +39,7 @@ public:
     //! @name Accessors
     //@{
     uint                               GetID                 () const;
-    const Gtia&                    GetGtia               () const;
+    const KnowledgeGroup&                    GetKnowledgeGroup               () const;
     const PopulationKnowledge*     GetPopulationKnowledge() const;
     const PopulationConcentration* GetConcentration      () const;
     const MT_Vector2D&                 GetPosition           () const;
@@ -58,7 +58,7 @@ public:
 
 private:
     const uint                                   nID_;
-          Gtia*                              pGtia_;
+          KnowledgeGroup*                              pKnowledgeGroup_;
     const PopulationKnowledge*               pPopulationKnowledge_;
     const PopulationConcentration*           pConcentration_;
           MT_Vector2D                            position_;

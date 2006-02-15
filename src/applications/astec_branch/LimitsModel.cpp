@@ -3,35 +3,28 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: SBO 2005-09-02 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
+#include "astec_pch.h"
+#include "LimitsModel.h"
+#include "TacticalLine_ABC.h"
+
 // -----------------------------------------------------------------------------
-// Name: Object_Camp::GetTC2ID
-// Created: SBO 2005-09-02
+// Name: LimitsModel constructor
+// Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-inline
-uint Object_Camp::GetTC2ID() const
+LimitsModel::LimitsModel()
 {
-    return nTC2ID_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_Camp::SetTC2ID
-// Created: SBO 2005-09-02
+// Name: LimitsModel destructor
+// Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-inline
-void Object_Camp::SetTC2ID( uint nTC2ID )
+LimitsModel::~LimitsModel()
 {
-    nTC2ID_ = nTC2ID;
+    Resolver< TacticalLine_ABC >::DeleteAll();
 }

@@ -8,42 +8,42 @@
 // *****************************************************************************
 //
 // $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Gtia.inl $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/KnowledgeGroup.inl $
 // $Author: Ape $
 // $Modtime: 23/11/04 18:06 $
 // $Revision: 8 $
-// $Workfile: Gtia.inl $
+// $Workfile: KnowledgeGroup.inl $
 //
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::GetID
+// Name: KnowledgeGroup::GetID
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 inline
-uint Gtia::GetID() const
+uint KnowledgeGroup::GetID() const
 {
     return nID_;
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::GetAgentKnowledges
+// Name: KnowledgeGroup::GetAgentKnowledges
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 inline
-const Gtia::T_AgentKnowledgeMap& Gtia::GetAgentKnowledges() const
+const KnowledgeGroup::T_AgentKnowledgeMap& KnowledgeGroup::GetAgentKnowledges() const
 {
     return agentKnowledges_;    
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::SetTeam
+// Name: KnowledgeGroup::SetTeam
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
 inline
-void Gtia::SetTeam( Team& team )
+void KnowledgeGroup::SetTeam( Team& team )
 {
     if( pTeam_ != 0 )
     {
@@ -56,22 +56,22 @@ void Gtia::SetTeam( Team& team )
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::SetType
+// Name: KnowledgeGroup::SetType
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
 inline
-void Gtia::SetType( const std::string& strType )
+void KnowledgeGroup::SetType( const std::string& strType )
 {
     strType_ = strType;
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::GetTeam
+// Name: KnowledgeGroup::GetTeam
 // Created: APE 2004-05-27
 // -----------------------------------------------------------------------------
 inline
-Team& Gtia::GetTeam() const
+Team& KnowledgeGroup::GetTeam() const
 {
 //$$$$ en attendant un refactoring des données coté SIM et de leur reception.
 //    assert( pTeam_ != 0 );
@@ -79,11 +79,11 @@ Team& Gtia::GetTeam() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gtia::GetPopulationKnowledges
+// Name: KnowledgeGroup::GetPopulationKnowledges
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 inline
-const Gtia::T_PopulationKnowledgeMap& Gtia::GetPopulationKnowledges() const
+const KnowledgeGroup::T_PopulationKnowledgeMap& KnowledgeGroup::GetPopulationKnowledges() const
 {
     return populationKnowledges_;
 }

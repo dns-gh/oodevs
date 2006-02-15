@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectKnowledgeAutomataPerception_h_
-#define __ObjectKnowledgeAutomataPerception_h_
+#ifndef __CampAttributes_h_
+#define __CampAttributes_h_
 
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
@@ -16,24 +16,27 @@
 #include "OptionalValue.h"
 #include "Resolver_ABC.h"
 
+class Controller;
 class Object_ABC;
 class Agent;
 
 // =============================================================================
-/** @class  ObjectKnowledgeAutomataPerception
-    @brief  ObjectKnowledgeAutomataPerception
+/** @class  CampAttributes
+    @brief  CampAttributes
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledgeAutomataPerception : public Extension_ABC
-                                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+class CampAttributes : public Extension_ABC
+                     , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                     , public Updatable_ABC< ASN1T_MsgObjectUpdate >
+                     , public Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgeAutomataPerception( const Resolver_ABC< Agent >& resolver );
-    virtual ~ObjectKnowledgeAutomataPerception();
+             CampAttributes( const Resolver_ABC< Agent >& resolver );
+    virtual ~CampAttributes();
     //@}
 
     //! @name Operations
@@ -43,28 +46,30 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectKnowledgeAutomataPerception( const ObjectKnowledgeAutomataPerception& );            //!< Copy constructor
-    ObjectKnowledgeAutomataPerception& operator=( const ObjectKnowledgeAutomataPerception& ); //!< Assignement operator
+    CampAttributes( const CampAttributes& );            //!< Copy constructor
+    CampAttributes& operator=( const CampAttributes& ); //!< Assignement operator
     //@}
 
     //! @name Types
     //@{
-    typedef std::set< const Agent* > T_Agents;
+    typedef std::vector< unsigned long > T_NbcIds;
     //@}
 
     //! @name Helpers
     //@{
     virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void Update( const ASN1T_MsgObjectUpdate& message );
+    virtual void Update( const ASN1T_MsgObjectCreation& message );
+    template< typename T >
+    void DoUpdate( const T& message );
     //@}
 
 private:
     //! @name Member data
     //@{
     const Resolver_ABC< Agent >& resolver_;
-
-    bool set_;
-    T_Agents detectingAutomats_;
+    Agent* tc2_;
     //@}
 };
 
-#endif // __ObjectKnowledgeAutomataPerception_h_
+#endif // __CampAttributes_h_

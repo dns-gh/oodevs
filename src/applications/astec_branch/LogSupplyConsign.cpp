@@ -25,6 +25,7 @@
 #include "Agent.h"
 #include "LogSupplyConsign_ListView_Item.h"
 #include "Model.h"
+#include "AgentsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign constructor
@@ -32,7 +33,7 @@
 // -----------------------------------------------------------------------------
 LogSupplyConsign::LogSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asn )
     : nID_              ( asn.oid_consigne )
-    , pion_             ( App::GetApp().GetModel().GetAgent( asn.oid_automate ) )
+    , pion_             ( App::GetApp().GetModel().agents_.GetAgent( asn.oid_automate ) )
     , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_( 0 )
     , pAutomateLogProvidingConvoyResources_( 0 )
@@ -80,7 +81,7 @@ void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTrait
 //            pAutomateLogHandling_->TerminateConsign( *this );
         if( asn.oid_automate_log_traitant != 0 )
         {
-            pAutomateLogHandling_ = & App::GetApp().GetModel().GetAgent( asn.oid_automate_log_traitant );
+            pAutomateLogHandling_ = & App::GetApp().GetModel().agents_.GetAgent( asn.oid_automate_log_traitant );
 //            pAutomateLogHandling_->HandleConsign( *this );
         }        
         else 
@@ -93,7 +94,7 @@ void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTrait
 //            pPionLogConvoying_->TerminateConsign( *this );
         if( asn.oid_pion_convoyant != 0 )
         {
-            pPionLogConvoying_ = &App::GetApp().GetModel().GetAgent( asn.oid_pion_convoyant );
+            pPionLogConvoying_ = &App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion_convoyant );
 //            pPionLogConvoying_->HandleConsign( *this );
         }        
         else 
@@ -103,7 +104,7 @@ void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTrait
     if( asn.m.oid_automate_log_fournissant_moyens_convoiPresent )
     {
         if( asn.oid_automate_log_fournissant_moyens_convoi != 0 )
-            pAutomateLogProvidingConvoyResources_ = &App::GetApp().GetModel().GetAgent( asn.oid_automate_log_fournissant_moyens_convoi );
+            pAutomateLogProvidingConvoyResources_ = &App::GetApp().GetModel().agents_.GetAgent( asn.oid_automate_log_fournissant_moyens_convoi );
         else
             pAutomateLogProvidingConvoyResources_ = 0;
     }

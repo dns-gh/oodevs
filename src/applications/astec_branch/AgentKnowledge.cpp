@@ -17,6 +17,7 @@
 #include "ASN_Messages.h"
 #include "AgentManager.h"
 #include "Model.h"
+#include "AgentsModel.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 
@@ -24,10 +25,10 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, Gtia& owner )
+AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, KnowledgeGroup& owner )
     : nID_                    ( asnMsg.oid_connaissance )
     , owner_                  ( owner )
-    , realAgent_              ( App::GetApp().GetModel().GetAgent( asnMsg.oid_unite_reelle ) )
+    , realAgent_              ( App::GetApp().GetModel().agents_.GetAgent( asnMsg.oid_unite_reelle ) )
 {
     // NOTHING
 }
@@ -101,7 +102,7 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
         automatePerceptionMap_.Data().clear();
         for( uint i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
         {
-            Agent* pAgent = & App::GetApp().GetModel().GetAgent( asnMsg.perception_par_compagnie.elem[i].oid_compagnie );
+            Agent* pAgent = & App::GetApp().GetModel().agents_.GetAgent( asnMsg.perception_par_compagnie.elem[i].oid_compagnie );
             automatePerceptionMap_.Data().insert( std::make_pair( pAgent, (E_PerceptionResult)( 3 - asnMsg.perception_par_compagnie.elem[i].identification_level ) ) ); //$$$ DEGUEULASSE
         }
     }

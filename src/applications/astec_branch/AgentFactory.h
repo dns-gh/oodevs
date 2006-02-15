@@ -29,14 +29,12 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( Controller& controller, AgentTypes& types );
+             AgentFactory( Controller& controller, AgentTypes& types, Model& model );
     virtual ~AgentFactory();
     //@}
 
     //! @name Operations
     //@{
-    void SetModel( Model& model );
-
     virtual Agent* Create( const ASN1T_MsgAutomateCreation& asnMsg );
     virtual Agent* Create( const ASN1T_MsgPionCreation& asnMsg );
     virtual Population* Create( const ASN1T_MsgPopulationCreation& asnMsg );
@@ -58,8 +56,8 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    Model* model_;
     AgentTypes& types_;
+    Model& model_;
     //@}
 };
 

@@ -32,10 +32,11 @@ LogisticRouteAttributes::~LogisticRouteAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRouteAttributes::Update
-// Created: AGE 2006-02-14
+// Name: LogisticRouteAttributes::DoUpdate
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LogisticRouteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+template< typename T >
+void LogisticRouteAttributes::DoUpdate( const T& message )
 {
     if( message.m.attributs_specifiquesPresent
      && message.attributs_specifiques.t == T_AttrObjectSpecific_itineraire_logistique )
@@ -47,4 +48,31 @@ void LogisticRouteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& mess
         nLogRouteMaxWeight_ = message.attributs_specifiques.u.itineraire_logistique->poids_max_supporte;
         bLogRouteEquipped_  = message.attributs_specifiques.u.itineraire_logistique->itineraire_equipe;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes::Update
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+void LogisticRouteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+{
+    DoUpdate( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void LogisticRouteAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+{
+    DoUpdate( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void LogisticRouteAttributes::Update( const ASN1T_MsgObjectCreation& message )
+{
+    DoUpdate( message );
 }

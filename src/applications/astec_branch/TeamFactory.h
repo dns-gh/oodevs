@@ -7,50 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectFactory_h_
-#define __ObjectFactory_h_
+#ifndef __TeamFactory_h_
+#define __TeamFactory_h_
 
-#include "ObjectFactory_ABC.h"
+#include "TeamFactory_ABC.h"
 
 class Controller;
+class Model;
 
 // =============================================================================
-/** @class  ObjectFactory
-    @brief  Object factory
+/** @class  TeamFactory
+    @brief  TeamFactory
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-02-15
 // =============================================================================
-class ObjectFactory : public ObjectFactory_ABC
+class TeamFactory : public TeamFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controller& controller );
-    virtual ~ObjectFactory();
+             TeamFactory( Controller& controller, Model& model );
+    virtual ~TeamFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
+    virtual Team* CreateTeam( unsigned long id, DIN::DIN_Input& input );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectFactory( const ObjectFactory& );            //!< Copy constructor
-    ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    TeamFactory( const TeamFactory& );            //!< Copy constructor
+    TeamFactory& operator=( const TeamFactory& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
     Controller& controller_;
+    Model& model_;
     //@}
 };
 
-#endif // __ObjectFactory_h_
+#endif // __TeamFactory_h_

@@ -20,14 +20,14 @@ uint PopulationConcentrationKnowledge::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentrationKnowledge::GetGtia
+// Name: PopulationConcentrationKnowledge::GetKnowledgeGroup
 // Created: SBO 2005-10-20
 // -----------------------------------------------------------------------------
 inline
-const Gtia& PopulationConcentrationKnowledge::GetGtia() const
+const KnowledgeGroup& PopulationConcentrationKnowledge::GetKnowledgeGroup() const
 {
-    assert( pGtia_ );
-    return *pGtia_;
+    assert( pKnowledgeGroup_ );
+    return *pKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

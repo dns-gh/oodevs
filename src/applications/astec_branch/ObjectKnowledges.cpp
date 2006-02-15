@@ -50,7 +50,7 @@ void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    Get( message.oid_connaissance ).Update( message );
+    Get( message.oid_connaissance ).UpdateKnowledge( message );
     controller_.Update( *this );
 }
 

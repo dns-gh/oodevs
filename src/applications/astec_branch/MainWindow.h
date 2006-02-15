@@ -41,7 +41,7 @@ class AgentCreationPanel;
 class PopulationCreationPanel;
 class Agent_ABC;
 class Agent;
-class Gtia;
+class KnowledgeGroup;
 class MapEventFilter_ABC;
 
 class QProgressBar;
@@ -96,7 +96,7 @@ signals:
     void CenterOnPoint( const MT_Vector2D& vPoint );
     void TeamChanged();
     void ReadingReports( Agent_ABC& agent );
-    void ODBNewAgent( const std::string& strCategory, Gtia& gtia, Agent* pParent );
+    void ODBNewAgent( const std::string& strCategory, KnowledgeGroup& gtia, Agent* pParent );
 
 private:
     void WriteSettings();

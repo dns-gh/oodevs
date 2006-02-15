@@ -13,13 +13,17 @@
 #include "PopulationKnowledge.h"
 
 #include "App.h"
-#include "Gtia.h"
+#include "KnowledgeGroup.h"
 #include "Population.h"
 #include "AgentManager.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "TypePopulation.h"
 #include "Model.h"
+#include "TeamsModel.h"
+#include "AgentsModel.h"
+
+// $$$$ AGE 2006-02-15: 
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
@@ -27,9 +31,9 @@
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
     : nID_        ( asnMsg.oid_connaissance )
-    , pGtia_      ( & App::GetApp().GetModel().GetGtia      ( asnMsg.oid_groupe_possesseur ) )
-    , pTeam_      ( & App::GetApp().GetModel().GetTeam      ( asnMsg.camp                  ) )
-    , pPopulation_( & App::GetApp().GetModel().GetPopulation( asnMsg.oid_population_reelle ) )
+    , pKnowledgeGroup_      ( & App::GetApp().GetModel().teams_.GetKnowledgeGroup      ( asnMsg.oid_groupe_possesseur ) )
+    , pTeam_      ( & App::GetApp().GetModel().teams_.GetTeam      ( asnMsg.camp                  ) )
+    , pPopulation_( & App::GetApp().GetModel().agents_.GetPopulation( asnMsg.oid_population_reelle ) )
     , pType_      ( &pPopulation_->GetType() )
 {
     // NOTHING
@@ -88,7 +92,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
     assert( pKnowledge );
     concentrations_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
 
-//    App::GetApp().NotifyPopulationConcentrationKnowledgeCreated( *pGtia_, *pKnowledge );
+//    App::GetApp().NotifyPopulationConcentrationKnowledgeCreated( *pKnowledgeGroup_, *pKnowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +104,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
     IT_ConcentrationKnowledgeMap it = concentrations_.find( asnMsg.oid_connaissance_concentration );
     assert( it != concentrations_.end() );
     it->second->Update( asnMsg );
-//    App::GetApp().NotifyPopulationConcentrationKnowledgeUpdated( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationConcentrationKnowledgeUpdated( *pKnowledgeGroup_, *( it->second ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -111,7 +115,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 {
     IT_ConcentrationKnowledgeMap it = concentrations_.find( asnMsg.oid_connaissance_concentration );
     assert( it != concentrations_.end() );
-//    App::GetApp().NotifyPopulationConcentrationKnowledgeDeleted( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationConcentrationKnowledgeDeleted( *pKnowledgeGroup_, *( it->second ) );
     delete it->second;
     concentrations_.erase( it );
 }
@@ -128,7 +132,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
     assert( pKnowledge );
     flows_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
 
-//    App::GetApp().NotifyPopulationFlowKnowledgeCreated( *pGtia_, *pKnowledge );
+//    App::GetApp().NotifyPopulationFlowKnowledgeCreated( *pKnowledgeGroup_, *pKnowledge );
 }
     
 // -----------------------------------------------------------------------------
@@ -140,7 +144,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& 
     IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
     assert( it != flows_.end() );
     it->second->Update( asnMsg );
-//    App::GetApp().NotifyPopulationFlowKnowledgeUpdated( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationFlowKnowledgeUpdated( *pKnowledgeGroup_, *( it->second ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -151,7 +155,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 {
     IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
     assert( it != flows_.end() );
-//    App::GetApp().NotifyPopulationFlowKnowledgeDeleted( *pGtia_, *( it->second ) );
+//    App::GetApp().NotifyPopulationFlowKnowledgeDeleted( *pKnowledgeGroup_, *( it->second ) );
     delete it->second;
     flows_.erase( it );
 }
@@ -175,12 +179,12 @@ const PopulationKnowledge::T_FlowKnowledgeMap& PopulationKnowledge::GetFlows() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetGtia
+// Name: PopulationKnowledge::GetKnowledgeGroup
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-Gtia* PopulationKnowledge::GetGtia() const
+KnowledgeGroup* PopulationKnowledge::GetKnowledgeGroup() const
 {
-    return pGtia_;
+    return pKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

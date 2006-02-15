@@ -25,6 +25,7 @@
 #include "Agent.h"
 #include "LogMedicalConsign_ListView_Item.h"
 #include "Model.h"
+#include "AgentsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign constructor
@@ -32,7 +33,7 @@
 // -----------------------------------------------------------------------------
 LogMedicalConsign::LogMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& asn )
     : nID_             ( asn.oid_consigne )
-    , pion_            ( App::GetApp().GetModel().GetAgent( asn.oid_pion ) )
+    , pion_            ( App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion ) )
     , pPionLogHandling_( 0 )
     , wound_           ( (E_Wound)asn.blessure )
     , bMentalDeceased_ ( asn.blesse_mental )
@@ -70,7 +71,7 @@ void LogMedicalConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogSanteTraitementHum
 //            pPionLogHandling_->TerminateConsign( *this );
         if( asn.oid_pion_log_traitant != 0 )
         {
-            pPionLogHandling_ = & App::GetApp().GetModel().GetAgent( asn.oid_pion_log_traitant );
+            pPionLogHandling_ = & App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion_log_traitant );
 //            pPionLogHandling_->HandleConsign( *this );
         }        
         else 

@@ -30,10 +30,11 @@ CrossingSiteAttributes::~CrossingSiteAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttributes::Update
-// Created: AGE 2006-02-14
+// Name: CrossingSiteAttributes::DoUpdate
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+template< typename T >
+void CrossingSiteAttributes::DoUpdate( const T& message )
 {
     set_ = true;
     if( message.m.attributs_specifiquesPresent 
@@ -44,4 +45,31 @@ void CrossingSiteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& messa
         speed_ = message.attributs_specifiques.u.site_franchissement->vitesse_courant;
         needsConstruction_ = message.attributs_specifiques.u.site_franchissement->berges_a_amenager;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes::Update
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+void CrossingSiteAttributes::Update( const ASN1T_MsgObjectKnowledgeUpdate& message )
+{
+    DoUpdate( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void CrossingSiteAttributes::Update( const ASN1T_MsgObjectUpdate& message )
+{
+    DoUpdate( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void CrossingSiteAttributes::Update( const ASN1T_MsgObjectCreation& message )
+{
+    DoUpdate( message );
 }

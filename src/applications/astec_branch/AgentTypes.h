@@ -11,7 +11,9 @@
 #define __AgentTypes_h_
 
 #include "Resolver.h"
+
 namespace xml { class xistream; };
+
 class AgentType;
 class ComponentType;
 class DecisionalModel;
@@ -35,7 +37,7 @@ class AgentTypes : public Resolver< AgentType >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentTypes( xml::xistream& xis );
+             AgentTypes( const std::string& scipioXml );
     virtual ~AgentTypes();
     //@}
 

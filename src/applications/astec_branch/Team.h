@@ -29,7 +29,7 @@
 class ObjectKnowledge;
 class AgentKnowledge;
 class Object_ABC;
-class Gtia;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  Team
@@ -47,9 +47,9 @@ class Team : public Entity_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< uint, Gtia* > T_GtiaMap;
-    typedef T_GtiaMap::iterator         IT_GtiaMap;
-    typedef T_GtiaMap::const_iterator   CIT_GtiaMap;
+    typedef std::map< uint, KnowledgeGroup* > T_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::iterator         IT_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
 
     typedef std::map< uint, ObjectKnowledge* >   T_ObjectKnowledgeMap;
     typedef T_ObjectKnowledgeMap::iterator               IT_ObjectKnowledgeMap;
@@ -71,12 +71,12 @@ public:
     ~Team();
     //@}
 
-    Gtia* CreateGtia     ( uint32 nId );
-    void RegisterGtia   ( Gtia& gtia );
-    void RemoveGtia     ( Gtia& gtia );
-    void DeleteAllGtias ();
-    Gtia* FindGtia( uint nID );
-    const T_GtiaMap& GetGtias() const;
+    KnowledgeGroup* CreateKnowledgeGroup     ( uint32 nId );
+    void RegisterKnowledgeGroup   ( KnowledgeGroup& gtia );
+    void RemoveKnowledgeGroup     ( KnowledgeGroup& gtia );
+    void DeleteAllKnowledgeGroups ();
+    KnowledgeGroup* FindKnowledgeGroup( uint nID );
+    const T_KnowledgeGroupMap& GetKnowledgeGroups() const;
 
 
     //! @name Accessors
@@ -104,7 +104,7 @@ private:
     std::string         strName_;
     uint32              nID_;
 
-    T_GtiaMap            gtias_;
+    T_KnowledgeGroupMap            gtias_;
 //    T_DiplomatyVector    diplomaty_;
     T_ObjectKnowledgeMap objectKnowledges_;
     T_AgentKnowledgeMap  agentKnowledges_;    // Concatenation of the gtias' agent knowledges for easy browsing.

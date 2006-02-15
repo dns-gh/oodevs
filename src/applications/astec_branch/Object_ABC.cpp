@@ -26,82 +26,59 @@
 #include "Net_Def.h"
 #include "App.h"
 #include "World.h"
-#include "AgentManager.h"
 #include "Tools.h"
-#include "Team.h"
 #include "FireResult.h"
-#include "Model.h"
+#include "Controller.h"
 #include "xeumeuleu/xml.h"
+
 using namespace xml;
 
 Object_ABC::T_ObjectIDs Object_ABC::objectIds_;
 Object_ABC::T_Managers  Object_ABC::managers_;
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC constructor
-// Created: SBO 2005-09-02
-// -----------------------------------------------------------------------------
-Object_ABC::Object_ABC( ASN1T_EnumObjectType eType )
-    : nID_                           ( 0 )
-    , strName_                       ( ENT_Tr::ConvertFromObjectType( ( E_ObjectType )eType ) )
-    , nType_                         ( eType )
-    , pTeam_                         ( 0 )
-    , rConstructionPercentage_       ( 0.0 )
-    , rValorizationPercentage_       ( 0.0 )
-    , rBypassConstructionPercentage_ ( 0.0 )
-    , bPrepared_                     ( false )
-    , nTypeLocalisation_             ( (ASN1T_EnumTypeLocalisation)0 )
-    , strTypeDotationConstruction_   ()
-    , strTypeDotationValorization_   ()
-    , nNbrDotationConstruction_      ( 0 )
-    , nNbrDotationValorization_      ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Object_ABC::Object_ABC
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
-    : nID_                           ( asnMsg.oid )
-    , strName_                       ( asnMsg.nom )
-    , nType_                         ( asnMsg.type )
-    , pTeam_                         ( & App::GetApp().GetModel().GetTeam( asnMsg.camp ) )
+Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller )
+    : controller_( controller )
+    , nId_                           ( message.oid )
+    , strName_                       ( message.nom )
+    , nType_                         ( message.type )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
     , bPrepared_                     ( false )
-    , nTypeLocalisation_             ( asnMsg.localisation.type )
-    , strTypeDotationConstruction_   ()
-    , strTypeDotationValorization_   ()
-    , nNbrDotationConstruction_      ( 0 )
-    , nNbrDotationValorization_      ( 0 )
+    , nTypeLocalisation_             ( message.localisation.type )
+//    , strTypeDotationConstruction_   ()
+//    , strTypeDotationValorization_   ()
+//    , nNbrDotationConstruction_      ( 0 )
+//    , nNbrDotationValorization_      ( 0 )
 {
-    GetIDManagerForObjectType( nType_ ).LockIdentifier( nID_ );
+    InterfaceContainer< Extension_ABC >::Register( *this );
 
-    for( uint i = 0; i < asnMsg.localisation.vecteur_point.n; ++i )
+    for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
     {
         MT_Vector2D vTmp;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.localisation.vecteur_point.elem[i].data, vTmp );
+        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.localisation.vecteur_point.elem[i].data, vTmp );
         pointVector_.push_back( vTmp );
         center_ += vTmp;
     }
 
-    if( pointVector_.size() > 1 )
+    if( ! pointVector_.empty() )
         center_ /= pointVector_.size();
 
-    if( asnMsg.m.type_dotation_constructionPresent )
-    {
-//        strTypeDotationConstruction_ = App::GetApp().GetResourceName( asnMsg.type_dotation_construction );
-        nNbrDotationConstruction_    = 0;
-    }
+//    if( message.m.type_dotation_constructionPresent )
+//    {
+//        strTypeDotationConstruction_ = App::GetApp().GetResourceName( message.type_dotation_construction );
+//        nNbrDotationConstruction_    = 0;
+//    }
     
-    if( asnMsg.m.type_dotation_valorisationPresent )
-    {
-//        strTypeDotationValorization_ = App::GetApp().GetResourceName( asnMsg.type_dotation_valorisation );
-        nNbrDotationValorization_    = 0;
-    }
+//    if( message.m.type_dotation_valorisationPresent )
+//    {
+//        strTypeDotationValorization_ = App::GetApp().GetResourceName( message.type_dotation_valorisation );
+//        nNbrDotationValorization_    = 0;
+//    }
 }
 
 
@@ -112,54 +89,64 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Object_ABC::~Object_ABC()
 {
-    pointVector_.clear();
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: Object_ABC::GetId
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+unsigned long Object_ABC::GetId() const
+{
+    return nId_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object_ABC::GetName
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+const std::string& Object_ABC::GetName() const
+{
+    return strName_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: Object_ABC::Update
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void Object_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
+void Object_ABC::Update( const ASN1T_MsgObjectUpdate& message )
 {
-    bPrepared_ = asnMsg.en_preparation;
+    bPrepared_ = message.en_preparation;
 
-    if( asnMsg.m.nb_dotation_constructionPresent )
-        nNbrDotationConstruction_ = asnMsg.nb_dotation_construction;
-    if( asnMsg.m.nb_dotation_valorisationPresent )
-        nNbrDotationValorization_ = asnMsg.nb_dotation_valorisation;
+//    if( message.m.nb_dotation_constructionPresent )
+//        nNbrDotationConstruction_ = message.nb_dotation_construction;
+//    if( message.m.nb_dotation_valorisationPresent )
+//        nNbrDotationValorization_ = message.nb_dotation_valorisation;
 
-    if( asnMsg.m.pourcentage_constructionPresent )
-        rConstructionPercentage_ = asnMsg.pourcentage_construction;
-    if( asnMsg.m.pourcentage_valorisationPresent )
-        rValorizationPercentage_ = asnMsg.pourcentage_valorisation;
-    if( asnMsg.m.pourcentage_creation_contournementPresent )
-        rBypassConstructionPercentage_ = asnMsg.pourcentage_creation_contournement;
+    if( message.m.pourcentage_constructionPresent )
+        rConstructionPercentage_ = message.pourcentage_construction;
+    if( message.m.pourcentage_valorisationPresent )
+        rValorizationPercentage_ = message.pourcentage_valorisation;
+    if( message.m.pourcentage_creation_contournementPresent )
+        rBypassConstructionPercentage_ = message.pourcentage_creation_contournement;
 
-    if( asnMsg.m.localisationPresent )
+    if( message.m.localisationPresent )
     {
         center_.Reset();
         pointVector_.clear();
-        nTypeLocalisation_ = asnMsg.localisation.type;
-        for( uint i = 0; i < asnMsg.localisation.vecteur_point.n; ++i )
+        pointVector_.reserve( message.localisation.vecteur_point.n );
+        nTypeLocalisation_ = message.localisation.type;
+        for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
         {
             MT_Vector2D vTmp;
-            App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.localisation.vecteur_point.elem[i].data, vTmp );
+            App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.localisation.vecteur_point.elem[i].data, vTmp );
             pointVector_.push_back( vTmp );
             center_ += vTmp;
         }
         if( pointVector_.size() > 1 )
             center_ /= pointVector_.size();
     }
-
-    std::stringstream strOutputMsg;
-    strOutputMsg << "ObjectUpdate - ID: " << (int)nID_ 
-                 << " Prepared: " << (int)bPrepared_
-                 << " Construction :" << rConstructionPercentage_ << "%"
-                 << " Valorisation :" << rValorizationPercentage_ << "%"
-                 << " Contournement :" << rBypassConstructionPercentage_ << "%";
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
+    controller_.Update( *this );
 //    App::GetApp().NotifyObjectUpdated( *this );
 }
 
@@ -167,100 +154,22 @@ void Object_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
 // Name: Object_ABC::Update
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Object_ABC::Update( const ASN1T_MsgExplosion& asnMsg )
+void Object_ABC::Update( const ASN1T_MsgExplosion& message )
 {
-//    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-//        OnReceiveMsgExplosion( asnMsg.degats_pions.elem[ i ] );
+//    for( uint i = 0; i < message.degats_pions.n; ++i )
+//        OnReceiveMsgExplosion( message.degats_pions.elem[ i ] );
 
 //    App::GetApp().NotifyObjectExplosion( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::ReadODB
-// Created: APE 2004-08-31
+// Name: Object_ABC::Update
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void Object_ABC::ReadODB( InputArchive& archive )
+void Object_ABC::Update( const ASN1T_FireDamagesPion& message )
 {
-    std::string strType;
-    archive.ReadAttribute( "type", strType );
 
-    nType_ = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strType );
-
-    archive.ReadAttribute( "id", nID_ );
-    GetIDManagerForObjectType( nType_ ).LockIdentifier( nID_ );
-
-    std::string strTeam;
-    archive.ReadField( "Armee", strTeam );
-    pTeam_ = App::GetApp().GetModel().FindTeam( strTeam ); // $$$$ AGE 2006-02-13: 
-
-    if( !archive.ReadField( "Nom", strName_, InputArchive::eNothing ) )
-    {
-        strName_ = ENT_Tr::ConvertFromObjectType( ( E_ObjectType )nType_ );
-    }
-
-    archive.Section( "Forme" );
-    archive.Section( "Localisation" );
-
-    std::string strLocType;
-    archive.ReadAttribute( "type", strLocType );
-    Tools::FromString( strLocType.c_str(), nTypeLocalisation_ );
-
-    archive.BeginList( "Points" );
-    while( archive.NextListElement() )
-    {
-        std::string strPos;
-        archive.Section( "Point" );
-            archive.Read( strPos );
-        archive.EndSection(); // Point
-        MT_Vector2D vPos;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vPos );
-        pointVector_.push_back( vPos );
-    }
-    archive.EndList(); // Points
-
-    // Compute object center.
-    center_ = MT_Vector2D( 0.0, 0.0 );
-    for( IT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
-        center_ = center_ + (*it) / (double)pointVector_.size();
-
-    archive.EndSection(); // Localisation
-    archive.EndSection(); // Forme
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: Object_ABC::WriteODB
-// Created: APE 2004-08-31
-// -----------------------------------------------------------------------------
-void Object_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
-{
-    archive.WriteAttribute( "type", ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType_ ) );
-    archive.WriteAttribute( "id", nID_ );
-    archive.WriteField( "Armee", pTeam_->GetName() );
-
-    if( !strName_.empty() && strName_ != ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType_ ) )
-        archive.WriteField( "Nom", strName_ );
-
-    archive.Section( "Forme" );
-    archive.Section( "Localisation" );
-
-    archive.WriteAttribute( "type", (Tools::ToString( nTypeLocalisation_ )).ascii() );
-
-    archive.BeginList( "Points", pointVector_.size() );
-    for( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
-    {
-        archive.Section( "Point" );
-        std::string strPos;
-        App::GetApp().GetWorld().SimToMosMgrsCoord( (*it), strPos );
-        archive << strPos;
-        archive.EndSection(); // Point
-    }
-    archive.EndList(); // Points
-
-    archive.EndSection(); // Forme
-    archive.EndSection(); // Localisation
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: Object_ABC::GetIDManagerForObjectType
@@ -319,9 +228,9 @@ void Object_ABC::InitializeObjectIds( xistream& xis )
 // Name: Object_ABC::OnReceiveMsgExplosion
 // Created: SBO 2005-09-07
 // -----------------------------------------------------------------------------
-//void Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& asnMsg )
+//void Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& message )
 //{
-//    explosionResults_.push_back( new FireResult( asnMsg ) );
+//    explosionResults_.push_back( new FireResult( message ) );
 //    if( explosionResults_.size() > 20 )
 //        explosionResults_.erase( explosionResults_.begin() );
 //}

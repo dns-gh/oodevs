@@ -30,11 +30,11 @@ MIL_AgentID Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& asnMsg )
-    : nPopulationID_( asnMsg.oid_population )
-    , strName_      ( asnMsg.nom )
+Population::Population( const ASN1T_MsgPopulationCreation& message, const Resolver_ABC< Team >& resolver )
+    : nPopulationID_( message.oid_population )
+    , strName_      ( message.nom )
     , pType_        ( 0 ) // App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population ) )
-    , pTeam_        ( & App::GetApp().GetModel().GetTeam( asnMsg.oid_camp ) )
+    , pTeam_        ( &resolver.Get( message.oid_camp ) )
 {
 //    assert( pType_ );
 }
@@ -165,6 +165,24 @@ uint Population::GetDeadHumans() const
 unsigned long Population::GetId() const
 {
     return nPopulationID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::FindConcentration
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+const PopulationConcentration* Population::FindConcentration( uint nID ) const
+{
+    return Resolver< PopulationConcentration >::Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::FindFlow
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+const PopulationFlow* Population::FindFlow( uint nID ) const
+{
+    return Resolver< PopulationFlow >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------

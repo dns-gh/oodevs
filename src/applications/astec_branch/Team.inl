@@ -19,7 +19,7 @@
 
 #include "AgentKnowledge.h"
 #include "ObjectKnowledge.h"
-#include "Gtia.h"
+#include "KnowledgeGroup.h"
 
 
 // -----------------------------------------------------------------------------
@@ -137,13 +137,13 @@ void Team::RemoveAgentKnowledge( AgentKnowledge& knowledge )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::RegisterGtia
+// Name: Team::RegisterKnowledgeGroup
 /** @param  gtia 
 */
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
 inline
-void Team::RegisterGtia( Gtia& gtia )
+void Team::RegisterKnowledgeGroup( KnowledgeGroup& gtia )
 {
     gtia.SetTeam( *this );
     if( ! gtias_.insert( std::make_pair( gtia.GetID(), &gtia ) ).second )
@@ -152,57 +152,57 @@ void Team::RegisterGtia( Gtia& gtia )
 
 
 // -----------------------------------------------------------------------------
-// Name: Team::RemoveGtia
+// Name: Team::RemoveKnowledgeGroup
 /** @param  gtia 
 */
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
 inline
-void Team::RemoveGtia( Gtia& gtia )
+void Team::RemoveKnowledgeGroup( KnowledgeGroup& gtia )
 {
-    IT_GtiaMap it = gtias_.find( gtia.GetID() );
+    IT_KnowledgeGroupMap it = gtias_.find( gtia.GetID() );
     assert( it != gtias_.end() );
     gtias_.erase( it );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: Team::DeleteAllGtias
+// Name: Team::DeleteAllKnowledgeGroups
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
 inline
-void Team::DeleteAllGtias()
+void Team::DeleteAllKnowledgeGroups()
 {
-    for( IT_GtiaMap itGtia = gtias_.begin(); itGtia != gtias_.end(); ++itGtia )
-        delete itGtia->second;
+    for( IT_KnowledgeGroupMap itKnowledgeGroup = gtias_.begin(); itKnowledgeGroup != gtias_.end(); ++itKnowledgeGroup )
+        delete itKnowledgeGroup->second;
     gtias_.clear();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: Team::FindGtia
+// Name: Team::FindKnowledgeGroup
 /** @param  nID 
     @return 
     */
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
 inline
-Gtia* Team::FindGtia( uint nID )
+KnowledgeGroup* Team::FindKnowledgeGroup( uint nID )
 {
-    IT_GtiaMap itGtia = gtias_.find( nID );    
-    if( itGtia != gtias_.end() )
-        return itGtia->second;
+    IT_KnowledgeGroupMap itKnowledgeGroup = gtias_.find( nID );    
+    if( itKnowledgeGroup != gtias_.end() )
+        return itKnowledgeGroup->second;
     return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::GetGtias
+// Name: Team::GetKnowledgeGroups
 /** @return 
 */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
 inline
-const Team::T_GtiaMap& Team::GetGtias() const
+const Team::T_KnowledgeGroupMap& Team::GetKnowledgeGroups() const
 {
     return gtias_;
 }

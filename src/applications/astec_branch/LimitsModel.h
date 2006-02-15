@@ -7,39 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectFactory_h_
-#define __ObjectFactory_h_
+#ifndef __LimitsModel_h_
+#define __LimitsModel_h_
 
-#include "ObjectFactory_ABC.h"
+#include "ASN_Types.h"
+#include "Resolver.h"
 
-class Controller;
+class TacticalLine_ABC;
+
+namespace DIN {
+    class DIN_Input;
+};
+
 
 // =============================================================================
-/** @class  ObjectFactory
-    @brief  Object factory
+/** @class  LimitsModel
+    @brief  LimitsModel
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-02-10
 // =============================================================================
-class ObjectFactory : public ObjectFactory_ABC
+class LimitsModel : public Resolver< TacticalLine_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controller& controller );
-    virtual ~ObjectFactory();
+             LimitsModel();
+    virtual ~LimitsModel();
     //@}
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectFactory( const ObjectFactory& );            //!< Copy constructor
-    ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
+    LimitsModel( const LimitsModel& );            //!< Copy constructor
+    LimitsModel& operator=( const LimitsModel& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -49,8 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
     //@}
 };
 
-#endif // __ObjectFactory_h_
+#endif // __LimitsModel_h_

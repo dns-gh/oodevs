@@ -11,12 +11,10 @@
 #define __ObjectKnowledgeFactory_h_
 
 #include "ASN_Types.h"
-#include "Resolver_ABC.h"
 
 class ObjectKnowledge;
-class Agent;
-class Object_ABC;
 class Controller;
+class Model;
 
 // =============================================================================
 /** @class  ObjectKnowledgeFactory
@@ -30,9 +28,7 @@ class ObjectKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgeFactory( Controller& controller
-                                   , const Resolver_ABC< Agent >& agentResolver
-                                   , const Resolver_ABC< Object_ABC >& objectResolver );
+             ObjectKnowledgeFactory( Controller& controller, Model& model );
     virtual ~ObjectKnowledgeFactory();
     //@}
 
@@ -56,8 +52,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& agentResolver_;
-    const Resolver_ABC< Object_ABC >& objectResolver_;
+    Model& model_;
     //@}
 };
 

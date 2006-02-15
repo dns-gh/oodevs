@@ -24,6 +24,7 @@
 #include "AgentManager.h"
 #include "Agent.h"
 #include "Model.h"
+#include "AgentsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign constructor
@@ -31,7 +32,7 @@
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::LogMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn )
     : nID_             ( asn.oid_consigne )
-    , pion_            ( App::GetApp().GetModel().GetAgent( asn.oid_pion ) )
+    , pion_            ( App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion ) )
     , pPionLogHandling_( 0 )
     , nEquipmentTypeID_( asn.type_equipement )
     , nBreakdownTypeID_( asn.type_panne )
@@ -66,7 +67,7 @@ void LogMaintenanceConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogMaintenanceTra
 //        pPionLogHandling_->TerminateConsign( *this );
     if( asn.oid_pion_log_traitant != 0 )
     {
-        pPionLogHandling_ = & App::GetApp().GetModel().GetAgent( asn.oid_pion_log_traitant );
+        pPionLogHandling_ = & App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion_log_traitant );
 //        pPionLogHandling_->HandleConsign( *this );
     }        
     else 

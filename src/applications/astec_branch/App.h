@@ -30,7 +30,7 @@ class Agent;
 class Agent_ABC;
 class Population;
 class Report_ABC;
-class Gtia;
+class KnowledgeGroup;
 class Team;
 class Population;
 class PopulationConcentration;
@@ -47,9 +47,6 @@ class TypePopulation;
 class Resource;
 class Model;
 class Simulation;
-class ObjectFactory;
-class AgentFactory;
-class AgentTypes;
 class Controller;
 
 typedef std::map< MIL_AgentID, std::string > T_MosId_String_Map;
@@ -115,10 +112,7 @@ private:
     //! @name Member data
     //@{
     World*          pWorld_;
-    AgentTypes*     agentTypes_;
     Controller*     controller_;
-    ObjectFactory*  objectFactory_;
-    AgentFactory*   agentFactory_;
     Model*          model_;
     Simulation*     simulation_;
 

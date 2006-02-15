@@ -9,13 +9,18 @@
 
 #include "astec_pch.h"
 #include "ObjectFactory.h"
-#include "Object_Factory.h"
+#include "Object_ABC.h"
+#include "LogisticRouteAttributes.h"
+#include "NBCAttributes.h"
+#include "RotaAttributes.h"
+#include "CrossingSiteAttributes.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-ObjectFactory::ObjectFactory()
+ObjectFactory::ObjectFactory( Controller& controller )
+    : controller_( controller )
 {
     // NOTHING
 }
@@ -33,7 +38,29 @@ ObjectFactory::~ObjectFactory()
 // Name: ObjectFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& asnMsg )
+Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
-    return Object_Factory::Create( asnMsg );
+    Object_ABC* result = new Object_ABC( message, controller_ );
+    switch( message.type )
+    {
+    case EnumObjectType::itineraire_logistique:
+        result->Attach( *new LogisticRouteAttributes() );
+        result->UpdateObject( message );
+        break;
+    case EnumObjectType::nuage_nbc:
+    case EnumObjectType::zone_nbc:
+        result->Attach( *new NBCAttributes() );
+        result->UpdateObject( message );
+        break;
+    case EnumObjectType::rota:
+        result->Attach( *new RotaAttributes() );
+        result->UpdateObject( message );
+        break;
+    case EnumObjectType::site_franchissement:
+        result->Attach( *new CrossingSiteAttributes() );
+        result->UpdateObject( message );
+    default:
+        ;
+    };
+    return result;
 }

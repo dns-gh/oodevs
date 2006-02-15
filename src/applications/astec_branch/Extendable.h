@@ -58,6 +58,7 @@ private:
     //! @name Types
     //@{
     typedef          std::vector< BaseType* >       T_Extensions;
+    typedef typename T_Extensions::iterator        IT_Extensions;
     typedef typename T_Extensions::const_iterator CIT_Extensions;
     //@}
 

@@ -18,7 +18,7 @@
 #include "OptionalValue.h"
 
 class Agent;
-class Gtia;
+class KnowledgeGroup;
 
 
 // =============================================================================
@@ -36,7 +36,7 @@ private:
     friend class AgentKnowledgePanel;
 
 public:
-     AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, Gtia& owner );
+     AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, KnowledgeGroup& owner );
     ~AgentKnowledge();
 
     //! @name Events
@@ -49,7 +49,7 @@ public:
     uint               GetID       () const;
     const MT_Vector2D& GetPosition () const;
     Agent&         GetRealAgent() const;
-    Gtia&          GetOwner() const;
+    KnowledgeGroup&          GetOwner() const;
     //@}
 
 private:
@@ -61,7 +61,7 @@ private:
     //@}
 
 private:
-    Gtia&         owner_;
+    KnowledgeGroup&         owner_;
     Agent&        realAgent_;
     
     MT_Vector2D vPosition_;

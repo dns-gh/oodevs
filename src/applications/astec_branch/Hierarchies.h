@@ -17,7 +17,7 @@
 
 class Controller;
 class Agent;
-class Gtia;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  Hierarchies
@@ -36,7 +36,7 @@ class Hierarchies : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Hierarchies( Controller& controller, const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< Gtia >& gtiaResolver );
+             Hierarchies( Controller& controller, const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
     virtual ~Hierarchies();
     //@}
 
@@ -59,8 +59,8 @@ private:
     virtual void Update( const ASN1T_MsgAutomateCreation& message );
     virtual void Update( const ASN1T_MsgPionCreation& message );
 
-    void ChangeGtia( unsigned long id );
-    void ChangeGtia( const Gtia& gtia );
+    void ChangeKnowledgeGroup( unsigned long id );
+    void ChangeKnowledgeGroup( const KnowledgeGroup& gtia );
     void ChangeSuperior( unsigned long id );
     void AddChild   ( Hierarchies& child );
     void RemoveChild( Hierarchies& child );
@@ -77,9 +77,9 @@ private:
     //@{
     Controller& controller_;
     const Resolver_ABC< Agent >& agentResolver_;
-    const Resolver_ABC< Gtia >&  gtiaResolver_;
+    const Resolver_ABC< KnowledgeGroup >&  gtiaResolver_;
 
-    const Gtia*   gtia_;
+    const KnowledgeGroup*   gtia_;
     Hierarchies*  superior_;
     T_Hierarchies children_;
     //@}

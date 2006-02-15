@@ -7,50 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectFactory_h_
-#define __ObjectFactory_h_
+#ifndef __ObjectsModel_h_
+#define __ObjectsModel_h_
 
-#include "ObjectFactory_ABC.h"
+#include "ASN_Types.h"
+#include "Resolver.h"
 
-class Controller;
+class ObjectFactory_ABC;
+class Object_ABC;
+
 
 // =============================================================================
-/** @class  ObjectFactory
-    @brief  Object factory
+/** @class  ObjectsModel
+    @brief  ObjectsModel
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-02-10
 // =============================================================================
-class ObjectFactory : public ObjectFactory_ABC
+class ObjectsModel : public Resolver< Object_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controller& controller );
-    virtual ~ObjectFactory();
+             ObjectsModel( ObjectFactory_ABC& objectFactory ); 
+    virtual ~ObjectsModel();
     //@}
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
+    void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
+    Object_ABC& GetObject( unsigned long id );
+    void DeleteObject( unsigned long id );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectFactory( const ObjectFactory& );            //!< Copy constructor
-    ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    ObjectsModel( const ObjectsModel& );            //!< Copy constructor
+    ObjectsModel& operator=( const ObjectsModel& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    ObjectFactory_ABC& objectFactory_;
     //@}
 };
 
-#endif // __ObjectFactory_h_
+#endif // __ObjectsModel_h_

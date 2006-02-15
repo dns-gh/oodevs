@@ -27,6 +27,8 @@ class Object_ABC;
 // =============================================================================
 class NBCAttributes : public Extension_ABC
                     , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                    , public Updatable_ABC< ASN1T_MsgObjectUpdate >
+                    , public Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
@@ -50,6 +52,10 @@ private:
     //! @name Helpers
     //@{
     virtual void Update( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void Update( const ASN1T_MsgObjectUpdate& message );
+    virtual void Update( const ASN1T_MsgObjectCreation& message );
+    template< typename T >
+    void DoUpdate( const T& message );
     //@}
 
 private:

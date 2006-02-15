@@ -31,6 +31,7 @@ class AgentModel;
 
 class AgentKnowledge;
 
+// $$$$ AGE 2006-02-15: Toujours n'importe quoi !
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -44,7 +45,7 @@ class Population : public Agent_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit Population( const ASN1T_MsgPopulationCreation& asnMsg );
+             Population( const ASN1T_MsgPopulationCreation& asnMsg, const Resolver_ABC< Team >& resolver );
     virtual ~Population();
     //@}
 
@@ -61,8 +62,6 @@ public:
 	void UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
 	void DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
     //@}
-
-
 
     const PopulationConcentration* FindConcentration ( uint nID ) const;
     const PopulationFlow*          FindFlow          ( uint nID ) const;

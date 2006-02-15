@@ -19,6 +19,7 @@
 #include "PopulationKnowledge.h"
 #include "AgentManager.h"
 #include "Model.h"
+#include "TeamsModel.h"
 
 // =============================================================================
 // FlowPart
@@ -49,11 +50,11 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
 // -----------------------------------------------------------------------------
 PopulationFlowKnowledge::PopulationFlowKnowledge( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
     : nID_                 ( asnMsg.oid_connaissance_flux )
-    , pGtia_               ( & App::GetApp().GetModel().GetGtia( asnMsg.oid_groupe_possesseur ) )
+    , pKnowledgeGroup_               ( & App::GetApp().GetModel().teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pFlow_               ( 0 )
 {
-//    pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+//    pPopulationKnowledge_ = pKnowledgeGroup_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
 //    assert( pPopulationKnowledge_ );
 //    const Population& population = pPopulationKnowledge_->GetPopulation();
 //    

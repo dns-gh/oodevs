@@ -19,6 +19,7 @@
 #include "PopulationKnowledge.h"
 #include "AgentManager.h"
 #include "Model.h"
+#include "TeamsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
@@ -26,11 +27,11 @@
 // -----------------------------------------------------------------------------
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
     : nID_                 ( asnMsg.oid_connaissance_concentration )
-    , pGtia_               ( & App::GetApp().GetModel().GetGtia( asnMsg.oid_groupe_possesseur ) )
+    , pKnowledgeGroup_               ( & App::GetApp().GetModel().teams_.GetKnowledgeGroup( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pConcentration_      ( 0 )
 {
-//    pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+//    pPopulationKnowledge_ = pKnowledgeGroup_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
 //    assert( pPopulationKnowledge_ );
 //    const Population& population = pPopulationKnowledge_->GetPopulation();
 //

@@ -120,19 +120,15 @@ void App::Initialize( const std::string& scipioXml )
     xis >> start( "Scipio" )
             >> start( "Donnees" );
     InitializeTerrainData  ( xis );
-    agentTypes_ = new AgentTypes( xis );
     InitializeHumanFactors ( xis ); 
     InitializeObjectIds    ( xis );
 
-    MT_ChangeDir( currentDirectory );
-    
     controller_      = new Controller();
-    agentFactory_    = new AgentFactory( *controller_, *agentTypes_);
-    objectFactory_   = new ObjectFactory();
-    model_           = new Model( *agentFactory_, *objectFactory_ );
-    agentFactory_->SetModel( *model_ ); // $$$$ AGE 2006-02-14: caca
+    model_           = new Model( *controller_, scipioXml );
     simulation_      = new Simulation();
-    pMOSServer_      = new Network    ( *model_, *simulation_ );
+    pMOSServer_      = new Network( *model_, *simulation_ );
+
+    MT_ChangeDir( currentDirectory );
 
     pMOSServer_->Connect( "localhost", 10000 );
 };

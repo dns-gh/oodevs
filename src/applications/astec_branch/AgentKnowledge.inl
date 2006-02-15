@@ -49,7 +49,7 @@ Agent& AgentKnowledge::GetRealAgent() const
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
 inline
-Gtia& AgentKnowledge::GetOwner() const
+KnowledgeGroup& AgentKnowledge::GetOwner() const
 {
     return owner_;
 }

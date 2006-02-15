@@ -16,7 +16,7 @@
 // Name: Hierarchies constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Hierarchies::Hierarchies( Controller& controller, const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< Gtia >& gtiaResolver  )
+Hierarchies::Hierarchies( Controller& controller, const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< KnowledgeGroup >& gtiaResolver  )
     : controller_( controller )
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
@@ -42,7 +42,7 @@ Hierarchies::~Hierarchies()
 void Hierarchies::Update( const ASN1T_MsgAutomateCreation& message )
 {
     ChangeSuperior( message.oid_automate );
-    ChangeGtia( message.oid_groupe_connaissance );
+    ChangeKnowledgeGroup( message.oid_groupe_connaissance );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,18 +80,18 @@ void Hierarchies::Update( const ASN1T_MsgChangeAutomate& message )
 void Hierarchies::Update( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error ) 
-        ChangeGtia( message.oid_groupe_connaissance );
+        ChangeKnowledgeGroup( message.oid_groupe_connaissance );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::ChangeGtia
+// Name: Hierarchies::ChangeKnowledgeGroup
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::ChangeGtia( unsigned long id )
+void Hierarchies::ChangeKnowledgeGroup( unsigned long id )
 {
-    Gtia* gtia = gtiaResolver_.Find( id );
+    KnowledgeGroup* gtia = gtiaResolver_.Find( id );
     if( gtia )
-        ChangeGtia( *gtia );
+        ChangeKnowledgeGroup( *gtia );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,14 +110,14 @@ void Hierarchies::ChangeSuperior( unsigned long id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Hierarchies::ChangeGtia
+// Name: Hierarchies::ChangeKnowledgeGroup
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Hierarchies::ChangeGtia( const Gtia& gtia )
+void Hierarchies::ChangeKnowledgeGroup( const KnowledgeGroup& gtia )
 {
     gtia_ = &gtia;
     for( IT_Hierarchies it = children_.begin(); it != children_.end(); ++it )
-        (*it)->ChangeGtia( gtia );
+        (*it)->ChangeKnowledgeGroup( gtia );
     controller_.Update( *this );
 }
 

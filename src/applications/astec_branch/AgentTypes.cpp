@@ -23,8 +23,12 @@ using namespace xml;
 // Name: AgentTypes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentTypes::AgentTypes( xml::xistream& xis )
+AgentTypes::AgentTypes( const std::string& scipioXml )
 {
+    xml::xifstream xis( scipioXml );
+    xis >> start( "Scipio" )    
+            >> start( "Donnees" );
+
     std::string components, decisional, agents, automats, sensors;
     xis >> content( "Capteurs", sensors )
         >> content( "Composantes", components )

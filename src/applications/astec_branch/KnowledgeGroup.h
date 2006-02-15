@@ -8,20 +8,16 @@
 // *****************************************************************************
 //
 // $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Gtia.h $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/KnowledgeGroup.h $
 // $Author: Ape $
 // $Modtime: 23/11/04 18:22 $
 // $Revision: 8 $
-// $Workfile: Gtia.h $
+// $Workfile: KnowledgeGroup.h $
 //
 // *****************************************************************************
 
-#ifndef __Gtia_h_
-#define __Gtia_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#ifndef __KnowledgeGroup_h_
+#define __KnowledgeGroup_h_
 
 #include "ASN_Types.h"
 #include "IDManager.h"
@@ -34,15 +30,15 @@ class PopulationKnowledge;
 
 
 // =============================================================================
-/** @class  Gtia
+/** @class  KnowledgeGroup
     @brief  Represents a gtia.
     @par    Holds the gtia's knowledge on other agents.
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Gtia
+class KnowledgeGroup
 {
-    MT_COPYNOTALLOWED( Gtia );
+    MT_COPYNOTALLOWED( KnowledgeGroup );
     friend class GLTool;
 
 public:
@@ -60,9 +56,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Gtia( bool bGenerateId = false );
-             Gtia( uint32 nId );
-    virtual ~Gtia();
+             KnowledgeGroup( bool bGenerateId = false );
+             KnowledgeGroup( uint32 nId );
+    virtual ~KnowledgeGroup();
     //@}
 
     //! @name ODB operations
@@ -96,6 +92,7 @@ public:
     bool Update( const ASN1T_MsgUnitKnowledgeCreation&          asnMsg );
     void Update( const ASN1T_MsgUnitKnowledgeUpdate&            asnMsg );
     void Update( const ASN1T_MsgUnitKnowledgeDestruction&       asnMsg );
+
     bool Update( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
     void Update( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
     void Update( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
@@ -126,6 +123,6 @@ private:
 };
 
 
-#   include "Gtia.inl"
+#   include "KnowledgeGroup.inl"
 
-#endif // __Gtia_h_
+#endif // __KnowledgeGroup_h_

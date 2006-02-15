@@ -10,21 +10,21 @@
 #include "astec_pch.h"
 #include "ObjectKnowledgeFactory.h"
 #include "ObjectKnowledge.h"
-#include "ObjectKnowledgeAttributes.h"
-#include "ObjectKnowledgeAutomataPerception.h"
 #include "LogisticRouteAttributes.h"
 #include "NBCAttributes.h"
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
+#include "Model.h"
+#include "AgentsModel.h"
+#include "ObjectsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledgeFactory::ObjectKnowledgeFactory( Controller& controller, const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< Object_ABC >& objectResolver )
+ObjectKnowledgeFactory::ObjectKnowledgeFactory( Controller& controller, Model& model )
     : controller_( controller )
-    , agentResolver_( agentResolver )
-    , objectResolver_( objectResolver )
+    , model_( model )
 {
 
 }
@@ -44,9 +44,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // -----------------------------------------------------------------------------
 ObjectKnowledge* ObjectKnowledgeFactory::Create( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    ObjectKnowledge* knowledge = new ObjectKnowledge( message, objectResolver_  );
-    knowledge->Attach( *new ObjectKnowledgeAutomataPerception( agentResolver_ ) );
-    knowledge->Attach( *new ObjectKnowledgeAttributes( controller_, objectResolver_ ) );
+    ObjectKnowledge* knowledge = new ObjectKnowledge( message, controller_, model_.objects_, model_.agents_ );
     
     switch( message.type )
     {

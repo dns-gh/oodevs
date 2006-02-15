@@ -36,14 +36,22 @@
 #include "ObjectDetections.h"
 #include "AgentDetections.h"
 #include "VisionCones.h"
+#include "AgentsModel.h"
+#include "ObjectsModel.h"
+#include "TeamsModel.h"
+#include "LogisticsModel.h"
+#include "LimitsModel.h"
+#include "AgentFactory.h"
+#include "ObjectFactory.h"
+#include "AgentTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controller& controller, AgentTypes& types )
+AgentFactory::AgentFactory( Controller& controller, AgentTypes& types, Model& model )
     : controller_( controller )
-    , model_( 0 )
+    , model_( model )
     , types_( types )
 {
     // NOTHING
@@ -56,15 +64,6 @@ AgentFactory::AgentFactory( Controller& controller, AgentTypes& types )
 AgentFactory::~AgentFactory()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory::SetModel
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void AgentFactory::SetModel( Model& model )
-{
-    model_ = &model;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +96,8 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    Population* result = new Population( asnMsg );
-    AttachExtensions( *result );
+    Population* result = new Population( asnMsg, model_.teams_ );
+    AttachExtensions( *result ); // $$$$ AGE 2006-02-15: Moins d'extensions que ca...
 //    result->Update( asnMsg );
     return result;
 }
@@ -115,20 +114,20 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Dotations( controller_ ) );
     agent.Attach( *new Equipments( controller_ ) );
     agent.Attach( *new HumanFactors( controller_ ) );
-    agent.Attach( *new Lends( controller_, *model_ ) );
-    agent.Attach( *new Limits( *model_ ) );
-    agent.Attach( *new LogisticLinks( controller_, *model_ ) );
+    agent.Attach( *new Lends( controller_, model_.agents_ ) );
+    agent.Attach( *new Limits( model_.limits_ ) );
+    agent.Attach( *new LogisticLinks( controller_, model_.agents_ ) );
     agent.Attach( *new Paths() );
-    agent.Attach( *new Reinforcements( controller_, *model_ ) );
+    agent.Attach( *new Reinforcements( controller_, model_.agents_ ) );
     agent.Attach( *new Reports( agent, controller_ ) );
-    agent.Attach( *new Transports( controller_, *model_ ) );
+    agent.Attach( *new Transports( controller_, model_.agents_ ) );
     agent.Attach( *new Troops( controller_ ) );
     agent.Attach( *new MaintenanceStates( controller_ ) );
     agent.Attach( *new MedicalStates( controller_ ) );
     agent.Attach( *new SupplyStates( controller_ ) );
-    agent.Attach( *new Hierarchies( controller_, *model_, *model_ ) );
-    agent.Attach( *new ObjectDetections( controller_, *model_ ) );
-    agent.Attach( *new AgentDetections( controller_, *model_ ) );
+    agent.Attach( *new Hierarchies( controller_, model_.agents_, model_.teams_ ) );
+    agent.Attach( *new ObjectDetections( controller_, model_.objects_ ) );
+    agent.Attach( *new AgentDetections( controller_, model_.agents_ ) );
     agent.Attach( *new VisionCones() );
 }
 

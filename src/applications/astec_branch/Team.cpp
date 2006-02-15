@@ -24,7 +24,7 @@
 #include "Team.h"
 
 #include "App.h"
-#include "Gtia.h"
+#include "KnowledgeGroup.h"
 #include "Tools.h"
 #include "ObjectKnowledge.h"
 #include "Object_ABC.h"
@@ -54,7 +54,7 @@ Team::Team( uint nID, DIN::DIN_Input& input )
 Team::~Team()
 {
     this->DestroyAllObjectKnowledges();
-//    this->DeleteAllGtias();
+//    this->DeleteAllKnowledgeGroups();
 
 }
 
@@ -70,15 +70,15 @@ void Team::DestroyAllObjectKnowledges()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::CreateGtia
+// Name: Team::CreateKnowledgeGroup
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-Gtia* Team::CreateGtia( uint32 nId )
+KnowledgeGroup* Team::CreateKnowledgeGroup( uint32 nId )
 {
-    if( FindGtia( nId ) )
-        return FindGtia( nId );
-    Gtia* gtia = new Gtia( nId );
-    RegisterGtia( *gtia );
+    if( FindKnowledgeGroup( nId ) )
+        return FindKnowledgeGroup( nId );
+    KnowledgeGroup* gtia = new KnowledgeGroup( nId );
+    RegisterKnowledgeGroup( *gtia );
     return gtia;
 }
 

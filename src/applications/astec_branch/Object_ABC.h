@@ -22,24 +22,27 @@
 #include "ASN_Types.h"
 #include "IDManager.h"
 #include "FireResult.h"
+#include "Entity_ABC.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
 
-class Team;
+class Controller;
 namespace xml { class xistream; };
 
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object_ABC
+class Object_ABC : public Entity_ABC
+                 , private Extension_ABC
+                 , public Updatable_ABC< ASN1T_MsgObjectUpdate >
+                 , public Updatable_ABC< ASN1T_MsgExplosion >
+                 , public Updatable_ABC< ASN1T_FireDamagesPion >
 {
-    MT_COPYNOTALLOWED( Object_ABC );
-    friend class GLTool;
-    friend class ObjectPanel;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Object_ABC( ASN1T_EnumObjectType eType );
-             Object_ABC( const ASN1T_MsgObjectCreation& asnMsg );
+    explicit Object_ABC( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller );
     virtual ~Object_ABC();
     //@}
 
@@ -48,85 +51,67 @@ public:
     static void           InitializeObjectIds      ( xml::xistream& xis );
     static IDManager& GetIDManagerForObjectType( ASN1T_EnumObjectType nType );
     static IDManager& GetIDManagerForObjectType( uint );
+
+    // $$$$ AGE 2006-02-15: Crap ! Change Updatable::Update to Updatable::Something ?
+    template< typename T >
+    void UpdateObject( const T& message ) {
+        Entity_ABC::Update( message );
+    }
     //@}
 
     //! @name Accessors
     //@{
-    uint                       GetID                          () const;
-    const std::string&         GetName                        () const;
-    ASN1T_EnumObjectType       GetType                        () const;
-    const Team&            GetTeam                        () const;
-    bool                       IsPrepared                     () const;
-    MT_Float                   GetConstructionPercentage      () const;
-    MT_Float                   GetValorizationPercentage      () const;
-    MT_Float                   GetBypassConstructionPercentage() const;
-    const MT_Vector2D&         GetCenter                      () const;
-    const T_PointVector&       GetPointList                   () const;
-    ASN1T_EnumTypeLocalisation GetLocationType                () const;
-
-    const std::string&         GetTypeDotationConstruction    () const;
-    const std::string&         GetTypeDotationValorization    () const;
-    uint                       GetNbrDotationConstruction     () const;
-    uint                       GetNbrDotationValorization     () const;
+    unsigned long GetId() const;
+    const std::string& GetName() const;
     //@}
-
-    //! @name Modifiers
+    
+private:
+    //! @name Copy/Assignment
     //@{
-    /*
-    void SetType        ( ASN1T_EnumObjectType nType );
-    */
-    void SetID          ( uint nID );
-    void SetName        ( const std::string& strName );
-    void SetTeam        ( Team& team );
-    void SetLocalisation( ASN1T_EnumTypeLocalisation nType, const T_PointVector& pointVector );
+    Object_ABC( const Object_ABC& );
+    Object_ABC& operator=( const Object_ABC& );
     //@}
 
+private:
     //! @name Operations
     //@{
-    virtual void Update( const ASN1T_MsgObjectUpdate& asnMsg  );
-    virtual void Update( const ASN1T_MsgExplosion& asnMsg );
-    virtual void ReadODB (       InputArchive&   archive );
-    virtual void WriteODB(       MT_XXmlOutputArchive&  archive ) const;
-
-    // explosion results
-//    void OnReceiveMsgExplosion    ( const ASN1T_FireDamagesPion& asnMsg );
-//    void DeleteAllExplosionResults();
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    T_PointVector              pointVector_;
-    MT_Vector2D                center_;
-    T_FireResults              explosionResults_;
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    ASN1T_EnumObjectType       nType_;
+    virtual void Update( const ASN1T_MsgObjectUpdate& message );
+    virtual void Update( const ASN1T_MsgExplosion& message );
+    virtual void Update( const ASN1T_FireDamagesPion& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    uint                       nID_;
-    std::string                strName_;
-    Team*                  pTeam_;
+    Controller&          controller_;
+
+    ASN1T_EnumObjectType nType_;
+    unsigned long        nId_;
+    std::string          strName_;
+
+    T_PointVector        pointVector_;
+    MT_Vector2D          center_;
+
+    MT_Float rConstructionPercentage_;
+    MT_Float rValorizationPercentage_;
+    MT_Float rBypassConstructionPercentage_;
+
+    bool bPrepared_;
+//    T_FireResults              explosionResults_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+//    Team*                  pTeam_; // $$$$ AGE 2006-02-15: 
 
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;
-
-    MT_Float                   rConstructionPercentage_;
-    MT_Float                   rValorizationPercentage_;
-    MT_Float                   rBypassConstructionPercentage_;
-
     // Dotations
-    std::string                strTypeDotationConstruction_;
-    std::string                strTypeDotationValorization_;
-    uint                       nNbrDotationConstruction_;
-    uint                       nNbrDotationValorization_;
-
-    bool                       bPrepared_;
+    // $$$$ AGE 2006-02-15: 
+//    std::string                strTypeDotationConstruction_;
+//    std::string                strTypeDotationValorization_;
+//    uint                       nNbrDotationConstruction_;
+//    uint                       nNbrDotationValorization_;
     //@}
 
 private:
@@ -143,7 +128,5 @@ public:
     static T_Managers  managers_;
     //@}
 };
-
-#   include "Object_ABC.inl"
 
 #endif // __Object_ABC_h_
