@@ -62,28 +62,6 @@ void TacticalLine_ABC::SetName( const std::string strName )
 
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::SetState
-// Created: APE 2004-04-14
-// -----------------------------------------------------------------------------
-inline
-void TacticalLine_ABC::SetState( TacticalLine_ABC::E_State nState )
-{
-    nState_ = nState;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::SetNetworkState
-// Created: APE 2004-04-14
-// -----------------------------------------------------------------------------
-inline
-void TacticalLine_ABC::SetNetworkState( TacticalLine_ABC::E_NetworkState nNetworkState )
-{
-    nNetworkState_ = nNetworkState;
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::IsUpdatingToSim
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------

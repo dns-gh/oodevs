@@ -39,6 +39,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "ObjectsModel.h"
 #include "LogisticsModel.h"
+#include "LimitsModel.h"
 #include "App.h"
 #include "DIN_Types.h"
 
@@ -727,10 +728,8 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
     MT_LOG_INFO( "CtrlSendCurrentStateEnd", eReceived, 0 );
     bReceivingState_ = false;
-
-    // If we are using our own lines, upload them to the sim.
-//    if( bUseMosLimits_ )
-//        App::GetApp().GetLineManager().UpdateToSim();
+    if( bUseMosLimits_ )
+        model_.limits_.UpdateToSim(); // $$$$ AGE 2006-02-15: 
 }
 
 
@@ -742,7 +741,6 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 {
     MT_LOG_INFO( "CtrlCheckPointSaveBegin", eReceived, 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd
@@ -805,15 +803,11 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-        // limit_;
-//        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-//        if( pLimit )
-//        {
-//            pLimit->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-//            pLimit->SetState( TacticalLine_ABC::eStateOk );
-//        }
-//        else
-//            Limit::idManager_.LockIdentifier( asnMsg.oid );
+        TacticalLine_ABC* limit = model_.limits_.Find( asnMsg.oid );
+        if( limit )
+            limit->Update( asnMsg );
+        else
+            Limit::idManager_.LockIdentifier( asnMsg.oid ); // $$$$ AGE 2006-02-15: 
     }
 }
 
@@ -830,13 +824,9 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-//        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-//        if( pLimit )
-//        {
-//            pLimit->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-//            pLimit->SetState( TacticalLine_ABC::eStateOk );
-//        }
-        // If the limit was not found, it's a message for another MOS
+        TacticalLine_ABC* limit = model_.limits_.Find( asnMsg.oid );
+        if( limit )
+            limit->Update( asnMsg );
     }
 }
 
@@ -852,16 +842,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDes
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
-    {
-//        TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-//        if( pLimit )
-//        {
-//            App::GetApp().NotifyTacticalLineDeleted( *pLimit );
-//            App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
-//        }
-//        else
-//            Limit::idManager_.ReleaseIdentifier( asnMsg.oid );
-    }
+        model_.limits_.DeleteLimit( asnMsg.oid );
 }
 
 //-----------------------------------------------------------------------------
@@ -876,17 +857,11 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreation
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-//        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-//        if( pLima )
-//        {
-//            pLima->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-//            pLima->SetState( TacticalLine_ABC::eStateOk );
-//        }
-//        else
-//        {
-//            // If the limit was not found, it's a message for another MOS. Lock the identifier.
-//            Lima::idManager_.LockIdentifier( asnMsg.oid );
-//        }
+        TacticalLine_ABC* lima = model_.limits_.Find( asnMsg.oid );
+        if( lima )
+            lima->Update( asnMsg );
+        else
+            Lima::idManager_.LockIdentifier( asnMsg.oid ); // $$$$ AGE 2006-02-15: 
     }
 }
 
@@ -902,13 +877,9 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck&
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
     {
-//        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-//        if( pLima )
-//        {
-//            pLima->SetNetworkState( TacticalLine_ABC::eNetworkStateRegistered );
-//            pLima->SetState( TacticalLine_ABC::eStateOk );
-//        }
-//        // If the limit was not found, it's a message for another MOS.
+        TacticalLine_ABC* limit = model_.limits_.Find( asnMsg.oid );
+        if( limit )
+            limit->Update( asnMsg );
     }
 }
 
@@ -923,16 +894,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestr
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
-    {
-//        TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg.oid );
-//        if( pLima )
-//        {
-//            App::GetApp().NotifyTacticalLineDeleted( *pLima );
-//            App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
-//        }
-//        else
-//            Lima::idManager_.ReleaseIdentifier( asnMsg.oid );
-    }
+        model_.limits_.DeleteLima( asnMsg.oid );
 }
 
 //-----------------------------------------------------------------------------
@@ -945,11 +907,9 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation&
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
-//        App::GetApp().GetLineManager().UseSimTacticalLines();
+        model_.limits_.UseSimTacticalLines();
+        model_.limits_.Create( asnMsg );
     }
-
-//    Limit* pLimit = new Limit( asnMsg );
-//    App::GetApp().GetLineManager().RegisterLine( *pLimit );
 }
 
 
@@ -959,12 +919,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestruction& asnMsg )
 {
-//    TacticalLine_ABC* pLimit = App::GetApp().GetLineManager().FindLine( asnMsg );
-//    if( pLimit )
-//    {
-//        App::GetApp().NotifyTacticalLineDeleted( *pLimit );
-//        App::GetApp().GetLineManager().DeleteLine( asnMsg );
-//    }
+    model_.limits_.DeleteLimit( asnMsg );
 }
 
 
@@ -978,13 +933,10 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& a
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
-//        App::GetApp().GetLineManager().UseSimTacticalLines();
+        model_.limits_.UseSimTacticalLines();
+        model_.limits_.Create( asnMsg );
     }
-
-//    Lima* pLimit = new Lima( asnMsg );
-//    App::GetApp().GetLineManager().RegisterLine( *pLimit );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaDestruction
@@ -992,12 +944,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& a
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruction& asnMsg )
 {
-//    TacticalLine_ABC* pLima = App::GetApp().GetLineManager().FindLine( asnMsg );
-//    if( pLima )
-//    {
-//        App::GetApp().NotifyTacticalLineDeleted( *pLima );
-//        App::GetApp().GetLineManager().DeleteLine( asnMsg );
-//    }
+    model_.limits_.DeleteLima( asnMsg );
 }
 
 //=============================================================================
@@ -1248,10 +1195,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgCh
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
-    // $$$$ AGE 2006-02-10: Knowledge group
     model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
-    // $$$$ AGE 2006-02-10: 
-//        MT_LOG_ERROR_MSG( "Duplicate agent knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1312,7 +1256,6 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgO
 void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 {
     model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
-//        MT_LOG_ERROR_MSG( "Duplicate population knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -1398,8 +1341,6 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const AS
 void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
 {
     model_.objects_.CreateObject( asnMsg );
-    // $$$$ AGE 2006-02-10: 
-//    MT_LOG_INFO( "ObjectCreation - ID: " << asnMsg.oid, eReceived, 0 );
 }
 
 //-----------------------------------------------------------------------------

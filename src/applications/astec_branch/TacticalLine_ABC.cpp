@@ -46,6 +46,45 @@ TacticalLine_ABC::~TacticalLine_ABC()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& )
+{
+    nState_ = eStateOk;
+    nNetworkState_ = eNetworkStateRegistered;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& )
+{
+    nState_ = eStateOk;
+    nNetworkState_ = eNetworkStateRegistered;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& )
+{
+    nState_ = eStateOk;
+    nNetworkState_ = eNetworkStateRegistered;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::Update
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Update( const ASN1T_MsgLimaUpdateAck& )
+{
+    nState_ = eStateOk;
+    nNetworkState_ = eNetworkStateRegistered;
+}
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::AddPoint

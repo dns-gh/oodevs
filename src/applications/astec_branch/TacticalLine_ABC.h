@@ -67,6 +67,14 @@ public:
     virtual ~TacticalLine_ABC();
     //@}
 
+    //! @name Operations
+    //@{
+    void Update( const ASN1T_MsgLimitCreationAck& asnMsg );
+    void Update( const ASN1T_MsgLimitUpdateAck& asnMsg );
+    void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
+    void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
+    //@}
+
     //! @name Accessors
     //@{
     MIL_LineID            GetID() const;
@@ -75,9 +83,6 @@ public:
     void                  SetName( const std::string strName );
     E_NatureLevel         GetLevel() const;
 
-    void                  SetState( TacticalLine_ABC::E_State nState );
-    void                  SetNetworkState( TacticalLine_ABC::E_NetworkState nNetworkState );
-    
     bool                  IsUpdatingToSim() const;
     bool                  IsCreatedByMos() const;
     

@@ -11,11 +11,8 @@
 
 #include "astec_pch.h"
 #include "Lima.h"
-
-#include "App.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "LineManager.h"
 #include "World.h"
 #include "Tools.h"
 
@@ -33,7 +30,7 @@ Lima::Lima()
 
     strName_ = Tools::ToString( eLimaFuncLCA );
     strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ += QString::number( nID_ & 0x3FFFFF );
 }
 
 
@@ -52,7 +49,7 @@ Lima::Lima( T_PointVector pointList, E_FuncLimaType nFuncType )
 
     strName_ = Tools::ToString( nFuncType );
     strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ += QString::number( nID_ & 0x3FFFFF );
 }
 
 
@@ -71,7 +68,7 @@ Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg )
 
     strName_ = Tools::ToString( eLimaFuncLCA );
     strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ += QString::number( nID_ & 0x3FFFFF );
 
     assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
@@ -207,7 +204,7 @@ void Lima::Read( MT_InputArchive_ABC& archive )
 
     strName_ = Tools::ToString( nFuncType_ );
     strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ += QString::number( nID_ & 0x3FFFFF );
 }
 
 

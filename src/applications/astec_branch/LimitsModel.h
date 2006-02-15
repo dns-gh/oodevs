@@ -38,6 +38,14 @@ public:
 
     //! @name Operations
     //@{
+    void Create( const ASN1T_MsgLimitCreation& asnMsg );
+    void Create( const ASN1T_MsgLimaCreation& asnMsg );
+
+    void DeleteLimit( unsigned long id );
+    void DeleteLima( unsigned long id );
+
+    void UpdateToSim();
+    void UseSimTacticalLines();
     //@}
 
 private:

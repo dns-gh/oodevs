@@ -11,11 +11,8 @@
 
 #include "astec_pch.h"
 #include "Limit.h"
-
-#include "App.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "LineManager.h"
 #include "World.h"
 
 IDManager Limit::idManager_( 138 );
@@ -28,7 +25,7 @@ Limit::Limit()
     : TacticalLine_ABC()
 {
     nID_ = idManager_.GetFreeIdentifier();
-    strName_ = QString( "Limit %1" ).arg(  App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
 }
 
 
@@ -43,7 +40,7 @@ Limit::Limit( T_PointVector pointList )
 {
     pointList_ = pointList;
     nID_ = idManager_.GetFreeIdentifier();
-    strName_ = QString( "Limit %1" ).arg(  App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
 }
 
 
@@ -61,7 +58,7 @@ Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg )
     bCreatedBy = false;
     nLevel_        = (E_NatureLevel) asnMsg.level;
 
-    strName_ = QString( "Limit %1" ).arg(  App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
 
     assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
