@@ -33,6 +33,7 @@ Team::Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGr
     , nID_    ( nID  )
 {
     input >> strName_;
+    controller_.Create( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Team::Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGr
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
+    controller_.Delete( *this );
     DeleteAll();
 }
 

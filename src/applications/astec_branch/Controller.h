@@ -11,7 +11,7 @@
 #define __Controller_h_
 
 #include "InterfaceContainer.h"
-#include "ExtensionObserver_ABC.h"
+#include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
 // =============================================================================
@@ -38,19 +38,19 @@ public:
     template< typename T >
     void Create( const T& extension ) {
         MT_LOG_INFO_MSG( "Creating " << typeid( T ).name() );
-        Apply( ExtensionObserver_ABC< T >::NotifyCreated, extension );
+        Apply( ElementObserver_ABC< T >::NotifyCreated, extension );
     };
 
     template< typename T >
     void Update( const T& extension ) {
         MT_LOG_INFO_MSG( "Updating " << typeid( T ).name() );
-        Apply( ExtensionObserver_ABC< T >::NotifyUpdated, extension );
+        Apply( ElementObserver_ABC< T >::NotifyUpdated, extension );
     };
 
     template< typename T >
     void Delete( const T& extension ) {
         MT_LOG_INFO_MSG( "Deleting " << typeid( T ).name() );
-        Apply( ExtensionObserver_ABC< T >::NotifyDeleted, extension );
+        Apply( ElementObserver_ABC< T >::NotifyDeleted, extension );
     };
     //@}
 

@@ -7,32 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionObserver_ABC_h_
-#define __ExtensionObserver_ABC_h_
+#ifndef __ElementObserver_ABC_h_
+#define __ElementObserver_ABC_h_
 
 // =============================================================================
-/** @class  ExtensionObserver_ABC
+/** @class  ElementObserver_ABC
     @brief  Extension observer definition
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-template< typename Extension >
-class ExtensionObserver_ABC
+template< typename Element >
+class ElementObserver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionObserver_ABC() {};
-    virtual ~ExtensionObserver_ABC() {};
+             ElementObserver_ABC() {};
+    virtual ~ElementObserver_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const Extension& extension ) = 0;
-    virtual void NotifyUpdated( const Extension& extension ) = 0;
-    virtual void NotifyDeleted( const Extension& extension ) = 0;
+    virtual void NotifyCreated( const Element& ) {};
+    virtual void NotifyUpdated( const Element& ) = 0;
+    virtual void NotifyDeleted( const Element& ) {};
     //@}
 };
 
-#endif // __ExtensionObserver_ABC_h_
+#endif // __ElementObserver_ABC_h_

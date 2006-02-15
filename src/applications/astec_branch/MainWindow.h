@@ -45,6 +45,7 @@ class KnowledgeGroup;
 class MapEventFilter_ABC;
 
 class QProgressBar;
+class Controller;
 
 #include "MapEventFilter_ABC.h"
 
@@ -69,8 +70,8 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-     MainWindow();
-    ~MainWindow();
+    explicit MainWindow( Controller& controller );
+    virtual ~MainWindow();
 
     static MainWindow& GetMainWindow();
     //@}

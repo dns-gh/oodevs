@@ -23,11 +23,15 @@
 #   pragma interface
 #endif
 
+#include "ElementObserver_ABC.h"
+#include "Observer_ABC.h"
+
 class Team;
 class Gtia;
 class Agent;
 class ActionContext;
 class SelectedElement;
+class Controller;
 
 
 // =============================================================================
@@ -37,8 +41,10 @@ class SelectedElement;
 // Created: APE 2004-03-15
 // =============================================================================
 class AgentListView : public QListView
+                    , public Observer_ABC
+                    , public ElementObserver_ABC< Team >
 {
-    Q_OBJECT;
+//    Q_OBJECT;
     MT_COPYNOTALLOWED( AgentListView );
 
 private:
@@ -52,52 +58,22 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentListView( QWidget* pParent );
+     AgentListView( QWidget* pParent, Controller& controller );
     ~AgentListView();
 
     QSize sizeHint() const;
     //@}
 
-public slots:
-    void AddAgent( Agent& agent );
-    void AddGtia( Gtia& gtia );
-    void SetSelectedElement( SelectedElement& selectedElement );
-    void OnAgentUpdated( Agent& agent );
-
-private slots:
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol );
-    void OnRequestCenter();
-
-    void OnSelectionChange( QListViewItem* pItem );
-    void OnTeamChanged();
-    void OnAgentReparented( Agent& agent );
-
-private:
-    QDragObject* dragObject();
-    void dropEvent( QDropEvent* pEvent );
-    void dragEnterEvent( QDragEnterEvent* pEvent );
-
-    void keyPressEvent( QKeyEvent* pEvent );
-
-signals:
-    void CenterOnPoint( const MT_Vector2D& vPoint );
-    void ElementSelected( SelectedElement& selectedElement );
-    void NewPopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-
 private:
     //! @name Helpers
     //@{
-    Team*  ToTeam ( QListViewItem* pItem );
-    Gtia*  ToGtia ( QListViewItem* pItem );
-    Agent* ToAgent( QListViewItem* pItem );
-
-    void DeleteAssociatedElements( QListViewItem* pItem );
+    virtual void NotifyCreated( const Team& team );
+    virtual void NotifyUpdated( const Team& team );
+    virtual void NotifyDeleted( const Team& team );
     //@}
 
 private:
     QPopupMenu* pPopupMenu_;
 };
-
-#   include "AgentListView.inl"
 
 #endif // __AgentListView_h_
