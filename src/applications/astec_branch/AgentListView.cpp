@@ -90,7 +90,7 @@ void AgentListView::NotifyUpdated( const Team& team )
         const KnowledgeGroup& group = it.NextElement();
         if( ! child->IsA< const KnowledgeGroup* >() || child->GetValue< const KnowledgeGroup* >() != &group )
         {
-            ValuedListItem* newChild = new ValuedListItem( &group, child, "stoopid group" );
+            ValuedListItem* newChild = new ValuedListItem( &group, teamItem, child, "stoopid group" );
             delete child;
             child = newChild;
         }

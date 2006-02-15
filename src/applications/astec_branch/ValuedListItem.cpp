@@ -11,12 +11,91 @@
 #include "ValuedListItem.h"
 
 // -----------------------------------------------------------------------------
-// Name: ValuedListItem::rtti
-// Created: AGE 2005-09-15
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-int ValuedListItem::rtti() const
+ValuedListItem::ValuedListItem( QListView * parent )
+: QListViewItem( parent )
+, container_( 0 )
 {
-    return container_.rtti();
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListView * parent, QListViewItem * after )
+: QListViewItem( parent, after )
+, container_( 0 )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+: QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+, container_( 0 )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+: QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
+, container_( 0 )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListViewItem * parent )
+: QListViewItem( parent )
+, container_( 0 )
+{
+
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListViewItem * parent, QListViewItem * after )
+: QListViewItem( parent, after )
+, container_( 0 )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+: QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+, container_( 0 )
+{
+
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem constructor
+// Created: AGE 2006-02-15
+// -----------------------------------------------------------------------------
+ValuedListItem::ValuedListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+: QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
+, container_( 0 )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -25,5 +104,5 @@ int ValuedListItem::rtti() const
 // -----------------------------------------------------------------------------
 ValuedListItem::~ValuedListItem()
 {
-    delete &container_;
+    delete container_;
 }

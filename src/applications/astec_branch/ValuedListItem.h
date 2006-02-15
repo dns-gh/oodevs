@@ -36,23 +36,33 @@ class ValuedListItem : public QListViewItem
 public:
     //! @name Constructors/Destructor
     //@{
-    template< typename T >
-    ValuedListItem( T value, QListView * parent );
-    template< typename T >
-    ValuedListItem( T value, QListView * parent, QListViewItem * after );
-    template< typename T >
-    ValuedListItem( T value, QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    template< typename T >
-    ValuedListItem( T value, QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    ValuedListItem( QListView * parent );
+    ValuedListItem( QListView * parent, QListViewItem * after );
+    ValuedListItem( QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    ValuedListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+
+    ValuedListItem( QListViewItem * parent );
+    ValuedListItem( QListViewItem * parent, QListViewItem * after );
+    ValuedListItem( QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    ValuedListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
 
     template< typename T >
-    ValuedListItem( T value, QListViewItem * parent );
+    ValuedListItem( const T& value, QListView * parent );
     template< typename T >
-    ValuedListItem( T value, QListViewItem * parent, QListViewItem * after );
+    ValuedListItem( const T& value, QListView * parent, QListViewItem * after );
     template< typename T >
-    ValuedListItem( T value, QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    ValuedListItem( const T& value, QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
     template< typename T >
-    ValuedListItem( T value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    ValuedListItem( const T& value, QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+
+    template< typename T >
+    ValuedListItem( const T& value, QListViewItem * parent );
+    template< typename T >
+    ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after );
+    template< typename T >
+    ValuedListItem( const T& value, QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    template< typename T >
+    ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
     virtual ~ValuedListItem();
     //@}
 
@@ -63,7 +73,9 @@ public:
     template< typename T >
     const T& GetValue();
 
-    int rtti() const;
+    int rtti() const {
+        return 1000;
+    }
     //@}
 
 private:
@@ -76,7 +88,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    ValueContainer_ABC& container_;
+    ValueContainer_ABC* container_;
     //@}
 };
 
@@ -87,7 +99,7 @@ protected:
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindItem( T searched, QListViewItem* root )
+ValuedListItem* FindItem( const T& searched, QListViewItem* root )
 {
     if( ! root )
         return 0;
@@ -148,12 +160,10 @@ class ValueContainer : public ValueContainer_ABC
 {
 public:
     ValueContainer( const T& value ) : value_( value ) {};
-    virtual int rtti() const
-    {
+    virtual int rtti() const {
         return ListItemRtti< T >::rtti;
     }
-    const T& GetValue()
-    {
+    const T& GetValue() {
         return value_;
     };
 private:
@@ -167,7 +177,7 @@ private:
 template< typename T >
 bool ValuedListItem::IsA() const
 {
-    return rtti() == ListItemRtti< T >::rtti;
+    return container_ && container_->rtti() == ListItemRtti< T >::rtti;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +189,7 @@ const T& ValuedListItem::GetValue()
 {
     if( ! IsA< T >() )
         throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
-    return static_cast< ValueContainer< T >& >( container_ ).GetValue();
+    return static_cast< ValueContainer< T >*>( container_ )->GetValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -187,9 +197,9 @@ const T& ValuedListItem::GetValue()
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListView * parent )
+ValuedListItem::ValuedListItem( const T& value, QListView * parent )
 : QListViewItem( parent )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -198,9 +208,9 @@ ValuedListItem::ValuedListItem( T value, QListView * parent )
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListView * parent, QListViewItem * after )
+ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewItem * after )
 : QListViewItem( parent, after )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -209,9 +219,9 @@ ValuedListItem::ValuedListItem( T value, QListView * parent, QListViewItem * aft
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+ValuedListItem::ValuedListItem( const T& value, QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
 : QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -220,9 +230,9 @@ ValuedListItem::ValuedListItem( T value, QListView * parent, QString label1, QSt
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
 : QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -231,9 +241,9 @@ ValuedListItem::ValuedListItem( T value, QListView * parent, QListViewItem * aft
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListViewItem * parent )
+ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent )
 : QListViewItem( parent )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -242,9 +252,9 @@ ValuedListItem::ValuedListItem( T value, QListViewItem * parent )
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListViewItem * parent, QListViewItem * after )
+ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after )
 : QListViewItem( parent, after )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -253,9 +263,9 @@ ValuedListItem::ValuedListItem( T value, QListViewItem * parent, QListViewItem *
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
 : QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
@@ -264,9 +274,9 @@ ValuedListItem::ValuedListItem( T value, QListViewItem * parent, QString label1,
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( T value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
+ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
 : QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( *new ValueContainer< T >( value ) )
+, container_( new ValueContainer< T >( value ) )
 {
 }
 
