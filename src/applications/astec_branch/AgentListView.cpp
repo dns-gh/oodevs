@@ -24,9 +24,11 @@
 #include "AgentListView.h"
 //#include "moc_AgentListView.cpp"
 #include "Controller.h"
+#include "ValuedListItem.h"
 
 #include "Agent.h"
 #include "Team.h"
+#include "KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView constructor
@@ -66,7 +68,8 @@ AgentListView::~AgentListView()
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyCreated( const Team& team )
 {
-    new MT_ValuedListViewItem< const Team*, eTeam >( &team, this, team.GetName().c_str() );
+    new ValuedListItem( &team, this, team.GetName().c_str() );
+    NotifyUpdated( team );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +78,25 @@ void AgentListView::NotifyCreated( const Team& team )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const Team& team )
 {
-    // 
+    ValuedListItem* teamItem = FindChild( &team, firstChild() );
+    if( ! teamItem )
+        throw "up";
+
+    ValuedListItem* child = (ValuedListItem*)( teamItem->firstChild() );
+    Iterator< const KnowledgeGroup& > it = team.CreateIterator();
+
+    while( it.HasMoreElements() )
+    {
+        const KnowledgeGroup& group = it.NextElement();
+        if( ! child->IsA< const KnowledgeGroup* >() || child->GetValue< const KnowledgeGroup* >() != &group )
+        {
+            ValuedListItem* newChild = new ValuedListItem( &group, child, "stoopid group" );
+            delete child;
+            child = newChild;
+        }
+        // $$$$ AGE 2006-02-15: Display 'group' in 'child' 
+        child = (ValuedListItem*)( child->nextSibling() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -84,17 +105,9 @@ void AgentListView::NotifyUpdated( const Team& team )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyDeleted( const Team& team )
 {
-    QListViewItem* item = firstChild();
-    while( item != 0 )
-    {
-        MT_ValuedListViewItem< const Team*, eTeam >* pCastItem = (MT_ValuedListViewItem< const Team*, (int)eTeam >*)item;
-        if( pCastItem->GetValue() == &team )
-        {
-            delete item;
-            return;
-        }
-        item = item->nextSibling();
-    }
+    ValuedListItem* item = FindChild( &team, firstChild() );
+    if( item )
+        delete item;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +118,3 @@ QSize AgentListView::sizeHint() const
 {
     return QSize( 230, 340 );
 }
-
-
-
-

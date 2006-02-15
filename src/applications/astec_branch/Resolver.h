@@ -11,6 +11,7 @@
 #define __Resolver_h_
 
 #include "Resolver_ABC.h"
+#include "Iterator.h"
 #include <stdexcept>
 #include <sstream>
 
@@ -38,6 +39,11 @@ public:
     {
         for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
             functor( *it->second );
+    };
+
+    Iterator< const T& > CreateIterator() const
+    {
+        return new AssociativeIterator< const T&, T_Elements >( elements_ );
     };
 
     void Register( const Identifier& identifier, T& element )
