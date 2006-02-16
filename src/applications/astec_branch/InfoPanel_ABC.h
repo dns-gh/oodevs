@@ -19,12 +19,6 @@
 #ifndef __InfoPanel_ABC_h_
 #define __InfoPanel_ABC_h_
 
-#include "SelectedElement.h"
-
-class Agent;
-class Population;
-class Agent_ABC;
-
 // =============================================================================
 /** @class  InfoPanel_ABC
     @brief  InfoPanel_ABC
@@ -33,8 +27,6 @@ class Agent_ABC;
 // =============================================================================
 class InfoPanel_ABC : public QScrollView
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,54 +34,8 @@ public:
     virtual ~InfoPanel_ABC();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void SetSelection( SelectedElement& item );
-    virtual void insertChild ( QObject*             pObj );
-    //@}
-
-protected slots:
-    //! @name Slots
-    //@{
-    virtual void OnUpdate           ();
-    virtual void OnClearSelection   () = 0;
-    virtual void OnAgentUpdated     ( Agent&      agent  );
-    virtual void OnObjectUpdated    ( Object_ABC& object );
-    virtual void OnPopulationUpdated( Population& population );
-
-    virtual void showEvent( QShowEvent* );
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    template< typename Cont1 >
-    void Suit( Cont1& destCont, unsigned int nSize, QListView* pView )
-    {
-        if( ! nSize )
-        {
-            pView->hide();
-            return;
-        }
-        pView->show();
-
-        while( destCont.size() < nSize )
-        {
-            destCont.push_back( new MT_ListViewItem( pView ) );
-            destCont.back()->SetBackground( destCont.size() % 2 == 0 ? QColor( 255, 255, 255 ) : QColor( 230, 230, 255 ) );
-        }
-        while( destCont.size() > nSize )
-        {
-            delete destCont.back();
-            destCont.pop_back();
-        }
-    }
-
-    bool     ShouldDisplay( const Agent&      agent      ) const;
-    bool     ShouldDisplay( const Population& population ) const;
-    bool     ShouldDisplay( const Object_ABC& object     ) const;
-    QLayout* layout       ();
-    //@}
+    virtual void insertChild ( QObject* pObj );
+    virtual QLayout* layout();
 
 private:
     //! @name Copy/Assignement
@@ -102,8 +48,6 @@ protected:
     //! @name Member data
     //@{
     QVBox* pBox_;
-    SelectedElement selectedItem_;
-    //bool bVisible_;
     //@}
 };
 

@@ -21,7 +21,8 @@
 
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "ActionObserver_ABC.h"
+#include "InfoPanel_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 class Agent;
 class ReportListView;
@@ -38,18 +39,17 @@ class Transports;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentStatePanel : public QScrollView
+class AgentStatePanel : public InfoPanel_ABC
                       , public Observer_ABC
+                      , public ElementObserver_ABC< Agent >
                       , public ElementObserver_ABC< Attributes >
                       , public ElementObserver_ABC< Contaminations >
                       , public ElementObserver_ABC< HumanFactors >
                       , public ElementObserver_ABC< Reinforcements >
                       , public ElementObserver_ABC< LogisticLinks >
                       , public ElementObserver_ABC< Transports >
-                      , public ActionObserver_ABC
+                      , public SelectionObserver< Agent >
 {
-    friend class GLTool;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -67,10 +67,10 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void insertChild ( QObject* pObj );
-    virtual QLayout* layout();
+    virtual void NotifySelected( const Agent* element );
 
-    virtual void NotifySelected( const Agent& agent );
+    virtual void NotifyUpdated( const Agent& );
+    virtual void NotifyDeleted( const Agent& );
     virtual void NotifyUpdated( const Attributes& attributes );
     virtual void NotifyUpdated( const Contaminations& attributes );
     virtual void NotifyUpdated( const HumanFactors& attributes );
@@ -85,8 +85,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
-    QVBox*   pBox_;
     Display* display_;
     const Agent* selected_;
     //@}

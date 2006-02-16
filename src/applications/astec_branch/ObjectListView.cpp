@@ -26,6 +26,9 @@
 #include "Controller.h"
 #include "ValuedListItem.h"
 #include "ObjectType.h"
+#include "ActionController.h"
+
+#include "moc_ObjectListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
@@ -33,8 +36,9 @@
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-ObjectListView::ObjectListView( QWidget* pParent, Controller& controller )
+ObjectListView::ObjectListView( QWidget* pParent, Controller& controller, ActionController& actionController )
     : QListView( pParent )
+    , actionController_( actionController )
     , pPopupMenu_   ( 0 )
 {
     setMinimumSize( 1, 1 );
@@ -42,6 +46,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controller& controller )
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
 
+    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controller.Register( *this );
 }
 
@@ -52,6 +57,17 @@ ObjectListView::ObjectListView( QWidget* pParent, Controller& controller )
 ObjectListView::~ObjectListView()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::OnSelectionChange
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+void ObjectListView::OnSelectionChange( QListViewItem* i )
+{
+    ValuedListItem* item = (ValuedListItem*)( i );
+    if( item->IsA< const Object_ABC* >() )
+        actionController_.Select( *item->GetValue< const Object_ABC* >() );
 }
 
 // -----------------------------------------------------------------------------

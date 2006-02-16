@@ -33,6 +33,7 @@ class ObjectType;
 
 // =============================================================================
 // Created: SBO 2005-09-02
+// $$$$ AGE 2006-02-16: renommmer en Object
 // =============================================================================
 class Object_ABC : public Entity_ABC
                  , private Extension_ABC

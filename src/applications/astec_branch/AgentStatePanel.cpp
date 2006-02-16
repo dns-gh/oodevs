@@ -31,18 +31,9 @@
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 AgentStatePanel::AgentStatePanel( QWidget* pParent, Controller& controller, ActionController& actionController  )
-    : QScrollView( pParent )
-    , actionController_( actionController )
-    , pBox_( new QVBox( viewport() ) )
+    : InfoPanel_ABC( pParent )
     , selected_( 0 )
 {
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    pBox_->setMargin( 5 );
-    pBox_->setSpacing( 5 );
-    addChild( pBox_ );
-    setResizePolicy( AutoOneFit );
-    setFrameStyle( QFrame::Box | QFrame::Sunken );
-
     display_ = new Display( this );
     display_->AddGroup( "Info" )
                 .AddItem( "Nom:", true )
@@ -96,7 +87,7 @@ AgentStatePanel::AgentStatePanel( QWidget* pParent, Controller& controller, Acti
                 .AddItem( "Réfugiés pris en compte:" );
 
     controller.Register( *this );
-    actionController_.Register( *this );
+    actionController.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,43 +100,28 @@ AgentStatePanel::~AgentStatePanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel::insertChild
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void AgentStatePanel::insertChild( QObject* pObj )
-{
-    pBox_->insertChild( pObj );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentStatePanel::layout
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-QLayout* AgentStatePanel::layout()
-{
-    if( !pBox_ )
-        return 0;
-    return pBox_->layout();
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentStatePanel::NotifySelected
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifySelected( const Agent& agent )
+void AgentStatePanel::NotifySelected( const Agent* agent )
 {
-    if( selected_ != & agent )
+    if( selected_ != agent )
     {
-        selected_ = & agent;
-        NotifyUpdated( agent.Get< Attributes >() );
-        NotifyUpdated( agent.Get< Contaminations >() );
-        NotifyUpdated( agent.Get< HumanFactors >() );
-        NotifyUpdated( agent.Get< Reinforcements >() );
-        if( agent.Retrieve< LogisticLinks >() )
-            NotifyUpdated( agent.Get< LogisticLinks >() );
+        selected_ = agent;
+        if( selected_ )
+        {
+            NotifyUpdated( selected_->Get< Attributes >() );
+            NotifyUpdated( selected_->Get< Contaminations >() );
+            NotifyUpdated( selected_->Get< HumanFactors >() );
+            NotifyUpdated( selected_->Get< Reinforcements >() );
+            if( selected_->Retrieve< LogisticLinks >() )
+                NotifyUpdated( selected_->Get< LogisticLinks >() );
+            else
+                display_->Group( "Liens logistiques" ).hide();
+            NotifyUpdated( selected_->Get< Transports >() );
+        }
         else
-            display_->Group( "Liens logistiques" ).hide();
-        NotifyUpdated( agent.Get< Transports >() );
+            display_->Clear();
     };
 }
 
@@ -311,4 +287,25 @@ void AgentStatePanel::NotifyUpdated( const Transports& attributes )
         }
         display_->Group( "Pions Transportés" ).Display( "", strTransports.str().c_str() );
     }
+}
+
+// $$$$ AGE 2006-02-16: Centraliser tout ca : 
+
+// -----------------------------------------------------------------------------
+// Name: AgentStatePanel::NotifyUpdated
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+void AgentStatePanel::NotifyUpdated( const Agent& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentStatePanel::NotifyDeleted
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+void AgentStatePanel::NotifyDeleted( const Agent& agent )
+{
+    if( selected_ = & agent )
+        NotifySelected( 0 );
 }

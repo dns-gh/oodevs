@@ -24,7 +24,7 @@
 
 class Object_ABC;
 class Controller;
-
+class ActionController;
 
 // =============================================================================
 /** @class  ObjectListView
@@ -36,16 +36,23 @@ class ObjectListView : public QListView
                      , public Observer_ABC
                      , public ElementObserver_ABC< Object_ABC >
 {
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListView( QWidget* pParent, Controller& controller );
+             ObjectListView( QWidget* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectListView();
     //@}
 
     //! @name Operations
     //@{
      QSize sizeHint() const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChange( QListViewItem* item );
     //@}
 
 private:
@@ -65,6 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
     QPopupMenu* pPopupMenu_;
     //@}
 };

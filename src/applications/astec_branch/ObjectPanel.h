@@ -20,10 +20,18 @@
 #define __ObjectPanel_h_
 
 #include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
 class Object_ABC;
-class QCheckBox;
-class QGrid;
+class CampAttributes;
+class CrossingSiteAttributes;
+class LogisticRouteAttributes;
+class NBCAttributes;
+class RotaAttributes;
+
+class Controller;
+class ActionController;
 class Display;
 
 // =============================================================================
@@ -33,42 +41,39 @@ class Display;
 // Created: APE 2004-06-11
 // =============================================================================
 class ObjectPanel : public InfoPanel_ABC
+                  , public Observer_ABC
+                  , public ElementObserver_ABC< Object_ABC >
+                  , public ElementObserver_ABC< CampAttributes >
+                  , public ElementObserver_ABC< CrossingSiteAttributes >
+                  , public ElementObserver_ABC< LogisticRouteAttributes >
+                  , public ElementObserver_ABC< NBCAttributes >
+                  , public ElementObserver_ABC< RotaAttributes >
+
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ObjectPanel );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectPanel( QWidget* pParent );
+             ObjectPanel( QWidget* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectPanel();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void OnClearSelection();
-    //@}
-
-private slots:
-    //! @name Helpers
-    //@{
-    virtual void OnUpdate();
-    virtual void OnObjectUpdated( Object_ABC& object );
-
-    void OnApply();
-    void OnCancel();
     //@}
 
 private:
-    //! @name Object types Helpers
+    //! @name Copy / Assignment
     //@{
-    void UpdateGeneric             ( Object_ABC& object );
-    void UpdateSiteFranchissement  ( Object_ABC& object );
-    void UpdateCamp                ( Object_ABC& object );
-    void UpdateNBC                 ( Object_ABC& object );
-    void UpdateROTA                ( Object_ABC& object );
-    void UpdateItineraireLogistique( Object_ABC& object );    
+    ObjectPanel( const ObjectPanel& );
+    ObjectPanel& operator=( const ObjectPanel& );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const Object_ABC* object );
     //@}
 
 private:
@@ -80,8 +85,8 @@ private:
     QSpinBox*  pPercentAroundEdit_;
     QCheckBox* pIsUnderPrepCheckBox_;
 
-    QPushButton* pApplyButton_;
-    QPushButton* pCancelButton_;
+//    QPushButton* pApplyButton_;
+//    QPushButton* pCancelButton_;
     //@}
 };
 

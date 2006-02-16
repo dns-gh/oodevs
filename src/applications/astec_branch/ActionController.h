@@ -12,8 +12,7 @@
 
 #include "InterfaceContainer.h"
 #include "Observer_ABC.h"
-
-class Agent;
+#include "SelectionObserver_ABC.h"
 
 // =============================================================================
 /** @class  ActionController
@@ -39,7 +38,13 @@ public:
 
     //! @name Operations
     //@{
-    void Select( const Agent& agent );
+    template< typename T >
+    void Select( const T& element )
+    {
+        Apply( SelectionObserver_ABC::BeforeSelection );
+        Apply( SelectionObserver_Base< T >::Select, element );
+        Apply( SelectionObserver_ABC::AfterSelection );
+    }
     //@}
 
 private:

@@ -24,7 +24,7 @@
 //#include "ReportPanel.h"
 //#include "AgentResourcesPanel.h"
 //#include "AgentKnowledgePanel.h"
-//#include "ObjectPanel.h"
+#include "ObjectPanel.h"
 //#include "ObjectReportPanel.h"
 //#include "ObjectKnowledgePanel.h"
 //#include "PopulationPanel.h"
@@ -52,7 +52,7 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
     pStatePanel_               = new AgentStatePanel( this, controller, actionController );
 //    pResourcesPanel_           = new AgentResourcesPanel( this );
 //    pAgentKnowledgePanel_      = new AgentKnowledgePanel( this );
-//    pObjectPanel_              = new ObjectPanel( this );
+//    pObjectPanel_              = new ObjectPanel( this, controller, actionController );
 //    pObjectReportPanel_        = new ObjectReportPanel( this );
 //    pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this );
 //    pAgentMaintenancePanel_    = new AgentMaintenancePanel( this );
@@ -65,6 +65,7 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
 
     pTabWidget_ = new QTabWidget( this );
     pTabWidget_->insertTab( pStatePanel_, tr( "Etat" ), 0 );
+//    pTabWidget_->insertTab( pObjectPanel_, tr( "Objet" ), 0 );
 
     addWidget  ( pTabWidget_ );
     raiseWidget( pTabWidget_ );

@@ -9,7 +9,6 @@
 
 #include "astec_pch.h"
 #include "ActionController.h"
-#include "ActionObserver_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionController constructor
@@ -45,13 +44,4 @@ void ActionController::Register( Observer_ABC& observer )
 void ActionController::Remove( Observer_ABC& observer )
 {
     InterfaceContainer< Observer_ABC >::Remove( observer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionController::Select
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void ActionController::Select( const Agent& agent )
-{
-    Apply( ActionObserver_ABC::NotifySelected, agent );
 }
