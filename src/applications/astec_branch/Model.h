@@ -23,6 +23,7 @@ class AgentTypes;
 class ObjectKnowledgeFactory;
 class AgentKnowledgeFactory_ABC;
 class TeamFactory_ABC;
+class ObjectTypes;
 
 // =============================================================================
 /** @class  Model
@@ -50,6 +51,7 @@ public:
     Controller& controller_;
 
     AgentTypes& types_;
+    ObjectTypes& objectTypes_;
 
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
     AgentKnowledgeFactory_ABC& agentsKnowledgeFactory_;

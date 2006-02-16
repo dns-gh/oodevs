@@ -29,22 +29,20 @@
 #include "Tools.h"
 #include "FireResult.h"
 #include "Controller.h"
-#include "xeumeuleu/xml.h"
 
-using namespace xml;
-
-Object_ABC::T_ObjectIDs Object_ABC::objectIds_;
-Object_ABC::T_Managers  Object_ABC::managers_;
+// $$$$ AGE 2006-02-16: possession des objets par la team ?
+// $$$$ AGE 2006-02-16: ou au moins les enregistrer ?
 
 // -----------------------------------------------------------------------------
 // Name: Object_ABC::Object_ABC
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller )
+Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver )
     : controller_( controller )
+    , type_                          ( typeResolver.Get( message.type ) )
     , nId_                           ( message.oid )
     , strName_                       ( message.nom )
-    , nType_                         ( message.type )
+    , team_                          ( teamResolver.Get( message.camp ) )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
@@ -79,6 +77,7 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
 //        strTypeDotationValorization_ = App::GetApp().GetResourceName( message.type_dotation_valorisation );
 //        nNbrDotationValorization_    = 0;
 //    }
+    controller_.Create( *this );
 }
 
 
@@ -89,7 +88,7 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
 // -----------------------------------------------------------------------------
 Object_ABC::~Object_ABC()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,9 +104,29 @@ unsigned long Object_ABC::GetId() const
 // Name: Object_ABC::GetName
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-const std::string& Object_ABC::GetName() const
+std::string Object_ABC::GetName() const
 {
-    return strName_;
+    std::stringstream stream;
+    stream << strName_ << " [" << nId_ << ']';
+    return stream.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object_ABC::GetTeam
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+const Team& Object_ABC::GetTeam() const
+{
+    return team_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object_ABC::GetType
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+ObjectType& Object_ABC::GetType() const
+{
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,58 +191,6 @@ void Object_ABC::DoUpdate( const ASN1T_FireDamagesPion& message )
 //        explosionResults_.erase( explosionResults_.begin() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Object_ABC::GetIDManagerForObjectType
-// Created: APE 2004-09-01
-// -----------------------------------------------------------------------------
-IDManager& Object_ABC::GetIDManagerForObjectType( ASN1T_EnumObjectType nType )
-{
-    return *managers_[ objectIds_[ nType ] ];
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object_ABC::GetIDManagerForObjectType
-// Created: HME 2005-11-08
-// -----------------------------------------------------------------------------
-IDManager& Object_ABC::GetIDManagerForObjectType( uint nType )
-{
-    return *managers_[ nType ];
-}
-
-namespace 
-{
-    struct ReadClass
-    {
-        void Read( xistream& xis )
-        {
-            std::string strObjectName;
-            int nId;
-
-            xis >> attribute( "nom", strObjectName )
-                >> attribute( "id", nId );
-            
-            ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strObjectName );
-            if( nType != -1 )
-            {
-                Object_ABC::objectIds_[ nType ] = nId;
-                IDManager*& pManager = Object_ABC::managers_[ nId ];
-                if( ! pManager )
-                    pManager = new IDManager( nId );
-            }
-        };
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object_ABC::InitializeObjectIds
-// Created: AGE 2005-04-05
-// -----------------------------------------------------------------------------
-void Object_ABC::InitializeObjectIds( xistream& xis )
-{
-    ReadClass readclass;
-    xis >> start( "Classes" )
-        >> list( "Classe", readclass, &ReadClass::Read );
-}
 
 //void Object_ABC::DeleteAllExplosionResults()
 //{

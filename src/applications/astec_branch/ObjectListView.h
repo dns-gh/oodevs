@@ -19,43 +19,28 @@
 #ifndef __ObjectListView_h_
 #define __ObjectListView_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
-class SelectedElement;
-class ActionContext;
 class Object_ABC;
+class Controller;
 
 
 // =============================================================================
 /** @class  ObjectListView
     @brief  ObjectListView
-    @par    Using example
-    @code
-    ObjectListView;
-    @endcode
 */
 // Created: APE 2004-08-05
 // =============================================================================
 class ObjectListView : public QListView
+                     , public Observer_ABC
+                     , public ElementObserver_ABC< Object_ABC >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ObjectListView );
-
-private:
-    enum 
-    {
-        eTeam,
-        eObjectType,
-        eObject
-    };
-
 public:
     //! @name Constructors/Destructor
     //@{
-     ObjectListView( QWidget* pParent );
-    ~ObjectListView();
+             ObjectListView( QWidget* pParent, Controller& controller );
+    virtual ~ObjectListView();
     //@}
 
     //! @name Operations
@@ -63,30 +48,19 @@ public:
      QSize sizeHint() const;
     //@}
 
-public slots:
-    void AddObject( Object_ABC& object );
-    void RemoveObject( Object_ABC& object );
-    void SetSelectedElement( SelectedElement& selectedElement );
-
-private slots:
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol );
-    void OnRequestCenter();
-
-    void OnSelectionChange( QListViewItem* pItem );
-    void OnTeamChanged();
-
-signals:
-    void CenterOnPoint( const MT_Vector2D& vPoint );
-    void ElementSelected( SelectedElement& selectedElement );
-    void NewPopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
-    Object_ABC* ToObject( QListViewItem* pItem );
+    ObjectListView( const ObjectListView& );
+    ObjectListView& operator=( const ObjectListView );
     //@}
 
-    void keyPressEvent( QKeyEvent* pEvent );
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const Object_ABC& object );
+    virtual void NotifyUpdated( const Object_ABC& object );
+    virtual void NotifyDeleted( const Object_ABC& object );
+    //@}
 
 private:
     //! @name Member data
@@ -94,7 +68,5 @@ private:
     QPopupMenu* pPopupMenu_;
     //@}
 };
-
-#   include "ObjectListView.inl"
 
 #endif // __ObjectListView_h_

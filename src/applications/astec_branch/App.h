@@ -104,7 +104,6 @@ private:
     void Initialize( const std::string& scipioXml );
     void InitializeTerrainData  ( xml::xistream& xis );
     void InitializeHumanFactors ( xml::xistream& xis );
-    void InitializeObjectIds    ( xml::xistream& xis );
 
     friend class GLTool;
 

@@ -25,9 +25,11 @@
 #include "Entity_ABC.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Resolver_ABC.h"
 
 class Controller;
-namespace xml { class xistream; };
+class Team;
+class ObjectType;
 
 // =============================================================================
 // Created: SBO 2005-09-02
@@ -42,20 +44,17 @@ class Object_ABC : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Object_ABC( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller );
+             Object_ABC( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller,
+                         const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver );
     virtual ~Object_ABC();
     //@}
-
-    //! @name Static Operations
-    //@{
-    static void           InitializeObjectIds      ( xml::xistream& xis );
-    static IDManager& GetIDManagerForObjectType( ASN1T_EnumObjectType nType );
-    static IDManager& GetIDManagerForObjectType( uint );
 
     //! @name Accessors
     //@{
     unsigned long GetId() const;
-    const std::string& GetName() const;
+    std::string GetName() const;
+    const Team& GetTeam() const;
+    ObjectType& GetType() const;
     //@}
     
 private:
@@ -76,14 +75,14 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller&          controller_;
+    Controller&   controller_;
+    ObjectType&   type_;
+    unsigned long nId_;
+    std::string   strName_;
+    Team&         team_;
 
-    ASN1T_EnumObjectType nType_;
-    unsigned long        nId_;
-    std::string          strName_;
-
-    T_PointVector        pointVector_;
-    MT_Vector2D          center_;
+    T_PointVector pointVector_;
+    MT_Vector2D   center_;
 
     MT_Float rConstructionPercentage_;
     MT_Float rValorizationPercentage_;
@@ -96,7 +95,7 @@ private:
 private:
     //! @name Member data
     //@{
-//    Team*                  pTeam_; // $$$$ AGE 2006-02-15: 
+    
 
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;
     // Dotations
@@ -105,20 +104,6 @@ private:
 //    std::string                strTypeDotationValorization_;
 //    uint                       nNbrDotationConstruction_;
 //    uint                       nNbrDotationValorization_;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< ASN1T_EnumObjectType, unsigned int >  T_ObjectIDs;
-    typedef std::map< unsigned int, IDManager* >        T_Managers;
-    //@}
-
-public:
-    //! @name Static members
-    //@{
-    static T_ObjectIDs objectIds_;
-    static T_Managers  managers_;
     //@}
 };
 

@@ -40,5 +40,17 @@ struct ListItemRtti< const Agent* > {
     enum { rtti = 1003 };
 };
 
+class ObjectType;
+template< >
+struct ListItemRtti< const ObjectType* > {
+    enum { rtti = 1004 };
+};
+
+class Object_ABC;
+template< >
+struct ListItemRtti< const Object_ABC* > {
+    enum { rtti = 1005 };
+};
+
 
 #endif // __ListItemRtti_h_

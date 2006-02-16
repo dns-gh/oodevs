@@ -13,6 +13,7 @@
 #include "ObjectFactory_ABC.h"
 
 class Controller;
+class Model;
 
 // =============================================================================
 /** @class  ObjectFactory
@@ -26,7 +27,7 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controller& controller );
+             ObjectFactory( Controller& controller, Model& model );
     virtual ~ObjectFactory();
     //@}
 
@@ -50,6 +51,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
+    Model& model_;
     //@}
 };
 

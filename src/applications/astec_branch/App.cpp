@@ -121,7 +121,6 @@ void App::Initialize( const std::string& scipioXml )
             >> start( "Donnees" );
     InitializeTerrainData  ( xis );
     InitializeHumanFactors ( xis ); 
-    InitializeObjectIds    ( xis );
 
     controller_      = new Controller();
     model_           = new Model( *controller_, scipioXml );
@@ -168,19 +167,6 @@ void App::InitializeHumanFactors( xistream& xis )
     Tiredness ::Initialize( factors );
     Experience::Initialize( factors );
     Morale    ::Initialize();
-}
-
-// -----------------------------------------------------------------------------
-// Name: App::InitializeObjectIds
-// Created: AGE 2005-04-05
-// -----------------------------------------------------------------------------
-void App::InitializeObjectIds( xml::xistream& xis )
-{
-    std::string strClassId;
-    xis >> content( "ClasseIDs", strClassId );
-    xifstream ids( strClassId );
-
-    Object_ABC::InitializeObjectIds( ids );
 }
 
 //-----------------------------------------------------------------------------

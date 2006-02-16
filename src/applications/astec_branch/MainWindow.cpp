@@ -27,8 +27,8 @@
 #include "Options.h"
 #include "AgentListView.h"
 #include "InfoPanel.h"
+#include "ObjectListView.h"
 
-//#include "ObjectListView.h"
 //#include "PopulationListView.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
@@ -53,9 +53,9 @@ MainWindow::MainWindow( Controller& controller )
     AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controller );
     pListsTabWidget->addTab( pAgentList_, tr( "Agents" ) );
     pAgentList_->header()->hide();
-//    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget );
-//    pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
-//    pObjectList_->header()->hide();
+    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controller );
+    pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
+    pObjectList_->header()->hide();
 //    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget );
 //	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
 //	pPopulationList_->header()->hide();
@@ -95,7 +95,7 @@ MainWindow::~MainWindow()
 {
     assert( pInstance_ != 0 );
 
-    delete pOptions_;
+//    delete pOptions_;
 
     pInstance_ = 0;
 }
