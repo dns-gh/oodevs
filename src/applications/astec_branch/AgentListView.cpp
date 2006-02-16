@@ -73,15 +73,25 @@ void AgentListView::NotifyCreated( const Team& team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentListView::Update
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+template< typename T >
+void AgentListView::Update( const T& value )
+{
+    ValuedListItem* item = FindItem( &value, firstChild() );
+    if( ! item )
+        throw std::runtime_error( std::string( "Could not update item " ) + typeid( value ).name() + " '" + value.GetName() + "'" );
+    Display( value, item );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyUpdated
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const Team& team )
 {
-    ValuedListItem* teamItem = FindSibling( &team, firstChild() );
-    if( ! teamItem )
-        throw std::runtime_error( "up" );
-    Display( team, teamItem );
+    Update( team );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,10 +109,7 @@ void AgentListView::NotifyDeleted( const Team& team )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const KnowledgeGroup& group )
 {
-    ValuedListItem* groupItem = FindItem( &group, firstChild() );
-    if( ! groupItem )
-        throw std::runtime_error( "up" );
-    Display( group, groupItem );
+    Update( group );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,10 +118,7 @@ void AgentListView::NotifyUpdated( const KnowledgeGroup& group )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const Agent& agent )
 {
-    ValuedListItem* agentItem = FindItem( &agent, firstChild() );
-    if( ! agentItem )
-        throw std::runtime_error( "up" );
-    Display( agent, agentItem );
+    Update( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +156,7 @@ void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* i
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const Team& team, ValuedListItem* item )
 {
+    item->SetValue( &team );
     item->setText( 0, team.GetName().c_str() );
     RecursiveDisplay< Team, KnowledgeGroup >( team, item );
 }
@@ -163,8 +168,7 @@ void AgentListView::Display( const Team& team, ValuedListItem* item )
 void AgentListView::Display( const KnowledgeGroup& group, ValuedListItem* item )
 {
     item->SetValue( &group );
-    item->setText( 0, QString( "Gtia %1" ).arg( group.GetId() ) );
-
+    item->setText( 0, group.GetName().c_str() );
     RecursiveDisplay< KnowledgeGroup, Agent >( group, item );
 }
 
@@ -172,10 +176,11 @@ void AgentListView::Display( const KnowledgeGroup& group, ValuedListItem* item )
 // Name: AgentListView::Display
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Agent& automat, ValuedListItem* item )
+void AgentListView::Display( const Agent& agent, ValuedListItem* item )
 {
-    item->setText( 0, automat.GetName().c_str() );
-    RecursiveDisplay< Agent, Agent >( automat, item );
+    item->SetValue( &agent );
+    item->setText( 0, agent.GetName().c_str() );
+    RecursiveDisplay< Agent, Agent >( agent, item );
 }
 
 // -----------------------------------------------------------------------------

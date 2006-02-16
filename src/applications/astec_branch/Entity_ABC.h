@@ -39,7 +39,7 @@ public:
     {
         const unsigned int applied = Apply( Updatable_ABC< T >::DoUpdate, updateMessage );
         if( ! applied )
-            throw std::runtime_error( "Nothing could be updated with message type " + std::string( typeid( T ).name() ) );
+            throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() ) + " could be updated with message type " + typeid( T ).name() );
     }
     //@}
 

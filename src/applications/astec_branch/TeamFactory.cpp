@@ -10,11 +10,13 @@
 #include "astec_pch.h"
 #include "TeamFactory.h"
 #include "Model.h"
+#include "TeamsModel.h"
 #include "ObjectKnowledges.h"
 #include "AgentKnowledges.h"
 #include "PopulationKnowledges.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
+#include "Diplomacies.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -44,6 +46,7 @@ Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 {
     Team* result = new Team( id, input, controller_, *this );
     result->Attach( *new ObjectKnowledges( controller_, model_.objectKnowledgeFactory_ ) );
+    result->Attach( *new Diplomacies( controller_, model_.teams_ ) );
     return result;
 }
 

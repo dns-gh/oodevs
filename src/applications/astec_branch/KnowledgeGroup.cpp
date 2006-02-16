@@ -70,3 +70,14 @@ unsigned long KnowledgeGroup::GetId() const
 {
     return nID_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::GetName
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+std::string KnowledgeGroup::GetName() const
+{
+    std::stringstream stream;
+    stream << "Gtia " << nID_;
+    return stream.str();
+}

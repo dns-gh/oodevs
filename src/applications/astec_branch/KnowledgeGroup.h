@@ -51,6 +51,7 @@ public:
     //! @name Accessors & Modifiers
     //@{
     unsigned long GetId() const;
+    std::string GetName() const;
     void AddAutomat( unsigned long id, Agent& automat );
     void RemoveAutomat( unsigned long id );
     //@}

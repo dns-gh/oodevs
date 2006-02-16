@@ -76,11 +76,13 @@ private:
     virtual void NotifyUpdated( const KnowledgeGroup& group );
     virtual void NotifyUpdated( const Agent& agent );
 
+    template< typename T >
+    void Update( const T& value );
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
     void Display( const Team& team,            ValuedListItem* item );
     void Display( const KnowledgeGroup& group, ValuedListItem* item );
-    void Display( const Agent& automat,        ValuedListItem* item );
+    void Display( const Agent& agent,          ValuedListItem* item );
     //@}
 
 private:
