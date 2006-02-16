@@ -69,9 +69,15 @@ public:
     //! @name Operations
     //@{
     template< typename T >
+    bool Holds( const T& value ) const {
+        return IsA< T >() && GetValue< T >() == value;
+    }
+    template< typename T >
     bool IsA() const;
     template< typename T >
-    const T& GetValue();
+    const T& GetValue() const;
+    template< typename T >
+    void SetValue( const T& value ) const;
 
     int rtti() const {
         return 1000;
@@ -116,6 +122,25 @@ ValuedListItem* FindItem( const T& searched, QListViewItem* root )
 }
 
 // =============================================================================
+/** @function  FindSibling
+    @brief  Search for a given item in the children of root
+*/
+// Created: APE 2004-04-19
+// =============================================================================
+template< typename T >
+ValuedListItem* FindSibling( const T& searched, QListViewItem* child )
+{
+    while( child )
+    {
+        ValuedListItem* item = static_cast< ValuedListItem* >( child );
+        if( item->IsA< T >() && item->GetValue< T >() == searched )
+            return item;
+        child = child->nextSibling();
+    }
+    return 0;
+}
+
+// =============================================================================
 /** @function  FindChild
     @brief  Search for a given item in the children of root
 */
@@ -126,15 +151,7 @@ ValuedListItem* FindChild( const T& searched, QListViewItem* root )
 {
     if( ! root )
         return 0;
-    QListViewItem* child = root->firstChild();
-    while( child )
-    {
-        ValuedListItem* item = static_cast< ValuedListItem* >( child );
-        if( item->IsA< T >() && item->GetValue< T >() == searched )
-            return item;
-        child = child->nextSibling();
-    }
-    return 0;
+    return FindSibling( searched, root->firstChild() );
 }
 
 // =============================================================================
@@ -163,9 +180,12 @@ public:
     virtual int rtti() const {
         return ListItemRtti< T >::rtti;
     }
-    const T& GetValue() {
+    const T& GetValue() const {
         return value_;
     };
+    void SetValue( const T& value ) {
+        value_ = value;
+    }
 private:
     T value_;
 };
@@ -185,11 +205,23 @@ bool ValuedListItem::IsA() const
 // Created: AGE 2005-09-15
 // -----------------------------------------------------------------------------
 template< typename T >
-const T& ValuedListItem::GetValue()
+const T& ValuedListItem::GetValue() const
 {
     if( ! IsA< T >() )
         throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
     return static_cast< ValueContainer< T >*>( container_ )->GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::SetValue
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+template< typename T >
+void ValuedListItem::SetValue( const T& value ) const
+{
+    if( ! IsA< T >() )
+        throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
+    static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
 }
 
 // -----------------------------------------------------------------------------

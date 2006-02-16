@@ -22,13 +22,14 @@
 #include "ASN_Types.h"
 #include "Entity_ABC.h"
 #include "IDManager.h"
+#include "Resolver.h"
 
 class Team;
 class Agent;
 class AgentKnowledge;
 class Population;
 class PopulationKnowledge;
-
+class Controller;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -38,17 +39,20 @@ class PopulationKnowledge;
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public Entity_ABC
+                     , public Resolver< Agent >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( uint32 nId );
+             KnowledgeGroup( uint32 nId, Controller& controller );
     virtual ~KnowledgeGroup();
     //@}
 
     //! @name Accessors & Modifiers
     //@{
     unsigned long GetId() const;
+    void AddAutomat( unsigned long id, Agent& automat );
+    void RemoveAutomat( unsigned long id );
     //@}
 
 private:
@@ -60,7 +64,11 @@ private:
 
 
 private:
+    //! @name Member data
+    //@{
+    Controller& controller_;
     uint32      nID_;
+    //@}
 
 private:
     static IDManager     idManager_;

@@ -34,5 +34,11 @@ struct ListItemRtti< const KnowledgeGroup* > {
     enum { rtti = 1002 };
 };
 
+class Agent;
+template< >
+struct ListItemRtti< const Agent* > {
+    enum { rtti = 1003 };
+};
+
 
 #endif // __ListItemRtti_h_

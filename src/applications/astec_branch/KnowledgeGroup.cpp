@@ -16,20 +16,9 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "KnowledgeGroup.h"
-
-#include "Team.h"
-#include "App.h"
-#include "Agent.h"
-#include "AgentKnowledge.h"
-#include "Population.h"
-#include "PopulationKnowledge.h"
-#include "AgentManager.h"
+#include "Controller.h"
 
 IDManager KnowledgeGroup::idManager_( 0 );
 
@@ -37,8 +26,9 @@ IDManager KnowledgeGroup::idManager_( 0 );
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( uint32 nId )
-    : nID_      ( nId )
+KnowledgeGroup::KnowledgeGroup( uint32 nId, Controller& controller )
+    : controller_( controller )
+    , nID_      ( nId )
 {
     idManager_.LockIdentifier( nID_ );
 }
@@ -50,4 +40,33 @@ KnowledgeGroup::KnowledgeGroup( uint32 nId )
 KnowledgeGroup::~KnowledgeGroup()
 {
     idManager_.ReleaseIdentifier( nID_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::AddAutomat
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::AddAutomat( unsigned long id, Agent& automat )
+{
+    Resolver< Agent >::Register( id, automat );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::RemoveAutomat
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::RemoveAutomat( unsigned long id )
+{
+    Resolver< Agent >::Remove( id );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::GetId
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+unsigned long KnowledgeGroup::GetId() const
+{
+    return nID_;
 }

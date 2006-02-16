@@ -53,7 +53,7 @@ Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 // -----------------------------------------------------------------------------
 KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( id );
+    KnowledgeGroup* result = new KnowledgeGroup( id, controller_ );
     result->Attach( *new AgentKnowledges( controller_, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controller_ ) );
     return result;

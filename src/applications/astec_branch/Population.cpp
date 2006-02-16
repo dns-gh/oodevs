@@ -73,7 +73,8 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-    Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
+    if( ! Resolver< PopulationFlow >::Find( asnMsg.oid_flux ) )
+        Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +83,8 @@ void Population::Update( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg ) );
+    if( ! Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration ) )
+        Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------

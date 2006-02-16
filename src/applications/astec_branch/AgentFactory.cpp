@@ -32,7 +32,6 @@
 #include "MaintenanceStates.h"
 #include "MedicalStates.h"
 #include "SupplyStates.h"
-#include "Hierarchies.h"
 #include "ObjectDetections.h"
 #include "AgentDetections.h"
 #include "VisionCones.h"
@@ -73,9 +72,8 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, types_ );
+    Agent* result = new Agent( asnMsg, controller_, types_, model_.agents_, model_.knowledgeGroups_ );
     AttachExtensions( *result );
-    result->Update( asnMsg );
     return result;
 }
 
@@ -85,9 +83,8 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, types_ );
+    Agent* result = new Agent( asnMsg, controller_, types_, model_.agents_, model_.knowledgeGroups_ );
     AttachExtensions( *result );
-    result->Update( asnMsg );
     return result;
 }
 
@@ -99,7 +96,6 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, model_.teams_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-15: Moins d'extensions que ca...
-//    result->Update( asnMsg );
     return result;
 }
 
@@ -126,7 +122,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new MaintenanceStates( controller_ ) );
     agent.Attach( *new MedicalStates( controller_ ) );
     agent.Attach( *new SupplyStates( controller_ ) );
-    agent.Attach( *new Hierarchies( controller_, model_.agents_, model_.knowledgeGroups_ ) );
     agent.Attach( *new ObjectDetections( controller_, model_.objects_ ) );
     agent.Attach( *new AgentDetections( controller_, model_.agents_ ) );
     agent.Attach( *new VisionCones() );

@@ -13,9 +13,14 @@
 #include "ASN_Types.h"
 #include "Agent_ABC.h"
 #include "Resolver_ABC.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+#include "Resolver.h"
 
+class Controller;
 class AgentType;
 class AutomatType;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  Agent
@@ -24,13 +29,26 @@ class AutomatType;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent : public Agent_ABC
+            , private Extension_ABC
+            , public Updatable_ABC< ASN1T_MsgChangeAutomateAck >
+            , public Updatable_ABC< ASN1T_MsgChangeAutomate >
+            , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
+            , public Resolver< Agent > // $$$$ AGE 2006-02-16: Split Agent and Automat
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const ASN1T_MsgAutomateCreation& message, const Resolver_ABC< AutomatType >& resolver );
-    explicit Agent( const ASN1T_MsgPionCreation& message, const Resolver_ABC< AgentType >& resolver );
+             Agent( const ASN1T_MsgAutomateCreation& message,
+                    Controller& controller, 
+                    const Resolver_ABC< AutomatType >& resolver,
+                    const Resolver_ABC< Agent >& agentResolver, 
+                    const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
+             Agent( const ASN1T_MsgPionCreation& message,
+                    Controller& controller, 
+                    const Resolver_ABC< AgentType >& resolver,
+                    const Resolver_ABC< Agent >& agentResolver, 
+                    const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
     virtual ~Agent();
     //@}
 
@@ -49,15 +67,35 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const ASN1T_MsgChangeAutomateAck& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeAutomate& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
+
+    void ChangeKnowledgeGroup( unsigned long id );
+    void ChangeKnowledgeGroup( KnowledgeGroup& gtia );
+    void ChangeSuperior( unsigned long id );
+    void AddChild   ( Agent& child );
+    void RemoveChild( Agent& child );
     //@}
 
 private:
     //! @name Member data
     //@{
-    AutomatType*  automatType_;
-    AgentType*    type_;
+    Controller& controller_;
+    const Resolver_ABC< Agent >& agentResolver_;
+    const Resolver_ABC< KnowledgeGroup >&  gtiaResolver_;
     std::string   name_;
     unsigned long id_;
+
+    // Automat only
+    AutomatType*  automatType_;
+    AgentType*    type_;
+
+    // Agent only
+    Agent*  superior_;
+
+    // Automat only
+    KnowledgeGroup* gtia_;
     //@}
 };
 

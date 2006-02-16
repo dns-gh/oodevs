@@ -27,12 +27,12 @@
 #include "Observer_ABC.h"
 
 class Team;
-class Gtia;
+class KnowledgeGroup;
 class Agent;
 class ActionContext;
 class SelectedElement;
 class Controller;
-
+class ValuedListItem;
 
 // =============================================================================
 /** @class  AgentListView
@@ -43,6 +43,8 @@ class Controller;
 class AgentListView : public QListView
                     , public Observer_ABC
                     , public ElementObserver_ABC< Team >
+                    , public ElementObserver_ABC< KnowledgeGroup >
+                    , public ElementObserver_ABC< Agent >
 {
 //    Q_OBJECT;
     MT_COPYNOTALLOWED( AgentListView );
@@ -58,8 +60,8 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentListView( QWidget* pParent, Controller& controller );
-    ~AgentListView();
+             AgentListView( QWidget* pParent, Controller& controller );
+    virtual ~AgentListView();
 
     QSize sizeHint() const;
     //@}
@@ -70,6 +72,15 @@ private:
     virtual void NotifyCreated( const Team& team );
     virtual void NotifyUpdated( const Team& team );
     virtual void NotifyDeleted( const Team& team );
+
+    virtual void NotifyUpdated( const KnowledgeGroup& group );
+    virtual void NotifyUpdated( const Agent& agent );
+
+    template< typename ParentType, typename ChildType >
+    void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
+    void Display( const Team& team,            ValuedListItem* item );
+    void Display( const KnowledgeGroup& group, ValuedListItem* item );
+    void Display( const Agent& automat,        ValuedListItem* item );
     //@}
 
 private:
