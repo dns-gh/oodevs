@@ -25,7 +25,7 @@
 class PopulationConcentration;
 class PopulationFlow;
 class Team;
-
+class Controller;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -37,7 +37,7 @@ class Population : public Agent_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const ASN1T_MsgPopulationCreation& asnMsg, const Resolver_ABC< Team >& resolver );
+             Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, const Resolver_ABC< Team >& resolver );
     virtual ~Population();
     //@}
 
@@ -51,6 +51,8 @@ public:
 	void Update( const ASN1T_MsgPopulationConcentrationUpdate&      message );
 	void Update( const ASN1T_MsgPopulationConcentrationDestruction& message );
     //@}
+
+    const Team& GetTeam() const;
 
     const PopulationConcentration* FindConcentration ( uint nID ) const;
     const PopulationFlow*          FindFlow          ( uint nID ) const;
@@ -75,10 +77,11 @@ private:
 private:
     //! @name Member data
     //@{
+    Controller&           controller_;
 	MIL_AgentID           nPopulationID_;
 	std::string           strName_;
     const TypePopulation* pType_;
-	Team*                 pTeam_;
+	Team&                 team_;
     //@}
 
 private:

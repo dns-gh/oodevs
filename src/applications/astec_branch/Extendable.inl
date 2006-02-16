@@ -75,12 +75,12 @@ void Extendable< BaseType >::Attach( Extension& extension )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Extendable< BaseType >::Retreive
+// Name: Extendable< BaseType >::Retrieve
 // Created: AGE 2006-02-06
 // -----------------------------------------------------------------------------
 template< typename BaseType >
 template< typename Extension >
-Extension* Extendable< BaseType >::Retreive()
+Extension* Extendable< BaseType >::Retrieve()
 {
     return static_cast< Extension* >( Find< Extension >() );
 }
@@ -93,8 +93,33 @@ template< typename BaseType >
 template< typename Extension >
 Extension& Extendable< BaseType >::Get()
 {
-    BaseType*& ext = Find< Extension >();
+    Extension* ext = Retrieve< Extension >();
     if( ! ext )
         throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist" );;
-    return * static_cast< Extension* >( ext );
+    return *ext;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Extendable::Retrieve
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+template< typename Extension >
+const Extension* Extendable< BaseType >::Retrieve() const
+{
+    return static_cast< const Extension* >( const_cast< Extendable* >( this )->Find< Extension >() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Extendable::Get
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+template< typename Extension >
+const Extension& Extendable< BaseType >::Get() const
+{
+    const Extension* ext = Retrieve< Extension >();
+    if( ! ext )
+        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist" );;
+    return *ext;
 }

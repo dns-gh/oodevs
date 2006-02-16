@@ -14,6 +14,8 @@
 #include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
+class Agent;
+
 // =============================================================================
 /** @class  Controller
     @brief  Controller

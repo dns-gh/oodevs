@@ -56,7 +56,7 @@ private:
     typedef std::vector< const Agent* > T_Agents;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;

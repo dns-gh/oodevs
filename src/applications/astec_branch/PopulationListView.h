@@ -10,76 +10,50 @@
 #ifndef __PopulationListView_h_
 #define __PopulationListView_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
-class Team;
+class Controller;
 class Population;
-class SelectedElement;
-class ActionContext;
-class AgentManager;
-
 
 // =============================================================================
 /** @class  PopulationListView
     @brief  PopulationListView
-    @par    Using example
-    @code
-    PopulationListView;
-    @endcode
 */
 // Created: HME 2005-10-03
 // =============================================================================
 class PopulationListView : public QListView
+                         , public Observer_ABC
+                         , public ElementObserver_ABC< Population >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( PopulationListView );
 
-private:
-    enum
-    {
-        eTeam  = 1000,
-        eGtia  = 1001,
-        eAgent = 1002
-    };
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent );
+             PopulationListView( QWidget* pParent, Controller& controller );
     virtual ~PopulationListView();
     //@}
 
-signals:
-    void CenterOnPoint( const MT_Vector2D& vPoint );
-    void ElementSelected( SelectedElement& selectedElement );
-    void NewPopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-
-public slots:
-	void AddPopulation( Population& population );
-    void SetSelectedElement( SelectedElement& selectedElement );
+private:
+    //! @name Copy / Assignment
+    //@{
+    PopulationListView( const PopulationListView& );
+    PopulationListView& operator=( const PopulationListView& );
+    //@}
 
 private:
-    void keyPressEvent( QKeyEvent* pEvent );
-
-private slots:
-	void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol );
-    void OnRequestCenter();
-
-    void OnSelectionChange( QListViewItem* pItem );
-    void OnTeamChanged();
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const Population& popu );
+    virtual void NotifyUpdated( const Population& popu );
+    virtual void NotifyDeleted( const Population& popu );
+    //@}
 
 private:
-    Team*       ToTeam ( QListViewItem* pItem );
-	Population* ToPopulation( QListViewItem* pItem );
-    void            RemovePopulation( Population& population );
-
-private:
+    //! @name Member data
+    //@{
     QPopupMenu* pPopupMenu_;
+    //@}
 };
-
-
-
-#include "PopulationListView.inl"
 
 #endif // __PopulationListView_h_

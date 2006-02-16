@@ -46,6 +46,7 @@ class MapEventFilter_ABC;
 
 class QProgressBar;
 class Controller;
+class ActionController;
 
 #include "MapEventFilter_ABC.h"
 
@@ -109,6 +110,8 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
+
     QDockWindow* pListDockWnd_;
     QDockWindow* pInfoDockWnd_;
     QDockWindow* pLogDockWnd_;

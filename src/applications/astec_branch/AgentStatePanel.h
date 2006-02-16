@@ -19,44 +19,76 @@
 #ifndef __AgentStatePanel_h_
 #define __AgentStatePanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-#include "Attr_Def.h"
-#include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "ActionObserver_ABC.h"
 
 class Agent;
 class ReportListView;
 class Display;
+class Controller;
+class ActionController;
+class Attributes;
+class Contaminations;
+class HumanFactors;
+class Reinforcements;
+class LogisticLinks;
+class Transports;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentStatePanel : public InfoPanel_ABC
+class AgentStatePanel : public QScrollView
+                      , public Observer_ABC
+                      , public ElementObserver_ABC< Attributes >
+                      , public ElementObserver_ABC< Contaminations >
+                      , public ElementObserver_ABC< HumanFactors >
+                      , public ElementObserver_ABC< Reinforcements >
+                      , public ElementObserver_ABC< LogisticLinks >
+                      , public ElementObserver_ABC< Transports >
+                      , public ActionObserver_ABC
 {
-    MT_COPYNOTALLOWED( AgentStatePanel );
     friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentStatePanel( QWidget* pParent );
+             AgentStatePanel( QWidget* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentStatePanel();
     //@}
 
 private:
-    //! @name Operations
+    //! @name Copy / Assignment
     //@{
-    virtual void OnUpdate        ();
-    virtual void OnClearSelection();
-    virtual void OnAgentUpdated  ( Agent& agent );
+    AgentStatePanel( const AgentStatePanel& );
+    AgentStatePanel& operator=( const AgentStatePanel& );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void insertChild ( QObject* pObj );
+    virtual QLayout* layout();
+
+    virtual void NotifySelected( const Agent& agent );
+    virtual void NotifyUpdated( const Attributes& attributes );
+    virtual void NotifyUpdated( const Contaminations& attributes );
+    virtual void NotifyUpdated( const HumanFactors& attributes );
+    virtual void NotifyUpdated( const Reinforcements& attributes );
+    virtual void NotifyUpdated( const LogisticLinks& attributes );
+    virtual void NotifyUpdated( const Transports& attributes );
+
+    template< typename Extension >
+    bool ShouldUpdate( const Extension& extension );
     //@}
 
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
+    QVBox*   pBox_;
     Display* display_;
+    const Agent* selected_;
     //@}
 };
 

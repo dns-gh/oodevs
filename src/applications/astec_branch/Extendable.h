@@ -35,10 +35,16 @@ public:
     void Attach( Extension& extension );
 
     template< typename Extension >
-    Extension* Retreive();
+    Extension* Retrieve();
 
     template< typename Extension >
     Extension& Get();
+
+    template< typename Extension >
+    const Extension* Retrieve() const;
+
+    template< typename Extension >
+    const Extension& Get() const;
     //@}
 
 protected:

@@ -23,6 +23,7 @@
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "Model.h"
+#include "Controller.h"
 
 MIL_AgentID Population::nMaxId_ = 200;
 
@@ -30,13 +31,15 @@ MIL_AgentID Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, const Resolver_ABC< Team >& resolver )
-    : nPopulationID_( message.oid_population )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const Resolver_ABC< Team >& resolver )
+    : controller_   ( controller )
+    , nPopulationID_( message.oid_population )
     , strName_      ( message.nom )
     , pType_        ( 0 ) // App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population ) )
-    , pTeam_        ( &resolver.Get( message.oid_camp ) )
+    , team_         ( resolver.Get( message.oid_camp ) )
 {
 //    assert( pType_ );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +48,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, const Resolv
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
+    controller_.Delete( *this );
     Resolver< PopulationConcentration >::DeleteAll();
     Resolver< PopulationFlow >::DeleteAll();
 }
@@ -169,5 +173,14 @@ const PopulationFlow& Population::GetFlow( uint nID ) const
 std::string Population::GetName() const
 {
     return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetTeam
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+const Team& Population::GetTeam() const
+{
+    return team_;
 }
 

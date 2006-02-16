@@ -30,7 +30,6 @@ const Experience Experience::veteran_    ( "Veteran"    , eVeteran    , EnumUnit
 // -----------------------------------------------------------------------------
 void Experience::Initialize( xistream& xis )
 {
-    MT_LOG_INFO_MSG( "Initializing experiences" );
     experiences_[ conscrit_    .GetName() ] = &conscrit_;
     experiences_[ experimente_ .GetName() ] = &experimente_;
     experiences_[ veteran_     .GetName() ] = &veteran_;

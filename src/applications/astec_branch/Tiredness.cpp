@@ -30,7 +30,6 @@ const Tiredness Tiredness::epuise_ ( "Epuise" , eEpuise , EnumUnitFatigue::epuis
 // -----------------------------------------------------------------------------
 void Tiredness::Initialize( xistream& xis  )
 {
-    MT_LOG_INFO_MSG( "Initializing tirenesses" );
     tirednesses_[ normal_  .GetName() ] = &normal_;
     tirednesses_[ fatigue_ .GetName() ] = &fatigue_;
     tirednesses_[ epuise_  .GetName() ] = &epuise_;

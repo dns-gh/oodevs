@@ -46,7 +46,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< unsigned > T_NbcAgents; // $$$$ AGE 2006-02-13: 
+    typedef std::vector< unsigned > T_NbcAgents; // $$$$ AGE 2006-02-13: resolve
     //@}
 
     //! @name Helpers
@@ -54,7 +54,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;

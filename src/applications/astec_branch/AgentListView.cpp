@@ -16,19 +16,17 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "AgentListView.h"
-//#include "moc_AgentListView.cpp"
 #include "Controller.h"
+#include "ActionController.h"
 #include "ValuedListItem.h"
 
 #include "Agent.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
+
+#include "moc_AgentListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView constructor
@@ -36,8 +34,9 @@
 */
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controller& controller )
+AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController )
     : QListView     ( pParent )
+    , actionController_( actionController )
     , pPopupMenu_   ( 0 )
 {
     setMinimumSize( 1, 1 );
@@ -49,7 +48,7 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller )
 //    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
 //    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
 //    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
-//    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controller.Register( *this );
 }
 
@@ -181,6 +180,17 @@ void AgentListView::Display( const Agent& agent, ValuedListItem* item )
     item->SetValue( &agent );
     item->setText( 0, agent.GetName().c_str() );
     RecursiveDisplay< Agent, Agent >( agent, item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::OnSelectionChange
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+void AgentListView::OnSelectionChange( QListViewItem* i )
+{
+    ValuedListItem* item = (ValuedListItem*)( i );
+    if( item->IsA< const Agent* >() )
+        actionController_.Select( *item->GetValue< const Agent* >() );
 }
 
 // -----------------------------------------------------------------------------

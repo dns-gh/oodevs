@@ -19,16 +19,10 @@
 #ifndef __InfoPanel_h_
 #define __InfoPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 class AgentStatePanel;
 class AgentResourcesPanel;
 class AgentCargoPanel;
 class AgentKnowledgePanel;
-class Agent;
-class SelectedElement;
 class AgentMaintenancePanel;
 class AgentMedicalPanel;
 class AgentSupplyPanel;
@@ -39,42 +33,30 @@ class ObjectKnowledgePanel;
 class PopulationPanel;
 class PopulationKnowledgePanel;
 
+class Controller;
+class ActionController;
+
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
 class InfoPanel : public QWidgetStack
 {
-    Q_OBJECT
-    MT_COPYNOTALLOWED( InfoPanel );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-     explicit InfoPanel( QWidget* pParent );
-    ~InfoPanel();
-    //@}
-
-    //! @name Accessors
-    //@{
-    AgentKnowledgePanel&		GetAgentKnowledgePanel();
-    ObjectKnowledgePanel&		GetObjectKnowledgePanel();
+             InfoPanel( QWidget* pParent, Controller& controller, ActionController& actionController );
+    virtual ~InfoPanel();
     //@}
 
     QSize sizeHint() const;
-
-public slots:
-    void SetSelectedElement( SelectedElement& selectedElement );
-    void ClearAll();
-
+    
 private:
-    void ShowAgentPanel              ( bool bShow );
-    void ShowAgentKnowledgePanel     ( bool bShow );
-    void ShowObjectKnowledgePanel    ( bool bShow );
-    void ShowObjectPanel             ( bool bShow );
-    void ShowLogisticPanels          ( bool bShow );
-	void ShowPopulationPanel		 ( bool bShow );
-    void ShowPopulationKnowledgePanel( bool bShow );
+    //! @name Copy / Assignment
+    //@{
+    InfoPanel( const InfoPanel& );
+    InfoPanel& operator=( const InfoPanel& );
+    //@}
 
 private:
     AgentStatePanel*          pStatePanel_;
@@ -103,7 +85,5 @@ private:
 
     QTabWidget* pTabWidget_;
 };
-
-#   include "InfoPanel.inl"
 
 #endif // __InfoPanel_h_

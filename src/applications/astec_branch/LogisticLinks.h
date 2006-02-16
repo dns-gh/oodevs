@@ -38,6 +38,10 @@ public:
 
     //! @name Operations
     //@{
+    Agent* GetTC2() const;
+    Agent* GetMaintenance() const;
+    Agent* GetMedical() const;
+    Agent* GetSupply() const;
     //@}
 
 private:
@@ -53,6 +57,8 @@ private:
     virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
     template< typename T >
     void UpdateData( const T& message );
+
+    Agent* Resolve( Agent*& agent, unsigned long id ) const;
     //@}
 
 private:
@@ -61,10 +67,10 @@ private:
     Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
 
-    Agent* tc2_;
-    Agent* maintenanceSuperior_;
-    Agent* medicalSuperior_;
-    Agent* supplySuperior_;
+    unsigned long idTc2_;         mutable Agent* tc2_;
+    unsigned long idMaintenance_; mutable Agent* maintenanceSuperior_;
+    unsigned long idMedical_;     mutable Agent* medicalSuperior_;
+    unsigned long idSupply_;      mutable Agent* supplySuperior_;
     //@}
 };
 

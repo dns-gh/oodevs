@@ -52,5 +52,11 @@ struct ListItemRtti< const Object_ABC* > {
     enum { rtti = 1005 };
 };
 
+class Population;
+template< >
+struct ListItemRtti< const Population* > {
+    enum { rtti = 1006 };
+};
+
 
 #endif // __ListItemRtti_h_

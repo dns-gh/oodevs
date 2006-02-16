@@ -631,17 +631,17 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogR
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "MSG Received : MsgLogRavitaillementChangeQuotaAck - Code ";
-    switch( asnMsg )
-    {
-        case MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur : strOutputMsg << "error_invalid_donneur"; break;
-        case MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur: strOutputMsg << "error_invalid_receveur"; break;
-        case MsgLogRavitaillementChangeQuotasAck::no_error:               strOutputMsg << "no_error"; break;
-        default:
-            assert( false );
-    }
-    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+//    std::stringstream strOutputMsg;
+//    strOutputMsg << "MSG Received : MsgLogRavitaillementChangeQuotaAck - Code ";
+//    switch( asnMsg )
+//    {
+//        case MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur : strOutputMsg << "error_invalid_donneur"; break;
+//        case MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur: strOutputMsg << "error_invalid_receveur"; break;
+//        case MsgLogRavitaillementChangeQuotasAck::no_error:               strOutputMsg << "no_error"; break;
+//        default:
+//            assert( false );
+//    }
+//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -650,18 +650,18 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "MSG Received : MsgLogRavitaillementPousserFlux - Code ";
-    switch( asnMsg )
-    {
-        case MsgLogRavitaillementPousserFluxAck::error_invalid_donneur        : strOutputMsg << "error_invalid_donneur"; break;
-        case MsgLogRavitaillementPousserFluxAck::error_invalid_receveur       : strOutputMsg << "error_invalid_receveur"; break;
-        case MsgLogRavitaillementPousserFluxAck::error_ravitaillement_en_cours: strOutputMsg << "error_ravitaillement_en_cours"; break;
-        case MsgLogRavitaillementPousserFluxAck::no_error                     : strOutputMsg << "no_error"; break;
-        default:
-            assert( false );
-    }
-    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+//    std::stringstream strOutputMsg;
+//    strOutputMsg << "MSG Received : MsgLogRavitaillementPousserFlux - Code ";
+//    switch( asnMsg )
+//    {
+//        case MsgLogRavitaillementPousserFluxAck::error_invalid_donneur        : strOutputMsg << "error_invalid_donneur"; break;
+//        case MsgLogRavitaillementPousserFluxAck::error_invalid_receveur       : strOutputMsg << "error_invalid_receveur"; break;
+//        case MsgLogRavitaillementPousserFluxAck::error_ravitaillement_en_cours: strOutputMsg << "error_ravitaillement_en_cours"; break;
+//        case MsgLogRavitaillementPousserFluxAck::no_error                     : strOutputMsg << "no_error"; break;
+//        default:
+//            assert( false );
+//    }
+//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1167,22 +1167,21 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "MSG Received : ChangeLiensLogistiquesAck - Etat: ";
-    switch( asnMsg.error_code )
-    {
-        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate               : strOutputMsg << "error_invalid_automate"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance   : strOutputMsg << "error_invalid_automate_maintenance"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement: strOutputMsg << "error_invalid_automate_ravitaillement"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante         : strOutputMsg << "error_invalid_automate_sante"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2           : strOutputMsg << "error_invalid_automate_tc2"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered               : strOutputMsg << "error_unit_surrendered"; break;
-        case EnumChangeLiensLogistiquesErrorCode::no_error                             : strOutputMsg << "no_error"; break;
-    }
-    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+//    std::stringstream strOutputMsg;
+//    strOutputMsg << "MSG Received : ChangeLiensLogistiquesAck - Etat: ";
+//    switch( asnMsg.error_code )
+//    {
+//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate               : strOutputMsg << "error_invalid_automate"; break;
+//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance   : strOutputMsg << "error_invalid_automate_maintenance"; break;
+//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement: strOutputMsg << "error_invalid_automate_ravitaillement"; break;
+//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante         : strOutputMsg << "error_invalid_automate_sante"; break;
+//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2           : strOutputMsg << "error_invalid_automate_tc2"; break;
+//        case EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered               : strOutputMsg << "error_unit_surrendered"; break;
+//        case EnumChangeLiensLogistiquesErrorCode::no_error                             : strOutputMsg << "no_error"; break;
+//    }
+//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 
     model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
-//    App::GetApp().NotifyAgentUpdated( *pAutomate );
 }
 
 // =============================================================================
@@ -1505,28 +1504,28 @@ void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopul
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplomatie& asnMsg )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "MSG Received : ChangeDiplomatie - ";
-
-    Team* pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp1 );
-    assert( pArmy );
-    strOutputMsg << pArmy->GetName() << " -> ";
-
-    pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp2 );
-    assert( pArmy );
-    strOutputMsg << pArmy->GetName() << " = ";
-
-    switch( asnMsg.diplomatie )
-    {
-    case EnumDiplomatie::inconnu : strOutputMsg << "Inconnu"; break;
-    case EnumDiplomatie::ami     : strOutputMsg << "Ami"; break;
-    case EnumDiplomatie::neutre  : strOutputMsg << "Neutre"; break;
-    case EnumDiplomatie::ennemi  : strOutputMsg << "Ennemi"; break;
-    default:
-        assert( false );
-    }
-
-    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+//    std::stringstream strOutputMsg;
+//    strOutputMsg << "MSG Received : ChangeDiplomatie - ";
+//
+//    Team* pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp1 );
+//    assert( pArmy );
+//    strOutputMsg << pArmy->GetName() << " -> ";
+//
+//    pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp2 );
+//    assert( pArmy );
+//    strOutputMsg << pArmy->GetName() << " = ";
+//
+//    switch( asnMsg.diplomatie )
+//    {
+//    case EnumDiplomatie::inconnu : strOutputMsg << "Inconnu"; break;
+//    case EnumDiplomatie::ami     : strOutputMsg << "Ami"; break;
+//    case EnumDiplomatie::neutre  : strOutputMsg << "Neutre"; break;
+//    case EnumDiplomatie::ennemi  : strOutputMsg << "Ennemi"; break;
+//    default:
+//        assert( false );
+//    }
+//
+//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1535,10 +1534,10 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Creation de Population"
-                 << " - ID  " << asnMsg.oid_population;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+//	std::stringstream strOutputMsg;
+//    strOutputMsg << "Creation de Population"
+//                 << " - ID  " << asnMsg.oid_population;
+//	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 
 	model_.agents_.CreatePopulation( asnMsg );
 }

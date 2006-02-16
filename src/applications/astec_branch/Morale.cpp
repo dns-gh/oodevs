@@ -30,7 +30,6 @@ const Morale Morale::fanatique_( "Fanatique", eFanatique, EnumUnitMoral::fanatiq
 // -----------------------------------------------------------------------------
 void Morale::Initialize()
 {
-    MT_LOG_INFO_MSG( "Initializing morales" );
     morales_[ mauvais_  .GetName() ] = &mauvais_;
     morales_[ moyen_    .GetName() ] = &moyen_;
     morales_[ bon_      .GetName() ] = &bon_;

@@ -28,8 +28,8 @@
 #include "AgentListView.h"
 #include "InfoPanel.h"
 #include "ObjectListView.h"
-
-//#include "PopulationListView.h"
+#include "PopulationListView.h"
+#include "ActionController.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
 
@@ -39,6 +39,7 @@ MainWindow* MainWindow::pInstance_ = 0;
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controller& controller )
     : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
+    , actionController_( * new ActionController() )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
@@ -50,15 +51,15 @@ MainWindow::MainWindow( Controller& controller )
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controller );
+    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controller, actionController_ );
     pListsTabWidget->addTab( pAgentList_, tr( "Agents" ) );
     pAgentList_->header()->hide();
     ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controller );
     pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
     pObjectList_->header()->hide();
-//    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget );
-//	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
-//	pPopulationList_->header()->hide();
+    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controller );
+	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
+	pPopulationList_->header()->hide();
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
@@ -66,14 +67,14 @@ MainWindow::MainWindow( Controller& controller )
     this->setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
     // Info panel
-//    QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
-//    this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-//    InfoPanel* pInfoPanel_ = new InfoPanel( pInfoDockWnd_ );
-//    pInfoDockWnd_->setWidget( pInfoPanel_ );
-//    pInfoDockWnd_->setResizeEnabled( true );
-//    pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-//    pInfoDockWnd_->setCaption( tr( "Informations" ) );
-//    this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
+    QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
+    this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
+    InfoPanel* pInfoPanel_ = new InfoPanel( pInfoDockWnd_, controller, actionController_ );
+    pInfoDockWnd_->setWidget( pInfoPanel_ );
+    pInfoDockWnd_->setResizeEnabled( true );
+    pInfoDockWnd_->setCloseMode( QDockWindow::Always );
+    pInfoDockWnd_->setCaption( tr( "Informations" ) );
+    this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
     // Logger
     QDockWindow*pLogDockWnd_ = new QDockWindow( this );

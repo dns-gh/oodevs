@@ -52,5 +52,6 @@ void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.pion_renforcePresent )
         reinforced_ = resolver_.Find( message.pion_renforce );
 
-    controller_.Update( *this );
+    if( message.m.pion_renforcePresent || message.m.pions_renforcantPresent )
+        controller_.Update( *this );
 }

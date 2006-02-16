@@ -19,10 +19,6 @@
 #ifndef __AgentListView_h_
 #define __AgentListView_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
@@ -33,6 +29,7 @@ class ActionContext;
 class SelectedElement;
 class Controller;
 class ValuedListItem;
+class ActionController;
 
 // =============================================================================
 /** @class  AgentListView
@@ -46,29 +43,32 @@ class AgentListView : public QListView
                     , public ElementObserver_ABC< KnowledgeGroup >
                     , public ElementObserver_ABC< Agent >
 {
-//    Q_OBJECT;
-    MT_COPYNOTALLOWED( AgentListView );
-
-private:
-    enum
-    {
-        eTeam  = 1000,
-        eGtia  = 1001,
-        eAgent = 1002
-    };
-    
+   Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, Controller& controller );
+             AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentListView();
 
     QSize sizeHint() const;
     //@}
 
 private:
+    //! @name Copy / Assignment
+    //@{
+    AgentListView( const AgentListView& );
+    AgentListView& operator=( const AgentListView& );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChange( QListViewItem* item );
+    //@}
+
     //! @name Helpers
     //@{
+private:
     virtual void NotifyCreated( const Team& team );
     virtual void NotifyUpdated( const Team& team );
     virtual void NotifyDeleted( const Team& team );
@@ -76,17 +76,23 @@ private:
     virtual void NotifyUpdated( const KnowledgeGroup& group );
     virtual void NotifyUpdated( const Agent& agent );
 
-    template< typename T >
-    void Update( const T& value );
+    template< typename Type >
+    void Update( const Type& value );
+
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
+
     void Display( const Team& team,            ValuedListItem* item );
     void Display( const KnowledgeGroup& group, ValuedListItem* item );
     void Display( const Agent& agent,          ValuedListItem* item );
     //@}
 
 private:
+    //! @name Member data
+    //@{
+    ActionController& actionController_;
     QPopupMenu* pPopupMenu_;
+    //@}
 };
 
 #endif // __AgentListView_h_

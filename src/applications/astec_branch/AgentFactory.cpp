@@ -74,6 +74,8 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controller_, types_, model_.agents_, model_.knowledgeGroups_ );
     AttachExtensions( *result );
+    result->Attach( *new LogisticLinks( controller_, model_.agents_ ) );
+    result->Update( asnMsg );
     return result;
 }
 
@@ -94,8 +96,8 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    Population* result = new Population( asnMsg, model_.teams_ );
-    AttachExtensions( *result ); // $$$$ AGE 2006-02-15: Moins d'extensions que ca...
+    Population* result = new Population( asnMsg, controller_, model_.teams_ );
+    AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     return result;
 }
 
@@ -113,7 +115,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new HumanFactors( controller_ ) );
     agent.Attach( *new Lends( controller_, model_.agents_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );
-    agent.Attach( *new LogisticLinks( controller_, model_.agents_ ) );
     agent.Attach( *new Paths() );
     agent.Attach( *new Reinforcements( controller_, model_.agents_ ) );
     agent.Attach( *new Reports( agent, controller_ ) );
