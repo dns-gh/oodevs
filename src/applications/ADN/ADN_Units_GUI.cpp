@@ -205,28 +205,23 @@ void ADN_Units_GUI::Build()
     pListUnits_->SetItemConnectors( vInfosConnectors );    
 
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10 );
     pMainLayout->addWidget( pListUnits_, 1 );
-    pMainLayout->addWidget( pGroup, 4 );
+    pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 1, 2, 5 );
+    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 4, 6, 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
-    pGroupLayout->addWidget( pParamGroup, 0, 0 );
-    pGroupLayout->addWidget( pNatureGroup,  0, 1 );
-    pGroupLayout->addWidget( pReconGroup, 1, 0 );
-    pGroupLayout->addWidget( pCommandGroup,  1, 1 );
+    pGroupLayout->addMultiCellWidget( pParamGroup  , 0, 0, 0, 2 );
+    pGroupLayout->addMultiCellWidget( pNatureGroup , 0, 0, 3, 5 );
+    pGroupLayout->addMultiCellWidget( pReconGroup  , 1, 1, 0, 2 );
+    pGroupLayout->addMultiCellWidget( pCommandGroup, 1, 1, 3, 5 );
 
-    QHBoxLayout* pSubLayout = new QHBoxLayout( 5 );
-    pSubLayout->addWidget( pDistancesGroup, 10 );
-    pSubLayout->addWidget( pPosturesGroup, 10 );
-    pSubLayout->addWidget( pComposantesGroup, 15 );
+    pGroupLayout->addMultiCellWidget( pDistancesGroup  , 2, 2, 0, 1 );
+    pGroupLayout->addMultiCellWidget( pPosturesGroup   , 2, 2, 2, 3 );
+    pGroupLayout->addMultiCellWidget( pComposantesGroup, 2, 2, 4, 5 );
 
-    QHBoxLayout* pSubLayout2 = new QHBoxLayout( 5 );
-    pSubLayout2->addWidget( pDotationsGroup, 12 );
-    pSubLayout2->addWidget( pStockGroup_, 10 );
-
-    pGroupLayout->addMultiCellLayout( pSubLayout, 2, 2, 0, 1 );
-    pGroupLayout->addMultiCellLayout( pSubLayout2, 3, 3, 0, 1 );
+    pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 3, 0, 2 );
+    pGroupLayout->addMultiCellWidget( pStockGroup_   , 3, 3, 3, 5 );
 }
 
 // -----------------------------------------------------------------------------
