@@ -18,7 +18,7 @@
 #include "MT/MT_Archive/MT_OutputArchive_ABC.h"
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
 
-MT_BOOSTPOOLING_FUNCTIONS( MT_Rect )
+//MT_BOOSTPOOLING_FUNCTIONS( MT_Rect )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect constructor

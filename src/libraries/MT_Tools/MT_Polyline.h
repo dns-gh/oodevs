@@ -23,7 +23,7 @@ class MT_Line;
 //=============================================================================
 class MT_Polyline
 {
-    MT_BOOSTPOOLING_MEMBERS( MT_Polyline )
+//    MT_BOOSTPOOLING_MEMBERS( MT_Polyline )
 
 public:
      MT_Polyline();

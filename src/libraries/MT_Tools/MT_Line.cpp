@@ -14,7 +14,7 @@
 #endif  // _DEBUG
           
 
-MT_BOOSTPOOLING_FUNCTIONS( MT_Line )
+//MT_BOOSTPOOLING_FUNCTIONS( MT_Line )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Line constructor

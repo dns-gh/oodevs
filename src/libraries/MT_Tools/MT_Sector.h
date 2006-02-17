@@ -21,7 +21,7 @@
 // =============================================================================
 class MT_Sector
 {
-    MT_BOOSTPOOLING_MEMBERS( MT_Sector )
+//    MT_BOOSTPOOLING_MEMBERS( MT_Sector )
 
 public:
      MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection, MT_Float rAngle );

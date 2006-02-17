@@ -18,7 +18,7 @@ class MT_Triangle
 {
     MT_COPYNOTALLOWED( MT_Triangle )
 
-    MT_BOOSTPOOLING_MEMBERS( MT_Triangle )
+//    MT_BOOSTPOOLING_MEMBERS( MT_Triangle )
 
 public:
     explicit MT_Triangle();

@@ -23,7 +23,7 @@ class MT_InputArchive_ABC;
 //=============================================================================
 class MT_Vector2D
 {
-    MT_BOOSTPOOLING_MEMBERS( MT_Vector2D )
+//    MT_BOOSTPOOLING_MEMBERS( MT_Vector2D )
 
 public:
      MT_Vector2D();                           // Constructor : les valeurs XYZ sont mises a 0

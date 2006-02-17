@@ -24,7 +24,7 @@ class MT_Polyline;
 //*****************************************************************************
 class TER_Polygon
 {
-    MT_BOOSTPOOLING_MEMBERS( TER_Polygon )
+//    MT_BOOSTPOOLING_MEMBERS( TER_Polygon )
 
 public:
     // @name Constructors/Destructor 

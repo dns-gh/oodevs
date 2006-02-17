@@ -22,7 +22,7 @@ typedef enum E_CollisionState
 //=============================================================================
 class MT_Line
 {
-    MT_BOOSTPOOLING_MEMBERS( MT_Line )
+//    MT_BOOSTPOOLING_MEMBERS( MT_Line )
 
 public:
     explicit MT_Line();

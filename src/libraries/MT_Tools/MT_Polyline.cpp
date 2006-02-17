@@ -16,7 +16,7 @@
 #include "MT_Line.h"
 #include "MT_Circle.h"
 
-MT_BOOSTPOOLING_FUNCTIONS( MT_Polyline )
+//MT_BOOSTPOOLING_FUNCTIONS( MT_Polyline )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline constructor

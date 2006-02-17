@@ -22,7 +22,7 @@
 //*****************************************************************************
 class MT_Ellipse
 {    
-    MT_BOOSTPOOLING_MEMBERS( MT_Ellipse )
+//    MT_BOOSTPOOLING_MEMBERS( MT_Ellipse )
 
 public:
              MT_Ellipse( const MT_Vector2D& vOrigin, MT_Float rMajorAxeLength, MT_Float rMinorAxeLength, MT_Float rTheta );
