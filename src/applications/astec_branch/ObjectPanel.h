@@ -22,6 +22,7 @@
 #include "InfoPanel_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 class Object_ABC;
 class CampAttributes;
@@ -33,6 +34,7 @@ class RotaAttributes;
 class Controller;
 class ActionController;
 class Display;
+class InfoPanel;
 
 // =============================================================================
 /** @class  ObjectPanel
@@ -48,19 +50,20 @@ class ObjectPanel : public InfoPanel_ABC
                   , public ElementObserver_ABC< LogisticRouteAttributes >
                   , public ElementObserver_ABC< NBCAttributes >
                   , public ElementObserver_ABC< RotaAttributes >
+                  , public SelectionObserver< Object_ABC >
 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( QWidget* pParent, Controller& controller, ActionController& actionController );
+             ObjectPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectPanel();
     //@}
 
-private:
     //! @name Operations
     //@{
+    virtual void NotifySelected( const Object_ABC* object );
     //@}
 
 private:
@@ -73,7 +76,16 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const Object_ABC* object );
+    virtual void NotifyUpdated( const Object_ABC& );
+    virtual void NotifyDeleted( const Object_ABC& );
+    virtual void NotifyUpdated( const CampAttributes& attributes );
+    virtual void NotifyUpdated( const CrossingSiteAttributes& attributes );
+    virtual void NotifyUpdated( const LogisticRouteAttributes& attributes );
+    virtual void NotifyUpdated( const NBCAttributes& attributes );
+    virtual void NotifyUpdated( const RotaAttributes& attributes );
+
+    template< typename Extension >
+    bool ShouldUpdate( const Extension& extension );
     //@}
 
 private:
@@ -84,6 +96,7 @@ private:
     QSpinBox*  pPercentValueEdit_;
     QSpinBox*  pPercentAroundEdit_;
     QCheckBox* pIsUnderPrepCheckBox_;
+    const Object_ABC* selected_;
 
 //    QPushButton* pApplyButton_;
 //    QPushButton* pCancelButton_;

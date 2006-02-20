@@ -18,21 +18,27 @@
 
 #include "astec_pch.h"
 #include "InfoPanel_ABC.h"
+#include "InfoPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanel_ABC constructor
-// Created: AGE 2005-04-05
+// Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-InfoPanel_ABC::InfoPanel_ABC( QWidget* pParent )
-    : QScrollView( pParent )
+InfoPanel_ABC::InfoPanel_ABC( InfoPanel* parent, const QString& name )
+    : QScrollView( parent )
+    , parent_( parent )
+    , name_( name )
     , pBox_( new QVBox( viewport() ) )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );
+    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+//    setResizePolicy( AutoOneFit );
+    setFrameStyle( QFrame::Box | QFrame::Sunken );
+
+    addChild( pBox_ );
     pBox_->setMargin( 5 );
     pBox_->setSpacing( 5 );
-    addChild( pBox_ );
-    setResizePolicy( AutoOneFit );
-    setFrameStyle( QFrame::Box | QFrame::Sunken );
+    pBox_->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +48,26 @@ InfoPanel_ABC::InfoPanel_ABC( QWidget* pParent )
 InfoPanel_ABC::~InfoPanel_ABC()
 {
     //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanel_ABC::Show
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void InfoPanel_ABC::Show()
+{
+    parent_->Add( this, name_ );
+    show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanel_ABC::Hide
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void InfoPanel_ABC::Hide()
+{
+    parent_->Remove( this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,4 +88,13 @@ QLayout* InfoPanel_ABC::layout()
     if( !pBox_ )
         return 0;
     return pBox_->layout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanel_ABC::sizeHint
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+QSize InfoPanel_ABC::sizeHint() const
+{
+    return QSize( 640, 1280 );
 }

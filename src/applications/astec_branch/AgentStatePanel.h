@@ -21,8 +21,8 @@
 
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "InfoPanel_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "InfoPanel_ABC.h"
 
 class Agent;
 class ReportListView;
@@ -35,6 +35,7 @@ class HumanFactors;
 class Reinforcements;
 class LogisticLinks;
 class Transports;
+class InfoPanel;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -53,9 +54,11 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( QWidget* pParent, Controller& controller, ActionController& actionController );
+             AgentStatePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentStatePanel();
     //@}
+
+    virtual void NotifySelected( const Agent* element );
 
 private:
     //! @name Copy / Assignment
@@ -67,8 +70,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const Agent* element );
-
     virtual void NotifyUpdated( const Agent& );
     virtual void NotifyDeleted( const Agent& );
     virtual void NotifyUpdated( const Attributes& attributes );
@@ -85,6 +86,7 @@ private:
 private:
     //! @name Member data
     //@{
+
     Display* display_;
     const Agent* selected_;
     //@}

@@ -73,7 +73,7 @@ private:
     virtual void DoUpdate( const ASN1T_FireDamagesPion& message );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller&   controller_;

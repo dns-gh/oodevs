@@ -18,7 +18,6 @@
 #include "AgentManager.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
-#include "TypePopulation.h"
 #include "Model.h"
 #include "TeamsModel.h"
 #include "AgentsModel.h"

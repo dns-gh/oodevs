@@ -13,13 +13,17 @@
 #include "Team.h"
 #include "Controller.h"
 #include "ValuedListItem.h"
+#include "ActionController.h"
+
+#include "moc_PopulationListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationListView::PopulationListView( QWidget* pParent, Controller& controller )
+PopulationListView::PopulationListView( QWidget* pParent, Controller& controller, ActionController& actionController )
     : QListView     ( pParent )
+    , actionController_( actionController )
     , pPopupMenu_   ( 0 )
 {
     this->setMinimumSize( 1, 1 );
@@ -27,6 +31,8 @@ PopulationListView::PopulationListView( QWidget* pParent, Controller& controller
     this->setRootIsDecorated( true );
     this->setResizeMode( QListView::LastColumn );
     this->setAcceptDrops( true );
+
+    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
 
     controller.Register( *this );
 }
@@ -69,4 +75,15 @@ void PopulationListView::NotifyUpdated( const Population& )
 void PopulationListView::NotifyDeleted( const Population& popu )
 {
     delete FindItem( &popu, firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::OnSelectionChange
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void PopulationListView::OnSelectionChange( QListViewItem* i )
+{
+    ValuedListItem* item = (ValuedListItem*)( i );
+    if( item->IsA< const Population* >() )
+        actionController_.Select( *item->GetValue< const Population* >() );
 }

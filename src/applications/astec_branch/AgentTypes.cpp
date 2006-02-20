@@ -14,6 +14,7 @@
 #include "DecisionalModel.h"
 #include "SensorType.h"
 #include "AutomatType.h"
+#include "PopulationType.h"
 #include "ent/ENT_Tr.h"
 #include "xeumeuleu/xml.h"
 
@@ -29,18 +30,20 @@ AgentTypes::AgentTypes( const std::string& scipioXml )
     xis >> start( "Scipio" )    
             >> start( "Donnees" );
 
-    std::string components, decisional, agents, automats, sensors;
+    std::string components, decisional, agents, automats, sensors, populations;
     xis >> content( "Capteurs", sensors )
         >> content( "Composantes", components )
         >> content( "Decisionnel", decisional )
         >> content( "Pions", agents )
-        >> content( "Automates", automats );
+        >> content( "Automates", automats )
+        >> content( "Populations", populations );
 
     ReadComponents( components );
     ReadDecisional( decisional );
     ReadSensors( sensors );
     ReadAgents( agents );
     ReadAutomats( automats );
+    ReadPopulations( populations );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +52,7 @@ AgentTypes::AgentTypes( const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 AgentTypes::~AgentTypes()
 {
+    Resolver< PopulationType >::DeleteAll();
     Resolver< AgentType >::DeleteAll();
     Resolver< AutomatType >::DeleteAll();
     Resolver< ComponentType, std::string >::DeleteAll();
@@ -193,5 +197,27 @@ void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
     AutomatType* type = new AutomatType( xis, *this, *this );
     Resolver< AutomatType >::Register( type->GetId(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadPopulations
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadPopulations( const std::string& populations )
+{
+    xifstream xis( populations );
+    xis >> start( "Populations" )
+            >> list( "Population", *this, ReadPopulationType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadPopulationType
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadPopulationType( xml::xistream& xis )
+{
+    PopulationType* type = new PopulationType( xis, *this );
+    Resolver< PopulationType >::Register( type->GetId(), *type );
+    Resolver< PopulationType, std::string >::Register( type->GetName(), *type );
 }
 

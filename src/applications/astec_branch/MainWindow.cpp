@@ -57,7 +57,7 @@ MainWindow::MainWindow( Controller& controller )
     ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controller, actionController_ );
     pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
     pObjectList_->header()->hide();
-    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controller );
+    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controller, actionController_ );
 	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
 	pPopulationList_->header()->hide();
 	pListDockWnd_->setWidget( pListsTabWidget );

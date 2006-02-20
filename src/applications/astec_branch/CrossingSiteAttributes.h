@@ -58,7 +58,7 @@ private:
     void UpdateData( const T& message );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;

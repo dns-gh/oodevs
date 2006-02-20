@@ -56,11 +56,6 @@ public:
     Agent& GetAgent( unsigned long id ) const;
     Agent* FindAgent( unsigned long id ) const;
 
-//    template< typename Functor >
-//    void ApplyOnAgents( const Functor& f ) {
-//        Resolver< Agent >::Apply( f );
-//    }
-
     Agent_ABC* FindAllAgent( unsigned long id ) const;
 
     void CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg );

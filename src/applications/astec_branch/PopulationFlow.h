@@ -11,11 +11,14 @@
 #define __PopulationFlow_h_
 
 #include "ASN_Types.h"
+#include "PopulationPart_ABC.h"
+#include "Updatable_ABC.h"
+#include "Extension_ABC.h"
 
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class PopulationFlow
+class PopulationFlow : public PopulationPart_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -26,18 +29,21 @@ public:
 
     //! @name Operations
     //@{
-	void Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
-    void UpdatePathFind();
+    virtual std::string  GetName() const;
+    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetDeadHumans() const;
+    virtual unsigned int GetDensity() const;
     //@}
 
+    void UpdatePathFind();
     //! @name Accessors
     //@{
             const T_PointVector& GetFlow            () const;
             const T_PointVector& GetItineraire      () const;
             const MT_Vector2D&   GetTailPosition    () const;
             const MT_Vector2D&   GetHeadPosition    () const;
-	virtual const std::string&   GetName            () const;
-    virtual const MT_Vector2D&   GetPos             () const;
+//	virtual const std::string&   GetName            () const;
+//    virtual const MT_Vector2D&   GetPos             () const;
     //@}
 
 private:
@@ -47,11 +53,15 @@ private:
     PopulationFlow& operator=( const PopulationFlow& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
+    //@}
+
 private:
     //! @name Member data
     //@{
     uint                 nID_;
-    const std::string strName_;
 
 	T_PointVector	  itineraire_;
 	T_PointVector	  flow_;
@@ -60,11 +70,8 @@ private:
     
     int                  nLivingHumans_;
     int                  nDeadHumans_;
-    E_PopulationAttitude attitude_;
     MT_Float             rDensity_;
     //@}
 };
-
-#include "PopulationFlow.inl"
 
 #endif // __PopulationFlow_h_

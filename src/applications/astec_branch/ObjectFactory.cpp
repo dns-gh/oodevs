@@ -14,8 +14,10 @@
 #include "NBCAttributes.h"
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
+#include "CampAttributes.h"
 #include "Model.h"
 #include "TeamsModel.h"
+#include "AgentsModel.h"
 #include "ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
@@ -47,6 +49,11 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     Object_ABC* result = new Object_ABC( message, controller_, model_.teams_, model_.objectTypes_ );
     switch( message.type )
     {
+    case EnumObjectType::camp_prisonniers:
+    case EnumObjectType::camp_refugies:
+        result->Attach( *new CampAttributes( controller_, model_.agents_ ) );
+        result->Update( message );
+        break;
     case EnumObjectType::itineraire_logistique:
         result->Attach( *new LogisticRouteAttributes( controller_ ) );
         result->Update( message );

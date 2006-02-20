@@ -25,13 +25,14 @@
 #include "Tiredness.h"
 #include "LogisticLinks.h"
 #include "Transports.h"
+#include "InfoPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentStatePanel constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( QWidget* pParent, Controller& controller, ActionController& actionController  )
-    : InfoPanel_ABC( pParent )
+AgentStatePanel::AgentStatePanel( InfoPanel* info, Controller& controller, ActionController& actionController  )
+    : InfoPanel_ABC( info, tr( "Etat" ) )
     , selected_( 0 )
 {
     display_ = new Display( this );
@@ -105,11 +106,12 @@ AgentStatePanel::~AgentStatePanel()
 // -----------------------------------------------------------------------------
 void AgentStatePanel::NotifySelected( const Agent* agent )
 {
-    if( selected_ != agent )
+    if( selected_ != agent || ! agent )
     {
         selected_ = agent;
         if( selected_ )
         {
+            Show();
             NotifyUpdated( selected_->Get< Attributes >() );
             NotifyUpdated( selected_->Get< Contaminations >() );
             NotifyUpdated( selected_->Get< HumanFactors >() );
@@ -121,7 +123,7 @@ void AgentStatePanel::NotifySelected( const Agent* agent )
             NotifyUpdated( selected_->Get< Transports >() );
         }
         else
-            display_->Clear();
+            Hide();
     };
 }
 

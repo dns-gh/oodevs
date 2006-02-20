@@ -11,29 +11,31 @@
 #define __PopulationConcentration_h_
 
 #include "ASN_Types.h"
+#include "PopulationPart_ABC.h"
+#include "Updatable_ABC.h"
 
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class PopulationConcentration
+class PopulationConcentration : public PopulationPart_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg );
+             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, MT_Float density );
     virtual ~PopulationConcentration();
-    //@}
-
-    //! @name Operations
-    //@{
-	void Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
     //@}
 
     //! @name Accessors
     //@{
-	virtual const MT_Vector2D& GetPos    () const;
-	virtual const std::string& GetName   () const;
-            MT_Float           GetArea   () const;
+//	virtual const MT_Vector2D& GetPos    () const;
+    MT_Float   GetArea   () const;
+
+	virtual std::string GetName   () const;
+    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetDeadHumans() const;
+    virtual unsigned int GetDensity() const;
     //@}
 
 private:
@@ -43,19 +45,21 @@ private:
     PopulationConcentration& operator=( const PopulationConcentration& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    const std::string strName_;
     MT_Vector2D position_;
 
-    uint                 nID_;
-    int                  nLivingHumans_;
-    int                  nDeadHumans_;
-    E_PopulationAttitude attitude_;
+    MT_Float density_;
+    uint     nID_;
+    int      nLivingHumans_;
+    int      nDeadHumans_;
     //@}			
 };
-
-#include "PopulationConcentration.inl"
 
 #endif // __PopulationConcentration_h_

@@ -39,7 +39,7 @@ class ActionController;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class InfoPanel : public QWidgetStack
+class InfoPanel : public QWidgetStack // $$$$ AGE 2006-02-17: renommer en InfoPanels
 {
 
 public:
@@ -49,7 +49,12 @@ public:
     virtual ~InfoPanel();
     //@}
 
-    QSize sizeHint() const;
+    //! @name Operations
+    //@{
+    void Add   ( QWidget* widget, const QString& name );
+    void Remove( QWidget* widget );
+    //@}
+    
     
 private:
     //! @name Copy / Assignment
@@ -58,7 +63,13 @@ private:
     InfoPanel& operator=( const InfoPanel& );
     //@}
 
+    //! @name Helpers
+    //@{
+    QSize sizeHint() const;
+    //@}
+
 private:
+    QTabWidget*               pTabWidget_;
     AgentStatePanel*          pStatePanel_;
     ReportPanel*              pReportPanel_;
     AgentResourcesPanel*      pResourcesPanel_;
@@ -83,7 +94,7 @@ private:
 	bool bPopulationVisible_;
     bool bPopulationKnowledgeVisible_;
 
-    QTabWidget* pTabWidget_;
+//    QTabWidget* pTabWidget_;
 };
 
 #endif // __InfoPanel_h_

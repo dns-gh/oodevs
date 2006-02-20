@@ -7,27 +7,23 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "PopulationFlow.h"
 #include "App.h"
 #include "World.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
-    : strName_              ( "Flow" )
-    , itineraire_           ( )
-    , flow_                 ( 2, MT_Vector2D( 0, 0 ) )
-    , nDirection_           ( 0 )
-    , nSpeed_               ( 0 )
+    : nID_       ( asnMsg.oid_flux )
+    , itineraire_( )
+    , flow_      ( 2, MT_Vector2D( 0, 0 ) )
+    , nDirection_( 0 )
+    , nSpeed_    ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,17 +35,25 @@ PopulationFlow::~PopulationFlow()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlow::Update
+// Name: PopulationFlow::GetName
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+std::string PopulationFlow::GetName() const
+{
+    static std::string flow( "Flow" );
+    return flow;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
 	if( asnMsg.m.nb_humains_vivantsPresent )
 		nLivingHumans_ = asnMsg.nb_humains_vivants;
 	if ( asnMsg.m.nb_humains_mortsPresent )
 		nDeadHumans_ = asnMsg.nb_humains_morts;
-	if ( asnMsg.m.attitudePresent )
-		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
 	if ( asnMsg.m.vitessePresent )
 		nSpeed_ = asnMsg.vitesse;
 	if ( asnMsg.m.directionPresent )
@@ -87,6 +91,35 @@ void PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
         else 
             rDensity_ = 0.;
 	}
+
+    PopulationPart_ABC::DoUpdate( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetDensity
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetDensity() const
+{
+    return rDensity_;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetLivingHumans
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetLivingHumans() const
+{
+    return nLivingHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetDeadHumans
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetDeadHumans() const
+{
+    return nDeadHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +139,7 @@ void PopulationFlow::UpdatePathFind()
     MT_Float rMinDistance = 999999999.0;
     IT_PointVector itLastValidPoint = itineraire_.end();
 
-    const MT_Vector2D& vPos = GetPos();
+    const MT_Vector2D& vPos = flow_.back();
 
     // Iterate on the path vector.
     IT_PointVector itPreviousPoint = itineraire_.begin();

@@ -15,6 +15,7 @@
 
 class Controller;
 class Population;
+class ActionController;
 
 // =============================================================================
 /** @class  PopulationListView
@@ -26,12 +27,19 @@ class PopulationListView : public QListView
                          , public Observer_ABC
                          , public ElementObserver_ABC< Population >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent, Controller& controller );
+             PopulationListView( QWidget* pParent, Controller& controller, ActionController& actionController );
     virtual ~PopulationListView();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChange( QListViewItem* item );
     //@}
 
 private:
@@ -52,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
     QPopupMenu* pPopupMenu_;
     //@}
 };

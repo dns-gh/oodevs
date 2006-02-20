@@ -17,7 +17,7 @@
 #include "App.h"
 #include "AgentManager.h"
 #include "Team.h"
-#include "TypePopulation.h"
+#include "PopulationType.h"
 #include "World.h"
 
 #include "PopulationFlow.h"
@@ -31,14 +31,13 @@ MIL_AgentID Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const Resolver_ABC< Team >& resolver )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const Resolver_ABC< Team >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
     : controller_   ( controller )
     , nPopulationID_( message.oid_population )
     , strName_      ( message.nom )
-    , pType_        ( 0 ) // App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population ) )
+    , type_         ( typeResolver.Get( message.type_population ) )
     , team_         ( resolver.Get( message.oid_camp ) )
 {
-//    assert( pType_ );
     controller_.Create( *this );
 }
 
@@ -49,8 +48,33 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
 Population::~Population()
 {
     controller_.Delete( *this );
-    Resolver< PopulationConcentration >::DeleteAll();
-    Resolver< PopulationFlow >::DeleteAll();
+    Resolver< PopulationPart_ABC >::DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetDeadHumans
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+unsigned int Population::GetDeadHumans() const
+{
+    unsigned int dead = 0;
+    Iterator< const PopulationPart_ABC& > it = CreateIterator();
+    while( it.HasMoreElements() )
+        dead += it.NextElement().GetDeadHumans();
+    return dead;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetLivingHumans
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+unsigned int Population::GetLivingHumans() const
+{
+    unsigned int living = 0;
+    Iterator< const PopulationPart_ABC& > it = CreateIterator();
+    while( it.HasMoreElements() )
+        living += it.NextElement().GetLivingHumans();
+    return living;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +83,7 @@ Population::~Population()
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	Resolver< PopulationFlow >::Get( asnMsg.oid_flux ).Update( asnMsg );
+    Resolver< PopulationPart_ABC >::Get( asnMsg.oid_flux ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +92,7 @@ void Population::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	Resolver< PopulationConcentration >::Get( asnMsg.oid_concentration ).Update( asnMsg );
+	Resolver< PopulationPart_ABC >::Get( asnMsg.oid_concentration ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +101,8 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-    if( ! Resolver< PopulationFlow >::Find( asnMsg.oid_flux ) )
-        Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
+    if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux ) )
+        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,8 +111,8 @@ void Population::Update( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    if( ! Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration ) )
-        Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg ) );
+    if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration ) )
+        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, type_.GetDensity() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +121,8 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& asnMsg 
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
-    delete Resolver< PopulationFlow >::Find( asnMsg.oid_flux );
-    Resolver< PopulationFlow >::Remove( asnMsg.oid_flux );
+    delete Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux );
+    Resolver< PopulationPart_ABC >::Remove( asnMsg.oid_flux );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +131,8 @@ void Population::Update( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-    delete Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration );
-    Resolver< PopulationConcentration >::Remove( asnMsg.oid_concentration );
+    delete Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration );
+    Resolver< PopulationPart_ABC >::Remove( asnMsg.oid_concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +143,6 @@ void Population::Update( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
 {
     // NOTHING
 } 
-
 
 // -----------------------------------------------------------------------------
 // Name: Population::GetId
@@ -136,7 +159,9 @@ unsigned long Population::GetId() const
 // -----------------------------------------------------------------------------
 const PopulationConcentration* Population::FindConcentration( uint nID ) const
 {
-    return Resolver< PopulationConcentration >::Find( nID );
+    const PopulationPart_ABC* part = Resolver< PopulationPart_ABC >::Find( nID );
+    assert( ! part || dynamic_cast< const PopulationConcentration* >( part ) ); // $$$$ AGE 2006-02-20: 
+    return static_cast< const PopulationConcentration* >( part );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +170,9 @@ const PopulationConcentration* Population::FindConcentration( uint nID ) const
 // -----------------------------------------------------------------------------
 const PopulationFlow* Population::FindFlow( uint nID ) const
 {
-    return Resolver< PopulationFlow >::Find( nID );
+    const PopulationPart_ABC* part = Resolver< PopulationPart_ABC >::Find( nID );
+    assert( ! part || dynamic_cast< const PopulationFlow* >( part ) ); // $$$$ AGE 2006-02-20: 
+    return static_cast< const PopulationFlow* >( part );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +181,8 @@ const PopulationFlow* Population::FindFlow( uint nID ) const
 // -----------------------------------------------------------------------------
 const PopulationConcentration& Population::GetConcentration( uint nID ) const
 {
-    return Resolver< PopulationConcentration >::Get( nID );
+    const PopulationPart_ABC& part = Resolver< PopulationPart_ABC >::Get( nID );
+    return static_cast< const PopulationConcentration& >( part );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +191,8 @@ const PopulationConcentration& Population::GetConcentration( uint nID ) const
 // -----------------------------------------------------------------------------
 const PopulationFlow& Population::GetFlow( uint nID ) const
 {
-    return Resolver< PopulationFlow >::Get( nID );
+    const PopulationPart_ABC& part = Resolver< PopulationPart_ABC >::Get( nID );
+    return static_cast< const PopulationFlow& >( part );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,4 +212,3 @@ const Team& Population::GetTeam() const
 {
     return team_;
 }
-

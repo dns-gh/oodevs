@@ -18,6 +18,7 @@
 
 #include "astec_pch.h"
 #include "InfoPanel.h"
+#include "InfoPanel_ABC.h"
 
 #include "MainWindow.h"
 #include "AgentStatePanel.h"
@@ -27,7 +28,7 @@
 #include "ObjectPanel.h"
 //#include "ObjectReportPanel.h"
 //#include "ObjectKnowledgePanel.h"
-//#include "PopulationPanel.h"
+#include "PopulationPanel.h"
 //#include "PopulationKnowledgePanel.h"
 //#include "AgentMaintenancePanel.h"
 //#include "AgentMedicalPanel.h"
@@ -48,28 +49,33 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
 	, bPopulationVisible_		   ( false )
 {
     this->setMinimumSize( 1, 1 );
-
-    pStatePanel_               = new AgentStatePanel( this, controller, actionController );
+    pStatePanel_               = new AgentStatePanel(  this, controller, actionController );
 //    pResourcesPanel_           = new AgentResourcesPanel( this );
 //    pAgentKnowledgePanel_      = new AgentKnowledgePanel( this );
-//    pObjectPanel_              = new ObjectPanel( this, controller, actionController );
+    pObjectPanel_              = new ObjectPanel( this, controller, actionController );
 //    pObjectReportPanel_        = new ObjectReportPanel( this );
 //    pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this );
 //    pAgentMaintenancePanel_    = new AgentMaintenancePanel( this );
 //    pAgentMedicalPanel_        = new AgentMedicalPanel( this );
 //    pAgentSupplyPanel_         = new AgentSupplyPanel( this );
 //    pReportPanel_              = new ReportPanel( this );
-//	  pPopulationPanel_		   = new PopulationPanel( this );
+	  pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
 //    pPopulationReportPanel_    = new ReportPanel( this );
 //    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this );
 
     pTabWidget_ = new QTabWidget( this );
-    pTabWidget_->insertTab( pStatePanel_, tr( "Etat" ), 0 );
-//    pTabWidget_->insertTab( pObjectPanel_, tr( "Objet" ), 0 );
+    pTabWidget_ ->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    pStatePanel_->Show();
+    pObjectPanel_->Show();
+    pPopulationPanel_->Show();
 
     addWidget  ( pTabWidget_ );
     raiseWidget( pTabWidget_ );
     pTabWidget_->setCurrentPage( 0 );
+
+    pStatePanel_->NotifySelected( 0 );
+    pObjectPanel_->NotifySelected( 0 );
+    pPopulationPanel_->NotifySelected( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,6 +87,24 @@ InfoPanel::~InfoPanel()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: InfoPanel::Add
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void InfoPanel::Add( QWidget* widget, const QString& name )
+{
+    if( pTabWidget_->indexOf( widget ) == -1 )
+        pTabWidget_->insertTab( widget, name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanel::Remove
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void InfoPanel::Remove( QWidget* widget )
+{
+    pTabWidget_->removePage( widget );
+}
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanel::sizeHint

@@ -19,6 +19,7 @@ class ComponentType;
 class DecisionalModel;
 class SensorType;
 class AutomatType;
+class PopulationType;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -28,6 +29,8 @@ class AutomatType;
 // =============================================================================
 class AgentTypes : public Resolver< AgentType >
                  , public Resolver< AgentType, std::string >
+                 , public Resolver< PopulationType >
+                 , public Resolver< PopulationType, std::string >
                  , public Resolver< AutomatType >
                  , public Resolver< ComponentType, std::string >
                  , public Resolver< SensorType, std::string >
@@ -65,9 +68,11 @@ private:
     void ReadAgents( const std::string& agents );
     void ReadAutomats( const std::string& automats );
     void ReadModels( const std::string& models );
+    void ReadPopulations( const std::string& populations );
 
     void ReadAgentType( xml::xistream& xis );
     void ReadAutomatType( xml::xistream& xis );
+    void ReadPopulationType( xml::xistream& xis );
     void ReadComponent( xml::xistream& xis );
     void ReadSensor( xml::xistream& xis );
     void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver );

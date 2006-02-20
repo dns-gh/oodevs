@@ -96,7 +96,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    Population* result = new Population( asnMsg, controller_, model_.teams_ );
+    Population* result = new Population( asnMsg, controller_, model_.teams_, model_.types_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     return result;
 }

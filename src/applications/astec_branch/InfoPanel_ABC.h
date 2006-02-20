@@ -19,6 +19,8 @@
 #ifndef __InfoPanel_ABC_h_
 #define __InfoPanel_ABC_h_
 
+class InfoPanel;
+
 // =============================================================================
 /** @class  InfoPanel_ABC
     @brief  InfoPanel_ABC
@@ -30,12 +32,15 @@ class InfoPanel_ABC : public QScrollView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InfoPanel_ABC( QWidget* pParent );
+             InfoPanel_ABC( InfoPanel* parent, const QString& name );
     virtual ~InfoPanel_ABC();
     //@}
 
-    virtual void insertChild ( QObject* pObj );
-    virtual QLayout* layout();
+    //! @name Operations
+    //@{
+    void Show();
+    void Hide();
+    //@}
 
 private:
     //! @name Copy/Assignement
@@ -44,9 +49,18 @@ private:
     InfoPanel_ABC& operator=( const InfoPanel_ABC& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void insertChild ( QObject* pObj );
+    virtual QLayout* layout();
+    virtual QSize sizeHint() const;
+    //@}
+
 protected:
     //! @name Member data
     //@{
+    InfoPanel* parent_;
+    QString name_; 
     QVBox* pBox_;
     //@}
 };

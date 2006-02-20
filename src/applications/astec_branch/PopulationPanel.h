@@ -11,73 +11,48 @@
 #define __PopulationPanel_h_
 
 #include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "SelectionObserver_ABC.h"
+#include "ElementObserver_ABC.h"
 
 class QListViewItem;
 class Display;
+class Population;
+class Controller;
+class ActionController;
+class ValuedListItem;
+class PopulationPart_ABC;
 
 // =============================================================================
 // Created: HME 2005-10-03
 // =============================================================================
 class PopulationPanel : public InfoPanel_ABC
+                      , public Observer_ABC
+                      , public SelectionObserver< Population >
+                      , public ElementObserver_ABC< Population >
 {
-    Q_OBJECT
-
-    MT_COPYNOTALLOWED( PopulationPanel );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationPanel( QWidget* pParent );
+    explicit PopulationPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~PopulationPanel();
     //@}
 
-signals:
-    //! @name Signals
-    //@{
-    void ElementSelected( SelectedElement& selectedElement );
-    //@}
+    virtual void NotifySelected( const Population* popu );
 
 private:
-    //! @name Event handlers
-    //@{
-	virtual void OnClearSelection();
-    virtual void OnUpdate();
-	virtual void OnPopulationUpdated( const Population& population );
-    //@}
-
     //! @name Helpers
     //@{
-    void UpdateSelected();
-    //@}
+    virtual void NotifyUpdated( const Population& );
+    virtual void NotifyDeleted( const Population& );
 
-private slots:
-    //! @name Slots
-    //@{
-    void OnSelectionChange               ( QListViewItem* pItem );
-    void OnPopulationConcentrationCreated( const PopulationConcentration& concentration );
-    void OnPopulationConcentrationUpdated( const PopulationConcentration& concentration );
-    void OnPopulationConcentrationDeleted( const PopulationConcentration& concentration );
-    void OnPopulationFlowCreated         ( const PopulationFlow&          flow );
-    void OnPopulationFlowUpdated         ( const PopulationFlow&          flow );
-    void OnPopulationFlowDeleted         ( const PopulationFlow&          flow );
+    void DisplayParts( const Population& population );
+    void DisplayPart( const PopulationPart_ABC& part, ValuedListItem* at );
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_ItemType
-    {
-        eConcentration,
-        eFlow
-    };
-
-    typedef MT_ValuedListViewItem< const PopulationConcentration*, eConcentration > T_PopulationConcentrationItem;
-    typedef MT_ValuedListViewItem< const PopulationFlow*         , eFlow >          T_PopulationFlowItem;
-    //@}
-
-private:
-    const Population* pPopulation_;
+    const Population* selected_;
     Display* display_;
     QListView* pPartsListView_;
 };
