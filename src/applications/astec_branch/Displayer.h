@@ -13,19 +13,19 @@
 class DisplayGroup;
 
 // =============================================================================
-/** @class  Display
-    @brief  Display
+/** @class  Displayer
+    @brief  Displayer
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class Display
+class Displayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Display( QWidget* parent );
-    virtual ~Display();
+             Displayer( QWidget* parent );
+    virtual ~Displayer();
     //@}
 
     //! @name Operations
@@ -44,8 +44,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Display( const Display& );            //!< Copy constructor
-    Display& operator=( const Display& ); //!< Assignement operator
+    Displayer( const Displayer& );            //!< Copy constructor
+    Displayer& operator=( const Displayer& ); //!< Assignement operator
     //@}
 
     //! @name Types

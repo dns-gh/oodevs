@@ -16,12 +16,14 @@
 #include "ElementObserver_ABC.h"
 
 class QListViewItem;
-class Display;
+class Displayer;
 class Population;
 class Controller;
 class ActionController;
 class ValuedListItem;
 class PopulationPart_ABC;
+template< typename T >
+class ListView;
 
 // =============================================================================
 // Created: HME 2005-10-03
@@ -39,22 +41,24 @@ public:
     virtual ~PopulationPanel();
     //@}
 
+    //! @name Operations
+    //@{
     virtual void NotifySelected( const Population* popu );
+    void Display( const PopulationPart_ABC& part, ValuedListItem* at );
+    //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Population& );
     virtual void NotifyDeleted( const Population& );
-
     void DisplayParts( const Population& population );
-    void DisplayPart( const PopulationPart_ABC& part, ValuedListItem* at );
     //@}
 
 private:
     const Population* selected_;
-    Display* display_;
-    QListView* pPartsListView_;
+    Displayer* display_;
+    ListView< PopulationPanel >* pPartsListView_;
 };
 
 #endif // __PopulationPanel_h_

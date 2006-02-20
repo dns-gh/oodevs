@@ -8,33 +8,33 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Display.h"
+#include "Displayer.h"
 #include "DisplayGroup.h"
 
 // -----------------------------------------------------------------------------
-// Name: Display constructor
+// Name: Displayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-Display::Display( QWidget* parent )
+Displayer::Displayer( QWidget* parent )
     : parent_( parent )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: Display destructor
+// Name: Displayer destructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-Display::~Display()
+Displayer::~Displayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Display::AddGroup
+// Name: Displayer::AddGroup
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-DisplayGroup& Display::AddGroup( const char* name )
+DisplayGroup& Displayer::AddGroup( const char* name )
 {
     DisplayGroup*& group = groups_[ std::string( name ) ];
     if( group )
@@ -44,10 +44,10 @@ DisplayGroup& Display::AddGroup( const char* name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Display::Group
+// Name: Displayer::Group
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-DisplayGroup& Display::Group( const char* name )
+DisplayGroup& Displayer::Group( const char* name )
 {
     DisplayGroup* group = groups_[ std::string( name ) ];
     if( ! group )
@@ -56,29 +56,29 @@ DisplayGroup& Display::Group( const char* name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Display::Clear
+// Name: Displayer::Clear
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-void Display::Clear()
+void Displayer::Clear()
 {
     for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
         it->second->Clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Display::YesNo
+// Name: Displayer::YesNo
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-QString Display::YesNo( bool value )
+QString Displayer::YesNo( bool value )
 {
     return value ? qApp->tr( "Oui" ) : qApp->tr( "Non" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Display::Id
+// Name: Displayer::Id
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-QString Display::Id( unsigned int value )
+QString Displayer::Id( unsigned int value )
 {
     return value ? QString::number( value ) : "-";
 }

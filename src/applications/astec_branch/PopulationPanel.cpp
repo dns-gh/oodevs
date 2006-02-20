@@ -13,12 +13,13 @@
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
-#include "Display.h"
+#include "Displayer.h"
 #include "DisplayGroup.h"
 #include "DisplayItem.h"
 #include "Controller.h"
 #include "ActionController.h"
 #include "ValuedListItem.h"
+#include "ListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPanel constructor
@@ -28,13 +29,13 @@ PopulationPanel::PopulationPanel( InfoPanel* pParent, Controller& controller, Ac
     : InfoPanel_ABC ( pParent, tr( "Population" ) )
     , selected_      ( 0 )
 {
-    display_ = new Display( this );
+    display_ = new Displayer( this );
     display_->AddGroup( "Informations" )
                 .AddItem( "Nom:", true )
                 .AddItem( "Nombre de personnes vivantes:" )
                 .AddItem( "Morts:" );
 
-    pPartsListView_ = new QListView( this );
+    pPartsListView_ = new ListView< PopulationPanel >( this, *this );
     pPartsListView_->addColumn( tr( "Morceau" ) );
     pPartsListView_->addColumn( tr( "Hommes vivants" ) );
     pPartsListView_->addColumn( tr( "Hommes morts" ) );
@@ -79,31 +80,16 @@ void PopulationPanel::NotifySelected( const Population* popu )
 // -----------------------------------------------------------------------------
 void PopulationPanel::DisplayParts( const Population& population )
 {
-    Iterator< const PopulationPart_ABC & > it = population.CreateIterator();
-    ValuedListItem* currentItem = 0;
-    ValuedListItem* previousItem = currentItem;
-    while( it.HasMoreElements() )
-    {
-        const PopulationPart_ABC& part = it.NextElement();
-        if( ! currentItem  ) 
-            currentItem = new ValuedListItem( &part, pPartsListView_, previousItem );
-        DisplayPart( part, currentItem );
-        previousItem = currentItem;
-        currentItem = (ValuedListItem*)( currentItem->nextSibling() );
-    }
-    while( currentItem )
-    {
-        ValuedListItem* next = (ValuedListItem*)( currentItem->nextSibling() );
-        delete currentItem;
-        currentItem = next;
-    }
+    Iterator< const PopulationPart_ABC& > it = population.CreateIterator();
+    ValuedListItem* item = pPartsListView_->Display( it, pPartsListView_->firstChild() );
+    pPartsListView_->DeleteTail( item );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPanel::DisplayPart
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::DisplayPart( const PopulationPart_ABC& part, ValuedListItem* at )
+void PopulationPanel::Display( const PopulationPart_ABC& part, ValuedListItem* at )
 {
     at->SetValue( &part );
     at->setText( 0, part.GetName().c_str() );

@@ -35,7 +35,7 @@
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
 AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController )
-    : QListView     ( pParent )
+    : ListView< AgentListView >( pParent, *this )
     , actionController_( actionController )
     , pPopupMenu_   ( 0 )
 {
@@ -127,25 +127,8 @@ void AgentListView::NotifyUpdated( const Agent& agent )
 template< typename ParentType, typename ChildType >
 void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* item )
 {
-    ValuedListItem* previousChild = (ValuedListItem*)( item->firstChild() );
-
     Iterator< const ChildType& > it = value.CreateIterator();
-    ValuedListItem* child = previousChild;
-    while( it.HasMoreElements() )
-    {
-        const ChildType& childValue = it.NextElement();
-        if( ! child  ) 
-            child = new ValuedListItem( &childValue, item, previousChild );
-        Display( childValue, child );
-        previousChild = child;
-        child = (ValuedListItem*)( child->nextSibling() );
-    }
-    while( child )
-    {
-        ValuedListItem* next = (ValuedListItem*)( child->nextSibling() );
-        delete child;
-        child = next;
-    }
+    DeleteTail( ListView< AgentListView >::Display( it, item, (ValuedListItem*)( item->firstChild() ) ) );
 }
 
 

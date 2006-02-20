@@ -26,7 +26,7 @@
 
 class Agent;
 class ReportListView;
-class Display;
+class Displayer;
 class Controller;
 class ActionController;
 class Attributes;
@@ -87,7 +87,7 @@ private:
     //! @name Member data
     //@{
 
-    Display* display_;
+    Displayer* display_;
     const Agent* selected_;
     //@}
 };

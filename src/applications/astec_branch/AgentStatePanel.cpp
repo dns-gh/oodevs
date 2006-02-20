@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "AgentStatePanel.h"
 #include "Controller.h"
-#include "Display.h"
+#include "Displayer.h"
 #include "DisplayGroup.h"
 #include "DisplayItem.h"
 #include "Agent.h"
@@ -35,7 +35,7 @@ AgentStatePanel::AgentStatePanel( InfoPanel* info, Controller& controller, Actio
     : InfoPanel_ABC( info, tr( "Etat" ) )
     , selected_( 0 )
 {
-    display_ = new Display( this );
+    display_ = new Displayer( this );
     display_->AddGroup( "Info" )
                 .AddItem( "Nom:", true )
                 .AddItem( "Etat Opérationnel:" )
@@ -151,13 +151,13 @@ void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
     display_->Group( "Info" )
                 .Display( "Nom:",                                selected_->GetName().c_str() )
                 .Display( "Etat Opérationnel:",                  QString( "%1 %" ).arg( attributes.nRawOpState_ ) )
-                .Display( "Mort:",                               Display::YesNo( attributes.bDead_ ) )
-                .Display( "Neutralisé:",                         Display::YesNo( attributes.bNeutralized_ ) )
+                .Display( "Mort:",                               Displayer::YesNo( attributes.bDead_ ) )
+                .Display( "Neutralisé:",                         Displayer::YesNo( attributes.bNeutralized_ ) )
                 .Display( "Vitesse:",                            QString::number( attributes.nSpeed_ ) )
                 .Display( "Direction:",                          QString::number( attributes.nDirection_ ) + "°"  )
                 .Display( "Altitude:",                           QString::number( attributes.nAltitude_ ) + "m" )
                 .Display( "Troupes:",                            attributes.bLoadingState_ ? tr( "Embarqué" ) : tr( "Débarqué" ) )
-                .Display( "Transporteurs d'hommes disponibles:", Display::YesNo( attributes.bHumanTransportersReady_ ) );
+                .Display( "Transporteurs d'hommes disponibles:", Displayer::YesNo( attributes.bHumanTransportersReady_ ) );
 
     QString strStance = Tools::ToString( attributes.nCurrentPosture_ )
                       + " (" + QString::number( attributes.nPostureCompletionPourcentage_ ) + "%)";
@@ -166,8 +166,8 @@ void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
                 .Display( "Nouvelle posture:", strStance );
 
     display_->Group( "Communications" )
-                .Display( "Brouillé:", Display::YesNo( attributes.bCommJammed_ ) )
-                .Display( "Silence radio:", Display::YesNo( attributes.bRadioSilence_ ) );
+                .Display( "Brouillé:", Displayer::YesNo( attributes.bCommJammed_ ) )
+                .Display( "Silence radio:", Displayer::YesNo( attributes.bRadioSilence_ ) );
 
     display_->Group( "Etat décisionnel" )
                 .Display( "Etat opérationnel:", ENT_Tr::ConvertFromEtatOperationnel( attributes.nOpState_ ) )
@@ -178,9 +178,9 @@ void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
                 .Display( "Contact combat:", ENT_Tr::ConvertFromEtatCombatRencontre( attributes.nCloseCombatState_ ) );
 
     display_->Group( "Etat martial" )
-            .Display( "Fait prisonnier:", Display::YesNo( attributes.bPrisoner_ ) )
-            .Display( "Rendu:", Display::YesNo( attributes.bSurrendered_ ) )
-            .Display( "Réfugiés pris en compte:", Display::YesNo( attributes.bRefugeesManaged_ ) );
+            .Display( "Fait prisonnier:", Displayer::YesNo( attributes.bPrisoner_ ) )
+            .Display( "Rendu:", Displayer::YesNo( attributes.bSurrendered_ ) )
+            .Display( "Réfugiés pris en compte:", Displayer::YesNo( attributes.bRefugeesManaged_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,10 +261,10 @@ void AgentStatePanel::NotifyUpdated( const LogisticLinks& a )
         return;
     display_->Group( "Liens logistiques" )
         // $$$$ AGE 2006-02-16: Plus malin que des ids ? a voir quand inversion de dépendance (genre liens, ...)
-                .Display( "TC2:",                       Display::Id( a.GetTC2() ? a.GetTC2()->GetId() : 0 ) ) 
-                .Display( "Supérieur maintenance:",     Display::Id( a.GetMaintenance() ? a.GetMaintenance()->GetId() : 0  ) )
-                .Display( "Supérieur santé:",           Display::Id( a.GetMedical() ? a.GetMedical()->GetId() : 0 ) )
-                .Display( "Supérieur ravitaillement:",  Display::Id( a.GetSupply() ? a.GetSupply()->GetId() : 0 ) );
+                .Display( "TC2:",                       Displayer::Id( a.GetTC2() ? a.GetTC2()->GetId() : 0 ) ) 
+                .Display( "Supérieur maintenance:",     Displayer::Id( a.GetMaintenance() ? a.GetMaintenance()->GetId() : 0  ) )
+                .Display( "Supérieur santé:",           Displayer::Id( a.GetMedical() ? a.GetMedical()->GetId() : 0 ) )
+                .Display( "Supérieur ravitaillement:",  Displayer::Id( a.GetSupply() ? a.GetSupply()->GetId() : 0 ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 #ifndef __AgentListView_h_
 #define __AgentListView_h_
 
+#include "ListView.h"
 #include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
@@ -37,7 +38,7 @@ class ActionController;
 */
 // Created: APE 2004-03-15
 // =============================================================================
-class AgentListView : public QListView
+class AgentListView : public ListView< AgentListView >
                     , public Observer_ABC
                     , public ElementObserver_ABC< Team >
                     , public ElementObserver_ABC< KnowledgeGroup >
@@ -51,6 +52,13 @@ public:
     virtual ~AgentListView();
 
     QSize sizeHint() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    void Display( const Team& team,            ValuedListItem* item );
+    void Display( const KnowledgeGroup& group, ValuedListItem* item );
+    void Display( const Agent& agent,          ValuedListItem* item );
     //@}
 
 private:
@@ -76,15 +84,11 @@ private:
     virtual void NotifyUpdated( const KnowledgeGroup& group );
     virtual void NotifyUpdated( const Agent& agent );
 
-    template< typename Type >
-    void Update( const Type& value );
-
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
 
-    void Display( const Team& team,            ValuedListItem* item );
-    void Display( const KnowledgeGroup& group, ValuedListItem* item );
-    void Display( const Agent& agent,          ValuedListItem* item );
+    template< typename Type >
+    void Update( const Type& value );
     //@}
 
 private:

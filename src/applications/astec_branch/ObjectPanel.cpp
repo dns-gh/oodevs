@@ -31,7 +31,7 @@
 #include "InfoPanel.h"
 #include "Agent.h"
 
-#include "Display.h"
+#include "Displayer.h"
 #include "DisplayGroup.h"
 #include "DisplayItem.h"
 
@@ -49,7 +49,7 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
     : InfoPanel_ABC ( info, tr( "Objet" ) )
     , selected_( 0 )
 {
-    display_ = new Display( this );
+    display_ = new Displayer( this );
     display_->AddGroup( "Informations" )
                 .AddItem( "Id:" )
                 .AddItem( "Nom:" )
@@ -176,10 +176,11 @@ void ObjectPanel::NotifyUpdated( const Object_ABC& object )
     App::GetApp().GetWorld().SimToMosMgrsCoord( object.center_, strPos );
 
     display_->Group( "Informations" )
-                .Display( "Id:", Display::Id( object.nId_ ) )
+                .Display( "Id:", Displayer::Id( object.nId_ ) )
                 .Display( "Nom:", object.strName_ )
                 .Display( "Type:", object.type_.GetName() )
                 .Display( "Position:", strPos );
+    // $$$$ AGE 2006-02-20: 
 //                .Display( "Dotation construction:", QString::number( object.GetNbrDotationConstruction() ) + " " + object.GetTypeDotationConstruction().c_str() )
 //                .Display( "Dotation valorisation:", QString::number( object.GetNbrDotationValorization() ) + " " + object.GetTypeDotationValorization().c_str() );
 }
@@ -217,7 +218,7 @@ void ObjectPanel::NotifyUpdated( const CampAttributes& a )
     if( ! ShouldUpdate( a ) )
         return;
 
-    display_->Group( "Camp" ).Display( "TC2:", Display::Id( a.tc2_ ? a.tc2_->GetId() : 0 ) );
+    display_->Group( "Camp" ).Display( "TC2:", Displayer::Id( a.tc2_ ? a.tc2_->GetId() : 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +234,7 @@ void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes& a )
                 .Display( "Largeur:", QString::number( a.width_ ) + " m" )
                 .Display( "Profondeur:", QString::number( a.depth_ ) + " m" )
                 .Display( "Vitesse courant:", QString::number( a.speed_ ) + " m/s" )
-                .Display( "Berges à aménager:", Display::YesNo( a.needsConstruction_ ) );
+                .Display( "Berges à aménager:", Displayer::YesNo( a.needsConstruction_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +247,7 @@ void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes& a )
         return;
 
     display_->Group( "Itinéraire Logistique" )
-                .Display( "Equipé:", Display::YesNo( a.bLogRouteEquipped_ ) )
+                .Display( "Equipé:", Displayer::YesNo( a.bLogRouteEquipped_ ) )
                 .Display( "Débit:", QString::number( a.nLogRouteFlow_ ) + " veh/h" )
                 .Display( "Largeur:", QString::number( a.nLogRouteWidth_ ) + " m" )
                 .Display( "Longueur:", QString::number( a.nLogRouteLength_ ) + " m" )
@@ -263,7 +264,7 @@ void ObjectPanel::NotifyUpdated( const NBCAttributes& a )
         return;
 
     display_->Group( "Nuage/Zone NBC" )
-        .Display( "Agent NBC:",Display::Id( a.nbcId_ ) ); // $$$$ AGE 2006-02-17: resolve
+        .Display( "Agent NBC:",Displayer::Id( a.nbcId_ ) ); // $$$$ AGE 2006-02-17: resolve
 }
 
 // -----------------------------------------------------------------------------
