@@ -11,6 +11,7 @@
 #include "ObjectTypes.h"
 #include "ObjectType.h"
 #include "DotationType.h"
+#include "EquipmentType.h"
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
@@ -22,11 +23,12 @@ using namespace xml;
 ObjectTypes::ObjectTypes( const std::string& scipioXml )
 {
     xml::xifstream scipio( scipioXml );
-    std::string idFile, dotations;
+    std::string idFile, dotations, equipments;
     scipio >> start( "Scipio" )
                 >> start( "Donnees" )
                     >> content( "ClasseIDs", idFile )
-                    >> content( "Dotations", dotations );
+                    >> content( "Dotations", dotations )
+                    >> content( "Composantes", equipments );
 
     xml::xifstream xis( idFile );
     Reader reader;
@@ -34,6 +36,7 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
         >> list( "Classe", reader, &Reader::Read, *this );
 
     ReadDotations( dotations );
+    ReadEquipments( equipments );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +47,7 @@ ObjectTypes::~ObjectTypes()
 {
     Resolver< ObjectType >::DeleteAll();
     Resolver< DotationType >::DeleteAll();
+    Resolver< EquipmentType >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,4 +106,25 @@ void ObjectTypes::ReadCategory( xml::xistream& xis, const std::string& name )
 {
     DotationType* dotation = new DotationType( name, xis );
     Resolver< DotationType >::Register( dotation->GetId(), *dotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadEquipments
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadEquipments( const std::string& equipments )
+{
+    xifstream xis( equipments );
+    xis >> start( "Composantes" )
+        >> list( "Composante", *this, ReadEquipment );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadEquipment
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadEquipment( xml::xistream& xis )
+{
+    EquipmentType* equipment = new EquipmentType( xis );
+    Resolver< EquipmentType >::Register( equipment->GetId(), *equipment );
 }

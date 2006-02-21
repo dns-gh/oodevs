@@ -18,7 +18,8 @@
 Troops::Troops( Controller& controller )
     : controller_( controller )
 {
-    // NOTHING
+    for( int i = 0; i < eTroopHealthStateNbrStates; ++i )
+        humans_[ i ].state_ = i;
 }
 
 // -----------------------------------------------------------------------------
@@ -43,21 +44,20 @@ void Troops::DoUpdate( const ASN1T_MsgUnitDotations& message )
     while( nSize > 0 )
     {
         const ASN1T_DotationPersonnel& dot = message.dotation_eff_personnel.elem[ --nSize ];
-
-        unsigned* table = troopers_;
+        unsigned Humans::* table = & Humans::troopers_;
         if( dot.rang == EnumHumanRank::officier )
-            table = officers_;
+            table = & Humans::officers_;
         else if( dot.rang == EnumHumanRank::sous_officer )
-            table = subOfficers_;
+            table = & Humans::subOfficers_;
 
-        table[ eTroopHealthStateTotal ]              = dot.nb_total;
-        table[ eTroopHealthStateOperational ]        = dot.nb_operationnels;
-        table[ eTroopHealthStateDead ]               = dot.nb_morts;
-        table[ eTroopHealthStateWounded ]            = dot.nb_blesses;
-        table[ eTroopHealthStateMentalWounds ]       = dot.nb_blesses_mentaux;
-        table[ eTroopHealthStateContaminated ]       = dot.nb_contamines_nbc;
-        table[ eTroopHealthStateInTreatment ]        = dot.nb_dans_chaine_sante;
-        table[ eTroopHealthStateUsedForMaintenance ] = dot.nb_utilises_pour_maintenance;
+        humans_[ eTroopHealthStateTotal ].*table              = dot.nb_total;
+        humans_[ eTroopHealthStateOperational ].*table        = dot.nb_operationnels;
+        humans_[ eTroopHealthStateDead ].*table               = dot.nb_morts;
+        humans_[ eTroopHealthStateWounded ].*table            = dot.nb_blesses;
+        humans_[ eTroopHealthStateMentalWounds ].*table       = dot.nb_blesses_mentaux;
+        humans_[ eTroopHealthStateContaminated ].*table       = dot.nb_contamines_nbc;
+        humans_[ eTroopHealthStateInTreatment ].*table        = dot.nb_dans_chaine_sante;
+        humans_[ eTroopHealthStateUsedForMaintenance ].*table = dot.nb_utilises_pour_maintenance;
     }
 
     controller_.Update( *this );

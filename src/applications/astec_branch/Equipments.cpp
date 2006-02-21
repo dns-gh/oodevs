@@ -10,13 +10,15 @@
 #include "astec_pch.h"
 #include "Equipments.h"
 #include "Controller.h"
+#include "Equipment.h"
 
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller )
+Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver )
     : controller_( controller )
+    , resolver_( resolver )
 {
 
 }
@@ -27,7 +29,7 @@ Equipments::Equipments( Controller& controller )
 // -----------------------------------------------------------------------------
 Equipments::~Equipments()
 {
-
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,12 +45,13 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitDotations& message )
     while ( nSize > 0 )
     {
         const ASN1T_DotationEquipement& value = message.dotation_eff_materiel.elem[ --nSize ];
-        unsigned long equipId = value.type_equipement;
-        equipments_[ equipId ].nNbrAvailable_       = value.nb_disponibles;
-        equipments_[ equipId ].nNbrUnavailable_     = value.nb_indisponibles;
-        equipments_[ equipId ].nNbrReparable_       = value.nb_reparables;
-        equipments_[ equipId ].nNbrInMaintenance_   = value.nb_dans_chaine_maintenance;
+        Equipment* equipment = Find( value.type_equipement );
+        if( ! equipment )
+        {
+            equipment = new Equipment( resolver_.Get( value.type_equipement ) );
+            Register( value.type_equipement, *equipment );
+        }
+        equipment->Update( value );
     }
-
     controller_.Update( *this );
 }

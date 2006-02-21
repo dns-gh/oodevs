@@ -112,9 +112,9 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Contaminations( controller_ ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controller_, model_.objectTypes_ ) );
-    agent.Attach( *new Equipments( controller_ ) );
+    agent.Attach( *new Equipments( controller_, model_.objectTypes_ ) );
     agent.Attach( *new HumanFactors( controller_ ) );
-    agent.Attach( *new Lends( controller_, model_.agents_ ) );
+    agent.Attach( *new Lends( controller_, model_.agents_, model_.objectTypes_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );
     agent.Attach( *new Paths() );
     agent.Attach( *new Reinforcements( controller_, model_.agents_ ) );

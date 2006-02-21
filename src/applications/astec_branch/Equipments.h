@@ -13,23 +13,27 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Resolver.h"
 
 class Controller;
+class Equipment;
+class EquipmentType;
 
 // =============================================================================
 /** @class  Equipments
-    @brief  Equipments
+    @brief  Equipments // $$$$ AGE 2006-02-21: = Composantes
 */
 // Created: AGE 2006-02-13
 // =============================================================================
 class Equipments : public Extension_ABC
                  , public Updatable_ABC< ASN1T_MsgUnitDotations >
+                 , public Resolver< Equipment >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( Controller& controller );
+             Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver );
     virtual ~Equipments();
     //@}
 
@@ -49,24 +53,11 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
     //@}
 
-    //! @name Types
-    //@{
-    struct EquipmentState
-    {
-        unsigned nNbrAvailable_;
-        unsigned nNbrUnavailable_;
-        unsigned nNbrReparable_;
-        unsigned nNbrInMaintenance_;
-    };
-    // $$$$ AGE 2006-02-13: resoudre unsigned long ?
-    typedef std::map< unsigned long, EquipmentState > T_Equipments;
-    //@}
-
 private:
     //! @name Member data
     //@{
     Controller& controller_;
-    T_Equipments equipments_;
+    const Resolver_ABC< EquipmentType >& resolver_;
     //@}
 };
 

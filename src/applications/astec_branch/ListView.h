@@ -50,6 +50,21 @@ public:
         }
         return currentItem;
     };
+    template< typename Iterator, typename Parent >
+    ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent, ValuedListItem* currentItem = 0 )
+    {
+        ValuedListItem* previousItem = currentItem;
+        while( from != to )
+        {
+            if( ! currentItem  ) 
+                currentItem = new ValuedListItem( *from, parent, previousItem );
+            list_.Display( *from, currentItem );
+            previousItem = currentItem;
+            currentItem = (ValuedListItem*)( currentItem->nextSibling() );
+            ++from;
+        }
+        return currentItem;
+    };
 
     void DeleteTail( ValuedListItem* item )
     {

@@ -14,9 +14,11 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
+#include "Lend.h"
 
 class Agent;
 class Controller;
+class EquipmentType;
 
 // =============================================================================
 /** @class  Lends
@@ -31,7 +33,7 @@ class Lends : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Lends( Controller& controller, const Resolver_ABC< Agent >& resolver );
+             Lends( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver );
     virtual ~Lends();
     //@}
 
@@ -46,14 +48,6 @@ private:
     Lends& operator=( const Lends& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    struct Lend
-    {
-        const Agent* borrower_;
-        unsigned long nEquipment_;
-        int nQuantity_;
-    };
     typedef std::vector< Lend > T_Lends;
     //@}
 
@@ -62,11 +56,12 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< EquipmentType >& equipmentResolver_;
     T_Lends lends_;
     //@}
 };

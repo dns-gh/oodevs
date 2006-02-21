@@ -31,6 +31,9 @@
 #include "Equipments.h"
 #include "Lends.h"
 #include "Troops.h"
+#include "Equipment.h"
+#include "EquipmentType.h"
+#include "Lend.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel constructor
@@ -88,85 +91,6 @@ AgentResourcesPanel::~AgentResourcesPanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentResourcesPanel::OnUpdate
-// Created: AGE 2005-04-05
-// -----------------------------------------------------------------------------
-//void AgentResourcesPanel::OnUpdate()
-//{
-//    if( selectedItem_.pAgent_ != 0 )
-//        OnAgentUpdated( *selectedItem_.pAgent_ );
-//    else
-//        OnClearSelection();
-//}
-
-// -----------------------------------------------------------------------------
-// Name: AgentResourcesPanel::OnAgentUpdated
-/** @param  agent 
-*/
-// Created: APE 2004-05-10
-// -----------------------------------------------------------------------------
-//void AgentResourcesPanel::OnAgentUpdated( Agent& agent )
-//{
-//    if( ! ShouldDisplay( agent ) )
-//        return;
-//
-//    const AgentComposition& composition = agent.GetComposition();
-//    Suit( equipement_, composition.equipment_.size(), pEquipment_ );
-//    Suit( resources_, composition.resources_.size(), pResources_ );
-//    Suit( troops_, (int)eTroopHealthStateNbrStates, pTroops_ );
-//    Suit( lends_, composition.lends_.size(), pLends_ );
-//
-//    int n1 = 0;
-//    for( CIT_EquipmentQty_Map it1 = composition.equipment_.begin(); it1 != composition.equipment_.end(); ++it1 )
-//    {
-//        QListViewItem* pItem = equipement_[ n1++ ];
-//        pItem->setText( 0, App::GetApp().GetEquipmentName( (*it1).first ).c_str() );
-//        pItem->setText( 1, QString::number( (*it1).second.nNbrAvailable_ ) );
-//        pItem->setText( 2, QString::number( (*it1).second.nNbrUnavailable_ ) );
-//        pItem->setText( 3, QString::number( (*it1).second.nNbrReparable_ ) );
-//        pItem->setText( 4, QString::number( (*it1).second.nNbrInMaintenance_ ) );
-//    }
-//
-//    int n2 = 0;
-//    for( CIT_ResourceQty_Map it2 = composition.resources_.begin(); it2 != composition.resources_.end(); ++it2 )
-//    {
-//        QListViewItem* pItem = resources_[ n2++ ];
-//        pItem->setText( 0, App::GetApp().GetResourceName( (*it2).first ).c_str() );
-//        pItem->setText( 1, QString::number( (*it2).second ) );
-//    }
-//
-//    for( int n3 = 0; n3 < (int)eTroopHealthStateNbrStates; ++n3 )
-//    {
-//        QListViewItem* pItem = troops_[ n3 ];
-//        pItem->setText( 0, Tools::ToString( (E_TroopHealthState)n3 ) );
-//        pItem->setText( 1, QString::number( composition.officiers_[n3] ) );
-//        pItem->setText( 2, QString::number( composition.sousOfficiers_[n3] ) );
-//        pItem->setText( 3, QString::number( composition.mdr_[n3] ) );
-//    }
-//
-//    for( uint n4 = 0; n4 < composition.lends_.size(); ++n4 )
-//    {
-//        QListViewItem* pItem = lends_[ n4 ];
-//        const AgentComposition::T_Lend& lend = composition.lends_[ n4 ];
-//        pItem->setText( 0, QString::number( lend.nBorrowerId_ ) );
-//        pItem->setText( 1, App::GetApp().GetEquipmentName( lend.nEquipment_ ).c_str() );
-//        pItem->setText( 2, QString::number( lend.nQuantity_ ) );
-//    }
-//}
-
-// -----------------------------------------------------------------------------
-// Name: AgentResourcesPanel::OnClearSelection
-// Created: SBO 2005-09-22
-// -----------------------------------------------------------------------------
-//void AgentResourcesPanel::OnClearSelection()
-//{
-//    pEquipment_->hide();
-//    pResources_->hide();
-//    pTroops_   ->hide();
-//    pLends_    ->hide();
-//}
-
-// -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::ShouldUpdate
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
@@ -186,9 +110,10 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
 {
     if( ! ShouldUpdate( a ) )
         return;
-    pResources_->DeleteTail( pResources_->Display( a.CreateIterator(), pResources_, (ValuedListItem*)( pResources_->firstChild() ) ) );
+    pResources_->DeleteTail( 
+        pResources_->Display( a.CreateIterator(), pResources_, (ValuedListItem*)( pResources_->firstChild() ) )
+    );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::Display
@@ -201,7 +126,6 @@ void AgentResourcesPanel::Display( const Dotation& dotation, ValuedListItem* ite
     item->setText( 1, QString::number( dotation.quantity_ ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::NotifyUpdated
 // Created: AGE 2006-02-21
@@ -210,6 +134,23 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
 {
     if( ! ShouldUpdate( a ) )
         return;
+    pEquipment_->DeleteTail( 
+        pEquipment_->Display( a.CreateIterator(), pEquipment_, (ValuedListItem*)( pEquipment_->firstChild() ) )
+    );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentResourcesPanel::Display
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentResourcesPanel::Display( const Equipment& equipment, ValuedListItem* item )
+{
+    item->SetValue( &equipment );
+    item->setText( 0, equipment.type_.GetName().c_str() );
+    item->setText( 1, QString::number( equipment.available_ ) );
+    item->setText( 2, QString::number( equipment.unavailable_ ) );
+    item->setText( 3, QString::number( equipment.repairable_ ) );
+    item->setText( 4, QString::number( equipment.inMaintenance_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,6 +161,21 @@ void AgentResourcesPanel::NotifyUpdated( const Lends& a )
 {
     if( ! ShouldUpdate( a ) )
         return;
+    pEquipment_->DeleteTail( 
+        pEquipment_->Display( a.lends_.begin(), a.lends_.end(), pEquipment_, (ValuedListItem*)( pEquipment_->firstChild() ) )
+    );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentResourcesPanel::Display
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentResourcesPanel::Display( const Lend& lend, ValuedListItem* item )
+{
+    item->SetValue( lend );
+    item->setText( 0, QString::number( lend.borrower_->GetId() ) ); // $$$$ AGE 2006-02-21: more than id
+    item->setText( 1, lend.type_->GetName().c_str() );
+    item->setText( 1, QString::number( lend.quantity_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,6 +186,21 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
 {
     if( ! ShouldUpdate( a ) )
         return;
+
+    pTroops_->Display( a.humans_, a.humans_+eTroopHealthStateNbrStates, pTroops_, (ValuedListItem*)( pTroops_->firstChild() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentResourcesPanel::Display
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentResourcesPanel::Display( const Troops::Humans& humans, ValuedListItem* item )
+{
+    item->SetValue( humans );
+    item->setText( 0, Tools::ToString( (E_TroopHealthState)humans.state_ ) );
+    item->setText( 1, QString::number( humans.officers_ ) );
+    item->setText( 2, QString::number( humans.subOfficers_ ) );
+    item->setText( 3, QString::number( humans.troopers_ ) );
 }
 
 // -----------------------------------------------------------------------------

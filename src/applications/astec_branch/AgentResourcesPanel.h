@@ -25,6 +25,7 @@
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "Troops.h"
 
 class Agent;
 class Controller;
@@ -33,7 +34,8 @@ class Dotation;
 class Dotations;
 class Equipments;
 class Lends;
-class Troops;
+class Equipment;
+class Lend;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
@@ -59,6 +61,9 @@ public:
     //! @name Operations
     //@{
     void Display( const Dotation& dotation, ValuedListItem* item );
+    void Display( const Equipment& equipment, ValuedListItem* item );
+    void Display( const Lend& lend, ValuedListItem* item );
+    void Display( const Troops::Humans& humans, ValuedListItem* item );
     //@}
 
 private:

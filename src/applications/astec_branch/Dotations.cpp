@@ -32,7 +32,7 @@ Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >
 // -----------------------------------------------------------------------------
 Dotations::~Dotations()
 {
-
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

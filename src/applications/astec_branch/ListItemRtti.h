@@ -70,7 +70,23 @@ struct ListItemRtti< const Dotation* > {
     enum { rtti = 1008 };
 };
 
+class Equipment;
+template< >
+struct ListItemRtti< const Equipment* > {
+    enum { rtti = 1009 };
+};
 
+class Lend;
+template< >
+struct ListItemRtti< Lend > { // $$$$ AGE 2006-02-21: copiés ici car temporaires
+    enum { rtti = 1010 };
+};
+
+#include "Troops.h" // $$$$ AGE 2006-02-21: crap
+template< >
+struct ListItemRtti< Troops::Humans > { // $$$$ AGE 2006-02-21: copiés ici car temporaires
+    enum { rtti = 1011 };
+};
 
 
 #endif // __ListItemRtti_h_

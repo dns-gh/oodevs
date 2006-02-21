@@ -16,6 +16,8 @@
 
 class ObjectType;
 class DotationType;
+class EquipmentType;
+
 namespace xml { class xistream; };
 
 // =============================================================================
@@ -27,6 +29,7 @@ namespace xml { class xistream; };
 class ObjectTypes
     : public Resolver< ObjectType >
     , public Resolver< DotationType >
+    , public Resolver< EquipmentType >
 {
 
 public:
@@ -57,6 +60,8 @@ private:
     void ReadDotations( const std::string& dotations );
     void ReadDotation( xml::xistream& xis );
     void ReadCategory( xml::xistream& xis, const std::string& name );
+    void ReadEquipments( const std::string& equipments );
+    void ReadEquipment( xml::xistream& xis );
     //@}
 
 private:

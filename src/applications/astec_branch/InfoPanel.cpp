@@ -24,7 +24,7 @@
 #include "AgentStatePanel.h"
 //#include "ReportPanel.h"
 #include "AgentResourcesPanel.h"
-//#include "AgentKnowledgePanel.h"
+#include "AgentKnowledgePanel.h"
 #include "ObjectPanel.h"
 //#include "ObjectReportPanel.h"
 //#include "ObjectKnowledgePanel.h"
@@ -51,7 +51,7 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
     this->setMinimumSize( 1, 1 );
     pStatePanel_               = new AgentStatePanel(  this, controller, actionController );
     pResourcesPanel_           = new AgentResourcesPanel( this, controller, actionController );
-//    pAgentKnowledgePanel_      = new AgentKnowledgePanel( this );
+    pAgentKnowledgePanel_      = new AgentKnowledgePanel( this, controller, actionController );
     pObjectPanel_              = new ObjectPanel( this, controller, actionController );
 //    pObjectReportPanel_        = new ObjectReportPanel( this );
 //    pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this );

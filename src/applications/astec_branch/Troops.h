@@ -49,13 +49,24 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
     //@}
 
-private:
+public:
+    //! @name Types
+    //@{
+    // $$$$ AGE 2006-02-21: Changer ca. Le sortir, puis utiliser un resolver, ou que sais-je
+    struct Humans
+    {
+        int state_;
+        unsigned officers_;
+        unsigned subOfficers_;
+        unsigned troopers_;
+    };
+    //@}
+
+public:
     //! @name Member data
     //@{
     Controller& controller_;
-    unsigned officers_   [eTroopHealthStateNbrStates];
-    unsigned subOfficers_[eTroopHealthStateNbrStates];
-    unsigned troopers_   [eTroopHealthStateNbrStates];
+    Humans humans_[eTroopHealthStateNbrStates];
     //@}
 };
 

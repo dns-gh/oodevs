@@ -10,14 +10,16 @@
 #include "astec_pch.h"
 #include "Lends.h"
 #include "Controller.h"
+#include "Lend.h"
 
 // -----------------------------------------------------------------------------
 // Name: Lends constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Lends::Lends( Controller& controller, const Resolver_ABC< Agent >& resolver )
+Lends::Lends( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver )
     : controller_( controller )
     , resolver_( resolver )
+    , equipmentResolver_( equipmentResolver )
 {
 
 }
@@ -40,13 +42,14 @@ void Lends::DoUpdate( const ASN1T_MsgUnitDotations& message )
     if( ! message.m.prets_equipementPresent )
         return;
 
-    lends_.resize( message.prets_equipement.n );
+    lends_.clear();
+    lends_.reserve( message.prets_equipement.n );
     for( unsigned int i = 0; i < message.prets_equipement.n; ++i )
     {
-        lends_[i].borrower_   = resolver_.Find( message.prets_equipement.elem[i].oid_pion_emprunteur );
-        lends_[i].nEquipment_ = message.prets_equipement.elem[i].type_equipement; // $$$$ AGE 2006-02-13: resolve
-        lends_[i].nQuantity_  = message.prets_equipement.elem[i].nombre;
+        const ASN1T_PretEquipement& pret = message.prets_equipement.elem[i];
+        lends_.push_back( Lend( equipmentResolver_.Get( pret.type_equipement ),
+                                resolver_.Get( pret.oid_pion_emprunteur ),
+                                pret.nombre ) );
     }
-
     controller_.Update( *this );
 }
