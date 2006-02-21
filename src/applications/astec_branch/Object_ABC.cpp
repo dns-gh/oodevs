@@ -37,7 +37,7 @@
 // Name: Object_ABC::Object_ABC
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver )
+Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
     : controller_( controller )
     , type_                          ( typeResolver.Get( message.type ) )
     , nId_                           ( message.oid )
@@ -48,10 +48,10 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
     , rBypassConstructionPercentage_ ( 0.0 )
     , bPrepared_                     ( false )
     , nTypeLocalisation_             ( message.localisation.type )
-//    , strTypeDotationConstruction_   ()
-//    , strTypeDotationValorization_   ()
-//    , nNbrDotationConstruction_      ( 0 )
-//    , nNbrDotationValorization_      ( 0 )
+    , construction_                  ( 0 )
+    , valorization_                  ( 0 )
+    , nDotationConstruction_         ( 0 )
+    , nDotationValorization_         ( 0 )
 {
     InterfaceContainer< Extension_ABC >::Register( *this );
 
@@ -66,17 +66,12 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
     if( ! pointVector_.empty() )
         center_ /= pointVector_.size();
 
-//    if( message.m.type_dotation_constructionPresent )
-//    {
-//        strTypeDotationConstruction_ = App::GetApp().GetResourceName( message.type_dotation_construction );
-//        nNbrDotationConstruction_    = 0;
-//    }
+    if( message.m.type_dotation_constructionPresent )
+        construction_ = & dotationResolver.Get( message.type_dotation_construction );
     
-//    if( message.m.type_dotation_valorisationPresent )
-//    {
-//        strTypeDotationValorization_ = App::GetApp().GetResourceName( message.type_dotation_valorisation );
-//        nNbrDotationValorization_    = 0;
-//    }
+    if( message.m.type_dotation_valorisationPresent )
+        valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
+
     controller_.Create( *this );
 }
 
@@ -137,10 +132,10 @@ void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
     bPrepared_ = message.en_preparation;
 
-//    if( message.m.nb_dotation_constructionPresent )
-//        nNbrDotationConstruction_ = message.nb_dotation_construction;
-//    if( message.m.nb_dotation_valorisationPresent )
-//        nNbrDotationValorization_ = message.nb_dotation_valorisation;
+    if( message.m.nb_dotation_constructionPresent )
+        nDotationConstruction_ = message.nb_dotation_construction;
+    if( message.m.nb_dotation_valorisationPresent )
+        nDotationValorization_ = message.nb_dotation_valorisation;
 
     if( message.m.pourcentage_constructionPresent )
         rConstructionPercentage_ = message.pourcentage_construction;

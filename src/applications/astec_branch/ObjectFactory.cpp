@@ -46,7 +46,7 @@ ObjectFactory::~ObjectFactory()
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
-    Object_ABC* result = new Object_ABC( message, controller_, model_.teams_, model_.objectTypes_ );
+    Object_ABC* result = new Object_ABC( message, controller_, model_.teams_, model_.objectTypes_, model_.objectTypes_ );
     switch( message.type )
     {
     case EnumObjectType::camp_prisonniers:

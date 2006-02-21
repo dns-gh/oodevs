@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "ObjectTypes.h"
 #include "ObjectType.h"
+#include "DotationType.h"
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
@@ -21,15 +22,18 @@ using namespace xml;
 ObjectTypes::ObjectTypes( const std::string& scipioXml )
 {
     xml::xifstream scipio( scipioXml );
-    std::string idFile;
+    std::string idFile, dotations;
     scipio >> start( "Scipio" )
                 >> start( "Donnees" )
-                    >> content( "ClasseIDs", idFile );
+                    >> content( "ClasseIDs", idFile )
+                    >> content( "Dotations", dotations );
 
     xml::xifstream xis( idFile );
     Reader reader;
     xis >> start( "Classes" )
         >> list( "Classe", reader, &Reader::Read, *this );
+
+    ReadDotations( dotations );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +42,8 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 ObjectTypes::~ObjectTypes()
 {
-    DeleteAll();
+    Resolver< ObjectType >::DeleteAll();
+    Resolver< DotationType >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +65,41 @@ void ObjectTypes::Reader::Read( xml::xistream& xis, ObjectTypes& objects )
         IDManager*& pManager = objects.managers_[ nId ];
         if( ! pManager )
             pManager = new IDManager( nId );
-        objects.Register( nType, *new ObjectType( nType, strObjectName, *pManager ) );
+        objects.Resolver< ObjectType >::Register( nType, *new ObjectType( nType, strObjectName, *pManager ) );
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadDotations
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadDotations( const std::string& dotations )
+{
+    xifstream xis( dotations );
+    xis >> start( "Dotations" )
+        >> list( "Dotation", *this, ReadDotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadDotation
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadDotation( xml::xistream& xis )
+{
+    std::string dotationName;
+    xis >> attribute( "nom", dotationName )
+        >> start( "Categories" )
+            >> list( "Categorie", *this, ReadCategory, dotationName )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadCategory
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadCategory( xml::xistream& xis, const std::string& name )
+{
+    DotationType* dotation = new DotationType( name, xis );
+    Resolver< DotationType >::Register( dotation->GetId(), *dotation );
 }

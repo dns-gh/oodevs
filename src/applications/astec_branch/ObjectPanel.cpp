@@ -30,6 +30,7 @@
 #include "ActionController.h"
 #include "InfoPanel.h"
 #include "Agent.h"
+#include "DotationType.h"
 
 #include "Displayer.h"
 #include "DisplayGroup.h"
@@ -179,10 +180,13 @@ void ObjectPanel::NotifyUpdated( const Object_ABC& object )
                 .Display( "Id:", Displayer::Id( object.nId_ ) )
                 .Display( "Nom:", object.strName_ )
                 .Display( "Type:", object.type_.GetName() )
-                .Display( "Position:", strPos );
-    // $$$$ AGE 2006-02-20: 
-//                .Display( "Dotation construction:", QString::number( object.GetNbrDotationConstruction() ) + " " + object.GetTypeDotationConstruction().c_str() )
-//                .Display( "Dotation valorisation:", QString::number( object.GetNbrDotationValorization() ) + " " + object.GetTypeDotationValorization().c_str() );
+                .Display( "Position:", strPos )
+                .Display( "Dotation construction:", 
+                    QString::number( object.nDotationConstruction_ ) + " " +
+                    ( object.construction_ ? object.construction_->GetCategory().c_str() : "" ) )
+                .Display( "Dotation valorisation:", 
+                    QString::number( object.nDotationValorization_ ) + " " +
+                    ( object.valorization_ ? object.valorization_->GetCategory().c_str() : "" ) );
 }
 
 // $$$$ AGE 2006-02-17: Factor

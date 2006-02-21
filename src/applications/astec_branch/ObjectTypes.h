@@ -15,6 +15,7 @@
 #include "IDManager.h"
 
 class ObjectType;
+class DotationType;
 namespace xml { class xistream; };
 
 // =============================================================================
@@ -25,6 +26,7 @@ namespace xml { class xistream; };
 // =============================================================================
 class ObjectTypes
     : public Resolver< ObjectType >
+    , public Resolver< DotationType >
 {
 
 public:
@@ -52,6 +54,9 @@ private:
     struct Reader  {
         void Read( xml::xistream& xis, ObjectTypes& objects );
     };
+    void ReadDotations( const std::string& dotations );
+    void ReadDotation( xml::xistream& xis );
+    void ReadCategory( xml::xistream& xis, const std::string& name );
     //@}
 
 private:

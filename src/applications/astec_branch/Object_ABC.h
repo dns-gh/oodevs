@@ -30,6 +30,7 @@
 class Controller;
 class Team;
 class ObjectType;
+class DotationType;
 
 // =============================================================================
 // Created: SBO 2005-09-02
@@ -46,7 +47,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object_ABC( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller,
-                         const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver );
+                         const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
+                         const Resolver_ABC< DotationType >& dotationResolver );
     virtual ~Object_ABC();
     //@}
 
@@ -93,18 +95,14 @@ public:
 //    T_FireResults              explosionResults_;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
-    
-
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;
-    // Dotations
-    // $$$$ AGE 2006-02-15: 
-//    std::string                strTypeDotationConstruction_;
-//    std::string                strTypeDotationValorization_;
-//    uint                       nNbrDotationConstruction_;
-//    uint                       nNbrDotationValorization_;
+    DotationType* construction_;
+    DotationType* valorization_;
+    unsigned int nDotationConstruction_;
+    unsigned int nDotationValorization_;
     //@}
 };
 

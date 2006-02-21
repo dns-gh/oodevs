@@ -15,6 +15,7 @@
 #include "SensorType.h"
 #include "AutomatType.h"
 #include "PopulationType.h"
+#include "DotationType.h"
 #include "ent/ENT_Tr.h"
 #include "xeumeuleu/xml.h"
 

@@ -20,6 +20,7 @@ class DecisionalModel;
 class SensorType;
 class AutomatType;
 class PopulationType;
+class DotationType;
 
 // =============================================================================
 /** @class  AgentTypes
