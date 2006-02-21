@@ -44,6 +44,7 @@
 #include "AgentFactory.h"
 #include "ObjectFactory.h"
 #include "AgentTypes.h"
+#include "ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -110,7 +111,7 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Attributes( controller_ ) );
     agent.Attach( *new Contaminations( controller_ ) );
     agent.Attach( *new DebugPoints() );
-    agent.Attach( *new Dotations( controller_ ) );
+    agent.Attach( *new Dotations( controller_, model_.objectTypes_ ) );
     agent.Attach( *new Equipments( controller_ ) );
     agent.Attach( *new HumanFactors( controller_ ) );
     agent.Attach( *new Lends( controller_, model_.agents_ ) );

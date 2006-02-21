@@ -13,8 +13,11 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Resolver.h"
 
 class Controller;
+class DotationType;
+class Dotation;
 
 // =============================================================================
 /** @class  Dotations
@@ -24,12 +27,13 @@ class Controller;
 // =============================================================================
 class Dotations : public Extension_ABC
                 , public Updatable_ABC< ASN1T_MsgUnitDotations >
+                , public Resolver< Dotation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( Controller& controller );
+             Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver );
     virtual ~Dotations();
     //@}
 
@@ -49,17 +53,12 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, unsigned > T_Dotations;
-    //@}
-
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;
+    const Resolver_ABC< DotationType >& resolver_;
     bool bEmptyGasTank_;
-    T_Dotations dotations_;
     //@}
 };
 

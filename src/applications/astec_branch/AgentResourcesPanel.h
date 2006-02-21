@@ -19,61 +19,81 @@
 #ifndef __AgentResourcesPanel_h_
 #define __AgentResourcesPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "InfoPanel_ABC.h"
+#include "ListView.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 class Agent;
-class QListView;
-
-typedef std::vector< MT_ListViewItem* >   T_ItemPtrVector;
-typedef T_ItemPtrVector::iterator       IT_ItemPtrVector;
-
+class Controller;
+class ActionController;
+class Dotation;
+class Dotations;
+class Equipments;
+class Lends;
+class Troops;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
-    @brief  AgentResourcesPanel
-    @par    Using example
-    @code
-    AgentResourcesPanel;
-    @endcode
+    @brief  Agent resources panel
 */
 // Created: APE 2004-03-10
 // =============================================================================
 class AgentResourcesPanel : public InfoPanel_ABC
+                          , private Observer_ABC
+                          , public ElementObserver_ABC< Dotations >
+                          , public ElementObserver_ABC< Equipments >
+                          , public ElementObserver_ABC< Lends >
+                          , public ElementObserver_ABC< Troops >
+                          , public SelectionObserver< Agent >
 {
-    MT_COPYNOTALLOWED( AgentResourcesPanel );
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentResourcesPanel( QWidget* pParent );
+             AgentResourcesPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentResourcesPanel();
     //@}
 
-private:
     //! @name Operations
     //@{
-    virtual void OnUpdate        ();
-    virtual void OnClearSelection();
-    virtual void OnAgentUpdated  ( Agent& agent );
+    void Display( const Dotation& dotation, ValuedListItem* item );
+    //@}
+
+private:
+    //! @name Copy / Assignment
+    //@{
+    AgentResourcesPanel( const AgentResourcesPanel& );
+    AgentResourcesPanel& operator=( const AgentResourcesPanel& );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const Dotations& a );
+    virtual void NotifyUpdated( const Equipments& a );
+    virtual void NotifyUpdated( const Lends& a );
+    virtual void NotifyUpdated( const Troops& a );
+    virtual void NotifySelected( const Agent* agent );
+
+    template< typename T >
+    bool ShouldUpdate( const T& a );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef ListView< AgentResourcesPanel > T_ListView;
     //@}
     
 private:
     //! @name Member Data
     //@{
-    QListView* pEquipment_;
-    QListView* pResources_;
-    QListView* pTroops_;
-    QListView* pLends_;
-
-    T_ItemPtrVector equipement_;
-    T_ItemPtrVector resources_;
-    T_ItemPtrVector troops_;
-    T_ItemPtrVector lends_;
+    T_ListView* pEquipment_;
+    T_ListView* pResources_;
+    T_ListView* pTroops_;
+    T_ListView* pLends_;
+    const Agent* selected_;
     //@}
 };
 

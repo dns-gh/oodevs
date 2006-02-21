@@ -11,13 +11,16 @@
 #include "Dotations.h"
 #include "App.h"
 #include "Controller.h"
+#include "Dotation.h"
+#include "DotationType.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller )
+Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver )
     : controller_( controller )
+    , resolver_( resolver )
     , bEmptyGasTank_( false )
 {
 
@@ -45,14 +48,15 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
     while( nSize > 0 )
     {
         const ASN1T_DotationRessource& value = message.dotation_eff_ressource.elem[ --nSize ];
-        unsigned long equipId = value.ressource_id;
-        unsigned qty = value.quantite_disponible;
-        dotations_[ equipId ] = qty;
-
+        DotationType& type = resolver_.Get( value.ressource_id );
+        Dotation* dotation = Find( value.ressource_id );
+        if( dotation )
+            dotation->quantity_ = value.quantite_disponible;
+        else
+            Register( value.ressource_id, *new Dotation( type, value.quantite_disponible ) );
         // $$$$ AGE 2006-02-13: 
 //        if( App::GetApp().GetResource( equipId ).GetDotationName() == "carburant" )
 //            bEmptyGasTank_ = (qty == 0);
     }
-
     controller_.Update( *this );
 }

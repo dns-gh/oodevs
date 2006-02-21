@@ -11,8 +11,7 @@
 #define __ListView_h_
 
 #include "Iterator.h"
-
-class ValuedListItem;
+#include "ValuedListItem.h"
 
 // =============================================================================
 /** @class  ListView
@@ -37,7 +36,7 @@ public:
     //! @name Operations
     //@{
     template< typename Element, typename Parent >
-    ValuedListItem* Display( Iterator< const Element& >& it, Parent* parent, ValuedListItem* currentItem = 0 )
+    ValuedListItem* Display( Iterator< const Element& > it, Parent* parent, ValuedListItem* currentItem = 0 )
     {
         ValuedListItem* previousItem = currentItem;
         while( it.HasMoreElements() )
@@ -50,11 +49,6 @@ public:
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
         }
         return currentItem;
-    };
-
-    template< typename Iterator >
-    ValuedListItem* Display( Iterator from, Iterator to, ValuedListItem* item = 0 )
-    {
     };
 
     void DeleteTail( ValuedListItem* item )
