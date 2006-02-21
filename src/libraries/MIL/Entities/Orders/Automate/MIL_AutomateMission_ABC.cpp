@@ -83,8 +83,7 @@ void MIL_AutomateMission_ABC::Initialize()
     pLeftLimit_ = pRightLimit_ = 0;
     limaMap_.clear();
 
-    vDirDanger_    = MT_Vector2D( 0., 1. );
-    GetVariable( nDIADirectionDangerIdx_  ).SetValue( &vDirDanger_ );
+    GetVariable( nDIADirectionDangerIdx_  ).SetValue( new MT_Vector2D( 0., 1. ), &DEC_Tools::GetTypeDirection() );
     GetVariable( nDIAFormationIdx_        ).SetValue( 0 );
 }
    
@@ -156,10 +155,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::InitializeMission( const ASN1T
     if( !NET_ASN_Tools::CopyDirection( asnMsg.direction_dangereuse, GetVariable( nDIADirectionDangerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
-    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
-    assert( pTmp );
-    vDirDanger_ = *pTmp;
-
     if( !NET_ASN_Tools::CopyEnumeration(  asnMsg.formation, GetVariable( nDIAFormationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     
@@ -176,7 +171,6 @@ void MIL_AutomateMission_ABC::Terminate()
     limaMap_.clear();
 
     fuseau_.Reset();
-    vDirDanger_.Reset();
 
     mrt_.Terminate();
 

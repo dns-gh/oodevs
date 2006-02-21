@@ -39,8 +39,7 @@ MIL_PionMission_ABC::MIL_PionMission_ABC( MIL_AgentPion& pion, const MIL_PionMis
     , type_                 ( type )
     , bDIABehaviorActivated_( false )
     , pLeftLimit_           ( 0 )
-    , pRightLimit_          ( 0 )
-    , vDirDanger_           ( 1., 0. )
+    , pRightLimit_          ( 0 )    
     , nOrderID_             ( (uint)-1 )
 {
     GetVariable( nDIAMissionType_ ).SetValue( (int)type.GetID() );
@@ -80,8 +79,7 @@ bool MIL_PionMission_ABC::Initialize()
     assert( limaMap_.empty() );
 
     nOrderID_      = MIL_IDManager::orders_.GetFreeSimID();
-    vDirDanger_    = MT_Vector2D( 0., 1. );
-    GetVariable( nDIADirectionDangerIdx_  ).SetValue( &vDirDanger_ );
+    GetVariable( nDIADirectionDangerIdx_  ).SetValue( new MT_Vector2D( 0., 1. ), &DEC_Tools::GetTypeDirection() );
     fuseau_.Reset();
     return true;
 }
@@ -98,9 +96,6 @@ bool MIL_PionMission_ABC::Initialize( const MIL_AutomateMission_ABC& parentMissi
     nOrderID_ = MIL_IDManager::orders_.GetFreeSimID();
     
     NET_ASN_Tools::CopyDirection( const_cast< MIL_AutomateMission_ABC& >( parentMission ).GetVariable( MIL_AutomateMission_ABC::nDIADirectionDangerIdx_ ), GetVariable( nDIADirectionDangerIdx_ ) );
-    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
-    assert( pTmp );
-    vDirDanger_ = *pTmp;
 
     limaMap_ = parentMission.GetLimas ();
     fuseau_  = parentMission.GetFuseau();
@@ -124,10 +119,6 @@ bool MIL_PionMission_ABC::Initialize( MIL_PionMission_ABC& mission )
 
     // Direction dangereuse
     NET_ASN_Tools::CopyDirection( const_cast< MIL_PionMission_ABC& >( mission ).GetVariable( nDIADirectionDangerIdx_ ), GetVariable( nDIADirectionDangerIdx_ ) );
-    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
-    assert( pTmp );
-    vDirDanger_ = *pTmp;
-
     return true;
 }
 
@@ -210,10 +201,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC::InitializeMission( const ASN1T_Msg
     // Direction dangereuse
     if( !NET_ASN_Tools::CopyDirection ( asnMsg.direction_dangereuse, GetVariable( nDIADirectionDangerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-
-    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
-    assert( pTmp );
-    vDirDanger_ = *pTmp;
 
     return EnumOrderErrorCode::no_error;     
 }

@@ -97,7 +97,6 @@ private:
           uint                     nOrderID_;
 
     // Mission parameters
-    MT_Vector2D        vDirDanger_;
     T_LimaFlagedPtrMap limaMap_;   
     const MIL_Limit*   pLeftLimit_;
     const MIL_Limit*   pRightLimit_;

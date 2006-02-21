@@ -92,6 +92,7 @@ private:
     ASN1T_EnumOrderErrorCode InitializeLimits  ( const ASN1T_MsgPionOrder& asnMsg );
     ASN1T_EnumOrderErrorCode InitializeLimas   ( const ASN1T_MsgPionOrder& asnMsg );
     ASN1T_EnumOrderErrorCode InitializeMission ( const ASN1T_MsgPionOrder& asnMsg );
+    void                     SetDirDanger      ( const MT_Vector2D& dirDanger );
     //@}   
 
 protected:
@@ -103,7 +104,6 @@ private:
     uint                       nOrderID_;
 
     // Mission parameters
-    MT_Vector2D        vDirDanger_;
     T_LimaFlagedPtrMap limaMap_;   
     const MIL_Limit*   pLeftLimit_;
     const MIL_Limit*   pRightLimit_;

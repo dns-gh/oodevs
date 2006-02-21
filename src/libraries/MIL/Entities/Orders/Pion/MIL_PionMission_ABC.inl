@@ -62,7 +62,12 @@ const MIL_Lima* MIL_PionMission_ABC::GetLima( MIL_Lima::E_LimaFunctions nLimaFun
 inline
 const MT_Vector2D& MIL_PionMission_ABC::GetDirDanger() const
 {
-    return vDirDanger_;
+    const MT_Vector2D* pTmp = const_cast< MIL_PionMission_ABC& >( *this ).GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
+    if( pTmp )
+        return *pTmp;
+
+    static const MT_Vector2D vDefaultDirDanger( 0, 1 );
+    return vDefaultDirDanger;
 }
 
 // -----------------------------------------------------------------------------

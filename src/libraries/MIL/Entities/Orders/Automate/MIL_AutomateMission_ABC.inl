@@ -36,7 +36,12 @@ MIL_Automate& MIL_AutomateMission_ABC::GetAutomate() const
 inline
 const MT_Vector2D& MIL_AutomateMission_ABC::GetDirDanger() const
 {
-    return vDirDanger_;
+    const MT_Vector2D* pTmp = const_cast< MIL_AutomateMission_ABC& >( *this ).GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
+    if( pTmp )
+        return *pTmp;
+
+    static const MT_Vector2D vDefaultDirDanger( 0, 1 );
+    return vDefaultDirDanger;
 }
 
 // -----------------------------------------------------------------------------

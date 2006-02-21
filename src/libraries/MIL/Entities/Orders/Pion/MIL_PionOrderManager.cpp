@@ -481,7 +481,6 @@ const MT_Vector2D& MIL_PionOrderManager::GetDirDanger() const
     return vDefaultDirDanger;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::GetFuseau
 // Created: NLD 2003-12-23
