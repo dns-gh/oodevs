@@ -10,6 +10,7 @@
 #ifndef __DisplayGroup_h_
 #define __DisplayGroup_h_
 
+#include "Displayer_ABC.h"
 #include <qgroupbox.h>
 #include <map>
 
@@ -21,7 +22,7 @@ class DisplayItem;
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class DisplayGroup : public QGroupBox
+class DisplayGroup : public Displayer_ABC, public QGroupBox
 {
 
 public:
@@ -34,15 +35,6 @@ public:
     //! @name Operations
     //@{
     DisplayGroup& AddItem( const char* name, bool bold = false );
-
-    template< typename T >
-    DisplayGroup& Display( const char* name, const T& value )
-    {
-        GetItem( name ).Display( value );
-        show();
-        return *this;
-    }
-
     void Clear();
     //@}
 
@@ -56,12 +48,15 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, DisplayItem* > T_Items;
-    typedef T_Items::iterator                        IT_Items;
+    typedef T_Items::iterator                    IT_Items;
     //@}
 
     //! @name Helpers
     //@{
-    DisplayItem& GetItem( const char* name );
+    virtual Displayer_ABC& SubItem( const char* name );
+    virtual void StartDisplay();
+    virtual void DisplayFormatted( const QString& formatted );
+    virtual void EndDisplay();
     //@}
 
 private:

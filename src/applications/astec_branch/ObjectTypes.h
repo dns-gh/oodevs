@@ -54,7 +54,7 @@ private:
     //@{
     typedef std::map< ASN1T_EnumObjectType, unsigned int >  T_ObjectIDs;
     typedef std::map< unsigned int, IDManager* >            T_Managers;
-    struct Reader  {
+    struct Reader  { // $$$$ AGE 2006-02-22: enlever, car plus statique
         void Read( xml::xistream& xis, ObjectTypes& objects );
     };
     void ReadDotations( const std::string& dotations );

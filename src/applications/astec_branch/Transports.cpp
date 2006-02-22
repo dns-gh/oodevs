@@ -51,3 +51,12 @@ void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 
     controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Transports::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Transports::Display( const Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Pions Transportés" ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
+}

@@ -68,6 +68,20 @@ struct Formatter< const char* > {
         displayer.AddToDisplay( QString( value ) );
     }
 };
+template< unsigned int N >
+struct Formatter< const char [N] > {
+    void operator()( const char* value, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( QString( value ) );
+    }
+};
+
+
+template< >
+struct Formatter< std::string > {
+    void operator()( const std::string& value, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( QString( value.c_str() ) );
+    }
+};
 
 // =============================================================================
 /** @class  Formatter
@@ -132,5 +146,100 @@ struct Formatter< UnitedValue< T > >
         displayer.AddToDisplay( (const QString&)element.unit_ );
     }
 };
+
+// =============================================================================
+/** @class  Formatter
+    @brief  Enums
+*/
+// Created: AGE 2006-02-21
+// =============================================================================
+template< >
+struct Formatter< E_UnitPosture >
+{
+    void operator()( const E_UnitPosture& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitPosture( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_EtatOperationnel >
+{
+    void operator()( const E_EtatOperationnel& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromEtatOperationnel( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_EtatRapFor >
+{
+    void operator()( const E_EtatRapFor& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromEtatRapFor( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_Roe >
+{
+    void operator()( const E_Roe& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromRoe( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_RoePopulation >
+{
+    void operator()( const E_RoePopulation& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromRoePopulation( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_EtatCombatRencontre >
+{
+    void operator()( const E_EtatCombatRencontre& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromEtatCombatRencontre( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_DisponibiliteAuTir >
+{
+    void operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromDisponibiliteAuTir( e ) );
+    }
+};
+
+// =============================================================================
+/** @class  Formatter
+    @brief  Containers
+*/
+// Created: AGE 2006-02-21
+// =============================================================================
+class Separator {};
+template< >
+struct Formatter< Separator >
+{
+    void operator()( const Separator& , Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ", " );
+    }
+};
+
+template< typename T >
+struct Formatter< std::vector< T > >
+{
+    void operator()( const std::vector< T >& v, Displayer_ABC& displayer ) const
+    {
+        if( v.empty() )
+            displayer.AddToDisplay( ValueNotSet() );
+        else
+            for( std::vector< T >::const_iterator it = v.begin(); it != v.end(); ++it )
+            {
+                if( it != v.begin() )
+                    displayer.AddToDisplay( Separator() );
+                displayer.AddToDisplay( *it );
+            }
+    }
+};
+
 
 #endif // __Formatter_h_

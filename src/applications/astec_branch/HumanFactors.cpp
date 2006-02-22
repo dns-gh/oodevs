@@ -13,6 +13,7 @@
 #include "Tiredness.h"
 #include "Morale.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: HumanFactors constructor
@@ -50,3 +51,16 @@ void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 
     controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: HumanFactors::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void HumanFactors::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Facteurs humains" )
+                .Display( "Experience:", pExperience_->GetName().c_str() )
+                .Display( "Moral:", pMorale_->GetName().c_str() )
+                .Display( "Fatigue:", pTiredness_->GetName().c_str() );
+}
+   

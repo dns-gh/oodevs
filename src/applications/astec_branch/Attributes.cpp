@@ -12,6 +12,8 @@
 #include "App.h"
 #include "World.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: Attributes constructor
@@ -122,4 +124,46 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         bRefugeesManaged_ = message.refugie_pris_en_compte;
 
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Attributes::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Info" )
+                .Display( "Etat Opérationnel:",                  nRawOpState_ * Units::percentage )
+                .Display( "Mort:",                               bDead_ )
+                .Display( "Neutralisé:",                         bNeutralized_ )
+                .Display( "Vitesse:",                            nSpeed_ * Units::metersPerSecond )
+                .Display( "Direction:",                          nDirection_ * Units::degrees )
+                .Display( "Altitude:",                           nAltitude_  * Units::meters )
+                .Display( "Troupes:",                            bLoadingState_ ? "Embarqué" : "Débarqué" )
+                .Display( "Transporteurs d'hommes disponibles:", bHumanTransportersReady_ );
+
+    displayer.Group( "Postures" )
+                .Display( "Ancienne posture:", nOldPosture_ )
+                .Item( "Nouvelle posture:" )
+                    .Start( nCurrentPosture_ )
+                    .Add( " (" )
+                    .Add( nPostureCompletionPourcentage_ * Units::percentage )
+                    .Add( ")" ).End();
+
+    displayer.Group( "Communications" )
+                .Display( "Brouillé:", bCommJammed_ )
+                .Display( "Silence radio:", bRadioSilence_ );
+
+    displayer.Group( "Etat décisionnel" )
+                .Display( "Etat opérationnel:", nOpState_ )
+                .Display( "RoE:", nRulesOfEngagementState_ )
+                .Display( "RoE Population:", nRulesOfEngagementPopulationState_ )
+                .Display( "Rapport de force:", nFightRateState_ )
+                .Display( "Disponibilité au tir indirect:", nIndirectFireAvailability_ )
+                .Display( "Contact combat:", nCloseCombatState_ );
+  
+    displayer.Group( "Etat martial" )
+            .Display( "Fait prisonnier:", bPrisoner_ )
+            .Display( "Rendu:", bSurrendered_ )
+            .Display( "Réfugiés pris en compte:", bRefugeesManaged_ );
 }

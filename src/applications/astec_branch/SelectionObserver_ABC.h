@@ -42,7 +42,7 @@ public:
 // Created: AGE 2006-02-16
 // =============================================================================
 template< typename T >
-class SelectionObserver_Base : public SelectionObserver_ABC
+class SelectionObserver_Base
 {
 
 public:
@@ -65,7 +65,7 @@ public:
 // Created: AGE 2006-02-16
 // =============================================================================
 template< typename T >
-class SelectionObserver : public SelectionObserver_Base< T >
+class SelectionObserver : public SelectionObserver_Base< T >, public SelectionObserver_ABC
 {
 
 public:

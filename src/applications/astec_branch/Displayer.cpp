@@ -44,15 +44,51 @@ DisplayGroup& Displayer::AddGroup( const char* name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Displayer::Group
-// Created: AGE 2006-02-09
+// Name: Displayer::SubItem
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-DisplayGroup& Displayer::Group( const char* name )
+Displayer_ABC& Displayer::SubItem( const char* name )
 {
     DisplayGroup* group = groups_[ std::string( name ) ];
     if( ! group )
         throw std::runtime_error( "Group '" + std::string( name ) + "' does not exist" );
     return *group;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer::Group
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+DisplayGroup& Displayer::Group( const char* name )
+{
+    return (DisplayGroup&)( SubItem( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer::StartDisplay
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Displayer::StartDisplay()
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer::DisplayFormatted
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Displayer::DisplayFormatted( const QString& )
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer::EndDisplay
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Displayer::EndDisplay()
+{
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

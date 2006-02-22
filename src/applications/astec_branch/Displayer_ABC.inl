@@ -15,11 +15,60 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-void Displayer_ABC::Display( const T& element )
+Displayer_ABC& Displayer_ABC::Display( const T& element )
 {
     StartDisplay();
     AddToDisplay( element );
     EndDisplay();
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+Displayer_ABC& Displayer_ABC::Display( const char* name, const T& element )
+{
+    SubItem( name ).Display( element );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::Start
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+Displayer_ABC& Displayer_ABC::Start( const T& element )
+{
+    StartDisplay();
+    AddToDisplay( element );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::Add
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+Displayer_ABC& Displayer_ABC::Add( const T& element )
+{
+    AddToDisplay( element );
+    return *this;
+};
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::End
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+inline
+Displayer_ABC& Displayer_ABC::End()
+{
+    EndDisplay();
+    return *this;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Reinforcements.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Reinforcements constructor
@@ -54,4 +55,15 @@ void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 
     if( message.m.pion_renforcePresent || message.m.pions_renforcantPresent )
         controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reinforcements::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Reinforcements::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Renforts" )
+        .Display( "Renforce:", reinforced_ )
+        .Display( "Est renforcé par:", reinforcements_ );
 }

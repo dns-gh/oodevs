@@ -45,15 +45,42 @@ DisplayGroup& DisplayGroup::AddItem( const char* name, bool bold )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::GetItem
-// Created: AGE 2006-02-09
+// Name: DisplayGroup::SubItem
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-DisplayItem& DisplayGroup::GetItem( const char* name )
+Displayer_ABC& DisplayGroup::SubItem( const char* name )
 {
     DisplayItem* item = items_[ std::string( name ) ];
     if( ! item )
         throw std::runtime_error( "Item '" + std::string( name ) + "' does not exist" );
     return *item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayGroup::StartDisplay
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayGroup::StartDisplay()
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayGroup::DisplayFormatted
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayGroup::DisplayFormatted( const QString& )
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayGroup::EndDisplay
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayGroup::EndDisplay()
+{
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

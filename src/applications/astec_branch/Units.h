@@ -34,10 +34,10 @@ private:
 class Units
 {
 public:
-    static Unit meters;
-    static Unit degrees;
-    static Unit percentage;
-    static Unit metersPerSecond;
+    static const Unit meters;
+    static const Unit degrees;
+    static const Unit percentage;
+    static const Unit metersPerSecond;
 };
 
 template< typename T >

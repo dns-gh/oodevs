@@ -68,11 +68,9 @@ AgentStatePanel::AgentStatePanel( InfoPanel* info, Controller& controller, Actio
                 .AddItem( "Disponibilité au tir indirect:" )
                 .AddItem( "Contact combat:" );
     display_->AddGroup( "Renforts" )
-                .AddItem( "Renforce:" );
+                .AddItem( "Renforce:" )
+                .AddItem( "Est renforcé par:" );
 
-    // $$$$ AGE 2006-02-09: Fusses
-    display_->AddGroup( "Renforts " )
-                .AddItem( "" );
     display_->AddGroup( "Pions Transportés" )
                 .AddItem( "" );
 
@@ -148,39 +146,9 @@ void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Info" )
-                .Display( "Nom:",                                selected_->GetName().c_str() )
-                .Display( "Etat Opérationnel:",                  QString( "%1 %" ).arg( attributes.nRawOpState_ ) )
-                .Display( "Mort:",                               Displayer::YesNo( attributes.bDead_ ) )
-                .Display( "Neutralisé:",                         Displayer::YesNo( attributes.bNeutralized_ ) )
-                .Display( "Vitesse:",                            QString::number( attributes.nSpeed_ ) )
-                .Display( "Direction:",                          QString::number( attributes.nDirection_ ) + "°"  )
-                .Display( "Altitude:",                           QString::number( attributes.nAltitude_ ) + "m" )
-                .Display( "Troupes:",                            attributes.bLoadingState_ ? tr( "Embarqué" ) : tr( "Débarqué" ) )
-                .Display( "Transporteurs d'hommes disponibles:", Displayer::YesNo( attributes.bHumanTransportersReady_ ) );
+    display_->Group( "Info" ) .Display( "Nom:", selected_->GetName().c_str() );
 
-    QString strStance = Tools::ToString( attributes.nCurrentPosture_ )
-                      + " (" + QString::number( attributes.nPostureCompletionPourcentage_ ) + "%)";
-    display_->Group( "Postures" )
-                .Display( "Ancienne posture:", Tools::ToString( attributes.nOldPosture_ ) )
-                .Display( "Nouvelle posture:", strStance );
-
-    display_->Group( "Communications" )
-                .Display( "Brouillé:", Displayer::YesNo( attributes.bCommJammed_ ) )
-                .Display( "Silence radio:", Displayer::YesNo( attributes.bRadioSilence_ ) );
-
-    display_->Group( "Etat décisionnel" )
-                .Display( "Etat opérationnel:", ENT_Tr::ConvertFromEtatOperationnel( attributes.nOpState_ ) )
-                .Display( "RoE:", ENT_Tr::ConvertFromRoe( attributes.nRulesOfEngagementState_ ) )
-                .Display( "RoE Population:", ENT_Tr::ConvertFromRoePopulation( attributes.nRulesOfEngagementPopulationState_ ) )
-                .Display( "Rapport de force:", ENT_Tr::ConvertFromEtatRapFor( attributes.nFightRateState_ ) )
-                .Display( "Disponibilité au tir indirect:", ENT_Tr::ConvertFromDisponibiliteAuTir ( attributes.nIndirectFireAvailability_ ) )
-                .Display( "Contact combat:", ENT_Tr::ConvertFromEtatCombatRencontre( attributes.nCloseCombatState_ ) );
-
-    display_->Group( "Etat martial" )
-            .Display( "Fait prisonnier:", Displayer::YesNo( attributes.bPrisoner_ ) )
-            .Display( "Rendu:", Displayer::YesNo( attributes.bSurrendered_ ) )
-            .Display( "Réfugiés pris en compte:", Displayer::YesNo( attributes.bRefugeesManaged_ ) );
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,19 +160,7 @@ void AgentStatePanel::NotifyUpdated( const Contaminations& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    const std::vector< unsigned >& agents = attributes.contaminatingNbcAgents_;
-    std::stringstream strNBCAgents;
-    for( std::vector< unsigned >::const_iterator it = agents.begin(); it != agents.end(); ++it )
-    {
-        if( it != agents.begin() )
-            strNBCAgents << ", ";
-        strNBCAgents << *it; // $$$$ AGE 2006-02-16: resolve !
-    }
-
-    display_->Group( "NBC" )
-                .Display( "Tenue NBC:", attributes.bNbcProtectionSuitWorn_ ? tr( "Mise" ) : tr( "Non mise" ) )
-                .Display( "Agents contaminants:", agents.empty() ? tr( "Aucun" ) : strNBCAgents.str().c_str() )
-                .Display( "Contamination:", QString::number( attributes.nContamination_ ) );
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,10 +172,7 @@ void AgentStatePanel::NotifyUpdated( const HumanFactors& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Facteurs humains" )
-                .Display( "Experience:", tr( attributes.pExperience_->GetName().c_str() ) )
-                .Display( "Moral:", tr( attributes.pMorale_->GetName().c_str() ) )
-                .Display( "Fatigue:", tr( attributes.pTiredness_->GetName().c_str() ) );
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,40 +184,19 @@ void AgentStatePanel::NotifyUpdated( const Reinforcements& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Renforts" )
-        .Display( "Renforce:", attributes.reinforced_
-                    ? QString( "[%1]" ).arg( attributes.reinforced_->GetId() )
-                    : "-" );
-
-    const std::vector< const Agent* >& agents = attributes.reinforcements_;
-    if( agents.empty() )
-        display_->Group( "Renforts " ).hide(); // $$$$ AGE 2006-02-16: ...
-    else
-    {
-        std::stringstream strReinforcements;
-        for( std::vector< const Agent* >::const_iterator it = agents.begin(); it != agents.end(); ++it ) {
-            if( it != agents.begin() )
-                strReinforcements << ", ";
-            strReinforcements << "[" << (*it)->GetId() << "]";
-        }
-        display_->Group( "Renforts " ).Display( "", strReinforcements.str().c_str() );
-    }
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentStatePanel::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyUpdated( const LogisticLinks& a )
+void AgentStatePanel::NotifyUpdated( const LogisticLinks& attributes )
 {
-    if( ! ShouldUpdate( a ) )
+    if( ! ShouldUpdate( attributes ) )
         return;
-    display_->Group( "Liens logistiques" )
-        // $$$$ AGE 2006-02-16: Plus malin que des ids ? a voir quand inversion de dépendance (genre liens, ...)
-                .Display( "TC2:",                       Displayer::Id( a.GetTC2() ? a.GetTC2()->GetId() : 0 ) ) 
-                .Display( "Supérieur maintenance:",     Displayer::Id( a.GetMaintenance() ? a.GetMaintenance()->GetId() : 0  ) )
-                .Display( "Supérieur santé:",           Displayer::Id( a.GetMedical() ? a.GetMedical()->GetId() : 0 ) )
-                .Display( "Supérieur ravitaillement:",  Displayer::Id( a.GetSupply() ? a.GetSupply()->GetId() : 0 ) );
+    
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,19 +208,7 @@ void AgentStatePanel::NotifyUpdated( const Transports& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    const std::vector< const Agent* >& agents = attributes.transported_;
-    if( agents.empty() )
-       display_->Group( "Pions Transportés" ).hide();
-    else
-    {
-        std::stringstream strTransports;
-        for( std::vector< const Agent* >::const_iterator it = agents.begin(); it != agents.end(); ++it ) {
-            if( it != agents.begin() )
-                strTransports << ", ";
-            strTransports << "[" << (*it)->GetId() << "]";
-        }
-        display_->Group( "Pions Transportés" ).Display( "", strTransports.str().c_str() );
-    }
+    attributes.Display( *display_ );
 }
 
 // $$$$ AGE 2006-02-16: Centraliser tout ca : 

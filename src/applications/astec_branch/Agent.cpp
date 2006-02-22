@@ -174,3 +174,16 @@ void Agent::RemoveChild( Agent& child )
     Resolver< Agent >::Remove( child.id_ );
     controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetKnowledgeGroup
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+KnowledgeGroup* Agent::GetKnowledgeGroup() const
+{
+    if( gtia_ )
+        return gtia_;
+    if( superior_ )
+        return superior_->GetKnowledgeGroup();
+    return 0;
+}

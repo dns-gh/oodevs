@@ -88,5 +88,11 @@ struct ListItemRtti< Troops::Humans > { // $$$$ AGE 2006-02-21: copiés ici car t
     enum { rtti = 1011 };
 };
 
+class AgentKnowledge;
+template< >
+struct ListItemRtti< const AgentKnowledge* > {
+    enum { rtti = 1012 };
+};
+
 
 #endif // __ListItemRtti_h_

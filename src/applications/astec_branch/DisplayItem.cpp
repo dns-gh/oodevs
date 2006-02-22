@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "DisplayItem.h"
 #include <qlabel.h>
+#include "Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: DisplayItem constructor
@@ -37,28 +38,58 @@ DisplayItem::~DisplayItem()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayItem::Display
-// Created: AGE 2006-02-09
+// Name: DisplayItem::SubItem
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void DisplayItem::Display( const QString& value )
+Displayer_ABC& DisplayItem::SubItem( const char* )
 {
-    valueLabel_->setText( value );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayItem::Display
-// Created: AGE 2006-02-09
+// Name: DisplayItem::StartDisplay
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void DisplayItem::Display( const char* value )
+void DisplayItem::StartDisplay()
 {
-    valueLabel_->setText( value );
+    message_ = "";
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayItem::Display
-// Created: AGE 2006-02-09
+// Name: DisplayItem::DisplayFormatted
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void DisplayItem::Display( const std::string& value )
+void DisplayItem::DisplayFormatted( const QString& formatted )
 {
-    Display( value.c_str() );
+    message_ += formatted;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayItem::EndDisplay
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayItem::EndDisplay()
+{
+    valueLabel_->setText( message_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayItem::Call
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayItem::Call( const bool& value )
+{
+    AddToDisplay( value ? qApp->tr( "Oui" ) : qApp->tr( "Non" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayItem::Call
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayItem::Call( const Agent& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( QString( " [" ) );
+    AddToDisplay( QString::number( value.GetId() ) );
+    AddToDisplay( QString( "]" ) );
 }

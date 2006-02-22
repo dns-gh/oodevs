@@ -56,6 +56,8 @@ public:
     //@{
     virtual std::string GetName() const;
     virtual unsigned long GetId() const;
+    
+    KnowledgeGroup* GetKnowledgeGroup() const; // $$$$ AGE 2006-02-21: Ref ?
     //@}
 
 private:

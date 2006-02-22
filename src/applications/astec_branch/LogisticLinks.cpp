@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "LogisticLinks.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
@@ -120,4 +121,17 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message )
 {
     UpdateData( message );        
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void LogisticLinks::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Liens logistiques" )
+                .Display( "TC2:",                     GetTC2() ) 
+                .Display( "Supérieur maintenance:",   GetMaintenance() )
+                .Display( "Supérieur santé:",         GetMedical() )
+                .Display( "Supérieurravitaillement:", GetSupply() );
 }

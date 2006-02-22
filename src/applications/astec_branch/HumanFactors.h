@@ -17,6 +17,7 @@ class Experience;
 class Tiredness;
 class Morale;
 class Controller;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  HumanFactors
@@ -37,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:

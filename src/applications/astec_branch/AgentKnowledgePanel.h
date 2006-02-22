@@ -19,19 +19,20 @@
 #ifndef __AgentKnowledgePanel_h_
 #define __AgentKnowledgePanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "ListView.h"
+#include "SelectionObserver_ABC.h"
 
-class Gtia;
+class Controller;
+class ActionController;
+class AgentKnowledges;
 class AgentKnowledge;
-class ActionContext;
-class SelectedElement;
-class QCheckBox;
-class Display;
+class Displayer;
+class KnowledgeGroup;
+class Agent;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -40,56 +41,65 @@ class Display;
 // Created: APE 2004-05-03
 // =============================================================================
 class AgentKnowledgePanel : public InfoPanel_ABC
+                          , private Observer_ABC
+                          , public ElementObserver_ABC< AgentKnowledges >
+                          , public ElementObserver_ABC< AgentKnowledge >
+                          , public SelectionObserver_ABC
+                          , public SelectionObserver_Base< KnowledgeGroup >
+                          , public SelectionObserver_Base< Agent >
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( AgentKnowledgePanel );
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentKnowledgePanel( QWidget* pParent );
+             AgentKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentKnowledgePanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Display( const AgentKnowledge& k, ValuedListItem* item );
+    //@}
+
+private:
+    //! @name Copy / Assignment
+    //@{
+    AgentKnowledgePanel( const AgentKnowledgePanel& );
+    AgentKnowledgePanel& operator=( const AgentKnowledgePanel& );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void      OnUpdate        ();
-    virtual void      OnClearSelection();
-            void      UpdateList      ();
-            void      UpdateSelected  ();
-            Gtia* GetSelectedGtia ( const SelectedElement& item );
+    virtual void NotifyUpdated( const AgentKnowledges& knowledges );
+    virtual void NotifyUpdated( const AgentKnowledge& knowledge );
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const KnowledgeGroup& element );
+    virtual void Select( const Agent& element );
+    void Select( const AgentKnowledges* k );
+    void Display( const AgentKnowledge& k );
     //@}
 
 private slots:
-    void OnSelectionChanged( QListViewItem* pItem );
-    void OnRequestCenter();
-
-    void OnKnowledgeCreated( Gtia& gtia, AgentKnowledge& knowledge );
-    void OnKnowledgeUpdated( Gtia& gtia, AgentKnowledge& knowledge );
-    void OnKnowledgeDeleted( Gtia& gtia, AgentKnowledge& knowledge );
-    void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos );
-
-    void ToggleDisplayOwnTeam();
-
-signals:
-    void NewPopupMenu( QPopupMenu& popupMenu, const ActionContext& action );
-    void ElementSelected( SelectedElement& selectedElement );
-    void CenterOnPoint( const MT_Vector2D& vPoint );
+    //! @name Slots
+    //@{
+    void OnSelectionChanged( QListViewItem* );
+    //@}
 
 private:
     //! @name Member data
     //@{
-    Gtia* pGtia_;
-    QListView* pKnowledgeListView_;
-    QCheckBox* pOwnTeamCheckBox_;
-    AgentKnowledge* pSelectedKnowledge_;
-
-    Display* display_;
-
-    QListView* pPerceptionListView_;
-
-    QPopupMenu* pPopupMenu_;
+    ListView< AgentKnowledgePanel >* pKnowledgeListView_;
+    Displayer* display_;
+    const AgentKnowledges* selected_;
+    const AgentKnowledges* newSelection_;
+    const AgentKnowledge* subSelected_;
+//    Gtia* pGtia_;
+//    QCheckBox* pOwnTeamCheckBox_;
+//    AgentKnowledge* pSelectedKnowledge_;
+//    QListView* pPerceptionListView_;
+//    QPopupMenu* pPopupMenu_;
     //@}
 };
 

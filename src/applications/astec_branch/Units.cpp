@@ -20,7 +20,7 @@ Unit::Unit( const QString& symbol )
     // NOTHING
 }
 
-Unit Units::meters( "m" );
-Unit Units::degrees( "°" );
-Unit Units::percentage( "%" );
-Unit Units::metersPerSecond( "m/s" );
+const Unit Units::meters( "m" );
+const Unit Units::degrees( "°" );
+const Unit Units::percentage( "%" );
+const Unit Units::metersPerSecond( "m/s" );

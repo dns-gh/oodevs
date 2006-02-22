@@ -126,3 +126,21 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
 
     controller_.Update( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetId
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+unsigned long AgentKnowledge::GetId() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetRealAgent
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+Agent& AgentKnowledge::GetRealAgent() const
+{
+    return realAgent_;
+}

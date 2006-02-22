@@ -10,7 +10,9 @@
 #ifndef __DisplayItem_h_
 #define __DisplayItem_h_
 
+#include "Displayer_ABC.h"
 class QLabel;
+class Agent;
 
 // =============================================================================
 /** @class  DisplayItem
@@ -18,7 +20,9 @@ class QLabel;
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class DisplayItem
+class DisplayItem : public Displayer_ABC
+                  , public Caller< bool >
+                  , public Caller< Agent >
 {
 
 public:
@@ -28,17 +32,6 @@ public:
     virtual ~DisplayItem();
     //@}
 
-    //! @name Operations
-    //@{
-    void Display( const char* value );
-    void Display( const std::string& value );
-    void Display( const QString& value );
-    template< typename T >
-    void Display( const T& value ) {
-        Display( QString::number( value ) );
-    }
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -46,10 +39,21 @@ private:
     DisplayItem& operator=( const DisplayItem& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual Displayer_ABC& SubItem( const char* name );
+    virtual void StartDisplay();
+    virtual void DisplayFormatted( const QString& formatted );
+    virtual void EndDisplay();
+    virtual void Call( const bool& value );
+    virtual void Call( const Agent& value );
+    //@}
+
 private:
     //! @name Member data
     //@{
     QLabel* valueLabel_;
+    QString message_;
     //@}
 };
 

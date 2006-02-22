@@ -16,50 +16,43 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "AgentKnowledgePanel.h"
 #include "moc_AgentKnowledgePanel.cpp"
 
-#include "App.h"
-#include "MainWindow.h"
-#include "Tools.h"
 #include "Agent.h"
-#include "AgentManager.h"
-#include "Team.h"
-#include "Gtia.h"
+#include "AgentKnowledges.h"
 #include "AgentKnowledge.h"
-#include "ActionContext.h"
-#include "Display.h"
+#include "Displayer.h"
 #include "DisplayGroup.h"
 #include "DisplayItem.h"
-#include "OptionalValue.h"
-#include "Model.h"
+#include "Controller.h"
+#include "ActionController.h"
+#include "KnowledgeGroup.h"
+#include "Agent.h"
+#include "AgentKnowledge.h"
+#include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-AgentKnowledgePanel::AgentKnowledgePanel( QWidget* pParent )
-    : InfoPanel_ABC     ( pParent )
-    , pPopupMenu_           ( new QPopupMenu( this ) )
-    , pSelectedKnowledge_   ( 0 )
-    , pGtia_                ( 0 )
-    , display_              ( 0 )
+AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+    : InfoPanel_ABC     ( pParent, tr( "C. agent" ) )
+//    , pPopupMenu_        ( new QPopupMenu( this ) )
+    , selected_( 0 )
+    , newSelection_( 0 )
+    , subSelected_( 0 )
+    , display_( 0 )
 {
-    pKnowledgeListView_ = new QListView( this );
+    pKnowledgeListView_ = new ListView< AgentKnowledgePanel >( this, *this );
     pKnowledgeListView_->addColumn( tr( "Agents connus" ) );
     pKnowledgeListView_->setResizeMode( QListView::LastColumn );
 
-    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
-    pOwnTeamCheckBox_->setChecked( true );
-
-    display_ = new Display( this );
+//    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
+//    pOwnTeamCheckBox_->setChecked( true );
+//
+    display_ = new Displayer( this );
     display_->AddGroup( "Détails" )
                 .AddItem( "Id:" )
                 .AddItem( "Agent associé:" )
@@ -82,28 +75,30 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* pParent )
                 .AddItem( "Réfugiés pris en compte:" )
                 .AddItem( "PC:" )
                 .AddItem( "Pertinence:"  );
-
-    pPerceptionListView_ = new QListView( this );
-    pPerceptionListView_->addColumn( tr( "Agent" ) );
-    pPerceptionListView_->addColumn( tr( "Niveau perception" ) );
-    pPerceptionListView_->setResizeMode( QListView::LastColumn );
-    pPerceptionListView_->setAllColumnsShowFocus( true );
-
-    connect( &App::GetApp(), SIGNAL( AgentKnowledgeCreated( Gtia&, AgentKnowledge& ) ),
-             this,                 SLOT(    OnKnowledgeCreated( Gtia&, AgentKnowledge& ) ) );
-    connect( &App::GetApp(), SIGNAL( AgentKnowledgeUpdated( Gtia&, AgentKnowledge& ) ),
-             this,                 SLOT(    OnKnowledgeUpdated( Gtia&, AgentKnowledge& ) ) );
-    connect( &App::GetApp(), SIGNAL( AgentKnowledgeDeleted( Gtia&, AgentKnowledge& ) ),
-             this,                 SLOT(    OnKnowledgeDeleted( Gtia&, AgentKnowledge& ) ) );
-
-    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
-    connect( this, SIGNAL( ElementSelected( SelectedElement& ) ),         &MainWindow::GetMainWindow(), SIGNAL( ElementSelected( SelectedElement& ) ) );
-    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ),             &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
-
-    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
+//
+//    pPerceptionListView_ = new QListView( this );
+//    pPerceptionListView_->addColumn( tr( "Agent" ) );
+//    pPerceptionListView_->addColumn( tr( "Niveau perception" ) );
+//    pPerceptionListView_->setResizeMode( QListView::LastColumn );
+//    pPerceptionListView_->setAllColumnsShowFocus( true );
+//
+//    connect( &App::GetApp(), SIGNAL( AgentKnowledgeCreated( Gtia&, AgentKnowledge& ) ),
+//             this,                 SLOT(    OnKnowledgeCreated( Gtia&, AgentKnowledge& ) ) );
+//    connect( &App::GetApp(), SIGNAL( AgentKnowledgeUpdated( Gtia&, AgentKnowledge& ) ),
+//             this,                 SLOT(    OnKnowledgeUpdated( Gtia&, AgentKnowledge& ) ) );
+//    connect( &App::GetApp(), SIGNAL( AgentKnowledgeDeleted( Gtia&, AgentKnowledge& ) ),
+//             this,                 SLOT(    OnKnowledgeDeleted( Gtia&, AgentKnowledge& ) ) );
+//
+//    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
+//    connect( this, SIGNAL( ElementSelected( SelectedElement& ) ),         &MainWindow::GetMainWindow(), SIGNAL( ElementSelected( SelectedElement& ) ) );
+//    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ),             &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
+//
+//    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
-    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+//    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+//    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    controller.Register( *this );
+    actionController.Register( *this );
 }
 
 
@@ -117,78 +112,100 @@ AgentKnowledgePanel::~AgentKnowledgePanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnUpdate
-// Created: AGE 2005-04-05
+// Name: AgentKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnUpdate()
+void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 {
-    /*if( GetSelectedGtia( selectedItem_ ) == 0 )
-        OnClearSelection();
-    else*/
-        UpdateList();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnClearSelection
-// Created: SBO 2005-09-22
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnClearSelection()
-{
-    pGtia_ = 0;
-    pKnowledgeListView_->clear();
-    display_->Clear();
-    pSelectedKnowledge_ = 0;
-    UpdateSelected();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::UpdateList
-// Created: APE 2004-06-10
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::UpdateList()
-{
-    Gtia*           pGtia      = GetSelectedGtia( selectedItem_ );
-    AgentKnowledge* pKnowledge = selectedItem_.pAgentKnowledge_;
-
-    if( pGtia == 0 )
+    if( ! isVisible() || selected_ != &knowledges )
         return;
 
-    if( pGtia_ != pGtia )
-    {
-        pKnowledgeListView_->clear();
-        const Gtia::T_AgentKnowledgeMap& knowledges = pGtia->GetAgentKnowledges();
-        for( Gtia::CIT_AgentKnowledgeMap it = knowledges.begin(); it != knowledges.end(); ++it )
-        {
-            // We only display knowledges concerning our own team if the appropriate check box is checked.
-            if( pOwnTeamCheckBox_->isChecked() || pGtia->GetTeam().GetID() != (*it).second->GetRealAgent().GetTeam().GetID() )
-                new MT_ValuedListViewItem<AgentKnowledge*>( (*it).second, pKnowledgeListView_, (*it).second->GetRealAgent().GetName().c_str() );
-        }
-        pGtia_ = pGtia;
-    }
+    pKnowledgeListView_->Display( knowledges.CreateIterator(), pKnowledgeListView_, (ValuedListItem*)( pKnowledgeListView_->firstChild() ) );
+}
 
-    // Try to select the appropriate knowledge.
-    if( pKnowledge != 0 )
-    {
-        QListViewItem* pItem = pKnowledgeListView_->firstChild();
-        while( pItem != 0 )
-        {
-            MT_ValuedListViewItem<AgentKnowledge*>* pCastItem = (MT_ValuedListViewItem<AgentKnowledge*>*)pItem;
-            if( pCastItem->GetValue() == pKnowledge )
-            {
-                pKnowledgeListView_->setSelected( pItem, true );
-                return;
-            }
-            pItem = pItem->nextSibling();
-        }
-    }
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::Display
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::Display( const AgentKnowledge& k, ValuedListItem* item )
+{
+    item->SetValue( &k );
+    item->setText( 0, k.GetRealAgent().GetName().c_str() ); // $$$$ AGE 2006-02-21: plus que l'agent !
+}
 
-    if( pKnowledgeListView_->childCount() > 0 )
-        pKnowledgeListView_->setSelected( pKnowledgeListView_->firstChild(), true );
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::BeforeSelection
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::BeforeSelection()
+{
+    newSelection_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::AfterSelection
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::AfterSelection()
+{
+    if( selected_ != newSelection_ )
+    {
+        selected_ = newSelection_;
+        if( selected_ )
+        {
+            Show();
+            NotifyUpdated( *selected_ );
+        }
+        else
+            Hide();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::Select
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::Select( const KnowledgeGroup& element )
+{
+    Select( element.Retrieve< AgentKnowledges >() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::Select
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::Select( const Agent& element )
+{
+    const KnowledgeGroup* kg = element.GetKnowledgeGroup();
+    if( kg )
+        Select( *kg );
     else
-    {
-        pSelectedKnowledge_ = 0;
-        UpdateSelected();
-    }
+        Select( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::Select
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::Select( const AgentKnowledges* k )
+{
+    newSelection_ = k;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::OnSelectionChanged
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
+{
+    ValuedListItem* item = (ValuedListItem*)( i );
+    if( ! item || ! item->IsA< const AgentKnowledge* >() )
+        return;
+    subSelected_ = item->GetValue< const AgentKnowledge* >();
+    if( subSelected_ )
+        NotifyUpdated( *subSelected_ );
+    else
+        display_->Clear();
 }
 
 namespace
@@ -212,31 +229,24 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::UpdateSelected
-/** @param  pKnowledge 
-*/
-// Created: APE 2004-05-03
+// Name: AgentKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::UpdateSelected()
+void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
 {
-    display_->Clear();
-
-    pPerceptionListView_->clear();
-
-    if( pSelectedKnowledge_ == 0 )
+    if( ! isVisible() || subSelected_ != & k )
         return;
 
-    AgentKnowledge& k = *pSelectedKnowledge_;
     display_->Group( "Détails" )
-                .Display( "Id:", Display::Id(  k.GetID() ) )
-                .Display( "Agent associé:", Display::Id( k.GetRealAgent().GetID() ) )
+                .Display( "Id:", Displayer::Id(  k.GetId() ) )
+                .Display( "Agent associé:", Displayer::Id( k.GetRealAgent().GetId() ) )
                 .Display( "Position:", IfSet( k.strPosition_, k.strPosition_ ) )
                 .Display( "Direction:", IfSet( k.nDirection_ ) )
                 .Display( "Vitesse:", IfSet( k.nSpeed_ ) )
                 .Display( "Etat ops.:", IfSet( k.nEtatOps_ ) )
                 .Display( "Niveau de perception:", IfSet( k.nCurrentPerceptionLevel_, Tools::ToString( k.nCurrentPerceptionLevel_ ) ) )
                 .Display( "Niveau max de perception:", IfSet( k.nCurrentPerceptionLevel_, Tools::ToString( k.nMaxPerceptionLevel_ ) ) )
-                .Display( "Camp:", IfSet( k.nTeam_, App::GetApp().GetModel().GetTeam( k.nTeam_).GetName() ) )
+//                .Display( "Camp:", IfSet( k.nTeam_, App::GetApp().GetAgentManager().FindTeam( k.nTeam_)->GetName() ) )
                 .Display( "Niveau:", IfSet( k.nLevel_, ENT_Tr::ConvertFromNatureLevel( k.nLevel_ ) ) )
                 .Display( "Arme:", IfSet( k.nWeapon_, ENT_Tr::ConvertFromUnitNatureWeapon( k.nWeapon_ ) ) )
                 .Display( "Spécialisation:", IfSet( k.nSpecialization_, ENT_Tr::ConvertFromUnitNatureSpecialization( k.nSpecialization_ ) ) )
@@ -244,153 +254,10 @@ void AgentKnowledgePanel::UpdateSelected()
                 .Display( "Catégorie:", IfSet( k.nCategory_, ENT_Tr::ConvertFromUnitNatureCategory( k.nCategory_ ) ) )
                 .Display( "Mobilité:", IfSet( k.nMobility_, ENT_Tr::ConvertFromUnitNatureMobility( k.nMobility_ ) ) )
                 .Display( "Capacité mission:", IfSet( k.nCapacity_, ENT_Tr::ConvertFromUnitCapaciteMission( k.nCapacity_ ) ) )
-                .Display( "Rendu:", IfSet( k.bSurrendered_, Display::YesNo( k.bSurrendered_ ) ) )
-                .Display( "Fait prisonnier:", IfSet( k.bPrisonner_, Display::YesNo( k.bPrisonner_ ) ) )
-                .Display( "Réfugiés pris en compte:", IfSet( k.bRefugies_, Display::YesNo( k.bRefugies_ ) ) )
-                .Display( "PC:", IfSet( k.bIsPC_, Display::YesNo( k.bIsPC_ ) ) )
+                .Display( "Rendu:", IfSet( k.bSurrendered_, Displayer::YesNo( k.bSurrendered_ ) ) )
+                .Display( "Fait prisonnier:", IfSet( k.bPrisonner_, Displayer::YesNo( k.bPrisonner_ ) ) )
+                .Display( "Réfugiés pris en compte:", IfSet( k.bRefugies_, Displayer::YesNo( k.bRefugies_ ) ) )
+                .Display( "PC:", IfSet( k.bIsPC_, Displayer::YesNo( k.bIsPC_ ) ) )
                 .Display( "Pertinence:", IfSet( k.nRelevance_ ) );
 
-    if( k.automatePerceptionMap_.IsSet() )
-    {
-        for( AgentKnowledge::CIT_AutomatePerceptionMap it = k.automatePerceptionMap_.Data().begin(); it != k.automatePerceptionMap_.Data().end(); ++it )
-            new QListViewItem( pPerceptionListView_, it->first->GetName().c_str(), Tools::ToString( it->second )  );
-    }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnSelectionChanged
-/** @param  pItem 
-*/
-// Created: APE 2004-05-04
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* pItem )
-{
-    if( pItem != 0 )
-    {
-        MT_ValuedListViewItem<AgentKnowledge*>* pCastItem = (MT_ValuedListViewItem<AgentKnowledge*>*)pItem;
-        pSelectedKnowledge_ = pCastItem->GetValue();
-        SelectedElement selectedElement( *pSelectedKnowledge_ );
-        emit ElementSelected( selectedElement );
-    }
-    else
-        pSelectedKnowledge_ = 0;
-
-    UpdateSelected();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnRequestCenter
-// Created: APE 2004-06-10
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnRequestCenter()
-{
-    QListViewItem* pItem = pKnowledgeListView_->selectedItem();
-    if( pItem == 0 )
-        return;
-
-    MT_ValuedListViewItem<AgentKnowledge*>* pCastItem = (MT_ValuedListViewItem<AgentKnowledge*>*)pItem;
-    emit CenterOnPoint( pCastItem->GetValue()->GetPosition() );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnKnowledgeCreated
-/** @param  knowledge 
-*/
-// Created: APE 2004-05-04
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnKnowledgeCreated( Gtia& gtia, AgentKnowledge& knowledge )
-{
-    if( &gtia != pGtia_ )
-        return;
-
-    // We only display knowledges concerning our own team if the appropriate check box is checked.
-    if( pOwnTeamCheckBox_->isChecked() || gtia.GetTeam().GetID() != knowledge.GetRealAgent().GetTeam().GetID() )
-        new MT_ValuedListViewItem<AgentKnowledge*>( &knowledge, pKnowledgeListView_, knowledge.GetRealAgent().GetName().c_str() );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnKnowledgeUpdated
-// Created: APE 2004-05-04
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnKnowledgeUpdated( Gtia& /*gtia*/, AgentKnowledge& knowledge )
-{
-    if( &knowledge != pSelectedKnowledge_ )
-        return;
-    UpdateSelected();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnKnowledgeDeleted
-// Created: APE 2004-05-04
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnKnowledgeDeleted( Gtia& gtia, AgentKnowledge& knowledge )
-{
-    if( &gtia != pGtia_ )
-        return;
-
-    QListViewItem* pItem = pKnowledgeListView_->firstChild();
-    while( pItem != 0 )
-    {
-        MT_ValuedListViewItem<AgentKnowledge*>* pCastItem = (MT_ValuedListViewItem<AgentKnowledge*>*)pItem;
-        if( pCastItem->GetValue() == &knowledge )
-        {
-            if ( pSelectedKnowledge_ == &knowledge )
-                pSelectedKnowledge_ = 0;
-            delete pCastItem;
-            break;
-        }
-
-        pItem = pItem->nextSibling();
-    }
-    UpdateSelected();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnContextMenuRequested
-// Created: APE 2004-05-11
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos )
-{
-    if( pItem == 0 ) 
-        return;
-
-    pPopupMenu_->clear();
-
-    MT_ValuedListViewItem<AgentKnowledge*>* pCastItem = (MT_ValuedListViewItem<AgentKnowledge*>*)pItem;
-    SelectedElement selectedElement( *(pCastItem->GetValue()) );
-    emit NewPopupMenu( *pPopupMenu_, ActionContext( selectedElement ) );
-
-    if( pPopupMenu_->count() > 0 )
-        pPopupMenu_->popup( pos );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::ToggleDisplayOwnTeam
-// Created: APE 2004-05-27
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::ToggleDisplayOwnTeam()
-{
-    this->UpdateList();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::GetSelectedGtia
-// Created: AGE 2005-04-05
-// -----------------------------------------------------------------------------
-Gtia* AgentKnowledgePanel::GetSelectedGtia( const SelectedElement& /*item*/ )
-{
-    if( selectedItem_.pAgent_ )
-        return & selectedItem_.pAgent_->GetGtia();
-    else if( selectedItem_.pGtia_ )
-        return selectedItem_.pGtia_;
-    else if( selectedItem_.pAgentKnowledge_ )
-        return & selectedItem_.pAgentKnowledge_->GetOwner();
-    return 0;
 }

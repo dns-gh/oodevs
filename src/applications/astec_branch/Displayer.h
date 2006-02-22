@@ -10,15 +10,17 @@
 #ifndef __Display_h_
 #define __Display_h_
 
-class DisplayGroup;
+#include "Displayer_ABC.h"
+#include "DisplayGroup.h"
 
 // =============================================================================
 /** @class  Displayer
     @brief  Displayer
+    // $$$$ AGE 2006-02-22: dégager ce bordel, faire une seule classe et un builder 
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class Displayer
+class Displayer : public Displayer_ABC
 {
 
 public:
@@ -31,8 +33,8 @@ public:
     //! @name Operations
     //@{
     DisplayGroup& AddGroup( const char* name );
-    DisplayGroup& Group( const char* name );
     void Clear();
+    virtual DisplayGroup& Group( const char* name );
     //@}
 
     //! @name Helpers
@@ -48,10 +50,18 @@ private:
     Displayer& operator=( const Displayer& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual Displayer_ABC& SubItem( const char* name );
+    virtual void StartDisplay();
+    virtual void DisplayFormatted( const QString& formatted );
+    virtual void EndDisplay();
+    //@}
+
     //! @name Types
     //@{
     typedef std::map< std::string, DisplayGroup* > T_Groups;
-    typedef T_Groups::iterator                        IT_Groups;
+    typedef T_Groups::iterator                    IT_Groups;
     //@}
 
 private:

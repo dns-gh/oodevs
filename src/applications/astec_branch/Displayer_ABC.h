@@ -32,11 +32,24 @@ public:
     //! @name Operations
     //@{
     template< typename T >
-    void Display( const T& element );
+    Displayer_ABC& Display( const T& element );
+
+    template< typename T >
+    Displayer_ABC& Display( const char* name, const T& element );
+
+    template< typename T >
+    Displayer_ABC& Start( const T& element );
+    template< typename T >
+    Displayer_ABC& Add( const T& element );
+    Displayer_ABC& End();
+
 
     template< typename T >
     void AddToDisplay( const T& element );
     void AddToDisplay( const QString& element );
+
+    virtual Displayer_ABC& Group( const char* name ) { return SubItem( name ); };
+    virtual Displayer_ABC& Item( const char* name ) { return SubItem( name ); };
     //@}
 
 private:
@@ -54,6 +67,7 @@ private:
 
     //! @name Operations
     //@{
+    virtual Displayer_ABC& SubItem( const char* name ) = 0;
     virtual void StartDisplay() = 0;
     virtual void DisplayFormatted( const QString& formatted ) = 0;
     virtual void EndDisplay() = 0;

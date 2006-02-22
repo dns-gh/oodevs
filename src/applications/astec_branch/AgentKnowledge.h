@@ -43,8 +43,9 @@ public:
     //! @name Accessors
     //@{
     unsigned long      GetId       () const;
-    const MT_Vector2D& GetPosition () const;
     Agent&             GetRealAgent() const;
+    const MT_Vector2D& GetPosition () const;
+    // $$$$ AGE 2006-02-21: Kg ?
     //@}
 
 private:
@@ -60,7 +61,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
     //@}
 
-private:
+public:
     Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
     unsigned long nID_;
@@ -73,7 +74,7 @@ private:
     OptionalValue< uint >                       nEtatOps_;
     OptionalValue< E_PerceptionResult >         nCurrentPerceptionLevel_;
     OptionalValue< E_PerceptionResult >         nMaxPerceptionLevel_;
-    OptionalValue< uint >                       nTeam_;
+    OptionalValue< uint >                       nTeam_; // $$$$ AGE 2006-02-21: resolve
     OptionalValue< E_NatureLevel >              nLevel_;
     OptionalValue< E_UnitNatureWeapon >         nWeapon_;
     OptionalValue< E_UnitNatureSpecialization > nSpecialization_;

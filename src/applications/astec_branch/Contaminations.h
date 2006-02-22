@@ -15,6 +15,7 @@
 #include "Updatable_ABC.h"
 
 class Controller;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  Contaminations
@@ -35,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:

@@ -17,6 +17,7 @@
 
 class Controller;
 class Agent;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  LogisticLinks
@@ -38,6 +39,8 @@ public:
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
+
     Agent* GetTC2() const;
     Agent* GetMaintenance() const;
     Agent* GetMedical() const;

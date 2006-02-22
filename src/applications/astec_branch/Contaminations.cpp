@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Contaminations.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Contaminations constructor
@@ -51,4 +52,16 @@ void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         bNbcProtectionSuitWorn_ = message.en_tenue_de_protection_nbc;
 
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Contaminations::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void Contaminations::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "NBC" )
+                .Display( "Tenue NBC:", bNbcProtectionSuitWorn_ ? "Mise" : "Non mise" ) // $$$$ AGE 2006-02-22: Boolean
+                .Display( "Agents contaminants:", contaminatingNbcAgents_ )
+                .Display( "Contamination:", nContamination_ );
 }

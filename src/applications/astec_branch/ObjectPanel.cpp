@@ -57,7 +57,7 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
                 .AddItem( "Type:" )
                 .AddItem( "Position:" );
 
-    DisplayGroup* group = &display_->Group( "Informations" );
+    DisplayGroup* group = (DisplayGroup*)&display_->Group( "Informations" );
     new QLabel( "Construction:", group );
     pPercentBuiltEdit_  = new QSpinBox( 0, 100, 1, group ); pPercentBuiltEdit_->setSuffix( "%" );
     new QLabel( "Valeur:", group );
