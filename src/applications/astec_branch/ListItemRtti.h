@@ -94,5 +94,10 @@ struct ListItemRtti< const AgentKnowledge* > {
     enum { rtti = 1012 };
 };
 
+class Perception;
+template< >
+struct ListItemRtti< Perception > {
+    enum { rtti = 1013 };
+};
 
 #endif // __ListItemRtti_h_

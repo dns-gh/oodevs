@@ -33,6 +33,7 @@
 #include "AgentKnowledge.h"
 #include "Tools.h"
 #include "Units.h"
+#include "PerceptionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
@@ -76,13 +77,13 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& contro
                 .AddItem( "Réfugiés pris en compte:" )
                 .AddItem( "PC:" )
                 .AddItem( "Pertinence:"  );
-//
-//    pPerceptionListView_ = new QListView( this );
-//    pPerceptionListView_->addColumn( tr( "Agent" ) );
-//    pPerceptionListView_->addColumn( tr( "Niveau perception" ) );
-//    pPerceptionListView_->setResizeMode( QListView::LastColumn );
-//    pPerceptionListView_->setAllColumnsShowFocus( true );
-//
+
+    pPerceptionListView_ = new ListView< AgentKnowledgePanel >( this, *this );
+    pPerceptionListView_->addColumn( tr( "Agent" ) );
+    pPerceptionListView_->addColumn( tr( "Niveau perception" ) );
+    pPerceptionListView_->setResizeMode( QListView::LastColumn );
+    pPerceptionListView_->setAllColumnsShowFocus( true );
+
 //    connect( &App::GetApp(), SIGNAL( AgentKnowledgeCreated( Gtia&, AgentKnowledge& ) ),
 //             this,                 SLOT(    OnKnowledgeCreated( Gtia&, AgentKnowledge& ) ) );
 //    connect( &App::GetApp(), SIGNAL( AgentKnowledgeUpdated( Gtia&, AgentKnowledge& ) ),
@@ -204,29 +205,12 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
         return;
     subSelected_ = item->GetValue< const AgentKnowledge* >();
     if( subSelected_ )
+    {
         NotifyUpdated( *subSelected_ );
+        NotifyUpdated( subSelected_->Get< PerceptionMap >() );
+    }
     else
         display_->Clear();
-}
-
-namespace
-{
-    // $$$$ AGE 2006-02-09: HIé
-    template< typename T >
-    QString IfSet( const T& value, const QString& message )
-    {
-        return value.IsSet() ? message : "";
-    }
-    template< typename T >
-    QString IfSet( const T& value, const std::string& message )
-    {
-        return value.IsSet() ? message.c_str() : "";
-    }
-    template< typename T >
-    QString IfSet( const T& value )
-    {
-        return value.IsSet() ? QString::number( value ) : "";
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -260,4 +244,28 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
                 .Display( "Réfugiés pris en compte:", k.bRefugies_ )
                 .Display( "PC:", k.bIsPC_ )
                 .Display( "Pertinence:", k.nRelevance_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
+{
+    if( ! isVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
+        return;
+
+    pPerceptionListView_->Display( perceptions.perceptions_.begin(), perceptions.perceptions_.end(),
+            pPerceptionListView_, (ValuedListItem*)( pPerceptionListView_->firstChild() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::Display
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::Display( const Perception& perception, ValuedListItem* item )
+{
+    item->SetValue( perception );
+    item->setText( 0, perception.detected_->GetName().c_str() );
+    item->setText( 1, Tools::ToString( perception.level_ ) );
 }

@@ -49,12 +49,7 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< Agent*, E_PerceptionResult > T_AutomatePerceptionMap;
-    typedef T_AutomatePerceptionMap::iterator          IT_AutomatePerceptionMap;
-    typedef T_AutomatePerceptionMap::const_iterator    CIT_AutomatePerceptionMap;
-    //@}
+   
 
     //! @name Helpers
     //@{
@@ -68,6 +63,7 @@ public:
     Agent&      realAgent_;
     MT_Vector2D vPosition_;
     
+    // $$$$ AGE 2006-02-22: Use Attributes ?
     OptionalValue< std::string >                strPosition_;
     OptionalValue< uint >                       nDirection_;
     OptionalValue< uint >                       nSpeed_;
@@ -87,7 +83,6 @@ public:
     OptionalValue< bool >                       bPrisonner_;
     OptionalValue< bool >                       bRefugies_;
     OptionalValue< uint >                       nRelevance_;
-    OptionalValue< T_AutomatePerceptionMap >    automatePerceptionMap_;
 
 private:
     static IDManager idManager_;

@@ -172,7 +172,8 @@ void AgentResourcesPanel::NotifyUpdated( const Lends& a )
 void AgentResourcesPanel::Display( const Lend& lend, ValuedListItem* item )
 {
     item->SetValue( lend );
-    item->setText( 0, QString::number( lend.borrower_->GetId() ) ); // $$$$ AGE 2006-02-21: more than id
+    // $$$$ AGE 2006-02-22: use a displayer_ABC
+    item->setText( 0, lend.borrower_->GetName().c_str() ); // $$$$ AGE 2006-02-21: more than name
     item->setText( 1, lend.type_->GetName().c_str() );
     item->setText( 1, QString::number( lend.quantity_ ) );
 }

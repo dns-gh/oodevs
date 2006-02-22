@@ -33,6 +33,8 @@ class AgentKnowledge;
 class Displayer;
 class KnowledgeGroup;
 class Agent;
+class PerceptionMap;
+class Perception;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -44,6 +46,7 @@ class AgentKnowledgePanel : public InfoPanel_ABC
                           , private Observer_ABC
                           , public ElementObserver_ABC< AgentKnowledges >
                           , public ElementObserver_ABC< AgentKnowledge >
+                          , public ElementObserver_ABC< PerceptionMap >
                           , public SelectionObserver_ABC
                           , public SelectionObserver_Base< KnowledgeGroup >
                           , public SelectionObserver_Base< Agent >
@@ -59,6 +62,7 @@ public:
     //! @name Operations
     //@{
     void Display( const AgentKnowledge& k, ValuedListItem* item );
+    void Display( const Perception& perception, ValuedListItem* item );
     //@}
 
 private:
@@ -73,6 +77,7 @@ private:
     //@{
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const AgentKnowledge& knowledge );
+    virtual void NotifyUpdated( const PerceptionMap& perceptions );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const KnowledgeGroup& element );
@@ -92,13 +97,15 @@ private:
     //@{
     ListView< AgentKnowledgePanel >* pKnowledgeListView_;
     Displayer* display_;
+    ListView< AgentKnowledgePanel >* pPerceptionListView_;
+
     const AgentKnowledges* selected_;
     const AgentKnowledges* newSelection_;
     const AgentKnowledge* subSelected_;
 //    Gtia* pGtia_;
 //    QCheckBox* pOwnTeamCheckBox_;
 //    AgentKnowledge* pSelectedKnowledge_;
-//    QListView* pPerceptionListView_;
+    
 //    QPopupMenu* pPopupMenu_;
     //@}
 };

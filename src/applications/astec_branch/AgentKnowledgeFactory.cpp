@@ -12,6 +12,7 @@
 #include "AgentKnowledge.h"
 #include "Model.h"
 #include "AgentsModel.h"
+#include "PerceptionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeFactory constructor
@@ -39,5 +40,7 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // -----------------------------------------------------------------------------
 AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    return new AgentKnowledge( message, controller_, model_.agents_ );
+    AgentKnowledge* result = new AgentKnowledge( message, controller_, model_.agents_ );
+    result->Attach( *new PerceptionMap( controller_, model_.agents_ ) );
+    return result;
 }

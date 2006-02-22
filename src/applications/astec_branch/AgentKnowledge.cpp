@@ -98,17 +98,6 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
     if( message.m.nature_pcPresent )
         bIsPC_ = message.nature_pc;
 
-    if( message.m.perception_par_compagniePresent )
-    {
-        automatePerceptionMap_.Set();
-        automatePerceptionMap_.Data().clear();
-        for( uint i = 0; i < message.perception_par_compagnie.n; ++i )
-        {
-            Agent* pAgent = & resolver_.Get( message.perception_par_compagnie.elem[i].oid_compagnie );
-            automatePerceptionMap_.Data().insert( std::make_pair( pAgent, (E_PerceptionResult)( 3 - message.perception_par_compagnie.elem[i].identification_level ) ) ); //$$$ DEGUEULASSE
-        }
-    }
-
     if( message.m.pertinencePresent )
         nRelevance_ = message.pertinence;
 

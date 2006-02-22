@@ -90,9 +90,6 @@ void DisplayItem::Call( const bool& value )
 void DisplayItem::Call( const Agent& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
-    AddToDisplay( QString( " [" ) );
-    AddToDisplay( QString::number( value.GetId() ) );
-    AddToDisplay( QString( "]" ) );
 }
 
 // -----------------------------------------------------------------------------
