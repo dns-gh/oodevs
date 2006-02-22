@@ -154,6 +154,7 @@ signatures
     V                                A::DEC_Automate_ChangeEtatPriseEnCompteRefugies( B /*pris en compte*/ );
 
     // Connaissance Populations
+    R                                    A::DEC_ConnaissancePopulation_Domination ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     B                                    A::DEC_ConnaissancePopulation_EstDansZone( U /*T_ConnaissancePopulation*/, U /*T_Localisation*/ );
     S /*T_ListeConnaissancesPopulation*/ A::DEC_Connaissances_Populations         ();
 

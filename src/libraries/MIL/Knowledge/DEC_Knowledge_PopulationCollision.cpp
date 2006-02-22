@@ -68,6 +68,7 @@ DEC_Knowledge_PopulationCollision::~DEC_Knowledge_PopulationCollision()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::serialize
 // Created: JVT 2005-04-14
@@ -75,7 +76,6 @@ DEC_Knowledge_PopulationCollision::~DEC_Knowledge_PopulationCollision()
 template< typename Archive > 
 void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const uint )
 {
-    assert( false );
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          & const_cast< MIL_AgentPion*& >( pAgentColliding_ )
          & pPopulation_

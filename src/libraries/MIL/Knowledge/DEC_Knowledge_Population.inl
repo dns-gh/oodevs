@@ -10,6 +10,27 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetArmy
+// Created: HME 2005-12-29
+// -----------------------------------------------------------------------------
+inline
+const MIL_Army& DEC_Knowledge_Population::GetArmy() const
+{
+    assert( pArmy_ );
+    return *pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetDominationState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Knowledge_Population::GetDominationState() const
+{
+    return rDominationState_;   
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::GetID
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
@@ -61,13 +82,3 @@ void DEC_Knowledge_Population::Recon()
     bIsRecon_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Agent::GetArmy
-// Created: HME 2005-12-29
-// -----------------------------------------------------------------------------
-inline
-const MIL_Army& DEC_Knowledge_Population::GetArmy() const
-{
-    assert( pArmy_ );
-    return *pArmy_;
-}

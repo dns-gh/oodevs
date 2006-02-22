@@ -156,8 +156,10 @@ void Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcent
 // Name: Population::UpdatePopulation				
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
+void Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
+    if( asnMsg.m.etat_dominationPresent ) 
+        nDomination_ = asnMsg.etat_domination;
 } 
 
 

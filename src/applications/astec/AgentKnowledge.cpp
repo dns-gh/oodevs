@@ -109,6 +109,9 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
     if( asnMsg.m.pertinencePresent )
         nRelevance_ = asnMsg.pertinence;
 
+    if( asnMsg.m.mortPresent )
+        bDead_ = asnMsg.mort;
+
     if( asnMsg.m.capacite_missionPresent )
         nCapacity_ = E_UnitCapaciteMission( asnMsg.capacite_mission );
 

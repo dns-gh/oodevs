@@ -14,6 +14,7 @@
 
 #include "ASN_Types.h"
 #include "IDManager.h"
+#include "OptionalValue.h"
 
 class Gtia;
 class Team;
@@ -28,6 +29,8 @@ class TypePopulation;
 class PopulationKnowledge
 {
     MT_COPYNOTALLOWED( PopulationKnowledge );
+
+    friend class PopulationKnowledgePanel;
 
 public:
     //! @name Types
@@ -51,10 +54,10 @@ public:
     //! @name Accessors
     //@{
     const uint                         GetID            () const;
-    const Team*                    GetTeam          () const;
-    const Population&              GetPopulation    () const;
-          Gtia*                    GetGtia          () const;
-    const TypePopulation&          GetType          () const;
+    const Team*                        GetTeam          () const;
+    const Population&                  GetPopulation    () const;
+          Gtia*                        GetGtia          () const;
+    const TypePopulation&              GetType          () const;
     const T_ConcentrationKnowledgeMap& GetConcentrations() const;
     const T_FlowKnowledgeMap&          GetFlows         () const;
     //@}
@@ -72,7 +75,7 @@ public:
     //@}
 
 private:
-    const uint                          nID_;
+    const uint                      nID_;
     const Team*                     pTeam_;
     const Population*               pPopulation_;
     const TypePopulation*           pType_;
@@ -80,6 +83,8 @@ private:
 
           T_ConcentrationKnowledgeMap   concentrations_;
           T_FlowKnowledgeMap            flows_;
+
+          OptionalValue< int >  nDomination_;
 };
 
 

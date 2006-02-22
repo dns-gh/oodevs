@@ -55,8 +55,9 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* pParent )
     display_->AddGroup( "Détails" )
                 .AddItem( "Id:" )
                 .AddItem( "Population associée:" )
-                .AddItem( "Camp:" );
-
+                .AddItem( "Camp:" )
+                .AddItem( "Domination:" );
+            
     display_->AddGroup( "Concentration" )
                 .AddItem( "Id:" )
                 .AddItem( "Concentration associée:" )
@@ -265,7 +266,8 @@ void PopulationKnowledgePanel::UpdateSelected()
     display_->Group( "Détails" )
                 .Display( "Id:", Display::Id( k.GetID() ) )
                 .Display( "Population associée:", Display::Id( k.GetPopulation().GetID() ) )
-                .Display( "Camp:", k.GetTeam() ? k.GetTeam()->GetName() : "" );
+                .Display( "Camp:", k.GetTeam() ? k.GetTeam()->GetName() : "" )
+                .Display( "Domination:", IfSet( k.nDomination_, QString::number( k.nDomination_ ) + "%" ) ) ;
 
     if( pSelectedConcentrationKnowledge_ != 0 )
     {

@@ -105,6 +105,7 @@ private:
     bool bPrisonerUpdated_;
     bool bSurrenderedUpdated_;
     bool bRefugeeManagedUpdated_;
+    bool bDeadUpdated_;
 };
 
 #include "DEC_Knowledge_AgentDataDetection.inl"

@@ -35,6 +35,9 @@ signatures
     R                                         A::DEC_ConnaissanceObjet_Distance       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
     U /*T_Point*/                             A::DEC_ConnaissanceObjet_PointPlusProche( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
     I /*E_Tristate*/                          A::DEC_ConnaissanceObjet_EstEnnemi( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete*/ );
+    
+    // Etat decisionnel
+    V                                         A::DEC_Population_ChangeEtatDomination( R /*domination entre 0 et 1*/ );
         
     // RC
     V                                         A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );

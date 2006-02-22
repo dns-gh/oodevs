@@ -23,6 +23,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/MIL_Army.h"
 #include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
@@ -34,14 +35,17 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Population, "DEC_Knowledge_Population" )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
-    : DEC_Knowledge_ABC()
-    , nID_             ( MIL_IDManager::knowledgePopulations_.GetFreeSimID() )
-    , pKnowledgeGroup_ ( &knowledgeGroup )
-    , pPopulationKnown_( &populationKnown )
-    , concentrations_  ()
-    , flows_           ()
-    , pArmy_           ( &populationKnown.GetArmy() )
-    , bIsRecon_        ( false )
+    : DEC_Knowledge_ABC     ()
+    , nID_                  ( MIL_IDManager::knowledgePopulations_.GetFreeSimID() )
+    , pKnowledgeGroup_      ( &knowledgeGroup )
+    , pPopulationKnown_     ( &populationKnown )
+    , concentrations_       ()
+    , flows_                ()
+    , pArmy_                ( &populationKnown.GetArmy() )
+    , bIsRecon_             ( false )
+    , bReconAttributesValid_( false )
+    , bDecStateUpdated_     ( false )
+    , rDominationState_     ( 0. )
 {
     SendMsgCreation();
 }
@@ -51,14 +55,17 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population()
-    : DEC_Knowledge_ABC()
-    , nID_             ( 0 )
-    , pKnowledgeGroup_ ( 0 )
-    , pPopulationKnown_( 0 )
-    , concentrations_  ()
-    , flows_           ()
-    , pArmy_           ( 0 )
-    , bIsRecon_        ( false )
+    : DEC_Knowledge_ABC     ()
+    , nID_                  ( 0 )
+    , pKnowledgeGroup_      ( 0 )
+    , pPopulationKnown_     ( 0 )
+    , concentrations_       ()
+    , flows_                ()
+    , pArmy_                ( 0 )
+    , bIsRecon_             ( false )
+    , bReconAttributesValid_( false )
+    , bDecStateUpdated_     ( false )
+    , rDominationState_     ( 0. )
 {
 }
 
@@ -87,7 +94,9 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> const_cast< uint& >( nID_ )
          >> concentrations_
          >> flows_
-         >> bIsRecon_;
+         >> bIsRecon_
+         >> bReconAttributesValid_
+         >> rDominationState_;
 
     assert( pPopulationKnown_ );
     pArmy_ = &pPopulationKnown_->GetArmy();
@@ -105,7 +114,9 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const uint 
          << nID_
          << concentrations_
          << flows_
-         << bIsRecon_;
+         << bIsRecon_
+         << bReconAttributesValid_
+         << rDominationState_;
 }
 
 // =============================================================================
@@ -126,11 +137,31 @@ void DEC_Knowledge_Population::Prepare()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::UpdateReconAttributes
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::UpdateReconAttributes()
+{
+    if( !IsRecon() )
+        return;
+
+    assert( pPopulationKnown_ );
+
+    bReconAttributesValid_ = true;
+    if( rDominationState_ != pPopulationKnown_->GetDecision().GetDominationState() )
+    {
+        rDominationState_ = pPopulationKnown_->GetDecision().GetDominationState();
+        bDecStateUpdated_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::Update
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision&  collision )
+void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision& collision )
 {
+    UpdateReconAttributes();
     collision.PublishKnowledges( *this );
 }
 
@@ -158,6 +189,7 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision& 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationPerception& perception )
 {
+    UpdateReconAttributes();
     perception.PublishKnowledges( *this );
 }
 
@@ -198,6 +230,8 @@ void DEC_Knowledge_Population::UpdateRelevance()
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Population::Clean()
 {
+    bDecStateUpdated_ = false;
+
     for( IT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); )
     {
         DEC_Knowledge_PopulationConcentration* pKnowledge = it->second;
@@ -367,6 +401,16 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::UpdateOnNetwork() const
 {
+    if( bReconAttributesValid_ && bDecStateUpdated_ )
+    {
+        NET_ASN_MsgPopulationKnowledgeUpdate asnMsg;
+        asnMsg.GetAsnMsg().oid_connaissance         = nID_;
+        asnMsg.GetAsnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
+        asnMsg.GetAsnMsg().m.etat_dominationPresent = 1;
+        asnMsg.GetAsnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
+        asnMsg.Send();
+    }
+
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
 
@@ -381,6 +425,17 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
 void DEC_Knowledge_Population::SendStateToNewClient() const
 {
     SendMsgCreation();
+
+    if( bReconAttributesValid_ )
+    {
+        NET_ASN_MsgPopulationKnowledgeUpdate asnMsg;
+        asnMsg.GetAsnMsg().oid_connaissance         = nID_;
+        asnMsg.GetAsnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
+        asnMsg.GetAsnMsg().m.etat_dominationPresent = 1;
+        asnMsg.GetAsnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
+        asnMsg.Send();
+    }
+
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->SendStateToNewClient();
 

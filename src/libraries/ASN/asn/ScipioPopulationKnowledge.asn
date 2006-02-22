@@ -25,7 +25,8 @@ MsgPopulationKnowledgeCreation ::= SEQUENCE
 MsgPopulationKnowledgeUpdate ::= SEQUENCE
 {
     oid-connaissance      OID,
-    oid-groupe-possesseur OID -- Groupe de connaissance possedant la connaissance
+    oid-groupe-possesseur OID, -- Groupe de connaissance possedant la connaissance
+    etat-domination       Pourcentage OPTIONAL
 }
 
 MsgPopulationKnowledgeDestruction ::= SEQUENCE

@@ -460,6 +460,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DamageObject                                      , "DEC_ConnaissanceObjet_Degrader"                          );
 
     // Population knowledges accessors
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDominationState           < MIL_AgentPion >, "DEC_ConnaissancePopulation_Domination"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsRecon                      < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstReconnu"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsPerceivedByAgent                            , "DEC_ConnaissancePopulation_EstPercueParUnite"            );

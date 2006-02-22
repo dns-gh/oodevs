@@ -12,6 +12,26 @@
 #include "DEC_FunctionsTools.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetDominationState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgePopulationFunctions::GetDominationState( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( (float)pKnowledge->GetDominationState() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_KnowledgePopulationFunctions::IsRecon
 // Created: NLD 2005-01-26

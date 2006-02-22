@@ -281,7 +281,7 @@ void ObjectPanel::UpdateCamp( Object_ABC& object )
 void ObjectPanel::UpdateNBC( Object_ABC& object )
 {
     Object_NBC& obj = static_cast< Object_NBC& >( object );
-    display_->Group( "Nuage/Zone NBC" ).Display( "Agent NBC", App::GetApp().GetNBCName( obj.GetAgentNbcId() ) );
+    display_->Group( "Nuage/Zone NBC" ).Display( "Agent NBC:", App::GetApp().GetNBCName( obj.GetAgentNbcId() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,8 +62,8 @@ public:
     void Update ( const DEC_Knowledge_PopulationFlowPerception&          perception ); // Called by DEC_Knowledge_PopulationPerception
 
     void Update ( const DEC_Knowledge_PopulationCollision&  collision  );
-    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationFlow&          flow          );
-    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationConcentration& concentration );
+    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationFlow&          flow          ); // Called by DEC_Knowledge_PopulationCollision
+    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationConcentration& concentration ); // Called by DEC_Knowledge_PopulationCollision
 
     void UpdateRelevance();
 
@@ -83,9 +83,12 @@ public:
           MT_Float            GetDangerosity    ( const MIL_AgentPion&    target        ) const;
           bool                IsRecon           () const;
           bool                IsInZone          ( const TER_Localisation& loc           ) const;
+          MT_Float            GetDominationState() const;
+          
           MT_Vector2D         GetClosestPoint   ( const MT_Vector2D&      refPos        ) const;
           MT_Vector2D         GetSecuringPoint  ( const MIL_Agent_ABC&    securingAgent ) const;
           MT_Vector2D         GetSafetyPosition ( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
+
     //@}
 
     //! @name Network operations
@@ -103,8 +106,9 @@ private:
 
     //! @name Tools
     //@{
-    DEC_Knowledge_PopulationConcentration& GetKnowledge( const MIL_PopulationConcentration& concentration );
-    DEC_Knowledge_PopulationFlow&          GetKnowledge( const MIL_PopulationFlow&          flow          );
+    DEC_Knowledge_PopulationConcentration& GetKnowledge         ( const MIL_PopulationConcentration& concentration );
+    DEC_Knowledge_PopulationFlow&          GetKnowledge         ( const MIL_PopulationFlow&          flow          );
+    void                                   UpdateReconAttributes();
     //@}
 
 private:
@@ -127,6 +131,10 @@ private:
           T_FlowMap           flows_;
     const MIL_Army*           pArmy_;
           bool                bIsRecon_;
+
+          bool                bReconAttributesValid_;
+          MT_Float            rDominationState_;
+          bool                bDecStateUpdated_;
 };
 
 #include "DEC_Knowledge_Population.inl"

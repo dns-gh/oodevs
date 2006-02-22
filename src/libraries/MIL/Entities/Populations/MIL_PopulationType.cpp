@@ -234,6 +234,7 @@ void MIL_PopulationType::InitializeFireData( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
+    // Actions
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population                   >, "DEC_StopAction"       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population                   >, "DEC_PauseAction"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population                   >, "DEC_ReprendAction"    );
@@ -271,8 +272,11 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::ResetPionMaxSpeed, "DEC_Population_RalentissementPion_VitesseParDefaut" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetAttitude      , "DEC_Population_ChangerAttitude"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetAttitude      , "DEC_Population_Attitude"                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetAliveHumans   , "DEC_Population_Vivants"                             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetDeadHumans    , "DEC_Population_Morts"                               );
+
+    // Etats decisionnel
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::NotifyDominationStateChanged, "DEC_Population_ChangeEtatDomination" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetAliveHumans              , "DEC_Population_Vivants"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetDeadHumans               , "DEC_Population_Morts"                );
 } 
 
 // =============================================================================

@@ -15,6 +15,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
+#include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
@@ -337,4 +338,17 @@ void DEC_PopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_Population&
     
     call.GetParameter( 1 ).SetValue( eQueryValid );
     call.GetResult().SetValue( callerPopulation.GetArmy().IsAnEnemy( pObject->GetArmy() ) );
+}
+
+// =============================================================================
+// ETAT DECISIONNEL
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::NotifyDominationStateChanged
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::NotifyDominationStateChanged( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+{
+    callerPopulation.GetDecision().NotifyDominationStateChanged( call.GetParameter( 0 ).ToFloat() );
 }

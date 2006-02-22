@@ -16,6 +16,7 @@
 
 class MIL_Population;
 class MIL_PopulationMission_ABC;
+class NET_ASN_MsgPopulationUpdate;
 
 // =============================================================================
 // @class  DEC_PopulationDecision
@@ -32,10 +33,10 @@ public:
 
     //! @name CheckPoints
     //@{
-    /*BOOST_SERIALIZATION_SPLIT_MEMBER()
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
     
     void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;*/
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
     //! @name Init
@@ -46,15 +47,29 @@ public:
     //! @name Operations
     //@{
     void UpdateDecision();
-    void Reset         ();
+    void Clean         ();
 
     void StartMissionBehavior( MIL_PopulationMission_ABC& mission );
     void StopMissionBehavior ( MIL_PopulationMission_ABC& mission );
+    void Reset               ();
     //@}
 
     //! @name Accessors
     //@{
-    MIL_Population& GetPopulation() const;
+    MIL_Population& GetPopulation     () const;
+    MT_Float        GetDominationState() const;
+    bool            HasStateChanged   () const; // Etat decisionnel
+    //@}
+
+    //! @name Notifications
+    //@{
+    void NotifyDominationStateChanged( MT_Float rValue );
+    //@}
+
+    //! @name Network
+    //@{
+    void SendChangedState( NET_ASN_MsgPopulationUpdate& msg );
+    void SendFullState   ( NET_ASN_MsgPopulationUpdate& msg );
     //@}
 
 private:
@@ -73,6 +88,10 @@ private:
     DIA_FunctionCaller< MIL_Population > diaFunctionCaller_;
     DIA_Parameters                       defaultBehaviorParameters_;
     DIA_Parameters                       missionBehaviorParameters_;   
+
+    MT_Float                             rDominationState_;
+    MT_Float                             rLastDominationState_;
+    bool                                 bStateHasChanged_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Population

@@ -51,6 +51,9 @@ public:
     static void GetKnowledgeObjectDistance      ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     static void GetKnowledgeObjectClosestPoint  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     static void IsEnemy                         ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+
+    // Etat decisionnel
+    static void NotifyDominationStateChanged( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     //@}    
 };
 

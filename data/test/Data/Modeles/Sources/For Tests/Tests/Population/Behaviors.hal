@@ -5,9 +5,16 @@ max_activations     =   10;
 actuators = deplacement, ordre;
 
 default Default()
-{
-    
+{    
     behavior BEH_GererOrdreConduite(); 
+    
+    persistent float rDomination = 0;
+    
+    rDomination = rDomination + 0.01;
+    if( rDomination > 1 )
+        rDomination = 0;
+    
+    DEC_Population_ChangeEtatDomination( rDomination );
 }
 
 behavior BEH_Defaut( id nDummy )

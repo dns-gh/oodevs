@@ -30,7 +30,8 @@ MsgPopulationCreation ::= SEQUENCE
 
 MsgPopulationUpdate ::= SEQUENCE
 {
-    oid-population  OID
+    oid-population  OID,
+    etat-domination Pourcentage OPTIONAL
 }
 
 -------------------

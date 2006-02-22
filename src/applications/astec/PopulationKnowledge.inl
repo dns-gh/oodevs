@@ -18,3 +18,5 @@ const uint PopulationKnowledge::GetID() const
 {
     return nID_;
 }
+
+

@@ -45,6 +45,7 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     , bPrisonerUpdated_            ( true )
     , bSurrenderedUpdated_         ( true )
     , bRefugeeManagedUpdated_      ( true )
+    , bDeadUpdated_                ( true )
 {
 }
     
@@ -98,7 +99,8 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bPositionUpdated_
          >> bPrisonerUpdated_
          >> bSurrenderedUpdated_
-         >> bRefugeeManagedUpdated_;
+         >> bRefugeeManagedUpdated_
+         >> bDeadUpdated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +131,8 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bPositionUpdated_
          << bPrisonerUpdated_
          << bSurrenderedUpdated_
-         << bRefugeeManagedUpdated_;
+         << bRefugeeManagedUpdated_
+         << bDeadUpdated_;
 }
 
 // =============================================================================
@@ -148,6 +151,7 @@ void DEC_Knowledge_AgentDataDetection::Prepare()
     bPrisonerUpdated_       = false;
     bSurrenderedUpdated_    = false;
     bRefugeeManagedUpdated_ = false;
+    bDeadUpdated_           = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +208,10 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
 
     const bool bNewDead = data.IsDead();
     if( bDead_ != bNewDead )
-        bDead_ = bNewDead;  //$$$ NETWORK
+    {
+        bDead_        = bNewDead;  
+        bDeadUpdated_ = true;
+    }
     
     rAltitude_                    =  data.GetAltitude();
     pLastPosture_                 = &data.GetLastPosture();
@@ -275,6 +282,9 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( ASN1T_MsgUnitKnowledgeUpda
 
     asnMsg.m.refugie_pris_en_comptePresent = 1;
     asnMsg.refugie_pris_en_compte = bRefugeeManaged_;
+
+    asnMsg.m.mortPresent = 1;
+    asnMsg.mort          = bDead_;
 }
 
 // -----------------------------------------------------------------------------
@@ -319,5 +329,9 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( ASN1T_MsgUnitKnowledgeU
         asnMsg.refugie_pris_en_compte = bRefugeeManaged_;
     }
 
-    //$$$ bDead_
+    if( bDeadUpdated_ )
+    {
+        asnMsg.m.mortPresent = 1;
+        asnMsg.mort          = bDead_;
+    }
 }

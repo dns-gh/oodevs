@@ -51,9 +51,10 @@ PopulationKnowledge::~PopulationKnowledge()
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& /*asnMsg*/ )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
 {
-    // NOTHING
+    if( asnMsg.m.etat_dominationPresent ) 
+        nDomination_ = asnMsg.etat_domination;
 }
 
 // -----------------------------------------------------------------------------

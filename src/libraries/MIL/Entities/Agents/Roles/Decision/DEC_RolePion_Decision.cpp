@@ -24,11 +24,8 @@
 #include "Decision/DEC_ModelPion.h"
 #include "Decision/DEC_Tools.h"
 #include "CheckPoints/DIA_Serializer.h"
-
 #include "Network/NET_ASN_Messages.h"
-
 #include "MIL_AgentServer.h"
-
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
@@ -132,6 +129,7 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::load
 // Created: JVT 2005-04-01
@@ -156,8 +154,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
     file >> nPionTypeID;
           
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::FindPionType( nPionTypeID );
-    assert( pType );
-    
+    assert( pType );    
 
     diaFunctionCaller_.DIA_FunctionCaller< MIL_AgentPion >::DIA_FunctionCaller( *pPion_, pType->GetFunctionTable() );
 
@@ -171,8 +168,8 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
         
         std::string strName;
         file >> strName;
-        GetVariable( nDIANameIdx_      ).SetValue( strName );
-        GetVariable( nDIAMissionIdx_   ).SetValue( *(DIA_TypedObject*)0 );
+        GetVariable( nDIANameIdx_    ).SetValue( strName );
+        GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
         
         DEC_AutomateDecision* pDecision;
         file >> pDecision;

@@ -32,6 +32,7 @@ MsgUnitKnowledgeUpdate ::= SEQUENCE
     identification-level        EnumUnitIdentificationLevel    OPTIONAL,
     max-identification-level    EnumUnitIdentificationLevel    OPTIONAL,
     etat-op                     PourcentageLibre               OPTIONAL,
+    mort                        BOOLEAN                        OPTIONAL,
     position                    CoordUTM                       OPTIONAL,
     direction                   Direction                      OPTIONAL,
     speed                       Vitesse                        OPTIONAL,

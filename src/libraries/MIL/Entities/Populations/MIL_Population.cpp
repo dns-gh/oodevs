@@ -141,9 +141,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
-         >> bHasDoneMagicMove_;
-
-    pDecision_ = new DEC_PopulationDecision( *this );
+         >> bHasDoneMagicMove_
+         >> pDecision_;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +165,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
-         << bHasDoneMagicMove_;
+         << bHasDoneMagicMove_
+         << pDecision_;
 }
 
 // =============================================================================
@@ -303,6 +303,9 @@ void MIL_Population::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Population::Clean()
 {
+    assert( pDecision_ );
+    pDecision_->Clean();
+
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).Clean();
 
@@ -881,8 +884,11 @@ void MIL_Population::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Population::SendFullState() const
 {
+    assert( pDecision_ );
+
     NET_ASN_MsgPopulationUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_population = nID_;
+    asnMsg.GetAsnMsg().oid_population = nID_;   
+    pDecision_->SendFullState( asnMsg );
     asnMsg.Send();
 
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -902,6 +908,15 @@ void MIL_Population::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateNetwork()
 {
+    assert( pDecision_ );
+    if( pDecision_->HasStateChanged() )
+    {
+        NET_ASN_MsgPopulationUpdate asnMsg;
+        asnMsg.GetAsnMsg().oid_population = nID_;   
+        pDecision_->SendChangedState( asnMsg );
+        asnMsg.Send();
+    }
+
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         (**it).SendChangedState();
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )

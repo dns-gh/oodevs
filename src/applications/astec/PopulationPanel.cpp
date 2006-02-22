@@ -36,8 +36,9 @@ PopulationPanel::PopulationPanel( QWidget* pParent )
     display_->AddGroup( "Informations" )
                 .AddItem( "Nom:", true )
                 .AddItem( "Nombre de personnes vivantes:" )
-                .AddItem( "Morts:" );
-
+                .AddItem( "Morts:" )
+                .AddItem( "Domination:" );
+                
     pPartsListView_ = new QListView( this );
     pPartsListView_->addColumn( tr( "Morceau" ) );
     pPartsListView_->addColumn( tr( "Hommes vivants" ) );
@@ -93,6 +94,26 @@ void PopulationPanel::OnUpdate()
     
 }
 
+namespace
+{
+    // $$$$ AGE 2006-02-09: HIé
+    template< typename T >
+    QString IfSet( const T& value, const QString& message )
+    {
+        return value.IsSet() ? message : "";
+    }
+    template< typename T >
+    QString IfSet( const T& value, const std::string& message )
+    {
+        return value.IsSet() ? message.c_str() : "";
+    }
+    template< typename T >
+    QString IfSet( const T& value )
+    {
+        return value.IsSet() ? QString::number( value ) : "";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPanel::OnPopulationUpdated
 // Created: HME 2005-10-03
@@ -102,7 +123,8 @@ void PopulationPanel::OnPopulationUpdated( const Population& population )
     display_->Group( "Informations" )
                 .Display( "Nom:", population.GetName() )
                 .Display( "Nombre de personnes vivantes:", population.GetLivingHumans() )
-                .Display( "Morts:",  population.GetDeadHumans() );
+                .Display( "Morts:",  population.GetDeadHumans() )
+                .Display( "Domination:", IfSet( population.nDomination_, QString::number( population.nDomination_ ) + "%" ) ) ;
 
     if( pPopulation_ == &population )
     {

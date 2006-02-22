@@ -230,6 +230,7 @@ signatures
     V                                       A::DEC_ConnaissanceObjet_Degrader                         ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/, R /*facteur de degradation 0..1*/ );
     
     // Connaissance population
+    R                                       A::DEC_ConnaissancePopulation_Domination                  ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     V                                       A::DEC_ConnaissancePopulation_Reconnaitre                 ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissancePopulation_EstReconnu                  ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissancePopulation_EstPercueParUnite           ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );

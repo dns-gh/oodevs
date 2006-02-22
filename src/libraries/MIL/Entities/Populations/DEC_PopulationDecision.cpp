@@ -20,17 +20,16 @@
 #include "Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
 #include "Entities/RC/MIL_RC.h"
-
+#include "CheckPoints/DIA_Serializer.h"
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
-
 
 int  DEC_PopulationDecision::nDIAMissionIdx_          = 0;
 int  DEC_PopulationDecision::nDIANameIdx_             = 0;
 uint DEC_PopulationDecision::nMissionBehaviorDummyId_ = 0;
 uint DEC_PopulationDecision::nDefaultBehaviorDummyId_ = 0;
 
-//BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
+BOOST_CLASS_EXPORT_GUID( DEC_PopulationDecision, "DEC_PopulationDecision" )
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::InitializeDIA
@@ -52,6 +51,9 @@ DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population )
     : DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
     , pPopulation_             ( &population )
     , diaFunctionCaller_       ( population, population.GetType().GetFunctionTable() )
+    , rDominationState_        ( 0. )
+    , rLastDominationState_    ( 0. )
+    , bStateHasChanged_        ( true )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
 
@@ -86,6 +88,9 @@ DEC_PopulationDecision::DEC_PopulationDecision()
     : DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Population" ), "" )
     , pPopulation_             ( 0 )
     , diaFunctionCaller_       ( *(MIL_Population*)0, *(DIA_FunctionTable< MIL_Population >*)1 ) // $$$$ JVT : Eurkkk
+    , rDominationState_        ( 0. )
+    , rLastDominationState_    ( 0. )
+    , bStateHasChanged_        ( true )
 {
 }
 
@@ -105,7 +110,7 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
-/*
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::load
 // Created: JVT 2005-04-05
@@ -113,29 +118,19 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> pPopulation_
-         >> nForceRatioState_
-         >> nRulesOfEngagementState_
-         >> nCloseCombatState_
-         >> nOperationalState_;
+         >> rDominationState_
+         >> rLastDominationState_;
+   
+    const DEC_ModelPopulation& model = pPopulation_->GetType().GetModel();
     
-    assert( pPopulation_ );
-    
-    uint nID;
-    file >> nID;
-    
-    const MIL_PopulationType* pType = MIL_PopulationType::FindPopulationType( nID );
-    assert( pType );
-    diaFunctionCaller_.DIA_FunctionCaller< MIL_Population >::DIA_FunctionCaller( *pPopulation_, pType->GetFunctionTable() );
-
+    diaFunctionCaller_.DIA_FunctionCaller< MIL_Population >::DIA_FunctionCaller( *pPopulation_, pPopulation_->GetType().GetFunctionTable() );
     RegisterUserFunctionCaller( diaFunctionCaller_ );
-    
-    const DEC_ModelPopulation& model = pType->GetModel();
-    
+
     try
     {
         SetType ( model.GetDIAType() );
         CopyFrom( &model.GetDIAModel() );
-        
+        GetVariable( nDIANameIdx_    ).SetValue( pPopulation_->GetName() );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(DIA_TypedObject*)0 );
         DIA_Workspace::Instance().SetObjectName( *this, pPopulation_->GetName() ); // ????
 
@@ -146,14 +141,10 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
     }
-    
-    missionMrtBehaviorParameters_.SetOwnerShip( true );
-    missionMrtBehaviorParameters_.AddParam( new DIA_Variable_Object() );
-    missionMrtBehaviorParameters_.AddParam( new DIA_Variable_Id() );
 
-    missionConduiteBehaviorParameters_.SetOwnerShip( true );
-    missionConduiteBehaviorParameters_.AddParam( new DIA_Variable_Object () );
-    missionConduiteBehaviorParameters_.AddParam( new DIA_Variable_Id() );
+    missionBehaviorParameters_.SetOwnerShip( true );
+    missionBehaviorParameters_.AddParam( new DIA_Variable_Object() );
+    missionBehaviorParameters_.AddParam( new DIA_Variable_Id    () );
 
     defaultBehaviorParameters_.SetOwnerShip( true );
     defaultBehaviorParameters_.AddParam( new DIA_Variable_Id() );
@@ -169,16 +160,12 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) 
     assert( pPopulation_ );
     
     file << pPopulation_
-         << nForceRatioState_
-         << nRulesOfEngagementState_
-         << nCloseCombatState_
-         << nOperationalState_
-         << pPopulation_->GetType().GetID();
+         << rDominationState_
+         << rLastDominationState_;
 
     DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
     file << diaSerializer;
 }
-*/
 
 // =============================================================================
 // TOOLS
@@ -313,3 +300,29 @@ void DEC_PopulationDecision::Reset()
     assert( pMotivationTool_ );
     static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ).Reset();
 } 
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::SendFullState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::SendFullState( NET_ASN_MsgPopulationUpdate& msg )
+{
+    msg.GetAsnMsg().m.etat_dominationPresent = 1;
+    msg.GetAsnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
+    rLastDominationState_ = rDominationState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::SendChangedState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::SendChangedState( NET_ASN_MsgPopulationUpdate& msg )
+{
+    if( bStateHasChanged_ )
+        SendFullState( msg );
+}
+

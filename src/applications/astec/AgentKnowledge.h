@@ -86,6 +86,7 @@ private:
     OptionalValue< bool >                       bPrisonner_;
     OptionalValue< bool >                       bRefugies_;
     OptionalValue< uint >                       nRelevance_;
+    OptionalValue< bool >                       bDead_;
     OptionalValue< T_AutomatePerceptionMap >    automatePerceptionMap_;
 
 private:

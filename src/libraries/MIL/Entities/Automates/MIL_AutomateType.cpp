@@ -495,7 +495,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyRefugeeManagedStateChanged, "DEC_Automate_ChangeEtatPriseEnCompteRefugies" );
 
     // Populations
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsInZone< MIL_Automate >, "DEC_ConnaissancePopulation_EstDansZone" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDominationState< MIL_Automate >, "DEC_ConnaissancePopulation_Domination"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsInZone          < MIL_Automate >, "DEC_ConnaissancePopulation_EstDansZone" );
 }
 
 

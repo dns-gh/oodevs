@@ -185,8 +185,8 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 
     ChangePostureCompletionPercentage( 0. );
 
-    bPosturesHasChanged_          = true;
-    bPourcentageHasChanged_       = true;
+    bPosturesHasChanged_    = true;
+    bPourcentageHasChanged_ = true;
 }
 
 // =============================================================================

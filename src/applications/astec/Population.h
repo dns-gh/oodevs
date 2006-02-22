@@ -38,6 +38,7 @@ class AgentKnowledge;
 class Population : public Agent_ABC
 {
     friend class GLTool; // to avoid "get" on concentration/flow maps
+    friend class PopulationPanel;
 
 public:
 	typedef std::map< uint, PopulationConcentration* >  T_ConcentrationMap;
@@ -104,15 +105,17 @@ public:
     //@}
 
 private:
-	MIL_AgentID               nPopulationID_;
-	std::string               strName_;
+	MIL_AgentID           nPopulationID_;
+	std::string           strName_;
     const TypePopulation* pType_;
 	Team*                 pTeam_;
 
-    T_ConcentrationMap        concentrationMap_;
-	T_FlowMap                 flowMap_;
+    T_ConcentrationMap    concentrationMap_;
+	T_FlowMap             flowMap_;
 
-    T_AgentKnowledgeMap       agentKnowledges_;
+    T_AgentKnowledgeMap   agentKnowledges_;
+
+    OptionalValue< int >  nDomination_;
 
 private:
     static MIL_AgentID        nMaxId_;

@@ -12,6 +12,8 @@
 
 #include "PopulationPart_ABC.h"
 
+#include "OptionalValue.h"
+
 class Population;
 
 // =============================================================================
