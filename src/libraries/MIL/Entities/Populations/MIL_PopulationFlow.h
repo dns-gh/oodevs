@@ -67,7 +67,7 @@ public:
     virtual const TER_Localisation& GetLocation () const;
                   MT_Float          GetSpeed    () const;
 
-    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const;
+    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const;
     //@}
 
     //! @name Concentration management

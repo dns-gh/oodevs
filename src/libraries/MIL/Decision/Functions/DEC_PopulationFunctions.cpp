@@ -137,6 +137,24 @@ void DEC_PopulationFunctions::GetAttitude( DIA_Call_ABC& call, MIL_Population& c
     call.GetResult().SetValue( (int)callerPopulation.GetAttitude().GetID() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetAliveHumans
+// Created: SBO 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetAliveHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+{
+    call.GetResult().SetValue( (float)callerPopulation.GetAliveHumans() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetDeadHumans
+// Created: SBO 2006-02-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetDeadHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+{
+    call.GetResult().SetValue( (float)callerPopulation.GetDeadHumans() );
+}
+
 // =============================================================================
 // KNOWLEDGE AGENTS
 // =============================================================================

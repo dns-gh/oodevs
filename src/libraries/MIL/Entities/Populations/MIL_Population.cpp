@@ -534,7 +534,19 @@ MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Fl
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( agent );
     if( !pClosestElement )
         return MT_Vector2D();
-    return pClosestElement->GetSafetyPosition( agent, rMinDistance );
+    MT_Vector2D safetyPoint;
+    MT_Float rSeed = 0.0f;
+    int nIteration = 1;
+    while( rSeed < MT_PI )
+    {
+        safetyPoint = pClosestElement->GetSafetyPosition( agent, rMinDistance, rSeed );
+        // $$$$ SBO 2006-02-22: { 0; pi/4; -pi/4; pi/2; -pi/2; 3pi/4; -3pi/4; pi }
+        rSeed += ( nIteration % 2 ? nIteration : -nIteration ) * MT_PI / 4;
+        ++nIteration;
+        if( GetClosestPoint( safetyPoint ).Distance( safetyPoint ) >= rMinDistance )
+            return safetyPoint;
+    }
+    return safetyPoint;
 }
 
 // -----------------------------------------------------------------------------
@@ -548,6 +560,36 @@ const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
     if( !flows_.empty() )
         return flows_.front()->GetAttitude();
     return GetDefaultAttitude();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetAliveHumans
+// Created: SBO 2006-02-22
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetAliveHumans() const
+{
+    MT_Float rResult = 0.0f;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        rResult += (**itConcentration).GetNbrAliveHumans();
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        rResult += (**itFlow).GetNbrAliveHumans();
+    return rResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDeadHumans
+// Created: SBO 2006-02-22
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetDeadHumans() const
+{
+    MT_Float rResult = 0.0f;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        rResult += (**itConcentration).GetNbrDeadHumans();
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        rResult += (**itFlow).GetNbrDeadHumans();
+    return rResult;
 }
 
 // =============================================================================

@@ -18,6 +18,7 @@ behavior BEH_Defaut( id nDummy )
         
         DEC_Trace( "aelkruzer" );
         DEC_Debug( "Attitude : " + EnumToString( DEC_Population_Attitude(), E_AttitudePopulation ) );
+        DEC_Debug( "Humans: " + FloatToString( DEC_Population_Vivants() ) + " / " + FloatToString( DEC_Population_Morts() ) );
         
         if( actionFire != 0 )
         {

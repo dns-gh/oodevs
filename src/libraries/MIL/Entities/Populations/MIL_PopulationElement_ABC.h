@@ -93,7 +93,7 @@ public:
 
     virtual const TER_Localisation& GetLocation      () const = 0;
     virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
-    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const = 0;
+    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const = 0;
     //@}
 
     //! @name Pion effects

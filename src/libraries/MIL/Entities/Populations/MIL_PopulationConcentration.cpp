@@ -225,10 +225,10 @@ void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow 
 // Name: MIL_PopulationConcentration::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RolePion_Location >().GetPosition();
-    MT_Vector2D evadeDirection = ( agentPosition - position_).Normalize();
+    MT_Vector2D evadeDirection = ( agentPosition - position_ ).Normalize().Rotate( rSeed );
 
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetDirDanger();

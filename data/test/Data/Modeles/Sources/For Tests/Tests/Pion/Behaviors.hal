@@ -18,7 +18,19 @@ default Default()
         
     T_ListeConnaissancesPopulation popus = DEC_Connaissances_CollisionsPopulations();
     if( DIA_Size( popus ) > 0 )
+    {
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
+        DEC_Debug( "Points d'esquive à 500m... cherchez les croix" );
+
+        T_ListePoints points = DEC_Geometrie_CreerListePoints();
+        E_ValiditeRequete   nValidite;
+        with( p in popus )
+        {
+            T_Point point = DEC_Geometrie_CalculerPositionSureteAvecPopulation( p, 500, nValidite );
+            DEC_ListePoints_PushBack( points, point );
+        }
+        DEC_DebugAffichePoints( points );
+    }
              
 
     E_ValiditeRequete   nValidite;

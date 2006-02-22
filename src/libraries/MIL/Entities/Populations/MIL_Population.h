@@ -67,6 +67,8 @@ public:
     const DEC_PopulationKnowledge&    GetKnowledge         () const;
           bool                        IsDead               () const;
           bool                        HasDoneMagicMove     () const;
+          MT_Float                    GetAliveHumans       () const;
+          MT_Float                    GetDeadHumans        () const;
     //@}
 
     //! @name Geometry

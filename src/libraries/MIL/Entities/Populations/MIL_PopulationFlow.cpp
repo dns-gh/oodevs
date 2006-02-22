@@ -404,13 +404,23 @@ void MIL_PopulationFlow::SendRC( const MIL_RC& rc ) const
 // Name: MIL_PopulationFlow::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float /*rSeed*/ ) const
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RolePion_Location >().GetPosition();
     MT_Vector2D nearestPointOnFlow;
     GetLocation().ComputeNearestPoint( agentPosition, nearestPointOnFlow );
 
-    MT_Vector2D evadeDirection = ( agentPosition - nearestPointOnFlow).Normalize();
+    // find flow segment containing nearestPointOnFlow
+    CIT_PointList itStart = flowShape_.begin();
+    CIT_PointList itEnd   = itStart;
+    ++itEnd;
+    for( ; itEnd != flowShape_.end(); ++itStart, ++itEnd )
+        if( MT_Line( *itStart, *itEnd ).IsInside( nearestPointOnFlow, 10.0f ) ) // $$$$ SBO 2006-02-22: epsilon should be 0
+            break;
+    if( itEnd == flowShape_.end() ) // $$$$ SBO 2006-02-22: should not happen
+        return MT_Vector2D();
+
+    MT_Vector2D evadeDirection = ( *itEnd - *itStart ).Normalize().Rotate( MT_PI / 2 );
 
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetDirDanger();
