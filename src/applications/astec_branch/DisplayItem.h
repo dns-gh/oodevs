@@ -13,6 +13,7 @@
 #include "Displayer_ABC.h"
 class QLabel;
 class Agent;
+class DotationType;
 
 // =============================================================================
 /** @class  DisplayItem
@@ -23,6 +24,7 @@ class Agent;
 class DisplayItem : public Displayer_ABC
                   , public Caller< bool >
                   , public Caller< Agent >
+                  , public Caller< DotationType >
 {
 
 public:
@@ -47,6 +49,7 @@ private:
     virtual void EndDisplay();
     virtual void Call( const bool& value );
     virtual void Call( const Agent& value );
+    virtual void Call( const DotationType& value );
     //@}
 
 private:

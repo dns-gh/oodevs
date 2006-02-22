@@ -81,7 +81,7 @@ void PopulationPanel::NotifySelected( const Population* popu )
 void PopulationPanel::DisplayParts( const Population& population )
 {
     Iterator< const PopulationPart_ABC& > it = population.CreateIterator();
-    ValuedListItem* item = pPartsListView_->Display( it, pPartsListView_->firstChild() );
+    ValuedListItem* item = pPartsListView_->Display( it, pPartsListView_, (ValuedListItem*)pPartsListView_->firstChild() );
     pPartsListView_->DeleteTail( item );
 }
 

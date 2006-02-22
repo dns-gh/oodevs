@@ -100,21 +100,3 @@ void Displayer::Clear()
     for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
         it->second->Clear();
 }
-
-// -----------------------------------------------------------------------------
-// Name: Displayer::YesNo
-// Created: AGE 2006-02-09
-// -----------------------------------------------------------------------------
-QString Displayer::YesNo( bool value )
-{
-    return value ? qApp->tr( "Oui" ) : qApp->tr( "Non" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Displayer::Id
-// Created: AGE 2006-02-09
-// -----------------------------------------------------------------------------
-QString Displayer::Id( unsigned int value )
-{
-    return value ? QString::number( value ) : "-";
-}

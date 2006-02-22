@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const Displayer_ABC& displayer ) const;
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:

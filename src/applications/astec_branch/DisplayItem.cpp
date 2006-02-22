@@ -9,8 +9,9 @@
 
 #include "astec_pch.h"
 #include "DisplayItem.h"
-#include <qlabel.h>
 #include "Agent.h"
+#include "DotationType.h"
+#include <qlabel.h>
 
 // -----------------------------------------------------------------------------
 // Name: DisplayItem constructor
@@ -92,4 +93,13 @@ void DisplayItem::Call( const Agent& value )
     AddToDisplay( QString( " [" ) );
     AddToDisplay( QString::number( value.GetId() ) );
     AddToDisplay( QString( "]" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayItem::Call
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayItem::Call( const DotationType& value )
+{
+    AddToDisplay( QString( value.GetCategory().c_str() ) );
 }

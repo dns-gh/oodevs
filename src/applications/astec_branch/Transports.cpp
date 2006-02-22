@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Transports.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Transports constructor
@@ -56,7 +57,7 @@ void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: Transports::Display
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void Transports::Display( const Displayer_ABC& displayer ) const
+void Transports::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Pions Transportés" ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
 }

@@ -37,12 +37,6 @@ public:
     virtual DisplayGroup& Group( const char* name );
     //@}
 
-    //! @name Helpers
-    //@{
-    static QString YesNo( bool );
-    static QString Id( unsigned int );
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

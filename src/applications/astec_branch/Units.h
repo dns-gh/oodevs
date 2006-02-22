@@ -38,6 +38,8 @@ public:
     static const Unit degrees;
     static const Unit percentage;
     static const Unit metersPerSecond;
+    static const Unit vehiclesPerHour;
+    static const Unit tons;
 };
 
 template< typename T >

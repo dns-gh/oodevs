@@ -133,5 +133,5 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
                 .Display( "TC2:",                     GetTC2() ) 
                 .Display( "Supérieur maintenance:",   GetMaintenance() )
                 .Display( "Supérieur santé:",         GetMedical() )
-                .Display( "Supérieurravitaillement:", GetSupply() );
+                .Display( "Supérieur ravitaillement:", GetSupply() );
 }

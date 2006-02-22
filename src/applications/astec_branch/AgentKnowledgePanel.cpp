@@ -32,6 +32,7 @@
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Tools.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
@@ -238,26 +239,25 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
         return;
 
     display_->Group( "Détails" )
-                .Display( "Id:", Displayer::Id(  k.GetId() ) )
-                .Display( "Agent associé:", Displayer::Id( k.GetRealAgent().GetId() ) )
-                .Display( "Position:", IfSet( k.strPosition_, k.strPosition_ ) )
-                .Display( "Direction:", IfSet( k.nDirection_ ) )
-                .Display( "Vitesse:", IfSet( k.nSpeed_ ) )
-                .Display( "Etat ops.:", IfSet( k.nEtatOps_ ) )
-                .Display( "Niveau de perception:", IfSet( k.nCurrentPerceptionLevel_, Tools::ToString( k.nCurrentPerceptionLevel_ ) ) )
-                .Display( "Niveau max de perception:", IfSet( k.nCurrentPerceptionLevel_, Tools::ToString( k.nMaxPerceptionLevel_ ) ) )
+                .Display( "Id:", k.GetId() )
+                .Display( "Agent associé:", k.GetRealAgent() )
+                .Display( "Position:", k.strPosition_ )
+                .Display( "Direction:", k.nDirection_ * Units::degrees )
+                .Display( "Vitesse:", k.nSpeed_ * Units::metersPerSecond )
+                .Display( "Etat ops.:", k.nEtatOps_ )
+                .Display( "Niveau de perception:", k.nCurrentPerceptionLevel_  )
+                .Display( "Niveau max de perception:", k.nMaxPerceptionLevel_ )
 //                .Display( "Camp:", IfSet( k.nTeam_, App::GetApp().GetAgentManager().FindTeam( k.nTeam_)->GetName() ) )
-                .Display( "Niveau:", IfSet( k.nLevel_, ENT_Tr::ConvertFromNatureLevel( k.nLevel_ ) ) )
-                .Display( "Arme:", IfSet( k.nWeapon_, ENT_Tr::ConvertFromUnitNatureWeapon( k.nWeapon_ ) ) )
-                .Display( "Spécialisation:", IfSet( k.nSpecialization_, ENT_Tr::ConvertFromUnitNatureSpecialization( k.nSpecialization_ ) ) )
-                .Display( "Qualification:", IfSet( k.nQualifier_, ENT_Tr::ConvertFromUnitNatureQualifier( k.nQualifier_ ) ) )
-                .Display( "Catégorie:", IfSet( k.nCategory_, ENT_Tr::ConvertFromUnitNatureCategory( k.nCategory_ ) ) )
-                .Display( "Mobilité:", IfSet( k.nMobility_, ENT_Tr::ConvertFromUnitNatureMobility( k.nMobility_ ) ) )
-                .Display( "Capacité mission:", IfSet( k.nCapacity_, ENT_Tr::ConvertFromUnitCapaciteMission( k.nCapacity_ ) ) )
-                .Display( "Rendu:", IfSet( k.bSurrendered_, Displayer::YesNo( k.bSurrendered_ ) ) )
-                .Display( "Fait prisonnier:", IfSet( k.bPrisonner_, Displayer::YesNo( k.bPrisonner_ ) ) )
-                .Display( "Réfugiés pris en compte:", IfSet( k.bRefugies_, Displayer::YesNo( k.bRefugies_ ) ) )
-                .Display( "PC:", IfSet( k.bIsPC_, Displayer::YesNo( k.bIsPC_ ) ) )
-                .Display( "Pertinence:", IfSet( k.nRelevance_ ) );
-
+                .Display( "Niveau:", k.nLevel_ )
+                .Display( "Arme:", k.nWeapon_ )
+                .Display( "Spécialisation:", k.nSpecialization_ )
+                .Display( "Qualification:", k.nQualifier_  )
+                .Display( "Catégorie:", k.nCategory_ )
+                .Display( "Mobilité:", k.nMobility_  )
+                .Display( "Capacité mission:", k.nCapacity_ )
+                .Display( "Rendu:", k.bSurrendered_ )
+                .Display( "Fait prisonnier:", k.bPrisonner_ )
+                .Display( "Réfugiés pris en compte:", k.bRefugies_ )
+                .Display( "PC:", k.bIsPC_ )
+                .Display( "Pertinence:", k.nRelevance_ );
 }

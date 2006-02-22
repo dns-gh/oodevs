@@ -80,7 +80,6 @@ AgentResourcesPanel::AgentResourcesPanel( InfoPanel* pParent, Controller& contro
     actionController.Register( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel destructor
 // Created: APE 2004-03-10

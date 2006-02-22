@@ -35,6 +35,7 @@
 #include "Displayer.h"
 #include "DisplayGroup.h"
 #include "DisplayItem.h"
+#include "Units.h"
 
 #include "App.h"
 #include "World.h"
@@ -177,16 +178,17 @@ void ObjectPanel::NotifyUpdated( const Object_ABC& object )
     App::GetApp().GetWorld().SimToMosMgrsCoord( object.center_, strPos );
 
     display_->Group( "Informations" )
-                .Display( "Id:", Displayer::Id( object.nId_ ) )
+                .Display( "Id:", object.nId_ )
                 .Display( "Nom:", object.strName_ )
                 .Display( "Type:", object.type_.GetName() )
                 .Display( "Position:", strPos )
-                .Display( "Dotation construction:", 
-                    QString::number( object.nDotationConstruction_ ) + " " +
-                    ( object.construction_ ? object.construction_->GetCategory().c_str() : "" ) )
-                .Display( "Dotation valorisation:", 
-                    QString::number( object.nDotationValorization_ ) + " " +
-                    ( object.valorization_ ? object.valorization_->GetCategory().c_str() : "" ) );
+                .Item( "Dotation construction:" )
+                    .Start( object.nDotationConstruction_ )
+                    .Add( " " ).Add( object.construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
+    display_->Group( "Informations" )
+                .Item( "Dotation valorisation:" )
+                    .Start( object.nDotationValorization_ )
+                    .Add( object.valorization_ ).End();
 }
 
 // $$$$ AGE 2006-02-17: Factor
@@ -222,7 +224,7 @@ void ObjectPanel::NotifyUpdated( const CampAttributes& a )
     if( ! ShouldUpdate( a ) )
         return;
 
-    display_->Group( "Camp" ).Display( "TC2:", Displayer::Id( a.tc2_ ? a.tc2_->GetId() : 0 ) );
+    display_->Group( "Camp" ).Display( "TC2:", a.tc2_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,10 +237,10 @@ void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes& a )
         return;
 
     display_->Group( "Site de franchissement" )
-                .Display( "Largeur:", QString::number( a.width_ ) + " m" )
-                .Display( "Profondeur:", QString::number( a.depth_ ) + " m" )
-                .Display( "Vitesse courant:", QString::number( a.speed_ ) + " m/s" )
-                .Display( "Berges à aménager:", Displayer::YesNo( a.needsConstruction_ ) );
+                .Display( "Largeur:", a.width_ * Units::meters )
+                .Display( "Profondeur:", a.depth_ * Units::meters )
+                .Display( "Vitesse courant:", a.speed_ * Units::metersPerSecond )
+                .Display( "Berges à aménager:", a.needsConstruction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,11 +253,11 @@ void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes& a )
         return;
 
     display_->Group( "Itinéraire Logistique" )
-                .Display( "Equipé:", Displayer::YesNo( a.bLogRouteEquipped_ ) )
-                .Display( "Débit:", QString::number( a.nLogRouteFlow_ ) + " veh/h" )
-                .Display( "Largeur:", QString::number( a.nLogRouteWidth_ ) + " m" )
-                .Display( "Longueur:", QString::number( a.nLogRouteLength_ ) + " m" )
-                .Display( "Poids supporté:", QString::number( a.nLogRouteMaxWeight_ ) + " t" );
+                .Display( "Equipé:", a.bLogRouteEquipped_ )
+                .Display( "Débit:", a.nLogRouteFlow_ * Units::vehiclesPerHour )
+                .Display( "Largeur:", a.nLogRouteWidth_ * Units::meters )
+                .Display( "Longueur:", a.nLogRouteLength_ * Units::meters )
+                .Display( "Poids supporté:", a.nLogRouteMaxWeight_ * Units::tons );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +270,7 @@ void ObjectPanel::NotifyUpdated( const NBCAttributes& a )
         return;
 
     display_->Group( "Nuage/Zone NBC" )
-        .Display( "Agent NBC:",Displayer::Id( a.nbcId_ ) ); // $$$$ AGE 2006-02-17: resolve
+        .Display( "Agent NBC:", a.nbcId_ ); // $$$$ AGE 2006-02-17: resolve
 }
 
 // -----------------------------------------------------------------------------
@@ -277,15 +279,7 @@ void ObjectPanel::NotifyUpdated( const NBCAttributes& a )
 // -----------------------------------------------------------------------------
 void ObjectPanel::NotifyUpdated( const RotaAttributes& a )
 {
-    const std::vector< unsigned long >& agents = a.agents_;
-    std::stringstream ss;
-    for( uint i = 0; i < agents.size(); ++i ) {
-        if( i > 0 )
-            ss << ", ";
-        ss << agents[ i ]; // App::GetApp().GetNBCName( agents[ i ] ); // $$$$ AGE 2006-02-17: 
-    }
-
     display_->Group( "ROTA" )
                 .Display( "Danger:", a.danger_ )
-                .Display( "Agents NBC:", ss.str() );
+                .Display( "Agents NBC:", a.agents_ );
 }

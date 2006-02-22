@@ -24,3 +24,5 @@ const Unit Units::meters( "m" );
 const Unit Units::degrees( "°" );
 const Unit Units::percentage( "%" );
 const Unit Units::metersPerSecond( "m/s" );
+const Unit Units::vehiclesPerHour( "veh/h" );
+const Unit Units::tons( "t" );

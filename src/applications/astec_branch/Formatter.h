@@ -12,6 +12,7 @@
 
 #include <qstring.h>
 #include "Displayer_ABC.h"
+#include "Tools.h"
 
 // =============================================================================
 /** @class  Formatter
@@ -111,6 +112,9 @@ struct Formatter< const T* >
     }
 };
 
+template< typename T >
+struct Formatter< T* > : public Formatter< const T* > {};
+
 // =============================================================================
 /** @class  Formatter
     @brief  OptionalValue
@@ -206,6 +210,70 @@ struct Formatter< E_DisponibiliteAuTir >
 {
     void operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const {
         displayer.AddToDisplay( ENT_Tr::ConvertFromDisponibiliteAuTir( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_PerceptionResult >
+{
+    void operator()( const E_PerceptionResult& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( Tools::ToString( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_NatureLevel >
+{
+    void operator()( const E_NatureLevel& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromNatureLevel( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_UnitNatureWeapon >
+{
+    void operator()( const E_UnitNatureWeapon& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureWeapon( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_UnitNatureSpecialization >
+{
+    void operator()( const E_UnitNatureSpecialization& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureSpecialization( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_UnitNatureQualifier >
+{
+    void operator()( const E_UnitNatureQualifier& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureQualifier( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_UnitNatureCategory >
+{
+    void operator()( const E_UnitNatureCategory& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureCategory( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_UnitNatureMobility >
+{
+    void operator()( const E_UnitNatureMobility& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureMobility( e ) );
+    }
+};
+
+template< >
+struct Formatter< E_UnitCapaciteMission >
+{
+    void operator()( const E_UnitCapaciteMission& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitCapaciteMission( e ) );
     }
 };
 
