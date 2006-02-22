@@ -22,11 +22,8 @@
 // -----------------------------------------------------------------------------
 DEC_Population_PathSection::DEC_Population_PathSection( DEC_Population_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint )
     : DEC_PathSection_ABC( path, vStartPoint, vEndPoint )
-    , rule_              ( *new DEC_Population_PathfinderRule() )
+    , rule_              ( *new DEC_Population_PathfinderRule( path ) )
 {
-    const DEC_Population_Path::T_PopulationPathChannelerVector& channelers = path.GetChannelers();
-    for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
-        rule_.AddChanneler( *it );
 }
 
 // -----------------------------------------------------------------------------

@@ -22,6 +22,8 @@
 #include "pathfind/TerrainRule_ABC.h"
 #include "DEC_Population_Path_Channeler.h"
 
+class DEC_Population_Path;
+
 // =============================================================================
 // Created: AGE 2005-03-08
 // =============================================================================
@@ -31,13 +33,8 @@ class DEC_Population_PathfinderRule : public TerrainRule_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Population_PathfinderRule();
+             DEC_Population_PathfinderRule( const DEC_Population_Path& path );
     virtual ~DEC_Population_PathfinderRule();
-    //@}
-
-    //! @name Cost Configuration
-    //@{
-    void AddChanneler( const DEC_Population_Path_Channeler& channeler );
     //@}
 
 private:

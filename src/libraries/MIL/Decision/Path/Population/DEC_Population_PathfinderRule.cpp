@@ -17,16 +17,21 @@
 // *****************************************************************************
 
 #include "MIL_pch.h"
+
 #include "DEC_Population_PathfinderRule.h"
+
 #include "DEC_Population_Path.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_Population_PathfinderRule::DEC_Population_PathfinderRule()
+DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Population_Path& path ) 
     : TerrainRule_ABC()
 {
+    const DEC_Population_Path::T_PopulationPathChannelerVector& channelers = path.GetChannelers();
+    for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
+        channelers_.push_back( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,14 +43,9 @@ DEC_Population_PathfinderRule::~DEC_Population_PathfinderRule()
     //NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Population_PathfinderRule::AddChanneler
-// Created: SBO 2006-01-16
-// -----------------------------------------------------------------------------
-void DEC_Population_PathfinderRule::AddChanneler( const DEC_Population_Path_Channeler& channeler )
-{
-    channelers_.push_back( channeler );
-}
+// =============================================================================
+// PATH FIND
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule::EvaluateCost
