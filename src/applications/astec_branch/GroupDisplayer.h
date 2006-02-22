@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    GroupDisplayer& AddItem( const char* name, bool bold = false );
+    GroupDisplayer& AddLabel( const char* name, bool bold = false );
     void Clear();
     //@}
 

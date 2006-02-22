@@ -32,10 +32,10 @@ GroupDisplayer::~GroupDisplayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GroupDisplayer::AddItem
+// Name: GroupDisplayer::AddLabel
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-GroupDisplayer& GroupDisplayer::AddItem( const char* name, bool bold )
+GroupDisplayer& GroupDisplayer::AddLabel( const char* name, bool bold )
 {
     LabelDisplayer*& item = items_[ std::string( name ) ];
     if( item )

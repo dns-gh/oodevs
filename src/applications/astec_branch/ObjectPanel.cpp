@@ -53,10 +53,10 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )
-                .AddItem( "Id:" )
-                .AddItem( "Nom:" )
-                .AddItem( "Type:" )
-                .AddItem( "Position:" );
+                .AddLabel( "Id:" )
+                .AddLabel( "Nom:" )
+                .AddLabel( "Type:" )
+                .AddLabel( "Position:" );
 
     GroupDisplayer* group = (GroupDisplayer*)&display_->Group( "Informations" );
     new QLabel( "Construction:", group );
@@ -69,31 +69,31 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
     pIsUnderPrepCheckBox_ = new QCheckBox( group );
 
     display_->Group( "Informations" )
-                .AddItem( "Dotation construction:" )
-                .AddItem( "Dotation valorisation:" );
+                .AddLabel( "Dotation construction:" )
+                .AddLabel( "Dotation valorisation:" );
 
     display_->AddGroup( "Site de franchissement" )
-                .AddItem( "Largeur:" )
-                .AddItem( "Profondeur:" )
-                .AddItem( "Vitesse courant:" )
-                .AddItem( "Berges à aménager:" );
+                .AddLabel( "Largeur:" )
+                .AddLabel( "Profondeur:" )
+                .AddLabel( "Vitesse courant:" )
+                .AddLabel( "Berges à aménager:" );
 
     display_->AddGroup( "Camp" )
-                .AddItem( "TC2:" );
+                .AddLabel( "TC2:" );
 
     display_->AddGroup( "Nuage/Zone NBC" )
-                .AddItem( "Agent NBC:" );
+                .AddLabel( "Agent NBC:" );
 
     display_->AddGroup( "ROTA" )
-                .AddItem( "Danger:" )
-                .AddItem( "Agents NBC:" );
+                .AddLabel( "Danger:" )
+                .AddLabel( "Agents NBC:" );
 
     display_->AddGroup( "Itinéraire Logistique" )
-                .AddItem( "Equipé:" )
-                .AddItem( "Débit:" )
-                .AddItem( "Largeur:" )
-                .AddItem( "Longueur:" )
-                .AddItem( "Poids supporté:" );
+                .AddLabel( "Equipé:" )
+                .AddLabel( "Débit:" )
+                .AddLabel( "Largeur:" )
+                .AddLabel( "Longueur:" )
+                .AddLabel( "Poids supporté:" );
 
     // $$$$ SBO 2005-09-23: QSpacerItem is inserted as first element in layout...
     //layout()->addItem( new QSpacerItem( 100, 50, QSizePolicy::Minimum, QSizePolicy::Expanding ) );

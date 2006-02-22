@@ -31,9 +31,9 @@ PopulationPanel::PopulationPanel( InfoPanel* pParent, Controller& controller, Ac
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )
-                .AddItem( "Nom:", true )
-                .AddItem( "Nombre de personnes vivantes:" )
-                .AddItem( "Morts:" );
+                .AddLabel( "Nom:", true )
+                .AddLabel( "Nombre de personnes vivantes:" )
+                .AddLabel( "Morts:" );
 
     pPartsListView_ = new ListView< PopulationPanel >( this, *this );
     pPartsListView_->addColumn( tr( "Morceau" ) );

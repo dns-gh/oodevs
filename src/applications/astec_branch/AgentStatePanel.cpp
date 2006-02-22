@@ -37,53 +37,53 @@ AgentStatePanel::AgentStatePanel( InfoPanel* info, Controller& controller, Actio
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Info" )
-                .AddItem( "Nom:", true )
-                .AddItem( "Etat Opérationnel:" )
-                .AddItem( "Mort:" )
-                .AddItem( "Neutralisé:" )
-                .AddItem( "Vitesse:" )
-                .AddItem( "Direction:" )
-                .AddItem( "Altitude:" )
-                .AddItem( "Troupes:" )
-                .AddItem( "Transporteurs d'hommes disponibles:" );
+                .AddLabel( "Nom:", true )
+                .AddLabel( "Etat Opérationnel:" )
+                .AddLabel( "Mort:" )
+                .AddLabel( "Neutralisé:" )
+                .AddLabel( "Vitesse:" )
+                .AddLabel( "Direction:" )
+                .AddLabel( "Altitude:" )
+                .AddLabel( "Troupes:" )
+                .AddLabel( "Transporteurs d'hommes disponibles:" );
     display_->AddGroup( "NBC" )
-                .AddItem( "Tenue NBC:" )
-                .AddItem( "Agents contaminants:" )
-                .AddItem( "Contamination:" );
+                .AddLabel( "Tenue NBC:" )
+                .AddLabel( "Agents contaminants:" )
+                .AddLabel( "Contamination:" );
     display_->AddGroup( "Postures" )
-                .AddItem( "Ancienne posture:" )
-                .AddItem( "Nouvelle posture:" );
+                .AddLabel( "Ancienne posture:" )
+                .AddLabel( "Nouvelle posture:" );
     display_->AddGroup( "Communications" )
-                .AddItem( "Brouillé:" )
-                .AddItem( "Silence radio:" );
+                .AddLabel( "Brouillé:" )
+                .AddLabel( "Silence radio:" );
     display_->AddGroup( "Facteurs humains" )
-                .AddItem( "Experience:" )
-                .AddItem( "Moral:" )
-                .AddItem( "Fatigue:" );
+                .AddLabel( "Experience:" )
+                .AddLabel( "Moral:" )
+                .AddLabel( "Fatigue:" );
     display_->AddGroup( "Etat décisionnel" )
-                .AddItem( "Etat opérationnel:" )
-                .AddItem( "RoE:" )
-                .AddItem( "RoE Population:" )
-                .AddItem( "Rapport de force:" )
-                .AddItem( "Disponibilité au tir indirect:" )
-                .AddItem( "Contact combat:" );
+                .AddLabel( "Etat opérationnel:" )
+                .AddLabel( "RoE:" )
+                .AddLabel( "RoE Population:" )
+                .AddLabel( "Rapport de force:" )
+                .AddLabel( "Disponibilité au tir indirect:" )
+                .AddLabel( "Contact combat:" );
     display_->AddGroup( "Renforts" )
-                .AddItem( "Renforce:" )
-                .AddItem( "Est renforcé par:" );
+                .AddLabel( "Renforce:" )
+                .AddLabel( "Est renforcé par:" );
 
     display_->AddGroup( "Pions Transportés" )
-                .AddItem( "" );
+                .AddLabel( "" );
 
     display_->AddGroup( "Liens logistiques" )
-                .AddItem( "TC2:" )
-                .AddItem( "Supérieur maintenance:" )
-                .AddItem( "Supérieur santé:" )
-                .AddItem( "Supérieur ravitaillement:" );
+                .AddLabel( "TC2:" )
+                .AddLabel( "Supérieur maintenance:" )
+                .AddLabel( "Supérieur santé:" )
+                .AddLabel( "Supérieur ravitaillement:" );
 
     display_->AddGroup( "Etat martial" )
-                .AddItem( "Fait prisonnier:" )
-                .AddItem( "Rendu:" )
-                .AddItem( "Réfugiés pris en compte:" );
+                .AddLabel( "Fait prisonnier:" )
+                .AddLabel( "Rendu:" )
+                .AddLabel( "Réfugiés pris en compte:" );
 
     controller.Register( *this );
     actionController.Register( *this );
