@@ -277,6 +277,14 @@ struct Formatter< E_UnitCapaciteMission >
     }
 };
 
+template< >
+struct Formatter< E_TroopHealthState >
+{
+    void operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( Tools::ToString( e ) );
+    }
+};
+
 // =============================================================================
 /** @class  Formatter
     @brief  Containers

@@ -7,33 +7,45 @@
 //
 // *****************************************************************************
 
-#ifndef __LabelDisplayer_h_
-#define __LabelDisplayer_h_
+#ifndef __ListItemDisplayer_h_
+#define __ListItemDisplayer_h_
 
 #include "BaseDisplayer.h"
-class QLabel;
+class QListViewItem;
 
 // =============================================================================
-/** @class  LabelDisplayer
-    @brief  LabelDisplayer
+/** @class  ListItemDisplayer
+    @brief  ListItemDisplayer
 */
-// Created: AGE 2006-02-09
+// Created: AGE 2006-02-22
 // =============================================================================
-class LabelDisplayer : public BaseDisplayer
+class ListItemDisplayer : public BaseDisplayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LabelDisplayer( QWidget* parent, const char* name, bool bold );
-    virtual ~LabelDisplayer();
+             ListItemDisplayer();
+    virtual ~ListItemDisplayer();
+    //@}
+
+    //! @name Operations
+    //@{
+    ListItemDisplayer& AddColumn( const char* column );
+
+    Displayer_ABC& operator()( QListViewItem* item );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    LabelDisplayer( const LabelDisplayer& );            //!< Copy constructor
-    LabelDisplayer& operator=( const LabelDisplayer& ); //!< Assignement operator
+    ListItemDisplayer( const ListItemDisplayer& );            //!< Copy constructor
+    ListItemDisplayer& operator=( const ListItemDisplayer& ); //!< Assignement operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Columns;
     //@}
 
     //! @name Helpers
@@ -42,14 +54,17 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
+    int FindColumn( const char* name ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QLabel* valueLabel_;
+    QListViewItem* item_;
+    int column_;
     QString message_;
+    T_Columns columns_;
     //@}
 };
 
-#endif // __LabelDisplayer_h_
+#endif // __ListItemDisplayer_h_

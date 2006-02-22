@@ -34,6 +34,7 @@
 #include "Equipment.h"
 #include "EquipmentType.h"
 #include "Lend.h"
+#include "ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel constructor
@@ -43,38 +44,26 @@ AgentResourcesPanel::AgentResourcesPanel( InfoPanel* pParent, Controller& contro
     : InfoPanel_ABC( pParent, tr( "Res." ) )
 {
     pEquipment_ = new T_ListView( this, *this );
-    pEquipment_->setSorting( -1 );
-    pEquipment_->addColumn( tr( "Equipement" ) );
-    pEquipment_->addColumn( tr( "Disponible" ) );
-    pEquipment_->addColumn( tr( "Indisponible" ) );
-    pEquipment_->addColumn( tr( "Réparable" ) );
-    pEquipment_->addColumn( tr( "En maintenance" ) );
-    pEquipment_->setResizeMode( QListView::LastColumn );
-    pEquipment_->setAllColumnsShowFocus ( true );
+    pEquipment_->AddColumn( "Equipement" )
+                .AddColumn( "Disponible" )
+                .AddColumn( "Indisponible" )
+                .AddColumn( "Réparable" )
+                .AddColumn( "En maintenance" );
 
     pResources_ = new T_ListView( this, *this );
-    pResources_->setSorting( -1 );
-    pResources_->addColumn( tr( "Resource" ) );
-    pResources_->addColumn( tr( "Quantité" ) );
-    pResources_->setResizeMode( QListView::LastColumn );
-    pResources_->setAllColumnsShowFocus ( true );
+    pResources_->AddColumn( "Resource" )
+                .AddColumn( "Quantité" );
 
     pTroops_ = new T_ListView( this, *this );
-    pTroops_->setSorting( -1 );
-    pTroops_->addColumn( tr( "Catégorie" ) );
-    pTroops_->addColumn( tr( "Officiers" ) );
-    pTroops_->addColumn( tr( "Sous officiers" ) );
-    pTroops_->addColumn( tr( "Mdr" ) );
-    pTroops_->setResizeMode( QListView::LastColumn );
-    pTroops_->setAllColumnsShowFocus ( true );
+    pTroops_->AddColumn( "Catégorie" )
+             .AddColumn( "Officiers" )
+             .AddColumn( "Sous officiers" )
+             .AddColumn( "Mdr" );
 
     pLends_ = new T_ListView( this, *this );
-    pLends_->setSorting( -1 );
-    pLends_->addColumn( tr( "Emprunteur" ) );
-    pLends_->addColumn( tr( "Equipement prêté" ) );
-    pLends_->addColumn( tr( "Quantité" ) );
-    pLends_->setResizeMode( QListView::LastColumn );
-    pLends_->setAllColumnsShowFocus ( true );
+    pLends_->AddColumn( "Emprunteur" )
+            .AddColumn( "Equipement prêté" )
+            .AddColumn( "Quantité" );
 
     controller.Register( *this );
     actionController.Register( *this );
@@ -110,7 +99,7 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
     if( ! ShouldUpdate( a ) )
         return;
     pResources_->DeleteTail( 
-        pResources_->Display( a.CreateIterator(), pResources_, (ValuedListItem*)( pResources_->firstChild() ) )
+        pResources_->Display( a.CreateIterator(), pResources_ )
     );
 }
 
@@ -118,11 +107,10 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Dotation& dotation, ValuedListItem* item )
+void AgentResourcesPanel::Display( const Dotation& dotation, Displayer_ABC& displayer )
 {
-    item->SetValue( &dotation );
-    item->setText( 0, dotation.type_.GetCategory().c_str() );
-    item->setText( 1, QString::number( dotation.quantity_ ) );
+    displayer.Display( "Resource", dotation.type_ )
+             .Display( "Quantité", dotation.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +122,7 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
     if( ! ShouldUpdate( a ) )
         return;
     pEquipment_->DeleteTail( 
-        pEquipment_->Display( a.CreateIterator(), pEquipment_, (ValuedListItem*)( pEquipment_->firstChild() ) )
+        pEquipment_->Display( a.CreateIterator(), pEquipment_ )
     );
 }
 
@@ -142,14 +130,13 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Equipment& equipment, ValuedListItem* item )
+void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& displayer )
 {
-    item->SetValue( &equipment );
-    item->setText( 0, equipment.type_.GetName().c_str() );
-    item->setText( 1, QString::number( equipment.available_ ) );
-    item->setText( 2, QString::number( equipment.unavailable_ ) );
-    item->setText( 3, QString::number( equipment.repairable_ ) );
-    item->setText( 4, QString::number( equipment.inMaintenance_ ) );
+    displayer.Display( "Equipement", equipment.type_  )
+             .Display( "Disponible", equipment.available_ )
+             .Display( "Indisponible", equipment.unavailable_ )
+             .Display( "Réparable", equipment.repairable_ )
+             .Display( "En maintenance", equipment.inMaintenance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +148,7 @@ void AgentResourcesPanel::NotifyUpdated( const Lends& a )
     if( ! ShouldUpdate( a ) )
         return;
     pEquipment_->DeleteTail( 
-        pEquipment_->Display( a.lends_.begin(), a.lends_.end(), pEquipment_, (ValuedListItem*)( pEquipment_->firstChild() ) )
+        pEquipment_->Display( a.lends_.begin(), a.lends_.end(), pEquipment_ )
     );
 }
 
@@ -169,13 +156,11 @@ void AgentResourcesPanel::NotifyUpdated( const Lends& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Lend& lend, ValuedListItem* item )
+void AgentResourcesPanel::Display( const Lend& lend, Displayer_ABC& displayer )
 {
-    item->SetValue( lend );
-    // $$$$ AGE 2006-02-22: use a displayer_ABC
-    item->setText( 0, lend.borrower_->GetName().c_str() ); // $$$$ AGE 2006-02-21: more than name
-    item->setText( 1, lend.type_->GetName().c_str() );
-    item->setText( 1, QString::number( lend.quantity_ ) );
+    displayer.Display( "Emprunteur", lend.borrower_ )
+             .Display( "Equipement prêté", lend.type_ )
+             .Display( "Quantité", lend.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,20 +172,19 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
     if( ! ShouldUpdate( a ) )
         return;
 
-    pTroops_->Display( a.humans_, a.humans_+eTroopHealthStateNbrStates, pTroops_, (ValuedListItem*)( pTroops_->firstChild() ) );
+    pTroops_->Display( a.humans_, a.humans_+eTroopHealthStateNbrStates, pTroops_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Troops::Humans& humans, ValuedListItem* item )
+void AgentResourcesPanel::Display( const Troops::Humans& humans, Displayer_ABC& displayer )
 {
-    item->SetValue( humans );
-    item->setText( 0, Tools::ToString( (E_TroopHealthState)humans.state_ ) );
-    item->setText( 1, QString::number( humans.officers_ ) );
-    item->setText( 2, QString::number( humans.subOfficers_ ) );
-    item->setText( 3, QString::number( humans.troopers_ ) );
+    displayer.Display( "Catégorie", humans.state_ )
+             .Display( "Officiers", humans.officers_ )
+             .Display( "Sous officiers", humans.subOfficers_ )
+             .Display( "Mdr", humans.troopers_ );
 }
 
 // -----------------------------------------------------------------------------

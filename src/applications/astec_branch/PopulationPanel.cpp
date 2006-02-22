@@ -19,7 +19,7 @@
 #include "Controller.h"
 #include "ActionController.h"
 #include "ValuedListItem.h"
-#include "ListView.h"
+#include "ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPanel constructor
@@ -35,12 +35,12 @@ PopulationPanel::PopulationPanel( InfoPanel* pParent, Controller& controller, Ac
                 .AddLabel( "Nombre de personnes vivantes:" )
                 .AddLabel( "Morts:" );
 
-    pPartsListView_ = new ListView< PopulationPanel >( this, *this );
-    pPartsListView_->addColumn( tr( "Morceau" ) );
-    pPartsListView_->addColumn( tr( "Hommes vivants" ) );
-    pPartsListView_->addColumn( tr( "Hommes morts" ) );
-    pPartsListView_->addColumn( tr( "Attitude" ) );
-    pPartsListView_->addColumn( tr( "Densité vivants" ) );
+    pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this );
+    pPartsListView_->AddColumn( "Morceau" )
+                    .AddColumn( "Hommes vivants" )
+                    .AddColumn( "Hommes morts" )
+                    .AddColumn( "Attitude" )
+                    .AddColumn( "Densité vivants" );
 
     controller.Register( *this );
     actionController.Register( *this );
@@ -80,8 +80,7 @@ void PopulationPanel::NotifySelected( const Population* popu )
 // -----------------------------------------------------------------------------
 void PopulationPanel::DisplayParts( const Population& population )
 {
-    Iterator< const PopulationPart_ABC& > it = population.CreateIterator();
-    ValuedListItem* item = pPartsListView_->Display( it, pPartsListView_, (ValuedListItem*)pPartsListView_->firstChild() );
+    ValuedListItem* item = pPartsListView_->Display( population.CreateIterator(), pPartsListView_ );
     pPartsListView_->DeleteTail( item );
 }
 
@@ -89,14 +88,13 @@ void PopulationPanel::DisplayParts( const Population& population )
 // Name: PopulationPanel::DisplayPart
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::Display( const PopulationPart_ABC& part, ValuedListItem* at )
+void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer )
 {
-    at->SetValue( &part );
-    at->setText( 0, part.GetName().c_str() );
-    at->setText( 1, QString::number( part.GetLivingHumans() ) );
-    at->setText( 2, QString::number( part.GetDeadHumans() ) );
-    at->setText( 3, part.GetAttitude().c_str() );
-    at->setText( 4, QString::number( part.GetDensity() ) );
+    displayer.Display( "Morceau", part.GetName().c_str() )
+             .Display( "Hommes vivants", part.GetLivingHumans() )
+             .Display( "Hommes morts", part.GetDeadHumans() )
+             .Display( "Attitude", part.GetAttitude() )
+             .Display( "Densité vivants", part.GetDensity() );
 }
 
 // -----------------------------------------------------------------------------

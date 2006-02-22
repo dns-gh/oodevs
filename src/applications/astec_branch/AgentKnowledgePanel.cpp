@@ -34,6 +34,7 @@
 #include "Tools.h"
 #include "Units.h"
 #include "PerceptionMap.h"
+#include "ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
@@ -47,10 +48,9 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& contro
     , subSelected_( 0 )
     , display_( 0 )
 {
-    pKnowledgeListView_ = new ListView< AgentKnowledgePanel >( this, *this );
-    pKnowledgeListView_->addColumn( tr( "Agents connus" ) );
-    pKnowledgeListView_->setResizeMode( QListView::LastColumn );
-
+    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );
+    pKnowledgeListView_->AddColumn( "Agents connus" );
+    
 //    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
 //    pOwnTeamCheckBox_->setChecked( true );
 //
@@ -78,11 +78,9 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& contro
                 .AddLabel( "PC:" )
                 .AddLabel( "Pertinence:"  );
 
-    pPerceptionListView_ = new ListView< AgentKnowledgePanel >( this, *this );
-    pPerceptionListView_->addColumn( tr( "Agent" ) );
-    pPerceptionListView_->addColumn( tr( "Niveau perception" ) );
-    pPerceptionListView_->setResizeMode( QListView::LastColumn );
-    pPerceptionListView_->setAllColumnsShowFocus( true );
+    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );
+    pPerceptionListView_->AddColumn( "Agent" ).
+                          AddColumn( "Niveau perception" );
 
 //    connect( &App::GetApp(), SIGNAL( AgentKnowledgeCreated( Gtia&, AgentKnowledge& ) ),
 //             this,                 SLOT(    OnKnowledgeCreated( Gtia&, AgentKnowledge& ) ) );
@@ -122,17 +120,16 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! isVisible() || selected_ != &knowledges )
         return;
 
-    pKnowledgeListView_->Display( knowledges.CreateIterator(), pKnowledgeListView_, (ValuedListItem*)( pKnowledgeListView_->firstChild() ) );
+    pKnowledgeListView_->Display( knowledges.CreateIterator(), pKnowledgeListView_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const AgentKnowledge& k, ValuedListItem* item )
+void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer )
 {
-    item->SetValue( &k );
-    item->setText( 0, k.GetRealAgent().GetName().c_str() ); // $$$$ AGE 2006-02-21: plus que l'agent !
+    displayer.Display( "Agents connus", k.GetRealAgent() );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,17 +252,15 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
     if( ! isVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
         return;
 
-    pPerceptionListView_->Display( perceptions.perceptions_.begin(), perceptions.perceptions_.end(),
-            pPerceptionListView_, (ValuedListItem*)( pPerceptionListView_->firstChild() ) );
+    pPerceptionListView_->Display( perceptions.perceptions_.begin(), perceptions.perceptions_.end(), pPerceptionListView_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const Perception& perception, ValuedListItem* item )
+void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer )
 {
-    item->SetValue( perception );
-    item->setText( 0, perception.detected_->GetName().c_str() );
-    item->setText( 1, Tools::ToString( perception.level_ ) );
+    displayer.Display( "Agent", perception.detected_ );
+    displayer.Display( "Niveau perception", perception.detected_ );
 }

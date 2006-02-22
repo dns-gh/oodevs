@@ -21,12 +21,12 @@
 
 #include "Types.h"
 #include "InfoPanel_ABC.h"
-#include "ListView.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "Troops.h"
 
+template< typename T > class ListDisplayer;
 class Agent;
 class Controller;
 class ActionController;
@@ -36,6 +36,7 @@ class Equipments;
 class Lends;
 class Equipment;
 class Lend;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
@@ -60,10 +61,10 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const Dotation& dotation, ValuedListItem* item );
-    void Display( const Equipment& equipment, ValuedListItem* item );
-    void Display( const Lend& lend, ValuedListItem* item );
-    void Display( const Troops::Humans& humans, ValuedListItem* item );
+    void Display( const Dotation& dotation, Displayer_ABC& displayer );
+    void Display( const Equipment& equipment, Displayer_ABC& displayer );
+    void Display( const Lend& lend, Displayer_ABC& displayer );
+    void Display( const Troops::Humans& humans, Displayer_ABC& displayer );
     //@}
 
 private:
@@ -88,7 +89,7 @@ private:
 
     //! @name Types
     //@{
-    typedef ListView< AgentResourcesPanel > T_ListView;
+    typedef ListDisplayer< AgentResourcesPanel > T_ListView;
     //@}
     
 private:

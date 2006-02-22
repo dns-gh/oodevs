@@ -23,7 +23,8 @@ class ActionController;
 class ValuedListItem;
 class PopulationPart_ABC;
 template< typename T >
-class ListView;
+class ListDisplayer;
+class Displayer_ABC;
 
 // =============================================================================
 // Created: HME 2005-10-03
@@ -44,7 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifySelected( const Population* popu );
-    void Display( const PopulationPart_ABC& part, ValuedListItem* at );
+    void Display( const PopulationPart_ABC& part, Displayer_ABC& displayer );
     //@}
 
 private:
@@ -58,7 +59,7 @@ private:
 private:
     const Population* selected_;
     DisplayBuilder* display_;
-    ListView< PopulationPanel >* pPartsListView_;
+    ListDisplayer< PopulationPanel >* pPartsListView_;
 };
 
 #endif // __PopulationPanel_h_

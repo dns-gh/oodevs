@@ -23,9 +23,9 @@
 #include "InfoPanel_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "ListView.h"
 #include "SelectionObserver_ABC.h"
 
+template< typename T > class ListDisplayer;
 class Controller;
 class ActionController;
 class AgentKnowledges;
@@ -35,6 +35,7 @@ class KnowledgeGroup;
 class Agent;
 class PerceptionMap;
 class Perception;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -61,8 +62,8 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const AgentKnowledge& k, ValuedListItem* item );
-    void Display( const Perception& perception, ValuedListItem* item );
+    void Display( const AgentKnowledge& k, Displayer_ABC& displayer );
+    void Display( const Perception& perception, Displayer_ABC& displayer );
     //@}
 
 private:
@@ -95,9 +96,9 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ListView< AgentKnowledgePanel >* pKnowledgeListView_;
+    ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
     DisplayBuilder* display_;
-    ListView< AgentKnowledgePanel >* pPerceptionListView_;
+    ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
     const AgentKnowledges* selected_;
     const AgentKnowledges* newSelection_;

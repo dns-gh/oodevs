@@ -43,7 +43,6 @@ public:
     Displayer_ABC& Add( const T& element );
     Displayer_ABC& End();
 
-
     template< typename T >
     void AddToDisplay( const T& element );
     void AddToDisplay( const QString& element );

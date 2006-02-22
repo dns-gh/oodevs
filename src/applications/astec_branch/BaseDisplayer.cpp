@@ -8,68 +8,51 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "LabelDisplayer.h"
+#include "BaseDisplayer.h"
 #include "Agent.h"
 #include "DotationType.h"
-#include <qlabel.h>
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer constructor
-// Created: AGE 2006-02-09
+// Name: BaseDisplayer constructor
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-LabelDisplayer::LabelDisplayer( QWidget* parent, const char* name, bool bold )
-{
-    new QLabel( qApp->tr( name ), parent );
-    valueLabel_ = new QLabel( parent );
-    if( bold )
-    {
-        QFont boldFont = valueLabel_->font();
-        boldFont.setBold( true );
-        valueLabel_->setFont( boldFont );
-    }
-}
-    
-// -----------------------------------------------------------------------------
-// Name: LabelDisplayer destructor
-// Created: AGE 2006-02-09
-// -----------------------------------------------------------------------------
-LabelDisplayer::~LabelDisplayer()
+BaseDisplayer::BaseDisplayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::SubItem
+// Name: BaseDisplayer destructor
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& LabelDisplayer::SubItem( const char* )
+BaseDisplayer::~BaseDisplayer()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::StartDisplay
+// Name: BaseDisplayer::Call
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void LabelDisplayer::StartDisplay()
+void BaseDisplayer::Call( const bool& value )
 {
-    message_ = "";
+    AddToDisplay( value ? qApp->tr( "Oui" ) : qApp->tr( "Non" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::DisplayFormatted
+// Name: BaseDisplayer::Call
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void LabelDisplayer::DisplayFormatted( const QString& formatted )
+void BaseDisplayer::Call( const Agent& value )
 {
-    message_ += formatted;
+    AddToDisplay( QString( value.GetName().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::EndDisplay
+// Name: BaseDisplayer::Call
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void LabelDisplayer::EndDisplay()
+void BaseDisplayer::Call( const DotationType& value )
 {
-    valueLabel_->setText( message_ );
+    AddToDisplay( QString( value.GetCategory().c_str() ) );
 }
