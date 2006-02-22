@@ -52,8 +52,7 @@ protected:
 
     //! @name Accessors
     //@{
-    virtual TerrainRule_ABC& GetRule   () const = 0;
-    virtual bool             NeedRefine() const = 0;
+    virtual TerrainRule_ABC& GetRule() const = 0;
     //@}
 
 private:
@@ -65,8 +64,8 @@ private:
 
 private:
     DEC_Path_ABC& path_;
-    MT_Vector2D   vStartPoint_;
-    MT_Vector2D   vEndPoint_;
+    MT_Vector2D   startPoint_;
+    MT_Vector2D   endPoint_;
     uint          nComputationEndTime_;
 
     bool          bCanceled_;

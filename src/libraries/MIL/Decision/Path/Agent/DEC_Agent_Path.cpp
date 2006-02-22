@@ -13,6 +13,8 @@
 #include "DEC_Agent_Path.h"
 
 #include "DEC_Agent_PathSection.h"
+#include "DEC_PathType.h"
+#include "DEC_PathClass.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
@@ -35,12 +37,14 @@
 DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
     : DEC_PathResult     ()
     , queryMaker_        ( queryMaker )
+    , bRefine_           ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_            () //$$$ Debile
     , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
+    , pathClass_         ( DEC_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_( false )
     , pathPoints_        ()
 {
@@ -59,12 +63,14 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
 DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
     : DEC_PathResult     ()
     , queryMaker_        ( queryMaker )
+    , bRefine_           ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
     , fuseau_            () //$$$ Debile
     , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
+    , pathClass_         ( DEC_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_( false )
     , pathPoints_        ()
 {
@@ -83,6 +89,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
 DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     : DEC_PathResult     ()    
     , queryMaker_        ( rhs.queryMaker_ )
+    , bRefine_           ( rhs.bRefine_ )
     , fuseau_            () //$$$ Debile
     , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( rhs.vDirDanger_ )
@@ -90,6 +97,7 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , unitSpeeds_        ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
     , rMaxSlope_         ( rhs.rMaxSlope_ )
     , pathType_          ( rhs.pathType_ )
+    , pathClass_         ( rhs.pathClass_ )
     , bDecPointsInserted_( false )
     , pathPoints_        ( rhs.pathPoints_ )
 {
@@ -164,29 +172,34 @@ bool IsObjectInsidePathPoint( const DEC_Knowledge_Object& knowledge, const T_Poi
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
-    // Agents
-    T_KnowledgeAgentVector knowledgesAgent;
-    queryMaker_.GetKSQuerier().GetEnemies( knowledgesAgent );
-    for( CIT_KnowledgeAgentVector itKnowledgeAgent = knowledgesAgent.begin(); itKnowledgeAgent != knowledgesAgent.end(); ++itKnowledgeAgent )
+    if( pathClass_.AvoidEnemies() )
     {
-        const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-        if( fuseau_.IsInside( knowledge.GetPosition() ) )
-            pathKnowledgeAgentVector_.push_back( DEC_Path_KnowledgeAgent( knowledge, queryMaker_ ) );
+        T_KnowledgeAgentVector knowledgesAgent;
+        queryMaker_.GetKSQuerier().GetEnemies( knowledgesAgent );
+        for( CIT_KnowledgeAgentVector itKnowledgeAgent = knowledgesAgent.begin(); itKnowledgeAgent != knowledgesAgent.end(); ++itKnowledgeAgent )
+        {
+            const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
+            if( fuseau_.IsInside( knowledge.GetPosition() ) )
+                pathKnowledgeAgentVector_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
+        }
     }
 
     // Objects
-    T_KnowledgeObjectVector knowledgesObject;    
-    queryMaker_.GetKSQuerier().GetObjects( knowledgesObject );
-    for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+    if( pathClass_.AvoidObjects() )
     {
-        const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-        //$$$ POURRI : Faire un DEC_Knowledge_Object::CanCollideWithXXX
-        if(        !knowledge.IsPrepared() 
-                && !knowledge.IsBypassed() 
-                && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() 
-                && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
-            pathKnowledgeObjectVector_.push_back( DEC_Path_KnowledgeObject( knowledge ) );
-    }       
+        T_KnowledgeObjectVector knowledgesObject;    
+        queryMaker_.GetKSQuerier().GetObjects( knowledgesObject );
+        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        {
+            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
+            //$$$ POURRI : Faire un DEC_Knowledge_Object::CanCollideWithXXX
+            if(        !knowledge.IsPrepared() 
+                    && !knowledge.IsBypassed() 
+                    && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() 
+                    && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
+                pathKnowledgeObjectVector_.push_back( DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+        }       
+    }
 }
 
 // =============================================================================
@@ -529,7 +542,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         MT_LOG_MESSAGE_MSG( "DEC_Agent_Path::Compute: " << this << " : computation begin" );
         MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
         MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
-        MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.ConvertPathTypeToString() );
+        MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.GetName().c_str() );
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }

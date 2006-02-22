@@ -18,6 +18,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_Path;
+class DEC_PathClass;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -28,8 +29,8 @@ class DEC_Path_KnowledgeObject
 public:
     //! @name Constructors/Destructor
     //@{
-     explicit DEC_Path_KnowledgeObject( const DEC_Knowledge_Object& knowledge );
-             ~DEC_Path_KnowledgeObject();
+    explicit DEC_Path_KnowledgeObject( const DEC_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+            ~DEC_Path_KnowledgeObject();
     //@}
 
     //! @name Copy/Assignement
@@ -41,28 +42,21 @@ public:
     //! @name Operations
     //@{
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    void SetCost( MT_Float rCost );
-    //@}
-
-    //! @name Accessors
-    //@{
-    uint GetTypeID() const;
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Tools
     //@{
-    void InitializeAgentStatus();
+    void SetCost( MT_Float rCost );
     //@}
 
+private:
     //! @name Member data
     //@{
     TER_Localisation localisation_;
-    uint             nObjectType_;
     MT_Float         rCostIn_;
     MT_Float         rCostOut_;
     //@}
-
 };
 
 #include "DEC_Path_KnowledgeObject.inl"

@@ -19,20 +19,22 @@
 #include "MIL_pch.h"
 #include "DEC_Path_KnowledgeAgent.h"
 
+#include "DEC_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
+DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
     : vEnemyPosition_   ( knowledge.GetPosition() )
     , rSecurityDistance_( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
 { 
     if( rSecurityDistance_ < 1000. )
         rSecurityDistance_ = 1000.;
-    SetCosts( 100., 10. );
+
+    rFactor_ = ( pathClass.GetEnemyCostAtSecurityRange() - pathClass.GetEnemyCostOnContact() ) / rSecurityDistance_;
+    rOffset_ = pathClass.GetEnemyCostOnContact();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,16 +44,6 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& kno
 DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeAgent::SetCosts
-// Created: AGE 2005-08-04
-// -----------------------------------------------------------------------------
-void DEC_Path_KnowledgeAgent::SetCosts( MT_Float rCostOnEnemy, MT_Float rCostAtSecurityRange )
-{
-    rFactor_ = ( rCostAtSecurityRange - rCostOnEnemy ) / rSecurityDistance_;
-    rOffset_ = rCostOnEnemy;
 }
 
 // =============================================================================

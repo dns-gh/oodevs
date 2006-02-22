@@ -46,12 +46,3 @@ TerrainRule_ABC& DEC_Population_PathSection::GetRule() const
 {
     return rule_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Population_PathSection::NeedRefine
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-bool DEC_Population_PathSection::NeedRefine() const
-{
-    return false;
-}

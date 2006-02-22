@@ -17,13 +17,13 @@
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "Decision/Path/DEC_PathResult.h"
-#include "Decision/Path/DEC_PathType.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Network/NET_ASN_Types.h"
 #include "MT_Tools/MT_Profiler.h"
 
 class DEC_Rep_PathPoint;
+class DEC_PathType;
 class MIL_Lima;
 class MIL_AgentPion;
 
@@ -53,19 +53,20 @@ public:
     //@{
     virtual void Execute              ( TerrainPathfinder& pathfind );
     virtual void CleanAfterComputation();
+    virtual bool NeedRefine           () const;
     //@}
     
     //! @name Accessors 
     //@{
-    const MIL_AgentPion&                GetQueryMaker          () const;
     const MIL_Fuseau&                   GetFuseau              () const;
     const MIL_Fuseau&                   GetAutomataFuseau      () const;
     const PHY_Speeds&                   GetUnitSpeeds          () const;
-    MT_Float                            GetUnitMaxSlope        () const;
+          MT_Float                      GetUnitMaxSlope        () const;
     const MT_Vector2D&                  GetDirDanger           () const;
     const T_PathKnowledgeObjectVector&  GetPathKnowledgeObjects() const;
     const T_PathKnowledgeAgentVector&   GetPathKnowledgeAgents () const;
     const DEC_PathType&                 GetPathType            () const;
+    const DEC_PathClass&                GetPathClass           () const;         
     //@}
     
     //! @name Tools
@@ -104,19 +105,18 @@ private:
     const MIL_AgentPion& queryMaker_;   
     
     // Path calculation parameters
-    T_PointVector                pathPoints_;
-
-    DEC_PathType                 pathType_;
-    MIL_Fuseau                   fuseau_;
-    MIL_Fuseau                   automateFuseau_;
-    MT_Vector2D                  vDirDanger_;
-    PHY_Speeds                   unitSpeeds_;
-    MT_Float                     rMaxSlope_;
-    T_PathKnowledgeAgentVector   pathKnowledgeAgentVector_;
-    T_PathKnowledgeObjectVector  pathKnowledgeObjectVector_;
-
-    MT_Profiler                  profiler_;
-    //@}   
+    const DEC_PathType&                pathType_;
+    const DEC_PathClass&               pathClass_;
+          bool                         bRefine_;
+          T_PointVector                pathPoints_;
+          MIL_Fuseau                   fuseau_;
+          MIL_Fuseau                   automateFuseau_;
+          MT_Vector2D                  vDirDanger_;
+          PHY_Speeds                   unitSpeeds_;
+          MT_Float                     rMaxSlope_;
+          T_PathKnowledgeAgentVector   pathKnowledgeAgentVector_;
+          T_PathKnowledgeObjectVector  pathKnowledgeObjectVector_;
+          MT_Profiler                  profiler_;
     
     //! @name
     //@{

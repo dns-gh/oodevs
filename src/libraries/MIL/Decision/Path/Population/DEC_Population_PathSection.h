@@ -35,8 +35,7 @@ public:
 private:
     //! @name Accessors
     //@{
-    virtual TerrainRule_ABC& GetRule   () const;
-    virtual bool             NeedRefine() const;
+    virtual TerrainRule_ABC& GetRule() const;
     //@}
 
 private:

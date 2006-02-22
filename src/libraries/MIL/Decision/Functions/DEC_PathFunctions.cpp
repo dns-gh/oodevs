@@ -12,7 +12,8 @@
 #include "MIL_pch.h"
 #include "DEC_PathFunctions.h"
 
-#include "Decision/Path/DEC_PathType.h"
+#include "Decision/Path/Agent/DEC_PathType.h"
+#include "Decision/Path/Agent/DEC_PathClass.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
@@ -35,14 +36,12 @@ void DEC_PathFunctions::CreatePathToPoint( DIA_Call_ABC& call, MIL_AgentPion& ca
     assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
 
     MT_Vector2D* pEnd = call.GetParameter( 0 ).ToUserPtr( pEnd   );
-
-    DEC_PathType pathType( (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId() );
-
     assert( pEnd );
-    assert( !_isnan( pEnd->rX_ ) );
-    assert( !_isnan( pEnd->rY_ ) );
 
-    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pEnd, pathType );
+    const DEC_PathType* pPathType = DEC_PathType::Find( call.GetParameter( 1 ).ToId() );
+    assert( pPathType );
+
+    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pEnd, *pPathType );
     pPath->IncDIARef();  
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
     call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );
@@ -58,12 +57,13 @@ void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion
 
     T_PointVector* pListPt = call.GetParameter( 0 ).ToUserPtr( pListPt );
 
-    DEC_PathType pathType( (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId() );
-
     assert( pListPt );
     assert( !pListPt->empty() );
 
-    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pListPt, pathType );
+    const DEC_PathType* pPathType = DEC_PathType::Find( call.GetParameter( 1 ).ToId() );
+    assert( pPathType );
+
+    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pListPt, *pPathType );
     pPath->IncDIARef();  
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
     call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );

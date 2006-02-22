@@ -19,7 +19,6 @@
 #include "MIL_pch.h"
 #include "DEC_Population_PathfinderRule.h"
 #include "DEC_Population_Path.h"
-#include "Decision/Path/DEC_PathType.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule constructor

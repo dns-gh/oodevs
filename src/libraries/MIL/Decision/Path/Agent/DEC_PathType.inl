@@ -1,60 +1,64 @@
 //*****************************************************************************
 //
-// $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Decision/Path/DEC_PathSection_ABC.inl $
+// $Created: JDY 03-04-10 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathType.inl $
 // $Author: Nld $
-// $Modtime: 22/02/05 14:32 $
+// $Modtime: 30/04/03 17:17 $
 // $Revision: 1 $
-// $Workfile: DEC_PathSection_ABC.inl $
+// $Workfile: DEC_PathType.inl $
 //
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::GetPosStart
-// Created: AGE 2005-02-25
+// Name: DEC_PathType::Find
+// Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const MT_Vector2D& DEC_PathSection_ABC::GetPosStart() const
+const DEC_PathType* DEC_PathType::Find( const std::string& strName )
 {
-    return startPoint_;
+    CIT_PathTypeMap it = pathTypes_.find ( strName );
+    if( it == pathTypes_.end() )
+        return 0;
+    return it->second;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::Find
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+inline
+const DEC_PathType* DEC_PathType::Find( uint nID )
+{
+    assert( pathTypesFromID_.size() > nID );
+    return pathTypesFromID_[ nID ];
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::GetPosEnd
-// Created: AGE 2005-02-25
+// Name: DEC_PathType::GetID
+// Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const MT_Vector2D& DEC_PathSection_ABC::GetPosEnd() const
+uint DEC_PathType::GetID() const
 {
-    return endPoint_;
+    return nPathType_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::IsImpossible
-// Created: AGE 2005-03-04
+// Name: DEC_PathType::GetName
+// Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-bool DEC_PathSection_ABC::IsImpossible() const
+const std::string& DEC_PathType::GetName() const
 {
-    return nAddedPoints_ < 2;
+    return strName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::Cancel
-// Created: AGE 2005-02-28
+// Name: DEC_PathType::GetPathTypes
+// Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-void DEC_PathSection_ABC::Cancel()
+DEC_PathType::T_PathTypeMap& DEC_PathType::GetPathTypes()
 {
-    bCanceled_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::GetLength
-// Created: AGE 2005-02-28
-// -----------------------------------------------------------------------------
-inline
-MT_Float DEC_PathSection_ABC::GetLength() const
-{
-    return startPoint_.Distance( endPoint_ );
+    return pathTypes_;
 }

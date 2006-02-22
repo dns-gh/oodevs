@@ -47,9 +47,9 @@ public:
             void Cancel               ();
     virtual void CleanAfterComputation();
 
-    MT_Float GetLength() const;
-
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
+            MT_Float GetLength     () const;
+    virtual bool     NeedRefine    () const = 0;
+    virtual void     AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
     //@}
 
     //! @name References

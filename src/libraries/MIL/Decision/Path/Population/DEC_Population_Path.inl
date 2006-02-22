@@ -28,3 +28,13 @@ const DEC_Population_Path::T_PopulationPathChannelerVector& DEC_Population_Path:
 {
     return channelers_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::NeedRefine
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Population_Path::NeedRefine() const
+{
+    return false;
+}

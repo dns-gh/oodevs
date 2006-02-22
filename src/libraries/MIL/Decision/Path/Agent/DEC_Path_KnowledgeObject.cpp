@@ -12,6 +12,7 @@
 #include "MIL_pch.h"
 #include "DEC_Path_KnowledgeObject.h"
 
+#include "DEC_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 
@@ -19,13 +20,12 @@
 // Name: DEC_Path_KnowledgeObject constructor
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Knowledge_Object& knowledge )
+DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
     : localisation_( knowledge.GetLocalisation() )
-    , nObjectType_ ( knowledge.GetType().GetID() )
     , rCostIn_     ( 0 )
     , rCostOut_    ( 0 )
 { 
-    // NOTHING
+    SetCost( pathClass.GetObjectCosts( knowledge.GetType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,6 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& copy )
     : localisation_           ( copy.localisation_ )
-    , nObjectType_            ( copy.nObjectType_ )
     , rCostOut_               ( copy.rCostOut_ )
     , rCostIn_                ( copy.rCostIn_ )
 {
@@ -57,19 +56,9 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObje
 DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_KnowledgeObject& copy )
 {
     localisation_.Reset( copy.localisation_ );
-    nObjectType_ = copy.nObjectType_;
     rCostIn_     = copy.rCostIn_;
     rCostOut_    = copy.rCostOut_;
     return *this;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::GetTypeID
-// Created: AGE 2005-03-30
-// -----------------------------------------------------------------------------
-uint DEC_Path_KnowledgeObject::GetTypeID() const
-{
-    return nObjectType_;
 }
 
 // -----------------------------------------------------------------------------

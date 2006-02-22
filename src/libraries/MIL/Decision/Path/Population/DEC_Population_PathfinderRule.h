@@ -53,7 +53,6 @@ private:
     virtual float GetCost     ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
     //@}
 
-
 private:
     //! @name Types
     //@{

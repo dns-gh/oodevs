@@ -22,6 +22,7 @@
 #include "MIL.h"
 
 class DEC_Knowledge_Agent;
+class DEC_PathClass;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -33,13 +34,12 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
+     DEC_Path_KnowledgeAgent( const DEC_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
     ~DEC_Path_KnowledgeAgent();
     //@}
 
     //! @name Operations
     //@{
-    void SetCosts( MT_Float rCostOnTarget, MT_Float rCostAtSecurityRange );
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 

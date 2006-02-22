@@ -14,17 +14,15 @@
 #include "DEC_Agent_PathSection.h"
 
 #include "DEC_Agent_Path.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "pathfind/TerrainRule_ABC.h"
+#include "DEC_Agent_PathfinderRule.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathSection constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint )
-    : DEC_PathSection_ABC( path, vStartPoint, vEndPoint )
-    , rule_              ( path.GetPathType().CreateRule( path, vStartPoint, vEndPoint ) )
-    , bNeedRefine_       ( path.GetQueryMaker().CanFly() && !path.GetQueryMaker().IsAutonomous() )
+DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
+    : DEC_PathSection_ABC( path, startPoint, endPoint )
+    , rule_              ( *new DEC_Agent_PathfinderRule( path, startPoint, endPoint ) )
 {  
 }
 
@@ -46,11 +44,3 @@ TerrainRule_ABC& DEC_Agent_PathSection::GetRule() const
     return rule_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathSection::NeedRefine
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-bool DEC_Agent_PathSection::NeedRefine() const
-{
-    return bNeedRefine_;
-}

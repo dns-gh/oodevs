@@ -15,10 +15,9 @@
 #include "DEC_Path_ABC.h"
 
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "DEC_PathType.h"
-#include "DEC_Path_ABC.h"
+#include "Agent/DEC_PathType.h"
+#include "Agent/DEC_PathClass.h"
 
-#undef Yield  // $$$$ AGE 2005-02-25: N'importe quoi
 #include "TER/TER_PathfinderThread.h"
 #include "TER/TER_PathFindManager.h"
 #include "TER/TER_World.h"
@@ -45,7 +44,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
     rulesArchive.AddWarningStream( std::cout );
     rulesArchive.Open( strRulesArchive );
 
-    DEC_PathType::InitializeRules( rulesArchive );
+    DEC_PathType::Initialize();
+    DEC_PathClass::Initialize( rulesArchive );
 
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", nPathfindThreads ) );
 
@@ -59,7 +59,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::~DEC_PathFind_Manager()
 {
-    // NOTHING
+    DEC_PathClass::Terminate();
+    DEC_PathType ::Terminate();    
 }
 
 // =============================================================================

@@ -10,6 +10,26 @@
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetPathClass
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+inline
+const DEC_PathClass& DEC_Agent_Path::GetPathClass() const
+{
+    return pathClass_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetPathType
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+inline
+const DEC_PathType& DEC_Agent_Path::GetPathType() const
+{
+    return pathType_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetUnitSpeeds
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
@@ -80,28 +100,13 @@ const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowled
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetPathType
-// Created: NLD 2005-02-22
+// Name: DEC_Agent_Path::NeedRefine
+// Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const DEC_PathType& DEC_Agent_Path::GetPathType() const
+bool DEC_Agent_Path::NeedRefine() const
 {
-    return pathType_;
+    return bRefine_;
 }
-
-//=============================================================================
-// REFERENCES
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetQueryMaker
-// Created: JDY 03-03-11
-//-----------------------------------------------------------------------------
-inline
-const MIL_AgentPion& DEC_Agent_Path::GetQueryMaker() const
-{
-    return queryMaker_;   
-}
-
 
 
