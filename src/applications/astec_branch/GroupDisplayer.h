@@ -7,41 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __Display_h_
-#define __Display_h_
+#ifndef __GroupDisplayer_h_
+#define __GroupDisplayer_h_
 
 #include "Displayer_ABC.h"
-#include "DisplayGroup.h"
+#include <qgroupbox.h>
+#include <map>
+
+class LabelDisplayer;
 
 // =============================================================================
-/** @class  Displayer
-    @brief  Displayer
-    // $$$$ AGE 2006-02-22: dégager ce bordel, faire une seule classe et un builder 
+/** @class  GroupDisplayer
+    @brief  GroupDisplayer
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class Displayer : public Displayer_ABC
+class GroupDisplayer : public Displayer_ABC, public QGroupBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Displayer( QWidget* parent );
-    virtual ~Displayer();
+             GroupDisplayer( QWidget* parent, const char* name  );
+    virtual ~GroupDisplayer();
     //@}
 
     //! @name Operations
     //@{
-    DisplayGroup& AddGroup( const char* name );
+    GroupDisplayer& AddItem( const char* name, bool bold = false );
     void Clear();
-    virtual DisplayGroup& Group( const char* name );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Displayer( const Displayer& );            //!< Copy constructor
-    Displayer& operator=( const Displayer& ); //!< Assignement operator
+    GroupDisplayer( const GroupDisplayer& );            //!< Copy constructor
+    GroupDisplayer& operator=( const GroupDisplayer& ); //!< Assignement operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< std::string, LabelDisplayer* > T_Items;
+    typedef T_Items::iterator                    IT_Items;
     //@}
 
     //! @name Helpers
@@ -52,18 +59,11 @@ private:
     virtual void EndDisplay();
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< std::string, DisplayGroup* > T_Groups;
-    typedef T_Groups::iterator                    IT_Groups;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    QWidget* parent_;
-    T_Groups groups_;
+    T_Items items_;
     //@}
 };
 
-#endif // __Display_h_
+#endif // __GroupDisplayer_h_

@@ -10,9 +10,9 @@
 #include "astec_pch.h"
 #include "AgentStatePanel.h"
 #include "Controller.h"
-#include "Displayer.h"
-#include "DisplayGroup.h"
-#include "DisplayItem.h"
+#include "DisplayBuilder.h"
+#include "GroupDisplayer.h"
+#include "LabelDisplayer.h"
 #include "Agent.h"
 #include "ActionController.h"
 #include "Attributes.h"
@@ -35,7 +35,7 @@ AgentStatePanel::AgentStatePanel( InfoPanel* info, Controller& controller, Actio
     : InfoPanel_ABC( info, tr( "Etat" ) )
     , selected_( 0 )
 {
-    display_ = new Displayer( this );
+    display_ = new DisplayBuilder( this );
     display_->AddGroup( "Info" )
                 .AddItem( "Nom:", true )
                 .AddItem( "Etat Opérationnel:" )

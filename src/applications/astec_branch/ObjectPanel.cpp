@@ -32,9 +32,9 @@
 #include "Agent.h"
 #include "DotationType.h"
 
-#include "Displayer.h"
-#include "DisplayGroup.h"
-#include "DisplayItem.h"
+#include "DisplayBuilder.h"
+#include "GroupDisplayer.h"
+#include "LabelDisplayer.h"
 #include "Units.h"
 
 #include "App.h"
@@ -51,14 +51,14 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
     : InfoPanel_ABC ( info, tr( "Objet" ) )
     , selected_( 0 )
 {
-    display_ = new Displayer( this );
+    display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )
                 .AddItem( "Id:" )
                 .AddItem( "Nom:" )
                 .AddItem( "Type:" )
                 .AddItem( "Position:" );
 
-    DisplayGroup* group = (DisplayGroup*)&display_->Group( "Informations" );
+    GroupDisplayer* group = (GroupDisplayer*)&display_->Group( "Informations" );
     new QLabel( "Construction:", group );
     pPercentBuiltEdit_  = new QSpinBox( 0, 100, 1, group ); pPercentBuiltEdit_->setSuffix( "%" );
     new QLabel( "Valeur:", group );

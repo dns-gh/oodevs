@@ -16,7 +16,7 @@
 #include "ElementObserver_ABC.h"
 
 class QListViewItem;
-class Displayer;
+class DisplayBuilder;
 class Population;
 class Controller;
 class ActionController;
@@ -57,7 +57,7 @@ private:
 
 private:
     const Population* selected_;
-    Displayer* display_;
+    DisplayBuilder* display_;
     ListView< PopulationPanel >* pPartsListView_;
 };
 

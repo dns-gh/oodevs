@@ -30,7 +30,7 @@ class Controller;
 class ActionController;
 class AgentKnowledges;
 class AgentKnowledge;
-class Displayer;
+class DisplayBuilder;
 class KnowledgeGroup;
 class Agent;
 class PerceptionMap;
@@ -96,7 +96,7 @@ private:
     //! @name Member data
     //@{
     ListView< AgentKnowledgePanel >* pKnowledgeListView_;
-    Displayer* display_;
+    DisplayBuilder* display_;
     ListView< AgentKnowledgePanel >* pPerceptionListView_;
 
     const AgentKnowledges* selected_;

@@ -7,38 +7,41 @@
 //
 // *****************************************************************************
 
-#ifndef __DisplayItem_h_
-#define __DisplayItem_h_
+#ifndef __Display_h_
+#define __Display_h_
 
 #include "Displayer_ABC.h"
-class QLabel;
-class Agent;
-class DotationType;
+#include "GroupDisplayer.h"
 
 // =============================================================================
-/** @class  DisplayItem
-    @brief  DisplayItem
+/** @class  DisplayBuilder
+    @brief  DisplayBuilder
+    // $$$$ AGE 2006-02-22: dégager ce bordel, faire une seule classe et un builder 
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class DisplayItem : public Displayer_ABC
-                  , public Caller< bool >
-                  , public Caller< Agent >
-                  , public Caller< DotationType >
+class DisplayBuilder : public Displayer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DisplayItem( QWidget* parent, const char* name, bool bold );
-    virtual ~DisplayItem();
+             DisplayBuilder( QWidget* parent );
+    virtual ~DisplayBuilder();
+    //@}
+
+    //! @name Operations
+    //@{
+    GroupDisplayer& AddGroup( const char* name );
+    void Clear();
+    virtual GroupDisplayer& Group( const char* name );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    DisplayItem( const DisplayItem& );            //!< Copy constructor
-    DisplayItem& operator=( const DisplayItem& ); //!< Assignement operator
+    DisplayBuilder( const DisplayBuilder& );            //!< Copy constructor
+    DisplayBuilder& operator=( const DisplayBuilder& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -47,17 +50,20 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    virtual void Call( const bool& value );
-    virtual void Call( const Agent& value );
-    virtual void Call( const DotationType& value );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< std::string, GroupDisplayer* > T_Groups;
+    typedef T_Groups::iterator                      IT_Groups;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QLabel* valueLabel_;
-    QString message_;
+    QWidget* parent_;
+    T_Groups groups_;
     //@}
 };
 
-#endif // __DisplayItem_h_
+#endif // __Display_h_

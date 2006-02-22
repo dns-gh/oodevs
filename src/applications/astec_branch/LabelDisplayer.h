@@ -7,48 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __DisplayGroup_h_
-#define __DisplayGroup_h_
+#ifndef __LabelDisplayer_h_
+#define __LabelDisplayer_h_
 
 #include "Displayer_ABC.h"
-#include <qgroupbox.h>
-#include <map>
-
-class DisplayItem;
+class QLabel;
+class Agent;
+class DotationType;
 
 // =============================================================================
-/** @class  DisplayGroup
-    @brief  DisplayGroup
+/** @class  LabelDisplayer
+    @brief  LabelDisplayer
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class DisplayGroup : public Displayer_ABC, public QGroupBox
+class LabelDisplayer : public Displayer_ABC
+                  , public Caller< bool >
+                  , public Caller< Agent >
+                  , public Caller< DotationType >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DisplayGroup( QWidget* parent, const char* name  );
-    virtual ~DisplayGroup();
-    //@}
-
-    //! @name Operations
-    //@{
-    DisplayGroup& AddItem( const char* name, bool bold = false );
-    void Clear();
+             LabelDisplayer( QWidget* parent, const char* name, bool bold );
+    virtual ~LabelDisplayer();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    DisplayGroup( const DisplayGroup& );            //!< Copy constructor
-    DisplayGroup& operator=( const DisplayGroup& ); //!< Assignement operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, DisplayItem* > T_Items;
-    typedef T_Items::iterator                    IT_Items;
+    LabelDisplayer( const LabelDisplayer& );            //!< Copy constructor
+    LabelDisplayer& operator=( const LabelDisplayer& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -57,13 +47,17 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
+    virtual void Call( const bool& value );
+    virtual void Call( const Agent& value );
+    virtual void Call( const DotationType& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Items items_;
+    QLabel* valueLabel_;
+    QString message_;
     //@}
 };
 
-#endif // __DisplayGroup_h_
+#endif // __LabelDisplayer_h_

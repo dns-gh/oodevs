@@ -13,9 +13,9 @@
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
-#include "Displayer.h"
-#include "DisplayGroup.h"
-#include "DisplayItem.h"
+#include "DisplayBuilder.h"
+#include "GroupDisplayer.h"
+#include "LabelDisplayer.h"
 #include "Controller.h"
 #include "ActionController.h"
 #include "ValuedListItem.h"
@@ -29,7 +29,7 @@ PopulationPanel::PopulationPanel( InfoPanel* pParent, Controller& controller, Ac
     : InfoPanel_ABC ( pParent, tr( "Population" ) )
     , selected_      ( 0 )
 {
-    display_ = new Displayer( this );
+    display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )
                 .AddItem( "Nom:", true )
                 .AddItem( "Nombre de personnes vivantes:" )

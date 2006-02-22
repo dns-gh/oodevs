@@ -23,9 +23,9 @@
 #include "Agent.h"
 #include "AgentKnowledges.h"
 #include "AgentKnowledge.h"
-#include "Displayer.h"
-#include "DisplayGroup.h"
-#include "DisplayItem.h"
+#include "DisplayBuilder.h"
+#include "GroupDisplayer.h"
+#include "LabelDisplayer.h"
 #include "Controller.h"
 #include "ActionController.h"
 #include "KnowledgeGroup.h"
@@ -54,7 +54,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& contro
 //    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
 //    pOwnTeamCheckBox_->setChecked( true );
 //
-    display_ = new Displayer( this );
+    display_ = new DisplayBuilder( this );
     display_->AddGroup( "Détails" )
                 .AddItem( "Id:" )
                 .AddItem( "Agent associé:" )

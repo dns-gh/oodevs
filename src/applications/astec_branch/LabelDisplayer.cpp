@@ -8,95 +8,95 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Displayer.h"
-#include "DisplayGroup.h"
+#include "LabelDisplayer.h"
+#include "Agent.h"
+#include "DotationType.h"
+#include <qlabel.h>
 
 // -----------------------------------------------------------------------------
-// Name: Displayer constructor
+// Name: LabelDisplayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-Displayer::Displayer( QWidget* parent )
-    : parent_( parent )
+LabelDisplayer::LabelDisplayer( QWidget* parent, const char* name, bool bold )
 {
-    // NOTHING
+    new QLabel( qApp->tr( name ), parent );
+    valueLabel_ = new QLabel( parent );
+    if( bold )
+    {
+        QFont boldFont = valueLabel_->font();
+        boldFont.setBold( true );
+        valueLabel_->setFont( boldFont );
+    }
 }
     
 // -----------------------------------------------------------------------------
-// Name: Displayer destructor
+// Name: LabelDisplayer destructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-Displayer::~Displayer()
+LabelDisplayer::~LabelDisplayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Displayer::AddGroup
-// Created: AGE 2006-02-09
-// -----------------------------------------------------------------------------
-DisplayGroup& Displayer::AddGroup( const char* name )
-{
-    DisplayGroup*& group = groups_[ std::string( name ) ];
-    if( group )
-        throw std::runtime_error( "Group '" + std::string( name ) + "' already exists" );
-    group = new DisplayGroup( parent_, name );
-    return *group;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Displayer::SubItem
+// Name: LabelDisplayer::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& Displayer::SubItem( const char* name )
-{
-    DisplayGroup* group = groups_[ std::string( name ) ];
-    if( ! group )
-        throw std::runtime_error( "Group '" + std::string( name ) + "' does not exist" );
-    return *group;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Displayer::Group
-// Created: AGE 2006-02-22
-// -----------------------------------------------------------------------------
-DisplayGroup& Displayer::Group( const char* name )
-{
-    return (DisplayGroup&)( SubItem( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Displayer::StartDisplay
-// Created: AGE 2006-02-22
-// -----------------------------------------------------------------------------
-void Displayer::StartDisplay()
+Displayer_ABC& LabelDisplayer::SubItem( const char* )
 {
     throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Displayer::DisplayFormatted
+// Name: LabelDisplayer::StartDisplay
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void Displayer::DisplayFormatted( const QString& )
+void LabelDisplayer::StartDisplay()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    message_ = "";
 }
 
 // -----------------------------------------------------------------------------
-// Name: Displayer::EndDisplay
+// Name: LabelDisplayer::DisplayFormatted
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void Displayer::EndDisplay()
+void LabelDisplayer::DisplayFormatted( const QString& formatted )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    message_ += formatted;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Displayer::Clear
-// Created: AGE 2006-02-09
+// Name: LabelDisplayer::EndDisplay
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void Displayer::Clear()
+void LabelDisplayer::EndDisplay()
 {
-    for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
-        it->second->Clear();
+    valueLabel_->setText( message_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LabelDisplayer::Call
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void LabelDisplayer::Call( const bool& value )
+{
+    AddToDisplay( value ? qApp->tr( "Oui" ) : qApp->tr( "Non" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LabelDisplayer::Call
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void LabelDisplayer::Call( const Agent& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LabelDisplayer::Call
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void LabelDisplayer::Call( const DotationType& value )
+{
+    AddToDisplay( QString( value.GetCategory().c_str() ) );
 }

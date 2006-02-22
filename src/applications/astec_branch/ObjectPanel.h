@@ -33,7 +33,7 @@ class RotaAttributes;
 
 class Controller;
 class ActionController;
-class Displayer;
+class DisplayBuilder;
 class InfoPanel;
 
 // =============================================================================
@@ -91,7 +91,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Displayer* display_;
+    DisplayBuilder* display_;
     QSpinBox*  pPercentBuiltEdit_;
     QSpinBox*  pPercentValueEdit_;
     QSpinBox*  pPercentAroundEdit_;

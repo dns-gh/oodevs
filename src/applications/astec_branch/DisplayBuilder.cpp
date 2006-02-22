@@ -8,87 +8,95 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "DisplayGroup.h"
-#include "DisplayItem.h"
-#include <stdexcept>
+#include "DisplayBuilder.h"
+#include "GroupDisplayer.h"
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup constructor
+// Name: DisplayBuilder constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-DisplayGroup::DisplayGroup( QWidget* parent, const char* name  )
-    : QGroupBox( 2, Qt::Horizontal, tr( name ), parent )
+DisplayBuilder::DisplayBuilder( QWidget* parent )
+    : parent_( parent )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup destructor
+// Name: DisplayBuilder destructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-DisplayGroup::~DisplayGroup()
+DisplayBuilder::~DisplayBuilder()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::AddItem
+// Name: DisplayBuilder::AddGroup
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-DisplayGroup& DisplayGroup::AddItem( const char* name, bool bold )
+GroupDisplayer& DisplayBuilder::AddGroup( const char* name )
 {
-    DisplayItem*& item = items_[ std::string( name ) ];
-    if( item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
-    item = new DisplayItem( this, name, bold );
-    return *this;
+    GroupDisplayer*& group = groups_[ std::string( name ) ];
+    if( group )
+        throw std::runtime_error( "Group '" + std::string( name ) + "' already exists" );
+    group = new GroupDisplayer( parent_, name );
+    return *group;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::SubItem
+// Name: DisplayBuilder::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& DisplayGroup::SubItem( const char* name )
+Displayer_ABC& DisplayBuilder::SubItem( const char* name )
 {
-    DisplayItem* item = items_[ std::string( name ) ];
-    if( ! item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' does not exist" );
-    return *item;
+    GroupDisplayer* group = groups_[ std::string( name ) ];
+    if( ! group )
+        throw std::runtime_error( "Group '" + std::string( name ) + "' does not exist" );
+    return *group;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::StartDisplay
+// Name: DisplayBuilder::Group
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void DisplayGroup::StartDisplay()
+GroupDisplayer& DisplayBuilder::Group( const char* name )
+{
+    return (GroupDisplayer&)( SubItem( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayBuilder::StartDisplay
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+void DisplayBuilder::StartDisplay()
 {
     throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::DisplayFormatted
+// Name: DisplayBuilder::DisplayFormatted
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void DisplayGroup::DisplayFormatted( const QString& )
+void DisplayBuilder::DisplayFormatted( const QString& )
 {
     throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::EndDisplay
+// Name: DisplayBuilder::EndDisplay
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void DisplayGroup::EndDisplay()
+void DisplayBuilder::EndDisplay()
 {
     throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayGroup::Clear
+// Name: DisplayBuilder::Clear
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-void DisplayGroup::Clear()
+void DisplayBuilder::Clear()
 {
-    for( IT_Items it = items_.begin(); it != items_.end(); ++it )
-        it->second->Display( "" );
+    for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
+        it->second->Clear();
 }
