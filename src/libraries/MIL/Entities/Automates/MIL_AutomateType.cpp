@@ -377,7 +377,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsKnowledgeValid                      < MIL_Automate >, "DEC_ConnaissanceAgent_EstValide"                         );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugee                             < MIL_Automate >, "DEC_ConnaissanceAgent_EstRefugie"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugeeManaged                      < MIL_Automate >, "DEC_ConnaissanteAgent_EstRefugiePrisEnCompte"            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsMilita                              < MIL_Automate >, "DEC_ConnaissanceAgent_EstMilice"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsMilitia                             < MIL_Automate >, "DEC_ConnaissanceAgent_EstMilice"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsTerrorist                           < MIL_Automate >, "DEC_ConnaissanceAgent_EstTerroriste"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsDead                                < MIL_Automate >, "DEC_ConnaissanceAgent_EstMort"                           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsSurrendered                         < MIL_Automate >, "DEC_ConnaissanceAgent_SEstRendu"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsPrisoner                            < MIL_Automate >, "DEC_ConnaissanceAgent_EstPrisonnier"                     );

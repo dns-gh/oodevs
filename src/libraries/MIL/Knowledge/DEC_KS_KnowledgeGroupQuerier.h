@@ -55,6 +55,7 @@ public:
 
     void                  GetPotentiallyDangerousAgents( T_KnowledgeAgentDiaIDVector&      container ) const;
     void                  GetMilitiaAgents             ( T_KnowledgeAgentDiaIDVector&      container ) const;
+    void                  GetTerroristAgents           ( T_KnowledgeAgentDiaIDVector&      container ) const;
     void                  GetRefugeeAgents             ( T_KnowledgeAgentDiaIDVector&      container ) const;
     void                  GetSurrenderedAgents         ( T_KnowledgeAgentDiaIDVector&      container ) const;
     void                  GetEnemies                   ( T_KnowledgeAgentVector&           container ) const;

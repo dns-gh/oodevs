@@ -200,12 +200,21 @@ void DEC_AgentFunctions::IsRefugee( DIA_Call_ABC& call, const MIL_AgentPion& cal
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsMilita
+// Name: DEC_AgentFunctions::IsMilitia
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IsMilita( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::IsMilitia( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     call.GetResult().SetValue( callerAgent.GetType().IsMilitia() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsTerrorist
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::IsTerrorist( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    call.GetResult().SetValue( callerAgent.GetType().IsTerrorist() );
 }
 
 // -----------------------------------------------------------------------------

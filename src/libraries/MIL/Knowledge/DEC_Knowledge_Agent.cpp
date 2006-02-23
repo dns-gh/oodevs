@@ -870,3 +870,12 @@ bool DEC_Knowledge_Agent::IsMilitia() const
     return pAgentKnown_->GetType().IsMilitia();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsTerrorist
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsTerrorist() const
+{
+    assert( pAgentKnown_ );
+    return pAgentKnown_->GetType().IsTerrorist();
+}

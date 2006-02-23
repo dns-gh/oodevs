@@ -50,6 +50,7 @@ public:
 
     virtual bool                     IsMilitia               () const;
     virtual bool                     IsRefugee               () const;
+    virtual bool                     IsTerrorist             () const;
     //@}
 
 private:

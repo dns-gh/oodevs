@@ -31,6 +31,7 @@ public:
     static void GetAgentsAttacking           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPotentiallyDangerousAgents( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMilitiaAgents             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetTerroristAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetRefugeeAgents             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetSurrenderedAgents         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPerceivedAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    

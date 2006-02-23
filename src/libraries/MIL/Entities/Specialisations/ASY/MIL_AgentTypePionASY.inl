@@ -18,3 +18,13 @@ const MIL_AgentTypePion* MIL_AgentTypePionASY::Create( const std::string& strNam
 {
     return new MIL_AgentTypePionASY( strName, archive );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePionASY::IsTerrorist
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+bool MIL_AgentTypePionASY::IsTerrorist() const
+{
+    return true;
+}

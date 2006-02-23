@@ -126,6 +126,16 @@ bool MIL_AgentType_ABC::IsMilitia() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentType_ABC::IsTerrorist
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+bool MIL_AgentType_ABC::IsTerrorist() const
+{
+    return false;
+}
           
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC::IsRefugee

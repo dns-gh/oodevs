@@ -57,7 +57,8 @@ public:
     {
         if(    pKnowledgeGroup_->GetArmy().IsAnEnemy( knowledge ) != eTristate_False 
             && !knowledge.IsMilitia() 
-            && !knowledge.IsRefugee() )
+            && !knowledge.IsRefugee() 
+            && !knowledge.IsTerrorist() )
             pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
@@ -110,6 +111,43 @@ void DEC_KS_KnowledgeGroupQuerier::GetMilitiaAgents( T_KnowledgeAgentDiaIDVector
 {
     assert( pKnowledgeGroup_ );
     sMilitiaAgentsInserter functor( *pKnowledgeGroup_, container );
+    
+    assert( pBlackBoard_ );
+    pBlackBoard_->ApplyOnKnowledgesAgent( functor );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: sTerroristAgentsInserter
+// Created: NLD 2004-04-06
+// -----------------------------------------------------------------------------
+class sTerroristAgentsInserter
+{
+public:
+    sTerroristAgentsInserter( const MIL_KnowledgeGroup& knowledgeGroup, T_KnowledgeAgentDiaIDVector& container )
+        : pKnowledgeGroup_( &knowledgeGroup )
+        , pContainer_     ( &container )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_Agent& knowledge )
+    {
+        if ( knowledge.IsTerrorist() )
+            pContainer_->push_back( (void*)knowledge.GetID() );
+    }
+
+private:
+    const MIL_KnowledgeGroup*    pKnowledgeGroup_;
+    T_KnowledgeAgentDiaIDVector* pContainer_;
+};
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeGroupQuerier::GetTerroristAgents
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+void DEC_KS_KnowledgeGroupQuerier::GetTerroristAgents( T_KnowledgeAgentDiaIDVector& container ) const
+{
+    assert( pKnowledgeGroup_ );
+    sTerroristAgentsInserter functor( *pKnowledgeGroup_, container );
     
     assert( pBlackBoard_ );
     pBlackBoard_->ApplyOnKnowledgesAgent( functor );

@@ -307,6 +307,16 @@ void DEC_KS_AgentQuerier::GetMilitiaAgents( T_KnowledgeAgentDiaIDVector& contain
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetTerroristAgents
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentQuerier::GetTerroristAgents( T_KnowledgeAgentDiaIDVector& container ) const
+{
+    assert( pPion_ );
+    pPion_->GetKnowledgeGroup().GetKSQuerier().GetTerroristAgents( container );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentQuerier::GetRefugeeAgents
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------

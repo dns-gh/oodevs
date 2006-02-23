@@ -27,7 +27,8 @@ public:
     // Accessors
     static void IsPC                      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsRefugee                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsMilita                  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsMilitia                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsTerrorist               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsDead                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsSurrendered             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPrisoner                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

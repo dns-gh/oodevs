@@ -194,11 +194,11 @@ void DEC_KnowledgeAgentFunctions::IsRefugeeManaged( DIA_Call_ABC& call, const T&
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeAgentFunctions::IsMilita
+// Name: template< typename T > static void DEC_KnowledgeAgentFunctions::IsMilitia
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_KnowledgeAgentFunctions::IsMilita( DIA_Call_ABC& call, const T& caller )
+void DEC_KnowledgeAgentFunctions::IsMilitia( DIA_Call_ABC& call, const T& caller )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
     if( !pKnowledge )
@@ -210,6 +210,25 @@ void DEC_KnowledgeAgentFunctions::IsMilita( DIA_Call_ABC& call, const T& caller 
     
     call.GetParameter( 1 ).SetValue( eQueryValid );
     call.GetResult().SetValue( pKnowledge->IsMilitia() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeAgentFunctions::IsTerrorist
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeAgentFunctions::IsTerrorist( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
+        return;
+    }
+    
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( pKnowledge->IsTerrorist() );
 }
 
 // -----------------------------------------------------------------------------

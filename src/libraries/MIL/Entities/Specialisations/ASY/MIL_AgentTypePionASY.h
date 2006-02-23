@@ -28,6 +28,10 @@ public:
     MIL_AgentTypePionASY( const std::string& strName, MIL_InputArchive& archive );
     virtual ~MIL_AgentTypePionASY();
 
+    //! @name Accessors
+    //@{
+    virtual bool IsTerrorist() const;
+    //@}
 
 public:
     static const MIL_AgentTypePion* Create( const std::string& strName, MIL_InputArchive& archive );

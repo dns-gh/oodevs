@@ -73,6 +73,19 @@ void DEC_KnowledgeFunctions::GetMilitiaAgents( DIA_Call_ABC& call, const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetTerroristAgents
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetTerroristAgents( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgeAgentDiaIDVector knowledges;
+    callerAgent.GetKSQuerier().GetTerroristAgents( knowledges );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetRefugeeAgents
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
