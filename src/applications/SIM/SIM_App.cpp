@@ -144,7 +144,7 @@ int SIM_App::Execute()
                << "Line : "        << exception.GetLine()        << std::endl
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;
-        MessageBox( 0, strMsg.str().c_str(), "Scipio - Initialization error", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( MT_Exception& exception )
     {
@@ -152,11 +152,11 @@ int SIM_App::Execute()
         strMsg << "Context : " << exception.GetContext() << std::endl
                << "Code :"     << exception.GetCode()    << std::endl
                << "Message : " << exception.GetInfo()    << std::endl;
-        MessageBox( 0, strMsg.str().c_str(), "Scipio - MT_Exception", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( MT_ArchiveLogger_Exception& exception )
     {
-        MessageBox ( 0, exception.what(), "Scipio - Parse error", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        MessageBox ( 0, exception.what(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( std::bad_alloc& /*exception*/ )
     {
