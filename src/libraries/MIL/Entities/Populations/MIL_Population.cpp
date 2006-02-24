@@ -27,6 +27,7 @@
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Network/NET_ASN_Messages.h"
@@ -935,4 +936,16 @@ void MIL_Population::UpdateNetwork()
         (**it).SendChangedState();
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
         (**it).SendChangedState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::Apply
+// Created: SBO 2006-02-24
+// -----------------------------------------------------------------------------
+void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const
+{
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        visitor.Visit( **it );
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        visitor.Visit( **it );
 }

@@ -21,9 +21,11 @@
 
 #include "MIL.h"
 
+#include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/Population/MIL_PopulationOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
 
+class MIL_EntityVisitor_ABC;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
@@ -42,6 +44,7 @@ class TER_Localisation;
 // Created: NLD 2005-09-28
 // =============================================================================
 class MIL_Population : public PHY_Actor
+                     , public MIL_VisitableEntity_ABC< MIL_PopulationElement_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -143,6 +146,11 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+
+    //! @name Visitor
+    //@{
+    virtual void Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const;
     //@}
 
 private:

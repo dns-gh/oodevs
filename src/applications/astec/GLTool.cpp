@@ -928,7 +928,7 @@ void GLTool::Draw( PopulationFlow& flow, E_State nState /*= eNormal*/ )
 
     DrawRect( topLeft, bottomRight, true );
     //DrawCircle( flow.GetHeadPosition(), GL_CROSSSIZE * 0.5, true );
-    glLineWidth( 20 );
+    glLineWidth( 10.0 );
     DrawLine( flow.GetFlow() );
 
     // draw dead people
