@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <World>
-    <Latitude>47.35</Latitude>
-    <Longitude>0</Longitude>
-    <Width>53853</Width>
-    <Height>78042.6</Height>
+  <Latitude>47.35</Latitude>
+  <Longitude>-1.76778e-006</Longitude>
+  <Width>53852.9</Width>
+  <Height>78042.6</Height>
 </World>
