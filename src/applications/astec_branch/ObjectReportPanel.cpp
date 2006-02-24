@@ -16,35 +16,26 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "ObjectReportPanel.h"
-#include "moc_ObjectReportPanel.cpp"
 
 #include "Object_ABC.h"
-#include "App.h"
-#include "FireResultListView.h"
+//#include "FireResultListView.h"
 
 
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel constructor
-/** @param  pParent 
-*/
-// Created: SBO 2005-09-08
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ObjectReportPanel::ObjectReportPanel( QWidget* pParent )
-    : InfoPanel_ABC ( pParent )
+ObjectReportPanel::ObjectReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+    : InfoPanel_ABC( pParent, "Rapports" )
 {
-    pFireResultListView_ = new FireResultListView( this );
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel destructor
-// Created: SBO 2005-09-08
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
 ObjectReportPanel::~ObjectReportPanel()
 {
@@ -52,34 +43,28 @@ ObjectReportPanel::~ObjectReportPanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectReportPanel::OnObjectUpdated
-// Created: SBO 2005-09-08
+// Name: ObjectReportPanel::NotifyUpdated
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::OnObjectUpdated( Object_ABC& object )
+void ObjectReportPanel::NotifyUpdated( const Object_ABC& )
 {
-    if( ! ShouldDisplay( object ) )
-        return;
 
-    pFireResultListView_->SetObject( &object );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectReportPanel::OnUpdate
-// Created: AGE 2005-04-05
+// Name: ObjectReportPanel::NotifyDeleted
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::OnUpdate()
+void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
 {
-    if( selectedItem_.pObject_ != 0 )
-        OnObjectUpdated( *selectedItem_.pObject_ );
-    else
-        OnClearSelection();
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectReportPanel::OnClearSelection
-// Created: SBO 2005-09-22
+// Name: ObjectReportPanel::NotifySelected
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::OnClearSelection()
+void ObjectReportPanel::NotifySelected( const Object_ABC* object )
 {
-    pFireResultListView_->SetObject( 0 );
+
 }

@@ -19,6 +19,7 @@
 class Controller;
 class Object_ABC;
 class Agent;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  CampAttributes
@@ -41,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:

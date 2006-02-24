@@ -92,10 +92,6 @@ private:
     //! @name Member data
     //@{
     DisplayBuilder* display_;
-    QSpinBox*  pPercentBuiltEdit_;
-    QSpinBox*  pPercentValueEdit_;
-    QSpinBox*  pPercentAroundEdit_;
-    QCheckBox* pIsUnderPrepCheckBox_;
     const Object_ABC* selected_;
 
 //    QPushButton* pApplyButton_;

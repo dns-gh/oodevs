@@ -27,7 +27,7 @@
 #include "AgentKnowledgePanel.h"
 #include "ObjectPanel.h"
 //#include "ObjectReportPanel.h"
-//#include "ObjectKnowledgePanel.h"
+#include "ObjectKnowledgePanel.h"
 #include "PopulationPanel.h"
 //#include "PopulationKnowledgePanel.h"
 //#include "AgentMaintenancePanel.h"
@@ -54,28 +54,20 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
     pAgentKnowledgePanel_      = new AgentKnowledgePanel( this, controller, actionController );
     pObjectPanel_              = new ObjectPanel( this, controller, actionController );
 //    pObjectReportPanel_        = new ObjectReportPanel( this );
-//    pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this );
+    pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this, controller, actionController );
 //    pAgentMaintenancePanel_    = new AgentMaintenancePanel( this );
 //    pAgentMedicalPanel_        = new AgentMedicalPanel( this );
 //    pAgentSupplyPanel_         = new AgentSupplyPanel( this );
 //    pReportPanel_              = new ReportPanel( this );
-	  pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
+    pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
 //    pPopulationReportPanel_    = new ReportPanel( this );
-//    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this );
+//    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controller, actionController );
 
     pTabWidget_ = new QTabWidget( this );
-    pTabWidget_ ->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
-    pStatePanel_->Show();
-    pObjectPanel_->Show();
-    pPopulationPanel_->Show();
 
     addWidget  ( pTabWidget_ );
     raiseWidget( pTabWidget_ );
     pTabWidget_->setCurrentPage( 0 );
-
-    pStatePanel_->NotifySelected( 0 );
-    pObjectPanel_->NotifySelected( 0 );
-    pPopulationPanel_->NotifySelected( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +85,11 @@ InfoPanel::~InfoPanel()
 // -----------------------------------------------------------------------------
 void InfoPanel::Add( QWidget* widget, const QString& name )
 {
-    if( pTabWidget_->indexOf( widget ) == -1 )
-        pTabWidget_->insertTab( widget, name );
+    if( pTabWidget_->indexOf( widget ) != -1 )
+        return;
+    int index = pTabWidget_->currentPageIndex();
+    pTabWidget_->insertTab( widget, name );
+    pTabWidget_->setCurrentPage( index );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +98,8 @@ void InfoPanel::Add( QWidget* widget, const QString& name )
 // -----------------------------------------------------------------------------
 void InfoPanel::Remove( QWidget* widget )
 {
+    if( pTabWidget_->indexOf( widget ) != -1 )
+        return;
     pTabWidget_->removePage( widget );
 }
 

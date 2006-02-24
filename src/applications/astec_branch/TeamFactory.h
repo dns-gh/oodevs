@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual Team* CreateTeam( unsigned long id, DIN::DIN_Input& input );
-    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id );
+    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id, const Team& team );
     //@}
 
 private:

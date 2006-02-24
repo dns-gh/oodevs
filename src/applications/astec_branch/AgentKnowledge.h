@@ -21,6 +21,8 @@
 
 class Agent;
 class Controller;
+class Displayer_ABC;
+class Team;
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -36,8 +38,14 @@ class AgentKnowledge : public Entity_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const Resolver_ABC< Agent >& resolver );
+             AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
+                             const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver );
     virtual ~AgentKnowledge();
+    //@}
+
+    //! @name operations
+    //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors
@@ -59,8 +67,10 @@ private:
 public:
     Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Team >& teamResolver_;
     unsigned long nID_;
     Agent&      realAgent_;
+    const Team* team_;
     MT_Vector2D vPosition_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
@@ -70,7 +80,6 @@ public:
     OptionalValue< uint >                       nEtatOps_;
     OptionalValue< E_PerceptionResult >         nCurrentPerceptionLevel_;
     OptionalValue< E_PerceptionResult >         nMaxPerceptionLevel_;
-    OptionalValue< uint >                       nTeam_; // $$$$ AGE 2006-02-21: resolve
     OptionalValue< E_NatureLevel >              nLevel_;
     OptionalValue< E_UnitNatureWeapon >         nWeapon_;
     OptionalValue< E_UnitNatureSpecialization > nSpecialization_;

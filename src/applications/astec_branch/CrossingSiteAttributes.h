@@ -18,6 +18,7 @@
 
 class Controller;
 class Object_ABC;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  CrossingSiteAttributes
@@ -40,6 +41,7 @@ public:
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:

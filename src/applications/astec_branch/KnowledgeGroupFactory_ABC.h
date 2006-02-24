@@ -11,6 +11,7 @@
 #define __KnowledgeGroupFactory_ABC_h_
 
 class KnowledgeGroup;
+class Team;
 
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
@@ -30,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id ) = 0; // $$$$ AGE 2006-02-15: team
+    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id, const Team& team ) = 0;
     //@}
 };
 

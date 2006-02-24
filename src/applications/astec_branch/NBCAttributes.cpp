@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "NBCAttributes.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttributes constructor
@@ -19,7 +20,7 @@ NBCAttributes::NBCAttributes( Controller& controller )
     : controller_( controller )
     , set_( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ NBCAttributes::NBCAttributes( Controller& controller )
 // -----------------------------------------------------------------------------
 NBCAttributes::~NBCAttributes()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -79,4 +80,14 @@ void NBCAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 void NBCAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttributes::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void NBCAttributes::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Nuage/Zone NBC" )
+        .Display( "Agent NBC:", nbcId_ ); // $$$$ AGE 2006-02-17: resolve
 }

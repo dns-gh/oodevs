@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "CampAttributes.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: CampAttributes constructor
@@ -20,7 +21,7 @@ CampAttributes::CampAttributes( Controller& controller, const Resolver_ABC< Agen
     , resolver_( resolver )
     , tc2_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +30,7 @@ CampAttributes::CampAttributes( Controller& controller, const Resolver_ABC< Agen
 // -----------------------------------------------------------------------------
 CampAttributes::~CampAttributes()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,4 +79,13 @@ void CampAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 void CampAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CampAttributes::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void CampAttributes::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Camp" ).Display( "TC2:", tc2_ );
 }

@@ -55,7 +55,7 @@ public:
     // $$$$ AGE 2006-02-21: Changer ca. Le sortir, puis utiliser un resolver, ou que sais-je
     struct Humans
     {
-        int state_;
+        E_TroopHealthState state_;
         unsigned officers_;
         unsigned subOfficers_;
         unsigned troopers_;

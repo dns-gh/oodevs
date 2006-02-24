@@ -19,7 +19,7 @@ Troops::Troops( Controller& controller )
     : controller_( controller )
 {
     for( int i = 0; i < eTroopHealthStateNbrStates; ++i )
-        humans_[ i ].state_ = i;
+        humans_[ i ].state_ = E_TroopHealthState( i );
 }
 
 // -----------------------------------------------------------------------------

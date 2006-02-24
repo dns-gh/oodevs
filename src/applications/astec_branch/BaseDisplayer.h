@@ -12,7 +12,10 @@
 
 #include "Displayer_ABC.h"
 class Agent;
+class Object_ABC;
+class Team;
 class DotationType;
+class EquipmentType;
 
 // =============================================================================
 /** @class  BaseDisplayer
@@ -23,7 +26,10 @@ class DotationType;
 class BaseDisplayer : public Displayer_ABC
                   , public Caller< bool >
                   , public Caller< Agent >
+                  , public Caller< Object_ABC >
+                  , public Caller< Team >
                   , public Caller< DotationType >
+                  , public Caller< EquipmentType >
 {
 
 public:
@@ -44,7 +50,10 @@ private:
     //@{
     virtual void Call( const bool& value );
     virtual void Call( const Agent& value );
+    virtual void Call( const Object_ABC& value );
+    virtual void Call( const Team& value );
     virtual void Call( const DotationType& value );
+    virtual void Call( const EquipmentType& value );
     //@}
 };
 

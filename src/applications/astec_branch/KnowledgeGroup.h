@@ -44,12 +44,13 @@ class KnowledgeGroup : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( uint32 nId, Controller& controller );
+             KnowledgeGroup( uint32 nId, Controller& controller, const Team& team );
     virtual ~KnowledgeGroup();
     //@}
 
     //! @name Accessors & Modifiers
     //@{
+    const Team& GetTeam() const;
     unsigned long GetId() const;
     std::string GetName() const;
     void AddAutomat( unsigned long id, Agent& automat );
@@ -68,6 +69,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
+    const Team& team_;
     uint32      nID_;
     //@}
 

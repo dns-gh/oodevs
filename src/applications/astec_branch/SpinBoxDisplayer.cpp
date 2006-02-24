@@ -8,106 +8,105 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "ListItemDisplayer.h"
+#include "SpinBoxDisplayer.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer constructor
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer constructor
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ListItemDisplayer::ListItemDisplayer()
-    : item_( 0 )
-    , column_( -1 )
+SpinBoxDisplayer::SpinBoxDisplayer( QWidget* parent, const char* name, int min, int max, int step )
+{
+    new QLabel( qApp->tr( name ), parent );
+    edit_ = new QSpinBox( min, max, step, parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpinBoxDisplayer destructor
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+SpinBoxDisplayer::~SpinBoxDisplayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer destructor
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer::SubItem
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ListItemDisplayer::~ListItemDisplayer()
+Displayer_ABC& SpinBoxDisplayer::SubItem( const char* )
+{
+    throw std::runtime_error( __FUNCTION__ ); // $$$$ AGE 2006-02-23: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpinBoxDisplayer::StartDisplay
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void SpinBoxDisplayer::StartDisplay()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::AddColumn
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer::DisplayFormatted
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ListItemDisplayer& ListItemDisplayer::AddColumn( const char* column )
+void SpinBoxDisplayer::DisplayFormatted( const QString& )
 {
-    columns_.push_back( column );
-    return *this;
+    throw std::runtime_error( __FUNCTION__ ); // $$$$ AGE 2006-02-23: 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::operator()
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer::EndDisplay
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-Displayer_ABC& ListItemDisplayer::operator()( QListViewItem* item )
+void SpinBoxDisplayer::EndDisplay()
 {
-    item_ = item;
-    return *this;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::SubItem
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer::Call
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-Displayer_ABC& ListItemDisplayer::SubItem( const char* name )
+void SpinBoxDisplayer::Call( const double& value )
 {
-    column_ = FindColumn( name );
-    return *this;
+    edit_->setValue( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::StartDisplay
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer::Call
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ListItemDisplayer::StartDisplay()
+void SpinBoxDisplayer::Call( const float& value )
 {
-    message_ = "";
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::DisplayFormatted
-// Created: AGE 2006-02-22
-// -----------------------------------------------------------------------------
-void ListItemDisplayer::DisplayFormatted( const QString& formatted )
-{
-    message_ += formatted;
+    edit_->setValue( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::EndDisplay
-// Created: AGE 2006-02-22
+// Name: SpinBoxDisplayer::Call
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ListItemDisplayer::EndDisplay()
+void SpinBoxDisplayer::Call( const int& value )
 {
-    if( ! item_ )
-        throw std::runtime_error( "ListItemDisplayer : Item not set" );
-    if( column_ < 0 )
-        throw std::runtime_error( "ListItemDisplayer : Colunm not set" );
-    item_->setText( column_, message_ );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::FindColumn
-// Created: AGE 2006-02-22
-// -----------------------------------------------------------------------------
-int ListItemDisplayer::FindColumn( const char* name ) const
-{
-    for( int i = 0; i < columns_.size(); ++i )
-        if( columns_[i] == name )
-            return i;
-    throw std::runtime_error( std::string( "Column '" ) + name + "' does not exist" );
+    edit_->setValue( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListItemDisplayer::Hide
+// Name: SpinBoxDisplayer::Call
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void SpinBoxDisplayer::Call( const Unit& value )
+{
+    edit_->setSuffix( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpinBoxDisplayer::Hide
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ListItemDisplayer::Hide()
+void SpinBoxDisplayer::Hide()
 {
-
+    // NOTHING
 }

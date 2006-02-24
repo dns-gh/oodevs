@@ -6,122 +6,92 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-10-19 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/PopulationKnowledgePanel.h $
-// $Author: Sbo $
-// $Modtime: 5/04/05 18:35 $
-// $Revision: 8 $
-// $Workfile: PopulationKnowledgePanel.h $
-//
-// *****************************************************************************
 
 #ifndef __PopulationKnowledgePanel_h_
 #define __PopulationKnowledgePanel_h_
 
-#include "Types.h"
 #include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "KnowledgeGroupSelectionObserver.h"
 
-class Gtia;
+class Controller;
+class ActionController;
+class DisplayBuilder;
+template< typename T > class ListDisplayer;
+class PopulationKnowledges;
 class PopulationKnowledge;
-class PopulationConcentrationKnowledge;
 class PopulationFlowKnowledge;
-class ActionContext;
-class SelectedElement;
-class QCheckBox;
-class QTable;
-class Display;
+class PopulationConcentrationKnowledge;
+class KnowledgeGroup;
+class Agent;
+class Displayer_ABC;
+class PopupulationPart_ABC;
 
 // =============================================================================
 // Created: SBO 2005-10-19
 // =============================================================================
 class PopulationKnowledgePanel : public InfoPanel_ABC
+                               , private Observer_ABC
+                               , public KnowledgeGroupSelectionObserver
+                               , public ElementObserver_ABC< PopulationKnowledges >
+                               , public ElementObserver_ABC< PopulationKnowledge >
+                               , public ElementObserver_ABC< PopulationFlowKnowledge >
+                               , public ElementObserver_ABC< PopulationConcentrationKnowledge >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( PopulationKnowledgePanel );
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationKnowledgePanel( QWidget* pParent );
+             PopulationKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~PopulationKnowledgePanel();
     //@}
 
-protected:
-    //! @name Update/Clean display
+    //! @name Operations
     //@{
-    virtual void OnUpdate        ();
-    virtual void OnClearSelection();
+    void Display( const PopulationKnowledge& part, Displayer_ABC& displayer );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    PopulationKnowledgePanel( const PopulationKnowledgePanel& );
+    PopulationKnowledgePanel& operator=( const PopulationKnowledgePanel& );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void      UpdateList     ();
-    void      UpdateSelected ();
-    Gtia* GetSelectedGtia();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnSelectionChanged             ( QListViewItem* pItem );
-    void OnRequestCenter                ();
-
-    void OnKnowledgeCreated             ( Gtia& gtia, PopulationKnowledge& knowledge );
-    void OnKnowledgeUpdated             ( Gtia& gtia, PopulationKnowledge& knowledge );
-    void OnKnowledgeDeleted             ( Gtia& gtia, PopulationKnowledge& knowledge );
-
-    void OnConcentrationKnowledgeCreated( Gtia& gtia, PopulationConcentrationKnowledge& knowledge );
-    void OnConcentrationKnowledgeUpdated( Gtia& gtia, PopulationConcentrationKnowledge& knowledge );
-    void OnConcentrationKnowledgeDeleted( Gtia& gtia, PopulationConcentrationKnowledge& knowledge );
-
-    void OnFlowKnowledgeCreated         ( Gtia& gtia, PopulationFlowKnowledge& knowledge );
-    void OnFlowKnowledgeUpdated         ( Gtia& gtia, PopulationFlowKnowledge& knowledge );
-    void OnFlowKnowledgeDeleted         ( Gtia& gtia, PopulationFlowKnowledge& knowledge );
-
-    void OnContextMenuRequested         ( QListViewItem* pItem, const QPoint&            pos       );
-    void ToggleDisplayOwnTeam           ();
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void NewPopupMenu   ( QPopupMenu&          popupMenu, const ActionContext& action );
-    void ElementSelected( SelectedElement& selectedElement );
-    void CenterOnPoint  ( const MT_Vector2D&   vPoint );
-    //@}
-
-private:
-    //! @name Enums
-    //@{
-    enum E_ItemType
-    {
-        ePopulation,
-        eConcentration,
-        eFlow
-    };
+    virtual void NotifyUpdated( const PopulationKnowledges& element );
+    virtual void NotifyUpdated( const PopulationKnowledge& element );
+    virtual void NotifyUpdated( const PopulationFlowKnowledge& element );
+    virtual void NotifyUpdated( const PopulationConcentrationKnowledge& element );
+    virtual void Select( const KnowledgeGroup* element );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Gtia*                             pGtia_;
-    PopulationKnowledge*              pSelectedKnowledge_;
-    PopulationConcentrationKnowledge* pSelectedConcentrationKnowledge_;
-    PopulationFlowKnowledge*          pSelectedFlowKnowledge_;
+    ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
+    DisplayBuilder* display_;
+    ListDisplayer< PopulationKnowledgePanel >* perceptionList_;
+    const PopulationKnowledges* selected_;
+    const PopulationKnowledge* subSelected_; // $$$$ AGE 2006-02-24: Watch for deletions
+    const PopupulationPart_ABC* selectedPart_;
+//    PopulationKnowledge*              pSelectedKnowledge_;
+//    PopulationConcentrationKnowledge* pSelectedConcentrationKnowledge_;
+//    PopulationFlowKnowledge*          pSelectedFlowKnowledge_;
+//
+//    QListView* pKnowledgeListView_;
+//    QListView* pPerceptionListView_;
+//    QCheckBox* pOwnTeamCheckBox_;
+//    
 
-    QListView* pKnowledgeListView_;
-    QListView* pPerceptionListView_;
-    QCheckBox* pOwnTeamCheckBox_;
-    
-    Display* display_;
-
-    QGroupBox* pFlowPartBox_;
-    QLabel*    pFlowPartNbr_;
-    QTable*    pFlowPartTable_;
-
-    QPopupMenu* pPopupMenu_;
+//
+//    QGroupBox* pFlowPartBox_;
+//    QLabel*    pFlowPartNbr_;
+//    QTable*    pFlowPartTable_;
+//
+//    QPopupMenu* pPopupMenu_;
     //@}
 };
 

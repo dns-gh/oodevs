@@ -23,7 +23,7 @@
 #include "InfoPanel_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "SelectionObserver_ABC.h"
+#include "KnowledgeGroupSelectionObserver.h"
 
 template< typename T > class ListDisplayer;
 class Controller;
@@ -32,7 +32,6 @@ class AgentKnowledges;
 class AgentKnowledge;
 class DisplayBuilder;
 class KnowledgeGroup;
-class Agent;
 class PerceptionMap;
 class Perception;
 class Displayer_ABC;
@@ -48,9 +47,7 @@ class AgentKnowledgePanel : public InfoPanel_ABC
                           , public ElementObserver_ABC< AgentKnowledges >
                           , public ElementObserver_ABC< AgentKnowledge >
                           , public ElementObserver_ABC< PerceptionMap >
-                          , public SelectionObserver_ABC
-                          , public SelectionObserver_Base< KnowledgeGroup >
-                          , public SelectionObserver_Base< Agent >
+                          , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
 public:
@@ -79,10 +76,7 @@ private:
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const AgentKnowledge& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
-    virtual void Select( const KnowledgeGroup& element );
-    virtual void Select( const Agent& element );
+    void Select( const KnowledgeGroup* group );
     void Select( const AgentKnowledges* k );
     void Display( const AgentKnowledge& k );
     //@}
@@ -101,12 +95,8 @@ private:
     ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
     const AgentKnowledges* selected_;
-    const AgentKnowledges* newSelection_;
-    const AgentKnowledge* subSelected_;
-//    Gtia* pGtia_;
+    const AgentKnowledge* subSelected_; // $$$$ AGE 2006-02-24: Watch for deletions !
 //    QCheckBox* pOwnTeamCheckBox_;
-//    AgentKnowledge* pSelectedKnowledge_;
-    
 //    QPopupMenu* pPopupMenu_;
     //@}
 };

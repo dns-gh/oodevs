@@ -10,6 +10,8 @@
 #include "astec_pch.h"
 #include "CrossingSiteAttributes.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttributes constructor
@@ -19,7 +21,7 @@ CrossingSiteAttributes::CrossingSiteAttributes( Controller& controller )
     : controller_( controller )
     , set_( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +30,7 @@ CrossingSiteAttributes::CrossingSiteAttributes( Controller& controller )
 // -----------------------------------------------------------------------------
 CrossingSiteAttributes::~CrossingSiteAttributes()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,4 +77,17 @@ void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Site de franchissement" )
+                .Display( "Largeur:", width_ * Units::meters )
+                .Display( "Profondeur:", depth_ * Units::meters )
+                .Display( "Vitesse courant:", speed_ * Units::metersPerSecond )
+                .Display( "Berges à aménager:", needsConstruction_ );
 }

@@ -32,13 +32,12 @@ InfoPanel_ABC::InfoPanel_ABC( InfoPanel* parent, const QString& name )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-//    setResizePolicy( AutoOneFit );
+    setResizePolicy( AutoOneFit );
     setFrameStyle( QFrame::Box | QFrame::Sunken );
 
     addChild( pBox_ );
     pBox_->setMargin( 5 );
     pBox_->setSpacing( 5 );
-    pBox_->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +56,6 @@ InfoPanel_ABC::~InfoPanel_ABC()
 void InfoPanel_ABC::Show()
 {
     parent_->Add( this, name_ );
-    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +65,6 @@ void InfoPanel_ABC::Show()
 void InfoPanel_ABC::Hide()
 {
     parent_->Remove( this );
-    hide();
 }
 
 // -----------------------------------------------------------------------------

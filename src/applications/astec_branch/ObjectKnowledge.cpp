@@ -14,6 +14,10 @@
 #include "Controller.h"
 #include "App.h"
 #include "World.h"
+#include "Displayer_ABC.h"
+#include "Units.h"
+#include "Object_ABC.h"
+#include "ObjectType.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
@@ -98,4 +102,32 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 Object_ABC* ObjectKnowledge::GetRealObject() const
 {
     return pRealObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Display
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Détails" )
+                .Display( "Id:", id_ )
+                .Display( "Objet associé:", pRealObject_ )
+//                .Display( "Position:", IfSet( k.strPos_, k.strPos_ ) ) // $$$$ AGE 2006-02-24: 
+                .Display( "Type:", type_ )
+                .Display( "Construction:", nPourcentageConstruction_ * Units::percentage )
+                .Display( "Valeur:", nPourcentageValorisation_ * Units::percentage )
+                .Display( "Contournement:", nPourcentageContournement_* Units::percentage )
+                .Display( "En préparation:", bEnPreparation_ )
+                .Display( "Perçu:", bIsPerceived_ )
+                .Display( "Pertinence:", nRelevance_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::DisplayInList
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
+{
+    displayer.Item( "Objets connus" ).Start( id_ ).End(); // $$$$ AGE 2006-02-24: 
 }

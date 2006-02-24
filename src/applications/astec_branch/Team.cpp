@@ -54,7 +54,7 @@ void Team::CreateKnowledgeGroup( unsigned int id )
 {
     if( ! Resolver< KnowledgeGroup >::Find( id ) )
     {
-        KnowledgeGroup* group = factory_.CreateKnowledgeGroup( id );
+        KnowledgeGroup* group = factory_.CreateKnowledgeGroup( id, *this );
         Resolver< KnowledgeGroup >::Register( id, *group );
         controller_.Update( *this );
     };

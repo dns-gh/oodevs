@@ -92,11 +92,11 @@ void DisplayBuilder::EndDisplay()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayBuilder::Clear
-// Created: AGE 2006-02-09
+// Name: DisplayBuilder::Hide
+// Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void DisplayBuilder::Clear()
+void DisplayBuilder::Hide()
 {
     for( IT_Groups it = groups_.begin(); it != groups_.end(); ++it )
-        it->second->Clear();
+        it->second->Hide();
 }

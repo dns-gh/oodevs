@@ -20,35 +20,40 @@ class KnowledgeGroup;
 class PopulationConcentration;
 class PopulationKnowledge;
 class Controller;
+class Displayer_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
 class PopulationConcentrationKnowledge
 {
-    MT_COPYNOTALLOWED( PopulationConcentrationKnowledge );
     friend class PopulationKnowledgePanel;
     friend class GLTool;
         
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit PopulationConcentrationKnowledge( Controller& controller, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
+             PopulationConcentrationKnowledge( Controller& controller, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
     virtual ~PopulationConcentrationKnowledge();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors
     //@{
-    uint                               GetID                 () const;
-    const KnowledgeGroup&                    GetKnowledgeGroup               () const;
+    uint                           GetID                 () const;
+    const KnowledgeGroup&          GetKnowledgeGroup     () const;
     const PopulationKnowledge*     GetPopulationKnowledge() const;
     const PopulationConcentration* GetConcentration      () const;
-    const MT_Vector2D&                 GetPosition           () const;
-    uint                               GetNbrAliveHumans     () const;
-    uint                               GetNbrDeadHumans      () const;
-    E_PopulationAttitude               GetAttitude           () const;
-    MT_Float                           GetRelevance          () const;
-    bool                               IsPerceived           () const;
+    const MT_Vector2D&             GetPosition           () const;
+    uint                           GetNbrAliveHumans     () const;
+    uint                           GetNbrDeadHumans      () const;
+    E_PopulationAttitude           GetAttitude           () const;
+    MT_Float                       GetRelevance          () const;
+    bool                           IsPerceived           () const;
     //@}
 
     //! @name Network
@@ -57,6 +62,15 @@ public:
     //@}
 
 private:
+    //! @name Copy / Assignment
+    //@{
+    PopulationConcentrationKnowledge( const PopulationConcentrationKnowledge& );
+    PopulationConcentrationKnowledge& operator=( const PopulationConcentrationKnowledge& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     Controller& controller_;
     const uint                                   nID_;
           KnowledgeGroup*                              pKnowledgeGroup_;
@@ -68,6 +82,7 @@ private:
           OptionalValue< E_PopulationAttitude >  eAttitude_;
           OptionalValue< bool >                  bIsPerceived_;
           MT_Float                               rRelevance_;
+    //@}
 };
 
 

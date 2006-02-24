@@ -8,77 +8,77 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "LabelDisplayer.h"
-#include "Agent.h"
-#include "DotationType.h"
-#include <qlabel.h>
+#include "CheckBoxDisplayer.h"
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer constructor
-// Created: AGE 2006-02-09
+// Name: CheckBoxDisplayer constructor
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-LabelDisplayer::LabelDisplayer( QWidget* parent, const char* name, bool bold )
+CheckBoxDisplayer::CheckBoxDisplayer( QWidget* parent, const char* name )
 {
     new QLabel( qApp->tr( name ), parent );
-    valueLabel_ = new QLabel( parent );
-    if( bold )
-    {
-        QFont boldFont = valueLabel_->font();
-        boldFont.setBold( true );
-        valueLabel_->setFont( boldFont );
-    }
+    box_ = new QCheckBox( parent );
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer destructor
-// Created: AGE 2006-02-09
+// Name: CheckBoxDisplayer destructor
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-LabelDisplayer::~LabelDisplayer()
+CheckBoxDisplayer::~CheckBoxDisplayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::SubItem
-// Created: AGE 2006-02-22
+// Name: CheckBoxDisplayer::SubItem
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-Displayer_ABC& LabelDisplayer::SubItem( const char* )
+Displayer_ABC& CheckBoxDisplayer::SubItem( const char* )
 {
     throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::StartDisplay
-// Created: AGE 2006-02-22
+// Name: CheckBoxDisplayer::StartDisplay
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void LabelDisplayer::StartDisplay()
+void CheckBoxDisplayer::StartDisplay()
 {
-    message_ = "";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::DisplayFormatted
-// Created: AGE 2006-02-22
+// Name: CheckBoxDisplayer::DisplayFormatted
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void LabelDisplayer::DisplayFormatted( const QString& formatted )
+void CheckBoxDisplayer::DisplayFormatted( const QString& )
 {
-    message_ += formatted;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::EndDisplay
-// Created: AGE 2006-02-22
+// Name: CheckBoxDisplayer::EndDisplay
+// Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void LabelDisplayer::EndDisplay()
+void CheckBoxDisplayer::EndDisplay()
 {
-    valueLabel_->setText( message_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LabelDisplayer::Hide
+// Name: CheckBoxDisplayer::Call
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void CheckBoxDisplayer::Call( const bool& value )
+{
+    box_->setChecked( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckBoxDisplayer::Hide
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void LabelDisplayer::Hide()
+void CheckBoxDisplayer::Hide()
 {
     // NOTHING
 }

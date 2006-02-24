@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "RotaAttributes.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: RotaAttributes constructor
@@ -19,7 +20,7 @@ RotaAttributes::RotaAttributes( Controller& controller )
     : controller_( controller )
     , set_( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ RotaAttributes::RotaAttributes( Controller& controller )
 // -----------------------------------------------------------------------------
 RotaAttributes::~RotaAttributes()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,4 +76,15 @@ void RotaAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 void RotaAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaAttributes::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void RotaAttributes::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "ROTA" )
+                .Display( "Danger:", danger_ )
+                .Display( "Agents NBC:", agents_ ); // $$$$ AGE 2006-02-23: resolve
 }

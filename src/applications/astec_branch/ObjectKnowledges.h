@@ -29,7 +29,7 @@ class ObjectKnowledges : public Extension_ABC
                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
-                       , private Resolver< ObjectKnowledge >
+                       , public Resolver< ObjectKnowledge >
 {
 
 public:

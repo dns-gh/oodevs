@@ -35,7 +35,9 @@ public:
     //! @name Operations
     //@{
     GroupDisplayer& AddLabel( const char* name, bool bold = false );
-    void Clear();
+    GroupDisplayer& AddSpinBox( const char* name, int min, int max, int step );
+    GroupDisplayer& AddCheckBox( const char* name );
+    virtual void Hide();
     //@}
 
 private:
@@ -47,8 +49,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, LabelDisplayer* > T_Items;
-    typedef T_Items::iterator                    IT_Items;
+    typedef std::map< std::string, Displayer_ABC* > T_Items;
+    typedef T_Items::iterator                      IT_Items;
     //@}
 
     //! @name Helpers

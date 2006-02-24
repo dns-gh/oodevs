@@ -22,6 +22,7 @@
 #include "TeamsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
@@ -88,3 +89,21 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
     controller_.Update( *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::Display
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
+{
+//    displayer.Group( "Concentration" )
+//                .Display( "Id:" )
+//                .Display( "Concentration associée:" )
+//                .Display( "Position:" )
+//                .Display( "Humains vivants:" )
+//                .Display( "Humains morts:" )
+//                .Display( "Attitude:" )
+//                .Display( "Percue:" )
+//                .Display( "Pertinence:" );
+//
+//    displayer.AddGroup( "Flux" ).Hide();
+}

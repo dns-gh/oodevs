@@ -29,6 +29,11 @@ public:
     virtual ~LabelDisplayer();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Hide();
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

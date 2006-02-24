@@ -7,41 +7,38 @@
 //
 // *****************************************************************************
 
-#ifndef __Display_h_
-#define __Display_h_
+#ifndef __CheckBoxDisplayer_h_
+#define __CheckBoxDisplayer_h_
 
 #include "Displayer_ABC.h"
-#include "GroupDisplayer.h"
 
 // =============================================================================
-/** @class  DisplayBuilder
-    @brief  DisplayBuilder
-    // $$$$ AGE 2006-02-22: dégager ce bordel, faire une seule classe et un builder 
+/** @class  CheckBoxDisplayer
+    @brief  CheckBoxDisplayer
 */
-// Created: AGE 2006-02-09
+// Created: AGE 2006-02-23
 // =============================================================================
-class DisplayBuilder : public Displayer_ABC
+class CheckBoxDisplayer : public Displayer_ABC
+                        , public Caller< bool >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DisplayBuilder( QWidget* parent );
-    virtual ~DisplayBuilder();
+             CheckBoxDisplayer( QWidget* parent, const char* name );
+    virtual ~CheckBoxDisplayer();
     //@}
 
     //! @name Operations
     //@{
-    GroupDisplayer& AddGroup( const char* name );
-    virtual GroupDisplayer& Group( const char* name );
     virtual void Hide();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    DisplayBuilder( const DisplayBuilder& );            //!< Copy constructor
-    DisplayBuilder& operator=( const DisplayBuilder& ); //!< Assignement operator
+    CheckBoxDisplayer( const CheckBoxDisplayer& );            //!< Copy constructor
+    CheckBoxDisplayer& operator=( const CheckBoxDisplayer& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -50,20 +47,14 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, GroupDisplayer* > T_Groups;
-    typedef T_Groups::iterator                      IT_Groups;
+    virtual void Call( const bool& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QWidget* parent_;
-    T_Groups groups_;
+    QCheckBox* box_;
     //@}
 };
 
-#endif // __Display_h_
+#endif // __CheckBoxDisplayer_h_

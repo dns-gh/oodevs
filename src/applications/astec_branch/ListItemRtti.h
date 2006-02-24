@@ -76,28 +76,23 @@ struct ListItemRtti< const Equipment* > {
     enum { rtti = 1009 };
 };
 
-class Lend;
-template< >
-struct ListItemRtti< Lend > { // $$$$ AGE 2006-02-21: copiés ici car temporaires
-    enum { rtti = 1010 };
-};
-
-#include "Troops.h" // $$$$ AGE 2006-02-21: crap
-template< >
-struct ListItemRtti< Troops::Humans > { // $$$$ AGE 2006-02-21: copiés ici car temporaires
-    enum { rtti = 1011 };
-};
-
 class AgentKnowledge;
 template< >
 struct ListItemRtti< const AgentKnowledge* > {
+    enum { rtti = 1010 };
+};
+
+class PopulationKnowledge;
+template< >
+struct ListItemRtti< const PopulationKnowledge* > {
+    enum { rtti = 1011 };
+};
+
+class ObjectKnowledge;
+template< >
+struct ListItemRtti< const ObjectKnowledge* > {
     enum { rtti = 1012 };
 };
 
-class Perception;
-template< >
-struct ListItemRtti< Perception > {
-    enum { rtti = 1013 };
-};
 
 #endif // __ListItemRtti_h_

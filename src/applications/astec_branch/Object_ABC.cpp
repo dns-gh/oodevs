@@ -29,6 +29,9 @@
 #include "Tools.h"
 #include "FireResult.h"
 #include "Controller.h"
+#include "Units.h"
+#include "Displayer_ABC.h"
+#include "ObjectType.h"
 
 // $$$$ AGE 2006-02-16: possession des objets par la team ?
 // $$$$ AGE 2006-02-16: ou au moins les enregistrer ?
@@ -193,3 +196,37 @@ void Object_ABC::DoUpdate( const ASN1T_FireDamagesPion& message )
 //        delete *it;
 //    explosionResults_.clear();
 //}
+
+// -----------------------------------------------------------------------------
+// Name: Object_ABC::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void Object_ABC::Display( Displayer_ABC& displayer ) const
+{
+    std::string strPos;
+    App::GetApp().GetWorld().SimToMosMgrsCoord( center_, strPos );
+
+    displayer.Group( "Informations" )
+             .Display( "Id:", nId_ )
+             .Display( "Nom:", strName_ )
+             .Display( "Type:", type_.GetName() )
+             .Display( "Position:", strPos )
+             .Display( "Construction:", rConstructionPercentage_ * Units::percentage )
+             .Display( "Valorisation:", rValorizationPercentage_ * Units::percentage )
+             .Display( "Contournement:", rBypassConstructionPercentage_ * Units::percentage )
+             .Display( "En préparation:", bPrepared_ )
+             .Item( "Dotation construction:" )
+                .Start( nDotationConstruction_ )
+                .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
+    displayer.Group( "Informations" )
+             .Item( "Dotation valorisation:" )
+                .Start( nDotationValorization_ )
+                .Add( " " ).Add( valorization_ ).End();
+
+}
+
+   
+
+
+
+   

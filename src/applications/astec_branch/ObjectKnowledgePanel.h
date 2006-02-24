@@ -21,13 +21,24 @@
 
 #include "Types.h"
 #include "InfoPanel_ABC.h"
+#include "TeamSelectionObserver.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
+template< typename T > class ListDisplayer;
 class Team;
+class ObjectKnowledges;
 class ObjectKnowledge;
-class ActionContext;
-class SelectedElement;
-class QCheckBox;
-class Display;
+class CampAttributes;
+class CrossingSiteAttributes;
+class LogisticRouteAttributes;
+class NBCAttributes;
+class RotaAttributes;
+class DisplayBuilder;
+class ObjectKnowledges;
+class Controller;
+class ActionController;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledgePanel
@@ -36,62 +47,69 @@ class Display;
 // Created: APE 2004-05-04
 // =============================================================================
 class ObjectKnowledgePanel : public InfoPanel_ABC
+                           , private Observer_ABC
+                           , public ElementObserver_ABC< ObjectKnowledges >
+                           , public ElementObserver_ABC< ObjectKnowledge >
+                           , public ElementObserver_ABC< CampAttributes >
+                           , public ElementObserver_ABC< CrossingSiteAttributes >
+                           , public ElementObserver_ABC< LogisticRouteAttributes >
+                           , public ElementObserver_ABC< NBCAttributes >
+                           , public ElementObserver_ABC< RotaAttributes >
+                           , public TeamSelectionObserver
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ObjectKnowledgePanel );
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectKnowledgePanel( QWidget* pParent );
+             ObjectKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectKnowledgePanel();
     //@}
 
-private:
-    //! @name Helpers
+    //! @name Operations
     //@{
-    virtual void OnUpdate        ();
-    virtual void OnClearSelection();
-            void UpdateList      ();
-            void UpdateSelected  ();
-    Team* GetSelectedTeam( const SelectedElement& item );
+    void Display( const ObjectKnowledge& k, Displayer_ABC& displayer );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( QListViewItem* pItem );
-    void OnRequestCenter();
-
-    void OnKnowledgeCreated( Team& team, ObjectKnowledge& knowledge );
-    void OnKnowledgeUpdated( Team& team, ObjectKnowledge& knowledge );
-    void OnKnowledgeDeleted( Team& team, ObjectKnowledge& knowledge );
-    void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos );
-
-    void ToggleDisplayOwnTeam();
+    void OnSelectionChanged( QListViewItem* );
     //@}
 
-signals:
-    //! @name Signals
+private:
+    //! @name Copy / Assignment
     //@{
-    void NewPopupMenu( QPopupMenu& popupMenu, const ActionContext& action );
-    void ElementSelected( SelectedElement& selectedElement );
-    void CenterOnPoint( const MT_Vector2D& vPoint );
+    ObjectKnowledgePanel( const ObjectKnowledgePanel& );
+    ObjectKnowledgePanel& operator=( const ObjectKnowledgePanel& );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const ObjectKnowledges& element );
+    virtual void NotifyUpdated( const ObjectKnowledge& element );
+    virtual void NotifyUpdated( const CampAttributes& element );
+    virtual void NotifyUpdated( const CrossingSiteAttributes& element );
+    virtual void NotifyUpdated( const LogisticRouteAttributes& element );
+    virtual void NotifyUpdated( const NBCAttributes& element );
+    virtual void NotifyUpdated( const RotaAttributes& element );
+    template< typename T >
+    void DisplayExtension( const T& extension );
+    virtual void Select( const Team* );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Team* pTeam_;
-    QListView* pKnowledgeListView_;
-    QCheckBox* pOwnTeamCheckBox_;
+    const ObjectKnowledges* selected_;
+    ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
-    ObjectKnowledge* pSelectedKnowledge_;
+//    QCheckBox* pOwnTeamCheckBox_;
+    const ObjectKnowledge* subSelected_;
+    DisplayBuilder* display_;
 
-    Display* display_;
-
-    QListView* pPerceptionListView_;
-    QPopupMenu* pPopupMenu_;
+//    ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
+//    QPopupMenu* pPopupMenu_;
     //@}
 };
 

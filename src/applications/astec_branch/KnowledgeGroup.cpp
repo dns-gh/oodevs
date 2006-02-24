@@ -26,9 +26,10 @@ IDManager KnowledgeGroup::idManager_( 0 );
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( uint32 nId, Controller& controller )
+KnowledgeGroup::KnowledgeGroup( uint32 nId, Controller& controller, const Team& team )
     : controller_( controller )
-    , nID_      ( nId )
+    , team_( team )
+    , nID_ ( nId )
 {
     idManager_.LockIdentifier( nID_ );
 }
@@ -80,4 +81,13 @@ std::string KnowledgeGroup::GetName() const
     std::stringstream stream;
     stream << "Gtia " << nID_;
     return stream.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::GetTeam
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+const Team& KnowledgeGroup::GetTeam() const
+{
+    return team_;
 }

@@ -10,6 +10,8 @@
 #include "astec_pch.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
+#include "SpinBoxDisplayer.h"
+#include "CheckBoxDisplayer.h"
 #include <stdexcept>
 
 // -----------------------------------------------------------------------------
@@ -37,10 +39,37 @@ GroupDisplayer::~GroupDisplayer()
 // -----------------------------------------------------------------------------
 GroupDisplayer& GroupDisplayer::AddLabel( const char* name, bool bold )
 {
-    LabelDisplayer*& item = items_[ std::string( name ) ];
+    Displayer_ABC*& item = items_[ std::string( name ) ];
     if( item )
         throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
     item = new LabelDisplayer( this, name, bold );
+    return *this;
+}
+
+// $$$$ AGE 2006-02-23: factor
+// -----------------------------------------------------------------------------
+// Name: GroupDisplayer::AddSpinBox
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+GroupDisplayer& GroupDisplayer::AddSpinBox( const char* name, int min, int max, int step )
+{
+    Displayer_ABC*& item = items_[ std::string( name ) ];
+    if( item )
+        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
+    item = new SpinBoxDisplayer( this, name, min, max, step );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GroupDisplayer::AddCheckBox
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+GroupDisplayer& GroupDisplayer::AddCheckBox( const char* name )
+{
+    Displayer_ABC*& item = items_[ std::string( name ) ];
+    if( item )
+        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
+    item = new CheckBoxDisplayer( this, name );
     return *this;
 }
 
@@ -50,9 +79,10 @@ GroupDisplayer& GroupDisplayer::AddLabel( const char* name, bool bold )
 // -----------------------------------------------------------------------------
 Displayer_ABC& GroupDisplayer::SubItem( const char* name )
 {
-    LabelDisplayer* item = items_[ std::string( name ) ];
+    Displayer_ABC* item = items_[ std::string( name ) ];
     if( ! item )
         throw std::runtime_error( "Item '" + std::string( name ) + "' does not exist" );
+    show();
     return *item;
 }
 
@@ -84,11 +114,10 @@ void GroupDisplayer::EndDisplay()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GroupDisplayer::Clear
-// Created: AGE 2006-02-09
+// Name: GroupDisplayer::Hide
+// Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void GroupDisplayer::Clear()
+void GroupDisplayer::Hide()
 {
-    for( IT_Items it = items_.begin(); it != items_.end(); ++it )
-        it->second->Display( "" );
+    hide();
 }

@@ -56,17 +56,11 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
                 .AddLabel( "Id:" )
                 .AddLabel( "Nom:" )
                 .AddLabel( "Type:" )
-                .AddLabel( "Position:" );
-
-    GroupDisplayer* group = (GroupDisplayer*)&display_->Group( "Informations" );
-    new QLabel( "Construction:", group );
-    pPercentBuiltEdit_  = new QSpinBox( 0, 100, 1, group ); pPercentBuiltEdit_->setSuffix( "%" );
-    new QLabel( "Valeur:", group );
-    pPercentValueEdit_  = new QSpinBox( 0, 100, 1, group ); pPercentValueEdit_->setSuffix( "%" );
-    new QLabel( "Contournement:", group );
-    pPercentAroundEdit_ = new QSpinBox( 0, 100, 1, group ); pPercentAroundEdit_->setSuffix( "%" );
-    new QLabel( "En préparation:", group );
-    pIsUnderPrepCheckBox_ = new QCheckBox( group );
+                .AddLabel( "Position:" )
+                .AddSpinBox( "Construction:", 0, 100, 1 )
+                .AddSpinBox( "Valorisation:", 0, 100, 1 )
+                .AddSpinBox( "Contournement:", 0, 100, 1 )
+                .AddCheckBox( "En préparation:" );
 
     display_->Group( "Informations" )
                 .AddLabel( "Dotation construction:" )
@@ -88,7 +82,7 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
                 .AddLabel( "Danger:" )
                 .AddLabel( "Agents NBC:" );
 
-    display_->AddGroup( "Itinéraire Logistique" )
+    display_->AddGroup( "Itinéraire logistique" )
                 .AddLabel( "Equipé:" )
                 .AddLabel( "Débit:" )
                 .AddLabel( "Largeur:" )
@@ -174,21 +168,7 @@ void ObjectPanel::NotifyUpdated( const Object_ABC& object )
     if( selected_  != &object || ! isVisible() )
         return;
 
-    std::string strPos;
-    App::GetApp().GetWorld().SimToMosMgrsCoord( object.center_, strPos );
-
-    display_->Group( "Informations" )
-                .Display( "Id:", object.nId_ )
-                .Display( "Nom:", object.strName_ )
-                .Display( "Type:", object.type_.GetName() )
-                .Display( "Position:", strPos )
-                .Item( "Dotation construction:" )
-                    .Start( object.nDotationConstruction_ )
-                    .Add( " " ).Add( object.construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
-    display_->Group( "Informations" )
-                .Item( "Dotation valorisation:" )
-                    .Start( object.nDotationValorization_ )
-                    .Add( object.valorization_ ).End();
+    object.Display( *display_ );
 }
 
 // $$$$ AGE 2006-02-17: Factor
@@ -219,67 +199,58 @@ bool ObjectPanel::ShouldUpdate( const Extension& extension )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const CampAttributes& a )
+void ObjectPanel::NotifyUpdated( const CampAttributes& attributes )
 {
-    if( ! ShouldUpdate( a ) )
+    if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Camp" ).Display( "TC2:", a.tc2_ );
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes& a )
+void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes& attributes )
 {
-    if( ! ShouldUpdate( a ) )
+    if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Site de franchissement" )
-                .Display( "Largeur:", a.width_ * Units::meters )
-                .Display( "Profondeur:", a.depth_ * Units::meters )
-                .Display( "Vitesse courant:", a.speed_ * Units::metersPerSecond )
-                .Display( "Berges à aménager:", a.needsConstruction_ );
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes& a )
+void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes& attributes )
 {
-    if( ! ShouldUpdate( a ) )
+    if( ! ShouldUpdate( attributes ) )
         return;
-
-    display_->Group( "Itinéraire Logistique" )
-                .Display( "Equipé:", a.bLogRouteEquipped_ )
-                .Display( "Débit:", a.nLogRouteFlow_ * Units::vehiclesPerHour )
-                .Display( "Largeur:", a.nLogRouteWidth_ * Units::meters )
-                .Display( "Longueur:", a.nLogRouteLength_ * Units::meters )
-                .Display( "Poids supporté:", a.nLogRouteMaxWeight_ * Units::tons );
+    
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const NBCAttributes& a )
+void ObjectPanel::NotifyUpdated( const NBCAttributes& attributes )
 {
-    if( ! ShouldUpdate( a ) )
+    if( ! ShouldUpdate( attributes) )
         return;
 
-    display_->Group( "Nuage/Zone NBC" )
-        .Display( "Agent NBC:", a.nbcId_ ); // $$$$ AGE 2006-02-17: resolve
+    attributes.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const RotaAttributes& a )
+void ObjectPanel::NotifyUpdated( const RotaAttributes& attributes )
 {
-    display_->Group( "ROTA" )
-                .Display( "Danger:", a.danger_ )
-                .Display( "Agents NBC:", a.agents_ );
+     if( ! ShouldUpdate( attributes ) )
+        return;
+
+    attributes.Display( *display_ );
 }

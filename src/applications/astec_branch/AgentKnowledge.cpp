@@ -19,6 +19,8 @@
 #include "Model.h"
 #include "AgentsModel.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
+#include "Units.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 
@@ -26,11 +28,13 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const Resolver_ABC< Agent >& resolver  )
+AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver )
     : controller_( controller )
     , resolver_ ( resolver )
+    , teamResolver_( teamResolver )
     , nID_      ( message.oid_connaissance )
     , realAgent_( resolver_.Get( message.oid_unite_reelle ) )
+    , team_( 0 )
 {
     InterfaceContainer< Extension_ABC >::Register( *this );
 }
@@ -75,7 +79,7 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
         nSpeed_ = message.speed;
 
     if( message.m.campPresent )
-        nTeam_ = message.camp;
+        team_ = & teamResolver_.Get( message.camp );
 
     if( message.m.nature_niveauPresent )
         nLevel_ = (E_NatureLevel)message.nature_niveau;
@@ -132,4 +136,33 @@ unsigned long AgentKnowledge::GetId() const
 Agent& AgentKnowledge::GetRealAgent() const
 {
     return realAgent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Id:", nID_ )
+             .Display( "Agent associé:", realAgent_ )
+             .Display( "Position:", strPosition_ )
+             .Display( "Direction:", nDirection_ * Units::degrees )
+             .Display( "Vitesse:", nSpeed_ * Units::metersPerSecond )
+             .Display( "Etat ops.:", nEtatOps_ )
+             .Display( "Niveau de perception:", nCurrentPerceptionLevel_  )
+             .Display( "Niveau max de perception:", nMaxPerceptionLevel_ )
+             .Display( "Camp:", team_  )
+             .Display( "Niveau:", nLevel_ )
+             .Display( "Arme:", nWeapon_ )
+             .Display( "Spécialisation:", nSpecialization_ )
+             .Display( "Qualification:", nQualifier_  )
+             .Display( "Catégorie:", nCategory_ )
+             .Display( "Mobilité:", nMobility_  )
+             .Display( "Capacité mission:", nCapacity_ )
+             .Display( "Rendu:", bSurrendered_ )
+             .Display( "Fait prisonnier:", bPrisonner_ )
+             .Display( "Réfugiés pris en compte:", bRefugies_ )
+             .Display( "PC:", bIsPC_ )
+             .Display( "Pertinence:", nRelevance_ );
 }

@@ -12,6 +12,8 @@
 #include "App.h"
 #include "World.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRouteAttributes constructor
@@ -21,7 +23,7 @@ LogisticRouteAttributes::LogisticRouteAttributes( Controller& controller )
     : set_( false )
     , controller_( controller )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +32,7 @@ LogisticRouteAttributes::LogisticRouteAttributes( Controller& controller )
 // -----------------------------------------------------------------------------
 LogisticRouteAttributes::~LogisticRouteAttributes()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,4 +80,19 @@ void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes::Display
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
+{
+    
+    displayer.Group( "Itinéraire logistique" )
+                .Display( "Equipé:", bLogRouteEquipped_ )
+                .Display( "Débit:", nLogRouteFlow_ * Units::vehiclesPerHour )
+                .Display( "Largeur:", nLogRouteWidth_ * Units::meters )
+                .Display( "Longueur:", nLogRouteLength_ * Units::meters )
+                .Display( "Poids supporté:", nLogRouteMaxWeight_ * Units::tons );
 }

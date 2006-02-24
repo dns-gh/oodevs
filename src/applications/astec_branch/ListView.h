@@ -61,7 +61,7 @@ public:
         while( from != to )
         {
             if( ! currentItem  ) 
-                currentItem = new ValuedListItem( *from, parent, previousItem );
+                currentItem = new EmptyListItem( parent, previousItem );
             list_.Display( *from, currentItem );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );

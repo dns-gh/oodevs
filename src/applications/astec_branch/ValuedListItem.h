@@ -37,14 +37,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     ValuedListItem( QListView * parent );
-    ValuedListItem( QListView * parent, QListViewItem * after );
     ValuedListItem( QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    ValuedListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-
     ValuedListItem( QListViewItem * parent );
-    ValuedListItem( QListViewItem * parent, QListViewItem * after );
     ValuedListItem( QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    ValuedListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
 
     template< typename T >
     ValuedListItem( const T& value, QListView * parent );
@@ -57,6 +52,11 @@ public:
 
     template< typename T >
     ValuedListItem( const T& value, QListViewItem * parent );
+    template< >
+    ValuedListItem( QListViewItem * const & parent, QListViewItem * after );
+    template< >
+    ValuedListItem( QListView* const & parent, QListViewItem * after );
+
     template< typename T >
     ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after );
     template< typename T >
@@ -96,6 +96,15 @@ protected:
     //@{
     ValueContainer_ABC* container_;
     //@}
+};
+
+class EmptyListItem : public ValuedListItem
+{
+public:
+    EmptyListItem( QListView * parent );
+    EmptyListItem( QListViewItem * parent );
+    EmptyListItem( QListView* value, QListViewItem * parent );
+    EmptyListItem( QListViewItem* parent, QListViewItem * after );
 };
 
 // =============================================================================

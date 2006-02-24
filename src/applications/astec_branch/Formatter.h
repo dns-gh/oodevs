@@ -70,11 +70,7 @@ struct Formatter< const char* > {
     }
 };
 template< unsigned int N >
-struct Formatter< const char [N] > {
-    void operator()( const char* value, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( QString( value ) );
-    }
-};
+struct Formatter< const char [N] > : public Formatter< const char* > { };
 
 
 template< >
@@ -96,7 +92,7 @@ struct Formatter< ValueNotSet >
 {
     void operator()( const ValueNotSet& , Displayer_ABC& displayer ) const
     {
-        displayer.AddToDisplay( QString( "-" ) );
+        displayer.AddToDisplay( QString( " - " ) );
     }
 };
 
@@ -147,7 +143,17 @@ struct Formatter< UnitedValue< T > >
     void operator()( const UnitedValue< T >& element, Displayer_ABC& displayer ) const
     {
         displayer.AddToDisplay( element.value_ );
-        displayer.AddToDisplay( (const QString&)element.unit_ );
+        displayer.AddToDisplay( element.unit_ );
+    }
+};
+
+class Unit;
+template< >
+struct Formatter< Unit >
+{
+    void operator()( const Unit& element, Displayer_ABC& displayer ) const
+    {
+        displayer.AddToDisplay( (const QString&)element );
     }
 };
 

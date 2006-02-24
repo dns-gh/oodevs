@@ -7,63 +7,63 @@
 //
 // *****************************************************************************
 
-#ifndef __Display_h_
-#define __Display_h_
+#ifndef __SpinBoxDisplayer_h_
+#define __SpinBoxDisplayer_h_
 
 #include "Displayer_ABC.h"
-#include "GroupDisplayer.h"
+
+class Unit;
 
 // =============================================================================
-/** @class  DisplayBuilder
-    @brief  DisplayBuilder
-    // $$$$ AGE 2006-02-22: dégager ce bordel, faire une seule classe et un builder 
+/** @class  SpinBoxDisplayer
+    @brief  SpinBoxDisplayer
 */
-// Created: AGE 2006-02-09
+// Created: AGE 2006-02-23
 // =============================================================================
-class DisplayBuilder : public Displayer_ABC
+class SpinBoxDisplayer : public Displayer_ABC
+                       , public Caller< double >
+                       , public Caller< float >
+                       , public Caller< int >
+                       , public Caller< Unit >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DisplayBuilder( QWidget* parent );
-    virtual ~DisplayBuilder();
+             SpinBoxDisplayer( QWidget* parent, const char* name, int min, int max, int step );
+    virtual ~SpinBoxDisplayer();
     //@}
 
     //! @name Operations
     //@{
-    GroupDisplayer& AddGroup( const char* name );
-    virtual GroupDisplayer& Group( const char* name );
-    virtual void Hide();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    DisplayBuilder( const DisplayBuilder& );            //!< Copy constructor
-    DisplayBuilder& operator=( const DisplayBuilder& ); //!< Assignement operator
+    SpinBoxDisplayer( const SpinBoxDisplayer& );            //!< Copy constructor
+    SpinBoxDisplayer& operator=( const SpinBoxDisplayer& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void Hide();
     virtual Displayer_ABC& SubItem( const char* name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< std::string, GroupDisplayer* > T_Groups;
-    typedef T_Groups::iterator                      IT_Groups;
+    virtual void Call( const double& value );
+    virtual void Call( const float& value );
+    virtual void Call( const int& value );
+    virtual void Call( const Unit& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QWidget* parent_;
-    T_Groups groups_;
+    QSpinBox* edit_;
     //@}
 };
 
-#endif // __Display_h_
+#endif // __SpinBoxDisplayer_h_

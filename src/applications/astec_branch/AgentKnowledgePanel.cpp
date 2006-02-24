@@ -44,7 +44,6 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& contro
     : InfoPanel_ABC     ( pParent, tr( "C. agent" ) )
 //    , pPopupMenu_        ( new QPopupMenu( this ) )
     , selected_( 0 )
-    , newSelection_( 0 )
     , subSelected_( 0 )
     , display_( 0 )
 {
@@ -120,7 +119,9 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! isVisible() || selected_ != &knowledges )
         return;
 
-    pKnowledgeListView_->Display( knowledges.CreateIterator(), pKnowledgeListView_ );
+    pKnowledgeListView_->DeleteTail( 
+        pKnowledgeListView_->Display( knowledges.CreateIterator(), pKnowledgeListView_ )
+        );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,62 +134,23 @@ void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displ
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::BeforeSelection
+// Name: AgentKnowledgePanel::Select
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::BeforeSelection()
+void AgentKnowledgePanel::Select( const KnowledgeGroup* element )
 {
-    newSelection_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::AfterSelection
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::AfterSelection()
-{
-    if( selected_ != newSelection_ )
+    const AgentKnowledges* k = element ? element->Retrieve< AgentKnowledges >() : 0;
+    if( ! k || k != selected_ )
     {
-        selected_ = newSelection_;
-        if( selected_ )
-        {
+        selected_ = k;
+        if( selected_ ) {
+            subSelected_ = 0;
             Show();
             NotifyUpdated( *selected_ );
         }
         else
             Hide();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::Select
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Select( const KnowledgeGroup& element )
-{
-    Select( element.Retrieve< AgentKnowledges >() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::Select
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Select( const Agent& element )
-{
-    const KnowledgeGroup* kg = element.GetKnowledgeGroup();
-    if( kg )
-        Select( *kg );
-    else
-        Select( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::Select
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Select( const AgentKnowledges* k )
-{
-    newSelection_ = k;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,7 +169,7 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
         NotifyUpdated( subSelected_->Get< PerceptionMap >() );
     }
     else
-        display_->Clear();
+        display_->Hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -219,28 +181,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
     if( ! isVisible() || subSelected_ != & k )
         return;
 
-    display_->Group( "Détails" )
-                .Display( "Id:", k.GetId() )
-                .Display( "Agent associé:", k.GetRealAgent() )
-                .Display( "Position:", k.strPosition_ )
-                .Display( "Direction:", k.nDirection_ * Units::degrees )
-                .Display( "Vitesse:", k.nSpeed_ * Units::metersPerSecond )
-                .Display( "Etat ops.:", k.nEtatOps_ )
-                .Display( "Niveau de perception:", k.nCurrentPerceptionLevel_  )
-                .Display( "Niveau max de perception:", k.nMaxPerceptionLevel_ )
-//                .Display( "Camp:", IfSet( k.nTeam_, App::GetApp().GetAgentManager().FindTeam( k.nTeam_)->GetName() ) )
-                .Display( "Niveau:", k.nLevel_ )
-                .Display( "Arme:", k.nWeapon_ )
-                .Display( "Spécialisation:", k.nSpecialization_ )
-                .Display( "Qualification:", k.nQualifier_  )
-                .Display( "Catégorie:", k.nCategory_ )
-                .Display( "Mobilité:", k.nMobility_  )
-                .Display( "Capacité mission:", k.nCapacity_ )
-                .Display( "Rendu:", k.bSurrendered_ )
-                .Display( "Fait prisonnier:", k.bPrisonner_ )
-                .Display( "Réfugiés pris en compte:", k.bRefugies_ )
-                .Display( "PC:", k.bIsPC_ )
-                .Display( "Pertinence:", k.nRelevance_ );
+    k.Display( display_->Group( "Détails" ) );
 }
 
 // -----------------------------------------------------------------------------

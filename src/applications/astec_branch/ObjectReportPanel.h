@@ -19,14 +19,15 @@
 #ifndef __ObjectReportPanel_h_
 #define __ObjectReportPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "InfoPanel_ABC.h"
+#include "SelectionObserver_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "Observer_ABC.h"
 
 class Object_ABC;
 class FireResultListView;
+class Controller;
+class ActionController;
 
 // =============================================================================
 /** @class  ObjectReportPanel
@@ -35,33 +36,35 @@ class FireResultListView;
 // Created: SBO 2005-09-08
 // =============================================================================
 class ObjectReportPanel : public InfoPanel_ABC
+                        , public Observer_ABC
+                        , public ElementObserver_ABC< Object_ABC > // $$$$ AGE 2006-02-23: 
+                        , public SelectionObserver< Object_ABC >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ObjectReportPanel );
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectReportPanel( QWidget* pParent );
+             ObjectReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectReportPanel();
     //@}
 
 private:
-    //! @name Operations
+    //! @name Copy/Assignment
     //@{
-    virtual void OnClearSelection();
+    ObjectReportPanel( const ObjectReportPanel& );
+    ObjectReportPanel& operator=( const ObjectReportPanel& );
     //@}
 
-private slots:
     //! @name Helpers
     //@{
-    virtual void OnUpdate();
-    virtual void OnObjectUpdated( Object_ABC& object );
+    virtual void NotifyUpdated( const Object_ABC& );
+    virtual void NotifyDeleted( const Object_ABC& );
+    virtual void NotifySelected( const Object_ABC* );
     //@}
+
 private:
     //! @name Member data
     //@{
-    FireResultListView* pFireResultListView_;
+    const Object_ABC* selected_;
     //@}
 };
 

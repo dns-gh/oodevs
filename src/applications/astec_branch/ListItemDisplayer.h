@@ -31,6 +31,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Hide();
     ListItemDisplayer& AddColumn( const char* column );
 
     Displayer_ABC& operator()( QListViewItem* item );

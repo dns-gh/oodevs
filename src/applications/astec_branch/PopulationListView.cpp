@@ -55,7 +55,9 @@ void PopulationListView::NotifyCreated( const Population& popu )
     const Team& team = popu.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
+    {
         teamItem = new ValuedListItem( &team, this, team.GetName().c_str() );
+    }
     new ValuedListItem( &popu, teamItem, popu.GetName().c_str() );
 }
     

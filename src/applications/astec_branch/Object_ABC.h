@@ -31,6 +31,7 @@ class Controller;
 class Team;
 class ObjectType;
 class DotationType;
+class Displayer_ABC;
 
 // =============================================================================
 // Created: SBO 2005-09-02
@@ -50,6 +51,11 @@ public:
                          const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
                          const Resolver_ABC< DotationType >& dotationResolver );
     virtual ~Object_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors

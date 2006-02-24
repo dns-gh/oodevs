@@ -17,6 +17,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 
+class Displayer_ABC;
 class Object_ABC;
 class Controller;
 class Agent;
@@ -44,6 +45,8 @@ public:
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
+    void DisplayInList( Displayer_ABC& displayer ) const;
     Object_ABC* GetRealObject() const;
     //@}
 
@@ -72,7 +75,7 @@ private:
     Controller& controller_;
 
     unsigned long id_;
-    unsigned long type_;
+    unsigned long type_; // $$$$ AGE 2006-02-24: resolve !
 
     
     T_PointVector points_;

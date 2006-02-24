@@ -11,6 +11,9 @@
 #include "BaseDisplayer.h"
 #include "Agent.h"
 #include "DotationType.h"
+#include "Team.h"
+#include "EquipmentType.h"
+#include "Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -55,4 +58,31 @@ void BaseDisplayer::Call( const Agent& value )
 void BaseDisplayer::Call( const DotationType& value )
 {
     AddToDisplay( QString( value.GetCategory().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Team& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-02-23
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const EquipmentType& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Object_ABC& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
 }
