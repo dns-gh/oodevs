@@ -29,8 +29,8 @@ class DEC_Path_KnowledgeObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Path_KnowledgeObject( const DEC_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
-            ~DEC_Path_KnowledgeObject();
+    DEC_Path_KnowledgeObject( const DEC_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+    ~DEC_Path_KnowledgeObject();
     //@}
 
     //! @name Copy/Assignement
@@ -58,7 +58,5 @@ private:
     MT_Float         rCostOut_;
     //@}
 };
-
-#include "DEC_Path_KnowledgeObject.inl"
 
 #endif // __DEC_Path_KnowledgeObject_h_

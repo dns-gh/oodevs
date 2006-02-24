@@ -71,6 +71,7 @@ private:
     MT_Float GetFuseauxCost        ( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     MT_Float GetObjectsCost        ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     MT_Float GetEnemiesCost        ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    MT_Float GetPopulationsCost    ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 
 private:
@@ -114,6 +115,9 @@ private:
 
     // Enemies
     const MT_Float     rEnemyMaximumCost_;
+
+    // Populations
+    const MT_Float     rPopulationMaximumCost_;
 };
 
 #endif // __DEC_Agent_PathfinderRule_h_

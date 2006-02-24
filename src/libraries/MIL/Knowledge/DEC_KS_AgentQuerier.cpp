@@ -436,6 +436,16 @@ void DEC_KS_AgentQuerier::GetObjectsColliding( T_KnowledgeObjectDiaIDVector& con
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetPopulations
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentQuerier::GetPopulations( T_KnowledgePopulationVector& container ) const
+{
+    assert( pPion_ );
+    pPion_->GetKnowledgeGroup().GetKSQuerier().GetPopulations( container );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentQuerier::GetPopulationsColliding
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

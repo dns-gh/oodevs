@@ -42,6 +42,4 @@ private:
     DEC_Population_PathfinderRule& rule_;
 };
 
-#include "DEC_Population_PathSection.inl"
-
 #endif // __DEC_Population_PathSection_h_

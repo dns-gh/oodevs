@@ -896,7 +896,7 @@ void GLTool::Draw( PopulationConcentration& concentration, E_State nState /*= eN
                       /   concentration.GetPopulation().GetType().GetConcentrationDensity();
     // draw the whole population
     glLineWidth( 1 );
-    DrawCircle( concentration.GetPos(), std::max< float >(100, std::sqrt( rSurface / MT_PI )), true );
+    DrawCircle( concentration.GetPos(), std::max< float >( 10.0f, std::sqrt( rSurface / MT_PI ) ), true );
     // draw dead people above
     glColor4d( COLOR_BLACK );
     rSurface = concentration.GetDeadHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();

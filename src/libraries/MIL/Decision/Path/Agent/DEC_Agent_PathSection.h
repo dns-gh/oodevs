@@ -41,6 +41,4 @@ private:
     TerrainRule_ABC& rule_;
 };
 
-#include "DEC_Agent_PathSection.inl"
-
 #endif // __DEC_Agent_PathSection_h_

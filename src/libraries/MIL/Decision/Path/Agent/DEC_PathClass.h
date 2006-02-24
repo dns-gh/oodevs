@@ -23,6 +23,7 @@ class DEC_PathType;
 class DEC_Path;
 class MIL_AgentPion;
 class MIL_RealObjectType;
+class MIL_PopulationAttitude;
 class TerrainRule_ABC;
 
 // =============================================================================
@@ -71,11 +72,15 @@ public:
 
           bool         AvoidObjects                        () const;
           bool         AvoidEnemies                        () const;
+          bool         AvoidPopulations                    () const;
 
           MT_Float     GetEnemyCostOnContact               () const;
           MT_Float     GetEnemyCostAtSecurityRange         () const;
           MT_Float     GetEnemyMaximumCost                 () const;
           MT_Float     GetObjectCosts                      ( const MIL_RealObjectType& objectType ) const;
+          MT_Float     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
+          MT_Float     GetPopulationSecurityRange          () const;
+          MT_Float     GetPopulationMaximumCost            () const;
 
           bool         IsShort                             () const;
     //@}
@@ -88,6 +93,7 @@ private:
     void ReadDangerDirection( MIL_InputArchive& archive );
     void ReadEnemiesCost    ( MIL_InputArchive& archive );
     void ReadTerrains       ( MIL_InputArchive& archive, TerrainData& data );
+    void ReadPopulationsCost( MIL_InputArchive& archive );
     //@}
 
 private:
@@ -125,6 +131,9 @@ private:
     MT_Float rEnemyCostOnContact_;
     MT_Float rEnemyCostAtSecurityRange_;
     MT_Float rEnemyMaximumCost_;
+
+    MT_Float rPopulationSecurityRange_;
+    MT_Float rPopulationMaximumCost_;
     //@}
 
 private:
@@ -135,11 +144,14 @@ private:
     typedef std::pair< bool /*bFlying*/, bool /*, bAutonomous*/> T_BooleanPair;
     typedef std::pair< std::string, T_BooleanPair >              T_RuleType;
     typedef std::map< T_RuleType, DEC_PathClass* >               T_Rules;
+
+    typedef std::map< const MIL_PopulationAttitude*, MT_Float >  T_PopulationAttitudeCosts;
     //@}
 
 private:
-    static T_Rules       rules_;
-    static T_ObjectCosts objectCosts_;
+    static T_Rules                   rules_;
+    static T_ObjectCosts             objectCosts_;
+    static T_PopulationAttitudeCosts populationAttitudeCosts_;
 };
 
 #include "DEC_PathClass.inl"

@@ -28,6 +28,16 @@
             <CostAtSecurityRange>0</CostAtSecurityRange>
             <MaximumCost>100</MaximumCost>
         </Enemies>
+        <Populations>
+            <SecurityRange>50</SecurityRange>
+            <MaximumCost>100</MaximumCost>
+            <CostsOnContact>
+                <CostOnContact attitude="calme">5</CostOnContact>
+                <CostOnContact attitude="agitee">10</CostOnContact>
+                <CostOnContact attitude="excitee">25</CostOnContact>
+                <CostOnContact attitude="agressive">50</CostOnContact>
+            </CostsOnContact>
+        </Populations>
     </Rule>
     
     <Rule type="movement" flying="false" autonomous="false" inherits="base">

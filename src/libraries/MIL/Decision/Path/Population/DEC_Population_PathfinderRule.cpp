@@ -65,7 +65,6 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     static const TerrainData preferedTerrain( TerrainData::SmallRoad  ()
                                       .Merge( TerrainData::MediumRoad () )
                                       .Merge( TerrainData::LargeRoad  () )
-                                      .Merge( TerrainData::Urban      () )
                                       .Merge( TerrainData::UrbanBorder() ) );
 
     const MT_Float rTerrainCost = terrainBetween.ContainsOne( preferedTerrain ) ? 0 : 10000.;

@@ -23,9 +23,11 @@
 #include "DEC_PathType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
 
-DEC_PathClass::T_Rules       DEC_PathClass::rules_;
-DEC_PathClass::T_ObjectCosts DEC_PathClass::objectCosts_;
+DEC_PathClass::T_Rules                   DEC_PathClass::rules_;
+DEC_PathClass::T_ObjectCosts             DEC_PathClass::objectCosts_;
+DEC_PathClass::T_PopulationAttitudeCosts DEC_PathClass::populationAttitudeCosts_;
 
 // =============================================================================
 // MANAGER
@@ -165,6 +167,8 @@ DEC_PathClass::DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pC
     , rEnemyCostOnContact_               ( 0 )
     , rEnemyCostAtSecurityRange_         ( 0 )
     , rEnemyMaximumCost_                 ( 100 )
+    , rPopulationSecurityRange_          ( 50 )
+    , rPopulationMaximumCost_            ( 100 )
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
@@ -206,6 +210,12 @@ DEC_PathClass::DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pC
     {
         ReadEnemiesCost( archive );
         archive.EndSection(); // Enemies
+    }
+
+    if( archive.Section( "Populations", MIL_InputArchive::eNothing ) )
+    {
+        ReadPopulationsCost( archive );
+        archive.EndSection(); // Populations
     }
 }
 
@@ -300,6 +310,32 @@ void DEC_PathClass::ReadEnemiesCost( MIL_InputArchive& archive )
     archive.ReadField( "MaximumCost"        , rEnemyMaximumCost_        , MIL_InputArchive::eNothing );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathClass::ReadPopulationsCost
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+void DEC_PathClass::ReadPopulationsCost( MIL_InputArchive& archive )
+{
+    std::string strAttitude;
+    MT_Float rCost = 0.0f;
+    archive.ReadField( "SecurityRange", rPopulationSecurityRange_, MIL_InputArchive::eNothing );
+    archive.ReadField( "MaximumCost", rPopulationMaximumCost_, MIL_InputArchive::eNothing );
+    archive.BeginList( "CostsOnContact", MIL_InputArchive::eNothing );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "CostOnContact" );
+        archive.ReadAttribute( "attitude", strAttitude );
+        const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
+        if( pAttitude )
+        {
+            archive.Read( rCost ); 
+            populationAttitudeCosts_[ pAttitude ] = rCost;
+        }
+        archive.EndSection(); // CostOnContact
+    }
+    archive.EndList(); // CostsOnContact
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -326,4 +362,16 @@ MT_Float DEC_PathClass::GetObjectCosts( const MIL_RealObjectType& objectType ) c
 {
     assert( objectCosts_.size() > objectType.GetID() );
     return objectCosts_[ objectType.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathClass::GetPopulationAttitudeCost
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+MT_Float DEC_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttitude& attitude ) const
+{
+    T_PopulationAttitudeCosts::const_iterator it = populationAttitudeCosts_.find( &attitude );
+    if( it == populationAttitudeCosts_.end() )
+        return 0.0f;
+    return it->second;
 }

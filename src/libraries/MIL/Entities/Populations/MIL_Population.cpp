@@ -403,15 +403,26 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetClosestElement
-// Created: NLD 2005-11-10
+// Name: MIL_Population::GetClosestAliveElement
+// Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Agent_ABC& reference ) const
 {
     const MT_Vector2D& position = reference.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    MIL_PopulationElement_ABC* pResult = 0;
+    MT_Float rMinDistance = 0.0f;
+    ComputeClosestAliveElement( position, pResult, rMinDistance );
+    return pResult;
+}
 
-    MIL_PopulationElement_ABC* pClosestElement = 0;
-    MT_Float                   rMinDistance    = std::numeric_limits< MT_Float >::max();
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetClosestElement
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, MT_Float& rMinDistance ) const
+{
+    pClosestElement = 0;
+    rMinDistance = std::numeric_limits< MT_Float >::max();
 
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
@@ -446,8 +457,6 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Age
             pClosestElement = *itFlow;
         }
     }
-
-    return pClosestElement;
 }
 
 // -----------------------------------------------------------------------------

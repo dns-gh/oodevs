@@ -341,26 +341,33 @@ void DEC_KS_KnowledgeGroupQuerier::GetFriendsInZone( T_KnowledgeAgentDiaIDVector
     pBlackBoard_->ApplyOnKnowledgesAgent( functor );     
 }
 
-// -----------------------------------------------------------------------------
-// Name: sPopulationKnowledgesInserter
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-class sPopulationKnowledgesInserter
+namespace
 {
-public:
-    sPopulationKnowledgesInserter( T_KnowledgePopulationDiaIDVector& container )
-        : pContainer_( &container )
+    class sDIAInserter
     {
-    }
+    public:
+        sDIAInserter( T_KnowledgePopulationDiaIDVector& container ) : pContainer_( &container ) {}
+        void operator() ( DEC_Knowledge_Population& knowledge )
+        {
+            pContainer_->push_back( (void*)knowledge.GetID() );
+        }
+    private:
+        T_KnowledgePopulationDiaIDVector* pContainer_;
+    };
 
-    void operator() ( DEC_Knowledge_Population& knowledge )
+    class sInserter
     {
-        pContainer_->push_back( (void*)knowledge.GetID() );
-    }
+    public:
+        sInserter( T_KnowledgePopulationVector& container ) : pContainer_( &container ) {}
+        void operator() ( DEC_Knowledge_Population& knowledge )
+        {
+            pContainer_->push_back( &knowledge );
+        }
+    private:
+        T_KnowledgePopulationVector* pContainer_;
+    };
 
-private:
-    T_KnowledgePopulationDiaIDVector* pContainer_;
-};
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_KnowledgeGroupQuerier::GetPopulations
@@ -370,7 +377,21 @@ void DEC_KS_KnowledgeGroupQuerier::GetPopulations( T_KnowledgePopulationDiaIDVec
 {
     container.clear();
     assert( pKnowledgeGroup_ );
-    sPopulationKnowledgesInserter functor( container );
+    sDIAInserter functor( container );
+
+    assert( pBlackBoard_ );
+    pBlackBoard_->ApplyOnKnowledgesPopulation( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgesPopulation
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+void DEC_KS_KnowledgeGroupQuerier::GetPopulations( T_KnowledgePopulationVector& container ) const
+{
+    container.clear();
+    assert( pKnowledgeGroup_ );
+    sInserter functor( container );
 
     assert( pBlackBoard_ );
     pBlackBoard_->ApplyOnKnowledgesPopulation( functor );

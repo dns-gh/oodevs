@@ -53,6 +53,4 @@ private:
     //@}
 };
 
-#include "DEC_Path_KnowledgeAgent.inl"
-
 #endif // __DEC_Path_KnowledgeAgent_h_

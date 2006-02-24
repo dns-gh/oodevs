@@ -80,6 +80,7 @@ public:
     DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter ) const;
     DEC_Knowledge_Object* GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter ) const;
     
+    void                  GetPopulations               ( T_KnowledgePopulationVector&          container ) const;
     void                  GetPopulationsColliding      ( T_KnowledgePopulationCollisionVector& container ) const;
     void                  GetPopulationsColliding      ( T_KnowledgePopulationDiaIDVector&     container ) const;
     void                  GetPopulationsAttacking      ( T_KnowledgePopulationDiaIDVector&     container ) const;

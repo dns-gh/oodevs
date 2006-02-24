@@ -42,9 +42,9 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& copy )
-    : localisation_           ( copy.localisation_ )
-    , rCostOut_               ( copy.rCostOut_ )
-    , rCostIn_                ( copy.rCostIn_ )
+    : localisation_( copy.localisation_ )
+    , rCostOut_    ( copy.rCostOut_ )
+    , rCostIn_     ( copy.rCostIn_ )
 {
     // NOTHING
 }

@@ -197,6 +197,15 @@ bool DEC_PathClass::AvoidEnemies() const
     return rEnemyCostOnContact_ || rEnemyCostAtSecurityRange_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathClass::AvoidPopulations
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+bool DEC_PathClass::AvoidPopulations() const
+{
+    return !populationAttitudeCosts_.empty();
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathClass::IsShort
@@ -206,4 +215,24 @@ inline
 bool DEC_PathClass::IsShort() const
 {
     return bShort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathClass::GetPopulationSecurityRange
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_PathClass::GetPopulationSecurityRange() const
+{
+    return rPopulationSecurityRange_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathClass::GetPopulationMaximumCost
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_PathClass::GetPopulationMaximumCost() const
+{
+    return rPopulationMaximumCost_;
 }

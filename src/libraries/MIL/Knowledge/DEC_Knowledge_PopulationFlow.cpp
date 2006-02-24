@@ -153,7 +153,7 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const ui
     uint nTmpID;
     file >> nTmpID;
     pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
-    assert( pAttitude_ );
+    //assert( pAttitude_ ); // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
     
     file >> nTmpID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
@@ -179,7 +179,7 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
          << nNbrAliveHumans_
          << nNbrDeadHumans_
          << bReconAttributesValid_
-         << pAttitude_->GetID()
+         << ( pAttitude_ ? pAttitude_->GetID() : 0 ) // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
          << pPreviousPerceptionLevel_->GetID()
          << pCurrentPerceptionLevel_->GetID();
 }

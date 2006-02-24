@@ -116,7 +116,8 @@ public:
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     void     SetAttitude   ( const MIL_PopulationAttitude& attitude );
 
-    MIL_PopulationElement_ABC* GetClosestAliveElement( const MIL_Agent_ABC& reference ) const;
+    MIL_PopulationElement_ABC* GetClosestAliveElement    ( const MIL_Agent_ABC& reference ) const;
+    void                       ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, MT_Float& rMinDistance ) const;
     //@}
 
     //! @name Tools

@@ -19,6 +19,7 @@ class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
+class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
 class PHY_Volume;
 
@@ -66,6 +67,10 @@ typedef T_KnowledgeComposanteVector::const_iterator     CIT_KnowledgeComposanteV
 typedef std::vector< void* >                                   T_PopulationKnowledgeAgentDiaIDVector;
 typedef T_PopulationKnowledgeAgentDiaIDVector::iterator        IT_PopulationKnowledgeAgentDiaIDVector;
 typedef T_PopulationKnowledgeAgentDiaIDVector::const_iterator  CIT_PopulationKnowledgeAgentDiaIDVector;
+
+typedef std::vector< DEC_Knowledge_Population* >     T_KnowledgePopulationVector;
+typedef T_KnowledgePopulationVector::iterator        IT_KnowledgePopulationVector;
+typedef T_KnowledgePopulationVector::const_iterator  CIT_KnowledgePopulationVector;
 
 typedef std::vector< void* >                                   T_PopulationKnowledgeObjectDiaIDVector;
 typedef T_PopulationKnowledgeObjectDiaIDVector::iterator       IT_PopulationKnowledgeObjectDiaIDVector;

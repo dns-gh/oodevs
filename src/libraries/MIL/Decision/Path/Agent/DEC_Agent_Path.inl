@@ -100,6 +100,16 @@ const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowled
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetPathKnowledgePopulations
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+const DEC_Agent_Path::T_PathKnowledgePopulationVector& DEC_Agent_Path::GetPathKnowledgePopulations() const
+{
+    return pathKnowledgePopulationVector_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::NeedRefine
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------

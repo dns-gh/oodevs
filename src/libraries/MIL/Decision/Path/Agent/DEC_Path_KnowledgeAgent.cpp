@@ -62,5 +62,5 @@ MT_Float DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT
 
     if( rDistBtwUnitAndEnemy > rSecurityDistance_ )
         return 0.;
-    return rFactor_ * rDistBtwUnitAndEnemy + rOffset_;    
+    return rFactor_ * rDistBtwUnitAndEnemy + rOffset_;
 }

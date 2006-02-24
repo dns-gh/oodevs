@@ -99,6 +99,7 @@ DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, 
     , dangerPoint_                   ( DotProduct( dangerDirection_, from ) > DotProduct( dangerDirection_, to ) ? from : to )
 
     , rEnemyMaximumCost_             ( path.GetPathClass().GetEnemyMaximumCost() )
+    , rPopulationMaximumCost_        ( path.GetPathClass().GetPopulationMaximumCost() )
 {
     InitializeFuseauData        ( from, to );
     InitializeAutomateFuseauData( from );
@@ -218,6 +219,26 @@ MT_Float DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathfinderRule::GetPopulationsCost
+// Created: SBO 2006-02-23
+// -----------------------------------------------------------------------------
+MT_Float DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+{
+    assert( ( !path_.GetPathClass().AvoidPopulations() && path_.GetPathKnowledgePopulations().empty() ) || path_.GetPathClass().AvoidPopulations() );
+    MT_Float rCost = 0.;
+    for( DEC_Agent_Path::CIT_PathKnowledgePopulationVector it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
+    {
+        MT_Float rCurrentCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        if( rCurrentCost < 0. ) // Impossible move
+            return rCurrentCost;
+        rCost += rCurrentCost;
+    }
+    if( rCost > rPopulationMaximumCost_ )
+        rCost = rPopulationMaximumCost_;
+    return rCost;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetAltitudeCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
@@ -289,6 +310,12 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     if( rEnemiesCost < 0 )
         return rEnemiesCost;
     rDynamicCost += rEnemiesCost;
+
+    // populations
+    const MT_Float rPopulationsCost = GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType );
+    if( rPopulationsCost < 0 )
+        return rPopulationsCost;
+    rDynamicCost += rPopulationsCost;
 
     const MT_Float rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
     return rBaseCost * ( 1 + rDynamicCost );

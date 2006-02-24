@@ -200,6 +200,15 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                 pathKnowledgeObjectVector_.push_back( DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
         }       
     }
+
+    // Populations
+    if( pathClass_.AvoidPopulations() )
+    {
+        T_KnowledgePopulationVector knowledgesPopulation;
+        queryMaker_.GetKSQuerier().GetPopulations( knowledgesPopulation );
+        for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+            pathKnowledgePopulationVector_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it ) );
+    }
 }
 
 // =============================================================================
