@@ -224,7 +224,7 @@ MT_Float DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, cons
 // -----------------------------------------------------------------------------
 MT_Float DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
-    assert( ( !path_.GetPathClass().AvoidPopulations() && path_.GetPathKnowledgePopulations().empty() ) || path_.GetPathClass().AvoidPopulations() );
+    assert( ( !path_.GetPathClass().HandlePopulations() && path_.GetPathKnowledgePopulations().empty() ) || path_.GetPathClass().HandlePopulations() );
     MT_Float rCost = 0.;
     for( DEC_Agent_Path::CIT_PathKnowledgePopulationVector it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
     {

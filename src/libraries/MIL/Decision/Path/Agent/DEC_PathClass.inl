@@ -198,11 +198,11 @@ bool DEC_PathClass::AvoidEnemies() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::AvoidPopulations
+// Name: DEC_PathClass::HandlePopulations
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 inline
-bool DEC_PathClass::AvoidPopulations() const
+bool DEC_PathClass::HandlePopulations() const
 {
     return !populationAttitudeCosts_.empty();
 }

@@ -72,7 +72,7 @@ public:
 
           bool         AvoidObjects                        () const;
           bool         AvoidEnemies                        () const;
-          bool         AvoidPopulations                    () const;
+          bool         HandlePopulations                   () const;
 
           MT_Float     GetEnemyCostOnContact               () const;
           MT_Float     GetEnemyCostAtSecurityRange         () const;

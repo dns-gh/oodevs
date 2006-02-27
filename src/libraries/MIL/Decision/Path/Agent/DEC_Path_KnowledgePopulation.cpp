@@ -12,7 +12,9 @@
 
 #include "DEC_PathClass.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "TER/TER_Localisation.h"
 
 namespace
@@ -25,7 +27,7 @@ namespace
     
         void Visit( const MIL_PopulationElement_ABC& element )
         {
-            if( ! element.IsDead() ) // $$$$ SBO 2006-02-24: only keep alive elements
+            if( ! element.IsDead() ) // only keep alive elements
                 container_.AddElement( element );
         }
 
@@ -38,9 +40,10 @@ namespace
 // Name: DEC_Path_KnowledgePopulation constructor
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_PathClass& pathClass, const DEC_Knowledge_Population& knowledge )
+DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, const MIL_AgentPion& pion )
     : elements_       ()
     , pPathClass_     ( &pathClass )
+    , bAvoidPolicy_   ( !pion.GetType().IsTerrorist() )
 {
     elements_.reserve( 10 );
     PopulationPathInserter pathInserter( *this );
@@ -75,10 +78,19 @@ MT_Float DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/,
     sPopulationElement* pClosestElement = 0;
     const MT_Float rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
 
-    if( !pClosestElement )
-        return 0.0f;
-    const MT_Float rElementCost = pPathClass_->GetPopulationAttitudeCost( *pClosestElement->pAttitude_ ) * pClosestElement->rDensity_;
-    return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
+    if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)
+    {
+        if( !pClosestElement )
+            return 0.0f;
+        const MT_Float rElementCost = pPathClass_->GetPopulationAttitudeCost( *pClosestElement->pAttitude_ ) * pClosestElement->rDensity_;
+        return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
+    }
+    else // "loving" policy (terrorist)
+    {
+        if( !pClosestElement )
+            return 10.;
+        return 0.;
+    }
 }
 
 // -----------------------------------------------------------------------------

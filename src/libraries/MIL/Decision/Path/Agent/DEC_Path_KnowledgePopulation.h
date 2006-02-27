@@ -11,10 +11,11 @@
 #define __DEC_Path_KnowledgePopulation_h_
 
 #include "MIL.h"
-#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 
 class DEC_PathClass;
+class DEC_Knowledge_Population;
+class MIL_AgentPion;
 class MIL_PopulationAttitude;
 class TER_Localisation;
 
@@ -30,7 +31,7 @@ class DEC_Path_KnowledgePopulation
 public:
     //! @name Constructors/Destructor
     //@{
-    DEC_Path_KnowledgePopulation( const DEC_PathClass& pathClass, const DEC_Knowledge_Population& knowledge );
+    DEC_Path_KnowledgePopulation( const DEC_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, const MIL_AgentPion& pion );
     ~DEC_Path_KnowledgePopulation();
     //@}
 
@@ -69,6 +70,7 @@ private:
 private:
           T_PopulationElements  elements_;
     const DEC_PathClass*        pPathClass_;
+          bool                  bAvoidPolicy_;
 };
 
 #endif // __DEC_Path_KnowledgePopulation_h_
