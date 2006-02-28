@@ -26,7 +26,8 @@ class PopulationConcentrationKnowledge;
 class KnowledgeGroup;
 class Agent;
 class Displayer_ABC;
-class PopupulationPart_ABC;
+class PopulationPartKnowledge_ABC;
+class ValuedListItem;
 
 // =============================================================================
 // Created: SBO 2005-10-19
@@ -39,6 +40,7 @@ class PopulationKnowledgePanel : public InfoPanel_ABC
                                , public ElementObserver_ABC< PopulationFlowKnowledge >
                                , public ElementObserver_ABC< PopulationConcentrationKnowledge >
 {
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -48,7 +50,14 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const PopulationKnowledge& part, Displayer_ABC& displayer );
+    void Display( const PopulationKnowledge& knowledge, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const PopulationPartKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* item );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChanged( QListViewItem* i );
     //@}
 
 private:
@@ -61,6 +70,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const PopulationKnowledges& element );
     virtual void NotifyUpdated( const PopulationKnowledge& element );
     virtual void NotifyUpdated( const PopulationFlowKnowledge& element );
@@ -73,24 +83,12 @@ private:
     //@{
     ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     DisplayBuilder* display_;
-    ListDisplayer< PopulationKnowledgePanel >* perceptionList_;
+//    ListDisplayer< PopulationKnowledgePanel >* perceptionList_;
     const PopulationKnowledges* selected_;
-    const PopulationKnowledge* subSelected_; // $$$$ AGE 2006-02-24: Watch for deletions
-    const PopupulationPart_ABC* selectedPart_;
-//    PopulationKnowledge*              pSelectedKnowledge_;
-//    PopulationConcentrationKnowledge* pSelectedConcentrationKnowledge_;
-//    PopulationFlowKnowledge*          pSelectedFlowKnowledge_;
-//
-//    QListView* pKnowledgeListView_;
-//    QListView* pPerceptionListView_;
-//    QCheckBox* pOwnTeamCheckBox_;
-//    
+    const PopulationKnowledge* subSelected_;
+    const PopulationPartKnowledge_ABC* selectedPart_;
 
-//
-//    QGroupBox* pFlowPartBox_;
-//    QLabel*    pFlowPartNbr_;
-//    QTable*    pFlowPartTable_;
-//
+    //    QCheckBox* pOwnTeamCheckBox_;
 //    QPopupMenu* pPopupMenu_;
     //@}
 };

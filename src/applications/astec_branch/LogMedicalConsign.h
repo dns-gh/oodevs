@@ -6,102 +6,67 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogMedicalConsign.h $
-// $Author: Age $
-// $Modtime: 1/04/05 11:06 $
-// $Revision: 1 $
-// $Workfile: LogMedicalConsign.h $
-//
-// *****************************************************************************
 
 #ifndef __LogMedicalConsign_h_
 #define __LogMedicalConsign_h_
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "Resolver_ABC.h"
 
 class Agent;
-class LogMedicalConsign_ListView_Item;
+class Controller;
+class Displayer_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
 class LogMedicalConsign
 {
-    MT_COPYNOTALLOWED( LogMedicalConsign );
-
 public:
-    //! @name Types
+    //! @name Operations
     //@{
-    enum E_State
-    {
-       eWaitingForEvacuation,
-       eEvacuationGoingTo,
-       eEvacuationLoading,
-       eEvacuationWaitingForFullLoading,
-       eEvacuationGoingFrom,
-       eEvacuationUnloading,
-       eWaitingForDiagnostic,
-       eDiagnosing,
-       eSearchingForSortingArea,
-       eWaitingForSorting,
-       eSorting,
-       eSearchingForHealingArea,
-       eWaitingForHealing,
-       eHealing,
-       eWaitingForCollection,
-       eCollectionLoading,
-       eCollectionWaitingForFullLoading,
-       eCollectionGoingTo,
-       eCollectionUnloading,
-       eFinished
-    };
-
-    enum E_Wound
-    {
-        eNotWounded, 
-        eKilled,
-        eWoundedU1,
-        eWoundedU2,
-        eWoundedU3,
-        eWoundedUE
-    };
+             LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
+    virtual ~LogMedicalConsign();
     //@}
 
-public:
-     LogMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
-    ~LogMedicalConsign();
-
-    //! @name Accessors
+    //! @name Operations
     //@{
-    uint        GetID() const;
-    Agent&  GetPion() const;
-    Agent*  GetPionLogHandling() const;
-    bool        IsContaminated() const;
-    bool        IsMentalDeceased() const;
-
-    E_State     GetState() const;
-    std::string GetWoundAsString() const;
-    std::string GetStateString() const;
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Network events
     //@{
-    void OnReceiveMsgUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asn );
+    void Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& message );
+    //@}
+
+    //! @name Accessors
+    //@{
+    const char* GetStateString() const;
+    const char* GetWoundString() const;
     //@}
 
 private:
-    uint        nID_;
+    //! @name Copy/Assignment
+    //@{
+    LogMedicalConsign( const LogMedicalConsign& );
+    LogMedicalConsign& operator=( const LogMedicalConsign& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Controller& controller_;
+    const Resolver_ABC< Agent >& resolver_;
+
+    uint    nID_;
     Agent&  pion_;
     Agent*  pPionLogHandling_;
-    E_Wound     wound_;
-    bool        bMentalDeceased_;
-    bool        bContaminated_;
-    E_State     nState_;
+    bool    bMentalDeceased_;
+    bool    bContaminated_;
+    E_HumanWound wound_;
+    E_LogSanteTraitementEtat nState_;
+    //@}
 };
-
-#include "LogMedicalConsign.inl"
 
 #endif // __LogMedicalConsign_h_

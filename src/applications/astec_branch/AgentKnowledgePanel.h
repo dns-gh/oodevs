@@ -35,6 +35,7 @@ class KnowledgeGroup;
 class PerceptionMap;
 class Perception;
 class Displayer_ABC;
+class ValuedListItem;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -59,8 +60,8 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const AgentKnowledge& k, Displayer_ABC& displayer );
-    void Display( const Perception& perception, Displayer_ABC& displayer );
+    void Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:
@@ -77,8 +78,8 @@ private:
     virtual void NotifyUpdated( const AgentKnowledge& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
     void Select( const KnowledgeGroup* group );
-    void Select( const AgentKnowledges* k );
     void Display( const AgentKnowledge& k );
+    void showEvent( QShowEvent* );
     //@}
 
 private slots:
@@ -95,7 +96,7 @@ private:
     ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
     const AgentKnowledges* selected_;
-    const AgentKnowledge* subSelected_; // $$$$ AGE 2006-02-24: Watch for deletions !
+    const AgentKnowledge* subSelected_;
 //    QCheckBox* pOwnTeamCheckBox_;
 //    QPopupMenu* pPopupMenu_;
     //@}

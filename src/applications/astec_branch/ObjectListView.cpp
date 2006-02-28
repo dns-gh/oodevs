@@ -68,6 +68,8 @@ void ObjectListView::OnSelectionChange( QListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     if( item->IsA< const Object_ABC* >() )
         actionController_.Select( *item->GetValue< const Object_ABC* >() );
+    else if ( item->IsA< const Team* >() )
+        actionController_.Select( *item->GetValue< const Team* >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -22,14 +22,17 @@
 #include "TeamsModel.h"
 #include "AgentsModel.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
+#include "KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( Controller& controller, const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge::PopulationKnowledge( Controller& controller, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
     : controller_( controller )
-    , nID_        ( message.oid_connaissance )
+    , nID_       ( message.oid_connaissance )
+    , popu_      ( resolver.Get( message.oid_population_reelle ) )
 {
     // NOTHING
 }
@@ -40,8 +43,7 @@ PopulationKnowledge::PopulationKnowledge( Controller& controller, const ASN1T_Ms
 // -----------------------------------------------------------------------------
 PopulationKnowledge::~PopulationKnowledge()
 {
-    Resolver< PopulationConcentrationKnowledge >::DeleteAll();
-    Resolver< PopulationFlowKnowledge >::DeleteAll();
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,10 +74,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& /*me
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    if( ! Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
+    if( ! Find( message.oid_connaissance_concentration ) )
     {
-        PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, message );
-        Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
+        PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, popu_, message );
+        Register( message.oid_connaissance_concentration, *pKnowledge );
     };
     controller_.Update( *this );
 }
@@ -86,8 +88,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    Resolver< PopulationConcentrationKnowledge >::
-        Get( message.oid_connaissance_concentration ).Update( message );
+    PopulationPartKnowledge_ABC* part = &Get( message.oid_connaissance_concentration );
+    ((PopulationConcentrationKnowledge*)( part ))->Update( message ); // $$$$ AGE 2006-02-27: 
 }
     
 // -----------------------------------------------------------------------------
@@ -96,8 +98,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    delete Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
-    Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
+    delete Find( message.oid_connaissance_concentration );
+    Remove( message.oid_connaissance_concentration );
     controller_.Update( *this );
 }
 
@@ -107,10 +109,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
 {
-    if( ! Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
+    if( ! Find( message.oid_connaissance_flux ) )
     {
-        PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, message );
-        Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
+        PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, popu_, message );
+        Register( message.oid_connaissance_flux, *pKnowledge );
     };
     controller_.Update( *this );
 }
@@ -121,8 +123,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
 {
-    Resolver< PopulationFlowKnowledge >::
-        Get( message.oid_connaissance_flux ).Update( message );
+    PopulationPartKnowledge_ABC* part = &Get( message.oid_connaissance_flux );
+    ((PopulationFlowKnowledge*)( part ))->Update( message ); // $$$$ AGE 2006-02-27: 
 }
     
 // -----------------------------------------------------------------------------
@@ -131,7 +133,28 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& 
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
 {
-    delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
-    Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
+    delete Find( message.oid_connaissance_flux );
+    Remove( message.oid_connaissance_flux );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::DisplayInList
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
+{
+    displayer.Item( "Populations connues" ).Start( popu_ ).Add( " - " ).Add( nID_ ).End();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::Display
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
+{
+   displayer.Group( "Détails" )
+                .Display( "Id:", nID_ )
+                .Display( "Population associée:", popu_ )
+                .Display( "Camp:", popu_.GetTeam() );
 }

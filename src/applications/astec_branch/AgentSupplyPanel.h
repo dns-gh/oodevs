@@ -19,11 +19,25 @@
 #ifndef __AgentSupplyPanel_h_
 #define __AgentSupplyPanel_h_
 
-#include "AgentLogisticPanel_ABC.h"
+#include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 
-template< typename Consign, typename Item > class LogConsignListView;
+class DisplayBuilder;
+class Controller;
+class ActionController;
+template< typename T > class ListDisplayer;
+class Displayer_ABC;
+class ValuedListItem;
+
+class LogisticConsigns;
+class SupplyStates;
+class Agent;
 class LogSupplyConsign;
-class LogSupplyConsign_ListView_Item;
+class Availability;
+class SubItemDisplayer;
+class Dotation;
 
 // =============================================================================
 /** @class  AgentSupplyPanel
@@ -31,40 +45,52 @@ class LogSupplyConsign_ListView_Item;
 */
 // Created: AGE 2005-04-01
 // =============================================================================
-class AgentSupplyPanel : public AgentLogisticPanel_ABC
+class AgentSupplyPanel : public InfoPanel_ABC
+                       , private Observer_ABC
+                       , public SelectionObserver< Agent >
+                       , public ElementObserver_ABC< LogisticConsigns >
+                       , public ElementObserver_ABC< SupplyStates >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentSupplyPanel( QWidget* pParent );
+             AgentSupplyPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentSupplyPanel();
     //@}
 
-private:
-    //! @name Slots
+    //! @name Operations
     //@{
-    virtual void OnUpdate();
-    virtual void OnClearSelection();
-    virtual void OnAgentUpdated( Agent& agent );
+    void Display( const LogSupplyConsign* consign,  Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Dotation& quota, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:
-    //! @name Types
+    //! @name Helpers
     //@{
-    typedef LogConsignListView< LogSupplyConsign, LogSupplyConsign_ListView_Item > T_List;
+    void NotifySelected( const Agent* agent );
+    void NotifyUpdated( const LogisticConsigns& consigns );
+    void NotifyUpdated( const SupplyStates& consigns );
+    template< typename Extension >
+    bool ShouldUpdate( const Extension& e );
+    void showEvent( QShowEvent* );
     //@}
 
+private:
     //! @name Member data
     //@{
-    T_List* pConsignListView_;
-    T_List* pConsignHandledListView_;
-    QListView* pState_;
-    QListViewItem* pStateChainEnabled_;
-    QListView* pStocks_;
-    QListView* pQuotas_;
-    QListView* pDispoTransporters_;
-    QListView* pDispoCommanders_;
+    const Agent* selected_;
+    ListDisplayer< AgentSupplyPanel >* pConsignListView_;
+    ListDisplayer< AgentSupplyPanel >* pConsignHandledListView_;
+    SubItemDisplayer* logDisplay_;
+
+    DisplayBuilder* display_;
+
+    ListDisplayer< AgentSupplyPanel >* pStocks_;
+    ListDisplayer< AgentSupplyPanel >* pQuotas_;
+    ListDisplayer< AgentSupplyPanel >* pDispoTransporters_;
+    ListDisplayer< AgentSupplyPanel >* pDispoCommanders_;
     //@}
 };
 

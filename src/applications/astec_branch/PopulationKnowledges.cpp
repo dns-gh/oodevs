@@ -11,14 +11,16 @@
 #include "PopulationKnowledges.h"
 #include "PopulationKnowledge.h"
 #include "Controller.h"
+#include "PopulationKnowledgeFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledges constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-PopulationKnowledges::PopulationKnowledges( Controller& controller )
+PopulationKnowledges::PopulationKnowledges( Controller& controller, PopulationKnowledgeFactory_ABC& factory )
     : controller_( controller )
-{
+    , factory_( factory )
+{ 
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +51,7 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationKnowledgeCreation&
 {
     if( ! Find( message.oid_connaissance ) )
     {
-        PopulationKnowledge* knowledge = new PopulationKnowledge( controller_, message );
+        PopulationKnowledge* knowledge = factory_.CreatePopulationKnowledge( message );
         Register( message.oid_connaissance, *knowledge );
         controller_.Update( *this );
     }

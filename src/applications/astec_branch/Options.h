@@ -16,6 +16,7 @@
 
 class OptionsObserver_ABC;
 class OptionVariant;
+class Settings;
 
 // =============================================================================
 /** @class  Options
@@ -39,6 +40,12 @@ public:
     void Remove( OptionsObserver_ABC& observer );
 
     void Change( const std::string& name, const OptionVariant& value );
+
+    void LoadBoolean( Settings& settings, const std::string& name, bool defaultValue );
+    void LoadInteger( Settings& settings, const std::string& name, int defatulValue );
+
+    void SaveBoolean( Settings& settings, const std::string& name );
+    void SaveInteger( Settings& settings, const std::string& name );
     //@}
 
 private:

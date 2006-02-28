@@ -13,6 +13,9 @@
 #include "InterfaceContainer.h"
 #include "Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "ContextMenuObserver_ABC.h"
+
+class QPopupMenu;
 
 // =============================================================================
 /** @class  ActionController
@@ -45,6 +48,12 @@ public:
         Apply( SelectionObserver_Base< T >::Select, element );
         Apply( SelectionObserver_ABC::AfterSelection );
     }
+
+    template< typename T >
+    void ContextMenu( const T& element, QPopupMenu& popupMenu )
+    {
+        Apply( ContextMenuObserver_ABC< T >::NotifyContextMenu, element, popupMenu );
+    };
     //@}
 
 private:

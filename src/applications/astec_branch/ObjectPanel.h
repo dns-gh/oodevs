@@ -76,6 +76,8 @@ private:
 private:
     //! @name Helpers
     //@{
+    void showEvent( QShowEvent* );
+
     virtual void NotifyUpdated( const Object_ABC& );
     virtual void NotifyDeleted( const Object_ABC& );
     virtual void NotifyUpdated( const CampAttributes& attributes );

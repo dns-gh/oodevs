@@ -19,138 +19,143 @@
 #include "astec_pch.h"
 
 #include "LogSupplyConsign.h"
-
-#include "App.h"
-#include "AgentManager.h"
 #include "Agent.h"
-#include "LogSupplyConsign_ListView_Item.h"
-#include "Model.h"
-#include "AgentsModel.h"
+#include "Controller.h"
+#include "LogisticConsigns.h"
+#include "Displayer_ABC.h"
+#include "DotationRequest.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign constructor
-// Created: NLD 2004-12-30
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asn )
-    : nID_              ( asn.oid_consigne )
-    , pion_             ( App::GetApp().GetModel().agents_.GetAgent( asn.oid_automate ) )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& message )
+    : controller_           ( controller )
+    , resolver_             ( resolver )
+    , dotationResolver_     ( dotationResolver )
+    , nID_                  ( message.oid_consigne )
+    , pion_                 ( resolver.Get( message.oid_automate ) )
     , pAutomateLogHandling_ ( 0 )
-    , pPionLogConvoying_( 0 )
+    , pPionLogConvoying_    ( 0 )
     , pAutomateLogProvidingConvoyResources_( 0 )
-    , nState_           ( eFinished )
+    , nState_( eLogRavitaillementTraitementEtat_Termine )
 {
-//    pion_.AddConsign( *this );
-
-    for( uint i = 0; i < asn.dotations.n; ++i )
-    {
-        sDotationData& dotationData = dotations_[ asn.dotations.elem[i].ressource_id ];
-        dotationData.nNbrRequested_ = asn.dotations.elem[i].quantite_demandee;
-        dotationData.nNbrReserved_  = asn.dotations.elem[i].quantite_accordee;
-        dotationData.nNbrConvoyed_  = asn.dotations.elem[i].quantite_en_transit;
-    }
+    for( uint i = 0; i < message.dotations.n; ++i )
+        Register( message.dotations.elem[i].ressource_id,
+                  * new DotationRequest( dotationResolver_.Get( message.dotations.elem[i].ressource_id ),
+                                         message.dotations.elem[i].quantite_demandee,
+                                         message.dotations.elem[i].quantite_accordee,
+                                         message.dotations.elem[i].quantite_en_transit ) );
+    pion_.Get< LogisticConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign destructor
-// Created: NLD 2004-12-30
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 LogSupplyConsign::~LogSupplyConsign()
 {
-//    pion_.RemoveConsign( *this );
-//    if( pAutomateLogHandling_ )
-//        pAutomateLogHandling_->TerminateConsign( *this );
-//    if( pPionLogConvoying_ )
-//        pPionLogConvoying_->TerminateConsign( *this );
+    pion_.Get< LogisticConsigns >().RemoveConsign( *this );
+    if( pAutomateLogHandling_ )
+        pAutomateLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+    if( pPionLogConvoying_ )
+        pPionLogConvoying_->Get< LogisticConsigns >().TerminateConsign( *this );
+    DeleteAll();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::OnReceiveMsgUpdate
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asn )
+void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate& message )
 {
-    assert( pion_.GetId() == asn.oid_automate );
-
-    if( asn.m.oid_automate_log_traitantPresent )
+    if( message.m.oid_automate_log_traitantPresent )
     {
-//        if( pAutomateLogHandling_ )
-//            pAutomateLogHandling_->TerminateConsign( *this );
-        if( asn.oid_automate_log_traitant != 0 )
-        {
-            pAutomateLogHandling_ = & App::GetApp().GetModel().agents_.GetAgent( asn.oid_automate_log_traitant );
-//            pAutomateLogHandling_->HandleConsign( *this );
-        }        
-        else 
-            pAutomateLogHandling_ = 0;
-    }
-    
-    if( asn.m.oid_pion_convoyantPresent )
-    {
-//        if( pPionLogConvoying_ )
-//            pPionLogConvoying_->TerminateConsign( *this );
-        if( asn.oid_pion_convoyant != 0 )
-        {
-            pPionLogConvoying_ = &App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion_convoyant );
-//            pPionLogConvoying_->HandleConsign( *this );
-        }        
-        else 
-            pPionLogConvoying_ = 0;
+        if( pAutomateLogHandling_ )
+            pAutomateLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pAutomateLogHandling_ = resolver_.Find( message.oid_automate_log_traitant );
+        if( pAutomateLogHandling_ )
+            pAutomateLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
     }
 
-    if( asn.m.oid_automate_log_fournissant_moyens_convoiPresent )
+    if( message.m.oid_pion_convoyantPresent )
     {
-        if( asn.oid_automate_log_fournissant_moyens_convoi != 0 )
-            pAutomateLogProvidingConvoyResources_ = &App::GetApp().GetModel().agents_.GetAgent( asn.oid_automate_log_fournissant_moyens_convoi );
-        else
-            pAutomateLogProvidingConvoyResources_ = 0;
+        if( pPionLogConvoying_ )
+            pPionLogConvoying_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pPionLogConvoying_ = resolver_.Find(message.oid_pion_convoyant );
+        if( message.oid_pion_convoyant )
+            pPionLogConvoying_->Get< LogisticConsigns >().HandleConsign( *this );
     }
 
-    if( asn.m.etatPresent )
-        nState_ = (E_State)asn.etat;
+    if( message.m.oid_automate_log_fournissant_moyens_convoiPresent )
+        pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.oid_automate_log_fournissant_moyens_convoi );
 
-    if( asn.m.dotationsPresent )
+    if( message.m.etatPresent )
+        nState_ = E_LogRavitaillementTraitementEtat( message.etat );
+
+    if( message.m.dotationsPresent )
     {
-        for( uint i = 0; i < asn.dotations.n; ++i )
+        for( uint i = 0; i < message.dotations.n; ++i )
         {
-            sDotationData& dotationData = dotations_[ asn.dotations.elem[i].ressource_id ];
-            dotationData.nNbrRequested_ = asn.dotations.elem[i].quantite_demandee;
-            dotationData.nNbrReserved_  = asn.dotations.elem[i].quantite_accordee;
-            dotationData.nNbrConvoyed_  = asn.dotations.elem[i].quantite_en_transit;
+            DotationRequest* request = Find( message.dotations.elem[i].ressource_id );
+            if( request )
+            {
+                request->requested_ = message.dotations.elem[i].quantite_demandee;
+                request->granted_   = message.dotations.elem[i].quantite_accordee;
+                request->convoyed_  = message.dotations.elem[i].quantite_en_transit;
+            }
+            else
+                Register( message.dotations.elem[i].ressource_id,
+                  * new DotationRequest( dotationResolver_.Get( message.dotations.elem[i].ressource_id ),
+                                         message.dotations.elem[i].quantite_demandee,
+                                         message.dotations.elem[i].quantite_accordee,
+                                         message.dotations.elem[i].quantite_en_transit ) );
         }
     }
-
-//    App::GetApp().NotifyLogisticConsignUpdated( *this );
+    controller_.Update( *this );
 }
-
+// $$$$ AGE 2006-02-28: degager
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::GetStateString
 // Created: HME 2006-01-30
 // -----------------------------------------------------------------------------
-std::string LogSupplyConsign::GetStateString() const
+const char* LogSupplyConsign::GetStateString() const
 {
-    std::string strState;
-
     switch( nState_ )
-    {     
-    case eConvoyWaitingForCommander         : strState = std::string( "Convoi en attente d'un chef de convoi" ); break;
-        case eConvoyWaitingForTransporters  : strState = std::string( "Convoi en attente de camions" ); break;
-        case eConvoyForming                 : strState = std::string( "Convoi en cours de constitution" ); break;
-        
-        case eConvoyGoingToLoadingPoint     : strState = std::string( "Convoi en déplacement vers point de chargement" ); break;
-        case eConvoyLoading                 : strState = std::string( "Convoi en cours de chargement" ); break;
-        
-        case eConvoyGoingToUnloadingPoint   : strState = std::string( "Convoi en déplacement vers point de déchargement" ); break;
-        case eConvoyUnloading               : strState = std::string( "Convoi en cours de déchargement" ); break;
-        
-        case eConvoyGoingBackToFormingPoint : strState = std::string( "Convoi en retour" ); break;
-        case eFinished                      : strState = std::string( "Terminé" ); break;
-        default:
-            assert( false );
+    {
+        case EnumLogRavitaillementTraitementEtat::convoi_en_attente_camions:
+            return "Convoi en attente de camions";
+        case EnumLogRavitaillementTraitementEtat::convoi_en_attente_chef_convoi:
+            return "Convoi en attente d'un chef de convoi";
+        case EnumLogRavitaillementTraitementEtat::convoi_constitution:
+            return "Convoi en cours de constitution";
+        case EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_chargement:
+            return "Convoi en déplacement vers point de chargement";
+        case EnumLogRavitaillementTraitementEtat::convoi_chargement:
+            return "Convoi en cours de chargement";
+        case EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_dechargement:
+            return "Convoi en déplacement vers point de déchargement";
+        case EnumLogRavitaillementTraitementEtat::convoi_dechargement:
+            return "Convoi en cours de déchargement";
+        case EnumLogRavitaillementTraitementEtat::convoi_deplacement_retour:
+            return "Convoi en retour";
+        case EnumLogRavitaillementTraitementEtat::termine:
+            return "Terminé";
+        default: return "";
     }
+}
 
-    return strState;
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Consigne :", nID_ )
+             .Display( "Pion demandeur :", pion_ )
+             .Display( "Pion traitant :", pAutomateLogHandling_ )
+             .Display( "Pion fournissant les moyens :", pAutomateLogProvidingConvoyResources_ )
+             .Display( "Pion convoyant :", pPionLogConvoying_ )
+//             .Display( "Dotations demandées/accordées" ) // $$$$ AGE 2006-02-28: 
+             .Display( "Etat :", nState_ );
 }

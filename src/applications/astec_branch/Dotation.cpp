@@ -12,10 +12,21 @@
 
 // -----------------------------------------------------------------------------
 // Name: Dotation constructor
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+Dotation::Dotation()
+    : type_( 0 )
+    , quantity_( 0 )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotation constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const DotationType& type, unsigned int quantity )
-    : type_( type )
+    : type_( & type )
     , quantity_( quantity )
 {
 

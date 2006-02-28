@@ -19,58 +19,75 @@
 #ifndef __AgentMedicalPanel_h_
 #define __AgentMedicalPanel_h_
 
-#include "AgentLogisticPanel_ABC.h"
+#include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 
+class DisplayBuilder;
+class Controller;
+class ActionController;
+template< typename T > class ListDisplayer;
+class Displayer_ABC;
+class ValuedListItem;
+
+class LogisticConsigns;
+class MedicalStates;
 class Agent;
-
-template< typename Consign, typename Item > class LogConsignListView;
 class LogMedicalConsign;
-class LogMedicalConsign_ListView_Item;
+class Availability;
+class SubItemDisplayer;
 
 // =============================================================================
 /** @class  AgentMedicalPanel
     @brief  Agent medical panel
+    // $$$$ AGE 2006-02-28: Factorisations entre panels logistiques !
 */
 // Created: AGE 2005-04-01
 // =============================================================================
-class AgentMedicalPanel : public AgentLogisticPanel_ABC
+class AgentMedicalPanel : public InfoPanel_ABC
+                        , private Observer_ABC
+                        , public SelectionObserver< Agent >
+                        , public ElementObserver_ABC< LogisticConsigns >
+                        , public ElementObserver_ABC< MedicalStates >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentMedicalPanel( QWidget* pParent );
+             AgentMedicalPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentMedicalPanel();
     //@}
 
-private:
-    //! @name Slots
+    //! @name Operations
     //@{
-    virtual void OnUpdate();
-    virtual void OnClearSelection();
-    virtual void OnAgentUpdated( Agent& agent );
+    void Display( const LogMedicalConsign* consign, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:
-    //! @name Types
+    //! @name Helpers
     //@{
-    typedef LogConsignListView< LogMedicalConsign, LogMedicalConsign_ListView_Item > T_List;
+    void NotifySelected( const Agent* agent );
+    void NotifyUpdated( const LogisticConsigns& consigns );
+    void NotifyUpdated( const MedicalStates& consigns );
+    template< typename Extension >
+    bool ShouldUpdate( const Extension& e );
+    void showEvent( QShowEvent* );
     //@}
 
+private:
     //! @name Member data
     //@{
-    T_List* pConsignListView_;
-    T_List* pConsignHandledListView_;
+    const Agent* selected_;
+    ListDisplayer< AgentMedicalPanel >* pConsignListView_;
+    ListDisplayer< AgentMedicalPanel >* pConsignHandledListView_;
+    SubItemDisplayer* logDisplay_;
 
-    QListView* pState_;
-    QListViewItem* pStateChainEnabled_;
-    QListViewItem* pStateTempsBordee_;
-    QListViewItem* pStatePriorites_;
-    QListViewItem* pStateTacticalPriorites_;
+    DisplayBuilder* display_;
 
-
-    QListView* pDispoReleveAmbulances_;
-    QListView* pDispoRamassageAmbulances_;
-    QListView* pDispoDoctors_;
+    ListDisplayer< AgentMedicalPanel >* dispoReleveAmbulances_;
+    ListDisplayer< AgentMedicalPanel >* dispoDispoRamassageAmbulances_;
+    ListDisplayer< AgentMedicalPanel >* dispoDispoDoctors_;
     //@}
 };
 

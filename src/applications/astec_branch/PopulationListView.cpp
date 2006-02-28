@@ -88,4 +88,6 @@ void PopulationListView::OnSelectionChange( QListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     if( item->IsA< const Population* >() )
         actionController_.Select( *item->GetValue< const Population* >() );
+    else if ( item->IsA< const Team* >() )
+        actionController_.Select( *item->GetValue< const Team* >() );
 }

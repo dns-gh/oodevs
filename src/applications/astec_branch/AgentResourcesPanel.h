@@ -37,6 +37,7 @@ class Lends;
 class Equipment;
 class Lend;
 class Displayer_ABC;
+class ValuedListItem;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
@@ -61,10 +62,10 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const Dotation& dotation, Displayer_ABC& displayer );
-    void Display( const Equipment& equipment, Displayer_ABC& displayer );
-    void Display( const Lend& lend, Displayer_ABC& displayer );
-    void Display( const Troops::Humans& humans, Displayer_ABC& displayer );
+    void Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Lend& lend, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Troops::Humans& humans, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:
@@ -77,6 +78,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Dotations& a );
     virtual void NotifyUpdated( const Equipments& a );
     virtual void NotifyUpdated( const Lends& a );

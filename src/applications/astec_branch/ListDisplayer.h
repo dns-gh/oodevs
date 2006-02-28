@@ -45,19 +45,36 @@ public:
         itemDisplayer_.AddColumn( column );
         return *this;
     }
-    template< typename Element, typename Parent >
-    ValuedListItem* Display( Iterator< const Element& > it, Parent* parent ) {
-        return T_Parent::Display( it, parent, (ValuedListItem*)( firstChild() ) );
+    template< typename Element >
+    ValuedListItem* DisplayList( Iterator< const Element& > it ) {
+        if( it.HasMoreElements() )
+            show();
+        return T_Parent::Display( it, this, (ValuedListItem*)( firstChild() ) );
+    }
+    template< typename Element >
+    ValuedListItem* DisplayList( Iterator< const Element& > it, QListViewItem* parent ) {
+        if( it.HasMoreElements() )
+            show();
+        return T_Parent::Display( it, parent, (ValuedListItem*)( parent->firstChild() ) );
     }
 
-    template< typename Iterator, typename Parent >
-    ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent ) {
-        return T_Parent::Display( from, to, parent, (ValuedListItem*)( firstChild() ) );
+    template< typename Iterator >
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to ) {
+        if( from != to )
+            show();
+        return T_Parent::Display( from, to, this, (ValuedListItem*)( firstChild() ) );
+    };
+
+    template< typename Iterator >
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListViewItem* parent ) {
+        if( from != to )
+            show();
+        return T_Parent::Display( from, to, (ValuedListItem*)( parent->firstChild() ) );
     };
 
     template< typename T >
     void Display( const T& element, ValuedListItem* item ) {
-        displayer_.Display( element, itemDisplayer_( item ) );
+        displayer_.Display( element, itemDisplayer_( item ), item );
     }
     //@}
 

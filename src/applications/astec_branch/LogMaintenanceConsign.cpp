@@ -17,92 +17,112 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-
 #include "LogMaintenanceConsign.h"
-
-#include "App.h"
-#include "AgentManager.h"
 #include "Agent.h"
-#include "Model.h"
-#include "AgentsModel.h"
+#include "LogisticConsigns.h"
+#include "Controller.h"
+#include "Displayer_ABC.h"
+#include "ValuedListItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign constructor
-// Created: NLD 2004-12-30
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn )
-    : nID_             ( asn.oid_consigne )
-    , pion_            ( App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion ) )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
+    : controller_( controller )
+    , resolver_( resolver )
+    , nID_             ( message.oid_consigne )
+    , pion_            ( resolver_.Get( message.oid_pion ) )
     , pPionLogHandling_( 0 )
-    , nEquipmentTypeID_( asn.type_equipement )
-    , nBreakdownTypeID_( asn.type_panne )
-    , nState_          ( eFinished )
+    , nEquipmentTypeID_( message.type_equipement )
+    , nBreakdownTypeID_( message.type_panne )
+    , nState_          ( EnumLogMaintenanceTraitementEtat::termine )
 {
-//    pion_.AddConsign( *this );
+    pion_.Get< LogisticConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign destructor
-// Created: NLD 2004-12-30
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
-//    pion_.RemoveConsign( *this );
-//    if( pPionLogHandling_ )
-//        pPionLogHandling_->TerminateConsign( *this );
+    pion_.Get< LogisticConsigns >().RemoveConsign( *this );
+    if( pPionLogHandling_ )
+        pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
 }
+
 
 // =============================================================================
 // NETWORK
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: LogMaintenanceConsign::OnReceiveMsgUpdate
+// Name: LogMaintenanceConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asn )
+void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& message )
 {
-    assert( pion_.GetId() == asn.oid_pion );
-//    if( pPionLogHandling_ )
-//        pPionLogHandling_->TerminateConsign( *this );
-    if( asn.oid_pion_log_traitant != 0 )
-    {
-        pPionLogHandling_ = & App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion_log_traitant );
-//        pPionLogHandling_->HandleConsign( *this );
-    }        
-    else 
-        pPionLogHandling_ = 0;
-    nState_ = (E_State)asn.etat;
-//    App::GetApp().NotifyLogisticConsignUpdated( *this );
+    if( pPionLogHandling_ )
+        pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+    pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
+    if( pPionLogHandling_ )
+        pPionLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
+    nState_ = message.etat;
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::GetStateString
 // Created: HME 2006-01-30
 // -----------------------------------------------------------------------------
-std::string LogMaintenanceConsign::GetStateString() const
+const char* LogMaintenanceConsign::GetStateString() const
 {
-    std::string strState;
-
     switch( nState_ )
-    {        
-    case eGoingFrom                   : strState = std::string( "En déplacement vers la chaine" ); break;         
-        case eWaitingForCarrier       : strState = std::string( "En attente d'un remorqueur" ); break;         
-        case eCarrierGoingTo          : strState = std::string( "Remorqueur en route" ); break;         
-        case eCarrierLoading          : strState = std::string( "Remorqueur en cours de chargement" ); break;         
-        case eCarrierGoingFrom        : strState = std::string( "Remorqueur en retour" ); break;         
-        case eCarrierUnloading        : strState = std::string( "Remorqueur en cours de déchargement" ); break;         
-        case eDiagnosing              : strState = std::string( "Diagnostique en cours" ); break;         
-        case eSearchingForUpperLevel  : strState = std::string( "En attente de prise en charge par le niveau supérieur" ); break;         
-        case eWaitingForParts         : strState = std::string( "En attente de pièces" ); break;         
-        case eWaitingForRepairer      : strState = std::string( "En attente d'un réparateur" ); break;         
-        case eRepairing               : strState = std::string( "En cours de réparation" ); break;         
-        case eWaitingForGoingBackToWar: strState = std::string( "En attente de retour" ); break;         
-        case eGoingBackToWar          : strState = std::string( "Retour en cours" ); break;         
-        case eFinished                : strState = std::string( "Terminé" ); break;         
+    {
+        case EnumLogMaintenanceTraitementEtat::deplacement_vers_chaine:
+            return "En déplacement vers la chaine";
+        case EnumLogMaintenanceTraitementEtat::attente_disponibilite_remorqueur: 
+            return "En attente d'un remorqueur";
+        case EnumLogMaintenanceTraitementEtat::remorqueur_deplacement_aller: 
+            return "Remorqueur en route";
+        case EnumLogMaintenanceTraitementEtat::remorqueur_chargement: 
+            return "Remorqueur en cours de chargement";
+        case EnumLogMaintenanceTraitementEtat::remorqueur_deplacement_retour: 
+            return "Remorqueur en retour";
+        case EnumLogMaintenanceTraitementEtat::remorqueur_dechargement: 
+            return "Remorqueur en cours de déchargement";
+        case EnumLogMaintenanceTraitementEtat::diagnostique: 
+            return "Diagnostique en cours";
+        case EnumLogMaintenanceTraitementEtat::attente_prise_en_charge_par_niveau_superieur: 
+            return "En attente de prise en charge par le niveau supérieur";
+        case EnumLogMaintenanceTraitementEtat::attente_disponibilite_pieces: 
+            return "En attente de pièces";
+        case EnumLogMaintenanceTraitementEtat::attente_disponibilite_reparateur: 
+            return "En attente d'un réparateur";
+        case EnumLogMaintenanceTraitementEtat::reparation: 
+            return "En cours de réparation";
+        case EnumLogMaintenanceTraitementEtat::attente_retour_pion: 
+            return "En attente de retour";
+        case EnumLogMaintenanceTraitementEtat::retour_pion: 
+            return "Retour en cours";
+        case EnumLogMaintenanceTraitementEtat::termine: 
+            return "Terminé";
         default:
-            assert( false );
+            return "";
     }
+}
 
-    return strState;
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Consigne :", nID_ )
+             .Display( "Pion demandeur :", pion_ )
+             .Display( "Pion traitant :", pPionLogHandling_ )
+             .Display( "Type d'équipement :", nEquipmentTypeID_ )
+             .Display( "Type de panne :", nBreakdownTypeID_ )
+             .Display( "Etat :", nState_ );
 }

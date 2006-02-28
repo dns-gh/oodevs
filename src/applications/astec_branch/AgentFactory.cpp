@@ -45,6 +45,8 @@
 #include "ObjectFactory.h"
 #include "AgentTypes.h"
 #include "ObjectTypes.h"
+#include "PopulationDetections.h"
+#include "LogisticConsigns.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -121,11 +123,13 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Reports( agent, controller_ ) );
     agent.Attach( *new Transports( controller_, model_.agents_ ) );
     agent.Attach( *new Troops( controller_ ) );
-    agent.Attach( *new MaintenanceStates( controller_ ) );
-    agent.Attach( *new MedicalStates( controller_ ) );
-    agent.Attach( *new SupplyStates( controller_ ) );
+    agent.Attach( *new MaintenanceStates( controller_, model_.objectTypes_, model_.agents_ ) );
+    agent.Attach( *new MedicalStates( controller_, model_.objectTypes_, model_.agents_ ) );
+    agent.Attach( *new SupplyStates( controller_, model_.objectTypes_, model_.objectTypes_ ) );
     agent.Attach( *new ObjectDetections( controller_, model_.objects_ ) );
     agent.Attach( *new AgentDetections( controller_, model_.agents_ ) );
     agent.Attach( *new VisionCones() );
+    agent.Attach( *new PopulationDetections( controller_, model_.agents_ ) );
+    agent.Attach( *new LogisticConsigns() );
 }
 

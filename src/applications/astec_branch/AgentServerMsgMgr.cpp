@@ -532,7 +532,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestructio
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asnMsg )
 {
-    model_.logistics_.GetMaintenanceConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
+    model_.logistics_.GetMaintenanceConsign( asnMsg.oid_consigne ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -568,7 +568,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const A
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asnMsg )
 {
-    model_.logistics_.GetMedicalConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
+    model_.logistics_.GetMedicalConsign( asnMsg.oid_consigne ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -604,7 +604,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( cons
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asnMsg )
 {
-    model_.logistics_.GetSupplyConsign( asnMsg.oid_consigne ).OnReceiveMsgUpdate( asnMsg );
+    model_.logistics_.GetSupplyConsign( asnMsg.oid_consigne ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

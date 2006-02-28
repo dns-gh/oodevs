@@ -17,33 +17,29 @@
 #include "Resolver.h"
 
 class Controller;
-class KnowledgeGroup;
 class Team;
 class Population;
-class PopulationConcentrationKnowledge;
-class PopulationFlowKnowledge;
 class TypePopulation;
+class Displayer_ABC;
+class PopulationPartKnowledge_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public Resolver< PopulationConcentrationKnowledge >
-                          , public Resolver< PopulationFlowKnowledge >
+class PopulationKnowledge : public Resolver< PopulationPartKnowledge_ABC >
 {
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( Controller& controller, const ASN1T_MsgPopulationKnowledgeCreation& asnMsg );
+             PopulationKnowledge( Controller& controller, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& asnMsg );
     virtual ~PopulationKnowledge();
     //@}
 
     //! @name Accessors
     //@{
+    void Display( Displayer_ABC& displayer ) const;
+    void DisplayInList( Displayer_ABC& displayer ) const;
     unsigned long GetId() const;
-//    const Team*                    GetTeam          () const;
-//    const Population&              GetPopulation    () const;
-//          KnowledgeGroup*                    GetKnowledgeGroup          () const;
-//    const TypePopulation&          GetType          () const;
     //@}
 
     //! @name Network
@@ -67,6 +63,7 @@ private:
 
 private:
     Controller& controller_;
+    const Population& popu_;
     unsigned long nID_;
 };
 

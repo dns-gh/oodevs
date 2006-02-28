@@ -26,3 +26,6 @@ const Unit Units::percentage( "%" );
 const Unit Units::metersPerSecond( "m/s" );
 const Unit Units::vehiclesPerHour( "veh/h" );
 const Unit Units::tons( "t" );
+const Unit Units::kilometersPerHour( "km/h" );
+const Unit Units::hours( "h" );
+

@@ -8,89 +8,79 @@
 // *****************************************************************************
 //
 // $Created: APE 2004-06-01 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MT_Settings.cpp $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/Settings.cpp $
 // $Author: Ape $
 // $Modtime: 2/09/04 11:19 $
 // $Revision: 2 $
-// $Workfile: MT_Settings.cpp $
+// $Workfile: Settings.cpp $
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
-#include "MT_Settings.h"
+#include "Settings.h"
 
 #include <qmainwindow.h>
 #include <qdockwindow.h>
 
 // -----------------------------------------------------------------------------
-// Name: MT_Settings constructor
+// Name: Settings constructor
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-MT_Settings::MT_Settings()
+Settings::Settings()
     : QSettings()
 {
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MT_Settings constructor
+// Name: Settings constructor
 /** @param  nFormat 
 */
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-MT_Settings::MT_Settings( QSettings::Format nFormat )
+Settings::Settings( QSettings::Format nFormat )
     : QSettings( nFormat )
 {
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MT_Settings destructor
+// Name: Settings destructor
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-MT_Settings::~MT_Settings()
+Settings::~Settings()
 {
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MT_Settings::WriteEntry
-/** @param  field 
-    @param  widget 
-*/
+// Name: Settings::WriteEntry
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-void MT_Settings::WriteEntry( const QString& field, QWidget& widget )
+void Settings::WriteEntry( const QString& field, QWidget& widget )
 {
-    this->beginGroup( field );
-    this->writeEntry( "/width",  widget.width() );
-    this->writeEntry( "/height", widget.height() );
-    this->writeEntry( "/x", widget.x() );
-    this->writeEntry( "/y", widget.y() );
-    this->writeEntry( "/visible", widget.isVisible() );
-    this->endGroup();
+    beginGroup( field );
+    writeEntry( "/width",  widget.width() );
+    writeEntry( "/height", widget.height() );
+    writeEntry( "/x", widget.x() );
+    writeEntry( "/y", widget.y() );
+    writeEntry( "/visible", widget.isVisible() );
+    endGroup();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MT_Settings::ReadEntry
-/** @param  field 
-    @param  widget 
-*/
+// Name: Settings::ReadEntry
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-void MT_Settings::ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible )
+void Settings::ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible )
 {
-    this->beginGroup( field );
+    beginGroup( field );
     widget.resize( readNumEntry( "/width", nW ), readNumEntry( "/height", nH ) );
     widget.move( readNumEntry( "/x", nX ), readNumEntry( "/y", nY ) );
     if( readBoolEntry( "/visible", bVisible ) )
         widget.show();
     else
         widget.hide();
-    this->endGroup();
+    endGroup();
 }

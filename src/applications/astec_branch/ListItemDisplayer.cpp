@@ -16,7 +16,7 @@
 // -----------------------------------------------------------------------------
 ListItemDisplayer::ListItemDisplayer()
     : item_( 0 )
-    , column_( -1 )
+    , column_( 0 )
 {
     // NOTHING
 }
@@ -56,7 +56,8 @@ Displayer_ABC& ListItemDisplayer::operator()( QListViewItem* item )
 // -----------------------------------------------------------------------------
 Displayer_ABC& ListItemDisplayer::SubItem( const char* name )
 {
-    column_ = FindColumn( name );
+    if( name )
+        column_ = FindColumn( name );
     return *this;
 }
 
@@ -89,6 +90,7 @@ void ListItemDisplayer::EndDisplay()
     if( column_ < 0 )
         throw std::runtime_error( "ListItemDisplayer : Colunm not set" );
     item_->setText( column_, message_ );
+    column_ = ( column_ + 1 ) % columns_.size();
 }
     
 // -----------------------------------------------------------------------------
@@ -109,5 +111,5 @@ int ListItemDisplayer::FindColumn( const char* name ) const
 // -----------------------------------------------------------------------------
 void ListItemDisplayer::Hide()
 {
-
+    // NOTHING
 }

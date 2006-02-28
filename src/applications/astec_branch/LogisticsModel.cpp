@@ -12,12 +12,14 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
+#include "LogisticConsignFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-LogisticsModel::LogisticsModel()
+LogisticsModel::LogisticsModel( LogisticConsignFactory_ABC& factory )
+    : factory_( factory )
 {
     // NOTHING
 }
@@ -50,7 +52,7 @@ void LogisticsModel::Delete( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg )
 {
-    Resolver< LogMaintenanceConsign >::Register( asnMsg.oid_consigne, *new LogMaintenanceConsign( asnMsg ) );
+    Resolver< LogMaintenanceConsign >::Register( asnMsg.oid_consigne, *factory_.CreateMaintenanceConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +79,7 @@ void LogisticsModel::DeleteMaintenanceConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& asnMsg )
 {
-    Resolver< LogMedicalConsign >::Register( asnMsg.oid_consigne, *new LogMedicalConsign( asnMsg ) );
+    Resolver< LogMedicalConsign >::Register( asnMsg.oid_consigne, *factory_.CreateMedicalConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +106,7 @@ void LogisticsModel::DeleteMedicalConsign( unsigned long id )
 // -----------------------------------------------------------------------------
 void LogisticsModel::CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asnMsg )
 {
-    Resolver< LogSupplyConsign >::Register( asnMsg.oid_consigne, *new LogSupplyConsign( asnMsg ) );
+    Resolver< LogSupplyConsign >::Register( asnMsg.oid_consigne, *factory_.CreateSupplyConsign( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------

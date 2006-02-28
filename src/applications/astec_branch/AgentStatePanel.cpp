@@ -117,7 +117,7 @@ void AgentStatePanel::NotifySelected( const Agent* agent )
             if( selected_->Retrieve< LogisticLinks >() )
                 NotifyUpdated( selected_->Get< LogisticLinks >() );
             else
-                display_->Group( "Liens logistiques" ).hide();
+                display_->Group( "Liens logistiques" ).Hide();
             NotifyUpdated( selected_->Get< Transports >() );
         }
         else
@@ -132,7 +132,7 @@ void AgentStatePanel::NotifySelected( const Agent* agent )
 template< typename Extension >
 bool AgentStatePanel::ShouldUpdate( const Extension& extension )
 {
-    return isVisible()
+    return IsVisible()
         && selected_ 
         && ( selected_->Retrieve< Extension >() == & extension );
 }
@@ -146,8 +146,7 @@ void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Info" ) .Display( "Nom:", selected_->GetName().c_str() );
-
+    display_->Group( "Info" ) .Display( "Nom:", selected_ );
     attributes.Display( *display_ );
 }
 

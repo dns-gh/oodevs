@@ -16,6 +16,7 @@
 class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogMedicalConsign;
+class LogisticConsignFactory_ABC;
 
 // =============================================================================
 /** @class  LogisticsModel
@@ -31,7 +32,7 @@ class LogisticsModel : public Resolver< LogMaintenanceConsign >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsModel();
+             LogisticsModel( LogisticConsignFactory_ABC& factory );
     virtual ~LogisticsModel();
     //@}
 
@@ -66,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    LogisticConsignFactory_ABC& factory_;
     //@}
 };
 

@@ -29,10 +29,10 @@
 //#include "ObjectReportPanel.h"
 #include "ObjectKnowledgePanel.h"
 #include "PopulationPanel.h"
-//#include "PopulationKnowledgePanel.h"
-//#include "AgentMaintenancePanel.h"
-//#include "AgentMedicalPanel.h"
-//#include "AgentSupplyPanel.h"
+#include "PopulationKnowledgePanel.h"
+#include "AgentMaintenancePanel.h"
+#include "AgentMedicalPanel.h"
+#include "AgentSupplyPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanel constructor
@@ -55,13 +55,13 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
     pObjectPanel_              = new ObjectPanel( this, controller, actionController );
 //    pObjectReportPanel_        = new ObjectReportPanel( this );
     pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this, controller, actionController );
-//    pAgentMaintenancePanel_    = new AgentMaintenancePanel( this );
-//    pAgentMedicalPanel_        = new AgentMedicalPanel( this );
-//    pAgentSupplyPanel_         = new AgentSupplyPanel( this );
+    pAgentMaintenancePanel_    = new AgentMaintenancePanel( this, controller, actionController );
+    pAgentMedicalPanel_        = new AgentMedicalPanel( this , controller, actionController );
+    pAgentSupplyPanel_         = new AgentSupplyPanel( this, controller, actionController );
 //    pReportPanel_              = new ReportPanel( this );
     pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
 //    pPopulationReportPanel_    = new ReportPanel( this );
-//    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controller, actionController );
+    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controller, actionController );
 
     pTabWidget_ = new QTabWidget( this );
 
@@ -98,8 +98,6 @@ void InfoPanel::Add( QWidget* widget, const QString& name )
 // -----------------------------------------------------------------------------
 void InfoPanel::Remove( QWidget* widget )
 {
-    if( pTabWidget_->indexOf( widget ) != -1 )
-        return;
     pTabWidget_->removePage( widget );
 }
 

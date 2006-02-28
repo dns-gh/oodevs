@@ -14,6 +14,10 @@
 #include "Team.h"
 #include "EquipmentType.h"
 #include "Object_ABC.h"
+#include "Population.h"
+#include "PopulationConcentration.h"
+#include "App.h"
+#include "World.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -85,4 +89,33 @@ void BaseDisplayer::Call( const EquipmentType& value )
 void BaseDisplayer::Call( const Object_ABC& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Population& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const PopulationConcentration& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const MT_Vector2D& value )
+{
+    std::string coordinates;
+    App::GetApp().GetWorld().SimToMosMgrsCoord( value, coordinates );
+    AddToDisplay( QString( coordinates.c_str() ) );
 }

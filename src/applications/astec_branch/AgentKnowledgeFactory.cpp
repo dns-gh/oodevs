@@ -14,6 +14,7 @@
 #include "AgentsModel.h"
 #include "PerceptionMap.h"
 #include "TeamsModel.h"
+#include "PopulationKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeFactory constructor
@@ -44,4 +45,13 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnit
     AgentKnowledge* result = new AgentKnowledge( message, controller_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controller_, model_.agents_ ) );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeFactory::CreatePopulationKnowledge
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message )
+{
+    return new PopulationKnowledge( controller_, model_.agents_, message );
 }

@@ -95,3 +95,12 @@ QSize InfoPanel_ABC::sizeHint() const
 {
     return QSize( 640, 1280 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanel_ABC::IsVisible
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+bool InfoPanel_ABC::IsVisible() const
+{
+    return isVisible();
+}

@@ -18,119 +18,169 @@
 
 #include "astec_pch.h"
 #include "AgentMaintenancePanel.h"
-#include "LogConsignListView.h"
-#include "LogMaintenanceConsign.h"
-#include "LogMaintenanceConsign_ListView_Item.h"
+#include "DisplayBuilder.h"
+#include "ListDisplayer.h"
+#include "Controller.h"
+#include "ActionController.h"
+#include "LogisticConsigns.h"
 #include "Agent.h"
-#include "App.h"
+#include "LogMaintenanceConsign.h"
+#include "MaintenanceStates.h"
+#include "Availability.h"
+#include "Units.h"
+#include "SubItemDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentMaintenancePanel constructor
-// Created: AGE 2005-04-01
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMaintenancePanel::AgentMaintenancePanel( QWidget* pParent )
-    : AgentLogisticPanel_ABC( pParent )
+AgentMaintenancePanel::AgentMaintenancePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+    : InfoPanel_ABC( pParent, tr( "Ch. maint." ) )
+    , selected_( 0 )
 {
-    pConsignListView_       = new T_List( this, false );
-    pConsignHandledListView_= new T_List( this, true );
-    pConsignListView_       ->hide();
-    pConsignHandledListView_->hide();
+    pConsignListView_        = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    pConsignListView_->AddColumn( "Demandes logistiques" );
+    
+    pConsignHandledListView_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    pConsignHandledListView_->AddColumn( "Consignes en traitement" );
 
-    pState_ = new QListView( this, tr( "Etat chaine maintenance" ) );
-    pState_->addColumn( tr( "Etat" ) );
-    pState_->addColumn( "" );
-    pState_->setMargin( 5 );
-    pState_->setLineWidth( 2 );
-    pState_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pStateChainEnabled_      = new QListViewItem( pState_, tr( "Etat chaine" ), " - " );
-    pStateTempsBordee_       = new QListViewItem( pState_, pStateChainEnabled_, tr( "Temps de bordée" ), " - " );
-    pStatePriorites_         = new QListViewItem( pState_, pStateTempsBordee_ , tr( "Priorités" ), " - " );  
-    pStateTacticalPriorites_ = new QListViewItem( pState_, pStatePriorites_   , tr( "Priorités tactiques" ), " - " );  
-    pState_->hide();
+    logDisplay_ = new SubItemDisplayer( "Consigne :" );
+    logDisplay_->AddChild( "Pion demandeur :" )
+                .AddChild( "Pion traitant :" )
+                .AddChild( "Type d'équipement :" )
+                .AddChild( "Type de panne :" )
+                .AddChild( "Etat :" );
 
-    pDispoHaulers_ = new QListView( this, tr( "Disponibilités remorqueurs" ) );
-    pDispoHaulers_->addColumn( tr( "Disponibilités remorqueurs" ) );
-    pDispoHaulers_->addColumn( "" );
-    pDispoHaulers_->setMargin( 5 );
-    pDispoHaulers_->setLineWidth( 2 );
-    pDispoHaulers_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pDispoHaulers_->setSorting( -1, FALSE );
-    pDispoHaulers_->hide();
+    display_                 = new DisplayBuilder( this );
+    display_->AddGroup( "Etat chaine maintenance" )
+                .AddLabel( "Etat chaine" )
+                .AddLabel( "Temps de bordée" )
+                .AddLabel( "Priorités" )
+                .AddLabel( "Priorités tactiques" );
 
-    pDispoRepairers_ = new QListView( this, tr( "Disponibilités réparateurs" ) );
-    pDispoRepairers_->addColumn( tr( "Disponibilités réparateurs" ) );
-    pDispoRepairers_->addColumn( "" );
-    pDispoRepairers_->setMargin( 5 );
-    pDispoRepairers_->setLineWidth( 2 );
-    pDispoRepairers_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pDispoRepairers_->setSorting( -1, FALSE );
-    pDispoRepairers_->hide();
+    dispoHaulers_            = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    dispoHaulers_->AddColumn( "Remorqueur" )
+                  .AddColumn( "Disponibles" );
+    dispoRepairers_          = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    dispoRepairers_->AddColumn( "Réparateur" )
+                    .AddColumn( "Disponibles" );
 
-    connect( &App::GetApp(), SIGNAL( AgentUpdated( Agent& ) ), this, SLOT( OnAgentUpdated( Agent& ) ) );
+    controller.Register( *this );
+    actionController.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentMaintenancePanel destructor
-// Created: AGE 2005-04-01
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMaintenancePanel::~AgentMaintenancePanel()
 {
-    //NOTHING
+    delete logDisplay_;
+    delete display_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMaintenancePanel::OnUpdate
-// Created: AGE 2005-04-05
+// Name: AgentMaintenancePanel::showEvent
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentMaintenancePanel::OnUpdate()
+void AgentMaintenancePanel::showEvent( QShowEvent* )
 {
-    if( selectedItem_.pAgent_ != 0 )
-        OnAgentUpdated( *selectedItem_.pAgent_ );
-    else
-        OnClearSelection();
+    const Agent* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMaintenancePanel::OnClearSelection
-// Created: SBO 2005-09-22
+// Name: AgentMaintenancePanel::ShouldUpdate
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentMaintenancePanel::OnClearSelection()
+template< typename Extension >
+bool AgentMaintenancePanel::ShouldUpdate( const Extension& e )
 {
-    pConsignListView_       ->hide();
-    pConsignHandledListView_->hide();
-    pState_                 ->hide();
-    pDispoHaulers_          ->hide();
-    pDispoRepairers_        ->hide();
+    return IsVisible() && selected_ && selected_->Retrieve< Extension >() == &e ;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMaintenancePanel::OnAgentUpdated
-// Created: AGE 2005-04-01
+// Name: AgentMaintenancePanel::NotifySelected
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentMaintenancePanel::OnAgentUpdated( Agent& agent )
+void AgentMaintenancePanel::NotifySelected( const Agent* agent )
 {
-    if( ! ShouldDisplay( agent ) )
-        return;
-
-    DisplayConsigns( agent.requestedMaintenances_, *pConsignListView_ );
-    DisplayConsigns( agent.handledMaintenances_, *pConsignHandledListView_ );
-
-    if( ! agent.pMaintenanceData_ )
+    if( ! agent || agent != selected_ )
     {
-        pState_->hide();
-        pDispoHaulers_->hide();
-        pDispoRepairers_->hide();
-        return;
+        selected_ = agent;
+        if( selected_ )
+        {
+            pConsignListView_->hide();
+            pConsignHandledListView_->hide();
+            display_->Hide();
+            dispoHaulers_->hide();
+            dispoRepairers_->hide();
+
+            Show();
+            NotifyUpdated( selected_->Get< LogisticConsigns >() );
+            if( selected_->Retrieve< MaintenanceStates >() )
+                NotifyUpdated( selected_->Get< MaintenanceStates >() );
+        }
+        else
+            Hide();
     }
+}
 
-    Agent::T_MaintenanceData& data = *agent.pMaintenanceData_;
-    pStateChainEnabled_->setText( 1, data.bChainEnabled_ ? tr( "Activée" ) : tr( "Désactivée" ) );
-    pStateTempsBordee_ ->setText( 1, ( QString( "%1 " ) + tr( "heures" ) ).arg( data.nTempsBordee_ ) );
-    DisplayPriorities( data.priorities_, *pStatePriorites_, EquipmentResolver() );    
-    DisplayPriorities( data.tacticalPriorities_, *pStateTacticalPriorites_, AutomateResolver() );
+// -----------------------------------------------------------------------------
+// Name: AgentMaintenancePanel::NotifyUpdated
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMaintenancePanel::NotifyUpdated( const LogisticConsigns& consigns )
+{
+    if( ! ShouldUpdate( consigns ) )
+        return;
 
-    pState_->show();
+    pConsignListView_->DeleteTail( 
+        pConsignListView_->DisplayList( consigns.requestedMaintenances_.begin(), consigns.requestedMaintenances_.end() )
+        );
+        
+    pConsignHandledListView_->DeleteTail( 
+        pConsignHandledListView_->DisplayList( consigns.handledMaintenances_.begin(), consigns.handledMaintenances_.end() )
+        );
+}
 
-    DisplayAvailabilities( data.dispoHaulers_, *pDispoHaulers_, EquipmentResolver(), "%" );
-    DisplayAvailabilities( data.dispoRepairers_, *pDispoRepairers_, EquipmentResolver(), "%" );
+// -----------------------------------------------------------------------------
+// Name: AgentMaintenancePanel::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMaintenancePanel::Display( const LogMaintenanceConsign* consign, Displayer_ABC&, ValuedListItem* item )
+{
+    if( consign )
+        consign->Display( (*logDisplay_)( item ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMaintenancePanel::NotifyUpdated
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMaintenancePanel::NotifyUpdated( const MaintenanceStates& consigns )
+{
+    if( ! ShouldUpdate( consigns ) )
+        return;
+
+    consigns.Display( *display_ );
+
+    dispoHaulers_->DeleteTail( 
+        dispoHaulers_->DisplayList( consigns.dispoHaulers_.begin(), consigns.dispoHaulers_.end() )
+        );
+
+    dispoRepairers_->DeleteTail( 
+        dispoRepairers_->DisplayList( consigns.dispoRepairers_.begin(), consigns.dispoRepairers_.end() )
+        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMaintenancePanel::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMaintenancePanel::Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* )
+{
+    displayer.Display( 0, availability.type_ )
+             .Display( 0, availability.available_ * Units::percentage );
 }

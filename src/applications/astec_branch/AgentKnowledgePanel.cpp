@@ -111,24 +111,42 @@ AgentKnowledgePanel::~AgentKnowledgePanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::showEvent
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::showEvent( QShowEvent* )
+{
+    if( selected_ ) 
+        NotifyUpdated( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 {
-    if( ! isVisible() || selected_ != &knowledges )
+    if( ! IsVisible() || selected_ != &knowledges )
         return;
 
     pKnowledgeListView_->DeleteTail( 
-        pKnowledgeListView_->Display( knowledges.CreateIterator(), pKnowledgeListView_ )
+        pKnowledgeListView_->DisplayList( knowledges.CreateIterator() )
         );
+    ValuedListItem* item = FindItem( subSelected_, pKnowledgeListView_->firstChild() );
+    if( item )
+        pKnowledgeListView_->setSelected( item, true );
+    else
+    {
+        subSelected_ = 0;
+        pKnowledgeListView_->setSelected( 0, false );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer )
+void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Agents connus", k.GetRealAgent() );
 }
@@ -161,8 +179,10 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
     if( ! item || ! item->IsA< const AgentKnowledge* >() )
-        return;
-    subSelected_ = item->GetValue< const AgentKnowledge* >();
+        subSelected_ = 0;
+    else
+        subSelected_ = item->GetValue< const AgentKnowledge* >();
+
     if( subSelected_ )
     {
         NotifyUpdated( *subSelected_ );
@@ -178,7 +198,7 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
 {
-    if( ! isVisible() || subSelected_ != & k )
+    if( ! IsVisible() || subSelected_ != & k )
         return;
 
     k.Display( display_->Group( "Détails" ) );
@@ -190,17 +210,19 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 {
-    if( ! isVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
+    if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
         return;
 
-    pPerceptionListView_->Display( perceptions.perceptions_.begin(), perceptions.perceptions_.end(), pPerceptionListView_ );
+    pPerceptionListView_->DeleteTail( 
+        pPerceptionListView_->DisplayList( perceptions.perceptions_.begin(), perceptions.perceptions_.end() )
+        );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer )
+void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Agent", perception.detected_ );
     displayer.Display( "Niveau perception", perception.detected_ );

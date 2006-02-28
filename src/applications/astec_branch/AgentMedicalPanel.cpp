@@ -18,155 +18,179 @@
 
 #include "astec_pch.h"
 #include "AgentMedicalPanel.h"
-#include "LogConsignListView.h"
 #include "LogMedicalConsign.h"
-#include "LogMedicalConsign_ListView_Item.h"
 #include "Agent.h"
-#include "App.h"
+#include "MedicalStates.h"
+#include "LogisticConsigns.h"
+#include "ListDisplayer.h"
+#include "DisplayBuilder.h"
+#include "Controller.h"
+#include "ActionController.h"
+#include "SubItemDisplayer.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentMedicalPanel constructor
-// Created: AGE 2005-04-01
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
-    : AgentLogisticPanel_ABC( pParent )
+AgentMedicalPanel::AgentMedicalPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+    : InfoPanel_ABC( pParent, tr( "Ch. medicale" ) )
+    , selected_( 0 )
 {
-    pConsignListView_       = new T_List( this, false );
-    pConsignHandledListView_= new T_List( this, true );
-    pConsignHandledListView_->hide();
-
-    pState_ = new QListView( this, tr( "Etat chaine medical" ) );
-    pState_->addColumn( tr( "Etat" ) );
-    pState_->addColumn( "" );
-    pState_->setMargin( 5 );
-    pState_->setLineWidth( 2 );
-    pState_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pStateChainEnabled_      = new QListViewItem( pState_, tr( "Etat chaine" ), " - " );
-    pStateTempsBordee_       = new QListViewItem( pState_, pStateChainEnabled_, tr( "Temps de bordée" ), " - " );
-    pStatePriorites_         = new QListViewItem( pState_, pStateTempsBordee_ , tr( "Priorités" ), " - " );  
-    pStateTacticalPriorites_ = new QListViewItem( pState_, pStatePriorites_   , tr( "Priorités tactiques" ), " - " );  
-    pState_->hide();
+    pConsignListView_        = new ListDisplayer< AgentMedicalPanel >( this, *this );
+    pConsignListView_->AddColumn( "Demandes logistiques" );
     
-    pDispoReleveAmbulances_ = new QListView( this, tr( "Disponibilités ambulances relève" ) );
-    pDispoReleveAmbulances_->addColumn( tr( "Disponibilités ambulances relève" ) );
-    pDispoReleveAmbulances_->addColumn( "" );
-    pDispoReleveAmbulances_->setMargin( 5 );
-    pDispoReleveAmbulances_->setLineWidth( 2 );
-    pDispoReleveAmbulances_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pDispoReleveAmbulances_->setSorting( -1, FALSE );
-    pDispoReleveAmbulances_->hide();
+    pConsignHandledListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
+    pConsignHandledListView_->AddColumn( "Consignes en traitement" );
 
-    pDispoRamassageAmbulances_ = new QListView( this, tr( "Disponibilités ambulances ramassage" ) );
-    pDispoRamassageAmbulances_->addColumn( tr( "Disponibilités ambulances ramassage" ) );
-    pDispoRamassageAmbulances_->addColumn( "" );
-    pDispoRamassageAmbulances_->setMargin( 5 );
-    pDispoRamassageAmbulances_->setLineWidth( 2 );
-    pDispoRamassageAmbulances_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pDispoRamassageAmbulances_->setSorting( -1, FALSE );
-    pDispoRamassageAmbulances_->hide();
+    logDisplay_ = new SubItemDisplayer( "Consigne :" );
+    logDisplay_->AddChild( "Pion demandeur :" )
+                .AddChild( "Pion traitant :" )
+                .AddChild( "Blessure :" )
+                .AddChild( "Reac. mental :" )
+                .AddChild( "Contaminé NBC :" )
+                .AddChild( "Etat :" );
 
-    pDispoDoctors_ = new QListView( this, tr( "Disponibilités médecins" ) );
-    pDispoDoctors_->addColumn( tr( "Disponibilités médecins" ) );
-    pDispoDoctors_->addColumn( "" );
-    pDispoDoctors_->setMargin( 5 );
-    pDispoDoctors_->setLineWidth( 2 );
-    pDispoDoctors_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pDispoDoctors_->setSorting( -1, FALSE );
-    pDispoDoctors_->hide();
+    display_                 = new DisplayBuilder( this );
+    display_->AddGroup( "Etat chaine santé" )
+                .AddLabel( "Etat chaine" )
+                .AddLabel( "Temps de bordée" )
+                .AddLabel( "Priorités" )
+                .AddLabel( "Priorités tactiques" );
 
-    connect( &App::GetApp(), SIGNAL( AgentUpdated( Agent& ) ), this, SLOT( OnAgentUpdated( Agent& ) ) );
+    dispoReleveAmbulances_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
+    dispoReleveAmbulances_->AddColumn( "Ambulances relève" )
+                           .AddColumn( "Disponibles" );
+    dispoDispoRamassageAmbulances_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
+    dispoDispoRamassageAmbulances_->AddColumn( "Ambulances ramassage" )
+                                   .AddColumn( "Disponibles" );
+    dispoDispoDoctors_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
+    dispoDispoDoctors_->AddColumn( "Médecins" )
+                       .AddColumn( "Disponibles" );
+
+    controller.Register( *this );
+    actionController.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentMedicalPanel destructor
-// Created: AGE 2005-04-01
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMedicalPanel::~AgentMedicalPanel()
 {
-    //NOTHING
+    delete logDisplay_; 
+    delete display_;
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::showEvent
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::showEvent( QShowEvent* )
 {
-    class MedicalResolver
+    const Agent* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::ShouldUpdate
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+template< typename Extension >
+bool AgentMedicalPanel::ShouldUpdate( const Extension& e )
+{
+    return IsVisible() && selected_ && selected_->Retrieve< Extension >() == &e ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::NotifySelected
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::NotifySelected( const Agent* agent )
+{
+    if( ! agent || agent != selected_ )
     {
-    public:
-        std::string GetName( unsigned int nUrgency ) const
+        selected_ = agent;
+        if( selected_ )
         {
-            switch( nUrgency )
-            {
-                case EnumHumanWound::blesse_urgence_1      : return "U1";
-                case EnumHumanWound::blesse_urgence_2      : return "U2";
-                case EnumHumanWound::blesse_urgence_3      : return "U3";
-                case EnumHumanWound::blesse_urgence_extreme: return "UE";
-                case EnumHumanWound::mort                  : return "Morts";
-                case EnumHumanWound::non_blesse            : return "Non blessés";
-            }
-            return "";
-        };
-    };
-};
+            pConsignListView_->hide();
+            pConsignHandledListView_->hide();
+            display_->Hide();
+            dispoReleveAmbulances_->hide();
+            dispoDispoRamassageAmbulances_->hide();
+            dispoDispoDoctors_->hide();
 
-// -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::OnUpdate
-// Created: AGE 2005-04-05
-// -----------------------------------------------------------------------------
-void AgentMedicalPanel::OnUpdate()
-{
-    if( selectedItem_.pAgent_ != 0 )
-        OnAgentUpdated( *selectedItem_.pAgent_ );
-    else
-        OnClearSelection();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::OnClearSelection
-// Created: SBO 2005-09-22
-// -----------------------------------------------------------------------------
-void AgentMedicalPanel::OnClearSelection()
-{
-    pConsignListView_         ->clear();
-    pConsignListView_         ->hide();
-    pConsignHandledListView_  ->clear();
-    pConsignHandledListView_  ->hide();
-    pState_                   ->hide();
-    pDispoReleveAmbulances_   ->hide();
-    pDispoRamassageAmbulances_->hide();
-    pDispoDoctors_            ->hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::OnAgentUpdated
-// Created: AGE 2005-04-01
-// -----------------------------------------------------------------------------
-void AgentMedicalPanel::OnAgentUpdated( Agent& agent )
-{
-    if( ! ShouldDisplay( agent ) )
-        return;
-
-    OnClearSelection();
-
-    DisplayConsigns( agent.requestedMedical_, *pConsignListView_ );
-    DisplayConsigns( agent.handledMedical_, *pConsignHandledListView_ );
-    
-    if( ! agent.pMedicalData_ )
-    {
-        pState_->hide();
-        pDispoReleveAmbulances_->hide();
-        pDispoRamassageAmbulances_->hide();
-        pDispoDoctors_->hide();
-        return;
+            Show();
+            NotifyUpdated( selected_->Get< LogisticConsigns >() );
+            if( selected_->Retrieve< MedicalStates >() )
+                NotifyUpdated( selected_->Get< MedicalStates >() );
+        }
+        else
+            Hide();
     }
-
-    Agent::T_MedicalData& data = *agent.pMedicalData_;
-    pStateChainEnabled_->setText( 1, data.bChainEnabled_ ? tr( "Activée" ) : tr( "Désactivée" ) );
-    pStateTempsBordee_ ->setText( 1, ( QString( "%1 " ) + tr( "heures" ) ).arg( data.nTempsBordee_ ) );
-    DisplayPriorities( data.priorities_        , *pStatePriorites_        , MedicalResolver() );
-    DisplayPriorities( data.tacticalPriorities_, *pStateTacticalPriorites_, AutomateResolver() );
-
-    pState_->show();
-
-    DisplayAvailabilities( data.dispoDoctors_, *pDispoDoctors_, EquipmentResolver(), "%" );
-    DisplayAvailabilities( data.dispoReleveAmbulances_, *pDispoReleveAmbulances_, EquipmentResolver(), "%" );
-    DisplayAvailabilities( data.dispoRamassageAmbulances_, *pDispoRamassageAmbulances_, EquipmentResolver(), "%" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::NotifyUpdated
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::NotifyUpdated( const LogisticConsigns& consigns )
+{
+    if( ! ShouldUpdate( consigns ) )
+        return;
+
+    pConsignListView_->DeleteTail( 
+        pConsignListView_->DisplayList( consigns.requestedMedical_.begin(), consigns.requestedMedical_.end() )
+        );
+        
+    pConsignHandledListView_->DeleteTail( 
+        pConsignHandledListView_->DisplayList( consigns.handledMedical_.begin(), consigns.handledMedical_.end() )
+        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::Display( const LogMedicalConsign* consign, Displayer_ABC& , ValuedListItem* item )
+{
+    if( consign )
+        consign->Display( (*logDisplay_)( item ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::NotifyUpdated
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::NotifyUpdated( const MedicalStates& consigns )
+{
+    if( ! ShouldUpdate( consigns ) )
+        return;
+
+    consigns.Display( *display_ );
+
+    dispoReleveAmbulances_->DeleteTail( 
+        dispoReleveAmbulances_->DisplayList( consigns.dispoReleveAmbulances_.begin(), consigns.dispoReleveAmbulances_.end() )
+        );
+
+    dispoDispoRamassageAmbulances_->DeleteTail( 
+        dispoDispoRamassageAmbulances_->DisplayList( consigns.dispoRamassageAmbulances_.begin(), consigns.dispoRamassageAmbulances_.end() )
+        );
+
+    dispoDispoDoctors_->DeleteTail( 
+        dispoDispoDoctors_->DisplayList( consigns.dispoDoctors_.begin(), consigns.dispoDoctors_.end() )
+        );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* )
+{
+    displayer.Display( 0, availability.type_ )
+             .Display( 0, availability.available_ * Units::percentage );
+}
+

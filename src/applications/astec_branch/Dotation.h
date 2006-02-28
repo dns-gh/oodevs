@@ -24,6 +24,7 @@ class Dotation
 public:
     //! @name Constructors/Destructor
     //@{
+             Dotation();
              Dotation( const DotationType& type, unsigned int quantity );
     virtual ~Dotation();
     //@}
@@ -32,21 +33,10 @@ public:
     //@{
     //@}
 
-private:
-    //! @name Copy/Assignement
-    //@{
-    Dotation( const Dotation& );            //!< Copy constructor
-    Dotation& operator=( const Dotation& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
 public:
     //! @name Member data
     //@{
-    const DotationType& type_;
+    const DotationType* type_;
     unsigned int quantity_;
     //@}
 };

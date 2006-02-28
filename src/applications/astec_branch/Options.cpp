@@ -12,6 +12,7 @@
 #include "OptionsObserver_ABC.h"
 #include "OptionVariant.h"
 #include <algorithm>
+#include "Settings.h"
 
 // -----------------------------------------------------------------------------
 // Name: Options constructor
@@ -60,4 +61,42 @@ void Options::Change( const std::string& name, const OptionVariant& value )
     options_[ name ] = value;
     for( CIT_Observers it = observers_.begin(); it != observers_.end(); ++it )
         (*it)->OptionChanged( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Options::LoadBoolean
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void Options::LoadBoolean( Settings& settings, const std::string& name, bool defaultValue )
+{
+    Change( name, settings.readBoolEntry( ( "/" + name ).c_str(), defaultValue ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Options::LoadInteger
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void Options::LoadInteger( Settings& settings, const std::string& name, int defaultValue )
+{
+    Change( name, settings.readNumEntry( ( "/" + name ).c_str(), defaultValue ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Options::SaveBoolean
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void Options::SaveBoolean( Settings& settings, const std::string& name )
+{
+    if( options_.find( name ) != options_.end() )
+        settings.writeEntry( ( "/" + name ).c_str(), options_[ name ].To< bool >() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Options::SaveInteger
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void Options::SaveInteger( Settings& settings, const std::string& name )
+{
+    if( options_.find( name ) != options_.end() )
+        settings.writeEntry( ( "/" + name ).c_str(), options_[ name ].To< int >() );
 }

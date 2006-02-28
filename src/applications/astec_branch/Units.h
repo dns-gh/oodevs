@@ -40,6 +40,8 @@ public:
     static const Unit metersPerSecond;
     static const Unit vehiclesPerHour;
     static const Unit tons;
+    static const Unit kilometersPerHour;
+    static const Unit hours;
 };
 
 template< typename T >

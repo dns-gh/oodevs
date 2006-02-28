@@ -11,6 +11,7 @@
 #define __AgentKnowledgeFactory_h_
 
 #include "AgentKnowledgeFactory_ABC.h"
+#include "PopulationKnowledgeFactory_ABC.h"
 
 class Controller;
 class Model;
@@ -22,6 +23,7 @@ class Model;
 // Created: AGE 2006-02-15
 // =============================================================================
 class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
+                            , public PopulationKnowledgeFactory_ABC
 {
 
 public:
@@ -33,7 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentKnowledge* CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message );
+    virtual AgentKnowledge*      CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message );
+    virtual PopulationKnowledge* CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message );
     //@}
 
 private:

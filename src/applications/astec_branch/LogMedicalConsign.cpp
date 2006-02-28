@@ -6,52 +6,42 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogMedicalConsign.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 10:54 $
-// $Revision: 2 $
-// $Workfile: LogMedicalConsign.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 
 #include "LogMedicalConsign.h"
-
-#include "App.h"
-#include "AgentManager.h"
 #include "Agent.h"
-#include "LogMedicalConsign_ListView_Item.h"
-#include "Model.h"
-#include "AgentsModel.h"
+#include "LogisticConsigns.h"
+#include "Controller.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign constructor
-// Created: NLD 2004-12-30
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& asn )
-    : nID_             ( asn.oid_consigne )
-    , pion_            ( App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion ) )
+LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& message )
+    : controller_      ( controller )
+    , resolver_        ( resolver )
+    , nID_             ( message.oid_consigne )
+    , pion_            ( resolver_.Get( message.oid_pion ) )
     , pPionLogHandling_( 0 )
-    , wound_           ( (E_Wound)asn.blessure )
-    , bMentalDeceased_ ( asn.blesse_mental )
-    , bContaminated_   ( asn.contamine_nbc )
-    , nState_          ( eFinished )
+    , wound_           ( E_HumanWound( message.blessure ) )
+    , bMentalDeceased_ ( message.blesse_mental )
+    , bContaminated_   ( message.contamine_nbc )
+    , nState_          ( eLogSanteTraitementEtat_Termine )
 {
-//    pion_.AddConsign( *this );
+    pion_.Get< LogisticConsigns >().AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign destructor
-// Created: NLD 2004-12-30
+// Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 LogMedicalConsign::~LogMedicalConsign()
 {
-//    pion_.RemoveConsign( *this );
-//    if( pPionLogHandling_ )
-//        pPionLogHandling_->TerminateConsign( *this );
+    pion_.Get< LogisticConsigns >().RemoveConsign( *this );
+    if( pPionLogHandling_ )
+        pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
 }
 
 // =============================================================================
@@ -59,91 +49,115 @@ LogMedicalConsign::~LogMedicalConsign()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: LogMedicalConsign::OnReceiveMsgUpdate
+// Name: LogMedicalConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asn )
+void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& message )
 {
-    assert( pion_.GetId() == asn.oid_pion );
-    if( asn.m.oid_pion_log_traitantPresent )
+    if( message.m.oid_pion_log_traitantPresent )
     {
-//        if( pPionLogHandling_ )
-//            pPionLogHandling_->TerminateConsign( *this );
-        if( asn.oid_pion_log_traitant != 0 )
-        {
-            pPionLogHandling_ = & App::GetApp().GetModel().agents_.GetAgent( asn.oid_pion_log_traitant );
-//            pPionLogHandling_->HandleConsign( *this );
-        }        
-        else 
-            pPionLogHandling_ = 0;
+        if( pPionLogHandling_ )
+            pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+        pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
+        if( pPionLogHandling_ )
+            pPionLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
     }
 
-    if ( asn.m.blesse_mentalPresent )
-        bMentalDeceased_ = asn.blesse_mental;
-    if ( asn.m.contamine_nbcPresent )
-        bContaminated_   = asn.contamine_nbc;
-    if ( asn.m.blessurePresent )
-        wound_ = (E_Wound)asn.blessure;
+    if( message.m.blesse_mentalPresent )
+        bMentalDeceased_ = message.blesse_mental;
+    if( message.m.contamine_nbcPresent )
+        bContaminated_   = message.contamine_nbc;
+    if( message.m.blessurePresent )
+        wound_ = E_HumanWound( message.blessure );
+    if( message.m.etatPresent )
+        nState_ = E_LogSanteTraitementEtat( message.etat );
 
-    if( asn.m.etatPresent )
-        nState_ = (E_State)asn.etat;
-
-//    App::GetApp().NotifyLogisticConsignUpdated( *this );
+    controller_.Update( *this );
 }
 
+// $$$$ AGE 2006-02-28: remove !
+
 // -----------------------------------------------------------------------------
-// Name: LogMedicalConsign::GetWoundAsString
+// Name: LogMedicalConsign::GetWoundString
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-std::string LogMedicalConsign::GetWoundAsString() const
+const char* LogMedicalConsign::GetWoundString() const
 {
-    switch( wound_ ) 
+    switch( wound_ )
     {
-        case eNotWounded: return "Non blessé";
-        case eKilled    : return "Mort";
-        case eWoundedU1 : return "U1";
-        case eWoundedU2 : return "U2";
-        case eWoundedU3 : return "U3";
-        case eWoundedUE : return "UE";
-        default:
-            assert( false );
-            return "Fussoir";
+        case EnumHumanWound::non_blesse: return "Non blessé";
+        case EnumHumanWound::mort    : return "Mort";
+        case EnumHumanWound::blesse_urgence_1 : return "U1";
+        case EnumHumanWound::blesse_urgence_2 : return "U2";
+        case EnumHumanWound::blesse_urgence_3 : return "U3";
+        case EnumHumanWound::blesse_urgence_extreme : return "UE";
+        default: return "";
     }
 }
-
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign::GetStateString
 // Created: HME 2006-01-30
 // -----------------------------------------------------------------------------
-std::string LogMedicalConsign::GetStateString() const
+const char* LogMedicalConsign::GetStateString() const
 {
-    std::string strState;
-
     switch( nState_ )
-    {        
-    case eWaitingForEvacuation                   : strState = std::string( "En attente d'évacuation" )                    ; break;
-        case eEvacuationGoingTo                  : strState = std::string( "Ambulance en route" )                         ; break;
-        case eEvacuationLoading                  : strState = std::string( "Ambulance en cours de chargement" )           ; break;
-        case eEvacuationWaitingForFullLoading    : strState = std::string( "Ambulance en attente de fin de chargement" )  ; break;
-        case eEvacuationGoingFrom                : strState = std::string( "Ambulance en retour" )                        ; break;
-        case eEvacuationUnloading                : strState = std::string( "Ambulance en cours de déchargement" )         ; break;
-        case eWaitingForDiagnostic               : strState = std::string( "En attente de diagnostique" )                 ; break;
-        case eDiagnosing                         : strState = std::string( "Diagnostique en cours" )                      ; break;
-        case eSearchingForSortingArea            : strState = std::string( "Recherche d'un secteur de tri" )              ; break;
-        case eWaitingForSorting                  : strState = std::string( "En attente de tri" )                          ; break;
-        case eSorting                            : strState = std::string( "Tri en cours" )                               ; break;
-        case eSearchingForHealingArea            : strState = std::string( "Recherche d'un secteur de soin" )             ; break;
-        case eWaitingForHealing                  : strState = std::string( "En attente de soins" )                        ; break;
-        case eHealing                            : strState = std::string( "Soins en cours" )                             ; break;
-        case eWaitingForCollection               : strState = std::string( "En attente de ramassage" )                    ; break;
-        case eCollectionLoading                  : strState = std::string( "Ramassage en cours" )                         ; break;
-        case eCollectionWaitingForFullLoading    : strState = std::string( "En attente de fin de ramassage" )             ; break;
-        case eCollectionGoingTo                  : strState = std::string( "Ramassage en route" )                         ; break;
-        case eCollectionUnloading                : strState = std::string( "Dechargement du ramassage en cours" )         ; break;
-        case eFinished                           : strState = std::string( "Terminé" )                                    ; break;
+    {
+        case EnumLogSanteTraitementEtat::attente_disponibilite_ambulance_releve:
+            return "En attente d'évacuation";
+        case EnumLogSanteTraitementEtat::ambulance_releve_deplacement_aller:
+            return "Ambulance en route";
+        case EnumLogSanteTraitementEtat::ambulance_releve_chargement:
+            return "Ambulance en cours de chargement";
+        case EnumLogSanteTraitementEtat::attente_chargement_complet_ambulance_releve:
+            return "Ambulance en attente de fin de chargement";
+        case EnumLogSanteTraitementEtat::ambulance_releve_deplacement_retour:
+            return "Ambulance en retour";
+        case EnumLogSanteTraitementEtat::ambulance_releve_dechargement:
+            return "Ambulance en cours de déchargement";
+        case EnumLogSanteTraitementEtat::attente_disponibilite_medecin_pour_diagnostique:
+            return "En attente de diagnostique";
+        case EnumLogSanteTraitementEtat::diagnostique:
+            return "Diagnostique en cours";
+        case EnumLogSanteTraitementEtat::recherche_secteur_tri:
+            return "Recherche d'un secteur de tri";
+        case EnumLogSanteTraitementEtat::attente_disponibilite_medecin_pour_tri:
+            return "En attente de tri";
+        case EnumLogSanteTraitementEtat::tri:
+            return "Tri en cours";
+        case EnumLogSanteTraitementEtat::recherche_secteur_soin:
+            return "Recherche d'un secteur de soin";
+        case EnumLogSanteTraitementEtat::attente_disponibilite_medecin_pour_soin:
+            return "En attente de soins";
+        case EnumLogSanteTraitementEtat::soin:
+            return "Soins en cours";
+        case EnumLogSanteTraitementEtat::attente_disponibilite_ambulance_ramassage:
+            return "En attente de ramassage";
+        case EnumLogSanteTraitementEtat::ambulance_ramassage_chargement:
+            return "Ramassage en cours";
+        case EnumLogSanteTraitementEtat::attente_chargement_complet_ambulance_ramassage:
+            return "En attente de fin de ramassage";
+        case EnumLogSanteTraitementEtat::ambulance_ramassage_deplacement_aller:
+            return "Ramassage en route";
+        case EnumLogSanteTraitementEtat::ambulance_ramassage_dechargement:
+            return "Dechargement du ramassage en cours";
+        case EnumLogSanteTraitementEtat::termine:
+            return "Terminé";
         default:
-            assert( false );
+            return "";
     }
+}
 
-    return strState;
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Consigne :", nID_ )
+             .Display( "Pion demandeur :", pion_ )
+             .Display( "Pion traitant :", pPionLogHandling_ )
+             .Display( "Blessure :", wound_ )
+             .Display( "Reac. mental :", bMentalDeceased_ )
+             .Display( "Contaminé NBC :", bContaminated_ )
+             .Display( "Etat :", nState_ );
 }

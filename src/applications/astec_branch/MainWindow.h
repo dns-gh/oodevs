@@ -19,10 +19,6 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 class GL3DWidget;
 class GLWidget;
 class InfoPanel;
@@ -43,6 +39,7 @@ class Agent_ABC;
 class Agent;
 class KnowledgeGroup;
 class MapEventFilter_ABC;
+class OptionsPanel;
 
 class QProgressBar;
 class Controller;
@@ -101,6 +98,7 @@ signals:
     void ODBNewAgent( const std::string& strCategory, KnowledgeGroup& gtia, Agent* pParent );
 
 private:
+    void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();
 
@@ -111,6 +109,8 @@ private:
     //! @name Member data
     //@{
     ActionController& actionController_;
+    Options* pOptions_;
+    OptionsPanel* pOptionsPanel_;
 
     QDockWindow* pListDockWnd_;
     QDockWindow* pInfoDockWnd_;
@@ -126,8 +126,6 @@ private:
     QLabel* pTickLabel_;
 
     QTimer* pLagTimer_;
-
-    Options* pOptions_;
     //@}
 
 private:

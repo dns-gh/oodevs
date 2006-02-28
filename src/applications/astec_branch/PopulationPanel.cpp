@@ -56,6 +56,17 @@ PopulationPanel::~PopulationPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationPanel::showEvent
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void PopulationPanel::showEvent( QShowEvent* )
+{
+    const Population* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationPanel::NotifySelected
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
@@ -64,14 +75,13 @@ void PopulationPanel::NotifySelected( const Population* popu )
     if( selected_ != popu || ! popu )
     {
         selected_ = popu;
-        if( selected_ )
-        {
+        if( selected_ ) {
             Show();
             NotifyUpdated( *selected_ );
         }
         else
             Hide();
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +90,7 @@ void PopulationPanel::NotifySelected( const Population* popu )
 // -----------------------------------------------------------------------------
 void PopulationPanel::DisplayParts( const Population& population )
 {
-    ValuedListItem* item = pPartsListView_->Display( population.CreateIterator(), pPartsListView_ );
+    ValuedListItem* item = pPartsListView_->DisplayList( population.CreateIterator() );
     pPartsListView_->DeleteTail( item );
 }
 
@@ -88,7 +98,7 @@ void PopulationPanel::DisplayParts( const Population& population )
 // Name: PopulationPanel::DisplayPart
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer )
+void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Morceau", part.GetName().c_str() )
              .Display( "Hommes vivants", part.GetLivingHumans() )
@@ -103,7 +113,7 @@ void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& di
 // -----------------------------------------------------------------------------
 void PopulationPanel::NotifyUpdated( const Population& p )
 {
-    if( ! isVisible() || selected_ != &p )
+    if( ! IsVisible() || selected_ != &p )
         return;
     display_->Group( "Informations" )
                 .Display( "Nom:", p.GetName() )

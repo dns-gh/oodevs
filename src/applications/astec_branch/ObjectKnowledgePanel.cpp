@@ -99,13 +99,23 @@ ObjectKnowledgePanel::~ObjectKnowledgePanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::showEvent
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::showEvent( QShowEvent* )
+{
+    if( selected_ )
+        NotifyUpdated( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 {
     pKnowledgeListView_->DeleteTail( 
-        pKnowledgeListView_->Display( element.CreateIterator(), pKnowledgeListView_ )
+        pKnowledgeListView_->DisplayList( element.CreateIterator() )
         );
 }
 
@@ -113,7 +123,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // Name: ObjectKnowledgePanel::Display
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& displayer )
+void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* )
 {
     k.DisplayInList( displayer );
 }
@@ -124,7 +134,7 @@ void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& dis
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge& element )
 {
-    if( ! isVisible() || &element != subSelected_ )
+    if( ! IsVisible() || &element != subSelected_ )
         return;
     display_->Hide();
     element.Display( *display_ );
@@ -137,7 +147,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge& element )
 template< typename T >
 void ObjectKnowledgePanel::DisplayExtension( const T& extension )
 {
-    if( isVisible() && subSelected_ && subSelected_->Retrieve< T >() == &extension )
+    if( IsVisible() && subSelected_ && subSelected_->Retrieve< T >() == &extension )
         extension.Display( *display_ );
 }
     

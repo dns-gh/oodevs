@@ -105,7 +105,6 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
     actionController.Register( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel destructor
 // Created: APE 2004-06-11
@@ -113,6 +112,17 @@ ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionControl
 ObjectPanel::~ObjectPanel()
 {
     delete display_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::showEvent
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void ObjectPanel::showEvent( QShowEvent* )
+{
+    const Object_ABC* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,27 +142,27 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             if( selected_->Retrieve< CampAttributes >() )
                 NotifyUpdated( selected_->Get< CampAttributes >() );
             else
-                display_->Group( "Camp" ).hide();
+                display_->Group( "Camp" ).Hide();
 
             if( selected_->Retrieve< CrossingSiteAttributes >() )
                 NotifyUpdated( selected_->Get< CrossingSiteAttributes >() );
             else
-                display_->Group( "Site de franchissement" ).hide();
+                display_->Group( "Site de franchissement" ).Hide();
 
             if( selected_->Retrieve< LogisticRouteAttributes >() )
                 NotifyUpdated( selected_->Get< LogisticRouteAttributes >() );
             else
-                display_->Group( "Itinéraire Logistique" ).hide();
+                display_->Group( "Itinéraire logistique" ).Hide();
 
             if( selected_->Retrieve< NBCAttributes >() )
                 NotifyUpdated( selected_->Get< NBCAttributes >() );
             else
-                display_->Group( "Nuage/Zone NBC" ).hide();
+                display_->Group( "Nuage/Zone NBC" ).Hide();
 
             if( selected_->Retrieve< RotaAttributes >() )
                 NotifyUpdated( selected_->Get< RotaAttributes >() );
             else
-                display_->Group( "ROTA" ).hide();
+                display_->Group( "ROTA" ).Hide();
         }
         else
             Hide();
@@ -165,7 +175,7 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
 // -----------------------------------------------------------------------------
 void ObjectPanel::NotifyUpdated( const Object_ABC& object )
 {
-    if( selected_  != &object || ! isVisible() )
+    if( selected_  != &object || ! IsVisible() )
         return;
 
     object.Display( *display_ );
@@ -190,7 +200,7 @@ void ObjectPanel::NotifyDeleted( const Object_ABC& object )
 template< typename Extension >
 bool ObjectPanel::ShouldUpdate( const Extension& extension )
 {
-    return isVisible()
+    return IsVisible()
         && selected_ 
         && ( selected_->Retrieve< Extension >() == & extension );
 }

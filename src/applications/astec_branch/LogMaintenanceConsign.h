@@ -21,67 +21,55 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "Resolver_ABC.h"
 
 class Agent;
+class Controller;
+class Displayer_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
 class LogMaintenanceConsign
 {
-    MT_COPYNOTALLOWED( LogMaintenanceConsign );
-
 public:
-    //! @name Types
+    //! @name Constructor / Destructor
     //@{
-    enum E_State
-    {
-        eGoingFrom,         // La composante se déplace seule vers le TC2
-        eWaitingForCarrier,
-        eCarrierGoingTo,
-        eCarrierLoading,
-        eCarrierGoingFrom,
-        eCarrierUnloading,
-        eDiagnosing,
-        eSearchingForUpperLevel,
-        eWaitingForParts,
-        eWaitingForRepairer,
-        eRepairing,
-        eWaitingForGoingBackToWar,
-        eGoingBackToWar,
-        eFinished
-    };
+             LogMaintenanceConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn );
+    virtual ~LogMaintenanceConsign();
     //@}
 
-public:
-     LogMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn );
-    ~LogMaintenanceConsign();
+    //! @name Operations
+    //@{
+    void Display( Displayer_ABC& displayer ) const;
+    //@}
 
     //! @name Accessors
     //@{
-    uint        GetID() const;
-    Agent&  GetPion() const;
-    Agent*  GetPionLogHandling() const;
-    uint        GetEquipmentTypeID() const;
-    uint        GetBreakdownTypeID() const;
-    E_State     GetState() const;
-    std::string GetStateString() const;
+    const char* GetStateString() const;
     //@}
 
     //! @name Network events
     //@{
-    void OnReceiveMsgUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asn );
+    void Update( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asn );
     //@}
 
 private:
-    uint        nID_;
+    //! @name Copy/Assignment
+    //@{
+    LogMaintenanceConsign( const LogMaintenanceConsign& );
+    LogMaintenanceConsign& operator=( const LogMaintenanceConsign& );
+    //@}
+
+private:
+    Controller& controller_;
+    const Resolver_ABC< Agent >& resolver_;
+    uint    nID_;
     Agent&  pion_;
     Agent*  pPionLogHandling_;
-    uint        nEquipmentTypeID_;
-    uint        nBreakdownTypeID_;
-    E_State     nState_;
+    uint    nEquipmentTypeID_; // $$$$ AGE 2006-02-28: resolve
+    uint    nBreakdownTypeID_;
+    ASN1T_EnumLogMaintenanceTraitementEtat nState_;
 };
-
-#include "LogMaintenanceConsign.inl"
 
 #endif // __LogMaintenanceConsign_h_

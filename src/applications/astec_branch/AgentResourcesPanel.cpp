@@ -79,13 +79,24 @@ AgentResourcesPanel::~AgentResourcesPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentResourcesPanel::showEvent
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void AgentResourcesPanel::showEvent( QShowEvent* )
+{
+    const Agent* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::ShouldUpdate
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 template< typename T >
 bool AgentResourcesPanel::ShouldUpdate( const T& a )
 {
-    return isVisible()
+    return IsVisible()
         && selected_ 
         && ( selected_->Retrieve< T >() == & a );
 }
@@ -99,7 +110,7 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
     if( ! ShouldUpdate( a ) )
         return;
     pResources_->DeleteTail( 
-        pResources_->Display( a.CreateIterator(), pResources_ )
+        pResources_->DisplayList( a.CreateIterator() )
     );
 }
 
@@ -107,7 +118,7 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Dotation& dotation, Displayer_ABC& displayer )
+void AgentResourcesPanel::Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Resource", dotation.type_ )
              .Display( "Quantité", dotation.quantity_ );
@@ -122,7 +133,7 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
     if( ! ShouldUpdate( a ) )
         return;
     pEquipment_->DeleteTail( 
-        pEquipment_->Display( a.CreateIterator(), pEquipment_ )
+        pEquipment_->DisplayList( a.CreateIterator() )
     );
 }
 
@@ -130,7 +141,7 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& displayer )
+void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Equipement", equipment.type_  )
              .Display( "Disponible", equipment.available_ )
@@ -147,8 +158,8 @@ void AgentResourcesPanel::NotifyUpdated( const Lends& a )
 {
     if( ! ShouldUpdate( a ) )
         return;
-    pEquipment_->DeleteTail( 
-        pEquipment_->Display( a.lends_.begin(), a.lends_.end(), pEquipment_ )
+    pLends_->DeleteTail( 
+        pLends_->DisplayList( a.lends_.begin(), a.lends_.end() )
     );
 }
 
@@ -156,7 +167,7 @@ void AgentResourcesPanel::NotifyUpdated( const Lends& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Lend& lend, Displayer_ABC& displayer )
+void AgentResourcesPanel::Display( const Lend& lend, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Emprunteur", lend.borrower_ )
              .Display( "Equipement prêté", lend.type_ )
@@ -172,14 +183,16 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
     if( ! ShouldUpdate( a ) )
         return;
 
-    pTroops_->Display( a.humans_, a.humans_+eTroopHealthStateNbrStates, pTroops_ );
+    pTroops_->DeleteTail(
+        pTroops_->DisplayList( &*a.humans_, a.humans_+eTroopHealthStateNbrStates )
+        );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Troops::Humans& humans, Displayer_ABC& displayer )
+void AgentResourcesPanel::Display( const Troops::Humans& humans, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Catégorie", humans.state_ )
              .Display( "Officiers", humans.officers_ )

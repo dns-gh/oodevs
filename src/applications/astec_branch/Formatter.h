@@ -291,6 +291,14 @@ struct Formatter< E_TroopHealthState >
     }
 };
 
+template< >
+struct Formatter< E_HumanWound >
+{
+    void operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const {
+        displayer.AddToDisplay( ENT_Tr::ConvertFromHumanWound( e ) );
+    }
+};
+
 // =============================================================================
 /** @class  Formatter
     @brief  Containers

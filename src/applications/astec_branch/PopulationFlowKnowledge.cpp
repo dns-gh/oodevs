@@ -22,6 +22,8 @@
 #include "TeamsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
+#include "Units.h"
 
 // =============================================================================
 // FlowPart
@@ -50,24 +52,13 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
     : controller_( controller )
+    , popu_( popu )
     , nID_                 ( asnMsg.oid_connaissance_flux )
-    , pKnowledgeGroup_               ( & App::GetApp().GetModel().knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ) )
-    , pPopulationKnowledge_( 0 )
     , pFlow_               ( 0 )
 {
-//    pPopulationKnowledge_ = pKnowledgeGroup_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
-//    assert( pPopulationKnowledge_ );
-//    const Population& population = pPopulationKnowledge_->GetPopulation();
-//    
-//    if( asnMsg.oid_flux_reel == 0 )
-//        pFlow_ = 0;
-//    else
-//    {
-//        pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
-//        assert( pFlow_ );
-//    }
+    pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,22 +89,39 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
     if( asnMsg.m.nb_humains_mortsPresent )
         nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
     if( asnMsg.m.oid_flux_reelPresent )
-    {
-//        assert( pPopulationKnowledge_ );
-//        const Population& population = pPopulationKnowledge_->GetPopulation();
-//        if( asnMsg.oid_flux_reel == 0 )
-//            pFlow_ = 0;
-//        else
-//        {
-//            pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
-//            assert( pFlow_ );
-//        }
-    }
+        pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
     if( asnMsg.m.portions_fluxPresent )
     {
-        flowParts_.Set();
+        flowParts_.clear(); flowParts_.reserve( asnMsg.portions_flux.n );
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
-            flowParts_.Data().push_back( FlowPart( asnMsg.portions_flux.elem[ i ] ) );
+            flowParts_.push_back( FlowPart( asnMsg.portions_flux.elem[ i ] ) );
     }
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlowKnowledge::Display
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Group( "Flux" )
+                .Display( "Id:", nID_ )
+                .Display( "Flux associée:", pFlow_ )
+                .Display( "Direction:", rDirection_ * Units::degrees )
+                .Display( "Vitesse:", rSpeed_ * Units::kilometersPerHour )
+                .Display( "Humains vivants:", nNbrAliveHumans_ )
+                .Display( "Humains morts:", nNbrDeadHumans_ )
+                .Display( "Attitude:", eAttitude_ )
+                .Display( "Percue:", bIsPerceived_ )
+                .Display( "Portions connues:", flowParts_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlowKnowledge::DisplayInList
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void PopulationFlowKnowledge::DisplayInList( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Populations connues" ).Start( "Flow - " ).Add( nID_ ).End();
 }

@@ -17,6 +17,7 @@
 #include "KnowledgeGroup.h"
 #include "Team.h"
 #include "Diplomacies.h"
+#include "AgentKnowledgeFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -58,6 +59,6 @@ KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team&
 {
     KnowledgeGroup* result = new KnowledgeGroup( id, controller_, team );
     result->Attach( *new AgentKnowledges( controller_, model_.agentsKnowledgeFactory_ ) );
-    result->Attach( *new PopulationKnowledges( controller_ ) );
+    result->Attach( *new PopulationKnowledges( controller_, model_.agentsKnowledgeFactory_ ) );
     return result;
 }

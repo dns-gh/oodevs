@@ -21,9 +21,10 @@ class ObjectFactory_ABC;
 class Controller;
 class AgentTypes;
 class ObjectKnowledgeFactory;
-class AgentKnowledgeFactory_ABC;
+class AgentKnowledgeFactory;
 class TeamFactory_ABC;
 class ObjectTypes;
+class LogisticConsignFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -54,11 +55,12 @@ public:
     ObjectTypes& objectTypes_;
 
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
-    AgentKnowledgeFactory_ABC& agentsKnowledgeFactory_;
+    AgentKnowledgeFactory& agentsKnowledgeFactory_;
 
-    TeamFactory_ABC&         teamFactory_;
-    AgentFactory_ABC&        agentFactory_;
-    ObjectFactory_ABC&       objectFactory_;
+    TeamFactory_ABC&            teamFactory_;
+    AgentFactory_ABC&           agentFactory_;
+    ObjectFactory_ABC&          objectFactory_;
+    LogisticConsignFactory_ABC& logisticFactory_;
 
     AgentsModel&    agents_;
     ObjectsModel&   objects_;

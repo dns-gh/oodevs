@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
@@ -30,6 +26,8 @@
 #include "ObjectListView.h"
 #include "PopulationListView.h"
 #include "ActionController.h"
+#include "Settings.h"
+#include "OptionsPanel.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
 
@@ -46,6 +44,8 @@ MainWindow::MainWindow( Controller& controller )
 
     this->setIcon( MAKE_PIXMAP( mosicon ) );
     this->setCaption( APP_NAME );
+
+    pOptions_ = new Options();
     
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -85,6 +85,20 @@ MainWindow::MainWindow( Controller& controller )
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
     pLogDockWnd_->setCaption( tr( "Log" ) );
     this->setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
+
+    // Options window
+    QDockWindow* pOptionsDockWnd_ = new QDockWindow( this );
+    this->moveDockWindow( pOptionsDockWnd_, Qt::DockRight );
+    pOptionsDockWnd_->hide();
+    pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, *pOptions_ );
+    pOptionsDockWnd_->setWidget( pOptionsPanel_ );
+    pOptionsDockWnd_->setResizeEnabled( true );
+    pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
+    pOptionsDockWnd_->setCaption( tr( "Options" ) );
+    this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
+
+    ReadSettings();
+    ReadOptions();
 }
 
 
@@ -111,4 +125,75 @@ void MainWindow::Update()
 //    pGLWidget_->update();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MainWindow::closeEvent
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void MainWindow::closeEvent( QCloseEvent* pEvent )
+{
+    WriteSettings();
+    WriteOptions();
+    QMainWindow::closeEvent( pEvent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::WriteSettings
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void MainWindow::WriteSettings()
+{
+    Settings settings;
+    settings.setPath( "MASA", "Astec" );
+
+    // Pannel configuration
+    QString strDockConfig;
+    QTextStream strDockConfigStream( &strDockConfig, IO_WriteOnly );
+    strDockConfigStream << *this;
+    settings.writeEntry( "/Panels", strDockConfig );
+    settings.WriteEntry( "/MainWindow", *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ReadSettings
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void MainWindow::ReadSettings()
+{
+    Settings settings;
+    settings.setPath( "MASA", "Astec" );
+
+    // Pannel configuration
+    QString strDockConfig;
+    strDockConfig = settings.readEntry( "/Panels" );
+    QTextStream strDockConfigStream( &strDockConfig, IO_ReadOnly );
+    strDockConfigStream >> *this;
+
+    // Main window configuration
+    settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
+
+    // Always keep the mission panel hidden hidden at launch.
+//    pMissionPanel_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::WriteOptions
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void MainWindow::WriteOptions()
+{
+    Settings settings;
+    settings.setPath( "MASA", "Astec" );
+    pOptionsPanel_->WriteOptions( settings );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ReadOptions
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void MainWindow::ReadOptions()
+{
+    Settings settings;
+    settings.setPath( "MASA", "Astec" );
+    pOptionsPanel_->ReadOptions( settings );
+}
 

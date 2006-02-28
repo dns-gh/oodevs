@@ -40,6 +40,7 @@ public:
     //@{
     void Show();
     void Hide();
+    bool IsVisible() const;
     //@}
 
 private:

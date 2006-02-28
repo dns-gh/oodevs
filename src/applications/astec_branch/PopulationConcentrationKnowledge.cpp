@@ -28,26 +28,14 @@
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const Population& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
     : controller_( controller )
-    , nID_                 ( asnMsg.oid_connaissance_concentration )
-    , pKnowledgeGroup_               ( & App::GetApp().GetModel().knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ) )
-    , pPopulationKnowledge_( 0 )
-    , pConcentration_      ( 0 )
+    , resolver_  ( resolver )
+    , nID_            ( asnMsg.oid_connaissance_concentration )
+    , pConcentration_ ( 0 )
 {
-//    pPopulationKnowledge_ = pKnowledgeGroup_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
-//    assert( pPopulationKnowledge_ );
-//    const Population& population = pPopulationKnowledge_->GetPopulation();
-//
-//    if( asnMsg.oid_concentration_reelle == 0 )
-//        pConcentration_ = 0;
-//    else
-//    {
-//        pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
-//        assert( pConcentration_ );
-//    }
-//    
-//    App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
+    pConcentration_ = resolver_.FindConcentration( asnMsg.oid_concentration_reelle );
+    App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,16 +62,7 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
     if( asnMsg.m.nb_humains_mortsPresent )
         nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
     if( asnMsg.m.oid_concentration_reellePresent )
-    {
-//        const Population& population = pPopulationKnowledge_->GetPopulation();
-//        if( asnMsg.oid_concentration_reelle == 0 )
-//            pConcentration_ = 0;
-//        else
-//        {
-//            pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
-//            assert( pConcentration_ );
-//        }
-    }
+        pConcentration_ = resolver_.FindConcentration( asnMsg.oid_concentration_reelle );
     if( asnMsg.m.pertinencePresent )
         rRelevance_ = asnMsg.pertinence;
     controller_.Update( *this );
@@ -95,15 +74,22 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 {
-//    displayer.Group( "Concentration" )
-//                .Display( "Id:" )
-//                .Display( "Concentration associée:" )
-//                .Display( "Position:" )
-//                .Display( "Humains vivants:" )
-//                .Display( "Humains morts:" )
-//                .Display( "Attitude:" )
-//                .Display( "Percue:" )
-//                .Display( "Pertinence:" );
-//
-//    displayer.AddGroup( "Flux" ).Hide();
+    displayer.Group( "Concentration" )
+                .Display( "Id:", nID_ )
+                .Display( "Concentration associée:", pConcentration_ )
+                .Display( "Position:", position_ )
+                .Display( "Humains vivants:", nNbrAliveHumans_ )
+                .Display( "Humains morts:", nNbrDeadHumans_ )
+                .Display( "Attitude:", eAttitude_ )
+                .Display( "Percue:", bIsPerceived_ )
+                .Display( "Pertinence:", rRelevance_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::DisplayInList
+// Created: AGE 2006-02-27
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Populations connues" ).Start( "Concentration - " ).Add( nID_ ).End();
 }

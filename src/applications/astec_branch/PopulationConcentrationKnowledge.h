@@ -15,8 +15,9 @@
 #include "ASN_Types.h"
 #include "IDManager.h"
 #include "OptionalValue.h"
+#include "PopulationPartKnowledge_ABC.h"
 
-class KnowledgeGroup;
+class Population;
 class PopulationConcentration;
 class PopulationKnowledge;
 class Controller;
@@ -25,35 +26,26 @@ class Displayer_ABC;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationConcentrationKnowledge
+class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
 {
-    friend class PopulationKnowledgePanel;
-    friend class GLTool;
-        
+    
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationConcentrationKnowledge( Controller& controller, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
+             PopulationConcentrationKnowledge( Controller& controller, const Population& popu,
+                 const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    virtual void Display( Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors
     //@{
-    uint                           GetID                 () const;
-    const KnowledgeGroup&          GetKnowledgeGroup     () const;
-    const PopulationKnowledge*     GetPopulationKnowledge() const;
-    const PopulationConcentration* GetConcentration      () const;
-    const MT_Vector2D&             GetPosition           () const;
-    uint                           GetNbrAliveHumans     () const;
-    uint                           GetNbrDeadHumans      () const;
-    E_PopulationAttitude           GetAttitude           () const;
-    MT_Float                       GetRelevance          () const;
-    bool                           IsPerceived           () const;
+
     //@}
 
     //! @name Network
@@ -72,20 +64,17 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const uint                                   nID_;
-          KnowledgeGroup*                              pKnowledgeGroup_;
-    const PopulationKnowledge*               pPopulationKnowledge_;
-    const PopulationConcentration*           pConcentration_;
-          MT_Vector2D                            position_;
-          OptionalValue< uint >                  nNbrAliveHumans_;
-          OptionalValue< uint >                  nNbrDeadHumans_;
-          OptionalValue< E_PopulationAttitude >  eAttitude_;
-          OptionalValue< bool >                  bIsPerceived_;
-          MT_Float                               rRelevance_;
+    const Population& resolver_;
+    const uint nID_;
+    
+    const PopulationConcentration*         pConcentration_;
+    MT_Vector2D                            position_;
+    OptionalValue< uint >                  nNbrAliveHumans_;
+    OptionalValue< uint >                  nNbrDeadHumans_;
+    OptionalValue< E_PopulationAttitude >  eAttitude_;
+    OptionalValue< bool >                  bIsPerceived_;
+    MT_Float                               rRelevance_;
     //@}
 };
-
-
-#include "PopulationConcentrationKnowledge.inl"
 
 #endif // __PopulationConcentrationKnowledge_h_

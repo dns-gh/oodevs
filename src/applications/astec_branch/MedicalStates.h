@@ -13,8 +13,13 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Availability.h"
+#include "Resolver_ABC.h"
 
 class Controller;
+class EquipmentType;
+class Agent;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  MedicalStates
@@ -25,17 +30,17 @@ class Controller;
 class MedicalStates : public Extension_ABC
                     , public Updatable_ABC< ASN1T_MsgLogSanteEtat >
 {
-
+    // $$$$ AGE 2006-02-28: Ne devrait pas etre instancié pour tout le monde !
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( Controller& controller );
+             MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver );
     virtual ~MedicalStates();
     //@}
 
     //! @name Operations
     //@{
-    
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -52,23 +57,25 @@ private:
 
     //! @name Types
     //@{
-    // $$$$ AGE 2006-02-14: resolve
-    typedef std::vector< unsigned >                        T_Priorities;
-    typedef std::vector< std::pair< unsigned, unsigned > > T_LogisticAvailabilities;
+    typedef std::vector< E_HumanWound > T_Priorities;
+    typedef std::vector< const Agent* > T_Agents;
+    typedef std::vector< Availability > T_Availabilities;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
-    Controller&              controller_;
+    Controller&      controller_;
+    const Resolver_ABC< EquipmentType >& resolver_;
+    const Resolver_ABC< Agent >&         agentResolver_;
 
-    bool                     bChainEnabled_;
-    unsigned                 nTempsBordee_;
-    T_LogisticAvailabilities dispoReleveAmbulances_;
-    T_LogisticAvailabilities dispoRamassageAmbulances_;  
-    T_LogisticAvailabilities dispoDoctors_;
-    T_Priorities             priorities_;
-    T_Priorities             tacticalPriorities_;
+    bool             bChainEnabled_;
+    unsigned         nTempsBordee_;
+    T_Availabilities dispoReleveAmbulances_;
+    T_Availabilities dispoRamassageAmbulances_;  
+    T_Availabilities dispoDoctors_;
+    T_Priorities     priorities_;
+    T_Agents         tacticalPriorities_;
     //@}
 };
 

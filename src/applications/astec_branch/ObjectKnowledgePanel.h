@@ -39,6 +39,7 @@ class ObjectKnowledges;
 class Controller;
 class ActionController;
 class Displayer_ABC;
+class ValuedListItem;
 
 // =============================================================================
 /** @class  ObjectKnowledgePanel
@@ -67,7 +68,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const ObjectKnowledge& k, Displayer_ABC& displayer );
+    void Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private slots:
@@ -86,6 +87,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const ObjectKnowledges& element );
     virtual void NotifyUpdated( const ObjectKnowledge& element );
     virtual void NotifyUpdated( const CampAttributes& element );

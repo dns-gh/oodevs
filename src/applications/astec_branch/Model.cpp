@@ -22,6 +22,7 @@
 #include "AgentKnowledgeFactory.h"
 #include "KnowledgeGroupsModel.h"
 #include "ObjectTypes.h"
+#include "LogisticConsignFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -35,12 +36,13 @@ Model::Model( Controller& controller, const std::string& scipioXml )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controller_, *this ) )
     , teamFactory_( *new TeamFactory( controller_, *this ) )
     , agentFactory_( *new AgentFactory( controller_,types_, *this ) )
+    , logisticFactory_( *new LogisticConsignFactory( controller_, *this ) )
     , objectFactory_( *new ObjectFactory( controller_, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
-    , logistics_( *new LogisticsModel() )
+    , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel() )
 {
 
@@ -52,14 +54,20 @@ Model::Model( Controller& controller, const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    delete &types_;
-    delete &agentFactory_;
-    delete &objectFactory_;
-    delete &agents_;
-    delete &objects_;
-    delete &teams_;
-    delete &logistics_;
     delete &limits_;
+    delete &logistics_;
+    delete &knowledgeGroups_;
+    delete &teams_;
+    delete &objects_;
+    delete &agents_;
+    delete &logisticFactory_;
+    delete &objectFactory_;
+    delete &agentFactory_;
+    delete &teamFactory_;
+    delete &agentsKnowledgeFactory_;
+    delete &objectKnowledgeFactory_;
+    delete &objectTypes_;
+    delete &types_;
 }
     
 

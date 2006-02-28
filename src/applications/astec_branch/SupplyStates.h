@@ -13,8 +13,14 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Availability.h"
+#include "Dotation.h"
+#include "Resolver.h"
 
 class Controller;
+class EquipmentType;
+class DotationType;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  SupplyStates
@@ -25,17 +31,19 @@ class Controller;
 class SupplyStates : public Extension_ABC
                    , public Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
                    , public Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
+                   , public Resolver< Dotation >
 {
-    // $$$$ AGE 2006-02-14: entierement optionnel
+    // $$$$ AGE 2006-02-28: Ne devrait pas etre instancié pour tout le monde !
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( Controller& controller );
+             SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver );
     virtual ~SupplyStates();
     //@}
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -53,21 +61,21 @@ private:
 
     //! @name Types
     //@{
-    // $$$$ AGE 2006-02-14: resolve
-    typedef std::map< unsigned long, unsigned >            T_ResourceQty_Map;
-    typedef std::vector< std::pair< unsigned, unsigned > > T_LogisticAvailabilities;
+    typedef std::vector< Availability >         T_Availabilities;
+    typedef std::vector< Dotation >             T_Dotations;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     Controller& controller_;
+    const Resolver_ABC< EquipmentType >& resolver_;
+    const Resolver_ABC< DotationType >& dotationResolver_;
 
-    bool                     bChainEnabled_;
-    T_LogisticAvailabilities dispoTransporters_;
-    T_LogisticAvailabilities dispoCommanders_;  
-    T_ResourceQty_Map        stocks_;
-    T_LogisticAvailabilities quotas_;
+    bool             bChainEnabled_;
+    T_Availabilities dispoTransporters_;
+    T_Availabilities dispoCommanders_;  
+    T_Dotations      quotas_;
     //@}
 };
 

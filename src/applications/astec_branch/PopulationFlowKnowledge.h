@@ -15,20 +15,18 @@
 #include "ASN_Types.h"
 #include "IDManager.h"
 #include "OptionalValue.h"
+#include "PopulationPartKnowledge_ABC.h"
 
-class KnowledgeGroup;
 class PopulationFlow;
 class PopulationKnowledge;
 class Controller;
+class Population;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationFlowKnowledge
+class PopulationFlowKnowledge : public PopulationPartKnowledge_ABC
 {
-    MT_COPYNOTALLOWED( PopulationFlowKnowledge );
-    friend class PopulationKnowledgePanel;
-
 public:
     //! @name Types
     //@{
@@ -46,26 +44,19 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( Controller& controller, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
+             PopulationFlowKnowledge( Controller& controller, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
     virtual ~PopulationFlowKnowledge();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Display( Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors
     //@{
-    uint                           GetID                 () const;
-    const KnowledgeGroup&                GetKnowledgeGroup               () const;
-    const PopulationKnowledge* GetPopulationKnowledge() const;
-    const PopulationFlow*      GetFlow               () const;
-    MT_Float                       GetDirection          () const;
-    MT_Float                       GetSpeed              () const;
-    uint                           GetNbrAliveHumans     () const;
-    uint                           GetNbrDeadHumans      () const;
-    E_PopulationAttitude           GetAttitude           () const;
-    MT_Float                       GetRelevance          () const;
-    bool                           IsPerceived           () const;
-    const T_FlowParts&             GetFlowParts          () const;
     //@}
-
 
     //! @name Network
     //@{
@@ -73,22 +64,26 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    PopulationFlowKnowledge( const PopulationFlowKnowledge& );
+    PopulationFlowKnowledge& operator=( const PopulationFlowKnowledge& );
+    //@}
+
+private:
     Controller& controller_;
-    const uint                                   nID_;
-          KnowledgeGroup*                              pKnowledgeGroup_;
-    const PopulationKnowledge*               pPopulationKnowledge_;
-    const PopulationFlow*                    pFlow_;
-          OptionalValue< MT_Float >              rDirection_;
-          OptionalValue< MT_Float >              rSpeed_;
-          OptionalValue< uint     >              nNbrAliveHumans_;
-          OptionalValue< uint     >              nNbrDeadHumans_;
-          OptionalValue< E_PopulationAttitude >  eAttitude_;
-          OptionalValue< bool     >              bIsPerceived_;
-          OptionalValue< T_FlowParts >           flowParts_;
+    const Population& popu_; 
+    const uint nID_;
+    const PopulationFlow* pFlow_;
+
+    OptionalValue< MT_Float >              rDirection_;
+    OptionalValue< MT_Float >              rSpeed_;
+    OptionalValue< uint     >              nNbrAliveHumans_;
+    OptionalValue< uint     >              nNbrDeadHumans_;
+    OptionalValue< E_PopulationAttitude >  eAttitude_;
+    OptionalValue< bool     >              bIsPerceived_;
+    T_FlowParts                            flowParts_;
 
 };
-
-
-#include "PopulationFlowKnowledge.inl"
 
 #endif // __PopulationFlowKnowledge_h_

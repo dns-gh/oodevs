@@ -45,12 +45,13 @@ public:
     //! @name Operations
     //@{
     virtual void NotifySelected( const Population* popu );
-    void Display( const PopulationPart_ABC& part, Displayer_ABC& displayer );
+    void Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Population& );
     virtual void NotifyDeleted( const Population& );
     void DisplayParts( const Population& population );

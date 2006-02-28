@@ -86,7 +86,6 @@ private:
 private:
     //! @name Member data
     //@{
-
     DisplayBuilder* display_;
     const Agent* selected_;
     //@}

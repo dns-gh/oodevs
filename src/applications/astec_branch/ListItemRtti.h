@@ -94,5 +94,11 @@ struct ListItemRtti< const ObjectKnowledge* > {
     enum { rtti = 1012 };
 };
 
+class PopulationPartKnowledge_ABC;
+template< >
+struct ListItemRtti< const PopulationPartKnowledge_ABC* > {
+    enum { rtti = 1013 };
+};
+
 
 #endif // __ListItemRtti_h_

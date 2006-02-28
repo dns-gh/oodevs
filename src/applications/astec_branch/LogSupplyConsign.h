@@ -21,75 +21,59 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "Resolver.h"
 
+class DotationRequest;
 class Agent;
-class LogSupplyConsign_ListView_Item;
+class Controller;
+class Displayer_ABC;
+class DotationType ;
 
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogSupplyConsign
+class LogSupplyConsign : public Resolver< DotationRequest >
 {
-    MT_COPYNOTALLOWED( LogSupplyConsign );
 
 public:
-    //! @name Types
+    //! @name Constructor / Destructor
     //@{
-    enum E_State
-    {
-        eConvoyWaitingForTransporters,
-        eConvoyWaitingForCommander,
-        eConvoyForming,
-        eConvoyGoingToLoadingPoint,
-        eConvoyLoading,
-        eConvoyGoingToUnloadingPoint,
-        eConvoyUnloading,
-        eConvoyGoingBackToFormingPoint,
-        eFinished
-    };
-
-    struct sDotationData
-    {
-        uint nNbrRequested_;
-        uint nNbrReserved_;
-        uint nNbrConvoyed_;
-    };
-
-    typedef std::map< uint /*dot ID*/, sDotationData > T_DotationMap;
-    typedef T_DotationMap::const_iterator              CIT_DotationMap;
+             LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
+    virtual ~LogSupplyConsign();
     //@}
-
-public:
-    LogSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
-    ~LogSupplyConsign();
 
     //! @name Accessors
     //@{
-          uint           GetID              () const;
-          Agent&     GetPion            () const;
-          Agent*     GetAutomateLogHandling () const;
-          Agent*     GetPionLogConvoying() const;
-          Agent*     GetAutomateLogProvidingConvoyResources() const;
-          E_State        GetState           () const;
-    const T_DotationMap& GetDotations       () const;
-          std::string    GetStateString     () const;
+    void Display( Displayer_ABC& displayer ) const;
+    const char* GetStateString() const;
     //@}
 
     //! @name Network events
     //@{
-    void OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asn );
+    void Update( const ASN1T_MsgLogRavitaillementTraitementUpdate& message );
     //@}
 
 private:
-    uint              nID_;
-    Agent&        pion_;
-    Agent*        pAutomateLogHandling_;
-    Agent*        pPionLogConvoying_;
-    Agent*        pAutomateLogProvidingConvoyResources_;
-    E_State           nState_;
-    T_DotationMap     dotations_;
-};
+    //! @name Copy/Assignment
+    //@{
+    LogSupplyConsign( const LogSupplyConsign& );
+    LogSupplyConsign& operator=( const LogSupplyConsign& );
+    //@}
 
-#include "LogSupplyConsign.inl"
+private:
+    //! @name Member data
+    //@{
+    Controller& controller_;
+    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< DotationType >& dotationResolver_;
+
+    uint   nID_;
+    Agent& pion_;
+    Agent* pAutomateLogHandling_;
+    Agent* pPionLogConvoying_;
+    Agent* pAutomateLogProvidingConvoyResources_;
+    E_LogRavitaillementTraitementEtat nState_;
+    //@}
+};
 
 #endif // __LogSupplyConsign_h_

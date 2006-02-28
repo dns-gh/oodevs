@@ -19,57 +19,66 @@
 #ifndef __OptionsPanel_h_
 #define __OptionsPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include "OptionsObserver_ABC.h"
 
 class QCheckBox;
-
+class Options;
+class Settings;
 
 // =============================================================================
 // Created: APE 2004-07-09
 // =============================================================================
-class OptionsPanel : public QWidget
+class OptionsPanel : public QWidget, public OptionsObserver_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( OptionsPanel );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    OptionsPanel( QWidget* pParent );
-    ~OptionsPanel();
+             OptionsPanel( QWidget* pParent, Options& options );
+    virtual ~OptionsPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    void ReadOptions( Settings& settings );
+    void WriteOptions( Settings& settings );
+    //@}
+
+private:
+    //! @name Copy / Assignment
+    //@{
+    OptionsPanel( const OptionsPanel& );
+    OptionsPanel& operator=( const OptionsPanel& );
     //@}
 
 private slots:
     //! @name Helpers
     //@{
-    void OnCheckpoint();
-    void Apply       ();
-    void OnDisplayRC ();
+    void FontSizeChanged( int );
+    void DrawObjectsChanged( bool );
+    void DrawHoveredInfoChanged( bool );
+    void DrawRCsChanged( bool );
+    void DrawSubscribedRCsOnlyChanged( bool );
+    void DrawMessagesChanged( bool );
+    void DrawTracesChanged( bool );
+    void DrawIdentificationsChanged( bool );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QSpinBox* pCheckpointSpinbox_ ;
-    QLineEdit* pCheckpointNameEdit_;
+    Options& options_;
 
     QSpinBox* pFontSpinbox_;
-
-    QCheckBox* pAutoOpenCheckbox_;
-    QCheckBox* pAutoSaveLoadCheckbox_;
-
     QCheckBox* pDrawObjectIcons_;
-
     QCheckBox* pDrawHoveredInfo_;
-
     QCheckBox* pDisplayRCOnMap_;
     QCheckBox* pDisplayMessagesOnMap_;
     QCheckBox* pDisplayTracesOnMap_;
     QCheckBox* pDisplayIdentificationLevelOnMap_ ;
     QCheckBox* pDisplayOnlySubscribedAgentsRC_ ;
-    
     //@}
 };
 

@@ -13,8 +13,13 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Availability.h"
+#include "Resolver_ABC.h"
 
 class Controller;
+class Displayer_ABC;
+class EquipmentType;
+class Agent;
 
 // =============================================================================
 /** @class  MaintenanceStates
@@ -25,16 +30,17 @@ class Controller;
 class MaintenanceStates : public Extension_ABC
                         , public Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
 {
-    // $$$$ AGE 2006-02-14: entierement optionnel
+    // $$$$ AGE 2006-02-28: Ne devrait pas etre instancié pour tout le monde !
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( Controller& controller );
+             MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver );
     virtual ~MaintenanceStates();
     //@}
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -51,22 +57,24 @@ private:
 
     //! @name Types
     //@{
-    // $$$$ AGE 2006-02-14: resolve
-    typedef std::vector< unsigned >                        T_Priorities;
-    typedef std::vector< std::pair< unsigned, unsigned > > T_LogisticAvailabilities;
+    typedef std::vector< const EquipmentType* > T_Priorities;
+    typedef std::vector< Availability >         T_Availabilities;
+    typedef std::vector< const Agent* >         T_Agents;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
-    Controller&              controller_;
+    Controller&      controller_;
+    const Resolver_ABC< EquipmentType >& resolver_;
+    const Resolver_ABC< Agent >& agentResolver_;
 
-    bool                     bChainEnabled_;
-    unsigned                 nTempsBordee_;
-    T_Priorities             priorities_;
-    T_Priorities             tacticalPriorities_;
-    T_LogisticAvailabilities dispoHaulers_;
-    T_LogisticAvailabilities dispoRepairers_;
+    bool             bChainEnabled_;
+    unsigned         nTempsBordee_;
+    T_Priorities     priorities_;
+    T_Agents         tacticalPriorities_;
+    T_Availabilities dispoHaulers_;
+    T_Availabilities dispoRepairers_;
     //@}
 };
 
