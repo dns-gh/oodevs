@@ -38,6 +38,7 @@ class LogSupplyConsign;
 class Availability;
 class SubItemDisplayer;
 class Dotation;
+class DotationRequest;
 
 // =============================================================================
 /** @class  AgentSupplyPanel
@@ -64,6 +65,7 @@ public:
     void Display( const LogSupplyConsign* consign,  Displayer_ABC& displayer, ValuedListItem* );
     void Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* );
     void Display( const Dotation& quota, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const DotationRequest& request, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:

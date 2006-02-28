@@ -28,6 +28,7 @@
 #include "ActionController.h"
 #include "SubItemDisplayer.h"
 #include "Units.h"
+#include "DotationRequest.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentSupplyPanel constructor
@@ -48,7 +49,6 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanel* pParent, Controller& controller, 
                 .AddChild( "Pion traitant :" )
                 .AddChild( "Pion fournissant les moyens :" )
                 .AddChild( "Pion convoyant :" )
-                .AddChild( "Dotations demandées/accordées" )
                 .AddChild( "Etat :" );
 
     display_ = new DisplayBuilder( this );
@@ -160,8 +160,34 @@ void AgentSupplyPanel::NotifyUpdated( const LogisticConsigns& consigns )
 // -----------------------------------------------------------------------------
 void AgentSupplyPanel::Display( const LogSupplyConsign* consign,  Displayer_ABC& , ValuedListItem* item )
 {
-    if( consign )
-        consign->Display( (*logDisplay_)( item ) );
+    if( ! consign )
+        return;
+
+    consign->Display( (*logDisplay_)( item ) );
+
+    // $$$$ AGE 2006-02-28: crado
+    QListViewItem* last  = item->firstChild();
+    QListViewItem* child = last;
+    while( child && child->text( 0 ) != tr( "Dotations demandées/accordées/convoyées" ) )
+    {
+        last = child;
+        child = child->nextSibling();
+    }
+    if( ! child )
+        child = new EmptyListItem( item, last );
+    pConsignListView_->DisplayList( consign->CreateIterator(), child );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentSupplyPanel::Display
+// Created: AGE 2006-02-28
+// -----------------------------------------------------------------------------
+void AgentSupplyPanel::Display( const DotationRequest& request, Displayer_ABC& displayer, ValuedListItem* )
+{
+    displayer.Item( 0 ).Start( request.type_ ).Add( "/" )
+                       .Add( request.requested_ ).Add( "/" )
+                       .Add( request.granted_ ).Add( "/" )
+                       .Add( request.convoyed_ ).End();
 }
 
 // -----------------------------------------------------------------------------

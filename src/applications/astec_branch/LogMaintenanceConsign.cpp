@@ -72,6 +72,7 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
     controller_.Update( *this );
 }
 
+// $$$$ AGE 2006-02-28: degager
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::GetStateString
 // Created: HME 2006-01-30

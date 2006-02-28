@@ -156,6 +156,5 @@ void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
              .Display( "Pion traitant :", pAutomateLogHandling_ )
              .Display( "Pion fournissant les moyens :", pAutomateLogProvidingConvoyResources_ )
              .Display( "Pion convoyant :", pPionLogConvoying_ )
-//             .Display( "Dotations demandées/accordées" ) // $$$$ AGE 2006-02-28: 
              .Display( "Etat :", nState_ );
 }

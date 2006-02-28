@@ -100,5 +100,10 @@ struct ListItemRtti< const PopulationPartKnowledge_ABC* > {
     enum { rtti = 1013 };
 };
 
+class DotationRequest;
+template< >
+struct ListItemRtti< const DotationRequest* > {
+    enum { rtti = 1014 };
+};
 
 #endif // __ListItemRtti_h_
