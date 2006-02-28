@@ -174,5 +174,7 @@ uint Scheduler::GetCurrentTick() const
 // -----------------------------------------------------------------------------
 bool Scheduler::MustRecomplete() const
 {
+    if( nRecompletionPeriod_ <= 0 )
+        return false;
     return nCurrentTick_ % nRecompletionPeriod_ == 0;
 }
