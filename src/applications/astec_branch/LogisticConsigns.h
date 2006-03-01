@@ -16,6 +16,7 @@
 class LogSupplyConsign;
 class LogMaintenanceConsign;
 class LogMedicalConsign;
+class Controller;
 
 // =============================================================================
 /** @class  LogisticConsigns
@@ -29,7 +30,7 @@ class LogisticConsigns : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsigns();
+             LogisticConsigns( Controller& controller );
     virtual ~LogisticConsigns();
     //@}
 
@@ -61,10 +62,6 @@ private:
     LogisticConsigns& operator=( const LogisticConsigns& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
     //! @name Types
     //@{
     typedef std::set< const LogSupplyConsign* >      T_SupplyConsigns;
@@ -75,6 +72,8 @@ private:
 public:
     //! @name Member data
     //@{
+    Controller& controller_;
+
     T_SupplyConsigns      requestedSupplies_;
     T_SupplyConsigns      handledSupplies_;
     T_MaintenanceConsigns requestedMaintenances_;

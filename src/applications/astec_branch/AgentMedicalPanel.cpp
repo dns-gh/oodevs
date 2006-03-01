@@ -39,7 +39,7 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanel* pParent, Controller& controller
 {
     pConsignListView_        = new ListDisplayer< AgentMedicalPanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );
-    
+
     pConsignHandledListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     pConsignHandledListView_->AddColumn( "Consignes en traitement" );
 
@@ -51,7 +51,7 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanel* pParent, Controller& controller
                 .AddChild( "Contaminé NBC :" )
                 .AddChild( "Etat :" );
 
-    display_                 = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this );
     display_->AddGroup( "Etat chaine santé" )
                 .AddLabel( "Etat chaine" )
                 .AddLabel( "Temps de bordée" )
@@ -156,7 +156,10 @@ void AgentMedicalPanel::NotifyUpdated( const LogisticConsigns& consigns )
 void AgentMedicalPanel::Display( const LogMedicalConsign* consign, Displayer_ABC& , ValuedListItem* item )
 {
     if( consign )
+    {
+        item->SetValue( consign );
         consign->Display( (*logDisplay_)( item ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -194,3 +197,15 @@ void AgentMedicalPanel::Display( const Availability& availability, Displayer_ABC
              .Display( 0, availability.available_ * Units::percentage );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::NotifyUpdated
+// Created: AGE 2006-03-01
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::NotifyUpdated( const LogMedicalConsign& consign )
+{
+    ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
+    if( ! item )
+        item = FindItem( &consign, pConsignHandledListView_->firstChild() );
+    if( item )
+        consign.Display( (*logDisplay_)( item ) );
+}

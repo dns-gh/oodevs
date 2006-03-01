@@ -111,7 +111,7 @@ QListViewItem* SubItemDisplayer::FindChild( const char* name ) const
         return parent_;
     QListViewItem* previous = parent_->firstChild();
     QListViewItem* child = previous;
-    for( int i = 0; i < children_.size(); ++i )
+    for( unsigned int i = 0; i < children_.size(); ++i )
     {
         if( ! child )
             child = new EmptyListItem( parent_, previous );

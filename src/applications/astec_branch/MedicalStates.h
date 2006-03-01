@@ -30,7 +30,6 @@ class Displayer_ABC;
 class MedicalStates : public Extension_ABC
                     , public Updatable_ABC< ASN1T_MsgLogSanteEtat >
 {
-    // $$$$ AGE 2006-02-28: Ne devrait pas etre instancié pour tout le monde !
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,6 +40,7 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+    virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
     //@}
 
 private:
@@ -48,11 +48,6 @@ private:
     //@{
     MedicalStates( const MedicalStates& );            //!< Copy constructor
     MedicalStates& operator=( const MedicalStates& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
     //@}
 
     //! @name Types

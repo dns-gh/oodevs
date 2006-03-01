@@ -158,11 +158,12 @@ void AgentSupplyPanel::NotifyUpdated( const LogisticConsigns& consigns )
 // Name: AgentSupplyPanel::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentSupplyPanel::Display( const LogSupplyConsign* consign,  Displayer_ABC& , ValuedListItem* item )
+void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& , ValuedListItem* item )
 {
     if( ! consign )
         return;
 
+    item->SetValue( consign );
     consign->Display( (*logDisplay_)( item ) );
 
     // $$$$ AGE 2006-02-28: crado
@@ -225,7 +226,7 @@ void AgentSupplyPanel::NotifyUpdated( const SupplyStates& consigns )
 void AgentSupplyPanel::Display( const Dotation& quota, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( 0, quota.type_ )
-        .Display( 0, quota.quantity_ );
+             .Display( 0, quota.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,4 +237,17 @@ void AgentSupplyPanel::Display( const Availability& availability, Displayer_ABC&
 {
     displayer.Display( 0, availability.type_ )
              .Display( 0, availability.available_ * Units::percentage );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentSupplyPanel::NotifyUpdated
+// Created: AGE 2006-03-01
+// -----------------------------------------------------------------------------
+void AgentSupplyPanel::NotifyUpdated( const LogSupplyConsign& consign )
+{
+    ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
+    if( ! item )
+        item = FindItem( &consign, pConsignHandledListView_->firstChild() );
+    if( item )
+        consign.Display( (*logDisplay_)( item ) );
 }

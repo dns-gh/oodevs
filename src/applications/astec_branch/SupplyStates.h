@@ -33,7 +33,6 @@ class SupplyStates : public Extension_ABC
                    , public Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
                    , public Resolver< Dotation >
 {
-    // $$$$ AGE 2006-02-28: Ne devrait pas etre instancié pour tout le monde !
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,6 +43,8 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
+    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     //@}
 
 private:
@@ -51,12 +52,6 @@ private:
     //@{
     SupplyStates( const SupplyStates& );            //!< Copy constructor
     SupplyStates& operator=( const SupplyStates& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     //@}
 
     //! @name Types

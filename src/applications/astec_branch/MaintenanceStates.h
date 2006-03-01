@@ -30,7 +30,6 @@ class Agent;
 class MaintenanceStates : public Extension_ABC
                         , public Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
 {
-    // $$$$ AGE 2006-02-28: Ne devrait pas etre instancié pour tout le monde !
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,6 +40,7 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
     //@}
 
 private:
@@ -48,11 +48,6 @@ private:
     //@{
     MaintenanceStates( const MaintenanceStates& );            //!< Copy constructor
     MaintenanceStates& operator=( const MaintenanceStates& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
     //@}
 
     //! @name Types

@@ -51,6 +51,7 @@ class AgentSupplyPanel : public InfoPanel_ABC
                        , public SelectionObserver< Agent >
                        , public ElementObserver_ABC< LogisticConsigns >
                        , public ElementObserver_ABC< SupplyStates >
+                       , public ElementObserver_ABC< LogSupplyConsign >
 {
 
 public:
@@ -74,6 +75,7 @@ private:
     void NotifySelected( const Agent* agent );
     void NotifyUpdated( const LogisticConsigns& consigns );
     void NotifyUpdated( const SupplyStates& consigns );
+    void NotifyUpdated( const LogSupplyConsign& consign );
     template< typename Extension >
     bool ShouldUpdate( const Extension& e );
     void showEvent( QShowEvent* );

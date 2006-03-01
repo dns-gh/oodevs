@@ -152,7 +152,10 @@ void AgentMaintenancePanel::NotifyUpdated( const LogisticConsigns& consigns )
 void AgentMaintenancePanel::Display( const LogMaintenanceConsign* consign, Displayer_ABC&, ValuedListItem* item )
 {
     if( consign )
+    {
+        item->SetValue( consign );
         consign->Display( (*logDisplay_)( item ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -183,4 +186,17 @@ void AgentMaintenancePanel::Display( const Availability& availability, Displayer
 {
     displayer.Display( 0, availability.type_ )
              .Display( 0, availability.available_ * Units::percentage );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMaintenancePanel::NotifyUpdated
+// Created: AGE 2006-03-01
+// -----------------------------------------------------------------------------
+void AgentMaintenancePanel::NotifyUpdated( const LogMaintenanceConsign& consign )
+{
+    ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
+    if( ! item )
+        item = FindItem( &consign, pConsignHandledListView_->firstChild() );
+    if( item )
+        consign.Display( (*logDisplay_)( item ) );
 }

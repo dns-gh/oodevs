@@ -46,9 +46,9 @@ void InterfaceContainer< BaseType >::Register( BaseType& i )
 {
     interfaces_.push_back( &i );
 
-    for( CIT_ImplementationMatrix it = implementations_.begin(); it != implementations_.end(); ++it )
+    for( unsigned int index = 0; index < implementations_.size(); ++index )
     {
-        T_Implementations* imps = *it;
+        T_Implementations* imps = implementations_.at( index );
         if( imps )
         {
             T_Caster caster = imps->first;
@@ -95,9 +95,10 @@ typename InterfaceContainer< BaseType >::T_Implementations* InterfaceContainer< 
     T_Implementations* implementations = new T_Implementations();
     Interface* (*caster)( BaseType* ) = Cast< Interface >;
     implementations->first = T_Caster( caster );
-    for( CIT_Interfaces it = interfaces_.begin(); it != interfaces_.end(); ++it )
+
+    for( unsigned int index = 0; index < interfaces_.size(); ++index )
     {
-        BaseType* ext = *it;
+        BaseType* ext = interfaces_.at( index );
         Interface* imp = caster( ext );
         if( imp )
             implementations->second.push_back( imp );
@@ -118,9 +119,9 @@ unsigned InterfaceContainer< BaseType >::Apply( Method method )
     if( ! implementations )
         implementations = InitializeImplementations< Member >();
 
-    for( CIT_UntypedInterfaces it = implementations->second.begin(); it != implementations->second.end(); ++it )
+    for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
-        void* ext = *it;
+        void* ext = implementations->second.at( index );
         Member* imp = reinterpret_cast< Member* >( ext );
         (*imp.*method)();
     }
@@ -140,14 +141,15 @@ unsigned InterfaceContainer< BaseType >::Apply( Method method, T& argument )
     if( ! implementations )
         implementations = InitializeImplementations< Member >();
 
-    for( CIT_UntypedInterfaces it = implementations->second.begin(); it != implementations->second.end(); ++it )
+    for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
-        void* ext = *it;
+        void* ext = implementations->second.at( index );
         Member* imp = reinterpret_cast< Member* >( ext );
         (*imp.*method)( argument );
     }
     return implementations->second.size();
 }
+
 // $$$$ AGE 2006-02-08: Pourrait peut etre factoriser tout ce foin hmm ?
 // -----------------------------------------------------------------------------
 // Name: InterfaceContainer::Apply
@@ -162,9 +164,9 @@ unsigned InterfaceContainer< BaseType >::Apply( Method method, T1& arg1, T2& arg
     if( ! implementations )
         implementations = InitializeImplementations< Member >();
 
-    for( CIT_UntypedInterfaces it = implementations->second.begin(); it != implementations->second.end(); ++it )
+    for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
-        void* ext = *it;
+        void* ext = implementations->second.at( index );
         Member* imp = reinterpret_cast< Member* >( ext );
         (*imp.*method)( arg1, arg2 );
     }

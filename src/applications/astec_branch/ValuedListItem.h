@@ -77,7 +77,7 @@ public:
     template< typename T >
     const T& GetValue() const;
     template< typename T >
-    void SetValue( const T& value ) const;
+    void SetValue( const T& value );
 
     int rtti() const {
         return 1000;
@@ -226,11 +226,16 @@ const T& ValuedListItem::GetValue() const
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 template< typename T >
-void ValuedListItem::SetValue( const T& value ) const
+void ValuedListItem::SetValue( const T& value )
 {
-    if( ! IsA< T >() )
-        throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
-    static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
+    if( ! container_ )
+        container_ = new ValueContainer< T >( value );
+    else
+    {
+        if( ! IsA< T >() )
+            throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
+        static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
+    }
 }
 
 // -----------------------------------------------------------------------------

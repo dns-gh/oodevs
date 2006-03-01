@@ -106,4 +106,22 @@ struct ListItemRtti< const DotationRequest* > {
     enum { rtti = 1014 };
 };
 
+class LogSupplyConsign;
+template< >
+struct ListItemRtti< const LogSupplyConsign* > {
+    enum { rtti = 1015 };
+};
+
+class LogMaintenanceConsign;
+template< >
+struct ListItemRtti< const LogMaintenanceConsign* > {
+    enum { rtti = 1016 };
+};
+
+class LogMedicalConsign;
+template< >
+struct ListItemRtti< const LogMedicalConsign* > {
+    enum { rtti = 1017 };
+};
+
 #endif // __ListItemRtti_h_

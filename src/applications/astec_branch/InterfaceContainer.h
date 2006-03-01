@@ -54,15 +54,11 @@ private:
 private:
     //! @name Types
     //@{
-    typedef           std::vector< BaseType* >      T_Interfaces;
-    typedef typename T_Interfaces::const_iterator CIT_Interfaces;
-
-    typedef std::vector< void* >                  T_UntypedInterfaces;
-    typedef T_UntypedInterfaces::const_iterator CIT_UntypedInterfaces;
+    typedef std::vector< BaseType* >      T_Interfaces;
+    typedef std::vector< void* >          T_UntypedInterfaces;
     typedef void* (*T_Caster)( BaseType* );
     typedef std::pair< T_Caster, T_UntypedInterfaces >          T_Implementations;
     typedef std::vector< T_Implementations*  >                  T_ImplementationMatrix;
-    typedef typename T_ImplementationMatrix::const_iterator   CIT_ImplementationMatrix;
 
     template< typename Method >        struct Extract { };
     template< typename M >             struct Extract< void (M::*)()       >     { typedef M Member; };

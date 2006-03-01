@@ -49,6 +49,7 @@ class AgentMaintenancePanel : public InfoPanel_ABC
                             , public SelectionObserver< Agent >
                             , public ElementObserver_ABC< LogisticConsigns >
                             , public ElementObserver_ABC< MaintenanceStates >
+                            , public ElementObserver_ABC< LogMaintenanceConsign >
 {
 public:
     //! @name Constructors/Destructor
@@ -69,6 +70,7 @@ private:
     void NotifySelected( const Agent* agent );
     void NotifyUpdated( const LogisticConsigns& consigns );
     void NotifyUpdated( const MaintenanceStates& consigns );
+    void NotifyUpdated( const LogMaintenanceConsign& consign );
     template< typename Extension >
     bool ShouldUpdate( const Extension& e );
     void showEvent( QShowEvent* );

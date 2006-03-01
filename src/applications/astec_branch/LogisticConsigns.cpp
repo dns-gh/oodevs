@@ -9,12 +9,14 @@
 
 #include "astec_pch.h"
 #include "LogisticConsigns.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsigns constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogisticConsigns::LogisticConsigns()
+LogisticConsigns::LogisticConsigns( Controller& controller )
+    : controller_( controller )
 {
     // NOTHING
 }
@@ -35,6 +37,7 @@ LogisticConsigns::~LogisticConsigns()
 void LogisticConsigns::AddConsign( LogSupplyConsign& consign )
 {
     requestedSupplies_.insert( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +47,7 @@ void LogisticConsigns::AddConsign( LogSupplyConsign& consign )
 void LogisticConsigns::RemoveConsign( LogSupplyConsign& consign )
 {
     requestedSupplies_.erase( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +57,7 @@ void LogisticConsigns::RemoveConsign( LogSupplyConsign& consign )
 void LogisticConsigns::AddConsign( LogMaintenanceConsign& consign )
 {
     requestedMaintenances_.insert( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +67,7 @@ void LogisticConsigns::AddConsign( LogMaintenanceConsign& consign )
 void LogisticConsigns::RemoveConsign( LogMaintenanceConsign& consign )
 {
     requestedMaintenances_.erase( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,6 +77,7 @@ void LogisticConsigns::RemoveConsign( LogMaintenanceConsign& consign )
 void LogisticConsigns::AddConsign( LogMedicalConsign& consign )
 {
     requestedMedical_.insert( &consign );
+    controller_.Update( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -80,6 +87,7 @@ void LogisticConsigns::AddConsign( LogMedicalConsign& consign )
 void LogisticConsigns::RemoveConsign( LogMedicalConsign& consign )
 {
     requestedMedical_.erase( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +97,7 @@ void LogisticConsigns::RemoveConsign( LogMedicalConsign& consign )
 void LogisticConsigns::HandleConsign( LogSupplyConsign& consign )
 {
     handledSupplies_.insert( &consign );
+    controller_.Update( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -98,6 +107,7 @@ void LogisticConsigns::HandleConsign( LogSupplyConsign& consign )
 void LogisticConsigns::TerminateConsign( LogSupplyConsign& consign )
 {
     handledSupplies_.erase( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +117,7 @@ void LogisticConsigns::TerminateConsign( LogSupplyConsign& consign )
 void LogisticConsigns::HandleConsign( LogMaintenanceConsign& consign )
 {
     handledMaintenances_.insert( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,6 +127,7 @@ void LogisticConsigns::HandleConsign( LogMaintenanceConsign& consign )
 void LogisticConsigns::TerminateConsign( LogMaintenanceConsign& consign )
 {
     handledMaintenances_.erase( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,6 +137,7 @@ void LogisticConsigns::TerminateConsign( LogMaintenanceConsign& consign )
 void LogisticConsigns::HandleConsign( LogMedicalConsign& consign )
 {
     handledMedical_.insert( &consign );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,4 +147,5 @@ void LogisticConsigns::HandleConsign( LogMedicalConsign& consign )
 void LogisticConsigns::TerminateConsign( LogMedicalConsign& consign )
 {
     handledMedical_.erase( &consign );
+    controller_.Update( *this );
 }
