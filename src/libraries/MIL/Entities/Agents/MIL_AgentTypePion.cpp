@@ -460,6 +460,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeAnimated                                     , "DEC_ConnaissanceObjet_PeutEtreAnime"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DamageObject                                      , "DEC_ConnaissanceObjet_Degrader"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity                       , "DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante"  ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity                     , "DEC_ConnaisssanceObjet_ResetDensitePopulationSortante"   );
 
     // Population knowledges accessors
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDominationState           < MIL_AgentPion >, "DEC_ConnaissancePopulation_Domination"                   );

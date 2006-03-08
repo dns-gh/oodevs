@@ -27,6 +27,7 @@
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
+class MIL_RealObject_ABC;
 class PHY_Volume;
 
 // =============================================================================
@@ -61,10 +62,10 @@ public:
 
     //! @name Flows management
     //@{
-    void     RegisterPushingFlow  ( MIL_PopulationFlow& flow );
-    void     UnregisterPushingFlow( MIL_PopulationFlow& flow );
+    void     RegisterPushingFlow   ( MIL_PopulationFlow& flow );
+    void     UnregisterPushingFlow ( MIL_PopulationFlow& flow );
     MT_Float GetPullingFlowsDensity() const;
-    void     SetPullingFlowsDensity( MT_Float rValue );
+    void     SetPullingFlowsDensity( const MIL_RealObject_ABC& splittingObject );
     //@}
 
     //! @name Accessors
@@ -125,7 +126,8 @@ private:
     MIL_PopulationFlow*     pPullingFlow_;
     T_FlowSet               pushingFlows_;
 
-    MT_Float                rPullingFlowsDensity_;
+    const MIL_RealObject_ABC* pSplittingObject_;
+    MT_Float                  rPullingFlowsDensity_;
 };
 
 #include "MIL_PopulationConcentration.inl"

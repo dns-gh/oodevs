@@ -28,7 +28,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -61,6 +61,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , bFlowShapeUpdated_       ( true ) 
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
+    , pSplittingObject_        ( 0 )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
@@ -88,6 +89,7 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , bFlowShapeUpdated_       ( true ) 
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
+    , pSplittingObject_        ( 0 )
 {
 }
 
@@ -257,6 +259,23 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ManageSplit
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::ManageSplit()
+{
+    if( pDestConcentration_ || !pSplittingObject_ )
+        return;
+
+    MoveToAlternateDestination( GetHeadPosition() );
+
+    pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
+    pDestConcentration_->SetPullingFlowsDensity( *pSplittingObject_ );
+    pDestConcentration_->RegisterPushingFlow( *this );
+    //pDestConcentration_->Move( destination_ ); $$ Auto next tick
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ApplyMove
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
@@ -305,16 +324,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
 
-    //$$$ TEST 
-    if( bSplit_ && !pDestConcentration_ )
-    {
-        MoveToAlternateDestination( GetHeadPosition() );
-
-        pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
-        pDestConcentration_->SetPullingFlowsDensity( 1. );
-        pDestConcentration_->RegisterPushingFlow( *this );
-        //pDestConcentration_->Move( destination_ ); $$ Auto next tick
-    }
+    ManageSplit();
 }
 
 // -----------------------------------------------------------------------------
@@ -366,7 +376,15 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-	bSplit_ = true;
+    if( !object.IsReal() )
+        return;
+
+    const MIL_RealObject_ABC& realObject = static_cast< const MIL_RealObject_ABC& >( object );
+    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
+        return;
+
+    if( !pSplittingObject_ || realObject.GetExitingPopulationDensity() < pSplittingObject_->GetExitingPopulationDensity() )
+        pSplittingObject_ = &realObject;
 }
 
 // -----------------------------------------------------------------------------

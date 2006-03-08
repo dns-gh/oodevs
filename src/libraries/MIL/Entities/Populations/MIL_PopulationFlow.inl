@@ -136,13 +136,12 @@ void MIL_PopulationFlow::Clean()
     PHY_MovingEntity_ABC     ::Clean();
     MIL_PopulationElement_ABC::Clean();
 
-    bPathUpdated_      = false;
-    bFlowShapeUpdated_ = false;
-    bDirectionUpdated_ = false;
-    bSpeedUpdated_     = false;
-    bHeadMoveFinished_ = false;
-
-    bSplit_ = false;
+    bPathUpdated_       = false;
+    bFlowShapeUpdated_  = false;
+    bDirectionUpdated_  = false;
+    bSpeedUpdated_      = false;
+    bHeadMoveFinished_  = false;
+    pSplittingObject_   = 0;
 }
 
 // -----------------------------------------------------------------------------

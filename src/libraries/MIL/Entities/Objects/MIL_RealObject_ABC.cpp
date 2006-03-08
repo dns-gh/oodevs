@@ -68,6 +68,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
     , pPathfindData_                     ( 0 )
     , pOccupier_                         ( 0 )
     , pView_                             ( 0 )
+    , rExitingPopulationDensity_         ( type.GetExitingPopulationDensity() )
 {
 }
 
@@ -98,6 +99,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC()
     , pPathfindData_                     ( 0 )
     , pOccupier_                         ( 0 )
     , pView_                             ( 0 )
+    , rExitingPopulationDensity_         ( std::numeric_limits< MT_Float >::max() )
 {
 }
 
@@ -154,7 +156,8 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
          >> nLastValueBypassPercentage_
          >> bPrepared_
          >> avoidanceLocalisation_
-         >> pView_;
+         >> pView_
+         >> rExitingPopulationDensity_;
 
     InitializeAvoidanceLocalisation();
     if ( pType_->GetIDManager().IsMosIDValid( nID_ ) )
@@ -189,7 +192,8 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << nLastValueBypassPercentage_
          << bPrepared_
          << avoidanceLocalisation_
-         << pView_;
+         << pView_
+         << rExitingPopulationDensity_;
 }
 
 
@@ -752,6 +756,28 @@ void MIL_RealObject_ABC::ApplyAttrition( MIL_Agent_ABC& target )
         ChangeConstructionPercentage( 0. );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetExitingPopulationDensity
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+MT_Float MIL_RealObject_ABC::GetExitingPopulationDensity() const
+{   
+    if( bPrepared_ || rConstructionPercentage_ == 0 || IsMarkedForDestruction() )
+        return std::numeric_limits< MT_Float >::max();
+
+    return rExitingPopulationDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::ResetExitingPopulationDensity
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::ResetExitingPopulationDensity()
+{
+    assert( pType_ );
+    rExitingPopulationDensity_ = pType_->GetExitingPopulationDensity();
+}
+
 // =============================================================================
 // MAIN
 // =============================================================================
@@ -863,7 +889,7 @@ void MIL_RealObject_ABC::Mine()
 {
     assert( pType_ );
     
-    if ( pType_->CanBeMined() )
+    if( pType_->CanBeMined() )
         ChangeMiningPercentage( 1. );
 }
 

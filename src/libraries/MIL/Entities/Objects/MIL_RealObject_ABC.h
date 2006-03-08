@@ -113,6 +113,13 @@ public:
     bool CanBeAnimatedBy( const MIL_AgentPion& agent ) const;
     //@}
 
+    //! @name Population split
+    //@{
+    MT_Float GetExitingPopulationDensity  () const;
+    void     SetExitingPopulationDensity  ( MT_Float rDensity );
+    void     ResetExitingPopulationDensity();
+    //@}
+
     //! @name Speed 
     //@{
     MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;
@@ -137,18 +144,18 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_RealObjectType& GetType                  () const;
-    uint                      GetID                    () const;
-    MT_Float                  GetSizeCoef              () const;
-    MT_Float                  GetDefaultMaxSpeed       () const;
-    bool                      IsBypassed               () const;
-    bool                      IsMined                  () const;
-    bool                      IsPrepared               () const;
-    MT_Float                  GetConstructionPercentage() const;
-    MT_Float                  GetMiningPercentage      () const;
-    MT_Float                  GetBypassPercentage      () const;
-    const TER_Localisation&   GetAvoidanceLocalisation () const;
-    const MIL_AgentPion*      GetOccupier              () const;
+    const MIL_RealObjectType& GetType                    () const;
+    uint                      GetID                      () const;
+    MT_Float                  GetSizeCoef                () const;
+    MT_Float                  GetDefaultMaxSpeed         () const;
+    bool                      IsBypassed                 () const;
+    bool                      IsMined                    () const;
+    bool                      IsPrepared                 () const;
+    MT_Float                  GetConstructionPercentage  () const;
+    MT_Float                  GetMiningPercentage        () const;
+    MT_Float                  GetBypassPercentage        () const;
+    const TER_Localisation&   GetAvoidanceLocalisation   () const;
+    const MIL_AgentPion*      GetOccupier                () const;
     
     virtual bool              IsReal() const;
     //@}
@@ -256,9 +263,11 @@ private:
     // Misc
     const MIL_AgentPion* pOccupier_;
           T_AgentSet     animators_;
+          MT_Float       rExitingPopulationDensity_;
 
     // View
     HLA_Object_ABC* pView_;
+
     
 private:
     static MT_Random random_;

@@ -80,6 +80,16 @@ MIL_RealObjectType::E_Behavior MIL_RealObjectType::GetBehavior() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetExitingPopulationDensity
+// Created: NLD 2006-02-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_RealObjectType::GetExitingPopulationDensity() const
+{
+    return rExitingPopulationDensity_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::GetID
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------

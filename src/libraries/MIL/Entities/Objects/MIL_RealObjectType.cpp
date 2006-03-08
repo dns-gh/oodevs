@@ -224,6 +224,7 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , pDotationCategoryForMining_      ( 0 )
     , pDefaultConsumptionMode_         ( 0 )
     , nNbrMaxAnimators_                ( 0 )
+    , rExitingPopulationDensity_       ( std::numeric_limits< MT_Float >::max() )
     , pIDManager_                      ()
     , nBehavior_                       ( nBehavior )
 {
@@ -396,7 +397,8 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
     archive.ReadField( "DistanceEvitement", rAvoidanceDistance_, MIL_InputArchive::eNothing );
     rAvoidanceDistance_ = MIL_Tools::ConvertMeterToSim( rAvoidanceDistance_ );
 
-    archive.ReadField( "NombreAnimateursMax", nNbrMaxAnimators_, CheckValueGreaterOrEqual( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    archive.ReadField( "NombreAnimateursMax"      , nNbrMaxAnimators_         , CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    archive.ReadField( "DensitePopulationSortante", rExitingPopulationDensity_, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
     InitializeSpeedData      ( archive );
     InitializePlacementScores( archive );

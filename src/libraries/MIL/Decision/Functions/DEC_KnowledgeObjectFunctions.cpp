@@ -147,3 +147,42 @@ void DEC_KnowledgeObjectFunctions::EquipLogisticRoute( DIA_Call_ABC& call, MIL_A
     call.GetParameter( 1 ).SetValue( eQueryValid );
     itiLog.Equip();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        return;
+    }
+
+    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+
+    pObject->SetExitingPopulationDensity( call.GetParameter( 2 ).ToFloat() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( !pKnowledge || !pKnowledge->GetObjectKnown() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        return;
+    }
+
+    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+
+    pObject->ResetExitingPopulationDensity();
+}

@@ -63,6 +63,7 @@
           <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
         </ProtectionTypeCombattant>
       </Attritions>
+      <DensitePopulationSortante>0</DensitePopulationSortante>
     </Objet>
     <Objet type="zone minee lineaire">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -495,6 +496,7 @@
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
       <NombreAnimateursMax>1</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+      <DensitePopulationSortante>1.2</DensitePopulationSortante>
     </Objet>
     <Objet type="terrain largage">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>

@@ -635,11 +635,16 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
             //currentAction = DEC_StartCreerContournementObjet( nState, mission.objet_ );
             //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
             //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
-            //nState = DEC_ActiverObjet( mission.objet_ );
+            //nState  = DEC_ActiverObjet( mission.objet_ );
             //DEC_Debug( "MIS_Pion_Test_CreateBypass PeutOccuperObjet : " + BoolToString( DEC_ConnaissanceObjet_PeutOccuperObjet( mission.objet_ ) ) );
-            currentAction = DEC_StartOccuperObjet( mission.objet_ );
+            //currentAction = DEC_StartOccuperObjet( mission.objet_ );
+            currentAction = DEC_StartAnimerObjet( mission.objet_ );
             
             E_ValiditeRequete nFusse;
+            
+            DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante( mission.objet_, nFusse, 1.5 );
+            
+            
             DEC_ConnaissanceObjet_Reconnaitre( mission.objet_, nFusse );
             
             if( DEC_ConnaissanceObjet_EstPrepare( mission.objet_, nFusse ) )
@@ -651,6 +656,8 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
                 DEC_Debug( "Objet contourné" );
             else
                 DEC_Debug( "Objet non contourné" );
+                
+            
             
         }
         

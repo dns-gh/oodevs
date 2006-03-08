@@ -27,6 +27,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
@@ -47,6 +48,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
     , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
+    , pSplittingObject_              ( 0 )
 {
     // Position
     std::string strPosition;
@@ -73,6 +75,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
     , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
+    , pSplittingObject_              ( 0 )
 {
     UpdateLocation();
     UpdateDensity ();
@@ -91,6 +94,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
     , rPullingFlowsDensity_          ( 0. )
+    , pSplittingObject_              ( 0 )
 {
     // NOTHING
 }
@@ -117,6 +121,9 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::Update()
 {
+    if( pSplittingObject_ && pSplittingObject_->IsMarkedForDestruction() )
+        pSplittingObject_ = 0;
+
     ClearCollisions();
     if( !IsValid() )
     {
@@ -238,6 +245,19 @@ MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion&
     return safetyPos;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetPullingFlowsDensity
+// Created: NLD 2005-12-11
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
+{
+    if( pSplittingObject_ )
+        return pSplittingObject_->GetExitingPopulationDensity();
+    else
+        return rPullingFlowsDensity_;
+}
+
+
 // =============================================================================
 // NETWORK
 // =============================================================================
@@ -336,7 +356,8 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
          >> location_
          >> pPullingFlow_
          >> pushingFlows_
-         >> rPullingFlowsDensity_;
+         >> rPullingFlowsDensity_
+         >> const_cast< MIL_RealObject_ABC* >( pSplittingObject_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,5 +373,6 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const ui
          << location_
          << pPullingFlow_
          << pushingFlows_
-         << rPullingFlowsDensity_;
+         << rPullingFlowsDensity_
+         << pSplittingObject_;
 }

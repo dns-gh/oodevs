@@ -368,3 +368,16 @@ const MIL_RealObject_ABC::T_AgentSet& MIL_RealObject_ABC::GetAnimators() const
 {
     return animators_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::SetExitingPopulationDensity
+// Created: NLD 2006-03-08
+// -----------------------------------------------------------------------------
+inline
+void MIL_RealObject_ABC::SetExitingPopulationDensity( MT_Float rDensity )
+{
+    assert( rDensity >= 0. );
+    rExitingPopulationDensity_ = rDensity;
+}
+    
+

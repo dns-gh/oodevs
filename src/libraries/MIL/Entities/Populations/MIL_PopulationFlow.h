@@ -29,6 +29,7 @@ class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class DEC_Population_Path;
+class MIL_RealObjectType;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -137,6 +138,7 @@ private:
     virtual bool HasResources         ();
     virtual void SendRC               ( const MIL_RC& rc ) const;
 
+            void ManageSplit               ();
             void MoveToAlternateDestination( const MT_Vector2D& destination );
             void ComputePath               ( const MT_Vector2D& destination );
     //@}
@@ -168,7 +170,7 @@ private:
     bool bSpeedUpdated_;
 
     // Split
-    bool bSplit_;
+    const MIL_RealObject_ABC* pSplittingObject_;
 };
 
 #include "MIL_PopulationFlow.inl"

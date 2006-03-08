@@ -125,6 +125,7 @@ public:
     const PHY_AttritionData&    GetAttritionData                  ( const PHY_Protection& protection ) const;
           uint                  GetNbrMaxAnimators                () const;
           E_Behavior            GetBehavior                       () const;
+          MT_Float              GetExitingPopulationDensity       () const;
     //@}
 
     //! @name Operations
@@ -245,6 +246,7 @@ private:
     uint                        nNbrMaxAnimators_;
     MIL_MOSIDManager*           pIDManager_;
     E_Behavior                  nBehavior_; //$$$ a renommer 
+    MT_Float                    rExitingPopulationDensity_;
 
 private:
     static T_ObjectTypeMap           objectTypes_;
