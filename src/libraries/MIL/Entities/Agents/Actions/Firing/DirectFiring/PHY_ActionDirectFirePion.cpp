@@ -18,7 +18,7 @@
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePion::PHY_ActionDirectFirePion( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_ActionDirectFirePion_ABC( pion, diaCall, PHY_DirectFireData::eFireAllComposantes )
+: PHY_ActionDirectFirePion_ABC( pion, diaCall, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFireOnAllComposantes )
 {
 }
 

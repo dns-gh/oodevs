@@ -22,14 +22,15 @@
 // Name: PHY_ActionDirectFirePion_ABC constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType )
+PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType )
     : PHY_Action_ABC              ( pion, diaCall )
     , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , diaReturnCode_              (       diaCall.GetParameter( 0 )         )
     , nTargetKnowledgeID_         ( (uint)diaCall.GetParameter( 1 ).ToPtr  () )
     , rPercentageComposantesToUse_(  std::max( 0., std::min( 1., (MT_Float)diaCall.GetParameter( 2 ).ToFloat() ) ) )
-    , nFiringMode_                ( (PHY_DirectFireData::E_FiringMode)diaCall.GetParameter( 3 ).ToId   () )
+    , nFiringMode_                ( (PHY_DirectFireData::E_FiringMode)diaCall.GetParameter( 3 ).ToId() )
     , nComposanteFiringType_      ( nComposanteFiringType )
+    , nComposanteFiredType_       ( nComposanteFiredType  )
     , pAmmoDotationClass_         ( 0 )
     , pFireResult_                ( 0 )  
 {
@@ -64,7 +65,7 @@ PHY_ActionDirectFirePion_ABC::~PHY_ActionDirectFirePion_ABC()
 void PHY_ActionDirectFirePion_ABC::Execute()
 {
     bool bMustRefResult = ( pFireResult_ == 0 );
-    int nResult = role_.FirePion( nTargetKnowledgeID_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, pFireResult_, pAmmoDotationClass_ );
+    int nResult = role_.FirePion( nTargetKnowledgeID_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, pFireResult_, pAmmoDotationClass_ );
     diaReturnCode_.SetValue( nResult );
 
     if( pFireResult_ && bMustRefResult )

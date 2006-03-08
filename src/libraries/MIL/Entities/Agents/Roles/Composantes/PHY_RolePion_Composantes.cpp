@@ -1105,14 +1105,18 @@ void PHY_RolePion_Composantes::FillIndirectFireData( PHY_SmokeData& data ) const
 // Name: PHY_RolePion_Composantes::GetComposantesAbleToBeFired
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& targets ) const
+void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes /*= false*/ ) const
 {
     targets.clear();
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
+
         if( composante.CanBeFired() )
-            targets.push_back( &composante );
+        {
+            if( !bFireOnlyOnMajorComposantes || ( nNbrMajorComposantes_ == 0 || composante.IsMajor() ) )
+                targets.push_back( &composante );
+        }
     }
 }
 
@@ -1120,11 +1124,11 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& 
 // Name: PHY_RolePion_Composantes::GetComposantesAbleToBeFired
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& targets, uint nNbrFirer ) const
+void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes /*= false*/ ) const
 {
     targets.clear();
     T_ComposanteVector availableTargets;
-    PHY_RolePion_Composantes::GetComposantesAbleToBeFired( availableTargets );
+    PHY_RolePion_Composantes::GetComposantesAbleToBeFired( availableTargets, bFireOnlyOnMajorComposantes );
     if( availableTargets.empty() )
         return;
 

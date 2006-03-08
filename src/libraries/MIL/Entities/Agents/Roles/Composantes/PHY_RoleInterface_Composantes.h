@@ -67,8 +67,8 @@ public:
 
     //! @name Fire
     //@{
-    virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets, uint nNbrFirers ) const = 0;
-    virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets ) const = 0;
+    virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets, uint nNbrFirers, bool bFireOnlyOnMajorComposantes = false ) const = 0;
+    virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const = 0;
     virtual void Neutralize                 () = 0;
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result ) = 0;

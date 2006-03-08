@@ -33,7 +33,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType );
+    PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType );
     virtual ~PHY_ActionDirectFirePion_ABC();
 
     //! @name Operations
@@ -49,7 +49,9 @@ private:
     const MT_Float                                   rPercentageComposantesToUse_;
     const PHY_DirectFireData::E_FiringMode           nFiringMode_;
     const PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
+    const PHY_DirectFireData::E_ComposanteFiredType  nComposanteFiredType_;
     const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
+   
           PHY_FireResults_Pion*                      pFireResult_;
 };
 

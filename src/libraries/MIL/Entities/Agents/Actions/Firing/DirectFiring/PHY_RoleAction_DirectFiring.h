@@ -62,7 +62,7 @@ public:
     int  FirePopulation         ( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
     void FirePopulationSuspended( uint nTargetKnowledgeID );
 
-    int  FirePion               ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    int  FirePion               ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     void FirePionSuspended      ( uint nTargetKnowledgeID );
 
     void FireZone               ( const MIL_ControlZone& zone, PHY_FireResults_Default*& pFireResult );

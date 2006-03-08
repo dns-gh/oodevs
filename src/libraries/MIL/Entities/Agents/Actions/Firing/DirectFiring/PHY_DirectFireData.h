@@ -36,9 +36,15 @@ public:
     //@{
     enum E_ComposanteFiringType
     {
-        eFireAllComposantes,
-        eFireComposantesLoadable,
-        eFireComposantesCarrier        
+        eFireUsingAllComposantes,
+        eFireUsingOnlyComposantesLoadable,
+        eFireUsingOnlyComposantesCarrier        
+    };
+
+    enum E_ComposanteFiredType
+    {
+        eFireOnAllComposantes,
+        eFireOnlyOnMajorComposantes
     };
 
     enum E_FiringMode

@@ -135,10 +135,10 @@ uint PHY_DirectFireData::GetNbrWeaponsUsable() const
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
-    if( nComposanteFiringType_ == eFireComposantesLoadable && !compFirer.CanBeLoaded() )
+    if( nComposanteFiringType_ == eFireUsingOnlyComposantesLoadable && !compFirer.CanBeLoaded() )
         return;
 
-    if( nComposanteFiringType_ == eFireComposantesCarrier && !compFirer.CanTransportHumans() )
+    if( nComposanteFiringType_ == eFireUsingOnlyComposantesCarrier && !compFirer.CanTransportHumans() )
         return;
 
     if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
