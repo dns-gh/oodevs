@@ -54,7 +54,6 @@ public:
         pItemString->setText( ENT_Tr::ConvertFromRoePopulation( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
 
         // set table item properties
-        pItemSurface->GetValidator().setRange( 0, 1, 2 );
         pItemPH->GetValidator().setRange( 0, 1, 2 );
 
         // connect items & datas
