@@ -244,16 +244,16 @@ void MessageReport::Initialize()
 	messages_[ "ArmesLetalesAutorisees" ] = new MessageReport( "ArmesLetalesAutorisees", eRC_ArmesLetalesAutorisees, T_MsgCR_cr_cr_armes_letales_autorisees, CommunicationType::eReportMission );
 	messages_[ "PopulationDetectee" ] = new MessageReport( "PopulationDetectee", eRC_PopulationDetectee, T_MsgCR_cr_cr_population_detectee, CommunicationType::eReportMission );
 	messages_[ "PriseAPartieParPopulation" ] = new MessageReport( "PriseAPartieParPopulation", eRC_PriseAPartieParPopulation, T_MsgCR_cr_cr_prise_a_partie_par_population, CommunicationType::eReportMission );
-	messages_[ "RiposteContrePopulation" ] = new MessageReport( "RiposteContrePopulation", eRC_RiposteContrePopulation, T_MsgCR_cr_cr_riposte_contre_population, CommunicationType::eReportMission);
+	messages_[ "RiposteContrePopulation" ] = new MessageReport( "RiposteContrePopulation", eRC_RiposteContrePopulation, T_MsgCR_cr_cr_riposte_contre_population, CommunicationType:: );
 	messages_[ "PopulationDangereuseAProximite" ] = new MessageReport( "PopulationDangereuseAProximite", eRC_PopulationDangereuseAProximite, T_MsgCR_cr_cr_population_dangereuse_a_proximite, CommunicationType::eReportMission );
-	messages_[ "EsquiveFaceAPopulation" ] = new MessageReport( "EsquiveFaceAPopulation", eRC_EsquiveFaceAPopulation, T_MsgCR_cr_cr_esquive_face_a_population, CommunicationType::eReportMission);
+	messages_[ "EsquiveFaceAPopulation" ] = new MessageReport( "EsquiveFaceAPopulation", eRC_EsquiveFaceAPopulation, T_MsgCR_cr_cr_esquive_face_a_population, CommunicationType:: );
 	messages_[ "DecrochageFaceAPopulation" ] = new MessageReport( "DecrochageFaceAPopulation", eRC_DecrochageFaceAPopulation, T_MsgCR_cr_cr_decrochage_face_a_population, CommunicationType::eReportMission );
 	messages_[ "MiseEnPlaceControleDeFoule" ] = new MessageReport( "MiseEnPlaceControleDeFoule", eRC_MiseEnPlaceControleDeFoule, T_MsgCR_cr_cr_mise_en_place_controle_de_foule, CommunicationType::eReportMission );
 	messages_[ "MiseEnPlaceFiltrage" ] = new MessageReport( "MiseEnPlaceFiltrage", eRC_MiseEnPlaceFiltrage, T_MsgCR_cr_cr_mise_en_place_filtrage, CommunicationType::eReportMission );
 	messages_[ "AnimationBarrage" ] = new MessageReport( "AnimationBarrage", eRC_AnimationBarrage, T_MsgCR_cr_cr_animation_barrage, CommunicationType::eReportMission );
 	messages_[ "AnimationCanalisation" ] = new MessageReport( "AnimationCanalisation", eRC_AnimationCanalisation, T_MsgCR_cr_cr_animation_canalisation, CommunicationType::eReportMission );
 	messages_[ "CollecteRenseignementsSurPopulations" ] = new MessageReport( "CollecteRenseignementsSurPopulations", eRC_CollecteRenseignementsSurPopulations, T_MsgCR_cr_cr_collecte_renseignements_sur_populations, CommunicationType::eReportMission );
-	messages_[ "PopulationReconnue" ] = new MessageReport( "PopulationReconnue", eRC_PopulationReconnue, T_MsgCR_cr_cr_population_reconnue, CommunicationType::eReportMission);
+	messages_[ "PopulationReconnue" ] = new MessageReport( "PopulationReconnue", eRC_PopulationReconnue, T_MsgCR_cr_cr_population_reconnue, CommunicationType:: );
 	messages_[ "AttitudeCalme" ] = new MessageReport( "AttitudeCalme", eRC_AttitudeCalme, T_MsgCR_cr_cr_attitude_calme, CommunicationType::eReportMission );
 	messages_[ "AttitudeAgitee" ] = new MessageReport( "AttitudeAgitee", eRC_AttitudeAgitee, T_MsgCR_cr_cr_attitude_agitee, CommunicationType::eReportMission );
 	messages_[ "AttitudeExcitee" ] = new MessageReport( "AttitudeExcitee", eRC_AttitudeExcitee, T_MsgCR_cr_cr_attitude_excitee, CommunicationType::eReportMission );
@@ -263,7 +263,6 @@ void MessageReport::Initialize()
 	messages_[ "PopulationTemporairementControlee" ] = new MessageReport( "PopulationTemporairementControlee", eRC_PopulationTemporairementControlee, T_MsgCR_cr_cr_population_temporairement_controlee, CommunicationType::eReportMission );
 	messages_[ "PopulationTemporairementRepoussee" ] = new MessageReport( "PopulationTemporairementRepoussee", eRC_PopulationTemporairementRepoussee, T_MsgCR_cr_cr_population_temporairement_repoussee, CommunicationType::eReportMission );
 	messages_[ "RepriseDesAffrontements" ] = new MessageReport( "RepriseDesAffrontements", eRC_RepriseDesAffrontements, T_MsgCR_cr_cr_reprise_des_affrontements, CommunicationType::eReportMission );
-	messages_[ "RecuperationProgressive" ] = new MessageReport( "RecuperationProgressive", eRC_RecuperationProgressive, T_MsgCR_cr_cr_recuperation_progressive, CommunicationType::eReportMission );
 	messages_[ "AgressionDePopulation" ] = new MessageReport( "AgressionDePopulation", eRC_AgressionDePopulation, T_MsgCR_cr_cr_agression_de_population, CommunicationType::eReportMission );
 	messages_[ "AgressionParPopulation" ] = new MessageReport( "AgressionParPopulation", eRC_AgressionParPopulation, T_MsgCR_cr_cr_agression_par_population, CommunicationType::eReportMission );
 	messages_[ "RiposteContreAgressionParPopulation" ] = new MessageReport( "RiposteContreAgressionParPopulation", eRC_RiposteContreAgressionParPopulation, T_MsgCR_cr_cr_riposte_contre_agression_par_population, CommunicationType::eReportMission );

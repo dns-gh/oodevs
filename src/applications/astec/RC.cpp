@@ -280,7 +280,6 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_population_temporairement_controlee : strMsg << "population temporairement controlee"; break;
         case T_MsgCR_cr_cr_population_temporairement_repoussee : strMsg << "population temporairement repoussee"; break;
         case T_MsgCR_cr_cr_reprise_des_affrontements : strMsg << "reprise des affrontements"; break;
-        case T_MsgCR_cr_cr_recuperation_progressive : strMsg << "recuperation progressive" << " - float : " << " " << asnMsg.cr.u.cr_recuperation_progressive; break;
         case T_MsgCR_cr_cr_agression_de_population : strMsg << "agression de population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_de_population ); break;
         case T_MsgCR_cr_cr_agression_par_population : strMsg << "agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_par_population ); break;
         case T_MsgCR_cr_cr_riposte_contre_agression_par_population : strMsg << "riposte contre agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_agression_par_population ); break;

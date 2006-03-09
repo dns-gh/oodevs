@@ -55,7 +55,6 @@
 #include "MIL_RC_PopulationDetectee.h"
 #include "MIL_RC_PriseAPartieParPopulation.h"
 #include "MIL_RC_RiposteContrePopulation.h"
-#include "MIL_RC_RecuperationProgressive.h"
 #include "MIL_RC_AgressionDePopulation.h"
 #include "MIL_RC_AgressionParPopulation.h"
 #include "MIL_RC_RiposteContreAgressionParPopulation.h"
@@ -354,7 +353,6 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_PopulationTemporairementControlee ] = new MIL_RC( eRC_PopulationTemporairementControlee, T_MsgCR_cr_cr_population_temporairement_controlee );
 	rcs_[ eRC_PopulationTemporairementRepoussee ] = new MIL_RC( eRC_PopulationTemporairementRepoussee, T_MsgCR_cr_cr_population_temporairement_repoussee );
 	rcs_[ eRC_RepriseDesAffrontements ] = new MIL_RC( eRC_RepriseDesAffrontements, T_MsgCR_cr_cr_reprise_des_affrontements );
-	rcs_[ eRC_RecuperationProgressive ] = new MIL_RC_RecuperationProgressive( eRC_RecuperationProgressive, T_MsgCR_cr_cr_recuperation_progressive );
 	rcs_[ eRC_AgressionDePopulation ] = new MIL_RC_AgressionDePopulation( eRC_AgressionDePopulation, T_MsgCR_cr_cr_agression_de_population );
 	rcs_[ eRC_AgressionParPopulation ] = new MIL_RC_AgressionParPopulation( eRC_AgressionParPopulation, T_MsgCR_cr_cr_agression_par_population );
 	rcs_[ eRC_RiposteContreAgressionParPopulation ] = new MIL_RC_RiposteContreAgressionParPopulation( eRC_RiposteContreAgressionParPopulation, T_MsgCR_cr_cr_riposte_contre_agression_par_population );

@@ -268,9 +268,9 @@ CR-UniteNeutreIdentifiee                                 ::= KnowledgeAgent
 CR-ObjetDetecte                                          ::= KnowledgeObject
 
 -- Reaction Populations
-CR-EmploiForceInterdit                               ::= NULL
+CR-EmploiForceInterdit                                   ::= NULL
 CR-MaintienADistanceParMoyensNonLetaux                   ::= NULL
-CR-DispersionParMoyensDeDefenseActifs           ::= NULL
+CR-DispersionParMoyensDeDefenseActifs                    ::= NULL
 CR-ArmesLetalesAutorisees                                ::= NULL
 CR-PopulationDetectee                                    ::= KnowledgePopulation
 CR-PriseAPartieParPopulation                             ::= KnowledgePopulation
@@ -295,7 +295,6 @@ CR-AffrontementAvecForcesEnnemies                        ::= NULL
 CR-PopulationTemporairementControlee                     ::= NULL
 CR-PopulationTemporairementRepoussee                     ::= NULL
 CR-RepriseDesAffrontements                               ::= NULL
-CR-RecuperationProgressive                               ::= INTEGER
 CR-AgressionDePopulation                                 ::= KnowledgePopulation
 CR-AgressionParPopulation                                ::= KnowledgePopulation
 CR-RiposteContreAgressionParPopulation                   ::= KnowledgePopulation
@@ -591,7 +590,6 @@ MsgCR ::= SEQUENCE
         cr-population-temporairement-controlee                          CR-PopulationTemporairementControlee,
         cr-population-temporairement-repoussee                          CR-PopulationTemporairementRepoussee,
         cr-reprise-des-affrontements                                    CR-RepriseDesAffrontements,
-        cr-recuperation-progressive                                     CR-RecuperationProgressive,
         cr-agression-de-population                                      CR-AgressionDePopulation,
         cr-agression-par-population                                     CR-AgressionParPopulation,
         cr-riposte-contre-agression-par-population                      CR-RiposteContreAgressionParPopulation,

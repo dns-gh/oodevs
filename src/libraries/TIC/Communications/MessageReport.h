@@ -290,7 +290,6 @@ private:
         eRC_PopulationTemporairementControlee,
         eRC_PopulationTemporairementRepoussee,
         eRC_RepriseDesAffrontements,
-        eRC_RecuperationProgressive, // Parametre : float
         eRC_AgressionDePopulation, // Parametre : T_ConnaissancePopulation
         eRC_AgressionParPopulation, // Parametre : T_ConnaissancePopulation
         eRC_RiposteContreAgressionParPopulation, // Parametre : T_ConnaissancePopulation
