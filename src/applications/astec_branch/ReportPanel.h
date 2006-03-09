@@ -21,14 +21,13 @@
 
 #include "InfoPanel_ABC.h"
 #include "Observer_ABC.h"
-#include "SelectionObserver_ABC.h"
+#include "AgentSelectionObserver.h"
 
 class ReportListView;
 //class FireResultListView;
 class ReportFilterOptions;
 class Controller;
 class ActionController;
-class Agent;
 
 // =============================================================================
 /** @class  ReportPanel
@@ -38,7 +37,7 @@ class Agent;
 // =============================================================================
 class ReportPanel : public InfoPanel_ABC
                   , private Observer_ABC
-                  , public SelectionObserver< Agent >
+                  , public AgentSelectionObserver
 {
 public:
     //! @name Constructors/Destructor
@@ -50,7 +49,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Agent* element );
+    virtual void NotifySelected( const Agent_ABC* element );
     //@}    
 
 private:

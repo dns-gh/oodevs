@@ -60,7 +60,6 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
     pAgentSupplyPanel_         = new AgentSupplyPanel( this, controller, actionController );
     pReportPanel_              = new ReportPanel( this, controller, actionController );
     pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
-//    pPopulationReportPanel_    = new ReportPanel( this );
     pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controller, actionController );
 
     pTabWidget_ = new QTabWidget( this );

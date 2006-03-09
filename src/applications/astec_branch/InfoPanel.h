@@ -83,7 +83,6 @@ private:
     ObjectKnowledgePanel*     pObjectKnowledgePanel_;
 
 	PopulationPanel*          pPopulationPanel_;
-    ReportPanel*              pPopulationReportPanel_;
     PopulationKnowledgePanel* pPopulationKnowledgePanel_;
 
     bool bAgentVisible_;

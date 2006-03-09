@@ -23,7 +23,7 @@
 #include "Report_ABC.h"
 #include "ReportFilterOptions.h"
 #include "Reports.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Controller.h"
 #include "ActionController.h"
 
@@ -73,7 +73,7 @@ ReportListView::~ReportListView()
 // -----------------------------------------------------------------------------
 void ReportListView::OnOptionsChanged()
 {
-    const Agent* selected = selected_;
+    const Agent_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -82,7 +82,7 @@ void ReportListView::OnOptionsChanged()
 // Name: ReportListView::NotifySelected
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::NotifySelected( const Agent* element )
+void ReportListView::NotifySelected( const Agent_ABC* element )
 {
     if( element != selected_ )
     {

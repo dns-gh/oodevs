@@ -53,7 +53,7 @@ ReportPanel::~ReportPanel()
 // Name: ReportPanel::NotifySelected
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportPanel::NotifySelected( const Agent* element )
+void ReportPanel::NotifySelected( const Agent_ABC* element )
 {
     if( element )
         Show();

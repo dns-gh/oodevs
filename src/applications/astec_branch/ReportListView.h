@@ -21,10 +21,10 @@
 
 #include "ListDisplayer.h"
 #include "Observer_ABC.h"
-#include "SelectionObserver_ABC.h"
+#include "AgentSelectionObserver.h"
 #include "ElementObserver_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Report_ABC;
 class ActionContext;
 class SelectedElement;
@@ -42,8 +42,8 @@ class ActionController;
 // =============================================================================
 class ReportListView : public ListDisplayer< ReportListView >
                      , private Observer_ABC
-                     , public SelectionObserver< Agent > // $$$$ AGE 2006-03-09: + population
-                     , public ElementObserver_ABC< Reports > // $$$$ AGE 2006-03-09: never actually updated
+                     , public AgentSelectionObserver
+                     , public ElementObserver_ABC< Reports > 
                      , public ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT
@@ -68,7 +68,7 @@ public slots:
 private:
     //! @name Slots
     //@{
-    virtual void NotifySelected( const Agent* element );
+    virtual void NotifySelected( const Agent_ABC* element );
 
     virtual void NotifyUpdated( const Reports& reports );
     virtual void NotifyCreated( const Report_ABC& report );
@@ -88,7 +88,7 @@ private:
     //! @name Member data
     //@{
     const ReportFilterOptions& filter_;
-    const Agent*               selected_;
+    const Agent_ABC*           selected_;
     //@}
 };
 
