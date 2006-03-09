@@ -16,394 +16,199 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "ReportListView.h"
 #include "moc_ReportListView.cpp"
 
-#include "App.h"
-#include "AgentManager.h"
-#include "ObjectManager.h"
-#include "MainWindow.h"
-#include "Agent_ABC.h"
-#include "Agent.h"
-//#include "Object.h"
-#include "ObjectKnowledge.h"
-#include "AgentKnowledge.h"
 #include "Report_ABC.h"
-#include "RC.h"
-#include "Trace.h"
-#include "ActionContext.h"
-#include "Gtia.h"
-#include "Team.h"
-#include "MT_RichListViewItem.h"
 #include "ReportFilterOptions.h"
-#include "Model.h"
+#include "Reports.h"
+#include "Agent.h"
+#include "Controller.h"
+#include "ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor
-// Created: APE 2004-03-10
+// Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportListView::ReportListView( QWidget* pParent, const ReportFilterOptions& filter )
-    : QListView  ( pParent )
-    , filter_    ( filter )
-    , pAgent_    ( 0 )
-    , pPopupMenu_( new QPopupMenu( this ) )
+ReportListView::ReportListView( QWidget* pParent, Controller& controller, ActionController& actionController, const ReportFilterOptions& filter )
+    : ListDisplayer< ReportListView >( pParent, *this )
+    , filter_( filter )
+    , selected_( 0 )
 {
-    addColumn( tr( "Reçu" ) );
-    addColumn( tr( "Compte-rendu" ) );
+    AddColumn( "Reçu" );
+    AddColumn( "Compte-rendu" );
 
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
     setSorting( -1, false );
 
-    setResizeMode( QListView::LastColumn );
-    setAllColumnsShowFocus ( true );
+//    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+//    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnClick( QListViewItem*, const QPoint&, int ) ) );
+//    connect( this, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+//    connect( this, SIGNAL( spacePressed( QListViewItem* ) ),  this, SLOT( OnRequestCenter() ) );
+//
+//    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) )                  , &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
+//    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
+//    connect( this, SIGNAL( ReadingReports( Agent_ABC& ) )                     , &MainWindow::GetMainWindow(), SIGNAL( ReadingReports( Agent_ABC& ) ) );
+//
+//    connect( &App::GetApp(), SIGNAL( ReportCreated( Agent_ABC&, Report_ABC& ) ), this, SLOT( OnReportCreated( Agent_ABC&, Report_ABC& ) ) );
 
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
-    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnClick( QListViewItem*, const QPoint&, int ) ) );
-    connect( this, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( spacePressed( QListViewItem* ) ),  this, SLOT( OnRequestCenter() ) );
-
-    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) )                  , &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
-    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
-    connect( this, SIGNAL( ReadingReports( Agent_ABC& ) )                     , &MainWindow::GetMainWindow(), SIGNAL( ReadingReports( Agent_ABC& ) ) );
-
-    connect( &App::GetApp(), SIGNAL( ReportCreated( Agent_ABC&, Report_ABC& ) ), this, SLOT( OnReportCreated( Agent_ABC&, Report_ABC& ) ) );
+    controller.Register( *this );
+    actionController.Register( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView destructor
-// Created: APE 2004-03-10
+// Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
 ReportListView::~ReportListView()
 {
+    // NOTHING
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::SetAgent
-// Created: APE 2004-03-10
-// -----------------------------------------------------------------------------
-void ReportListView::SetAgent( Agent_ABC* pAgent )
-{
-    if( pAgent_ == pAgent )
-        return;
-
-    // Before we change the displayed reports, mark the old ones as read.
-    
-    QListViewItem* pItem = firstChild();
-    while( pItem != 0 )
-    {
-        Report_ABC& report = GetItemValue( *pItem );
-        report.SetNew( false );
-        pItem = pItem->nextSibling();
-    }
-    
-
-    clear();
-    pPopupMenu_->hide();
-
-    pAgent_ = pAgent;
-    if( pAgent_ == 0 )
-        return;
-
-    emit ReadingReports( *pAgent_ );
-
-    Agent_ABC::T_ReportVector& reports = pAgent_->GetReports();
-    for( Agent_ABC::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
-        OnReportCreated( *pAgent_, **it );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView::OnOptionsChanged
-// Created: AGE 2005-09-21
+// Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
 void ReportListView::OnOptionsChanged()
 {
-    if( pAgent_ )
+    const Agent* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::NotifySelected
+// Created: AGE 2006-03-09
+// -----------------------------------------------------------------------------
+void ReportListView::NotifySelected( const Agent* element )
+{
+    if( element != selected_ )
     {
-        clear();
-        Agent_ABC::T_ReportVector& reports = pAgent_->GetReports();
-        for( Agent_ABC::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
-            OnReportCreated( *pAgent_, **it );
+        selected_ = element;
+        if( selected_  )
+            NotifyUpdated( selected_->Get< Reports >() );
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ReportListView::ShouldUpdate
+// Created: AGE 2006-03-09
+// -----------------------------------------------------------------------------
+bool ReportListView::ShouldUpdate( const Reports& reports )
+{
+    return isVisible()
+        && selected_
+        && selected_->Retrieve< Reports >() == &reports;
+}
 
 // -----------------------------------------------------------------------------
-// Name: ReportListView::OnReportCreated
-// Created: APE 2004-08-04
+// Name: ReportListView::NotifyUpdated
+// Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::OnReportCreated( Agent_ABC& agent, Report_ABC& report )
+void ReportListView::NotifyUpdated( const Reports& reports )
 {
-    if( pAgent_ != &agent )
+    if( ! ShouldUpdate( reports ) )
+        return;
+
+    DeleteTail( DisplayList( reports.reports_.begin(), reports.reports_.end() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::Display
+// Created: AGE 2006-03-09
+// -----------------------------------------------------------------------------
+void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer, ValuedListItem* item )
+{
+    if( report && & report->GetAgent() == selected_ )
+    {
+        if( filter_.ShouldDisplay( *report ) )
+        {
+            QString time( "%1:%2:%3" );
+            time = time.arg( ( report->GetTime() / 3600 ) % 24 )
+                    .arg( ( report->GetTime() / 60 ) % 60 )
+                    .arg(  report->GetTime() % 60  );
+            item->setText( 0, time );
+            item->setText( 1, report->GetTitle().c_str() );
+        }
+        else
+            delete item;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::NotifyCreated
+// Created: AGE 2006-03-09
+// -----------------------------------------------------------------------------
+void ReportListView::NotifyCreated( const Report_ABC& report )
+{
+    if( ! isVisible() || & report.GetAgent() != selected_ )
         return;
     if( ! filter_.ShouldDisplay( report ) )
         return;
 
-    std::string strTime = MT_FormatString( "%02d:%02d:%02d", ( report.GetTime() / 3600 ) % 24, ( report.GetTime() / 60 ) % 60 , report.GetTime() % 60  ).c_str();
+    QString time( "%1:%2:%3" );
 
-    if( report.IsRCType() )
-    {
-        T_RichReportItem* pItem = new T_RichReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
-        pItem->setRenameEnabled( 0, false );
-        pItem->SetBold( report.IsNew() );
+    time = time.arg( ( report.GetTime() / 3600 ) % 24 )
+               .arg( ( report.GetTime() / 60 ) % 60 )
+               .arg(  report.GetTime() % 60  );
+    new ValuedListItem( & report, this,time, report.GetTitle().c_str() );
+//    if( report.IsRCType() )
+//    {
+//        T_RichReportItem* pItem = new T_RichReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
+//        pItem->setRenameEnabled( 0, false );
+//        pItem->SetBold( report.IsNew() );
+//
+//        RC& rc = (RC&)report;
+//        if( ! rc.GetFragOrders().empty() )
+//            pItem->SetFontColor( QColor( 200, 0, 0 ) );
+//        else if( rc.GetType() == Report_ABC::eMessage ) // blue
+//            pItem->SetFontColor( QColor( 0, 0, 200 ) );
+//        else if( rc.GetType() == Report_ABC::eWarning ) // orange
+//            pItem->SetFontColor( QColor( 255, 128, 64 ) );
+//        else if( rc.GetType() == Report_ABC::eEvent ) // green
+//            pItem->SetFontColor( QColor( 32, 200, 64 ) );
+//
+//    }
+//    else
+//    {
+//        T_ReportItem* pItem = new T_ReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
+//        pItem->setRenameEnabled( 0, false );
+//        QFont font = this->font();
+//        font.setBold( report.IsNew() );
+//        pItem->SetFont( font );
+//        pItem->SetFontColor( QColor( 150, 150, 150 ) );
+//    }
 
-        RC& rc = (RC&)report;
-        if( ! rc.GetFragOrders().empty() )
-            pItem->SetFontColor( QColor( 200, 0, 0 ) );
-        else if( rc.GetType() == Report_ABC::eMessage ) // blue
-            pItem->SetFontColor( QColor( 0, 0, 200 ) );
-        else if( rc.GetType() == Report_ABC::eWarning ) // orange
-            pItem->SetFontColor( QColor( 255, 128, 64 ) );
-        else if( rc.GetType() == Report_ABC::eEvent ) // green
-            pItem->SetFontColor( QColor( 32, 200, 64 ) );
-
-    }
-    else
-    {
-        T_ReportItem* pItem = new T_ReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
-        pItem->setRenameEnabled( 0, false );
-        QFont font = this->font();
-        font.setBold( report.IsNew() );
-        pItem->SetFont( font );
-        pItem->SetFontColor( QColor( 150, 150, 150 ) );
-    }
-    
-    // Trick for making sure the EventToolButton gets the ReadingReports event
-    // after receiving the ReportCreated event.
-    QTimer::singleShot( 0, this, SLOT( NotifyReadingReports() ) );
 }
 
-
-
 // -----------------------------------------------------------------------------
-// Name: ReportListView::NotifyReadingReports
-// Created: APE 2004-09-30
+// Name: ReportListView::NotifyUpdated
+// Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::NotifyReadingReports()
+void ReportListView::NotifyUpdated( const Report_ABC& report )
 {
-    if( isVisible() && pAgent_ != 0 )
-        emit ReadingReports( *pAgent_ );
+    ValuedListItem* item = FindItem( &report, firstChild() );
+    if( item )
+        ;
+    // $$$$ AGE 2006-03-09: Never happens anyway
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReportListView::OnClick
-// Created: APE 2004-09-07
+// Name: ReportListView::NotifyDeleted
+// Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int nCol )
+void ReportListView::NotifyDeleted( const Report_ABC&  )
 {
-    if( pItem == 0 || pItem->rtti() != eRichItem )
-        return;
-
-    MT_RichListViewItem* pRItem = (MT_RichListViewItem*)pItem;
-    QString str = pRItem->GetAnchorAt( pos, nCol );
-    if( str == QString::null )
-        return;
-
-    int nId;
-    if( InterpretLink( str, "Agent:", nId ) )
-    {
-        Agent_ABC* pAgent = & App::GetApp().GetModel().GetAgent( nId );
-        //$$$ can't do this here cauze it would destroy the listview item we clicked on...
-        //$$$   emit ElementSelected( SelectedElement( *pAgent ) );
-        emit CenterOnPoint( pAgent->GetPos() );
-        return;
-    }
-
-
-    if( InterpretLink( str, "AgentKnowledge:", nId ) )
-    {
-        AgentKnowledge* pKnowledge = pAgent_->FindAgentKnowledge( nId );
-        if( pKnowledge != 0 )
-        {
-            //$$$ can't do this here cauze it would destroy the listview item we clicked on...
-            //$$$   emit ElementSelected( SelectedElement( *pKnowledge ) );
-            emit CenterOnPoint( pKnowledge->GetPosition() );
-        }
-        return;
-    }
-
-    if( InterpretLink( str, "ObjectKnowledge:", nId ) )
-    {
-        ObjectKnowledge* pKnowledge = pAgent_->GetTeam().FindObjectKnowledge( nId );
-        if( pKnowledge != 0 )
-        {
-            //$$$ can't do this here cauze it would destroy the listview item we clicked on...
-            //$$$   emit ElementSelected( SelectedElement( *pKnowledge ) );
-            emit CenterOnPoint( pKnowledge->GetCenter() );
-        }
-        return;
-    }
- 
+    // never happens either;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::OnRequestCenter
-// Created: APE 2004-05-12
-// -----------------------------------------------------------------------------
-void ReportListView::OnRequestCenter()
-{
-    QListViewItem* pItem = selectedItem();
-    if( pItem == 0 )
-        return;
-
-    MT_Vector2D vPos = GetItemValue( *pItem ).GetPos();
-
-    emit CenterOnPoint( vPos );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::OnRequestPopup
-// Created: APE 2004-05-10
-// -----------------------------------------------------------------------------
-void ReportListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int /*nCol*/ )
-{
-    if( pAgent_ == 0 )
-        return;
-
-    pPopupItem_ = pItem;
-    pPopupMenu_->clear();
-    pPopupMenu_->insertItem( tr( "Tout effacer" ), this, SLOT( OnClearAll() ) );
-    pPopupMenu_->insertItem( tr( "Effacer les msg debug" ), this, SLOT( OnClearTrace() ) );
-
-    if( pItem != 0 )
-    {
-        pPopupMenu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
-
-        Report_ABC& report = GetItemValue( *pItem );
-        if( report.IsRCType() )
-        {
-            RC& rc = (RC&)report;
-            
-            if( !rc.GetFragOrders().empty() )
-            {
-                SelectedElement selectedElement( rc );
-                ActionContext context( selectedElement );
-                emit NewPopupMenu( *pPopupMenu_, context );
-            }
-        }
-    }
-
-    pPopupMenu_->popup( pos );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::OnClearAll
-// Created: APE 2004-05-10
-// -----------------------------------------------------------------------------
-void ReportListView::OnClearAll()
-{
-    if ( pAgent_ != 0 )
-    {
-        pAgent_->DeleteAllRCs();
-        pAgent_->DeleteAllTraces();
-    }
-    clear();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::OnClearTrace
-// Created: APE 2004-05-10
-// -----------------------------------------------------------------------------
-void ReportListView::OnClearTrace()
-{
-    if ( pAgent_ != 0 )
-    {
-        clear();
-        pAgent_->DeleteAllTraces();
-        SetAgent( pAgent_ );
-    }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::OnClearUpTo
-// Created: APE 2004-05-10
-// -----------------------------------------------------------------------------
-void ReportListView::OnClearUpTo()
-{
-    assert( pPopupItem_ != 0 );
-    assert( pAgent_ != 0  );
-
-    QListViewItem* pItem = pPopupItem_;
-    while( pItem != 0 )
-    {
-        if ( pAgent_ != 0 )
-            pAgent_->DeleteReport( GetItemValue( *pItem ) );
-        pItem = pItem->nextSibling();
-    }
-
-    clear();
-    if ( pAgent_ != 0 )
-    {
-        Agent_ABC* pAgent = pAgent_;
-        pAgent_ = 0;
-        SetAgent( pAgent );
-    }
-}
-
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::hideEvent
-// Created: APE 2004-06-17
-// -----------------------------------------------------------------------------
-void ReportListView::hideEvent( QHideEvent* pEvent )
-{
-    QListView::hideEvent( pEvent );
-
-    if( pEvent->spontaneous() )
-        return;
-
-    QListViewItem* pItem = firstChild();
-    while( pItem != 0 )
-    {
-        if( pItem->rtti() == eRichItem )
-            ((T_RichReportItem*)pItem)->SetBold( false );
-        else
-        {
-            QFont font = this->font();
-            ((T_ReportItem*)pItem)->SetFont( font );
-        }
-        GetItemValue( *pItem ).SetNew( false );
-
-        pItem = pItem->nextSibling();
-    }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::showEvent
-// Created: APE 2004-06-17
-// -----------------------------------------------------------------------------
-void ReportListView::showEvent( QShowEvent* pEvent )
-{
-    QListView::showEvent( pEvent );
-    NotifyReadingReports();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::InterpretLink
-// Created: APE 2004-09-10
-// -----------------------------------------------------------------------------
-bool ReportListView::InterpretLink( const QString& strLink, const QString& strKeyword, int& nResultId )
-{
-    if( strLink.left( strKeyword.length() ) != strKeyword )
-        return false;
-
-    bool b = false;
-    nResultId = strLink.right( strLink.length() - strKeyword.length() ).toInt( &b );
-    return b;
-}
+    // Before we change the displayed reports, mark the old ones as read.
+//    QListViewItem* pItem = firstChild();
+//    while( pItem != 0 )
+//    {
+//        Report_ABC& report = GetItemValue( *pItem );
+//        report.SetNew( false );
+//        pItem = pItem->nextSibling();
+//    }

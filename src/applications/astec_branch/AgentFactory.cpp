@@ -53,10 +53,11 @@
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controller& controller, AgentTypes& types, Model& model )
+AgentFactory::AgentFactory( Controller& controller, AgentTypes& types, Model& model, const Simulation& simulation )
     : controller_( controller )
     , model_( model )
     , types_( types )
+    , simulation_( simulation )
 {
     // NOTHING
 }
@@ -121,7 +122,7 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Limits( model_.limits_ ) );
     agent.Attach( *new Paths() );
     agent.Attach( *new Reinforcements( controller_, model_.agents_ ) );
-    agent.Attach( *new Reports( agent, controller_ ) );
+    agent.Attach( *new Reports( agent, controller_, simulation_ ) );
     agent.Attach( *new Transports( controller_, model_.agents_ ) );
     agent.Attach( *new Troops( controller_ ) );
     agent.Attach( *new Logistics( agent, controller_, model_ ) );

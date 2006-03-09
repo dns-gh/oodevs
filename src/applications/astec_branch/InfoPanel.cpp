@@ -22,7 +22,7 @@
 
 #include "MainWindow.h"
 #include "AgentStatePanel.h"
-//#include "ReportPanel.h"
+#include "ReportPanel.h"
 #include "AgentResourcesPanel.h"
 #include "AgentKnowledgePanel.h"
 #include "ObjectPanel.h"
@@ -58,7 +58,7 @@ InfoPanel::InfoPanel( QWidget* pParent, Controller& controller, ActionController
     pAgentMaintenancePanel_    = new AgentMaintenancePanel( this, controller, actionController );
     pAgentMedicalPanel_        = new AgentMedicalPanel( this , controller, actionController );
     pAgentSupplyPanel_         = new AgentSupplyPanel( this, controller, actionController );
-//    pReportPanel_              = new ReportPanel( this );
+    pReportPanel_              = new ReportPanel( this, controller, actionController );
     pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
 //    pPopulationReportPanel_    = new ReportPanel( this );
     pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controller, actionController );

@@ -124,4 +124,11 @@ struct ListItemRtti< const LogMedicalConsign* > {
     enum { rtti = 1017 };
 };
 
+class Report_ABC;
+template< >
+struct ListItemRtti< const Report_ABC* > {
+    enum { rtti = 1018 };
+};
+
+
 #endif // __ListItemRtti_h_

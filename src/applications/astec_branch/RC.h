@@ -19,50 +19,36 @@
 
 class Agent_ABC;
 enum E_OrderConduiteID;
+class Simulation;
 
 // =============================================================================
 // Created: AGN 2003-12-22
 // =============================================================================
 class RC : public Report_ABC
 {
-    MT_COPYNOTALLOWED( RC );
-
-public:
-    //! @name Types
-    //@{
-    typedef std::vector< uint >               T_FragOrderVector;
-    typedef T_FragOrderVector::iterator       IT_FragOrderVector;
-    typedef T_FragOrderVector::const_iterator CIT_FragOrderVector;
-    //@}
-
 public:
     //! @name Constructor/Destructor
     //@{
-     RC( Agent_ABC& agent, const ASN1T_MsgCR& asnMsg );
-     RC( Agent_ABC& agent, const ASN1T_MsgAttenteOrdreConduite& asnMsg );
-    ~RC();
-    //@}
-
-    //! @name Accessors
-    //@{
-    Agent_ABC&           GetAgent     ();
-    const T_FragOrderVector& GetFragOrders() const;
+             RC( const Agent_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg );
+    virtual ~RC();
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    RC( const RC& );
+    RC& operator=( const RC& );
+    //@}
+
+    //! @name Helpers
+    //@{
     std::string ObjectKnowledgeLink( ASN1T_OID nId );
     std::string AgentKnowledgeLink ( ASN1T_OID nId );
     std::string PopulationKnowledgeLink ( ASN1T_OID nId );
     std::string AgentLink          ( ASN1T_OID nId );
 
     void Initialize( const ASN1T_MsgCR& asnMsg );
-    void Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
-
-private:
-    Agent_ABC&      agent_;
-    T_FragOrderVector   fragOrderVector_;
+    //@}
 };
-
-#   include "RC.inl"
 
 #endif // __RC_h_

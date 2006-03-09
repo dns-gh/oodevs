@@ -18,6 +18,7 @@
 class Report_ABC;
 class Controller;
 class Agent_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  Reports
@@ -34,7 +35,7 @@ class Reports : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( Agent_ABC& agent, Controller& controller );
+             Reports( const Agent_ABC& agent, Controller& controller, const Simulation& simulation );
     virtual ~Reports();
     //@}
 
@@ -63,11 +64,12 @@ private:
     virtual void DoUpdate( const TraceMessage& msg );
     //@}
 
-private:
+public: // $$$$ AGE 2006-03-09: 
     //! @name Member data
     //@{
-    Agent_ABC& agent_;
+    const Agent_ABC& agent_;
     Controller& controller_;
+    const Simulation& simulation_;
     T_Reports reports_;
     //@}
 };

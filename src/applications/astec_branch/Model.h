@@ -25,6 +25,7 @@ class AgentKnowledgeFactory;
 class TeamFactory_ABC;
 class ObjectTypes;
 class LogisticConsignFactory_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  Model
@@ -38,7 +39,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controller& controller, const std::string& scipioXml );
+             Model( Controller& controller, const Simulation& simulation, const std::string& scipioXml );
     virtual ~Model();
     //@}
 
@@ -49,8 +50,6 @@ public:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-
     AgentTypes& types_;
     ObjectTypes& objectTypes_;
 

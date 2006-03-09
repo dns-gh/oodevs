@@ -19,18 +19,20 @@
 #ifndef __ReportListView_h_
 #define __ReportListView_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include "ListDisplayer.h"
+#include "Observer_ABC.h"
+#include "SelectionObserver_ABC.h"
+#include "ElementObserver_ABC.h"
 
-#include "MT_ValuedRichListViewItem.h"
-
-class Agent_ABC;
+class Agent;
 class Report_ABC;
 class ActionContext;
 class SelectedElement;
 class ReportFilterOptions;
+class Reports;
 
+class Controller;
+class ActionController;
 
 // =============================================================================
 /** @class  ReportListView
@@ -38,83 +40,59 @@ class ReportFilterOptions;
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class ReportListView : public QListView
+class ReportListView : public ListDisplayer< ReportListView >
+                     , private Observer_ABC
+                     , public SelectionObserver< Agent > // $$$$ AGE 2006-03-09: + population
+                     , public ElementObserver_ABC< Reports > // $$$$ AGE 2006-03-09: never actually updated
+                     , public ElementObserver_ABC< Report_ABC >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ReportListView );
-    friend class GLTool;
-
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-     ReportListView( QWidget* pParent, const ReportFilterOptions& filter );
-    ~ReportListView();
+             ReportListView( QWidget* pParent, Controller& controller, ActionController& actionController, const ReportFilterOptions& filter );
+    virtual ~ReportListView();
     //@}
 
     //! @name Operations
     //@{
-    void SetAgent( Agent_ABC* pAgent );
+    void Display( const Report_ABC* report, Displayer_ABC& displayer, ValuedListItem* item );
     //@}
 
-private slots:
+public slots:
     //! @name Slots
     //@{
-    void OnReportCreated( Agent_ABC& agent, Report_ABC& report );
-
-    void OnClick        ( QListViewItem*, const QPoint&, int );
-    void OnRequestCenter();
-    void OnRequestPopup ( QListViewItem* pItem, const QPoint& pos, int nCol );
-    void OnClearAll     ();
-    void OnClearTrace   ();
-    void OnClearUpTo    ();
-
-    void NotifyReadingReports();
-    void OnOptionsChanged    ();
+    void OnOptionsChanged();
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Slots
     //@{
-    void hideEvent( QHideEvent* pEvent );
-    void showEvent( QShowEvent* pEvent );
+    virtual void NotifySelected( const Agent* element );
 
-    Report_ABC& GetItemValue ( QListViewItem& item );
-    bool            InterpretLink( const QString& strLink, const QString& strKeyword, int& nResultId );
-    //@}
+    virtual void NotifyUpdated( const Reports& reports );
+    virtual void NotifyCreated( const Report_ABC& report );
+    virtual void NotifyUpdated( const Report_ABC& report );
+    virtual void NotifyDeleted( const Report_ABC& report );
 
-signals:
-    //! @name Signals
-    //@{
-    void ElementSelected( SelectedElement& selectedElement );
-    void CenterOnPoint  ( const MT_Vector2D& vPoint );
-    void NewPopupMenu   ( QPopupMenu& popupMenu, const ActionContext& context );
-    void ReadingReports ( Agent_ABC& agent );
+    bool ShouldUpdate( const Reports& reports );
     //@}
 
 private:
-    //! @name Types
+    //! @name Copy/Assignment
     //@{
-    enum
-    { 
-        eRichItem = 1000,
-        eItem = 100
-    };
-    typedef MT_ValuedListViewItem    < Report_ABC*, eItem >     T_ReportItem;
-    typedef MT_ValuedRichListViewItem< Report_ABC*, eRichItem > T_RichReportItem;
+    ReportListView( const ReportListView& );
+    ReportListView& operator=( const ReportListView& );
     //@}
-    
+
     //! @name Member data
     //@{
     const ReportFilterOptions& filter_;
-    Agent_ABC*                 pAgent_;
-    QPopupMenu*                    pPopupMenu_;
-    QListViewItem*                 pPopupItem_;
+    const Agent*               selected_;
     //@}
 };
 
 //$$$$$ Remarque générale: Attacher les popupmenus à leur listitem pour éviter les
 // pb en cas d'effacement de l'item, ou gérer ca autrement.
-
-#   include "ReportListView.inl"
 
 #endif // __ReportListView_h_

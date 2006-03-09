@@ -16,19 +16,25 @@
 #include "DIN_Types.h"
 
 class Agent_ABC;
+class Simulation;
 
 // =============================================================================
 // Created: AGN 2003-12-22
 // =============================================================================
 class Trace : public Report_ABC
 {
-    MT_COPYNOTALLOWED( Trace );
-
 public:
     //! @name Constructor/Destructor
     //@{
-     Trace( Agent_ABC& agent, const TraceMessage& input );
-    ~Trace();
+             Trace( const Agent_ABC& agent, const Simulation& simulation, const TraceMessage& input );
+    virtual ~Trace();
+    //@}
+
+private:
+    //! @name Copy / Assignment
+    //@{
+    Trace( const Trace& );
+    Trace& operator=( const Trace& );
     //@}
 };
 

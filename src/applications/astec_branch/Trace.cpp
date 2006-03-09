@@ -19,24 +19,15 @@
 //
 //*****************************************************************************
 
-#ifdef __GNUG__
-#    pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "Trace.h"
-
-#include "App.h"
-#include "Agent_ABC.h"
-
-using namespace DIN;
 
 //-----------------------------------------------------------------------------
 // Name: Trace constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-Trace::Trace( Agent_ABC& agent, const TraceMessage& input )
-    : Report_ABC( MT_Vector2D() )//agent.GetPos() ) // $$$$ AGE 2006-02-14: 
+Trace::Trace( const Agent_ABC& agent, const Simulation& simulation, const TraceMessage& input )
+    : Report_ABC( agent, simulation )
 {
     eType_ = Report_ABC::eTrace;
     input >> strTitle_;
@@ -48,5 +39,6 @@ Trace::Trace( Agent_ABC& agent, const TraceMessage& input )
 //-----------------------------------------------------------------------------
 Trace::~Trace()
 {
+    // NOTHING
 }
 

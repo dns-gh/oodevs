@@ -46,9 +46,9 @@ public:
             const Element& element = it.NextElement();
             if( ! currentItem  ) 
                 currentItem = new ValuedListItem( &element, parent, previousItem );
-            list_.Display( element, currentItem );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
+            list_.Display( element, previousItem );
         }
         return currentItem;
     };
@@ -62,9 +62,9 @@ public:
         {
             if( ! currentItem  ) 
                 currentItem = new EmptyListItem( parent, previousItem );
-            list_.Display( *from, currentItem );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
+            list_.Display( *from, previousItem );
             ++from;
         }
         return currentItem;

@@ -20,10 +20,15 @@
 #define __ReportPanel_h_
 
 #include "InfoPanel_ABC.h"
+#include "Observer_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 class ReportListView;
-class FireResultListView;
+//class FireResultListView;
 class ReportFilterOptions;
+class Controller;
+class ActionController;
+class Agent;
 
 // =============================================================================
 /** @class  ReportPanel
@@ -32,24 +37,27 @@ class ReportFilterOptions;
 // Created: AGE 2005-04-21
 // =============================================================================
 class ReportPanel : public InfoPanel_ABC
+                  , private Observer_ABC
+                  , public SelectionObserver< Agent >
 {
-    MT_COPYNOTALLOWED( ReportPanel );
-    friend class GLTool; // $$$$ AGE 2005-04-21: whatever
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ReportPanel( QWidget* pParent );
+             ReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
     virtual ~ReportPanel();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void OnUpdate        ();
-    virtual void OnClearSelection();
-    virtual void OnAgentUpdated  ( Agent& agent );
-    virtual void OnAgentUpdated  ( Population& population );
+    virtual void NotifySelected( const Agent* element );
+    //@}    
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ReportPanel( const ReportPanel& );
+    ReportPanel& operator=( const ReportPanel& );
     //@}
 
 private:
@@ -57,7 +65,7 @@ private:
     //@{
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;
-    FireResultListView*  pFireResultListView_;
+//    FireResultListView*  pFireResultListView_;
     //@}
 };
 

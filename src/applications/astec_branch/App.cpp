@@ -123,8 +123,8 @@ void App::Initialize( const std::string& scipioXml )
     InitializeHumanFactors ( xis ); 
 
     controller_      = new Controller();
-    model_           = new Model( *controller_, scipioXml );
     simulation_      = new Simulation();
+    model_           = new Model( *controller_, *simulation_, scipioXml );
     pMOSServer_      = new Network( *model_, *simulation_ );
 
     MT_ChangeDir( currentDirectory );
@@ -151,7 +151,7 @@ void App::InitializeTerrainData( xistream& xis )
 //-----------------------------------------------------------------------------
 App::~App()
 {
-    
+    // bof
 }
 
 // -----------------------------------------------------------------------------

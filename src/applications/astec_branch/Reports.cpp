@@ -12,16 +12,18 @@
 #include "RC.h"
 #include "Trace.h"
 #include "Controller.h"
+#include "WaitingForFragOrder.h"
 
 // -----------------------------------------------------------------------------
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( Agent_ABC& agent, Controller& controller )
+Reports::Reports( const Agent_ABC& agent, Controller& controller, const Simulation& simulation )
     : agent_( agent )
     , controller_( controller )
+    , simulation_( simulation )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +42,7 @@ Reports::~Reports()
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgCR& message )
 {   
-    RC& rc = *new RC( agent_, message );
+    Report_ABC& rc = *new RC( agent_, simulation_, message );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }
@@ -51,7 +53,7 @@ void Reports::DoUpdate( const ASN1T_MsgCR& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgAttenteOrdreConduite& message )
 {
-    RC& rc = *new RC( agent_, message );
+    Report_ABC& rc = *new WaitingForFragOrder( agent_, simulation_, message );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }
@@ -62,7 +64,7 @@ void Reports::DoUpdate( const ASN1T_MsgAttenteOrdreConduite& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const TraceMessage& msg )
 {
-    Trace& trace = *new Trace( agent_, msg );
+    Report_ABC& trace = *new Trace( agent_, simulation_, msg );
     reports_.push_back( &trace );
     controller_.Create( trace );
 }

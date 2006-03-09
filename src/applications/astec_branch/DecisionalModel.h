@@ -48,8 +48,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< unsigned long > T_Missions;
-    typedef std::set   < unsigned long >   T_FragOrders;
+    typedef std::vector< unsigned long > T_Missions; // $$$$ AGE 2006-03-09: resolve ?
+    typedef std::set   < unsigned long > T_FragOrders;
     //@}
 
     //! @name Helpers
