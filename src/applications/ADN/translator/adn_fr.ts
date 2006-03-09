@@ -2683,31 +2683,31 @@
     </message>
     <message>
         <source>Pion ABC RASIT RenseignerSur</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion ABC RASIT RenseignerSur</translation>
     </message>
     <message>
         <source>Pion InterdireFranchissementPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion InterdireFranchissementPopulations</translation>
     </message>
     <message>
         <source>Pion FiltrerPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion FiltrerPopulations</translation>
     </message>
     <message>
         <source>Pion RenseignerSurPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion RenseignerSurPopulations</translation>
     </message>
     <message>
         <source>Pion CanaliserPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion CanaliserPopulations</translation>
     </message>
     <message>
         <source>Pion ControlerPopulationsDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion ControlerPopulationsDansZone</translation>
     </message>
     <message>
         <source>Pion SecuriserZoneContrePopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion SecuriserZoneContrePopulations</translation>
     </message>
 </context>
 <context>
@@ -3709,6 +3709,14 @@ du tireur</translation>
     <message>
         <source>Mining</source>
         <translation>Valorisation</translation>
+    </message>
+    <message>
+        <source>Outgoing population density</source>
+        <translation>Outgoing population density</translation>
+    </message>
+    <message>
+        <source>people/m&#xb2;</source>
+        <translation>hommes/m²</translation>
     </message>
 </context>
 <context>
@@ -5733,27 +5741,27 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Unite essence</source>
-        <translation type="unfinished"></translation>
+        <translation>Unite essence</translation>
     </message>
     <message>
         <source>Unite feu TD</source>
-        <translation type="unfinished"></translation>
+        <translation>Unite feu TD</translation>
     </message>
     <message>
         <source>Unite feu -TD</source>
-        <translation type="unfinished"></translation>
+        <translation>Unite feu -TD</translation>
     </message>
     <message>
         <source>Unite vivre</source>
-        <translation type="unfinished"></translation>
+        <translation>Unite vivre</translation>
     </message>
     <message>
         <source>Pieces</source>
-        <translation type="unfinished"></translation>
+        <translation>Pieces</translation>
     </message>
     <message>
         <source>VCI</source>
-        <translation type="unfinished"></translation>
+        <translation>VCI</translation>
     </message>
 </context>
 <context>
@@ -5948,11 +5956,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
         <source>Category</source>
-        <translation type="unfinished">Catégorie</translation>
+        <translation>Catégorie</translation>
     </message>
     <message>
         <source>Log threshold (%)</source>
-        <translation type="unfinished">Seuil logistique (%)</translation>
+        <translation>Seuil logistique (%)</translation>
     </message>
 </context>
 <context>

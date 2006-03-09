@@ -109,6 +109,8 @@ public:
         ADN_Type_Enum< E_SpeedImpact, eNbrSpeedImpact > nSpeedImpact_;
         ADN_Type_Double                              rMaxAgentSpeedPercentage_;
 
+        ADN_Type_Double                              rOutgoingPopulationDensity_;
+
         T_ScoreLocationInfosVector                   vScoreLocation_;
 
         ADN_Type_Bool                                bAttritions_;

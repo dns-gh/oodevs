@@ -124,6 +124,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
 , bToReinforce_     ( false )
 , bToBuild_         ( false )
 , rMaxAgentSpeedPercentage_( 0 )
+, rOutgoingPopulationDensity_( 0 )
 {
     rAvoidDistance_.SetDataName( "la distance d'évitement" );
     rAvoidDistance_.SetParentNode( *this );
@@ -139,6 +140,8 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
     rDefaultBypassSpeed_.SetParentNode( *this );
     rMaxInteractionHeight_.SetDataName( "la hauteur maximale d'interaction" );
     rMaxInteractionHeight_.SetParentNode( *this );
+    rOutgoingPopulationDensity_.SetDataName( "le densité des populations sortantes" );
+    rOutgoingPopulationDensity_.SetParentNode( *this );
 
     vScoreLocation_.SetParentNode( *this );
     vScoreLocation_.SetItemTypeName( "un poids de placement sur un terrain de type" );
@@ -211,6 +214,12 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
         throw ADN_DataException( "Donnée invalide",
         MT_FormatString( "La hauteur maximale d'interaction de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
         "Editer le fichier %s pour modifier le champ Objets::Type::HauteurMaxInteraction de cet objet." );
+
+    if(     input.ReadField( "DensitePopulationSortante", rOutgoingPopulationDensity_, ADN_XmlInput_Helper::eNothing )
+        &&  rOutgoingPopulationDensity_.GetData() < 0 )
+        throw ADN_DataException( "Donnée invalide",
+        MT_FormatString( "La densité des populations sortantes de l'objet %s est négative.", strName_.GetData().c_str() ).c_str(),
+        "Editer le fichier %s pour modifier le champ Objets::Type::DensitePopulationSortante de cet objet." );
 
     input.Section( "ModeImpactSurVitessePion" );
     input.ReadAttribute( "type", nSpeedImpact_, ADN_Tr::ConvertToSpeedImpact, ADN_XmlInput_Helper::eThrow );
@@ -324,6 +333,9 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "VitesseParDefaut", rDefaultSpeed_.GetData() );
     output.WriteField( "VitesseParDefautQuandContourne", rDefaultBypassSpeed_.GetData() );
     output.WriteField( "HauteurMaxInteraction", rMaxInteractionHeight_.GetData() );
+
+    if( rOutgoingPopulationDensity_.GetData() > 0 )
+        output.WriteField( "DensitePopulationSortante", rOutgoingPopulationDensity_.GetData() );
 
     if( nObjectType_ == eObjectType_SiteDecontamination && nMaxNbrUsers_.GetData() <= 0 )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Nbr max users for decontamination site <= 0 when it should be >= 1." ).ascii() );

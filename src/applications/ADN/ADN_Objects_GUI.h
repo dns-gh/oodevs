@@ -42,6 +42,7 @@ public:
         eDefaultConsumption,
         eSpeedImpact,
         eMaxAgentSpeedPercentage,
+        eOutgoingPopulationDensity,
         eMaxNbrUsers,
         eToBuild,
         eToReinforce,
