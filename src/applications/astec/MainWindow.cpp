@@ -384,7 +384,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 void MainWindow::WriteSettings()
 {
     MT_Settings settings;
-    settings.setPath( "MASA", "Light2" );
+    settings.setPath( "MASA", "Astec" );
 
     // Pannel configuration
     QString strDockConfig;
@@ -408,7 +408,7 @@ void MainWindow::WriteSettings()
 void MainWindow::ReadSettings()
 {
     MT_Settings settings;
-    settings.setPath( "MASA", "Light2" );
+    settings.setPath( "MASA", "Astec" );
 
     // Pannel configuration
     QString strDockConfig;

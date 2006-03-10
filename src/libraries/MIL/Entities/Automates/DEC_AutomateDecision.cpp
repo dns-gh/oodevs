@@ -222,27 +222,36 @@ void DEC_AutomateDecision::CleanStateAfterCrash()
 // UPDATE
 // =============================================================================
 
+namespace
+{
+    void LogCrash( MIL_Automate* pAutomate_ )
+    {
+        MT_LOG_ERROR_MSG( "Automate " << pAutomate_->GetID() << " ('" << pAutomate_->GetName() << "') : Mission '" << 
+            ( pAutomate_->GetOrderManager().GetMission() ? pAutomate_->GetOrderManager().GetMission()->GetName() : "Default" )
+            << "' impossible" );
+    }
+}
+
+#include "tools/Win32/StackWalkerProxy.h"
+
 //-----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::UpdateDecision
 // Last modified: JVT 02-12-16
 //-----------------------------------------------------------------------------
 void DEC_AutomateDecision::UpdateDecision()
 {
-    try
+    __try
     {
         PrepareUpdate    ();
         UpdateMotivations( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
         UpdateDecisions  ();
         ExecuteAllActions();
     }
-#ifdef _DEBUG
-    catch( DIA_Script_Exception& e )
-#else
-    catch( ... )
-#endif    
+    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
     {
         assert( pAutomate_ );
-        MT_LOG_ERROR_MSG( MT_FormatString( "Automate %d ('%s') : Mission '%s' impossible", pAutomate_->GetID(), pAutomate_->GetName().c_str(), pAutomate_->GetOrderManager().GetMission() ? pAutomate_->GetOrderManager().GetMission()->GetName() : "Default" ) );
+        LogCrash( pAutomate_ );
+        
         MIL_RC::pRcMissionImpossible_->Send( *pAutomate_, MIL_RC::eRcTypeMessage );
         pAutomate_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();
@@ -272,13 +281,13 @@ void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission_ABC& mis
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission_ABC& mission )
 {
-    try
+    __try
     {
         const std::string& strBehavior = mission.GetType().GetMrtBehaviorName();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
     }
-    catch( ... )
+    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }
@@ -303,13 +312,13 @@ void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission_ABC
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission_ABC& mission )
 {
-    try
+    __try
     {
         const std::string& strBehavior = mission.GetType().GetConduiteBehaviorName();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
     }
-    catch( ... )
+    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }

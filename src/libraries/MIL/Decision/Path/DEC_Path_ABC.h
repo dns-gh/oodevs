@@ -86,6 +86,7 @@ protected:
     std::string  GetStateAsString   () const;
     std::string  GetPathAsString    () const;
     virtual void NotifySectionEnded() = 0;
+    void         DoExecute( TerrainPathfinder& pathfind );
     //@}
 
 private:

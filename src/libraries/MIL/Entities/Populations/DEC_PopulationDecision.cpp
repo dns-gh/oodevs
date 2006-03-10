@@ -191,27 +191,35 @@ void DEC_PopulationDecision::CleanStateAfterCrash()
 // UPDATE
 // =============================================================================
 
+namespace
+{
+    void LogCrash( MIL_Population* pPopulation_ )
+    {
+        MT_LOG_ERROR_MSG( "Population " << pPopulation_->GetID() << " ('" << pPopulation_->GetName() << "') : Mission '"
+            << ( pPopulation_->GetOrderManager().GetMission() ? pPopulation_->GetOrderManager().GetMission()->GetName() : "Default" )
+            << "' impossible" );
+    }
+}
+
+#include "tools/Win32/StackWalkerProxy.h"
+
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::UpdateDecision
 // Last modified: JVT 02-12-16
 //-----------------------------------------------------------------------------
 void DEC_PopulationDecision::UpdateDecision()
 {
-    try
+    __try
     {
         PrepareUpdate    ();
         UpdateMotivations( (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
         UpdateDecisions  ();
         ExecuteAllActions();
     }
-#ifdef _DEBUG
-    catch( DIA_Script_Exception& e )
-#else
-    catch( ... )
-#endif    
+    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
     {
         assert( pPopulation_ );
-        MT_LOG_ERROR_MSG( MT_FormatString( "Population %d ('%s') : Mission '%s' impossible", pPopulation_->GetID(), pPopulation_->GetName().c_str(), pPopulation_->GetOrderManager().GetMission() ? pPopulation_->GetOrderManager().GetMission()->GetName() : "Default" ) );
+        LogCrash( pPopulation_ );
         MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
         pPopulation_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();
@@ -241,13 +249,13 @@ void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission_ABC& mi
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission_ABC& mission )
 {
-    try
+    __try
     {
         const std::string& strBehavior = mission.GetType().GetBehaviorName();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PopulationMission_ABC*)0 );
     }
-    catch( ... )
+    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }

@@ -558,18 +558,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 
     assert( resultList_.empty() );
 
-    ///$$$ try/catch() à déplacer DEC_Path_ABC
-    try
-    {
-        DEC_Path_ABC::Execute( pathfind );
-    }
-    catch( ... )
-    {
-        Cancel();
-        DEC_Path_ABC::Execute( pathfind ); //$$$$ ???
-        DecRef();
-        throw;
-    }
+    DEC_Path_ABC::Execute( pathfind );
 
 #ifndef NDEBUG
     for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )

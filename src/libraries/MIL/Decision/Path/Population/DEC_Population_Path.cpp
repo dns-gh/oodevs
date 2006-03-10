@@ -104,18 +104,7 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
 
     assert( resultList_.empty() );
 
-    ///$$$ try/catch() à déplacer DEC_Path_ABC
-    try
-    {
-        DEC_Path_ABC::Execute( pathfind );
-    }
-    catch( ... )
-    {
-        Cancel();
-        DEC_Path_ABC::Execute( pathfind ); //$$$$ ???
-        DecRef();
-        throw;
-    }
+    DEC_Path_ABC::Execute( pathfind );
 
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {

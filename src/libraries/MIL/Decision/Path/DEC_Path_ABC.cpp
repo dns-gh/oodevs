@@ -83,10 +83,10 @@ MT_Float DEC_Path_ABC::GetLength() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_ABC::Execute
-// Created: NLD 2005-02-22
+// Name: DEC_Path_ABC::DoExecute
+// Created: AGE 2006-03-07
 // -----------------------------------------------------------------------------
-void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
+void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
 {
     uint nComputationEndTime = 0;
     
@@ -118,6 +118,26 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
         NotifySectionEnded();
     }
     nState_ = eValid;
+}
+
+#include "tools/Win32/StackWalkerProxy.h"
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::Execute
+// Created: NLD 2005-02-22
+// -----------------------------------------------------------------------------
+void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
+{
+    __try
+    {
+        DoExecute( pathfind );
+    }
+    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    {
+        bJobCanceled_ = true;
+        nState_ = eCanceled;
+        DecRef();
+    }
 }
 
 // =============================================================================

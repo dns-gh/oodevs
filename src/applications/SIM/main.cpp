@@ -228,6 +228,8 @@ int Run( uint nArgc, char* pArgv[] )
     return nResult;
 }
 
+#include "tools/win32/StackWalkerProxy.h"
+
 //-----------------------------------------------------------------------------
 // Name: main constructor
 // Created: FBD 02-11-22
@@ -241,7 +243,9 @@ int main( uint nArgc, char* pArgv[] )
 #endif
         return Run( nArgc, pArgv );
     }
-    __except( WriteMiniDump( GetExceptionInformation() ) )
+//    __except( WriteMiniDump( GetExceptionInformation() ) )
+    // $$$$ AGE 2006-03-07: Haaahahaha continue execution !
+    __except( StackWalkerProxy::ContinueExecution( GetExceptionInformation() ) )
     {
     }
 }
