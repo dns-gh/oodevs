@@ -29,7 +29,7 @@
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, "C. popu" )
     , selected_( 0 )
     , subSelected_( 0 )

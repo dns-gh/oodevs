@@ -24,7 +24,6 @@
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
-#include "Troops.h"
 
 template< typename T > class ListDisplayer;
 class Agent;
@@ -38,6 +37,8 @@ class Equipment;
 class Lend;
 class Displayer_ABC;
 class ValuedListItem;
+class Humans;
+class Troops;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
@@ -56,7 +57,7 @@ class AgentResourcesPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentResourcesPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             AgentResourcesPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentResourcesPanel();
     //@}
 
@@ -65,7 +66,7 @@ public:
     void Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* );
     void Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* );
     void Display( const Lend& lend, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Troops::Humans& humans, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:

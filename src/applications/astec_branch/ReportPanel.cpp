@@ -19,7 +19,7 @@
 #include "astec_pch.h"
 #include "ReportPanel.h"
 #include "ReportListView.h"
-//#include "FireResultListView.h"
+#include "FireResultListView.h"
 #include "ReportFilterOptions.h"
 #include "Controller.h"
 #include "ActionController.h"
@@ -28,12 +28,13 @@
 // Name: ReportPanel constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportPanel::ReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+ReportPanel::ReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC     ( pParent, tr( "Rapports" ) )
+    , selected_         ( 0 )
 {
     pFilterOptions_      = new ReportFilterOptions( this );
     pReportListView_     = new ReportListView( this, controller, actionController, *pFilterOptions_ );
-//    pFireResultListView_ = new FireResultListView( this, controller, actionController );
+    pFireResultListView_ = new FireResultListView( this );
     connect( pFilterOptions_, SIGNAL( OptionsChanged() ), pReportListView_, SLOT( OnOptionsChanged() ) );
 
     controller.Register( *this );
@@ -55,8 +56,15 @@ ReportPanel::~ReportPanel()
 // -----------------------------------------------------------------------------
 void ReportPanel::NotifySelected( const Agent_ABC* element )
 {
-    if( element )
-        Show();
-    else
-        Hide();
+    if( selected_ != element || ! element )
+    {
+        selected_ = element;
+        if( selected_ )
+        {
+//            pFireResultListView_->D
+            Show();
+        }
+        else
+            Hide();
+    }
 }

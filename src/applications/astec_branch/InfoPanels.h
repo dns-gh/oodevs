@@ -8,20 +8,19 @@
 // *****************************************************************************
 //
 // $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/InfoPanel.h $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/InfoPanels.h $
 // $Author: Age $
 // $Modtime: 21/04/05 16:03 $
 // $Revision: 8 $
-// $Workfile: InfoPanel.h $
+// $Workfile: InfoPanels.h $
 //
 // *****************************************************************************
 
-#ifndef __InfoPanel_h_
-#define __InfoPanel_h_
+#ifndef __InfoPanels_h_
+#define __InfoPanels_h_
 
 class AgentStatePanel;
 class AgentResourcesPanel;
-class AgentCargoPanel;
 class AgentKnowledgePanel;
 class AgentMaintenancePanel;
 class AgentMedicalPanel;
@@ -39,14 +38,14 @@ class ActionController;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class InfoPanel : public QWidgetStack // $$$$ AGE 2006-02-17: renommer en InfoPanels
+class InfoPanels : public QWidgetStack
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanel( QWidget* pParent, Controller& controller, ActionController& actionController );
-    virtual ~InfoPanel();
+             InfoPanels( QWidget* pParent, Controller& controller, ActionController& actionController );
+    virtual ~InfoPanels();
     //@}
 
     //! @name Operations
@@ -59,8 +58,8 @@ public:
 private:
     //! @name Copy / Assignment
     //@{
-    InfoPanel( const InfoPanel& );
-    InfoPanel& operator=( const InfoPanel& );
+    InfoPanels( const InfoPanels& );
+    InfoPanels& operator=( const InfoPanels& );
     //@}
 
     //! @name Helpers
@@ -84,16 +83,6 @@ private:
 
 	PopulationPanel*          pPopulationPanel_;
     PopulationKnowledgePanel* pPopulationKnowledgePanel_;
-
-    bool bAgentVisible_;
-    bool bAgentKnowledgeVisible_;
-    bool bObjectVisible_;
-    bool bObjectKnowledgeVisible_;
-    bool bLogisiticVisible_;
-	bool bPopulationVisible_;
-    bool bPopulationKnowledgeVisible_;
-
-//    QTabWidget* pTabWidget_;
 };
 
-#endif // __InfoPanel_h_
+#endif // __InfoPanels_h_

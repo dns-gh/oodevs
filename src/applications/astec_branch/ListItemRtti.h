@@ -130,5 +130,16 @@ struct ListItemRtti< const Report_ABC* > {
     enum { rtti = 1018 };
 };
 
+class PopulationFireResult;
+template< >
+struct ListItemRtti< const PopulationFireResult* > {
+    enum { rtti = 1019 };
+};
+
+class AgentFireResult;
+template< >
+struct ListItemRtti< const AgentFireResult* > {
+    enum { rtti = 1020 };
+};
 
 #endif // __ListItemRtti_h_

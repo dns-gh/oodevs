@@ -228,14 +228,11 @@ const T& ValuedListItem::GetValue() const
 template< typename T >
 void ValuedListItem::SetValue( const T& value )
 {
-    if( ! container_ )
+    if( ! IsA< T >() ) {
+        delete container_;
         container_ = new ValueContainer< T >( value );
-    else
-    {
-        if( ! IsA< T >() )
-            throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
-        static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
     }
+    static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
 }
 
 // -----------------------------------------------------------------------------

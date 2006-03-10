@@ -21,23 +21,8 @@
 
 class GL3DWidget;
 class GLWidget;
-class InfoPanel;
-class AgentListView;
-class ObjectListView;
-class PopulationListView;
-class MissionPanel;
 class MapEventHandler_ABC;
-class SelectedElement;
-class ActionContext;
-class WeatherPanel;
-class Logger;
 class Options;
-class ObjectCreationPanel;
-class AgentCreationPanel;
-class PopulationCreationPanel;
-class Agent_ABC;
-class Agent;
-class KnowledgeGroup;
 class MapEventFilter_ABC;
 class OptionsPanel;
 
@@ -89,13 +74,8 @@ public:
 
 
 signals:
-    void ElementSelected( SelectedElement& selectedElement );
-    void ElementHovered( SelectedElement& hoveredElement );
-    void NewPopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
     void CenterOnPoint( const MT_Vector2D& vPoint );
     void TeamChanged();
-    void ReadingReports( Agent_ABC& agent );
-    void ODBNewAgent( const std::string& strCategory, KnowledgeGroup& gtia, Agent* pParent );
 
 private:
     void closeEvent( QCloseEvent* pEvent );

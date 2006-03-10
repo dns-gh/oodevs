@@ -34,7 +34,7 @@
 // Name: AgentSupplyPanel constructor
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-AgentSupplyPanel::AgentSupplyPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, tr( "Ch. rav." ) )
     , selected_( 0 )
 {

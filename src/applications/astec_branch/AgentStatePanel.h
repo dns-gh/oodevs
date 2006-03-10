@@ -35,7 +35,7 @@ class HumanFactors;
 class Reinforcements;
 class LogisticLinks;
 class Transports;
-class InfoPanel;
+class InfoPanels;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -54,7 +54,7 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             AgentStatePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentStatePanel();
     //@}
 

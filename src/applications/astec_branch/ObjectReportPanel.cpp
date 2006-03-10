@@ -18,19 +18,28 @@
 
 #include "astec_pch.h"
 #include "ObjectReportPanel.h"
+#include "Controller.h"
+#include "ActionController.h"
+#include "FireResultListView.h"
 
 #include "Object_ABC.h"
-//#include "FireResultListView.h"
-
+#include "Explosions.h"
+#include "PopulationFireResult.h"
+#include "AgentFireResult.h"
+#include "Equipment.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ObjectReportPanel::ObjectReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, "Rapports" )
+    , selected_( 0 )
 {
-    // NOTHING
+    reports_ = new FireResultListView( this );
+
+    controller.Register( *this );
+    actionController.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,9 +55,16 @@ ObjectReportPanel::~ObjectReportPanel()
 // Name: ObjectReportPanel::NotifyUpdated
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::NotifyUpdated( const Object_ABC& )
+void ObjectReportPanel::NotifyUpdated( const Explosions& explosions )
 {
+    if( ! IsVisible() || ! selected_ || selected_->Retrieve< Explosions >() != &explosions )
+        return;
 
+    // $$$$ AGE 2006-03-10: try to keep the selection if possible
+
+    ValuedListItem* item = reports_->DisplayList( explosions.agentExplosions_.begin(), explosions.agentExplosions_.end() );
+                    item = reports_->DisplayList( explosions.populationExplosions_.begin(), explosions.populationExplosions_.end(), item );
+    reports_->DeleteTail( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +73,8 @@ void ObjectReportPanel::NotifyUpdated( const Object_ABC& )
 // -----------------------------------------------------------------------------
 void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
 {
-
+    if( & object == selected_ )
+        NotifySelected( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,5 +83,15 @@ void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ObjectReportPanel::NotifySelected( const Object_ABC* object )
 {
-
+    if( object != selected_ || !object )
+    {
+        selected_ = object;
+        if( selected_ )
+        {
+            Show();
+            NotifyUpdated( selected_->Get< Explosions >() );
+        }
+        else
+            Hide();
+    }
 }

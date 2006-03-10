@@ -57,7 +57,7 @@ class AgentSupplyPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentSupplyPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             AgentSupplyPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentSupplyPanel();
     //@}
 

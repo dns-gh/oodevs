@@ -19,9 +19,7 @@
 #include "astec_pch.h"
 #include "AgentResourcesPanel.h"
 
-#include "AgentComposition.h"
 #include "Agent.h"
-#include "App.h"
 #include "Tools.h"
 #include "Controller.h"
 #include "ActionController.h"
@@ -35,12 +33,13 @@
 #include "EquipmentType.h"
 #include "Lend.h"
 #include "ListDisplayer.h"
+#include "Humans.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-AgentResourcesPanel::AgentResourcesPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, tr( "Res." ) )
 {
     pEquipment_ = new T_ListView( this, *this );
@@ -192,7 +191,7 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Troops::Humans& humans, Displayer_ABC& displayer, ValuedListItem* )
+void AgentResourcesPanel::Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Catégorie", humans.state_ )
              .Display( "Officiers", humans.officers_ )

@@ -18,13 +18,13 @@
 
 #include "astec_pch.h"
 #include "InfoPanel_ABC.h"
-#include "InfoPanel.h"
+#include "InfoPanels.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanel_ABC constructor
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-InfoPanel_ABC::InfoPanel_ABC( InfoPanel* parent, const QString& name )
+InfoPanel_ABC::InfoPanel_ABC( InfoPanels* parent, const QString& name )
     : QScrollView( parent )
     , parent_( parent )
     , name_( name )

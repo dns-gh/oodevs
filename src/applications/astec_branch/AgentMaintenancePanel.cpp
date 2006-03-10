@@ -34,7 +34,7 @@
 // Name: AgentMaintenancePanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMaintenancePanel::AgentMaintenancePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, tr( "Ch. maint." ) )
     , selected_( 0 )
 {

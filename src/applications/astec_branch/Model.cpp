@@ -23,6 +23,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "ObjectTypes.h"
 #include "LogisticConsignFactory.h"
+#include "FireResultFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -43,8 +44,9 @@ Model::Model( Controller& controller, const Simulation& simulation, const std::s
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel() )
+    , fireResultsFactory_( *new FireResultFactory( *this ) )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +55,7 @@ Model::Model( Controller& controller, const Simulation& simulation, const std::s
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &fireResultsFactory_;
     delete &limits_;
     delete &logistics_;
     delete &knowledgeGroups_;

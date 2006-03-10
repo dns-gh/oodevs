@@ -129,8 +129,8 @@ void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer
             time = time.arg( ( report->GetTime() / 3600 ) % 24 )
                     .arg( ( report->GetTime() / 60 ) % 60 )
                     .arg(  report->GetTime() % 60  );
-            item->setText( 0, time );
-            item->setText( 1, report->GetTitle().c_str() );
+            displayer.Display( "Reçu", time );
+            displayer.Display( "Compte-rendu", report->GetTitle() );
         }
         else
             delete item;

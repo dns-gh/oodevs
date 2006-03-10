@@ -55,7 +55,7 @@ class AgentMedicalPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMedicalPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             AgentMedicalPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentMedicalPanel();
     //@}
 

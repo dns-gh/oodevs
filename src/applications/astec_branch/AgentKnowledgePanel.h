@@ -54,7 +54,7 @@ class AgentKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             AgentKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentKnowledgePanel();
     //@}
 

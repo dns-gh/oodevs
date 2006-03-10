@@ -28,7 +28,6 @@
 #include "RotaAttributes.h"
 #include "Controller.h"
 #include "ActionController.h"
-#include "InfoPanel.h"
 #include "Agent.h"
 #include "DotationType.h"
 
@@ -47,7 +46,7 @@
 */
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( InfoPanel* info, Controller& controller, ActionController& actionController )
+ObjectPanel::ObjectPanel( InfoPanels* info, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC ( info, tr( "Objet" ) )
     , selected_( 0 )
 {

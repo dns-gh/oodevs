@@ -41,10 +41,6 @@ private:
     Equipment& operator=( const Equipment& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 public:
     //! @name Member data
     //@{

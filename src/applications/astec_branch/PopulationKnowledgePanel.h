@@ -44,7 +44,7 @@ class PopulationKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             PopulationKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~PopulationKnowledgePanel();
     //@}
 

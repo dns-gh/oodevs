@@ -26,6 +26,7 @@ class TeamFactory_ABC;
 class ObjectTypes;
 class LogisticConsignFactory_ABC;
 class Simulation;
+class FireResultFactory;
 
 // =============================================================================
 /** @class  Model
@@ -67,6 +68,8 @@ public:
     KnowledgeGroupsModel& knowledgeGroups_;
     LogisticsModel& logistics_;
     LimitsModel&    limits_;
+
+    FireResultFactory& fireResultsFactory_;
     //@}
 
 private:

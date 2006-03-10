@@ -54,7 +54,7 @@ class AgentMaintenancePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMaintenancePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             AgentMaintenancePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~AgentMaintenancePanel();
     //@}
 

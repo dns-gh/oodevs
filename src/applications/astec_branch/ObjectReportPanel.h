@@ -24,10 +24,18 @@
 #include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
-class Object_ABC;
 class FireResultListView;
+class Object_ABC;
 class Controller;
 class ActionController;
+class Explosions;
+class Displayer_ABC;
+class ValuedListItem;
+class PopulationFireResult;
+class AgentFireResult;
+class Equipment;
+class SubItemDisplayer;
+class Casualties;
 
 // =============================================================================
 /** @class  ObjectReportPanel
@@ -37,14 +45,19 @@ class ActionController;
 // =============================================================================
 class ObjectReportPanel : public InfoPanel_ABC
                         , public Observer_ABC
-                        , public ElementObserver_ABC< Object_ABC > // $$$$ AGE 2006-02-23: 
+                        , public ElementObserver_ABC< Explosions >
                         , public SelectionObserver< Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             ObjectReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectReportPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    
     //@}
 
 private:
@@ -56,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Object_ABC& );
+    virtual void NotifyUpdated( const Explosions& );
     virtual void NotifyDeleted( const Object_ABC& );
     virtual void NotifySelected( const Object_ABC* );
     //@}
@@ -65,6 +78,7 @@ private:
     //! @name Member data
     //@{
     const Object_ABC* selected_;
+    FireResultListView* reports_;
     //@}
 };
 

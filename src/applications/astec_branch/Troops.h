@@ -13,6 +13,7 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Humans.h"
 
 class Controller;
 
@@ -47,19 +48,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
-    //@}
-
-public:
-    //! @name Types
-    //@{
-    // $$$$ AGE 2006-02-21: Changer ca. Le sortir, puis utiliser un resolver, ou que sais-je
-    struct Humans
-    {
-        E_TroopHealthState state_;
-        unsigned officers_;
-        unsigned subOfficers_;
-        unsigned troopers_;
-    };
     //@}
 
 public:

@@ -3,194 +3,126 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-30 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "FireResultListView.h"
-#include "moc_FireResultListView.cpp"
-
-#include "App.h"
-#include "Agent_ABC.h"
-#include "Object_ABC.h"
-#include "FireResult.h"
+#include "PopulationFireResult.h"
+#include "AgentFireResult.h"
+#include "Equipment.h"
+#include "Casualties.h"
+#include "SubItemDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView constructor
-// Created: SBO 2005-08-30
+// Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-FireResultListView::FireResultListView( QWidget* pParent )
-    : QListView  ( pParent )
-    , pOrigin_   ( 0 )
+FireResultListView::FireResultListView( QWidget* parent )
+    : ListDisplayer< FireResultListView >( parent, *this )
 {
-    this->addColumn( tr( "Cible" ) );
-
-    connect( &App::GetApp(), SIGNAL( ConflictEnded  ( Agent_ABC&  ) ), this, SLOT( OnConflictEnded  ( Agent_ABC&  ) ) );
-    connect( &App::GetApp(), SIGNAL( ObjectExplosion( Object_ABC& ) ), this, SLOT( OnObjectExplosion( Object_ABC& ) ) );
+    AddColumn( "Cible" );
+    AddColumn( "Attrition" );
+    
+    agentDisplay_ = new SubItemDisplayer( "Cible" );
+    agentDisplay_->AddChild( "Equipements" );
+    agentDisplay_->AddChild( "Humains" ); // $$$$ AGE 2006-03-10: humains ??
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView destructor
-// Created: SBO 2005-08-30
+// Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 FireResultListView::~FireResultListView()
 {
-    // NOTHING
+    delete agentDisplay_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::SetOrigin
-// Created: SBO 2005-08-30
-// -----------------------------------------------------------------------------
-void FireResultListView::SetOrigin( Agent_ABC* pOrigin )
-{
-    if( pOrigin_ == pOrigin )
-        return;
 
-    pOrigin_ = pOrigin;
-    pObject_ = 0;
-    if( pOrigin_ == 0 )
-    {
-        clear();
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::Display
+// Created: AGE 2006-03-10
+// -----------------------------------------------------------------------------
+void FireResultListView::Display( const PopulationFireResult* result, Displayer_ABC& displayer, ValuedListItem* item )
+{
+    if( ! result ) {
+        delete item;
         return;
     }
-
-    OnFireResultCreated( pOrigin_->GetFireResult() );
+    // $$$$ AGE 2006-03-10: Move in PopulationFireResult
+    item->SetValue( result );
+    displayer.Display( "Cible", result->target_ );
+    displayer.Item( "Attrition" ).Start( tr( "Morts:" ) ).Add( result->deadPeople_ ).End();
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireResultListView::SetObject
-// Created: SBO 2005-09-07
+// Name: FireResultListView::Display
+// Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void FireResultListView::SetObject( Object_ABC* pObject )
+void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&, ValuedListItem* item )
 {
-    if( pObject_ == pObject )
-        return;
-
-    pOrigin_ = 0;
-    pObject_ = pObject;
-    if( pObject_ == 0 )
-    {
-        clear();
+    if( ! result ) {
+        delete item;
         return;
     }
+    // SubItemDisplayer;
+    // $$$$ AGE 2006-03-10: Move in AgentFireResult
+    item->SetValue( result );
+    Displayer_ABC& displayer = (*agentDisplay_)( item );
 
-    OnFireResultCreated( pObject->explosionResults_ );
-}
+    displayer.Display( "Cible", result->target_ );
+    displayer.Display( "Equipments", tr( " (dispo, indispo, réparable):" ) );
+    displayer.Display( "Humains", tr( " (officier, ss-officier, mdr)" ) );
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::OnFireResultCreated
-// Created: SBO 2005-08-31
-// -----------------------------------------------------------------------------
-void FireResultListView::OnFireResultCreated( const T_FireResults& fireResults )
-{
-    const FireResult* pSelectedValue = 0;
-          bool            bOpenState = false;
-    if( selectedItem() != 0 )
-    {
-        pSelectedValue = ( ( MT_ValuedListViewItem< const FireResult* >* )selectedItem() )->GetValue();
-        bOpenState = selectedItem()->isOpen();
+    // $$$$ AGE 2006-02-28: crado. Essayer de faire un displayer qui puisse cascader 
+    // $$$$ AGE 2006-02-28: les subItems et meler des listes aussi mais sans que l'interface
+    // $$$$ AGE 2006-02-28: devienne horrible (MT_Archive_ABC quelqu'un ?)
+    QListViewItem* last  = item->firstChild();
+    QListViewItem* equipments = last;
+    while( equipments && equipments->text( 0 ) != tr( "Equipments" ) ) {
+        last = equipments;
+        equipments = equipments->nextSibling();
     }
+    if( ! equipments )
+        equipments = new EmptyListItem( item, last );
+    DeleteTail( 
+        DisplayList( result->CreateIterator(), equipments )
+    );
 
-    clear();
-    for( CIT_FireResults it = fireResults.begin(); it != fireResults.end(); ++it )
-    {
-        MT_ValuedListViewItem< const FireResult* >* pParentItem = new MT_ValuedListViewItem< const FireResult* >( *it, this, ( *it )->GetTarget().GetName().c_str() );
-        /*
-        QListViewItem* pParentItem = new QListViewItem( this );
-        pParentItem->setText( 0, ( *it )->GetTarget().GetName().c_str() );
-        */
-
-        // agent => agent damages
-        if( ( *it )->GetEquipments().size() > 0 || ( *it )->GetHumans().size() > 0 )
-        {
-            BuildEquipmentResult( **it, *pParentItem );
-            BuildHumanResult    ( **it, *pParentItem );
-        }
-        // agent => population damages
-        else
-        {
-            QListViewItem* pItem = new QListViewItem( pParentItem );
-            pItem->setText( 0, tr( "Morts: " ) + QString::number( ( *it )->GetDead() ) );
-        }
-        // try to reselect previous element if possible
-        if( pSelectedValue && *it == pSelectedValue )
-        {
-            setSelected( pParentItem, true );
-            pParentItem->setOpen( bOpenState );
-        }
+    last = item->firstChild();
+    QListViewItem* humans = last;
+    while( humans && humans->text( 0 ) != tr( "Humains" ) ) {
+        last = humans;
+        humans = humans->nextSibling();
     }
+    if( ! humans )
+        humans = new EmptyListItem( item, last );
+    DeleteTail( 
+        DisplayList( &* result->casualties_, result->casualties_+eNbrHumanWound, humans )
+    );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireResultListView::BuildEquipmentResult
-// Created: SBO 2005-12-05
+// Name: FireResultListView::Display
+// Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void FireResultListView::BuildEquipmentResult( const FireResult& result, QListViewItem& parentItem )
+void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
 {
-    QListViewItem* pEquiItem = new QListViewItem( &parentItem );
-    pEquiItem->setText( 0, tr( "Equipements (dispo, indispo, réparable)" ) );
-    for( FireResult::CIT_FireResultEquipments itEqui = result.GetEquipments().begin(); itEqui != result.GetEquipments().end(); ++itEqui )
-    {
-        QListViewItem* pItem = new QListViewItem( pEquiItem );
-        pItem->setText( 0, ( *itEqui ).c_str() );
-    }
+    displayer.Display( "Cible", equipment.type_ );
+    displayer.Item( "Attrition" ).Start( equipment.available_ )
+                    .Add( " / " ).Add( equipment.unavailable_ )
+                    .Add( " / " ).Add( equipment.repairable_ ).End();
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireResultListView::BuildHumanResult
-// Created: SBO 2005-12-05
+// Name: FireResultListView::Display
+// Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void FireResultListView::BuildHumanResult( const FireResult& result, QListViewItem& parentItem )
+void FireResultListView::Display( const Casualties& casualties, Displayer_ABC& displayer, ValuedListItem* )
 {
-    QListViewItem* pHumanItem = new QListViewItem( &parentItem );
-    pHumanItem->setText( 0, tr( "Humains (officier, ss-officier, mdr)" ) );
-
-    const FireResult::T_FireResultHuman& off   = *result.GetHumans().find( 0 )->second;
-    const FireResult::T_FireResultHuman& ssoff = *result.GetHumans().find( 1 )->second;
-    const FireResult::T_FireResultHuman& mdr   = *result.GetHumans().find( 2 )->second;
-    
-    for( uint i = 0; i < off.size(); ++i )
-    {
-        QListViewItem* pItem = new QListViewItem( pHumanItem );
-        std::stringstream ss;
-        ss << ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i, ENT_Tr::eToTr )
-           << " - [" << off[ i ] << " " << ssoff[ i ] << " " << mdr[ i ] << "]";
-        pItem->setText( 0, ss.str().c_str() );
-
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::OnConflictEnded
-// Created: SBO 2005-09-08
-// -----------------------------------------------------------------------------
-void FireResultListView::OnConflictEnded( Agent_ABC& origin )
-{
-    if( &origin == pOrigin_ )
-        OnFireResultCreated( origin.GetFireResult() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::OnObjectExplosion
-// Created: SBO 2005-09-08
-// -----------------------------------------------------------------------------
-void FireResultListView::OnObjectExplosion( Object_ABC& object )
-{
-    if( &object == pObject_ )
-        OnFireResultCreated( object.explosionResults_ );
+    displayer.Display( "Cible", casualties.wound_ );
+    displayer.Item( "Attrition" ).Start( casualties.officers_ )
+                    .Add( " / " ).Add( casualties.subOfficers_ )
+                    .Add( " / " ).Add( casualties.troopers_ ).End();
 }

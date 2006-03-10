@@ -36,7 +36,7 @@
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, "C. objet" ) // $$$$ AGE 2006-02-24: tr(
     , selected_( 0 )
     , subSelected_( 0 )

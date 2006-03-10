@@ -40,7 +40,7 @@
 // Name: AgentKnowledgePanel constructor
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-AgentKnowledgePanel::AgentKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC     ( pParent, tr( "C. agent" ) )
 //    , pPopupMenu_        ( new QPopupMenu( this ) )
     , selected_( 0 )

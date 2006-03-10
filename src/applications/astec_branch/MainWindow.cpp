@@ -22,7 +22,7 @@
 #include "Logger.h"
 #include "Options.h"
 #include "AgentListView.h"
-#include "InfoPanel.h"
+#include "InfoPanels.h"
 #include "ObjectListView.h"
 #include "PopulationListView.h"
 #include "ActionController.h"
@@ -69,7 +69,7 @@ MainWindow::MainWindow( Controller& controller )
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanel* pInfoPanel_ = new InfoPanel( pInfoDockWnd_, controller, actionController_ );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controller, actionController_ );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );

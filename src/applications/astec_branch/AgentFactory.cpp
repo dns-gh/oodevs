@@ -48,6 +48,7 @@
 #include "PopulationDetections.h"
 #include "LogisticConsigns.h"
 #include "Logistics.h"
+#include "Explosions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -131,5 +132,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new VisionCones() );
     agent.Attach( *new PopulationDetections( controller_, model_.agents_ ) );
     agent.Attach( *new LogisticConsigns( controller_ ) );
+    agent.Attach( *new Explosions( controller_, model_.fireResultsFactory_ ) );
 }
 

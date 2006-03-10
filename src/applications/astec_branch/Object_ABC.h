@@ -21,7 +21,6 @@
 
 #include "ASN_Types.h"
 #include "IDManager.h"
-#include "FireResult.h"
 #include "Entity_ABC.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
@@ -40,8 +39,6 @@ class Displayer_ABC;
 class Object_ABC : public Entity_ABC
                  , private Extension_ABC
                  , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-                 , public Updatable_ABC< ASN1T_MsgExplosion >
-                 , public Updatable_ABC< ASN1T_FireDamagesPion >
 {
 
 public:
@@ -77,8 +74,6 @@ private:
     //! @name Operations
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgExplosion& message );
-    virtual void DoUpdate( const ASN1T_FireDamagesPion& message );
     //@}
 
 public:
@@ -98,7 +93,6 @@ public:
     MT_Float rBypassConstructionPercentage_;
 
     bool bPrepared_;
-//    T_FireResults              explosionResults_;
     //@}
 
 public:

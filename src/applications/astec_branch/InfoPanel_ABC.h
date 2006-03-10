@@ -19,7 +19,7 @@
 #ifndef __InfoPanel_ABC_h_
 #define __InfoPanel_ABC_h_
 
-class InfoPanel;
+class InfoPanels;
 
 // =============================================================================
 /** @class  InfoPanel_ABC
@@ -32,7 +32,7 @@ class InfoPanel_ABC : public QScrollView
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanel_ABC( InfoPanel* parent, const QString& name );
+             InfoPanel_ABC( InfoPanels* parent, const QString& name );
     virtual ~InfoPanel_ABC();
     //@}
 
@@ -60,7 +60,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    InfoPanel* parent_;
+    InfoPanels* parent_;
     QString name_; 
     QVBox* pBox_;
     //@}

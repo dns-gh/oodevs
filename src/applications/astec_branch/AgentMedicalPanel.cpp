@@ -33,7 +33,7 @@
 // Name: AgentMedicalPanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMedicalPanel::AgentMedicalPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, tr( "Ch. medicale" ) )
     , selected_( 0 )
 {

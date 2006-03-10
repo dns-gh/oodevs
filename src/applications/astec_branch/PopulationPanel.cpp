@@ -25,7 +25,7 @@
 // Name: PopulationPanel constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationPanel::PopulationPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController )
+PopulationPanel::PopulationPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC ( pParent, tr( "Population" ) )
     , selected_      ( 0 )
 {

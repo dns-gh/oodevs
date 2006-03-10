@@ -62,7 +62,7 @@ class ObjectKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             ObjectKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~ObjectKnowledgePanel();
     //@}
 

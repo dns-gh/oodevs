@@ -24,7 +24,7 @@
 #include "AgentSelectionObserver.h"
 
 class ReportListView;
-//class FireResultListView;
+class FireResultListView;
 class ReportFilterOptions;
 class Controller;
 class ActionController;
@@ -42,7 +42,7 @@ class ReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportPanel( InfoPanel* pParent, Controller& controller, ActionController& actionController );
+             ReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
     virtual ~ReportPanel();
     //@}
 
@@ -62,9 +62,10 @@ private:
 private:
     //! @name Member data
     //@{
+    const Agent_ABC*     selected_;
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;
-//    FireResultListView*  pFireResultListView_;
+    FireResultListView*  pFireResultListView_;
     //@}
 };
 

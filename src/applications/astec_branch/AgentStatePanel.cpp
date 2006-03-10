@@ -25,13 +25,12 @@
 #include "Tiredness.h"
 #include "LogisticLinks.h"
 #include "Transports.h"
-#include "InfoPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentStatePanel constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( InfoPanel* info, Controller& controller, ActionController& actionController  )
+AgentStatePanel::AgentStatePanel( InfoPanels* info, Controller& controller, ActionController& actionController  )
     : InfoPanel_ABC( info, tr( "Etat" ) )
     , selected_( 0 )
 {

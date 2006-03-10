@@ -15,6 +15,7 @@
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
 #include "CampAttributes.h"
+#include "Explosions.h"
 #include "Model.h"
 #include "TeamsModel.h"
 #include "AgentsModel.h"
@@ -47,6 +48,7 @@ ObjectFactory::~ObjectFactory()
 Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
     Object_ABC* result = new Object_ABC( message, controller_, model_.teams_, model_.objectTypes_, model_.objectTypes_ );
+    result->Attach( *new Explosions( controller_, model_.fireResultsFactory_ ) );
     switch( message.type )
     {
     case EnumObjectType::camp_prisonniers:

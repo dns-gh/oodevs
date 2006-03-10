@@ -3,72 +3,61 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: SBO 2005-08-30 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __FireResultListView_h_
 #define __FireResultListView_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include "ListDisplayer.h"
+class SubItemDisplayer;
 
-#include "MT_ValuedRichListViewItem.h"
-#include "FireResult.h"
-
-class Agent_ABC;
-class Object_ABC;
+class PopulationFireResult;
+class AgentFireResult;
+class Equipment;
+class Casualties;
 
 // =============================================================================
-// Created: SBO 2005-08-30
+/** @class  FireResultListView
+    @brief  FireResultListView
+*/
+// Created: AGE 2006-03-10
 // =============================================================================
-class FireResultListView : public QListView
+class FireResultListView : public ListDisplayer< FireResultListView >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( FireResultListView );
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FireResultListView( QWidget* pParent );
+    explicit FireResultListView( QWidget* parent );
     virtual ~FireResultListView();
     //@}
 
     //! @name Operations
     //@{
-    void SetOrigin( Agent_ABC*  pOrigin );
-    void SetObject( Object_ABC* pObject );
-    //@}
-
-private slots:
-    //! @name slots
-    //@{
-    void OnConflictEnded  ( Agent_ABC&  origin );
-    void OnObjectExplosion( Object_ABC& object );
+    void Display( const PopulationFireResult* result, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const AgentFireResult* result, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const Casualties& casualties, Displayer_ABC& displayer, ValuedListItem* item );
     //@}
 
 private:
+    //! @name Copy/Assignement
+    //@{
+    FireResultListView( const FireResultListView& );            //!< Copy constructor
+    FireResultListView& operator=( const FireResultListView& ); //!< Assignement operator
+    //@}
+
     //! @name Helpers
     //@{
-    void OnFireResultCreated ( const T_FireResults& fireResults );
-    void BuildEquipmentResult( const FireResult& result, QListViewItem& parentItem );
-    void BuildHumanResult    ( const FireResult& result, QListViewItem& parentItem );
     //@}
 
 private:
-    Agent_ABC*  pOrigin_;
-    Object_ABC* pObject_;
-    QListViewItem*  pPopupItem_;
+    //! @name Member data
+    //@{
+    SubItemDisplayer* agentDisplay_;
+    //@}
 };
 
 #endif // __FireResultListView_h_
