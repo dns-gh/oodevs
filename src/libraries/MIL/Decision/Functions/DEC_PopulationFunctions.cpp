@@ -139,21 +139,21 @@ void DEC_PopulationFunctions::GetAttitude( DIA_Call_ABC& call, MIL_Population& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetAliveHumans
+// Name: DEC_PopulationFunctions::GetNbrAliveHumans
 // Created: SBO 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::GetAliveHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+void DEC_PopulationFunctions::GetNbrAliveHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
 {
-    call.GetResult().SetValue( (float)callerPopulation.GetAliveHumans() );
+    call.GetResult().SetValue( (float)callerPopulation.GetNbrAliveHumans() );
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::GetDeadHumans
+// Name: DEC_PopulationFunctions::GetNbrDeadHumans
 // Created: SBO 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::GetDeadHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+void DEC_PopulationFunctions::GetNbrDeadHumans( DIA_Call_ABC& call, MIL_Population& callerPopulation )
 {
-    call.GetResult().SetValue( (float)callerPopulation.GetDeadHumans() );
+    call.GetResult().SetValue( (float)callerPopulation.GetNbrDeadHumans() );
 }
 
 // =============================================================================

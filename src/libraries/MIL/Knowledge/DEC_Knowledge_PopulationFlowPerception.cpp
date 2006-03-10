@@ -157,7 +157,7 @@ bool DEC_Knowledge_PopulationFlowPerception::IsPerceived() const
 // Name: DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans() const
+MT_Float DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans() const
 {
     assert( pPopulationFlowPerceived_ );
     return pPopulationFlowPerceived_->GetNbrAliveHumans();
@@ -167,7 +167,7 @@ uint DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans() const
 // Name: DEC_Knowledge_PopulationFlowPerception::GetNbrDeadHumans
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_PopulationFlowPerception::GetNbrDeadHumans() const
+MT_Float DEC_Knowledge_PopulationFlowPerception::GetNbrDeadHumans() const
 {
     assert( pPopulationFlowPerceived_ );
     return pPopulationFlowPerceived_->GetNbrDeadHumans();

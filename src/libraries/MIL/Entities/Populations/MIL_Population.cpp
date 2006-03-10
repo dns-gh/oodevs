@@ -576,10 +576,10 @@ const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetAliveHumans
+// Name: MIL_Population::GetNbrAliveHumans
 // Created: SBO 2006-02-22
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetAliveHumans() const
+MT_Float MIL_Population::GetNbrAliveHumans() const
 {
     MT_Float rResult = 0.0f;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
@@ -591,10 +591,10 @@ MT_Float MIL_Population::GetAliveHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetDeadHumans
+// Name: MIL_Population::GetNbrDeadHumans
 // Created: SBO 2006-02-22
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetDeadHumans() const
+MT_Float MIL_Population::GetNbrDeadHumans() const
 {
     MT_Float rResult = 0.0f;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )

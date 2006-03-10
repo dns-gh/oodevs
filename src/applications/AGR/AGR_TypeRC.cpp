@@ -569,6 +569,9 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_AttaqueInstallation" ] = "eReportMission";
 	rcTypes_[ "eRC_EnStationnement" ] = "eReportMission";
 	rcTypes_[ "eRC_ExecutionAttentat" ] = "eReportMission";
+    rcTypes_[ "eRC_RiposteContrePopulation" ] = "eReportMission";
+    rcTypes_[ "eRC_EsquiveFaceAPopulation" ] = "eReportMission";
+    rcTypes_[ "eRC_PopulationReconnue" ] = "eReportMission";
 }
     
 // -----------------------------------------------------------------------------

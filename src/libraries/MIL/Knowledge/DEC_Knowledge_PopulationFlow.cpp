@@ -42,8 +42,8 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()
-    , nNbrAliveHumans_         ( 0 )
-    , nNbrDeadHumans_          ( 0 )
+    , rNbrAliveHumans_         ( 0. )
+    , rNbrDeadHumans_          ( 0. )
     , pAttitude_               ( 0 ) // $$$
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
@@ -69,8 +69,8 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()
-    , nNbrAliveHumans_         ( 0 )
-    , nNbrDeadHumans_          ( 0 )
+    , rNbrAliveHumans_         ( 0. )
+    , rNbrDeadHumans_          ( 0. )
     , pAttitude_               ( 0 ) // $$$
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
@@ -146,8 +146,8 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const ui
          >> direction_
          >> rSpeed_
          >> flowParts_
-         >> nNbrAliveHumans_
-         >> nNbrDeadHumans_
+         >> rNbrAliveHumans_
+         >> rNbrDeadHumans_
          >> bReconAttributesValid_;
 
     uint nTmpID;
@@ -176,8 +176,8 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
          << direction_
          << rSpeed_
          << flowParts_
-         << nNbrAliveHumans_
-         << nNbrDeadHumans_
+         << rNbrAliveHumans_
+         << rNbrDeadHumans_
          << bReconAttributesValid_
          << ( pAttitude_ ? pAttitude_->GetID() : 0 ) // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
          << pPreviousPerceptionLevel_->GetID()
@@ -233,14 +233,14 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
     if( pPopulationKnowledge_->IsRecon() )
     {
         bReconAttributesValid_ = true;
-        if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
+        if( rNbrAliveHumans_ != perception.GetNbrAliveHumans() )
         {
-            nNbrAliveHumans_ = perception.GetNbrAliveHumans();
+            rNbrAliveHumans_ = perception.GetNbrAliveHumans();
             bHumansUpdated_  = true;
         }
-        if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
+        if( rNbrDeadHumans_ != perception.GetNbrDeadHumans() )
         {
-            nNbrDeadHumans_  = perception.GetNbrDeadHumans();
+            rNbrDeadHumans_  = perception.GetNbrDeadHumans();
             bHumansUpdated_  = true;
         }
 
@@ -362,8 +362,8 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
         asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
         asnMsg.GetAsnMsg().m.attitudePresent           = 1;
 
-        asnMsg.GetAsnMsg().nb_humains_morts   = nNbrDeadHumans_;
-        asnMsg.GetAsnMsg().nb_humains_vivants = nNbrAliveHumans_;
+        asnMsg.GetAsnMsg().nb_humains_morts   = (uint)rNbrDeadHumans_;
+        asnMsg.GetAsnMsg().nb_humains_vivants = (uint)rNbrAliveHumans_;
         asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
     }
 
@@ -439,8 +439,8 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         {
             asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
             asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-            asnMsg.GetAsnMsg().nb_humains_morts            = nNbrDeadHumans_;
-            asnMsg.GetAsnMsg().nb_humains_vivants          = nNbrAliveHumans_;
+            asnMsg.GetAsnMsg().nb_humains_morts            = (uint)rNbrDeadHumans_;
+            asnMsg.GetAsnMsg().nb_humains_vivants          = (uint)rNbrAliveHumans_;
         }
 
         if( bAttitudeUpdated_ )

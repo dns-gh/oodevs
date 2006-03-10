@@ -86,8 +86,8 @@ private:
           MT_Float                   rSpeed_;
           T_FlowPartMap              flowParts_;
 
-          uint                       nNbrAliveHumans_;
-          uint                       nNbrDeadHumans_;
+          MT_Float                   rNbrAliveHumans_;
+          MT_Float                   rNbrDeadHumans_;
     const MIL_PopulationAttitude*    pAttitude_;
           bool                       bReconAttributesValid_;
 
