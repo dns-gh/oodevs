@@ -61,5 +61,5 @@ void PHY_Population_ActionMove::Execute()
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionMove::ExecuteSuspended()
 {
-    Execute();
+    // NOTHING
 }
