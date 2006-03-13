@@ -158,3 +158,12 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( "Population associée:", popu_ )
                 .Display( "Camp:", popu_.GetTeam() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::IsInTeam
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+bool PopulationKnowledge::IsInTeam( const Team& team ) const
+{
+    return & popu_.GetTeam() == &team;
+}

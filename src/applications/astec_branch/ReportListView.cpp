@@ -187,12 +187,9 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
 // Name: ReportListView::NotifyUpdated
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::NotifyUpdated( const Report_ABC& report )
+void ReportListView::NotifyUpdated( const Report_ABC& )
 {
-    ValuedListItem* item = FindItem( &report, firstChild() );
-    if( item )
-        ;
-    // $$$$ AGE 2006-03-09: Never happens anyway
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

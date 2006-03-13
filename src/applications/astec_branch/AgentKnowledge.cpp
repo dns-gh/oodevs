@@ -39,7 +39,6 @@ AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, C
     InterfaceContainer< Extension_ABC >::Register( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge destructor
 // Created: NLD 2004-03-18
@@ -165,4 +164,13 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
              .Display( "Réfugiés pris en compte:", bRefugies_ )
              .Display( "PC:", bIsPC_ )
              .Display( "Pertinence:", nRelevance_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::IsInTeam
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+bool AgentKnowledge::IsInTeam( const Team& team ) const
+{
+    return team_ == &team;
 }

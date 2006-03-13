@@ -28,6 +28,7 @@ class Agent;
 class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
 class ValuedListItem;
+class Team;
 
 // =============================================================================
 // Created: SBO 2005-10-19
@@ -58,6 +59,8 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( QListViewItem* i );
+    void ToggleDisplayOwnTeam(); // $$$$ AGE 2006-03-13: factoriser tous ces slots classiques
+    void OnContextMenuRequested( QListViewItem*, const QPoint& );
     //@}
 
 private:
@@ -81,15 +84,16 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
+    const Team* owner_;
     ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     DisplayBuilder* display_;
-//    ListDisplayer< PopulationKnowledgePanel >* perceptionList_;
     const PopulationKnowledges* selected_;
     const PopulationKnowledge* subSelected_;
     const PopulationPartKnowledge_ABC* selectedPart_;
 
-    //    QCheckBox* pOwnTeamCheckBox_;
-//    QPopupMenu* pPopupMenu_;
+    QCheckBox* pOwnTeamCheckBox_;
+    QPopupMenu* pPopupMenu_;
     //@}
 };
 

@@ -129,5 +129,14 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "Objets connus" ).Start( id_ ).End(); // $$$$ AGE 2006-02-24: 
+    displayer.Item( "Objets connus" ).Start( id_ ).End(); // $$$$ AGE 2006-02-24: pas id
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::IsInTeam
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+bool ObjectKnowledge::IsInTeam( const Team& team ) const
+{
+    return pRealObject_ && & pRealObject_->GetTeam() == &team;
 }

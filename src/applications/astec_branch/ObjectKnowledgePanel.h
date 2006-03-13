@@ -69,12 +69,15 @@ public:
     //! @name Operations
     //@{
     void Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Agent* agent, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( QListViewItem* );
+    void ToggleDisplayOwnTeam();
+    void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos );
     //@}
 
 private:
@@ -103,15 +106,18 @@ private:
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
+
+    const Team* owner_;
     const ObjectKnowledges* selected_;
     ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
-//    QCheckBox* pOwnTeamCheckBox_;
+    QCheckBox* pOwnTeamCheckBox_;
     const ObjectKnowledge* subSelected_;
     DisplayBuilder* display_;
 
-//    ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
-//    QPopupMenu* pPopupMenu_;
+    ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
+    QPopupMenu* pPopupMenu_;
     //@}
 };
 

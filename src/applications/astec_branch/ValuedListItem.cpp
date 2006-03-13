@@ -105,3 +105,32 @@ EmptyListItem::EmptyListItem( QListViewItem* parent, QListViewItem * after )
 {
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::rtti
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+int ValuedListItem::rtti() const
+{
+    return container_ ? container_->rtti() : 1000;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::Select
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void ValuedListItem::Select( ActionController& actions )
+{
+    if( container_ )
+        container_->Select( actions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::ContextMenu
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void ValuedListItem::ContextMenu( ActionController& actions, QPopupMenu& menu )
+{
+    if( container_ )
+        container_->ContextMenu( actions, menu );
+}

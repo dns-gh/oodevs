@@ -38,7 +38,7 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controller& controller,
     : InfoPanel_ABC( pParent, tr( "Ch. rav." ) )
     , selected_( 0 )
 {
-    pConsignListView_        = new ListDisplayer< AgentSupplyPanel >( this, *this );
+    pConsignListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );
     
     pConsignHandledListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this );

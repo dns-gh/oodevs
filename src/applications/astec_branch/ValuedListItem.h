@@ -21,6 +21,7 @@
 
 #include <qlistview.h>
 #include "ListItemRtti.h"
+#include "ActionController.h"
 
 class ValueContainer_ABC;
 
@@ -79,9 +80,10 @@ public:
     template< typename T >
     void SetValue( const T& value );
 
-    int rtti() const {
-        return 1000;
-    }
+    int rtti() const;
+
+    void Select( ActionController& actions );
+    void ContextMenu( ActionController& actions, QPopupMenu& menu );
     //@}
 
 private:
@@ -173,6 +175,8 @@ class ValueContainer_ABC
 {
 public:
     virtual int rtti() const = 0;
+    virtual void Select( ActionController& actions ) = 0;
+    virtual void ContextMenu( ActionController& actions, QPopupMenu& menu ) = 0;
 };
 
 // =============================================================================
@@ -194,6 +198,12 @@ public:
     };
     void SetValue( const T& value ) {
         value_ = value;
+    }
+    virtual void Select( ActionController& actions ) {
+        actions.Select( *value_ );
+    };
+    virtual void ContextMenu( ActionController& actions, QPopupMenu& menu ) {
+        actions.ContextMenu( *value_, menu );
     }
 private:
     T value_;
@@ -322,6 +332,5 @@ ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListVie
 , container_( new ValueContainer< T >( value ) )
 {
 }
-
 
 #endif // __ValuedListItem_h_

@@ -51,17 +51,17 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controller& c
                 .AddChild( "Type de panne :" )
                 .AddChild( "Etat :" );
 
-    display_                 = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this );
     display_->AddGroup( "Etat chaine maintenance" )
                 .AddLabel( "Etat chaine" )
                 .AddLabel( "Temps de bordée" )
                 .AddLabel( "Priorités" )
                 .AddLabel( "Priorités tactiques" );
 
-    dispoHaulers_            = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    dispoHaulers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     dispoHaulers_->AddColumn( "Remorqueur" )
                   .AddColumn( "Disponibles" );
-    dispoRepairers_          = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    dispoRepairers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     dispoRepairers_->AddColumn( "Réparateur" )
                     .AddColumn( "Disponibles" );
 

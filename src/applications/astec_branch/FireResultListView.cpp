@@ -39,7 +39,6 @@ FireResultListView::~FireResultListView()
     delete agentDisplay_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
 // Created: AGE 2006-03-10

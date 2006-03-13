@@ -37,12 +37,18 @@
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
-    : InfoPanel_ABC( pParent, "C. objet" ) // $$$$ AGE 2006-02-24: tr(
-    , selected_( 0 )
-    , subSelected_( 0 )
+    : InfoPanel_ABC( pParent, tr( "C. objet" ) )
+    , actionController_( actionController )
+    , owner_       ( 0 )
+    , selected_    ( 0 )
+    , subSelected_ ( 0 )
+    , pPopupMenu_  ( new QPopupMenu( this ) )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this );
     pKnowledgeListView_->AddColumn( "Objets connus" );
+
+    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
+    pOwnTeamCheckBox_->setChecked( true );
 
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Détails" )
@@ -80,10 +86,12 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& con
                 .AddLabel( "Longueur:" )
                 .AddLabel( "Poids supporté:" );
 
-//    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this );
-//    pPerceptionListView_->AddColumn( "Agent" );
+    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this );
+    pPerceptionListView_->AddColumn( "Agent" );
 
+    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) );
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
 
     controller.Register( *this );
     actionController.Register( *this );
@@ -114,7 +122,7 @@ void ObjectKnowledgePanel::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 {
-    pKnowledgeListView_->DeleteTail( 
+    pKnowledgeListView_->DeleteTail(
         pKnowledgeListView_->DisplayList( element.CreateIterator() )
         );
 }
@@ -123,9 +131,15 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // Name: ObjectKnowledgePanel::Display
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* )
+void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    k.DisplayInList( displayer );
+    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.IsInTeam( *owner_ ) )
+    {
+        item->SetValue( &k );
+        k.DisplayInList( displayer );
+    }
+    else
+        delete item;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +152,18 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge& element )
         return;
     display_->Hide();
     element.Display( *display_ );
+    pPerceptionListView_->DeleteTail(
+        pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
+    );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::Display
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::Display( const Agent* agent, Displayer_ABC& displayer, ValuedListItem* )
+{
+    displayer.Display( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +176,7 @@ void ObjectKnowledgePanel::DisplayExtension( const T& extension )
     if( IsVisible() && subSelected_ && subSelected_->Retrieve< T >() == &extension )
         extension.Display( *display_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
@@ -202,6 +228,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes& element )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Select( const Team* team )
 {
+    owner_ = team;
     const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;
     if( ! k || k != selected_ )
     {
@@ -240,7 +267,31 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
                 NotifyUpdated( subSelected_->Get< NBCAttributes >() );
             if( subSelected_->Retrieve< RotaAttributes >() )
                 NotifyUpdated( subSelected_->Get< RotaAttributes >() );
-        }                              
-    }                                  
-}                                      
-                                       
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::ToggleDisplayOwnTeam
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::ToggleDisplayOwnTeam()
+{
+    showEvent( 0 );
+}
+
+// $$$$ AGE 2006-03-13: Factor these
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::OnContextMenuRequested
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+{
+    pPopupMenu_->clear();
+
+    ValuedListItem* item = (ValuedListItem*)( i );
+    item->ContextMenu( actionController_, *pPopupMenu_ );
+
+    if( pPopupMenu_->count() > 0 )
+        pPopupMenu_->popup( pos );
+}

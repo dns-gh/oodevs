@@ -46,6 +46,8 @@ public:
     //! @name operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+
+    bool IsInTeam( const Team& team ) const;
     //@}
 
     //! @name Accessors

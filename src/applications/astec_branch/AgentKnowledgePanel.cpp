@@ -41,18 +41,20 @@
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
-    : InfoPanel_ABC     ( pParent, tr( "C. agent" ) )
-//    , pPopupMenu_        ( new QPopupMenu( this ) )
-    , selected_( 0 )
-    , subSelected_( 0 )
-    , display_( 0 )
+    : InfoPanel_ABC    ( pParent, tr( "C. agent" ) )
+    , actionController_( actionController )
+    , pPopupMenu_      ( new QPopupMenu( this ) )
+    , owner_           ( 0 )
+    , selected_        ( 0 )
+    , subSelected_     ( 0 )
+    , display_         ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );
     pKnowledgeListView_->AddColumn( "Agents connus" );
     
-//    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
-//    pOwnTeamCheckBox_->setChecked( true );
-//
+    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
+    pOwnTeamCheckBox_->setChecked( true );
+
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Détails" )
                 .AddLabel( "Id:" )
@@ -81,20 +83,13 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& contr
     pPerceptionListView_->AddColumn( "Agent" ).
                           AddColumn( "Niveau perception" );
 
-//    connect( &App::GetApp(), SIGNAL( AgentKnowledgeCreated( Gtia&, AgentKnowledge& ) ),
-//             this,                 SLOT(    OnKnowledgeCreated( Gtia&, AgentKnowledge& ) ) );
-//    connect( &App::GetApp(), SIGNAL( AgentKnowledgeUpdated( Gtia&, AgentKnowledge& ) ),
-//             this,                 SLOT(    OnKnowledgeUpdated( Gtia&, AgentKnowledge& ) ) );
-//    connect( &App::GetApp(), SIGNAL( AgentKnowledgeDeleted( Gtia&, AgentKnowledge& ) ),
-//             this,                 SLOT(    OnKnowledgeDeleted( Gtia&, AgentKnowledge& ) ) );
-//
 //    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
 //    connect( this, SIGNAL( ElementSelected( SelectedElement& ) ),         &MainWindow::GetMainWindow(), SIGNAL( ElementSelected( SelectedElement& ) ) );
 //    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ),             &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
 //
-//    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
+    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-//    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
 //    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     controller.Register( *this );
     actionController.Register( *this );
@@ -146,9 +141,15 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* )
+void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    displayer.Display( "Agents connus", k.GetRealAgent() );
+    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.IsInTeam( *owner_ ) )
+    {
+        item->SetValue( &k );
+        displayer.Display( "Agents connus", k.GetRealAgent() );
+    }
+    else
+        delete item;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,6 +159,7 @@ void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displ
 void AgentKnowledgePanel::Select( const KnowledgeGroup* element )
 {
     const AgentKnowledges* k = element ? element->Retrieve< AgentKnowledges >() : 0;
+    owner_ = element ? & element->GetTeam() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;
@@ -190,6 +192,30 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
     }
     else
         display_->Hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::OnContextMenuRequested
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+{
+    pPopupMenu_->clear();
+
+    ValuedListItem* item = (ValuedListItem*)( i );
+    item->ContextMenu( actionController_, *pPopupMenu_ );
+
+    if( pPopupMenu_->count() > 0 )
+        pPopupMenu_->popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::ToggleDisplayOwnTeam
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::ToggleDisplayOwnTeam()
+{
+    showEvent( 0 );
 }
 
 // -----------------------------------------------------------------------------

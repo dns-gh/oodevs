@@ -171,12 +171,7 @@ void AgentListView::Display( const Agent& agent, ValuedListItem* item )
 void AgentListView::OnSelectionChange( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    if( item->IsA< const Team* >() )
-        actionController_.Select( *item->GetValue< const Team* >() );
-    if( item->IsA< const KnowledgeGroup* >() )
-        actionController_.Select( *item->GetValue< const KnowledgeGroup* >() );
-    if( item->IsA< const Agent* >() )
-        actionController_.Select( *item->GetValue< const Agent* >() );
+    item->Select( actionController_ );
 }
 
 // -----------------------------------------------------------------------------

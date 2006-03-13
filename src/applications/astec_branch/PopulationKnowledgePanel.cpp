@@ -31,12 +31,18 @@
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC( pParent, "C. popu" )
+    , actionController_( actionController )
+    , owner_( 0 )
     , selected_( 0 )
     , subSelected_( 0 )
     , selectedPart_( 0 )
+    , pPopupMenu_( new QPopupMenu( this ) )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this );
     knowledgeList_->AddColumn( "Populations connues" );
+
+    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
+    pOwnTeamCheckBox_->setChecked( true );
 
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Détails" )
@@ -65,18 +71,21 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Control
                 .AddLabel( "Percue:" )
                 .AddLabel( "Portions connues:" );
 
-    // $$$$ AGE 2006-02-27: 
+    // $$$$ AGE 2006-02-27: ? does the data event exist ?
 //    perceptionList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this );
 //    perceptionList_->AddColumn( "Agent" );
 //    perceptionList_->AddColumn( "Niveau perception" );
 
     connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+
+    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() )                    , this, SLOT( ToggleDisplayOwnTeam() ) );
 
     controller.Register( *this );
     actionController.Register( *this );
 }
 
-// $$$$ AGE 2006-02-27: 
+// $$$$ AGE 2006-02-27: ajouter
 //    pFlowPartBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Portions de flux" ), this );
 //    pFlowPartTable_ = new QTable( 0, 2, pFlowPartBox_ );
 //    pFlowPartTable_->horizontalHeader()->setLabel( 0, tr( "#" ) );
@@ -106,6 +115,30 @@ void PopulationKnowledgePanel::showEvent( QShowEvent* )
 {
     if( selected_ )
         NotifyUpdated( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgePanel::ToggleDisplayOwnTeam
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void PopulationKnowledgePanel::ToggleDisplayOwnTeam()
+{
+    showEvent( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgePanel::OnContextMenuRequested
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
+{
+    pPopupMenu_->clear();
+
+    ValuedListItem* item = (ValuedListItem*)( i );
+    item->ContextMenu( actionController_, *pPopupMenu_ );
+
+    if( pPopupMenu_->count() > 0 )
+        pPopupMenu_->popup( pos );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,10 +185,14 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 // -----------------------------------------------------------------------------
 void PopulationKnowledgePanel::Display( const PopulationKnowledge& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    knowledge.DisplayInList( displayer );
-    knowledgeList_->DeleteTail( 
-        knowledgeList_->DisplayList( knowledge.CreateIterator(), item  )
-        );
+    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.IsInTeam( *owner_ ) )
+    {
+        item->SetValue( &knowledge );
+        knowledge.DisplayInList( displayer );
+        knowledgeList_->DeleteTail( 
+            knowledgeList_->DisplayList( knowledge.CreateIterator(), item  )
+            );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -209,6 +246,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationConcentrationKnowl
 void PopulationKnowledgePanel::Select( const KnowledgeGroup* element )
 {
     const PopulationKnowledges* k = element ? element->Retrieve< PopulationKnowledges >() : 0;
+    owner_ = element ? & element->GetTeam() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;

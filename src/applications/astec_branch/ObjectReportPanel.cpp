@@ -61,7 +61,6 @@ void ObjectReportPanel::NotifyUpdated( const Explosions& explosions )
         return;
 
     // $$$$ AGE 2006-03-10: try to keep the selection if possible
-
     ValuedListItem* item = reports_->DisplayList( explosions.agentExplosions_.begin(), explosions.agentExplosions_.end() );
                     item = reports_->DisplayList( explosions.populationExplosions_.begin(), explosions.populationExplosions_.end(), item );
     reports_->DeleteTail( item );

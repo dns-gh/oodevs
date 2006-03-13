@@ -31,7 +31,7 @@ class PopulationKnowledge : public Resolver< PopulationPartKnowledge_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( Controller& controller, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& asnMsg );
+             PopulationKnowledge( Controller& controller, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -40,18 +40,19 @@ public:
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
     unsigned long GetId() const;
+    bool IsInTeam( const Team& team ) const;
     //@}
 
     //! @name Network
     //@{
-    void Update( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg );
-
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    asnMsg );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      asnMsg );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeCreation&             asnMsg );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               asnMsg );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
+    // $$$$ AGE 2006-03-13: hmmm
+    void Update( const ASN1T_MsgPopulationKnowledgeUpdate& message );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    message );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      message );
+    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message );
+    void Update( const ASN1T_MsgPopulationFluxKnowledgeCreation&             message );
+    void Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               message );
+    void Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          message );
     //@}
 
 private:

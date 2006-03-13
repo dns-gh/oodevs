@@ -137,6 +137,17 @@ bool AgentStatePanel::ShouldUpdate( const Extension& extension )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentStatePanel::DisplayIfNeeded
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void AgentStatePanel::DisplayIfNeeded( const Extension& extension )
+{
+    if( ShouldUpdate( extension ) )
+        extension.Display( *display_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentStatePanel::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
@@ -155,10 +166,7 @@ void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
 // -----------------------------------------------------------------------------
 void AgentStatePanel::NotifyUpdated( const Contaminations& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +175,7 @@ void AgentStatePanel::NotifyUpdated( const Contaminations& attributes )
 // -----------------------------------------------------------------------------
 void AgentStatePanel::NotifyUpdated( const HumanFactors& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,10 +184,7 @@ void AgentStatePanel::NotifyUpdated( const HumanFactors& attributes )
 // -----------------------------------------------------------------------------
 void AgentStatePanel::NotifyUpdated( const Reinforcements& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,10 +193,7 @@ void AgentStatePanel::NotifyUpdated( const Reinforcements& attributes )
 // -----------------------------------------------------------------------------
 void AgentStatePanel::NotifyUpdated( const LogisticLinks& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-    
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,10 +202,7 @@ void AgentStatePanel::NotifyUpdated( const LogisticLinks& attributes )
 // -----------------------------------------------------------------------------
 void AgentStatePanel::NotifyUpdated( const Transports& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // $$$$ AGE 2006-02-16: Centraliser tout ca : 

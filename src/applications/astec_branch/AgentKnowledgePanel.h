@@ -36,6 +36,7 @@ class PerceptionMap;
 class Perception;
 class Displayer_ABC;
 class ValuedListItem;
+class Team;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -86,19 +87,24 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( QListViewItem* );
+    void OnContextMenuRequested( QListViewItem*, const QPoint& );
+    void ToggleDisplayOwnTeam();
     //@}
 
 private:
     //! @name Member data
     //@{
+    ActionController& actionController_;
+
     ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
     DisplayBuilder* display_;
     ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
+    const Team* owner_;
     const AgentKnowledges* selected_;
     const AgentKnowledge* subSelected_;
-//    QCheckBox* pOwnTeamCheckBox_;
-//    QPopupMenu* pPopupMenu_;
+    QCheckBox* pOwnTeamCheckBox_;
+    QPopupMenu* pPopupMenu_;
     //@}
 };
 

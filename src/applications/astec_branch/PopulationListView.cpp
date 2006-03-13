@@ -55,9 +55,7 @@ void PopulationListView::NotifyCreated( const Population& popu )
     const Team& team = popu.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
-    {
         teamItem = new ValuedListItem( &team, this, team.GetName().c_str() );
-    }
     new ValuedListItem( &popu, teamItem, popu.GetName().c_str() );
 }
     
@@ -86,8 +84,5 @@ void PopulationListView::NotifyDeleted( const Population& popu )
 void PopulationListView::OnSelectionChange( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    if( item->IsA< const Population* >() )
-        actionController_.Select( *item->GetValue< const Population* >() );
-    else if ( item->IsA< const Team* >() )
-        actionController_.Select( *item->GetValue< const Team* >() );
+    item->Select( actionController_ );
 }

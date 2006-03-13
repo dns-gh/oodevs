@@ -21,6 +21,7 @@ class Displayer_ABC;
 class Object_ABC;
 class Controller;
 class Agent;
+class Team;
 
 // =============================================================================
 /** @class  ObjectKnowledge
@@ -48,6 +49,7 @@ public:
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
     Object_ABC* GetRealObject() const;
+    bool IsInTeam( const Team& team ) const;
     //@}
 
 private:
@@ -77,7 +79,6 @@ private:
     unsigned long id_;
     unsigned long type_; // $$$$ AGE 2006-02-24: resolve !
 
-    
     T_PointVector points_;
     Object_ABC* pRealObject_;
 
@@ -88,7 +89,8 @@ private:
     OptionalValue< bool >          bIsPerceived_;
     OptionalValue< uint >          nRelevance_;
 
-    T_Agents detectingAutomats_;
+public: // $$$$ AGE 2006-03-13: 
+    T_Agents detectingAutomats_; // $$$$ AGE 2006-03-13: move in an extension ?
     //@}
 };
 

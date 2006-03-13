@@ -37,7 +37,7 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controller& controlle
     : InfoPanel_ABC( pParent, tr( "Ch. medicale" ) )
     , selected_( 0 )
 {
-    pConsignListView_        = new ListDisplayer< AgentMedicalPanel >( this, *this );
+    pConsignListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );
 
     pConsignHandledListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
