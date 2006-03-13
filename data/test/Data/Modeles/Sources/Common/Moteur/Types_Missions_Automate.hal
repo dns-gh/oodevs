@@ -783,6 +783,36 @@ typedef struct T_Mission_Automate_FaireMouvementVersCampRefugies : T_Mission_Aut
 {
 };
 
+typedef struct T_Mission_Automate_InterdireFranchissementPopulations : T_Mission_Automate
+{
+T_ListePoints points_;
+};
+
+typedef struct T_Mission_Automate_FiltrerPopulations : T_Mission_Automate
+{
+T_ListePoints points_;
+};
+
+typedef struct T_Mission_Automate_CanaliserPopulations : T_Mission_Automate
+{
+T_ListeLocalisations zones_;
+};
+
+typedef struct T_Mission_Automate_ControlerPopulationsDansZone : T_Mission_Automate
+{
+T_ListeLocalisations zones_;
+};
+
+typedef struct T_Mission_Automate_SecuriserZoneContrePopulations : T_Mission_Automate
+{
+T_ListePoints points_;
+};
+
+typedef struct T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone : T_Mission_Automate
+{
+T_ListeLocalisations zones_;
+};
+
 typedef struct T_Mission_Automate_Generique : T_Mission_Automate
 {
 T_ListeLocalisations zones_;

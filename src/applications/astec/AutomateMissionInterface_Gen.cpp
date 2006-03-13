@@ -146,6 +146,12 @@ AutomateMissionInterface::~AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_se_recompleter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_se_recompleter; break;
         case T_Mission_Automate_mission_automate_se_rendre : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_se_rendre; break;
         case T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_faire_mouvement_vers_camp_refugies; break;
+        case T_Mission_Automate_mission_automate_interdire_franchissement_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_interdire_franchissement_populations; break;
+        case T_Mission_Automate_mission_automate_filtrer_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_filtrer_populations; break;
+        case T_Mission_Automate_mission_automate_canaliser_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_canaliser_populations; break;
+        case T_Mission_Automate_mission_automate_controler_populations_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_controler_populations_dans_zone; break;
+        case T_Mission_Automate_mission_automate_securiser_zone_contre_populations : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_securiser_zone_contre_populations; break;
+        case T_Mission_Automate_mission_automate_asy_commettre_exactions_sur_population_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asy_commettre_exactions_sur_population_dans_zone; break;
         case T_Mission_Automate_mission_automate_generique : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_generique; break;
         case T_Mission_Automate_mission_automate_nbc_reconnaitre_un_axe : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_nbc_reconnaitre_un_axe; break;
         case T_Mission_Automate_mission_automate_nbc_reconnaitre_une_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_nbc_reconnaitre_une_zone; break;
@@ -307,6 +313,12 @@ void AutomateMissionInterface::CreateInterface()
         case eMission_Automate_SeRecompleter : CreateMission_SeRecompleter(); break;
         case eMission_Automate_SeRendre : CreateMission_SeRendre(); break;
         case eMission_Automate_FaireMouvementVersCampRefugies : CreateMission_FaireMouvementVersCampRefugies(); break;
+        case eMission_Automate_InterdireFranchissementPopulations : CreateMission_InterdireFranchissementPopulations(); break;
+        case eMission_Automate_FiltrerPopulations : CreateMission_FiltrerPopulations(); break;
+        case eMission_Automate_CanaliserPopulations : CreateMission_CanaliserPopulations(); break;
+        case eMission_Automate_ControlerPopulationsDansZone : CreateMission_ControlerPopulationsDansZone(); break;
+        case eMission_Automate_SecuriserZoneContrePopulations : CreateMission_SecuriserZoneContrePopulations(); break;
+        case eMission_Automate_ASY_CommettreExactionsSurPopulationDansZone : CreateMission_ASY_CommettreExactionsSurPopulationDansZone(); break;
         case eMission_Automate_Generique : CreateMission_Generique(); break;
         case eMission_Automate_NBC_ReconnaitreUnAxe : CreateMission_NBC_ReconnaitreUnAxe(); break;
         case eMission_Automate_NBC_ReconnaitreUneZone : CreateMission_NBC_ReconnaitreUneZone(); break;
@@ -2161,6 +2173,78 @@ void AutomateMissionInterface::CreateMission_FaireMouvementVersCampRefugies()
     ASN1T_Mission_Automate_FaireMouvementVersCampRefugies& asnMission = *new ASN1T_Mission_Automate_FaireMouvementVersCampRefugies();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_faire_mouvement_vers_camp_refugies = &asnMission;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_InterdireFranchissementPopulations
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_InterdireFranchissementPopulations()
+{
+    ASN1T_Mission_Automate_InterdireFranchissementPopulations& asnMission = *new ASN1T_Mission_Automate_InterdireFranchissementPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_interdire_franchissement_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_interdire_franchissement_populations = &asnMission;
+    CreatePointList( asnMission.points, "Points", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_FiltrerPopulations
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_FiltrerPopulations()
+{
+    ASN1T_Mission_Automate_FiltrerPopulations& asnMission = *new ASN1T_Mission_Automate_FiltrerPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_filtrer_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_filtrer_populations = &asnMission;
+    CreatePointList( asnMission.points, "Points", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_CanaliserPopulations
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_CanaliserPopulations()
+{
+    ASN1T_Mission_Automate_CanaliserPopulations& asnMission = *new ASN1T_Mission_Automate_CanaliserPopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_canaliser_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_canaliser_populations = &asnMission;
+    CreateLocationList( asnMission.zones, "Zones", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ControlerPopulationsDansZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ControlerPopulationsDansZone()
+{
+    ASN1T_Mission_Automate_ControlerPopulationsDansZone& asnMission = *new ASN1T_Mission_Automate_ControlerPopulationsDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_controler_populations_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_controler_populations_dans_zone = &asnMission;
+    CreatePolygonList( asnMission.zones, "Zones", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_SecuriserZoneContrePopulations
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_SecuriserZoneContrePopulations()
+{
+    ASN1T_Mission_Automate_SecuriserZoneContrePopulations& asnMission = *new ASN1T_Mission_Automate_SecuriserZoneContrePopulations();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_securiser_zone_contre_populations;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_securiser_zone_contre_populations = &asnMission;
+    CreatePointList( asnMission.points, "Points", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASY_CommettreExactionsSurPopulationDansZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASY_CommettreExactionsSurPopulationDansZone()
+{
+    ASN1T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *new ASN1T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asy_commettre_exactions_sur_population_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asy_commettre_exactions_sur_population_dans_zone = &asnMission;
+    CreatePolygonList( asnMission.zones, "Zones", false );
 }
 
 // -----------------------------------------------------------------------------

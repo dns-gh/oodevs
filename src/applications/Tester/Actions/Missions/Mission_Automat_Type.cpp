@@ -154,6 +154,12 @@
 #include "Automat/Mission_Automat_SeRecompleter.cpp"
 #include "Automat/Mission_Automat_SeRendre.cpp"
 #include "Automat/Mission_Automat_FaireMouvementVersCampRefugies.cpp"
+#include "Automat/Mission_Automat_InterdireFranchissementPopulations.cpp"
+#include "Automat/Mission_Automat_FiltrerPopulations.cpp"
+#include "Automat/Mission_Automat_CanaliserPopulations.cpp"
+#include "Automat/Mission_Automat_ControlerPopulationsDansZone.cpp"
+#include "Automat/Mission_Automat_SecuriserZoneContrePopulations.cpp"
+#include "Automat/Mission_Automat_ASY_CommettreExactionsSurPopulationDansZone.cpp"
 #include "Automat/Mission_Automat_Generique.cpp"
 #include "Automat/Mission_Automat_NBC_ReconnaitreUnAxe.cpp"
 #include "Automat/Mission_Automat_NBC_ReconnaitreUneZone.cpp"
@@ -332,6 +338,12 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_SeRecompleter >( "Automate SeRecompleter" );
     Register< Mission_Automat_SeRendre >( "Automate SeRendre" );
     Register< Mission_Automat_FaireMouvementVersCampRefugies >( "Automate FaireMouvementVersCampRefugies" );
+    Register< Mission_Automat_InterdireFranchissementPopulations >( "Automate InterdireFranchissementPopulations" );
+    Register< Mission_Automat_FiltrerPopulations >( "Automate FiltrerPopulations" );
+    Register< Mission_Automat_CanaliserPopulations >( "Automate CanaliserPopulations" );
+    Register< Mission_Automat_ControlerPopulationsDansZone >( "Automate ControlerPopulationsDansZone" );
+    Register< Mission_Automat_SecuriserZoneContrePopulations >( "Automate SecuriserZoneContrePopulations" );
+    Register< Mission_Automat_ASY_CommettreExactionsSurPopulationDansZone >( "Automate ASY CommettreExactionsSurPopulationDansZone" );
     Register< Mission_Automat_Generique >( "Automate Generique" );
     Register< Mission_Automat_NBC_ReconnaitreUnAxe >( "Automate NBC ReconnaitreUnAxe" );
     Register< Mission_Automat_NBC_ReconnaitreUneZone >( "Automate NBC ReconnaitreUneZone" );

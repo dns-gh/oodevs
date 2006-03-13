@@ -321,6 +321,11 @@ enum E_SMission
     eSMission_Automate_SeRecompleter,
     eSMission_Automate_SeRendre,
     eSMission_Automate_FaireMouvementVersCampRefugies,
+    eSMission_Automate_InterdireFranchissementPopulations,
+    eSMission_Automate_FiltrerPopulations,
+    eSMission_Automate_CanaliserPopulations,
+    eSMission_Automate_ControlerPopulationsDansZone,
+    eSMission_Automate_SecuriserZoneContrePopulations,
     eSMission_Automate_Generique,
     eSMission_Automate_TRANS_Commander,
 
@@ -522,6 +527,7 @@ enum E_SMission
     // ASY
     eSMission_Automate_ASY_Debut,
 
+    eSMission_Automate_ASY_CommettreExactionsSurPopulationDansZone,
 
     eSMission_Automate_ASY_Fin,
 

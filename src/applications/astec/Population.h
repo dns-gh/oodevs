@@ -87,7 +87,7 @@ public:
     //! @name Accessors
     //@{
 	virtual const MIL_AgentID          GetID  () const;
-	virtual Team&                  GetTeam() const;
+	virtual Team&                      GetTeam() const;
 	virtual const std::string          GetName() const;
 	virtual const MT_Vector2D&         GetPos () const;
     virtual const MT_Vector2D          GetAggregatedPos() const;
@@ -95,8 +95,8 @@ public:
 
 	uint                               GetLivingHumans() const;
 	uint                               GetDeadHumans  () const;
-    const AgentModel&              GetModel       () const;
-    const TypePopulation&          GetType        () const;
+    const AgentModel&                  GetModel       () const;
+    const TypePopulation&              GetType        () const;
 
     // for selection management
     const T_ConcentrationMap&          GetConcentrations() const;

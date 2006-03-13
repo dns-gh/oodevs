@@ -2709,6 +2709,30 @@
         <source>Pion SecuriserZoneContrePopulations</source>
         <translation>Pion SecuriserZoneContrePopulations</translation>
     </message>
+    <message>
+        <source>Automate InterdireFranchissementPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate FiltrerPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate CanaliserPopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ControlerPopulationsDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate SecuriserZoneContrePopulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>

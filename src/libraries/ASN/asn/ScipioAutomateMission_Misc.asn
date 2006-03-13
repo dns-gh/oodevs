@@ -7,7 +7,7 @@
 ScipioAutomateMission_Misc DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
+        max-uint8, Point, Itineraire, ListPolygon, ListLocalisation, ListPoint, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
 IMPORTS EnumObjectType FROM ScipioObject;
 
 Mission-Automate-Test-MoveTo ::= SEQUENCE
@@ -65,6 +65,41 @@ Mission-Automate-SeRendre ::= SEQUENCE
 Mission-Automate-FaireMouvementVersCampRefugies ::= SEQUENCE
 {
 }
+
+-- Population
+
+Mission-Automate-InterdireFranchissementPopulations ::= SEQUENCE
+{
+    points ListPoint
+}
+
+Mission-Automate-FiltrerPopulations ::= SEQUENCE
+{
+    points ListPoint
+}
+
+Mission-Automate-CanaliserPopulations ::= SEQUENCE
+{
+    zones ListLocalisation
+}
+
+Mission-Automate-ControlerPopulationsDansZone ::= SEQUENCE
+{
+    zones ListPolygon
+}
+
+Mission-Automate-SecuriserZoneContrePopulations ::= SEQUENCE
+{
+    points ListPoint
+}
+
+-- ASY
+
+Mission-Automate-ASY-CommettreExactionsSurPopulationDansZone ::= SEQUENCE
+{
+    zones ListPolygon
+}
+
 
 -- Missions génériques
 Mission-Automate-Generique ::= SEQUENCE

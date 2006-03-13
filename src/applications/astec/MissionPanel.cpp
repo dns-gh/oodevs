@@ -152,6 +152,14 @@ void MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, Population& pop
         pFragOrdersMenu->setItemParameter( nId, i );
     }
 
+    // Specific population frag orders.
+    const AgentModel::T_FragOrderSet& fragOrders = population.GetModel().GetAvailableFragOrders();
+    for( AgentModel::CIT_FragOrderSet itFrag = fragOrders.begin(); itFrag != fragOrders.end(); ++itFrag )
+    {
+        int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *itFrag ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrderPopulation( int ) ) );
+        pFragOrdersMenu->setItemParameter( nId, (int)(*itFrag) );
+    }
+
     int nFragId = popupMenu.insertItem( tr( "Ordres de conduite" ), pFragOrdersMenu );
 
     // Add the magic orders if playing as controller.
