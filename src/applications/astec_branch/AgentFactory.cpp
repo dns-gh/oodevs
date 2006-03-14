@@ -49,6 +49,7 @@
 #include "LogisticConsigns.h"
 #include "Logistics.h"
 #include "Explosions.h"
+#include "Fires.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -102,7 +103,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    Population* result = new Population( asnMsg, controller_, model_.teams_, model_.types_ );
+    Population* result = new Population( asnMsg, controller_, model_.coordinateConverter_, model_.teams_, model_.types_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     return result;
 }
@@ -113,7 +114,7 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentFactory::AttachExtensions( Agent_ABC& agent )
 {
-    agent.Attach( *new Attributes( controller_ ) );
+    agent.Attach( *new Attributes( controller_, model_.coordinateConverter_ ) );
     agent.Attach( *new Contaminations( controller_ ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controller_, model_.objectTypes_ ) );
@@ -121,7 +122,7 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new HumanFactors( controller_ ) );
     agent.Attach( *new Lends( controller_, model_.agents_, model_.objectTypes_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );
-    agent.Attach( *new Paths() );
+    agent.Attach( *new Paths( model_.coordinateConverter_ ) );
     agent.Attach( *new Reinforcements( controller_, model_.agents_ ) );
     agent.Attach( *new Reports( agent, controller_, simulation_ ) );
     agent.Attach( *new Transports( controller_, model_.agents_ ) );
@@ -133,5 +134,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new PopulationDetections( controller_, model_.agents_ ) );
     agent.Attach( *new LogisticConsigns( controller_ ) );
     agent.Attach( *new Explosions( controller_, model_.fireResultsFactory_ ) );
+    agent.Attach( *new Fires( controller_, model_.fireFactory_ ) );
 }
 

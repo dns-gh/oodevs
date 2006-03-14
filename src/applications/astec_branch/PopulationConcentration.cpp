@@ -9,19 +9,17 @@
 
 #include "astec_pch.h"
 #include "PopulationConcentration.h"
-
-#include "App.h"
-#include "World.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, MT_Float density )
-    : position_( 0, 0 )
+PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter& converter, MT_Float density )
+    : position_( converter.ConvertToXY( asnMsg.position ) )
     , density_ ( density )
 {
-	App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,11 +46,11 @@ std::string PopulationConcentration::GetName() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	if ( asnMsg.m.nb_humains_vivantsPresent )
-		nLivingHumans_ = asnMsg.nb_humains_vivants;
+    if( asnMsg.m.nb_humains_vivantsPresent )
+        nLivingHumans_ = asnMsg.nb_humains_vivants;
 
-	if ( asnMsg.m.nb_humains_mortsPresent )
-	    nDeadHumans_ = asnMsg.nb_humains_morts;
+    if( asnMsg.m.nb_humains_mortsPresent )
+        nDeadHumans_ = asnMsg.nb_humains_morts;
 
     PopulationPart_ABC::DoUpdate( asnMsg );
 }

@@ -7,18 +7,12 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "Population.h"
 
-#include "App.h"
 #include "AgentManager.h"
 #include "Team.h"
 #include "PopulationType.h"
-#include "World.h"
 
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
@@ -31,8 +25,9 @@ MIL_AgentID Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const Resolver_ABC< Team >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Team >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
     : controller_   ( controller )
+    , converter_    ( converter )
     , nPopulationID_( message.oid_population )
     , strName_      ( message.nom )
     , type_         ( typeResolver.Get( message.type_population ) )
@@ -103,7 +98,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
     if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux ) )
-        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
+        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +108,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
     if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration ) )
-        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, type_.GetDensity() ) );
+        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
 }
 
 // -----------------------------------------------------------------------------

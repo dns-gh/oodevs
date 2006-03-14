@@ -44,7 +44,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // -----------------------------------------------------------------------------
 ObjectKnowledge* ObjectKnowledgeFactory::Create( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    ObjectKnowledge* knowledge = new ObjectKnowledge( message, controller_, model_.objects_, model_.agents_ );
+    ObjectKnowledge* knowledge = new ObjectKnowledge( message, controller_, model_.coordinateConverter_, model_.objects_, model_.agents_ );
     
     switch( message.type )
     {

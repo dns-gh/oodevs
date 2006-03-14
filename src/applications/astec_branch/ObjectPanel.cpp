@@ -36,8 +36,6 @@
 #include "LabelDisplayer.h"
 #include "Units.h"
 
-#include "App.h"
-#include "World.h"
 #include <qgrid.h>
 
 // -----------------------------------------------------------------------------

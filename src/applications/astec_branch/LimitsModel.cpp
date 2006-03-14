@@ -12,12 +12,14 @@
 #include "TacticalLine_ABC.h"
 #include "Limit.h"
 #include "Lima.h"
+#include "Model.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-LimitsModel::LimitsModel()
+LimitsModel::LimitsModel( Model& model )
+    : model_( model )
 {
     // NOTHING
 }
@@ -59,7 +61,7 @@ void LimitsModel::UseSimTacticalLines()
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
 {
-    TacticalLine_ABC* line = new Limit( asnMsg );
+    TacticalLine_ABC* line = new Limit( asnMsg, model_.coordinateConverter_ );
     Register( asnMsg.oid, *line );
 }
 
@@ -69,7 +71,7 @@ void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
 {
-    TacticalLine_ABC* line = new Lima( asnMsg );
+    TacticalLine_ABC* line = new Lima( asnMsg, model_.coordinateConverter_ );
     Register( asnMsg.oid, *line );
 }
 

@@ -42,7 +42,7 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // -----------------------------------------------------------------------------
 AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    AgentKnowledge* result = new AgentKnowledge( message, controller_, model_.agents_, model_.teams_ );
+    AgentKnowledge* result = new AgentKnowledge( message, controller_, model_.coordinateConverter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controller_, model_.agents_ ) );
     return result;
 }
@@ -53,5 +53,5 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnit
 // -----------------------------------------------------------------------------
 PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
-    return new PopulationKnowledge( controller_, model_.agents_, message );
+    return new PopulationKnowledge( controller_, model_.coordinateConverter_, model_.agents_, message );
 }

@@ -12,8 +12,6 @@
 #include "astec_pch.h"
 #include "AgentKnowledge.h"
 
-#include "App.h"
-#include "World.h"
 #include "ASN_Messages.h"
 #include "AgentManager.h"
 #include "Model.h"
@@ -21,6 +19,7 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
+#include "CoordinateConverter.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 
@@ -28,8 +27,9 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver )
+AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver )
     : controller_( controller )
+    , converter_( converter )
     , resolver_ ( resolver )
     , teamResolver_( teamResolver )
     , nID_      ( message.oid_connaissance )
@@ -68,7 +68,7 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
     if( message.m.positionPresent )
     {
         strPosition_ = std::string( (const char*)message.position.data, 15 );
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.position.data, vPosition_ );
+        vPosition_ = converter_.ConvertToXY( message.position );
     }
 
     if( message.m.directionPresent )

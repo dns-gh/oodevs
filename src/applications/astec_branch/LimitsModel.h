@@ -14,6 +14,7 @@
 #include "Resolver.h"
 
 class TacticalLine_ABC;
+class Model;
 
 namespace DIN {
     class DIN_Input;
@@ -32,7 +33,7 @@ class LimitsModel : public Resolver< TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsModel();
+    explicit LimitsModel( Model& model );
     virtual ~LimitsModel();
     //@}
 
@@ -55,13 +56,10 @@ private:
     LimitsModel& operator=( const LimitsModel& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
+    Model& model_;
     //@}
 };
 

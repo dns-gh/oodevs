@@ -9,14 +9,14 @@
 
 #include "astec_pch.h"
 #include "Paths.h"
-#include "App.h"
-#include "World.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: Paths constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Paths::Paths()
+Paths::Paths( const CoordinateConverter& converter )
+    : converter_( converter ) 
 {
     // NOTHING
 }
@@ -38,11 +38,7 @@ void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     // $$$$ AGE 2006-02-13: Jamais vidé ??
     if( message.m.positionPresent )
-    {
-        MT_Vector2D vNewPos;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.position.data, vNewPos );
-        previousPath_.push_back( vNewPos );
-    }
+        previousPath_.push_back( converter_.ConvertToXY( message.position ) );
 }   
 
 // -----------------------------------------------------------------------------
@@ -53,10 +49,5 @@ void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 {
     plannedPath_.clear(); plannedPath_.reserve( message.itineraire.vecteur_point.n );
     for( uint i = 0; i < message.itineraire.vecteur_point.n; ++i )
-    {
-        MT_Vector2D vPos;
-        // $$$$ AGE 2006-02-13: 
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.itineraire.vecteur_point.elem[i].data, vPos );
-        plannedPath_.push_back( vPos );
-    }
+        plannedPath_.push_back( converter_.ConvertToXY( message.itineraire.vecteur_point.elem[i] ) );
 }

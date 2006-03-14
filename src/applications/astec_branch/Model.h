@@ -28,6 +28,8 @@ class LogisticConsignFactory_ABC;
 class Simulation;
 class FireResultFactory;
 class FiresModel;
+class CoordinateConverter;
+class FireFactory;
 
 // =============================================================================
 /** @class  Model
@@ -52,6 +54,7 @@ public:
 public:
     //! @name Member data
     //@{
+    CoordinateConverter& coordinateConverter_;
     AgentTypes& types_;
     ObjectTypes& objectTypes_;
 
@@ -62,6 +65,7 @@ public:
     AgentFactory_ABC&           agentFactory_;
     ObjectFactory_ABC&          objectFactory_;
     LogisticConsignFactory_ABC& logisticFactory_;
+    FireFactory&                fireFactory_;
 
     AgentsModel&    agents_;
     ObjectsModel&   objects_;

@@ -15,6 +15,7 @@
 #include "Resolver_ABC.h"
 
 class Agent;
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  IndirectFire
@@ -28,7 +29,7 @@ class IndirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_ABC< Agent >& resolver );
+             IndirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_ABC< Agent >& resolver, const CoordinateConverter& converter );
     virtual ~IndirectFire();
     //@}
 

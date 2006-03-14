@@ -10,7 +10,6 @@
 #include "astec_pch.h"
 #include "LogisticRouteAttributes.h"
 #include "App.h"
-#include "World.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"

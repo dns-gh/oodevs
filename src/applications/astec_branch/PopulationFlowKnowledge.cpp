@@ -11,9 +11,7 @@
 
 #include "astec_pch.h"
 #include "PopulationFlowKnowledge.h"
-
-#include "App.h"
-#include "World.h"
+#include "CoordinateConverter.h"
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationKnowledge.h"
@@ -33,15 +31,11 @@
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
+PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter& converter )
      : rRelevance_ ( asn.pertinence )
 {
     for( uint i = 0; i < asn.forme.vecteur_point.n; ++i )
-	{
-		MT_Vector2D point;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asn.forme.vecteur_point.elem[ i ].data, point );
-        flowPart_.push_back( point );
-	}
+        flowPart_.push_back( converter.ConvertToXY( asn.forme.vecteur_point.elem[ i ] ) );
 }
 
 // =============================================================================
@@ -52,11 +46,12 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn )
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter& converter, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
     : controller_( controller )
-    , popu_( popu )
-    , nID_                 ( asnMsg.oid_connaissance_flux )
-    , pFlow_               ( 0 )
+    , converter_ ( converter )
+    , popu_      ( popu )
+    , nID_       ( asnMsg.oid_connaissance_flux )
+    , pFlow_     ( 0 )
 {
     pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
 }
@@ -94,7 +89,7 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
     {
         flowParts_.clear(); flowParts_.reserve( asnMsg.portions_flux.n );
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
-            flowParts_.push_back( FlowPart( asnMsg.portions_flux.elem[ i ] ) );
+            flowParts_.push_back( FlowPart( asnMsg.portions_flux.elem[ i ], converter_ ) );
     }
     controller_.Update( *this );
 }

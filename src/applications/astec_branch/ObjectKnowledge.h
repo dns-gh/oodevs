@@ -22,6 +22,7 @@ class Object_ABC;
 class Controller;
 class Agent;
 class Team;
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  ObjectKnowledge
@@ -38,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message,
-                              Controller& controller,
+                              Controller& controller, const CoordinateConverter& converter,
                               const Resolver_ABC< Object_ABC >& objectResolver,
                               const Resolver_ABC< Agent >& agentResolver );
     virtual ~ObjectKnowledge();
@@ -72,6 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const CoordinateConverter& converter_;
     const Resolver_ABC< Object_ABC >& objectResolver_;
     const Resolver_ABC< Agent >& agentResolver_;
     Controller& controller_;

@@ -19,7 +19,6 @@
 #include "LineManager.h"
 #include "Lima.h"
 #include "Limit.h"
-#include "World.h"
 #include "ASN_Messages.h"
 #include "Net_Def.h"
 #include "KnowledgeGroup.h"

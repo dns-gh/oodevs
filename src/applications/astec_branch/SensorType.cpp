@@ -6,11 +6,9 @@
 
 #include "SensorType.h"
 
-#include "App.h"
 #include "Net_Def.h"
 #include "Tools.h"
 #include "Attr_Def.h"
-#include "World.h"
 #include "Agent.h"
 #include "Experience.h"
 #include "Tiredness.h"

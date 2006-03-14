@@ -13,9 +13,11 @@
 #include "Limit.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "World.h"
+#include "CoordinateConverter.h"
 
 IDManager Limit::idManager_( 138 );
+
+// $$$$ SBO 2006-03-14: Incroyable une merde pareil
 
 //-----------------------------------------------------------------------------
 // Name: Limit constructor
@@ -28,14 +30,13 @@ Limit::Limit()
     strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 /** @param  pointList 
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( T_PointVector pointList )
+Limit::Limit( const T_PointVector& pointList )
     : TacticalLine_ABC()
 {
     pointList_ = pointList;
@@ -43,12 +44,11 @@ Limit::Limit( T_PointVector pointList )
     strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg )
+Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter )
     : TacticalLine_ABC()
 {
     nID_ = asnMsg.oid;
@@ -62,13 +62,8 @@ Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg )
 
     assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
-    {
-        MT_Vector2D vTmp;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, vTmp );
-        pointList_.push_back( vTmp );
-    }
+        pointList_.push_back( converter.ConvertToXY( asnMsg.geometrie.vecteur_point.elem[i] ) );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: Limit destructor
@@ -111,8 +106,8 @@ bool Limit::UpdateToSim()
             {
                 std::string strMGRS;
                 const MT_Vector2D& vPos = *itPoint;
-                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
-                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str();
+//                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
+                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str(); // $$$$ SBO 2006-03-14: C'est buggué jusqu'à la moelle ce truc ! depuis 3 ans !!
                 ++i;
             }
 
@@ -141,8 +136,8 @@ bool Limit::UpdateToSim()
             {
                 std::string strMGRS;
                 const MT_Vector2D& vPos = *itPoint;
-                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
-                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str();
+//                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
+                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str(); // $$$$ SBO 2006-03-14: ca pareil !
                 ++i;
             }
 

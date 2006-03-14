@@ -22,7 +22,6 @@
 class Network;
 class AgentManager;
 class LineManager;
-class World;
 class ObjectManager;
 class Meteo_Manager;
 class MainWindow;
@@ -81,14 +80,11 @@ public:
 
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     Network&       GetNetwork       () const;
     Model&         GetModel  () const { return *model_; };
     MainWindow&    GetMainWindow() const;
-    World&         GetWorld         () const;
     //@}
 
     void SetSplashText( const QString& strText );
@@ -110,7 +106,6 @@ private:
 private:
     //! @name Member data
     //@{
-    World*          pWorld_;
     Controller*     controller_;
     Model*          model_;
     Simulation*     simulation_;

@@ -9,15 +9,15 @@
 
 #include "astec_pch.h"
 #include "PopulationFlow.h"
-#include "App.h"
-#include "World.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
-    : nID_       ( asnMsg.oid_flux )
+PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter& converter )
+    : converter_ ( converter )
+    , nID_       ( asnMsg.oid_flux )
     , itineraire_( )
     , flow_      ( 2, MT_Vector2D( 0, 0 ) )
     , nDirection_( 0 )
@@ -32,6 +32,7 @@ PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 // -----------------------------------------------------------------------------
 PopulationFlow::~PopulationFlow()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,21 +63,13 @@ void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 	{
         itineraire_.clear();
 		for( uint i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
-		{
-			MT_Vector2D point;
-			App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, point  );
-			itineraire_.push_back( point );
-		}
+            itineraire_.push_back( converter_.ConvertToXY( asnMsg.itineraire.vecteur_point.elem[i] ) );
 	}
 	if ( asnMsg.m.fluxPresent )
 	{
         flow_.clear();
 		for( uint i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
-		{
-			MT_Vector2D point;
-			App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.flux.vecteur_point.elem[i].data, point  );
-			flow_.push_back( point );
-		}
+			flow_.push_back( converter_.ConvertToXY( asnMsg.flux.vecteur_point.elem[i] ) );
 
         // Density
         MT_Float rLength = 0.;

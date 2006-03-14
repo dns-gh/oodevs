@@ -17,6 +17,7 @@
 #include "OptionalValue.h"
 #include "PopulationPartKnowledge_ABC.h"
 
+class CoordinateConverter;
 class PopulationFlow;
 class PopulationKnowledge;
 class Controller;
@@ -32,7 +33,7 @@ public:
     //@{
     struct FlowPart
     {
-        FlowPart( ASN1T_PortionFlux& asn );
+        FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter& converter );
         T_PointVector flowPart_;
         MT_Float      rRelevance_;
     };
@@ -44,7 +45,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( Controller& controller, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
+             PopulationFlowKnowledge( Controller& controller, const CoordinateConverter& converter, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -72,6 +73,8 @@ private:
 
 private:
     Controller& controller_;
+    const CoordinateConverter& converter_;
+
     const Population& popu_; 
     const uint nID_;
     const PopulationFlow* pFlow_;

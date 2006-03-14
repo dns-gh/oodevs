@@ -12,30 +12,29 @@
 #include "astec_pch.h"
 #include "ObjectKnowledge.h"
 #include "Controller.h"
-#include "App.h"
-#include "World.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
 #include "Object_ABC.h"
 #include "ObjectType.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller , const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent >& agentResolver )
-    : objectResolver_( objectResolver )
-    , agentResolver_( agentResolver )
-    , controller_( controller )
-    , id_        ( message.oid_connaissance ) 
-    , type_      ( message.type )
-    , pRealObject_( 0 )
+ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent >& agentResolver )
+    : converter_     ( converter )
+    , objectResolver_( objectResolver )
+    , agentResolver_ ( agentResolver )
+    , controller_    ( controller )
+    , id_            ( message.oid_connaissance ) 
+    , type_          ( message.type )
+    , pRealObject_   ( 0 )
 {
     // $$$$ AGE 2006-02-14: Team !
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
     InterfaceContainer< Extension_ABC >::Register( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge destructor
@@ -63,11 +62,7 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
         points_.clear();
         points_.reserve( message.localisation.vecteur_point.n );
         for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
-        {
-            MT_Vector2D vPos;
-            App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.localisation.vecteur_point.elem[i].data, vPos );    
-            points_.push_back( vPos );
-        }
+            points_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
     }
 
     if( message.m.pourcentage_constructionPresent )

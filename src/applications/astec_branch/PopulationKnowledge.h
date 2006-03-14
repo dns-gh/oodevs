@@ -17,6 +17,7 @@
 #include "Resolver.h"
 
 class Controller;
+class CoordinateConverter;
 class Team;
 class Population;
 class TypePopulation;
@@ -31,7 +32,7 @@ class PopulationKnowledge : public Resolver< PopulationPartKnowledge_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( Controller& controller, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -64,6 +65,8 @@ private:
 
 private:
     Controller& controller_;
+    const CoordinateConverter& converter_;
+
     const Population& popu_;
     unsigned long nID_;
 };

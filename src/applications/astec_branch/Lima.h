@@ -16,6 +16,7 @@
 #include "IDManager.h"
 #include "ASN_Types.h"
 
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  Lima
@@ -33,7 +34,7 @@ public:
 public:
      Lima();
      Lima( T_PointVector pointList, E_FuncLimaType nFuncType );
-     Lima( const ASN1T_MsgLimaCreation& asnMsg );
+     Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
     ~Lima();
 
     //-------------------------------------------------------------------------

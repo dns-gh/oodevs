@@ -14,6 +14,8 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 
+class CoordinateConverter;
+
 // =============================================================================
 /** @class  Paths
     @brief  Paths
@@ -28,7 +30,7 @@ class Paths : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Paths();
+    explicit Paths( const CoordinateConverter& converter );
     virtual ~Paths();
     //@}
 
@@ -57,6 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const CoordinateConverter& converter_;
     T_Points plannedPath_;
     T_Points previousPath_;
     //@}

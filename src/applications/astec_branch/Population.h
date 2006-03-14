@@ -25,6 +25,7 @@ class PopulationFlow;
 class Team;
 class Controller;
 class PopulationType;
+class CoordinateConverter;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -43,7 +44,7 @@ class Population : public Agent_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, 
+             Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, const CoordinateConverter& converter,
                          const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< PopulationType >& typeResolver );
     virtual ~Population();
     //@}
@@ -96,11 +97,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller&           controller_;
-	MIL_AgentID           nPopulationID_;
-	std::string           strName_;
-    const PopulationType& type_;
-	Team&                 team_;
+    Controller&                controller_;
+    const CoordinateConverter& converter_;
+	MIL_AgentID                nPopulationID_;
+	std::string                strName_;
+    const PopulationType&      type_;
+	Team&                      team_;
     //@}
 
 private:

@@ -12,8 +12,6 @@
 #include "astec_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 
-#include "App.h"
-#include "World.h"
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
@@ -23,19 +21,20 @@
 #include "KnowledgeGroupsModel.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const Population& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter& converter, const Population& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
     : controller_( controller )
     , resolver_  ( resolver )
-    , nID_            ( asnMsg.oid_connaissance_concentration )
-    , pConcentration_ ( 0 )
+    , nID_           ( asnMsg.oid_connaissance_concentration )
+    , pConcentration_( resolver_.FindConcentration( asnMsg.oid_concentration_reelle ) )
+    , position_      ( converter.ConvertToXY( asnMsg.position ) )
 {
-    pConcentration_ = resolver_.FindConcentration( asnMsg.oid_concentration_reelle );
-    App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

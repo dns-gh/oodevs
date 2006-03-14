@@ -18,7 +18,7 @@ class DotationType;
 class EquipmentType;
 class Population;
 class PopulationConcentration;
-class MT_Vector2D;
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  BaseDisplayer
@@ -35,7 +35,6 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< Team >
                   , public Caller< DotationType >
                   , public Caller< EquipmentType >
-                  , public Caller< MT_Vector2D >
 {
 
 public:
@@ -62,7 +61,6 @@ private:
     virtual void Call( const Team& value );
     virtual void Call( const DotationType& value );
     virtual void Call( const EquipmentType& value );
-    virtual void Call( const MT_Vector2D& value );
     //@}
 };
 

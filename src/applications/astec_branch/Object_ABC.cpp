@@ -24,14 +24,13 @@
 #include "Object_ABC.h"
 
 #include "Net_Def.h"
-#include "App.h"
-#include "World.h"
 #include "Tools.h"
 #include "FireResult.h"
 #include "Controller.h"
 #include "Units.h"
 #include "Displayer_ABC.h"
 #include "ObjectType.h"
+#include "CoordinateConverter.h"
 
 // $$$$ AGE 2006-02-16: possession des objets par la team ?
 // $$$$ AGE 2006-02-16: ou au moins les enregistrer ?
@@ -40,8 +39,9 @@
 // Name: Object_ABC::Object_ABC
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
-    : controller_( controller )
+Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
+    : controller_                    ( controller )
+    , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
     , nId_                           ( message.oid )
     , strName_                       ( message.nom )
@@ -60,10 +60,8 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
 
     for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
     {
-        MT_Vector2D vTmp;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.localisation.vecteur_point.elem[i].data, vTmp );
-        pointVector_.push_back( vTmp );
-        center_ += vTmp;
+        pointVector_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
+        center_ += pointVector_.back();
     }
 
     if( ! pointVector_.empty() )
@@ -155,10 +153,8 @@ void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
         nTypeLocalisation_ = message.localisation.type;
         for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
         {
-            MT_Vector2D vTmp;
-            App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.localisation.vecteur_point.elem[i].data, vTmp );
-            pointVector_.push_back( vTmp );
-            center_ += vTmp;
+            pointVector_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
+            center_ += pointVector_.back();
         }
         if( pointVector_.size() > 1 )
             center_ /= pointVector_.size();
@@ -173,14 +169,11 @@ void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void Object_ABC::Display( Displayer_ABC& displayer ) const
 {
-    std::string strPos;
-    App::GetApp().GetWorld().SimToMosMgrsCoord( center_, strPos );
-
     displayer.Group( "Informations" )
              .Display( "Id:", nId_ )
              .Display( "Nom:", strName_ )
              .Display( "Type:", type_.GetName() )
-             .Display( "Position:", strPos )
+             .Display( "Position:", converter_.ConvertToMgrs( center_ ) )
              .Display( "Construction:", rConstructionPercentage_ * Units::percentage )
              .Display( "Valorisation:", rValorizationPercentage_ * Units::percentage )
              .Display( "Contournement:", rBypassConstructionPercentage_ * Units::percentage )

@@ -9,18 +9,18 @@
 
 #include "astec_pch.h"
 #include "Attributes.h"
-#include "App.h"
-#include "World.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller )
+Attributes::Attributes( Controller& controller, const CoordinateConverter& converter )
     : controller_( controller )
+    , converter_ ( converter )
 {
     // NOTHING
 }
@@ -41,12 +41,7 @@ Attributes::~Attributes()
 void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.positionPresent )
-    {
-        MT_Vector2D vNewPos;
-        // $$$$ AGE 2006-02-13: 
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)message.position.data, vNewPos );
-        vPos_ = vNewPos;
-    }
+        vPos_ = converter_.ConvertToXY( message.position );
 
     if( message.m.etat_operationnel_brutPresent )
         nRawOpState_ = message.etat_operationnel_brut;

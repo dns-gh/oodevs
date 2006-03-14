@@ -47,7 +47,7 @@ ObjectFactory::~ObjectFactory()
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
-    Object_ABC* result = new Object_ABC( message, controller_, model_.teams_, model_.objectTypes_, model_.objectTypes_ );
+    Object_ABC* result = new Object_ABC( message, controller_, model_.coordinateConverter_, model_.teams_, model_.objectTypes_, model_.objectTypes_ );
     result->Attach( *new Explosions( controller_, model_.fireResultsFactory_ ) );
     switch( message.type )
     {

@@ -16,7 +16,6 @@
 #include "Network.h"
 #include "AgentManager.h"
 #include "LineManager.h"
-#include "World.h"
 #include "ObjectManager.h"
 #include "Meteo_Manager.h"
 #include "MainWindow.h"
@@ -119,7 +118,7 @@ void App::Initialize( const std::string& scipioXml )
 
     xis >> start( "Scipio" )
             >> start( "Donnees" );
-    InitializeTerrainData  ( xis );
+//    InitializeTerrainData  ( xis );
     InitializeHumanFactors ( xis ); 
 
     controller_      = new Controller();
@@ -132,22 +131,9 @@ void App::Initialize( const std::string& scipioXml )
     pMOSServer_->Connect( "localhost", 10000 );
 };
 
-// -----------------------------------------------------------------------------
-// Name: App::InitializeTerrainData
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-void App::InitializeTerrainData( xistream& xis )
-{
-    std::string terrainFile, meteoFile;
-    xis >> content( "Terrain", terrainFile )
-        >> content( "Meteo", meteoFile );
-    pWorld_ = new World( terrainFile, meteoFile );
-}
-
 //-----------------------------------------------------------------------------
 // Name: App destructor
 // Created: NLD 2002-07-15
-// Modified: SBO 2005-07-26 (TacticalLines.xml is output in -conffile directory)
 //-----------------------------------------------------------------------------
 App::~App()
 {

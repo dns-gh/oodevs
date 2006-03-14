@@ -29,8 +29,9 @@
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( Controller& controller, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge::PopulationKnowledge( Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
     : controller_( controller )
+    , converter_ ( converter )
     , nID_       ( message.oid_connaissance )
     , popu_      ( resolver.Get( message.oid_population_reelle ) )
 {
@@ -77,7 +78,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 {
     if( ! Find( message.oid_connaissance_concentration ) )
     {
-        PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, popu_, message );
+        PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
         Register( message.oid_connaissance_concentration, *pKnowledge );
     };
     controller_.Update( *this );
@@ -112,7 +113,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
 {
     if( ! Find( message.oid_connaissance_flux ) )
     {
-        PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, popu_, message );
+        PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, converter_, popu_, message );
         Register( message.oid_connaissance_flux, *pKnowledge );
     };
     controller_.Update( *this );

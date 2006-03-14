@@ -23,6 +23,7 @@ class Agent;
 class Controller;
 class Displayer_ABC;
 class Team;
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -38,7 +39,7 @@ class AgentKnowledge : public Entity_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
+             AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter,
                              const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
@@ -68,6 +69,7 @@ private:
 
 public:
     Controller& controller_;
+    const CoordinateConverter& converter_;
     const Resolver_ABC< Agent >& resolver_;
     const Resolver_ABC< Team >& teamResolver_;
     unsigned long nID_;

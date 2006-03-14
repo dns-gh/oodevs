@@ -25,26 +25,30 @@
 #include "LogisticConsignFactory.h"
 #include "FireResultFactory.h"
 #include "FiresModel.h"
+#include "CoordinateConverter.h"
+#include "FireFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 Model::Model( Controller& controller, const Simulation& simulation, const std::string& scipioXml )
-    : types_( * new AgentTypes( scipioXml ) )
+    : coordinateConverter_( *new CoordinateConverter( scipioXml ) )
+    , types_( *new AgentTypes( scipioXml ) )
     , objectTypes_( *new ObjectTypes( scipioXml ) )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controller, *this ) )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controller, *this ) )
     , teamFactory_( *new TeamFactory( controller, *this ) )
     , agentFactory_( *new AgentFactory( controller, types_, *this, simulation ) )
     , logisticFactory_( *new LogisticConsignFactory( controller, *this ) )
+    , fireFactory_( *new FireFactory( *this ) )
     , objectFactory_( *new ObjectFactory( controller, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
-    , limits_( *new LimitsModel() )
+    , limits_( *new LimitsModel( *this ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
 {
@@ -65,6 +69,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &fireFactory_;
     delete &logisticFactory_;
     delete &objectFactory_;
     delete &agentFactory_;
@@ -73,6 +78,7 @@ Model::~Model()
     delete &objectKnowledgeFactory_;
     delete &objectTypes_;
     delete &types_;
+    delete &coordinateConverter_;
 }
     
 

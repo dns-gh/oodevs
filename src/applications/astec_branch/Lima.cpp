@@ -13,8 +13,8 @@
 #include "Lima.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "World.h"
 #include "Tools.h"
+#include "CoordinateConverter.h"
 
 IDManager Lima::idManager_( 137 );
 
@@ -57,7 +57,7 @@ Lima::Lima( T_PointVector pointList, E_FuncLimaType nFuncType )
 // Name: Lima constructor
 // Created: APE 2005-01-26
 // -----------------------------------------------------------------------------
-Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg )
+Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter )
 : TacticalLine_ABC ()
 {
     nID_ = asnMsg.oid;
@@ -72,11 +72,7 @@ Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg )
 
     assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
-    {
-        MT_Vector2D vTmp;
-        App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, vTmp );
-        pointList_.push_back( vTmp );
-    }
+        pointList_.push_back( converter.ConvertToXY( asnMsg.geometrie.vecteur_point.elem[i] ) );
 
     nFuncType_ = (E_FuncLimaType)asnMsg.fonction;
 }
@@ -123,8 +119,9 @@ bool Lima::UpdateToSim()
             {
                 std::string strMGRS;
                 const MT_Vector2D& vPos = *itPoint;
-                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
-                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str();
+//                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
+                 // $$$$ SBO 2006-03-14: factoriser lima/limit...
+                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str(); // $$$$ SBO 2006-03-14: buggué de toute facon
                 ++i;
             }
 
@@ -151,8 +148,8 @@ bool Lima::UpdateToSim()
             {
                 std::string strMGRS;
                 const MT_Vector2D& vPos = *itPoint;
-                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
-                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str();
+//                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
+                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str(); // $$$$ SBO 2006-03-14: buggué !
                 ++i;
             }
 
