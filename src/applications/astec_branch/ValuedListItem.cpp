@@ -15,10 +15,10 @@
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 ValuedListItem::ValuedListItem( QListView * parent )
-: QListViewItem( parent )
-, container_( 0 )
+    : RichListItem( parent )
+    , container_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -26,10 +26,10 @@ ValuedListItem::ValuedListItem( QListView * parent )
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 ValuedListItem::ValuedListItem( QListViewItem * parent )
-: QListViewItem( parent )
-, container_( 0 )
+    : RichListItem( parent )
+    , container_( 0 )
 {
-
+    // NOTHING
 }
    
 // -----------------------------------------------------------------------------
@@ -38,10 +38,10 @@ ValuedListItem::ValuedListItem( QListViewItem * parent )
 // -----------------------------------------------------------------------------
 template< >
 ValuedListItem::ValuedListItem( QListViewItem * const & parent, QListViewItem * after )
-: QListViewItem( parent, after )
-, container_( 0 )
+    : RichListItem( parent, after )
+    , container_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,12 +50,11 @@ ValuedListItem::ValuedListItem( QListViewItem * const & parent, QListViewItem * 
 // -----------------------------------------------------------------------------
 template< >
 ValuedListItem::ValuedListItem( QListView* const & parent, QListViewItem * after )
-: QListViewItem( parent, after )
-, container_( 0 )
+    : RichListItem( parent, after )
+    , container_( 0 )
 {
-
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem destructor
@@ -73,7 +72,7 @@ ValuedListItem::~ValuedListItem()
 EmptyListItem::EmptyListItem( QListView * parent )
     : ValuedListItem( parent )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +82,7 @@ EmptyListItem::EmptyListItem( QListView * parent )
 EmptyListItem::EmptyListItem( QListViewItem * parent )
     : ValuedListItem( parent )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +92,7 @@ EmptyListItem::EmptyListItem( QListViewItem * parent )
 EmptyListItem::EmptyListItem( QListView* value, QListViewItem * parent )
     : ValuedListItem( value, parent )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +102,7 @@ EmptyListItem::EmptyListItem( QListView* value, QListViewItem * parent )
 EmptyListItem::EmptyListItem( QListViewItem* parent, QListViewItem * after )
     : ValuedListItem( parent, after )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

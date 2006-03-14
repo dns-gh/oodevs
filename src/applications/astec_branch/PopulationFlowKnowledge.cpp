@@ -54,6 +54,7 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const 
     , pFlow_     ( 0 )
 {
     pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +63,7 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const 
 // -----------------------------------------------------------------------------
 PopulationFlowKnowledge::~PopulationFlowKnowledge()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------

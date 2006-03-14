@@ -54,6 +54,7 @@ public:
     //! @name Accessors
     //@{
     unsigned long      GetId       () const;
+    std::string        GetName     () const;
     Agent&             GetRealAgent() const;
     const MT_Vector2D& GetPosition () const;
     // $$$$ AGE 2006-02-21: Kg ?

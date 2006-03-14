@@ -10,11 +10,10 @@
 #ifndef __ParamPopulationKnowledge_h_
 #define __ParamPopulationKnowledge_h_
 
-#include "ASN_Types.h"
-#include "Param_ABC.h"
-#include "ContextMenuObserver_ABC.h"
+#include "EntityParameter.h"
 
 class PopulationKnowledge;
+class Population;
 
 // =============================================================================
 /** @class  ParamPopulationKnowledge
@@ -22,22 +21,15 @@ class PopulationKnowledge;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamPopulationKnowledge : public QHBox
-                               , public Param_ABC
-                               , public ContextMenuObserver_ABC< PopulationKnowledge >
+class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge >
+                               , public ContextMenuObserver_ABC< Population >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( ASN1T_KnowledgePopulation& asn, Agent_ABC& agent, const std::string& label, QWidget* pParent, bool bOptional );
+             ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
     virtual ~ParamPopulationKnowledge();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool CheckValidity();
-    virtual void Commit();
     //@}
 
 private:
@@ -47,17 +39,10 @@ private:
     ParamPopulationKnowledge& operator=( const ParamPopulationKnowledge& ); //!< Assignement operator
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    //@}
-
 private:
-    //! @name Member data
+    //! @name Helpers
     //@{
-    ASN1T_KnowledgePopulation& asn_;
-    Agent_ABC& agent_;
-    const PopulationKnowledge* selected_;
+    virtual void NotifyContextMenu( const Population& entity, QPopupMenu& menu );
     //@}
 };
 

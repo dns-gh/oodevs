@@ -3,81 +3,47 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-05-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamObjectKnowledge.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:43 $
-// $Revision: 5 $
-// $Workfile: ParamObjectKnowledge.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __ParamObjectKnowledge_h_
 #define __ParamObjectKnowledge_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-#include "ASN_Types.h"
-#include "Param_ABC.h"
+#include "EntityParameter.h"
 
 class ObjectKnowledge;
-class Team;
-class Agent_ABC;
-
+class Object_ABC;
 
 // =============================================================================
 /** @class  ParamObjectKnowledge
     @brief  ParamObjectKnowledge
-    @par    Using example
-    @code
-    ParamObjectKnowledge;
-    @endcode
 */
-// Created: APE 2004-05-10
+// Created: AGE 2006-03-14
 // =============================================================================
-class ParamObjectKnowledge : public QHBox, public Param_ABC
+class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge >
+                           , public ContextMenuObserver_ABC< Object_ABC >
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamObjectKnowledge );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-    ~ParamObjectKnowledge();
-    //@}
-
-    //! @name Operations
-    //@{
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
-    //@}
-
-private slots:
-    //! @name Private slots
-    //@{
-    void AcceptPopupMenuKnowledge();
-    void OnObjectKnowledgeDeleted( Team& team, ObjectKnowledge& knowledge );
+             ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
+    virtual ~ParamObjectKnowledge();
     //@}
 
 private:
-    std::string strMenuText_;
-    ASN1T_KnowledgeObject& asnKnowledge_;
-    Agent_ABC& agent_;
-    ObjectKnowledge* pKnowledge_;
+    //! @name Copy/Assignement
+    //@{
+    ParamObjectKnowledge( const ParamObjectKnowledge& );            //!< Copy constructor
+    ParamObjectKnowledge& operator=( const ParamObjectKnowledge& ); //!< Assignement operator
+    //@}
 
-    MT_ParameterLabel* pLabel_;
-    QLabel* pKnowledgeLabel_;
-
-    ObjectKnowledge* pPopupKnowledge_;
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu );
+    //@}
 };
 
 #endif // __ParamObjectKnowledge_h_

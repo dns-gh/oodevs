@@ -46,7 +46,7 @@ class Team;
 // =============================================================================
 class AgentKnowledgePanel : public InfoPanel_ABC
                           , private Observer_ABC
-                          , public ElementObserver_ABC< AgentKnowledges >
+                          , public ElementObserver_ABC< AgentKnowledges > // $$$$ AGE 2006-03-07: watch for AgentKnowledge creation / deletion instead
                           , public ElementObserver_ABC< AgentKnowledge >
                           , public ElementObserver_ABC< PerceptionMap >
                           , public KnowledgeGroupSelectionObserver

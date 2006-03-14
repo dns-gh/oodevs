@@ -3,83 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-05-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamAgentKnowledgeList.h $
-// $Author: Ape $
-// $Modtime: 7/01/05 10:41 $
-// $Revision: 4 $
-// $Workfile: ParamAgentKnowledgeList.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __ParamAgentKnowledgeList_h_
 #define __ParamAgentKnowledgeList_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
-#include "Param_ABC.h"
-#include "ParamListView.h"
+#include "EntityListParameter.h"
 
-class Gtia;
 class AgentKnowledge;
-class Agent_ABC;
-
+class Agent;
 
 // =============================================================================
 /** @class  ParamAgentKnowledgeList
     @brief  ParamAgentKnowledgeList
-    @par    Using example
-    @code
-    ParamAgentKnowledgeList;
-    @endcode
+    // $$$$ AGE 2006-03-14: factor these stuffs with single entity parameters 
 */
-// Created: APE 2004-05-10
+// Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgentKnowledgeList : public ParamListView, public Param_ABC
+class ParamAgentKnowledgeList : public EntityListParameter< AgentKnowledge >
+                              , public ContextMenuObserver_ABC< Agent > 
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamAgentKnowledgeList );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional );
-    ~ParamAgentKnowledgeList();
-    //@}
-
-    //! @name Operations
-    //@{
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
-    //@}
-
-private slots:
-    //! @name Private slots
-    //@{
-    void AcceptPopupMenuKnowledge();
-    void OnAgentKnowledgeDeleted( Gtia& gtia, AgentKnowledge& knowledge );
+             ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu );
+    virtual ~ParamAgentKnowledgeList();
     //@}
 
 private:
-    //! @name Member data
+    //! @name Copy/Assignement
     //@{
-    std::string strMenuText_;
-    ASN1T_ListKnowledgeAgent& asnListKnowledge_;
-    ASN1T_OID* pAsnOIDList_;
-    Agent_ABC& agent_;
-    int nMinItems_;
-    int nMaxItems_;
+    ParamAgentKnowledgeList( const ParamAgentKnowledgeList& );            //!< Copy constructor
+    ParamAgentKnowledgeList& operator=( const ParamAgentKnowledgeList& ); //!< Assignement operator
+    //@}
 
-    AgentKnowledge* pPopupKnowledge_;
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyContextMenu( const Agent& entity, QPopupMenu& menu );
     //@}
 };
 

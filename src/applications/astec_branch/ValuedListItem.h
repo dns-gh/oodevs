@@ -19,7 +19,7 @@
 #ifndef __ValuedListItem_h_
 #define __ValuedListItem_h_
 
-#include <qlistview.h>
+#include "RichListItem.h"
 #include "ListItemRtti.h"
 #include "ActionController.h"
 
@@ -31,7 +31,7 @@ class ValueContainer_ABC;
 */
 // Created: APE 2004-04-19
 // =============================================================================
-class ValuedListItem : public QListViewItem
+class ValuedListItem : public RichListItem
 {
 
 public:
@@ -251,9 +251,10 @@ void ValuedListItem::SetValue( const T& value )
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListView * parent )
-: QListViewItem( parent )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -262,9 +263,10 @@ ValuedListItem::ValuedListItem( const T& value, QListView * parent )
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewItem * after )
-: QListViewItem( parent, after )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent, after )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -273,9 +275,10 @@ ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewIte
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-: QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -284,9 +287,10 @@ ValuedListItem::ValuedListItem( const T& value, QListView * parent, QString labe
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-: QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -295,9 +299,10 @@ ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewIte
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent )
-: QListViewItem( parent )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -306,9 +311,10 @@ ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent )
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after )
-: QListViewItem( parent, after )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent, after )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -317,9 +323,10 @@ ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListVie
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-: QListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -328,9 +335,10 @@ ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QString 
 // -----------------------------------------------------------------------------
 template< typename T >
 ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-: QListViewItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
-, container_( new ValueContainer< T >( value ) )
+    : RichListItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
+    , container_( new ValueContainer< T >( value ) )
 {
+    // NOTHING
 }
 
 #endif // __ValuedListItem_h_

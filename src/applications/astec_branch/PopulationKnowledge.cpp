@@ -35,7 +35,7 @@ PopulationKnowledge::PopulationKnowledge( Controller& controller, const Coordina
     , nID_       ( message.oid_connaissance )
     , popu_      ( resolver.Get( message.oid_population_reelle ) )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +45,7 @@ PopulationKnowledge::PopulationKnowledge( Controller& controller, const Coordina
 PopulationKnowledge::~PopulationKnowledge()
 {
     DeleteAll();
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------

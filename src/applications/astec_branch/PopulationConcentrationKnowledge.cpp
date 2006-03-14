@@ -35,6 +35,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& 
     , position_      ( converter.ConvertToXY( asnMsg.position ) )
 {
     // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +44,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& 
 // -----------------------------------------------------------------------------
 PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------

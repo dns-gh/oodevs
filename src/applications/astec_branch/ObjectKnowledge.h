@@ -47,6 +47,9 @@ public:
 
     //! @name Operations
     //@{
+    unsigned long GetId() const;
+    std::string GetName() const;
+
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
     Object_ABC* GetRealObject() const;

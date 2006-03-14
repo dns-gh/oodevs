@@ -66,7 +66,7 @@ protected:
     void CreateAgentKnowledgeList ( ASN1T_ListKnowledgeAgent& asn  , const std::string& strName, bool bOptional );
     void CreateObjectKnowledge    ( ASN1T_KnowledgeObject& asn     , const std::string& strName, bool bOptional );
     void CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn , const std::string& strName, bool bOptional );
-    void CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn      , const std::string& strName, bool bOptional );
+    void CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn , const std::string& strName, bool bOptional );
     void CreateGenObject          ( ASN1T_MissionGenObject& asn    , const std::string& strName, bool bOptional );
     void CreateGenObjectList      ( ASN1T_ListMissionGenObject& asn, const std::string& strName, bool bOptional );
     void CreateBool               ( ASN1BOOL& asn                  , const std::string& strName, bool bOptional, QWidget* pParent = 0 );

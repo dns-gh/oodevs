@@ -34,6 +34,7 @@ ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& messag
     // $$$$ AGE 2006-02-14: Team !
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
     InterfaceContainer< Extension_ABC >::Register( *this );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& messag
 // -----------------------------------------------------------------------------
 ObjectKnowledge::~ObjectKnowledge()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,4 +135,22 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 bool ObjectKnowledge::IsInTeam( const Team& team ) const
 {
     return pRealObject_ && & pRealObject_->GetTeam() == &team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetId
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+unsigned long ObjectKnowledge::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetName
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+std::string ObjectKnowledge::GetName() const
+{
+    return pRealObject_ ? pRealObject_->GetName() : "Unknown Object";
 }

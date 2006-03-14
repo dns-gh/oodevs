@@ -20,6 +20,7 @@
 #include "Displayer_ABC.h"
 #include "Units.h"
 #include "CoordinateConverter.h"
+#include "Agent.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 
@@ -37,6 +38,7 @@ AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, C
     , team_( 0 )
 {
     InterfaceContainer< Extension_ABC >::Register( *this );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +47,7 @@ AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, C
 // -----------------------------------------------------------------------------
 AgentKnowledge::~AgentKnowledge()
 {
-    // NOTHING
+    controller_.Delete( *this );
 }
 
 
@@ -135,6 +137,15 @@ unsigned long AgentKnowledge::GetId() const
 Agent& AgentKnowledge::GetRealAgent() const
 {
     return realAgent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetName
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+std::string AgentKnowledge::GetName() const
+{
+    return realAgent_.GetName();
 }
 
 // -----------------------------------------------------------------------------
