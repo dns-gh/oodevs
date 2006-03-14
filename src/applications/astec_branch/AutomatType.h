@@ -38,6 +38,7 @@ public:
     //@{
     unsigned long GetId();
     AgentType* GetTypePC();
+    const DecisionalModel& GetDecisionalModel() const;
     //@}
 
 private:

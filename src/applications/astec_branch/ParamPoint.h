@@ -53,7 +53,6 @@ public:
     //! @name Operations
     //@{
     void Draw();
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
     bool CheckValidity();
     void WriteMsg( std::stringstream& strMsg );
 
@@ -84,7 +83,5 @@ private:
 
     MT_Vector2D popupMenuPoint_;
 };
-
-#   include "ParamPoint.inl"
 
 #endif // __ParamPoint_h_

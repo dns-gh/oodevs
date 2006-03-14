@@ -21,6 +21,8 @@ class SensorType;
 class AutomatType;
 class PopulationType;
 class DotationType;
+class MissionFactory;
+class Mission;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -58,7 +60,7 @@ private:
 
     //! @name Types
     //@{
-    typedef unsigned long (*T_Resolver)( const std::string& );
+    typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
     //@}
 
     //! @name Helpers

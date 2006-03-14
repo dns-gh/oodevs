@@ -40,10 +40,6 @@ CoordinateConverter::~CoordinateConverter()
 {
 }
 
-//-------------------------------------------------------------------------
-// Initialization
-//-------------------------------------------------------------------------
-
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ReadTerrain
 // Created: AGE 2005-03-14
@@ -53,12 +49,14 @@ void CoordinateConverter::ReadTerrain( const std::string& terrainFile )
     xifstream xis( terrainFile );
 
     std::string geoidFile, worldFile;
-    xis >> content( "Geoid", geoidFile )
-        >> content( "CoordinateConverter", worldFile );
+    xis >> start( "Terrain" )
+            >> content( "Geoid", geoidFile )
+            >> content( "World", worldFile );
 
-    geocoord::Geoid::Instance().Initialize( geoidFile );
+    const std::string baseDirectory = QFileInfo( terrainFile.c_str() ).dirPath().ascii() + std::string( "/" );
+    geocoord::Geoid::Instance().Initialize( baseDirectory + geoidFile );
 
-    ReadWorld( QFileInfo( terrainFile.c_str() ).filePath().ascii() + ( "/" + worldFile ) );
+    ReadWorld( baseDirectory + worldFile );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +68,7 @@ void CoordinateConverter::ReadWorld( const std::string& worldFile )
     xifstream xis( worldFile );
 
     double rLatitude, rLongitude, rWidth, rHeight;
-    xis >> start( "CoordinateConverter" )
+    xis >> start( "World" )
         >> content( "Latitude", rLatitude )
         >> content( "Longitude", rLongitude )
         >> content( "Width", rWidth )

@@ -38,6 +38,7 @@ public:
     //@{
     unsigned long GetId() const;
     const std::string& GetName() const;
+    const DecisionalModel& GetDecisionalModel() const;
     //@}
 
 private:

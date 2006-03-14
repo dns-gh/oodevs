@@ -43,7 +43,7 @@ AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std
 // -----------------------------------------------------------------------------
 AutomatType::~AutomatType()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,4 +62,13 @@ AgentType* AutomatType::GetTypePC()
 unsigned long AutomatType::GetId()
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::GetDecisionalModel
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+const DecisionalModel& AutomatType::GetDecisionalModel() const
+{
+    return *model_;
 }

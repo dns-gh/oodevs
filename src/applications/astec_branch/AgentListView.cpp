@@ -25,6 +25,7 @@
 #include "Agent.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
+#include "AutomatDecisions.h"
 
 #include "moc_AgentListView.cpp"
 
@@ -37,15 +38,14 @@
 AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController )
     : ListView< AgentListView >( pParent, *this )
     , actionController_( actionController )
-    , pPopupMenu_   ( 0 )
+    , pPopupMenu_   ( new QPopupMenu( this ) )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Unités" );
     setRootIsDecorated( true );
-    setResizeMode( QListView::LastColumn );
     setAcceptDrops( true );
 
-//    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 //    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
 //    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
@@ -59,6 +59,7 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionCo
 // -----------------------------------------------------------------------------
 AgentListView::~AgentListView()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +162,23 @@ void AgentListView::Display( const Agent& agent, ValuedListItem* item )
 {
     item->SetValue( &agent );
     item->setText( 0, agent.GetName().c_str() );
-    RecursiveDisplay< Agent, Agent >( agent, item );
+    if( agent.Retrieve< AutomatDecisions >() )
+    {
+        const QPixmap pix = agent.Get< AutomatDecisions >().IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
+        item->setPixmap( 0, pix );
+        RecursiveDisplay< Agent, Agent >( agent, item );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyUpdated
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
+{
+    ValuedListItem* item = FindItem( & decisions.GetAgent(), firstChild() );
+    if( item )
+        item->setPixmap( 0, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +189,21 @@ void AgentListView::OnSelectionChange( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
     item->Select( actionController_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::OnContextMenuRequested
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+{
+    pPopupMenu_->clear();
+
+    ValuedListItem* item = (ValuedListItem*)( i );
+    item->ContextMenu( actionController_, *pPopupMenu_ );
+
+    if( pPopupMenu_->count() > 0 )
+        pPopupMenu_->popup( pos );
 }
 
 // -----------------------------------------------------------------------------

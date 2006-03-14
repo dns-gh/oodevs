@@ -19,10 +19,6 @@
 #ifndef __UnitMissionInterface_h_
 #define __UnitMissionInterface_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MissionInterface_ABC.h"
 
 class Mission;
@@ -35,13 +31,19 @@ class Agent;
 class UnitMissionInterface : public MissionInterface_ABC
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( UnitMissionInterface );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    UnitMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel );
-    ~UnitMissionInterface();
+             UnitMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel );
+    virtual ~UnitMissionInterface();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    UnitMissionInterface( const UnitMissionInterface& );
+    UnitMissionInterface& operator=( const UnitMissionInterface& );
     //@}
 
 private:
@@ -51,14 +53,16 @@ private:
     void CreateInterface();
     //@}
 
-
     //! @name Generated helpers
     //@{
 #include "UnitMissionInterface_Gen.h" 
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void OnOk();
+    //@}
 
 private:
     //! @name Member data

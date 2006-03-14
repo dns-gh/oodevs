@@ -31,6 +31,7 @@ class SelectedElement;
 class Controller;
 class ValuedListItem;
 class ActionController;
+class AutomatDecisions;
 
 // =============================================================================
 /** @class  AgentListView
@@ -43,6 +44,7 @@ class AgentListView : public ListView< AgentListView >
                     , public ElementObserver_ABC< Team >
                     , public ElementObserver_ABC< KnowledgeGroup >
                     , public ElementObserver_ABC< Agent >
+                    , public ElementObserver_ABC< AutomatDecisions >
 {
    Q_OBJECT;
 public:
@@ -72,6 +74,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChange( QListViewItem* item );
+    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     //@}
 
     //! @name Helpers
@@ -83,6 +86,7 @@ private:
 
     virtual void NotifyUpdated( const KnowledgeGroup& group );
     virtual void NotifyUpdated( const Agent& agent );
+    virtual void NotifyUpdated( const AutomatDecisions& decisions );
 
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );

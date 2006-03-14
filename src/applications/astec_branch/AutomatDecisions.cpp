@@ -3,78 +3,73 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Param_ABC.cpp $
-// $Author: Nld $
-// $Modtime: 26/07/04 18:06 $
-// $Revision: 4 $
-// $Workfile: Param_ABC.cpp $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Param_ABC.h"
-#include "ActionController.h"
+#include "AutomatDecisions.h"
+#include "Agent.h"
+#include "DecisionalModel.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
-// Name: Param_ABC constructor
+// Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Param_ABC::Param_ABC()
-    : bIsOptional_( false )
-    , controller_( 0 )
+AutomatDecisions::AutomatDecisions( Controller& controller, const Agent& agent )
+    : controller_( controller )
+    , agent_( agent )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Param_ABC destructor
+// Name: AutomatDecisions destructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Param_ABC::~Param_ABC()
+AutomatDecisions::~AutomatDecisions()
 {
-    if( controller_ )
-        controller_->Remove( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Param_ABC::RegisterIn
+// Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void Param_ABC::RegisterIn( ActionController& controller )
+void AutomatDecisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
-    controller.Register( *this );
-    controller_ = &controller;
+    if( message.m.etat_automatePresent )
+        bEmbraye_ = ( message.etat_automate == EnumAutomateState::embraye );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Param_ABC::SetOptional
+// Name: Iterator< const Mission& > AutomatDecisions::GetMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void Param_ABC::SetOptional( bool optional )
+Iterator< const Mission& > AutomatDecisions::GetMissions() const
 {
-    bIsOptional_ = optional;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Param_ABC::CheckValidity
-// Created: APE 2004-04-22
-// -----------------------------------------------------------------------------
-bool Param_ABC::CheckValidity()
-{
-    return true;
+    if( ! agent_.GetAutomatDecisionalModel() )
+        throw std::runtime_error( "AutomatDecisions attached on agent" );
+    return agent_.GetAutomatDecisionalModel()->Resolver< Mission >::CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Param_ABC::IsOptional
-// Created: SBO 2005-11-08
+// Name: AutomatDecisions::GetAgent
+// Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-bool Param_ABC::IsOptional() const
+const Agent& AutomatDecisions::GetAgent() const
 {
-    return bIsOptional_;
+    return agent_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::IsEmbraye
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+bool AutomatDecisions::IsEmbraye() const
+{
+    return bEmbraye_;
+}
+   

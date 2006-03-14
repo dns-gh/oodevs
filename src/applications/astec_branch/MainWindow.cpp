@@ -28,6 +28,7 @@
 #include "ActionController.h"
 #include "Settings.h"
 #include "OptionsPanel.h"
+#include "MissionPanel.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
 
@@ -75,6 +76,13 @@ MainWindow::MainWindow( Controller& controller )
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
     pInfoDockWnd_->setCaption( tr( "Informations" ) );
     this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
+
+     // Mission panel
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, actionController_ );
+    this->moveDockWindow( pMissionPanel_, Qt::DockLeft );
+    pMissionPanel_->hide();
+    this->setDockEnabled( pMissionPanel_, Qt::DockTop, false );
+    this->setAppropriate( pMissionPanel_, false );
 
     // Logger
     QDockWindow*pLogDockWnd_ = new QDockWindow( this );

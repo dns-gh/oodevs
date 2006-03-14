@@ -9,6 +9,9 @@
 
 #include "astec_pch.h"
 #include "DecisionalModel.h"
+#include "Mission.h"
+#include "FragOrder.h"
+#include "MissionFactory.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -17,12 +20,12 @@ using namespace xml;
 // Name: DecisionalModel constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-DecisionalModel::DecisionalModel( xml::xistream& xis, const T_Resolver& missionResolver, const T_Resolver& fragOrderResolver )
+DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver )
 {
     xis >> attribute( "nom", name_ )
         >> optional() 
             >> start( "Missions" )
-                >> list( "Mission", *this, ReadMission, missionResolver, fragOrderResolver )
+                >> list( "Mission", *this, ReadMission, factory, missionResolver )
             >> end();
 }
 
@@ -32,22 +35,23 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, const T_Resolver& missionR
 // -----------------------------------------------------------------------------
 DecisionalModel::~DecisionalModel()
 {
-    // NOTHING
+    Resolver< Mission >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DecisionalModel::ReadMission
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void DecisionalModel::ReadMission( xml::xistream& xis, const T_Resolver& missionResolver, const T_Resolver& fragOrderResolver )
+void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver )
 {
-    std::string mission;
-    xis >> attribute( "nom", mission );
-    availableMissions_.push_back( missionResolver( mission ) );
+    std::string name;
+    xis >> attribute( "nom", name );
+    Mission* mission = (factory.*missionResolver)( name );
+    Resolver< Mission >::Register( mission->id_, *mission );
 
     xis >> optional() 
         >> start( "OrdresConduite" )
-            >> list( "OrdreConduite", *this, ReadFragOrder, fragOrderResolver )
+            >> list( "OrdreConduite", *this, ReadFragOrder, *mission, factory )
         >> end();
 }
 
@@ -55,11 +59,14 @@ void DecisionalModel::ReadMission( xml::xistream& xis, const T_Resolver& mission
 // Name: DecisionalModel::ReadFragOrder
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void DecisionalModel::ReadFragOrder( xml::xistream& xis, const T_Resolver& resolver )
+void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory )
 {
     std::string name;
     xis >> attribute( "nom", name );
-    availableFragOrders_.insert( resolver( name ) );
+    FragOrder* order = factory.CreateFragOrder( name );
+    mission.AddAvailableOrder( *order );
+    if( ! Resolver< FragOrder >::Find( order->id_ ) )
+        Resolver< FragOrder >::Register( order->id_, *order );
 }
 
 // -----------------------------------------------------------------------------

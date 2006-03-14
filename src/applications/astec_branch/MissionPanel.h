@@ -19,99 +19,71 @@
 #ifndef __MissionPanel_h_
 #define __MissionPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-#include "Param_ABC.h"
-#include "Types.h"
+#include "ContextMenuObserver_ABC.h"
+#include "Observer_ABC.h"
+#include "Iterator.h"
 
 class QPopupMenu;
+class ActionController;
+class Decisions;
+class AutomatDecisions;
 class Agent;
 class Population;
-class PopulationConcentration;
-class PopulationFlow;
 class MissionInterface_ABC;
-class RC;
-class ShapeEditorMapEventFilter;
-class Team;
+class Mission;
 
 // =============================================================================
 // Created: APE 2004-03-19
 // =============================================================================
 class MissionPanel : public QDockWindow
+                   , private Observer_ABC
+                   , public ContextMenuObserver_ABC< Agent >
+                   , public ContextMenuObserver_ABC< Population >
+        
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( MissionPanel );
-    
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    MissionPanel( QWidget* pParent );
-    ~MissionPanel();
+             MissionPanel( QWidget* pParent, ActionController& actions );
+    virtual ~MissionPanel();
     //@}
 
-public slots:
     //! @name Operations
     //@{
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    //@}
-
-private:
-    void FillDiplomacyPopupMenu( QPopupMenu& popumMenu, Team& team );
-    void FillStandardPopupMenu( QPopupMenu& popupMenu, Agent& agent );
-    void FillStandardPopupMenu( QPopupMenu& popupMenu, Population& population );
-    void FillStandardPopupMenu( QPopupMenu& popupMenu, PopulationConcentration& concentration );
-    void FillStandardPopupMenu( QPopupMenu& popupMenu, PopulationFlow& flow );
-    void FillFragmentaryOrderPopup( QPopupMenu& popupMenu, RC& rc );
-
     void hideEvent( QHideEvent* pEvent );
+    //@}
 
 private slots:
-    void ToggleAutomate();
-    void ToggleAggregation();
-    void ActivateUnitMission( int nMissionId );
-    void ActivatePopulationMission( int nMissionId );
-    void ActivateAutomataMission( int nMissionId );
-    void ActivateFragmentaryOrder( int nOrderId );
-    void ActivateFragmentaryOrderPopulation( int nOrderId );
-
-    void MagicMove();
-    void MagicMoveDone();
-    void MagicRestore( int nId );
-    void MagicDestroyComponent();
-    void MagicDestroyAll();
-    void MagicRecompletion();
-    void MagicSurrender();
-    void MagicRecoverHumanTransporters();
-    void MagicChangeDiplomatie();
-    void MagicChangeLogisticLinks();
-    void MagicPushFlux();
-    void MagicChangeQuotas();
-    void ChangeHumanFactors();
-
-    //! @name Population magic actions
+    //! @name Slots
     //@{
-    void PopulationMagicMove                ();
-    void PopulationMagicMoveDone            ();
-    void PopulationMagicChangeAttitudeGlobal( int nAttitude );
-    void PopulationMagicChangeAttitude      ( int nAttitude, bool bGlobal = false );
-    void PopulationMagicDestroyAll          ();
+    void ActivateAgentMission( int );
+    void ActivateAutomatMission( int );
     //@}
 
 private:
-    Team*		             pPopupTeam_;
-    Agent*		             pPopupAgent_;
-	Population*              pPopupPopulation_;
-    PopulationConcentration* pPopupPopulationConcentration_;
-    PopulationFlow*          pPopupPopulationFlow_;
+    //! @name Copy / Assignment
+    //@{
+    MissionPanel( const MissionPanel& );
+    MissionPanel& operator=( const MissionPanel& );
+    //@}
 
+    //! @name Helpers
+    //@{
+    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Population& agent, QPopupMenu& menu );
+    int AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, const QString& name, const char* slot );
+    void AddAgentMissions( const Decisions& decisions, QPopupMenu& menu ); 
+    void AddAutomatMissions( const AutomatDecisions& decisions, QPopupMenu& menu ); 
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
     MissionInterface_ABC* pMissionInterface_;
-
-    ShapeEditorMapEventFilter* pAgentMagicMovePositionEditor_;
-    ShapeEditorMapEventFilter* pPopulationMagicMovePositionEditor_;
+    const Agent* selected_;
+    //@}
 };
 
 #endif // __MissionPanel_h_

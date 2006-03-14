@@ -10,9 +10,12 @@
 #ifndef __DecisionalModel_h_
 #define __DecisionalModel_h_
 
-#include "Resolver_ABC.h"
+#include "Resolver.h"
 
 namespace xml { class xistream; };
+class Mission;
+class MissionFactory;
+class FragOrder;
 
 // =============================================================================
 /** @class  DecisionalModel
@@ -20,17 +23,18 @@ namespace xml { class xistream; };
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class DecisionalModel
+class DecisionalModel : public Resolver< Mission >
+                      , public Resolver< FragOrder >
 {
 public:
     //! @name Types
     //@{
-    typedef unsigned long (*T_Resolver)( const std::string& );
+    typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
     //@}
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalModel( xml::xistream& xis, const T_Resolver& missionResolver, const T_Resolver& fragOrderResolver);
+             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
     virtual ~DecisionalModel();
     //@}
 
@@ -46,24 +50,16 @@ private:
     DecisionalModel& operator=( const DecisionalModel& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned long > T_Missions; // $$$$ AGE 2006-03-09: resolve ?
-    typedef std::set   < unsigned long > T_FragOrders;
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadMission( xml::xistream& xis, const T_Resolver& missionResolver, const T_Resolver& fragOrderResolver );
-    void ReadFragOrder( xml::xistream& xis, const T_Resolver& resolver );
+    void ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
+    void ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string name_;
-    T_Missions   availableMissions_;
-    T_FragOrders availableFragOrders_;
     //@}
 };
 

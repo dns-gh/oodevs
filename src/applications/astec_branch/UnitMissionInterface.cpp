@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "UnitMissionInterface.h"
 #include "moc_UnitMissionInterface.cpp"
@@ -33,7 +29,6 @@
 #include "ParamPath.h"
 #include "ParamLimits.h"
 #include "ParamLimaList.h"
-#include "ParamRadioBtnGroup.h"
 #include "ParamGDH.h"
 #include "ParamComboBox.h"
 #include "ParamBool.h"
@@ -50,11 +45,11 @@
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel )
     : MissionInterface_ABC( agent, parentPanel )
-    , nMissionId_             ( nMissionId )
+    , nMissionId_         ( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPionOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent_);
-    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetID();
+    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetId();
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromUnitMission( E_UnitMission( nMissionId_ ) ).c_str(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
@@ -63,7 +58,7 @@ UnitMissionInterface::UnitMissionInterface( Agent& agent, uint nMissionId, Missi
     font.setBold( true );
     pLabel->setFont( font );
 
-    this->CreateInterface();
+    CreateInterface();
 }
 
 
@@ -100,7 +95,7 @@ void UnitMissionInterface::CreateDefaultParameters()
 // -----------------------------------------------------------------------------
 void UnitMissionInterface::OnOk()
 {
-    if( ! this->CheckValidity() )
+    if( ! CheckValidity() )
         return;
 
     std::stringstream strMsg;
@@ -122,7 +117,7 @@ void UnitMissionInterface::OnOk()
     order.m.oid_limite_droitePresent = (order.oid_limite_droite != MIL_NULL_LINE_ID) ? 1 : 0;
     pASNMsgOrder_->Send( 45 );
 
-    agent_.OnSendMissionOrder( order );
+    agent_.Update( order );
     parentPanel_.hide();
 }
 

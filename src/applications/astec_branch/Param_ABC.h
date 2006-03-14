@@ -19,40 +19,28 @@
 #ifndef __Param_ABC_h_
 #define __Param_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-#include "Types.h"
-
-class ActionContext;
-class QPopupMenu;
-
-class Param_ABC;
-typedef std::vector< Param_ABC* >   T_ParamVector;
-typedef T_ParamVector::iterator         IT_ParamVector;
-typedef T_ParamVector::const_iterator   CIT_ParamVector;
+#include "Observer_ABC.h"
+class ActionController;
 
 // =============================================================================
 // Created: APE 2004-03-18
 // =============================================================================
-class Param_ABC
+class Param_ABC : private Observer_ABC
 {
-    MT_COPYNOTALLOWED( Param_ABC );
-
 public:
     //! @name Constructors/Destructor
     //@{
-             Param_ABC( bool bOptional );
+             Param_ABC();
     virtual ~Param_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw();
-    virtual void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
+    void RegisterIn( ActionController& controller );
+    void SetOptional( bool );
+
     virtual bool CheckValidity();
-    virtual void WriteMsg ( std::stringstream& strMsg ) = 0;
+    virtual void Commit() = 0;
     //@}
 
     //! @name Accessors
@@ -61,9 +49,15 @@ public:
     //@}
 
 private:
-    bool bIsOptional_;
-};
+    //! @name Copy/Assignment
+    //@{
+    Param_ABC( const Param_ABC& );
+    Param_ABC& operator=( const Param_ABC& );
+    //@}
 
-#   include "Param_ABC.inl"
+private:
+    bool bIsOptional_;
+    ActionController* controller_;
+};
 
 #endif // __Param_ABC_h_

@@ -77,3 +77,12 @@ const std::string& AgentType::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetDecisionalModel
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+const DecisionalModel& AgentType::GetDecisionalModel() const
+{
+    return *model_;
+}

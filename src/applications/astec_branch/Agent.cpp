@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Agent.h"
+#include "AgentType.h"
 #include "AutomatType.h"
 #include "Controller.h"
 #include "KnowledgeGroup.h"
@@ -186,4 +187,31 @@ KnowledgeGroup* Agent::GetKnowledgeGroup() const
     if( superior_ )
         return superior_->GetKnowledgeGroup();
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetDecisionalModel
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+const DecisionalModel& Agent::GetDecisionalModel() const
+{
+    return type_->GetDecisionalModel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetAutomatDecisionalModel
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+const DecisionalModel* Agent::GetAutomatDecisionalModel() const
+{
+    return automatType_ ? & automatType_->GetDecisionalModel() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetSuperior
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+const Agent* Agent::GetSuperior() const
+{
+    return superior_;
 }

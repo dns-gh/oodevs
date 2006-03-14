@@ -3,42 +3,29 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPoint.inl $
-// $Author: Ape $
-// $Modtime: 27/08/04 17:14 $
-// $Revision: 3 $
-// $Workfile: ParamPoint.inl $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-
-#include "GLTool.h"
-
+#include "astec_pch.h"
+#include "FragOrder.h"
 
 // -----------------------------------------------------------------------------
-// Name: ParamPoint::Draw
-// Created: APE 2004-06-03
+// Name: FragOrder constructor
+// Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-inline
-void ParamPoint::Draw()
+FragOrder::FragOrder( const std::string& name, unsigned int id )
+    : name_( name )
+    , id_( id )
 {
-    GLTool::Draw( *this );
+    // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamPoint::GetPoint
-/** @return 
-*/
-// Created: APE 2004-08-27
+// Name: FragOrder destructor
+// Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& ParamPoint::GetPoint()
+FragOrder::~FragOrder()
 {
-    return point_;
+    // NOTHING
 }

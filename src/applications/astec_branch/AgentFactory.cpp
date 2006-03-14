@@ -49,6 +49,8 @@
 #include "LogisticConsigns.h"
 #include "Logistics.h"
 #include "Explosions.h"
+#include "Decisions.h"
+#include "AutomatDecisions.h"
 #include "Fires.h"
 
 // -----------------------------------------------------------------------------
@@ -82,6 +84,8 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     Agent* result = new Agent( asnMsg, controller_, types_, model_.agents_, model_.knowledgeGroups_ );
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controller_, model_.agents_ ) );
+    result->Attach( *new Decisions( controller_, *result ) );
+    result->Attach( *new AutomatDecisions( controller_, *result ) );
     result->Update( asnMsg );
     return result;
 }
@@ -94,6 +98,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controller_, types_, model_.agents_, model_.knowledgeGroups_ );
     AttachExtensions( *result );
+    result->Attach( *new Decisions( controller_, *result ) );
     return result;
 }
 

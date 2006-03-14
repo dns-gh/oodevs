@@ -16,7 +16,7 @@
 #include "AutomatType.h"
 #include "PopulationType.h"
 #include "DotationType.h"
-#include "ent/ENT_Tr.h"
+#include "MissionFactory.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -108,9 +108,9 @@ void AgentTypes::ReadDecisional( const std::string& decisional )
 void AgentTypes::ReadModels( const std::string& models )
 {
     xifstream xis( models );
-    T_Resolver unitResolver       = T_Resolver( ENT_Tr::ConvertToUnitMission );
-    T_Resolver automatResolver    = T_Resolver( ENT_Tr::ConvertToAutomataMission );
-    T_Resolver populationResolver = T_Resolver( ENT_Tr::ConvertToPopulationMission );
+    T_Resolver unitResolver       = &MissionFactory::CreateAgentMission;
+    T_Resolver automatResolver    = &MissionFactory::CreateAutomatMission;
+    T_Resolver populationResolver = &MissionFactory::CreatePopulationMission;
 
     xis >> start( "Modeles" )
             >> start( "Pions" )
@@ -130,8 +130,8 @@ void AgentTypes::ReadModels( const std::string& models )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolver )
 {
-    T_Resolver fragResolver = T_Resolver( ENT_Tr::ConvertToFragOrder );
-    DecisionalModel* model = new DecisionalModel( xis, missionResolver, fragResolver );
+    MissionFactory factory;
+    DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver );
     Resolver< DecisionalModel, std::string >::Register( model->GetName(), *model );
 }
 
