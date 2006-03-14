@@ -64,8 +64,7 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    bool set_;
-    unsigned long nbcId_; // $$$$ AGE 2006-02-14: resolve
+    OptionalValue< unsigned long > nbcId_; // $$$$ AGE 2006-02-14: resolve
     //@}
 };
 

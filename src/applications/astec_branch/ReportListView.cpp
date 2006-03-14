@@ -38,7 +38,7 @@ ReportListView::ReportListView( QWidget* pParent, Controller& controller, Action
 {
     AddColumn( "Reçu" );
     AddColumn( "Compte-rendu" );
-
+    
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
     setSorting( -1, false );
@@ -65,6 +65,15 @@ ReportListView::ReportListView( QWidget* pParent, Controller& controller, Action
 ReportListView::~ReportListView()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::showEvent
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void ReportListView::showEvent( QShowEvent* )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -125,11 +134,7 @@ void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer
     {
         if( filter_.ShouldDisplay( *report ) )
         {
-            QString time( "%1:%2:%3" );
-            time = time.arg( ( report->GetTime() / 3600 ) % 24 )
-                    .arg( ( report->GetTime() / 60 ) % 60 )
-                    .arg(  report->GetTime() % 60  );
-            displayer.Display( "Reçu", time );
+            displayer.Display( "Reçu", QTime().addSecs( report->GetTime() ).toString( "hh:mm:ss" ) );
             displayer.Display( "Compte-rendu", report->GetTitle() );
         }
         else
@@ -148,12 +153,7 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
     if( ! filter_.ShouldDisplay( report ) )
         return;
 
-    QString time( "%1:%2:%3" );
-
-    time = time.arg( ( report.GetTime() / 3600 ) % 24 )
-               .arg( ( report.GetTime() / 60 ) % 60 )
-               .arg(  report.GetTime() % 60  );
-    new ValuedListItem( & report, this,time, report.GetTitle().c_str() );
+    new ValuedListItem( & report, this, QTime().addSecs( report.GetTime() ).toString( "hh:mm:ss" ), report.GetTitle().c_str() );
 //    if( report.IsRCType() )
 //    {
 //        T_RichReportItem* pItem = new T_RichReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );

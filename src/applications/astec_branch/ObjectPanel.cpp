@@ -137,31 +137,22 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
         {
             // $$$$ AGE 2006-02-17: refactor that
             Show();
+            display_->Hide();
             NotifyUpdated( *selected_ );
             if( selected_->Retrieve< CampAttributes >() )
                 NotifyUpdated( selected_->Get< CampAttributes >() );
-            else
-                display_->Group( "Camp" ).Hide();
 
             if( selected_->Retrieve< CrossingSiteAttributes >() )
                 NotifyUpdated( selected_->Get< CrossingSiteAttributes >() );
-            else
-                display_->Group( "Site de franchissement" ).Hide();
 
             if( selected_->Retrieve< LogisticRouteAttributes >() )
                 NotifyUpdated( selected_->Get< LogisticRouteAttributes >() );
-            else
-                display_->Group( "Itinéraire logistique" ).Hide();
 
             if( selected_->Retrieve< NBCAttributes >() )
                 NotifyUpdated( selected_->Get< NBCAttributes >() );
-            else
-                display_->Group( "Nuage/Zone NBC" ).Hide();
 
             if( selected_->Retrieve< RotaAttributes >() )
                 NotifyUpdated( selected_->Get< RotaAttributes >() );
-            else
-                display_->Group( "ROTA" ).Hide();
         }
         else
             Hide();

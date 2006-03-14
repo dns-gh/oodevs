@@ -17,7 +17,6 @@ class Population;
 // =============================================================================
 /** @class  AgentFactory_ABC
     @brief  AgentFactory_ABC
-    // $$$$ AGE 2006-02-13: Make an only EntityFactory ?
 */
 // Created: AGE 2006-02-13
 // =============================================================================
@@ -43,15 +42,6 @@ private:
     //@{
     AgentFactory_ABC( const AgentFactory_ABC& );            //!< Copy constructor
     AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

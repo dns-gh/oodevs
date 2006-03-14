@@ -29,7 +29,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const T& updateMessage ) = 0; // $$$$ AGE 2006-02-15: 
+    virtual void DoUpdate( const T& updateMessage ) = 0; // $$$$ AGE 2006-02-15: DoUpdate c'est pas terrible
     //@}
 };
 

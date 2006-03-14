@@ -71,11 +71,6 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Control
                 .AddLabel( "Percue:" )
                 .AddLabel( "Portions connues:" );
 
-    // $$$$ AGE 2006-02-27: ? does the data event exist ?
-//    perceptionList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this );
-//    perceptionList_->AddColumn( "Agent" );
-//    perceptionList_->AddColumn( "Niveau perception" );
-
     connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
 

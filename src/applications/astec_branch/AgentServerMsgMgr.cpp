@@ -40,6 +40,7 @@
 #include "ObjectsModel.h"
 #include "LogisticsModel.h"
 #include "LimitsModel.h"
+#include "FiresModel.h"
 #include "App.h"
 #include "DIN_Types.h"
 
@@ -193,18 +194,18 @@ void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& inp
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateCreation
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCreation& message )
 {
-    model_.agents_.CreateAgent( asnMsg );
+    model_.agents_.CreateAgent( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPionCreation
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& message )
 {
-    model_.agents_.CreateAgent( asnMsg );
+    model_.agents_.CreateAgent( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,18 +232,9 @@ void AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input
 // Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
 // Created: NLD 2002-10-14
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN_Input& input )
+void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN_Input& )
 {
-    double rPerceptionTime;
-    double rDecisionTime;
-    double rActionTime;
-    double rMainLoopTime;
-
-    input >> rPerceptionTime;
-    input >> rDecisionTime;
-    input >> rActionTime;
-    input >> rMainLoopTime;
-    // $$$$ AGE 2006-02-10: 
+    // $$$$ AGE 2006-02-10: NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -341,13 +333,13 @@ void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*link
 // Name: AgentServerMsgMgr::SendMsgMosSim
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
+void AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& message )
 {
     if( ! session_ )
         return;
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
 
-    ASN1C_MsgsMosSim asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
+    ASN1C_MsgsMosSim asnMsgCtrl( asnPEREncodeBuffer, message );
 
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
@@ -361,7 +353,7 @@ void AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 
     Send( eMsgMosSim, dinMsg );
 
-    msgRecorder_.OnNewMsg( asnMsg.t, asnPEREncodeBuffer );
+    msgRecorder_.OnNewMsg( message.t, asnPEREncodeBuffer );
 }
 
 
@@ -369,14 +361,14 @@ void AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 // Name: AgentServerMsgMgr::SendMsgMosSimWithContext
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, MIL_MOSContextID nCtx )
+void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& message, MIL_MOSContextID nCtx )
 {
     if( ! session_ )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
 
-    ASN1C_MsgsMosSimWithContext asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
+    ASN1C_MsgsMosSimWithContext asnMsgCtrl( asnPEREncodeBuffer, message );
 
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
@@ -392,7 +384,7 @@ void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& a
 
     Send( eMsgMosSimWithContext, dinMsg );
 
-    msgRecorder_.OnNewMsgWithContext( asnMsg.t, nCtx, asnPEREncodeBuffer );
+    msgRecorder_.OnNewMsgWithContext( message.t, nCtx, asnPEREncodeBuffer );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,9 +427,9 @@ bool AgentServerMsgMgr::CheckAcknowledge( const char* type, const T& message )
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck( const ASN1T_MsgCtrlPauseAck& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck( const ASN1T_MsgCtrlPauseAck& message )
 {
-    if( CheckAcknowledge( "CtrlPauseAck", asnMsg ) )
+    if( CheckAcknowledge( "CtrlPauseAck", message ) )
         simulation_.Pause( true );
 }
 
@@ -445,9 +437,9 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck( const ASN1T_MsgCtrlPauseAck& a
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck( const ASN1T_MsgCtrlResumeAck& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck( const ASN1T_MsgCtrlResumeAck& message )
 {
-    if( CheckAcknowledge( "CtrlResumeAck", asnMsg ) )
+    if( CheckAcknowledge( "CtrlResumeAck", message ) )
         simulation_.Pause( false );
 }
 
@@ -455,28 +447,28 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck( const ASN1T_MsgCtrlResumeAck&
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck
 // Created: NLD 2003-02-27
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlChangeTimeFactorAck& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlChangeTimeFactorAck& message )
 {
-    if( CheckAcknowledge( "CtrlTimeFactorAck", asnMsg.error_code ) )
-        simulation_.ChangeSpeed( (int)asnMsg.time_factor );
+    if( CheckAcknowledge( "CtrlTimeFactorAck", message.error_code ) )
+        simulation_.ChangeSpeed( (int)message.time_factor );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlInfo
 // Created: NLD 2003-02-27
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& message )
 {
-    simulation_.Update( asnMsg );
+    simulation_.Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& message )
 {
-    simulation_.BeginTick( asnMsg );
+    simulation_.BeginTick( message );
     msgRecorder_.OnTimeTick( simulation_.GetTime() );
 }
 
@@ -484,7 +476,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick&
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlEndTick
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnMsg*/ )
+void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*message*/ )
 {
     simulation_.EndTick();
 }
@@ -493,9 +485,9 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*a
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitAttributes
 // Created: NLD 2003-02-27
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 
@@ -503,137 +495,137 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttribute
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitDotations
 // Created: NLD 2003-03-06
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreation( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
 {
-    model_.logistics_.CreateMaintenanceConsign( asnMsg );
+    model_.logistics_.CreateMaintenanceConsign( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( const ASN1T_MsgLogMaintenanceTraitementEquipementDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( const ASN1T_MsgLogMaintenanceTraitementEquipementDestruction& message )
 {
-    model_.logistics_.DeleteMaintenanceConsign( asnMsg.oid_consigne );
+    model_.logistics_.DeleteMaintenanceConsign( message.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& message )
 {
-    model_.logistics_.GetMaintenanceConsign( asnMsg.oid_consigne ).Update( asnMsg );
+    model_.logistics_.GetMaintenanceConsign( message.oid_consigne ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const ASN1T_MsgLogSanteTraitementHumainCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const ASN1T_MsgLogSanteTraitementHumainCreation& message )
 {
-    model_.logistics_.CreateMedicalConsign( asnMsg );
+    model_.logistics_.CreateMedicalConsign( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const ASN1T_MsgLogSanteTraitementHumainDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const ASN1T_MsgLogSanteTraitementHumainDestruction& message )
 {
-    model_.logistics_.DeleteMedicalConsign( asnMsg.oid_consigne );
+    model_.logistics_.DeleteMedicalConsign( message.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& message )
 {
-    model_.logistics_.GetMedicalConsign( asnMsg.oid_consigne ).Update( asnMsg );
+    model_.logistics_.GetMedicalConsign( message.oid_consigne ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogSanteEtat
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogSanteEtat( const ASN1T_MsgLogSanteEtat& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogSanteEtat( const ASN1T_MsgLogSanteEtat& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation( const ASN1T_MsgLogRavitaillementTraitementCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation( const ASN1T_MsgLogRavitaillementTraitementCreation& message )
 {
-    model_.logistics_.CreateSupplyConsign( asnMsg );
+    model_.logistics_.CreateSupplyConsign( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( const ASN1T_MsgLogRavitaillementTraitementDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( const ASN1T_MsgLogRavitaillementTraitementDestruction& message )
 {
-    model_.logistics_.DeleteSupplyConsign( asnMsg.oid_consigne );
+    model_.logistics_.DeleteSupplyConsign( message.oid_consigne );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& message )
 {
-    model_.logistics_.GetSupplyConsign( asnMsg.oid_consigne ).Update( asnMsg );
+    model_.logistics_.GetSupplyConsign( message.oid_consigne ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLogRavitaillementEtat&  asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLogRavitaillementEtat&  message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogRavitaillementQuotas& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogRavitaillementQuotas& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& message, MIL_MOSContextID )
 {
 //    std::stringstream strOutputMsg;
 //    strOutputMsg << "MSG Received : MsgLogRavitaillementChangeQuotaAck - Code ";
-//    switch( asnMsg )
+//    switch( message )
 //    {
 //        case MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur : strOutputMsg << "error_invalid_donneur"; break;
 //        case MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur: strOutputMsg << "error_invalid_receveur"; break;
@@ -648,11 +640,11 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& message, MIL_MOSContextID )
 {
 //    std::stringstream strOutputMsg;
 //    strOutputMsg << "MSG Received : MsgLogRavitaillementPousserFlux - Code ";
-//    switch( asnMsg )
+//    switch( message )
 //    {
 //        case MsgLogRavitaillementPousserFluxAck::error_invalid_donneur        : strOutputMsg << "error_invalid_donneur"; break;
 //        case MsgLogRavitaillementPousserFluxAck::error_invalid_receveur       : strOutputMsg << "error_invalid_receveur"; break;
@@ -668,27 +660,27 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitPathFind
 // Created: NLD 2003-03-31
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    CheckAcknowledge( "UnitMagicActionAck", asnMsg.error_code );
+    CheckAcknowledge( "UnitMagicActionAck", message.error_code );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    CheckAcknowledge( "ObjectMagicActionAck", asnMsg.error_code );
+    CheckAcknowledge( "ObjectMagicActionAck", message.error_code );
 }
 
 // -----------------------------------------------------------------------------
@@ -729,7 +721,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
     MT_LOG_INFO( "CtrlSendCurrentStateEnd", eReceived, 0 );
     bReceivingState_ = false;
     if( bUseMosLimits_ )
-        model_.limits_.UpdateToSim(); // $$$$ AGE 2006-02-15: 
+        model_.limits_.UpdateToSim(); // $$$$ AGE 2006-02-15: WTF
 }
 
 
@@ -795,19 +787,19 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimitCreationAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimitCreationAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
+    if( message.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* limit = model_.limits_.Find( asnMsg.oid );
+        TacticalLine_ABC* limit = model_.limits_.Find( message.oid );
         if( limit )
-            limit->Update( asnMsg );
+            limit->Update( message );
         else
-            Limit::idManager_.LockIdentifier( asnMsg.oid ); // $$$$ AGE 2006-02-15: 
+            Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu
     }
 }
 
@@ -816,17 +808,17 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimitUpdateAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimitUpdateAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
+    if( message.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* limit = model_.limits_.Find( asnMsg.oid );
+        TacticalLine_ABC* limit = model_.limits_.Find( message.oid );
         if( limit )
-            limit->Update( asnMsg );
+            limit->Update( message );
     }
 }
 
@@ -835,33 +827,33 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimitDestructionAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimitDestructionAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
-        model_.limits_.DeleteLimit( asnMsg.oid );
+    if( message.error_code == EnumInfoContextErrorCode::no_error )
+        model_.limits_.DeleteLimit( message.oid );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimaCreationAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimaCreationAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
+    if( message.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* lima = model_.limits_.Find( asnMsg.oid );
+        TacticalLine_ABC* lima = model_.limits_.Find( message.oid );
         if( lima )
-            lima->Update( asnMsg );
+            lima->Update( message );
         else
-            Lima::idManager_.LockIdentifier( asnMsg.oid ); // $$$$ AGE 2006-02-15: 
+            Lima::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: pareil qu'au dessus
     }
 }
 
@@ -869,17 +861,17 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreation
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimaUpdateAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimaUpdateAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
+    if( message.error_code == EnumInfoContextErrorCode::no_error )
     {
-        TacticalLine_ABC* limit = model_.limits_.Find( asnMsg.oid );
+        TacticalLine_ABC* limit = model_.limits_.Find( message.oid );
         if( limit )
-            limit->Update( asnMsg );
+            limit->Update( message );
     }
 }
 
@@ -887,28 +879,28 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck&
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestructionAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestructionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimaDestructionAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimaDestructionAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-    if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
-        model_.limits_.DeleteLima( asnMsg.oid );
+    if( message.error_code == EnumInfoContextErrorCode::no_error )
+        model_.limits_.DeleteLima( message.oid );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitCreation
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation& message )
 {
     // If we are receiving those lines while initializing from the sim, use those lines instead of our lines.
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
         model_.limits_.UseSimTacticalLines();
-        model_.limits_.Create( asnMsg );
+        model_.limits_.Create( message );
     }
 }
 
@@ -917,9 +909,9 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation&
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitDestruction
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestruction& message )
 {
-    model_.limits_.DeleteLimit( asnMsg );
+    model_.limits_.DeleteLimit( message );
 }
 
 
@@ -927,14 +919,14 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestru
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaCreation
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& message )
 {
     // If we are receiving those lines while initializing from the sim, use those lines instead of our lines.
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
         model_.limits_.UseSimTacticalLines();
-        model_.limits_.Create( asnMsg );
+        model_.limits_.Create( message );
     }
 }
 
@@ -942,9 +934,9 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& a
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaDestruction
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruction& message )
 {
-    model_.limits_.DeleteLima( asnMsg );
+    model_.limits_.DeleteLima( message );
 }
 
 //=============================================================================
@@ -955,52 +947,52 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& message, MIL_MOSContextID /*nCtx*/ )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "AutomateOrderAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "AutomateOrderAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
-//APE    App::GetApp().GetMainWindow().GetAgentEditor().NotifyAgentMissionAck( asnMsg.error_code );
+//APE    App::GetApp().GetMainWindow().GetAgentEditor().NotifyAgentMissionAck( message.error_code );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPionOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    MT_LOG_INFO( "Agent[" << asnMsg.oid_unite_executante << "] PionOrderAck - Code: " << Tools::ToString( asnMsg.error_code ), eReceived, 0 );
-    model_.agents_.FindAllAgent( asnMsg.oid_unite_executante )->Update( asnMsg );
+    MT_LOG_INFO( "Agent[" << message.oid_unite_executante << "] PionOrderAck - Code: " << Tools::ToString( message.error_code ), eReceived, 0 );
+    model_.agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderConduiteAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderConduiteAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    MT_LOG_INFO( "OrderConduiteAck - Code: " << Tools::ToString( asnMsg.error_code ), eReceived, 0 );
+    MT_LOG_INFO( "OrderConduiteAck - Code: " << Tools::ToString( message.error_code ), eReceived, 0 );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCR
 // Created: NLD 2002-09-02
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& message )
 {    
-    model_.agents_.FindAllAgent( asnMsg.unit_id )->Update( asnMsg );
+    model_.agents_.FindAllAgent( message.unit_id )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgOrderManagement
 // Created: NLD 2003-03-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagement& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagement& message )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "OrderManagement - Etat: ";
-    switch( asnMsg.etat )
+    switch( message.etat )
     {
         case EnumOrderState::started  : strOutputMsg << "Démarré"; break;
         case EnumOrderState::stopped  : strOutputMsg << "Arrêté"; break;
@@ -1014,15 +1006,15 @@ void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagem
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateMRT
 // Created: NLD 2003-05-13
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& message )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "AutomateMRT - Automate " << asnMsg.automate_id;
+    strOutputMsg << "AutomateMRT - Automate " << message.automate_id;
 
     std::stringstream strOutputMsg2;
-    for( uint i = 0; i < asnMsg.missions.n; ++i )
+    for( uint i = 0; i < message.missions.n; ++i )
     {
-        ASN1T_MsgPionOrder& asnPionOrder = asnMsg.missions.elem[i];
+        ASN1T_MsgPionOrder& asnPionOrder = message.missions.elem[i];
 
         strOutputMsg2 << "Pion " << asnPionOrder.oid_unite_executante
                      << " - Mission " << asnPionOrder.mission.t << endl;
@@ -1037,30 +1029,30 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& asn
 // Name: AgentServerMsgMgr::OnReceiveMsgPionOrder
 // Created: NLD 2003-10-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message )
 {
-    MT_LOG_INFO( "PionOrder - Mission " << asnMsg.mission.t, eReceived, 0 );
-    model_.agents_.FindAllAgent( asnMsg.oid_unite_executante )->Update( asnMsg );
+    MT_LOG_INFO( "PionOrder - Mission " << message.mission.t, eReceived, 0 );
+    model_.agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite
 // Created: NLD 2003-04-04
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& message )
 {
-    model_.agents_.FindAllAgent( asnMsg.unit_id )->Update( asnMsg );
+    model_.agents_.FindAllAgent( message.unit_id )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& message, MIL_MOSContextID /*nCtx*/ )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "SetAutomateModeAck - Etat: ";
-    switch( asnMsg.error_code )
+    switch( message.error_code )
     {
         case EnumSetAutomateModeErrorCode::no_error                : strOutputMsg << "No error"; break;
         case EnumSetAutomateModeErrorCode::error_already_debraye   : strOutputMsg << "Déjà debrayé"; break;
@@ -1073,16 +1065,16 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutoma
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck
-/** @param  asnMsg
+/** @param  message
     @param  nCtx
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "ChangeAutomateAck - Etat: ";
-    switch( asnMsg.error_code )
+    switch( message.error_code )
     {
     case EnumChangeAutomateErrorCode::no_error                 : strOutputMsg << "no_error"; break;
     case EnumChangeAutomateErrorCode::error_camps_incompatibles: strOutputMsg << "error_camps_incompatibles"; break;
@@ -1090,9 +1082,9 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAuto
     case EnumChangeAutomateErrorCode::error_invalid_pion       : strOutputMsg << "error_invalid_pion"; break;
     }
 
-    if( asnMsg.error_code == EnumOrderErrorCode::no_error )
+    if( message.error_code == EnumOrderErrorCode::no_error )
     {
-        model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+        model_.agents_.GetAgent( message.oid_pion ).Update( message );
     }
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
@@ -1101,34 +1093,34 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAuto
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomate
-/** @param  asnMsg
+/** @param  message
 */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomate& message )
 {
-    model_.agents_.GetAgent( asnMsg.oid_pion ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck
-/** @param  asnMsg
+/** @param  message
     @param  nCtx
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "ChangeDiplomacyAck( - Etat: ";
-    switch( asnMsg.error_code )
+    switch( message.error_code )
     {
     case EnumChangeDiplomatieErrorCode::no_error           : strOutputMsg << "no_error"; break;
     case EnumChangeDiplomatieErrorCode::error_invalid_camp : strOutputMsg << "error_invalid_camp"; break;
     }
 
-    model_.teams_.GetTeam( asnMsg.oid_camp1 ).Update( asnMsg );
-    model_.teams_.GetTeam( asnMsg.oid_camp2 ).Update( asnMsg );
+    model_.teams_.GetTeam( message.oid_camp1 ).Update( message );
+    model_.teams_.GetTeam( message.oid_camp2 ).Update( message );
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }
@@ -1136,16 +1128,16 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck
-/** @param  asnMsg
+/** @param  message
     @param  nCtx
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& message, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "ChangeGroupeConnaissanceAck - Etat: ";
-    switch( asnMsg.error_code )
+    switch( message.error_code )
     {
     case EnumChangeGroupeConnaissanceErrorCode::no_error                          : strOutputMsg << "no_error"; break;
     case EnumChangeGroupeConnaissanceErrorCode::error_invalid_automate            : strOutputMsg << "error_invalid_automate"; break;
@@ -1153,9 +1145,9 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
     case EnumChangeGroupeConnaissanceErrorCode::error_invalid_groupe_connaissance : strOutputMsg << "error_invalid_groupe_connaissance"; break;
     }
 
-    if( asnMsg.error_code == EnumChangeGroupeConnaissanceErrorCode::no_error )
+    if( message.error_code == EnumChangeGroupeConnaissanceErrorCode::no_error )
     {
-        model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
+        model_.agents_.GetAgent( message.oid_automate ).Update( message );
     }
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
@@ -1165,11 +1157,11 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& message, MIL_MOSContextID )
 {
 //    std::stringstream strOutputMsg;
 //    strOutputMsg << "MSG Received : ChangeLiensLogistiquesAck - Etat: ";
-//    switch( asnMsg.error_code )
+//    switch( message.error_code )
 //    {
 //        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate               : strOutputMsg << "error_invalid_automate"; break;
 //        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance   : strOutputMsg << "error_invalid_automate_maintenance"; break;
@@ -1181,7 +1173,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgCh
 //    }
 //    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 
-    model_.agents_.GetAgent( asnMsg.oid_automate ).Update( asnMsg );
+    model_.agents_.GetAgent( message.oid_automate ).Update( message );
 }
 
 // =============================================================================
@@ -1192,36 +1184,36 @@ void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgCh
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    model_.teams_.Get( asnMsg.oid_camp_possesseur ).Update( asnMsg );
+    model_.teams_.Get( message.oid_camp_possesseur ).Update( message );
 }
 
 
@@ -1229,9 +1221,9 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObje
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    model_.teams_.Get( asnMsg.oid_camp_possesseur ).Update( asnMsg );
+    model_.teams_.Get( message.oid_camp_possesseur ).Update( message );
 }
 
 
@@ -1239,9 +1231,9 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObject
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& message )
 {
-    model_.teams_.Get( asnMsg.oid_camp_possesseur ).Update( asnMsg );
+    model_.teams_.Get( message.oid_camp_possesseur ).Update( message );
 }
 
 // =============================================================================
@@ -1252,81 +1244,81 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgO
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
     
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
     
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction
 // Created: SBO 2005-10-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
 {
-    model_.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ).Update( asnMsg );
+    model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
 
 //=============================================================================
@@ -1337,27 +1329,27 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const AS
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectCreation
 // Created: NLD 2003-04-29
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& message )
 {
-    model_.objects_.CreateObject( asnMsg );
+    model_.objects_.CreateObject( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectUpdate
 // Created: NLD 2003-04-29
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    model_.objects_.GetObject( asnMsg.oid ).Update( asnMsg );
+    model_.objects_.GetObject( message.oid ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectDestruction
 // Created: NLD 2003-04-29
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruction& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruction& message )
 {
-    model_.objects_.DeleteObject( asnMsg );
+    model_.objects_.DeleteObject( message );
 }
 
 //=============================================================================
@@ -1368,251 +1360,171 @@ void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDest
 // Name: AgentServerMsgMgr::OnReceiveMsgStartPionFire
 // Created: NLD 2003-04-30
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire& message )
 {
-    // $$$$ AGE 2006-02-13: 
-//    std::stringstream strOutputMsg;
-//    strOutputMsg << "StartPionFire - ID: " << asnMsg.oid_tir
-//                 << " - ID source " << asnMsg.tireur;
-//
-//    AgentManager& agentManager = App::GetApp().GetAgentManager();
-//    Agent* pAgentSrc = agentManager.FindAgent( asnMsg.tireur );
-//    assert( pAgentSrc );
-//
-//    if( asnMsg.m.munitionPresent )
-//        strOutputMsg << " - Munition : " << App::GetApp().GetResourceName( asnMsg.munition );
-//
-//    if( asnMsg.cible.t == T_MsgStartPionFire_cible_pion )
-//    {
-//        strOutputMsg << " - ID pion cible " << asnMsg.cible.u.pion;
-//        
-//        Agent* pTarget = agentManager.FindAgent( asnMsg.cible.u.pion );
-//        assert( pTarget );
-//        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
-//    }
-//    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_position )
-//    {
-//        std::string strTmp( (const char*)asnMsg.cible.u.position->data, asnMsg.cible.u.position->numocts );
-//        MT_Vector2D vPos;
-//        App::GetApp().GetWorld().MosToSimMgrsCoord( strTmp, vPos );
-//        strOutputMsg << " - Position " << strTmp;
-//        agentManager.AddIndirectConflict( asnMsg.oid_tir, *pAgentSrc, vPos );
-//    }
-//    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_population )
-//    {
-//        strOutputMsg << " - ID population cible " << asnMsg.cible.u.population;
-//        
-//        Population* pTarget = agentManager.FindPopulation( asnMsg.cible.u.population );
-//        assert( pTarget );
-//        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
-//    }
-//
-//    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );   
+    Agent& src = model_.agents_.GetAgent( message.tireur );
+    src.Update( message );
+    model_.fires_.AddFire( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStopPionFire
 // Created: NLD 2003-04-30
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& message )
 {
-//    MT_LOG_INFO( "StopPionFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
-//
-//    // fire results
-//    Agent_ABC* pOrigin = App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
-//
-//    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when Light2 is disconnected after a StartFire
-//        return;
-//    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-//        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
-//    for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
-//        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
-//
-//    App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
+    Agent_ABC* src = model_.fires_.FindFirer( message );
+    if( src )
+        src->Update( message );
+    model_.fires_.RemoveFire( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStartFireEffect
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEffect& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEffect& message )
 {
-//    MT_LOG_INFO( "Start ammunition meteo effect - ID: " << asnMsg.oid_effet << " Type:" << asnMsg.type, eReceived, 0 );
-//    App::GetApp().GetWeatherManager().RegisterAmmoMeteoEffect( asnMsg );
+    // $$$$ AGE 2006-03-13: 
+//    MT_LOG_INFO( "Start ammunition meteo effect - ID: " << message.oid_effet << " Type:" << message.type, eReceived, 0 );
+//    App::GetApp().GetWeatherManager().RegisterAmmoMeteoEffect( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStopFireEffect
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffect& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffect& message )
 {
-//    MT_LOG_INFO( "Stop ammunition meteo effect - ID: " << asnMsg, eReceived, 0 );
-//    App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( asnMsg );
+    // $$$$ AGE 2006-03-13: 
+//    MT_LOG_INFO( "Stop ammunition meteo effect - ID: " << message, eReceived, 0 );
+//    App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( message );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgExplosion
 // Created: NLD 2003-05-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& message )
 {
     // fire results
-    model_.objects_.GetObject( asnMsg.oid_objet ).Update( asnMsg );
-    MT_LOG_INFO( "Explosion" << " - ID objet " << asnMsg.oid_objet, eReceived, 0 );
+    model_.objects_.GetObject( message.oid_objet ).Update( message );
+    MT_LOG_INFO( "Explosion" << " - ID objet " << message.oid_objet, eReceived, 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStartPopulationFire
 // Created: SBO 2005-12-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPopulationFire& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPopulationFire& message )
 {
-//    MT_LOG_INFO( "StartPopulationFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src );
-//    Population& popu = model_.GetPopulation( asnMsg.oid_src );
-
-//    AgentManager& agentManager = App::GetApp().GetAgentManager();
-//    agentManager.AddIndirectConflict( asnMsg.oid_tir, *pPopulationSrc, pPopulationSrc->GetPos() );
+    Population& src = model_.agents_.GetPopulation( message.oid_src );
+    src.Update( message );
+    model_.fires_.AddFire( message );
 }
     
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStopPopulationFire
 // Created: SBO 2005-12-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopulationFire&  asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopulationFire& message )
 {
-    MT_LOG_INFO( "StopPopulationFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
-
-//    // fire results
-//    Agent_ABC* pOrigin = App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
-//
-//    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when Light2 is disconnected after a StartFire
-//        return;
-//    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-//        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
-    /* population => population
-    for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
-        pAgent->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
-    */
-
-//    App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
+    Agent_ABC* src = model_.fires_.FindFirer( message );
+    if( src )
+        src->Update( message );
+    model_.fires_.RemoveFire( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplomatie& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplomatie& message )
 {
-//    std::stringstream strOutputMsg;
-//    strOutputMsg << "MSG Received : ChangeDiplomatie - ";
-//
-//    Team* pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp1 );
-//    assert( pArmy );
-//    strOutputMsg << pArmy->GetName() << " -> ";
-//
-//    pArmy = & model_.teams_.GetTeam( asnMsg.oid_camp2 );
-//    assert( pArmy );
-//    strOutputMsg << pArmy->GetName() << " = ";
-//
-//    switch( asnMsg.diplomatie )
-//    {
-//    case EnumDiplomatie::inconnu : strOutputMsg << "Inconnu"; break;
-//    case EnumDiplomatie::ami     : strOutputMsg << "Ami"; break;
-//    case EnumDiplomatie::neutre  : strOutputMsg << "Neutre"; break;
-//    case EnumDiplomatie::ennemi  : strOutputMsg << "Ennemi"; break;
-//    default:
-//        assert( false );
-//    }
-//
-//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+    model_.teams_.Get( message.oid_camp1 ).Update( message );
+    model_.teams_.Get( message.oid_camp2 ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreation& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreation& message )
 {
-//	std::stringstream strOutputMsg;
-//    strOutputMsg << "Creation de Population"
-//                 << " - ID  " << asnMsg.oid_population;
-//	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-
-	model_.agents_.CreatePopulation( asnMsg );
+	model_.agents_.CreatePopulation( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& message )
 {
-	model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+	model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationConcentrationCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& message )
 {
-    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 	}
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& message )
 {
-    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& message )
 {
-    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationFluxCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFluxCreation& message )
 {
-    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationFluxDestruction
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulationFluxDestruction& message )
 {
-    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationFluxUpdate
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& message )
 {
-    model_.agents_.GetPopulation( asnMsg.oid_population ).Update( asnMsg );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck
 // Created: SBO 2005-11-02
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "PopulationMagicActionAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "PopulationMagicActionAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 }
 
@@ -1637,8 +1549,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& i
     ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
 
     // Decode the message
-    ASN1T_MsgsSimMos asnMsg;
-    ASN1C_MsgsSimMos asnMsgCtrl( asnPERDecodeBuffer, asnMsg );
+    ASN1T_MsgsSimMos message;
+    ASN1C_MsgsSimMos asnMsgCtrl( asnPERDecodeBuffer, message );
     if( asnMsgCtrl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
@@ -1652,15 +1564,15 @@ void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& i
 //    std::cout << "END MSG DUMP =>" << std::endl;
 #endif
 
-    switch( asnMsg.t )
+    switch( message.t )
     {
-        case T_MsgsSimMos_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *asnMsg.u.msg_ctrl_info                           ); break;
-        case T_MsgsSimMos_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  asnMsg.u.msg_ctrl_begin_tick                     ); break;
-        case T_MsgsSimMos_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *asnMsg.u.msg_ctrl_end_tick                       ); break;
+        case T_MsgsSimMos_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.u.msg_ctrl_info                           ); break;
+        case T_MsgsSimMos_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.u.msg_ctrl_begin_tick                     ); break;
+        case T_MsgsSimMos_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.u.msg_ctrl_end_tick                       ); break;
         case T_MsgsSimMos_msg_ctrl_stop_ack:                        break;
-        case T_MsgsSimMos_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( asnMsg.u.msg_ctrl_pause_ack                       ); break;
-        case T_MsgsSimMos_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( asnMsg.u.msg_ctrl_resume_ack                      ); break;
-        case T_MsgsSimMos_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *asnMsg.u.msg_ctrl_change_time_factor_ack         ); break;
+        case T_MsgsSimMos_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.u.msg_ctrl_pause_ack                       ); break;
+        case T_MsgsSimMos_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.u.msg_ctrl_resume_ack                      ); break;
+        case T_MsgsSimMos_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *message.u.msg_ctrl_change_time_factor_ack         ); break;
         case T_MsgsSimMos_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
         case T_MsgsSimMos_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
         case T_MsgsSimMos_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
@@ -1672,83 +1584,83 @@ void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& i
         case T_MsgsSimMos_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
         case T_MsgsSimMos_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsSimMos_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *asnMsg.u.msg_limit_creation                      ); break;
-        case T_MsgsSimMos_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( asnMsg.u.msg_limit_destruction                    ); break;
-        case T_MsgsSimMos_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *asnMsg.u.msg_lima_creation                       ); break;
-        case T_MsgsSimMos_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( asnMsg.u.msg_lima_destruction                     ); break;
+        case T_MsgsSimMos_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.u.msg_limit_creation                      ); break;
+        case T_MsgsSimMos_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.u.msg_limit_destruction                    ); break;
+        case T_MsgsSimMos_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.u.msg_lima_creation                       ); break;
+        case T_MsgsSimMos_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.u.msg_lima_destruction                     ); break;
 
-        case T_MsgsSimMos_msg_unit_knowledge_creation:              OnReceiveMsgUnitKnowledgeCreation     ( *asnMsg.u.msg_unit_knowledge_creation             ); break;
-        case T_MsgsSimMos_msg_unit_knowledge_update:                OnReceiveMsgUnitKnowledgeUpdate       ( *asnMsg.u.msg_unit_knowledge_update               ); break;
-        case T_MsgsSimMos_msg_unit_knowledge_destruction:           OnReceiveMsgUnitKnowledgeDestruction  ( *asnMsg.u.msg_unit_knowledge_destruction          ); break;
+        case T_MsgsSimMos_msg_unit_knowledge_creation:              OnReceiveMsgUnitKnowledgeCreation     ( *message.u.msg_unit_knowledge_creation             ); break;
+        case T_MsgsSimMos_msg_unit_knowledge_update:                OnReceiveMsgUnitKnowledgeUpdate       ( *message.u.msg_unit_knowledge_update               ); break;
+        case T_MsgsSimMos_msg_unit_knowledge_destruction:           OnReceiveMsgUnitKnowledgeDestruction  ( *message.u.msg_unit_knowledge_destruction          ); break;
 
-        case T_MsgsSimMos_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *asnMsg.u.msg_unit_attributes                     ); break;
-        case T_MsgsSimMos_msg_unit_dotations:                       OnReceiveMsgUnitDotations             ( *asnMsg.u.msg_unit_dotations                      ); break;
-        case T_MsgsSimMos_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *asnMsg.u.msg_unit_pathfind                       ); break;
+        case T_MsgsSimMos_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *message.u.msg_unit_attributes                     ); break;
+        case T_MsgsSimMos_msg_unit_dotations:                       OnReceiveMsgUnitDotations             ( *message.u.msg_unit_dotations                      ); break;
+        case T_MsgsSimMos_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.u.msg_unit_pathfind                       ); break;
 
-        case T_MsgsSimMos_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *asnMsg.u.msg_start_pion_fire                     ); break;
-        case T_MsgsSimMos_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *asnMsg.u.msg_stop_pion_fire                      ); break;
-        case T_MsgsSimMos_msg_start_population_fire:                OnReceiveMsgStartPopulationFire       ( *asnMsg.u.msg_start_population_fire               ); break;
-        case T_MsgsSimMos_msg_stop_population_fire:                 OnReceiveMsgStopPopulationFire        ( *asnMsg.u.msg_stop_population_fire                ); break;
+        case T_MsgsSimMos_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *message.u.msg_start_pion_fire                     ); break;
+        case T_MsgsSimMos_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *message.u.msg_stop_pion_fire                      ); break;
+        case T_MsgsSimMos_msg_start_population_fire:                OnReceiveMsgStartPopulationFire       ( *message.u.msg_start_population_fire               ); break;
+        case T_MsgsSimMos_msg_stop_population_fire:                 OnReceiveMsgStopPopulationFire        ( *message.u.msg_stop_population_fire                ); break;
 
-        case T_MsgsSimMos_msg_explosion:                            OnReceiveMsgExplosion                 ( *asnMsg.u.msg_explosion                           ); break;
-        case T_MsgsSimMos_msg_cr:                                   OnReceiveMsgCR                        ( *asnMsg.u.msg_cr                                  ); break;
-        case T_MsgsSimMos_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *asnMsg.u.msg_start_fire_effect ); break;
-        case T_MsgsSimMos_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( asnMsg.u.msg_stop_fire_effect ); break;
+        case T_MsgsSimMos_msg_explosion:                            OnReceiveMsgExplosion                 ( *message.u.msg_explosion                           ); break;
+        case T_MsgsSimMos_msg_cr:                                   OnReceiveMsgCR                        ( *message.u.msg_cr                                  ); break;
+        case T_MsgsSimMos_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.u.msg_start_fire_effect ); break;
+        case T_MsgsSimMos_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.u.msg_stop_fire_effect ); break;
 
-        case T_MsgsSimMos_msg_order_management:                     OnReceiveMsgOrderManagement           ( *asnMsg.u.msg_order_management                    ); break;
-        case T_MsgsSimMos_msg_attente_ordre_conduite:               OnReceiveMsgWaitForOrderConduite      ( *asnMsg.u.msg_attente_ordre_conduite              ); break;
+        case T_MsgsSimMos_msg_order_management:                     OnReceiveMsgOrderManagement           ( *message.u.msg_order_management                    ); break;
+        case T_MsgsSimMos_msg_attente_ordre_conduite:               OnReceiveMsgWaitForOrderConduite      ( *message.u.msg_attente_ordre_conduite              ); break;
         case T_MsgsSimMos_msg_annule_attente_ordre_conduite:        break; //$$$ TODO
-        case T_MsgsSimMos_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *asnMsg.u.msg_automate_mrt                        ); break;
-        case T_MsgsSimMos_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *asnMsg.u.msg_pion_order ); break;
+        case T_MsgsSimMos_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *message.u.msg_automate_mrt                        ); break;
+        case T_MsgsSimMos_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.u.msg_pion_order ); break;
 
-        case T_MsgsSimMos_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *asnMsg.u.msg_object_creation                     ); break;
-        case T_MsgsSimMos_msg_object_update:                        OnReceiveMsgObjectUpdate              ( *asnMsg.u.msg_object_update                       ); break;
-        case T_MsgsSimMos_msg_object_destruction:                   OnReceiveMsgObjectDestruction         ( asnMsg.u.msg_object_destruction                   ); break;
-        case T_MsgsSimMos_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.u.msg_object_knowledge_creation           ); break;
-        case T_MsgsSimMos_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.u.msg_object_knowledge_update             ); break;
-        case T_MsgsSimMos_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.u.msg_object_knowledge_destruction        ); break;
+        case T_MsgsSimMos_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *message.u.msg_object_creation                     ); break;
+        case T_MsgsSimMos_msg_object_update:                        OnReceiveMsgObjectUpdate              ( *message.u.msg_object_update                       ); break;
+        case T_MsgsSimMos_msg_object_destruction:                   OnReceiveMsgObjectDestruction         ( message.u.msg_object_destruction                   ); break;
+        case T_MsgsSimMos_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *message.u.msg_object_knowledge_creation           ); break;
+        case T_MsgsSimMos_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.u.msg_object_knowledge_update             ); break;
+        case T_MsgsSimMos_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.u.msg_object_knowledge_destruction        ); break;
 
-        case T_MsgsSimMos_msg_change_automate:                      OnReceiveMsgChangeAutomate            ( *asnMsg.u.msg_change_automate ); break;
+        case T_MsgsSimMos_msg_change_automate:                      OnReceiveMsgChangeAutomate            ( *message.u.msg_change_automate ); break;
 
-        case T_MsgsSimMos_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *asnMsg.u.msg_pion_creation                       ); break;
-        case T_MsgsSimMos_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *asnMsg.u.msg_automate_creation                   ); break;
-        case T_MsgsSimMos_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *asnMsg.u.msg_change_diplomatie                   ); break;
+        case T_MsgsSimMos_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *message.u.msg_pion_creation                       ); break;
+        case T_MsgsSimMos_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *message.u.msg_automate_creation                   ); break;
+        case T_MsgsSimMos_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *message.u.msg_change_diplomatie                   ); break;
 
-        case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *asnMsg.u.msg_log_maintenance_traitement_equipement_creation ); break;
-        case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *asnMsg.u.msg_log_maintenance_traitement_equipement_destruction ); break;
-        case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *asnMsg.u.msg_log_maintenance_traitement_equipement_update ); break;
-        case T_MsgsSimMos_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *asnMsg.u.msg_log_maintenance_etat ); break;
+        case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.u.msg_log_maintenance_traitement_equipement_creation ); break;
+        case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.u.msg_log_maintenance_traitement_equipement_destruction ); break;
+        case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *message.u.msg_log_maintenance_traitement_equipement_update ); break;
+        case T_MsgsSimMos_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *message.u.msg_log_maintenance_etat ); break;
 
-        case T_MsgsSimMos_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *asnMsg.u.msg_log_ravitaillement_traitement_creation ); break;
-        case T_MsgsSimMos_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *asnMsg.u.msg_log_ravitaillement_traitement_destruction ); break;
-        case T_MsgsSimMos_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *asnMsg.u.msg_log_ravitaillement_traitement_update ); break;
-        case T_MsgsSimMos_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *asnMsg.u.msg_log_ravitaillement_etat ); break;
-        case T_MsgsSimMos_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *asnMsg.u.msg_log_ravitaillement_quotas ); break;
+        case T_MsgsSimMos_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *message.u.msg_log_ravitaillement_traitement_creation ); break;
+        case T_MsgsSimMos_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *message.u.msg_log_ravitaillement_traitement_destruction ); break;
+        case T_MsgsSimMos_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *message.u.msg_log_ravitaillement_traitement_update ); break;
+        case T_MsgsSimMos_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *message.u.msg_log_ravitaillement_etat ); break;
+        case T_MsgsSimMos_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.u.msg_log_ravitaillement_quotas ); break;
 
 
-        case T_MsgsSimMos_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *asnMsg.u.msg_log_sante_traitement_humain_creation ); break;
-        case T_MsgsSimMos_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *asnMsg.u.msg_log_sante_traitement_humain_destruction ); break;
-        case T_MsgsSimMos_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *asnMsg.u.msg_log_sante_traitement_humain_update ); break;
-        case T_MsgsSimMos_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *asnMsg.u.msg_log_sante_etat ); break;
+        case T_MsgsSimMos_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *message.u.msg_log_sante_traitement_humain_creation ); break;
+        case T_MsgsSimMos_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *message.u.msg_log_sante_traitement_humain_destruction ); break;
+        case T_MsgsSimMos_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *message.u.msg_log_sante_traitement_humain_update ); break;
+        case T_MsgsSimMos_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *message.u.msg_log_sante_etat ); break;
 
-        case T_MsgsSimMos_msg_population_creation                       : OnMsgPopulationCreation                ( *asnMsg.u.msg_population_creation ); break;
-        case T_MsgsSimMos_msg_population_update                         : OnMsgPopulationUpdate                  ( *asnMsg.u.msg_population_update ); break;
-        case T_MsgsSimMos_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *asnMsg.u.msg_population_concentration_creation ); break;
-        case T_MsgsSimMos_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *asnMsg.u.msg_population_concentration_destruction ); break;
-        case T_MsgsSimMos_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *asnMsg.u.msg_population_concentration_update ); break;
-        case T_MsgsSimMos_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *asnMsg.u.msg_population_flux_creation ); break;
-        case T_MsgsSimMos_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *asnMsg.u.msg_population_flux_destruction ); break;
-        case T_MsgsSimMos_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *asnMsg.u.msg_population_flux_update ); break;
+        case T_MsgsSimMos_msg_population_creation                       : OnMsgPopulationCreation                ( *message.u.msg_population_creation ); break;
+        case T_MsgsSimMos_msg_population_update                         : OnMsgPopulationUpdate                  ( *message.u.msg_population_update ); break;
+        case T_MsgsSimMos_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *message.u.msg_population_concentration_creation ); break;
+        case T_MsgsSimMos_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *message.u.msg_population_concentration_destruction ); break;
+        case T_MsgsSimMos_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *message.u.msg_population_concentration_update ); break;
+        case T_MsgsSimMos_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *message.u.msg_population_flux_creation ); break;
+        case T_MsgsSimMos_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *message.u.msg_population_flux_destruction ); break;
+        case T_MsgsSimMos_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *message.u.msg_population_flux_update ); break;
 
-        case T_MsgsSimMos_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *asnMsg.u.msg_population_knowledge_creation                  ); break;
-        case T_MsgsSimMos_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *asnMsg.u.msg_population_knowledge_update                    ); break;
-        case T_MsgsSimMos_msg_population_knowledge_destruction               : OnReceiveMsgPopulationKnowledgeDestruction             ( *asnMsg.u.msg_population_knowledge_destruction               ); break;
-        case T_MsgsSimMos_msg_population_concentration_knowledge_creation    : OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( *asnMsg.u.msg_population_concentration_knowledge_creation    ); break;
-        case T_MsgsSimMos_msg_population_concentration_knowledge_update      : OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( *asnMsg.u.msg_population_concentration_knowledge_update      ); break;
-        case T_MsgsSimMos_msg_population_concentration_knowledge_destruction : OnReceiveMsgPopulationConcentrationKnowledgeDestruction( *asnMsg.u.msg_population_concentration_knowledge_destruction ); break;
-        case T_MsgsSimMos_msg_population_flux_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *asnMsg.u.msg_population_flux_knowledge_creation             ); break;
-        case T_MsgsSimMos_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *asnMsg.u.msg_population_flux_knowledge_update               ); break;
-        case T_MsgsSimMos_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *asnMsg.u.msg_population_flux_knowledge_destruction          ); break;
+        case T_MsgsSimMos_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *message.u.msg_population_knowledge_creation                  ); break;
+        case T_MsgsSimMos_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *message.u.msg_population_knowledge_update                    ); break;
+        case T_MsgsSimMos_msg_population_knowledge_destruction               : OnReceiveMsgPopulationKnowledgeDestruction             ( *message.u.msg_population_knowledge_destruction               ); break;
+        case T_MsgsSimMos_msg_population_concentration_knowledge_creation    : OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( *message.u.msg_population_concentration_knowledge_creation    ); break;
+        case T_MsgsSimMos_msg_population_concentration_knowledge_update      : OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( *message.u.msg_population_concentration_knowledge_update      ); break;
+        case T_MsgsSimMos_msg_population_concentration_knowledge_destruction : OnReceiveMsgPopulationConcentrationKnowledgeDestruction( *message.u.msg_population_concentration_knowledge_destruction ); break;
+        case T_MsgsSimMos_msg_population_flux_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *message.u.msg_population_flux_knowledge_creation             ); break;
+        case T_MsgsSimMos_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.u.msg_population_flux_knowledge_update               ); break;
+        case T_MsgsSimMos_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.u.msg_population_flux_knowledge_destruction          ); break;
 
         default:
             {
@@ -1783,8 +1695,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, D
     ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
 
     // Decode the message
-    ASN1T_MsgsSimMosWithContext asnMsg;
-    ASN1C_MsgsSimMosWithContext asnMsgCtrl( asnPERDecodeBuffer, asnMsg );
+    ASN1T_MsgsSimMosWithContext message;
+    ASN1C_MsgsSimMosWithContext asnMsgCtrl( asnPERDecodeBuffer, message );
     if( asnMsgCtrl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
@@ -1802,27 +1714,27 @@ void AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, D
 //    std::cout << "END MSG DUMP =>" << std::endl;
 #endif
 
-    switch( asnMsg.t )
+    switch( message.t )
     {
-        case T_MsgsSimMosWithContext_msg_limit_creation_ack:                     OnReceiveMsgLimitCreationAck                ( *asnMsg.u.msg_limit_creation_ack                  , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_limit_update_ack:                       OnReceiveMsgLimitUpdateAck                  ( *asnMsg.u.msg_limit_update_ack                    , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_limit_destruction_ack:                  OnReceiveMsgLimitDestructionAck             ( *asnMsg.u.msg_limit_destruction_ack               , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_lima_creation_ack:                      OnReceiveMsgLimaCreationAck                 ( *asnMsg.u.msg_lima_creation_ack                   , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_lima_update_ack:                        OnReceiveMsgLimaUpdateAck                   ( *asnMsg.u.msg_lima_update_ack                     , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_lima_destruction_ack:                   OnReceiveMsgLimaDestructionAck              ( *asnMsg.u.msg_lima_destruction_ack                , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                ( *asnMsg.u.msg_automate_order_ack                  , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                    ( *asnMsg.u.msg_pion_order_ack                      , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_order_conduite_ack:                     OnReceiveMsgOrderConduiteAck                ( *asnMsg.u.msg_order_conduite_ack                  , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck              ( *asnMsg.u.msg_unit_magic_action_ack               , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck              ( *asnMsg.u.msg_set_automate_mode_ack               , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_change_automate_ack:                    OnReceiveMsgChangeAutomateAck               ( *asnMsg.u.msg_change_automate_ack                 , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck              ( *asnMsg.u.msg_change_diplomatie_ack               , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack:         OnReceiveMsgChangeGroupeConnaissanceAck     ( *asnMsg.u.msg_change_groupe_connaissance_ack      , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck            ( *asnMsg.u.msg_object_magic_action_ack             , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *asnMsg.u.msg_change_liens_logistiques_ack        , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  asnMsg.u.msg_log_ravitaillement_pousser_flux_ack , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  asnMsg.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *asnMsg.u.msg_population_magic_action_ack         , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_limit_creation_ack:                     OnReceiveMsgLimitCreationAck                ( *message.u.msg_limit_creation_ack                  , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_limit_update_ack:                       OnReceiveMsgLimitUpdateAck                  ( *message.u.msg_limit_update_ack                    , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_limit_destruction_ack:                  OnReceiveMsgLimitDestructionAck             ( *message.u.msg_limit_destruction_ack               , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_lima_creation_ack:                      OnReceiveMsgLimaCreationAck                 ( *message.u.msg_lima_creation_ack                   , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_lima_update_ack:                        OnReceiveMsgLimaUpdateAck                   ( *message.u.msg_lima_update_ack                     , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_lima_destruction_ack:                   OnReceiveMsgLimaDestructionAck              ( *message.u.msg_lima_destruction_ack                , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                ( *message.u.msg_automate_order_ack                  , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                    ( *message.u.msg_pion_order_ack                      , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_order_conduite_ack:                     OnReceiveMsgOrderConduiteAck                ( *message.u.msg_order_conduite_ack                  , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck              ( *message.u.msg_unit_magic_action_ack               , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck              ( *message.u.msg_set_automate_mode_ack               , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_change_automate_ack:                    OnReceiveMsgChangeAutomateAck               ( *message.u.msg_change_automate_ack                 , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck              ( *message.u.msg_change_diplomatie_ack               , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack:         OnReceiveMsgChangeGroupeConnaissanceAck     ( *message.u.msg_change_groupe_connaissance_ack      , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck            ( *message.u.msg_object_magic_action_ack             , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *message.u.msg_change_liens_logistiques_ack        , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  message.u.msg_log_ravitaillement_pousser_flux_ack , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  message.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *message.u.msg_population_magic_action_ack         , nCtx ); break;
 
 //        case T_MsgsSimMosWithContext_msg_population_order_ack  : break; //$$$ TODO        
 

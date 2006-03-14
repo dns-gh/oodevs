@@ -19,7 +19,6 @@
 // -----------------------------------------------------------------------------
 CrossingSiteAttributes::CrossingSiteAttributes( Controller& controller )
     : controller_( controller )
-    , set_( false )
 {
     // NOTHING
 }
@@ -40,7 +39,6 @@ CrossingSiteAttributes::~CrossingSiteAttributes()
 template< typename T >
 void CrossingSiteAttributes::UpdateData( const T& message )
 {
-    set_ = true;
     if( message.m.attributs_specifiquesPresent 
      && message.attributs_specifiques.t == T_AttrObjectSpecific_site_franchissement )
     {

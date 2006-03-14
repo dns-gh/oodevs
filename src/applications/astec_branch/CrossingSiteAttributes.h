@@ -64,11 +64,10 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    bool set_;
-    unsigned int width_;
-    unsigned int depth_;
-    unsigned int speed_;
-    bool         needsConstruction_;
+    OptionalValue< unsigned int > width_;
+    OptionalValue< unsigned int > depth_;
+    OptionalValue< unsigned int > speed_;
+    OptionalValue< bool         > needsConstruction_;
     //@}
 };
 

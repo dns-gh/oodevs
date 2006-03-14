@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Diplomacies.h"
 #include "Team.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacies constructor
@@ -54,7 +55,7 @@ void Diplomacies::UpdateData( const T& message )
 void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
 {
     if( message.error_code == EnumChangeDiplomatieErrorCode::no_error )
-        DoUpdate( message );
+        UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,5 +64,5 @@ void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
 // -----------------------------------------------------------------------------
 void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatie& message )
 {
-    DoUpdate( message );
+    UpdateData( message );
 }

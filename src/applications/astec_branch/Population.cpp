@@ -38,6 +38,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     , type_         ( typeResolver.Get( message.type_population ) )
     , team_         ( resolver.Get( message.oid_camp ) )
 {
+    Agent_ABC::Register( *this );
     controller_.Create( *this );
 }
 
@@ -78,71 +79,71 @@ unsigned int Population::GetLivingHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update			
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
     Resolver< PopulationPart_ABC >::Get( asnMsg.oid_flux ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update	
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	Resolver< PopulationPart_ABC >::Get( asnMsg.oid_concentration ).Update( asnMsg );
+    Resolver< PopulationPart_ABC >::Get( asnMsg.oid_concentration ).Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update			
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
     if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux ) )
         Resolver< PopulationPart_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update	
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
     if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration ) )
         Resolver< PopulationPart_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, type_.GetDensity() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update			
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
     delete Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux );
     Resolver< PopulationPart_ABC >::Remove( asnMsg.oid_flux );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update	
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
     delete Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration );
     Resolver< PopulationPart_ABC >::Remove( asnMsg.oid_concentration );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::Update				
+// Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
+void Population::DoUpdate( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
 {
     // NOTHING
-} 
+}
 
 // -----------------------------------------------------------------------------
 // Name: Population::GetId
@@ -160,7 +161,7 @@ unsigned long Population::GetId() const
 const PopulationConcentration* Population::FindConcentration( uint nID ) const
 {
     const PopulationPart_ABC* part = Resolver< PopulationPart_ABC >::Find( nID );
-    assert( ! part || dynamic_cast< const PopulationConcentration* >( part ) ); // $$$$ AGE 2006-02-20: 
+    assert( ! part || dynamic_cast< const PopulationConcentration* >( part ) ); // $$$$ AGE 2006-02-20:
     return static_cast< const PopulationConcentration* >( part );
 }
 
@@ -171,7 +172,7 @@ const PopulationConcentration* Population::FindConcentration( uint nID ) const
 const PopulationFlow* Population::FindFlow( uint nID ) const
 {
     const PopulationPart_ABC* part = Resolver< PopulationPart_ABC >::Find( nID );
-    assert( ! part || dynamic_cast< const PopulationFlow* >( part ) ); // $$$$ AGE 2006-02-20: 
+    assert( ! part || dynamic_cast< const PopulationFlow* >( part ) ); // $$$$ AGE 2006-02-20:
     return static_cast< const PopulationFlow* >( part );
 }
 

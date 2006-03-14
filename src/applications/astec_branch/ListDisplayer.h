@@ -42,6 +42,7 @@ public:
     //@{
     ListDisplayer& AddColumn( const char* column ) {
         addColumn( tr( column ) );
+        setResizeMode( QListView::LastColumn );
         itemDisplayer_.AddColumn( column );
         return *this;
     }
@@ -70,6 +71,13 @@ public:
         if( from != to )
             show();
         return T_Parent::Display( from, to, (ValuedListItem*)( parent->firstChild() ) );
+    };
+
+    template< typename Iterator >
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListView* parent, QListViewItem* after ) {
+        if( from != to )
+            show();
+        return T_Parent::Display( from, to, parent, (ValuedListItem*)( after ) );
     };
 
     template< typename T >

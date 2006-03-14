@@ -23,7 +23,7 @@ behavior BEH_Defaut( id nDummy )
     {              
         persistent T_Action actionFire;
         
-        DEC_Trace( "aelkruzer" );
+        DEC_Trace( "aelkruzer ! aelkruzer !" );
         DEC_Debug( "Attitude : " + EnumToString( DEC_Population_Attitude(), E_AttitudePopulation ) );
         DEC_Debug( "Humans: " + FloatToString( DEC_Population_Vivants() ) + " / " + FloatToString( DEC_Population_Morts() ) );
         

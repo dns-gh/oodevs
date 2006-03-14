@@ -27,7 +27,6 @@
 // -----------------------------------------------------------------------------
 Report_ABC::Report_ABC( const Agent_ABC& agent, const Simulation& simulation )
     : agent_  ( agent )
-    , vPos_   ( agent_.Get< Attributes >().vPos_ )
     , nTime_  ( simulation.GetTime() )
     , bNew_   ( true )
 {
@@ -43,17 +42,6 @@ Report_ABC::~Report_ABC()
 {
     // NOTHING
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: Report_ABC::GetPos
-// Created: APE 2004-08-04
-// -----------------------------------------------------------------------------
-MT_Vector2D Report_ABC::GetPos() const
-{
-    return vPos_;
-}
-    
 
 // -----------------------------------------------------------------------------
 // Name: Report_ABC::GetTitle

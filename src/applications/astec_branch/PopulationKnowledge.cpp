@@ -59,8 +59,9 @@ unsigned long PopulationKnowledge::GetId() const
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& /*message*/ )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& )
 {
+    // message.etat_domination // $$$$ AGE 2006-03-13: 
     // NOTHING
 }
 

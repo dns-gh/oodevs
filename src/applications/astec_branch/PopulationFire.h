@@ -32,19 +32,11 @@ public:
     virtual ~PopulationFire();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
     PopulationFire( const PopulationFire& );            //!< Copy constructor
     PopulationFire& operator=( const PopulationFire& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

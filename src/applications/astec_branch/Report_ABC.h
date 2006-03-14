@@ -52,7 +52,6 @@ public:
     //-------------------------------------------------------------------------
     //@{
     const Agent_ABC& GetAgent() const;
-    MT_Vector2D GetPos  () const;
     std::string GetTitle() const;
     std::string GetStrippedTitle() const;
     bool        IsInteresting() const;
@@ -76,7 +75,6 @@ protected:
     //@{
     const Agent_ABC& agent_;
     std::string strTitle_; 
-    MT_Vector2D vPos_;
     int         nTime_;
     bool        bNew_;
     E_Type      eType_;

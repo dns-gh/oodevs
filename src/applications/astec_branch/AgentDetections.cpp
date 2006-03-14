@@ -19,7 +19,7 @@ AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Ag
     : controller_( controller )
     , resolver_( resolver )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Ag
 // -----------------------------------------------------------------------------
 AgentDetections::~AgentDetections()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

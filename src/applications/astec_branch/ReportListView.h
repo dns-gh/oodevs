@@ -56,6 +56,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void showEvent( QShowEvent* );
     void Display( const Report_ABC* report, Displayer_ABC& displayer, ValuedListItem* item );
     //@}
 
@@ -91,8 +92,5 @@ private:
     const Agent_ABC*           selected_;
     //@}
 };
-
-//$$$$$ Remarque générale: Attacher les popupmenus à leur listitem pour éviter les
-// pb en cas d'effacement de l'item, ou gérer ca autrement.
 
 #endif // __ReportListView_h_

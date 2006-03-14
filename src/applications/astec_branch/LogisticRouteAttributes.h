@@ -64,13 +64,12 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    bool set_;
 
-    unsigned nLogRouteFlow_;
-    unsigned nLogRouteWidth_;
-    unsigned nLogRouteLength_;
-    unsigned nLogRouteMaxWeight_;
-    bool bLogRouteEquipped_;
+    OptionalValue< unsigned > nLogRouteFlow_;
+    OptionalValue< unsigned > nLogRouteWidth_;
+    OptionalValue< unsigned > nLogRouteLength_;
+    OptionalValue< unsigned > nLogRouteMaxWeight_;
+    OptionalValue< bool > bLogRouteEquipped_;
     //@}
 };
 

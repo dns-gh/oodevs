@@ -53,7 +53,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
-public: // $$$$ AGE 2006-02-16: 
+private:
     //! @name Member data
     //@{
     Controller& controller_;

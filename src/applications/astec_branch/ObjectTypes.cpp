@@ -31,9 +31,8 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
                     >> content( "Composantes", equipments );
 
     xml::xifstream xis( idFile );
-    Reader reader;
     xis >> start( "Classes" )
-        >> list( "Classe", reader, &Reader::Read, *this );
+        >> list( "Classe", *this, ReadObjectTypes );
 
     ReadDotations( dotations );
     ReadEquipments( equipments );
@@ -51,10 +50,10 @@ ObjectTypes::~ObjectTypes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTypes::Reader::Read
-// Created: AGE 2006-02-16
+// Name: ObjectTypes::ReadObjectTypes
+// Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ObjectTypes::Reader::Read( xml::xistream& xis, ObjectTypes& objects )
+void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
 {
     std::string strObjectName;
     int nId;
@@ -65,14 +64,13 @@ void ObjectTypes::Reader::Read( xml::xistream& xis, ObjectTypes& objects )
     ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strObjectName );
     if( nType != -1 )
     {
-        objects.objectIds_[ nType ] = nId;
-        IDManager*& pManager = objects.managers_[ nId ];
+        objectIds_[ nType ] = nId;
+        IDManager*& pManager = managers_[ nId ];
         if( ! pManager )
             pManager = new IDManager( nId );
-        objects.Resolver< ObjectType >::Register( nType, *new ObjectType( nType, strObjectName, *pManager ) );
+        Resolver< ObjectType >::Register( nType, *new ObjectType( nType, strObjectName, *pManager ) );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadDotations

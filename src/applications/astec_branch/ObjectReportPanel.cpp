@@ -24,8 +24,6 @@
 
 #include "Object_ABC.h"
 #include "Explosions.h"
-#include "PopulationFireResult.h"
-#include "AgentFireResult.h"
 #include "Equipment.h"
 
 // -----------------------------------------------------------------------------
@@ -62,7 +60,7 @@ void ObjectReportPanel::NotifyUpdated( const Explosions& explosions )
 
     // $$$$ AGE 2006-03-10: try to keep the selection if possible
     ValuedListItem* item = reports_->DisplayList( explosions.agentExplosions_.begin(), explosions.agentExplosions_.end() );
-                    item = reports_->DisplayList( explosions.populationExplosions_.begin(), explosions.populationExplosions_.end(), item );
+                    item = reports_->DisplayList( explosions.populationExplosions_.begin(), explosions.populationExplosions_.end(), reports_, item );
     reports_->DeleteTail( item );
 }
 

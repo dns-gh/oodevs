@@ -18,7 +18,6 @@
 // -----------------------------------------------------------------------------
 RotaAttributes::RotaAttributes( Controller& controller )
     : controller_( controller )
-    , set_( false )
 {
     // NOTHING
 }
@@ -42,7 +41,6 @@ void RotaAttributes::UpdateData( const T& message )
     if( message.m.attributs_specifiquesPresent 
      && message.attributs_specifiques.t == T_AttrObjectSpecific_rota )
     {
-        set_ = true;
         danger_ = message.attributs_specifiques.u.rota->niveau_danger;
         agents_.resize( message.attributs_specifiques.u.rota->agents_nbc.n );
         for( uint i = 0; i < message.attributs_specifiques.u.rota->agents_nbc.n; ++i )

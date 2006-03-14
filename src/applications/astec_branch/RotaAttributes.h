@@ -69,8 +69,7 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    bool set_;
-    unsigned int danger_;
+    OptionalValue< unsigned int > danger_;
     T_NbcIds agents_;
     //@}
 };

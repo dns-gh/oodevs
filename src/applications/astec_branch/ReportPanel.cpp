@@ -60,10 +60,7 @@ void ReportPanel::NotifySelected( const Agent_ABC* element )
     {
         selected_ = element;
         if( selected_ )
-        {
-//            pFireResultListView_->D
             Show();
-        }
         else
             Hide();
     }

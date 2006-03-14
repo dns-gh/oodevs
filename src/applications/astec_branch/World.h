@@ -36,7 +36,7 @@ class World : private GraphicManager_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-    explicit World( const std::string& strArchive, const std::string& archive );
+             World( const std::string& strArchive, const std::string& archive );
     virtual ~World();
     //@}
 

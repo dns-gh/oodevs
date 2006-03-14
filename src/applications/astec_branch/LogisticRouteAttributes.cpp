@@ -20,8 +20,7 @@
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 LogisticRouteAttributes::LogisticRouteAttributes( Controller& controller )
-    : set_( false )
-    , controller_( controller )
+    : controller_( controller )
 {
     // NOTHING
 }
@@ -45,7 +44,6 @@ void LogisticRouteAttributes::UpdateData( const T& message )
     if( message.m.attributs_specifiquesPresent
      && message.attributs_specifiques.t == T_AttrObjectSpecific_itineraire_logistique )
     {
-        set_ = true;
         nLogRouteFlow_      = message.attributs_specifiques.u.itineraire_logistique->debit;
         nLogRouteLength_    = message.attributs_specifiques.u.itineraire_logistique->longueur;
         nLogRouteWidth_     = message.attributs_specifiques.u.itineraire_logistique->largeur;

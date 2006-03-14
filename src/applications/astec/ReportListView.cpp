@@ -55,6 +55,7 @@ ReportListView::ReportListView( QWidget* pParent, const ReportFilterOptions& fil
 {
     addColumn( tr( "Reçu" ) );
     addColumn( tr( "Compte-rendu" ) );
+    setResizeMode( QListView::LastColumn );
 
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );

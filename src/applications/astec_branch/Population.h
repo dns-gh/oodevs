@@ -16,6 +16,8 @@
 #include "Agent_ABC.h"
 #include "AgentKnowledge.h"
 #include "Resolver.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
 
 class PopulationPart_ABC;
 class PopulationConcentration;
@@ -29,6 +31,14 @@ class PopulationType;
 // =============================================================================
 class Population : public Agent_ABC
                  , public Resolver< PopulationPart_ABC >
+                 , private Extension_ABC
+                 , public Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
+                 , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
+                 , public Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
+                 , public Updatable_ABC< ASN1T_MsgPopulationUpdate >       
+                 , public Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
+                 , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
+                 , public Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
 {
 public:
     //! @name Constructor/Destructor
@@ -40,13 +50,7 @@ public:
 
     //! @name Network
     //@{
-	void Update( const ASN1T_MsgPopulationFluxCreation&             message );
-    void Update( const ASN1T_MsgPopulationFluxUpdate&               message );
-    void Update( const ASN1T_MsgPopulationFluxDestruction&          message );
-    void Update( const ASN1T_MsgPopulationUpdate&                   message );
-    void Update( const ASN1T_MsgPopulationConcentrationCreation&    message );
-	void Update( const ASN1T_MsgPopulationConcentrationUpdate&      message );
-	void Update( const ASN1T_MsgPopulationConcentrationDestruction& message );
+	
     //@}
 
     const PopulationConcentration* FindConcentration ( uint nID ) const;
@@ -79,6 +83,14 @@ private:
     //@{
     unsigned int ComputeLivingHumans() const;
     unsigned int ComputeDeadHumans() const;
+
+    void DoUpdate( const ASN1T_MsgPopulationFluxCreation&             message );
+    void DoUpdate( const ASN1T_MsgPopulationFluxUpdate&               message );
+    void DoUpdate( const ASN1T_MsgPopulationFluxDestruction&          message );
+    void DoUpdate( const ASN1T_MsgPopulationUpdate&                   message );
+    void DoUpdate( const ASN1T_MsgPopulationConcentrationCreation&    message );
+	void DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate&      message );
+	void DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& message );
     //@}
 
 private:

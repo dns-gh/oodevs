@@ -18,7 +18,6 @@
 // -----------------------------------------------------------------------------
 NBCAttributes::NBCAttributes( Controller& controller )
     : controller_( controller )
-    , set_( false )
 {
     // NOTHING
 }
@@ -43,12 +42,11 @@ void NBCAttributes::UpdateData( const T& message )
     {
         if( message.attributs_specifiques.t == T_AttrObjectSpecific_nuage_nbc )
         {
-            set_ = true;
             nbcId_  = message.attributs_specifiques.u.nuage_nbc->agent_nbc;
             controller_.Update( *this );
         }
         else if( message.attributs_specifiques.t == T_AttrObjectSpecific_zone_nbc )
-        {   set_ = true;
+        {
             nbcId_  = message.attributs_specifiques.u.zone_nbc->agent_nbc;
             controller_.Update( *this );
         }
