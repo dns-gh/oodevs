@@ -29,6 +29,7 @@
 #include "Settings.h"
 #include "OptionsPanel.h"
 #include "MissionPanel.h"
+#include "GlWidget.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
 
@@ -36,17 +37,21 @@ MainWindow* MainWindow::pInstance_ = 0;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controller& controller )
+MainWindow::MainWindow( Controller& controller, const std::string& scipioXml )
     : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
     , actionController_( * new ActionController() )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
 
-    this->setIcon( MAKE_PIXMAP( mosicon ) );
-    this->setCaption( APP_NAME );
+    setIcon( MAKE_PIXMAP( mosicon ) );
+    setCaption( APP_NAME );
 
     pOptions_ = new Options();
+
+    GlWidget* pGlWiget = new GlWidget( this, scipioXml );
+    setCentralWidget( pGlWiget );
+    pGlWiget->show();
     
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );

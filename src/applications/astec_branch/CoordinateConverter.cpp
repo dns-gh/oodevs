@@ -13,23 +13,22 @@
 #include "geometry/Types.h"
 #include "geocoord/Geoid.h"
 #include "MT_Tools/MT_Rect.h"
-#include "xeumeuleu/xml.h"
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter constructor
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const std::string& scipioXml )
-    : planar_        ( parameters_ )
+    : WorldParameters( scipioXml )
+    , planar_( parameters_ )
 {
-    xml::xifstream scipio( scipioXml );
-    std::string terrain;
-    scipio >> start( "Scipio" )
-                >> start( "Donnees" )
-                    >> content( "Terrain", terrain );
-    ReadTerrain( terrain );
+    geocoord::Geoid::Instance().Initialize( geoid_ );
+
+    extent_.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( width_, height_ ) );
+    translation_.rX_ = width_ * 0.5;
+    translation_.rY_ = height_ * 0.5;
+    const double rPiOver180 = std::acos( -1. ) / 180.;
+    parameters_.SetOrigin( latitude_ * rPiOver180, longitude_ * rPiOver180 );
 }
     
 // -----------------------------------------------------------------------------
@@ -38,52 +37,8 @@ CoordinateConverter::CoordinateConverter( const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 CoordinateConverter::~CoordinateConverter()
 {
+    // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ReadTerrain
-// Created: AGE 2005-03-14
-// -----------------------------------------------------------------------------
-void CoordinateConverter::ReadTerrain( const std::string& terrainFile )
-{
-    xifstream xis( terrainFile );
-
-    std::string geoidFile, worldFile;
-    xis >> start( "Terrain" )
-            >> content( "Geoid", geoidFile )
-            >> content( "World", worldFile );
-
-    const std::string baseDirectory = QFileInfo( terrainFile.c_str() ).dirPath().ascii() + std::string( "/" );
-    geocoord::Geoid::Instance().Initialize( baseDirectory + geoidFile );
-
-    ReadWorld( baseDirectory + worldFile );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ReadWorld
-// Created: AGE 2005-03-14
-// -----------------------------------------------------------------------------
-void CoordinateConverter::ReadWorld( const std::string& worldFile )
-{
-    xifstream xis( worldFile );
-
-    double rLatitude, rLongitude, rWidth, rHeight;
-    xis >> start( "World" )
-        >> content( "Latitude", rLatitude )
-        >> content( "Longitude", rLongitude )
-        >> content( "Width", rWidth )
-        >> content( "Height", rHeight );
-
-    extent_.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( rWidth, rHeight ) );
-    translation_.rX_ = rWidth * 0.5;
-    translation_.rY_ = rHeight * 0.5;
-    const double rPiOver180 = std::acos( -1. ) / 180.;
-    parameters_.SetOrigin( rLatitude * rPiOver180, rLongitude * rPiOver180 );
-}
-
-//-------------------------------------------------------------------------
-// Coordinate CoordinateConverter
-//-------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertToMgrs

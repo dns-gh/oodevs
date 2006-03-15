@@ -78,7 +78,7 @@ App::App( int nArgc, char** ppArgv )
     Initialize( conffile );
 
 //    SetSplashText( tr("Initialisation de l'interface...") );
-    pMainWindow_ = new MainWindow( *controller_ );
+    pMainWindow_ = new MainWindow( *controller_, conffile );
     pMainWindow_->show();
 
     if( pSplashScreen_ )

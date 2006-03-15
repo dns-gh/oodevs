@@ -12,14 +12,16 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "WorldParameters.h"
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
 #include "geocoord/Geodetic.h"
 
 // =============================================================================
 // Created: APE 2004-07-19
+// $$$$ AGE 2006-03-15: make an iface
 // =============================================================================
-class CoordinateConverter
+class CoordinateConverter : private WorldParameters
 {
 public:
     //! @name Constructor / Destructor

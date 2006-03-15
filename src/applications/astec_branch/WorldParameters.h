@@ -7,47 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef __GlWidget_h_
-#define __GlWidget_h_
-
-#include "graphics/MapWidget.h"
-#include "WorldParameters.h"
+#ifndef __WorldParameters_h_
+#define __WorldParameters_h_
 
 // =============================================================================
-/** @class  GlWidget
-    @brief  GlWidget
+/** @class  WorldParameters
+    @brief  WorldParameters
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private WorldParameters, public MapWidget
+class WorldParameters
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, const std::string& scipioXml );
-    virtual ~GlWidget();
-    //@}
-
-    //! @name Operations
-    //@{
+    explicit WorldParameters( const std::string& scipioXml );
+    virtual ~WorldParameters();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    GlWidget( const GlWidget& );            //!< Copy constructor
-    GlWidget& operator=( const GlWidget& ); //!< Assignement operator
+    WorldParameters( const WorldParameters& );            //!< Copy constructor
+    WorldParameters& operator=( const WorldParameters& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    void ReadTerrain( const std::string& terrain );
+    void ReadWorld( const std::string& world );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
+    float latitude_, longitude_;
+    float width_, height_;
+    std::string dataDirectory_;
+    std::string terrainDirectory_;
+    std::string graphicsDirectory_;
+    std::string detection_;
+    std::string geoid_;
     //@}
 };
 
-#endif // __GlWidget_h_
+#endif // __WorldParameters_h_

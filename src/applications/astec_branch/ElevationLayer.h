@@ -7,47 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __GlWidget_h_
-#define __GlWidget_h_
+#ifndef __ElevationLayer_h_
+#define __ElevationLayer_h_
 
-#include "graphics/MapWidget.h"
-#include "WorldParameters.h"
+#include "graphics/MapLayer_ABC.h"
+#include "graphics/DrawDetection.h"
+#include <memory>
+
+class DrawDetection;
 
 // =============================================================================
-/** @class  GlWidget
-    @brief  GlWidget
+/** @class  ElevationLayer
+    @brief  ElevationLayer
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private WorldParameters, public MapWidget
+class ElevationLayer : public MapLayer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, const std::string& scipioXml );
-    virtual ~GlWidget();
+    explicit ElevationLayer( const std::string& detectionFile );
+    virtual ~ElevationLayer();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Initialize( const geometry::Rectangle2f& extent );
+    virtual void Paint( const geometry::Rectangle2f& viewport ); 
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    GlWidget( const GlWidget& );            //!< Copy constructor
-    GlWidget& operator=( const GlWidget& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    ElevationLayer( const ElevationLayer& );            //!< Copy constructor
+    ElevationLayer& operator=( const ElevationLayer& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::string detectionFile_;
+    std::auto_ptr< DrawDetection > detection_;
     //@}
 };
 
-#endif // __GlWidget_h_
+#endif // __ElevationLayer_h_

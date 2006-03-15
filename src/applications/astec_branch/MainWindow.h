@@ -53,7 +53,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-    explicit MainWindow( Controller& controller );
+             MainWindow( Controller& controller, const std::string& scipioXml );
     virtual ~MainWindow();
 
     static MainWindow& GetMainWindow();
