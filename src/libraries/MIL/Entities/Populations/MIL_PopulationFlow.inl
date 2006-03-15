@@ -17,42 +17,11 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetPosition
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& MIL_PopulationFlow::GetPosition() const
-{
-    assert( !flowShape_.empty() );
-    return flowShape_.back();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetDirection
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& MIL_PopulationFlow::GetDirection() const
-{
-    return direction_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetSpeedWithReinforcement
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 inline
 MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/ ) const
-{
-    return GetMaxSpeed();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetSpeedWithReinforcement
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& /*object*/ ) const
 {
     return GetMaxSpeed();
 }
@@ -71,21 +40,21 @@ void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( const DEC_PathPoint& /*poin
 // Name: MIL_PopulationFlow::NotifyMovingInsideObject
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-inline
-void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& /*object*/ )
-{
+//inline
+//void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& /*object*/ )
+//{
     // NOTHING
-}
+//}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::NotifyMovingOutsideObject
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-//inline
-//void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& /*object*/ )
-//{
-//    // NOTHING
-//}
+inline
+void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& /*object*/ )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::NotifyEnvironmentChanged
@@ -142,6 +111,7 @@ void MIL_PopulationFlow::Clean()
     bSpeedUpdated_      = false;
     bHeadMoveFinished_  = false;
     pSplittingObject_   = 0;
+    objectsCollisionBeforeMove_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -189,6 +159,26 @@ const MT_Vector2D& MIL_PopulationFlow::GetTailPosition() const
 {
     assert( flowShape_.size() >= 2 );
     return flowShape_.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetPosition
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MIL_PopulationFlow::GetPosition() const
+{
+    return GetHeadPosition();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetDirection
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MIL_PopulationFlow::GetDirection() const
+{
+    return direction_;
 }
 
 // -----------------------------------------------------------------------------

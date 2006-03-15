@@ -153,10 +153,12 @@ private:
     MIL_PopulationConcentration* pSourceConcentration_;
     MIL_PopulationConcentration* pDestConcentration_;
          
-    MT_Vector2D          primaryDestination_;
-    MT_Vector2D          alternateDestination_; // Used when the flow is splitted
-    DEC_Population_Path* pCurrentPath_;
-    bool                 bHeadMoveFinished_;
+    MT_Vector2D                       primaryDestination_;
+    MT_Vector2D                       alternateDestination_; // Used when the flow is splitted
+    DEC_Population_Path*              pCurrentPath_;
+    bool                              bHeadMoveFinished_;
+    TER_ObjectManager::T_ObjectVector objectsCollisionBeforeMove_; // For interaction object-flow when moving
+
 
     MT_Vector2D          direction_;
     MT_Float             rSpeed_;
