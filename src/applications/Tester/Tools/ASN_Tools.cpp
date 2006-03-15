@@ -350,6 +350,22 @@ void ASN_Tools::CopyPolygonList( const T_LocationVector& locations, ASN1T_ListPo
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyLocationList
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyLocationList( const T_LocationVector& locations, ASN1T_ListLocalisation& asn )
+{
+    asn.n = locations.size();
+    if( locations.empty() )
+        return;
+    
+    asn.elem = new ASN1T_Polygon[ locations.size() ]; //$$$ RAM
+    uint i = 0;
+    for( CIT_LocationVector it = locations.begin(); it != locations.end(); ++it )
+        CopyLocation( **it, asn.elem[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyNatureAtlas
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------

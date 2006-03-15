@@ -297,6 +297,15 @@ T_LocationVector& Testable_Entity::GetTestParam_PolygonList() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Testable_Entity::GetTestParam_LocationList
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+T_LocationVector& Testable_Entity::GetTestParam_LocationList() const
+{
+    return GetTestParam_PolygonList();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_NatureAtlas
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
