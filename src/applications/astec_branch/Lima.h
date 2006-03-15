@@ -16,8 +16,6 @@
 #include "IDManager.h"
 #include "ASN_Types.h"
 
-class CoordinateConverter;
-
 // =============================================================================
 /** @class  Lima
     @brief  Represents a lima.
@@ -26,44 +24,41 @@ class CoordinateConverter;
 // =============================================================================
 class Lima : public TacticalLine_ABC
 {
-    MT_COPYNOTALLOWED( Lima );
 
 public:
-    static IDManager idManager_;
-
-public:
-     Lima();
-     Lima( T_PointVector pointList, E_FuncLimaType nFuncType );
-     Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
-    ~Lima();
-
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Constructor/Destructor
     //@{
-    TacticalLine_ABC::E_LineType GetLineType() const;
-
-    bool UpdateToSim();
+    explicit Lima( const CoordinateConverter& converter );
+             Lima( T_PointVector pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter );
+             Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
+    virtual ~Lima();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Func*/
-    //-------------------------------------------------------------------------
+    //! @name Operations
     //@{
-    E_FuncLimaType  GetTypeFunc() const;
-    void            SetTypeFunc( E_FuncLimaType nTypeFunc );
-    //@}
     
-    //! @name In/Out
-    //@{
-    void Read( MT_InputArchive_ABC& archive );
-    void Write( MT_OutputArchive_ABC& archive ) const;
     //@}
 
 private:
-    E_FuncLimaType        nFuncType_;
-};
+    //! @name Copy/Assignment
+    //@{
+    Lima( const Lima& );
+    Lima& operator=( const Lima& );
+    //@}
 
-#   include "Lima.inl"
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void FillAndSend();
+    virtual void UpdateToSim( E_State state );
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    static IDManager idManager_;
+    E_FuncLimaType   nFuncType_;
+    //@}
+};
 
 #endif // __Lima_h_

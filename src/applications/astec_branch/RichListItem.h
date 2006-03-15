@@ -59,6 +59,8 @@ public:
     virtual int  width( const QFontMetrics& fm, const QListView* pListView, int nColumn ) const;
     virtual void setText( int column, const QString& text );
     virtual QString text( int column ) const;
+    virtual void setPixmap( int column, const QPixmap & pm );
+    virtual const QPixmap * pixmap( int column ) const;
     //@}
 
 private:
@@ -73,19 +75,26 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< QString, QSimpleRichText* > T_RichText;
-    typedef std::vector< T_RichText >              T_RichTexts;
-    typedef T_RichTexts::iterator                 IT_RichTexts;
+    struct RichText
+    {
+        RichText() : rich( 0 ), pixMap( 0 ) {}
+        RichText( const QString& s, QSimpleRichText* rich ) : base( s ), rich( rich ), pixMap( 0 ) {}
+        QString          base;
+        QSimpleRichText* rich;
+        QPixmap          pixMap;
+    };
+    typedef std::vector< RichText > T_RichTexts;
+    typedef T_RichTexts::iterator  IT_RichTexts;
     //@}
 
 private:
     //! @name Member data
     //@{
     T_RichTexts columns_;
-
-    bool even_;
+    
     QColor backgroundColor_;
     QColor backgroundColor2_;   // For listviews with alternating colors
+    bool even_;
 
     QFont font_;
     QColor fontColor_;

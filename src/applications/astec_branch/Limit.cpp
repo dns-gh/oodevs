@@ -13,35 +13,29 @@
 #include "Limit.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "CoordinateConverter.h"
 
 IDManager Limit::idManager_( 138 );
-
-// $$$$ SBO 2006-03-14: Incroyable une merde pareil
 
 //-----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-Limit::Limit()
-    : TacticalLine_ABC()
+Limit::Limit( const CoordinateConverter& converter )
+    : TacticalLine_ABC( "Limit", idManager_.GetFreeIdentifier(), converter )
+    , nLevel_( eNatureLevel_None )
 {
-    nID_ = idManager_.GetFreeIdentifier();
-    strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
-/** @param  pointList 
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( const T_PointVector& pointList )
-    : TacticalLine_ABC()
+Limit::Limit( const T_PointVector& pointList, const CoordinateConverter& converter )
+    : TacticalLine_ABC(  "Limit", idManager_.GetFreeIdentifier(), pointList, converter )
+    , nLevel_( eNatureLevel_None )
 {
-    pointList_ = pointList;
-    nID_ = idManager_.GetFreeIdentifier();
-    strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -49,20 +43,10 @@ Limit::Limit( const T_PointVector& pointList )
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter )
-    : TacticalLine_ABC()
+    : TacticalLine_ABC( "Limit", asnMsg.oid, asnMsg.geometrie, converter )
+    , nLevel_( (E_NatureLevel) asnMsg.level )
 {
-    nID_ = asnMsg.oid;
-    idManager_.LockIdentifier( nID_ );
-    nState_ = eStateOk;
-    nNetworkState_ = eNetworkStateRegistered;
-    bCreatedBy = false;
-    nLevel_        = (E_NatureLevel) asnMsg.level;
-
-    strName_ = QString( "Limit %1" ).arg( nID_ & 0x3FFFFF );
-
-    assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
-    for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
-        pointList_.push_back( converter.ConvertToXY( asnMsg.geometrie.vecteur_point.elem[i] ) );
+    idManager_.LockIdentifier( GetId() );
 }
 
 //-----------------------------------------------------------------------------
@@ -71,130 +55,38 @@ Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& c
 //-----------------------------------------------------------------------------
 Limit::~Limit()
 {
-//    if( bCreatedBy )
-    idManager_.ReleaseIdentifier( nID_ );
+    idManager_.ReleaseIdentifier( GetId() );
 }
 
+//-----------------------------------------------------------------------------
+// Name: Limit::FillAndSend
+// Created: FBD 03-01-03
+//-----------------------------------------------------------------------------
+template< typename T >
+void Limit::FillAndSend()
+{
+    T message;
+    message.GetAsnMsg().oid   = GetId();
+    message.GetAsnMsg().level = (ASN1T_EnumNatureLevel) nLevel_;
+    WriteGeometry( message.GetAsnMsg().geometrie );
+    Send( message );
+    delete[] message.GetAsnMsg().geometrie.vecteur_point.elem;
+};
 
 //-----------------------------------------------------------------------------
 // Name: Limit::UpdateToSim
 // Created: FBD 03-01-03
 //-----------------------------------------------------------------------------
-bool Limit::UpdateToSim()
+void Limit::UpdateToSim( E_State state )
 {
-    if ( !App::GetApp().GetNetwork().IsConnected() )
-        return false;
-
-    uint i;
-
-    switch( nState_ )
+    if( state == eStateCreated )
+        FillAndSend< ASN_MsgLimitCreation >();
+    else if( state == eStateModified )
+        FillAndSend< ASN_MsgLimitUpdate >();
+    else if( state == eStateDeleted )
     {
-        case eStateCreated:
-        {
-            assert( !pointList_.empty() );
-        
-            ASN_MsgLimitCreation asnMsg;
-
-            asnMsg.GetAsnMsg().oid                          = nID_;
-            asnMsg.GetAsnMsg().level                        = (ASN1T_EnumNatureLevel) nLevel_;
-            asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
-            asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
-            asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
-
-            i = 0;
-            for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-            {
-                std::string strMGRS;
-                const MT_Vector2D& vPos = *itPoint;
-//                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
-                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str(); // $$$$ SBO 2006-03-14: C'est buggué jusqu'à la moelle ce truc ! depuis 3 ans !!
-                ++i;
-            }
-
-            asnMsg.Send( (MIL_MOSContextID)this );
-
-            nNetworkState_ = eNetworkStateRegistering;
-
-            delete[] asnMsg.GetAsnMsg().geometrie.vecteur_point.elem;
-        }
-        break;
-
-        case eStateModified:
-        {
-            assert( !pointList_.empty() );
-
-            ASN_MsgLimitUpdate asnMsg;
-
-            asnMsg.GetAsnMsg().oid                          = nID_;
-            asnMsg.GetAsnMsg().level                        = (ASN1T_EnumNatureLevel) nLevel_;
-            asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
-            asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
-            asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
-
-            i = 0;
-            for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-            {
-                std::string strMGRS;
-                const MT_Vector2D& vPos = *itPoint;
-//                App::GetApp().GetWorld().SimToMosMgrsCoord( vPos, strMGRS );
-                asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str(); // $$$$ SBO 2006-03-14: ca pareil !
-                ++i;
-            }
-
-            asnMsg.Send( (MIL_MOSContextID)this );
-
-            nNetworkState_ = eNetworkStateRegistering;
-
-            delete[] asnMsg.GetAsnMsg().geometrie.vecteur_point.elem;
-        }
-        break;
-
-        case eStateDeleted:
-        {
-            ASN_MsgLimitDestruction asnMsg;
-
-            asnMsg.GetAsnMsg() = nID_;
-            asnMsg.Send( (MIL_MOSContextID)this );
-            nNetworkState_ = eNetworkStateRegistering;
-
-            std::stringstream strMsg;
-            strMsg << "Demande destruction " << strName_;
-            MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
-        }
-        break;
-
-        case eStateOk:
-        default:
-            break;
+        ASN_MsgLimitDestruction asnMsg;
+        asnMsg.GetAsnMsg() = GetId();
+        Send( asnMsg );
     }
-
-    return true;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Limit::Read
-/** @param  archive 
-*/
-// Created: APE 2004-07-26
-// -----------------------------------------------------------------------------
-void Limit::Read( MT_InputArchive_ABC& archive )
-{
-    archive.Section( "Limit" );
-    TacticalLine_ABC::Read( archive );
-    archive.EndSection();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Limit::Write
-/** @param  archive 
-*/
-// Created: APE 2004-07-26
-// -----------------------------------------------------------------------------
-void Limit::Write( MT_OutputArchive_ABC& archive ) const
-{
-    archive.Section( "Limit" );
-    TacticalLine_ABC::Write( archive );
-    archive.EndSection();
 }

@@ -25,33 +25,36 @@ class CoordinateConverter;
 // =============================================================================
 class Limit : public TacticalLine_ABC
 {
-    MT_COPYNOTALLOWED( Limit );
 
 public:
-    static IDManager idManager_;
-
-public:
-             Limit();
-    explicit Limit( const T_PointVector& pointList );
+    //! @name Constructor/Destructor
+    //@{
+    explicit Limit( const CoordinateConverter& converter);
+             Limit( const T_PointVector& pointList, const CoordinateConverter& converter );
              Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter );
     virtual ~Limit();
-
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
-    //@{
-    TacticalLine_ABC::E_LineType GetLineType() const;
-
-    bool UpdateToSim();
     //@}
 
-    //! @name In/Out
+private:
+    //! @name Copy/Assignment
     //@{
-    void Read( MT_InputArchive_ABC& archive );
-    void Write( MT_OutputArchive_ABC& archive ) const;
+    Limit( const Limit& );
+    Limit& operator=( const Limit& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void FillAndSend();
+    virtual void UpdateToSim( E_State state );
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    static IDManager idManager_;
+    E_NatureLevel  nLevel_;
     //@}
 };
-
-#   include "Limit.inl"
 
 #endif // __Limit_h_

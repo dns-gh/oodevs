@@ -18,6 +18,7 @@
 
 #include "astec_pch.h"
 #include "RichListItem.h"
+#include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: RichListItem constructor
@@ -26,7 +27,7 @@
 RichListItem::RichListItem( QListView * parent )
     : QListViewItem( parent )
     , font_( parent->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -40,7 +41,7 @@ RichListItem::RichListItem( QListView * parent )
 RichListItem::RichListItem( QListView * parent, QListViewItem * after )
     : QListViewItem( parent, after )
     , font_( parent->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -54,7 +55,7 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after )
 RichListItem::RichListItem( QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent )
     , font_( parent->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -67,7 +68,7 @@ RichListItem::RichListItem( QListView * parent, QString label1, QString label2 /
 RichListItem::RichListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent, after )
     , font_( parent->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -80,7 +81,7 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after, QString l
 RichListItem::RichListItem( QListViewItem * parent )
     : QListViewItem( parent )
     , font_( listView()->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -93,7 +94,7 @@ RichListItem::RichListItem( QListViewItem * parent )
 RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after )
     : QListViewItem( parent, after )
     , font_( listView()->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -106,7 +107,7 @@ RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after )
 RichListItem::RichListItem( QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent )
     , font_( listView()->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -119,7 +120,7 @@ RichListItem::RichListItem( QListViewItem * parent, QString label1, QString labe
 RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent, after )
     , font_( listView()->font() )
-    , fontColor_( Qt::white )
+    , fontColor_( Qt::black )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -132,7 +133,7 @@ RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after, QStri
 RichListItem::~RichListItem()
 {
     for( IT_RichTexts it = columns_.begin(); it != columns_.end(); ++it )
-        delete it->second;
+        delete it->rich;
 }
 
 // -----------------------------------------------------------------------------
@@ -165,6 +166,8 @@ void RichListItem::AddColumns( const QString& label1, const QString& label2, con
 // -----------------------------------------------------------------------------
 bool RichListItem::InitializeColor()
 {
+    if( ! backgroundColor_.isValid() )
+        backgroundColor_ = listView()->colorGroup().base();
     const RichListItem* pItem = (RichListItem*)( itemAbove() );
     return backgroundColor2_.isValid()&& pItem && ! pItem->even_;
 }
@@ -200,8 +203,8 @@ void RichListItem::SetFont( const QFont& font )
     font_ = font;
     int height = 0;
     for( IT_RichTexts it = columns_.begin(); it != columns_.end(); ++it ) {
-        it->second->setDefaultFont( font_ );
-        height = std::max( height, it->second->height() );
+        it->rich->setDefaultFont( font_ );
+        height = std::max( height, it->rich->height() );
     }
     setHeight( height );
     widthChanged();
@@ -246,7 +249,7 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
         return;
 
     QColorGroup colorGroup( cg );
-    QBrush brush;
+    QBrush brush( Qt::SolidPattern );
     if( isSelected() )
     {
         if( listView()->hasFocus() )
@@ -269,9 +272,12 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
         brush.setColor( GetBackgroundColor() );
     }
 
-    QSimpleRichText* pRichText = columns_[nColumn].second;
-    const QRect rect( 0, 0, nWidth, this->height() );
-    pRichText->draw( pPainter, 0, 0, rect, colorGroup, &brush );
+    QSimpleRichText* pRichText = columns_[nColumn].rich;
+    const QPixmap& pm = columns_[nColumn].pixMap;
+    QRect rect( 0, 0, nWidth, height() );
+
+    pRichText->draw( pPainter, pm.width(), 0, rect, colorGroup, &brush );
+    pPainter->drawPixmap( QPoint( 0, height()/2 - pm.height()/2 ), pm );
 }
 
 
@@ -283,8 +289,7 @@ int RichListItem::width( const QFontMetrics& /*fm*/, const QListView* /*lv*/, in
 {
     if( nColumn >= (int)columns_.size() )
         return 0;
-
-    return columns_[nColumn].second->widthUsed();
+    return columns_[nColumn].rich->widthUsed() + columns_[nColumn].pixMap.width();
 }
 
 // -----------------------------------------------------------------------------
@@ -296,12 +301,29 @@ void RichListItem::setText( int column, const QString& text )
     if( column < 0 )
         return;
     while( (int)columns_.size() <= column )
-        columns_.push_back( T_RichText( "", CreateRichText( "" ) ) );
-    T_RichText& richText = columns_[ column ];
-    delete richText.second; 
-    richText = T_RichText( text, CreateRichText( text ) );
+        columns_.push_back( RichText( "", CreateRichText( "" ) ) );
+    RichText& richText = columns_[ column ];
+    delete richText.rich; 
+    richText = RichText( text, CreateRichText( text ) );
     widthChanged();
 }
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::setPixmap
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+void RichListItem::setPixmap( int column, const QPixmap & pm )
+{
+    if( column < 0 )
+        return;
+    while( (int)columns_.size() <= column )
+        columns_.push_back( RichText( "", CreateRichText( "" ) ) );
+    RichText& richText = columns_[ column ];
+    richText.pixMap = pm;
+    setHeight( std::max( height(), pm.height() ) );
+    widthChanged();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: RichListItem::CreateRichText
@@ -324,5 +346,16 @@ QString RichListItem::text( int column ) const
 {
     if( column < 0 || column >= (int)columns_.size() )
         return "";
-    return columns_[ column ].first;
+    return columns_[ column ].base;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::pixmap
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+const QPixmap * RichListItem::pixmap( int column ) const
+{
+    if( column < 0 || column >= (int)columns_.size() )
+        return 0;
+    return & columns_[ column ].pixMap; // $$$$ AGE 2006-03-15: maybe use a list to allow reentrance?
 }

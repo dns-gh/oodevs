@@ -19,14 +19,11 @@
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Order_Def.h"
 #include "Types.h"
 #include "ASN_Types.h"
 
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  TacticalLine_ABC
@@ -36,9 +33,38 @@
 // =============================================================================
 class TacticalLine_ABC
 {
-    MT_COPYNOTALLOWED( TacticalLine_ABC );
 
 public:
+    //! @name Constructors/Destructor
+    //@{
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter& converter );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter& converter );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter& converter );
+    virtual ~TacticalLine_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Update( const ASN1T_MsgLimitCreationAck& asnMsg );
+    void Update( const ASN1T_MsgLimitUpdateAck& asnMsg );
+    void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
+    void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
+
+    void UpdateToSim();
+    //@}
+
+    //! @name Accessors
+    //@{
+    unsigned long GetId() const;
+    std::string   GetName() const;
+
+    bool IsUpdatingToSim() const;
+    bool IsCreatedByMos() const;
+    //@}
+
+protected:
+    //! @name Types
+    //@{
     enum E_State
     {   
         eStateOk            = 0x00,
@@ -53,78 +79,39 @@ public:
         eNetworkStateRegistering       = 1,
         eNetworkStateRegistered        = 2
     };
+    //@}
 
-    enum E_LineType
+    //! @name Helpers
+    //@{
+    void WriteGeometry( ASN1T_Line& line );
+    virtual void UpdateToSim( E_State state ) = 0;
+    template< typename Message >
+    void Send( Message& message )
     {
-        eLima,
-        eLimit
-    };
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-             TacticalLine_ABC();
-    virtual ~TacticalLine_ABC();
+        message.Send( (MIL_MOSContextID)this );
+        nNetworkState_ = eNetworkStateRegistering;
+    }
     //@}
 
-    //! @name Operations
+private:
+    //! @name Copy/Assignment
     //@{
-    void Update( const ASN1T_MsgLimitCreationAck& asnMsg );
-    void Update( const ASN1T_MsgLimitUpdateAck& asnMsg );
-    void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
-    void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
+    TacticalLine_ABC( const TacticalLine_ABC& );
+    TacticalLine_ABC& operator=( const TacticalLine_ABC& );
     //@}
 
-    //! @name Accessors
-    //@{
-    unsigned long         GetId() const;
-    MIL_LineID            GetID() const;
-    CT_PointVector&       GetPointList() const;
-    const std::string     GetName() const;
-    void                  SetName( const std::string strName );
-    E_NatureLevel         GetLevel() const;
-
-    bool                  IsUpdatingToSim() const;
-    bool                  IsCreatedByMos() const;
-    
-    //@}
-
-    //! @name Point operations
-    //@{
-    void AddPoint( const MT_Vector2D& vPos );
-    void InsertPoint( uint nIndex, const MT_Vector2D& vPos );
-    void ModifyPoint( uint nIndex, const MT_Vector2D& vNewPos );
-    void Translate( const MT_Vector2D& vTranslation );
-    void DeletePoint( uint nIndex );
-    void PopPoint();
-    void DeleteAllPoints();
-    //@}
-
-    virtual bool UpdateToSim() = 0;
-    virtual TacticalLine_ABC::E_LineType GetLineType() const = 0;
-
-    //! @name In/Out
-    //@{
-    virtual void Read( MT_InputArchive_ABC& archive );
-    virtual void Write( MT_OutputArchive_ABC& archive ) const;
-    //@}
-
-protected:
+private:
     //! @name Member data
     //@{
-    MIL_LineID     nID_;
-    E_NatureLevel  nLevel_;
+    const CoordinateConverter& converter_;
 
+    unsigned long  id_;
     T_PointVector  pointList_;
     std::string    strName_;
-
     E_State        nState_;
     E_NetworkState nNetworkState_;
-
     bool           bCreatedBy; 
     //@}
 };
-
-#   include "TacticalLine_ABC.inl"
 
 #endif // __TacticalLine_ABC_h_
