@@ -278,6 +278,16 @@ Location& Testable_Entity::GetTestParam_Location() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Testable_Entity::GetTestParam_LocationList
+// Created: SBO 2006-03-15
+// -----------------------------------------------------------------------------
+T_LocationVector& Testable_Entity::GetTestParam_LocationList() const
+{
+    // retrieve 3 random lines
+    return Location::GetTestParam_LocationList( GetPosition(), 3, EnumTypeLocalisation::line );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_Polygon
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
@@ -294,15 +304,6 @@ T_LocationVector& Testable_Entity::GetTestParam_PolygonList() const
 {
     // retrieve 3 random polygons
     return Location::GetTestParam_LocationList( GetPosition(), 3, EnumTypeLocalisation::polygon );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Testable_Entity::GetTestParam_LocationList
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-T_LocationVector& Testable_Entity::GetTestParam_LocationList() const
-{
-    return GetTestParam_PolygonList();
 }
 
 // -----------------------------------------------------------------------------

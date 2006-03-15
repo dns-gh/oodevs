@@ -315,6 +315,22 @@ void ASN_Tools::CopyLocation( const Location& location, ASN1T_Localisation& asn 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyLocationList
+// Created: SBO 2006-03-15
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyLocationList( const T_LocationVector& locations, ASN1T_ListLocalisation& asn )
+{
+    asn.n = locations.size();
+    if( locations.empty() )
+        return;
+
+    asn.elem = new ASN1T_Localisation[ locations.size() ]; //$$$ RAM
+    uint i = 0;
+    for( CIT_LocationVector it = locations.begin(); it != locations.end(); ++it )
+        CopyLocation( **it, asn.elem[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyPolygon
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
@@ -347,22 +363,6 @@ void ASN_Tools::CopyPolygonList( const T_LocationVector& locations, ASN1T_ListPo
     uint i = 0;
     for( CIT_LocationVector it = locations.begin(); it != locations.end(); ++it )
         CopyPolygon( **it, asn.elem[ i++ ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASN_Tools::CopyLocationList
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-void ASN_Tools::CopyLocationList( const T_LocationVector& locations, ASN1T_ListLocalisation& asn )
-{
-    asn.n = locations.size();
-    if( locations.empty() )
-        return;
-    
-    asn.elem = new ASN1T_Polygon[ locations.size() ]; //$$$ RAM
-    uint i = 0;
-    for( CIT_LocationVector it = locations.begin(); it != locations.end(); ++it )
-        CopyLocation( **it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -476,8 +476,6 @@ void ASN_Tools::Delete( ASN1T_ListLocalisation& asn )
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
-/** @param  asn 
-*/
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 void ASN_Tools::Delete( ASN1T_ListKnowledgeAgent& asn )

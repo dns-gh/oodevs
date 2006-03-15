@@ -83,9 +83,9 @@ public:
     virtual GenObject&         GetTestParam_GenObject          () const;
     virtual T_GenObjectVector& GetTestParam_GenObjectList      () const;
     virtual Location&          GetTestParam_Location           () const;
+    virtual T_LocationVector&  GetTestParam_LocationList       () const;
     virtual Location&          GetTestParam_Polygon            () const;
     virtual T_LocationVector&  GetTestParam_PolygonList        () const;
-    virtual T_LocationVector&  GetTestParam_LocationList       () const;
     virtual uint               GetTestParam_NatureAtlas        () const;
     virtual uint               GetTestParam_GDH                () const;
 
