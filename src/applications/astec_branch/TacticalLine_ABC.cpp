@@ -210,3 +210,12 @@ void TacticalLine_ABC::Write( MT_OutputArchive_ABC& archive ) const
     }
     archive.EndList();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::GetId
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+unsigned long TacticalLine_ABC::GetId() const
+{
+    return nID_;
+}

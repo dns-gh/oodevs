@@ -77,6 +77,7 @@ public:
 
     //! @name Accessors
     //@{
+    unsigned long         GetId() const;
     MIL_LineID            GetID() const;
     CT_PointVector&       GetPointList() const;
     const std::string     GetName() const;

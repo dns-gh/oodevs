@@ -40,8 +40,13 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( Agent_ABC& agent, ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller );
     virtual ~MissionInterface_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    bool CheckValidity();
     //@}
 
 protected:
@@ -99,6 +104,11 @@ private:
     //@{
     typedef std::vector< Param_ABC* >      T_Parameters;
     typedef T_Parameters::const_iterator CIT_Parameters;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void AddParameter( Param_ABC& parameter, bool optional );
     //@}
 
 private:

@@ -3,16 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2005-03-14 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamNumericField.cpp $
-// $Author: Age $
-// $Modtime: 14/03/05 15:37 $
-// $Revision: 2 $
-// $Workfile: ParamNumericField.cpp $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -22,73 +13,56 @@
 
 // -----------------------------------------------------------------------------
 // Name: ParamNumericField constructor
-// Created: APE 2005-03-14
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
-: QHBox         ( pParent )
-, Param_ABC ( bOptional )
-, pAsnInt_      ( &asnInt )
-, pAsnReal_     ( 0 )
+ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const std::string& label )
+    : QHBox( parent )
+    , int_( &asn )
+    , real_( 0 )
 {
-    assert( nDefault >= nMin && nDefault <= nMax );
-
-    this->setSpacing( 5 );
-    pLabel_ = new QLabel( strLabel.c_str(), this );
+    setSpacing( 5 );
+    pLabel_ = new QLabel( label.c_str(), this );
     pLabel_->setAlignment( AlignVCenter | AlignLeft );
 
-    pEdit_ = new QLineEdit( QString::number( nDefault ), this );
-    pEdit_->setValidator( new QIntValidator( nMin, nMax, pEdit_ ) );
+    pEdit_ = new QLineEdit( QString::number( 0 ), this );
+    pEdit_->setValidator( new QIntValidator( 0, 9999, pEdit_ ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamNumericField constructor
-// Created: APE 2005-03-14
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
-: QHBox         ( pParent )
-, Param_ABC ( bOptional )
-, pAsnInt_      ( 0 )
-, pAsnReal_     ( &asnReal )
+ParamNumericField::ParamNumericField( QWidget* parent, ASN1REAL& asn, const std::string& label )
+    : QHBox( parent )
+    , int_ ( 0 )
+    , real_( &asn )
 {
-    assert( rDefault >= rMin && rDefault <= rMax );
-
-    this->setSpacing( 5 );
-    pLabel_ = new QLabel( strLabel.c_str(), this );
+    setSpacing( 5 );
+    pLabel_ = new QLabel( label.c_str(), this );
     pLabel_->setAlignment( AlignVCenter | AlignLeft );
 
-    pEdit_ = new QLineEdit( QString::number( rDefault ), this );
-    pEdit_->setValidator( new QDoubleValidator( rMin, rMax, 2, pEdit_ ) );
+    pEdit_ = new QLineEdit( QString::number( 0. ), this );
+    pEdit_->setValidator( new QDoubleValidator( 0., 9999., 2, pEdit_ ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamNumericField destructor
-// Created: APE 2005-03-14
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamNumericField::~ParamNumericField()
 {
+    // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamNumericField::WriteMsg
-// Created: APE 2005-03-14
+// Name: ParamNumericField::Commit
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void ParamNumericField::WriteMsg( std::stringstream& strMsg )
+void ParamNumericField::Commit()
 {
-    strMsg << pLabel_->text().latin1() << ": ";
-    bool bOk = false;
-    float rValue = pEdit_->text().toFloat( &bOk );
-    assert( bOk );
-    if( pAsnInt_ != 0 )
-    {
-        *pAsnInt_ = (int)rValue;
-        strMsg << (int)rValue;
-    }
+    const float rValue = pEdit_->text().toFloat();
+    if( int_ )
+        *int_ = (int)rValue;
     else
-    {
-        *pAsnReal_ = (float)rValue;
-        strMsg << (float)rValue;
-    }
+        *real_ = (float)rValue;
 }

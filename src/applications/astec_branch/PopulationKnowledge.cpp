@@ -58,6 +58,15 @@ unsigned long PopulationKnowledge::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetName
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+std::string PopulationKnowledge::GetName() const
+{
+    return popu_.GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------

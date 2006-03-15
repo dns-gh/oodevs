@@ -3,53 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-05-07 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamAgentType.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:36 $
-// $Revision: 2 $
-// $Workfile: ParamAgentType.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __ParamAgentType_h_
 #define __ParamAgentType_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
 
-
 // =============================================================================
-// Created: APE 2004-04-21
+/** @class  ParamAgentType
+    @brief  ParamAgentType
+*/
+// Created: AGE 2006-03-15
 // =============================================================================
 class ParamAgentType : public QButtonGroup, public Param_ABC
 {
-    MT_COPYNOTALLOWED( ParamAgentType );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, bool bOptional );
-    ~ParamAgentType();
+             ParamAgentType( QWidget* parent, ASN1T_NatureAtlas& asn, const std::string& label );
+    virtual ~ParamAgentType();
     //@}
 
     //! @name Operations
     //@{
-    void WriteMsg( std::stringstream& strMsg );
+    virtual void Commit();
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    ParamAgentType( const ParamAgentType& );            //!< Copy constructor
+    ParamAgentType& operator=( const ParamAgentType& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ASN1T_NatureAtlas& asnNatureAtlas_;
+    ASN1T_NatureAtlas& asn_;
 
     QCheckBox* pArmoredCheckBox_;
     QCheckBox* pASSCheckBox_;

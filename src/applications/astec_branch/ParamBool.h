@@ -3,53 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-04-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamBool.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:36 $
-// $Revision: 2 $
-// $Workfile: ParamBool.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __ParamBool_h_
 #define __ParamBool_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
 
-
 // =============================================================================
-// Created: APE 2004-04-21
+/** @class  ParamBool
+    @brief  ParamBool
+*/
+// Created: AGE 2006-03-15
 // =============================================================================
 class ParamBool : public QCheckBox, public Param_ABC
 {
-    MT_COPYNOTALLOWED( ParamBool );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent, bool bOptional );
-    ~ParamBool();
+             ParamBool( QWidget* parent, ASN1BOOL& asn, const std::string& label, bool defaultValue = false );
+    virtual ~ParamBool();
     //@}
 
     //! @name Operations
     //@{
-    void WriteMsg( std::stringstream& strMsg );
+    virtual void Commit();
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    ParamBool( const ParamBool& );            //!< Copy constructor
+    ParamBool& operator=( const ParamBool& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ASN1BOOL& asnBool_;
+    ASN1BOOL& asn_;
     //@}
 };
 

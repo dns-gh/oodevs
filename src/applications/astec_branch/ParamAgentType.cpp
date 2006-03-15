@@ -3,34 +3,20 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-07 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamAgentType.cpp $
-// $Author: Ape $
-// $Modtime: 7/05/04 12:05 $
-// $Revision: 1 $
-// $Workfile: ParamAgentType.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ParamAgentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentType constructor
-// Created: APE 2004-05-07
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamAgentType::ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, bool bOptional )
-    : QButtonGroup    ( 2, Qt::Horizontal, strLabel.c_str(), pParent )
-    , Param_ABC   ( bOptional )
-    , asnNatureAtlas_ ( asnNatureAtlas )
+ParamAgentType::ParamAgentType( QWidget* parent, ASN1T_NatureAtlas& asn, const std::string& label )
+    : QButtonGroup( 2, Qt::Horizontal, label.c_str(), parent )
+    , asn_        ( asn )
 {
     pArmoredCheckBox_        = new QCheckBox( tr( "Blindé" )         , this );
     pASSCheckBox_            = new QCheckBox( tr( "ASS" )            , this );
@@ -45,37 +31,34 @@ ParamAgentType::ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::st
     pNoneCheckBox_           = new QCheckBox( tr( "Aucun" )          , this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ParamAgentType destructor
-// Created: APE 2004-05-07
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamAgentType::~ParamAgentType()
 {
+    // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamAgentType::WriteMsg
-/** @param  strMsg 
-*/
-// Created: APE 2004-05-07
+// Name: ParamAgentType::Commit
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void ParamAgentType::WriteMsg( std::stringstream& /*strMsg*/ )
+void ParamAgentType::Commit()
 {
-    asnNatureAtlas_.numbits = 11;
-    asnNatureAtlas_.data[0] = 0;
-    asnNatureAtlas_.data[1] = 0;
+    asn_.numbits = 11;
+    asn_.data[0] = 0;
+    asn_.data[1] = 0;
 
-    asnNatureAtlas_.data[BytXblinde          ] |= ( pArmoredCheckBox_       ->isChecked() ? BitMblinde : 0             );
-    asnNatureAtlas_.data[BytXass             ] |= ( pASSCheckBox_           ->isChecked() ? BitMass : 0                );
-    asnNatureAtlas_.data[BytXpc              ] |= ( pHQCheckBox_            ->isChecked() ? BitMpc : 0                 );
-    asnNatureAtlas_.data[BytXlog             ] |= ( pLogCheckBox_           ->isChecked() ? BitMlog : 0                );
-    asnNatureAtlas_.data[BytXmortier         ] |= ( pMortarCheckBox_        ->isChecked() ? BitMmortier : 0            );
-    asnNatureAtlas_.data[BytXlance_roquette  ] |= ( pRocketLauncherCheckBox_->isChecked() ? BitMlance_roquette : 0     );
-    asnNatureAtlas_.data[BytXvehicule        ] |= ( pVehiculeCheckBox_      ->isChecked() ? BitMvehicule : 0           );
-    asnNatureAtlas_.data[BytXpersonnel_a_pied] |= ( pFootTroopsCheckBox_    ->isChecked() ? BitMpersonnel_a_pied : 0   );
-    asnNatureAtlas_.data[BytXhelicoptere     ] |= ( pHelicopterCheckBox_    ->isChecked() ? BitMhelicoptere : 0        );
-    asnNatureAtlas_.data[BytXindefini        ] |= ( pUndefinedCheckBox_     ->isChecked() ? BitMindefini : 0           );
-    asnNatureAtlas_.data[BytXnone            ] |= ( pNoneCheckBox_          ->isChecked() ? BitMnone : 0               );
+    asn_.data[BytXblinde          ] |= ( pArmoredCheckBox_       ->isChecked() ? BitMblinde : 0           );
+    asn_.data[BytXass             ] |= ( pASSCheckBox_           ->isChecked() ? BitMass : 0              );
+    asn_.data[BytXpc              ] |= ( pHQCheckBox_            ->isChecked() ? BitMpc : 0               );
+    asn_.data[BytXlog             ] |= ( pLogCheckBox_           ->isChecked() ? BitMlog : 0              );
+    asn_.data[BytXmortier         ] |= ( pMortarCheckBox_        ->isChecked() ? BitMmortier : 0          );
+    asn_.data[BytXlance_roquette  ] |= ( pRocketLauncherCheckBox_->isChecked() ? BitMlance_roquette : 0   );
+    asn_.data[BytXvehicule        ] |= ( pVehiculeCheckBox_      ->isChecked() ? BitMvehicule : 0         );
+    asn_.data[BytXpersonnel_a_pied] |= ( pFootTroopsCheckBox_    ->isChecked() ? BitMpersonnel_a_pied : 0 );
+    asn_.data[BytXhelicoptere     ] |= ( pHelicopterCheckBox_    ->isChecked() ? BitMhelicoptere : 0      );
+    asn_.data[BytXindefini        ] |= ( pUndefinedCheckBox_     ->isChecked() ? BitMindefini : 0         );
+    asn_.data[BytXnone            ] |= ( pNoneCheckBox_          ->isChecked() ? BitMnone : 0             );
 }

@@ -38,9 +38,11 @@ public:
 
     //! @name Accessors
     //@{
+    unsigned long GetId() const;
+    std::string GetName() const;
+
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
-    unsigned long GetId() const;
     bool IsInTeam( const Team& team ) const;
     //@}
 

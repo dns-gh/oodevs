@@ -19,67 +19,61 @@
 #ifndef __ParamComboBox_h_
 #define __ParamComboBox_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Param_ABC.h"
-
+#include "MT/MT_Qt/MT_ValuedComboBox.h" // $$$$ AGE 2006-03-15: move
 
 // =============================================================================
 /** @class  ParamComboBox
     @brief  ParamComboBox
-    @par    Using example
-    @code
-    ParamComboBox;
-    @endcode
 */
 // Created: APE 2004-04-21
 // =============================================================================
 template< class T >
 class ParamComboBox : public QHBox, public Param_ABC
 {
-    MT_COPYNOTALLOWED( ParamComboBox );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, bool bOptional );
-    ~ParamComboBox();
+             ParamComboBox( QWidget* parent, T& asn, const std::string label );
+    virtual ~ParamComboBox();
     //@}
 
     //! @name Operations
     //@{
     void AddItem( const std::string strLabel, const T& value );
-    void WriteMsg( std::stringstream& strMsg );
+    virtual void Commit();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{    
+    ParamComboBox( const ParamComboBox& );
+    ParamComboBox& operator=( const ParamComboBox& );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T& output_;
-    QLabel* pLabel_;
-    MT_ValuedComboBox<T>* pComboBox_;
+    T& asn_;
+    MT_ValuedComboBox<T>* pComboBox_; // $$$$ AGE 2006-03-15: MT_Caca
     //@}
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox constructor
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
-ParamComboBox<T>::ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, bool bOptional )
-    : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
-    , output_       ( output )
+ParamComboBox<T>::ParamComboBox( QWidget* parent, T& asn, const std::string label )
+    : QHBox( parent )
+    , asn_ ( asn )
 {
-    pLabel_ = new QLabel( strLabel.c_str(), this );
-    pLabel_->setAlignment( AlignVCenter | AlignLeft );
+    QLabel* pLabel = new QLabel( label.c_str(), this );
+    pLabel->setAlignment( AlignVCenter | AlignLeft );
     pComboBox_ = new MT_ValuedComboBox<T>( this );
     pComboBox_->setSorting( true );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox destructor
@@ -88,8 +82,8 @@ ParamComboBox<T>::ParamComboBox( T& output, const std::string strLabel, QWidget*
 template< class T >
 ParamComboBox<T>::~ParamComboBox()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox::AddItem
@@ -101,17 +95,14 @@ void ParamComboBox<T>::AddItem( const std::string strLabel, const T& value )
     pComboBox_->AddItem( strLabel.c_str(), value );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox::WriteMsg
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
-void ParamComboBox<T>::WriteMsg( std::stringstream& strMsg )
+void ParamComboBox<T>::Commit()
 {
     output_ = pComboBox_->GetValue();
-    strMsg << pLabel_->text().latin1() << ": " << pComboBox_->GetValue();
 }
-
 
 #endif // __ParamComboBox_h_

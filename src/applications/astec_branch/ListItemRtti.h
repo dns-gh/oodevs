@@ -142,4 +142,10 @@ struct ListItemRtti< const AgentFireResult* > {
     enum { rtti = 1020 };
 };
 
+class Lima;
+template< >
+struct ListItemRtti< const Lima* > {
+    enum { rtti = 1021 };
+};
+
 #endif // __ListItemRtti_h_

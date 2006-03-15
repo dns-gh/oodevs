@@ -3,54 +3,38 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamBool.cpp $
-// $Author: Ape $
-// $Modtime: 8/06/04 14:26 $
-// $Revision: 2 $
-// $Workfile: ParamBool.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ParamBool.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamBool constructor
-// Created: APE 2004-04-21
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent, bool bOptional )
-    : QCheckBox     ( strLabel.c_str(), pParent )
-    , Param_ABC ( bOptional )
-    , asnBool_      ( asnBool )
+ParamBool::ParamBool( QWidget* parent, ASN1BOOL& asn, const std::string& label, bool defaultValue /*= false*/ )
+    : QCheckBox( label.c_str(), parent )
+    , asn_     ( asn )
 {
-    this->setChecked( bDefaultValue );
+    setChecked( defaultValue );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamBool destructor
-// Created: APE 2004-04-21
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamBool::~ParamBool()
 {
+    // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamBool::WriteMsg
-// Created: APE 2004-04-21
+// Name: ParamBool::Commit
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void ParamBool::WriteMsg( std::stringstream& strMsg )
+void ParamBool::Commit()
 {
-    asnBool_ = this->isChecked();
-    strMsg << this->text().latin1() << ((this->isChecked()) ? ": true" : ": false");
+    asn_ = isChecked();
 }

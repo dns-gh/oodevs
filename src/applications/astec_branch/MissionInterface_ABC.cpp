@@ -21,37 +21,42 @@
 #include "moc_MissionInterface_ABC.cpp"
 
 #include "MissionPanel.h"
-#include "ParamPoint.h"
+//#include "ParamPoint.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
-#include "ParamPath.h"
-#include "ParamPathList.h"
+//#include "ParamPath.h"
+//#include "ParamPathList.h"
 #include "ParamGDH.h"
-#include "ParamComboBox.h"
+//#include "ParamComboBox.h"
 #include "ParamBool.h"
-#include "ParamLocation.h"
-#include "ParamLocationList.h"
-#include "ParamAgentType.h"
+//#include "ParamLocation.h"
+//#include "ParamLocationList.h"
+//#include "ParamAgentType.h"
 #include "ParamAgentKnowledge.h"
 #include "ParamAgentKnowledgeList.h"
 #include "ParamPopulationKnowledge.h"
 #include "ParamObjectKnowledge.h"
 #include "ParamObjectKnowledgeList.h"
-#include "ParamObstacle.h"
-#include "ParamObstacleList.h"
+//#include "ParamObstacle.h"
+//#include "ParamObstacleList.h"
 #include "ParamDirection.h"
 #include "ParamNumericField.h"
-#include "ParamEquipmentList.h"
-#include "ParamHumanWoundList.h"
+//#include "ParamEquipmentList.h"
+//#include "ParamHumanWoundList.h"
+#include "Agent.h"
+#include "Object_ABC.h"
+#include "ObjectKnowledge.h"
+#include "AgentKnowledge.h"
+#include "PopulationKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( Agent_ABC& agent, ActionController& controller )
-    : QVBox       ( &parentPanel )
-    , agent_      ( agent )
-    , parentPanel_( parentPanel )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller )
+    : QVBox      ( parent )
+    , controller_( controller )
+    , agent_     ( agent )
 {
     setMargin( 5 );
     setSpacing( 4 );
@@ -73,9 +78,8 @@ MissionInterface_ABC::~MissionInterface_ABC()
 bool MissionInterface_ABC::CheckValidity()
 {
     bool b = true;
-    for( IT_ParamVector itP = parameters_.begin(); itP != parameters_.end(); ++itP )
-        if( ! (*itP)->IsOptional() && ! (*itP)->CheckValidity() )
-            b = false;  // Don't stop here, we want to turn red the labels of all invalid params.
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        b = (*it)->CheckValidity() && b;
     return b;
 }
 
@@ -92,9 +96,19 @@ void MissionInterface_ABC::CreateOkCancelButtons()
     pOk->setDefault( true );
 
     connect( pOk, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
-    connect( pCancel, SIGNAL( clicked() ), &parentPanel_, SLOT( hide() ) );
+    connect( pCancel, SIGNAL( clicked() ), parent(), SLOT( hide() ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::AddParameter
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::AddParameter( Param_ABC& parameter, bool optional )
+{
+    parameters_.push_back( &parameter );
+    parameter.SetOptional( optional );
+    parameter.RegisterIn( controller_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateNatureAtlas
@@ -102,9 +116,8 @@ void MissionInterface_ABC::CreateOkCancelButtons()
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateNatureAtlas( ASN1T_NatureAtlas& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamAgentType( asn, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamAgentType( asn, strName, this, bOptional ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateGDH
@@ -112,7 +125,7 @@ void MissionInterface_ABC::CreateNatureAtlas( ASN1T_NatureAtlas& asn, const std:
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateGDH( ASN1T_GDH& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamGDH( asn, strName, this, bOptional ) );
+    AddParameter( *new ParamGDH( this, asn, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +134,7 @@ void MissionInterface_ABC::CreateGDH( ASN1T_GDH& asn, const std::string& strName
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateDirection( ASN1T_Direction& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamDirection( asn, strName, this, bOptional ) );
+    AddParameter( *new ParamDirection( this, asn, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +143,7 @@ void MissionInterface_ABC::CreateDirection( ASN1T_Direction& asn, const std::str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePoint( ASN1T_Point& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamPoint( asn, strName, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamPoint( asn, strName, strName, this, bOptional ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +152,7 @@ void MissionInterface_ABC::CreatePoint( ASN1T_Point& asn, const std::string& str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePath( ASN1T_Itineraire& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamPath( asn, agent_, strName, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamPath( asn, agent_, strName, strName, this, bOptional ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,16 +161,16 @@ void MissionInterface_ABC::CreatePath( ASN1T_Itineraire& asn, const std::string&
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePathList( ASN1T_ListItineraire& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamPathList( asn, strName, strName, 1, 999, this, true /*bOptional*/ ) );
+//    parameters_.push_back( new ParamPathList( asn, strName, strName, 1, 999, this, true /*bOptional*/ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateAgentList
 // Created: APE 2004-04-30
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAgentList( ASN1T_ListAgent& asn, const std::string& strName, bool bOptional )
+void MissionInterface_ABC::CreateAgentList( ASN1T_ListAgent& asn, const std::string& strName, bool /*bOptional*/ )
 {
-    parameters_.push_back( new ParamAgentList( asn, strName, strName, 0, 999, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamAgentList( this, asn, strName, strName ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,16 +179,16 @@ void MissionInterface_ABC::CreateAgentList( ASN1T_ListAgent& asn, const std::str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAgent( ASN1T_Agent& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamAgent( asn, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamAgent( this, asn, strName, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateAutomateList
 // Created: APE 2004-10-25
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAutomateList( ASN1T_ListAutomate& asn, const std::string& strName, bool bOptional )
+void MissionInterface_ABC::CreateAutomateList( ASN1T_ListAutomate& asn, const std::string& strName, bool /*bOptional*/ )
 {
-    parameters_.push_back( new ParamAgentList( (ASN1T_ListAgent&)asn, strName, strName, 0, 999, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamAgentList( this, (ASN1T_ListAgent&)asn, strName, strName ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +197,7 @@ void MissionInterface_ABC::CreateAutomateList( ASN1T_ListAutomate& asn, const st
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAutomate( ASN1T_Agent& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamAgent( asn, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamAgent( this, asn, strName, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +206,7 @@ void MissionInterface_ABC::CreateAutomate( ASN1T_Agent& asn, const std::string& 
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamLocation( asn, strName, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamLocation( asn, strName, strName, this, bOptional ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +215,7 @@ void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const std::s
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateLocationList( ASN1T_ListLocalisation& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
+//    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +224,7 @@ void MissionInterface_ABC::CreateLocationList( ASN1T_ListLocalisation& asn, cons
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePolygonList( ASN1T_ListPolygon& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
+//    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +233,7 @@ void MissionInterface_ABC::CreatePolygonList( ASN1T_ListPolygon& asn, const std:
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePointList( ASN1T_ListPoint& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
+//    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,16 +242,16 @@ void MissionInterface_ABC::CreatePointList( ASN1T_ListPoint& asn, const std::str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAgentKnowledge( ASN1T_KnowledgeAgent& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamAgentKnowledge( asn, agent_, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamAgentKnowledge( this, asn, strName, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateAgentKnowledgeList
 // Created: APE 2004-04-30
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asn, const std::string& strName, bool bOptional )
+void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asn, const std::string& strName, bool /*bOptional*/ )
 {
-    parameters_.push_back( new ParamAgentKnowledgeList( asn, agent_, strName, strName, 1, 999, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamAgentKnowledgeList( this, asn, strName, strName ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,16 +260,16 @@ void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& a
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamObjectKnowledge( asn, agent_, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamObjectKnowledge( this, asn, strName, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateObjectKnowledgeList
 // Created: APE 2004-04-30
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn, const std::string& strName, bool bOptional )
+void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn, const std::string& strName, bool /*bOptional*/ )
 {
-    parameters_.push_back( new ParamObjectKnowledgeList( asn, agent_, strName, strName, 1, 999, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamObjectKnowledgeList( this, asn, strName, strName ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,7 +278,7 @@ void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject&
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateGenObject( ASN1T_MissionGenObject& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamObstacle( asn, strName, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamObstacle( asn, strName, strName, this, bOptional ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,8 +287,7 @@ void MissionInterface_ABC::CreateGenObject( ASN1T_MissionGenObject& asn, const s
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateGenObjectList( ASN1T_ListMissionGenObject& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamObstacleList( asn, strName, strName, this, true /*bOptional*/ ) );
-
+//    parameters_.push_back( new ParamObstacleList( asn, strName, strName, this, true /*bOptional*/ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +296,8 @@ void MissionInterface_ABC::CreateGenObjectList( ASN1T_ListMissionGenObject& asn,
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateBool( ASN1BOOL& asn, const std::string& strName, bool bOptional, QWidget* pParent )
 {
-    parameters_.push_back( new ParamBool( asn, false, strName, (pParent != 0) ? pParent : this, bOptional ) );
+//    (pParent != 0) ? pParent : this
+    AddParameter( *new ParamBool( this, asn, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +306,7 @@ void MissionInterface_ABC::CreateBool( ASN1BOOL& asn, const std::string& strName
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateNumeric( ASN1INT& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamNumericField( asn, 0, 9999, 0, strName, this, bOptional ) );
+    AddParameter( *new ParamNumericField( this, asn, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +315,7 @@ void MissionInterface_ABC::CreateNumeric( ASN1INT& asn, const std::string& strNa
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateNumeric( ASN1REAL& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamNumericField( asn, 0.0f, 9999.0f, 0.0f, strName, this, bOptional ) );
+    AddParameter( *new ParamNumericField( this, asn, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +324,7 @@ void MissionInterface_ABC::CreateNumeric( ASN1REAL& asn, const std::string& strN
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamEquipmentList( asn, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamEquipmentList( asn, strName, this, bOptional ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +333,7 @@ void MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePriorit
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamHumanWoundList( asn, strName, this, bOptional ) );
+//    parameters_.push_back( new ParamHumanWoundList( asn, strName, this, bOptional ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,5 +342,5 @@ void MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, c
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn, const std::string& strName, bool bOptional )
 {
-    parameters_.push_back( new ParamPopulationKnowledge( asn, agent_, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamPopulationKnowledge( this, asn, strName, strName ), bOptional );
 }
