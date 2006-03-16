@@ -32,7 +32,6 @@
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "Options.h"
-#include "MT/MT_IO/MT_CommandLine.h"
 #include "Model.h"
 #include "Simulation.h"
 #include "AgentFactory.h"
@@ -45,8 +44,12 @@
 #include <direct.h>
 #include <cstdio>
 #include <qsplashscreen.h>
+#include <qfileinfo.h>
+
+#include <boost/program_options.hpp>
 
 using namespace xml;
+namespace po = boost::program_options;
 
 App* App::pInstance_ = 0;
 
@@ -62,6 +65,16 @@ App::App( int nArgc, char** ppArgv )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
+
+    // Command line options
+    std::string conffile;
+    po::options_description desc( "Allowed options" );
+    desc.add_options()
+        ( "conffile,c", po::value< std::string >( &conffile )->default_value( "./scipio.xml" ), "specify main config file (scipio.xml)" )
+    ;
+    po::variables_map vm;
+    po::store( po::parse_command_line( argc(), argv(), desc ), vm );
+    po::notify( vm );
     
     // Prepare the splash screen displayed during the initialization.
     QPixmap splashImage( "Mos2.jpg" );
@@ -73,8 +86,7 @@ App::App( int nArgc, char** ppArgv )
 
 //    SetSplashText( tr("Démarrage...") );
 
-    MT_CommandLine cmdLine( argc(), argv() );
-    const std::string conffile = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
+    conffile = RetrieveValidConfigFile( conffile );
     Initialize( conffile );
 
 //    SetSplashText( tr("Initialisation de l'interface...") );
@@ -109,12 +121,10 @@ App::App( int nArgc, char** ppArgv )
 // -----------------------------------------------------------------------------
 void App::Initialize( const std::string& scipioXml )
 {
-    xifstream xis( scipioXml );
+    const QString initialDirectory = QDir::currentDirPath();
 
-    const std::string currentDirectory = MT_GetCurrentDir();
-    std::string baseDirectory;
-    MT_ExtractFilePath( scipioXml, baseDirectory );
-    MT_ChangeDir( baseDirectory );
+    xifstream xis( scipioXml );
+    QDir::setCurrent( QFileInfo( scipioXml.c_str() ).dirPath() );
 
     xis >> start( "Scipio" )
             >> start( "Donnees" );
@@ -126,10 +136,10 @@ void App::Initialize( const std::string& scipioXml )
     model_           = new Model( *controller_, *simulation_, scipioXml );
     pMOSServer_      = new Network( *model_, *simulation_ );
 
-    MT_ChangeDir( currentDirectory );
+    QDir::setCurrent( initialDirectory );
 
     pMOSServer_->Connect( "localhost", 10000 );
-};
+}
 
 //-----------------------------------------------------------------------------
 // Name: App destructor
@@ -138,6 +148,24 @@ void App::Initialize( const std::string& scipioXml )
 App::~App()
 {
     // bof
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::RetrieveValidConfigFile
+// Created: SBO 2006-03-16
+// -----------------------------------------------------------------------------
+std::string App::RetrieveValidConfigFile( const std::string& conffile )
+{
+    std::string current = conffile;
+    while( ! QFileInfo( current.c_str() ).exists() )
+    {
+        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Open scipio.xml" );
+        if( ! filename.isEmpty() )
+            current = filename;
+        else
+            throw std::exception( "No scipio.xml file specified." );
+    }
+    return current;
 }
 
 // -----------------------------------------------------------------------------

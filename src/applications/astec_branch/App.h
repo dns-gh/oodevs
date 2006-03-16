@@ -68,23 +68,19 @@ class App : public QApplication
     MT_COPYNOTALLOWED( App );
 
 public:
-    //-------------------------------------------------------------------------
-    /** @name Constructor, destructor and accessor */
-    //-------------------------------------------------------------------------
+    //! @name Constructor, destructor and accessor */
     //@{
     App( int nArgc, char** ppArgv );
     ~App();
-
+    
     static App& GetApp();
-    //@}
-
     //@}
 
     //! @name Accessors
     //@{
-    Network&       GetNetwork       () const;
-    Model&         GetModel  () const { return *model_; };
-    MainWindow&    GetMainWindow() const;
+    Network&    GetNetwork   () const;
+    MainWindow& GetMainWindow() const;
+    Model&      GetModel     () const { return *model_; };
     //@}
 
     void SetSplashText( const QString& strText );
@@ -97,9 +93,12 @@ private slots:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    std::string RetrieveValidConfigFile( const std::string& conffile );
     void Initialize( const std::string& scipioXml );
-    void InitializeTerrainData  ( xml::xistream& xis );
     void InitializeHumanFactors ( xml::xistream& xis );
+    //@}
 
     friend class GLTool;
 
@@ -113,10 +112,10 @@ private:
     Network*        pMOSServer_;
     
     MainWindow*    pMainWindow_;
-    QSplashScreen*     pSplashScreen_;
+    QSplashScreen* pSplashScreen_;
 
-    QTimer*            pNetworkTimer_;
-    QTimer*            pDisplayTimer_;
+    QTimer*        pNetworkTimer_;
+    QTimer*        pDisplayTimer_;
     //@}
 
 private:

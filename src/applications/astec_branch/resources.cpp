@@ -22,7 +22,7 @@
 // instead of resources.h
 #define static 
 
-#include "res/mosicon.xpm"
+#include "res/astec.xpm"
 #include "res/connexiongreen.xpm"
 #include "res/connexionorange.xpm"
 #include "res/connexionred.xpm"

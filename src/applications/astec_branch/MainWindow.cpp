@@ -44,7 +44,7 @@ MainWindow::MainWindow( Controller& controller, const std::string& scipioXml )
     assert( pInstance_ == 0 );
     pInstance_ = this;
 
-    setIcon( MAKE_PIXMAP( mosicon ) );
+    setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
     pOptions_ = new Options();
