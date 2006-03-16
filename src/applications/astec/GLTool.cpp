@@ -896,7 +896,12 @@ void GLTool::Draw( PopulationConcentration& concentration, E_State nState /*= eN
                       /   concentration.GetPopulation().GetType().GetConcentrationDensity();
     // draw the whole population
     glLineWidth( 1 );
-    DrawCircle( concentration.GetPos(), std::max< float >( 10.0f, std::sqrt( rSurface / MT_PI ) ), true );
+    float radius = std::max< float >( 10.0f, std::sqrt( rSurface / MT_PI ) );
+    DrawCircle( concentration.GetPos(), radius , true );
+    //float addColor = ( concentration.GetDensity() - 1 )* 50;
+    //color.AddRGB( addColor , addColor, addColor );
+    //color.SetGLColor();
+    //DrawCircle( concentration.GetPos(), radius + 2, true );
     // draw dead people above
     glColor4d( COLOR_BLACK );
     rSurface = concentration.GetDeadHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
@@ -930,6 +935,7 @@ void GLTool::Draw( PopulationFlow& flow, E_State nState /*= eNormal*/ )
     //DrawCircle( flow.GetHeadPosition(), GL_CROSSSIZE * 0.5, true );
     glLineWidth( 10.0 );
     DrawLine( flow.GetFlow() );
+
 
     // draw dead people
     if( flow.GetDeadHumans() > 0 )
@@ -2050,6 +2056,10 @@ void GLTool::Draw( const DefaultMapEventHandler& eventHandler )
             QString strPeople = QString( "Vivants: " ) + QString::number( pPopulation->GetLivingHumans() )+ QString( ", Morts: " ) + QString::number( pPopulation->GetDeadHumans() );
             color.SetRGB( 255, 255, 255 );
             toolTip.AddLine( strPeople, color );
+
+            //write the domination
+            QString strDomination = QString( "Domination: " ) + QString::number( pPopulation->GetPopulation().nDomination_ ) + "%" ;
+            toolTip.AddLine( strDomination, color ) ;
 
             //write the 5 last RCs
             toolTip.AddLine( QString(""), color );
