@@ -30,8 +30,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DrawCross( const geometry::Point2f& at ) const = 0;
-    virtual void DrawLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
+    virtual float Pixels() const = 0;
+
+    virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const = 0;
+    virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
+    virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const = 0;
+    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.3f, float size = -1.f ) const = 0;
+    virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
+    virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     //@}
 };
 

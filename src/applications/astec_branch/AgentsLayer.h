@@ -13,12 +13,12 @@
 #include "graphics/MapLayer_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "GlTools_ABC.h"
 
 class Agent;
 class Controller;
 class ActionController;
 class CoordinateConverter;
+class GlTools_ABC;
 
 // =============================================================================
 /** @class  AgentsLayer
@@ -29,13 +29,12 @@ class CoordinateConverter;
 class AgentsLayer : public MapLayer_ABC
                   , private Observer_ABC
                   , public ElementObserver_ABC< Agent >
-                  , public GlTools_ABC // $$$$ AGE 2006-03-16: 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter );
+             AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools );
     virtual ~AgentsLayer();
     //@}
 
@@ -73,6 +72,7 @@ private:
     //@{
     ActionController& actions_;
     const CoordinateConverter& converter_;
+    const GlTools_ABC& tools_;
     T_Agents agents_;
     //@}
 };

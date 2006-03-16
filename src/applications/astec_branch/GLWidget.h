@@ -11,7 +11,10 @@
 #define __GlWidget_h_
 
 #include "graphics/MapWidget.h"
+
 #include "WorldParameters.h"
+#include "GlTools_ABC.h"
+#include "SetGlOptions.h"
 
 class CoordinateConverter;
 class Controller;
@@ -23,7 +26,7 @@ class ActionController;
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private WorldParameters, public MapWidget
+class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget, public GlTools_ABC
 {
 
 public:
@@ -36,6 +39,13 @@ public:
 
     //! @name Operations
     //@{
+    virtual float Pixels() const;
+    virtual void  DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const;
+    virtual void  DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
+    virtual void  DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const;
+    virtual void  DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.3f, float size = -1.f ) const;
+    virtual void  DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
+    virtual void  DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const;
     //@}
 
 private:
@@ -47,11 +57,19 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void initializeGL();
+    virtual void resizeGL( int w, int h );
+
+    unsigned int GenerateCircle();
     //@}
 
 private:
     //! @name Member data
     //@{
+    int windowHeight_;
+    int windowWidth_;
+    geometry::Rectangle2f viewport_;
+    unsigned int circle_;
     //@}
 };
 
