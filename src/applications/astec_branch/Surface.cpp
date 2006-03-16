@@ -25,14 +25,14 @@ Surface::Surface( const VisionConesMessage& input )
 //    pSensorType_ = App::GetApp().FindSensorType( strTypeName );
 //    assert( pSensorType_ );
 
-    uint32 nNbrSectors;
+    unsigned long nNbrSectors;
     input >> nNbrSectors;
     sectors_.reserve( nNbrSectors );
     for( uint i = 0; i < nNbrSectors; ++i )
     {
-        MT_Vector2D vDirection;
-        input >> vDirection;
-        sectors_.push_back( MT_Sector( vOrigin_, vDirection, 12 /*pSensorType_->GetAngle()*/ ) ); // $$$$ AGE 2006-02-14: 
+        double x, y;
+        input >> x >> y;
+        sectors_.push_back( MT_Sector( vOrigin_, geometry::Point2f( float(x), float(y) ), 12 /*pSensorType_->GetAngle()*/ ) ); // $$$$ AGE 2006-02-14: 
     }
 }
 
@@ -51,13 +51,13 @@ Surface::~Surface()
 // -----------------------------------------------------------------------------
 void Surface::Draw( const Agent& agent ) const
 {
-    MT_Float rRadius = pSensorType_->GetMaxDistance( agent );
+    float rRadius = pSensorType_->GetMaxDistance( agent );
 
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
     {
         const MT_Sector& sector = *itSector;
 
-        const MT_Float angle = sector.GetAngle() * 0.5;
+        const float angle = sector.GetAngle() * 0.5;
         MT_Vector2D dir      = sector.GetDirection();
         const MT_Vector2D& pos    = sector.GetOrigin();
 

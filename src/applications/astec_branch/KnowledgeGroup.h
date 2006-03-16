@@ -44,7 +44,7 @@ class KnowledgeGroup : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( uint32 nId, Controller& controller, const Team& team );
+             KnowledgeGroup( unsigned long nId, Controller& controller, const Team& team );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -70,7 +70,7 @@ private:
     //@{
     Controller& controller_;
     const Team& team_;
-    uint32      nID_;
+    unsigned long      nID_;
     //@}
 
 private:

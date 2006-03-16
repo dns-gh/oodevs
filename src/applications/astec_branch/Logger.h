@@ -19,10 +19,7 @@
 #ifndef __Logger_h_
 #define __Logger_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
+#include "MT/MT_logger/MT_Logger_ABC.h"
 
 // =============================================================================
 /** @class  Logger
@@ -33,13 +30,12 @@
 class Logger : public QListView, public MT_Logger_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( Logger );
 
 public:
     //! @name Constructors/Destructor
     //@{
-     Logger( QWidget* pParent );
-    ~Logger();
+    explicit Logger( QWidget* pParent );
+    virtual ~Logger();
     //@}
 
 protected:
@@ -54,6 +50,8 @@ private slots:
     void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
 
 private:
+    Logger( const Logger &);
+    Logger& operator=( const Logger& );
     QPopupMenu popupMenu_;
 };
 

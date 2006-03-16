@@ -35,7 +35,7 @@ public:
     {
         FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter& converter );
         T_PointVector flowPart_;
-        MT_Float      rRelevance_;
+        float         rRelevance_;
     };
 
     typedef std::vector< FlowPart >       T_FlowParts;
@@ -79,12 +79,12 @@ private:
     const uint nID_;
     const PopulationFlow* pFlow_;
 
-    OptionalValue< MT_Float >              rDirection_;
-    OptionalValue< MT_Float >              rSpeed_;
-    OptionalValue< uint     >              nNbrAliveHumans_;
-    OptionalValue< uint     >              nNbrDeadHumans_;
+    OptionalValue< float >                 rDirection_;
+    OptionalValue< float >                 rSpeed_;
+    OptionalValue< uint  >                 nNbrAliveHumans_;
+    OptionalValue< uint  >                 nNbrDeadHumans_;
     OptionalValue< E_PopulationAttitude >  eAttitude_;
-    OptionalValue< bool     >              bIsPerceived_;
+    OptionalValue< bool  >                 bIsPerceived_;
     T_FlowParts                            flowParts_;
 
 };

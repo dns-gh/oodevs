@@ -15,6 +15,14 @@
 #include "Types.h"
 #include "ASN_Types.h"
 
+#include "DIN/DIN_Engine.h"
+#include "DIN/DIN_Link.h"
+#include "DIN/DIN_Input.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
+#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
+#include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
+#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
+
 class AgentServerController;
 class Agent;
 class MsgRecorder;
@@ -31,7 +39,6 @@ namespace DIN
 //=============================================================================
 class AgentServerMsgMgr
 {
-    MT_COPYNOTALLOWED( AgentServerMsgMgr );
 
 public:
     //-------------------------------------------------------------------------
@@ -277,6 +284,9 @@ private:
     template< typename T >
     bool CheckAcknowledge( const char* type, const T& message );
     //@}
+
+    AgentServerMsgMgr( const AgentServerMsgMgr& );
+    AgentServerMsgMgr& operator=( const AgentServerMsgMgr& );
     
 private:
     Model&       model_;

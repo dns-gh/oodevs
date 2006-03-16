@@ -77,7 +77,7 @@ private:
     Controller& controller_;
     KnowledgeGroupFactory_ABC& factory_;
     std::string         strName_;
-    uint32              nID_;
+    unsigned long              nID_;
     //@}
 };
 

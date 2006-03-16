@@ -77,7 +77,7 @@ ASN1T_EnumUnitExperience Experience::GetAsnID() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Experience::GetCoefMaxSpeedModificator() const
+float Experience::GetCoefMaxSpeedModificator() const
 {
     return rCoefMaxSpeedModificator_;
 }
@@ -87,7 +87,7 @@ MT_Float Experience::GetCoefMaxSpeedModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Experience::GetCoefReloadingTimeModificator() const
+float Experience::GetCoefReloadingTimeModificator() const
 {
     return rCoefReloadingTimeModificator_;
 }
@@ -97,7 +97,7 @@ MT_Float Experience::GetCoefReloadingTimeModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Experience::GetCoefPhModificator() const
+float Experience::GetCoefPhModificator() const
 {
     return rCoefPhModificator_;
 }
@@ -107,7 +107,7 @@ MT_Float Experience::GetCoefPhModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Experience::GetCoefPostureTimeModificator() const
+float Experience::GetCoefPostureTimeModificator() const
 {
     return rCoefPostureTimeModificator_;
 }
@@ -117,7 +117,7 @@ MT_Float Experience::GetCoefPostureTimeModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Experience::GetCoefSensorDistanceModificator() const
+float Experience::GetCoefSensorDistanceModificator() const
 {
     return rCoefSensorDistanceModificator_;
 }

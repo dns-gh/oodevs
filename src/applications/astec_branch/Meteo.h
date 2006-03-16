@@ -53,7 +53,7 @@ public:
     /** @name Creation / destruction */
     //-------------------------------------------------------------------------
     //@{
-    static Meteo* Create( InputArchive& );
+//    static Meteo* Create( InputArchive& );
     static Meteo* Create( const ASN1T_MeteoAttributs& );
     bool              Destroy();
 
@@ -90,7 +90,7 @@ private:
 
     friend class RawVisionData;
 
-    void Initialize( InputArchive& );
+//    void Initialize( InputArchive& );
     bool Initialize( const ASN1T_MeteoAttributs& );
     void Terminate();
     //@}
@@ -111,7 +111,7 @@ private:
 
     int            nPlancherCouvertureNuageuse_;
     int            nPlafondCouvertureNuageuse_;
-    MT_Float       rDensiteCouvertureNuageuse_;
+    float          rDensiteCouvertureNuageuse_;
     E_LightingType nEclairement_;
     E_WeatherType  nPrecipitation_;
 

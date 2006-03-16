@@ -13,9 +13,6 @@
 #include "AgentKnowledge.h"
 
 #include "ASN_Messages.h"
-#include "AgentManager.h"
-#include "Model.h"
-#include "AgentsModel.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"

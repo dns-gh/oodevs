@@ -45,11 +45,6 @@ private:
     Paths& operator=( const Paths& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< MT_Vector2D > T_Points;
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitPathFind& message );
@@ -60,8 +55,8 @@ private:
     //! @name Member data
     //@{
     const CoordinateConverter& converter_;
-    T_Points plannedPath_;
-    T_Points previousPath_;
+    T_PointVector plannedPath_;
+    T_PointVector previousPath_;
     //@}
 };
 

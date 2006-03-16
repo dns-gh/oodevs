@@ -29,7 +29,7 @@ public:
     //! @name Constructor/Destructor
     //@{
     explicit Lima( const CoordinateConverter& converter );
-             Lima( T_PointVector pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter );
+             Lima( const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter );
              Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
     virtual ~Lima();
     //@}

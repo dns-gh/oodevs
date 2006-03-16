@@ -26,7 +26,7 @@ IDManager KnowledgeGroup::idManager_( 0 );
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( uint32 nId, Controller& controller, const Team& team )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const Team& team )
     : controller_( controller )
     , team_( team )
     , nID_ ( nId )

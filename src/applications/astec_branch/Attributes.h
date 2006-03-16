@@ -38,7 +38,6 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
-    MT_Vector2D GetPosition() const; // $$$$ AGE 2006-03-16: move to a specific extension ?
     //@}
 
 private:
@@ -59,7 +58,7 @@ private:
     Controller& controller_;
     const CoordinateConverter& converter_;
 
-    MT_Vector2D	 vPos_;
+    geometry::Point2f vPos_;
     unsigned int nSpeed_;
     int	nAltitude_;
     int	nDirection_;

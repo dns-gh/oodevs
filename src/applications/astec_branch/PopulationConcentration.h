@@ -24,14 +24,13 @@ class PopulationConcentration : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter& converter, MT_Float density );
+             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter& converter, float density );
     virtual ~PopulationConcentration();
     //@}
 
     //! @name Accessors
     //@{
-//	virtual const MT_Vector2D& GetPos    () const;
-    MT_Float   GetArea   () const;
+    float   GetArea   () const;
 
 	virtual std::string GetName   () const;
     virtual unsigned int GetLivingHumans() const;
@@ -54,12 +53,12 @@ private:
 private:
     //! @name Member data
     //@{
-    MT_Vector2D position_;
+    geometry::Point2f position_;
 
-    MT_Float density_;
-    uint     nID_;
-    int      nLivingHumans_;
-    int      nDeadHumans_;
+    float density_;
+    uint  nID_;
+    int   nLivingHumans_;
+    int   nDeadHumans_;
     //@}			
 };
 

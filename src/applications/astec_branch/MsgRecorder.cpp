@@ -132,17 +132,17 @@ void MsgRecorder::Msg::SendSelf( AgentServerMsgMgr& msgManager )
 */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MsgRecorder::Msg::ReadArchive( MT_InputArchive_ABC& archive )
-{
-    archive >> bContext_;
-    archive >> nContext_;
-    archive >> nTime_;
-    archive >> nOffset_;
-    archive >> nMsgLength_;
-    pMsg_ = new ASN1OCTET[ nMsgLength_];
-    for( int n = 0; n < nMsgLength_; ++n )
-        archive >> pMsg_[n];
-}
+//void MsgRecorder::Msg::ReadArchive( MT_InputArchive_ABC& archive )
+//{
+//    archive >> bContext_;
+//    archive >> nContext_;
+//    archive >> nTime_;
+//    archive >> nOffset_;
+//    archive >> nMsgLength_;
+//    pMsg_ = new ASN1OCTET[ nMsgLength_];
+//    for( int n = 0; n < nMsgLength_; ++n )
+//        archive >> pMsg_[n];
+//}
 
 
 // -----------------------------------------------------------------------------
@@ -151,16 +151,16 @@ void MsgRecorder::Msg::ReadArchive( MT_InputArchive_ABC& archive )
 */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MsgRecorder::Msg::WriteArchive( MT_OutputArchive_ABC& archive ) const
-{
-    archive << bContext_;
-    archive << nContext_;
-    archive << nTime_;
-    archive << nOffset_;
-    archive << nMsgLength_;
-    for( int n = 0; n < nMsgLength_; ++n )
-        archive << pMsg_[n];
-}
+//void MsgRecorder::Msg::WriteArchive( MT_OutputArchive_ABC& archive ) const
+//{
+//    archive << bContext_;
+//    archive << nContext_;
+//    archive << nTime_;
+//    archive << nOffset_;
+//    archive << nMsgLength_;
+//    for( int n = 0; n < nMsgLength_; ++n )
+//        archive << pMsg_[n];
+//}
 
 
 // -----------------------------------------------------------------------------
@@ -301,19 +301,19 @@ void MsgRecorder::OnTimeTick( int )
 */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MsgRecorder::ReadArchive( MT_InputArchive_ABC& archive )
-{
-    Clear();
-    int nSize;
-    archive >> nTimeStart_;
-    archive >> nSize;
-    for( int n = 0; n < nSize; ++n  )
-    {
-        Msg* pNewMsg = new Msg();
-        pNewMsg->ReadArchive( archive );
-        messages_.push_back( pNewMsg );
-    }
-}
+//void MsgRecorder::ReadArchive( MT_InputArchive_ABC& archive )
+//{
+//    Clear();
+//    int nSize;
+//    archive >> nTimeStart_;
+//    archive >> nSize;
+//    for( int n = 0; n < nSize; ++n  )
+//    {
+//        Msg* pNewMsg = new Msg();
+//        pNewMsg->ReadArchive( archive );
+//        messages_.push_back( pNewMsg );
+//    }
+//}
 
 
 // -----------------------------------------------------------------------------
@@ -322,13 +322,13 @@ void MsgRecorder::ReadArchive( MT_InputArchive_ABC& archive )
 */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MsgRecorder::WriteArchive( MT_OutputArchive_ABC& archive ) const
-{
-    archive << nTimeStart_;
-    archive << (int)messages_.size();
-    for( CIT_MsgVector it = messages_.begin(); it != messages_.end(); ++it )
-    {
-        (*it)->WriteArchive( archive );
-    }
-}
+//void MsgRecorder::WriteArchive( MT_OutputArchive_ABC& archive ) const
+//{
+//    archive << nTimeStart_;
+//    archive << (int)messages_.size();
+//    for( CIT_MsgVector it = messages_.begin(); it != messages_.end(); ++it )
+//    {
+//        (*it)->WriteArchive( archive );
+//    }
+//}
 

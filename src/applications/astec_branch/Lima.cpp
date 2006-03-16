@@ -32,7 +32,7 @@ Lima::Lima( const CoordinateConverter& converter )
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( T_PointVector pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter )
+Lima::Lima( const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter )
     : TacticalLine_ABC( Tools::ToString( nFuncType ).ascii(), idManager_.GetFreeIdentifier(), pointList, converter )
     , nFuncType_      ( nFuncType )
 {

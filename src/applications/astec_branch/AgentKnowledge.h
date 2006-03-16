@@ -53,10 +53,10 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned long      GetId       () const;
-    std::string        GetName     () const;
-    Agent&             GetRealAgent() const;
-    const MT_Vector2D& GetPosition () const;
+    unsigned long            GetId       () const;
+    std::string              GetName     () const;
+    Agent&                   GetRealAgent() const;
+    const geometry::Point2f& GetPosition () const; // $$$$ AGE 2006-03-16: attach a positions !
     // $$$$ AGE 2006-02-21: Kg ?
     //@}
 
@@ -76,7 +76,7 @@ public:
     unsigned long nID_;
     Agent&      realAgent_;
     const Team* team_;
-    MT_Vector2D vPosition_;
+    geometry::Point2f vPosition_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
     OptionalValue< std::string >                strPosition_;

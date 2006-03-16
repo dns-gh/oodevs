@@ -29,7 +29,7 @@ class CoordinateConverter;
 class AgentsLayer : public MapLayer_ABC
                   , private Observer_ABC
                   , public ElementObserver_ABC< Agent >
-                  , private GlTools_ABC // $$$$ AGE 2006-03-16: 
+                  , public GlTools_ABC // $$$$ AGE 2006-03-16: 
 {
 
 public:
@@ -43,7 +43,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
 
-    virtual void DrawCross( const MT_Vector2D& at ) const;
+    virtual void DrawCross( const geometry::Point2f& at ) const;
     //@}
 
 private:
@@ -62,7 +62,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Agent* >       T_Agents; // $$$$ AGE 2006-03-16: constness !
+    typedef std::vector< const Agent* > T_Agents;
     typedef T_Agents::iterator         IT_Agents;
     typedef T_Agents::const_iterator  CIT_Agents;
     //@}

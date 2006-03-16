@@ -14,6 +14,7 @@
 #include "Param_ABC.h"
 #include "ContextMenuObserver_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "MT/MT_Qt/MT_ParameterLabel.h"
 
 // =============================================================================
 /** @class  EntityParameterBase

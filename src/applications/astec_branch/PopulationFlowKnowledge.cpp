@@ -15,10 +15,6 @@
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationKnowledge.h"
-#include "AgentManager.h"
-#include "Model.h"
-#include "TeamsModel.h"
-#include "KnowledgeGroupsModel.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
@@ -75,9 +71,9 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
     if( asnMsg.m.directionPresent )
-        rDirection_ = ( MT_Float )asnMsg.direction;
+        rDirection_ = ( float )asnMsg.direction;
     if( asnMsg.m.vitessePresent )
-        rSpeed_ = ( MT_Float )asnMsg.vitesse;
+        rSpeed_ = ( float )asnMsg.vitesse;
     if( asnMsg.m.est_percuPresent )
         bIsPerceived_ = ( bool )asnMsg.est_percu;
     if( asnMsg.m.nb_humains_vivantsPresent )

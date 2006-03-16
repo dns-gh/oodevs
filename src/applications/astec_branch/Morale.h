@@ -14,6 +14,7 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 // =============================================================================
 // @class  Morale
@@ -21,13 +22,12 @@
 // =============================================================================
 class Morale
 {
-    MT_COPYNOTALLOWED( Morale )
 
 public:
     //! @name Types
     //@{
     typedef std::map< std::string, const Morale*, sCaseInsensitiveLess > T_MoraleMap;
-    typedef T_MoraleMap::const_iterator                                      CIT_MoraleMap;
+    typedef T_MoraleMap::const_iterator                                CIT_MoraleMap;
     //@}
 
 public:
@@ -77,6 +77,8 @@ private:
 private:
      Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMoral nAsnID );
     ~Morale();
+    Morale( const Morale& );
+    Morale& operator=( const Morale& );
 
 private:
     const std::string         strName_;

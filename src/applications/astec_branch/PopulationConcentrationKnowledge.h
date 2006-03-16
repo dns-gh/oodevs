@@ -69,12 +69,12 @@ private:
     const uint nID_;
     
     const PopulationConcentration*         pConcentration_;
-    MT_Vector2D                            position_;
+    geometry::Point2f                      position_;
     OptionalValue< uint >                  nNbrAliveHumans_;
     OptionalValue< uint >                  nNbrDeadHumans_;
     OptionalValue< E_PopulationAttitude >  eAttitude_;
     OptionalValue< bool >                  bIsPerceived_;
-    MT_Float                               rRelevance_;
+    float                                  rRelevance_;
     //@}
 };
 

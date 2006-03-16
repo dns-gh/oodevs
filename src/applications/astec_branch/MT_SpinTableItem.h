@@ -35,8 +35,6 @@ namespace MT {
 // =============================================================================
 class MT_SpinTableItem : public QTableItem
 {
-    MT_COPYNOTALLOWED( MT_SpinTableItem );
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -49,6 +47,13 @@ public:
     //@{
     QWidget* createEditor        () const;
     void     setContentFromEditor( QWidget* pWidget );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    MT_SpinTableItem( const MT_SpinTableItem& );
+    MT_SpinTableItem& operator=( const MT_SpinTableItem& );
     //@}
 
 protected:

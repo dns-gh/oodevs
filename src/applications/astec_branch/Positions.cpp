@@ -8,48 +8,42 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "AgentDrawer.h"
+#include "Positions.h"
 #include "CoordinateConverter.h"
-#include "Agent.h"
-#include "Drawable_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentDrawer constructor
+// Name: Positions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentDrawer::AgentDrawer( Agent& agent, const CoordinateConverter& converter, const GlTools_ABC& tools )
+Positions::Positions( const CoordinateConverter& converter )
     : converter_( converter )
-    , tools_( tools )
-    , agent_( agent )
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentDrawer destructor
-// Created: AGE 2006-03-16
-// -----------------------------------------------------------------------------
-AgentDrawer::~AgentDrawer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentDrawer::Draw
+// Name: Positions destructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentDrawer::Draw( const geometry::Rectangle2f& viewport )
+Positions::~Positions()
 {
-    // $$$$ AGE 2006-03-16: choisir geometry ou MT_Vector2D
-    if( viewport.IsInside( geometry::Point2f( position_.rX_, position_.rY_ ) ) )
-        agent_.InterfaceContainer< Extension_ABC >::Apply( Drawable_ABC::Draw, position_, tools_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentDrawer::DoUpdate
+// Name: Positions::GetPosition
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentDrawer::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+geometry::Point2f Positions::GetPosition() const
+{
+    return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Positions::DoUpdate
+// Created: AGE 2006-03-16
+// -----------------------------------------------------------------------------
+void Positions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.positionPresent )
         position_ = converter_.ConvertToXY( message.position );

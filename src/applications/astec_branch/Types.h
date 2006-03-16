@@ -12,10 +12,6 @@
 #ifndef __Types_h_
 #define __Types_h_
 
-class MT_XXmlInputArchive;
-template< typename Archive > class MT_InputArchive_Logger;
-typedef MT_InputArchive_Logger< MT_XXmlInputArchive > InputArchive;
-
 //-----------------------------------------------------------------------------
 // Machine type: simple client-server structure
 //-----------------------------------------------------------------------------
@@ -79,46 +75,13 @@ enum E_TypeAgent
 
 #define DEFAULT_PORT_AS_MOS 10000
 
-typedef uint32  MIL_AgentID;
-typedef uint32  MIL_MOSContextID;
-typedef uint32  MIL_SensorCapacityID;
-typedef uint32  MIL_LineID;
+typedef unsigned long  MIL_AgentID;
+typedef unsigned long  MIL_MOSContextID;
+typedef unsigned long  MIL_SensorCapacityID;
+typedef unsigned long  MIL_LineID;
 
 #define MIL_NULL_AGENT_ID   (MIL_AgentID)-1
 #define MIL_NULL_LINE_ID       (MIL_LineID)-1
-
-#define MT_PI 3.14159265358979323 //$$$ A deplacer
-
-
-class Node;
-class Tri;
-class Line;
-
-typedef std::vector< Node* >           T_NodePtrVector;
-typedef const T_NodePtrVector              CT_NodePtrVector;
-typedef T_NodePtrVector::iterator          IT_NodePtrVector;
-typedef T_NodePtrVector::const_iterator    CIT_NodePtrVector;
-
-typedef std::vector< Line* >           T_MOSLinePtrVector;
-typedef const T_MOSLinePtrVector              CT_MOSLinePtrVector;
-typedef T_MOSLinePtrVector::iterator          IT_MOSLinePtrVector;
-typedef T_MOSLinePtrVector::const_iterator    CIT_MOSLinePtrVector;
-
-typedef std::vector< Tri* >            T_TriPtrVector;
-typedef const T_TriPtrVector               CT_TriPtrVector;
-typedef T_TriPtrVector::iterator           IT_TriPtrVector;
-typedef T_TriPtrVector::const_iterator     CIT_TriPtrVector;
-
-
-// NB : for the MOC files
-namespace DIN
-{
-    class DIN_Input;
-    class DIN_BufferedMessage;
-	class DIN_Engine;
-	class DIN_Link;
-}
-
 
 enum E_DataFlow
 {

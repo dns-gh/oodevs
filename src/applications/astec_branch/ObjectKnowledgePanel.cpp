@@ -31,6 +31,7 @@
 #include "LogisticRouteAttributes.h"
 #include "NBCAttributes.h"
 #include "RotaAttributes.h"
+#include "Team.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel constructor

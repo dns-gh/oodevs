@@ -61,11 +61,11 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
     for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
     {
         pointVector_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
-        center_ += pointVector_.back();
+        center_ += geometry::Vector2f( pointVector_.back().X(), pointVector_.back().Y() );
     }
 
     if( ! pointVector_.empty() )
-        center_ /= pointVector_.size();
+        center_.Set( center_.X() / pointVector_.size(), center_.Y() / pointVector_.size() );
 
     if( message.m.type_dotation_constructionPresent )
         construction_ = & dotationResolver.Get( message.type_dotation_construction );
@@ -147,17 +147,17 @@ void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 
     if( message.m.localisationPresent )
     {
-        center_.Reset();
+        center_.Set( 0, 0 );
         pointVector_.clear();
         pointVector_.reserve( message.localisation.vecteur_point.n );
         nTypeLocalisation_ = message.localisation.type;
         for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
         {
             pointVector_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
-            center_ += pointVector_.back();
+            center_ += geometry::Vector2f( pointVector_.back().X(), pointVector_.back().Y() );
         }
         if( pointVector_.size() > 1 )
-            center_ /= pointVector_.size();
+            center_.Set( center_.X() / pointVector_.size(), center_.Y() / pointVector_.size() );
     }
     controller_.Update( *this );
 }

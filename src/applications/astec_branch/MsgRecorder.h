@@ -30,8 +30,6 @@ class AgentServerMsgMgr;
 // =============================================================================
 class MsgRecorder
 {
-    MT_COPYNOTALLOWED( MsgRecorder );
-
 private:
     class Msg
     {
@@ -46,8 +44,8 @@ private:
 
             void SendSelf( AgentServerMsgMgr& msgManager );
             
-            void ReadArchive( MT_InputArchive_ABC& archive );
-            void WriteArchive( MT_OutputArchive_ABC& archive ) const;
+//            void ReadArchive( MT_InputArchive_ABC& archive );
+//            void WriteArchive( MT_OutputArchive_ABC& archive ) const;
 
         private:
             bool bContext_;
@@ -91,13 +89,15 @@ public:
 
     void OnTimeTick( int nTime );
 
-    void ReadArchive( MT_InputArchive_ABC& archive );
-    void WriteArchive( MT_OutputArchive_ABC& archive ) const;
+//    void ReadArchive( MT_InputArchive_ABC& archive );
+//    void WriteArchive( MT_OutputArchive_ABC& archive ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
+    MsgRecorder( const MsgRecorder& );
+    MsgRecorder& operator=( const MsgRecorder& );
     //@}
 
 private:

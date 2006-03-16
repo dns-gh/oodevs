@@ -12,7 +12,7 @@
 #include "AgentType.h"
 #include "ComponentType.h"
 #include "DecisionalModel.h"
-#include "SensorType.h"
+//#include "SensorType.h"
 #include "AutomatType.h"
 #include "PopulationType.h"
 #include "DotationType.h"
@@ -61,7 +61,7 @@ AgentTypes::~AgentTypes()
     Resolver< AutomatType >::DeleteAll();
     Resolver< ComponentType, std::string >::DeleteAll();
     Resolver< DecisionalModel, std::string >::DeleteAll();
-    Resolver< SensorType, std::string >::DeleteAll();
+//    Resolver< SensorType, std::string >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,17 +91,14 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadDecisional( const std::string& decisional )
 {
+    const std::string baseDirectory = QFileInfo( decisional.c_str() ).dirPath().ascii() + std::string( "/" );
+
     xifstream xis( decisional );
     std::string models;
     xis >> start( "Decisionnel" )
             >> start( "DirectIA" )
                 >> content( "Modeles", models );
-    const std::string current = MT_GetCurrentDir();
-    std::string modelDir;
-    MT_ExtractFilePath( decisional, modelDir );
-    MT_ChangeDir( modelDir );
-    ReadModels( models );
-    MT_ChangeDir( current );
+    ReadModels(baseDirectory +  models );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,8 +153,9 @@ void AgentTypes::ReadSensors( const std::string& sensors )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadSensor( xml::xistream& xis )
 {
-    SensorType* type = new SensorType( xis );
-    Resolver< SensorType, std::string >::Register( type->GetName(), *type );
+
+//    SensorType* type = new SensorType( xis );
+//    Resolver< SensorType, std::string >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------

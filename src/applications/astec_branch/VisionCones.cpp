@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "VisionCones.h"
-#include "Surface.h"
+//#include "Surface.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones constructor
@@ -36,18 +36,19 @@ VisionCones::~VisionCones()
 // -----------------------------------------------------------------------------
 void VisionCones::DoUpdate( const VisionConesMessage& message )
 {
-    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
-        delete *itSurface;
-    surfaces_.clear();
-
-    unsigned long nNbrSurfaces;
-    message >> nNbrSurfaces;
-    surfaces_.reserve( nNbrSurfaces );
-    for( uint i = 0; i < nNbrSurfaces; ++i )
-        surfaces_.push_back( new Surface( message ) );
-
-    message >> elongationFactor_;
-    needsUpdating_ = true;
+    // $$$$ AGE 2006-03-16: 
+//    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
+//        delete *itSurface;
+//    surfaces_.clear();
+//
+//    unsigned long nNbrSurfaces;
+//    message >> nNbrSurfaces;
+//    surfaces_.reserve( nNbrSurfaces );
+//    for( uint i = 0; i < nNbrSurfaces; ++i )
+//        surfaces_.push_back( new Surface( message ) );
+//
+//    message >> elongationFactor_;
+//    needsUpdating_ = true;
 }
 
 // -----------------------------------------------------------------------------

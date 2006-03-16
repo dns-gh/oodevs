@@ -14,6 +14,7 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml { class xistream; };
 
@@ -23,13 +24,11 @@ namespace xml { class xistream; };
 // =============================================================================
 class Tiredness
 {
-    MT_COPYNOTALLOWED( Tiredness )
-
 public:
     //! @name Types
     //@{
     typedef std::map< std::string, const Tiredness*, sCaseInsensitiveLess > T_TirednessMap;
-    typedef T_TirednessMap::const_iterator                                      CIT_TirednessMap;
+    typedef T_TirednessMap::const_iterator                                CIT_TirednessMap;
     //@}
 
 public:
@@ -55,11 +54,11 @@ public:
           int                   GetID                           () const;
     const std::string&          GetName                         () const;
           ASN1T_EnumUnitFatigue GetAsnID                        () const;
-          MT_Float              GetCoefMaxSpeedModificator      () const;
-          MT_Float              GetCoefReloadingTimeModificator () const;
-          MT_Float              GetCoefPhModificator            () const;
-          MT_Float              GetCoefPostureTimeModificator   () const;
-          MT_Float              GetCoefSensorDistanceModificator() const;
+          float                 GetCoefMaxSpeedModificator      () const;
+          float                 GetCoefReloadingTimeModificator () const;
+          float                 GetCoefPhModificator            () const;
+          float                 GetCoefPostureTimeModificator   () const;
+          float                 GetCoefSensorDistanceModificator() const;
     //@}
 
     //! @name Operators
@@ -82,6 +81,8 @@ private:
 private:
      Tiredness( const std::string& strName, E_TirednessType nType, ASN1T_EnumUnitFatigue nAsnID );
     ~Tiredness();
+    Tiredness( const Tiredness& );
+    Tiredness& operator=( const Tiredness& );
 
     //! @name Init
     //@{
@@ -93,11 +94,11 @@ private:
     const E_TirednessType       nType_;
     const ASN1T_EnumUnitFatigue nAsnID_;
 
-    MT_Float rCoefMaxSpeedModificator_;
-    MT_Float rCoefReloadingTimeModificator_;
-    MT_Float rCoefPhModificator_;
-    MT_Float rCoefPostureTimeModificator_;
-    MT_Float rCoefSensorDistanceModificator_;
+    float rCoefMaxSpeedModificator_;
+    float rCoefReloadingTimeModificator_;
+    float rCoefPhModificator_;
+    float rCoefPostureTimeModificator_;
+    float rCoefSensorDistanceModificator_;
 
 private:
     static T_TirednessMap tirednesses_;

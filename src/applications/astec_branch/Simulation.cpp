@@ -49,7 +49,6 @@ void Simulation::Pause( bool paused )
 // -----------------------------------------------------------------------------
 void Simulation::ChangeSpeed( int timeFactor )
 {
-    MT_LOG_INFO( "Facteur temps: " << timeFactor, eReceived, 0 );
     timeFactor_ = timeFactor;
 //    controller_.Update( *this );
 }
@@ -60,12 +59,12 @@ void Simulation::ChangeSpeed( int timeFactor )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const ASN1T_MsgCtrlInfo& asnMsg )
 {
-    MT_LOG_INFO( "CtrlInfo - Current Tick: " << asnMsg.current_tick
-                 << " - Tick duration : "       << asnMsg.tick_duration
-                 << " - Time factor: "          << asnMsg.time_factor
-                 << " - Exercice ID: "          << asnMsg.id_exercice
-                 << " - Checkpoint Frequency: " << asnMsg.checkpoint_frequence,
-                 eReceived, 0 );
+//    MT_LOG_INFO( "CtrlInfo - Current Tick: " << asnMsg.current_tick
+//                 << " - Tick duration : "       << asnMsg.tick_duration
+//                 << " - Time factor: "          << asnMsg.time_factor
+//                 << " - Exercice ID: "          << asnMsg.id_exercice
+//                 << " - Checkpoint Frequency: " << asnMsg.checkpoint_frequence,
+//                 eReceived, 0 );
     tickDuration_ = asnMsg.tick_duration;
     ChangeSpeed( asnMsg.time_factor );
 }

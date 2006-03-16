@@ -68,7 +68,7 @@ void PopulationDetections::DoUpdate( const FlowDetectionMessage& message )
 
     const PopulationPart_ABC* pFlow = & pPopulation->GetFlow( nFlowID );
 
-    uint32 nNbrPoints;
+    unsigned long nNbrPoints;
     message >> nNbrPoints;
     // $$$$ AGE 2006-02-27: 
 //

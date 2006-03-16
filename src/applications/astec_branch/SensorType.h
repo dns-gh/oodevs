@@ -29,24 +29,24 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName () const;
-    MT_Float     GetAngle() const;
+    float              GetAngle() const;
     //@}
 
     //! @name Operations
     //@{
-    MT_Float GetMaxDistance   ( const Agent& agent ) const;
-    MT_Float ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent, MT_Float rCurrentNRJ ) const;
-    MT_Float ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent ) const;
+    float GetMaxDistance   ( const Agent& agent ) const;
+    float ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent, MT_Float rCurrentNRJ ) const;
+    float ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent ) const;
 
-    E_PerceptionResult InterpreteNRJ( MT_Float rNRJ ) const;
+    E_PerceptionResult InterpreteNRJ( float skyRock ) const;
 
-    MT_Float GetDistanceModificator( const Agent& agent ) const;
+    float GetDistanceModificator( const Agent& agent ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float > T_FactorVector;
+    typedef std::vector< float > T_FactorVector;
     //@}
 
 private:
@@ -60,20 +60,20 @@ private:
     void InitializeEnvironnementFactors( InputArchive& archive );
     void InitializeAngle               ( InputArchive& archive );
 
-    MT_Float GetPostureSourceFactor    ( const Agent& agent ) const;
-    MT_Float ComputeEnvironementFactor ( RawVisionData::envBits nEnv ) const;
+    float GetPostureSourceFactor    ( const Agent& agent ) const;
+    float ComputeEnvironementFactor ( RawVisionData::envBits nEnv ) const;
     //@}
 
 private:
     std::string strName_;
-    MT_Float rAngle_;
+    float rAngle_;
     bool     bScanningAllowed_;
 
     // Distances
-    MT_Float rSquareProximityDist_;
-    MT_Float rIdentificationDist_;
-    MT_Float rRecognitionDist_;
-    MT_Float rDetectionDist_;
+    float rSquareProximityDist_;
+    float rIdentificationDist_;
+    float rRecognitionDist_;
+    float rDetectionDist_;
 
     // Modificateurs
     T_FactorVector postureSourceFactors_;
@@ -82,8 +82,8 @@ private:
     T_FactorVector environementFactors_;
 
     // Population
-    MT_Float rPopulationDensity_;
-    MT_Float rPopulationFactor_;
+    float rPopulationDensity_;
+    float rPopulationFactor_;
 
 };
 

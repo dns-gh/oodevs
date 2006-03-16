@@ -42,8 +42,8 @@ void DebugPoints::DoUpdate( const DebugPointsMessage& message )
     points_.reserve( size );
     for( unsigned i = 0; i < size; ++i )
     {
-        MT_Vector2D vPos;
-        message >> vPos;
-        points_.push_back( vPos );
+        double x, y;
+        message >> x >> y;
+        points_.push_back( geometry::Point2f( float(x), float(y) ) );
     }
 }

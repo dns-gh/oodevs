@@ -59,7 +59,7 @@ unsigned long PopulationType::GetId() const
 // Name: PopulationType::GetDensity
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-MT_Float PopulationType::GetDensity() const
+float PopulationType::GetDensity() const
 {
     return density_;
 }

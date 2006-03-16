@@ -7,45 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentDrawer_h_
-#define __AgentDrawer_h_
+#ifndef __Positions_h_
+#define __Positions_h_
 
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
-#include "geometry/Types.h"
 
-class Agent;
 class CoordinateConverter;
-class GlTools_ABC;
 
 // =============================================================================
-/** @class  AgentDrawer
-    @brief  AgentDrawer
+/** @class  Positions
+    @brief  Positions. Nothing sexual.
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class AgentDrawer : public Extension_ABC
-                  , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+class Positions : public Extension_ABC
+                , public Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentDrawer( Agent& agent, const CoordinateConverter& converter, const GlTools_ABC& tools );
-    virtual ~AgentDrawer();
+    explicit Positions( const CoordinateConverter& converter );
+    virtual ~Positions();
     //@}
 
     //! @name Operations
     //@{
-    void Draw(  const geometry::Rectangle2f& viewport );
+    geometry::Point2f GetPosition() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    AgentDrawer( const AgentDrawer& );            //!< Copy constructor
-    AgentDrawer& operator=( const AgentDrawer& ); //!< Assignement operator
+    Positions( const Positions& );            //!< Copy constructor
+    Positions& operator=( const Positions& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -57,10 +54,8 @@ private:
     //! @name Member data
     //@{
     const CoordinateConverter& converter_;
-    const GlTools_ABC& tools_;
-    Agent& agent_;
-    MT_Vector2D position_;
+    geometry::Point2f position_;
     //@}
 };
 
-#endif // __AgentDrawer_h_
+#endif // __Positions_h_

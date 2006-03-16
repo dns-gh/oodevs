@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Connect( const std::string& strHostName, uint16 nPort );
+    bool Connect( const std::string& strHostName, unsigned short nPort );
     bool Disconnect();
     bool IsConnected() const;
 

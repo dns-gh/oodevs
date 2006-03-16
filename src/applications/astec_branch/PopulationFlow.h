@@ -40,10 +40,6 @@ public:
     void UpdatePathFind();
     //! @name Accessors
     //@{
-            const T_PointVector& GetFlow            () const;
-            const T_PointVector& GetItineraire      () const;
-            const MT_Vector2D&   GetTailPosition    () const;
-            const MT_Vector2D&   GetHeadPosition    () const;
 //	virtual const std::string&   GetName            () const;
 //    virtual const MT_Vector2D&   GetPos             () const;
     //@}
@@ -65,15 +61,15 @@ private:
     //@{
     const CoordinateConverter& converter_;
 
-    uint              nID_;
-	T_PointVector	  itineraire_;
-	T_PointVector	  flow_;
-	int				  nDirection_;
-	int				  nSpeed_;
+    uint          nID_;
+	T_PointVector itineraire_;
+	T_PointVector flow_;
+	int			  nDirection_;
+	int			  nSpeed_;
     
-    int               nLivingHumans_;
-    int               nDeadHumans_;
-    MT_Float          rDensity_;
+    int           nLivingHumans_;
+    int           nDeadHumans_;
+    float         rDensity_;
     //@}
 };
 

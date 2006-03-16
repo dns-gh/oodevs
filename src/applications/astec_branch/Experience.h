@@ -14,6 +14,7 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml { class xistream; };
 
@@ -23,13 +24,12 @@ namespace xml { class xistream; };
 // =============================================================================
 class Experience
 {
-    MT_COPYNOTALLOWED( Experience )
 
 public:
     //! @name Types
     //@{
     typedef std::map< std::string, const Experience*, sCaseInsensitiveLess > T_ExperienceMap;
-    typedef T_ExperienceMap::const_iterator                                      CIT_ExperienceMap;
+    typedef T_ExperienceMap::const_iterator                                CIT_ExperienceMap;
     //@}
 
 public:
@@ -52,14 +52,14 @@ public:
 
     //! @name Accessors
     //@{
-          int                      GetID                           () const;
-    const std::string&             GetName                         () const;
-          ASN1T_EnumUnitExperience GetAsnID                        () const;
-          MT_Float                 GetCoefMaxSpeedModificator      () const;
-          MT_Float                 GetCoefReloadingTimeModificator () const;
-          MT_Float                 GetCoefPhModificator            () const;
-          MT_Float                 GetCoefPostureTimeModificator   () const;
-          MT_Float                 GetCoefSensorDistanceModificator() const;
+    int                      GetID                           () const;
+    const std::string&       GetName                         () const;
+    ASN1T_EnumUnitExperience GetAsnID                        () const;
+    float                    GetCoefMaxSpeedModificator      () const;
+    float                    GetCoefReloadingTimeModificator () const;
+    float                    GetCoefPhModificator            () const;
+    float                    GetCoefPostureTimeModificator   () const;
+    float                    GetCoefSensorDistanceModificator() const;
     //@}
 
     //! @name Operators
@@ -83,6 +83,10 @@ private:
      Experience( const std::string& strName, E_ExperienceType nType, ASN1T_EnumUnitExperience nAsnID );
     ~Experience();
 
+    Experience( const Experience& );
+    Experience& operator=( const Experience& );
+
+
     //! @name Init
     //@{
     void Read( xml::xistream& xis );
@@ -93,11 +97,11 @@ private:
     const E_ExperienceType         nType_;
     const ASN1T_EnumUnitExperience nAsnID_;
 
-    MT_Float rCoefMaxSpeedModificator_;
-    MT_Float rCoefReloadingTimeModificator_;
-    MT_Float rCoefPhModificator_;
-    MT_Float rCoefPostureTimeModificator_;
-    MT_Float rCoefSensorDistanceModificator_;
+    float rCoefMaxSpeedModificator_;
+    float rCoefReloadingTimeModificator_;
+    float rCoefPhModificator_;
+    float rCoefPostureTimeModificator_;
+    float rCoefSensorDistanceModificator_;
 
 private:
     static T_ExperienceMap experiences_;

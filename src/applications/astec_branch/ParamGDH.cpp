@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "ParamGDH.h"
 #include "moc_ParamGDH.cpp"
+#include "MT/MT_Qt/MT_ParameterLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamGDH constructor

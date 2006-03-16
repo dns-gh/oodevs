@@ -17,20 +17,17 @@
 #include "Order_Def.h"
 #include "Attr_Def.h"
 #include "Perception_Def.h"
-#include "Meteo_ABC.h"
-#include "RawVisionData.h"
-#include "Team.h"
+//#include "Meteo_ABC.h"
+//#include "RawVisionData.h"
+//#include "Team.h"
 
 class QListView;
-
 
 //=============================================================================
 // Created: NLD 2003-05-31
 //=============================================================================
 class Tools
 {
-    MT_COPYNOTALLOWED( Tools );
-
 public:
     //$$$$ QString -> const char*
     static QString ToString( E_UnitPosture nPosture );
@@ -46,7 +43,7 @@ public:
     static QString ToString( ASN1T_EnumMissionGenSousTypeObstacle nType );
     static QString ToString( ASN1T_EnumMissionGenPriorite nObject );
 
-    static QString ToString( Meteo_ABC::E_WeatherType nType );
+//    static QString ToString( Meteo_ABC::E_WeatherType nType );
 
     static const char* ToString( const ASN1T_EnumInfoContextErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumCtrlErrorCode& nCode );
@@ -60,7 +57,7 @@ public:
     static const char* ToSymbol( const std::string& strUnitType );
     static void FromString( const char* szString, ASN1T_EnumTypeLocalisation& nId );
 
-    static bool PointNearLine( const MT_Vector2D& point, const T_PointVector& line, MT_Float rMinDist, bool bLineLoop = false );
+//    static bool PointNearLine( const MT_Vector2D& point, const T_PointVector& line, MT_Float rMinDist, bool bLineLoop = false );
 
 
 
@@ -72,7 +69,7 @@ public:
 
     static std::string ConvertNatureAtlas          ( E_NatureAtlasType );
     static std::string ConvertPerceptionLevel      ( E_PerceptionResult );
-    static std::string ConvertEnvironementType     ( RawVisionData::E_VisionObject );
+//    static std::string ConvertEnvironementType     ( RawVisionData::E_VisionObject );
 
     static std::string ConvertDiplomaty            ( ASN1T_EnumDiplomatie );
 
@@ -158,7 +155,7 @@ private:
     static converter< E_PerceptionResult >                perceptionLevelConverter_[];
     static converter< E_WeatherType >                     weatherConverter_[];
     static converter< E_LightingType >                    lightingConverter_[];
-    static converter< RawVisionData::E_VisionObject > environnementConverter_[];
+//    static converter< RawVisionData::E_VisionObject > environnementConverter_[];
     static converter< ASN1T_EnumDiplomatie >              diplomatyConverter_[];
 };
 

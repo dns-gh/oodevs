@@ -25,6 +25,8 @@
 #include "moc_Logger.cpp"
 
 #include "Types.h"
+#include "MT/MT_Logger/MT_logger_lib.h"
+#include "MT/MT_Qt/MT_ValuedListViewItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: Logger constructor

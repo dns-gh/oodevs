@@ -29,7 +29,6 @@ class QMainWindow;
 // =============================================================================
 class Settings : public QSettings
 {
-    MT_COPYNOTALLOWED( Settings );
 
 public:
     //! @name Constructors/Destructor
@@ -43,6 +42,13 @@ public:
     //@{
     void WriteEntry( const QString& field, QWidget& widget );
     void ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Settings( const Settings& );
+    Settings& operator=( const Settings& );
     //@}
 };
 

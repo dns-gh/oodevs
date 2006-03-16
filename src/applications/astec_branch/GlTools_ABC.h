@@ -28,7 +28,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DrawCross( const MT_Vector2D& at ) const = 0;
+    virtual void DrawCross( const geometry::Point2f& at ) const = 0;
     //@}
 };
 

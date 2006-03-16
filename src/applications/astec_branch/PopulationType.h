@@ -36,7 +36,7 @@ public:
     std::string GetName() const;
     unsigned long GetId() const;
 
-    MT_Float GetDensity() const;
+    float GetDensity() const;
     //@}
 
 private:
@@ -57,7 +57,7 @@ private:
     unsigned long id_;
     const DecisionalModel* model_;
 
-    MT_Float density_;
+    float density_;
     //@}
 };
 

@@ -10,9 +10,7 @@
 #ifndef __DinMessageWrapper_h_
 #define __DinMessageWrapper_h_
 
-namespace DIN {
-    class DIN_Input;
-};
+#include "DIN/DIN_Input.h"
 
 #define DECLARE_MESSAGE_WRAPPER( name )         \
 struct name : public DinMessageWrapper< name >   \

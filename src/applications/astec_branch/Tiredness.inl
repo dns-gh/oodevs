@@ -77,7 +77,7 @@ ASN1T_EnumUnitFatigue Tiredness::GetAsnID() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Tiredness::GetCoefMaxSpeedModificator() const
+float Tiredness::GetCoefMaxSpeedModificator() const
 {
     return rCoefMaxSpeedModificator_;
 }
@@ -87,7 +87,7 @@ MT_Float Tiredness::GetCoefMaxSpeedModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Tiredness::GetCoefReloadingTimeModificator() const
+float Tiredness::GetCoefReloadingTimeModificator() const
 {
     return rCoefReloadingTimeModificator_;
 }
@@ -97,7 +97,7 @@ MT_Float Tiredness::GetCoefReloadingTimeModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Tiredness::GetCoefPhModificator() const
+float Tiredness::GetCoefPhModificator() const
 {
     return rCoefPhModificator_;
 }
@@ -107,7 +107,7 @@ MT_Float Tiredness::GetCoefPhModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Tiredness::GetCoefPostureTimeModificator() const
+float Tiredness::GetCoefPostureTimeModificator() const
 {
     return rCoefPostureTimeModificator_;
 }
@@ -117,7 +117,7 @@ MT_Float Tiredness::GetCoefPostureTimeModificator() const
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float Tiredness::GetCoefSensorDistanceModificator() const
+float Tiredness::GetCoefSensorDistanceModificator() const
 {
     return rCoefSensorDistanceModificator_;
 }

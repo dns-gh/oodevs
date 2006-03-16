@@ -13,8 +13,6 @@
 #define __App_h_
 
 #include "Types.h"
-
-#include "RawVisionData.h"
 #include "Resource.h"
 
 #include <qapplication.h>

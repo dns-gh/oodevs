@@ -32,8 +32,8 @@ public:
 
     //! @name Coordinate conversions
     //@{
-    std::string ConvertToMgrs( const MT_Vector2D&    pos  ) const;
-    MT_Vector2D ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
+    std::string       ConvertToMgrs( const geometry::Point2f& pos  ) const;
+    geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
     //@}
 
 private:
@@ -50,8 +50,8 @@ private:
     //@}
     
 private:
-    MT_Rect         extent_;
-    MT_Vector2D     translation_;
+    geometry::Rectangle2f extent_;
+    geometry::Vector2f    translation_;
 
             geocoord::PlanarCartesian::Parameters parameters_;
     mutable geocoord::PlanarCartesian             planar_;

@@ -15,25 +15,7 @@
 #pragma warning( disable : 4290 )
 #pragma warning( disable : 4702 )
 
-#include "MT/MT_Tools/MT_Tools_lib.h"
-#include "MT/MT_IO/MT_IO_lib.h"
-#include "MT/MT_Archive/MT_Archive_lib.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
-#include "MT/MT_Time/MT_Time_lib.h"
-#include "MT/MT_XmlTools/MT_XmlTools_lib.h"
-#include "MT/MT_Qt/MT_Qt_lib.h"
-
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
-
-#include "MT_Tools/MT_Assert.h"
-#include "MT_Tools/MT_Vector2D.h"
-#include "MT_Tools/MT_Vector3D.h"
-#include "MT_Tools/MT_Line.h"
-#include "MT_Tools/MT_Rect.h"
-#include "MT_Tools/MT_InputArchive_Logger.h"
-
+#define WIN32_LEAN_AND_MEAN
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -93,11 +75,13 @@
 #include <qmainwindow.h>
 #include <qdockwindow.h>
 #include <qsound.h>
-#include <stdexcept>
 
-#include "GFX/GFX_Tools.h"
-#include "GFX/GFX_Text.h"
-#include "GFX/GFX_Color.h"
+#include <stdexcept>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <map>
+#include <set>
 
 #ifdef min
 #   undef min
@@ -106,6 +90,11 @@
 #ifdef max
 #   undef max
 #endif
+
+#include "geometry/Types.h"
+typedef std::vector< geometry::Point2f > T_PointVector; // $$$$ AGE 2006-03-16: 
+typedef T_PointVector::iterator         IT_PointVector;
+typedef T_PointVector::const_iterator  CIT_PointVector;
 
 #include "resources.h"
 

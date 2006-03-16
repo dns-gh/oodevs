@@ -72,7 +72,7 @@ ParamLocation::ParamLocation( ASN1T_Localisation& asnListPoint, const std::strin
 
         for( uint n = 0; n < asnListPoint_.vecteur_point.n; ++n )
         {
-            MT_Vector2D vPos;
+            geometry::Point2f vPos;
             std::string strPos( (char*)((asnListPoint_.vecteur_point.elem + n)->data), sizeof(asnListPoint_.vecteur_point.elem->data) );
             App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vPos );
             pointList_.push_back( vPos );
@@ -194,7 +194,7 @@ void ParamLocation::StartTracing( int nLocationType )
 // -----------------------------------------------------------------------------
 void ParamLocation::TracingDone()
 {
-    T_PointVector& pointList = pLineEditor_->GetPointList();
+    T_Points& pointList = pLineEditor_->GetPointList();
     if(    (nType_ == EnumTypeLocalisation::point   && (int)pointList.size() == 1 )
         || (nType_ == EnumTypeLocalisation::line    && (int)pointList.size() >= 2 )
         || (nType_ == EnumTypeLocalisation::circle  && (int)pointList.size() == 2 )

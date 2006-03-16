@@ -12,18 +12,12 @@
 #include "astec_pch.h"
 #include "PopulationKnowledge.h"
 
-#include "App.h"
 #include "KnowledgeGroup.h"
 #include "Population.h"
-#include "AgentManager.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
-#include "Model.h"
-#include "TeamsModel.h"
-#include "AgentsModel.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
-#include "KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge

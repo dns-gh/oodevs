@@ -37,7 +37,7 @@ private:
     //! @name Member data
     //@{
     unsigned int id_;
-    MT_Vector2D target_;
+    geometry::Point2f target_;
     //@}
 };
 

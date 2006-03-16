@@ -50,7 +50,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< MT_Vector2D > points_;
+    std::vector< geometry::Point2f > points_;
     //@}
 };
 

@@ -17,7 +17,7 @@ const std::string& SensorType::GetName() const
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
 inline
-MT_Float SensorType::GetAngle() const
+float SensorType::GetAngle() const
 {
     return rAngle_;
 }
@@ -27,7 +27,7 @@ MT_Float SensorType::GetAngle() const
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float SensorType::ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent ) const
+float SensorType::ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent ) const
 {
     return ComputeExtinction( env, srcAgent, rDetectionDist_ );
 }
@@ -37,7 +37,7 @@ MT_Float SensorType::ComputeExtinction( const RawVisionData::Iterator& env, cons
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
 inline
-E_PerceptionResult SensorType::InterpreteNRJ( MT_Float rNRJ ) const
+E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 {
     if ( rNRJ >= rDetectionDist_ - rIdentificationDist_ )
         return eIdentification;

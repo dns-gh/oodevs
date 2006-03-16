@@ -10,7 +10,6 @@
 #include "astec_pch.h"
 #include "Population.h"
 
-#include "AgentManager.h"
 #include "Team.h"
 #include "PopulationType.h"
 

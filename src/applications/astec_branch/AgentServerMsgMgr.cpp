@@ -13,10 +13,7 @@
 #include "AgentServerMsgMgr.h"
 #include "Agent.h"
 #include "Agent_ABC.h"
-#include "AgentManager.h"
 #include "Object_ABC.h"
-#include "ObjectManager.h"
-#include "LineManager.h"
 #include "Lima.h"
 #include "Limit.h"
 #include "ASN_Messages.h"
@@ -56,9 +53,8 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Sim
     , bReceivingState_ ( true )
     , msgRecorder_     ( * new MsgRecorder( *this ) )
 {
-    DIN_ConnectorGuest connector( eConnector_SIM_MOS );
-    pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>(
-        *this, engine, connector, "Msgs MOS Server -> Agent Server" );
+    const DIN_ConnectorGuest theConnector( (DIN::DIN_Connector_ABC::DIN_ConnectionID)( eConnector_SIM_MOS ) );
+    pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>( *this, engine, theConnector, "Msgs MOS Server -> Agent Server" );
 
     pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & AgentServerMsgMgr::OnReceiveMsgInit                );
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
@@ -242,7 +238,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    uint32 nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     model_.agents_.FindAllAgent( nAgentID )->Update( TraceMessage( input ) );
 }

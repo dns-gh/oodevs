@@ -71,7 +71,7 @@ void SensorType::InitializeEnvironnementFactors( InputArchive& archive )
     for ( uint idx = 0; idx < RawVisionData::eNbrVisionObjects; ++idx )
     {
         assert( environementFactors_.size() > idx );
-        MT_Float& rFactor = environementFactors_[ idx ];
+        float& rFactor = environementFactors_[ idx ];
 
         if ( !archive.ReadField( Tools::ConvertEnvironementType( RawVisionData::ConvertObjectIdxToEnvironnement( idx ) ), rFactor ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
@@ -95,7 +95,7 @@ void SensorType::InitializeWeatherFactors( InputArchive& archive )
     for( uint i = 0; i < eNbrWeatherType; ++i )
     {
         assert( weatherFactors_.size() > i );
-        MT_Float& rFactor = weatherFactors_[ i ];
+        float& rFactor = weatherFactors_[ i ];
 
         archive.ReadField( Tools::ConvertWeatherType( (E_WeatherType)i ), rFactor );
         if ( rFactor < 0. || rFactor > 1. )
@@ -115,7 +115,7 @@ void SensorType::InitializeLightingFactors( InputArchive& archive )
     for( uint i = 0; i < eNbrLightingType; ++i )
     {
         assert( lightingFactors_.size() > i );
-        MT_Float& rFactor = lightingFactors_[ i ];
+        float& rFactor = lightingFactors_[ i ];
 
         archive.ReadField( Tools::ConvertLightingType( (E_LightingType)i ), rFactor );
         if ( rFactor < 0. || rFactor > 1. )
@@ -189,7 +189,7 @@ void SensorType::InitializePostureSourceFactors( InputArchive& archive )
     for( uint i = 0; i < eNbrUnitPosture; ++i )
     {
         assert( postureSourceFactors_.size() > i );
-        MT_Float& rFactor = postureSourceFactors_[ i ];
+        float& rFactor = postureSourceFactors_[ i ];
         const std::string strPosture = Tools::ToString( (E_UnitPosture)i ).ascii();
 
         archive.ReadField( strPosture, rFactor );
@@ -204,11 +204,11 @@ void SensorType::InitializePostureSourceFactors( InputArchive& archive )
 // Name: SensorType::GetPostureSourceFactor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-MT_Float SensorType::GetPostureSourceFactor( const Agent& agent ) const
+float SensorType::GetPostureSourceFactor( const Agent& agent ) const
 {
     E_UnitPosture nOldPosture     ; //= agent.GetOldStance();
     E_UnitPosture nCurrentPosture ; //= agent.GetStance();
-    MT_Float      rPourcentage    ; //= agent.GetStanceCompletion() / 100.;
+    float         rPourcentage    ; //= agent.GetStanceCompletion() / 100.;
 
     assert( postureSourceFactors_.size() > (uint)nOldPosture );
     assert( postureSourceFactors_.size() > (uint)nCurrentPosture );
@@ -219,7 +219,7 @@ MT_Float SensorType::GetPostureSourceFactor( const Agent& agent ) const
 // Name: SensorType::GetDistanceModificator
 // Created: NLD 2004-12-02
 // -----------------------------------------------------------------------------
-MT_Float SensorType::GetDistanceModificator( const Agent& agent ) const
+float SensorType::GetDistanceModificator( const Agent& agent ) const
 {
 //    const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
 //          MT_Float rPopulationFactor = 1.;
@@ -237,7 +237,7 @@ MT_Float SensorType::GetDistanceModificator( const Agent& agent ) const
 // Name: SensorType::GetMaxDistance
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-MT_Float SensorType::GetMaxDistance( const Agent& agent ) const
+float SensorType::GetMaxDistance( const Agent& agent ) const
 {
     return rDetectionDist_ * GetDistanceModificator( agent );
 }
@@ -248,9 +248,9 @@ MT_Float SensorType::GetMaxDistance( const Agent& agent ) const
 // Modified: JVT 2004-09-27
 //-----------------------------------------------------------------------------
 inline
-MT_Float SensorType::ComputeEnvironementFactor( RawVisionData::envBits nEnv ) const
+float SensorType::ComputeEnvironementFactor( RawVisionData::envBits nEnv ) const
 {
-    MT_Float res = nEnv & RawVisionData::eVisionEmpty ? environementFactors_[ 0 ] : 1.;
+    float res = nEnv & RawVisionData::eVisionEmpty ? environementFactors_[ 0 ] : 1.;
 
     for( uint mask = 1, idx = 1; idx < RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
         if( mask & nEnv )
@@ -262,12 +262,12 @@ MT_Float SensorType::ComputeEnvironementFactor( RawVisionData::envBits nEnv ) co
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-MT_Float SensorType::ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent, MT_Float rCurrentNRJ ) const
+float SensorType::ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent, MT_Float rCurrentNRJ ) const
 {
     assert( rCurrentNRJ <= rDetectionDist_ );
     assert( rCurrentNRJ > 0 );
 
-    MT_Float rDistanceModificator = GetDistanceModificator( srcAgent );
+    float rDistanceModificator = GetDistanceModificator( srcAgent );
     // Prise en compte de l'éclairement
     rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
     // Prise en compte des précipitations

@@ -52,6 +52,7 @@
 #include "Decisions.h"
 #include "AutomatDecisions.h"
 #include "Fires.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -140,5 +141,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new LogisticConsigns( controller_ ) );
     agent.Attach( *new Explosions( controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controller_, model_.fireFactory_ ) );
+    agent.Attach( *new Positions( model_.coordinateConverter_ ) );
 }
 

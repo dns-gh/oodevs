@@ -88,11 +88,11 @@ public:
     Team&         team_;
 
     T_PointVector pointVector_;
-    MT_Vector2D   center_;
+    geometry::Point2f   center_;
 
-    MT_Float rConstructionPercentage_;
-    MT_Float rValorizationPercentage_;
-    MT_Float rBypassConstructionPercentage_;
+    float rConstructionPercentage_;
+    float rValorizationPercentage_;
+    float rBypassConstructionPercentage_;
 
     bool bPrepared_;
     //@}

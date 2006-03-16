@@ -12,7 +12,8 @@
 
 #include <qstring.h>
 #include "Displayer_ABC.h"
-#include "Tools.h"
+#include "Perception_Def.h"
+#include "Types.h"
 
 // =============================================================================
 /** @class  Formatter
@@ -166,137 +167,103 @@ struct Formatter< Unit >
 template< >
 struct Formatter< E_UnitPosture >
 {
-    void operator()( const E_UnitPosture& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitPosture( e ) );
-    }
+    void operator()( const E_UnitPosture& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_EtatOperationnel >
 {
-    void operator()( const E_EtatOperationnel& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromEtatOperationnel( e ) );
-    }
+    void operator()( const E_EtatOperationnel& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_EtatRapFor >
 {
-    void operator()( const E_EtatRapFor& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromEtatRapFor( e ) );
-    }
+    void operator()( const E_EtatRapFor& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_Roe >
 {
-    void operator()( const E_Roe& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromRoe( e ) );
-    }
+    void operator()( const E_Roe& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_RoePopulation >
 {
-    void operator()( const E_RoePopulation& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromRoePopulation( e ) );
-    }
+    void operator()( const E_RoePopulation& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_EtatCombatRencontre >
 {
-    void operator()( const E_EtatCombatRencontre& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromEtatCombatRencontre( e ) );
-    }
+    void operator()( const E_EtatCombatRencontre& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_DisponibiliteAuTir >
 {
-    void operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromDisponibiliteAuTir( e ) );
-    }
+    void operator()( const E_DisponibiliteAuTir& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_PerceptionResult >
 {
-    void operator()( const E_PerceptionResult& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( Tools::ToString( e ) );
-    }
+    void operator()( const E_PerceptionResult& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_NatureLevel >
 {
-    void operator()( const E_NatureLevel& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromNatureLevel( e ) );
-    }
+    void operator()( const E_NatureLevel& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_UnitNatureWeapon >
 {
-    void operator()( const E_UnitNatureWeapon& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureWeapon( e ) );
-    }
+    void operator()( const E_UnitNatureWeapon& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_UnitNatureSpecialization >
 {
-    void operator()( const E_UnitNatureSpecialization& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureSpecialization( e ) );
-    }
+    void operator()( const E_UnitNatureSpecialization& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_UnitNatureQualifier >
 {
-    void operator()( const E_UnitNatureQualifier& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureQualifier( e ) );
-    }
+    void operator()( const E_UnitNatureQualifier& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_UnitNatureCategory >
 {
-    void operator()( const E_UnitNatureCategory& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureCategory( e ) );
-    }
+    void operator()( const E_UnitNatureCategory& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_UnitNatureMobility >
 {
-    void operator()( const E_UnitNatureMobility& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureMobility( e ) );
-    }
+    void operator()( const E_UnitNatureMobility& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_UnitCapaciteMission >
 {
-    void operator()( const E_UnitCapaciteMission& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromUnitCapaciteMission( e ) );
-    }
+    void operator()( const E_UnitCapaciteMission& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_TroopHealthState >
 {
-    void operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( Tools::ToString( e ) );
-    }
+    void operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
 struct Formatter< E_HumanWound >
 {
-    void operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( ENT_Tr::ConvertFromHumanWound( e ) );
-    }
+    void operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

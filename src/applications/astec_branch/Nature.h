@@ -42,8 +42,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename Enum, typename Solver >
-    void Read( InputArchive& archive, const std::string& field, const Solver& solver, Enum& result );
+//    template< typename Enum, typename Solver >
+//    void Read( InputArchive& archive, const std::string& field, const Solver& solver, Enum& result );
 
     static char Symbol( const Nature& n );
     static char LevelSymbol( const Nature& n );

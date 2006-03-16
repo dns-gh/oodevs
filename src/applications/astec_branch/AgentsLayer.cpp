@@ -12,7 +12,8 @@
 #include "Controller.h"
 #include "ActionController.h"
 #include "Agent.h"
-#include "AgentDrawer.h"
+#include "Positions.h"
+#include "Drawable_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -42,18 +43,20 @@ AgentsLayer::~AgentsLayer()
 void AgentsLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     for( CIT_Agents it = agents_.begin(); it != agents_.end(); ++it )
-        (*it)->Get< AgentDrawer >().Draw( viewport );
+    {
+        Entity_ABC& agent = const_cast< Agent& >( **it ); // $$$$ AGE 2006-03-16: 
+        const geometry::Point2f position = agent.Get< Positions >().GetPosition();
+        if( viewport.IsInside( position ) )
+            agent.Apply( Drawable_ABC::Draw, position, *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::NotifyCreated
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentsLayer::NotifyCreated( const Agent& a )
+void AgentsLayer::NotifyCreated( const Agent& agent )
 {
-    Agent& agent = const_cast< Agent& >( a ); // $$$$ AGE 2006-03-16: 
-    if( ! agent.Retrieve< AgentDrawer >() )
-        agent.Attach( *new AgentDrawer( agent, converter_, *this ) );
     agents_.push_back( &agent );
 }
 
@@ -85,7 +88,13 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
 // Name: AgentsLayer::DrawCross
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentsLayer::DrawCross( const MT_Vector2D& at ) const
+void AgentsLayer::DrawCross( const geometry::Point2f& at ) const
 {
-
+    const float rSize = 200.f; // $$$$ AGE 2006-03-16: arg, ...
+    glBegin( GL_LINES );
+        glVertex2f(  at.X() - rSize, at.Y() - rSize );
+        glVertex2f(  at.X() + rSize, at.Y() + rSize );
+        glVertex2f(  at.X() + rSize, at.Y() - rSize );
+        glVertex2f(  at.X() - rSize, at.Y() + rSize );
+    glEnd();
 }

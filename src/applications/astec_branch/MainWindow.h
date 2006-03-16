@@ -31,8 +31,6 @@ class Controller;
 class ActionController;
 class CoordinateConverter;
 
-#include "MapEventFilter_ABC.h"
-
 // =============================================================================
 /** @class  MainWindow
     @brief  Main window of the application.
@@ -48,8 +46,6 @@ class CoordinateConverter;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( MainWindow )
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor/Accessor
@@ -64,27 +60,27 @@ public:
     //@{
     void Update();
 
-    void PushMapEventFilter( MapEventFilter_ABC& filter );
-    void PopMapEventFilter( MapEventFilter_ABC& filter );
-    const T_MapEventFilterVector& GetMapEvents() const;
-
     Options& GetOptions() const;
 
     QGLWidget* GetQGLWidget( bool b3Dmode ) const;
     //@}
 
-
-signals:
-    void CenterOnPoint( const MT_Vector2D& vPoint );
-    void TeamChanged();
-
 private:
+    //! @name Helpers
+    //@{
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();
 
     void WriteOptions();
     void ReadOptions();
+    //@}
+
+    //! @name Copy/Assignment
+    //@{
+    MainWindow( const MainWindow& );
+    MainWindow& operator=( const MainWindow& );
+    //@}
 
 private:
     //! @name Member data
@@ -112,7 +108,5 @@ private:
 private:
     static MainWindow* pInstance_;
 };
-
-#   include "MainWindow.inl"
 
 #endif // __MainWindow_h_

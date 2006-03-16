@@ -37,12 +37,10 @@ ObjectsModel::~ObjectsModel()
 // -----------------------------------------------------------------------------
 void ObjectsModel::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 {
-    MT_LOG_INFO( "ObjectCreation - ID: " << asnMsg.oid, eReceived, 0 );
     if( ! Resolver< Object_ABC >::Find( asnMsg.oid ) )
     {
         Object_ABC* pObject = objectFactory_.Create( asnMsg );
         Resolver< Object_ABC >::Register( asnMsg.oid, *pObject );
-//        application_.NotifyObjectCreated( *pObject );
     }
 }
  
@@ -61,8 +59,6 @@ Object_ABC& ObjectsModel::GetObject( unsigned long id )
 // -----------------------------------------------------------------------------
 void ObjectsModel::DeleteObject( unsigned long id )
 {
-    MT_LOG_INFO( "ObjectDestruction - ID: " << id, eReceived, 0 );
-//    application_.NotifyObjectDeleted( GetObject( id ) );
     delete Resolver< Object_ABC >::Find( id );
     Resolver< Object_ABC >::Remove( id );
 }

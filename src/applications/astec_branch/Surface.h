@@ -44,7 +44,7 @@ private:
 
 private:
     MT_Vector2D  vOrigin_;
-    MT_Float     rHeight_;
+    float rHeight_;
     T_SectorVector sectors_;
     const SensorType* pSensorType_;
 };

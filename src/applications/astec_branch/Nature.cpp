@@ -72,16 +72,16 @@ Nature::~Nature()
 // Name: Nature::Read
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-template< typename Enum, typename Solver >
-void Nature::Read( InputArchive& archive, const std::string& field, const Solver& solver, Enum& result )
-{
-    std::string strValue;
-    if( ! archive.Section( field, InputArchive::eNothing ) )
-        return;
-    archive.ReadAttribute( "type", strValue );
-    archive.EndSection(); // field
-    result = (Enum) solver( strValue );
-}
+//template< typename Enum, typename Solver >
+//void Nature::Read( InputArchive& archive, const std::string& field, const Solver& solver, Enum& result )
+//{
+//    std::string strValue;
+//    if( ! archive.Section( field, InputArchive::eNothing ) )
+//        return;
+//    archive.ReadAttribute( "type", strValue );
+//    archive.EndSection(); // field
+//    result = (Enum) solver( strValue );
+//}
 
 namespace
 {
