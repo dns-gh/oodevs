@@ -27,6 +27,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 AgentTypes::AgentTypes( const std::string& scipioXml )
 {
+    // $$$$ SBO 2006-03-16: qfileinfo?
+    const std::string baseDirectory = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
+
     xml::xifstream xis( scipioXml );
     xis >> start( "Scipio" )    
             >> start( "Donnees" );
@@ -39,12 +42,12 @@ AgentTypes::AgentTypes( const std::string& scipioXml )
         >> content( "Automates", automats )
         >> content( "Populations", populations );
 
-    ReadComponents( components );
-    ReadDecisional( decisional );
-    ReadSensors( sensors );
-    ReadAgents( agents );
-    ReadAutomats( automats );
-    ReadPopulations( populations );
+    ReadComponents( baseDirectory + components );
+    ReadDecisional( baseDirectory + decisional );
+    ReadSensors( baseDirectory + sensors );
+    ReadAgents( baseDirectory + agents );
+    ReadAutomats( baseDirectory + automats );
+    ReadPopulations( baseDirectory + populations );
 }
 
 // -----------------------------------------------------------------------------

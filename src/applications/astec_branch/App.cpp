@@ -14,39 +14,24 @@
 #include "moc_App.cpp"
 
 #include "Network.h"
-#include "AgentManager.h"
-#include "LineManager.h"
-#include "ObjectManager.h"
-#include "Meteo_Manager.h"
 #include "MainWindow.h"
-#include "SensorType.h"
 #include "Morale.h"
 #include "Experience.h"
 #include "Tiredness.h"
-#include "LogSupplyConsign.h"
-#include "LogMedicalConsign.h"
-#include "LogMaintenanceConsign.h"
-#include "Object_ABC.h"
-#include "Population.h"
-#include "PopulationKnowledge.h"
-#include "PopulationConcentrationKnowledge.h"
-#include "PopulationFlowKnowledge.h"
 #include "Options.h"
 #include "Model.h"
 #include "Simulation.h"
-#include "AgentFactory.h"
-#include "ObjectFactory.h"
-#include "AgentTypes.h"
 #include "Controller.h"
 
 #include "xeumeuleu/xml.h"
 
-#include <direct.h>
-#include <cstdio>
 #include <qsplashscreen.h>
 #include <qfileinfo.h>
 
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
 #include <boost/program_options.hpp>
+#pragma warning( pop )
 
 using namespace xml;
 namespace po = boost::program_options;
@@ -56,12 +41,11 @@ App* App::pInstance_ = 0;
 //-----------------------------------------------------------------------------
 // Name: App constructor
 // Created: NLD 2002-07-15
-// Modified: SBO 2005-07-26 (Added support for cmd line specified initial directory)
 //-----------------------------------------------------------------------------
 App::App( int nArgc, char** ppArgv )
     : QApplication  ( nArgc, ppArgv )
-    , pSplashScreen_( 0 )
-    , pMainWindow_( 0 )
+    , splashScreen_( 0 )
+    , mainWindow_( 0 )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
@@ -80,8 +64,8 @@ App::App( int nArgc, char** ppArgv )
     QPixmap splashImage( "Mos2.jpg" );
     if( !splashImage.isNull() )
     {
-        pSplashScreen_ = new QSplashScreen( splashImage );
-        pSplashScreen_->show();
+        splashScreen_ = new QSplashScreen( splashImage );
+        splashScreen_->show();
     }
 
 //    SetSplashText( tr("Démarrage...") );
@@ -90,14 +74,14 @@ App::App( int nArgc, char** ppArgv )
     Initialize( conffile );
 
 //    SetSplashText( tr("Initialisation de l'interface...") );
-    pMainWindow_ = new MainWindow( *controller_, conffile );
-    pMainWindow_->show();
+    mainWindow_ = new MainWindow( *controller_, conffile );
+    mainWindow_->show();
 
-    if( pSplashScreen_ )
+    if( splashScreen_ )
     {
-        pSplashScreen_->finish( pMainWindow_ );
-        delete pSplashScreen_;
-        pSplashScreen_ = 0;
+        splashScreen_->finish( mainWindow_ );
+        delete splashScreen_;
+        splashScreen_ = 0;
     }
 
     // Make sure the application exits when the main window is closed.
@@ -105,14 +89,14 @@ App::App( int nArgc, char** ppArgv )
 
     // The following 2 timers will roughly emulate two threads.
     // This one reads the network to refresh the local data and is called as often as possible.
-    pNetworkTimer_ = new QTimer( this );
-    connect( pNetworkTimer_, SIGNAL( timeout()), this, SLOT( UpdateData() ) );
-    pNetworkTimer_->start(0);
+    networkTimer_ = new QTimer( this );
+    connect( networkTimer_, SIGNAL( timeout()), this, SLOT( UpdateData() ) );
+    networkTimer_->start(0);
 
     // This one refreshes the map display, and is called only a few time per second.
-    pDisplayTimer_ = new QTimer( this );
-    connect( pDisplayTimer_, SIGNAL( timeout()), this, SLOT( UpdateDisplay() ) );
-    pDisplayTimer_->start(250);
+    displayTimer_ = new QTimer( this );
+    connect( displayTimer_, SIGNAL( timeout()), this, SLOT( UpdateDisplay() ) );
+    displayTimer_->start(250);
 }
 
 // -----------------------------------------------------------------------------
@@ -121,24 +105,19 @@ App::App( int nArgc, char** ppArgv )
 // -----------------------------------------------------------------------------
 void App::Initialize( const std::string& scipioXml )
 {
-    const QString initialDirectory = QDir::currentDirPath();
+    const std::string absoluteConfigFile = QFileInfo( scipioXml.c_str() ).absFilePath().ascii();
 
-    xifstream xis( scipioXml );
-    QDir::setCurrent( QFileInfo( scipioXml.c_str() ).dirPath() );
-
+    xifstream xis( absoluteConfigFile );
     xis >> start( "Scipio" )
             >> start( "Donnees" );
-//    InitializeTerrainData  ( xis );
-    InitializeHumanFactors ( xis ); 
+    InitializeHumanFactors ( xis, absoluteConfigFile ); 
 
-    controller_      = new Controller();
-    simulation_      = new Simulation();
-    model_           = new Model( *controller_, *simulation_, scipioXml );
-    pMOSServer_      = new Network( *model_, *simulation_ );
+    controller_ = new Controller();
+    simulation_ = new Simulation();
+    model_      = new Model( *controller_, *simulation_, absoluteConfigFile );
+    network_    = new Network( *model_, *simulation_ );
 
-    QDir::setCurrent( initialDirectory );
-
-    pMOSServer_->Connect( "localhost", 10000 );
+    network_->Connect( "localhost", 10000 ); // $$$$ SBO 2006-03-16: 
 }
 
 //-----------------------------------------------------------------------------
@@ -172,11 +151,13 @@ std::string App::RetrieveValidConfigFile( const std::string& conffile )
 // Name: App::InitializeHumanFactors
 // Created: NLD 2004-11-30
 // -----------------------------------------------------------------------------
-void App::InitializeHumanFactors( xistream& xis )
+void App::InitializeHumanFactors( xistream& xis, const std::string& conffile )
 {
+    const std::string baseDirectory = QFileInfo( conffile.c_str() ).dirPath().ascii() + std::string( "/" );
+
     std::string strHumanFactorsFile;
     xis >> content( "FacteursHumains", strHumanFactorsFile );
-    xifstream factors( strHumanFactorsFile );
+    xifstream factors( baseDirectory + strHumanFactorsFile );
 
     Tiredness ::Initialize( factors );
     Experience::Initialize( factors );
@@ -189,10 +170,9 @@ void App::InitializeHumanFactors( xistream& xis )
 //-----------------------------------------------------------------------------
 void App::UpdateData()
 {
-    assert( pMOSServer_ != 0 );
-    pMOSServer_->Update();
-    pMOSServer_->Update();
-    pMOSServer_->Update();
+    network_->Update();
+    network_->Update();
+    network_->Update();
 }
     
 
@@ -202,6 +182,6 @@ void App::UpdateData()
 //-----------------------------------------------------------------------------
 void App::UpdateDisplay()
 {
-    assert( pMainWindow_ != 0 );
-    pMainWindow_->Update();
+    mainWindow_->Update();
 }
+

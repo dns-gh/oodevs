@@ -20,70 +20,39 @@
 #include <qapplication.h>
 
 class Network;
-class AgentManager;
-class LineManager;
-class ObjectManager;
-class Meteo_Manager;
 class MainWindow;
-class Agent;
-class Agent_ABC;
-class Population;
-class Report_ABC;
-class KnowledgeGroup;
-class Team;
-class Population;
-class PopulationConcentration;
-class PopulationFlow;
-class AgentKnowledge;
-class ObjectKnowledge;
-class PopulationKnowledge;
-class PopulationConcentrationKnowledge;
-class PopulationFlowKnowledge;
-class Object_ABC;
-class TacticalLine_ABC;
 class QSplashScreen;
-class TypePopulation;
-class Resource;
 class Model;
 class Simulation;
 class Controller;
 
-typedef std::map< MIL_AgentID, std::string > T_MosId_String_Map;
-typedef T_MosId_String_Map::iterator         IT_MosId_String_Map;
-typedef T_MosId_String_Map::const_iterator   CIT_MosId_String_Map;
-
-class SensorType;
-class LogSupplyConsign;
-class LogMedicalConsign;
-class LogMaintenanceConsign;
-
 namespace xml { class xistream; }
 
-//=============================================================================
-// Created: NLD 2002-07-15
-//=============================================================================
+// =============================================================================
+/** @class  App
+    @brief  Application
+*/
+// Created: AGE 2006-03-15
+// =============================================================================
 class App : public QApplication
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( App );
 
 public:
-    //! @name Constructor, destructor and accessor */
+    static App& GetApp(); // $$$$ SBO 2006-03-16: 
+
+    //! @name Constructor/destructor
     //@{
-    App( int nArgc, char** ppArgv );
-    ~App();
-    
-    static App& GetApp();
+             App( int nArgc, char** ppArgv );
+    virtual ~App();
     //@}
 
     //! @name Accessors
     //@{
-    Network&    GetNetwork   () const;
-    MainWindow& GetMainWindow() const;
+    Network&    GetNetwork   () const { return *network_; };
+    MainWindow& GetMainWindow() const { return *mainWindow_; };
     Model&      GetModel     () const { return *model_; };
     //@}
-
-    void SetSplashText( const QString& strText );
 
 private slots:
     //! @name Slots
@@ -93,14 +62,19 @@ private slots:
     //@}
 
 private:
+    //! @name Copy/Assignement
+    //@{
+    App( const App& );
+    App& operator=( const App& );
+    //@}
+
     //! @name Helpers
     //@{
     std::string RetrieveValidConfigFile( const std::string& conffile );
     void Initialize( const std::string& scipioXml );
-    void InitializeHumanFactors ( xml::xistream& xis );
+    void InitializeHumanFactors ( xml::xistream& xis, const std::string& conffile );
+    void SetSplashText( const QString& strText );
     //@}
-
-    friend class GLTool;
 
 private:
     //! @name Member data
@@ -109,20 +83,17 @@ private:
     Model*          model_;
     Simulation*     simulation_;
 
-    Network*        pMOSServer_;
+    Network*        network_;
     
-    MainWindow*    pMainWindow_;
-    QSplashScreen* pSplashScreen_;
+    MainWindow*     mainWindow_;
+    QSplashScreen*  splashScreen_;
 
-    QTimer*        pNetworkTimer_;
-    QTimer*        pDisplayTimer_;
+    QTimer*         networkTimer_;
+    QTimer*         displayTimer_;
     //@}
 
 private:
     static App*    pInstance_;
 };
-
-
-#   include "App.inl"
 
 #endif // __App_h_

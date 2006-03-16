@@ -22,6 +22,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ObjectTypes::ObjectTypes( const std::string& scipioXml )
 {
+    // $$$$ SBO 2006-03-16: qfileinfo?
+    const std::string baseDirectory = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
     xml::xifstream scipio( scipioXml );
     std::string idFile, dotations, equipments;
     scipio >> start( "Scipio" )
@@ -30,12 +32,12 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
                     >> content( "Dotations", dotations )
                     >> content( "Composantes", equipments );
 
-    xml::xifstream xis( idFile );
+    xml::xifstream xis( baseDirectory + idFile );
     xis >> start( "Classes" )
         >> list( "Classe", *this, ReadObjectTypes );
 
-    ReadDotations( dotations );
-    ReadEquipments( equipments );
+    ReadDotations( baseDirectory + dotations );
+    ReadEquipments( baseDirectory + equipments );
 }
 
 // -----------------------------------------------------------------------------
