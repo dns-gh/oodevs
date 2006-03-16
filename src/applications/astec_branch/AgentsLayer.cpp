@@ -98,3 +98,15 @@ void AgentsLayer::DrawCross( const geometry::Point2f& at ) const
         glVertex2f(  at.X() - rSize, at.Y() + rSize );
     glEnd();
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::DrawLine
+// Created: AGE 2006-03-16
+// -----------------------------------------------------------------------------
+void AgentsLayer::DrawLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
+{
+    glBegin( GL_LINES );
+        glVertex2f(  from.X(), from.Y() );
+        glVertex2f(  to.X()  , to.Y() );
+    glEnd();
+}

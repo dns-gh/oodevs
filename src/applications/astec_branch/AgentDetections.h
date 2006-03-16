@@ -15,6 +15,7 @@
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
 #include "Attr_Def.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class Agent;
@@ -27,6 +28,7 @@ class Agent;
 // =============================================================================
 class AgentDetections : public Extension_ABC
                       , public Updatable_ABC< DetectionMessage >
+                      , public Drawable_ABC
 {
 
 public:
@@ -38,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -50,6 +53,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const Agent*, E_UnitVisType > T_AgentDetections;
+    typedef T_AgentDetections::const_iterator     CIT_AgentDetections;
     //@}
 
     //! @name Helpers

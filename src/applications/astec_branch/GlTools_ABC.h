@@ -10,6 +10,8 @@
 #ifndef __GlTools_ABC_h_
 #define __GlTools_ABC_h_
 
+#include "GLToolColors.h"
+
 // =============================================================================
 /** @class  GlTools_ABC
     @brief  GlTools definition
@@ -29,6 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual void DrawCross( const geometry::Point2f& at ) const = 0;
+    virtual void DrawLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     //@}
 };
 

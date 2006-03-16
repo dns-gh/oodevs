@@ -10,6 +10,9 @@
 #include "astec_pch.h"
 #include "AgentDetections.h"
 #include "Controller.h"
+#include "Positions.h"
+#include "Agent.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentDetections constructor
@@ -48,4 +51,27 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
     detections_[ agent ] = bRecordMode ? E_UnitVisType( 4 ) : E_UnitVisType( nVisType ); // $$$$ AGE 2006-02-14: 4 = eRecorded
 
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentDetections::Draw
+// Created: AGE 2006-03-16
+// -----------------------------------------------------------------------------
+void AgentDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 1.f );
+    for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
+    {
+        if( it->second == eVisTypeRecognized )
+            glColor4d( COLOR_RECO );
+        else if( it->second == eVisTypeIdentified )
+            glColor4d( COLOR_IDENTIFIED );
+        else if( it->second == E_UnitVisType( 4 ) )
+            glColor4d( COLOR_RECORDED );
+        else
+            glColor4d( COLOR_DETECTED );
+        tools.DrawLine( where, it->first->Get< Positions >().GetPosition() );
+    }
+    glPopAttrib();
 }

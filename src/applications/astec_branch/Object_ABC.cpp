@@ -16,16 +16,11 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "Object_ABC.h"
 
 #include "Net_Def.h"
 #include "Tools.h"
-#include "FireResult.h"
 #include "Controller.h"
 #include "Units.h"
 #include "Displayer_ABC.h"

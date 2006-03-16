@@ -9,7 +9,6 @@
 
 static void PureHandler()
 {
-    assert( false && "Pure Call" );
     throw std::exception( "Pure virtual call" );
 }
 

@@ -44,6 +44,7 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
 
     virtual void DrawCross( const geometry::Point2f& at ) const;
+    virtual void DrawLine( const geometry::Point2f& from, const geometry::Point2f& to ) const;
     //@}
 
 private:
