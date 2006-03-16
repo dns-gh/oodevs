@@ -108,6 +108,7 @@ ObjectPanel::ObjectPanel( InfoPanels* info, Controller& controller, ActionContro
 // -----------------------------------------------------------------------------
 ObjectPanel::~ObjectPanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
 }
 

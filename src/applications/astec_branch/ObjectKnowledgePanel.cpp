@@ -103,6 +103,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& con
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::~ObjectKnowledgePanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
 }
 

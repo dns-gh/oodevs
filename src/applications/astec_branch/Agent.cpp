@@ -13,6 +13,7 @@
 #include "AutomatType.h"
 #include "Controller.h"
 #include "KnowledgeGroup.h"
+#include "Attributes.h"
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
@@ -35,6 +36,7 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     // $$$$ AGE 2006-02-16: message.oid_camp
     InterfaceContainer< Extension_ABC >::Register( *this );
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +59,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
 {
     InterfaceContainer< Extension_ABC >::Register( *this );
     ChangeSuperior( message.oid_automate );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +70,7 @@ Agent::~Agent()
 {
     ChangeKnowledgeGroup( 0 );
     ChangeSuperior( 0 );
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -99,6 +99,7 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Control
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::~PopulationKnowledgePanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
 }
 

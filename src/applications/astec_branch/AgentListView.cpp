@@ -59,6 +59,7 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionCo
 // -----------------------------------------------------------------------------
 AgentListView::~AgentListView()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     // NOTHING
 }
 

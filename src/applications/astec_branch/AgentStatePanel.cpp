@@ -94,6 +94,7 @@ AgentStatePanel::AgentStatePanel( InfoPanels* info, Controller& controller, Acti
 // -----------------------------------------------------------------------------
 AgentStatePanel::~AgentStatePanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
 }
 

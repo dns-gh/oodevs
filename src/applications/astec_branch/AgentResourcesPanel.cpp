@@ -74,6 +74,7 @@ AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controller& contr
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::~AgentResourcesPanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     // NOTHING
 }
 

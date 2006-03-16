@@ -82,6 +82,7 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controller& controller,
 // -----------------------------------------------------------------------------
 AgentSupplyPanel::~AgentSupplyPanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
     delete logDisplay_;
 }

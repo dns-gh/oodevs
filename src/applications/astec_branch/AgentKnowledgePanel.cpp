@@ -102,6 +102,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& contr
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::~AgentKnowledgePanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
 }
 

@@ -56,6 +56,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controller& controller, Action
 // -----------------------------------------------------------------------------
 ObjectListView::~ObjectListView()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     // NOTHING
 }
 

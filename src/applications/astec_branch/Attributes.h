@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+    MT_Vector2D GetPosition() const; // $$$$ AGE 2006-03-16: move to a specific extension ?
     //@}
 
 private:

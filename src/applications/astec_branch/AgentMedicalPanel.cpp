@@ -78,6 +78,7 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controller& controlle
 // -----------------------------------------------------------------------------
 AgentMedicalPanel::~AgentMedicalPanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete logDisplay_; 
     delete display_;
 }

@@ -74,7 +74,7 @@ App::App( int nArgc, char** ppArgv )
     Initialize( conffile );
 
 //    SetSplashText( tr("Initialisation de l'interface...") );
-    mainWindow_ = new MainWindow( *controller_, conffile );
+    mainWindow_ = new MainWindow( *controller_, model_->coordinateConverter_, conffile );
     mainWindow_->show();
 
     if( splashScreen_ )
@@ -185,3 +185,11 @@ void App::UpdateDisplay()
     mainWindow_->Update();
 }
 
+// -----------------------------------------------------------------------------
+// Name: App::GetApp
+// Created: AGE 2006-03-16
+// -----------------------------------------------------------------------------
+App& App::GetApp()
+{
+    return *pInstance_;
+}

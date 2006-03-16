@@ -37,8 +37,8 @@ MainWindow* MainWindow::pInstance_ = 0;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controller& controller, const std::string& scipioXml )
-    : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
+MainWindow::MainWindow( Controller& controller, const CoordinateConverter& converter, const std::string& scipioXml )
+    : QMainWindow      ( 0, 0, Qt::WDestructiveClose )
     , actionController_( * new ActionController() )
 {
     assert( pInstance_ == 0 );
@@ -49,7 +49,7 @@ MainWindow::MainWindow( Controller& controller, const std::string& scipioXml )
 
     pOptions_ = new Options();
 
-    GlWidget* pGlWiget = new GlWidget( this, scipioXml );
+    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controller, actionController_, converter );
     setCentralWidget( pGlWiget );
     pGlWiget->show();
     

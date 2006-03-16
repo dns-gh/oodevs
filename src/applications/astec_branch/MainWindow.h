@@ -29,6 +29,7 @@ class OptionsPanel;
 class QProgressBar;
 class Controller;
 class ActionController;
+class CoordinateConverter;
 
 #include "MapEventFilter_ABC.h"
 
@@ -53,7 +54,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controller& controller, const std::string& scipioXml );
+             MainWindow( Controller& controller, const CoordinateConverter& converter, const std::string& scipioXml );
     virtual ~MainWindow();
 
     static MainWindow& GetMainWindow();

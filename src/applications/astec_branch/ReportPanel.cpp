@@ -47,6 +47,7 @@ ReportPanel::ReportPanel( InfoPanels* pParent, Controller& controller, ActionCon
 // -----------------------------------------------------------------------------
 ReportPanel::~ReportPanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     //NOTHING
 }
 

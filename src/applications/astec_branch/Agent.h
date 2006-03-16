@@ -16,6 +16,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver.h"
+#include "geometry/Types.h"
 
 class Controller;
 class AgentType;

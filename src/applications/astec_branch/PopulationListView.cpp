@@ -43,6 +43,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controller& controller
 // -----------------------------------------------------------------------------
 PopulationListView::~PopulationListView()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     // NOTHING
 }
 

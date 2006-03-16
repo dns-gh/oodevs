@@ -13,6 +13,10 @@
 #include "graphics/MapWidget.h"
 #include "WorldParameters.h"
 
+class CoordinateConverter;
+class Controller;
+class ActionController;
+
 // =============================================================================
 /** @class  GlWidget
     @brief  GlWidget
@@ -25,7 +29,8 @@ class GlWidget : private WorldParameters, public MapWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, const std::string& scipioXml );
+             GlWidget( QWidget* pParent, const std::string& scipioXml,
+                       Controller& controller, ActionController& actions, const CoordinateConverter& converter );
     virtual ~GlWidget();
     //@}
 

@@ -11,17 +11,19 @@
 #include "GlWidget.h"
 #include "TerrainLayer.h"
 #include "ElevationLayer.h"
+#include "AgentsLayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml )
+GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& controller, ActionController& actions, const CoordinateConverter& converter )
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
 {
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
+    Register( *new AgentsLayer( controller, actions, converter ) );
 }
 
 // -----------------------------------------------------------------------------

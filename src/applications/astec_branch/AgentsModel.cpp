@@ -44,7 +44,6 @@ void AgentsModel::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
     {
         Agent* pAgent = agentFactory_.Create( asnMsg );
         Resolver< Agent >::Register( asnMsg.oid_automate, *pAgent );
-//        application_.NotifyAgentCreated( *pAgent );
     }
 }
 
@@ -58,7 +57,6 @@ void AgentsModel::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
     {
         Agent* pAgent = agentFactory_.Create( asnMsg );
         Resolver< Agent >::Register( asnMsg.oid_pion, *pAgent );
-//        application_.NotifyAgentCreated( *pAgent );
     }
 }
 
@@ -102,7 +100,6 @@ void AgentsModel::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
     {
         Population* popu = agentFactory_.Create( asnMsg );
         Resolver< Population >::Register( asnMsg.oid_population, *popu );
-//        application_.NotifyPopulationCreated( *popu );
     }
 }
 

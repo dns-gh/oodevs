@@ -64,6 +64,7 @@ ReportListView::ReportListView( QWidget* pParent, Controller& controller, Action
 // -----------------------------------------------------------------------------
 ReportListView::~ReportListView()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     // NOTHING
 }
 

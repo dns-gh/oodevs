@@ -52,6 +52,7 @@ PopulationPanel::PopulationPanel( InfoPanels* pParent, Controller& controller, A
 // -----------------------------------------------------------------------------
 PopulationPanel::~PopulationPanel()
 {
+    // $$$$ AGE 2006-03-16: controller_.Remove
     delete display_;
 }
 
