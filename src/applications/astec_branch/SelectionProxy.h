@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    void Register( SelectionLayer_ABC& layer );
+    void Register( SelectionLayer_ABC& layer, int position = -1 );
     void Remove  ( SelectionLayer_ABC& layer );
 
     void NotifyFocusLost( SelectionLayer_ABC& layer );
@@ -46,15 +46,16 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< SelectionLayer_ABC* > T_Layers;
-    typedef T_Layers::iterator                IT_Layers;
+    typedef std::map< unsigned, SelectionLayer_ABC* > T_Layers;
+    typedef T_Layers::iterator                       IT_Layers;
     //@}
 
 private:
     //! @name Member data
     //@{
     T_Layers  layers_;
-    unsigned  focused_;
+    IT_Layers focused_;
+    unsigned  last_;
     //@}
 };
 

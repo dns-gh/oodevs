@@ -16,6 +16,7 @@
 // Created: SBO 2006-03-16
 // -----------------------------------------------------------------------------
 SelectionProxy::SelectionProxy()
+    : last_( 0 )
 {
     // NOTHING
 }
@@ -33,13 +34,17 @@ SelectionProxy::~SelectionProxy()
 // Name: SelectionProxy::Register
 // Created: SBO 2006-03-16
 // -----------------------------------------------------------------------------
-void SelectionProxy::Register( SelectionLayer_ABC& layer )
+void SelectionProxy::Register( SelectionLayer_ABC& layer, int position /*=-1*/)
 {
-    layers_.push_back( &layer );
+    if( position == -1 )
+        position = last_++;
+
+    if( ! layers_.insert( std::make_pair( position, &layer ) ).second )
+        throw std::runtime_error( "Layer index already in use" );
     if( layers_.size() == 1 )
     {
-        focused_ = 0;
-        layers_[ focused_ ]->SetFocus( true );
+        focused_ = layers_.begin();
+        focused_->second->SetFocus( true );
     }
 }
 
@@ -50,7 +55,9 @@ void SelectionProxy::Register( SelectionLayer_ABC& layer )
 void SelectionProxy::Remove( SelectionLayer_ABC& layer )
 {
     NotifyFocusLost( layer );
-    layers_.erase( std::find( layers_.begin(), layers_.end(), &layer ) );
+    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        if( it->second == &layer )
+            layers_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,11 +66,11 @@ void SelectionProxy::Remove( SelectionLayer_ABC& layer )
 // -----------------------------------------------------------------------------
 void SelectionProxy::NotifyFocusLost( SelectionLayer_ABC& layer )
 {
-    if( &layer == layers_[ focused_ ] )
+    if( &layer == focused_->second )
     {
-        layers_[ focused_ ]->SetFocus( false );
-        if( ++focused_ == layers_.size() )
-            focused_ = 0;
-        layers_[ focused_ ]->SetFocus( true );
+        focused_->second->SetFocus( false );
+        if( ++focused_ == layers_.end() )
+            focused_ = layers_.begin();
+        focused_->second->SetFocus( true );
     }
 }

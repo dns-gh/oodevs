@@ -22,16 +22,14 @@
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, SelectionProxy& proxy, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy )
+AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy )
     : actions_  ( actions )
     , converter_( converter )
-    , proxy_    ( proxy )
     , tools_    ( tools )
     , strategy_ ( strategy )
     , selected_ ( 0 )
 {
     controller.Register( *this );
-    proxy_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +40,6 @@ AgentsLayer::~AgentsLayer()
 {
     // $$$$ AGE 2006-03-16: 
     //    controller_.Remove( *this );
-    //    proxy_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,10 +89,7 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
     if( it != agents_.end() )
     {
         if( agents_[ selected_ ] == *it )
-        {
             selected_ = it - agents_.begin();
-            proxy_.NotifyFocusLost( *this );
-        }
         std::swap( *it, agents_.back() );
         agents_.pop_back();
     }
@@ -105,23 +99,27 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
 // Name: AgentsLayer::HandleMousePress
 // Created: SBO 2006-03-16
 // -----------------------------------------------------------------------------
-// $$$$ AGE 2006-03-17: deal with button !
 bool AgentsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point )
 {
-    if( ! HasFocus() || agents_.empty() )
+    if( agents_.empty() )
         return false;
     
     if( selected_ >= agents_.size() || ! IsInSelection( *agents_[ selected_ ], point ) )
         selected_ = 0;
 
     for( unsigned i = selected_; i < agents_.size(); ++i )
-        if( IsInSelection( *agents_[ i ], point ) )
+    {
+        const Agent& agent = *agents_[ i ];
+        if( IsInSelection( agent, point ) )
         {
-            actions_.Select( *agents_[ i ] );
+            if( button == Qt::LeftButton )
+                actions_.Select( agent );
+//            else if( button == Qt::MiddleButton )
+//                actions_.ContextMenu( agent, *popupMenu ); // $$$$ AGE 2006-03-17: 
             selected_ = i;
             return true;
         }
-    proxy_.NotifyFocusLost( *this );
+    }
     return false;
 }
 

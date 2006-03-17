@@ -12,10 +12,9 @@
 #include "TerrainLayer.h"
 #include "ElevationLayer.h"
 #include "AgentsLayer.h"
-#include "SelectionProxy.h"
 #include "Agent.h"
 #include "ColorStrategy.h"
-//#include "SelectionLayer.h"
+#include "MetricsLayer.h"
 
 using namespace geometry;
 
@@ -44,18 +43,21 @@ namespace
 GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& controller, ActionController& actions, const CoordinateConverter& converter )
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
-    , proxy_( *new SelectionProxy() )
     , strategy_( *new ColorStrategy( controller ) )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , frame_( 0 )
     , circle_( 0 )
 {
+    SetReverse( false );
+    SetExclusive( true );
+    SetLastFocusFirst( true );
+
     Register( *new SpyLayer( viewport_, frame_ ) );
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
-//    Register( *new SelectionLayer< Agent, AgentDrawer >( controller, actions, proxy_, converter ) );
-    Register( *new AgentsLayer( controller, actions, proxy_, converter, *this, strategy_ ) );
+    Register( *new MetricsLayer() );
+    Register( *new AgentsLayer( controller, actions, converter, *this, strategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +67,6 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
 GlWidget::~GlWidget()
 {
     delete &strategy_;
-    delete &proxy_;
     glDeleteLists( circle_, 1 );
 }
 

@@ -24,22 +24,16 @@ class SelectionLayer_ABC : public MapLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer_ABC() : hasFocus_( false ) {}
+             SelectionLayer_ABC()
+                 : hasFocus_( false )
+             {}
     virtual ~SelectionLayer_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport ) = 0;
-    void SetFocus( bool focus ) { hasFocus_ = focus; };
-    bool HasFocus() const { return hasFocus_; }
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    SelectionLayer_ABC( const SelectionLayer_ABC& );            //!< Copy constructor
-    SelectionLayer_ABC& operator=( const SelectionLayer_ABC& ); //!< Assignement operator
+    virtual void SetFocus( bool focus ) { hasFocus_ = focus; };
+    virtual bool HasFocus() const { return hasFocus_; }
     //@}
 
 private:

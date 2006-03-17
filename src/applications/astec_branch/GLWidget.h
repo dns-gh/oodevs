@@ -19,8 +19,8 @@
 class CoordinateConverter;
 class Controller;
 class ActionController;
-class SelectionProxy;
 class ColorStrategy;
+class SelectionLayer_ABC;
 
 // =============================================================================
 /** @class  GlWidget
@@ -65,14 +65,12 @@ private:
     //@{
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
-
     unsigned int GenerateCircle();
     //@}
 
 private:
     //! @name Member data
     //@{
-    SelectionProxy& proxy_;
     ColorStrategy& strategy_;
 
     int windowHeight_;
