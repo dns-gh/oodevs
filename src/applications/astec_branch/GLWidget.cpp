@@ -12,6 +12,9 @@
 #include "TerrainLayer.h"
 #include "ElevationLayer.h"
 #include "AgentsLayer.h"
+#include "SelectionProxy.h"
+#include "Agent.h"
+//#include "SelectionLayer.h"
 
 using namespace geometry;
 
@@ -35,6 +38,7 @@ namespace
 GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& controller, ActionController& actions, const CoordinateConverter& converter )
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
+    , proxy_( *new SelectionProxy() )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_( 0 )
@@ -42,7 +46,8 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     Register( *new SpyLayer( viewport_ ) );
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
-    Register( *new AgentsLayer( controller, actions, converter, *this ) );
+//    Register( *new SelectionLayer< Agent, AgentDrawer >( controller, actions, proxy_, converter ) );
+    Register( *new AgentsLayer( controller, actions, proxy_, converter, *this ) );
 }
 
 // -----------------------------------------------------------------------------

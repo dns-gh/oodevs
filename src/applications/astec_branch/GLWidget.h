@@ -19,6 +19,7 @@
 class CoordinateConverter;
 class Controller;
 class ActionController;
+class SelectionProxy;
 
 // =============================================================================
 /** @class  GlWidget
@@ -66,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    SelectionProxy& proxy_;
     int windowHeight_;
     int windowWidth_;
     geometry::Rectangle2f viewport_;

@@ -10,7 +10,7 @@
 #ifndef __AgentsLayer_h_
 #define __AgentsLayer_h_
 
-#include "graphics/MapLayer_ABC.h"
+#include "SelectionLayer_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 
@@ -18,6 +18,7 @@ class Agent;
 class Controller;
 class ActionController;
 class CoordinateConverter;
+class SelectionProxy;
 class GlTools_ABC;
 
 // =============================================================================
@@ -26,7 +27,7 @@ class GlTools_ABC;
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class AgentsLayer : public MapLayer_ABC
+class AgentsLayer : public SelectionLayer_ABC
                   , private Observer_ABC
                   , public ElementObserver_ABC< Agent >
 {
@@ -34,16 +35,19 @@ class AgentsLayer : public MapLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools );
+             AgentsLayer( Controller& controller, ActionController& actions, SelectionProxy& proxy, const CoordinateConverter& converter, const GlTools_ABC& tools );
     virtual ~AgentsLayer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
+    //@}
 
-    virtual void DrawCross( const geometry::Point2f& at ) const;
-    virtual void DrawLine( const geometry::Point2f& from, const geometry::Point2f& to ) const;
+protected:
+    //! @name Events
+    //@{
+    virtual bool HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point );
     //@}
 
 private:
@@ -58,6 +62,8 @@ private:
     virtual void NotifyCreated( const Agent& );
     virtual void NotifyUpdated( const Agent& );
     virtual void NotifyDeleted( const Agent& );
+
+    bool IsInSelection( const Agent& agent, const geometry::Point2f& point ) const;
     //@}
 
     //! @name Types
@@ -72,8 +78,10 @@ private:
     //@{
     ActionController& actions_;
     const CoordinateConverter& converter_;
+    SelectionProxy& proxy_;
     const GlTools_ABC& tools_;
     T_Agents agents_;
+    unsigned selected_;
     //@}
 };
 
