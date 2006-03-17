@@ -26,6 +26,7 @@
 #include "CheckPoints/DIA_Serializer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "MIL_AgentServer.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
@@ -304,8 +305,6 @@ void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission_ABC& mission )
     GetVariable( nDIAMissionIdx_ ).SetValue( mission );
 }
 
-#include "tools/Win32/StackWalkerProxy.h"
-
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::StopMissionBehavior
 // Created: NLD 2004-09-03
@@ -318,7 +317,7 @@ void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission_ABC& mission )
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PionMission_ABC*)0 );
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }
@@ -375,7 +374,7 @@ void DEC_RolePion_Decision::UpdateDecision()
         UpdateDecisions  ();
         ExecuteAllActions();
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         assert( pPion_ );
         LogCrash( *pPion_ );

@@ -23,9 +23,8 @@
 #include "Entities/RC/MIL_RC.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
-
 #include "CheckPoints/DIA_Serializer.h"
-
+#include "MT_Tools/MT_CrashHandler.h"
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
@@ -232,8 +231,6 @@ namespace
     }
 }
 
-#include "tools/Win32/StackWalkerProxy.h"
-
 //-----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::UpdateDecision
 // Last modified: JVT 02-12-16
@@ -247,7 +244,7 @@ void DEC_AutomateDecision::UpdateDecision()
         UpdateDecisions  ();
         ExecuteAllActions();
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         assert( pAutomate_ );
         LogCrash( pAutomate_ );
@@ -287,7 +284,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission_ABC& miss
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }
@@ -318,7 +315,7 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission_ABC&
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }

@@ -5,7 +5,8 @@
 
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Version.h"
-
+#include "MT_Tools/MT_CrashHandler.h"
+    
 #include "MT/MT_Logger/MT_ConsoleLogger.h"
 #include "MT/MT_Logger/MT_FileLogger.h"
 
@@ -228,8 +229,6 @@ int Run( uint nArgc, char* pArgv[] )
     return nResult;
 }
 
-#include "tools/win32/StackWalkerProxy.h"
-
 //-----------------------------------------------------------------------------
 // Name: main constructor
 // Created: FBD 02-11-22
@@ -245,7 +244,7 @@ int main( uint nArgc, char* pArgv[] )
     }
 //    __except( WriteMiniDump( GetExceptionInformation() ) )
     // $$$$ AGE 2006-03-07: Haaahahaha continue execution !
-    __except( StackWalkerProxy::ContinueExecution( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
     }
 }

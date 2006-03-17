@@ -16,6 +16,7 @@
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Pathfind_Manager.h"
 #include "MIL_AgentServer.h"
+#include "MT_Tools/MT_CrashHandler.h"
 
 uint DEC_Path_ABC::nIDIdx_ = 0;
 
@@ -120,8 +121,6 @@ void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
     nState_ = eValid;
 }
 
-#include "tools/Win32/StackWalkerProxy.h"
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::Execute
 // Created: NLD 2005-02-22
@@ -132,7 +131,7 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
     {
         DoExecute( pathfind );
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         bJobCanceled_ = true;
         nState_ = eCanceled;

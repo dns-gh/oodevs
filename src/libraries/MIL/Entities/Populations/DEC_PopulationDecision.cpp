@@ -21,6 +21,7 @@
 #include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
 #include "Entities/RC/MIL_RC.h"
 #include "CheckPoints/DIA_Serializer.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
@@ -201,8 +202,6 @@ namespace
     }
 }
 
-#include "tools/Win32/StackWalkerProxy.h"
-
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::UpdateDecision
 // Last modified: JVT 02-12-16
@@ -216,7 +215,7 @@ void DEC_PopulationDecision::UpdateDecision()
         UpdateDecisions  ();
         ExecuteAllActions();
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         assert( pPopulation_ );
         LogCrash( pPopulation_ );
@@ -255,7 +254,7 @@ void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission_ABC& mis
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PopulationMission_ABC*)0 );
     }
-    __except( StackWalkerProxy::ExecuteHandler( GetExceptionInformation() ) )
+    __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
         CleanStateAfterCrash();
     }
