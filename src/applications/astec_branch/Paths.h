@@ -13,6 +13,7 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 class CoordinateConverter;
 
@@ -25,6 +26,7 @@ class CoordinateConverter;
 class Paths : public Extension_ABC
             , public Updatable_ABC< ASN1T_MsgUnitPathFind >
             , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+            , public Drawable_ABC
 {
 
 public:
@@ -36,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

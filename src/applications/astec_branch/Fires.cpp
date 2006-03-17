@@ -14,6 +14,7 @@
 #include "DirectFire.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Fires constructor
@@ -100,3 +101,16 @@ void Fires::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
     DestroyFire( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Fires::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void Fires::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 2.f );
+    glColor4f( COLOR_RED );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Draw( where, tools );
+    glPopAttrib();
+}

@@ -56,7 +56,6 @@ private slots:
     //! @name Slots
     //@{
     void UpdateData();
-    void UpdateDisplay();
     //@}
 
 private:
@@ -87,7 +86,6 @@ private:
     QSplashScreen*  splashScreen_;
 
     QTimer*         networkTimer_;
-    QTimer*         displayTimer_;
     //@}
 
 private:

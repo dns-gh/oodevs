@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class Agent;
@@ -28,6 +29,7 @@ class Displayer_ABC;
 class LogisticLinks : public Extension_ABC
                     , public Updatable_ABC< ASN1T_MsgChangeLiensLogistiquesAck >
                     , public Updatable_ABC< ASN1T_MsgAutomateCreation >
+                    , public Drawable_ABC
 {
 
 public:
@@ -45,6 +47,8 @@ public:
     Agent* GetMaintenance() const;
     Agent* GetMedical() const;
     Agent* GetSupply() const;
+
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -62,6 +66,7 @@ private:
     void UpdateData( const T& message );
 
     Agent* Resolve( Agent*& agent, unsigned long id ) const;
+    void DrawLink( const geometry::Point2f& from, Agent* to, const GlTools_ABC& tools, float curve ) const;
     //@}
 
 private:

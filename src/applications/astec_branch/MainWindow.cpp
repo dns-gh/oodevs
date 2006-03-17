@@ -110,6 +110,11 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
     this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
 
+    // This one refreshes the map display, and is called only a few time per second.
+    QTimer* displayTimer = new QTimer( this );
+    connect( displayTimer, SIGNAL( timeout()), pGlWiget, SLOT( updateGL() ) );
+    displayTimer->start( 50 );
+
     ReadSettings();
     ReadOptions();
 }
@@ -126,16 +131,6 @@ MainWindow::~MainWindow()
 //    delete pOptions_;
 
     pInstance_ = 0;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Update
-// Created: APE 2004-03-23
-// -----------------------------------------------------------------------------
-void MainWindow::Update()
-{
-//    pGLWidget_->update();
 }
 
 // -----------------------------------------------------------------------------

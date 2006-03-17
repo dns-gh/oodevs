@@ -22,12 +22,17 @@ namespace
 {
     struct SpyLayer : public MapLayer_ABC
     {
-        SpyLayer( Rectangle2f& viewport ) : viewport_( &viewport ) {};
+        SpyLayer( Rectangle2f& viewport, unsigned int& frame )
+            : viewport_( &viewport )
+            , frame_( &frame )
+        {};
         virtual void Paint( const Rectangle2f& viewport )
         {
             * viewport_ = viewport;
+            ++ *frame_;
         }
         Rectangle2f* viewport_;
+        unsigned int* frame_;
     };
 };
 
@@ -41,9 +46,10 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     , proxy_( *new SelectionProxy() )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
+    , frame_( 0 )
     , circle_( 0 )
 {
-    Register( *new SpyLayer( viewport_ ) );
+    Register( *new SpyLayer( viewport_, frame_ ) );
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
 //    Register( *new SelectionLayer< Agent, AgentDrawer >( controller, actions, proxy_, converter ) );
@@ -91,7 +97,7 @@ unsigned int GlWidget::GenerateCircle()
     glNewList( id, GL_COMPILE);
         for( float angle = 0; angle < twoPi; angle += 0.3142f )
             glVertex2f( std::cos( angle ), std::sin( angle ) );
-        glVertex2f( 0.f, 0.f );
+        glVertex2f( 1.f, 0.f );
     glEndList();
     return id;
 }
@@ -105,6 +111,21 @@ float GlWidget::Pixels() const
     if( windowWidth_ > 0 )
         return viewport_.Width() / windowWidth_;
     return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::StipplePattern
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+unsigned short GlWidget::StipplePattern() const
+{
+    static unsigned short pattern[] = {
+        0x00FF, 0x01FE, 0x03FC, 0x07F8,
+        0x0FF0, 0x1FE0, 0x3FC0, 0x7F80,
+        0xFF00, 0xFE01, 0xFC03, 0xF807,
+        0xF00F, 0xE01F, 0xC03F, 0x807F
+    };
+    return pattern[ frame_%16 ]; 
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +154,17 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
         glVertex2f(  from.X(), from.Y() );
         glVertex2f(  to.X()  , to.Y() );
     glEnd();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawLines
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void GlWidget::DrawLines( const T_PointVector& points ) const
+{
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points[0]) );
+    glDrawArrays( GL_LINE_STRIP, 0, points.size() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +224,7 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
         float x, y, lastX, lastY;
-        glBegin( GL_LINES );
+        glBegin( GL_LINE_STRIP );
             for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
             {
                 x = std::cos( angle ); y = std::sin( angle );
@@ -201,7 +233,7 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
             lastX = std::cos( maxAngle ); lastY = std::sin( maxAngle );
             glVertex2f( lastX, lastY );
         glEnd();
-        DrawArrow( Point2f( x, y ), Point2f( lastX, lastY ) );
+        DrawArrow( Point2f( x, y ), Point2f( lastX, lastY ), 10.f * Pixels() / radius );
     glPopMatrix();
 }
 
@@ -218,7 +250,7 @@ void GlWidget::DrawCircle( const geometry::Point2f& center, float radius /*= -1.
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
-        glBegin( GL_LINES );
+        glBegin( GL_LINE_STRIP );
             glCallList( circle_ );
         glEnd();
     glPopMatrix();
@@ -241,7 +273,7 @@ void GlWidget::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*
             glVertex2f( 0.f, 0.f );
             glCallList( circle_ );
         glEnd();
-        glBegin( GL_LINES );
+        glBegin( GL_LINE_STRIP );
             glCallList( circle_ );
         glEnd();
     glPopMatrix();

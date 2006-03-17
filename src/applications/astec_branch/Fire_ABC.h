@@ -12,6 +12,7 @@
 
 #include "ASN_Types.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 class Agent_ABC;
 
@@ -23,6 +24,7 @@ class Agent_ABC;
 // =============================================================================
 class Fire_ABC : public Updatable_ABC< ASN1T_MsgStopPionFire >
                , public Updatable_ABC< ASN1T_MsgStopPopulationFire >
+               , public Drawable_ABC
 {
 
 public:
@@ -36,6 +38,7 @@ public:
     //@{
     virtual void DoUpdate( const ASN1T_MsgStopPionFire& message );
     virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const = 0;
     //@}
 
 private:

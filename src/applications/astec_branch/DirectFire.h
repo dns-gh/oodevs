@@ -36,6 +36,11 @@ public:
     virtual ~DirectFire();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    //@}
+
 public:
     //! @name Member data
     //@{

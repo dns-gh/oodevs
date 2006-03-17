@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class Fire_ABC;
@@ -31,6 +32,7 @@ class Fires : public Extension_ABC
             , public Updatable_ABC< ASN1T_MsgStartPopulationFire >
             , public Updatable_ABC< ASN1T_MsgStopPopulationFire >
             , public Resolver< Fire_ABC >
+            , public Drawable_ABC
 {
 
 public:
@@ -38,6 +40,11 @@ public:
     //@{
              Fires( Controller& controller, FireFactory& factory );
     virtual ~Fires();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

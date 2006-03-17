@@ -33,6 +33,11 @@ public:
     virtual ~IndirectFire();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{

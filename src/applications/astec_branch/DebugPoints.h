@@ -13,6 +13,7 @@
 #include "DIN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 // =============================================================================
 /** @class  DebugPoints
@@ -22,6 +23,7 @@
 // =============================================================================
 class DebugPoints : public Extension_ABC
                   , public Updatable_ABC< DebugPointsMessage >
+                  , public Drawable_ABC
 {
 
 public:
@@ -33,6 +35,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -50,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< geometry::Point2f > points_;
+    T_PointVector points_;
     //@}
 };
 

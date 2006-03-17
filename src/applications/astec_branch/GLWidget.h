@@ -41,8 +41,11 @@ public:
     //! @name Operations
     //@{
     virtual float Pixels() const;
+    virtual unsigned short StipplePattern() const;
+
     virtual void  DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const;
     virtual void  DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
+    virtual void  DrawLines      ( const T_PointVector& points ) const;
     virtual void  DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const;
     virtual void  DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.3f, float size = -1.f ) const;
     virtual void  DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
@@ -71,6 +74,7 @@ private:
     int windowHeight_;
     int windowWidth_;
     geometry::Rectangle2f viewport_;
+    unsigned int frame_;
     unsigned int circle_;
     //@}
 };

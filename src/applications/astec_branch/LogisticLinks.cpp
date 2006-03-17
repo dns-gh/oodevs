@@ -11,6 +11,9 @@
 #include "LogisticLinks.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "GlTools_ABC.h"
+#include "Positions.h"
+#include "Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
@@ -134,4 +137,40 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
                 .Display( "Supérieur maintenance:",   GetMaintenance() )
                 .Display( "Supérieur santé:",         GetMedical() )
                 .Display( "Supérieur ravitaillement:", GetSupply() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::DrawLink
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, const GlTools_ABC& tools, float curve ) const
+{
+    if( agent )
+        tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
+    else // $$$$ AGE 2006-03-17: Pas vraiment ca non plus
+        tools.DrawCircle( where, 20 * tools.Pixels() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void LogisticLinks::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glLineWidth( 3.f );
+    
+    glColor4d( COLOR_YELLOW );  
+    DrawLink( where, GetTC2(), tools, 0.1 );
+
+    glColor4d( COLOR_PINK );
+    DrawLink( where, GetMedical(), tools, -0.1 );
+
+    glColor4d( COLOR_MAROON );
+    DrawLink( where, GetMaintenance(), tools, 0.2 );
+
+    glColor4d( COLOR_ORANGE );
+    DrawLink( where, GetSupply(), tools, -0.2 );    
+
+    glPopAttrib();
 }

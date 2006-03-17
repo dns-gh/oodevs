@@ -85,3 +85,12 @@ void PopulationDetections::DoUpdate( const FlowDetectionMessage& message )
     else
         perceived_.erase( pFlow );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationDetections::DoUpdate
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void PopulationDetections::DoUpdate( const PopulationCollisionMessage& message )
+{
+    // $$$$ AGE 2006-03-17: 
+}

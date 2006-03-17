@@ -31,9 +31,11 @@ public:
     //! @name Operations
     //@{
     virtual float Pixels() const = 0;
+    virtual unsigned short StipplePattern() const = 0;
 
     virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const = 0;
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
+    virtual void DrawLines      ( const T_PointVector& points ) const = 0; // $$$$ AGE 2006-03-17: pas terrible..
     virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const = 0;
     virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.3f, float size = -1.f ) const = 0;
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;

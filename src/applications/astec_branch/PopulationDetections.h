@@ -28,6 +28,7 @@ class PopulationPart_ABC;
 class PopulationDetections : public Extension_ABC
                            , public Updatable_ABC< ConcentrationDetectionMessage >
                            , public Updatable_ABC< FlowDetectionMessage >
+                           , public Updatable_ABC< PopulationCollisionMessage >
 {
 
 public:
@@ -52,6 +53,7 @@ private:
     //@{
     virtual void DoUpdate( const ConcentrationDetectionMessage& message );
     virtual void DoUpdate( const FlowDetectionMessage& message );
+    virtual void DoUpdate( const PopulationCollisionMessage& message );
     //@}
 
     //! @name Types

@@ -11,6 +11,7 @@
 #include "IndirectFire.h"
 #include "Agent.h"
 #include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: IndirectFire constructor
@@ -32,4 +33,13 @@ IndirectFire::IndirectFire( const ASN1T_MsgStartPionFire& message, const Resolve
 IndirectFire::~IndirectFire()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndirectFire::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void IndirectFire::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    tools.DrawCurvedArrow( where, target_ );
 }

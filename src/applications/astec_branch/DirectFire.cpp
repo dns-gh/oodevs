@@ -11,6 +11,8 @@
 #include "DirectFire.h"
 #include "Population.h"
 #include "Agent.h"
+#include "GlTools_ABC.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: DirectFire constructor
@@ -38,4 +40,15 @@ DirectFire::DirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_AB
 DirectFire::~DirectFire()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFire::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void DirectFire::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    const Positions* p = target_->Retrieve< Positions >();
+    if( p )
+        tools.DrawArrow( where, p->GetPosition() );
 }

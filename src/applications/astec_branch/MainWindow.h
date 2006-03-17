@@ -58,8 +58,6 @@ public:
 
     //! @name Operations
     //@{
-    void Update();
-
     Options& GetOptions() const;
 
     QGLWidget* GetQGLWidget( bool b3Dmode ) const;

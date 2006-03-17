@@ -30,3 +30,12 @@ PopulationFire::~PopulationFire()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFire::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void PopulationFire::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    // $$$$ AGE 2006-03-17: 
+}

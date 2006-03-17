@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "DebugPoints.h"
 #include "Net_Def.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DebugPoints constructor
@@ -46,4 +47,14 @@ void DebugPoints::DoUpdate( const DebugPointsMessage& message )
         message >> x >> y;
         points_.push_back( geometry::Point2f( float(x), float(y) ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugPoints::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void DebugPoints::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) const
+{
+    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        tools.DrawCross( *it );
 }

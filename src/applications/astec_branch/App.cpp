@@ -92,11 +92,6 @@ App::App( int nArgc, char** ppArgv )
     networkTimer_ = new QTimer( this );
     connect( networkTimer_, SIGNAL( timeout()), this, SLOT( UpdateData() ) );
     networkTimer_->start(0);
-
-    // This one refreshes the map display, and is called only a few time per second.
-    displayTimer_ = new QTimer( this );
-    connect( displayTimer_, SIGNAL( timeout()), this, SLOT( UpdateDisplay() ) );
-    displayTimer_->start(250);
 }
 
 // -----------------------------------------------------------------------------
@@ -173,16 +168,6 @@ void App::UpdateData()
     network_->Update();
     network_->Update();
     network_->Update();
-}
-    
-
-//-----------------------------------------------------------------------------
-// Name: App::UpdateDisplay
-// Created: NLD 2002-07-15
-//-----------------------------------------------------------------------------
-void App::UpdateDisplay()
-{
-    mainWindow_->Update();
 }
 
 // -----------------------------------------------------------------------------
