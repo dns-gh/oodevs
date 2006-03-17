@@ -17,9 +17,9 @@
   </Dangerosite>
 
   <EtatOps>
-    <PoidsComposantesNonMajeures>0.1</PoidsComposantesNonMajeures>
-    <PoidsComposantesMajeures>0.4</PoidsComposantesMajeures>
-    <PoidsPersonnel>0.5</PoidsPersonnel>
+    <PoidsComposantesNonMajeures>0.3</PoidsComposantesNonMajeures>
+    <PoidsComposantesMajeures>0.7</PoidsComposantesMajeures>
+    <PoidsPersonnel>0.25</PoidsPersonnel>
   </EtatOps>
 
   <RapportDeForce>

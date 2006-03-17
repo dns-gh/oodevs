@@ -142,22 +142,18 @@ void ADN_AiEngine_Data::ReadArchive( ADN_XmlInput_Helper& input )
         "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsComposantesMajeures." );
     rMajorEquipmentWeight_ = rTmp;
 
-    if( input.ReadField( "PoidsPersonnel", rTmp, ADN_XmlInput_Helper::eNothing ) )
-    {
-        if( rTmp < 0.0 || rTmp > 1.0 )
-            throw ADN_DataException( "Donnée invalide",
-                "Le poids du personnel doit être compris entre 0 et 1.",
-                "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsPersonnel." );
-        rHumanWeight_ = rTmp;
-    }
-    else
-        rHumanWeight_ = 1. - ( rMajorEquipmentWeight_.GetData() + rMinorEquipmentWeight_.GetData() );
-
-    if( rMinorEquipmentWeight_.GetData() + rHumanWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.0 )
+    if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.0 )
         throw ADN_DataException( "Donnée invalide",
         "La somme des poids des composantes doit être égal à 1.",
-        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier les champs PoidsComposantesMajeures, PoidsComposantesNonMajeures et PoidsPersonnel." );
+        "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier les champs PoidsComposantesMajeures et PoidsComposantesNonMajeures." );
 
+    input.ReadField( "PoidsPersonnel", rTmp );
+    if( rTmp < 0.0 || rTmp > 1.0 )
+        throw ADN_DataException( "Donnée invalide",
+            "Le poids du personnel doit être compris entre 0 et 1.",
+            "Veuillez éditer le fichier de configuration du moteur décisionnel pour modifier le champ PoidsPersonnel." );
+    rHumanWeight_ = rTmp;
+  
     input.EndSection(); // EtatOps
 
     input.Section( "RapportDeForce" );

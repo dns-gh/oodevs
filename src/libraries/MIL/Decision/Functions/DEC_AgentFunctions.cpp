@@ -876,7 +876,7 @@ void DEC_AgentFunctions::ChannelPopulations( DIA_Call_ABC& call, MIL_AgentPion& 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::GetKilledOfficers( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    MT_Float rTotal = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrHumans( PHY_HumanRank::officier_ );
+    MT_Float rTotal = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrHumans     ( PHY_HumanRank::officier_ );
     MT_Float rAlive = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrAliveHumans( PHY_HumanRank::officier_ );
     MT_Float rRatio = 1.;
     if( rTotal > 0. )

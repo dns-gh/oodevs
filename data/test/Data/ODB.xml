@@ -529,8 +529,8 @@
             </FacteursHumains>
             <Personnels>
                 <Personnel etat="ue" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
-                <Personnel etat="u1" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
-                <Personnel etat="u2" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
+                <Personnel etat="u1" nbOfficier="5" nbSousOfficier="5" nbMilitaireDuRang="20"/>
+                <Personnel etat="u2" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="20"/>
             </Personnels>
         </Pion>
         
@@ -597,8 +597,15 @@
                         <!--<Categorie nom="Fusse a jupette 53mm">0</Categorie>-->
                     </Categories>                                
                 </Dotation>
+            
+            </Dotations>               
+            <Equipements>
+                <Equipement type="CompTest" disponible="0" indisponible="0" reparable="20" />
+                <Equipement type="CompTest2" disponible="0" indisponible="0" reparable="20" />
+            </Equipements>                  
+                
                                 
-            </Dotations>            
+             
         </Pion>
         <Pion id="6000026" type="Section Combat GEN" >
             <LiensHierarchiques>

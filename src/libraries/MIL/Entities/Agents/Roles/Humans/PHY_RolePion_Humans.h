@@ -54,13 +54,9 @@ public:
     
     //! @name Accessors
     //@{
-
-    bool IsUsable              () const;
-    uint GetNbrUsableHumans    () const;
-    uint GetNbrHumans          () const;
-    uint GetNbrHumans          ( const PHY_HumanRank& rank ) const;
-    uint GetNbrFullyAliveHumans() const;
-    uint GetNbrAliveHumans     ( const PHY_HumanRank& rank ) const;
+    uint GetNbrUsableHumans() const;
+    uint GetNbrAliveHumans ( const PHY_HumanRank& rank ) const;
+    uint GetNbrHumans      ( const PHY_HumanRank& rank ) const;
     //@}
 
     //! @name Notifications
@@ -144,8 +140,6 @@ private:
     uint              nNbrUsableHumans_;
 
     uint              nNbrHumans_;
-    uint              nNbrFullyAliveHumans_; // Not wounded nor contaminated nor mental diseased
-
     uint              nNbrHumansDataChanged_;
     T_HumanSet        humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
 

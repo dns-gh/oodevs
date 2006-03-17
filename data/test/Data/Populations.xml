@@ -94,11 +94,11 @@
 	            </RegleEngagementTireur>
 	            <RegleEngagementTireur nom="dispersion par moyens de defense actifs">
 	              <SurfaceAttrition>0.1</SurfaceAttrition>
-	              <PH>0</PH>
+	              <PH>0.2</PH>
 	            </RegleEngagementTireur>
 	            <RegleEngagementTireur nom="armes letales autorisees">
 	              <SurfaceAttrition>0.5</SurfaceAttrition>
-	              <PH>0</PH>
+	              <PH>0.8</PH>
 	            </RegleEngagementTireur>
 	          </ReglesEngagementTireur>
                 </Cible>

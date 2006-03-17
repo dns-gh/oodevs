@@ -23,7 +23,8 @@ MT_Random                       PHY_HumanWound::randomGenerator_;
       uint           PHY_HumanWound::nContaminatedHealingTime_  = 0;
       uint           PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
       MT_Float       PHY_HumanWound::rMentalDiseaseFactor_      = 0;
-
+                                                                            
+//                                                                          pPrevious_  , pNext_                                                                
 const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, 0           , &woundedU3_, EnumHumanWound::non_blesse             );
 const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , &notWounded_, &woundedU2_, EnumHumanWound::blesse_urgence_3       );
 const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "U2"       , eWoundedU2 , &woundedU3_ , &woundedU1_, EnumHumanWound::blesse_urgence_2       );
@@ -154,14 +155,14 @@ PHY_HumanWound::~PHY_HumanWound()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::Degrade
+// Name: PHY_HumanWound::Aggravate
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-const PHY_HumanWound& PHY_HumanWound::Degrade( const PHY_HumanWound& degradation ) const
+const PHY_HumanWound& PHY_HumanWound::Aggravate( const PHY_HumanWound& degradation ) const
 {
     if( !pNext_ || !degradation.pPrevious_ )
         return *this;
-    return pNext_->Degrade( *degradation.pPrevious_ );
+    return pNext_->Aggravate( *degradation.pPrevious_ );
 }
 
 // -----------------------------------------------------------------------------

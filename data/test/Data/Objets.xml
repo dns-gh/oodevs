@@ -26,7 +26,7 @@
         <Construction categorie="mine classique" type="mine"/>
         <Valorisation categorie="mine classique" type="mine"/>
       </Dotations>
-      <Attritions>
+      <!--<Attritions>
         <ProtectionTypeCharLourd>
           <Destruction>0.3</Destruction>
           <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
@@ -62,7 +62,8 @@
           <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
           <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
         </ProtectionTypeCombattant>
-      </Attritions>
+      </Attritions>-->
+      <DensitePopulationSortante>0</DensitePopulationSortante>
       <DensitePopulationSortante>0</DensitePopulationSortante>
     </Objet>
     <Objet type="zone minee lineaire">
@@ -79,6 +80,7 @@
       <Dotations>
         <Construction categorie="mine classique" type="mine"/>
       </Dotations>
+      <DensitePopulationSortante>1</DensitePopulationSortante>
     </Objet>
     <Objet type="zone minee par dispersion">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>

@@ -57,7 +57,7 @@ public:
     static uint GetSortingTime              ();
     static uint GetContaminatedHealingTime  ();
     static uint GetMentalDiseaseHealingTime ();
-    static bool ChooseMentalDesease         ();
+    static bool ChooseMentalDisease         ();
 
     //@}
 
@@ -79,8 +79,8 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_HumanWound& ApplyRandomWound() const;
-    const PHY_HumanWound& Degrade         ( const PHY_HumanWound& degradation ) const;
+    const PHY_HumanWound& Aggravate() const;
+    const PHY_HumanWound& Aggravate( const PHY_HumanWound& degradation ) const;
     //@}
 
 private:

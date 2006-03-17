@@ -257,8 +257,11 @@ private:
         std::vector< uint > nbrsPerState_;
         bool                bHasChanged_;
     };
+    //@}
 
 public:
+    //! @name Types
+    //@{
     typedef std::vector< PHY_ComposantePion* >       T_ComposantePionVector;
     typedef T_ComposantePionVector::iterator         IT_ComposantePionVector;
     typedef T_ComposantePionVector::const_iterator   CIT_ComposantePionVector;
@@ -291,11 +294,11 @@ private:
     void UpdateOperationalStates();
     void UpdateMajorComposante  ();
 
-    void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, bool bIsMajor, T_ComposanteTypeProperties& properties );
-    void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, bool bIsMajor, T_ComposanteTypeProperties& properties );
+    void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
+    void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
-    void SendChangedLends     ( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullLends        ( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendChangedLends( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendFullLends   ( NET_ASN_MsgUnitDotations& asn ) const;
     //@}
 
 private:
@@ -313,11 +316,6 @@ private:
 
     uint                   nNbrUsableComposantes_;
 
-    uint                   nNbrUndamagedMajorComposantes_;
-    uint                   nNbrUndamagedNonMajorComposantes_;
-    uint                   nNbrMajorComposantes_;
-    uint                   nNbrNonMajorComposantes_;
-
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
     uint                            nTickRcMaintenanceQuerySent_;
@@ -325,7 +323,6 @@ private:
 public:
     static MT_Float rOpStateWeightNonMajorComposante_;
     static MT_Float rOpStateWeightMajorComposante_;
-    static MT_Float rOpStateWeightHumans_;
     static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
     static MT_Float rMaxDangerosityDegradationByOpState_;
 };

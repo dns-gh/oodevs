@@ -167,8 +167,8 @@ public:
     virtual bool                      CanFire            () const;
     virtual bool                      CanFireWhenUnloaded() const;            
             
-    virtual const PHY_ComposanteTypePion& GetType       () const;
-    virtual uint                          GetMajorScore () const;
+    virtual const PHY_ComposanteTypePion& GetType            () const;
+    virtual uint                          GetMajorScore      () const;
     //@}
 
     //! @name Dotations
@@ -205,8 +205,9 @@ public:
     template< typename T > void ApplyOnSensors( T& func ) const;
     template< typename T > void ApplyOnRadars ( T& func ) const;
 
-    void ReinitializeState( const PHY_ComposanteState& state );
-    void Repair           ();
+    MT_Float GetOperationalState() const;
+    void     ReinitializeState  ( const PHY_ComposanteState& state );
+    void     Repair             ();
     //@}
 
 private:
@@ -229,8 +230,6 @@ private:
     bool CanBeUsed           () const;
     bool CanBeUsedForMove    () const;
     void ManageEndMaintenance();
-
-    void CheckViability      ();
     //@}
 
 private:
@@ -242,7 +241,6 @@ private:
           bool                      bUsedForLogistic_;
           T_WeaponVector            weapons_;
           T_SensorVector            sensors_;
-          uint                      nNbrUsableHumans_;
           PHY_HumansComposante      humans_;
 
     // Breakdowns
@@ -256,6 +254,9 @@ private:
 
 private:
     static MT_Random random_;
+
+public:
+    static MT_Float rOpStateWeightHumans_;
 };
 
 #include "PHY_ComposantePion.inl"

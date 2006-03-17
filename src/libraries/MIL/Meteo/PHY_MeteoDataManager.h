@@ -24,6 +24,8 @@ class PHY_MeteoDataManager
 {
     MT_COPYNOTALLOWED( PHY_MeteoDataManager );
 
+    friend class PHY_Meteo; // For UnregisterMeteo
+
 public:
      PHY_MeteoDataManager( MIL_InputArchive& archive );
     ~PHY_MeteoDataManager();
@@ -48,10 +50,17 @@ public:
     //@}
 
 private:
+    //! @name Registration
+    //@{
+    void RegisterMeteo  ( PHY_Meteo& meteo );
+    void UnregisterMeteo( PHY_Meteo& meteo );
+    //@}
+
+private:
     //! @name Types
     //@{
-    typedef std::list< PHY_Meteo* >     T_MeteoList;
-    typedef T_MeteoList::const_iterator CIT_MeteoList;
+    typedef std::set< PHY_Meteo* >     T_MeteoSet;
+    typedef T_MeteoSet::const_iterator CIT_MeteoSet;
     //@}
 
 private:
@@ -64,7 +73,7 @@ private:
 private:
     PHY_Ephemeride*     pEphemeride_;
     PHY_Meteo*          pGlobalMeteo_;
-    T_MeteoList         localMeteos_;    
+    T_MeteoSet          meteos_;    // Including global meteo
     PHY_RawVisionData*  pRawData_;        
 };
 

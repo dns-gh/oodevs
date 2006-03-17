@@ -20,26 +20,6 @@ uint PHY_RolePion_Humans::GetNbrUsableHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::GetNbrHumans
-// Created: NLD 2005-06-29
-// -----------------------------------------------------------------------------
-inline
-uint PHY_RolePion_Humans::GetNbrHumans() const
-{
-    return nNbrHumans_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::GetNbrFullyAliveHumans
-// Created: NLD 2005-06-29
-// -----------------------------------------------------------------------------
-inline
-uint PHY_RolePion_Humans::GetNbrFullyAliveHumans() const
-{
-    return nNbrFullyAliveHumans_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::HasChanged
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

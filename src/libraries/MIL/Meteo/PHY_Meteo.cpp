@@ -78,6 +78,7 @@ PHY_Meteo::PHY_Meteo( const ASN1T_MeteoAttributs& asnMsg )
 //-----------------------------------------------------------------------------
 PHY_Meteo::~PHY_Meteo()
 {
+    MIL_AgentServer::GetWorkspace().GetMeteoDataManager().UnregisterMeteo( *this );
     assert( nRefCount_ == 0 );
 }
 

@@ -18,8 +18,10 @@
 class MIL_NbcAgentType;
 class MIL_AutomateLOG;
 class PHY_HumanRank;
-class PHY_ComposantePion;
+class PHY_HumansComposante;
 class PHY_MedicalHumanState;
+
+//$$$ Clarifier l'interface (trop de trucs différents pour trop de fonctionnalités proches) (Log vs Magic vs attrition)
 
 // =============================================================================
 // @class  PHY_Human
@@ -39,7 +41,7 @@ public:
     //@}
 
 public:
-     PHY_Human( PHY_ComposantePion& composante );
+     PHY_Human( PHY_HumansComposante& composante );
      PHY_Human( const PHY_Human& rhs );
      PHY_Human();
     ~PHY_Human();
@@ -56,10 +58,11 @@ public:
     //! @name Operations
     //@{
     void Heal                 (); // 'Magic' Heal
-    bool ChangeRank           ( const PHY_HumanRank&  newRank  );
-    bool ChangeWound          ( const PHY_HumanWound& newWound );
-    bool ApplyWound           ();
-    bool ApplyWound           ( const MIL_NbcAgentType& nbcAgentType );
+    bool SetRank              ( const PHY_HumanRank&  newRank  ); // Force rank change
+    bool SetWound             ( const PHY_HumanWound& newWound ); // Don't test 'usability' => force wound change
+    bool ApplyWound           (); // Apply random wound (degrade)
+    bool ApplyWound           ( const PHY_HumanWound& newWound ); // Test 'usability'
+    bool ApplyWound           ( const MIL_NbcAgentType& nbcAgentType ); // NBC effects
     void ApplyMentalDisease   ();
     void CancelLogisticRequest();
     //@}
@@ -70,7 +73,7 @@ public:
     const PHY_HumanWound& GetWound        () const;
           E_Location      GetLocation     () const;
           bool            IsUsable        () const;  
-          bool            IsAlive         () const;
+          bool            IsDead          () const;
           bool            IsWounded       () const;
           bool            IsContaminated  () const;
           bool            IsMentalDiseased() const;
@@ -82,7 +85,7 @@ public:
     void Update();
     //@}
 
-    //! @name Medical
+    //! @name Medical logistic
     //@{
     bool NeedEvacuation(); // NeedMedical() && pas encore pris en charge
     void Evacuate      ( MIL_AutomateLOG& destinationTC2 );
@@ -113,7 +116,7 @@ private:
     //@}
 
 private:
-          PHY_ComposantePion*    pComposante_;
+          PHY_HumansComposante*  pComposante_;
     const PHY_HumanRank*         pRank_;
     const PHY_HumanWound*        pWound_;
           bool                   bMentalDiseased_;

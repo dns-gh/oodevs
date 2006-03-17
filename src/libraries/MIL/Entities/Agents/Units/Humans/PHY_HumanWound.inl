@@ -155,13 +155,13 @@ MT_Float PHY_HumanWound::GetWoundedFactor() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::ApplyRandomWound
+// Name: PHY_HumanWound::Aggravate
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
 inline
-const PHY_HumanWound& PHY_HumanWound::ApplyRandomWound() const
+const PHY_HumanWound& PHY_HumanWound::Aggravate() const
 {
-    return Degrade( GetRandomWound() );
+    return Aggravate( GetRandomWound() );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,11 +185,11 @@ uint PHY_HumanWound::GetHealingTime() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::ChooseMentalDesease
+// Name: PHY_HumanWound::ChooseMentalDisease
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
 inline
-bool PHY_HumanWound::ChooseMentalDesease()
+bool PHY_HumanWound::ChooseMentalDisease()
 {
     return randomGenerator_.rand_oi( 0., 1. ) <= rMentalDiseaseFactor_;
 }

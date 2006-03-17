@@ -497,7 +497,7 @@ void ADN_Project_Data::Load()
     // Read the Scipio file
     ADN_XmlInput_Helper input;
 
-    if( !input.Open(szFile_.GetFileNameFull()) )
+    if( !input.Open(szFile_.GetFileNameFull(), ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szFile_.GetFileNameFull() );
 
     try
@@ -518,7 +518,7 @@ void ADN_Project_Data::Load()
     std::string strNetFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + dataInfos_.szNetwork_.GetData();
 
-    if( !netInput.Open( strNetFile ) )
+    if( !netInput.Open( strNetFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( strNetFile );
 
     try
@@ -539,7 +539,7 @@ void ADN_Project_Data::Load()
     std::string strPathfinderFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + dataInfos_.szPathfinder_.GetData();
 
-    if( !pathfinderInput.Open( strPathfinderFile ) )
+    if( !pathfinderInput.Open( strPathfinderFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( strPathfinderFile );
 
     try

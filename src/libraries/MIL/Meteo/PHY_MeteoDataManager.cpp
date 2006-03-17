@@ -25,7 +25,7 @@
 PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_InputArchive& initArchive )
     : pEphemeride_ ( 0 )
     , pGlobalMeteo_( 0 )
-    , localMeteos_ ( )
+    , meteos_      ( )
     , pRawData_    ( 0 )        
 {
     PHY_Precipitation::Initialize();
@@ -56,8 +56,8 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_InputArchive& initArchive )
 PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {  
     delete pRawData_;
-    assert( localMeteos_.empty() );
     pGlobalMeteo_->DecRef();
+    assert( meteos_.size() == 1 );
 
     PHY_Lighting     ::Terminate();
     PHY_Precipitation::Terminate();
@@ -72,6 +72,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( MIL_InputArchive& archive )
     archive.Section( "MeteoGlobale" );
     pGlobalMeteo_ = new PHY_Meteo( archive, *pEphemeride_ );
     pGlobalMeteo_->IncRef();
+    RegisterMeteo( *pGlobalMeteo_ );
     archive.EndSection(); // MeteoGlobale
 }
 
@@ -101,14 +102,13 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( MIL_InputArchive& archive )
         MIL_Tools::ConvertCoordMosToSim( strPos, vDownRight );
 
         PHY_Meteo* pMeteo = new PHY_Meteo( archive, *pEphemeride_ );
-        localMeteos_.push_back( pMeteo );
+        RegisterMeteo( *pMeteo );
         pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pMeteo );
 
         archive.EndSection();
     }
     archive.EndList(); // PatchsLocaux
 }
-
 
 // =============================================================================
 // NETWORK
@@ -141,7 +141,13 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const ASN1T_MsgCtrlMeteoLocal
     NET_ASN_Tools::ReadPoint( asnMsg.rect_point_haut_gauche, vUpLeft    );
     NET_ASN_Tools::ReadPoint( asnMsg.rect_point_bas_droite , vDownRight );
 
-    PHY_Meteo* pTmp = asnMsg.meteo.t == T_MsgCtrlMeteoLocale_meteo_globale ? 0 /*reset meteo globale*/ : new PHY_Meteo( *asnMsg.meteo.u.attributs );
+    PHY_Meteo* pTmp = 0;
+    if( asnMsg.meteo.t == T_MsgCtrlMeteoLocale_meteo_attributs )
+    {
+        pTmp = new PHY_Meteo( *asnMsg.meteo.u.attributs );
+        RegisterMeteo( *pTmp );
+    }
+
     assert( pRawData_ );
     pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 
@@ -186,10 +192,8 @@ void PHY_MeteoDataManager::Update()
     if( pEphemeride_->UpdateNight() )
     {
         MT_LOG_DEBUG_MSG( MT_FormatString( "Maintenant il fait %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
-
-        pGlobalMeteo_->Update( *pEphemeride_ );
-        for( CIT_MeteoList itMeteo = localMeteos_.begin(); itMeteo != localMeteos_.end(); ++itMeteo )
-            (*itMeteo)->Update( *pEphemeride_ );
+        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+            (*it)->Update( *pEphemeride_ );
     }
 }
 

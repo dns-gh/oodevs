@@ -61,7 +61,7 @@ void PHY_RoleHLA_Location::NotifyObjectCollision( MIL_RealObject_ABC& /*object*/
 // Name: PHY_RoleHLA_Location::NotifyPopulationCollision
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::NotifyPopulationCollision( MIL_PopulationFlow&          population )
+void PHY_RoleHLA_Location::NotifyPopulationCollision( MIL_PopulationFlow& population )
 {
     // NOTHING ?
 }

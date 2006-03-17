@@ -182,7 +182,7 @@ void PHY_RoleHLA_Composantes::Destroy()
 // Name: PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes /*= false*/ ) const
+void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& targets, bool /*bFireOnlyOnMajorComposantes = false*/ ) const
 {
     targets.clear();
     for( CIT_Composantes it = composantes_.begin(); it != composantes_.end(); ++it )

@@ -19,10 +19,11 @@ class PHY_HumanWound;
 class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
-class MIL_NbcAgentType;
-class MIL_AutomateLOG;
 class PHY_Human;
 class PHY_RolePion_Composantes;
+class PHY_MedicalHumanState;
+class MIL_NbcAgentType;
+class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  PHY_HumansComposante
@@ -42,24 +43,21 @@ public:
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
     
-    //! @name 
+    //! @name Operations
     //@{
     bool ChangeHumanRank  ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
-    void ApplyWounds      ( const MIL_NbcAgentType& nbcAgentType );
-    void ApplyWounds      ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
-    void KillAllHumans    ();
-    void KillAllHumans    ( PHY_FireDamages_Agent& fireDamages );
+    void ApplyWounds        ( const MIL_NbcAgentType& nbcAgentType );
+    void ApplyWounds        ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
+    void KillAllUsableHumans();
+    void KillAllUsableHumans( PHY_FireDamages_Agent& fireDamages );
 
     uint WoundHumans      ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
     uint HealHumans       ( const PHY_HumanRank& rank, uint nNbrToChange );
     void HealAllHumans    ();    
-    //@}
 
-    //! @name Medical
-    //@{
-    bool HasWoundedHumansToEvacuate() const;
-    void EvacuateWoundedHumans     ( MIL_AutomateLOG& destinationTC2 ) const;
+    MT_Float GetOperationalState() const;
+    bool     IsViable           () const;
     //@}
 
     //! @name Composante notifications
@@ -67,6 +65,29 @@ public:
     void NotifyComposanteHandledByMaintenance();
     void NotifyComposanteBackFromMaintenance ();
     void NotifyComposanteTransfered          ( PHY_RolePion_Composantes& src, PHY_RolePion_Composantes& dest );
+    //@}
+
+    //! @name Humans notifications
+    //@{
+    void NotifyHumanAdded  ( PHY_Human& human );
+    void NotifyHumanRemoved( PHY_Human& human );
+    void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
+    //@}
+
+    //! @name Medical
+    //@{
+    bool                   HasWoundedHumansToEvacuate      () const;
+    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+
+    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) const;
+    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) const;
+    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const PHY_ComposantePion& GetComposante     () const;
+          uint                GetNbrUsableHumans() const;
     //@}
 
 private:
@@ -79,6 +100,7 @@ private:
 private:
     PHY_ComposantePion* pComposante_;
     T_HumanVector       humans_;
+    uint                nNbrUsableHumans_;
 };
 
 #include "PHY_HumansComposante.inl"

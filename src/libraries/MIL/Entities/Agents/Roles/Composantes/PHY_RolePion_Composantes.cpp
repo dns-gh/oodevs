@@ -41,7 +41,6 @@
 
 MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
 MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
-MT_Float PHY_RolePion_Composantes::rOpStateWeightHumans_                         = 0.;
 MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
 MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_          = 0.;
 
@@ -89,23 +88,19 @@ void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& f
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Composantes    ( role )
-    , pPion_                           ( &pion )
-    , composantes_                     ()
-    , lentComposantes_                 ()
-    , nNbrComposanteChanged_           ( 0 )
-    , nNbrUsableComposantes_           ( 0 )
-    , nNbrUndamagedMajorComposantes_   ( 0 )
-    , nNbrUndamagedNonMajorComposantes_( 0 )
-    , nNbrMajorComposantes_            ( 0 )
-    , nNbrNonMajorComposantes_         ( 0 )
-    , rOperationalState_               ( 0. )
-    , rMajorOperationalState_          ( 0. )
-    , bOperationalStateChanged_        ( false )
-    , pMajorComposante_                ( 0 )
-    , nNeutralizationEndTimeStep_      ( 0 )
-    , bLendsChanged_                   ( false )
-    , nTickRcMaintenanceQuerySent_     ( 0 )
+    : PHY_RoleInterface_Composantes( role )
+    , pPion_                       ( &pion )
+    , composantes_                 ()
+    , lentComposantes_             ()
+    , nNbrComposanteChanged_       ( 0 )
+    , nNbrUsableComposantes_       ( 0 )
+    , rOperationalState_           ( 0. )
+    , rMajorOperationalState_      ( 0. )
+    , bOperationalStateChanged_    ( false )
+    , pMajorComposante_            ( 0 )
+    , nNeutralizationEndTimeStep_  ( 0 )
+    , bLendsChanged_               ( false )
+    , nTickRcMaintenanceQuerySent_ ( 0 )
 {
     assert( pPion_ );
     pPion_->GetType().GetUnitType().InstanciateComposantes( *this );
@@ -117,25 +112,21 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::PHY_RolePion_Composantes()
-    : PHY_RoleInterface_Composantes     ()
-    , pPion_                            ()
-    , composantes_                      ()
-    , lentComposantes_                  ()
-    , bLendsChanged_                    ( false )
-    , composanteTypes_                  ()
-    , nNbrComposanteChanged_            ( 0 )
-    , nNbrUsableComposantes_            ( 0 )
-    , nNbrUndamagedMajorComposantes_    ( 0 )
-    , nNbrUndamagedNonMajorComposantes_ ( 0 )
-    , nNbrMajorComposantes_             ( 0 )
-    , nNbrNonMajorComposantes_          ( 0 )
-    , rOperationalState_                ( 0. )
-    , rMajorOperationalState_           ( 0. )
-    , bOperationalStateChanged_         ( false )
-    , pMajorComposante_                 ( 0 )
-    , nNeutralizationEndTimeStep_       ( 0 )
-    , maintenanceComposanteStates_      ()
-    , nTickRcMaintenanceQuerySent_      ( 0 )
+    : PHY_RoleInterface_Composantes()
+    , pPion_                       ()
+    , composantes_                 ()
+    , lentComposantes_             ()
+    , bLendsChanged_               ( false )
+    , composanteTypes_             ()
+    , nNbrComposanteChanged_       ( 0 )
+    , nNbrUsableComposantes_       ( 0 )
+    , rOperationalState_           ( 0. )
+    , rMajorOperationalState_      ( 0. )
+    , bOperationalStateChanged_    ( false )
+    , pMajorComposante_            ( 0 )
+    , nNeutralizationEndTimeStep_  ( 0 )
+    , maintenanceComposanteStates_ ()
+    , nTickRcMaintenanceQuerySent_ ( 0 )
 {
 }
 
@@ -265,10 +256,6 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
          & composanteTypes_
          & nNbrComposanteChanged_
          & nNbrUsableComposantes_
-         & nNbrUndamagedMajorComposantes_
-         & nNbrUndamagedNonMajorComposantes_
-         & nNbrMajorComposantes_
-         & nNbrNonMajorComposantes_
          & rOperationalState_
          & rMajorOperationalState_
          & pMajorComposante_
@@ -280,6 +267,7 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
 // =============================================================================
 // INIT
 // =============================================================================
+
 //-----------------------------------------------------------------------------
 // Name: PHY_UnitCanHaveComposante_ABC::DistributeCommanders
 // Created: JVT 03-08-27
@@ -550,55 +538,60 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
     if( !HasChanged() && !GetRole< PHY_RolePion_Humans >().HasChanged() )
         return;
 
-
-    MT_Float rNewOpState = rOperationalState_;
-
-    // Pas de composantes majeures explicites
-    if( nNbrMajorComposantes_ == 0 )
+    MT_Float rMajorOpStateValue    = 0.;
+    uint     nMajorOpStateNbr      = 0;
+    MT_Float rNonMajorOpStateValue = 0.;
+    uint     nNonMajorOpStateNbr   = 0;
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        MT_Float rRatioNonMajorComposantes = 0.;
-        if( nNbrNonMajorComposantes_ != 0 )
-            rRatioNonMajorComposantes = (MT_Float)nNbrUndamagedNonMajorComposantes_ / (MT_Float)nNbrNonMajorComposantes_;
+        const PHY_ComposantePion& composante   = **it;
+        const MT_Float            rCompOpState = composante.GetOperationalState();
 
-        rMajorOperationalState_ = rRatioNonMajorComposantes;
-        rNewOpState             = rRatioNonMajorComposantes * ( 1. - rOpStateWeightHumans_ );
-    }
-    // Pas de composantes non majeures (unité homogène)
-    else if( nNbrNonMajorComposantes_ == 0 )
-    {
-        MT_Float rRatioMajorComposantes = 0.;
-        if( nNbrMajorComposantes_ != 0 )
-            rRatioMajorComposantes = (MT_Float)nNbrUndamagedMajorComposantes_ / (MT_Float)nNbrMajorComposantes_;
-
-        rMajorOperationalState_ = rRatioMajorComposantes;
-        rNewOpState             = rRatioMajorComposantes * ( 1. - rOpStateWeightHumans_ );
-    }
-    // Pion hétérogène
-    else
-    {
-        const MT_Float rRatioMajorComposantes    = (MT_Float)nNbrUndamagedMajorComposantes_    / (MT_Float)nNbrMajorComposantes_;
-        const MT_Float rRatioNonMajorComposantes = (MT_Float)nNbrUndamagedNonMajorComposantes_ / (MT_Float)nNbrNonMajorComposantes_;
-
-        rMajorOperationalState_ = rRatioMajorComposantes;
-        rNewOpState             = rRatioMajorComposantes    * rOpStateWeightMajorComposante_
-                                + rRatioNonMajorComposantes * rOpStateWeightNonMajorComposante_;
+        if( composante.IsMajor() )
+        {
+            ++ nMajorOpStateNbr;
+            rMajorOpStateValue += rCompOpState;
+        }
+        else
+        {
+            ++ nNonMajorOpStateNbr;
+            rNonMajorOpStateValue += rCompOpState;
+        }        
     }
 
-    // Impact des humains sur état ops
-    if( GetRole< PHY_RolePion_Humans >().GetNbrHumans() > 0 )
-    {
-        const MT_Float rRatioHumans = (MT_Float)GetRole< PHY_RolePion_Humans >().GetNbrFullyAliveHumans() / (MT_Float)GetRole< PHY_RolePion_Humans >().GetNbrHumans();
-        rNewOpState += rRatioHumans * rOpStateWeightHumans_;
-    }
-    else
-        rNewOpState /= ( 1. - rOpStateWeightHumans_ ); // Le poids des 'humains' doit être nul
+    MT_Float rNewOpState = 0.;
 
-    assert( rNewOpState >= 0. && rNewOpState <= 1. );
+    // Etat ops
+    if( nMajorOpStateNbr == 0 ) // Pas de composantes majeures explicites
+    {
+        if( nNonMajorOpStateNbr != 0 )
+            rNewOpState = rNonMajorOpStateValue / nNonMajorOpStateNbr;
+    }
+    else if( nNonMajorOpStateNbr == 0 ) // Pas de composantes non majeures (unité homogène)
+    {
+        if( nMajorOpStateNbr != 0 )
+            rNewOpState = rMajorOpStateValue / nMajorOpStateNbr;
+    }
+    else // Pion hétérogène
+    {
+        rNewOpState = ( rMajorOpStateValue    / nMajorOpStateNbr    ) * rOpStateWeightMajorComposante_
+                    + ( rNonMajorOpStateValue / nNonMajorOpStateNbr ) * rOpStateWeightNonMajorComposante_;
+    }
+
     if( rNewOpState != rOperationalState_ )
     {
+        assert( rNewOpState >= 0. && rNewOpState <= 1. );
         bOperationalStateChanged_ = true;
         rOperationalState_        = rNewOpState;
     }
+
+    // Etat ops majeur
+    if( nMajorOpStateNbr > 0 )
+        rMajorOperationalState_ = rMajorOpStateValue / nMajorOpStateNbr;
+    else if( nNonMajorOpStateNbr > 0 )
+        rMajorOperationalState_ = rNonMajorOpStateValue / nNonMajorOpStateNbr;
+    else
+        rMajorOperationalState_ = 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -663,23 +656,10 @@ void PHY_RolePion_Composantes::Clean()
 // Name: PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded
 // Created: NLD 2005-06-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded( const PHY_ComposanteState& compState, bool bIsMajor, T_ComposanteTypeProperties& properties )
+void PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded( const PHY_ComposanteState& compState, T_ComposanteTypeProperties& properties )
 {
     if( compState.IsUsable() )
-        ++nNbrUsableComposantes_;
-
-    if( bIsMajor )
-    {
-        ++nNbrMajorComposantes_;
-        if( compState == PHY_ComposanteState::undamaged_ )
-            ++nNbrUndamagedMajorComposantes_;
-    }
-    else
-    {
-        ++nNbrNonMajorComposantes_;
-        if( compState == PHY_ComposanteState::undamaged_ )
-            ++nNbrUndamagedNonMajorComposantes_;
-    }
+        ++nNbrUsableComposantes_;   
 
     ++properties.nbrsPerState_[ compState.GetID() ];
     if( !properties.bHasChanged_ )
@@ -693,33 +673,12 @@ void PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded( const PHY_Composan
 // Name: PHY_RolePion_Composantes::UpdateDataWhenComposanteRemoved
 // Created: NLD 2005-06-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& compState, bool bIsMajor, T_ComposanteTypeProperties& properties )
+void PHY_RolePion_Composantes::UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& compState, T_ComposanteTypeProperties& properties )
 {
     if( compState.IsUsable() )
 {
         assert( nNbrUsableComposantes_ > 0 );
         --nNbrUsableComposantes_;
-    }
-
-    if( bIsMajor )
-    {
-        assert( nNbrMajorComposantes_ > 0 );
-        --nNbrMajorComposantes_;
-        if( compState == PHY_ComposanteState::undamaged_ )
-        {
-            assert( nNbrUndamagedMajorComposantes_ > 0 );
-            --nNbrUndamagedMajorComposantes_;
-        }
-    }
-    else
-    {
-        assert( nNbrNonMajorComposantes_ > 0 );
-        --nNbrNonMajorComposantes_;
-        if( compState == PHY_ComposanteState::undamaged_ )
-        {
-            assert( nNbrUndamagedNonMajorComposantes_ > 0 );
-            --nNbrUndamagedNonMajorComposantes_;
-        }
     }
 
     assert( properties.nbrsPerState_[ compState.GetID() ] > 0 );
@@ -740,7 +699,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) == composantes_.end() );
     composantes_.push_back( &composante );
 
-    UpdateDataWhenComposanteAdded( composante.GetState(), composante.IsMajor(), composanteTypes_[ &composante.GetType() ] );
+    UpdateDataWhenComposanteAdded( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
 
     if( composante.GetState().IsUsable() )
         GetRole< PHY_RolePion_Dotations >().RegisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
@@ -753,7 +712,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
 void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
-    UpdateDataWhenComposanteRemoved( composante.GetState(), composante.IsMajor(), composanteTypes_[ &composante.GetType() ] );
+    UpdateDataWhenComposanteRemoved( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
 
     IT_ComposantePionVector it = std::find( composantes_.begin(), composantes_.end(), &composante );
     assert( it != composantes_.end() );
@@ -777,8 +736,8 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     T_ComposanteTypeProperties& properties = composanteTypes_[ &composante.GetType() ];
 
-    UpdateDataWhenComposanteRemoved( oldState, composante.IsMajor(), properties );
-    UpdateDataWhenComposanteAdded  ( newState, composante.IsMajor(), properties );
+    UpdateDataWhenComposanteRemoved( oldState, properties );
+    UpdateDataWhenComposanteAdded  ( newState, properties );
 
     if( !newState.IsUsable() && oldState.IsUsable() )
         GetRole< PHY_RolePion_Dotations >().UnregisterDotationsCapacities( composante.GetType().GetDotationCapacities() );
@@ -1114,7 +1073,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& 
 
         if( composante.CanBeFired() )
         {
-            if( !bFireOnlyOnMajorComposantes || ( nNbrMajorComposantes_ == 0 || composante.IsMajor() ) )
+            if( !bFireOnlyOnMajorComposantes || composante.IsMajor() )
                 targets.push_back( &composante );
         }
     }
@@ -1139,8 +1098,6 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& 
     }
     targets.resize( nNbrFirer );
 }
-
-
 
 // =============================================================================
 // NETWORK
@@ -2029,24 +1986,19 @@ uint PHY_RolePion_Composantes::LendCollectionComposantes( PHY_RolePion_Composant
 {
     uint nNbrDone = 0;
 
-    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr && composantes_.size() > 1; )
+    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
-        assert( *it );
-
         PHY_ComposantePion& composante = **it;
 
         if( composante.CanBeLent() && composante.CanCollectCasualties() )
         {
             ++nNbrDone;
-            lentComposantes_[ &newRole ].push_back( &composante );
-            composante.TransfertComposante( newRole );
-            it = composantes_.rbegin(); // TransfertComposante modifie composantes_
+            LendComposante( newRole, composante );
+            it = composantes_.rbegin(); // LendComposante->TransfertComposante modifie composantes_
         }
         else
             ++it;
     }
-    if( nNbrDone > 0 )
-        bLendsChanged_ = true;
     return nNbrDone;
 }
 

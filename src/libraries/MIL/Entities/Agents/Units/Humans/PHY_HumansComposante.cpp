@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
 
@@ -25,11 +26,12 @@ BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
 PHY_HumansComposante::PHY_HumansComposante( PHY_ComposantePion& composante, uint nNbrMdr )
-    : pComposante_( &composante )
-    , humans_     ()
+    : pComposante_     ( &composante )
+    , humans_          ()
+    , nNbrUsableHumans_( 0 )
 {
     while ( nNbrMdr-- )
-        humans_.push_back( new PHY_Human( composante ) );
+        humans_.push_back( new PHY_Human( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,8 +39,9 @@ PHY_HumansComposante::PHY_HumansComposante( PHY_ComposantePion& composante, uint
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_HumansComposante::PHY_HumansComposante()
-    : pComposante_( 0 )
-    , humans_     ()
+    : pComposante_     ( 0 )
+    , humans_          ()
+    , nNbrUsableHumans_( 0 )
 {
 }
 
@@ -55,6 +58,15 @@ PHY_HumansComposante::~PHY_HumansComposante()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::IsViable
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+bool PHY_HumansComposante::IsViable() const
+{
+    return nNbrUsableHumans_ > 0 || pComposante_->GetRole().GetPion().IsAutonomous();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::ChangeHumanRank
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
@@ -68,7 +80,7 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
         PHY_Human& human = **it;
         if( human.GetRank() == oldRank && human.GetWound() == wound )
         {
-            human.ChangeRank( newRank );
+            human.SetRank( newRank );
             return true;
         }
     }
@@ -76,26 +88,26 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::KillAllHumans
+// Name: PHY_HumansComposante::KillAllUsableHumans
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::KillAllHumans()
+void PHY_HumansComposante::KillAllUsableHumans()
 {
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end() ; ++it )
-        (**it).ChangeWound( PHY_HumanWound::killed_ );
+        (**it).ApplyWound( PHY_HumanWound::killed_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ChangeAllHumansWound
+// Name: PHY_HumansComposante::KillAllUsableHumans
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::KillAllHumans( PHY_FireDamages_Agent& fireDamages )
+void PHY_HumansComposante::KillAllUsableHumans( PHY_FireDamages_Agent& fireDamages )
 {
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end() ; ++it )
     {
         PHY_Human& human = **it;
         const PHY_HumanWound& oldWound = human.GetWound();
-        if( human.ChangeWound( PHY_HumanWound::killed_ ) )
+        if( human.ApplyWound( PHY_HumanWound::killed_ ) )
             fireDamages.NotifyHumanWoundChanged( human, oldWound );
     }
 }
@@ -124,7 +136,7 @@ uint PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, uint nNbrToCha
     {
         PHY_Human& human = **it;
 
-        if( human.GetRank() == rank && ( human.NeedMedical() || !human.IsAlive() ) )
+        if( human.GetRank() == rank && ( human.NeedMedical() || human.IsDead() ) )  //$$$ POURRI
         {
             human.Heal();
             -- nNbrToChange;
@@ -150,10 +162,10 @@ uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToCh
         if( human.GetRank() != rank )
             continue;
 
-        if( human.NeedMedical() || !human.IsAlive() )
+        if( human.NeedMedical() || human.IsDead() ) //$$$ BUG si humain en santé
             continue;
 
-        human.ChangeWound( newWound );
+        human.SetWound( newWound );
         -- nNbrToChange;
         ++ nNbrChanged; 
     }
@@ -231,14 +243,99 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RolePion_Composantes&
     for ( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
     {
         (**it).CancelLogisticRequest();
-        src.NotifyHumanRemoved( **it );
-        dest.NotifyHumanAdded( **it );
+        src .NotifyHumanRemoved( **it );
+        dest.NotifyHumanAdded  ( **it );
     }
 }
 
 // =============================================================================
+// NOTIFICATIONS HUMANS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::NotifyHumanAdded
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::NotifyHumanAdded( PHY_Human& human )
+{
+    if( human.IsUsable() )
+        ++ nNbrUsableHumans_;
+    assert( pComposante_ );
+    pComposante_->NotifyHumanAdded( human );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::NotifyHumanRemoved
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::NotifyHumanRemoved( PHY_Human& human )
+{
+    if( human.IsUsable() )
+    {
+        assert( nNbrUsableHumans_ > 0 );
+        -- nNbrUsableHumans_;
+    }
+
+    assert( pComposante_ );
+    pComposante_->NotifyHumanRemoved( human );
+    if( !IsViable() )
+        pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::NotifyHumanChanged
+// Created: NLD 2005-01-07
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState )
+{
+    if( copyOfOldHumanState.IsUsable() )
+    {
+        assert( nNbrUsableHumans_ > 0 );
+        -- nNbrUsableHumans_;
+    }
+    if( human.IsUsable() )
+        ++ nNbrUsableHumans_;
+  
+    assert( pComposante_ );
+    pComposante_->NotifyHumanChanged( human, copyOfOldHumanState );
+    if( !IsViable() )
+        pComposante_->ReinitializeState( PHY_ComposanteState::dead_ );
+}
+
+
+// =============================================================================
 // MEDICAL
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::NotifyHumanBackFromMedical
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState ) const
+{
+    assert( pComposante_ );
+    pComposante_->NotifyHumanBackFromMedical( humanState );
+}
+
+// ----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::NotifyHumanWaitingForMedical
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* PHY_HumansComposante::NotifyHumanWaitingForMedical( PHY_Human& human ) const
+{
+    assert( pComposante_ );
+    return pComposante_->NotifyHumanWaitingForMedical( human );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::NotifyHumanEvacuatedByThirdParty
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* PHY_HumansComposante::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const
+{
+    assert( pComposante_ );
+    return pComposante_->NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::EvacuateWoundedHumans

@@ -18,5 +18,41 @@ inline
 void PHY_HumansComposante::serialize( Archive& file, const uint )
 {
     file & pComposante_
-         & humans_;
+         & humans_,
+         & nNbrUsableHumans_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetOperationalState
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_HumansComposante::GetOperationalState() const
+{
+    if( humans_.empty() )
+        return 0.;
+    return (float)nNbrUsableHumans_ / (float)humans_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetNbrUsableHumans
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+inline
+uint PHY_HumansComposante::GetNbrUsableHumans() const
+{
+    return nNbrUsableHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetComposante
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+inline
+const PHY_ComposantePion& PHY_HumansComposante::GetComposante() const
+{
+    assert( pComposante_ );
+    return *pComposante_;
+}
+
+

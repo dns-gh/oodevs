@@ -16,8 +16,8 @@
     </Nature>
     <Equipements>
       <Equipement nom="NTI TC2">3</Equipement>
-      <Equipement nom="Remorqueur 5T">2</Equipement>
-      <Equipement nom="Remorqueur 3T">2</Equipement>
+      <Equipement nom="Remorqueur 5T">3</Equipement>
+      <Equipement nom="Remorqueur 3T">3</Equipement>
       <Equipement nom="VSB (releve)">5</Equipement>
       <Equipement nom="VSR (ramassage)">5</Equipement>
       <Equipement nom="Medecin TC2">10</Equipement>
@@ -60,7 +60,7 @@
         <Categories/>
       </Dotation>
     </ContenanceTC1>
-    <Stocks>
+ <!--   <Stocks>
         <SeuilsLogistiques>        
             <SeuilLogistique categorie="Unite essence" seuil="10"/>
             <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
@@ -68,7 +68,7 @@
             <SeuilLogistique categorie="Unite vivre" seuil="10"/>
             <SeuilLogistique categorie="Pieces" seuil="10"/>
         </SeuilsLogistiques>    
-    </Stocks>
+    </Stocks>-->
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>
       <Poste>300s</Poste>

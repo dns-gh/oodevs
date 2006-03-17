@@ -161,7 +161,7 @@ void PHY_MedicalHumanState::NotifyHandledByMedical()
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::GoBackToWar()
 {
-    if ( bShouldGoBackToWar_ )
+    if( bShouldGoBackToWar_ )
         pHuman_->NotifyBackToWar();
 }
 

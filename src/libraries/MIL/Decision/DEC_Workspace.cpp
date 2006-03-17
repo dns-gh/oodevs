@@ -206,12 +206,9 @@ void DEC_Workspace::InitializeConfig( MIL_InputArchive& archive )
 
     archive.ReadField( "PoidsComposantesNonMajeures", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_, CheckValueBound( 0., 1. ) );
     archive.ReadField( "PoidsComposantesMajeures"   , PHY_RolePion_Composantes::rOpStateWeightMajorComposante_   , CheckValueBound( 0., 1. ) );
+    archive.ReadField( "PoidsPersonnel"             , PHY_ComposantePion      ::rOpStateWeightHumans_            , CheckValueBound( 0., 1. ) );
 
-    // $$$ Optionnel pour compat v0.110.x
-    if( !archive.ReadField( "PoidsPersonnel", PHY_RolePion_Composantes::rOpStateWeightHumans_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
-        PHY_RolePion_Composantes::rOpStateWeightHumans_ = 1. - ( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ );
-
-    if( PHY_RolePion_Composantes::rOpStateWeightHumans_ + PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
+    if( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1", archive.GetContext() );
     archive.EndSection(); // EtatOps
 

@@ -12,13 +12,37 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyHumansWounds
+// Created: NLD 2004-10-07
+// -----------------------------------------------------------------------------
+inline
+void PHY_ComposantePion::ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages )
+{
+    humans_.ApplyWounds( composanteNewState, fireDamages );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetOperationalState
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_ComposantePion::GetOperationalState() const
+{
+    assert( pState_ );
+    if( *pState_ != PHY_ComposanteState::undamaged_ )
+        return 0.;
+
+    return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * humans_.GetOperationalState();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetNbrUsableHumans
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
 inline
 uint PHY_ComposantePion::GetNbrUsableHumans() const
 {
-    return nNbrUsableHumans_;
+    return humans_.GetNbrUsableHumans();
 }
 
 // -----------------------------------------------------------------------------

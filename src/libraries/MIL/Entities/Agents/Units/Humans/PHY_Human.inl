@@ -42,13 +42,13 @@ PHY_Human::E_Location PHY_Human::GetLocation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::IsAlive
+// Name: PHY_Human::IsDead
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
 inline
-bool PHY_Human::IsAlive() const
+bool PHY_Human::IsDead() const
 {
-    return *pWound_ != PHY_HumanWound::killed_;
+    return *pWound_ == PHY_HumanWound::killed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +58,7 @@ bool PHY_Human::IsAlive() const
 inline
 bool PHY_Human::IsUsable() const
 {
-    if( pMedicalState_ && nLocation_ == eBattleField )
-        return true;
-
-    return IsAlive();
+    return !IsDead() && nLocation_ != eMedical;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,6 +68,7 @@ bool PHY_Human::IsUsable() const
 inline
 bool PHY_Human::IsWounded() const
 {
+    assert( pWound_ );
     return *pWound_ != PHY_HumanWound::killed_ && *pWound_ != PHY_HumanWound::notWounded_;
 }
 
@@ -101,6 +99,7 @@ bool PHY_Human::IsMentalDiseased() const
 inline
 bool PHY_Human::IsAnEmergency() const
 {
+    assert( pWound_ );
     return *pWound_ == PHY_HumanWound::woundedU1_ || *pWound_ == PHY_HumanWound::woundedUE_;
 }
 
@@ -111,7 +110,7 @@ bool PHY_Human::IsAnEmergency() const
 inline
 bool PHY_Human::NeedMedical() const
 {
-    return IsAlive() && ( IsWounded() || IsContaminated() || IsMentalDiseased() );
+    return !IsDead() && ( IsWounded() || IsContaminated() || IsMentalDiseased() );
 }
 
 // -----------------------------------------------------------------------------

@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
 // Name: PHY_Human constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-PHY_Human::PHY_Human( PHY_ComposantePion& composante )
+PHY_Human::PHY_Human( PHY_HumansComposante& composante )
     : pComposante_    ( &composante )
     , pRank_          ( &PHY_HumanRank::militaireDuRang_ )
     , pWound_         ( &PHY_HumanWound::notWounded_     )
@@ -150,7 +150,7 @@ void PHY_Human::CancelLogisticRequest()
     {
         PHY_Human oldHumanState( *this );
         pComposante_->NotifyHumanBackFromMedical( *pMedicalState_ );
-        if( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
+        if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eMaintenance;
         else 
             nLocation_ = eBattleField;
@@ -177,10 +177,10 @@ void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 // -----------------------------------------------------------------------------
 void PHY_Human::Heal()
 {
+    CancelLogisticRequest();
     HealMentalDisease    ();
     HealContamination    ();
-    ChangeWound          ( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => don't heal deads ...
-    CancelLogisticRequest();    
+    SetWound             ( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...    
 }
 
 // -----------------------------------------------------------------------------
@@ -229,8 +229,22 @@ void PHY_Human::HealContamination()
 // -----------------------------------------------------------------------------
 bool PHY_Human::ApplyWound()
 {
+    if( !IsUsable() )
+        return false;
+
     assert( pWound_ );
-    return ChangeWound( pWound_->ApplyRandomWound() );
+    return SetWound( pWound_->Aggravate() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyWound
+// Created: NLD 2006-02-09
+// -----------------------------------------------------------------------------
+bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
+{
+    if( !IsUsable() )
+        return false;
+    return SetWound( newWound );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,7 +262,9 @@ bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
         bContamined_ = true;
         NotifyHumanChanged( oldHumanState );
     }
-    return ChangeWound( pWound_->Degrade( nbcAgentType.GetRandomWound() ) );
+
+    assert( pWound_ );
+    return SetWound( pWound_->Aggravate( nbcAgentType.GetRandomWound() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,7 +276,7 @@ void PHY_Human::ApplyMentalDisease()
     if( !IsUsable() || bMentalDiseased_ )
         return;
 
-    if( PHY_HumanWound::ChooseMentalDesease() )
+    if( PHY_HumanWound::ChooseMentalDisease() )
     {
         PHY_Human oldHumanState( *this );
         bMentalDiseased_ = true;
@@ -269,10 +285,10 @@ void PHY_Human::ApplyMentalDisease()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::ChangeRank
+// Name: PHY_Human::SetRank
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-bool PHY_Human::ChangeRank( const PHY_HumanRank& newRank )
+bool PHY_Human::SetRank( const PHY_HumanRank& newRank )
 {
     PHY_Human oldHumanState( *this );
     if( newRank == *pRank_ )
@@ -283,10 +299,10 @@ bool PHY_Human::ChangeRank( const PHY_HumanRank& newRank )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::ChangeWound
+// Name: PHY_Human::SetWound
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-bool PHY_Human::ChangeWound( const PHY_HumanWound& newWound )
+bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
 {
     PHY_Human oldHumanState( *this );
     if( newWound == *pWound_ )
@@ -303,10 +319,11 @@ bool PHY_Human::ChangeWound( const PHY_HumanWound& newWound )
         nDeathTimeStep_ = std::numeric_limits< uint >::max();
     else
         nDeathTimeStep_ = std::min( nDeathTimeStep_, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWound_->GetLifeExpectancy() );
-    NotifyHumanChanged( oldHumanState );   
-
+    
     if( !NeedMedical() )
         CancelLogisticRequest();
+
+    NotifyHumanChanged( oldHumanState );   
     return true;
 }
 
@@ -319,8 +336,12 @@ void PHY_Human::NotifyBackToWar()
     assert( pComposante_ );
     assert( pMedicalState_ );
 
+    //$$$ BOF
+    if( pComposante_->GetComposante().GetState() != PHY_ComposanteState::dead_ )
+        return;
+
     CancelLogisticRequest();
-    MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeOperational );
+    MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeOperational );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,14 +404,14 @@ void PHY_Human::Update()
 
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
-        if( ChangeWound( PHY_HumanWound::killed_ ) )
+        if( SetWound( PHY_HumanWound::killed_ ) )
         {
             if( !pMedicalState_ )
-                MIL_RC::pRcDecesBlesse_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeEvent );
+                MIL_RC::pRcDecesBlesse_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
             else if( pMedicalState_->IsInAmbulance() )
-                MIL_RC::pRcDecesBlessePendantTransport_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeEvent );
+                MIL_RC::pRcDecesBlessePendantTransport_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
             else
-                MIL_RC::pRcDecesBlessePendantHospitalisation_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeEvent );
+                MIL_RC::pRcDecesBlessePendantHospitalisation_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
         }
     }
 

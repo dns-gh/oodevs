@@ -72,7 +72,6 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion&
     , nNbrHumansDataChanged_  ( humansData_.size() )
     , nNbrUsableHumans_       ( 0 )
     , nNbrHumans_             ( 0 )
-    , nNbrFullyAliveHumans_   ( 0 ) // Not wounded nor contaminated nor mental diseased
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
     , nTickRcMedicalQuerySent_( 0 )
@@ -92,7 +91,6 @@ PHY_RolePion_Humans::PHY_RolePion_Humans()
     , nNbrUsableHumans_       ( 0 )
     , nNbrHumansDataChanged_  ( 0 )
     , nNbrHumans_             ( 0 )
-    , nNbrFullyAliveHumans_   ( 0 ) // Not wounded nor contaminated nor mental diseased
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
     , nTickRcMedicalQuerySent_( 0 )
@@ -124,7 +122,6 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
          & humansData_
          & nNbrUsableHumans_
          & nNbrHumans_ 
-         & nNbrFullyAliveHumans_
          & humansToUpdate_
          & nNbrHumansDataChanged_
          & medicalHumanStates_
@@ -134,16 +131,6 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 // =============================================================================
 // OPERATIONS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::IsUsable
-// Created: NLD 2005-08-09
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Humans::IsUsable() const
-{
-    assert( pPion_ );
-    return nNbrUsableHumans_ > 0 || pPion_->IsAutonomous();
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::ChangeHumansAvailability
@@ -248,7 +235,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
         assert( nNbrUsableHumans_ > 0 );
         -- nNbrUsableHumans_;
     }
-    if( !human.IsAlive() )
+    if( human.IsDead() )
     {
         assert( humanData.nNbrDead_ > 0 );
         -- humanData.nNbrDead_;
@@ -268,10 +255,9 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
         assert( humanData.nNbrMentalDiseased_ > 0 );
         -- humanData.nNbrMentalDiseased_;
     }
-    if( !human.IsWounded() && human.IsAlive() && !human.IsContaminated() && !human.IsMentalDiseased() )
+    if( human.IsUsable() && !human.NeedMedical() )
     {
-        assert( nNbrFullyAliveHumans_ > 0 );
-        -- nNbrFullyAliveHumans_;
+        assert( humanData.nNbrOperational_ > 0 );
         -- humanData.nNbrOperational_;
     }
 
@@ -279,7 +265,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
     {
         case PHY_Human::eBattleField: break;
         case PHY_Human::eMaintenance: assert( humanData.nNbrInLogisticMaintenance_ > 0 ); -- humanData.nNbrInLogisticMaintenance_; break;
-        case PHY_Human::eMedical    : assert( humanData.nNbrInLogisticMedical_ > 0 ); -- humanData.nNbrInLogisticMedical_; break;
+        case PHY_Human::eMedical    : assert( humanData.nNbrInLogisticMedical_     > 0 ); -- humanData.nNbrInLogisticMedical_; break;
         default:
             assert( false );
     }
@@ -303,7 +289,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const PHY_Human& human )
 
     if( human.IsUsable() )
         ++ nNbrUsableHumans_;
-    if( !human.IsAlive() )
+    if( human.IsDead() )
         ++ humanData.nNbrDead_;
     if( human.IsWounded() )
         ++ humanData.nNbrWounded_;
@@ -311,11 +297,8 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const PHY_Human& human )
         ++ humanData.nNbrNBC_;
     if( human.IsMentalDiseased() )
         ++ humanData.nNbrMentalDiseased_;
-    if( !human.IsWounded() && human.IsAlive() && !human.IsContaminated() && !human.IsMentalDiseased() )
-    {
-        ++ nNbrFullyAliveHumans_;
+    if( human.IsUsable() && !human.NeedMedical() )
         ++ humanData.nNbrOperational_;
-    }
 
     switch( human.GetLocation() )
     {

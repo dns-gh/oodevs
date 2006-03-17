@@ -41,20 +41,9 @@
 #include "Entities/RC/MIL_RC_MaterielRetourDeMaintenance.h"
 
 MT_Random PHY_ComposantePion::random_;
+MT_Float  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
 BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CheckViability
-// Created: NLD 2005-08-08
-// -----------------------------------------------------------------------------
-inline
-void PHY_ComposantePion::CheckViability()
-{
-    assert( pRole_ );
-    if( nNbrUsableHumans_ == 0 && !pRole_->GetPion().IsAutonomous() )
-        ReinitializeState( PHY_ComposanteState::dead_ );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion constructor
@@ -73,14 +62,14 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
     , pMaintenanceState_           ( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_       ( 0 )
-    , nNbrUsableHumans_            ( 0 )
     , humans_                      ( *this, pType_->GetNbrHumanInCrew() )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
 
     pRole_->NotifyComposanteAdded( *this );
-    CheckViability();
+    if( !humans_.IsViable() )
+        ReinitializeState( PHY_ComposanteState::dead_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +86,6 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bUsedForLogistic_            ( false )
     , weapons_                     ()
     , sensors_                     () 
-    , nNbrUsableHumans_            ()
     , humans_                      ()
     , nAutoRepairTimeStep_         ()
     , pBreakdown_                  ()
@@ -153,7 +141,6 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
     file >> const_cast< bool& >( bMajor_ )
          >> const_cast< bool& >( bLoadable_ )
          >> bUsedForLogistic_
-         >> nNbrUsableHumans_
          >> humans_
          >> nAutoRepairTimeStep_
          >> const_cast< PHY_Breakdown*& >( pBreakdown_ )
@@ -182,7 +169,6 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << bMajor_
          << bLoadable_
          << bUsedForLogistic_
-         << nNbrUsableHumans_
          << humans_
          << nAutoRepairTimeStep_
          << pBreakdown_
@@ -199,6 +185,7 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::TransfertComposante
 // Created: JVT 2005-01-17
@@ -235,8 +222,6 @@ void PHY_ComposantePion::TransfertComposante( PHY_RolePion_Composantes& newRole 
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::NotifyHumanAdded( PHY_Human& human )
 {
-    if( human.IsUsable() )
-        ++ nNbrUsableHumans_;
     assert( pRole_ );
     pRole_->NotifyHumanAdded( human );
 }
@@ -247,16 +232,8 @@ void PHY_ComposantePion::NotifyHumanAdded( PHY_Human& human )
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::NotifyHumanRemoved( PHY_Human& human )
 {
-    if( human.IsUsable() )
-    {
-        assert( nNbrUsableHumans_ > 0 );
-        -- nNbrUsableHumans_;
-    }
-
     assert( pRole_ );
     pRole_->NotifyHumanRemoved( human );
-
-    CheckViability();
 }
     
 // -----------------------------------------------------------------------------
@@ -265,18 +242,8 @@ void PHY_ComposantePion::NotifyHumanRemoved( PHY_Human& human )
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState )
 {
-    if( copyOfOldHumanState.IsUsable() )
-    {
-        assert( nNbrUsableHumans_ > 0 );
-        -- nNbrUsableHumans_;
-    }
-    if( human.IsUsable() )
-        ++ nNbrUsableHumans_;
-  
     assert( pRole_ );
     pRole_->NotifyHumanChanged( human, copyOfOldHumanState );
-
-    CheckViability();
 }
 
 
@@ -304,10 +271,10 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     const PHY_ComposanteState* pOldState = pState_;
     pState_                              = pNewState;
 
-    if ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
-            pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
+    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
+        pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
     else if( *pState_ == PHY_ComposanteState::dead_ )
-        humans_.KillAllHumans();    
+        humans_.KillAllUsableHumans();    
     ManageEndMaintenance();
 
     assert( pRole_ );
@@ -417,50 +384,40 @@ void PHY_ComposantePion::FillIndirectFireData( PHY_SmokeData& data )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyHumansWounds
-// Created: NLD 2004-10-07
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages )
-{
-    const PHY_ComposanteState& oldState = *pState_;
-    humans_.ApplyWounds( composanteNewState, fireDamages );
-    if( nNbrUsableHumans_ == 0 )
-        fireDamages.NotifyComposanteStateChanged( *this, oldState, PHY_ComposanteState::dead_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_FireDamages_Agent& fireDamages )
 {
+    //$$$ FACTORISER AVEC REINITIALIZESTATE()
     assert( pRole_ );
     assert( pType_ );
     assert( CanBeFired() );
+    assert( pState_ );
 
-    const PHY_ComposanteState& tmpState  = attritionData.ComputeComposanteState();
-    const PHY_ComposanteState* pNewState = &tmpState;
+    const PHY_ComposanteState& oldState  = *pState_;
+    const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState();
 
     ApplyHumansWounds( *pNewState, fireDamages );    
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
 
-    if ( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
+    if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
 
-    if ( *pNewState < *pState_ )
+    if( *pNewState < *pState_ )
     {
-        fireDamages.NotifyComposanteStateChanged( *this, *pState_, *pNewState );
-        const PHY_ComposanteState* pOldState = pState_;
-        pState_                              = pNewState;
+        pState_ = pNewState;
 
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
-                pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
+            pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
         else if( *pState_ == PHY_ComposanteState::dead_ )
-            humans_.KillAllHumans( fireDamages );        
+            humans_.KillAllUsableHumans( fireDamages );        
         ManageEndMaintenance();
        
-        pRole_->NotifyComposanteChanged ( *this, *pOldState );
+        pRole_->NotifyComposanteChanged( *this, oldState );
     }
+
+    fireDamages.NotifyComposanteStateChanged( *this, oldState, *pState_ );
 }
 
 // -----------------------------------------------------------------------------
