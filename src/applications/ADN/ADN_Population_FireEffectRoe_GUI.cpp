@@ -54,7 +54,7 @@ public:
         pItemString->setText( ENT_Tr::ConvertFromRoePopulation( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
 
         // set table item properties
-        pItemPH->GetValidator().setRange( 0, 1, 2 );
+        pItemPH->GetValidator().setRange( 0, 1, 4 );
 
         // connect items & datas
         pItemSurface->GetConnector().Connect( &static_cast<FireEffectRoeInfos*>(obj)->rAttritionSurface_ );
