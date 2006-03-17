@@ -14,6 +14,7 @@
 #include "AgentsLayer.h"
 #include "SelectionProxy.h"
 #include "Agent.h"
+#include "ColorStrategy.h"
 //#include "SelectionLayer.h"
 
 using namespace geometry;
@@ -44,6 +45,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
     , proxy_( *new SelectionProxy() )
+    , strategy_( *new ColorStrategy( controller ) )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , frame_( 0 )
@@ -53,7 +55,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
 //    Register( *new SelectionLayer< Agent, AgentDrawer >( controller, actions, proxy_, converter ) );
-    Register( *new AgentsLayer( controller, actions, proxy_, converter, *this ) );
+    Register( *new AgentsLayer( controller, actions, proxy_, converter, *this, strategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +64,8 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
 // -----------------------------------------------------------------------------
 GlWidget::~GlWidget()
 {
+    delete &strategy_;
+    delete &proxy_;
     glDeleteLists( circle_, 1 );
 }
 
@@ -277,5 +281,19 @@ void GlWidget::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*
             glCallList( circle_ );
         glEnd();
     glPopMatrix();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawRectangle
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void GlWidget::DrawRectangle( const geometry::Rectangle2f& rect ) const
+{
+    glBegin( GL_QUADS );
+        glVertex2f( rect.Left(), rect.Bottom() );
+        glVertex2f( rect.Left(), rect.Top() );
+        glVertex2f( rect.Right(), rect.Top() );
+        glVertex2f( rect.Right(), rect.Bottom() );
+    glEnd();
 }
 

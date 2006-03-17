@@ -52,6 +52,7 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitPathFind& message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    void UpdatePathfind();
     //@}
 
 private:

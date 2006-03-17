@@ -39,7 +39,10 @@ void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     // $$$$ AGE 2006-02-13: Jamais vidé ??
     if( message.m.positionPresent )
+    {
         previousPath_.push_back( converter_.ConvertToXY( message.position ) );
+        UpdatePathfind();
+    }
 }   
 
 // -----------------------------------------------------------------------------
@@ -51,6 +54,57 @@ void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
     plannedPath_.clear(); plannedPath_.reserve( message.itineraire.vecteur_point.n );
     for( uint i = 0; i < message.itineraire.vecteur_point.n; ++i )
         plannedPath_.push_back( converter_.ConvertToXY( message.itineraire.vecteur_point.elem[i] ) );
+    UpdatePathfind();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Paths::UpdatePathfind
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void Paths::UpdatePathfind()
+{
+    if( plannedPath_.size() <= 1 || previousPath_.empty() )
+        return;
+
+    const geometry::Point2f position = previousPath_.back();
+    float closestDistance = std::numeric_limits< float >::max();
+    IT_PointVector closest = plannedPath_.begin();
+    IT_PointVector previous = plannedPath_.begin();
+
+    IT_PointVector itLastValidPoint = plannedPath_.end();
+    for( IT_PointVector current = plannedPath_.begin() + 1;
+         current != plannedPath_.end() && closestDistance > 0.1;
+         ++current )
+    {
+        const geometry::Vector2f u( *previous, position );
+        const geometry::Vector2f v( *previous, *current );
+        const float rProjection = v.DotProduct( u );
+        const float squareLenght = v.SquareLength();
+
+        float squareDist;
+        if( rProjection <= 0.f )
+            squareDist = previous->SquareDistance( position );
+        else if( rProjection >= squareLenght )
+            squareDist = current->SquareDistance( position );
+        else
+        {
+            const float rRatio = squareLenght > 0 ? rProjection / squareLenght : 1;
+            const geometry::Point2f projected = *previous + rRatio * v;
+            squareDist = projected.SquareDistance( position );
+        }
+
+        if( squareDist < closestDistance )
+        {
+            closestDistance = squareDist;
+            closest = previous;
+        }
+        previous = current;
+    };
+
+    std::copy( closest, plannedPath_.end(), plannedPath_.begin() );
+    plannedPath_.resize( plannedPath_.end() - closest );
+    if( ! plannedPath_.empty() )
+        plannedPath_.front() = position;
 }
 
 // -----------------------------------------------------------------------------

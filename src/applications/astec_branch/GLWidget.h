@@ -20,6 +20,7 @@ class CoordinateConverter;
 class Controller;
 class ActionController;
 class SelectionProxy;
+class ColorStrategy;
 
 // =============================================================================
 /** @class  GlWidget
@@ -50,6 +51,7 @@ public:
     virtual void  DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.3f, float size = -1.f ) const;
     virtual void  DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
     virtual void  DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const;
+    virtual void  DrawRectangle  ( const geometry::Rectangle2f& rect ) const;
     //@}
 
 private:
@@ -71,6 +73,8 @@ private:
     //! @name Member data
     //@{
     SelectionProxy& proxy_;
+    ColorStrategy& strategy_;
+
     int windowHeight_;
     int windowWidth_;
     geometry::Rectangle2f viewport_;

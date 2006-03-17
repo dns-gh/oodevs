@@ -13,6 +13,7 @@
 #include "Displayer_ABC.h"
 #include "Units.h"
 #include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Attributes constructor
@@ -127,6 +128,7 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Attributes::Display( Displayer_ABC& displayer ) const
 {
+    // $$$$ AGE 2006-03-17: Split attributes ?
     displayer.Group( "Info" )
                 .Display( "Etat Opérationnel:",                  nRawOpState_ * Units::percentage )
                 .Display( "Mort:",                               bDead_ )
@@ -161,4 +163,14 @@ void Attributes::Display( Displayer_ABC& displayer ) const
             .Display( "Fait prisonnier:", bPrisoner_ )
             .Display( "Rendu:", bSurrendered_ )
             .Display( "Réfugiés pris en compte:", bRefugeesManaged_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::Draw
+// Created: AGE 2006-03-17
+// -----------------------------------------------------------------------------
+void Attributes::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+     // $$$$ AGE 2006-03-17: Move out ?
+    tools.DrawCross( where );
 }

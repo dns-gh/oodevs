@@ -16,17 +16,19 @@
 #include "Drawable_ABC.h"
 #include "Positions.h"
 #include "SelectionProxy.h"
+#include "ColorStrategy_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, SelectionProxy& proxy, const CoordinateConverter& converter, const GlTools_ABC& tools )
+AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, SelectionProxy& proxy, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy )
     : actions_  ( actions )
     , converter_( converter )
     , proxy_    ( proxy )
-    , selected_ ( 0 )
     , tools_    ( tools )
+    , strategy_ ( strategy )
+    , selected_ ( 0 )
 {
     controller.Register( *this );
     proxy_.Register( *this );
@@ -54,7 +56,10 @@ void AgentsLayer::Paint( const geometry::Rectangle2f& viewport )
         Entity_ABC& agent = const_cast< Agent& >( **it ); // $$$$ AGE 2006-03-16: 
         const geometry::Point2f position = agent.Get< Positions >().GetPosition();
         if( viewport.IsInside( position ) )
+        {
+            strategy_.SelectColor( **it );
             agent.Apply( Drawable_ABC::Draw, position, tools_ );
+        }
     }
 }
 
@@ -100,6 +105,7 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
 // Name: AgentsLayer::HandleMousePress
 // Created: SBO 2006-03-16
 // -----------------------------------------------------------------------------
+// $$$$ AGE 2006-03-17: deal with button !
 bool AgentsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point )
 {
     if( ! HasFocus() || agents_.empty() )

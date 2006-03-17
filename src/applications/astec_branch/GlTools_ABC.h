@@ -40,6 +40,7 @@ public:
     virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.3f, float size = -1.f ) const = 0;
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
+    virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const = 0;
     //@}
 };
 

@@ -20,6 +20,7 @@ class ActionController;
 class CoordinateConverter;
 class SelectionProxy;
 class GlTools_ABC;
+class ColorStrategy_ABC;
 
 // =============================================================================
 /** @class  AgentsLayer
@@ -35,7 +36,7 @@ class AgentsLayer : public SelectionLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controller& controller, ActionController& actions, SelectionProxy& proxy, const CoordinateConverter& converter, const GlTools_ABC& tools );
+             AgentsLayer( Controller& controller, ActionController& actions, SelectionProxy& proxy, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy );
     virtual ~AgentsLayer();
     //@}
 
@@ -80,6 +81,7 @@ private:
     const CoordinateConverter& converter_;
     SelectionProxy& proxy_;
     const GlTools_ABC& tools_;
+    ColorStrategy_ABC& strategy_;
     T_Agents agents_;
     unsigned selected_;
     //@}
