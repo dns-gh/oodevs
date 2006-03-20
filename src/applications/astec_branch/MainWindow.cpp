@@ -31,8 +31,6 @@
 #include "MissionPanel.h"
 #include "GlWidget.h"
 
-MainWindow* MainWindow::pInstance_ = 0;
-
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -41,9 +39,6 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
     : QMainWindow      ( 0, 0, Qt::WDestructiveClose )
     , actionController_( * new ActionController() )
 {
-    assert( pInstance_ == 0 );
-    pInstance_ = this;
-
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
@@ -126,11 +121,7 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    assert( pInstance_ != 0 );
-
 //    delete pOptions_;
-
-    pInstance_ = 0;
 }
 
 // -----------------------------------------------------------------------------

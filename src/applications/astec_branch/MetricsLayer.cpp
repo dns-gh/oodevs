@@ -74,6 +74,7 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& viewport )
 bool MetricsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point )
 {
     // bleh
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,4 +84,5 @@ bool MetricsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Poi
 bool MetricsLayer::HandleMouseMove( Qt::ButtonState button, const geometry::Point2f& point )
 {
     // bleh
+    return true;
 }

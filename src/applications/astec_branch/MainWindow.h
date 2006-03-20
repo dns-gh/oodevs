@@ -52,8 +52,6 @@ public:
     //@{
              MainWindow( Controller& controller, const CoordinateConverter& converter, const std::string& scipioXml );
     virtual ~MainWindow();
-
-    static MainWindow& GetMainWindow();
     //@}
 
     //! @name Operations
@@ -102,9 +100,6 @@ private:
 
     QTimer* pLagTimer_;
     //@}
-
-private:
-    static MainWindow* pInstance_;
 };
 
 #endif // __MainWindow_h_

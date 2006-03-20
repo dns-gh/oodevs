@@ -26,9 +26,16 @@ ComponentType::ComponentType( xml::xistream& xis )
 
     xis >> optional() 
         >> start( "FonctionsLogistiques" );
-    hasMaintenance_ = xis.exists( "Maintenance" );
-    hasMedical_     = xis.exists( "Sante" );
-    hasSupply_      = xis.exists( "Ravitaillement" );
+            >> optional()
+                >> list( "Maintenance", *this, ReadPresence, hasMaintenance_ )
+            >> optional()
+                >> list( "Sante", *this, ReadPresence, hasMedical_ )
+            >> optional()
+                >> list( "Ravitaillement", *this, ReadPresence, hasSupply_ );
+
+//    hasMaintenance_ = xis.exists( "Maintenance" );
+//    hasMedical_     = xis.exists( "Sante" );
+//    hasSupply_      = xis.exists( "Ravitaillement" );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +45,15 @@ ComponentType::ComponentType( xml::xistream& xis )
 ComponentType::~ComponentType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::ReadPresence
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+void ComponentType::ReadPresence( xml::xistream& , bool& flag )
+{
+    flag = true;
 }
 
 // -----------------------------------------------------------------------------

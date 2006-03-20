@@ -42,6 +42,7 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadPresence( xml::xistream& , bool& flag );
     //@}
 
 private:
