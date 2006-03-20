@@ -47,7 +47,7 @@ public:
 protected:
     //! @name Events
     //@{
-    virtual bool HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
 private:

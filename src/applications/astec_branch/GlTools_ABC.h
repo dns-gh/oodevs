@@ -41,6 +41,7 @@ public:
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const = 0;
+    virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const = 0;
     //@}
 };
 

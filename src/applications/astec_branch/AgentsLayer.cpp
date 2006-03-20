@@ -99,7 +99,7 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
 // Name: AgentsLayer::HandleMousePress
 // Created: SBO 2006-03-16
 // -----------------------------------------------------------------------------
-bool AgentsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point )
+bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
     if( agents_.empty() )
         return false;
@@ -112,9 +112,10 @@ bool AgentsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Poin
         const Agent& agent = *agents_[ i ];
         if( IsInSelection( agent, point ) )
         {
+            int button = event->button();
             if( button == Qt::LeftButton )
                 actions_.Select( agent );
-//            else if( button == Qt::MiddleButton )
+//            else if( button == Qt::RightButton )
 //                actions_.ContextMenu( agent, *popupMenu ); // $$$$ AGE 2006-03-17: 
             selected_ = i;
             return true;

@@ -56,7 +56,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     Register( *new SpyLayer( viewport_, frame_ ) );
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
-    Register( *new MetricsLayer() );
+    Register( *new MetricsLayer( *this ) );
     Register( *new AgentsLayer( controller, actions, converter, *this, strategy_ ) );
 }
 
@@ -296,5 +296,15 @@ void GlWidget::DrawRectangle( const geometry::Rectangle2f& rect ) const
         glVertex2f( rect.Right(), rect.Top() );
         glVertex2f( rect.Right(), rect.Bottom() );
     glEnd();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::Print
+// Created: AGE 2006-03-20
+// -----------------------------------------------------------------------------
+void GlWidget::Print( const std::string& message, const geometry::Point2f& where ) const
+{
+    QGLWidget* that = const_cast< GlWidget* >( this );
+    that->renderText( where.X(), where.Y(), 0, message.c_str() );
 }
 

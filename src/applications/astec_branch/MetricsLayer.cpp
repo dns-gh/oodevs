@@ -9,13 +9,17 @@
 
 #include "astec_pch.h"
 #include "MetricsLayer.h"
+#include "GlTools_ABC.h"
+#include <iomanip>
 
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-MetricsLayer::MetricsLayer()
-    : gridStep_( 10000 )
+MetricsLayer::MetricsLayer( GlTools_ABC& tools )
+    : tools_   ( tools )
+    , gridStep_( 10000 )
+    , ruling_  ( false )
 {
     // NOTHING
 }
@@ -42,16 +46,24 @@ float MetricsLayer::Displace( float value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MetricsLayer::Initialize
+// Created: AGE 2006-03-20
+// -----------------------------------------------------------------------------
+void MetricsLayer::Initialize( const geometry::Rectangle2f& extent )
+{
+    extent_ = extent;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MetricsLayer::Paint
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void MetricsLayer::Paint( const geometry::Rectangle2f& viewport )
+void MetricsLayer::Paint( const geometry::Rectangle2f& v )
 {
+    geometry::Rectangle2f viewport = v.Intersect( extent_ );
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glColor4d( 1.0, 1.0, 1.0, 0.3 );
     glLineWidth( 1.0 );
-
-    glBegin( GL_LINES );
         for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridStep_ )
         {
             glVertex2f( x, viewport.Top()    );
@@ -64,6 +76,21 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& viewport )
             glVertex2f( viewport.Right(), y );
         }
     glEnd();
+
+    if( ruling_ )
+    {
+        glLineWidth( 2 );
+        glColor4d( COLOR_BLACK );
+        glBegin( GL_LINES );
+            glVertex2fv( (float*)& start_ );
+            glVertex2fv( (float*)& end_ );
+        glEnd();
+        const geometry::Point2f middle( 0.5f*( start_.X() + end_.X() ), 0.5*(start_.Y() + end_.Y() ) );
+        std::stringstream message;
+        message << "  " << std::setprecision( 2 ) << start_.Distance( end_ ) << "m";
+        tools_.Print( message.str(), middle );
+    }
+
     glPopAttrib();
 }
 
@@ -71,18 +98,35 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& viewport )
 // Name: MetricsLayer::HandleMousePress
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-bool MetricsLayer::HandleMousePress( Qt::ButtonState button, const geometry::Point2f& point )
+bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    // bleh
-    return true;
+    if( event->button() & Qt::LeftButton && event->state() == Qt::NoButton )
+        start_ = point;
+    else if( event->button() & Qt::LeftButton && event->state() & Qt::LeftButton )
+    {
+        ruling_ = false;
+        start_.Set( 0, 0 );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer::HandleMouseMove
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-bool MetricsLayer::HandleMouseMove( Qt::ButtonState button, const geometry::Point2f& point )
+bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    // bleh
-    return true;
+    if( event->state() == Qt::LeftButton  )
+    {
+        if( ! start_.IsZero() && start_.Distance( point ) > 10 * tools_.Pixels() )
+            ruling_ = true;
+        if( ruling_ )
+            end_ = point;
+    }
+    else
+    {
+        start_.Set( 0, 0 );
+        ruling_ = false;
+    }
+    return ruling_;
 }

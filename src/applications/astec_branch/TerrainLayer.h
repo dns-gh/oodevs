@@ -50,8 +50,6 @@ private:
     virtual bool ShouldUseList( const std::string& filename );
     virtual bool ShouldLoad( const std::string& filename );
 
-    virtual bool HandleKeyPress( int key );
-
     void DrawInnerShapes  ( const geometry::Rectangle2f& viewport ) const;
     void DrawShapesBorders( const geometry::Rectangle2f& viewport ) const;
     void DrawLinearShapes ( const geometry::Rectangle2f& viewport ) const;
