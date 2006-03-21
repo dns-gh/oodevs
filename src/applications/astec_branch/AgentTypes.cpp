@@ -28,7 +28,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 AgentTypes::AgentTypes( const std::string& scipioXml )
 {
-    xml::xifstream xisSymbols( "astec/symbols.xml" ); // $$$$ SBO 2006-03-20: !!!
+    xml::xifstream xisSymbols( "symbols.xml" ); // $$$$ SBO 2006-03-20: !!!
     symbolFactory_ = new SymbolFactory( xisSymbols );
 
     // $$$$ SBO 2006-03-16: qfileinfo?
