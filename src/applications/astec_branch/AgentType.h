@@ -44,6 +44,7 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
     const std::string& GetSymbol() const;
+    const std::string& GetLevelSymbol() const;
     //@}
 
 private:
@@ -73,6 +74,7 @@ private:
     AgentNature* nature_;
     T_Components equipments_;
     std::string symbol_;
+    std::string levelSymbol_;
     //@}
 };
 

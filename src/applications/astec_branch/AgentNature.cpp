@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "AgentNature.h"
 #include "xeumeuleu/xml.h"
+#include <boost/algorithm/string.hpp>
 
 using namespace xml;
 
@@ -50,7 +51,9 @@ void AgentNature::ReadNature( xml::xistream& xis, const std::string& name, const
     xis >> start( name )
             >> attribute( "type", type )
         >> end();
-    natures_[ symbolName ] = type; // $$$$ SBO 2006-03-20: !! can contain a comma separated list of natures
+    boost::replace_all( type, ",", "" );
+    boost::to_lower( type );
+    natures_[ symbolName ] = type;
 }
 
 // -----------------------------------------------------------------------------

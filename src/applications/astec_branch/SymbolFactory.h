@@ -15,7 +15,7 @@ namespace xml
     class xistream;
 }
 
-class AgentType;
+class AgentNature;
 class SymbolRule;
 
 // =============================================================================
@@ -36,7 +36,15 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateSymbol( const AgentType& type ) const;
+    std::string CreateSymbol     ( const AgentNature& nature ) const;
+    std::string CreateLevelSymbol( const AgentNature& nature ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< SymbolRule* >   T_Rules;
+    typedef T_Rules::const_iterator    CIT_Rules;
     //@}
 
 private:
@@ -48,20 +56,15 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadRule( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< SymbolRule* >   T_Rules;
-    typedef T_Rules::const_iterator    CIT_Rules;
+    void ReadRule( xml::xistream& xis, T_Rules& rules ) const;
+    std::string CreateSymbolFromRules( const AgentNature& nature, const T_Rules& rules ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Rules rules_;
+    T_Rules symbolRules_;
+    T_Rules levelRules_;
     //@}
 };
 

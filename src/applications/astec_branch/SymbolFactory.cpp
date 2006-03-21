@@ -21,8 +21,13 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 SymbolFactory::SymbolFactory( xml::xistream& xis )
 {
-    xis >> start( "rules" )
-            >> list( "rule", *this, ReadRule );
+    xis >> start( "rulesets" )
+            >> start( "symbols" )
+                >> list( "rule", *this, ReadRule, symbolRules_ )
+            >> end()
+            >> start( "levels" )
+                >> list( "rule", *this, ReadRule, levelRules_ )
+            >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +36,9 @@ SymbolFactory::SymbolFactory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 SymbolFactory::~SymbolFactory()
 {
-    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
+    for( CIT_Rules it = symbolRules_.begin(); it != symbolRules_.end(); ++it )
+        delete *it;
+    for( CIT_Rules it = levelRules_.begin(); it != levelRules_.end(); ++it )
         delete *it;
 }
 
@@ -39,20 +46,38 @@ SymbolFactory::~SymbolFactory()
 // Name: SymbolFactory::ReadRule
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void SymbolFactory::ReadRule( xml::xistream& xis )
+void SymbolFactory::ReadRule( xml::xistream& xis, T_Rules& rules ) const
 {
-    rules_.push_back( new SymbolRule( xis ) );
+    rules.push_back( new SymbolRule( xis ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::CreateSymbol
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-std::string SymbolFactory::CreateSymbol( const AgentType& type ) const
+std::string SymbolFactory::CreateSymbol( const AgentNature& nature ) const
 {
-    SymbolRequest request( type );
-        
-    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
+    return CreateSymbolFromRules( nature, symbolRules_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateLevelSymbol
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateLevelSymbol( const AgentNature& nature ) const
+{
+    return CreateSymbolFromRules( nature, levelRules_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateSymbolFromRules
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateSymbolFromRules( const AgentNature& nature, const T_Rules& rules ) const
+{
+    SymbolRequest request( nature );
+
+    for( CIT_Rules it = rules.begin(); it != rules.end(); ++it )
     {
         std::string value = (*it)->Evaluate( request );
         if( !value.empty() )

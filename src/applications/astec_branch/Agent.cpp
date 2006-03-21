@@ -229,4 +229,5 @@ const Agent* Agent::GetSuperior() const
 void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
     tools.DrawApp6Symbol( type_->GetSymbol(), where );
+    tools.DrawApp6Symbol( type_->GetLevelSymbol(), where );
 }

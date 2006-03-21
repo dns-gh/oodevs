@@ -10,7 +10,7 @@
 #ifndef __SymbolRequest_h_
 #define __SymbolRequest_h_
 
-class AgentType;
+class AgentNature;
 
 // =============================================================================
 /** @class  SymbolRequest
@@ -24,7 +24,7 @@ class SymbolRequest
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SymbolRequest( const AgentType& type );
+    explicit SymbolRequest( const AgentNature& nature );
     virtual ~SymbolRequest();
     //@}
 
@@ -43,7 +43,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const AgentType& type_;
+    const AgentNature& nature_;
     //@}
 };
 

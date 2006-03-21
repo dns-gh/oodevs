@@ -35,7 +35,8 @@ AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std
             >> list( "Equipement", *this, ReadEquipment, componentResolver )
         >> end();
     nature_ = nature.release();
-    symbol_ = symbolFactory.CreateSymbol( *this );
+    symbol_      = symbolFactory.CreateSymbol( *nature_ );
+    levelSymbol_ = symbolFactory.CreateLevelSymbol( *nature_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,4 +106,13 @@ const AgentNature& AgentType::GetNature() const
 const std::string& AgentType::GetSymbol() const
 {
     return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetLevelSymbol
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+const std::string& AgentType::GetLevelSymbol() const
+{
+    return levelSymbol_;
 }
