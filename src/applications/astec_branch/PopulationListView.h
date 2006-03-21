@@ -12,6 +12,7 @@
 
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 class Controller;
 class Population;
@@ -26,6 +27,7 @@ class ActionController;
 class PopulationListView : public QListView
                          , public Observer_ABC
                          , public ElementObserver_ABC< Population >
+                         , public SelectionObserver_Base< Population >
 {
     Q_OBJECT;
 
@@ -55,6 +57,7 @@ private:
     virtual void NotifyCreated( const Population& popu );
     virtual void NotifyUpdated( const Population& popu );
     virtual void NotifyDeleted( const Population& popu );
+    virtual void Select( const Population& popu );
     //@}
 
 private:

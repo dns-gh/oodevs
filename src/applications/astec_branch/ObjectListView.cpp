@@ -115,3 +115,13 @@ QSize ObjectListView::sizeHint() const
 {
     return QSize( 230, 340 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::Select
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void ObjectListView::Select( const Object_ABC& object )
+{
+    setSelected( FindItem( &object, firstChild() ), true );
+    ensureItemVisible( selectedItem() );
+}

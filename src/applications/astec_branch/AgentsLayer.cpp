@@ -107,7 +107,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     if( agents_.empty() || !event || event->state() == Qt::NoButton )
         return false;
     
-    if( selected_ >= agents_.size() || ! IsInSelection( *agents_[ selected_ ], point ) )
+    if( selected_ >= agents_.size() || ! IsInSelection( *agents_[ selected_ ], point ) || ++selected_ >= agents_.size() )
         selected_ = 0;
 
     for( unsigned i = selected_; i < agents_.size(); ++i )

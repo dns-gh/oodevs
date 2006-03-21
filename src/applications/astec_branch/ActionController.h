@@ -44,9 +44,15 @@ public:
     template< typename T >
     void Select( const T& element )
     {
-        Apply( SelectionObserver_ABC::BeforeSelection );
-        Apply( SelectionObserver_Base< T >::Select, element );
-        Apply( SelectionObserver_ABC::AfterSelection );
+        // avoid reentrance
+        if( ! selecting_ )
+        {
+            selecting_ = true;
+            Apply( SelectionObserver_ABC::BeforeSelection );
+            Apply( SelectionObserver_Base< T >::Select, element );
+            Apply( SelectionObserver_ABC::AfterSelection );
+        }
+        selecting_ = false;
     }
 
     template< typename T >
@@ -61,6 +67,11 @@ private:
     //@{
     ActionController( const ActionController& );            //!< Copy constructor
     ActionController& operator=( const ActionController& ); //!< Assignement operator
+    //@}
+
+    //! @name Member data
+    //@{
+    bool selecting_;
     //@}
 };
 

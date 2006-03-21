@@ -15,6 +15,7 @@
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 ActionController::ActionController()
+    : selecting_( false )
 {
     // NOTHING
 }

@@ -87,3 +87,13 @@ void PopulationListView::OnSelectionChange( QListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     item->Select( actionController_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::Select
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void PopulationListView::Select( const Population& popu )
+{
+    setSelected( FindItem( &popu, firstChild() ), true );
+    ensureItemVisible( selectedItem() );
+}

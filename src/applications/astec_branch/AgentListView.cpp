@@ -50,6 +50,7 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionCo
 //    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controller.Register( *this );
+    actionController.Register( *this );
 }
 
 
@@ -214,4 +215,34 @@ void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos,
 QSize AgentListView::sizeHint() const
 {
     return QSize( 230, 340 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Select
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void AgentListView::Select( const Team& element )
+{
+   setSelected( FindItem( &element, firstChild() ), true );
+   ensureItemVisible( selectedItem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Select
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void AgentListView::Select( const KnowledgeGroup& element )
+{
+   setSelected( FindItem( &element, firstChild() ), true );
+   ensureItemVisible( selectedItem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Select
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void AgentListView::Select( const Agent& element )
+{
+   setSelected( FindItem( &element, firstChild() ), true );
+   ensureItemVisible( selectedItem() );
 }

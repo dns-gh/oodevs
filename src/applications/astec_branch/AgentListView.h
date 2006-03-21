@@ -22,6 +22,7 @@
 #include "ListView.h"
 #include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
+#include "SelectionObserver_ABC.h"
 
 class Team;
 class KnowledgeGroup;
@@ -45,6 +46,9 @@ class AgentListView : public ListView< AgentListView >
                     , public ElementObserver_ABC< KnowledgeGroup >
                     , public ElementObserver_ABC< Agent >
                     , public ElementObserver_ABC< AutomatDecisions >
+                    , public SelectionObserver_Base< Team > // $$$$ AGE 2006-03-21: refactor these crap
+                    , public SelectionObserver_Base< KnowledgeGroup >
+                    , public SelectionObserver_Base< Agent >
 {
    Q_OBJECT;
 public:
@@ -87,6 +91,10 @@ private:
     virtual void NotifyUpdated( const KnowledgeGroup& group );
     virtual void NotifyUpdated( const Agent& agent );
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
+
+    virtual void Select( const Team& element );
+    virtual void Select( const KnowledgeGroup& element );
+    virtual void Select( const Agent& element );
 
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );

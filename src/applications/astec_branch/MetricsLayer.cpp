@@ -64,6 +64,7 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& v )
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glColor4d( 1.0, 1.0, 1.0, 0.3 );
     glLineWidth( 1.0 );
+    glBegin( GL_LINES );
         for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridStep_ )
         {
             glVertex2f( x, viewport.Top()    );
@@ -87,7 +88,7 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& v )
         glEnd();
         const geometry::Point2f middle( 0.5f*( start_.X() + end_.X() ), 0.5*(start_.Y() + end_.Y() ) );
         std::stringstream message;
-        message << "  " << std::setprecision( 2 ) << start_.Distance( end_ ) << "m";
+        message << "  " << std::setw( 1 ) << start_.Distance( end_ ) << "m";
         tools_.Print( message.str(), middle );
     }
 
