@@ -9,6 +9,8 @@
 
 #include "astec_pch.h"
 #include "AutomatType.h"
+#include "SymbolFactory.h"
+#include "GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -18,7 +20,8 @@ using namespace xml;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver )
+                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+                                            , const SymbolFactory& symbolFactory )
 {
     int id;
     std::string modelName;
@@ -35,6 +38,7 @@ AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std
         >> start( "PionPC" )
             >> attribute( "type", pcType );
     pcType_ = & agentResolver.Get( pcType );
+    symbol_ = symbolFactory.CreateAutomatSymbol();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,4 +75,13 @@ unsigned long AutomatType::GetId()
 const DecisionalModel& AutomatType::GetDecisionalModel() const
 {
     return *model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::Draw
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+void AutomatType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    tools.DrawApp6Symbol( symbol_, where );
 }

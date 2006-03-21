@@ -12,6 +12,7 @@
 #include "xeumeuleu/xml.h"
 #include "AgentNature.h"
 #include "SymbolFactory.h"
+#include "GlTools_ABC.h"
 
 using namespace xml;
 
@@ -91,28 +92,11 @@ const DecisionalModel& AgentType::GetDecisionalModel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentType::GetNature
-// Created: SBO 2006-03-20
-// -----------------------------------------------------------------------------
-const AgentNature& AgentType::GetNature() const
-{
-    return *nature_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentType::GetSymbol
-// Created: SBO 2006-03-20
-// -----------------------------------------------------------------------------
-const std::string& AgentType::GetSymbol() const
-{
-    return symbol_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentType::GetLevelSymbol
+// Name: AgentType::Draw
 // Created: SBO 2006-03-21
 // -----------------------------------------------------------------------------
-const std::string& AgentType::GetLevelSymbol() const
+void AgentType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
-    return levelSymbol_;
+    tools.DrawApp6Symbol( symbol_, where );
+    tools.DrawApp6Symbol( levelSymbol_, where );
 }

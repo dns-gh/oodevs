@@ -11,9 +11,11 @@
 #define __AutomatType_h_
 
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class DecisionalModel;
 class AgentType;
+class SymbolFactory;
 
 namespace xml { class xistream; };
 
@@ -23,14 +25,15 @@ namespace xml { class xistream; };
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AutomatType
+class AutomatType : public Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver );
+                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+                                            , const SymbolFactory& symbolFactory );
     virtual ~AutomatType();
     //@}
 
@@ -39,6 +42,7 @@ public:
     unsigned long GetId();
     AgentType* GetTypePC();
     const DecisionalModel& GetDecisionalModel() const;
+    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -61,7 +65,7 @@ private:
 
     DecisionalModel* model_;
     AgentType* pcType_;
-
+    std::string symbol_;
     //@}
 };
 

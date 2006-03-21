@@ -36,8 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateSymbol     ( const AgentNature& nature ) const;
-    std::string CreateLevelSymbol( const AgentNature& nature ) const;
+    std::string CreateSymbol       ( const AgentNature& nature ) const;
+    std::string CreateLevelSymbol  ( const AgentNature& nature ) const;
+    std::string CreateAutomatSymbol() const;
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     //! @name Helpers
     //@{
     void ReadRule( xml::xistream& xis, T_Rules& rules ) const;
+    void ReadAutomatRule( xml::xistream& xis );
     std::string CreateSymbolFromRules( const AgentNature& nature, const T_Rules& rules ) const;
     //@}
 
@@ -65,6 +67,7 @@ private:
     //@{
     T_Rules symbolRules_;
     T_Rules levelRules_;
+    std::string automatSymbol_;
     //@}
 };
 

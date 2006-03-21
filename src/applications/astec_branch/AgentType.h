@@ -11,6 +11,7 @@
 #define __AgentType_h_
 
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 namespace xml { class xistream; };
 
@@ -25,7 +26,7 @@ class SymbolFactory;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentType
+class AgentType : public Drawable_ABC
 {
 
 public:
@@ -42,9 +43,7 @@ public:
     unsigned long GetId() const;
     const std::string& GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
-    const AgentNature& GetNature() const;
-    const std::string& GetSymbol() const;
-    const std::string& GetLevelSymbol() const;
+    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

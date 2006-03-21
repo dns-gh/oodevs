@@ -22,6 +22,9 @@ using namespace xml;
 SymbolFactory::SymbolFactory( xml::xistream& xis )
 {
     xis >> start( "rulesets" )
+            >> start( "automats" )
+                >> list( "rule", *this, ReadAutomatRule )
+            >> end()
             >> start( "symbols" )
                 >> list( "rule", *this, ReadRule, symbolRules_ )
             >> end()
@@ -49,6 +52,15 @@ SymbolFactory::~SymbolFactory()
 void SymbolFactory::ReadRule( xml::xistream& xis, T_Rules& rules ) const
 {
     rules.push_back( new SymbolRule( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::ReadAutomatRule
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+void SymbolFactory::ReadAutomatRule( xml::xistream& xis )
+{
+    xis >> attribute( "default", automatSymbol_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,4 +96,13 @@ std::string SymbolFactory::CreateSymbolFromRules( const AgentNature& nature, con
             return value;
     }
     return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateAutomatSymbol
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateAutomatSymbol() const
+{
+    return automatSymbol_;
 }
