@@ -13,9 +13,11 @@
 #include "Resolver_ABC.h"
 
 namespace xml { class xistream; };
+
 class ComponentType;
-class Nature;
+class AgentNature;
 class DecisionalModel;
+class SymbolFactory;
 
 // =============================================================================
 /** @class  AgentType
@@ -30,7 +32,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver
-                                          , const Resolver_ABC< DecisionalModel, std::string >& modelResolver );
+                                          , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+                                          , const SymbolFactory& symbolFactory );
     virtual ~AgentType();
     //@}
 
@@ -39,6 +42,8 @@ public:
     unsigned long GetId() const;
     const std::string& GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
+    const AgentNature& GetNature() const;
+    const std::string& GetSymbol() const;
     //@}
 
 private:
@@ -65,8 +70,9 @@ private:
     unsigned long id_;
 
     DecisionalModel* model_;
-    Nature* nature_;
+    AgentNature* nature_;
     T_Components equipments_;
+    std::string symbol_;
     //@}
 };
 

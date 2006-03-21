@@ -8,55 +8,56 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "ComponentType.h"
+#include "SymbolCase.h"
+#include "SymbolRule.h"
+#include "SymbolRequest.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: ComponentType constructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-ComponentType::ComponentType( xml::xistream& xis )
-    : hasMaintenance_( false )
-    , hasMedical_( false )
-    , hasSupply_( false )
-{
-    int id;
-    xis >> attribute( "nom", name_ )
-            >> content( "MosID", id );
-    id_ = id;
-
-    xis >> optional() 
-        >> start( "FonctionsLogistiques" )
-            >> list( "Maintenance", *this, ReadPresence, hasMaintenance_ )
-            >> list( "Sante", *this, ReadPresence, hasMedical_ )
-            >> list( "Ravitaillement", *this, ReadPresence, hasSupply_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComponentType destructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-ComponentType::~ComponentType()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComponentType::ReadPresence
+// Name: SymbolCase constructor
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void ComponentType::ReadPresence( xml::xistream& , bool& flag ) const
+SymbolCase::SymbolCase( xml::xistream& xis )
 {
-    flag = true;
+    xis >> attribute( "value", value_ )
+            >> list( "rule", *this, ReadRule );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: SymbolCase destructor
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+SymbolCase::~SymbolCase()
+{
+    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ComponentType::GetName
-// Created: AGE 2006-02-14
+// Name: SymbolCase::ReadRule
+// Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-const std::string& ComponentType::GetName() const
+void SymbolCase::ReadRule( xml::xistream& xis )
 {
-    return name_;
+    rules_.push_back( new SymbolRule( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolCase::Evaluate
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+std::string SymbolCase::Evaluate( const std::string& ruleName, const SymbolRequest& request ) const
+{
+    if( !request.Matches( ruleName, value_ ) )
+        return "";
+
+    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
+    {
+        const std::string value = (*it)->Evaluate( request );
+        if( !value.empty() )
+            return value;
+    }
+    return "";        
 }

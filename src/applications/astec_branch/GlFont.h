@@ -7,54 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __ComponentType_h_
-#define __ComponentType_h_
-
-namespace xml { class xistream; };
+#ifndef __GlFont_h_
+#define __GlFont_h_
 
 // =============================================================================
-/** @class  ComponentType
-    @brief  ComponentType
+/** @class  GlFont
+    @brief  Gl font
 */
-// Created: AGE 2006-02-14
+// Created: SBO 2006-03-20
 // =============================================================================
-class ComponentType
+class GlFont
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ComponentType( xml::xistream& xis );
-    virtual ~ComponentType();
+             GlFont( const std::string& font );
+    virtual ~GlFont();
     //@}
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    void Print( const geometry::Point2f& where, const std::string& message, float rFontSize = 1.0f );
+    geometry::Point2f GetTextSize( const std::string& message ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ComponentType( const ComponentType& );            //!< Copy constructor
-    ComponentType& operator=( const ComponentType& ); //!< Assignement operator
+    GlFont( const GlFont& );            //!< Copy constructor
+    GlFont& operator=( const GlFont& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    void ReadPresence( xml::xistream& , bool& flag ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string   name_;
-    unsigned long id_;
-
-    bool hasMaintenance_;
-    bool hasMedical_;
-    bool hasSupply_;
+    unsigned int        nBasePoly_;
+    GLYPHMETRICSFLOAT	gmfPoly_[256];
     //@}
 };
 
-#endif // __ComponentType_h_
+#endif // __GlFont_h_

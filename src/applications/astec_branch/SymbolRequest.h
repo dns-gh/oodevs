@@ -7,54 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __ComponentType_h_
-#define __ComponentType_h_
+#ifndef __SymbolRequest_h_
+#define __SymbolRequest_h_
 
-namespace xml { class xistream; };
+class AgentType;
 
 // =============================================================================
-/** @class  ComponentType
-    @brief  ComponentType
+/** @class  SymbolRequest
+    @brief  Symbol request
 */
-// Created: AGE 2006-02-14
+// Created: SBO 2006-03-20
 // =============================================================================
-class ComponentType
+class SymbolRequest
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ComponentType( xml::xistream& xis );
-    virtual ~ComponentType();
+    explicit SymbolRequest( const AgentType& type );
+    virtual ~SymbolRequest();
     //@}
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    bool Matches( const std::string& name, const std::string& value ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ComponentType( const ComponentType& );            //!< Copy constructor
-    ComponentType& operator=( const ComponentType& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadPresence( xml::xistream& , bool& flag ) const;
+    SymbolRequest( const SymbolRequest& );            //!< Copy constructor
+    SymbolRequest& operator=( const SymbolRequest& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string   name_;
-    unsigned long id_;
-
-    bool hasMaintenance_;
-    bool hasMedical_;
-    bool hasSupply_;
+    const AgentType& type_;
     //@}
 };
 
-#endif // __ComponentType_h_
+#endif // __SymbolRequest_h_

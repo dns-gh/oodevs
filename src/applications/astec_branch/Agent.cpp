@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "KnowledgeGroup.h"
 #include "Attributes.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
@@ -218,4 +219,14 @@ const DecisionalModel* Agent::GetAutomatDecisionalModel() const
 const Agent* Agent::GetSuperior() const
 {
     return superior_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Draw
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    tools.DrawApp6Symbol( type_->GetSymbol(), where );
 }

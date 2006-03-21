@@ -17,6 +17,7 @@
 #include "PopulationType.h"
 #include "DotationType.h"
 #include "MissionFactory.h"
+#include "SymbolFactory.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -27,6 +28,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 AgentTypes::AgentTypes( const std::string& scipioXml )
 {
+    xml::xifstream xisSymbols( "astec/symbols.xml" ); // $$$$ SBO 2006-03-20: !!!
+    symbolFactory_ = new SymbolFactory( xisSymbols );
+
     // $$$$ SBO 2006-03-16: qfileinfo?
     const std::string baseDirectory = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
 
@@ -175,7 +179,7 @@ void AgentTypes::ReadAgents( const std::string& agents )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadAgentType( xml::xistream& xis )
 {
-    AgentType* type = new AgentType( xis, *this, *this );
+    AgentType* type = new AgentType( xis, *this, *this, *symbolFactory_ );
     Resolver< AgentType >             ::Register( type->GetId(), *type );
     Resolver< AgentType, std::string >::Register( type->GetName(), *type );
 }

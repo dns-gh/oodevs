@@ -10,7 +10,8 @@
 #include "astec_pch.h"
 #include "AgentType.h"
 #include "xeumeuleu/xml.h"
-#include "Nature.h"
+#include "AgentNature.h"
+#include "SymbolFactory.h"
 
 using namespace xml;
 
@@ -18,7 +19,7 @@ using namespace xml;
 // Name: AgentType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver, const Resolver_ABC< DecisionalModel, std::string >& modelResolver )
+AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver, const Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
     : nature_( 0 )
 {
     std::string modelName;
@@ -29,11 +30,12 @@ AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std
     id_ = id;
     model_ = & modelResolver.Get( modelName );
 
-    std::auto_ptr< Nature > nature( new Nature( xis ) );
+    std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> start( "Equipements" )
             >> list( "Equipement", *this, ReadEquipment, componentResolver )
         >> end();
     nature_ = nature.release();
+    symbol_ = symbolFactory.CreateSymbol( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,4 +87,22 @@ const std::string& AgentType::GetName() const
 const DecisionalModel& AgentType::GetDecisionalModel() const
 {
     return *model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetNature
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+const AgentNature& AgentType::GetNature() const
+{
+    return *nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetSymbol
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+const std::string& AgentType::GetSymbol() const
+{
+    return symbol_;
 }

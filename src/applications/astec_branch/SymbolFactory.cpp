@@ -8,55 +8,55 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "ComponentType.h"
+#include "SymbolFactory.h"
+#include "SymbolRequest.h"
+#include "SymbolRule.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: ComponentType constructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-ComponentType::ComponentType( xml::xistream& xis )
-    : hasMaintenance_( false )
-    , hasMedical_( false )
-    , hasSupply_( false )
-{
-    int id;
-    xis >> attribute( "nom", name_ )
-            >> content( "MosID", id );
-    id_ = id;
-
-    xis >> optional() 
-        >> start( "FonctionsLogistiques" )
-            >> list( "Maintenance", *this, ReadPresence, hasMaintenance_ )
-            >> list( "Sante", *this, ReadPresence, hasMedical_ )
-            >> list( "Ravitaillement", *this, ReadPresence, hasSupply_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComponentType destructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-ComponentType::~ComponentType()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComponentType::ReadPresence
+// Name: SymbolFactory constructor
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void ComponentType::ReadPresence( xml::xistream& , bool& flag ) const
+SymbolFactory::SymbolFactory( xml::xistream& xis )
 {
-    flag = true;
+    xis >> start( "rules" )
+            >> list( "rule", *this, ReadRule );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ComponentType::GetName
-// Created: AGE 2006-02-14
+// Name: SymbolFactory destructor
+// Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-const std::string& ComponentType::GetName() const
+SymbolFactory::~SymbolFactory()
 {
-    return name_;
+    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
+        delete *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::ReadRule
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+void SymbolFactory::ReadRule( xml::xistream& xis )
+{
+    rules_.push_back( new SymbolRule( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateSymbol
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateSymbol( const AgentType& type ) const
+{
+    SymbolRequest request( type );
+        
+    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
+    {
+        std::string value = (*it)->Evaluate( request );
+        if( !value.empty() )
+            return value;
+    }
+    return "";
 }

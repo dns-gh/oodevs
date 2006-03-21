@@ -23,6 +23,7 @@ class PopulationType;
 class DotationType;
 class MissionFactory;
 class Mission;
+class SymbolFactory;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -84,6 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
+    SymbolFactory* symbolFactory_;
     //@}
 };
 

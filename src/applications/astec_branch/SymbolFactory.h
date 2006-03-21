@@ -7,54 +7,62 @@
 //
 // *****************************************************************************
 
-#ifndef __ComponentType_h_
-#define __ComponentType_h_
+#ifndef __SymbolFactory_h_
+#define __SymbolFactory_h_
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
+
+class AgentType;
+class SymbolRule;
 
 // =============================================================================
-/** @class  ComponentType
-    @brief  ComponentType
+/** @class  SymbolFactory
+    @brief  Symbol factory
 */
-// Created: AGE 2006-02-14
+// Created: SBO 2006-03-20
 // =============================================================================
-class ComponentType
+class SymbolFactory
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ComponentType( xml::xistream& xis );
-    virtual ~ComponentType();
+    explicit SymbolFactory( xml::xistream& xis );
+    virtual ~SymbolFactory();
     //@}
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    std::string CreateSymbol( const AgentType& type ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ComponentType( const ComponentType& );            //!< Copy constructor
-    ComponentType& operator=( const ComponentType& ); //!< Assignement operator
+    SymbolFactory( const SymbolFactory& );            //!< Copy constructor
+    SymbolFactory& operator=( const SymbolFactory& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    void ReadPresence( xml::xistream& , bool& flag ) const;
+    void ReadRule( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< SymbolRule* >   T_Rules;
+    typedef T_Rules::const_iterator    CIT_Rules;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string   name_;
-    unsigned long id_;
-
-    bool hasMaintenance_;
-    bool hasMedical_;
-    bool hasSupply_;
+    T_Rules rules_;
     //@}
 };
 
-#endif // __ComponentType_h_
+#endif // __SymbolFactory_h_

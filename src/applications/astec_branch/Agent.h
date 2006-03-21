@@ -16,6 +16,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class AgentType;
@@ -35,6 +36,7 @@ class Agent : public Agent_ABC
             , public Updatable_ABC< ASN1T_MsgChangeAutomate >
             , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
             , public Resolver< Agent > // $$$$ AGE 2006-02-16: Split Agent and Automat
+            , public Drawable_ABC
 {
 
 public:
@@ -85,6 +87,8 @@ private:
     void ChangeSuperior( unsigned long id );
     void AddChild   ( Agent& child );
     void RemoveChild( Agent& child );
+
+    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

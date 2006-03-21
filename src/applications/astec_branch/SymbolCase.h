@@ -7,54 +7,63 @@
 //
 // *****************************************************************************
 
-#ifndef __ComponentType_h_
-#define __ComponentType_h_
+#ifndef __SymbolCase_h_
+#define __SymbolCase_h_
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
+
+class SymbolRequest;
+class SymbolRule;
 
 // =============================================================================
-/** @class  ComponentType
-    @brief  ComponentType
+/** @class  SymbolCase
+    @brief  Symbol case
 */
-// Created: AGE 2006-02-14
+// Created: SBO 2006-03-20
 // =============================================================================
-class ComponentType
+class SymbolCase
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ComponentType( xml::xistream& xis );
-    virtual ~ComponentType();
+    explicit SymbolCase( xml::xistream& xis );
+    virtual ~SymbolCase();
     //@}
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    std::string Evaluate( const std::string& ruleName, const SymbolRequest& request ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ComponentType( const ComponentType& );            //!< Copy constructor
-    ComponentType& operator=( const ComponentType& ); //!< Assignement operator
+    SymbolCase( const SymbolCase& );            //!< Copy constructor
+    SymbolCase& operator=( const SymbolCase& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    void ReadPresence( xml::xistream& , bool& flag ) const;
+    void ReadRule( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< SymbolRule* >   T_Rules;
+    typedef T_Rules::const_iterator    CIT_Rules;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string   name_;
-    unsigned long id_;
-
-    bool hasMaintenance_;
-    bool hasMedical_;
-    bool hasSupply_;
+    std::string value_;
+    T_Rules     rules_;
     //@}
 };
 
-#endif // __ComponentType_h_
+#endif // __SymbolCase_h_

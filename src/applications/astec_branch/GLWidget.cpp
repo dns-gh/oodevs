@@ -15,6 +15,7 @@
 #include "Agent.h"
 #include "ColorStrategy.h"
 #include "MetricsLayer.h"
+#include "GlFont.h"
 
 using namespace geometry;
 
@@ -66,6 +67,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
 // -----------------------------------------------------------------------------
 GlWidget::~GlWidget()
 {
+    delete app6Font_;
     delete &strategy_;
     glDeleteLists( circle_, 1 );
 }
@@ -78,6 +80,7 @@ void GlWidget::initializeGL()
 {
     MapWidget::initializeGL();
     circle_ = GenerateCircle();
+    app6Font_ = new GlFont( "Scipio" );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,3 +311,13 @@ void GlWidget::Print( const std::string& message, const geometry::Point2f& where
     that->renderText( where.X(), where.Y(), 0, message.c_str() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: GLWidget::DrawApp6Symbol
+// Created: SBO 2006-03-20
+// -----------------------------------------------------------------------------
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where ) const
+{
+    const geometry::Point2f& fontSize = app6Font_->GetTextSize( symbol );
+    const float size = 600.f;
+    app6Font_->Print( geometry::Point2f( where.X() - fontSize.X() * size / 2.f, where.Y() ), symbol, size );
+}
