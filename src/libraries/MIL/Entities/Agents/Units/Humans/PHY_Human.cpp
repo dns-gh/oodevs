@@ -320,10 +320,12 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
     else
         nDeathTimeStep_ = std::min( nDeathTimeStep_, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWound_->GetLifeExpectancy() );
     
+    NotifyHumanChanged( oldHumanState );   
+
+    // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
     if( !NeedMedical() )
         CancelLogisticRequest();
 
-    NotifyHumanChanged( oldHumanState );   
     return true;
 }
 
