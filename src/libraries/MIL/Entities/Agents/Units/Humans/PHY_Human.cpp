@@ -273,7 +273,7 @@ bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
 // -----------------------------------------------------------------------------
 void PHY_Human::ApplyMentalDisease()
 {
-    if( !IsUsable() || bMentalDiseased_ )
+    if( !IsUsable() || IsWounded() || bMentalDiseased_ )
         return;
 
     if( PHY_HumanWound::ChooseMentalDisease() )
