@@ -215,6 +215,7 @@ void PHY_MedicalHumanState::SendFullState() const
     NET_ASN_MsgLogSanteTraitementHumainUpdate asn;
     asn.GetAsnMsg().oid_consigne          = nID_;
     asn.GetAsnMsg().oid_pion              = pPion_->GetID();
+
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
@@ -225,12 +226,14 @@ void PHY_MedicalHumanState::SendFullState() const
         asn.GetAsnMsg().etat                           = EnumLogSanteTraitementEtat::termine;
     }
 
-    asn.GetAsnMsg().m.blesse_mentalPresent = 1;
-    asn.GetAsnMsg().m.blessurePresent      = 1;
-    asn.GetAsnMsg().m.contamine_nbcPresent = 1;        
-    asn.GetAsnMsg().blessure               = pHuman_->GetWound().GetAsnID();
-    asn.GetAsnMsg().blesse_mental          = pHuman_->IsMentalDiseased();
-    asn.GetAsnMsg().contamine_nbc          = pHuman_->IsContaminated();
+    asn.GetAsnMsg().m.blesse_mentalPresent         = 1;
+    asn.GetAsnMsg().m.blessurePresent              = 1;
+    asn.GetAsnMsg().m.contamine_nbcPresent         = 1;        
+    asn.GetAsnMsg().m.diagnostique_effectuePresent = 1;
+    asn.GetAsnMsg().blessure                       = pHuman_->GetWound().GetAsnID();
+    asn.GetAsnMsg().blesse_mental                  = pHuman_->IsMentalDiseased();
+    asn.GetAsnMsg().contamine_nbc                  = pHuman_->IsContaminated();    
+    asn.GetAsnMsg().diagnostique_effectue          = bDiagnosed_;
 
     asn.Send();
 }
@@ -268,6 +271,10 @@ void PHY_MedicalHumanState::SendChangedState() const
         asn.GetAsnMsg().blesse_mental          = pHuman_->IsMentalDiseased();
         asn.GetAsnMsg().contamine_nbc          = pHuman_->IsContaminated();
     }
+
+    asn.GetAsnMsg().m.diagnostique_effectuePresent = 1;
+    asn.GetAsnMsg().diagnostique_effectue          = bDiagnosed_;
+
     asn.Send();
 }
 

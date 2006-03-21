@@ -37,6 +37,7 @@ LogMaintenanceConsign_ListView_Item::LogMaintenanceConsign_ListView_Item( QListV
     pListViewItemEquipmentType_   = new QListViewItem( this, pListViewItemLogPionHandling_ , tr( "Type d'équipement : " ) + App::GetApp().GetEquipmentName( pConsign_->GetEquipmentTypeID() ).c_str() );
     pListViewItemBreakdownType_   = new QListViewItem( this, pListViewItemEquipmentType_   , tr( "Type de panne : " ) + App::GetApp().GetBreakDownName( pConsign_->GetBreakdownTypeID() ).c_str() );
     pListViewItemState_           = new QListViewItem( this, pListViewItemBreakdownType_   , "" );
+    pListViewItemDiagnosed_       = new QListViewItem( this, pListViewItemState_           , tr( "Diagnostique non effectué" ) );
 
     Update();
 
@@ -63,7 +64,8 @@ void LogMaintenanceConsign_ListView_Item::Update()
     else
         pListViewItemLogPionHandling_->setText( 0, tr( "Pas de pion log. traitant la consigne" ) );
 
-    pListViewItemState_->setText( 0, tr( "Etat : " ) +  QString( pConsign_->GetStateString().c_str() ) );
+    pListViewItemState_    ->setText( 0, tr( "Etat : " ) +  QString( pConsign_->GetStateString().c_str() ) );
+    pListViewItemDiagnosed_->setText( 0, pConsign_->IsDiagnosed() ? tr( "Diagnostique effectué" ) : tr( "Diagnostique non effectué" ) );
 }
 
 // -----------------------------------------------------------------------------

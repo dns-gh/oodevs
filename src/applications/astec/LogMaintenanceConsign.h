@@ -60,12 +60,14 @@ public:
     //! @name Accessors
     //@{
     uint        GetID() const;
-    Agent&  GetPion() const;
-    Agent*  GetPionLogHandling() const;
+    Agent&      GetPion() const;
+    Agent*      GetPionLogHandling() const;
     uint        GetEquipmentTypeID() const;
     uint        GetBreakdownTypeID() const;
     E_State     GetState() const;
     std::string GetStateString() const;
+
+    bool        IsDiagnosed() const;
     //@}
 
     //! @name Network events
@@ -75,11 +77,12 @@ public:
 
 private:
     uint        nID_;
-    Agent&  pion_;
-    Agent*  pPionLogHandling_;
+    Agent&      pion_;
+    Agent*      pPionLogHandling_;
     uint        nEquipmentTypeID_;
     uint        nBreakdownTypeID_;
     E_State     nState_;
+    bool        bDiagnosed_;
 };
 
 #include "LogMaintenanceConsign.inl"

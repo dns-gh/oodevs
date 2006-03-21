@@ -76,3 +76,12 @@ LogMaintenanceConsign::E_State LogMaintenanceConsign::GetState() const
     return nState_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::IsDiagnosed
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+inline
+bool LogMaintenanceConsign::IsDiagnosed() const
+{
+    return bDiagnosed_;
+}

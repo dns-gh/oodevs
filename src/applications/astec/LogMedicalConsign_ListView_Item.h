@@ -55,6 +55,7 @@ private:
     QListViewItem* pListViewItemMental_;
     QListViewItem* pListViewItemNBC_;
     QListViewItem* pListViewItemState_;
+    QListViewItem* pListViewItemDiagnosed_;
 };
 
 #include "LogMedicalConsign_ListView_Item.inl"

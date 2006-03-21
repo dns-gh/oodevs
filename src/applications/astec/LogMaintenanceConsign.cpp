@@ -35,6 +35,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( const ASN1T_MsgLogMaintenanceTrait
     , nEquipmentTypeID_( asn.type_equipement )
     , nBreakdownTypeID_( asn.type_panne )
     , nState_          ( eFinished )
+    , bDiagnosed_      ( false )
 {
     assert( &pion_ );
     pion_.AddConsign( *this );
@@ -73,8 +74,11 @@ void LogMaintenanceConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogMaintenanceTra
     else 
         pPionLogHandling_ = 0;
 
+    if( asn.m.etatPresent )
+        nState_ = (E_State)asn.etat;
 
-    nState_ = (E_State)asn.etat;
+    if( asn.m.diagnostique_effectuePresent )
+        bDiagnosed_ = asn.diagnostique_effectue;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +91,7 @@ std::string LogMaintenanceConsign::GetStateString() const
 
     switch( nState_ )
     {        
-    case eGoingFrom                   : strState = std::string( "En déplacement vers la chaine" ); break;         
+        case eGoingFrom               : strState = std::string( "En déplacement vers la chaine" ); break;         
         case eWaitingForCarrier       : strState = std::string( "En attente d'un remorqueur" ); break;         
         case eCarrierGoingTo          : strState = std::string( "Remorqueur en route" ); break;         
         case eCarrierLoading          : strState = std::string( "Remorqueur en cours de chargement" ); break;         

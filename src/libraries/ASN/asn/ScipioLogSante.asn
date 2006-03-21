@@ -52,7 +52,8 @@ MsgLogSanteTraitementHumainUpdate ::= SEQUENCE
     blessure              EnumHumanWound             OPTIONAL,
     blesse-mental         BOOLEAN                    OPTIONAL,
     contamine-nbc         BOOLEAN                    OPTIONAL,
-    etat                  EnumLogSanteTraitementEtat OPTIONAL
+    etat                  EnumLogSanteTraitementEtat OPTIONAL,
+    diagnostique-effectue BOOLEAN                    OPTIONAL    
 }
 
 MsgLogSanteTraitementHumainDestruction ::= SEQUENCE

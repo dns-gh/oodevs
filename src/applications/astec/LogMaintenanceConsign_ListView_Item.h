@@ -54,6 +54,7 @@ private:
     QListViewItem* pListViewItemEquipmentType_;
     QListViewItem* pListViewItemBreakdownType_;
     QListViewItem* pListViewItemState_;
+    QListViewItem* pListViewItemDiagnosed_;
 };
 
 #include "LogMaintenanceConsign_ListView_Item.inl"

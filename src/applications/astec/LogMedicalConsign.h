@@ -77,10 +77,11 @@ public:
     //! @name Accessors
     //@{
     uint        GetID() const;
-    Agent&  GetPion() const;
-    Agent*  GetPionLogHandling() const;
+    Agent&      GetPion() const;
+    Agent*      GetPionLogHandling() const;
     bool        IsContaminated() const;
     bool        IsMentalDeceased() const;
+    bool        IsDiagnosed     () const;
 
     E_State     GetState() const;
     std::string GetWoundAsString() const;
@@ -94,12 +95,13 @@ public:
 
 private:
     uint        nID_;
-    Agent&  pion_;
-    Agent*  pPionLogHandling_;
+    Agent&      pion_;
+    Agent*      pPionLogHandling_;
     E_Wound     wound_;
     bool        bMentalDeceased_;
     bool        bContaminated_;
     E_State     nState_;
+    bool        bDiagnosed_;
 };
 
 #include "LogMedicalConsign.inl"

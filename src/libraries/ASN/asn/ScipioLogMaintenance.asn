@@ -40,8 +40,10 @@ MsgLogMaintenanceTraitementEquipementUpdate ::= SEQUENCE
     oid-consigne          OID,
     oid-pion              Agent,                            -- pion possèdant l'equipement
     oid-pion-log-traitant Agent,                            -- pion LOG gérant la maintenance de l'equipement, 0 si aucun pion (demande passée à la BLIAT par exemple)
-    etat                  EnumLogMaintenanceTraitementEtat
+    etat                  EnumLogMaintenanceTraitementEtat OPTIONAL,
+    diagnostique-effectue BOOLEAN                          OPTIONAL
 }
+
 
 MsgLogMaintenanceTraitementEquipementDestruction ::= SEQUENCE
 {

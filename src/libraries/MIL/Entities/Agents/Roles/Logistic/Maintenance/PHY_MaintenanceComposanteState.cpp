@@ -209,12 +209,17 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate asn;
     asn.GetAsnMsg().oid_consigne          = nID_;
     asn.GetAsnMsg().oid_pion              = pPion_->GetID();
+
+    asn.GetAsnMsg().m.diagnostique_effectuePresent = 1;
+    asn.GetAsnMsg().m.diagnostique_effectuePresent = bDiagnosed_;
+
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
     {
         asn.GetAsnMsg().oid_pion_log_traitant = 0;
-        asn.GetAsnMsg().etat                  = EnumLogMaintenanceTraitementEtat::termine;
+        asn.GetAsnMsg().m.etatPresent         = 1;
+        asn.GetAsnMsg().etat                  = EnumLogMaintenanceTraitementEtat::termine;        
     }
     asn.Send();
 }
@@ -233,11 +238,16 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
     NET_ASN_MsgLogMaintenanceTraitementEquipementUpdate asn;
     asn.GetAsnMsg().oid_consigne          = nID_;
     asn.GetAsnMsg().oid_pion              = pPion_->GetID();
+
+    asn.GetAsnMsg().m.diagnostique_effectuePresent = 1;
+    asn.GetAsnMsg().m.diagnostique_effectuePresent = bDiagnosed_;
+
     if( pConsign_ )
         pConsign_->SendChangedState( asn );
     else
     {
         asn.GetAsnMsg().oid_pion_log_traitant = 0;
+        asn.GetAsnMsg().m.etatPresent         = 1;
         asn.GetAsnMsg().etat                  = EnumLogMaintenanceTraitementEtat::termine;
     }
     asn.Send();

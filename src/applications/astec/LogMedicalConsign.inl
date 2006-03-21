@@ -75,3 +75,13 @@ bool LogMedicalConsign::IsMentalDeceased() const
 {
     return bMentalDeceased_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::IsDiagnosed
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+inline
+bool LogMedicalConsign::IsDiagnosed() const
+{
+    return bDiagnosed_;
+}

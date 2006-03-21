@@ -418,6 +418,7 @@ void PHY_MaintenanceConsign_ABC::SendFullState( NET_ASN_MsgLogMaintenanceTraitem
     assert( pMaintenance_ );
     
     asn.GetAsnMsg().oid_pion_log_traitant = pMaintenance_->GetPion().GetID();
+    asn.GetAsnMsg().m.etatPresent         = 1;
     asn.GetAsnMsg().etat                  = (ASN1T_EnumLogMaintenanceTraitementEtat)nState_;
 }
 

@@ -39,6 +39,7 @@ LogMedicalConsign_ListView_Item::LogMedicalConsign_ListView_Item( QListView* pPa
     pListViewItemMental_          = new QListViewItem( this, pListViewItemWound_          , pConsign_->IsMentalDeceased() ? tr( "Reac. mental" ) : tr( "Non reac. mental" ) );
     pListViewItemNBC_             = new QListViewItem( this, pListViewItemMental_         , pConsign_->IsContaminated() ? tr( "Contaminé NBC" ) : tr( "Non contaminé NBC" ) );
     pListViewItemState_           = new QListViewItem( this, pListViewItemNBC_            , "" );
+    pListViewItemDiagnosed_       = new QListViewItem( this, pListViewItemState_          , tr( "Diagnostique non effectué" ) );
 
     Update();
 
@@ -65,11 +66,12 @@ void LogMedicalConsign_ListView_Item::Update()
     else
         pListViewItemLogPionHandling_->setText( 0, tr( "Pas de pion log. traitant la consigne" ) );
 
-    pListViewItemState_->setText( 0, tr( "Etat : " ) + QString( pConsign_->GetStateString().c_str() ) );
+    pListViewItemState_    ->setText( 0, tr( "Etat : " ) + QString( pConsign_->GetStateString().c_str() ) );
+    pListViewItemDiagnosed_->setText( 0, pConsign_->IsDiagnosed() ? tr( "Diagnostique effectué" ) : tr( "Diagnostique non effectué" ) );
 
-    pListViewItemWound_->setText ( 0, tr( "Blessure : " ) + tr( pConsign_->GetWoundAsString().c_str() ) );
+    pListViewItemWound_ ->setText( 0, tr( "Blessure : " ) + tr( pConsign_->GetWoundAsString().c_str() ) );
     pListViewItemMental_->setText( 0, pConsign_->IsMentalDeceased() ? tr( "Reac. mental" ) : tr( "Non reac. mental" ) );
-    pListViewItemNBC_->setText   ( 0, pConsign_->IsContaminated() ? tr( "Contaminé NBC" ) : tr( "Non contaminé NBC" ) );
+    pListViewItemNBC_   ->setText( 0, pConsign_->IsContaminated() ? tr( "Contaminé NBC" ) : tr( "Non contaminé NBC" ) );
 }
 
 // -----------------------------------------------------------------------------
