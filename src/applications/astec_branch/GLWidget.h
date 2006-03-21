@@ -82,6 +82,7 @@ private:
     unsigned int frame_;
     unsigned int circle_;
     GlFont* app6Font_;
+    GlFont* app6OutlinedFont_;
     //@}
 };
 

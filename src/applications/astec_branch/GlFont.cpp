@@ -14,52 +14,52 @@
 // Name: GlFont::GlFont
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-GlFont::GlFont( const std::string& name )
-    : nBasePoly_( glGenLists( 256 ) )
+GlFont::GlFont( const std::string& name, bool outlines )
+    : baseList_( glGenLists( 256 ) )
 {
     HDC hDC = qt_display_dc();
-    HFONT font = CreateFont(  -12,                              // Height Of Font
-                                0,                              // Width Of Font
-                                0,                              // Angle Of Escapement
-                                0,                              // Orientation Angle
-                                FW_THIN,                        // Font Weight
-                                FALSE,                          // Italic
-                                FALSE,                          // Underline
-                                FALSE,                          // Strikeout
-                                DEFAULT_CHARSET,                // Character Set Identifier
-                                OUT_TT_PRECIS,                  // Output Precision
-                                CLIP_DEFAULT_PRECIS,            // Clipping Precision
-                                ANTIALIASED_QUALITY,            // Output Quality
-                                FF_DONTCARE|DEFAULT_PITCH,      // Family And Pitch
+    HFONT font = CreateFont(  -12,
+                                0,
+                                0,
+                                0,
+                                FW_THIN,
+                                FALSE,
+                                FALSE,
+                                FALSE,
+                                DEFAULT_CHARSET,
+                                OUT_TT_PRECIS,
+                                CLIP_DEFAULT_PRECIS,
+                                ANTIALIASED_QUALITY,
+                                FF_DONTCARE|DEFAULT_PITCH,
                                 name.c_str() );
     if( font == NULL )
         throw std::runtime_error( "Unable to create font " + name );
 
-    if( SelectObject( hDC, font ) == NULL ) // Selects The Font We Created
+    if( SelectObject( hDC, font ) == NULL )
         throw std::runtime_error( "Unable to select font " + name );
 
-    BOOL result = wglUseFontOutlines( hDC,      // Select The Current DC
-                                      0,                              // Starting Character
-                                      255,                            // Number Of Display Lists To Build
-                                      nBasePoly_,                     // Starting Display Lists
-                                      0.005,                          // Deviation From The True Outlines
-                                      0.0f,                           // Font Thickness In The Z Direction
-                                      WGL_FONT_POLYGONS,              // Use Polygons, Not Lines
-                                      gmfPoly_ );                     // Address Of Buffer To Recieve Data
-    
+    BOOL result = wglUseFontOutlines( hDC,
+                                      0,
+                                      255,
+                                      baseList_,
+                                      0.005f,
+                                      0.0f,
+                                      outlines ? WGL_FONT_LINES : WGL_FONT_POLYGONS,
+                                      gmfPoly_ );
+
     if( result == FALSE )
         throw std::runtime_error( "wglUseFontOutlines failed" );
 
     DeleteObject( font );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GlFont::~GlFont
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 GlFont::~GlFont()
 {
-    glDeleteLists( nBasePoly_, 256 );
+    glDeleteLists( baseList_, 256 );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void GlFont::Print( const geometry::Point2f& where, const std::string& message, 
     glTranslatef( where.X(), where.Y(), 0.0f );
     glScalef( size, size, 1.f );
     glPushAttrib( GL_LIST_BIT );
-    glListBase( nBasePoly_ );
+    glListBase( baseList_ );
     glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
     glPopAttrib();
     glPopMatrix();
@@ -85,10 +85,13 @@ void GlFont::Print( const geometry::Point2f& where, const std::string& message, 
 // Name: GlFont::GetTextSize
 // Created: SBO 2006-03-21
 // -----------------------------------------------------------------------------
-geometry::Point2f GlFont::GetTextSize( const std::string& message ) const
+geometry::Vector2f GlFont::GetTextSize( const std::string& message ) const
 {
-    geometry::Point2f size( 0. ,0. );
+    float x = 0, y = 0;
     for( std::string::const_iterator it = message.begin(); it != message.end(); ++it )
-        size.Set( size.X() + gmfPoly_[ *it ].gmfCellIncX, std::max( size.Y(), gmfPoly_[ *it ].gmfBlackBoxY ) );
-    return size;
+    {
+        x += gmfPoly_[ *it ].gmfCellIncX;
+        y = std::max( y, gmfPoly_[ *it ].gmfBlackBoxY );
+    }
+    return geometry::Vector2f( x, y );
 }

@@ -17,6 +17,7 @@
 #include "Positions.h"
 #include "SelectionProxy.h"
 #include "ColorStrategy_ABC.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -28,6 +29,7 @@ AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, con
     , tools_    ( tools )
     , strategy_ ( strategy )
     , selected_ ( 0 )
+    , menu_( new QPopupMenu() ) // $$$$ AGE 2006-03-20: don't make the menu_ orphan
 {
     controller.Register( *this );
 }
@@ -40,6 +42,7 @@ AgentsLayer::~AgentsLayer()
 {
     // $$$$ AGE 2006-03-16: 
     //    controller_.Remove( *this );
+    delete menu_;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +104,7 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( agents_.empty() )
+    if( agents_.empty() || !event || event->state() == Qt::NoButton )
         return false;
     
     if( selected_ >= agents_.size() || ! IsInSelection( *agents_[ selected_ ], point ) )
@@ -115,8 +118,13 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
             int button = event->button();
             if( button == Qt::LeftButton )
                 actions_.Select( agent );
-//            else if( button == Qt::RightButton )
-//                actions_.ContextMenu( agent, *popupMenu ); // $$$$ AGE 2006-03-17: 
+            else if( button == Qt::RightButton )
+            {
+                menu_->clear();
+                actions_.ContextMenu( agent, *menu_ );
+                if( menu_->count() > 0 )
+                    menu_->popup( event->globalPos() );
+            }
             selected_ = i;
             return true;
         }
@@ -130,5 +138,5 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 bool AgentsLayer::IsInSelection( const Agent& agent, const geometry::Point2f& point ) const
 {
-    return agent.Get< Positions >().GetPosition().Distance( point ) < 100.f; // $$$$ SBO 2006-03-16: 
+    return agent.Get< Positions >().GetPosition().Distance( point ) < 10 * tools_.Pixels();
 }

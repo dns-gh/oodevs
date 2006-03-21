@@ -172,5 +172,5 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 void Attributes::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
      // $$$$ AGE 2006-03-17: Move out ?
-    tools.DrawCross( where );
+    tools.DrawCross( where, GL_CROSSSIZE );
 }

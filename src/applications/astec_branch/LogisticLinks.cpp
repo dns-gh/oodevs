@@ -148,7 +148,7 @@ void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, cons
     if( agent )
         tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
     else // $$$$ AGE 2006-03-17: Pas vraiment ca non plus
-        tools.DrawCircle( where, 20 * tools.Pixels() );
+        tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }
 
 // -----------------------------------------------------------------------------

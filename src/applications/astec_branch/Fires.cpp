@@ -43,7 +43,7 @@ Fires::~Fires()
 template< typename T >
 void Fires::CreateFire( const T& message )
 {
-     if( ! Find( message.oid_tir ) )
+    if( ! Find( message.oid_tir ) )
     {
         Fire_ABC* fire = factory_.CreateFire( message );
         Register( message.oid_tir, *fire );

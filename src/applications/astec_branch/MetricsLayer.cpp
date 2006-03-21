@@ -100,9 +100,9 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& v )
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->button() & Qt::LeftButton && event->state() == Qt::NoButton )
+    if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::NoButton )
         start_ = point;
-    else if( event->button() & Qt::LeftButton && event->state() & Qt::LeftButton )
+    else if( ( event->button() & Qt::LeftButton ) && ( event->state() & Qt::LeftButton ) )
     {
         ruling_ = false;
         start_.Set( 0, 0 );

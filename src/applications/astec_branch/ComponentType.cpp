@@ -29,9 +29,9 @@ ComponentType::ComponentType( xml::xistream& xis )
 
     xis >> optional() 
         >> start( "FonctionsLogistiques" )
-            >> list( "Maintenance", *this, ReadPresence, hasMaintenance_ )
-            >> list( "Sante", *this, ReadPresence, hasMedical_ )
-            >> list( "Ravitaillement", *this, ReadPresence, hasSupply_ );
+                >> list( "Maintenance", *this, ReadPresence, hasMaintenance_ )
+                >> list( "Sante", *this, ReadPresence, hasMedical_ )
+                >> list( "Ravitaillement", *this, ReadPresence, hasSupply_ );
 }
 
 // -----------------------------------------------------------------------------

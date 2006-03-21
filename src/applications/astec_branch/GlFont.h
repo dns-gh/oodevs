@@ -22,14 +22,14 @@ class GlFont
 public:
     //! @name Constructors/Destructor
     //@{
-             GlFont( const std::string& font );
+    explicit GlFont( const std::string& font, bool outlines = false );
     virtual ~GlFont();
     //@}
 
     //! @name Operations
     //@{
     void Print( const geometry::Point2f& where, const std::string& message, float rFontSize = 1.0f );
-    geometry::Point2f GetTextSize( const std::string& message ) const;
+    geometry::Vector2f GetTextSize( const std::string& message ) const;
     //@}
 
 private:
@@ -46,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int        nBasePoly_;
+    unsigned int        baseList_;
     GLYPHMETRICSFLOAT	gmfPoly_[256];
     //@}
 };

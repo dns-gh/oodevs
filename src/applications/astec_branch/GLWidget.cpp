@@ -49,6 +49,8 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     , windowWidth_ ( 0 )
     , frame_( 0 )
     , circle_( 0 )
+    , app6Font_( 0 )
+    , app6OutlinedFont_( 0 )
 {
     SetReverse( false );
     SetExclusive( true );
@@ -68,6 +70,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
 GlWidget::~GlWidget()
 {
     delete app6Font_;
+    delete app6OutlinedFont_;
     delete &strategy_;
     glDeleteLists( circle_, 1 );
 }
@@ -80,7 +83,8 @@ void GlWidget::initializeGL()
 {
     MapWidget::initializeGL();
     circle_ = GenerateCircle();
-    app6Font_ = new GlFont( "Scipio" );
+    app6Font_         = new GlFont( "Scipio" );
+    app6OutlinedFont_ = new GlFont( "Scipio", true );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +107,7 @@ unsigned int GlWidget::GenerateCircle()
     static const float twoPi = 2.f * std::acos( -1.f );
     unsigned int id = glGenLists(1);
     glNewList( id, GL_COMPILE);
-        for( float angle = 0; angle < twoPi; angle += 0.3142f )
+        for( float angle = 0; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
             glVertex2f( std::cos( angle ), std::sin( angle ) );
         glVertex2f( 1.f, 0.f );
     glEndList();
@@ -182,7 +186,7 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/ ) const
 {
     if( size < 0 )
-        size = 10.f * Pixels();
+        size = 15.f * Pixels();
 
     const Vector2f u = Vector2f( from, to ).Normalize() * size;
     const Vector2f v = 0.5f * u.Normal();
@@ -249,7 +253,7 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
 // Name: GlWidget::DrawCircle
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
+void GlWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels();
@@ -268,7 +272,7 @@ void GlWidget::DrawCircle( const geometry::Point2f& center, float radius /*= -1.
 // Name: GlWidget::DrawDisc
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
+void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 {
     if( radius < 0 )
         radius = 10.f * Pixels();
@@ -291,7 +295,7 @@ void GlWidget::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*
 // Name: GlWidget::DrawRectangle
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawRectangle( const geometry::Rectangle2f& rect ) const
+void GlWidget::DrawRectangle( const Rectangle2f& rect ) const
 {
     glBegin( GL_QUADS );
         glVertex2f( rect.Left(), rect.Bottom() );
@@ -305,7 +309,7 @@ void GlWidget::DrawRectangle( const geometry::Rectangle2f& rect ) const
 // Name: GlWidget::Print
 // Created: AGE 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::Print( const std::string& message, const geometry::Point2f& where ) const
+void GlWidget::Print( const std::string& message, const Point2f& where ) const
 {
     QGLWidget* that = const_cast< GlWidget* >( this );
     that->renderText( where.X(), where.Y(), 0, message.c_str() );
@@ -315,9 +319,23 @@ void GlWidget::Print( const std::string& message, const geometry::Point2f& where
 // Name: GLWidget::DrawApp6Symbol
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
 {
-    const geometry::Point2f& fontSize = app6Font_->GetTextSize( symbol );
+    const Vector2f& fontSize = app6Font_->GetTextSize( symbol );
     const float size = 600.f;
-    app6Font_->Print( geometry::Point2f( where.X() - fontSize.X() * size / 2.f, where.Y() ), symbol, size );
+    const Point2f center = Point2f( where.X() - fontSize.X() * size * 0.5f, where.Y() );
+
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+
+    float shadowedColor[4];
+    glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
+    for(unsigned i = 0;i < 3; ++i )
+        shadowedColor[i]/=5.f;
+    shadowedColor[3] = 0.9f;
+    glColor4fv( shadowedColor );
+    glLineWidth( 4.0f );
+    app6OutlinedFont_->Print( center, symbol, size );
+    glPopAttrib();
+
+    app6Font_->Print( center, symbol, size );
 }
