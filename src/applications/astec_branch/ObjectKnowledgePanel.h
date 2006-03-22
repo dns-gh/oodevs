@@ -117,7 +117,6 @@ private:
     DisplayBuilder* display_;
 
     ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
-    QPopupMenu* pPopupMenu_;
     //@}
 };
 

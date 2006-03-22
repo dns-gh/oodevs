@@ -12,6 +12,7 @@
 #include "graphics/GraphicSetup.h"
 #include "graphics/DataFactory.h"
 #include "graphics/GraphicFactory.h"
+#include "graphics/GraphicShape.h"
 
 // -----------------------------------------------------------------------------
 // Name: TerrainLayer constructor
@@ -29,7 +30,8 @@ TerrainLayer::TerrainLayer( const std::string& dataDirectory )
 // -----------------------------------------------------------------------------
 TerrainLayer::~TerrainLayer()
 {
-    // NOTHING
+    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -38,30 +40,18 @@ TerrainLayer::~TerrainLayer()
 // -----------------------------------------------------------------------------
 void TerrainLayer::Initialize( const geometry::Rectangle2f& )
 {
-    static GraphicSetup setup; // $$$$ AGE 2005-10-20: 
     DataFactory dataFactory;
-    GraphicFactory factory( *this, setup, dataFactory );
-
+    GraphicFactory factory( *this, *this, dataFactory );
     factory.LoadGraphicDirectory( dataDirectory_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TerrainLayer::AddShape
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TerrainLayer::AddShape( const GraphicShapeProxy& shape )
+void TerrainLayer::AddShape( GraphicShape& shape )
 {
-    shapes_.push_back( shape );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainLayer::ShouldUseList
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-bool TerrainLayer::ShouldUseList( const std::string& )
-{   
-    return false;
+    shapes_.push_back( &shape );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +82,7 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 void TerrainLayer::DrawInnerShapes( const geometry::Rectangle2f& viewport ) const
 {
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        it->DrawArea( viewport );
+        (*it)->DrawArea( viewport );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,11 +97,11 @@ void TerrainLayer::DrawShapesBorders( const geometry::Rectangle2f& viewport ) co
     glStencilFunc( GL_NEVER, 1, 0xFFFFFFFF );
     glStencilOp( GL_INCR, GL_INCR, GL_INCR );
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        it->DrawBorders( viewport );
+        (*it)->DrawBorders( viewport );
        
     glStencilFunc( GL_GEQUAL, 1, 0xFFFFFFFF );
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        it->DrawBorders( viewport );
+        (*it)->DrawBorders( viewport );
 
     glDisable( GL_STENCIL_TEST );
 }
@@ -123,6 +113,47 @@ void TerrainLayer::DrawShapesBorders( const geometry::Rectangle2f& viewport ) co
 void TerrainLayer::DrawLinearShapes( const geometry::Rectangle2f& viewport ) const
 {
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-        it->DrawLines( viewport );
+        (*it)->DrawLines( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::SetupLineGraphics
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void TerrainLayer::SetupLineGraphics( const Data_ABC* pData )
+{
+     static GraphicSetup setup; // $$$$ AGE 2005-10-20: 
+     setup.SetupLineGraphics( pData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::SetupBorderGraphics
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void TerrainLayer::SetupBorderGraphics( const Data_ABC* pData )
+{
+     static GraphicSetup setup; // $$$$ AGE 2005-10-20: 
+     setup.SetupBorderGraphics( pData );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::SetupAreaGraphics
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void TerrainLayer::SetupAreaGraphics( const Data_ABC* pData )
+{
+     static GraphicSetup setup; // $$$$ AGE 2005-10-20: 
+     setup.SetupAreaGraphics( pData );
+
+     float colors[4];
+     glGetFloatv( GL_CURRENT_COLOR, colors );
+     QColor color( colors[0]*255, colors[1]*255, colors[2]*255 );
+     int hsv[4];
+     color.hsv( hsv, hsv+1, hsv+2 );
+
+     static int factor = 0;
+     (*hsv) = ( *hsv + ( factor++ / 100 ) ) % 360;
+     color.setHsv( *hsv,*(hsv+1),*(hsv+2) );
+     glColor4f( color.red()/255.f, color.green()/255.f, color.blue()/255.f, colors[3] );
 }
 

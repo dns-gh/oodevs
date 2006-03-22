@@ -128,8 +128,8 @@ void ValuedListItem::Select( ActionController& actions )
 // Name: ValuedListItem::ContextMenu
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ValuedListItem::ContextMenu( ActionController& actions, QPopupMenu& menu )
+void ValuedListItem::ContextMenu( ActionController& actions, const QPoint& where )
 {
     if( container_ )
-        container_->ContextMenu( actions, menu );
+        container_->ContextMenu( actions, where );
 }

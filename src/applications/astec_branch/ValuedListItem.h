@@ -83,7 +83,7 @@ public:
     int rtti() const;
 
     void Select( ActionController& actions );
-    void ContextMenu( ActionController& actions, QPopupMenu& menu );
+    void ContextMenu( ActionController& actions, const QPoint& where );
     //@}
 
 private:
@@ -176,7 +176,7 @@ class ValueContainer_ABC
 public:
     virtual int rtti() const = 0;
     virtual void Select( ActionController& actions ) = 0;
-    virtual void ContextMenu( ActionController& actions, QPopupMenu& menu ) = 0;
+    virtual void ContextMenu( ActionController& actions, const QPoint& where ) = 0;
 };
 
 // =============================================================================
@@ -202,8 +202,8 @@ public:
     virtual void Select( ActionController& actions ) {
         actions.Select( *value_ );
     };
-    virtual void ContextMenu( ActionController& actions, QPopupMenu& menu ) {
-        actions.ContextMenu( *value_, menu );
+    virtual void ContextMenu( ActionController& actions, const QPoint& where ) {
+        actions.ContextMenu( *value_, where );
     }
 private:
     T value_;

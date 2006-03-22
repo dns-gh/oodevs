@@ -12,7 +12,9 @@
 
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/GraphicManager_ABC.h"
-#include "graphics/GraphicShapeProxy.h"
+#include "graphics/GraphicSetup_ABC.h"
+
+class GraphicShape;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -21,7 +23,7 @@
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class TerrainLayer : public MapLayer_ABC, private GraphicManager_ABC
+class TerrainLayer : public MapLayer_ABC, private GraphicManager_ABC, private GraphicSetup_ABC
 {
 
 public:
@@ -46,19 +48,22 @@ private:
     //! @name Helpers
     //@{
     virtual void Initialize( const geometry::Rectangle2f& extent );
-    virtual void AddShape( const GraphicShapeProxy& shape );
-    virtual bool ShouldUseList( const std::string& filename );
+    virtual void AddShape( GraphicShape& shape );
     virtual bool ShouldLoad( const std::string& filename );
 
     void DrawInnerShapes  ( const geometry::Rectangle2f& viewport ) const;
     void DrawShapesBorders( const geometry::Rectangle2f& viewport ) const;
     void DrawLinearShapes ( const geometry::Rectangle2f& viewport ) const;
+
+    virtual void SetupLineGraphics  ( const Data_ABC* pData );
+    virtual void SetupBorderGraphics( const Data_ABC* pData );
+    virtual void SetupAreaGraphics  ( const Data_ABC* pData );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< GraphicShapeProxy > T_Shapes;
-    typedef T_Shapes::const_iterator       CIT_Shapes;
+    typedef std::vector< GraphicShape* > T_Shapes;
+    typedef T_Shapes::const_iterator  CIT_Shapes;
     //@}
 
 private:

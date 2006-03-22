@@ -86,7 +86,7 @@
 #undef min
 #undef max
 #include "geometry/Types.h"
-#include "graphics/GraphicShape_ABC.h"
+#include "graphics/GraphicShape.h"
 #include "graphics/DrawDetection.h"
 
 DECLARE_ICON( flare );
@@ -285,7 +285,7 @@ void GLTool::DrawAreas( World& world, unsigned int nMaxLod )
     {
         for( World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            const GraphicShape_ABC& shape = *it;
+            const GraphicShape& shape = **it;
             shape.DrawArea( extent );
             glTranslatef( 0.f, 0.f, 0.0001f );
         }
@@ -309,7 +309,7 @@ void GLTool::DrawBorders( World& world, unsigned int nMaxLod )
     {
         for( World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            const GraphicShape_ABC& shape = *it;
+            const GraphicShape& shape = **it;
             shape.DrawBorders( extent );
         }
     }
@@ -319,7 +319,7 @@ void GLTool::DrawBorders( World& world, unsigned int nMaxLod )
     {
         for( World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            const GraphicShape_ABC& shape = *it;
+            const GraphicShape& shape = **it;
             shape.DrawBorders( extent );
         }
     }
@@ -339,7 +339,7 @@ void GLTool::DrawLines( World& world, unsigned int nMaxLod )
     {
         for( World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            const GraphicShape_ABC& shape = *it;
+            const GraphicShape& shape = **it;
             shape.DrawLines( extent );
         }
     }
@@ -374,7 +374,7 @@ void GLTool::DrawNameObjects( World& world )
     {
         for( World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
-            const GraphicShape_ABC& shape = *it;
+            const GraphicShape& shape = **it;
             glColor3f( 0, 0, 0 );
             shape.DrawName( extent, widget );
         }

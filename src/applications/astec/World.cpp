@@ -20,7 +20,7 @@
 #include "MT/MT_IO/MT_Dir.h"
 
 #include "geocoord/Geoid.h"
-#include "graphics/GraphicShapeProxy.h"
+#include "graphics/GraphicShape.h"
 #include "graphics/DrawDetection.h"
 #include "graphics/DataFactory.h"
 #include "graphics/GraphicFactory.h"
@@ -249,9 +249,9 @@ void World::ReadGraphicFile( const std::string& strName )
 // -----------------------------------------------------------------------------
 // Name: World::AddShape
 // -----------------------------------------------------------------------------
-void World::AddShape( const GraphicShapeProxy& shape )
+void World::AddShape( GraphicShape& shape )
 {
-    lodshapes_[ setup_.GetLastLevelOfDetail() ].push_back( shape );
+    lodshapes_[ setup_.GetLastLevelOfDetail() ].push_back( &shape );
 }
 
 // -----------------------------------------------------------------------------

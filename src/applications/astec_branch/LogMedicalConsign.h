@@ -64,6 +64,7 @@ private:
     Agent*  pPionLogHandling_;
     bool    bMentalDeceased_;
     bool    bContaminated_;
+    bool    diagnosed_;
     E_HumanWound wound_;
     E_LogSanteTraitementEtat nState_;
     //@}

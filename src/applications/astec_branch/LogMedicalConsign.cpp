@@ -28,6 +28,7 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC
     , wound_           ( E_HumanWound( message.blessure ) )
     , bMentalDeceased_ ( message.blesse_mental )
     , bContaminated_   ( message.contamine_nbc )
+    , diagnosed_       ( false )
     , nState_          ( eLogSanteTraitementEtat_Termine )
 {
     pion_.Get< LogisticConsigns >().AddConsign( *this );
@@ -71,6 +72,8 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
         wound_ = E_HumanWound( message.blessure );
     if( message.m.etatPresent )
         nState_ = E_LogSanteTraitementEtat( message.etat );
+    if( message.m.diagnostique_effectuePresent )
+        diagnosed_ = message.diagnostique_effectue;
 
     controller_.Update( *this );
 }
@@ -156,7 +159,7 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
     displayer.Display( "Consigne :", nID_ )
              .Display( "Pion demandeur :", pion_ )
              .Display( "Pion traitant :", pPionLogHandling_ )
-             .Display( "Blessure :", wound_ )
+             .Display( "Blessure :", wound_ )// $$$$ AGE 2006-03-21: only if diagnosed
              .Display( "Reac. mental :", bMentalDeceased_ )
              .Display( "Contaminé NBC :", bContaminated_ )
              .Display( "Etat :", nState_ );

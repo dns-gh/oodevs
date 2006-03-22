@@ -82,7 +82,6 @@ private:
     ColorStrategy_ABC& strategy_;
     T_Agents agents_;
     unsigned selected_;
-    QPopupMenu* menu_;
     //@}
 };
 

@@ -43,7 +43,6 @@
 AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
     : InfoPanel_ABC    ( pParent, tr( "C. agent" ) )
     , actionController_( actionController )
-    , pPopupMenu_      ( new QPopupMenu( this ) )
     , owner_           ( 0 )
     , selected_        ( 0 )
     , subSelected_     ( 0 )
@@ -83,7 +82,6 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& contr
     pPerceptionListView_->AddColumn( "Agent" ).
                           AddColumn( "Niveau perception" );
 
-//    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
 //    connect( this, SIGNAL( ElementSelected( SelectedElement& ) ),         &MainWindow::GetMainWindow(), SIGNAL( ElementSelected( SelectedElement& ) ) );
 //    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ),             &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
 //
@@ -201,13 +199,11 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint& pos )
 {
-    pPopupMenu_->clear();
-
-    ValuedListItem* item = (ValuedListItem*)( i );
-    item->ContextMenu( actionController_, *pPopupMenu_ );
-
-    if( pPopupMenu_->count() > 0 )
-        pPopupMenu_->popup( pos );
+    if( i )
+    {
+        ValuedListItem* item = (ValuedListItem*)( i );
+        item->ContextMenu( actionController_, pos );
+    }
 }
 
 // -----------------------------------------------------------------------------

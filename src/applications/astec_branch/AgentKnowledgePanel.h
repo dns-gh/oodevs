@@ -104,7 +104,6 @@ private:
     const AgentKnowledges* selected_;
     const AgentKnowledge* subSelected_;
     QCheckBox* pOwnTeamCheckBox_;
-    QPopupMenu* pPopupMenu_;
     //@}
 };
 

@@ -107,7 +107,6 @@ private:
     //! @name Member data
     //@{
     ActionController& actionController_;
-    QPopupMenu* pPopupMenu_;
     //@}
 };
 

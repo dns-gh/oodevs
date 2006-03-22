@@ -86,8 +86,6 @@ ObjectPanel::ObjectPanel( InfoPanels* info, Controller& controller, ActionContro
                 .AddLabel( "Longueur:" )
                 .AddLabel( "Poids supporté:" );
 
-    // $$$$ SBO 2005-09-23: QSpacerItem is inserted as first element in layout...
-    //layout()->addItem( new QSpacerItem( 100, 50, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
     QWidget* pSpacer = new QWidget( this );
     pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
 

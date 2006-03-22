@@ -69,6 +69,7 @@ private:
     Agent*  pPionLogHandling_;
     uint    nEquipmentTypeID_; // $$$$ AGE 2006-02-28: resolve
     uint    nBreakdownTypeID_;
+    bool    diagnosed_;
     ASN1T_EnumLogMaintenanceTraitementEtat nState_;
 };
 

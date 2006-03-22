@@ -29,7 +29,6 @@ AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, con
     , tools_    ( tools )
     , strategy_ ( strategy )
     , selected_ ( 0 )
-    , menu_( new QPopupMenu() ) // $$$$ AGE 2006-03-20: don't make the menu_ orphan
 {
     controller.Register( *this );
 }
@@ -42,7 +41,6 @@ AgentsLayer::~AgentsLayer()
 {
     // $$$$ AGE 2006-03-16: 
     //    controller_.Remove( *this );
-    delete menu_;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,12 +117,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
             if( button == Qt::LeftButton )
                 actions_.Select( agent );
             else if( button == Qt::RightButton )
-            {
-                menu_->clear();
-                actions_.ContextMenu( agent, *menu_ );
-                if( menu_->count() > 0 )
-                    menu_->popup( event->globalPos() );
-            }
+                actions_.ContextMenu( agent, event->globalPos() );
             selected_ = i;
             return true;
         }

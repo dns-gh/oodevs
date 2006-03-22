@@ -87,7 +87,6 @@
 #undef min
 #undef max
 #include "geometry/Types.h"
-#include "graphics/GraphicShape_ABC.h"
 #include "graphics/DrawDetection.h"
 
 DECLARE_ICON( flare );

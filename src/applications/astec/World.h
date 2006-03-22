@@ -19,9 +19,8 @@
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/Geodetic.h"
 #include "graphics/GraphicManager_ABC.h"
-#include "graphics/GraphicShapeProxy.h"
+#include "graphics/GraphicShape.h"
 
-class GraphicShape_ABC;
 class DrawDetection;
 class TesselatedShape;
 
@@ -73,14 +72,14 @@ private:
     void ReadGraphicFile( const std::string& strName );
     void ReadDetection( const std::string& strName );
 
-    virtual void AddShape( const GraphicShapeProxy& shape );
+    virtual void AddShape( GraphicShape& shape );
     virtual bool ShouldUseList( const std::string& filename );
     //@}
     
     //! @name Types
     //@{
-    typedef std::vector< GraphicShapeProxy > T_Shapes;
-    typedef T_Shapes::const_iterator       CIT_Shapes;
+    typedef std::vector< GraphicShape* > T_Shapes;
+    typedef T_Shapes::const_iterator   CIT_Shapes;
     //@}
     
 private:

@@ -36,6 +36,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const Reso
     , pPionLogHandling_( 0 )
     , nEquipmentTypeID_( message.type_equipement )
     , nBreakdownTypeID_( message.type_panne )
+    , diagnosed_       ( false )
     , nState_          ( EnumLogMaintenanceTraitementEtat::termine )
 {
     pion_.Get< LogisticConsigns >().AddConsign( *this );
@@ -68,7 +69,10 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
     pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
-    nState_ = message.etat;
+    if( message.m.etatPresent )
+        nState_ = message.etat;
+    if( message.m.diagnostique_effectuePresent )
+        diagnosed_ = message.diagnostique_effectue;
     controller_.Update( *this );
 }
 
@@ -123,7 +127,7 @@ void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
     displayer.Display( "Consigne :", nID_ )
              .Display( "Pion demandeur :", pion_ )
              .Display( "Pion traitant :", pPionLogHandling_ )
-             .Display( "Type d'équipement :", nEquipmentTypeID_ )
-             .Display( "Type de panne :", nBreakdownTypeID_ )
+             .Display( "Type d'équipement :", nEquipmentTypeID_ ) // $$$$ AGE 2006-03-21: only if diagnosed
+             .Display( "Type de panne :", nBreakdownTypeID_ )     // $$$$ AGE 2006-03-21: only if diagnosed
              .Display( "Etat :", nState_ );
 }

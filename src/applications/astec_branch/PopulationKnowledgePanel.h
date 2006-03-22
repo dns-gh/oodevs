@@ -93,7 +93,6 @@ private:
     const PopulationPartKnowledge_ABC* selectedPart_;
 
     QCheckBox* pOwnTeamCheckBox_;
-    QPopupMenu* pPopupMenu_;
     //@}
 };
 

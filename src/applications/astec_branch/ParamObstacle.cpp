@@ -84,7 +84,6 @@ ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::stri
     if ( asnObject_.pos_obstacle.vecteur_point.n != 0 )
         bOutsideDataLocalisation = true;
     pLocation_ = new ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, bOptional, bOutsideDataLocalisation );
-    //$$$$ pas de tr sur "Localisation:";
 }
 
 

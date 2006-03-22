@@ -38,7 +38,6 @@
 AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController )
     : ListView< AgentListView >( pParent, *this )
     , actionController_( actionController )
-    , pPopupMenu_   ( new QPopupMenu( this ) )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Unités" );
@@ -199,13 +198,11 @@ void AgentListView::OnSelectionChange( QListViewItem* i )
 // -----------------------------------------------------------------------------
 void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
 {
-    pPopupMenu_->clear();
-
-    ValuedListItem* item = (ValuedListItem*)( i );
-    item->ContextMenu( actionController_, *pPopupMenu_ );
-
-    if( pPopupMenu_->count() > 0 )
-        pPopupMenu_->popup( pos );
+    if( i )
+    {
+        ValuedListItem* item = (ValuedListItem*)( i );
+        item->ContextMenu( actionController_, pos );
+    }
 }
 
 // -----------------------------------------------------------------------------

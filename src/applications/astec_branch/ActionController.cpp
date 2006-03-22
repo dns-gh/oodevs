@@ -16,6 +16,7 @@
 // -----------------------------------------------------------------------------
 ActionController::ActionController()
     : selecting_( false )
+    , popupMenu_( new QPopupMenu() )
 {
     // NOTHING
 }
@@ -26,7 +27,7 @@ ActionController::ActionController()
 // -----------------------------------------------------------------------------
 ActionController::~ActionController()
 {
-    // NOTHING
+    delete popupMenu_;
 }
 
 // -----------------------------------------------------------------------------
@@ -45,4 +46,14 @@ void ActionController::Register( Observer_ABC& observer )
 void ActionController::Remove( Observer_ABC& observer )
 {
     InterfaceContainer< Observer_ABC >::Remove( observer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionController::ShowMenu
+// Created: AGE 2006-03-21
+// -----------------------------------------------------------------------------
+void ActionController::ShowMenu( const QPoint& where )
+{
+    if( popupMenu_->count() )
+        popupMenu_->popup( where );
 }

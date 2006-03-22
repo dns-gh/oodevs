@@ -14,8 +14,7 @@
 #include "Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ContextMenuObserver_ABC.h"
-
-class QPopupMenu;
+#include <qpopupmenu.h>
 
 // =============================================================================
 /** @class  ActionController
@@ -56,9 +55,11 @@ public:
     }
 
     template< typename T >
-    void ContextMenu( const T& element, QPopupMenu& popupMenu )
+    void ContextMenu( const T& element,const QPoint& where )
     {
-        Apply( ContextMenuObserver_ABC< T >::NotifyContextMenu, element, popupMenu );
+        popupMenu_->clear();
+        Apply( ContextMenuObserver_ABC< T >::NotifyContextMenu, element, *popupMenu_ );
+        ShowMenu( where );
     };
     //@}
 
@@ -69,9 +70,15 @@ private:
     ActionController& operator=( const ActionController& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void ShowMenu( const QPoint& where );
+    //@}
+
     //! @name Member data
     //@{
     bool selecting_;
+    QPopupMenu* popupMenu_;
     //@}
 };
 
