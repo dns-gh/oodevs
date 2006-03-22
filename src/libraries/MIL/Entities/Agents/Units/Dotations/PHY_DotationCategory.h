@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
 class PHY_DotationType;
+class PHY_DotationNature;
 class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_AmmoDotationClass;
 class PHY_Protection;
@@ -43,6 +44,7 @@ public:
     const std::string&              GetName             () const;
     const PHY_AmmoDotationClass*    GetAmmoDotationClass() const;
     const PHY_DotationLogisticType& GetLogisticType     () const;
+    const PHY_DotationNature&       GetNature           () const;
     //@}
 
     //! @name Fire
@@ -90,10 +92,11 @@ private:
     const PHY_DotationType&         type_;
     const PHY_AmmoDotationClass*    pAmmoDotationClass_;      
     const PHY_DotationLogisticType* pLogisticType_;
+    const PHY_DotationNature*       pNature_;
 
     std::string strName_;
     uint        nMosID_;
-    
+        
     // Packaging
     MT_Float rWeight_;
     MT_Float rVolume_;

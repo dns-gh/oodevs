@@ -33,6 +33,7 @@ class PHY_ConsumptionType;
 class PHY_Posture;
 class PHY_Human;
 class PHY_DotationConsumptions;
+class PHY_DotationNature;
 class MIL_RealObjectType;
 class MIL_RealObject_ABC;
 class PHY_RolePion_Dotations;
@@ -167,6 +168,7 @@ public:
     //! @name Logistic - supply
     //@{
     bool     CanConvoyTransport               () const;
+    bool     CanConvoyTransport               ( const PHY_DotationCategory& dotationCategory ) const;
     void     GetConvoyTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
     uint     GetConvoyTransporterLoadingTime  () const;
     uint     GetConvoyTransporterUnloadingTime() const;
@@ -302,11 +304,12 @@ private:
     bool                            bCanDiagnoseHumans_;
 
     // Logistic : supply
-    MT_Float rConvoyTransporterWeightCapacity_;
-    MT_Float rConvoyTransporterVolumeCapacity_;
-    uint     nConvoyTransporterLoadingTime_;
-    uint     nConvoyTransporterUnloadingTime_;
-    bool     bConvoyCommander_;
+    const PHY_DotationNature*       pNatureTransported_;
+          MT_Float                  rConvoyTransporterWeightCapacity_;
+          MT_Float                  rConvoyTransporterVolumeCapacity_;
+          uint                      nConvoyTransporterLoadingTime_;
+          uint                      nConvoyTransporterUnloadingTime_;
+          bool                      bConvoyCommander_;    
 
 private:
     static T_ComposanteTypeMap composantesTypes_;

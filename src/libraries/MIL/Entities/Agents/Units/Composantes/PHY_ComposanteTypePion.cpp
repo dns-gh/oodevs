@@ -17,6 +17,8 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
@@ -143,6 +145,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , nConvoyTransporterLoadingTime_             ( 0 )
     , nConvoyTransporterUnloadingTime_           ( 0 )
     , bConvoyCommander_                          ( false )
+    , pNatureTransported_                        ( 0 )
 {
     archive.ReadField( "DeniveleMaximum", rMaxSlope_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
@@ -619,6 +622,12 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
 
     if( archive.Section( "Transporteur", MIL_InputArchive::eNothing ) )
     {
+        std::string strNature;
+        archive.ReadField( "NatureTransportee", strNature );
+        pNatureTransported_ = PHY_DotationNature::Find( strNature );
+        if( !pNatureTransported_ )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown dotation nature", archive.GetContext() );
+
         archive.Section( "Capacite" );
         archive.ReadField( "Masse" , rConvoyTransporterWeightCapacity_, CheckValueGreater( 0. ) );
         archive.ReadField( "Volume", rConvoyTransporterVolumeCapacity_, CheckValueGreater( 0. ) );
@@ -1078,4 +1087,19 @@ void PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
         return;
     }
     assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanConvoyTransport
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanConvoyTransport( const PHY_DotationCategory& dotationCategory ) const
+{
+    if( !CanConvoyTransport() )
+        return false;
+
+    if( pNatureTransported_ && *pNatureTransported_ != dotationCategory.GetNature() )
+        return false;
+
+    return true;
 }

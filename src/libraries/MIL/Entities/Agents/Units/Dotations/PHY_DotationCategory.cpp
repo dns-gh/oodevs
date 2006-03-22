@@ -18,6 +18,7 @@
 #include "PHY_IndirectFireDotationClass.h"
 #include "PHY_AmmoDotationClass.h"
 #include "PHY_DotationLogisticType.h"
+#include "PHY_DotationNature.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 //-----------------------------------------------------------------------------
@@ -28,6 +29,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     : type_              ( type )
     , pAmmoDotationClass_( 0 )
     , pLogisticType_     ( 0 )
+    , pNature_           ( 0 )
     , strName_           ( strName )
     , nMosID_            ( 0 )
     , pIndirectFireData_ ( 0 )
@@ -36,6 +38,12 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , rVolume_           ( 0. ) 
 {
     archive.ReadField( "MosID", nMosID_ );
+
+    std::string strNature;
+    archive.ReadField( "Nature", strNature );
+    pNature_ = PHY_DotationNature::Find( strNature );
+    if( !pNature_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation nature", archive.GetContext() );
 
     InitializePackagingData   ( archive );
     InitializeAttritions      ( archive );

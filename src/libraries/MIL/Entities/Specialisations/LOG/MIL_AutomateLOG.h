@@ -102,7 +102,7 @@ public:
     void                     SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState );
     void                     SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState    );
     PHY_RolePion_Supply*     SupplyGetStockPion                 ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
-    bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion ) const;
+    bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
     bool                     SupplyGetAvailableConvoyCommander  ( PHY_ComposantePion*& pConvoyCommander  , MIL_AgentPion*& pConvoyCommanderPion   ) const;
     MT_Float                 SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
     bool                     SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, MT_Float rReturnedValue  ) const;

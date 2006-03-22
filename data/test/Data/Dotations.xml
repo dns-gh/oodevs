@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Dotations>
+  <Natures>
+    <Nature>Solide</Nature>
+    <Nature>Liquide</Nature>
+    <!-- <Nature>Matiere dangereuse</Nature> -->
+  </Natures>    
 
   <Dotation nom="munition">
     <Categories>
@@ -7,6 +12,7 @@
         <TrancheD/>
         <MosID>1</MosID>
         <Type>Mitraille</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>0.2</Masse>
@@ -57,6 +63,7 @@
       <Categorie nom="Obus 120 mm">
         <MosID>2</MosID>
         <Type>Obus</Type>
+        <Nature>Liquide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>0.6</Masse>
@@ -124,6 +131,7 @@
       <Categorie nom="Fusse a jupette 53mm">
         <MosID>3</MosID>
         <Type>MissileSol</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -191,6 +199,7 @@
       <Categorie nom="Fusse a ailettes 50mm">
         <MosID>4</MosID>
         <Type>MissileAir</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -258,6 +267,7 @@
       <Categorie nom="Missile Hot">
         <MosID>5</MosID>
         <Type>MissileSol</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -325,6 +335,7 @@
       <Categorie nom="Obus eclairant">
         <MosID>6</MosID>
         <Type>Obus</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -345,6 +356,7 @@
       <Categorie nom="Obus mine">
         <MosID>7</MosID>
         <Type>Obus</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -364,6 +376,7 @@
       <Categorie nom="Obus fumigene">
         <MosID>8</MosID>
         <Type>Obus</Type>
+        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -388,6 +401,7 @@
     <Categories>
       <Categorie nom="gasoil">
         <MosID>9</MosID>
+        <Nature>Liquide</Nature>
         <Conditionnement>
           <Nombre>50</Nombre>
           <Masse>6</Masse>
@@ -405,6 +419,7 @@
     <Categories>
       <Categorie nom="explosif classique">
         <MosID>10</MosID>
+        <Nature>Solide</Nature>        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -422,6 +437,7 @@
     <Categories>
       <Categorie nom="mine classique">
         <MosID>11</MosID>
+        <Nature>Solide</Nature>                
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -434,6 +450,7 @@
       </Categorie>
       <Categorie nom="pont flottant de la mort">
         <MosID>12</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -451,6 +468,7 @@
     <Categories>
       <Categorie nom="barbele classique">
         <MosID>13</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -468,6 +486,7 @@
     <Categories>
       <Categorie nom="Truc pour reparer la mobilite 1">
         <MosID>14</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -480,6 +499,7 @@
       </Categorie>
       <Categorie nom="Truc pour reparer la mobilite 2">
         <MosID>15</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -492,6 +512,7 @@
       </Categorie>
       <Categorie nom="Truc pour reparer la mobilite 3">
         <MosID>16</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -504,6 +525,7 @@
       </Categorie>
       <Categorie nom="Truc pour reparer l'electronique 1">
         <MosID>17</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -521,6 +543,7 @@
     <Categories>
       <Categorie nom="bouffe">
         <MosID>18</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -533,6 +556,7 @@
       </Categorie>
       <Categorie nom="flotte">
         <MosID>19</MosID>
+        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>

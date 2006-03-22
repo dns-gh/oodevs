@@ -110,6 +110,7 @@ public:
     //@{
     bool     CanConvoyCommand                 () const;
     bool     CanConvoyTransport               () const;
+    bool     CanConvoyTransport               ( const PHY_DotationCategory& dotationCategory ) const;
     void     GetConvoyTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
     uint     GetConvoyTransporterLoadingTime  () const;
     uint     GetConvoyTransporterUnloadingTime() const;

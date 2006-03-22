@@ -35,6 +35,7 @@
 #include "Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Agents/Units/Weapons/PHY_LauncherType.h"
 #include "Agents/Units/Weapons/PHY_WeaponType.h"
 #include "Agents/Units/Sensors/PHY_SensorType.h"
@@ -109,6 +110,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     InitializeType< PHY_Tiredness               >( archive, "FacteursHumains"     );    
     InitializeType< PHY_Volume                  >( archive, "Volumes"             );
     InitializeType< PHY_Protection              >( archive, "Protections"         );
+    InitializeType< PHY_DotationNature          >( archive, "Dotations"           );
     InitializeType< PHY_DotationType            >( archive, "Dotations"           );
     InitializeType< MIL_RealObjectType          >( archive, "Objets"              );
     InitializeType< MIL_VirtualObjectType       >( archive, "Objets"              );
@@ -258,6 +260,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_WeaponType               ::Terminate();
     PHY_LauncherType             ::Terminate();
     PHY_DotationType             ::Terminate();
+    PHY_DotationNature           ::Terminate();
     MIL_RealObjectType           ::Terminate();
     MIL_VirtualObjectType        ::Terminate();
     MIL_NbcAgentType             ::Terminate();

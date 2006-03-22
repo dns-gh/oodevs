@@ -36,7 +36,7 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 // -----------------------------------------------------------------------------
 PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     : dotationCapacitiesTC1_          ( "ContenanceTC1", archive )    
-    , stockLogisticThresholdRatios_   ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), std::numeric_limits< MT_Float >::max() )
+    , stockLogisticThresholdRatios_   ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), 0.1 )
     , postureTimes_                   ( PHY_Posture::GetPostures().size(), 0 )
     , rCoupDeSondeLength_             ( 0. )
     , rCoefDecontaminationPerTimeStep_( 0. )
@@ -104,13 +104,6 @@ void PHY_UnitType::InitializeStockLogisticThresholdRatios( MIL_InputArchive& arc
         archive.EndSection(); // SeuilLogistique
     }
     archive.EndList(); // SeuilsLogistiques
-
-    // Post check
-    for( uint i = 0; i < stockLogisticThresholdRatios_.size(); ++i )
-    {
-        if( stockLogisticThresholdRatios_[ i ] == std::numeric_limits< MT_Float >::max() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Logistic dotation type '%s' not initialized", PHY_DotationLogisticType::Find( i )->GetName().c_str() ), archive.GetContext() );
-    }
 
     archive.EndSection(); // Stocks
 }

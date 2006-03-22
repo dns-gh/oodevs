@@ -99,11 +99,11 @@ void PHY_RolePionLOG_Supply::ReadOverloading( MIL_InputArchive& archive )
 // Name: PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter() const
+PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const
 {
     if( !bSystemEnabled_ )
         return 0;
-    return GetRole< PHY_RolePion_Composantes >().GetAvailableConvoyTransporter();
+    return GetRole< PHY_RolePion_Composantes >().GetAvailableConvoyTransporter( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

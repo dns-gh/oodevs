@@ -588,7 +588,7 @@ bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCat
 // Name: MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion ) const
+bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const
 {
     pConvoyTransporter     = 0;
     pConvoyTransporterPion = 0;
@@ -596,7 +596,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
     const T_PionVector& pions  = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        pConvoyTransporter = (**itPion).GetRole< PHY_RolePion_Supply >().GetAvailableConvoyTransporter();
+        pConvoyTransporter = (**itPion).GetRole< PHY_RolePion_Supply >().GetAvailableConvoyTransporter( dotationCategory );
         if( pConvoyTransporter )
         {
             pConvoyTransporterPion = *itPion;

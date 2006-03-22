@@ -64,7 +64,7 @@ public:
     virtual MT_Float            GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
     virtual MT_Float            AddStockReservation          ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
     virtual void                RemoveStockReservation       ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
-    virtual PHY_ComposantePion* GetAvailableConvoyTransporter() const;
+    virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_ComposantePion* GetAvailableConvoyCommander  () const;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );

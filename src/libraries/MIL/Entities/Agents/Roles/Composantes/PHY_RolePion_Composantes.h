@@ -153,7 +153,7 @@ public:
 
     //! @name Logistic - Supply
     //@{
-    PHY_ComposantePion* GetAvailableConvoyTransporter() const;
+    PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
     void                GetConvoyTransporters        ( T_ComposanteUseMap& composanteUse ) const;
     PHY_ComposantePion* GetAvailableConvoyCommander  () const;
     void                GetConvoyCommanders          ( T_ComposanteUseMap& composanteUse ) const;    

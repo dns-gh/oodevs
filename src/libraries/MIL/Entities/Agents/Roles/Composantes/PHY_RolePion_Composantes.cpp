@@ -2059,11 +2059,11 @@ uint PHY_RolePion_Composantes::UndoLendCollectionComposantes( PHY_RolePion_Compo
 // Name: PHY_RolePion_Composantes::GetAvailableConvoyTransporter
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyTransporter() const
+PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        if( (**it).CanConvoyTransport() )
+        if( (**it).CanConvoyTransport( dotationCategory ) )
             return *it;
     }
     return 0;

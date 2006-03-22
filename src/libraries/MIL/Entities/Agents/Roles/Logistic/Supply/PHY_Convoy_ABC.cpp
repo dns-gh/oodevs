@@ -330,33 +330,39 @@ bool PHY_Convoy_ABC::ReserveTransporters()
     pConsign_->GetMerchandiseToConvoy( merchandise );
     assert( !merchandise.empty() );
 
-    while( !merchandise.empty() )
+    for( IT_MerchandiseToConvoyMap itMerchandise = merchandise.begin(); itMerchandise != merchandise.end(); ++itMerchandise )
     {
-        PHY_ComposantePion* pConveyorComp = 0;
-        MIL_AgentPion*      pConveyorPion = 0;
-        if( !pConsign_->GetConvoyingAutomate().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion ) )
-            break;
+        const PHY_DotationCategory& dotationCategory = *itMerchandise->first;
 
-        PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
-        bool bOut = conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second;
-        assert( bOut );
-
-        while( !pConveyor->IsFull() && !merchandise.empty() )
+        // Fill the previously used conveyors
+        for( CIT_ConveyorMap itConveyor = conveyors_.begin(); itConveyor != conveyors_.end() && itMerchandise->second > 0.; ++itConveyor )
         {
-            IT_MerchandiseToConvoyMap it = merchandise.begin();
+            PHY_Conveyor& conveyor = *itConveyor->second;
+            if( conveyor.IsFull() )
+                continue;
 
-            const PHY_DotationCategory& dotationCategory = *it->first;
-
-            const MT_Float rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, it->second );
-            // Cannot convoy 1 dotation
-            if( rNbrConvoyed <= 0. )
-                break;
-
-            it->second -= rNbrConvoyed;            
-            if( it->second <= 0. )
-                merchandise.erase( it );
+            const MT_Float rNbrConvoyed = conveyor.Convoy( *pConsign_, dotationCategory, itMerchandise->second );
+            if( rNbrConvoyed > 0. )
+                itMerchandise->second -= rNbrConvoyed;            
         }
-    } 
+            
+        // Allocate new conveyors
+        while( itMerchandise->second > 0. )
+        {
+            PHY_ComposantePion* pConveyorComp = 0;
+            MIL_AgentPion*      pConveyorPion = 0;
+            if( !pConsign_->GetConvoyingAutomate().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion, dotationCategory ) )
+                break; // No more convoys
+
+            PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
+            bool bOut = conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second;
+            assert( bOut );
+
+            const MT_Float rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, itMerchandise->second );
+            if( rNbrConvoyed > 0. )
+                itMerchandise->second -= rNbrConvoyed;            
+        }
+    }            
 
     if( conveyors_.empty() )
         return false;

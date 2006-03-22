@@ -205,6 +205,17 @@ bool PHY_ComposantePion::CanConvoyCommand() const
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
+bool PHY_ComposantePion::CanConvoyTransport( const PHY_DotationCategory& dotationCategory ) const
+{
+    assert( pType_ );
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanConvoyTransport( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanConvoyTransport
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+inline
 bool PHY_ComposantePion::CanConvoyTransport() const
 {
     assert( pType_ );

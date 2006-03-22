@@ -410,6 +410,16 @@ bool PHY_ComposanteTypePion::CanConvoyCommand() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanConvoyTransport
+// Created: NLD 2006-03-21
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposanteTypePion::CanConvoyTransport() const
+{
+    return rConvoyTransporterWeightCapacity_ > 0. && rConvoyTransporterVolumeCapacity_ > 0.;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetConvoyTransporterLoadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
@@ -438,16 +448,6 @@ void PHY_ComposanteTypePion::GetConvoyTransporterCapacity( MT_Float& rWeightMax,
 {
     rWeightMax = rConvoyTransporterWeightCapacity_;
     rVolumeMax = rConvoyTransporterVolumeCapacity_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanConvoyTransport
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposanteTypePion::CanConvoyTransport() const
-{
-    return rConvoyTransporterWeightCapacity_ > 0. && rConvoyTransporterVolumeCapacity_ > 0.;
 }
 
 // -----------------------------------------------------------------------------

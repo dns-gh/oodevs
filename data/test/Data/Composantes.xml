@@ -2216,7 +2216,7 @@
     </Pannes>
   </Composante>
 
-  <Composante Commentaire="" nom="Camion">
+  <Composante Commentaire="" nom="Camion transport solide">
     <MosID>19</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
@@ -2304,10 +2304,121 @@
     <FonctionsLogistiques>
       <Ravitaillement>
         <Transporteur>
+          <NatureTransportee>Solide</NatureTransportee>
           <Capacite>
             <Masse>33</Masse>
             <Volume>10</Volume>
-          </Capacite>
+          </Capacite>          
+          <TempsChargementMoyen>60s</TempsChargementMoyen>
+          <TempsDechargementMoyen>300s</TempsDechargementMoyen>
+        </Transporteur>
+      </Ravitaillement>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+  
+    <Composante Commentaire="" nom="Camion transport liquide">
+    <MosID>190</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel>
+        <Equipage>1</Equipage>
+      </Personnel>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Ravitaillement>
+        <Transporteur>
+          <NatureTransportee>Liquide</NatureTransportee>
+          <Capacite>
+            <Masse>33</Masse>
+            <Volume>10</Volume>
+          </Capacite>          
           <TempsChargementMoyen>60s</TempsChargementMoyen>
           <TempsDechargementMoyen>300s</TempsDechargementMoyen>
         </Transporteur>

@@ -45,6 +45,7 @@ PHY_RolePion_Supply::~PHY_RolePion_Supply()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::serialize
 // Created: JVT 2005-03-30
@@ -205,7 +206,7 @@ PHY_DotationStock* PHY_RolePion_Supply::GetStock( const PHY_DotationCategory& /*
 // Name: PHY_RolePion_Supply::GetAvailableConvoyTransporter
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Supply::GetAvailableConvoyTransporter() const
+PHY_ComposantePion* PHY_RolePion_Supply::GetAvailableConvoyTransporter( const PHY_DotationCategory& /*dotationCategory*/ ) const
 {
     return 0;
 }

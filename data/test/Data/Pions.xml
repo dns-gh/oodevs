@@ -22,7 +22,8 @@
       <Equipement nom="VSR (ramassage)">5</Equipement>
       <Equipement nom="Medecin TC2">10</Equipement>
       <Equipement nom="Chef de convoi">2</Equipement>
-      <Equipement nom="Camion">30</Equipement>
+      <Equipement nom="Camion transport solide">15</Equipement>
+      <Equipement nom="Camion transport liquide">15</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -2332,7 +2333,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Camion">50</Equipement>
+      <Equipement nom="Camion transport solide">25</Equipement>
+      <Equipement nom="Camion transport liquide">25</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>

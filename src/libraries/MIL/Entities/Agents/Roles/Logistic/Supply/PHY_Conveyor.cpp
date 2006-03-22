@@ -130,27 +130,36 @@ void PHY_Conveyor::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy )
 {
-    MT_Float rVolumeToConvoy = std::min( rVolumeCapacity_, rNbrToConvoy * dotationCategory.GetVolume() );
-    MT_Float rWeightToConvoy = std::min( rWeightCapacity_, rNbrToConvoy * dotationCategory.GetWeight() );
+    assert( pConveyorComp_ );
+    if( !pConveyorComp_->GetType().CanConvoyTransport( dotationCategory ) )
+        return 0.;
 
-    MT_Float rNbrConvoyed = 0.;
-    if( rWeightToConvoy > rVolumeToConvoy )
+    MT_Float rVolumeToConvoy = rNbrToConvoy * dotationCategory.GetVolume();
+    MT_Float rWeightToConvoy = rNbrToConvoy * dotationCategory.GetWeight();
+
+    if( rVolumeToConvoy > rVolumeCapacity_ )
     {
-        rNbrConvoyed      = std::min( rNbrToConvoy, rWeightToConvoy / dotationCategory.GetWeight() ); // min for precision errors
-        rWeightCapacity_ -= rWeightToConvoy;
-        rVolumeCapacity_ -= ( rNbrConvoyed * dotationCategory.GetVolume() );
-    }
-    else
-    {
-        rNbrConvoyed      = std::min( rNbrToConvoy, rVolumeToConvoy / dotationCategory.GetVolume() ); // min for precision errors
-        rVolumeCapacity_ -= rVolumeToConvoy;
-        rWeightCapacity_ -= ( rNbrConvoyed * dotationCategory.GetWeight() );               
+        rVolumeToConvoy = rVolumeCapacity_;
+        rWeightToConvoy = ( rVolumeToConvoy / dotationCategory.GetVolume() ) * dotationCategory.GetWeight();
     }
 
+    if( rWeightToConvoy > rWeightCapacity_ )
+    {
+        rWeightToConvoy = rWeightCapacity_;
+        rVolumeToConvoy = ( rWeightToConvoy / dotationCategory.GetWeight() ) * dotationCategory.GetVolume();
+    }
+
+    assert( rVolumeToConvoy <= rVolumeCapacity_ );
+    assert( rWeightToConvoy <= rWeightCapacity_ );
+
+    rVolumeCapacity_ -= rVolumeToConvoy;
+    rWeightCapacity_ -= rWeightToConvoy;
+
+    assert( rWeightToConvoy / dotationCategory.GetWeight() == rVolumeToConvoy / dotationCategory.GetVolume() );
+
+    const MT_Float rNbrConvoyed = rWeightToConvoy / dotationCategory.GetWeight();
     dotationsConvoyed_[ &dotationCategory ] += rNbrConvoyed;
-
     consign.AddConvoyedMerchandise( dotationCategory, rNbrConvoyed );
-
     return rNbrConvoyed;
 }
 
