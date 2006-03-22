@@ -52,7 +52,7 @@
 #include "Decisions.h"
 #include "AutomatDecisions.h"
 #include "Fires.h"
-#include "Positions.h"
+#include "AgentPositions.h"
 #include "Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -88,6 +88,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
+    result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
     result->Update( asnMsg );
     return result;
 }
@@ -101,6 +102,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
+    result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
     return result;
 }
 
@@ -142,6 +144,5 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
-    agent.Attach( *new Positions( model_.coordinateConverter_ ) );
 }
 

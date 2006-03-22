@@ -12,7 +12,7 @@
 #include "TerrainLayer.h"
 #include "ElevationLayer.h"
 #include "AgentsLayer.h"
-#include "Agent.h"
+#include "ObjectsLayer.h"
 #include "ColorStrategy.h"
 #include "MetricsLayer.h"
 #include "GlFont.h"
@@ -60,7 +60,8 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
     Register( *new MetricsLayer( *this ) );
-    Register( *new AgentsLayer( controllers, converter, *this, strategy_, *this ) );
+    Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
+    Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
 }
 
 // -----------------------------------------------------------------------------

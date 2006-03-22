@@ -25,9 +25,8 @@
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
     : controllers_( controllers )
-    , converter_  ( converter )
     , tools_      ( tools )
     , strategy_   ( strategy )
     , widget_     ( widget )

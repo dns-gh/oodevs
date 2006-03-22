@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void SelectColor( const Agent& agent );
+    virtual void SelectColor( const Object& object );
     //@}
 
 private:

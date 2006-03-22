@@ -21,6 +21,7 @@
 #include "AgentsModel.h"
 #include "ObjectTypes.h"
 #include "Controllers.h"
+#include "ObjectPositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectFactory constructor
@@ -50,6 +51,7 @@ Object* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
     Object* result = new Object( message, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.objectTypes_, model_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
+    result->Attach< Positions >( *new ObjectPositions( model_.coordinateConverter_ ) );
     switch( message.type )
     {
     case EnumObjectType::camp_prisonniers:
@@ -76,5 +78,6 @@ Object* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     default:
         ;
     };
+    result->Update( message );
     return result;
 }

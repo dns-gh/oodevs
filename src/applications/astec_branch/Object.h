@@ -45,8 +45,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter& converter,
-                         const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
-                         const Resolver_ABC< DotationType >& dotationResolver );
+                     const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
+                     const Resolver_ABC< DotationType >& dotationResolver );
     virtual ~Object();
     //@}
 

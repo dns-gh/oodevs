@@ -17,8 +17,6 @@
 
 class Agent;
 class Controllers;
-class ActionController;
-class CoordinateConverter;
 class GlTools_ABC;
 class ColorStrategy_ABC;
 class MapWidget;
@@ -38,7 +36,7 @@ class AgentsLayer : public MapLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controllers& controllers, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+             AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
     virtual ~AgentsLayer();
     //@}
 
@@ -81,7 +79,6 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const CoordinateConverter& converter_;
     const GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
     MapWidget& widget_;

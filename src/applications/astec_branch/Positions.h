@@ -10,51 +10,27 @@
 #ifndef __Positions_h_
 #define __Positions_h_
 
-#include "ASN_Types.h"
 #include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-
-class CoordinateConverter;
 
 // =============================================================================
 /** @class  Positions
-    @brief  Positions. Nothing sexual.
+    @brief  Positions
 */
-// Created: AGE 2006-03-16
+// Created: AGE 2006-03-22
 // =============================================================================
 class Positions : public Extension_ABC
-                , public Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Positions( const CoordinateConverter& converter );
-    virtual ~Positions();
+             Positions() {};
+    virtual ~Positions() {};
     //@}
 
     //! @name Operations
     //@{
-    geometry::Point2f GetPosition() const;
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    Positions( const Positions& );            //!< Copy constructor
-    Positions& operator=( const Positions& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const CoordinateConverter& converter_;
-    geometry::Point2f position_;
+    virtual geometry::Point2f GetPosition() const = 0;
     //@}
 };
 

@@ -13,6 +13,7 @@
 #include "KnowledgeGroup.h"
 #include "Team.h"
 #include "Controllers.h"
+#include "Object.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
@@ -42,6 +43,17 @@ ColorStrategy::~ColorStrategy()
 void ColorStrategy::SelectColor( const Agent& agent )
 {
     const Team& team = agent.GetKnowledgeGroup()->GetTeam();
+    const QColor color = teamColors_[ &team ].second;
+    glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2006-03-22
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const Object& object )
+{
+    const Team& team = object.GetTeam();
     const QColor color = teamColors_[ &team ].second;
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }

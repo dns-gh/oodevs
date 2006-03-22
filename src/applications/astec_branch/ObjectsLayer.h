@@ -14,11 +14,17 @@
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
+
 class Object;
+class Controllers;
+class GlTools_ABC;
+class ColorStrategy_ABC;
+class MapWidget;
 
 // =============================================================================
 /** @class  ObjectsLayer
     @brief  ObjectsLayer
+    // $$$$ AGE 2006-03-22: Factorisations avec AgentsLayer ?
 */
 // Created: AGE 2006-03-22
 // =============================================================================
@@ -31,7 +37,7 @@ class ObjectsLayer : public MapLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer();
+             ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
     virtual ~ObjectsLayer();
     //@}
 
@@ -49,11 +55,28 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const Object& );
+    virtual void NotifyUpdated( const Object& );
+    virtual void NotifyDeleted( const Object& );
+    virtual void NotifyActivated( const Object& );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const Object* > T_Objects;
+    typedef T_Objects::iterator         IT_Objects;
+    typedef T_Objects::const_iterator  CIT_Objects;
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
+    const GlTools_ABC& tools_;
+    ColorStrategy_ABC& strategy_;
+    MapWidget& widget_;
+
+    T_Objects objects_;
     //@}
 };
 
