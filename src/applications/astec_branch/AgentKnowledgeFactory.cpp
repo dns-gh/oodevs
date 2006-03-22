@@ -15,16 +15,17 @@
 #include "PerceptionMap.h"
 #include "TeamsModel.h"
 #include "PopulationKnowledge.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledgeFactory::AgentKnowledgeFactory( Controller& controller, Model& model )
-    : controller_( controller )
+AgentKnowledgeFactory::AgentKnowledgeFactory( Controllers& controllers, Model& model )
+    : controllers_( controllers )
     , model_( model )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +34,7 @@ AgentKnowledgeFactory::AgentKnowledgeFactory( Controller& controller, Model& mod
 // -----------------------------------------------------------------------------
 AgentKnowledgeFactory::~AgentKnowledgeFactory()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,8 +43,8 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // -----------------------------------------------------------------------------
 AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    AgentKnowledge* result = new AgentKnowledge( message, controller_, model_.coordinateConverter_, model_.agents_, model_.teams_ );
-    result->Attach( *new PerceptionMap( controller_, model_.agents_ ) );
+    AgentKnowledge* result = new AgentKnowledge( message, controllers_.controller_, model_.coordinateConverter_, model_.agents_, model_.teams_ );
+    result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
     return result;
 }
 
@@ -53,5 +54,5 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnit
 // -----------------------------------------------------------------------------
 PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
-    return new PopulationKnowledge( controller_, model_.coordinateConverter_, model_.agents_, message );
+    return new PopulationKnowledge( controllers_.controller_, model_.coordinateConverter_, model_.agents_, message );
 }

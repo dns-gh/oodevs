@@ -22,7 +22,7 @@ class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogMedicalConsign;
 class KnowledgeGroup;
-class Object_ABC;
+class Object;
 class App;
 class Population;
 class TacticalLine_ABC;

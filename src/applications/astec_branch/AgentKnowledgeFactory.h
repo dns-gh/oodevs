@@ -13,7 +13,7 @@
 #include "AgentKnowledgeFactory_ABC.h"
 #include "PopulationKnowledgeFactory_ABC.h"
 
-class Controller;
+class Controllers;
 class Model;
 
 // =============================================================================
@@ -29,7 +29,7 @@ class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgeFactory( Controller& controller, Model& model );
+             AgentKnowledgeFactory( Controllers& controllers, Model& model );
     virtual ~AgentKnowledgeFactory();
     //@}
 
@@ -49,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
     Model& model_;
     //@}
 };

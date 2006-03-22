@@ -45,8 +45,8 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionCo
     setAcceptDrops( true );
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
-//    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-//    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controller.Register( *this );
     actionController.Register( *this );
@@ -202,6 +202,19 @@ void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos,
     {
         ValuedListItem* item = (ValuedListItem*)( i );
         item->ContextMenu( actionController_, pos );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::OnRequestCenter
+// Created: AGE 2006-03-22
+// -----------------------------------------------------------------------------
+void AgentListView::OnRequestCenter()
+{
+    if( selectedItem() )
+    {
+        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
+        item->Activate( actionController_ );
     }
 }
 

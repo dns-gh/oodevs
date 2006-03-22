@@ -12,7 +12,7 @@
 
 #include "AgentFactory_ABC.h"
 
-class Controller;
+class Controllers;
 class Model;
 class AgentTypes;
 class Agent_ABC;
@@ -30,7 +30,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( Controller& controller, AgentTypes& types, Model& model, const Simulation& simulation );
+             AgentFactory( Controllers& controllers, AgentTypes& types, Model& model, const Simulation& simulation );
     virtual ~AgentFactory();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
     AgentTypes& types_;
     Model& model_;
     const Simulation& simulation_;

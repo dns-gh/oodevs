@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Options.h"
 #include "OptionsObserver_ABC.h"
+#include "Observer_ABC.h"
 #include "OptionVariant.h"
 #include <algorithm>
 #include "Settings.h"
@@ -36,20 +37,25 @@ Options::~Options()
 // Name: Options::Register
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Register( OptionsObserver_ABC& observer )
+void Options::Register( Observer_ABC& o )
 {
-    observers_.push_back( &observer );
-    for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
-        observer.OptionChanged( it->first, it->second );
+    OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
+    if( observer )
+    {
+        observers_.push_back( observer );
+        for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
+            observer->OptionChanged( it->first, it->second );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Options::Remove
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Remove( OptionsObserver_ABC& observer )
+void Options::Remove( Observer_ABC& o )
 {
-    observers_.erase( std::find( observers_.begin(), observers_.end(), &observer ) );
+    OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
+    observers_.erase( std::find( observers_.begin(), observers_.end(), observer ) );
 }
 
 // -----------------------------------------------------------------------------

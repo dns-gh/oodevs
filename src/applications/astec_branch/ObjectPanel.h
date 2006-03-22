@@ -24,7 +24,7 @@
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 
-class Object_ABC;
+class Object;
 class CampAttributes;
 class CrossingSiteAttributes;
 class LogisticRouteAttributes;
@@ -44,13 +44,13 @@ class InfoPanels;
 // =============================================================================
 class ObjectPanel : public InfoPanel_ABC
                   , public Observer_ABC
-                  , public ElementObserver_ABC< Object_ABC >
+                  , public ElementObserver_ABC< Object >
                   , public ElementObserver_ABC< CampAttributes >
                   , public ElementObserver_ABC< CrossingSiteAttributes >
                   , public ElementObserver_ABC< LogisticRouteAttributes >
                   , public ElementObserver_ABC< NBCAttributes >
                   , public ElementObserver_ABC< RotaAttributes >
-                  , public SelectionObserver< Object_ABC >
+                  , public SelectionObserver< Object >
 
 {
 
@@ -63,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Object_ABC* object );
+    virtual void NotifySelected( const Object* object );
     //@}
 
 private:
@@ -78,8 +78,8 @@ private:
     //@{
     void showEvent( QShowEvent* );
 
-    virtual void NotifyUpdated( const Object_ABC& );
-    virtual void NotifyDeleted( const Object_ABC& );
+    virtual void NotifyUpdated( const Object& );
+    virtual void NotifyDeleted( const Object& );
     virtual void NotifyUpdated( const CampAttributes& attributes );
     virtual void NotifyUpdated( const CrossingSiteAttributes& attributes );
     virtual void NotifyUpdated( const LogisticRouteAttributes& attributes );
@@ -94,7 +94,7 @@ private:
     //! @name Member data
     //@{
     DisplayBuilder* display_;
-    const Object_ABC* selected_;
+    const Object* selected_;
 
 //    QPushButton* pApplyButton_;
 //    QPushButton* pCancelButton_;

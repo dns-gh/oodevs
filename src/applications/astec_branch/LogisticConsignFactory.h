@@ -12,7 +12,7 @@
 
 #include "LogisticConsignFactory_ABC.h"
 
-class Controller;
+class Controllers;
 class Model;
 
 // =============================================================================
@@ -27,7 +27,7 @@ class LogisticConsignFactory : public LogisticConsignFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsignFactory( Controller& controller, Model& model );
+             LogisticConsignFactory( Controllers& controllers, Model& model );
     virtual ~LogisticConsignFactory();
     //@}
 
@@ -48,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
     Model& model_;
     //@}
 };

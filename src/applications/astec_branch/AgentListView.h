@@ -79,6 +79,7 @@ private slots:
     //@{
     void OnSelectionChange( QListViewItem* item );
     void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    void OnRequestCenter();
     //@}
 
     //! @name Helpers

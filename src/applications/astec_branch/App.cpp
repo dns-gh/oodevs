@@ -21,7 +21,7 @@
 #include "Options.h"
 #include "Model.h"
 #include "Simulation.h"
-#include "Controller.h"
+#include "Controllers.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -74,7 +74,7 @@ App::App( int nArgc, char** ppArgv )
     Initialize( conffile );
 
 //    SetSplashText( tr("Initialisation de l'interface...") );
-    mainWindow_ = new MainWindow( *controller_, model_->coordinateConverter_, conffile );
+    mainWindow_ = new MainWindow( *controllers_, model_->coordinateConverter_, conffile );
     mainWindow_->show();
 
     if( splashScreen_ )
@@ -107,10 +107,10 @@ void App::Initialize( const std::string& scipioXml )
             >> start( "Donnees" );
     InitializeHumanFactors ( xis, absoluteConfigFile ); 
 
-    controller_ = new Controller();
-    simulation_ = new Simulation();
-    model_      = new Model( *controller_, *simulation_, absoluteConfigFile );
-    network_    = new Network( *model_, *simulation_ );
+    controllers_ = new Controllers();
+    simulation_  = new Simulation();
+    model_       = new Model( *controllers_, *simulation_, absoluteConfigFile );
+    network_     = new Network( *model_, *simulation_ );
 
     network_->Connect( "localhost", 10000 ); // $$$$ SBO 2006-03-16: 
 }

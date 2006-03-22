@@ -15,22 +15,25 @@
 #include "Positions.h"
 #include "Drawable_ABC.h"
 #include "Positions.h"
-#include "SelectionProxy.h"
 #include "ColorStrategy_ABC.h"
 #include "GlTools_ABC.h"
+#include "Positions.h"
+#include "graphics/MapWidget.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy )
+AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
     : actions_  ( actions )
     , converter_( converter )
     , tools_    ( tools )
     , strategy_ ( strategy )
+    , widget_   ( widget )
     , selected_ ( 0 )
 {
     controller.Register( *this );
+    actions.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +97,15 @@ void AgentsLayer::NotifyDeleted( const Agent& agent )
         std::swap( *it, agents_.back() );
         agents_.pop_back();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::NotifyActivated
+// Created: AGE 2006-03-22
+// -----------------------------------------------------------------------------
+void AgentsLayer::NotifyActivated( const Agent& agent )
+{
+    widget_.Center( agent.Get< Positions >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

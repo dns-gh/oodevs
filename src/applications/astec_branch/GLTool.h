@@ -36,7 +36,7 @@ class AgentKnowledge;
 class Team;
 class Gtia;
 class ObjectManager;
-class Object_ABC;
+class Object;
 class ObjectKnowledge;
 class LineManager;
 class TacticalLine_ABC;
@@ -181,7 +181,7 @@ public:
     static void Draw( PopulationFlowKnowledge&          knowledge, E_State nState = eNormal );
 
     static void Draw( ObjectManager& manager );
-    static void Draw( Object_ABC& object, E_State nState = eNormal );
+    static void Draw( Object& object, E_State nState = eNormal );
     static void Draw( ObjectKnowledge& knowledge, E_State nState = eNormal );
 
     static void Draw( LineManager& lineManager );

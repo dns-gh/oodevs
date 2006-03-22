@@ -22,7 +22,7 @@ class MainWindow;
 class QSplashScreen;
 class Model;
 class Simulation;
-class Controller;
+class Controllers;
 
 namespace xml { class xistream; }
 
@@ -76,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller*     controller_;
+    Controllers*    controllers_;
     Model*          model_;
     Simulation*     simulation_;
 

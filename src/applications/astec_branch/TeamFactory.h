@@ -13,7 +13,7 @@
 #include "TeamFactory_ABC.h"
 #include "KnowledgeGroupFactory_ABC.h"
 
-class Controller;
+class Controllers;
 class Model;
 
 // =============================================================================
@@ -28,7 +28,7 @@ class TeamFactory : public TeamFactory_ABC, public KnowledgeGroupFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( Controller& controller, Model& model );
+             TeamFactory( Controllers& controllers, Model& model );
     virtual ~TeamFactory();
     //@}
 
@@ -48,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
     Model& model_;
     //@}
 };

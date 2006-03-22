@@ -19,7 +19,7 @@
 #include "astec_pch.h"
 #include "ObjectPanel.h"
 
-#include "Object_ABC.h"
+#include "Object.h"
 #include "ObjectType.h"
 #include "CampAttributes.h"
 #include "CrossingSiteAttributes.h"
@@ -116,7 +116,7 @@ ObjectPanel::~ObjectPanel()
 // -----------------------------------------------------------------------------
 void ObjectPanel::showEvent( QShowEvent* )
 {
-    const Object_ABC* selected = selected_;
+    const Object* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -125,7 +125,7 @@ void ObjectPanel::showEvent( QShowEvent* )
 // Name: ObjectPanel::NotifySelected
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifySelected( const Object_ABC* object )
+void ObjectPanel::NotifySelected( const Object* object )
 {
     if( selected_ != object || ! object )
     {
@@ -160,7 +160,7 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const Object_ABC& object )
+void ObjectPanel::NotifyUpdated( const Object& object )
 {
     if( selected_  != &object || ! IsVisible() )
         return;
@@ -173,7 +173,7 @@ void ObjectPanel::NotifyUpdated( const Object_ABC& object )
 // Name: ObjectPanel::NotifyDeleted
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyDeleted( const Object_ABC& object )
+void ObjectPanel::NotifyDeleted( const Object& object )
 {
     if( selected_ == &object )
         NotifySelected( 0 );

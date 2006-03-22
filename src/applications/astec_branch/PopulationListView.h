@@ -42,6 +42,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChange( QListViewItem* item );
+    void OnRequestCenter();
     //@}
 
 private:

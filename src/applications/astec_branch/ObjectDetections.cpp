@@ -16,7 +16,7 @@
 // Name: ObjectDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< Object_ABC >& resolver )
+ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< Object >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {
@@ -42,7 +42,7 @@ void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
     unsigned char  nObjectVisType;
 
     message >> id >> nObjectVisType;
-    Object_ABC* object = & resolver_.Get( id );
+    Object* object = & resolver_.Get( id );
 
     if( nObjectVisType == eVisTypeInvisible )
         perceivedObjects_.erase( object );

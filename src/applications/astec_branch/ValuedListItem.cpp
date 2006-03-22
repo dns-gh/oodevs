@@ -133,3 +133,13 @@ void ValuedListItem::ContextMenu( ActionController& actions, const QPoint& where
     if( container_ )
         container_->ContextMenu( actions, where );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::Activate
+// Created: AGE 2006-03-22
+// -----------------------------------------------------------------------------
+void ValuedListItem::Activate( ActionController& actions )
+{
+    if( container_ )
+        container_->Activate( actions );
+}

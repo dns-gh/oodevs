@@ -22,7 +22,7 @@
 #include "ActionController.h"
 #include "FireResultListView.h"
 
-#include "Object_ABC.h"
+#include "Object.h"
 #include "Explosions.h"
 #include "Equipment.h"
 
@@ -69,7 +69,7 @@ void ObjectReportPanel::NotifyUpdated( const Explosions& explosions )
 // Name: ObjectReportPanel::NotifyDeleted
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
+void ObjectReportPanel::NotifyDeleted( const Object& object )
 {
     if( & object == selected_ )
         NotifySelected( 0 );
@@ -79,7 +79,7 @@ void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
 // Name: ObjectReportPanel::NotifySelected
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::NotifySelected( const Object_ABC* object )
+void ObjectReportPanel::NotifySelected( const Object* object )
 {
     if( object != selected_ || !object )
     {

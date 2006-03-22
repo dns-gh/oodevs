@@ -20,7 +20,6 @@ class CoordinateConverter;
 class Controller;
 class ActionController;
 class ColorStrategy;
-class SelectionLayer_ABC;
 class GlFont;
 
 // =============================================================================

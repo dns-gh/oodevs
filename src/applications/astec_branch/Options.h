@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 
+class Observer_ABC;
 class OptionsObserver_ABC;
 class OptionVariant;
 class Settings;
@@ -36,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( OptionsObserver_ABC& observer );
-    void Remove( OptionsObserver_ABC& observer );
+    void Register( Observer_ABC& observer );
+    void Remove  ( Observer_ABC& observer );
 
     void Change( const std::string& name, const OptionVariant& value );
 

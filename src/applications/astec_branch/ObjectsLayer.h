@@ -7,60 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __MetricsLayer_h_
-#define __MetricsLayer_h_
+#ifndef __ObjectsLayer_h_
+#define __ObjectsLayer_h_
 
 #include "graphics/MapLayer_ABC.h"
-class GlTools_ABC;
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "ActivationObserver_ABC.h"
+class Object;
 
 // =============================================================================
-/** @class  MetricsLayer
-    @brief  MetricsLayer
+/** @class  ObjectsLayer
+    @brief  ObjectsLayer
 */
-// Created: AGE 2006-03-17
+// Created: AGE 2006-03-22
 // =============================================================================
-class MetricsLayer : public MapLayer_ABC
+class ObjectsLayer : public MapLayer_ABC
+                   , private Observer_ABC
+                   , public ElementObserver_ABC< Object >
+                   , public ActivationObserver_ABC< Object > 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MetricsLayer( GlTools_ABC& tools );
-    virtual ~MetricsLayer();
+             ObjectsLayer();
+    virtual ~ObjectsLayer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
-    virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    MetricsLayer( const MetricsLayer& );            //!< Copy constructor
-    MetricsLayer& operator=( const MetricsLayer& ); //!< Assignement operator
+    ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor
+    ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    float Displace( float value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
-
-    geometry::Rectangle2f extent_;
-    float gridStep_;
-
-    bool ruling_;
-    geometry::Point2f start_;
-    geometry::Point2f end_;
     //@}
 };
 
-#endif // __MetricsLayer_h_
+#endif // __ObjectsLayer_h_

@@ -12,7 +12,7 @@
 
 #include "Displayer_ABC.h"
 class Agent;
-class Object_ABC;
+class Object;
 class Team;
 class DotationType;
 class EquipmentType;
@@ -31,7 +31,7 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< Population >
                   , public Caller< PopulationConcentration >
                   , public Caller< Agent >
-                  , public Caller< Object_ABC >
+                  , public Caller< Object >
                   , public Caller< Team >
                   , public Caller< DotationType >
                   , public Caller< EquipmentType >
@@ -57,7 +57,7 @@ private:
     virtual void Call( const Agent& value );
     virtual void Call( const Population& value );
     virtual void Call( const PopulationConcentration& value );
-    virtual void Call( const Object_ABC& value );
+    virtual void Call( const Object& value );
     virtual void Call( const Team& value );
     virtual void Call( const DotationType& value );
     virtual void Call( const EquipmentType& value );

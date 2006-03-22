@@ -18,7 +18,7 @@
 
 #include "astec_pch.h"
 #include "ObjectListView.h"
-#include "Object_ABC.h"
+#include "Object.h"
 #include "Team.h"
 #include "Tools.h"
 #include "SelectedElement.h"
@@ -47,6 +47,9 @@ ObjectListView::ObjectListView( QWidget* pParent, Controller& controller, Action
     setResizeMode( QListView::LastColumn );
 
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( spacePressed    ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+
     controller.Register( *this );
 }
 
@@ -66,15 +69,31 @@ ObjectListView::~ObjectListView()
 // -----------------------------------------------------------------------------
 void ObjectListView::OnSelectionChange( QListViewItem* i )
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
-    item->Select( actionController_ );
+    if( i )
+    {
+        ValuedListItem* item = (ValuedListItem*)( i );
+        item->Select( actionController_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::OnRequestCenter
+// Created: AGE 2006-03-22
+// -----------------------------------------------------------------------------
+void ObjectListView::OnRequestCenter()
+{
+    if( selectedItem() )
+    {
+        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
+        item->Activate( actionController_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView::NotifyCreated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyCreated( const Object_ABC& object )
+void ObjectListView::NotifyCreated( const Object& object )
 {
     const Team& team = object.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
@@ -93,7 +112,7 @@ void ObjectListView::NotifyCreated( const Object_ABC& object )
 // Name: ObjectListView::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyUpdated( const Object_ABC& )
+void ObjectListView::NotifyUpdated( const Object& )
 {
     // NOTHING
 }
@@ -102,7 +121,7 @@ void ObjectListView::NotifyUpdated( const Object_ABC& )
 // Name: ObjectListView::NotifyDeleted
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyDeleted( const Object_ABC& object )
+void ObjectListView::NotifyDeleted( const Object& object )
 {
     delete FindItem( &object, firstChild() );
 }
@@ -120,7 +139,7 @@ QSize ObjectListView::sizeHint() const
 // Name: ObjectListView::Select
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void ObjectListView::Select( const Object_ABC& object )
+void ObjectListView::Select( const Object& object )
 {
     setSelected( FindItem( &object, firstChild() ), true );
     ensureItemVisible( selectedItem() );

@@ -30,21 +30,19 @@
 #include "OptionsPanel.h"
 #include "MissionPanel.h"
 #include "GlWidget.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controller& controller, const CoordinateConverter& converter, const std::string& scipioXml )
+MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& converter, const std::string& scipioXml )
     : QMainWindow      ( 0, 0, Qt::WDestructiveClose )
-    , actionController_( * new ActionController() )
 {
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-    pOptions_ = new Options();
-
-    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controller, actionController_, converter );
+    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controllers.controller_, controllers.actions_, converter );
     setCentralWidget( pGlWiget );
     pGlWiget->show();
     
@@ -52,13 +50,13 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controller, actionController_ );
+    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controllers.controller_, controllers.actions_ );
     pListsTabWidget->addTab( pAgentList_, tr( "Agents" ) );
     pAgentList_->header()->hide();
-    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controller, actionController_ );
+    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controllers.controller_, controllers.actions_ );
     pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
     pObjectList_->header()->hide();
-    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controller, actionController_ );
+    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controllers.controller_, controllers.actions_ );
 	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
 	pPopulationList_->header()->hide();
 	pListDockWnd_->setWidget( pListsTabWidget );
@@ -70,7 +68,7 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controller, actionController_ );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers.controller_, controllers.actions_ );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
@@ -78,7 +76,7 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
     this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, actionController_ );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers.actions_ );
     this->moveDockWindow( pMissionPanel_, Qt::DockLeft );
     pMissionPanel_->hide();
     this->setDockEnabled( pMissionPanel_, Qt::DockTop, false );
@@ -98,12 +96,15 @@ MainWindow::MainWindow( Controller& controller, const CoordinateConverter& conve
     QDockWindow* pOptionsDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pOptionsDockWnd_, Qt::DockRight );
     pOptionsDockWnd_->hide();
-    pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, *pOptions_ );
+    pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, controllers.options_ );
     pOptionsDockWnd_->setWidget( pOptionsPanel_ );
     pOptionsDockWnd_->setResizeEnabled( true );
     pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
     this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
+
+    // $$$$ AGE 2006-03-22: 
+    new QToolBar( this );
 
     // This one refreshes the map display, and is called only a few time per second.
     QTimer* displayTimer = new QTimer( this );

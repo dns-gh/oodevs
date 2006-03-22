@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 
 class ObjectKnowledge;
-class Controller;
+class Controllers;
 class Model;
 
 // =============================================================================
@@ -28,7 +28,7 @@ class ObjectKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgeFactory( Controller& controller, Model& model );
+             ObjectKnowledgeFactory( Controllers& controllers, Model& model );
     virtual ~ObjectKnowledgeFactory();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
     Model& model_;
     //@}
 };

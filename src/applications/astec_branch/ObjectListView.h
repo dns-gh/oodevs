@@ -23,7 +23,7 @@
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 
-class Object_ABC;
+class Object;
 class Controller;
 class ActionController;
 
@@ -35,8 +35,8 @@ class ActionController;
 // =============================================================================
 class ObjectListView : public QListView
                      , public Observer_ABC
-                     , public ElementObserver_ABC< Object_ABC >
-                     , public SelectionObserver_Base< Object_ABC >
+                     , public ElementObserver_ABC< Object >
+                     , public SelectionObserver_Base< Object >
 {
     Q_OBJECT;
 public:
@@ -55,6 +55,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChange( QListViewItem* item );
+    void OnRequestCenter();
     //@}
 
 private:
@@ -66,10 +67,10 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Object_ABC& object );
-    virtual void NotifyUpdated( const Object_ABC& object );
-    virtual void NotifyDeleted( const Object_ABC& object );
-    virtual void Select( const Object_ABC& object );
+    virtual void NotifyCreated( const Object& object );
+    virtual void NotifyUpdated( const Object& object );
+    virtual void NotifyDeleted( const Object& object );
+    virtual void Select( const Object& object );
     //@}
 
 private:

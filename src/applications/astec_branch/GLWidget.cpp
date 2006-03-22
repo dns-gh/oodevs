@@ -60,7 +60,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
     Register( *new MetricsLayer( *this ) );
-    Register( *new AgentsLayer( controller, actions, converter, *this, strategy_ ) );
+    Register( *new AgentsLayer( controller, actions, converter, *this, strategy_, *this ) );
 }
 
 // -----------------------------------------------------------------------------

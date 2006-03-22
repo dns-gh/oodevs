@@ -14,7 +14,7 @@
 #include "Resolver.h"
 
 class ObjectFactory_ABC;
-class Object_ABC;
+class Object;
 
 
 // =============================================================================
@@ -23,7 +23,7 @@ class Object_ABC;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class ObjectsModel : public Resolver< Object_ABC >
+class ObjectsModel : public Resolver< Object >
 {
 
 public:
@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
-    Object_ABC& GetObject( unsigned long id );
+    Object& GetObject( unsigned long id );
     void DeleteObject( unsigned long id );
     //@}
 

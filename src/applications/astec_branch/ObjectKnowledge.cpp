@@ -14,7 +14,7 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
-#include "Object_ABC.h"
+#include "Object.h"
 #include "ObjectType.h"
 #include "CoordinateConverter.h"
 
@@ -22,7 +22,7 @@
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent >& agentResolver )
+ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent >& agentResolver )
     : converter_     ( converter )
     , objectResolver_( objectResolver )
     , agentResolver_ ( agentResolver )
@@ -95,7 +95,7 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 // Name: ObjectKnowledge::GetRealObject
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Object_ABC* ObjectKnowledge::GetRealObject() const
+Object* ObjectKnowledge::GetRealObject() const
 {
     return pRealObject_;
 }

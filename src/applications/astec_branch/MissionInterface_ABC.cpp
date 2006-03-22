@@ -44,7 +44,7 @@
 //#include "ParamEquipmentList.h"
 //#include "ParamHumanWoundList.h"
 #include "Agent.h"
-#include "Object_ABC.h"
+#include "Object.h"
 #include "ObjectKnowledge.h"
 #include "AgentKnowledge.h"
 #include "PopulationKnowledge.h"

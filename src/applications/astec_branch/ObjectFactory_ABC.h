@@ -11,7 +11,7 @@
 #define __ObjectFactory_ABC_h_
 
 #include "ASN_Types.h"
-class Object_ABC;
+class Object;
 
 // =============================================================================
 /** @class  ObjectFactory_ABC
@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& asnMsg ) = 0;
+    virtual Object* Create( const ASN1T_MsgObjectCreation& asnMsg ) = 0;
     //@}
 
 private:

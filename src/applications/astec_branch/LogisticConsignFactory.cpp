@@ -15,13 +15,14 @@
 #include "LogSupplyConsign.h"
 #include "LogMedicalConsign.h"
 #include "ObjectTypes.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogisticConsignFactory::LogisticConsignFactory( Controller& controller, Model& model )
-    : controller_( controller )
+LogisticConsignFactory::LogisticConsignFactory( Controllers& controllers, Model& model )
+    : controllers_( controllers )
     , model_( model )
 {
     // NOTHING
@@ -42,7 +43,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
 {
-    return new LogMaintenanceConsign( controller_, model_.agents_, message );
+    return new LogMaintenanceConsign( controllers_.controller_, model_.agents_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +52,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const A
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& message )
 {
-    return new LogSupplyConsign( controller_, model_.agents_, model_.objectTypes_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.objectTypes_, message );
 }
     
 // -----------------------------------------------------------------------------
@@ -60,5 +61,5 @@ LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const ASN1T_MsgLo
 // -----------------------------------------------------------------------------
 LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const ASN1T_MsgLogSanteTraitementHumainCreation& message )
 {
-    return new LogMedicalConsign( controller_, model_.agents_, message );
+    return new LogMedicalConsign( controllers_.controller_, model_.agents_, message );
 }

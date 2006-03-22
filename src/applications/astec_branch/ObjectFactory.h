@@ -12,7 +12,7 @@
 
 #include "ObjectFactory_ABC.h"
 
-class Controller;
+class Controllers;
 class Model;
 
 // =============================================================================
@@ -27,13 +27,13 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controller& controller, Model& model );
+             ObjectFactory( Controllers& controllers, Model& model );
     virtual ~ObjectFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
+    virtual Object* Create( const ASN1T_MsgObjectCreation& message );
     //@}
 
 private:
@@ -43,14 +43,10 @@ private:
     ObjectFactory& operator=( const ObjectFactory& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
     Model& model_;
     //@}
 };

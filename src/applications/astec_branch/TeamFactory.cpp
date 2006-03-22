@@ -18,16 +18,17 @@
 #include "Team.h"
 #include "Diplomacies.h"
 #include "AgentKnowledgeFactory.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( Controller& controller, Model& model )
-    : controller_( controller )
+TeamFactory::TeamFactory( Controllers& controllers, Model& model )
+    : controllers_( controllers )
     , model_( model )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ TeamFactory::TeamFactory( Controller& controller, Model& model )
 // -----------------------------------------------------------------------------
 TeamFactory::~TeamFactory()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,9 +46,9 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 {
-    Team* result = new Team( id, input, controller_, *this );
-    result->Attach( *new ObjectKnowledges( controller_, model_.objectKnowledgeFactory_ ) );
-    result->Attach( *new Diplomacies( controller_, model_.teams_ ) );
+    Team* result = new Team( id, input, controllers_.controller_, *this );
+    result->Attach( *new ObjectKnowledges( controllers_.controller_, model_.objectKnowledgeFactory_ ) );
+    result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     return result;
 }
 
@@ -57,8 +58,8 @@ Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 // -----------------------------------------------------------------------------
 KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team& team  )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( id, controller_, team );
-    result->Attach( *new AgentKnowledges( controller_, model_.agentsKnowledgeFactory_ ) );
-    result->Attach( *new PopulationKnowledges( controller_, model_.agentsKnowledgeFactory_ ) );
+    KnowledgeGroup* result = new KnowledgeGroup( id, controllers_.controller_, team );
+    result->Attach( *new AgentKnowledges( controllers_.controller_, model_.agentsKnowledgeFactory_ ) );
+    result->Attach( *new PopulationKnowledges( controllers_.controller_, model_.agentsKnowledgeFactory_ ) );
     return result;
 }

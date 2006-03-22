@@ -16,7 +16,7 @@
 #include "Resolver_ABC.h"
 
 class Controller;
-class Object_ABC;
+class Object;
 
 // =============================================================================
 /** @class  ObjectDetections
@@ -31,7 +31,7 @@ class ObjectDetections : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectDetections( Controller& controller, const Resolver_ABC< Object_ABC >& resolver );
+             ObjectDetections( Controller& controller, const Resolver_ABC< Object >& resolver );
     virtual ~ObjectDetections();
     //@}
 
@@ -53,14 +53,14 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const Object_ABC* > T_Objects;
+    typedef std::set< const Object* > T_Objects;
     //@}
 
 private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Object_ABC >& resolver_;
+    const Resolver_ABC< Object >& resolver_;
 
     T_Objects perceivedObjects_;
     //@}

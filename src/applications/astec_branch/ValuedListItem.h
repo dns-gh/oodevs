@@ -84,6 +84,7 @@ public:
 
     void Select( ActionController& actions );
     void ContextMenu( ActionController& actions, const QPoint& where );
+    void Activate( ActionController& actions );
     //@}
 
 private:
@@ -177,6 +178,7 @@ public:
     virtual int rtti() const = 0;
     virtual void Select( ActionController& actions ) = 0;
     virtual void ContextMenu( ActionController& actions, const QPoint& where ) = 0;
+    virtual void Activate( ActionController& actions ) = 0;
 };
 
 // =============================================================================
@@ -204,6 +206,9 @@ public:
     };
     virtual void ContextMenu( ActionController& actions, const QPoint& where ) {
         actions.ContextMenu( *value_, where );
+    }
+    void Activate( ActionController& actions ) {
+        actions.Activate( *value_ );
     }
 private:
     T value_;

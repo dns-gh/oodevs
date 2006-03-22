@@ -27,8 +27,7 @@ class MapEventFilter_ABC;
 class OptionsPanel;
 
 class QProgressBar;
-class Controller;
-class ActionController;
+class Controllers;
 class CoordinateConverter;
 
 // =============================================================================
@@ -50,7 +49,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controller& controller, const CoordinateConverter& converter, const std::string& scipioXml );
+             MainWindow( Controllers& controllers, const CoordinateConverter& converter, const std::string& scipioXml );
     virtual ~MainWindow();
     //@}
 
@@ -81,8 +80,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
-    Options* pOptions_;
     OptionsPanel* pOptionsPanel_;
 
     QDockWindow* pListDockWnd_;

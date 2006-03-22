@@ -14,6 +14,7 @@
 #include "Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ContextMenuObserver_ABC.h"
+#include "ActivationObserver_ABC.h"
 #include <qpopupmenu.h>
 
 // =============================================================================
@@ -60,7 +61,13 @@ public:
         popupMenu_->clear();
         Apply( ContextMenuObserver_ABC< T >::NotifyContextMenu, element, *popupMenu_ );
         ShowMenu( where );
-    };
+    }
+
+    template< typename T >
+    void Activate( const T& element )
+    {
+        Apply( ActivationObserver_ABC< T >::NotifyActivated, element );
+    }
     //@}
 
 private:

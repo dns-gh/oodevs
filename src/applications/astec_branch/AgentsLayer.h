@@ -10,9 +10,10 @@
 #ifndef __AgentsLayer_h_
 #define __AgentsLayer_h_
 
-#include "SelectionLayer_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "ActivationObserver_ABC.h"
+#include "graphics/MapLayer_ABC.h"
 
 class Agent;
 class Controller;
@@ -20,6 +21,7 @@ class ActionController;
 class CoordinateConverter;
 class GlTools_ABC;
 class ColorStrategy_ABC;
+class MapWidget;
 
 // =============================================================================
 /** @class  AgentsLayer
@@ -27,15 +29,16 @@ class ColorStrategy_ABC;
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class AgentsLayer : public SelectionLayer_ABC
+class AgentsLayer : public MapLayer_ABC
                   , private Observer_ABC
                   , public ElementObserver_ABC< Agent >
+                  , public ActivationObserver_ABC< Agent >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy );
+             AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
     virtual ~AgentsLayer();
     //@}
 
@@ -62,6 +65,7 @@ private:
     virtual void NotifyCreated( const Agent& );
     virtual void NotifyUpdated( const Agent& );
     virtual void NotifyDeleted( const Agent& );
+    virtual void NotifyActivated( const Agent& );
 
     bool IsInSelection( const Agent& agent, const geometry::Point2f& point ) const;
     //@}
@@ -80,6 +84,8 @@ private:
     const CoordinateConverter& converter_;
     const GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
+    MapWidget& widget_;
+
     T_Agents agents_;
     unsigned selected_;
     //@}

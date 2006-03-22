@@ -18,7 +18,7 @@
 #include "Updatable_ABC.h"
 
 class Displayer_ABC;
-class Object_ABC;
+class Object;
 class Controller;
 class Agent;
 class Team;
@@ -40,7 +40,7 @@ public:
     //@{
              ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message,
                               Controller& controller, const CoordinateConverter& converter,
-                              const Resolver_ABC< Object_ABC >& objectResolver,
+                              const Resolver_ABC< Object >& objectResolver,
                               const Resolver_ABC< Agent >& agentResolver );
     virtual ~ObjectKnowledge();
     //@}
@@ -52,7 +52,7 @@ public:
 
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
-    Object_ABC* GetRealObject() const;
+    Object* GetRealObject() const;
     bool IsInTeam( const Team& team ) const;
     //@}
 
@@ -77,7 +77,7 @@ private:
     //! @name Member data
     //@{
     const CoordinateConverter& converter_;
-    const Resolver_ABC< Object_ABC >& objectResolver_;
+    const Resolver_ABC< Object >& objectResolver_;
     const Resolver_ABC< Agent >& agentResolver_;
     Controller& controller_;
 
@@ -85,7 +85,7 @@ private:
     unsigned long type_; // $$$$ AGE 2006-02-24: resolve !
 
     T_PointVector points_;
-    Object_ABC* pRealObject_;
+    Object* pRealObject_;
 
     OptionalValue< unsigned int >  nPourcentageConstruction_;
     OptionalValue< unsigned int >  nPourcentageValorisation_;

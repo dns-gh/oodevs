@@ -7,40 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __SelectionLayer_ABC_h_
-#define __SelectionLayer_ABC_h_
+#ifndef __Controllers_h_
+#define __Controllers_h_
 
-#include "graphics/MapLayer_ABC.h"
+class Options;
+class Controller;
+class ActionController;
+class Observer_ABC;
 
 // =============================================================================
-/** @class  SelectionLayer_ABC
-    @brief  Base class for layers with selectionable elements
+/** @class  Controllers
+    @brief  Controllers
 */
-// Created: SBO 2006-03-16
+// Created: AGE 2006-03-22
 // =============================================================================
-class SelectionLayer_ABC : public MapLayer_ABC
+class Controllers
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer_ABC()
-                 : hasFocus_( false )
-             {}
-    virtual ~SelectionLayer_ABC() {}
+             Controllers();
+    virtual ~Controllers();
     //@}
 
     //! @name Operations
     //@{
-    virtual void SetFocus( bool focus ) { hasFocus_ = focus; };
-    virtual bool HasFocus() const { return hasFocus_; }
+    void Register( Observer_ABC& observer );
+    void Remove( Observer_ABC& observer );
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    Controllers( const Controllers& );
+    Controllers& operator=( const Controllers& );
+    //@}
+
+public:
     //! @name Member data
     //@{
-    bool hasFocus_;
+    Options&          options_;
+    Controller&       controller_;
+    ActionController& actions_;
     //@}
 };
 
-#endif // __SelectionLayer_ABC_h_
+#endif // __Controllers_h_

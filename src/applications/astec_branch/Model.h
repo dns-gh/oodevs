@@ -18,7 +18,7 @@ class LogisticsModel;
 class LimitsModel;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
-class Controller;
+class Controllers;
 class AgentTypes;
 class ObjectKnowledgeFactory;
 class AgentKnowledgeFactory;
@@ -43,7 +43,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controller& controller, const Simulation& simulation, const std::string& scipioXml );
+             Model( Controllers& controllers, const Simulation& simulation, const std::string& scipioXml );
     virtual ~Model();
     //@}
 

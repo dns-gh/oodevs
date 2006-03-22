@@ -17,7 +17,7 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Object_ABC.h"
+#include "Object.h"
 
 #include "Net_Def.h"
 #include "Tools.h"
@@ -31,10 +31,10 @@
 // $$$$ AGE 2006-02-16: ou au moins les enregistrer ?
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::Object_ABC
+// Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
+Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
     : controller_                    ( controller )
     , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
@@ -74,28 +74,28 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& message, Controller& cont
 
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::~Object_ABC
+// Name: Object::~Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object_ABC::~Object_ABC()
+Object::~Object()
 {
     controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::GetId
+// Name: Object::GetId
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-unsigned long Object_ABC::GetId() const
+unsigned long Object::GetId() const
 {
     return nId_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::GetName
+// Name: Object::GetName
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-std::string Object_ABC::GetName() const
+std::string Object::GetName() const
 {
     std::stringstream stream;
     stream << strName_ << " [" << nId_ << ']';
@@ -103,28 +103,28 @@ std::string Object_ABC::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::GetTeam
+// Name: Object::GetTeam
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-const Team& Object_ABC::GetTeam() const
+const Team& Object::GetTeam() const
 {
     return team_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::GetType
+// Name: Object::GetType
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType& Object_ABC::GetType() const
+ObjectType& Object::GetType() const
 {
     return type_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::DoUpdate
+// Name: Object::DoUpdate
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
     bPrepared_ = message.en_preparation;
 
@@ -159,10 +159,10 @@ void Object_ABC::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 
 
 // -----------------------------------------------------------------------------
-// Name: Object_ABC::Display
+// Name: Object::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void Object_ABC::Display( Displayer_ABC& displayer ) const
+void Object::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Informations" )
              .Display( "Id:", nId_ )

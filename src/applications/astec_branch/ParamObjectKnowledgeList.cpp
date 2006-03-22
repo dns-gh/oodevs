@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "ParamObjectKnowledgeList.h"
-#include "Object_ABC.h"
+#include "Object.h"
 #include "ObjectKnowledge.h"
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 // Name: ParamObjectKnowledgeList::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledgeList::NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu )
+void ParamObjectKnowledgeList::NotifyContextMenu( const Object& entity, QPopupMenu& menu )
 {
     // $$$$ AGE 2006-03-14: TODO !
 }

@@ -33,6 +33,8 @@ PopulationListView::PopulationListView( QWidget* pParent, Controller& controller
     this->setAcceptDrops( true );
 
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( spacePressed    ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
 
     controller.Register( *this );
 }
@@ -78,14 +80,31 @@ void PopulationListView::NotifyDeleted( const Population& popu )
     delete FindItem( &popu, firstChild() );
 }
 
+// $$$$ AGE 2006-03-22: somehow factor these things
 // -----------------------------------------------------------------------------
 // Name: PopulationListView::OnSelectionChange
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
 void PopulationListView::OnSelectionChange( QListViewItem* i )
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
-    item->Select( actionController_ );
+    if( i )
+    {
+        ValuedListItem* item = (ValuedListItem*)( i );
+        item->Select( actionController_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::OnRequestCenter
+// Created: AGE 2006-03-22
+// -----------------------------------------------------------------------------
+void PopulationListView::OnRequestCenter()
+{
+    if( selectedItem() )
+    {
+        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
+        item->Select( actionController_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

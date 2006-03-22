@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Object_ABC_h_
-#define __Object_ABC_h_
+#ifndef __Object_h_
+#define __Object_h_
 
 #include "ASN_Types.h"
 #include "IDManager.h"
@@ -35,20 +35,19 @@ class CoordinateConverter;
 
 // =============================================================================
 // Created: SBO 2005-09-02
-// $$$$ AGE 2006-02-16: renommmer en Object
 // =============================================================================
-class Object_ABC : public Entity_ABC
-                 , private Extension_ABC
-                 , public Updatable_ABC< ASN1T_MsgObjectUpdate >
+class Object : public Entity_ABC
+             , private Extension_ABC
+             , public Updatable_ABC< ASN1T_MsgObjectUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Object_ABC( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter& converter,
+             Object( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter& converter,
                          const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
                          const Resolver_ABC< DotationType >& dotationResolver );
-    virtual ~Object_ABC();
+    virtual ~Object();
     //@}
 
     //! @name Operations
@@ -67,8 +66,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    Object_ABC( const Object_ABC& );
-    Object_ABC& operator=( const Object_ABC& );
+    Object( const Object& );
+    Object& operator=( const Object& );
     //@}
 
 private:
@@ -108,4 +107,4 @@ public:
     //@}
 };
 
-#endif // __Object_ABC_h_
+#endif // __Object_h_

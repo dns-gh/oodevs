@@ -25,7 +25,7 @@
 #include "Observer_ABC.h"
 
 class FireResultListView;
-class Object_ABC;
+class Object;
 class Controller;
 class ActionController;
 class Explosions;
@@ -46,7 +46,7 @@ class Casualties;
 class ObjectReportPanel : public InfoPanel_ABC
                         , public Observer_ABC
                         , public ElementObserver_ABC< Explosions >
-                        , public SelectionObserver< Object_ABC >
+                        , public SelectionObserver< Object >
 {
 public:
     //! @name Constructors/Destructor
@@ -70,14 +70,14 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Explosions& );
-    virtual void NotifyDeleted( const Object_ABC& );
-    virtual void NotifySelected( const Object_ABC* );
+    virtual void NotifyDeleted( const Object& );
+    virtual void NotifySelected( const Object* );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Object_ABC* selected_;
+    const Object* selected_;
     FireResultListView* reports_;
     //@}
 };

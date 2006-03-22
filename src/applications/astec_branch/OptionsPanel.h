@@ -20,6 +20,7 @@
 #define __OptionsPanel_h_
 
 #include "OptionsObserver_ABC.h"
+#include "Observer_ABC.h"
 
 class QCheckBox;
 class Options;
@@ -28,7 +29,9 @@ class Settings;
 // =============================================================================
 // Created: APE 2004-07-09
 // =============================================================================
-class OptionsPanel : public QWidget, public OptionsObserver_ABC
+class OptionsPanel : public QWidget
+                   , private Observer_ABC
+                   , public OptionsObserver_ABC
 {
     Q_OBJECT;
 

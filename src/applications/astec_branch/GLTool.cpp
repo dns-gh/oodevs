@@ -34,7 +34,7 @@
 #include "Team.h"
 #include "Gtia.h"
 #include "ObjectManager.h"
-#include "Object_ABC.h"
+#include "Object.h"
 #include "ObjectKnowledge.h"
 #include "Team.h"
 #include "LineManager.h"
@@ -1266,7 +1266,7 @@ void GLTool::Draw( ObjectManager& manager )
 // Name: GLTool::Draw
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void GLTool::Draw( Object_ABC& object, E_State nState )
+void GLTool::Draw( Object& object, E_State nState )
 {
     glLineWidth( 2 );
 
@@ -2079,7 +2079,7 @@ void GLTool::Draw( const DefaultMapEventHandler& eventHandler )
         {
             QGLWidget* pWidget = MainWindow::GetMainWindow().GetQGLWidget( App::GetApp().Is3D() );
             MT_Float zoom = rClicksPerPix_;
-            Object_ABC* pObject = eventHandler.hoveredElement_.pObject_;
+            Object* pObject = eventHandler.hoveredElement_.pObject_;
             const MT_Vector2D pos = pObject->GetCenter();
 
             GFX_Color color( 0.0, 0.0, 0.0, 1.0 ); //color of the text
