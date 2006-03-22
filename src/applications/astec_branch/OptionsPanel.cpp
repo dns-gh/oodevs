@@ -19,6 +19,7 @@
 #include "astec_pch.h"
 #include "OptionsPanel.h"
 #include "moc_OptionsPanel.cpp"
+#include "Controllers.h"
 #include "Options.h"
 #include "OptionVariant.h"
 #include "Settings.h"
@@ -27,9 +28,10 @@
 // Name: OptionsPanel constructor
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-OptionsPanel::OptionsPanel( QWidget* pParent, Options& options )
-    : QWidget( pParent )
-    , options_( options )
+OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
+    : QWidget     ( pParent )
+    , controllers_( controllers )
+    , options_    ( controllers_.options_ )
 {
     QVBoxLayout* pLayout = new QVBoxLayout( this );
     pLayout->setMargin( 5 );
@@ -79,7 +81,7 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Options& options )
     pSubLayout2->addWidget( pDisplayIdentificationLevelOnMap_, 8, 0 );
     connect( pDisplayIdentificationLevelOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawIdentificationsChanged( bool ) ) );
 
-    options.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +90,7 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Options& options )
 // -----------------------------------------------------------------------------
 OptionsPanel::~OptionsPanel()
 {
-    options_.Remove( *this );
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

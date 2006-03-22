@@ -26,8 +26,6 @@
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
-#include "Controller.h"
-#include "ActionController.h"
 #include "KnowledgeGroup.h"
 #include "Agent.h"
 #include "AgentKnowledge.h"
@@ -35,18 +33,19 @@
 #include "Units.h"
 #include "PerceptionMap.h"
 #include "ListDisplayer.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
-    : InfoPanel_ABC    ( pParent, tr( "C. agent" ) )
-    , actionController_( actionController )
-    , owner_           ( 0 )
-    , selected_        ( 0 )
-    , subSelected_     ( 0 )
-    , display_         ( 0 )
+AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
+    : InfoPanel_ABC( pParent, tr( "C. agent" ) )
+    , controllers_ ( controllers )
+    , owner_       ( 0 )
+    , selected_    ( 0 )
+    , subSelected_ ( 0 )
+    , display_     ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );
     pKnowledgeListView_->AddColumn( "Agents connus" );
@@ -89,8 +88,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& contr
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
 //    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 
@@ -100,7 +98,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controller& contr
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::~AgentKnowledgePanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete display_;
 }
 
@@ -202,7 +200,7 @@ void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint
     if( i )
     {
         ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( actionController_, pos );
+        item->ContextMenu( controllers_.actions_, pos );
     }
 }
 

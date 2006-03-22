@@ -15,10 +15,7 @@
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
 #include "ListDisplayer.h"
-
-#include "Controller.h"
-#include "ActionController.h"
-
+#include "Controllers.h"
 #include "KnowledgeGroup.h"
 #include "PopulationKnowledges.h"
 #include "PopulationKnowledge.h"
@@ -29,12 +26,12 @@
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, "C. popu" )
-    , actionController_( actionController )
-    , owner_( 0 )
-    , selected_( 0 )
-    , subSelected_( 0 )
+    , controllers_ ( controllers )
+    , owner_       ( 0 )
+    , selected_    ( 0 )
+    , subSelected_ ( 0 )
     , selectedPart_( 0 )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this );
@@ -75,8 +72,7 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Control
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() )                    , this, SLOT( ToggleDisplayOwnTeam() ) );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // $$$$ AGE 2006-02-27: ajouter
@@ -98,7 +94,7 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Control
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::~PopulationKnowledgePanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete display_;
 }
 
@@ -130,7 +126,7 @@ void PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const Q
     if( i )
     {
         ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( actionController_, pos );
+        item->ContextMenu( controllers_.actions_, pos );
     }
 }
 

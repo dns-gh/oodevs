@@ -29,9 +29,8 @@ class KnowledgeGroup;
 class Agent;
 class ActionContext;
 class SelectedElement;
-class Controller;
+class Controllers;
 class ValuedListItem;
-class ActionController;
 class AutomatDecisions;
 
 // =============================================================================
@@ -54,7 +53,7 @@ class AgentListView : public ListView< AgentListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController );
+             AgentListView( QWidget* pParent, Controllers& controllers );
     virtual ~AgentListView();
 
     QSize sizeHint() const;
@@ -107,7 +106,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
+    Controllers& controllers_;
     //@}
 };
 

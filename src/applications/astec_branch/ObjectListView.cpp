@@ -27,6 +27,7 @@
 #include "ValuedListItem.h"
 #include "ObjectType.h"
 #include "ActionController.h"
+#include "Controllers.h"
 
 #include "moc_ObjectListView.cpp"
 
@@ -36,10 +37,10 @@
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-ObjectListView::ObjectListView( QWidget* pParent, Controller& controller, ActionController& actionController )
-    : QListView( pParent )
-    , actionController_( actionController )
-    , pPopupMenu_   ( 0 )
+ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers )
+    : QListView   ( pParent )
+    , controllers_( controllers )
+    , pPopupMenu_ ( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Objets" );
@@ -50,7 +51,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controller& controller, Action
     connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed    ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
 
-    controller.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +60,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controller& controller, Action
 // -----------------------------------------------------------------------------
 ObjectListView::~ObjectListView()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void ObjectListView::OnSelectionChange( QListViewItem* i )
     if( i )
     {
         ValuedListItem* item = (ValuedListItem*)( i );
-        item->Select( actionController_ );
+        item->Select( controllers_.actions_ );
     }
 }
 
@@ -85,7 +85,7 @@ void ObjectListView::OnRequestCenter()
     if( selectedItem() )
     {
         ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-        item->Activate( actionController_ );
+        item->Activate( controllers_.actions_ );
     }
 }
 

@@ -31,9 +31,7 @@ class ObjectReportPanel;
 class ObjectKnowledgePanel;
 class PopulationPanel;
 class PopulationKnowledgePanel;
-
-class Controller;
-class ActionController;
+class Controllers;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -44,7 +42,7 @@ class InfoPanels : public QWidgetStack
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* pParent, Controller& controller, ActionController& actionController );
+             InfoPanels( QWidget* pParent, Controllers& controllers );
     virtual ~InfoPanels();
     //@}
 

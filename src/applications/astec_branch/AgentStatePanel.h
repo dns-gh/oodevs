@@ -27,8 +27,7 @@
 class Agent;
 class ReportListView;
 class DisplayBuilder;
-class Controller;
-class ActionController;
+class Controllers;
 class Attributes;
 class Contaminations;
 class HumanFactors;
@@ -54,7 +53,7 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             AgentStatePanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~AgentStatePanel();
     //@}
 
@@ -88,6 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     DisplayBuilder* display_;
     const Agent* selected_;
     //@}

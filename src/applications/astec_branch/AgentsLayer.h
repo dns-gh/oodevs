@@ -16,7 +16,7 @@
 #include "graphics/MapLayer_ABC.h"
 
 class Agent;
-class Controller;
+class Controllers;
 class ActionController;
 class CoordinateConverter;
 class GlTools_ABC;
@@ -38,7 +38,7 @@ class AgentsLayer : public MapLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+             AgentsLayer( Controllers& controllers, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
     virtual ~AgentsLayer();
     //@}
 
@@ -80,7 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actions_;
+    Controllers& controllers_;
     const CoordinateConverter& converter_;
     const GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;

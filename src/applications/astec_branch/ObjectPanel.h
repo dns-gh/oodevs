@@ -31,8 +31,7 @@ class LogisticRouteAttributes;
 class NBCAttributes;
 class RotaAttributes;
 
-class Controller;
-class ActionController;
+class Controllers;
 class DisplayBuilder;
 class InfoPanels;
 
@@ -57,7 +56,7 @@ class ObjectPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             ObjectPanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~ObjectPanel();
     //@}
 
@@ -93,6 +92,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     DisplayBuilder* display_;
     const Object* selected_;
 

@@ -20,7 +20,7 @@
 #include "MissionPanel.h"
 #include "moc_MissionPanel.cpp"
 
-#include "ActionController.h"
+#include "Controllers.h"
 #include "Decisions.h"
 #include "Agent.h"
 #include "Mission.h"
@@ -34,8 +34,9 @@
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, ActionController& actions )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers )
     : QDockWindow       ( pParent )
+    , controllers_      ( controllers )
     , pMissionInterface_( 0 )
     , selected_         ( 0 )
 {
@@ -43,7 +44,7 @@ MissionPanel::MissionPanel( QWidget* pParent, ActionController& actions )
     setCaption( tr( "Mission" ) );
     setCloseMode( QDockWindow::Always );
 
-    actions.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ MissionPanel::MissionPanel( QWidget* pParent, ActionController& actions )
 // -----------------------------------------------------------------------------
 MissionPanel::~MissionPanel()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

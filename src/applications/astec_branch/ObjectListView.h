@@ -24,8 +24,7 @@
 #include "SelectionObserver_ABC.h"
 
 class Object;
-class Controller;
-class ActionController;
+class Controllers;
 
 // =============================================================================
 /** @class  ObjectListView
@@ -42,7 +41,7 @@ class ObjectListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListView( QWidget* pParent, Controller& controller, ActionController& actionController );
+             ObjectListView( QWidget* pParent, Controllers& controllers );
     virtual ~ObjectListView();
     //@}
 
@@ -76,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
+    Controllers& controllers_;
     QPopupMenu* pPopupMenu_;
     //@}
 };

@@ -21,8 +21,7 @@
 
 #include "Agent.h"
 #include "Tools.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "Dotations.h"
 #include "Dotation.h"
 #include "DotationType.h"
@@ -39,8 +38,9 @@
 // Name: AgentResourcesPanel constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Res." ) )
+    , controllers_( controllers )
 {
     pEquipment_ = new T_ListView( this, *this );
     pEquipment_->AddColumn( "Equipement" )
@@ -64,8 +64,7 @@ AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controller& contr
             .AddColumn( "Equipement prêté" )
             .AddColumn( "Quantité" );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,8 +73,7 @@ AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controller& contr
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::~AgentResourcesPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

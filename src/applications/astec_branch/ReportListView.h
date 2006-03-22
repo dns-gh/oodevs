@@ -31,8 +31,7 @@ class SelectedElement;
 class ReportFilterOptions;
 class Reports;
 
-class Controller;
-class ActionController;
+class Controllers;
 
 // =============================================================================
 /** @class  ReportListView
@@ -50,7 +49,7 @@ class ReportListView : public ListDisplayer< ReportListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportListView( QWidget* pParent, Controller& controller, ActionController& actionController, const ReportFilterOptions& filter );
+             ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter );
     virtual ~ReportListView();
     //@}
 
@@ -88,6 +87,7 @@ private:
 
     //! @name Member data
     //@{
+    Controllers&               controllers_;
     const ReportFilterOptions& filter_;
     const Agent_ABC*           selected_;
     //@}

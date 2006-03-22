@@ -26,8 +26,7 @@
 #include "LogisticRouteAttributes.h"
 #include "NBCAttributes.h"
 #include "RotaAttributes.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "Agent.h"
 #include "DotationType.h"
 
@@ -44,8 +43,9 @@
 */
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( InfoPanels* info, Controller& controller, ActionController& actionController )
+ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers )
     : InfoPanel_ABC ( info, tr( "Objet" ) )
+    , controllers_( controllers )
     , selected_( 0 )
 {
     display_ = new DisplayBuilder( this );
@@ -96,8 +96,7 @@ ObjectPanel::ObjectPanel( InfoPanels* info, Controller& controller, ActionContro
 //    connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
 //    connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +105,7 @@ ObjectPanel::ObjectPanel( InfoPanels* info, Controller& controller, ActionContro
 // -----------------------------------------------------------------------------
 ObjectPanel::~ObjectPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete display_;
 }
 

@@ -18,8 +18,7 @@
 
 #include "astec_pch.h"
 #include "ObjectReportPanel.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "FireResultListView.h"
 
 #include "Object.h"
@@ -30,14 +29,14 @@
 // Name: ObjectReportPanel constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, "Rapports" )
-    , selected_( 0 )
+    , controllers_ ( controllers )
+    , selected_    ( 0 )
 {
     reports_ = new FireResultListView( this );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +45,7 @@ ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controller& controlle
 // -----------------------------------------------------------------------------
 ObjectReportPanel::~ObjectReportPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

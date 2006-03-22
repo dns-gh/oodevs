@@ -25,8 +25,7 @@
 #include "SelectionObserver_ABC.h"
 
 class DisplayBuilder;
-class Controller;
-class ActionController;
+class Controllers;
 template< typename T > class ListDisplayer;
 class Displayer_ABC;
 class ValuedListItem;
@@ -55,7 +54,7 @@ class AgentMedicalPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMedicalPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~AgentMedicalPanel();
     //@}
 
@@ -80,6 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     const Agent* selected_;
     ListDisplayer< AgentMedicalPanel >* pConsignListView_;
     ListDisplayer< AgentMedicalPanel >* pConsignHandledListView_;

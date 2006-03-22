@@ -14,9 +14,8 @@
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 
-class Controller;
+class Controllers;
 class Population;
-class ActionController;
 
 // =============================================================================
 /** @class  PopulationListView
@@ -34,7 +33,7 @@ class PopulationListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent, Controller& controller, ActionController& actionController );
+             PopulationListView( QWidget* pParent, Controllers& controllers );
     virtual ~PopulationListView();
     //@}
 
@@ -64,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
+    Controllers& controllers_;
     QPopupMenu* pPopupMenu_;
     //@}
 };

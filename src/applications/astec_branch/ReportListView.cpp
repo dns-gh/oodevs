@@ -24,15 +24,15 @@
 #include "ReportFilterOptions.h"
 #include "Reports.h"
 #include "Agent_ABC.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportListView::ReportListView( QWidget* pParent, Controller& controller, ActionController& actionController, const ReportFilterOptions& filter )
+ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter )
     : ListDisplayer< ReportListView >( pParent, *this )
+    , controllers_( controllers )
     , filter_( filter )
     , selected_( 0 )
 {
@@ -54,8 +54,7 @@ ReportListView::ReportListView( QWidget* pParent, Controller& controller, Action
 //
 //    connect( &App::GetApp(), SIGNAL( ReportCreated( Agent_ABC&, Report_ABC& ) ), this, SLOT( OnReportCreated( Agent_ABC&, Report_ABC& ) ) );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,8 +63,7 @@ ReportListView::ReportListView( QWidget* pParent, Controller& controller, Action
 // -----------------------------------------------------------------------------
 ReportListView::~ReportListView()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

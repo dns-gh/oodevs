@@ -21,6 +21,7 @@
 #include "Controller.h"
 #include "ActionController.h"
 #include "ValuedListItem.h"
+#include "Controllers.h"
 
 #include "Agent.h"
 #include "Team.h"
@@ -35,9 +36,9 @@
 */
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionController& actionController )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers )
     : ListView< AgentListView >( pParent, *this )
-    , actionController_( actionController )
+    , controllers_( controllers )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Unités" );
@@ -48,8 +49,7 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionCo
     connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 
@@ -59,8 +59,7 @@ AgentListView::AgentListView( QWidget* pParent, Controller& controller, ActionCo
 // -----------------------------------------------------------------------------
 AgentListView::~AgentListView()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +188,7 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 void AgentListView::OnSelectionChange( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    item->Select( actionController_ );
+    item->Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +200,7 @@ void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos,
     if( i )
     {
         ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( actionController_, pos );
+        item->ContextMenu( controllers_.actions_, pos );
     }
 }
 
@@ -214,7 +213,7 @@ void AgentListView::OnRequestCenter()
     if( selectedItem() )
     {
         ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-        item->Activate( actionController_ );
+        item->Activate( controllers_.actions_ );
     }
 }
 

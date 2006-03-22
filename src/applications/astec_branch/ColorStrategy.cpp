@@ -12,18 +12,18 @@
 #include "Agent.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
-#include "Controller.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-ColorStrategy::ColorStrategy( Controller& controller )
-    : controller_( controller )
+ColorStrategy::ColorStrategy( Controllers& controllers )
+    : controllers_( controllers )
 {
     InitializeSynonyms();
     InitializeColors();
-    controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ ColorStrategy::ColorStrategy( Controller& controller )
 // -----------------------------------------------------------------------------
 ColorStrategy::~ColorStrategy()
 {
-    controller_.Remove( *this );
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

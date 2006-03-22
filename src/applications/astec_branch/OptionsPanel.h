@@ -23,6 +23,7 @@
 #include "Observer_ABC.h"
 
 class QCheckBox;
+class Controllers;
 class Options;
 class Settings;
 
@@ -38,7 +39,7 @@ class OptionsPanel : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPanel( QWidget* pParent, Options& options );
+             OptionsPanel( QWidget* pParent, Controllers& controllers );
     virtual ~OptionsPanel();
     //@}
 
@@ -72,7 +73,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    Options& options_;
+    Controllers& controllers_;
+    Options&     options_;
 
     QSpinBox* pFontSpinbox_;
     QCheckBox* pDrawObjectIcons_;

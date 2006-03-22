@@ -21,24 +21,23 @@
 #include "ReportListView.h"
 #include "FireResultListView.h"
 #include "ReportFilterOptions.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportPanel constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportPanel::ReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+ReportPanel::ReportPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC     ( pParent, tr( "Rapports" ) )
+    , controllers_      ( controllers )
     , selected_         ( 0 )
 {
     pFilterOptions_      = new ReportFilterOptions( this );
-    pReportListView_     = new ReportListView( this, controller, actionController, *pFilterOptions_ );
+    pReportListView_     = new ReportListView( this, controllers_, *pFilterOptions_ );
     pFireResultListView_ = new FireResultListView( this );
     connect( pFilterOptions_, SIGNAL( OptionsChanged() ), pReportListView_, SLOT( OnOptionsChanged() ) );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +46,7 @@ ReportPanel::ReportPanel( InfoPanels* pParent, Controller& controller, ActionCon
 // -----------------------------------------------------------------------------
 ReportPanel::~ReportPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    //NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

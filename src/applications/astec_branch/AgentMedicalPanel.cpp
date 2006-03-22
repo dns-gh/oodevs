@@ -24,8 +24,7 @@
 #include "LogisticConsigns.h"
 #include "ListDisplayer.h"
 #include "DisplayBuilder.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "SubItemDisplayer.h"
 #include "Units.h"
 
@@ -33,8 +32,9 @@
 // Name: AgentMedicalPanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Ch. medicale" ) )
+    , controllers_( controllers )
     , selected_( 0 )
 {
     pConsignListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
@@ -68,8 +68,7 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controller& controlle
     dispoDispoDoctors_->AddColumn( "Médecins" )
                        .AddColumn( "Disponibles" );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +77,7 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controller& controlle
 // -----------------------------------------------------------------------------
 AgentMedicalPanel::~AgentMedicalPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete logDisplay_; 
     delete display_;
 }

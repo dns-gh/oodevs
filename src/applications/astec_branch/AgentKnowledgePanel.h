@@ -26,8 +26,7 @@
 #include "KnowledgeGroupSelectionObserver.h"
 
 template< typename T > class ListDisplayer;
-class Controller;
-class ActionController;
+class Controllers;
 class AgentKnowledges;
 class AgentKnowledge;
 class DisplayBuilder;
@@ -55,7 +54,7 @@ class AgentKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~AgentKnowledgePanel();
     //@}
 
@@ -94,7 +93,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
+    Controllers& controllers_;
 
     ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
     DisplayBuilder* display_;

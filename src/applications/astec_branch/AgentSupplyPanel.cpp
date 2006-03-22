@@ -24,8 +24,7 @@
 #include "LogisticConsigns.h"
 #include "ListDisplayer.h"
 #include "DisplayBuilder.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "SubItemDisplayer.h"
 #include "Units.h"
 #include "DotationRequest.h"
@@ -34,8 +33,9 @@
 // Name: AgentSupplyPanel constructor
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Ch. rav." ) )
+    , controllers_( controllers )
     , selected_( 0 )
 {
     pConsignListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
@@ -72,8 +72,7 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controller& controller,
     pDispoCommanders_->AddColumn( "Chefs de convois" )
                       .AddColumn( "Disponibles" );
     
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +81,7 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controller& controller,
 // -----------------------------------------------------------------------------
 AgentSupplyPanel::~AgentSupplyPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete display_;
     delete logDisplay_;
 }

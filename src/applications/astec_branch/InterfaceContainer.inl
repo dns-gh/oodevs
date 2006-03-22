@@ -55,8 +55,8 @@ void InterfaceContainer< BaseType >::Register( BaseType& i )
             void* imp = caster( &i );
             if( imp )
                 imps->second.push_back( imp );
-        };
-    };
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,23 @@ void InterfaceContainer< BaseType >::Register( BaseType& i )
 template< typename BaseType >
 void InterfaceContainer< BaseType >::Remove( BaseType& i )
 {
-    interfaces_.erase( std::find( interfaces_.begin(), interfaces_.end(), &i ) );
+    T_Interfaces::iterator it = std::find( interfaces_.begin(), interfaces_.end(), &i );
+    if( it != interfaces_.end() )
+    {
+        interfaces_.erase( it );
+        for( unsigned int index = 0; index < implementations_.size(); ++index )
+        {
+            T_Implementations* imps = implementations_.at( index );
+            if( imps )
+            {
+                T_Caster caster = imps->first;
+                void* imp = caster( &i );
+                T_UntypedInterfaces::iterator impIt = std::find( imps->second.begin(), imps->second.end(), imp );
+                if( impIt != imps->second.end() )
+                    imps->second.erase( impIt );
+            }
+        }
+    }
 }
 
 

@@ -14,7 +14,7 @@
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
 #include "Agent.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "Attributes.h"
 #include "Contaminations.h"
 #include "HumanFactors.h"
@@ -30,8 +30,9 @@
 // Name: AgentStatePanel constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( InfoPanels* info, Controller& controller, ActionController& actionController  )
+AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers )
     : InfoPanel_ABC( info, tr( "Etat" ) )
+    , controllers_( controllers )
     , selected_( 0 )
 {
     display_ = new DisplayBuilder( this );
@@ -84,8 +85,7 @@ AgentStatePanel::AgentStatePanel( InfoPanels* info, Controller& controller, Acti
                 .AddLabel( "Rendu:" )
                 .AddLabel( "Réfugiés pris en compte:" );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,8 +94,7 @@ AgentStatePanel::AgentStatePanel( InfoPanels* info, Controller& controller, Acti
 // -----------------------------------------------------------------------------
 AgentStatePanel::~AgentStatePanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    delete display_;
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------

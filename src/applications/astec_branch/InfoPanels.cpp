@@ -18,8 +18,6 @@
 
 #include "astec_pch.h"
 #include "InfoPanels.h"
-
-#include "MainWindow.h"
 #include "AgentStatePanel.h"
 #include "ReportPanel.h"
 #include "AgentResourcesPanel.h"
@@ -37,22 +35,22 @@
 // Name: InfoPanels constructor
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* pParent, Controller& controller, ActionController& actionController )
-    : QWidgetStack                 ( pParent )
+InfoPanels::InfoPanels( QWidget* pParent, Controllers& controllers )
+    : QWidgetStack( pParent )
 {
     this->setMinimumSize( 1, 1 );
-    pStatePanel_               = new AgentStatePanel(  this, controller, actionController );
-    pResourcesPanel_           = new AgentResourcesPanel( this, controller, actionController );
-    pAgentKnowledgePanel_      = new AgentKnowledgePanel( this, controller, actionController );
-    pObjectPanel_              = new ObjectPanel( this, controller, actionController );
-    pObjectReportPanel_        = new ObjectReportPanel( this, controller, actionController );
-    pObjectKnowledgePanel_     = new ObjectKnowledgePanel( this, controller, actionController );
-    pAgentMaintenancePanel_    = new AgentMaintenancePanel( this, controller, actionController );
-    pAgentMedicalPanel_        = new AgentMedicalPanel( this , controller, actionController );
-    pAgentSupplyPanel_         = new AgentSupplyPanel( this, controller, actionController );
-    pReportPanel_              = new ReportPanel( this, controller, actionController );
-    pPopulationPanel_		   = new PopulationPanel( this, controller, actionController );
-    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controller, actionController );
+    pStatePanel_               = new AgentStatePanel         ( this, controllers );
+    pResourcesPanel_           = new AgentResourcesPanel     ( this, controllers );
+    pAgentKnowledgePanel_      = new AgentKnowledgePanel     ( this, controllers );
+    pObjectPanel_              = new ObjectPanel             ( this, controllers );
+    pObjectReportPanel_        = new ObjectReportPanel       ( this, controllers );
+    pObjectKnowledgePanel_     = new ObjectKnowledgePanel    ( this, controllers );
+    pAgentMaintenancePanel_    = new AgentMaintenancePanel   ( this, controllers );
+    pAgentMedicalPanel_        = new AgentMedicalPanel       ( this, controllers );
+    pAgentSupplyPanel_         = new AgentSupplyPanel        ( this, controllers );
+    pReportPanel_              = new ReportPanel             ( this, controllers );
+    pPopulationPanel_		   = new PopulationPanel         ( this, controllers );
+    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controllers );
 
     pTabWidget_ = new QTabWidget( this );
 

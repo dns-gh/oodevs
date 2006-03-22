@@ -20,8 +20,7 @@
 #include "AgentMaintenancePanel.h"
 #include "DisplayBuilder.h"
 #include "ListDisplayer.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "LogisticConsigns.h"
 #include "Agent.h"
 #include "LogMaintenanceConsign.h"
@@ -34,9 +33,10 @@
 // Name: AgentMaintenancePanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Ch. maint." ) )
-    , selected_( 0 )
+    , controllers_ ( controllers )
+    , selected_    ( 0 )
 {
     pConsignListView_        = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );
@@ -65,8 +65,7 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controller& c
     dispoRepairers_->AddColumn( "Réparateur" )
                     .AddColumn( "Disponibles" );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +74,7 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controller& c
 // -----------------------------------------------------------------------------
 AgentMaintenancePanel::~AgentMaintenancePanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete logDisplay_;
     delete display_;
 }

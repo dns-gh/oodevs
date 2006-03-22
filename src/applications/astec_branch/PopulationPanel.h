@@ -18,8 +18,7 @@
 class QListViewItem;
 class DisplayBuilder;
 class Population;
-class Controller;
-class ActionController;
+class Controllers;
 class ValuedListItem;
 class PopulationPart_ABC;
 template< typename T >
@@ -38,7 +37,7 @@ class PopulationPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             PopulationPanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~PopulationPanel();
     //@}
 
@@ -58,6 +57,7 @@ private:
     //@}
 
 private:
+    Controllers& controllers_;
     const Population* selected_;
     DisplayBuilder* display_;
     ListDisplayer< PopulationPanel >* pPartsListView_;

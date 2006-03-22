@@ -15,8 +15,7 @@
 #include "ElementObserver_ABC.h"
 #include "KnowledgeGroupSelectionObserver.h"
 
-class Controller;
-class ActionController;
+class Controllers;
 class DisplayBuilder;
 template< typename T > class ListDisplayer;
 class PopulationKnowledges;
@@ -45,7 +44,7 @@ class PopulationKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~PopulationKnowledgePanel();
     //@}
 
@@ -84,7 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
+    Controllers& controllers_;
     const Team* owner_;
     ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     DisplayBuilder* display_;

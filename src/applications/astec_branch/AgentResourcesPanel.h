@@ -27,8 +27,7 @@
 
 template< typename T > class ListDisplayer;
 class Agent;
-class Controller;
-class ActionController;
+class Controllers;
 class Dotation;
 class Dotations;
 class Equipments;
@@ -57,7 +56,7 @@ class AgentResourcesPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentResourcesPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~AgentResourcesPanel();
     //@}
 
@@ -98,6 +97,7 @@ private:
 private:
     //! @name Member Data
     //@{
+    Controllers& controllers_;
     T_ListView* pEquipment_;
     T_ListView* pResources_;
     T_ListView* pTroops_;

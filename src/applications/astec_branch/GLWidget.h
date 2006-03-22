@@ -17,8 +17,7 @@
 #include "SetGlOptions.h"
 
 class CoordinateConverter;
-class Controller;
-class ActionController;
+class Controllers;
 class ColorStrategy;
 class GlFont;
 
@@ -35,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GlWidget( QWidget* pParent, const std::string& scipioXml,
-                       Controller& controller, ActionController& actions, const CoordinateConverter& converter );
+                       Controllers& controllers, const CoordinateConverter& converter );
     virtual ~GlWidget();
     //@}
 

@@ -19,21 +19,21 @@
 #include "GlTools_ABC.h"
 #include "Positions.h"
 #include "graphics/MapWidget.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
-    : actions_  ( actions )
-    , converter_( converter )
-    , tools_    ( tools )
-    , strategy_ ( strategy )
-    , widget_   ( widget )
-    , selected_ ( 0 )
+AgentsLayer::AgentsLayer( Controllers& controllers, const CoordinateConverter& converter, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
+    : controllers_( controllers )
+    , converter_  ( converter )
+    , tools_      ( tools )
+    , strategy_   ( strategy )
+    , widget_     ( widget )
+    , selected_   ( 0 )
 {
-    controller.Register( *this );
-    actions.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,8 +42,7 @@ AgentsLayer::AgentsLayer( Controller& controller, ActionController& actions, con
 // -----------------------------------------------------------------------------
 AgentsLayer::~AgentsLayer()
 {
-    // $$$$ AGE 2006-03-16: 
-    //    controller_.Remove( *this );
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,9 +126,9 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
         {
             int button = event->button();
             if( button == Qt::LeftButton )
-                actions_.Select( agent );
+                controllers_.actions_.Select( agent );
             else if( button == Qt::RightButton )
-                actions_.ContextMenu( agent, event->globalPos() );
+                controllers_.actions_.ContextMenu( agent, event->globalPos() );
             selected_ = i;
             return true;
         }

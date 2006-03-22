@@ -22,8 +22,7 @@
 
 #include "ListDisplayer.h"
 #include "DisplayBuilder.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "ObjectKnowledges.h"
 #include "ObjectKnowledge.h"
 #include "CampAttributes.h"
@@ -37,9 +36,9 @@
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "C. objet" ) )
-    , actionController_( actionController )
+    , controllers_ ( controllers )
     , owner_       ( 0 )
     , selected_    ( 0 )
     , subSelected_ ( 0 )
@@ -93,8 +92,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& con
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +101,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controller& con
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::~ObjectKnowledgePanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete display_;
 }
 
@@ -291,6 +289,6 @@ void ObjectKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoin
     if( i )
     {
         ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( actionController_, pos );
+        item->ContextMenu( controllers_.actions_, pos );
     }
 }

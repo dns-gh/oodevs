@@ -42,7 +42,7 @@ MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& con
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controllers.controller_, controllers.actions_, converter );
+    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controllers, converter );
     setCentralWidget( pGlWiget );
     pGlWiget->show();
     
@@ -50,13 +50,13 @@ MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& con
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controllers.controller_, controllers.actions_ );
+    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controllers );
     pListsTabWidget->addTab( pAgentList_, tr( "Agents" ) );
     pAgentList_->header()->hide();
-    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controllers.controller_, controllers.actions_ );
+    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controllers );
     pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
     pObjectList_->header()->hide();
-    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controllers.controller_, controllers.actions_ );
+    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controllers );
 	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
 	pPopulationList_->header()->hide();
 	pListDockWnd_->setWidget( pListsTabWidget );
@@ -68,7 +68,7 @@ MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& con
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers.controller_, controllers.actions_ );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
@@ -76,7 +76,7 @@ MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& con
     this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers.actions_ );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers );
     this->moveDockWindow( pMissionPanel_, Qt::DockLeft );
     pMissionPanel_->hide();
     this->setDockEnabled( pMissionPanel_, Qt::DockTop, false );
@@ -96,7 +96,7 @@ MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& con
     QDockWindow* pOptionsDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pOptionsDockWnd_, Qt::DockRight );
     pOptionsDockWnd_->hide();
-    pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, controllers.options_ );
+    pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, controllers );
     pOptionsDockWnd_->setWidget( pOptionsPanel_ );
     pOptionsDockWnd_->setResizeEnabled( true );
     pOptionsDockWnd_->setCloseMode( QDockWindow::Always );

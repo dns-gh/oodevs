@@ -36,8 +36,7 @@ class NBCAttributes;
 class RotaAttributes;
 class DisplayBuilder;
 class ObjectKnowledges;
-class Controller;
-class ActionController;
+class Controllers;
 class Displayer_ABC;
 class ValuedListItem;
 
@@ -62,7 +61,7 @@ class ObjectKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~ObjectKnowledgePanel();
     //@}
 
@@ -106,7 +105,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actionController_;
+    Controllers& controllers_;
 
     const Team* owner_;
     const ObjectKnowledges* selected_;

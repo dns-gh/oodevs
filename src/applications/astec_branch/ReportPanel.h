@@ -26,8 +26,7 @@
 class ReportListView;
 class FireResultListView;
 class ReportFilterOptions;
-class Controller;
-class ActionController;
+class Controllers;
 
 // =============================================================================
 /** @class  ReportPanel
@@ -42,7 +41,7 @@ class ReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             ReportPanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~ReportPanel();
     //@}
 
@@ -62,6 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     const Agent_ABC*     selected_;
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;

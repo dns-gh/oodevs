@@ -41,10 +41,10 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& controller, ActionController& actions, const CoordinateConverter& converter )
+GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers& controllers, const CoordinateConverter& converter )
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
-    , strategy_( *new ColorStrategy( controller ) )
+    , strategy_( *new ColorStrategy( controllers ) )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , frame_( 0 )
@@ -60,7 +60,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controller& 
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
     Register( *new MetricsLayer( *this ) );
-    Register( *new AgentsLayer( controller, actions, converter, *this, strategy_, *this ) );
+    Register( *new AgentsLayer( controllers, converter, *this, strategy_, *this ) );
 }
 
 // -----------------------------------------------------------------------------

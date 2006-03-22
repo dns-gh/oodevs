@@ -16,8 +16,7 @@
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "Controllers.h"
 #include "ValuedListItem.h"
 #include "ListDisplayer.h"
 
@@ -25,9 +24,10 @@
 // Name: PopulationPanel constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationPanel::PopulationPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController )
+PopulationPanel::PopulationPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC ( pParent, tr( "Population" ) )
-    , selected_      ( 0 )
+    , controllers_  ( controllers )
+    , selected_     ( 0 )
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )
@@ -42,8 +42,7 @@ PopulationPanel::PopulationPanel( InfoPanels* pParent, Controller& controller, A
                     .AddColumn( "Attitude" )
                     .AddColumn( "Densité vivants" );
 
-    controller.Register( *this );
-    actionController.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +51,7 @@ PopulationPanel::PopulationPanel( InfoPanels* pParent, Controller& controller, A
 // -----------------------------------------------------------------------------
 PopulationPanel::~PopulationPanel()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
+    controllers_.Remove( *this );
     delete display_;
 }
 

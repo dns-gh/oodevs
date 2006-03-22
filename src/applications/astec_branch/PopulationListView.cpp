@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "ValuedListItem.h"
 #include "ActionController.h"
+#include "Controllers.h"
 
 #include "moc_PopulationListView.cpp"
 
@@ -21,22 +22,22 @@
 // Name: PopulationListView constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationListView::PopulationListView( QWidget* pParent, Controller& controller, ActionController& actionController )
-    : QListView     ( pParent )
-    , actionController_( actionController )
-    , pPopupMenu_   ( 0 )
+PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers )
+    : QListView   ( pParent )
+    , controllers_( controllers )
+    , pPopupMenu_ ( 0 )
 {
-    this->setMinimumSize( 1, 1 );
-    this->addColumn( "Populations" );
-    this->setRootIsDecorated( true );
-    this->setResizeMode( QListView::LastColumn );
-    this->setAcceptDrops( true );
+    setMinimumSize( 1, 1 );
+    addColumn( "Populations" );
+    setRootIsDecorated( true );
+    setResizeMode( QListView::LastColumn );
+    setAcceptDrops( true );
 
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed    ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
 
-    controller.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,8 +46,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controller& controller
 // -----------------------------------------------------------------------------
 PopulationListView::~PopulationListView()
 {
-    // $$$$ AGE 2006-03-16: controller_.Remove
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void PopulationListView::OnSelectionChange( QListViewItem* i )
     if( i )
     {
         ValuedListItem* item = (ValuedListItem*)( i );
-        item->Select( actionController_ );
+        item->Select( controllers_.actions_ );
     }
 }
 
@@ -103,7 +103,7 @@ void PopulationListView::OnRequestCenter()
     if( selectedItem() )
     {
         ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-        item->Select( actionController_ );
+        item->Select( controllers_.actions_ );
     }
 }
 

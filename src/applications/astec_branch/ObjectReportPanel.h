@@ -26,8 +26,7 @@
 
 class FireResultListView;
 class Object;
-class Controller;
-class ActionController;
+class Controllers;
 class Explosions;
 class Displayer_ABC;
 class ValuedListItem;
@@ -51,7 +50,7 @@ class ObjectReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( InfoPanels* pParent, Controller& controller, ActionController& actionController );
+             ObjectReportPanel( InfoPanels* pParent, Controllers& controllers );
     virtual ~ObjectReportPanel();
     //@}
 
@@ -77,6 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     const Object* selected_;
     FireResultListView* reports_;
     //@}

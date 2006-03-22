@@ -55,7 +55,9 @@ void Options::Register( Observer_ABC& o )
 void Options::Remove( Observer_ABC& o )
 {
     OptionsObserver_ABC* observer = dynamic_cast< OptionsObserver_ABC* >( &o );
-    observers_.erase( std::find( observers_.begin(), observers_.end(), observer ) );
+    T_Observers::iterator it = std::find( observers_.begin(), observers_.end(), observer );
+    if( it != observers_.end() )
+        observers_.erase( it );
 }
 
 // -----------------------------------------------------------------------------

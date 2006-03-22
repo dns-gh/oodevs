@@ -24,13 +24,13 @@
 #include "Iterator.h"
 
 class QPopupMenu;
-class ActionController;
 class Decisions;
 class AutomatDecisions;
 class Agent;
 class Population;
 class MissionInterface_ABC;
 class Mission;
+class Controllers;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -46,7 +46,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, ActionController& actions );
+             MissionPanel( QWidget* pParent, Controllers& controllers );
     virtual ~MissionPanel();
     //@}
 
@@ -81,6 +81,7 @@ private:
 private:
     //! @name Member Data
     //@{
+    Controllers& controllers_;
     MissionInterface_ABC* pMissionInterface_;
     const Agent* selected_;
     //@}

@@ -15,7 +15,7 @@
 #include "ElementObserver_ABC.h"
 
 class Team;
-class Controller;
+class Controllers;
 
 // =============================================================================
 /** @class  ColorStrategy
@@ -31,7 +31,7 @@ class ColorStrategy : public ColorStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ColorStrategy( Controller& controller );
+    explicit ColorStrategy( Controllers& controllers );
     virtual ~ColorStrategy();
     //@}
 
@@ -71,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    Controllers& controllers_;
 
     T_TeamColors teamColors_;
     T_Synonyms   synonyms_;
