@@ -18,6 +18,7 @@
 class ADN_Categories_Data;
 class ADN_ListView_Categories_Armor;
 class ADN_ListView_Categories_Size;
+class ADN_ListView_Categories_DotationNature;
 
 // =============================================================================
 /** @class  ADN_Categories_GUI
@@ -50,6 +51,12 @@ public:
         eNbrSizeGuiElements
     };
 
+    enum E_DotationNatureGuiElements
+    {
+        eDotationNatureName,
+        eNbrDotationNatureGuiElements
+    };
+
 public slots:
     void OnTypeChanged();
 
@@ -62,8 +69,9 @@ public:
 private:
     ADN_Categories_Data& data_;
 
-    ADN_ListView_Categories_Armor*  pListArmor_;
-    ADN_ListView_Categories_Size*   pListSize_;
+    ADN_ListView_Categories_Armor*          pListArmor_;
+    ADN_ListView_Categories_Size*           pListSize_;
+    ADN_ListView_Categories_DotationNature* pListDotationNature_;
 
     QComboBox*  pComboType_;
     QGroupBox*  pArmorBreakdownGroup_;

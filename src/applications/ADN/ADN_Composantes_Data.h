@@ -174,6 +174,7 @@ public:
         ADN_Type_Time unloadTime_;
 
         ADN_Type_Bool bIsConvoyLeader_;
+        ADN_Type_Bool bIsConvoyer_;
     };
 
     //*****************************************************************************

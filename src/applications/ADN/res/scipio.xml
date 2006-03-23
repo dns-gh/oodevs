@@ -14,6 +14,7 @@
     <Reseau>Data/Reseau.xml</Reseau>
     <Volumes>Data/Volumes.xml</Volumes>
     <Protections>Data/Protections.xml</Protections>
+	<DotationNatures>Data/DotationNatures.xml</DotationNatures>
     <Objets>Data/Objets.xml</Objets>
     <Dotations>Data/Dotations.xml</Dotations>
     <Lanceurs>Data/Lanceurs.xml</Lanceurs>

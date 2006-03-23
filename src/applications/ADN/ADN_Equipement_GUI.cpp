@@ -45,6 +45,7 @@
 #include "ADN_Tr.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_TimeField.h"
+#include "ADN_ComboBox_Equipment_Nature.h"
 
 
 // -----------------------------------------------------------------------------
@@ -156,6 +157,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeNNO" ), vConnectors[eNNOCode] );
     builder.AddEnumField<E_MunitionType>( pHolder, tr( "Type" ), vConnectors[eType], ADN_Tr::ConvertFromMunitionType );
 
+    builder.AddField<ADN_ComboBox_Equipment_Nature>( pHolder, tr( "Nature" ), vConnectors[eNature]  );
     
     QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[eAmmoPackageNbr], 0, eGreaterZero );

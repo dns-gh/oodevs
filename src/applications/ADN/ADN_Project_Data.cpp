@@ -136,6 +136,7 @@ ADN_Project_Data::DataInfos::DataInfos()
 , szNetwork_()
 , szSizes_()
 , szArmors_()
+, szDotationNatures_()
 , szObjects_()
 , szEquipements_()
 , szLaunchers_()
@@ -175,6 +176,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "Reseau", szNetwork_ );
     input.ReadField( "Volumes", szSizes_ );
     input.ReadField( "Protections", szArmors_ );
+    input.ReadField( "DotationNatures", szDotationNatures_ );
     input.ReadField( "Objets", szObjects_ );
     input.ReadField( "Dotations", szEquipements_ );
     input.ReadField( "Lanceurs", szLaunchers_ );
@@ -214,6 +216,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "Reseau", szNetwork_.GetData() );
     output.WriteField( "Volumes", szSizes_.GetData() );
     output.WriteField( "Protections", szArmors_.GetData() );
+    output.WriteField( "DotationNatures", szDotationNatures_.GetData() );
     output.WriteField( "Objets", szObjects_.GetData() );
     output.WriteField( "Dotations", szEquipements_.GetData() );
     output.WriteField( "Lanceurs", szLaunchers_.GetData() );

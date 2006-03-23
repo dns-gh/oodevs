@@ -55,6 +55,7 @@ public:
         eAmmoPackageWeight,
         eAmmoPackageVolume,        
         eType,
+        eNature,
         eTrancheD,
         eEMAT6Code,
         eEMAT8Code,

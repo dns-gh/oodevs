@@ -81,6 +81,7 @@ public:
         ADN_Type_String szNetwork_;
         ADN_Type_String szSizes_;
         ADN_Type_String szArmors_;
+        ADN_Type_String szDotationNatures_;
         ADN_Type_String szObjects_;
         ADN_Type_String szEquipements_;
         ADN_Type_String szLaunchers_;

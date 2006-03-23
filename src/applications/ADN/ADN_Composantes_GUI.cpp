@@ -358,6 +358,7 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     new QGridLayout( pHolder, 0, 3, 5, 5 );
 
     builder.AddField<ADN_CheckBox>( pHolder, tr( "Convoy leader" ), vInfosConnectors[eIsConvoyLeader] );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "Convoyer" ), vInfosConnectors[eIsConvoyer] );
 
     ADN_GroupBox* pCarrierGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Carrier" ), pSupplyGroup );
     vInfosConnectors[eIsLogCarrier] = & pCarrierGroup->GetConnector();

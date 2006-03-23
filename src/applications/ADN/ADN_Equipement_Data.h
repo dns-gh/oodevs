@@ -210,6 +210,7 @@ public:
 
     public:
         ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
+        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
 
         ADN_Type_Bool bTrancheD_;
 
@@ -245,9 +246,9 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& );
 
     public:
-        E_FamilleDotation          nType_;
-        ADN_Type_String         strName_;
-        T_CategoryInfos_Vector  categories_; 
+        E_FamilleDotation      nType_;
+        ADN_Type_String        strName_;
+        T_CategoryInfos_Vector categories_; 
     };
 
     typedef ADN_Type_Vector_ABC<DotationInfos> T_DotationInfos_Vector;

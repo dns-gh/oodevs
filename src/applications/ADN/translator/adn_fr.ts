@@ -579,6 +579,14 @@
         <source>Type</source>
         <translation>Type</translation>
     </message>
+    <message>
+        <source>Dotation natures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished">Nature</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ChangeValueCommand</name>
@@ -1107,6 +1115,10 @@
     <message>
         <source>Device category:</source>
         <translation>Catégorie matériel:</translation>
+    </message>
+    <message>
+        <source>Convoyer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2923,6 +2935,10 @@
     <message>
         <source>Stance</source>
         <translation>Posture</translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished">Nature</translation>
     </message>
 </context>
 <context>

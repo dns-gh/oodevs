@@ -19,6 +19,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_ListView_Categories_Armor.h"
 #include "ADN_ListView_Categories_Size.h"
+#include "ADN_ListView_Categories_DotationNature.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
@@ -43,6 +44,7 @@ ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
 , data_      ( data )
 , pListArmor_( 0 )
 , pListSize_ ( 0 )
+, pListDotationNature_( 0 )
 {
 }
 
@@ -72,9 +74,9 @@ void ADN_Categories_GUI::Build()
 
     // horizontal layout
     QHBoxLayout* pLayout = new QHBoxLayout( pMainWidget_ );
-    pLayout->setMargin(20);
-    pLayout->setSpacing(20);
-    pLayout->setAutoAdd(true);
+    pLayout->setMargin( 20 );
+    pLayout->setSpacing( 20 );
+    pLayout->setAutoAdd( true );
 
     /////////////////
     // Armors
@@ -108,10 +110,12 @@ void ADN_Categories_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pWoundedGroup_, tr( "Evac" ), vArmorInfosConnectors[eWoundedEvac], tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pWoundedGroup_, tr( "No evac" ), vArmorInfosConnectors[eWondedNoEvac], tr( "%" ), ePercentage );
 
+    QVBox* pBox = new QVBox( pMainWidget_ );
+
     ///////////////////
     // Sizes
-    QGroupBox* pGroup=new QVGroupBox( tr( "Sizes" ),pMainWidget_);
-    QHBox     * pGroupSize=new QHBox(pGroup);  
+    QGroupBox* pGroup = new QVGroupBox( tr( "Sizes" ), pBox );
+    QHBox* pGroupSize = new QHBox(pGroup);  
     
     // sizes list
     T_ConnectorVector    vSizeInfosConnectors(eNbrSizeGuiElements,(ADN_Connector_ABC*)0 );
@@ -120,15 +124,34 @@ void ADN_Categories_GUI::Build()
     QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
 
     // size
-    pGroup  =new QVGroupBox( tr( "Size" ),pGroup);
+    pGroup = new QVGroupBox( tr( "Size" ),pGroup);
     pGroup->setInsideMargin(20);
     pGroup->setInsideSpacing(20);
-    pEdit=new ADN_EditLine_String(pGroup);
+    pEdit = new ADN_EditLine_String(pGroup);
     vSizeInfosConnectors[eSizeName]=&pEdit->GetConnector();
+
+    ///////////////////
+    // Dotation Natures
+    QGroupBox* pNatureGroup = new QVGroupBox( tr( "Dotation natures" ), pBox );
+    QHBox*     pNatureHBox  = new QHBox( pNatureGroup );
+    
+    // dotation natures list
+    T_ConnectorVector    vDotationNatureInfosConnectors( eNbrDotationNatureGuiElements, (ADN_Connector_ABC*)0 );
+    pListDotationNature_ = new ADN_ListView_Categories_DotationNature( pNatureHBox );
+    static_cast<ADN_Connector_Vector_ABC*>( &pListDotationNature_->GetConnector() )->Connect( &data_.GetDotationNaturesInfos() );
+    QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
+
+    // size
+    pNatureGroup = new QVGroupBox( tr( "Nature" ), pNatureGroup );
+    pNatureGroup->setInsideMargin( 20 );
+    pNatureGroup->setInsideSpacing( 20 );
+    pEdit = new ADN_EditLine_String( pNatureGroup );
+    vDotationNatureInfosConnectors[ eDotationNatureName ] = &pEdit->GetConnector();
 
     // set auto connectors
     pListArmor_->SetItemConnectors(vArmorInfosConnectors);
     pListSize_->SetItemConnectors(vSizeInfosConnectors);
+    pListDotationNature_->SetItemConnectors(vDotationNatureInfosConnectors);
 }
 
 // -----------------------------------------------------------------------------

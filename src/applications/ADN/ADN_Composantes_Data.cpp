@@ -479,6 +479,7 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , loadTime_           ( "0s" )
 , unloadTime_         ( "0s" )
 , bIsConvoyLeader_    ( false )
+, bIsConvoyer_        ( false )
 {
 }
 
@@ -514,6 +515,7 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
     loadTime_   = src.loadTime_.GetData();
     unloadTime_ = src.unloadTime_.GetData();
     bIsConvoyLeader_ = src.bIsConvoyLeader_.GetData();
+    bIsConvoyer_  = src.bIsConvoyer_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -540,6 +542,11 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& inp
         bIsConvoyLeader_ = true;
         input.EndSection(); // ChefDeConvoi
     }
+    if( input.Section( "Convoyeur", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bIsConvoyer_ = true;
+        input.EndSection(); // Convoyeur
+    }
 }
 
 
@@ -565,6 +572,12 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& o
     {
         output.Section( "ChefDeConvoi" );
         output.EndSection(); // ChefDeConvoi
+    }
+
+    if( bIsConvoyer_.GetData() )
+    {
+        output.Section( "Convoyeur" );
+        output.EndSection(); // Convoyeur
     }
 }
 
