@@ -26,6 +26,7 @@
 #include "Displayer_ABC.h"
 #include "ObjectType.h"
 #include "CoordinateConverter.h"
+#include "Positions.h"
 
 // $$$$ AGE 2006-02-16: possession des objets par la team ?
 // $$$$ AGE 2006-02-16: ou au moins les enregistrer ?
@@ -53,15 +54,6 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
 {
     InterfaceContainer< Extension_ABC >::Register( *this );
 
-    for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
-    {
-        pointVector_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
-        center_ += geometry::Vector2f( pointVector_.back().X(), pointVector_.back().Y() );
-    }
-
-    if( ! pointVector_.empty() )
-        center_.Set( center_.X() / pointVector_.size(), center_.Y() / pointVector_.size() );
-
     if( message.m.type_dotation_constructionPresent )
         construction_ = & dotationResolver.Get( message.type_dotation_construction );
     
@@ -70,8 +62,6 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
 
     controller_.Create( *this );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: Object::~Object
@@ -140,23 +130,8 @@ void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
     if( message.m.pourcentage_creation_contournementPresent )
         rBypassConstructionPercentage_ = message.pourcentage_creation_contournement;
 
-    if( message.m.localisationPresent )
-    {
-        center_.Set( 0, 0 );
-        pointVector_.clear();
-        pointVector_.reserve( message.localisation.vecteur_point.n );
-        nTypeLocalisation_ = message.localisation.type;
-        for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
-        {
-            pointVector_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
-            center_ += geometry::Vector2f( pointVector_.back().X(), pointVector_.back().Y() );
-        }
-        if( pointVector_.size() > 1 )
-            center_.Set( center_.X() / pointVector_.size(), center_.Y() / pointVector_.size() );
-    }
     controller_.Update( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Object::Display
@@ -168,7 +143,7 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( "Id:", nId_ )
              .Display( "Nom:", strName_ )
              .Display( "Type:", type_.GetName() )
-             .Display( "Position:", converter_.ConvertToMgrs( center_ ) )
+             .Display( "Position:", converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
              .Display( "Construction:", rConstructionPercentage_ * Units::percentage )
              .Display( "Valorisation:", rValorizationPercentage_ * Units::percentage )
              .Display( "Contournement:", rBypassConstructionPercentage_ * Units::percentage )
@@ -180,11 +155,4 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Item( "Dotation valorisation:" )
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
-
 }
-
-   
-
-
-
-   

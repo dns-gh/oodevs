@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition() const;
+    virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     //@}
 
 private:

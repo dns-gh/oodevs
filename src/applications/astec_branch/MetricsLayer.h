@@ -11,7 +11,10 @@
 #define __MetricsLayer_h_
 
 #include "graphics/MapLayer_ABC.h"
+#include "Observer_ABC.h"
+#include "OptionsObserver_ABC.h"
 class GlTools_ABC;
+class Controllers;
 
 // =============================================================================
 /** @class  MetricsLayer
@@ -20,12 +23,14 @@ class GlTools_ABC;
 // Created: AGE 2006-03-17
 // =============================================================================
 class MetricsLayer : public MapLayer_ABC
+                   , private Observer_ABC
+                   , public OptionsObserver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MetricsLayer( GlTools_ABC& tools );
+             MetricsLayer( Controllers& controllers, GlTools_ABC& tools );
     virtual ~MetricsLayer();
     //@}
 
@@ -47,15 +52,17 @@ private:
     //! @name Helpers
     //@{
     float Displace( float value );
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     GlTools_ABC& tools_;
 
     geometry::Rectangle2f extent_;
-    float gridStep_;
+    float gridSize_;
 
     bool ruling_;
     geometry::Point2f start_;

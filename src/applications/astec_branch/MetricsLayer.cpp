@@ -10,18 +10,21 @@
 #include "astec_pch.h"
 #include "MetricsLayer.h"
 #include "GlTools_ABC.h"
+#include "Controllers.h"
+#include "OptionVariant.h"
 #include <iomanip>
 
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-MetricsLayer::MetricsLayer( GlTools_ABC& tools )
-    : tools_   ( tools )
-    , gridStep_( 10000 )
+MetricsLayer::MetricsLayer( Controllers& controllers, GlTools_ABC& tools )
+    : controllers_( controllers )
+    , tools_   ( tools )
+    , gridSize_( 10000 )
     , ruling_  ( false )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +33,17 @@ MetricsLayer::MetricsLayer( GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 MetricsLayer::~MetricsLayer()
 {
-    // NOTHING
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MetricsLayer::OptionChanged
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void MetricsLayer::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "GridSize" )
+        gridSize_ = value.To< float >();
 }
 
 // -----------------------------------------------------------------------------
@@ -39,10 +52,10 @@ MetricsLayer::~MetricsLayer()
 // -----------------------------------------------------------------------------
 float MetricsLayer::Displace( float value )
 {
-    if( gridStep_ <= 0 )
+    if( gridSize_ <= 0 )
         return value;
-    int clipped = int( std::floor( value / gridStep_ ) );
-    return clipped * gridStep_;
+    int clipped = int( std::floor( value / gridSize_ ) );
+    return clipped * gridSize_;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,13 +78,13 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& v )
     glColor4d( 1.0, 1.0, 1.0, 0.3 );
     glLineWidth( 1.0 );
     glBegin( GL_LINES );
-        for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridStep_ )
+        for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize_ )
         {
             glVertex2f( x, viewport.Top()    );
             glVertex2f( x, viewport.Bottom() );
         }
 
-        for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridStep_ )
+        for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridSize_ )
         {
             glVertex2f( viewport.Left(),  y );
             glVertex2f( viewport.Right(), y );

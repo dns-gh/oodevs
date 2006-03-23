@@ -59,6 +59,8 @@ private:
     virtual void NotifyUpdated( const Object& );
     virtual void NotifyDeleted( const Object& );
     virtual void NotifyActivated( const Object& );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    bool IsInSelection( const Object& object, const geometry::Point2f& point ) const;
     //@}
 
     //! @name Types
@@ -77,6 +79,7 @@ private:
     MapWidget& widget_;
 
     T_Objects objects_;
+    unsigned selected_;
     //@}
 };
 

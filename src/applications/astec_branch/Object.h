@@ -86,9 +86,6 @@ public:
     std::string   strName_;
     Team&         team_;
 
-    T_PointVector pointVector_;
-    geometry::Point2f   center_;
-
     float rConstructionPercentage_;
     float rValorizationPercentage_;
     float rBypassConstructionPercentage_;

@@ -48,3 +48,16 @@ void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.positionPresent )
         position_ = converter_.ConvertToXY( message.position );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::IsAt
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+bool AgentPositions::IsAt( const geometry::Point2f& pos, float /*precision*/ /*= 100.f*/ ) const // $$$$ AGE 2006-03-23: 
+{
+    const float halfSizeX = 500.f * 0.5f; // $$$$ SBO 2006-03-21: use font size?
+    const float sizeY     = 400.f;
+    const geometry::Rectangle2f agentBBox( position_.X() - halfSizeX, position_.Y(),
+                                           position_.X() + halfSizeX, position_.Y() + sizeY );
+    return agentBBox.IsInside( pos );
+}

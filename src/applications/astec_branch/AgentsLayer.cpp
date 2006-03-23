@@ -141,9 +141,5 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 bool AgentsLayer::IsInSelection( const Agent& agent, const geometry::Point2f& point ) const
 {
-    const float halfSizeX = 500.f * 0.5f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f;
-    const geometry::Point2f& center = agent.Get< Positions >().GetPosition();
-    const geometry::Rectangle2f agentBBox( center.X() - halfSizeX, center.Y(), center.X() + halfSizeX, center.Y() + sizeY );
-    return agentBBox.IsInside( point );
+    return agent.Get< Positions >().IsAt( point );
 }

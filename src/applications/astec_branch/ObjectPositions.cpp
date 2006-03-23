@@ -88,3 +88,17 @@ void ObjectPositions::Draw( const geometry::Point2f&, const GlTools_ABC& tools )
     tools.DrawLines( points_ );
     glPopAttrib();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::IsAt
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+{
+    // $$$$ AGE 2006-03-23: Test segments too !
+    precision*=precision;
+    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        if( it->SquareDistance( pos ) < precision )
+            return true;
+    return false;
+}

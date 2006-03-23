@@ -59,7 +59,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     Register( *new SpyLayer( viewport_, frame_ ) );
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
-    Register( *new MetricsLayer( *this ) );
+    Register( *new MetricsLayer( controllers, *this ) );
     Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
     Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
 }
@@ -176,7 +176,7 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 void GlWidget::DrawLines( const T_PointVector& points ) const
 {
     glEnableClientState( GL_VERTEX_ARRAY );
-    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points[0]) );
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glDrawArrays( GL_LINE_STRIP, 0, points.size() );    
 }
 
