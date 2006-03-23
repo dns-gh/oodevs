@@ -255,3 +255,21 @@ void AgentListView::Select( const Agent& element )
    setSelected( FindItem( &element, firstChild() ), true );
    ensureItemVisible( selectedItem() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::BeforeSelection
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void AgentListView::BeforeSelection()
+{
+    selectAll( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::AfterSelection
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void AgentListView::AfterSelection()
+{
+    // NOTHING
+}

@@ -16,6 +16,7 @@
 #include "ColorStrategy.h"
 #include "MetricsLayer.h"
 #include "GlFont.h"
+#include "DefaultLayer.h"
 
 using namespace geometry;
 
@@ -62,6 +63,8 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
     Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
+
+    SetDefaultLayer( *new DefaultLayer( controllers ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,18 +211,19 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*=
 // Name: GlWidget::DrawCurvedArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.3f*/, float size /*= -1.f*/ ) const
+void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
 {
     if( curveRatio == 0 )
     {
         DrawArrow( from, to, size );
         return;
     }
+    // $$$$ AGE 2006-03-23: revoir un peu...
 
     const Vector2f u( from, to );
     const Vector2f v( u.Normal() );
     const Point2f middle = from + 0.5f * u;
-    const Point2f center = middle + v * curveRatio;
+    const Point2f center = middle + v / curveRatio;
     const float radius = center.Distance( from );
     if( radius == 0.f )
         return;

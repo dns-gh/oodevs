@@ -48,6 +48,7 @@ class AgentListView : public ListView< AgentListView >
                     , public SelectionObserver_Base< Team > // $$$$ AGE 2006-03-21: refactor these crap
                     , public SelectionObserver_Base< KnowledgeGroup >
                     , public SelectionObserver_Base< Agent >
+                    , public SelectionObserver_ABC
 {
    Q_OBJECT;
 public:
@@ -95,6 +96,8 @@ private:
     virtual void Select( const Team& element );
     virtual void Select( const KnowledgeGroup& element );
     virtual void Select( const Agent& element );
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
 
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
