@@ -36,6 +36,8 @@ public:
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
+
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

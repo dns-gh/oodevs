@@ -18,6 +18,7 @@
 #include "Resolver.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 class PopulationPart_ABC;
 class PopulationConcentration;
@@ -40,6 +41,7 @@ class Population : public Agent_ABC
                  , public Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
                  , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
                  , public Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
+                 , public Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -60,6 +62,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
     //@}

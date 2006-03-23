@@ -32,7 +32,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     , type_         ( typeResolver.Get( message.type_population ) )
     , team_         ( resolver.Get( message.oid_camp ) )
 {
-    Agent_ABC::Register( *this );
+    InterfaceContainer< Extension_ABC >::Register( *this );
     controller_.Create( *this );
 }
 
@@ -206,4 +206,15 @@ std::string Population::GetName() const
 const Team& Population::GetTeam() const
 {
     return team_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Draw
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void Population::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    Iterator< const PopulationPart_ABC& > it = CreateIterator();
+    while( it.HasMoreElements() )
+        it.NextElement().Draw( where, tools );
 }

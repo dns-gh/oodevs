@@ -20,7 +20,7 @@
 // =============================================================================
 class PopulationPositions : public Positions
 {
-
+    
 public:
     //! @name Constructors/Destructor
     //@{

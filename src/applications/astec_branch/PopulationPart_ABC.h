@@ -14,6 +14,7 @@
 #include "Entity_ABC.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 // =============================================================================
 /** @class  PopulationPart_ABC
@@ -21,10 +22,12 @@
 */
 // Created: AGE 2006-02-20
 // =============================================================================
-class PopulationPart_ABC : public Entity_ABC, 
-                           private Extension_ABC,
-                           public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >,
-                           public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
+class PopulationPart_ABC : public Entity_ABC
+                         , private Extension_ABC
+                         , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
+                         , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
+                         , public Drawable_ABC
+                           
 {
 
 public:
@@ -40,6 +43,7 @@ public:
     virtual unsigned int GetDeadHumans() const = 0;
     virtual unsigned int GetLivingHumans() const = 0;
     virtual unsigned int GetDensity() const = 0;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const = 0;
 
     virtual std::string  GetAttitude() const;
     //@}

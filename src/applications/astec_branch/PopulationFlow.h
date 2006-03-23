@@ -35,9 +35,9 @@ public:
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
-    //@}
 
-    void UpdatePathFind();
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    //@}
     //! @name Accessors
     //@{
 //	virtual const std::string&   GetName            () const;
@@ -62,7 +62,7 @@ private:
     const CoordinateConverter& converter_;
 
     uint          nID_;
-	T_PointVector itineraire_;
+	T_PointVector itineraire_; // $$$$ AGE 2006-03-23: extension
 	T_PointVector flow_;
 	int			  nDirection_;
 	int			  nSpeed_;

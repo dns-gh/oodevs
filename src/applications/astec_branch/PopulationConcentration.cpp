@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "PopulationConcentration.h"
 #include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration constructor
@@ -81,3 +82,20 @@ unsigned int PopulationConcentration::GetDensity() const
 {
     return density_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Draw
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools ) const
+{
+    static const float pi = std::acos( -1.f );
+    const float radius     = std::sqrt( ( ( nLivingHumans_ + nDeadHumans_ ) / density_ ) / pi );
+    const float deadRadius = std::sqrt( ( nDeadHumans_ / density_ ) / pi );
+    tools.DrawDisc( position_, radius );
+    glPushAttrib( GL_CURRENT_BIT );
+    glColor4d( COLOR_BLACK );
+    tools.DrawDisc( position_, deadRadius );
+    glPopAttrib();
+}
+    

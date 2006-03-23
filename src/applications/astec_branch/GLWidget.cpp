@@ -225,7 +225,7 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
     const Vector2f u( from, to );
     const Vector2f v( u.Normal() );
     const Point2f middle = from + 0.5f * u;
-    const Point2f center = middle + v / curveRatio;
+    const Point2f center = middle + v * ( 1.f / curveRatio - 1.f );
     const float radius = center.Distance( from );
     if( radius == 0.f )
         return;
@@ -235,7 +235,10 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
     Vector2f v2( center, to ); v2.Normalize();
     float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
     if( minAngle > maxAngle )
-        std::swap( minAngle, maxAngle );
+    {
+        static const float twoPi = 2.0 * std::acos( -1.0 );
+        maxAngle = maxAngle + twoPi;
+    }
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
     glMatrixMode(GL_MODELVIEW);	

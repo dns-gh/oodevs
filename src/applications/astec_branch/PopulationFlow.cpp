@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "PopulationFlow.h"
 #include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow constructor
@@ -116,53 +117,13 @@ unsigned int PopulationFlow::GetDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlow::UpdatePathFind
-// Created: HME 2005-10-06
+// Name: PopulationFlow::Draw
+// Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::UpdatePathFind()
+void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools ) const
 {
-//    if( itineraire_.size() <= 1 )
-//        return;
-//
-//    // We have to determine where along the path is located the unit. To do this, we
-//    // compute the distance from the agent to each segment of the path, and take
-//    // the closest segment. The path is then truncated to discard all the points
-//    // before that segment (since we're supposed to have passed them).
-//
-//    MT_Float rMinDistance = 999999999.0;
-//    IT_PointVector itLastValidPoint = itineraire_.end();
-//
-//    const geometry::Point2f& vPos = flow_.back();
-//
-//    // Iterate on the path vector.
-//    IT_PointVector itPreviousPoint = itineraire_.begin();
-//    for( IT_PointVector it = itineraire_.begin() + 1; it != itineraire_.end() ; ++it )
-//    {
-//        MT_Line curLine( *itPreviousPoint, *it );
-//        geometry::Point2f vNewPos = curLine.ClosestPointOnLine( vPos );
-//        MT_Float rSqrDistance = vPos.SquareDistance( vNewPos );
-//        if( rSqrDistance < rMinDistance )
-//        {
-//            itLastValidPoint = itPreviousPoint;
-//            rMinDistance = rSqrDistance;
-//        }
-//
-//        // If the distance is less than 0.1 km, we can consider that this is good enough.
-//        if( rSqrDistance < (0.1 * 0.1) )
-//            break;
-//
-//        itPreviousPoint = it;
-//    }
-//
-//    // Check and handle an improbable result.
-//    if( itLastValidPoint == itineraire_.end() )
-//    {
-//        itineraire_.clear();
-//        return;
-//    }
-//
-//    // Move the points we want to keep to the begining of the vector, and trucate the end.
-//    std::copy( itLastValidPoint, itineraire_.end(), itineraire_.begin() );
-//    itineraire_.resize( itineraire_.end() - itLastValidPoint );
-
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( 10.f );
+    tools.DrawLines( flow_ );
+    glPopAttrib();
 }

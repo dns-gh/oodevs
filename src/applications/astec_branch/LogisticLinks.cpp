@@ -161,16 +161,16 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const GlTools_ABC& too
     glLineWidth( 3.f );
     
     glColor4d( COLOR_YELLOW );  
-    DrawLink( where, GetTC2(), tools, 0.5f );
+    DrawLink( where, GetTC2(), tools, 0.3f );
 
     glColor4d( COLOR_PINK );
-    DrawLink( where, GetMedical(), tools, -0.5f );
+    DrawLink( where, GetMedical(), tools, 0.4f );
 
     glColor4d( COLOR_MAROON );
-    DrawLink( where, GetMaintenance(), tools, 0.75f );
+    DrawLink( where, GetMaintenance(), tools, 0.5f );
 
     glColor4d( COLOR_ORANGE );
-    DrawLink( where, GetSupply(), tools, -0.75f );    
+    DrawLink( where, GetSupply(), tools, 0.6f );    
 
     glPopAttrib();
 }
