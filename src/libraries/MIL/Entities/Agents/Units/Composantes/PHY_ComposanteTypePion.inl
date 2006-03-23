@@ -109,43 +109,43 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedPerTimeStep() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanTransport
+// Name: PHY_ComposanteTypePion::CanTransportPion
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-bool PHY_ComposanteTypePion::CanTransport() const
+bool PHY_ComposanteTypePion::CanTransportPion() const
 {
-    return rTransportWeightCapacity_ > 0.;
+    return rPionTransporterWeightCapacity_ > 0.;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetTransportWeightCapacity
+// Name: PHY_ComposanteTypePion::GetPionTransporterWeightCapacity
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetTransportWeightCapacity() const
+MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightCapacity() const
 {
-    return rTransportWeightCapacity_;
+    return rPionTransporterWeightCapacity_;
 }
     
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetTransportWeightLoadedPerTimeStep
+// Name: PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetTransportWeightLoadedPerTimeStep() const
+MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep() const
 {
-    return rTransportWeightLoadedPerTimeStep_;
+    return rPionTransporterWeightLoadedPerTimeStep_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetTransportWeightUnloadedPerTimeStep
+// Name: PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetTransportWeightUnloadedPerTimeStep() const
+MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() const
 {
-    return rTransportWeightUnloadedPerTimeStep_;
+    return rPionTransporterWeightUnloadedPerTimeStep_;
 }
 
 // -----------------------------------------------------------------------------
@@ -400,54 +400,54 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanConvoyCommand
+// Name: PHY_ComposanteTypePion::CanCommandConvoy
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-bool PHY_ComposanteTypePion::CanConvoyCommand() const
+bool PHY_ComposanteTypePion::CanCommandConvoy() const
 {
-    return bConvoyCommander_;
+    return bCanCommandConvoy_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanConvoyTransport
-// Created: NLD 2006-03-21
+// Name: PHY_ComposanteTypePion::CanBePartOfConvoy
+// Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------
 inline
-bool PHY_ComposanteTypePion::CanConvoyTransport() const
+bool PHY_ComposanteTypePion::CanBePartOfConvoy() const
 {
-    return rConvoyTransporterWeightCapacity_ > 0. && rConvoyTransporterVolumeCapacity_ > 0.;
+    return bCanBePartOfConvoy_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetConvoyTransporterLoadingTime
+// Name: PHY_ComposanteTypePion::GetStockTransporterLoadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposanteTypePion::GetConvoyTransporterLoadingTime() const
+uint PHY_ComposanteTypePion::GetStockTransporterLoadingTime() const
 {
-    return nConvoyTransporterLoadingTime_;
+    return nStockTransporterLoadingTime_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetConvoyTransporterUnloadingTime
+// Name: PHY_ComposanteTypePion::GetStockTransporterUnloadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposanteTypePion::GetConvoyTransporterUnloadingTime() const
+uint PHY_ComposanteTypePion::GetStockTransporterUnloadingTime() const
 {
-    return nConvoyTransporterUnloadingTime_;
+    return nStockTransporterUnloadingTime_;
 }
     
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetConvoyTransporterCapacity
+// Name: PHY_ComposanteTypePion::GetStockTransporterCapacity
 // Created: NLD 2005-07-18
 // -----------------------------------------------------------------------------
 inline
-void PHY_ComposanteTypePion::GetConvoyTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
+void PHY_ComposanteTypePion::GetStockTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
 {
-    rWeightMax = rConvoyTransporterWeightCapacity_;
-    rVolumeMax = rConvoyTransporterVolumeCapacity_;
+    rWeightMax = rStockTransporterWeightCapacity_;
+    rVolumeMax = rStockTransporterVolumeCapacity_;
 }
 
 // -----------------------------------------------------------------------------

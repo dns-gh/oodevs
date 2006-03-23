@@ -190,69 +190,69 @@ bool PHY_ComposantePion::CanSortHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanConvoyCommand
+// Name: PHY_ComposantePion::CanCommandConvoy
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-bool PHY_ComposantePion::CanConvoyCommand() const
+bool PHY_ComposantePion::CanCommandConvoy() const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && pType_->CanConvoyCommand();
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanCommandConvoy();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanConvoyTransport
+// Name: PHY_ComposantePion::CanBePartOfConvoy
+// Created: NLD 2006-03-23
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposantePion::CanBePartOfConvoy() const
+{
+    assert( pType_ );
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanBePartOfConvoy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanTransportStock
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-bool PHY_ComposantePion::CanConvoyTransport( const PHY_DotationCategory& dotationCategory ) const
+bool PHY_ComposantePion::CanTransportStock( const PHY_DotationCategory& dotationCategory ) const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && pType_->CanConvoyTransport( dotationCategory );
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanTransportStock( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanConvoyTransport
-// Created: NLD 2006-03-21
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposantePion::CanConvoyTransport() const
-{
-    assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && pType_->CanConvoyTransport();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetConvoyTransporterCapacity
+// Name: PHY_ComposantePion::GetStockTransporterCapacity
 // Created: NLD 2005-07-18
 // -----------------------------------------------------------------------------
 inline
-void PHY_ComposantePion::GetConvoyTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
+void PHY_ComposantePion::GetStockTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
 {
     assert( pType_ );
-    return pType_->GetConvoyTransporterCapacity( rWeightMax, rVolumeMax );
+    return pType_->GetStockTransporterCapacity( rWeightMax, rVolumeMax );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetConvoyTransporterLoadingTime
+// Name: PHY_ComposantePion::GetStockTransporterLoadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposantePion::GetConvoyTransporterLoadingTime() const
+uint PHY_ComposantePion::GetStockTransporterLoadingTime() const
 {
     assert( pType_ );
-    return pType_->GetConvoyTransporterLoadingTime();
+    return pType_->GetStockTransporterLoadingTime();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetConvoyTransporterUnloadingTime
+// Name: PHY_ComposantePion::GetStockTransporterUnloadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposantePion::GetConvoyTransporterUnloadingTime() const
+uint PHY_ComposantePion::GetStockTransporterUnloadingTime() const
 {
     assert( pType_ );
-    return pType_->GetConvoyTransporterUnloadingTime();
+    return pType_->GetStockTransporterUnloadingTime();
 }
 
 // -----------------------------------------------------------------------------
@@ -412,14 +412,47 @@ bool PHY_ComposantePion::CanBeFired() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanTransport
+// Name: PHY_ComposantePion::CanTransportPion
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-bool PHY_ComposantePion::CanTransport() const
+bool PHY_ComposantePion::CanTransportPion() const
 {
     assert( pType_ );
-    return pState_->CanTransport() && pType_->CanTransport() && CanBeUsed();
+    return pState_->CanTransport() && pType_->CanTransportPion() && CanBeUsed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetPionTransporterWeightCapacity
+// Created: NLD 2006-03-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_ComposantePion::GetPionTransporterWeightCapacity() const
+{
+    assert( pType_ );
+    return pType_->GetPionTransporterWeightCapacity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetPionTransporterWeightLoadedPerTimeStep
+// Created: NLD 2006-03-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_ComposantePion::GetPionTransporterWeightLoadedPerTimeStep() const
+{
+    assert( pType_ );
+    return pType_->GetPionTransporterWeightLoadedPerTimeStep();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetPionTransporterWeightUnloadedPerTimeStep
+// Created: NLD 2006-03-23
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_ComposantePion::GetPionTransporterWeightUnloadedPerTimeStep() const
+{
+    assert( pType_ );
+    return pType_->GetPionTransporterWeightUnloadedPerTimeStep();
 }
 
 // -----------------------------------------------------------------------------

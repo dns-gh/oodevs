@@ -49,7 +49,9 @@ PHY_Conveyor::PHY_Conveyor( PHY_ComposantePion& conveyorComp, MIL_AgentPion& con
     , dotationsConvoyed_( )
     , pLentTo_          ( 0 )
 {
-    pConveyorComp_->GetConvoyTransporterCapacity( rWeightCapacity_, rVolumeCapacity_ );
+    assert( pConveyorComp_->CanBePartOfConvoy() );
+
+    pConveyorComp_->GetStockTransporterCapacity( rWeightCapacity_, rVolumeCapacity_ );
     assert( rWeightCapacity_ > 0. && rVolumeCapacity_ > 0. );
     pConveyorPion_->GetRole< PHY_RolePion_Supply >().StartUsingForLogistic( *pConveyorComp_ );
 }
@@ -131,7 +133,7 @@ void PHY_Conveyor::serialize( Archive& file, const uint )
 MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy )
 {
     assert( pConveyorComp_ );
-    if( !pConveyorComp_->GetType().CanConvoyTransport( dotationCategory ) )
+    if( !pConveyorComp_->GetType().CanTransportStock( dotationCategory ) )
         return 0.;
 
     MT_Float rVolumeToConvoy = rNbrToConvoy * dotationCategory.GetVolume();
@@ -157,7 +159,7 @@ MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_Dotatio
 
     assert( rWeightToConvoy / dotationCategory.GetWeight() == rVolumeToConvoy / dotationCategory.GetVolume() );
 
-    const MT_Float rNbrConvoyed = rWeightToConvoy / dotationCategory.GetWeight();
+    const MT_Float rNbrConvoyed = std::min( rNbrToConvoy, std::max( rWeightToConvoy / dotationCategory.GetWeight(), rVolumeToConvoy / dotationCategory.GetVolume() ) );
     dotationsConvoyed_[ &dotationCategory ] += rNbrConvoyed;
     consign.AddConvoyedMerchandise( dotationCategory, rNbrConvoyed );
     return rNbrConvoyed;
@@ -212,7 +214,8 @@ void PHY_Conveyor::NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign )
 // -----------------------------------------------------------------------------
 uint PHY_Conveyor::GetLoadingTime() const
 {
-    return pConveyorComp_->GetConvoyTransporterLoadingTime();
+    assert( pConveyorComp_ );
+    return pConveyorComp_->GetStockTransporterLoadingTime();
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +224,8 @@ uint PHY_Conveyor::GetLoadingTime() const
 // -----------------------------------------------------------------------------
 uint PHY_Conveyor::GetUnloadingTime() const
 {
-    return pConveyorComp_->GetConvoyTransporterUnloadingTime();
+    assert( pConveyorComp_ );
+    return pConveyorComp_->GetStockTransporterUnloadingTime();
 }
 
 // -----------------------------------------------------------------------------

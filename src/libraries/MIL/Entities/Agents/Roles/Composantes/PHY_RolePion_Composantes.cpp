@@ -2063,8 +2063,10 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyTransporter( con
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        if( (**it).CanConvoyTransport( dotationCategory ) )
-            return *it;
+        PHY_ComposantePion& composante = **it;
+
+        if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory ) )
+            return &composante;
     }
     return 0;
 }
@@ -2078,7 +2080,7 @@ void PHY_RolePion_Composantes::GetConvoyTransporters( T_ComposanteUseMap& compos
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanConvoyTransport()  )
+        if( (**itComposante).GetType().CanBePartOfConvoy()  )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
             ++ data.nNbrTotal_;
@@ -2086,7 +2088,7 @@ void PHY_RolePion_Composantes::GetConvoyTransporters( T_ComposanteUseMap& compos
             if( (**itComposante).GetState().IsUsable() )
             {
                 ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanConvoyTransport() )
+                if( !(**itComposante).CanBePartOfConvoy() )
                     ++ data.nNbrUsed_;
             }
         }
@@ -2101,7 +2103,7 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyCommander() cons
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        if( (**it).CanConvoyCommand() )
+        if( (**it).CanCommandConvoy() )
             return *it;
     }
     return 0;
@@ -2117,7 +2119,7 @@ void PHY_RolePion_Composantes::GetConvoyCommanders( T_ComposanteUseMap& composan
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanConvoyCommand() )
+        if( (**itComposante).GetType().CanCommandConvoy() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
             ++ data.nNbrTotal_;
@@ -2125,7 +2127,7 @@ void PHY_RolePion_Composantes::GetConvoyCommanders( T_ComposanteUseMap& composan
             if( (**itComposante).GetState().IsUsable() )
             {
                 ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanConvoyCommand() )
+                if( !(**itComposante).CanCommandConvoy() )
                     ++ data.nNbrUsed_;
             }
         }

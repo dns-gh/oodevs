@@ -96,10 +96,10 @@ public:
     MT_Float GetNbrHumansLoadedPerTimeStep  () const;
     MT_Float GetNbrHumansUnloadedPerTimeStep() const;
 
-    bool     CanTransport                         () const;
-    MT_Float GetTransportWeightCapacity           () const;
-    MT_Float GetTransportWeightLoadedPerTimeStep  () const;
-    MT_Float GetTransportWeightUnloadedPerTimeStep() const;
+    bool     CanTransportPion                           () const;
+    MT_Float GetPionTransporterWeightCapacity           () const;
+    MT_Float GetPionTransporterWeightLoadedPerTimeStep  () const;
+    MT_Float GetPionTransporterWeightUnloadedPerTimeStep() const;
     //@}
 
     //! @name Objects
@@ -167,12 +167,12 @@ public:
 
     //! @name Logistic - supply
     //@{
-    bool     CanConvoyTransport               () const;
-    bool     CanConvoyTransport               ( const PHY_DotationCategory& dotationCategory ) const;
-    void     GetConvoyTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
-    uint     GetConvoyTransporterLoadingTime  () const;
-    uint     GetConvoyTransporterUnloadingTime() const;
-    bool     CanConvoyCommand                 () const;
+    bool CanCommandConvoy                () const;
+    bool CanBePartOfConvoy               () const;
+    bool CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
+    void GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
+    uint GetStockTransporterLoadingTime  () const;
+    uint GetStockTransporterUnloadingTime() const;
     //@}
 
     //! @name Operators
@@ -272,16 +272,15 @@ private:
     MT_Float rNbrHumansUnloadedPerTimeStep_;
 
     // Transport
-    MT_Float rTransportWeightCapacity_;
-    MT_Float rTransportWeightLoadedPerTimeStep_;
-    MT_Float rTransportWeightUnloadedPerTimeStep_;
+    MT_Float rPionTransporterWeightCapacity_;
+    MT_Float rPionTransporterWeightLoadedPerTimeStep_;
+    MT_Float rPionTransporterWeightUnloadedPerTimeStep_;
 
     MT_Float  rWeight_;
 
     // Logistic : Breakdowns
     T_BreakdownTypeProbabilityVector  randomBreakdownTypeProbabilities_;
-    T_BreakdownTypeProbabilityVector  attritionBreakdownTypeProbabilities_;
-    
+    T_BreakdownTypeProbabilityVector  attritionBreakdownTypeProbabilities_;    
 
     // Logistic : maintenance
     MT_Float            rHaulWeightCapacity_;
@@ -305,11 +304,12 @@ private:
 
     // Logistic : supply
     const PHY_DotationNature*       pNatureTransported_;
-          MT_Float                  rConvoyTransporterWeightCapacity_;
-          MT_Float                  rConvoyTransporterVolumeCapacity_;
-          uint                      nConvoyTransporterLoadingTime_;
-          uint                      nConvoyTransporterUnloadingTime_;
-          bool                      bConvoyCommander_;    
+          MT_Float                  rStockTransporterWeightCapacity_;
+          MT_Float                  rStockTransporterVolumeCapacity_;
+          uint                      nStockTransporterLoadingTime_;
+          uint                      nStockTransporterUnloadingTime_;
+          bool                      bCanBePartOfConvoy_;
+          bool                      bCanCommandConvoy_;    
 
 private:
     static T_ComposanteTypeMap composantesTypes_;

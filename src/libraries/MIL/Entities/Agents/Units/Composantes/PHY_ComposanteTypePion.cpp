@@ -122,9 +122,9 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , rNbrHumansUnloadedPerTimeStep_             ( 0. )
     , rSensorRotationAngle_                      ( 0. )
     , rWeight_                                   ( 0. )
-    , rTransportWeightCapacity_                  ( 0. )
-    , rTransportWeightLoadedPerTimeStep_         ( 0. )
-    , rTransportWeightUnloadedPerTimeStep_       ( 0. )
+    , rPionTransporterWeightCapacity_            ( 0. )
+    , rPionTransporterWeightLoadedPerTimeStep_   ( 0. )
+    , rPionTransporterWeightUnloadedPerTimeStep_ ( 0. )
     , rHaulWeightCapacity_                       ( 0. )
     , rHaulWeightLoadedPerTimeStep_              ( 0. )
     , rHaulWeightUnloadedPerTimeStep_            ( 0. )
@@ -140,12 +140,13 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , bCanSortHumans_                            ( false )
     , bCanDiagnoseHumans_                        ( false )
     , bCanHealWounds_                            ( false )
-    , rConvoyTransporterWeightCapacity_          ( 0. )
-    , rConvoyTransporterVolumeCapacity_          ( 0. )
-    , nConvoyTransporterLoadingTime_             ( 0 )
-    , nConvoyTransporterUnloadingTime_           ( 0 )
-    , bConvoyCommander_                          ( false )
     , pNatureTransported_                        ( 0 )
+    , rStockTransporterWeightCapacity_           ( 0. )
+    , rStockTransporterVolumeCapacity_           ( 0. )
+    , nStockTransporterLoadingTime_              ( 0 )
+    , nStockTransporterUnloadingTime_            ( 0 )
+    , bCanBePartOfConvoy_                        ( false )
+    , bCanCommandConvoy_                         ( false )    
 {
     archive.ReadField( "DeniveleMaximum", rMaxSlope_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
@@ -410,14 +411,14 @@ void PHY_ComposanteTypePion::InitializeTransport( MIL_InputArchive& archive )
 
     if( archive.Section( "Pion", MIL_InputArchive::eNothing ) )
     {
-        archive.ReadField( "Capacite", rTransportWeightCapacity_, CheckValueGreater( 0. ) );
+        archive.ReadField( "Capacite", rPionTransporterWeightCapacity_, CheckValueGreater( 0. ) );
 
         archive.Section( "Temps" );
-        archive.ReadTimeField( "TempsChargementParTonne"  , rTransportWeightLoadedPerTimeStep_  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementParTonne", rTransportWeightUnloadedPerTimeStep_, CheckValueGreater( 0. ) );
+        archive.ReadTimeField( "TempsChargementParTonne"  , rPionTransporterWeightLoadedPerTimeStep_  , CheckValueGreater( 0. ) );
+        archive.ReadTimeField( "TempsDechargementParTonne", rPionTransporterWeightUnloadedPerTimeStep_, CheckValueGreater( 0. ) );
 
-        rTransportWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rTransportWeightLoadedPerTimeStep_   );
-        rTransportWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTransportWeightUnloadedPerTimeStep_ );
+        rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
+        rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
 
         archive.EndSection(); // Temps
         archive.EndSection(); // Pion
@@ -629,25 +630,31 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown dotation nature", archive.GetContext() );
 
         archive.Section( "Capacite" );
-        archive.ReadField( "Masse" , rConvoyTransporterWeightCapacity_, CheckValueGreater( 0. ) );
-        archive.ReadField( "Volume", rConvoyTransporterVolumeCapacity_, CheckValueGreater( 0. ) );
+        archive.ReadField( "Masse" , rStockTransporterWeightCapacity_, CheckValueGreater( 0. ) );
+        archive.ReadField( "Volume", rStockTransporterVolumeCapacity_, CheckValueGreater( 0. ) );
         archive.EndSection(); // Capacite
 
         MT_Float rLoadingTimeTmp;
         MT_Float rUnloadingTimeTmp;
        
-        archive.ReadTimeField( "TempsChargementMoyen"  , rLoadingTimeTmp             , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementMoyen", rUnloadingTimeTmp           , CheckValueGreater( 0. ) );
+        archive.ReadTimeField( "TempsChargementMoyen"  , rLoadingTimeTmp  , CheckValueGreater( 0. ) );
+        archive.ReadTimeField( "TempsDechargementMoyen", rUnloadingTimeTmp, CheckValueGreater( 0. ) );
 
-        nConvoyTransporterLoadingTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rLoadingTimeTmp   );
-        nConvoyTransporterUnloadingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUnloadingTimeTmp );
+        nStockTransporterLoadingTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rLoadingTimeTmp   );
+        nStockTransporterUnloadingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUnloadingTimeTmp );
 
         archive.EndSection(); // Transporteur
     }
 
     if( archive.Section( "ChefDeConvoi", MIL_InputArchive::eNothing ) )
     {
-        bConvoyCommander_ = true;
+        bCanCommandConvoy_ = true;
+        archive.EndSection(); // ChefDeConvoi
+    }
+
+    if( archive.Section( "Convoyeur", MIL_InputArchive::eNothing ) )
+    {
+        bCanBePartOfConvoy_ = true;
         archive.EndSection(); // ChefDeConvoi
     }
 
@@ -1090,12 +1097,12 @@ void PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanConvoyTransport
+// Name: PHY_ComposanteTypePion::CanTransportStock
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanConvoyTransport( const PHY_DotationCategory& dotationCategory ) const
+bool PHY_ComposanteTypePion::CanTransportStock( const PHY_DotationCategory& dotationCategory ) const
 {
-    if( !CanConvoyTransport() )
+    if( rStockTransporterWeightCapacity_ <= 0. || rStockTransporterVolumeCapacity_ <= 0. )
         return false;
 
     if( pNatureTransported_ && *pNatureTransported_ != dotationCategory.GetNature() )

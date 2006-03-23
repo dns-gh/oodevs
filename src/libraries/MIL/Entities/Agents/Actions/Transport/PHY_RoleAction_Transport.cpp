@@ -152,13 +152,12 @@ struct sTransporterData
 
     void operator() ( const PHY_ComposantePion& composante )
     {
-        if( composante.CanTransport() )
+        if( composante.CanTransportPion() )
         {
-            const PHY_ComposanteTypePion& compType = composante.GetType();
-            rWeightCapacity_                 += compType.GetTransportWeightCapacity           ();
-            rWeightLoadedPerTimeStep_        += compType.GetTransportWeightLoadedPerTimeStep  ();
-            rWeightUnloadedPerTimeStep_      += compType.GetTransportWeightUnloadedPerTimeStep();
-            rMaxComposanteTransportedWeight_  = std::max( rMaxComposanteTransportedWeight_, compType.GetTransportWeightCapacity() );
+            rWeightCapacity_                 += composante.GetPionTransporterWeightCapacity           ();
+            rWeightLoadedPerTimeStep_        += composante.GetPionTransporterWeightLoadedPerTimeStep  ();
+            rWeightUnloadedPerTimeStep_      += composante.GetPionTransporterWeightUnloadedPerTimeStep();
+            rMaxComposanteTransportedWeight_  = std::max( rMaxComposanteTransportedWeight_, composante.GetPionTransporterWeightCapacity() );
         }
     }
 
@@ -338,7 +337,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
     if( !composante.GetState().IsDamaged() )
         return;
 
-    MT_Float rWeightDamaged = std::min( composante.GetType().GetTransportWeightCapacity(), rWeightTransported_ );
+    MT_Float rWeightDamaged = std::min( composante.GetPionTransporterWeightCapacity(), rWeightTransported_ );
     if( rWeightDamaged == 0 )
         return;
 

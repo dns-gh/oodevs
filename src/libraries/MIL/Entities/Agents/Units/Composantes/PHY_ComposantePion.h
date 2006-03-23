@@ -64,7 +64,6 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
-
     
     //! @name Main
     //@{
@@ -106,14 +105,14 @@ public:
     void                   Heal                            (       PHY_Human& human ) const;
     //@}
 
-    //! @name Logisitc - Supply
+    //! @name Logistic - Supply
     //@{
-    bool     CanConvoyCommand                 () const;
-    bool     CanConvoyTransport               () const;
-    bool     CanConvoyTransport               ( const PHY_DotationCategory& dotationCategory ) const;
-    void     GetConvoyTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
-    uint     GetConvoyTransporterLoadingTime  () const;
-    uint     GetConvoyTransporterUnloadingTime() const;
+    bool CanCommandConvoy                () const;
+    bool CanBePartOfConvoy               () const;
+    bool CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const; // Indépendamment du fait que la composante peut faire partie d'un convoi
+    void GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
+    uint GetStockTransporterLoadingTime  () const;
+    uint GetStockTransporterUnloadingTime() const;
     //@}
 
     //! @name Humans
@@ -168,8 +167,8 @@ public:
     virtual bool                      CanFire            () const;
     virtual bool                      CanFireWhenUnloaded() const;            
             
-    virtual const PHY_ComposanteTypePion& GetType            () const;
-    virtual uint                          GetMajorScore      () const;
+    virtual const PHY_ComposanteTypePion& GetType        () const;
+    virtual uint                          GetMajorScore  () const;
     //@}
 
     //! @name Dotations
@@ -196,9 +195,13 @@ public:
     //! @name Load / unload / transport
     //@{
     bool CanBeLoaded       () const;
-    bool CanTransportHumans() const;    
-    bool CanBeTransported  () const;
-    bool CanTransport      () const;
+    bool CanTransportHumans() const;
+    
+    bool     CanBeTransported                           () const;
+    bool     CanTransportPion                           () const;
+    MT_Float GetPionTransporterWeightCapacity           () const;
+    MT_Float GetPionTransporterWeightLoadedPerTimeStep  () const;
+    MT_Float GetPionTransporterWeightUnloadedPerTimeStep() const;
     //@}
 
     //! @name Operations

@@ -2312,6 +2312,7 @@
           <TempsChargementMoyen>60s</TempsChargementMoyen>
           <TempsDechargementMoyen>300s</TempsDechargementMoyen>
         </Transporteur>
+        <Convoyeur/>
       </Ravitaillement>
     </FonctionsLogistiques>
     <Pannes>
@@ -2422,6 +2423,7 @@
           <TempsChargementMoyen>60s</TempsChargementMoyen>
           <TempsDechargementMoyen>300s</TempsDechargementMoyen>
         </Transporteur>
+        <Convoyeur/>
       </Ravitaillement>
     </FonctionsLogistiques>
     <Pannes>
