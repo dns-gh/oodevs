@@ -102,7 +102,7 @@ public:
         eLogLoadTime,
         eLogUnloadTime,
         eIsConvoyLeader,
-        eIsConvoyer,
+        eIsConveyor,
         eIsMaintenance,
         eIsTower,
         eTowerCapacity,

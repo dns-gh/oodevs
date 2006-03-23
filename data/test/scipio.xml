@@ -19,6 +19,7 @@
     <Protections>Data/Protections.xml</Protections>
     <Objets>Data/Objets.xml</Objets>
     <Dotations>Data/Dotations.xml</Dotations>
+    <DotationNatures>Data/DotationNatures.xml</DotationNatures>
     <Lanceurs>Data/Lanceurs.xml</Lanceurs>
     <Armements>Data/Armements.xml</Armements>
     <Capteurs>Data/Capteurs.xml</Capteurs>

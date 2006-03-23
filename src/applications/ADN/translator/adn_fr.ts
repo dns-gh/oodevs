@@ -581,11 +581,11 @@
     </message>
     <message>
         <source>Dotation natures</source>
-        <translation type="unfinished"></translation>
+        <translation>Natures dotation</translation>
     </message>
     <message>
         <source>Nature</source>
-        <translation type="unfinished">Nature</translation>
+        <translation>Nature</translation>
     </message>
 </context>
 <context>
@@ -1117,8 +1117,8 @@
         <translation>Catégorie matériel:</translation>
     </message>
     <message>
-        <source>Convoyer</source>
-        <translation type="unfinished"></translation>
+        <source>Conveyor</source>
+        <translation>Convoyeur</translation>
     </message>
 </context>
 <context>
@@ -2723,27 +2723,27 @@
     </message>
     <message>
         <source>Automate InterdireFranchissementPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate InterdireFranchissementPopulations</translation>
     </message>
     <message>
         <source>Automate FiltrerPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate FiltrerPopulations</translation>
     </message>
     <message>
         <source>Automate CanaliserPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate CanaliserPopulations</translation>
     </message>
     <message>
         <source>Automate ControlerPopulationsDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate ControlerPopulationsDansZone</translation>
     </message>
     <message>
         <source>Automate SecuriserZoneContrePopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate SecuriserZoneContrePopulations</translation>
     </message>
     <message>
         <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate ASY CommettreExactionsSurPopulationDansZone</translation>
     </message>
 </context>
 <context>
@@ -2938,7 +2938,7 @@
     </message>
     <message>
         <source>Nature</source>
-        <translation type="unfinished">Nature</translation>
+        <translation>Nature</translation>
     </message>
 </context>
 <context>
@@ -3218,6 +3218,21 @@ du tireur</translation>
     <message>
         <source>Delete Armor-Plating</source>
         <translation>Effacer cette catégorie de blindage</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Categories_DotationNature</name>
+    <message>
+        <source>Dotation Natures</source>
+        <translation>Natures dotation</translation>
+    </message>
+    <message>
+        <source>New dotation nature</source>
+        <translation>Nouvelle nature dotation</translation>
+    </message>
+    <message>
+        <source>Delete dotation nature</source>
+        <translation>Effacer nature dotation</translation>
     </message>
 </context>
 <context>
