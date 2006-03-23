@@ -8,23 +8,23 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "AgentsLayer.h"
+#include "PopulationsLayer.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer constructor
+// Name: PopulationsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
-    : EntityLayer< Agent >( controllers, tools, strategy, widget )
+PopulationsLayer::PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
+    : EntityLayer< Population >( controllers, tools, strategy, widget )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer destructor
+// Name: PopulationsLayer destructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-AgentsLayer::~AgentsLayer()
+PopulationsLayer::~PopulationsLayer()
 {
     // NOTHING
 }

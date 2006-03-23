@@ -61,3 +61,12 @@ bool AgentPositions::IsAt( const geometry::Point2f& pos, float /*precision*/ /*=
                                            position_.X() + halfSizeX, position_.Y() + sizeY );
     return agentBBox.IsInside( pos );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::IsIn
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+bool AgentPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
+{
+    return rectangle.IsInside( position_ );
+}

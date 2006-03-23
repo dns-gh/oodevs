@@ -15,6 +15,7 @@ class Agent;
 class KnowledgeGroup;
 class Team;
 class Object;
+class Population;
 
 // =============================================================================
 /** @class  TeamSelectionObserver
@@ -28,6 +29,7 @@ class TeamSelectionObserver
     , public SelectionObserver_Base< KnowledgeGroup >
     , public SelectionObserver_Base< Agent >
     , public SelectionObserver_Base< Object >
+    , public SelectionObserver_Base< Population >
 {
 
 public:
@@ -53,6 +55,7 @@ protected:
     virtual void Select( const KnowledgeGroup& element );
     virtual void Select( const Agent& element );
     virtual void Select( const Object& element );
+    virtual void Select( const Population& element );
     virtual void Select( const Team* ) = 0;
     //@}
 

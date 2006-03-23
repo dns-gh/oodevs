@@ -40,6 +40,7 @@ public:
     //@{
     virtual geometry::Point2f GetPosition() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
+    virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
 
     virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
@@ -63,6 +64,7 @@ private:
     //@{
     const CoordinateConverter& converter_;
     T_PointVector points_;
+    geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
     //@}
 };

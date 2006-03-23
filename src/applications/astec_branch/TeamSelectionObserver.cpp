@@ -12,6 +12,7 @@
 #include "KnowledgeGroup.h"
 #include "Agent.h"
 #include "Object.h"
+#include "Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamSelectionObserver constructor
@@ -84,6 +85,15 @@ void TeamSelectionObserver::Select( const Agent& element )
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 void TeamSelectionObserver::Select( const Object& element )
+{
+    Select( element.GetTeam() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamSelectionObserver::Select
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void TeamSelectionObserver::Select( const Population& element )
 {
     Select( element.GetTeam() );
 }

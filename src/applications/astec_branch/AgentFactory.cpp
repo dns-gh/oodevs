@@ -53,6 +53,7 @@
 #include "AutomatDecisions.h"
 #include "Fires.h"
 #include "AgentPositions.h"
+#include "PopulationPositions.h"
 #include "Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -114,6 +115,7 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.types_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
+    result->Attach< Positions >( *new PopulationPositions() );
     return result;
 }
 

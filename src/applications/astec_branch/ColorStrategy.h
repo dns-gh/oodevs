@@ -41,6 +41,7 @@ public:
     //@{
     virtual void SelectColor( const Agent& agent );
     virtual void SelectColor( const Object& object );
+    virtual void SelectColor( const Population& population );
     //@}
 
 private:
@@ -59,6 +60,7 @@ private:
     virtual void BeforeSelection();
     virtual void Select( const Agent& element );
     virtual void Select( const Object& element );
+    virtual void Select( const Population& element );
     virtual void Select( const Team* );
 
     void InitializeSynonyms();
@@ -67,6 +69,8 @@ private:
     std::string RandomName() const;
     QColor RandomColor() const;
     void CreateNewColor( const std::string& name );
+    QColor SelectedColor( const QColor& base ) const;
+    QColor TeamSelectedColor( const QColor& base ) const;
     //@}
 
     //! @name Types 
@@ -80,9 +84,10 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Team*   selectedTeam_;
-    const Object* selectedObject_;
-    const Agent*  selectedAgent_;
+    const Team*       selectedTeam_;
+    const Object*     selectedObject_;
+    const Agent*      selectedAgent_;
+    const Population* selectedPopulation_;
 
     T_TeamColors teamColors_;
     T_Synonyms   synonyms_;

@@ -7,30 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentPositions_h_
-#define __AgentPositions_h_
+#ifndef __PopulationPositions_h_
+#define __PopulationPositions_h_
 
-#include "ASN_Types.h"
-#include "Updatable_ABC.h"
 #include "Positions.h"
 
-class CoordinateConverter;
-
 // =============================================================================
-/** @class  AgentPositions
-    @brief  AgentPositions. Nothing sexual.
+/** @class  PopulationPositions
+    @brief  PopulationPositions
 */
-// Created: AGE 2006-03-16
+// Created: AGE 2006-03-23
 // =============================================================================
-class AgentPositions : public Positions
-                     , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+class PopulationPositions : public Positions
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentPositions( const CoordinateConverter& converter );
-    virtual ~AgentPositions();
+             PopulationPositions();
+    virtual ~PopulationPositions();
     //@}
 
     //! @name Operations
@@ -43,21 +38,14 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    AgentPositions( const AgentPositions& );            //!< Copy constructor
-    AgentPositions& operator=( const AgentPositions& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    PopulationPositions( const PopulationPositions& );            //!< Copy constructor
+    PopulationPositions& operator=( const PopulationPositions& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter& converter_;
-    geometry::Point2f position_;
     //@}
 };
 
-#endif // __AgentPositions_h_
+#endif // __PopulationPositions_h_

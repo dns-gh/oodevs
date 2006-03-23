@@ -51,14 +51,12 @@ public:
 
     //! @name Network
     //@{
-	
-    //@}
-
     const PopulationConcentration* FindConcentration ( uint nID ) const;
     const PopulationFlow*          FindFlow          ( uint nID ) const;
 
     const PopulationConcentration& GetConcentration ( uint nID ) const;
     const PopulationFlow&          GetFlow          ( uint nID ) const;
+    //@}
 
     //! @name Operations
     //@{

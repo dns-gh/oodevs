@@ -7,34 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentsLayer_h_
-#define __AgentsLayer_h_
+#ifndef __PopulationsLayer_h_
+#define __PopulationsLayer_h_
 
 #include "EntityLayer.h"
-#include "Agent.h"
+#include "Population.h"
 
 // =============================================================================
-/** @class  AgentsLayer
-    @brief  AgentsLayer
+/** @class  PopulationsLayer
+    @brief  PopulationsLayer
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class AgentsLayer : public EntityLayer< Agent >
+class PopulationsLayer : public EntityLayer< Population >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer(  Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
-    virtual ~AgentsLayer();
+             PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+    virtual ~PopulationsLayer();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    AgentsLayer( const AgentsLayer& );            //!< Copy constructor
-    AgentsLayer& operator=( const AgentsLayer& ); //!< Assignement operator
+    PopulationsLayer( const PopulationsLayer& );            //!< Copy constructor
+    PopulationsLayer& operator=( const PopulationsLayer& ); //!< Assignement operator
     //@}
 };
 
-#endif // __AgentsLayer_h_
+#endif // __PopulationsLayer_h_

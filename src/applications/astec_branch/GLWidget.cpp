@@ -17,6 +17,7 @@
 #include "MetricsLayer.h"
 #include "GlFont.h"
 #include "DefaultLayer.h"
+#include "PopulationsLayer.h"
 
 using namespace geometry;
 
@@ -63,7 +64,8 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
     Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
-
+    Register( *new PopulationsLayer( controllers, *this, strategy_, *this ) );
+    
     SetDefaultLayer( *new DefaultLayer( controllers ) );
 }
 

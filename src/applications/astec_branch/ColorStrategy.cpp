@@ -14,6 +14,7 @@
 #include "Team.h"
 #include "Controllers.h"
 #include "Object.h"
+#include "Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
@@ -24,6 +25,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers )
     , selectedTeam_( 0 )
     , selectedObject_( 0 )
     , selectedAgent_( 0 )
+    , selectedPopulation_( 0 )
 {
     InitializeSynonyms();
     InitializeColors();
@@ -73,6 +75,16 @@ void ColorStrategy::Select( const Object& element )
 // Name: ColorStrategy::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Population& element )
+{
+    selectedPopulation_ = &element;
+    TeamSelectionObserver::Select( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
 void ColorStrategy::Select( const Team* team )
 {
     selectedTeam_ = team;
@@ -87,9 +99,9 @@ void ColorStrategy::SelectColor( const Agent& agent )
     const Team& team = agent.GetKnowledgeGroup()->GetTeam();
     QColor color = teamColors_[ &team ].second;
     if( selectedAgent_ == &agent )
-        color = color.light( 150 );
+        color = SelectedColor( color );
     else if( selectedTeam_ == &team )
-        color = color.light( 120 );
+        color = TeamSelectedColor( color );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -102,10 +114,43 @@ void ColorStrategy::SelectColor( const Object& object )
     const Team& team = object.GetTeam();
     QColor color = teamColors_[ &team ].second;
     if( selectedObject_ == &object )
-        color = color.light( 150 );
+        color = SelectedColor( color );
     else if( selectedTeam_ == &team )
-        color = color.light( 120 );
+        color = TeamSelectedColor( color );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const Population& population )
+{
+    const Team& team = population.GetTeam();
+     QColor color = teamColors_[ &team ].second;
+    if( selectedPopulation_ == &population )
+        color = SelectedColor( color );
+    else if( selectedTeam_ == &team )
+        color = TeamSelectedColor( color );
+    glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectedColor
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::SelectedColor( const QColor& base ) const
+{
+    return base.light( 150 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::TeamSelectedColor
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::TeamSelectedColor( const QColor& base ) const
+{
+    return base.light( 120 );
 }
 
 // -----------------------------------------------------------------------------

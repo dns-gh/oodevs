@@ -70,7 +70,7 @@ void Extendable< BaseType >::Attach( Extension& extension )
 {
     BaseType*& ext = Find< Extension >();
     if( ext )
-        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " already attached" );
+        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " already attached to " + typeid( *this ).name() );
     AddExtension( ext, &extension );
 }
 
@@ -95,7 +95,7 @@ Extension& Extendable< BaseType >::Get()
 {
     Extension* ext = Retrieve< Extension >();
     if( ! ext )
-        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist" );;
+        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist in " + typeid( *this ).name() );
     return *ext;
 }
 
@@ -120,6 +120,6 @@ const Extension& Extendable< BaseType >::Get() const
 {
     const Extension* ext = Retrieve< Extension >();
     if( ! ext )
-        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist" );;
+        throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist in " + typeid( *this ).name() );
     return *ext;
 }

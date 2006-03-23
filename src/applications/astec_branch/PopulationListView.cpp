@@ -103,7 +103,7 @@ void PopulationListView::OnRequestCenter()
     if( selectedItem() )
     {
         ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-        item->Select( controllers_.actions_ );
+        item->Activate( controllers_.actions_ );
     }
 }
 

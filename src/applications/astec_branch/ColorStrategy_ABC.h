@@ -12,6 +12,7 @@
 
 class Agent;
 class Object;
+class Population;
 
 // =============================================================================
 /** @class  ColorStrategy_ABC
@@ -33,6 +34,7 @@ public:
     //@{
     virtual void SelectColor( const Agent& agent ) = 0;
     virtual void SelectColor( const Object& object ) = 0;
+    virtual void SelectColor( const Population& population ) = 0;
     //@}
 };
 
