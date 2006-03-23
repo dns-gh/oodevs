@@ -110,7 +110,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     InitializeType< PHY_Tiredness               >( archive, "FacteursHumains"     );    
     InitializeType< PHY_Volume                  >( archive, "Volumes"             );
     InitializeType< PHY_Protection              >( archive, "Protections"         );
-    InitializeType< PHY_DotationNature          >( archive, "Dotations"           );
+    InitializeType< PHY_DotationNature          >( archive, "DotationNatures"     );
     InitializeType< PHY_DotationType            >( archive, "Dotations"           );
     InitializeType< MIL_RealObjectType          >( archive, "Objets"              );
     InitializeType< MIL_VirtualObjectType       >( archive, "Objets"              );

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Dotations>
-  <Natures>
-    <Nature>Solide</Nature>
-    <Nature>Liquide</Nature>
-    <!-- <Nature>Matiere dangereuse</Nature> -->
-  </Natures>    
-
   <Dotation nom="munition">
     <Categories>
       <Categorie nom="Balle Classique 12,7">
