@@ -177,7 +177,7 @@ void ADN_Categories_Data::Load()
     std::string szArmorsFile= ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
                       + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szArmors_.GetData();
 
-    if ( !armorsInput.Open(szArmorsFile) )
+    if ( !armorsInput.Open( szArmorsFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szArmorsFile );
 
     try
@@ -199,7 +199,7 @@ void ADN_Categories_Data::Load()
     std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
         + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szSizes_.GetData();
 
-    if ( !sizesInput.Open(szSizesFile) )
+    if ( !sizesInput.Open( szSizesFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szSizesFile );
 
     try
@@ -221,9 +221,8 @@ void ADN_Categories_Data::Load()
     std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
         + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDotationNatures_.GetData();
 
-    if ( !dotationNaturesInput.Open(szDotationNaturesFile) )
+    if ( !dotationNaturesInput.Open( szDotationNaturesFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szDotationNaturesFile );
-
     try
     {
         ReadDotationNatures( dotationNaturesInput );
