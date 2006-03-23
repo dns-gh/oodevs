@@ -66,6 +66,7 @@ private:
     virtual void NotifyActivated( const Agent& );
 
     bool IsInSelection( const Agent& agent, const geometry::Point2f& point ) const;
+    void Draw( const Agent& agent, const geometry::Rectangle2f& viewport );
     //@}
 
     //! @name Types

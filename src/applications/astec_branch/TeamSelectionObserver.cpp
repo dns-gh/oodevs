@@ -11,6 +11,7 @@
 #include "TeamSelectionObserver.h"
 #include "KnowledgeGroup.h"
 #include "Agent.h"
+#include "Object.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamSelectionObserver constructor
@@ -76,4 +77,13 @@ void TeamSelectionObserver::Select( const Agent& element )
     const KnowledgeGroup* kg = element.GetKnowledgeGroup();
     if( kg )
         Select( *kg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamSelectionObserver::Select
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void TeamSelectionObserver::Select( const Object& element )
+{
+    Select( element.GetTeam() );
 }

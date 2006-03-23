@@ -50,15 +50,25 @@ AgentsLayer::~AgentsLayer()
 // -----------------------------------------------------------------------------
 void AgentsLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    for( CIT_Agents it = agents_.begin(); it != agents_.end(); ++it )
+    for( unsigned i = 0; i < agents_.size(); ++i )
+        if( i != selected_ )
+            Draw( *agents_.at( i ), viewport );
+    if( selected_ < agents_.size() )
+        Draw( *agents_.at( selected_ ), viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Draw
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void AgentsLayer::Draw( const Agent& a, const geometry::Rectangle2f& viewport )
+{
+    Entity_ABC& agent = const_cast< Agent& >( a ); // $$$$ AGE 2006-03-16: 
+    const geometry::Point2f position = agent.Get< Positions >().GetPosition();
+    if( viewport.IsInside( position ) )
     {
-        Entity_ABC& agent = const_cast< Agent& >( **it ); // $$$$ AGE 2006-03-16: 
-        const geometry::Point2f position = agent.Get< Positions >().GetPosition();
-        if( viewport.IsInside( position ) )
-        {
-            strategy_.SelectColor( **it );
-            agent.Apply( Drawable_ABC::Draw, position, tools_ );
-        }
+        strategy_.SelectColor( a );
+        agent.Apply( Drawable_ABC::Draw, position, tools_ );
     }
 }
 

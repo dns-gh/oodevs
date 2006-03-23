@@ -21,6 +21,9 @@
 // -----------------------------------------------------------------------------
 ColorStrategy::ColorStrategy( Controllers& controllers )
     : controllers_( controllers )
+    , selectedTeam_( 0 )
+    , selectedObject_( 0 )
+    , selectedAgent_( 0 )
 {
     InitializeSynonyms();
     InitializeColors();
@@ -37,13 +40,56 @@ ColorStrategy::~ColorStrategy()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorStrategy::BeforeSelection
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void ColorStrategy::BeforeSelection()
+{
+    selectedTeam_ = 0; selectedObject_ = 0; selectedAgent_ = 0;
+    TeamSelectionObserver::BeforeSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Agent& element )
+{
+    selectedAgent_ = &element;
+    TeamSelectionObserver::Select( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Object& element )
+{
+    selectedObject_ = &element;
+    TeamSelectionObserver::Select( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Team* team )
+{
+    selectedTeam_ = team;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Agent& agent )
 {
     const Team& team = agent.GetKnowledgeGroup()->GetTeam();
-    const QColor color = teamColors_[ &team ].second;
+    QColor color = teamColors_[ &team ].second;
+    if( selectedAgent_ == &agent )
+        color = color.light( 150 );
+    else if( selectedTeam_ == &team )
+        color = color.light( 120 );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -54,7 +100,11 @@ void ColorStrategy::SelectColor( const Agent& agent )
 void ColorStrategy::SelectColor( const Object& object )
 {
     const Team& team = object.GetTeam();
-    const QColor color = teamColors_[ &team ].second;
+    QColor color = teamColors_[ &team ].second;
+    if( selectedObject_ == &object )
+        color = color.light( 150 );
+    else if( selectedTeam_ == &team )
+        color = color.light( 120 );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 

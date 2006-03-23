@@ -13,6 +13,7 @@
 #include "ColorStrategy_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "TeamSelectionObserver.h"
 
 class Team;
 class Controllers;
@@ -26,6 +27,7 @@ class Controllers;
 class ColorStrategy : public ColorStrategy_ABC
                     , private Observer_ABC
                     , public ElementObserver_ABC< Team >
+                    , public TeamSelectionObserver
 {
 
 public:
@@ -54,6 +56,11 @@ private:
     virtual void NotifyUpdated( const Team& );
     virtual void NotifyDeleted( const Team& );
 
+    virtual void BeforeSelection();
+    virtual void Select( const Agent& element );
+    virtual void Select( const Object& element );
+    virtual void Select( const Team* );
+
     void InitializeSynonyms();
     void InitializeColors();
 
@@ -73,6 +80,9 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    const Team*   selectedTeam_;
+    const Object* selectedObject_;
+    const Agent*  selectedAgent_;
 
     T_TeamColors teamColors_;
     T_Synonyms   synonyms_;
