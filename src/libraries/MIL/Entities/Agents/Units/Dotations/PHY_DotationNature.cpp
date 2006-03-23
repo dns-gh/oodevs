@@ -28,7 +28,6 @@ void PHY_DotationNature::Initialize( MIL_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing dotation natures" );
 
-    archive.Section( "Dotations" );
     archive.BeginList( "Natures" );
 
     while( archive.NextListElement() )
@@ -48,7 +47,6 @@ void PHY_DotationNature::Initialize( MIL_InputArchive& archive )
     }
 
     archive.EndList(); // Natures
-    archive.EndSection(); // Dotations
 }
 
 // -----------------------------------------------------------------------------
