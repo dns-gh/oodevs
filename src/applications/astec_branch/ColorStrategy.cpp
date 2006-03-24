@@ -22,9 +22,9 @@
 // -----------------------------------------------------------------------------
 ColorStrategy::ColorStrategy( Controllers& controllers )
     : controllers_( controllers )
-    , selectedTeam_( 0 )
-    , selectedObject_( 0 )
-    , selectedAgent_( 0 )
+    , selectedObject_    ( 0 )
+    , selectedAgent_     ( 0 )
+    , selectedSuperior_  ( 0 )
     , selectedPopulation_( 0 )
 {
     InitializeSynonyms();
@@ -47,8 +47,7 @@ ColorStrategy::~ColorStrategy()
 // -----------------------------------------------------------------------------
 void ColorStrategy::BeforeSelection()
 {
-    selectedTeam_ = 0; selectedObject_ = 0; selectedAgent_ = 0;
-    TeamSelectionObserver::BeforeSelection();
+    selectedObject_ = 0; selectedAgent_ = 0; selectedSuperior_ = 0; selectedPopulation_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +56,8 @@ void ColorStrategy::BeforeSelection()
 // -----------------------------------------------------------------------------
 void ColorStrategy::Select( const Agent& element )
 {
-    selectedAgent_ = &element;
-    TeamSelectionObserver::Select( element );
+    selectedAgent_    = &element;
+    selectedSuperior_ = element.GetSuperior();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +67,6 @@ void ColorStrategy::Select( const Agent& element )
 void ColorStrategy::Select( const Object& element )
 {
     selectedObject_ = &element;
-    TeamSelectionObserver::Select( element );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,16 +76,15 @@ void ColorStrategy::Select( const Object& element )
 void ColorStrategy::Select( const Population& element )
 {
     selectedPopulation_ = &element;
-    TeamSelectionObserver::Select( element );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-03-23
+// Name: ColorStrategy::AfterSelection
+// Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Team* team )
+void ColorStrategy::AfterSelection()
 {
-    selectedTeam_ = team;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -100,8 +97,8 @@ void ColorStrategy::SelectColor( const Agent& agent )
     QColor color = teamColors_[ &team ].second;
     if( selectedAgent_ == &agent )
         color = SelectedColor( color );
-    else if( selectedTeam_ == &team )
-        color = TeamSelectedColor( color );
+    else if( selectedAgent_ == agent.GetSuperior() || selectedSuperior_ == agent.GetSuperior() )
+        color = SuperiorSelectedColor( color );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -115,8 +112,6 @@ void ColorStrategy::SelectColor( const Object& object )
     QColor color = teamColors_[ &team ].second;
     if( selectedObject_ == &object )
         color = SelectedColor( color );
-    else if( selectedTeam_ == &team )
-        color = TeamSelectedColor( color );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -130,8 +125,6 @@ void ColorStrategy::SelectColor( const Population& population )
      QColor color = teamColors_[ &team ].second;
     if( selectedPopulation_ == &population )
         color = SelectedColor( color );
-    else if( selectedTeam_ == &team )
-        color = TeamSelectedColor( color );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -145,10 +138,10 @@ QColor ColorStrategy::SelectedColor( const QColor& base ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::TeamSelectedColor
+// Name: ColorStrategy::SuperiorSelectedColor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-QColor ColorStrategy::TeamSelectedColor( const QColor& base ) const
+QColor ColorStrategy::SuperiorSelectedColor( const QColor& base ) const
 {
     return base.light( 120 );
 }

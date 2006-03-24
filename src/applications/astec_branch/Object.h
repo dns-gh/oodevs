@@ -25,6 +25,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class Team;
@@ -39,6 +40,7 @@ class CoordinateConverter;
 class Object : public Entity_ABC
              , private Extension_ABC
              , public Updatable_ABC< ASN1T_MsgObjectUpdate >
+             , public Drawable_ABC
 {
 
 public:
@@ -53,6 +55,7 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors

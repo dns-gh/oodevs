@@ -37,7 +37,9 @@ ObjectPositions::~ObjectPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f ObjectPositions::GetPosition() const
 {
-    return center_;
+    if( ! points_.empty() )
+        return points_.front();
+    return geometry::Point2f();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +89,10 @@ void ObjectPositions::Draw( const geometry::Point2f&, const GlTools_ABC& tools )
 {
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 2.f );
-    tools.DrawLines( points_ );
+    if( points_.size() >= 2 )
+        tools.DrawLines( points_ );
+    else if( ! points_.empty() )
+        tools.DrawCross( points_.front() );
     glPopAttrib();
 }
 

@@ -10,6 +10,8 @@
 #ifndef __ObjectType_h_
 #define __ObjectType_h_
 
+#include "Drawable_ABC.h"
+
 class IDManager;
 
 // =============================================================================
@@ -18,7 +20,7 @@ class IDManager;
 */
 // Created: AGE 2006-02-16
 // =============================================================================
-class ObjectType
+class ObjectType : public Drawable_ABC
 {
 
 public:
@@ -31,6 +33,7 @@ public:
     //! @name Operations
     //@{
     const std::string& GetName() const;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -40,12 +43,20 @@ private:
     ObjectType& operator=( const ObjectType& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void GenerateTexture();
+    QImage TypeIcon();
+    //@}
+
 public:
     //! @name Static members
     //@{
+    IDManager& manager_;
+
     unsigned long id_;
     std::string name_;
-    IDManager& manager_;
+    unsigned int texture_;
     //@}
 };
 

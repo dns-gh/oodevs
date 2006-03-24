@@ -13,9 +13,12 @@
 #include "ColorStrategy_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "TeamSelectionObserver.h"
+#include "SelectionObserver_ABC.h"
 
 class Team;
+class Agent;
+class Object;
+class Population;
 class Controllers;
 
 // =============================================================================
@@ -27,7 +30,10 @@ class Controllers;
 class ColorStrategy : public ColorStrategy_ABC
                     , private Observer_ABC
                     , public ElementObserver_ABC< Team >
-                    , public TeamSelectionObserver
+                    , public SelectionObserver_ABC
+                    , public SelectionObserver_Base< Agent >
+                    , public SelectionObserver_Base< Object >
+                    , public SelectionObserver_Base< Population >
 {
 
 public:
@@ -61,7 +67,7 @@ private:
     virtual void Select( const Agent& element );
     virtual void Select( const Object& element );
     virtual void Select( const Population& element );
-    virtual void Select( const Team* );
+    virtual void AfterSelection();
 
     void InitializeSynonyms();
     void InitializeColors();
@@ -70,7 +76,7 @@ private:
     QColor RandomColor() const;
     void CreateNewColor( const std::string& name );
     QColor SelectedColor( const QColor& base ) const;
-    QColor TeamSelectedColor( const QColor& base ) const;
+    QColor SuperiorSelectedColor( const QColor& base ) const;
     //@}
 
     //! @name Types 
@@ -84,9 +90,9 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Team*       selectedTeam_;
     const Object*     selectedObject_;
     const Agent*      selectedAgent_;
+    const Agent*      selectedSuperior_;
     const Population* selectedPopulation_;
 
     T_TeamColors teamColors_;

@@ -156,3 +156,12 @@ void Object::Display( Displayer_ABC& displayer ) const
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::Draw
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Object::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    type_.Draw( where, tools );
+}
