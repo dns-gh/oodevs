@@ -28,7 +28,7 @@ class OptionsPanel;
 
 class QProgressBar;
 class Controllers;
-class CoordinateConverter;
+class Model;
 
 // =============================================================================
 /** @class  MainWindow
@@ -49,7 +49,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controllers& controllers, const CoordinateConverter& converter, const std::string& scipioXml );
+             MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml );
     virtual ~MainWindow();
     //@}
 

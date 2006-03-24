@@ -11,10 +11,12 @@
 #define __ParametersLayer_h_
 
 #include "graphics/MapLayer_ABC.h"
+class GlTools_ABC;
+class ShapeHandler_ABC;
 
 // =============================================================================
 /** @class  ParametersLayer
-    @brief  ParametersLayer
+    @brief  ParametersLayer // $$$$ AGE 2006-03-24: points, lines, polygons
 */
 // Created: AGE 2006-03-23
 // =============================================================================
@@ -24,13 +26,13 @@ class ParametersLayer : public MapLayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer();
+    explicit ParametersLayer( const GlTools_ABC& tools );
     virtual ~ParametersLayer();
     //@}
 
     //! @name Operations
     //@{
-    void Start( int type, unsigned expected );
+    void Start( ShapeHandler_ABC& handler, int type = GL_LINE_STRIP, unsigned expected = std::numeric_limits< unsigned >::max() );
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
@@ -57,7 +59,8 @@ private:
 private:
     //! @name Member data
     //@{
-    bool focus_;
+    const GlTools_ABC& tools_;
+    ShapeHandler_ABC* handler_;
     geometry::Rectangle2f world_;
     int type_;
     unsigned expected_;

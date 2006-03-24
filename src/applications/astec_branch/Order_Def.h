@@ -34,7 +34,7 @@ enum E_FuncLimaType
     eLimaFuncLDM    = 7, // Ligne de début de mission
     eLimaFuncLFM    = 8, // Ligne de fin de mission
     eLimaFuncLIA    = 9, // Ligne d'identification acceuil
-    eLimaFuncNbr         // Keep this at the end of the enum!
+    eLimaFuncNbr         // Keep this at the end of the enum! No !
 };
 
 

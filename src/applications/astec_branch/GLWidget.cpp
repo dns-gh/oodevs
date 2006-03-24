@@ -19,6 +19,8 @@
 #include "DefaultLayer.h"
 #include "PopulationsLayer.h"
 #include "LimitsLayer.h"
+#include "ParametersLayer.h"
+#include "Model.h"
 
 using namespace geometry;
 
@@ -44,7 +46,7 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers& controllers, const CoordinateConverter& converter )
+GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers& controllers, Model& model )
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
     , strategy_( *new ColorStrategy( controllers ) )
@@ -59,14 +61,17 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     SetExclusive( true );
     SetLastFocusFirst( true );
 
+    ParametersLayer* parameters = new ParametersLayer( *this );
+
     Register( *new SpyLayer( viewport_, frame_ ) );
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
-    Register( *new LimitsLayer( controllers, *this, strategy_ ) );
+    Register( *new LimitsLayer( controllers, *this, strategy_, *parameters, model.limits_ ) );
     Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
     Register( *new PopulationsLayer( controllers, *this, strategy_, *this ) );
     Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
+    Register( *parameters );
     
     SetDefaultLayer( *new DefaultLayer( controllers ) );
 }

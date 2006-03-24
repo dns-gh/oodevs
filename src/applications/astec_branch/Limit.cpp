@@ -28,6 +28,7 @@ Limit::Limit( Controller& controller, const CoordinateConverter& converter )
     , nLevel_( eNatureLevel_None )
 {
     controller_.Create( *this );
+    TacticalLine_ABC::UpdateToSim();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Limit::Limit( Controller& controller, const T_PointVector& pointList, const Coor
     , nLevel_( eNatureLevel_None )
 {
     controller_.Create( *this );
+    TacticalLine_ABC::UpdateToSim();
 }
 
 //-----------------------------------------------------------------------------

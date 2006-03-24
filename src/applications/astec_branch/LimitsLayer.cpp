@@ -9,22 +9,30 @@
 
 #include "astec_pch.h"
 #include "LimitsLayer.h"
+#include "moc_LimitsLayer.cpp"
+
 #include "Controllers.h"
 #include "ActionController.h"
 #include "Lima.h"
 #include "Limit.h"
 #include "ColorStrategy_ABC.h"
 #include "GlTools_ABC.h"
+#include "Tools.h"
+#include "ParametersLayer.h"
+#include "LimitsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy )
+LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model )
     : controllers_( controllers )
-    , tools_( tools )
-    , strategy_( strategy )
-    , selected_( 0 )
+    , tools_      ( tools )
+    , strategy_   ( strategy )
+    , parameters_ ( parameters )
+    , model_      ( model )
+    , selected_   ( 0 )
+    , type_       ( -1 )
 {
     controllers_.Register( *this );
 }
@@ -184,5 +192,53 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
     return false;
 }
 
-//    virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
-//    virtual bool HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::NotifyContextMenu
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu )
+{
+    if( menu.count() > 0 )
+        menu.insertSeparator();
+    menu.insertItem( tr( "Créer limite" ), this, SLOT( OnCreateLimit() ) );
+
+    QPopupMenu* limaMenu = new QPopupMenu( &menu );
+    for( int n = 0; n < eLimaFuncNbr; ++n )
+    {
+        int nId = limaMenu->insertItem( Tools::ToString( (E_FuncLimaType)n ), this, SLOT( OnCreateLima( int ) ) ); 
+        limaMenu->setItemParameter( nId, n );
+    }
+    menu.insertItem( tr( "Créer lima" ), limaMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::OnCreateLimit
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsLayer::OnCreateLimit()
+{
+    type_ = -1;
+    parameters_.Start( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::OnCreateLima
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsLayer::OnCreateLima( int i )
+{
+    type_ = i;
+    parameters_.Start( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Handle
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsLayer::Handle( const T_PointVector& points )
+{
+    if( type_ == -1 )
+        model_.CreateLimit( points );
+    else
+        model_.CreateLima( E_FuncLimaType( type_ ), points );
+}

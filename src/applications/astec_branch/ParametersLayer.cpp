@@ -9,13 +9,16 @@
 
 #include "astec_pch.h"
 #include "ParametersLayer.h"
+#include "GlTools_ABC.h"
+#include "ShapeHandler_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer()
-    : focus_( false )
+ParametersLayer::ParametersLayer( const GlTools_ABC& tools )
+    : tools_( tools )
+    , handler_( 0 )
     , type_( GL_LINE_STRIP )
     , expected_( 0 )
 {
@@ -46,9 +49,19 @@ void ParametersLayer::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void ParametersLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 {
-    glEnableClientState( GL_VERTEX_ARRAY );
-    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points_.front()) );
-    glDrawArrays( type_, 0, points_.size() );    
+    if( ! handler_ )
+        return;
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glColor4d( COLOR_UNDERCONST );
+        glLineWidth( 3.f );
+        if( type_ == GL_POINTS )
+            for( T_PointVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
+                tools_.DrawCross( *it );
+        else 
+            tools_.DrawLines( points_ );
+        if( type_ == GL_LINE_LOOP && ! points_.empty() )
+            tools_.DrawLine( points_.back(), points_.front() );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +70,7 @@ void ParametersLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
 {
-    if( ! focus_ )
+    if( ! handler_ )
         return false;
     switch( key->key() )
     {
@@ -84,7 +97,7 @@ bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& )
 {
-    return focus_; // $$$$ AGE 2006-03-23: trouver autre chose pour gerer les focus events...
+    return handler_; // $$$$ AGE 2006-03-23: trouver autre chose pour gerer les focus events...
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +106,7 @@ bool ParametersLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& )
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! focus_ )
+    if( ! handler_ )
         return false;
 
     if( world_.IsInside( point ) )
@@ -117,7 +130,7 @@ bool ParametersLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Poin
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& /*point*/ )
 {
-    if( ! focus_ )
+    if( ! handler_ )
         return false;
 
     if( mouse->button() == Qt::RightButton && mouse->state() == Qt::NoButton && ! points_.empty() )
@@ -132,9 +145,10 @@ bool ParametersLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry
 // Name: ParametersLayer::Start
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ParametersLayer::Start( int type, unsigned expected )
+void ParametersLayer::Start( ShapeHandler_ABC& handler, int type, unsigned expected )
 {
-    focus_    = true;
+    points_.clear();
+    handler_ = &handler;
     type_     = type;
     expected_ = expected;
 }
@@ -154,6 +168,8 @@ bool ParametersLayer::IsDone() const
 // -----------------------------------------------------------------------------
 void ParametersLayer::NotifyDone()
 {
-    focus_ = false;
-    // $$$$ AGE 2006-03-23: 
+    ShapeHandler_ABC* handler = handler_;
+    handler_ = 0;
+    handler->Handle( points_ );
+    points_.clear();
 }

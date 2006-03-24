@@ -16,10 +16,10 @@
 #include "GlTools_ABC.h"
 #include "SetGlOptions.h"
 
-class CoordinateConverter;
 class Controllers;
 class ColorStrategy;
 class GlFont;
+class Model;
 
 // =============================================================================
 /** @class  GlWidget
@@ -34,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GlWidget( QWidget* pParent, const std::string& scipioXml,
-                       Controllers& controllers, const CoordinateConverter& converter );
+                       Controllers& controllers, Model& model ); // $$$$ AGE 2006-03-24: violent
     virtual ~GlWidget();
     //@}
 

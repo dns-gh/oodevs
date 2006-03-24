@@ -29,6 +29,7 @@ Lima::Lima( Controller& controller, const CoordinateConverter& converter )
     , nFuncType_      ( eLimaFuncLCA )
 {
     controller_.Create( *this );
+    TacticalLine_ABC::UpdateToSim();
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaTy
     , nFuncType_      ( nFuncType )
 {
     controller_.Create( *this );
+    TacticalLine_ABC::UpdateToSim();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +57,7 @@ Lima::Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const C
     idManager_.LockIdentifier( GetId() );
     controller_.Create( *this );
 }
-    
+ 
 // -----------------------------------------------------------------------------
 // Name: Lima destructor
 // Created: AGE 2006-03-15
@@ -113,7 +115,10 @@ void Lima::UpdateToSim( E_State state )
 void Lima::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glLineWidth( 5.0 );
+        TacticalLine_ABC::Draw( viewport, tools );
         glLineWidth( 3.0 );
+        glColor4d( 0.55, 0.3, 0.1, 1.0 );
         TacticalLine_ABC::Draw( viewport, tools );
         glColor3f( 0.f, 0.f, 0.f );
         DrawName( tools );
@@ -128,7 +133,7 @@ void Lima::Select( ActionController& actions ) const
 {
     actions.Select( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Lima::ContextMenu
 // Created: AGE 2006-03-24

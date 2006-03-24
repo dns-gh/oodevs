@@ -13,6 +13,8 @@
 #include "graphics/MapLayer_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "ContextMenuObserver_ABC.h"
+#include "ShapeHandler_ABC.h"
 
 class Controllers;
 class Lima;
@@ -20,6 +22,8 @@ class Limit;
 class TacticalLine_ABC;
 class GlTools_ABC;
 class ColorStrategy_ABC;
+class ParametersLayer;
+class LimitsModel;
 
 // =============================================================================
 /** @class  LimitsLayer
@@ -27,22 +31,34 @@ class ColorStrategy_ABC;
 */
 // Created: AGE 2006-03-24
 // =============================================================================
-class LimitsLayer : public MapLayer_ABC
+class LimitsLayer : public QObject
+                  , public MapLayer_ABC
                   , private Observer_ABC
                   , public ElementObserver_ABC< Lima >
                   , public ElementObserver_ABC< Limit >
+                  , public ContextMenuObserver_ABC< geometry::Point2f >
+                  , private ShapeHandler_ABC
+                  
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy );
+             LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model );
     virtual ~LimitsLayer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnCreateLimit();
+    void OnCreateLima( int );
     //@}
 
 private:
@@ -65,12 +81,14 @@ private:
 
     virtual bool HandleKeyPress        ( QKeyEvent* key );
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
-//    virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
-//    virtual bool HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
+
+    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu );
 
     virtual bool IsInSelection( const TacticalLine_ABC& line, const geometry::Point2f& point ) const;
     void Select( const TacticalLine_ABC& line );
     void ContextMenu( const TacticalLine_ABC& line, const QPoint& point );
+
+    virtual void Handle( const T_PointVector& points );
     //@}
 
     //! @name Types
@@ -86,8 +104,12 @@ private:
     Controllers& controllers_;
     const GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
+    ParametersLayer& parameters_;
+    LimitsModel& model_;
+
     T_Lines lines_;
     unsigned selected_;
+    int type_;
     //@}
 };
 

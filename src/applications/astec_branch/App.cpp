@@ -74,7 +74,7 @@ App::App( int nArgc, char** ppArgv )
     Initialize( conffile );
 
 //    SetSplashText( tr("Initialisation de l'interface...") );
-    mainWindow_ = new MainWindow( *controllers_, model_->coordinateConverter_, conffile );
+    mainWindow_ = new MainWindow( *controllers_, *model_, conffile );
     mainWindow_->show();
 
     if( splashScreen_ )

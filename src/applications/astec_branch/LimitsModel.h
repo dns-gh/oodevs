@@ -10,6 +10,7 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
+#include "Order_Def.h"
 #include "ASN_Types.h"
 #include "Resolver.h"
 
@@ -42,6 +43,8 @@ public:
     //@{
     void Create( const ASN1T_MsgLimitCreation& asnMsg );
     void Create( const ASN1T_MsgLimaCreation& asnMsg );
+    void CreateLimit( const T_PointVector& points );
+    void CreateLima( E_FuncLimaType type, const T_PointVector& points );
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );

@@ -7,28 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef __ParamAgent_h_
-#define __ParamAgent_h_
-
-#include "EntityParameter.h"
-
-class Agent;
+#ifndef __ShapeHandler_ABC_h_
+#define __ShapeHandler_ABC_h_
 
 // =============================================================================
-/** @class  ParamAgent
-    @brief  ParamAgent
+/** @class  ShapeHandler_ABC
+    @brief  ShapeHandler_ABC // $$$$ AGE 2006-03-24: renommer
 */
-// Created: AGE 2006-03-14
+// Created: AGE 2006-03-24
 // =============================================================================
-class ParamAgent : public EntityParameter< Agent >
+class ShapeHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgent( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
-    virtual ~ParamAgent();
+             ShapeHandler_ABC() {};
+    virtual ~ShapeHandler_ABC() {};
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Handle( const T_PointVector& points ) = 0;
     //@}
 };
 
-#endif // __ParamAgent_h_
+#endif // __ShapeHandler_ABC_h_

@@ -36,13 +36,13 @@
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, const CoordinateConverter& converter, const std::string& scipioXml )
+MainWindow::MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml )
     : QMainWindow      ( 0, 0, Qt::WDestructiveClose )
 {
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controllers, converter );
+    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controllers, model  );
     setCentralWidget( pGlWiget );
     pGlWiget->show();
     

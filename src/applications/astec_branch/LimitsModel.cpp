@@ -78,6 +78,26 @@ void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LimitsModel::CreateLimit
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsModel::CreateLimit( const T_PointVector& points )
+{
+    TacticalLine_ABC* line = new Limit( controllers_.controller_, points, model_.coordinateConverter_ );
+    Register( line->GetId(), *line );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsModel::CreateLima
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsModel::CreateLima( E_FuncLimaType type, const T_PointVector& points )
+{
+    TacticalLine_ABC* line = new Lima( controllers_.controller_, points, type, model_.coordinateConverter_ );
+    Register( line->GetId(), *line );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LimitsModel::DeleteLimit
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
