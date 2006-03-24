@@ -12,7 +12,7 @@
 
 #include "ASN_Types.h"
 
-class Controller;
+class Controllers;
 
 // =============================================================================
 /** @class  Simulation
@@ -26,12 +26,14 @@ class Simulation
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Simulation(); // $$$$ AGE 2006-02-14: autre chose que juste controller ?
+    explicit Simulation( Controllers& controllers );
     virtual ~Simulation();
     //@}
 
     //! @name Operations
     //@{
+    void Connect();
+    void Disconnect();
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
     void Update( const ASN1T_MsgCtrlInfo& asnMsg );
@@ -40,6 +42,8 @@ public:
 
     int GetTime() const;
     bool IsPaused() const;
+    bool IsConnected() const;
+    int GetSpeed() const;
     //@}
 
 private:
@@ -52,12 +56,13 @@ private:
 private:
     //! @name Member data
     //@{
-//    Controller& controller_;
+    Controllers& controllers_;
     unsigned int tickDuration_;
     unsigned int timeFactor_;
     int time_;
     bool paused_;
     bool tickStart_;
+    bool connected_;
     //@}
 };
 

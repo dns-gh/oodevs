@@ -43,7 +43,7 @@ MetricsLayer::~MetricsLayer()
 void MetricsLayer::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "GridSize" )
-        gridSize_ = value.To< float >();
+        gridSize_ = value.To< float >() * 1000.f;
 }
 
 // -----------------------------------------------------------------------------

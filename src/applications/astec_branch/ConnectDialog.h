@@ -22,10 +22,6 @@
 #ifndef __ConnectDialog_h_
 #define __ConnectDialog_h_
 
-#ifdef __GNUG__
-#	pragma interface
-#endif
-
 #include "Types.h"
 
 class QComboBox;
@@ -39,13 +35,12 @@ class QLabel;
 class ConnectDialog : public QDialog
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ConnectDialog );
 
 public:
     //! @name Constructor/Destructor
     //@{
-     ConnectDialog( QWidget* pParent = 0 );
-    ~ConnectDialog();
+    explicit ConnectDialog( QWidget* pParent = 0 );
+    virtual ~ConnectDialog();
     //@}
 
 private slots:
@@ -56,14 +51,24 @@ private slots:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    ConnectDialog( const ConnectDialog& );
+    ConnectDialog& operator=( const ConnectDialog& );
+    //@}
+
+private:
     //! @name Config management
     //@{
     void LoadDefaultConfig();
     //@}
 
 private:
+    //! @name Member data
+    //@{
     QComboBox*   pHostNameComboBox_;
     QSpinBox*    pPortSpinBox_;
+    //@}
 };
 
 #endif // __ConnectDialog_h_

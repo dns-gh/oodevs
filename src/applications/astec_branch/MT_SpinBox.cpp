@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "MT_SpinBox.h"
 #include "moc_MT_SpinBox.cpp"

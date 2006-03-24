@@ -13,24 +13,29 @@
 #define __SIMControlToolbar_h_
 
 #include "Types.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
 class ConnectDialog;
 class DisconnectDialog;
 class QMainWindow;
 class MT_SpinBox;
+class Simulation;
+class Controllers;
 
 //*****************************************************************************
 // Created: FBD 03-01-14
 //*****************************************************************************
 class SIMControlToolbar : public QToolBar
+                        , private Observer_ABC
+                        , public ElementObserver_ABC< Simulation >
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( SIMControlToolbar );
 
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit SIMControlToolbar( QMainWindow* pParent );
+             SIMControlToolbar( QMainWindow* pParent, Controllers& controllers );
     virtual ~SIMControlToolbar();
     //@}
 
@@ -42,18 +47,31 @@ protected slots:
     void SlotSpeedChange();
     void SlotOnSpinBoxChange();
     void SlotOnSpinBoxEnterPressed();
-    void SlotOnConnexionStatusChanged( bool bConnected );
-    void SlotOnPauseStatusChanged( bool bPaused );
-    void SlotOnSpeedChanged( int nSpeed );
     //@}
 
 private:
-    QToolButton*            pConnectButton_;
-    QToolButton*            pPlayButton_;
-    QToolButton*            pSpeedButton_;
-    MT_SpinBox*             pSpeedSpinBox_;
+    //! @name Copy/Assignement
+    //@{
+    SIMControlToolbar( const SIMControlToolbar& );
+    SIMControlToolbar& operator=( const SIMControlToolbar& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const Simulation& simulation );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Controllers&        controllers_;
+    QToolButton*        pConnectButton_;
+    QToolButton*        pPlayButton_;
+    QToolButton*        pSpeedButton_;
+    MT_SpinBox*         pSpeedSpinBox_; // $$$$ AGE 2006-03-24: MT_Caca
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
+    //@}
 };
 
 #endif // __SIMControlToolbar_h_

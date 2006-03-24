@@ -10,10 +10,6 @@
 #ifndef __MT_SpinBox_h_
 #define __MT_SpinBox_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include <qspinbox.h>
 
 // =============================================================================
@@ -22,7 +18,6 @@
 class MT_SpinBox : public QSpinBox
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( MT_SpinBox )
 
 public:
     //! @name Constructors/Destructor
@@ -36,6 +31,13 @@ signals:
     //! @name Signals
     //@{
     void enterPressed();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    MT_SpinBox( const MT_SpinBox& );
+    MT_SpinBox& operator=( const MT_SpinBox& );
     //@}
 
 protected:

@@ -15,6 +15,7 @@
 #include "moc_ConnectDialog.cpp"
 #include "App.h"
 #include "Network.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog constructor
@@ -66,7 +67,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent )
 ConnectDialog::~ConnectDialog()
 {
     QSettings settings;
-    settings.setPath( "MASA", "Light2" );
+    settings.setPath( "MASA", "Astec" );
     settings.beginGroup( "/ConnectWindow" );
     
     QStringList list;
@@ -99,8 +100,6 @@ void ConnectDialog::Validate()
         strMsgTitle << "Non connecté à " << pHostNameComboBox_->currentText().ascii() << ":" << pPortSpinBox_->value();
         strMsg << "Raison :" << std::endl << e.what();
         MT_LOG_INFO( strMsgTitle.str().c_str(), eDefault, strMsg.str().c_str() );
-//        MT_LOG_INFO_MSG(  );   
-
         reject();
         return;
     }
@@ -126,7 +125,7 @@ void ConnectDialog::LoadDefaultConfig()
     pPortSpinBox_->setValue( DEFAULT_PORT_AS_MOS );
 
     QSettings settings;
-    settings.setPath( "MASA", "Light2" );
+    settings.setPath( "MASA", "Astec" );
     settings.beginGroup( "/ConnectWindow" );
     QStringList list = settings.readListEntry( "/hosts", ';' );
     int nIndex = settings.readNumEntry( "/index", 0 );

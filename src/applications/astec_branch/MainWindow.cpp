@@ -31,6 +31,8 @@
 #include "MissionPanel.h"
 #include "GlWidget.h"
 #include "Controllers.h"
+#include "SIMControlToolbar.h"
+#include "MapToolbar.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -103,8 +105,8 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
     this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
 
-    // $$$$ AGE 2006-03-22: 
-    new QToolBar( this );
+    new SIMControlToolbar( this, controllers );
+    new MapToolbar( this, controllers );
 
     // This one refreshes the map display, and is called only a few time per second.
     QTimer* displayTimer = new QTimer( this );

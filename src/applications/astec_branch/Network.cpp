@@ -14,6 +14,7 @@
 #include "AgentServerMsgMgr.h"
 #include "App.h"
 #include "ASN_Messages.h"
+#include "Simulation.h"
 
 #include "DIN/DIN_Engine.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
@@ -25,7 +26,8 @@ using namespace DIN; using namespace NEK;
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
 Network::Network( Model& model, Simulation& simu )
-    : engine_( new DIN::DIN_Engine() )
+    : simu_( simu )
+    , engine_( new DIN::DIN_Engine() )
     , manager_( new AgentServerMsgMgr( *engine_, model, simu ) )
     , session_( 0 )
 {
@@ -66,7 +68,6 @@ bool Network::Connect( const std::string& strHostName, uint16 nPort )
     if( IsConnected() )
     {
         MT_LOG_ERROR_MSG( "Déjà connecté" );
-        assert( false );
         return false;
     }
     
@@ -88,7 +89,7 @@ bool Network::Disconnect()
         return false;
     }
     session_->Close( false );
-//    App::GetApp().NotifyConnexionStatusChanged( false );
+    simu_.Disconnect();
     return true;
 }
 
@@ -133,7 +134,7 @@ void Network::OnConnected( DIN::DIN_Link& link )
     asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
     asnMsg.Send();
     
-//    App::GetApp().NotifyConnexionStatusChanged( true );
+    simu_.Connect();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,8 +144,7 @@ void Network::OnConnected( DIN::DIN_Link& link )
 void Network::OnNotConnected( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason )
 {
     MT_LOG_INFO_MSG( "Non connecté à " << link.GetRemoteAddress().GetAddressAsString() << " (raison :" << reason.GetInfo() << ")" );   
-
-//    App::GetApp().NotifyConnexionStatusChanged( false );
+    simu_.Disconnect();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +155,5 @@ void Network::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescrip
 {
     MT_LOG_INFO_MSG( "Connexion à " << link.GetRemoteAddress().GetAddressAsString() << " perdue (raison: " << reason.GetInfo() << ")" );    
     session_ = 0;
-
-//    App::GetApp().NotifyConnexionLost();
+    simu_.Disconnect();
 }

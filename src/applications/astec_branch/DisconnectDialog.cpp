@@ -49,12 +49,8 @@ DisconnectDialog::DisconnectDialog( QWidget* pParent )
 //-----------------------------------------------------------------------------
 DisconnectDialog::~DisconnectDialog()
 {
+    // NOTHING
 }
-
-
-//=============================================================================
-// SLOTS
-//=============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog::Validate
@@ -63,7 +59,7 @@ DisconnectDialog::~DisconnectDialog()
 void DisconnectDialog::Validate()
 {
     accept();
-    App::GetApp().GetNetwork().Disconnect();
+    App::GetApp().GetNetwork().Disconnect(); // $$$$ AGE 2006-03-24: 
 }
 
 

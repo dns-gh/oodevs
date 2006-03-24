@@ -108,11 +108,9 @@ void App::Initialize( const std::string& scipioXml )
     InitializeHumanFactors ( xis, absoluteConfigFile ); 
 
     controllers_ = new Controllers();
-    simulation_  = new Simulation();
+    simulation_  = new Simulation( *controllers_ );
     model_       = new Model( *controllers_, *simulation_, absoluteConfigFile );
     network_     = new Network( *model_, *simulation_ );
-
-    network_->Connect( "localhost", 10000 ); // $$$$ SBO 2006-03-16: 
 }
 
 //-----------------------------------------------------------------------------

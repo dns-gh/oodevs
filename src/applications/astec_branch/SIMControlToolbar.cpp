@@ -15,21 +15,22 @@
 #include "moc_SIMControlToolbar.cpp"
 
 #include "App.h"
-#include "MainWindow.h"
 #include "ASN_Messages.h"
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-
 #include "MT_SpinBox.h"
+#include "Simulation.h"
+#include "Controllers.h"
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
-SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent )
+SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers )
     : QToolBar( pParent, "sim control toolbar" )
+    , controllers_( controllers )
 {
-    this->setLabel( tr( "Contrôle SIM" ) );
+    setLabel( tr( "Contrôle SIM" ) );
 
     pConnectButton_ = new QToolButton( this );
     pConnectButton_->setAccel( Key_C );
@@ -65,11 +66,9 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent )
     connect( pSpeedButton_,   SIGNAL( clicked() ), this, SLOT( SlotSpeedChange() ) );
     connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange() ) );
     connect( pSpeedSpinBox_ , SIGNAL( enterPressed() ), this, SLOT( SlotOnSpinBoxEnterPressed() ) );
-    connect( &App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( SlotOnConnexionStatusChanged( bool ) ) );
-    connect( &App::GetApp(), SIGNAL( PauseStatusChanged( bool ) ),     this, SLOT( SlotOnPauseStatusChanged( bool ) ) );
-    connect( &App::GetApp(), SIGNAL( SpeedChanged( int ) ),            this, SLOT( SlotOnSpeedChanged( int ) ) );
-}
 
+    controllers_.Register( *this );
+}
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar destructor
@@ -77,8 +76,8 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent )
 //-----------------------------------------------------------------------------
 SIMControlToolbar::~SIMControlToolbar()
 {
+    controllers_.Remove( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar::SlotConnectDisconnect
@@ -103,7 +102,6 @@ void SIMControlToolbar::SlotConnectDisconnect()
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar::SlotPlayPause
 // Created: FBD 03-01-22
@@ -114,18 +112,13 @@ void SIMControlToolbar::SlotPlayPause()
     {
         ASN_MsgCtrlResume asnMsg;
         asnMsg.Send();
-
-        MT_LOG_INFO( "Demande reprise", eSent, 0 );
     }
     else
     {
         ASN_MsgCtrlPause asnMsg;
         asnMsg.Send();
-
-        MT_LOG_INFO( "Demande pause", eSent, 0 );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SIMControlToolbar::SlotSpeedChange
@@ -138,10 +131,6 @@ void SIMControlToolbar::SlotSpeedChange()
         ASN_MsgCtrlChangeTimeFactor asnMsg;
         asnMsg.GetAsnMsg() = pSpeedSpinBox_->value();
         asnMsg.Send();
-
-        std::stringstream strMsg;
-        strMsg << "Demande passage vitesse " << pSpeedSpinBox_->value();
-        MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
     }
 }
 
@@ -165,12 +154,12 @@ void SIMControlToolbar::SlotOnSpinBoxEnterPressed()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::SlotOnConnexionStatusChanged
-// Created: APE 2004-03-08
+// Name: SIMControlToolbar::NotifyUpdated
+// Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void SIMControlToolbar::SlotOnConnexionStatusChanged( bool bConnected )
+void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if ( bConnected )
+    if( simulation.IsConnected() )
     {
         pConnectButton_->setIconSet( MAKE_ICON( connexiongreen ) );
         pPlayButton_->setEnabled( true );
@@ -183,16 +172,8 @@ void SIMControlToolbar::SlotOnConnexionStatusChanged( bool bConnected )
         pSpeedSpinBox_->setEnabled( false );
         pSpeedButton_->setEnabled( false );
     }
-}
 
-
-// -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::SlotOnPauseStatusChanged
-// Created: APE 2004-03-08
-// -----------------------------------------------------------------------------
-void SIMControlToolbar::SlotOnPauseStatusChanged( bool bPaused )
-{
-    if ( bPaused )
+    if( simulation.IsPaused() )
     {
         pPlayButton_->setIconSet( MAKE_ICON( play ) );
         pPlayButton_->setTextLabel( tr( "Reprise (P)" ) );
@@ -202,15 +183,7 @@ void SIMControlToolbar::SlotOnPauseStatusChanged( bool bPaused )
         pPlayButton_->setIconSet( MAKE_ICON( stop ) );
         pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
     }
-}
 
-
-// -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::SlotOnSpeedChanged
-// Created: APE 2004-04-26
-// -----------------------------------------------------------------------------
-void SIMControlToolbar::SlotOnSpeedChanged( int nSpeed )
-{
-    pSpeedSpinBox_->setValue( nSpeed );
+    pSpeedSpinBox_->setValue( simulation.GetSpeed() );
     pSpeedButton_->setEnabled( false );
 }

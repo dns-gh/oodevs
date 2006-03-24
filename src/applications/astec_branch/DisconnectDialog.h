@@ -22,40 +22,38 @@
 #ifndef __DisconnectDialog_h_
 #define __DisconnectDialog_h_
 
-#ifdef __GNUG__
-#	pragma interface
-#endif
-
 #include "Types.h"
-
 
 //=============================================================================
 /**
 *   @class  DisconnectDialog
-*   @brief  PUT THE COMMENTS ON THE CLASS HERE
-*   @par    Using example
-*   @code
-*     PUT YOUR EXAMPLE CODE HERE
-*   @endcode
+*   @brief  Disconnect dialog
 */
 // Created:  NLD 2002-01-03 
 //=============================================================================
 class DisconnectDialog : public QDialog
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( DisconnectDialog );
 
 public:
-     DisconnectDialog( QWidget* pParent = 0 );
-    ~DisconnectDialog();
+    //! @name Constructor/Destructor
+    //@{
+    explicit DisconnectDialog( QWidget* pParent = 0 );
+    virtual ~DisconnectDialog();
+    //@}
 
 private slots:
-    //-------------------------------------------------------------------------
-    /** @name Main methods */
-    //-------------------------------------------------------------------------
+    //! @name Slots
     //@{
     void Validate();
     void Reject();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    DisconnectDialog( const DisconnectDialog& );
+    DisconnectDialog& operator=( const DisconnectDialog& );
     //@}
 };
 

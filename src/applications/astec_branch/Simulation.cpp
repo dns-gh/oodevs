@@ -10,16 +10,20 @@
 #include "astec_pch.h"
 #include "Simulation.h"
 #include "App.h"
+#include "Controllers.h"
 #include "Controller.h"
+#include "Network.h"
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Simulation::Simulation( )
-    : tickDuration_( 10 )
+Simulation::Simulation( Controllers& controllers )
+    : controllers_( controllers )
+    , tickDuration_( 10 )
     , time_( 0 )
     , paused_( false )
+    , connected_( false )
 {
     // NOTHING
 }
@@ -34,13 +38,33 @@ Simulation::~Simulation()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::Connect
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Simulation::Connect()
+{
+    connected_ = true;
+    controllers_.controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Disconnect
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Simulation::Disconnect()
+{
+    connected_ = false;
+    controllers_.controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::Pause
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
 void Simulation::Pause( bool paused )
 {
     paused_ = paused;
-//    controller_.Update( *this );
+    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,23 +74,20 @@ void Simulation::Pause( bool paused )
 void Simulation::ChangeSpeed( int timeFactor )
 {
     timeFactor_ = timeFactor;
-//    controller_.Update( *this );
+    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgCtrlInfo& asnMsg )
+void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
 {
-//    MT_LOG_INFO( "CtrlInfo - Current Tick: " << asnMsg.current_tick
-//                 << " - Tick duration : "       << asnMsg.tick_duration
-//                 << " - Time factor: "          << asnMsg.time_factor
-//                 << " - Exercice ID: "          << asnMsg.id_exercice
-//                 << " - Checkpoint Frequency: " << asnMsg.checkpoint_frequence,
-//                 eReceived, 0 );
-    tickDuration_ = asnMsg.tick_duration;
-    ChangeSpeed( asnMsg.time_factor );
+    tickDuration_ = message.tick_duration;
+    paused_       = message.etat == EnumEtatSim::paused;
+    timeFactor_   = message.time_factor;
+    time_         = message.current_tick * tickDuration_;
+    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +98,7 @@ void Simulation::BeginTick( int tick )
 {
     time_ = tick * tickDuration_;
     tickStart_ = true; // $$$$ AGE 2006-02-14: 
-//    controller_.Update( *this );
+//    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +108,7 @@ void Simulation::BeginTick( int tick )
 void Simulation::EndTick()
 {
     tickStart_ = false;
-//    controller_.Update( *this );
+//    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,4 +127,22 @@ int Simulation::GetTime() const
 bool Simulation::IsPaused() const
 {
     return paused_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::IsConnected
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+bool Simulation::IsConnected() const
+{
+    return connected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetSpeed
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+int Simulation::GetSpeed() const
+{
+    return timeFactor_;
 }

@@ -66,6 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Simulation& simu_;
     DIN::DIN_Engine* engine_;
     DIN::DIN_ConnectionServiceClientUserCbk< Network >* pConnService_;
 
