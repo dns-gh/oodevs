@@ -39,6 +39,7 @@
 #include "ADN_Composantes_ConsumptionsTable.h"
 #include "ADN_Composantes_BreakdownsTable.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_ComboBox_Equipment_Nature.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
@@ -367,6 +368,8 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero ); 
     builder.AddField<ADN_TimeField>( pCarrierGroup , tr( "Average load time"   ), vInfosConnectors[eLogLoadTime] ); 
     builder.AddField<ADN_TimeField>( pCarrierGroup , tr( "Average unload time" ), vInfosConnectors[eLogUnloadTime] ); 
+    builder.AddField<ADN_ComboBox_Equipment_Nature>( pCarrierGroup, tr( "Carried nature" ), vInfosConnectors[eLogCarryNature] );
+
     return pSupplyGroup;
 }
 

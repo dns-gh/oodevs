@@ -82,6 +82,7 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eGenEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrDotationNature_, bConnect );
 }
 
 

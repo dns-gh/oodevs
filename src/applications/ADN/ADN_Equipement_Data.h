@@ -70,6 +70,7 @@ public:
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
+        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
@@ -210,7 +211,6 @@ public:
 
     public:
         ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
 
         ADN_Type_Bool bTrancheD_;
 
@@ -248,7 +248,7 @@ public:
     public:
         E_FamilleDotation      nType_;
         ADN_Type_String        strName_;
-        T_CategoryInfos_Vector categories_; 
+        T_CategoryInfos_Vector categories_;
     };
 
     typedef ADN_Type_Vector_ABC<DotationInfos> T_DotationInfos_Vector;

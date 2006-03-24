@@ -86,6 +86,7 @@ public:
         eGenEMAT8Code,
         eGenLFRILCode,
         eGenNNOCode,
+        eGenNature,
         eNbrGenericGuiElements
     };
 

@@ -47,6 +47,7 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 : ADN_Ref_ABC           ( "ADN_Equipement_Data::CategoryInfo" )
 , ADN_DataTreeNode_ABC  ()
 , parentDotation_       ( *gpDummyDotationInfos )
+, ptrDotationNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
     assert( 0 );
 }
@@ -62,6 +63,7 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( DotationInfos& parentDotation )
 , strCodeEMAT8_         ()
 , strCodeLFRIL_         ()
 , strCodeNNO_           ()
+, ptrDotationNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 , parentDotation_       ( parentDotation )
 , strName_              ()
 , nMosId_               ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
@@ -105,7 +107,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
-
+    pCopy->ptrDotationNature_ = ptrDotationNature_.GetData();
     return pCopy;
 }
 
@@ -136,6 +138,13 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( ADN_XmlInput_Helper& input 
     input.ReadField( "CodeLFRIL", strCodeLFRIL_, ADN_XmlInput_Helper::eNothing );
     input.ReadField( "CodeNNO", strCodeNNO_, ADN_XmlInput_Helper::eNothing );
 
+    std::string strNature;
+    input.ReadField( "Nature", strNature );
+    ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
+    if( !pNature )
+        input.ThrowError( "La nature de dotation : " + strNature + " n'existe pas." );
+    ptrDotationNature_ = pNature;
+
     input.EndSection(); // Categorie
 }
 
@@ -161,6 +170,7 @@ void ADN_Equipement_Data::CategoryInfo::WriteArchive( MT_OutputArchive_ABC& outp
     output.WriteField( "CodeEMAT8", strCodeEMAT8_.GetData() );
     output.WriteField( "CodeLFRIL", strCodeLFRIL_.GetData() );
     output.WriteField( "CodeNNO", strCodeNNO_.GetData() );
+    output.WriteField( "Nature", ptrDotationNature_.GetData()->GetData() );
 
     output.EndSection();
 }
@@ -452,7 +462,6 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDo
 , bIndirect_        ( false )
 , attritions_       (ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
 , indirectAmmoInfos_()
-, ptrDotationNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
 }
 
@@ -466,7 +475,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     AmmoCategoryInfo* pCopy = new AmmoCategoryInfo( parentDotation_ );
     pCopy->bTrancheD_ = bTrancheD_.GetData();
     pCopy->nType_ = nType_.GetData();
-    pCopy->ptrDotationNature_ = ptrDotationNature_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
     
@@ -502,13 +510,6 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( ADN_XmlInput_Helper& in
     }
 
     input.ReadField( "Type", nType_, ADN_Tr::ConvertToMunitionType, ADN_XmlInput_Helper::eThrow );
-    
-    std::string strNature;
-    input.ReadField( "Nature", strNature );
-    ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
-    if( !pNature )
-        input.ThrowError( "La nature de dotation : " + strNature + " n'existe pas." );
-    ptrDotationNature_ = pNature;
 
     input.Section( "Conditionnement" );
     input.ReadField( "Nombre", rNbrInPackage_  );
@@ -525,6 +526,13 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( ADN_XmlInput_Helper& in
     input.ReadField( "CodeEMAT8", strCodeEMAT8_, ADN_XmlInput_Helper::eNothing );
     input.ReadField( "CodeLFRIL", strCodeLFRIL_, ADN_XmlInput_Helper::eNothing );
     input.ReadField( "CodeNNO", strCodeNNO_, ADN_XmlInput_Helper::eNothing );
+
+    std::string strNature;
+    input.ReadField( "Nature", strNature );
+    ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
+    if( !pNature )
+        input.ThrowError( "La nature de dotation : " + strNature + " n'existe pas." );
+    ptrDotationNature_ = pNature;
 
     if( input.Section( "Attritions", ADN_XmlInput_Helper::eNothing ) )
     {
@@ -567,7 +575,6 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( MT_OutputArchive_ABC& 
     }
     output.WriteField( "MosID", nMosId_ );
     output.WriteField( "Type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
-    output.WriteField( "Nature", ptrDotationNature_.GetData()->GetData() );
 
     output.Section( "Conditionnement" );
     output.WriteField( "Nombre", rNbrInPackage_ .GetData() );
@@ -579,6 +586,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( MT_OutputArchive_ABC& 
     output.WriteField( "CodeEMAT8", strCodeEMAT8_.GetData() );
     output.WriteField( "CodeLFRIL", strCodeLFRIL_.GetData() );
     output.WriteField( "CodeNNO", strCodeNNO_.GetData() );
+    output.WriteField( "Nature", ptrDotationNature_.GetData()->GetData() );
 
     if( bDirect_.GetData() == true )
     {

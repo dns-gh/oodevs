@@ -115,6 +115,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogLoadTime]->Connect( &pInfos->logInfos_.supplyInfos_.loadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogUnloadTime]->Connect( &pInfos->logInfos_.supplyInfos_.unloadTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptrDotationNature_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsConvoyLeader]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConvoyLeader_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsConveyor]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConveyor_, bConnect );

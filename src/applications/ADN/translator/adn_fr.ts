@@ -1120,6 +1120,10 @@
         <source>Conveyor</source>
         <translation>Convoyeur</translation>
     </message>
+    <message>
+        <source>Carried nature</source>
+        <translation>Nature transportée</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

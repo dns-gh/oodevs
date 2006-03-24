@@ -116,6 +116,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_FamilleDotation nType, QTabWidget* pPar
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeEMAT8" ), vConnectors[eGenEMAT8Code] );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode] );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeNNO" ), vConnectors[eGenNNOCode] );
+    builder.AddField<ADN_ComboBox_Equipment_Nature>( pHolder, tr( "Nature" ), vConnectors[eGenNature] );
 
     QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ePackageNbr], 0, eGreaterZero );
@@ -156,9 +157,8 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeLFRIL" ), vConnectors[eLFRILCode] );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeNNO" ), vConnectors[eNNOCode] );
     builder.AddEnumField<E_MunitionType>( pHolder, tr( "Type" ), vConnectors[eType], ADN_Tr::ConvertFromMunitionType );
+    builder.AddField<ADN_ComboBox_Equipment_Nature>( pHolder, tr( "Nature" ), vConnectors[eNature] );
 
-    builder.AddField<ADN_ComboBox_Equipment_Nature>( pHolder, tr( "Nature" ), vConnectors[eNature]  );
-    
     QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[eAmmoPackageNbr], 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package weight" ), vConnectors[eAmmoPackageWeight], tr( "T" ), eGreaterZero );
