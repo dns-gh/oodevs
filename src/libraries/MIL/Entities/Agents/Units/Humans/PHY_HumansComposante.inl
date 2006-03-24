@@ -18,8 +18,9 @@ inline
 void PHY_HumansComposante::serialize( Archive& file, const uint )
 {
     file & pComposante_
-         & humans_,
+         & humans_
          & nNbrUsableHumans_;
+    assert( pComposante_ );
 }
 
 // -----------------------------------------------------------------------------
