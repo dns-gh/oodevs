@@ -102,11 +102,20 @@ void ObjectPositions::Draw( const geometry::Point2f&, const GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
 {
-    // $$$$ AGE 2006-03-23: Test segments too !
     precision*=precision;
-    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        if( it->SquareDistance( pos ) < precision )
+    if( points_.empty() )
+        return false;
+    if( points_.size() == 1 )
+        return points_.front().SquareDistance( pos ) <= precision;
+
+    CIT_PointVector previous = points_.begin();
+    for( CIT_PointVector current = previous + 1; current != points_.end(); ++current )
+    {
+        const geometry::Segment2f segment( *previous, *current );
+        if( segment.SquareDistance( pos ) < precision )
             return true;
+        previous = current;
+    }
     return false;
 }
 

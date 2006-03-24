@@ -13,6 +13,8 @@
 #include "Limit.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
+#include "Controller.h"
+#include "ActionController.h"
 
 IDManager Limit::idManager_( 138 );
 
@@ -20,33 +22,37 @@ IDManager Limit::idManager_( 138 );
 // Name: Limit constructor
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-Limit::Limit( const CoordinateConverter& converter )
+Limit::Limit( Controller& controller, const CoordinateConverter& converter )
     : TacticalLine_ABC( "Limit", idManager_.GetFreeIdentifier(), converter )
+    , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( const T_PointVector& pointList, const CoordinateConverter& converter )
+Limit::Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter& converter )
     : TacticalLine_ABC(  "Limit", idManager_.GetFreeIdentifier(), pointList, converter )
+    , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 //-----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter )
+Limit::Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter )
     : TacticalLine_ABC( "Limit", asnMsg.oid, asnMsg.geometrie, converter )
+    , controller_( controller )
     , nLevel_( (E_NatureLevel) asnMsg.level )
 {
     idManager_.LockIdentifier( GetId() );
+    controller_.Create( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -55,6 +61,7 @@ Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& c
 //-----------------------------------------------------------------------------
 Limit::~Limit()
 {
+    controller_.Delete( *this );
     idManager_.ReleaseIdentifier( GetId() );
 }
 
@@ -89,4 +96,49 @@ void Limit::UpdateToSim( E_State state )
         asnMsg.GetAsnMsg() = GetId();
         Send( asnMsg );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Draw
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Limit::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        if( nLevel_ == eNatureLevel_ooo )
+        {
+            glLineWidth( 4.f );
+            TacticalLine_ABC::Draw( viewport, tools );
+            glColor3f( 0.5f, 0.5f, 0.5f );
+            glLineWidth( 2.f );
+        }
+        else
+        {
+            glLineWidth( 5.f );
+            TacticalLine_ABC::Draw( viewport, tools );
+            glColor3f( 0.1f, 0.1f, 0.1f );
+            glLineWidth( 3.f );
+        }
+        TacticalLine_ABC::Draw( viewport, tools );
+        glColor3f( 0.f, 0.f, 0.f );
+        DrawName( tools );
+    glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Select
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Limit::Select( ActionController& actions ) const
+{
+    actions.Select( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::ContextMenu
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
+{
+    actions.ContextMenu( *this, point );
 }

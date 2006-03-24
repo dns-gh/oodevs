@@ -69,7 +69,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Agent& );
     virtual void NotifyDeleted( const Agent& );
     virtual void NotifyUpdated( const Attributes& attributes );
     virtual void NotifyUpdated( const Contaminations& attributes );

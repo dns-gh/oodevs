@@ -15,6 +15,7 @@
 
 class TacticalLine_ABC;
 class Model;
+class Controllers;
 
 namespace DIN {
     class DIN_Input;
@@ -33,7 +34,7 @@ class LimitsModel : public Resolver< TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LimitsModel( Model& model );
+             LimitsModel( Model& model, Controllers& controllers );
     virtual ~LimitsModel();
     //@}
 
@@ -60,6 +61,7 @@ private:
     //! @name Member data
     //@{
     Model& model_;
+    Controllers& controllers_;
     //@}
 };
 

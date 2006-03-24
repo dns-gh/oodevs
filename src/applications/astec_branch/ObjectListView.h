@@ -67,7 +67,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Object& object );
-    virtual void NotifyUpdated( const Object& object );
     virtual void NotifyDeleted( const Object& object );
     virtual void Select( const Object& object );
     //@}

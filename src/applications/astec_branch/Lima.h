@@ -16,6 +16,8 @@
 #include "IDManager.h"
 #include "ASN_Types.h"
 
+class Controller;
+
 // =============================================================================
 /** @class  Lima
     @brief  Represents a lima.
@@ -28,15 +30,17 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit Lima( const CoordinateConverter& converter );
-             Lima( const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter );
-             Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
+             Lima( Controller& controller, const CoordinateConverter& converter );
+             Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter );
+             Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
     virtual ~Lima();
     //@}
 
     //! @name Operations
     //@{
-    
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Select( ActionController& actions ) const;
+    virtual void ContextMenu( ActionController& actions, const QPoint& point ) const;
     //@}
 
 private:
@@ -57,6 +61,7 @@ public:
     //! @name Member data
     //@{
     static IDManager idManager_;
+    Controller& controller_;
     E_FuncLimaType   nFuncType_;
     //@}
 };

@@ -24,6 +24,8 @@
 #include "ASN_Types.h"
 
 class CoordinateConverter;
+class GlTools_ABC;
+class ActionController;
 
 // =============================================================================
 /** @class  TacticalLine_ABC
@@ -45,12 +47,22 @@ public:
 
     //! @name Operations
     //@{
+    void Delete();
+
     void Update( const ASN1T_MsgLimitCreationAck& asnMsg );
     void Update( const ASN1T_MsgLimitUpdateAck& asnMsg );
     void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
     void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
 
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
     void UpdateToSim();
+
+    bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
+
+    // $$$$ AGE 2006-03-24: trouver autre chose
+    virtual void Select( ActionController& actions ) const = 0;
+    virtual void ContextMenu( ActionController& actions, const QPoint& point ) const = 0;
     //@}
 
     //! @name Accessors
@@ -91,6 +103,7 @@ protected:
         message.Send( (MIL_MOSContextID)this );
         nNetworkState_ = eNetworkStateRegistering;
     }
+    void DrawName( const GlTools_ABC& tools ) const;
     //@}
 
 private:

@@ -48,7 +48,7 @@ Model::Model( Controllers& controllers, const Simulation& simulation, const std:
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
-    , limits_( *new LimitsModel( *this ) )
+    , limits_( *new LimitsModel( *this, controllers ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
 {

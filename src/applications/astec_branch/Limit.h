@@ -16,6 +16,7 @@
 #include "IDManager.h"
 
 class CoordinateConverter;
+class Controller;
 
 // =============================================================================
 /** @class  Limit
@@ -29,10 +30,17 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit Limit( const CoordinateConverter& converter);
-             Limit( const T_PointVector& pointList, const CoordinateConverter& converter );
-             Limit( const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter );
+             Limit( Controller& controller, const CoordinateConverter& converter);
+             Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter& converter );
+             Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter );
     virtual ~Limit();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Select( ActionController& actions ) const;
+    virtual void ContextMenu( ActionController& actions, const QPoint& point ) const;
     //@}
 
 private:
@@ -53,6 +61,7 @@ public:
     //! @name Member data
     //@{
     static IDManager idManager_;
+    Controller& controller_;
     E_NatureLevel  nLevel_;
     //@}
 };

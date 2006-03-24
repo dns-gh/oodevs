@@ -182,24 +182,6 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
 
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReportListView::NotifyUpdated
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-void ReportListView::NotifyUpdated( const Report_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::NotifyDeleted
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-void ReportListView::NotifyDeleted( const Report_ABC&  )
-{
-    // never happens either;
-}
-
     // Before we change the displayed reports, mark the old ones as read.
 //    QListViewItem* pItem = firstChild();
 //    while( pItem != 0 )

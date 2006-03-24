@@ -20,6 +20,7 @@
 #include "TacticalLine_ABC.h"
 #include "ASN_Messages.h"
 #include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
@@ -73,6 +74,19 @@ TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long i
 TacticalLine_ABC::~TacticalLine_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::Delete
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Delete()
+{
+    if( nNetworkState_ == eNetworkStateRegistered )
+    {
+        nState_ = eStateDeleted;
+        UpdateToSim();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -160,4 +174,46 @@ void TacticalLine_ABC::UpdateToSim()
 {
     if ( App::GetApp().GetNetwork().IsConnected() )
         UpdateToSim( nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::Draw
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Draw( const geometry::Rectangle2f&, const GlTools_ABC& tools ) const
+{
+    tools.DrawLines( pointList_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::DrawName
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::DrawName( const GlTools_ABC& tools ) const
+{
+    if( ! pointList_.empty() )
+        tools.Print( strName_, pointList_.front() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::IsAt
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+bool TacticalLine_ABC::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/ ) const
+{
+    precision*=precision;
+    if( pointList_.empty() )
+        return false;
+    if( pointList_.size() == 1 )
+        return pointList_.front().SquareDistance( point ) <= precision;
+
+    CIT_PointVector previous = pointList_.begin();
+    for( CIT_PointVector current = previous + 1; current != pointList_.end(); ++current )
+    {
+        const geometry::Segment2f segment( *previous, *current );
+        if( segment.SquareDistance( point ) < precision )
+            return true;
+        previous = current;
+    }
+    return false;
 }

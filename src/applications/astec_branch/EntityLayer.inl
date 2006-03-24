@@ -50,16 +50,6 @@ void EntityLayer< ConcreteEntity >::NotifyCreated( const ConcreteEntity& entity 
 }
  
 // -----------------------------------------------------------------------------
-// Name: EntityLayer::NotifyUpdated
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::NotifyUpdated( const ConcreteEntity& )
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
 // Name: EntityLayer::NotifyDeleted
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------

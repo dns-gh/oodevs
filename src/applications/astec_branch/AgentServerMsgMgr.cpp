@@ -895,8 +895,8 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation&
     {
         bUseMosLimits_ = false;
         model_.limits_.UseSimTacticalLines();
-        model_.limits_.Create( message );
     }
+    model_.limits_.Create( message );
 }
 
 
@@ -921,8 +921,8 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& m
     {
         bUseMosLimits_ = false;
         model_.limits_.UseSimTacticalLines();
-        model_.limits_.Create( message );
     }
+    model_.limits_.Create( message );
 }
 
 //-----------------------------------------------------------------------------

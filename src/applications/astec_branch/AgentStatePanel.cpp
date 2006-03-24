@@ -206,16 +206,6 @@ void AgentStatePanel::NotifyUpdated( const Transports& attributes )
 }
 
 // $$$$ AGE 2006-02-16: Centraliser tout ca : 
-
-// -----------------------------------------------------------------------------
-// Name: AgentStatePanel::NotifyUpdated
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyUpdated( const Agent& )
-{
-    // NOTHING
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentStatePanel::NotifyDeleted
 // Created: AGE 2006-02-16

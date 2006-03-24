@@ -55,7 +55,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Population& popu );
-    virtual void NotifyUpdated( const Population& popu );
     virtual void NotifyDeleted( const Population& popu );
     virtual void Select( const Population& popu );
     //@}

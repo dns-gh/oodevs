@@ -72,8 +72,6 @@ private:
 
     virtual void NotifyUpdated( const Reports& reports );
     virtual void NotifyCreated( const Report_ABC& report );
-    virtual void NotifyUpdated( const Report_ABC& report );
-    virtual void NotifyDeleted( const Report_ABC& report );
 
     bool ShouldUpdate( const Reports& reports );
     //@}

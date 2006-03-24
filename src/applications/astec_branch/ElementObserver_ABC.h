@@ -30,7 +30,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyCreated( const Element& ) {};
-    virtual void NotifyUpdated( const Element& ) = 0;
+    virtual void NotifyUpdated( const Element& ) {};
     virtual void NotifyDeleted( const Element& ) {};
     //@}
 };

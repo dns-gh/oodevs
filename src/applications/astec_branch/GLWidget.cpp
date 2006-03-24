@@ -18,6 +18,7 @@
 #include "GlFont.h"
 #include "DefaultLayer.h"
 #include "PopulationsLayer.h"
+#include "LimitsLayer.h"
 
 using namespace geometry;
 
@@ -54,7 +55,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     , app6Font_( 0 )
     , app6OutlinedFont_( 0 )
 {
-    SetReverse( false );
+    SetReverse( true );
     SetExclusive( true );
     SetLastFocusFirst( true );
 
@@ -62,9 +63,10 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     Register( *new ElevationLayer( detection_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
-    Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
+    Register( *new LimitsLayer( controllers, *this, strategy_ ) );
     Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
     Register( *new PopulationsLayer( controllers, *this, strategy_, *this ) );
+    Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
     
     SetDefaultLayer( *new DefaultLayer( controllers ) );
 }

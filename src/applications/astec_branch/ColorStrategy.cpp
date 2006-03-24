@@ -15,6 +15,8 @@
 #include "Controllers.h"
 #include "Object.h"
 #include "Population.h"
+#include "Lima.h"
+#include "Limit.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
@@ -26,6 +28,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers )
     , selectedAgent_     ( 0 )
     , selectedSuperior_  ( 0 )
     , selectedPopulation_( 0 )
+    , selectedLine_      ( 0 )
 {
     InitializeSynonyms();
     InitializeColors();
@@ -47,7 +50,8 @@ ColorStrategy::~ColorStrategy()
 // -----------------------------------------------------------------------------
 void ColorStrategy::BeforeSelection()
 {
-    selectedObject_ = 0; selectedAgent_ = 0; selectedSuperior_ = 0; selectedPopulation_ = 0;
+    selectedObject_ = 0; selectedAgent_ = 0; selectedSuperior_ = 0; 
+    selectedPopulation_ = 0; selectedLine_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +80,24 @@ void ColorStrategy::Select( const Object& element )
 void ColorStrategy::Select( const Population& element )
 {
     selectedPopulation_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Lima& element )
+{
+    selectedLine_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const Limit& element )
+{
+    selectedLine_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +148,18 @@ void ColorStrategy::SelectColor( const Population& population )
     if( selectedPopulation_ == &population )
         color = SelectedColor( color );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
+{
+    if( & line == selectedLine_ )
+        glColor3f( 1.f, 0.5f, 0.05f );
+    else
+        glColor3f( 1.f, 1.f, 1.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,15 +237,6 @@ void ColorStrategy::NotifyCreated( const Team& team )
 
     teamColors_[ &team ] = *it;
     available_.erase( it );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::NotifyUpdated
-// Created: AGE 2006-03-17
-// -----------------------------------------------------------------------------
-void ColorStrategy::NotifyUpdated( const Team& )
-{
-    // NOTHING
 }
     
 // -----------------------------------------------------------------------------

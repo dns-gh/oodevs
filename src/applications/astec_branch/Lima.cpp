@@ -14,6 +14,8 @@
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
+#include "Controller.h"
+#include "ActionController.h"
 
 IDManager Lima::idManager_( 137 );
 
@@ -21,33 +23,37 @@ IDManager Lima::idManager_( 137 );
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( const CoordinateConverter& converter )
+Lima::Lima( Controller& controller, const CoordinateConverter& converter )
     : TacticalLine_ABC( Tools::ToString( eLimaFuncLCA ).ascii(), idManager_.GetFreeIdentifier(), converter )
+    , controller_     ( controller )
     , nFuncType_      ( eLimaFuncLCA )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter )
+Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter )
     : TacticalLine_ABC( Tools::ToString( nFuncType ).ascii(), idManager_.GetFreeIdentifier(), pointList, converter )
+    , controller_     ( controller )
     , nFuncType_      ( nFuncType )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter )
+Lima::Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter )
     : TacticalLine_ABC( Tools::ToString( (E_FuncLimaType)asnMsg.fonction ).ascii(), asnMsg.oid, asnMsg.geometrie, converter )
+    , controller_     ( controller )
     , nFuncType_      ( (E_FuncLimaType)asnMsg.fonction )
 {
     idManager_.LockIdentifier( GetId() );
+    controller_.Create( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -56,6 +62,7 @@ Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& conv
 // -----------------------------------------------------------------------------
 Lima::~Lima()
 {
+    controller_.Delete( *this );
     idManager_.ReleaseIdentifier( GetId() );
 }
 
@@ -97,4 +104,36 @@ void Lima::UpdateToSim( E_State state )
         break;
             break;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Draw
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Lima::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glLineWidth( 3.0 );
+        TacticalLine_ABC::Draw( viewport, tools );
+        glColor3f( 0.f, 0.f, 0.f );
+        DrawName( tools );
+    glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Select
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Lima::Select( ActionController& actions ) const
+{
+    actions.Select( *this );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Lima::ContextMenu
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
+{
+    actions.ContextMenu( *this, point );
 }

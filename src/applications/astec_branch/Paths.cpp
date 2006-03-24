@@ -76,22 +76,8 @@ void Paths::UpdatePathfind()
          current != plannedPath_.end() && closestDistance > 0.1;
          ++current )
     {
-        const geometry::Vector2f u( *previous, position );
-        const geometry::Vector2f v( *previous, *current );
-        const float rProjection = v.DotProduct( u );
-        const float squareLenght = v.SquareLength();
-
-        float squareDist;
-        if( rProjection <= 0.f )
-            squareDist = previous->SquareDistance( position );
-        else if( rProjection >= squareLenght )
-            squareDist = current->SquareDistance( position );
-        else
-        {
-            const float rRatio = squareLenght > 0 ? rProjection / squareLenght : 1;
-            const geometry::Point2f projected = *previous + rRatio * v;
-            squareDist = projected.SquareDistance( position );
-        }
+        const geometry::Segment2f segment( *previous, *current );
+        const float squareDist = segment.SquareDistance( position );
 
         if( squareDist < closestDistance )
         {

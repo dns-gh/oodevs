@@ -117,7 +117,6 @@ protected:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const ConcreteEntity& );
-    virtual void NotifyUpdated( const ConcreteEntity& );
     virtual void NotifyDeleted( const ConcreteEntity& );
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void SelectColor( const Entity_ABC& );

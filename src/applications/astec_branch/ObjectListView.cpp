@@ -109,15 +109,6 @@ void ObjectListView::NotifyCreated( const Object& object )
 }
  
 // -----------------------------------------------------------------------------
-// Name: ObjectListView::NotifyUpdated
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void ObjectListView::NotifyUpdated( const Object& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectListView::NotifyDeleted
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------

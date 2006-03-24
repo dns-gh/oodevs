@@ -61,15 +61,6 @@ void PopulationListView::NotifyCreated( const Population& popu )
         teamItem = new ValuedListItem( &team, this, team.GetName().c_str() );
     new ValuedListItem( &popu, teamItem, popu.GetName().c_str() );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: PopulationListView::NotifyUpdated
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void PopulationListView::NotifyUpdated( const Population& )
-{
-    // NOTHING
-}
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView::NotifyDeleted

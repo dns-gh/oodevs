@@ -20,6 +20,9 @@ class Agent;
 class Object;
 class Population;
 class Controllers;
+class TacticalLine_ABC;
+class Lima;
+class Limit;
 
 // =============================================================================
 /** @class  ColorStrategy
@@ -34,6 +37,8 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public SelectionObserver_Base< Agent >
                     , public SelectionObserver_Base< Object >
                     , public SelectionObserver_Base< Population >
+                    , public SelectionObserver_Base< Lima >
+                    , public SelectionObserver_Base< Limit >
 {
 
 public:
@@ -48,6 +53,7 @@ public:
     virtual void SelectColor( const Agent& agent );
     virtual void SelectColor( const Object& object );
     virtual void SelectColor( const Population& population );
+    virtual void SelectColor( const TacticalLine_ABC& line );
     //@}
 
 private:
@@ -60,13 +66,14 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Team& );
-    virtual void NotifyUpdated( const Team& );
     virtual void NotifyDeleted( const Team& );
 
     virtual void BeforeSelection();
     virtual void Select( const Agent& element );
     virtual void Select( const Object& element );
     virtual void Select( const Population& element );
+    virtual void Select( const Lima& element );
+    virtual void Select( const Limit& element );
     virtual void AfterSelection();
 
     void InitializeSynonyms();
@@ -94,6 +101,7 @@ private:
     const Agent*      selectedAgent_;
     const Agent*      selectedSuperior_;
     const Population* selectedPopulation_;
+    const TacticalLine_ABC* selectedLine_;
 
     T_TeamColors teamColors_;
     T_Synonyms   synonyms_;
