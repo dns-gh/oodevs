@@ -163,7 +163,6 @@ ADN_Project_Data::DataInfos::DataInfos()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DataInfos::ReadArchive
 // Created: APE 2004-11-17
@@ -171,35 +170,35 @@ ADN_Project_Data::DataInfos::DataInfos()
 void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section("Donnees");
-    input.ReadField( "Terrain", szTerrain_ );
-    input.ReadField( "Decisionnel", szDecisional_ );
-    input.ReadField( "Reseau", szNetwork_ );
-    input.ReadField( "Volumes", szSizes_ );
-    input.ReadField( "Protections", szArmors_ );
-    input.ReadField( "DotationNatures", szDotationNatures_ );
-    input.ReadField( "Objets", szObjects_ );
-    input.ReadField( "Dotations", szEquipements_ );
-    input.ReadField( "Lanceurs", szLaunchers_ );
-    input.ReadField( "Armements", szWeapons_ );
-    input.ReadField( "Capteurs", szSensors_ );
-    input.ReadField( "Composantes", szComponents_ );
-    input.ReadField( "Pions", szUnits_ );
-    input.ReadField( "Automates", szAutomata_ );
-    input.ReadField( "NBC", szNBC_ );
-    input.ReadField( "Meteo", szWeather_ );
-    input.ReadField( "Sante", szHealth_ );
-    input.ReadField( "ClasseIDs", szIDs_ );
-    input.ReadField( "FacteursHumains", szHumanFactors_ );
-    input.ReadField( "Pannes", szBreakdowns_ );
-    input.ReadField( "GroupesConnaissance", szKnowledgeGroups_ );
-    input.ReadField( "Logistique", szLog_ );
-    input.ReadField( "Ravitaillement", szSupply_ );
-    input.ReadField( "Communications", szCom_ );
-    input.ReadField( "ODB", szODB_ );
-    input.ReadField( "Pathfind", szPathfinder_ );
-    input.ReadField( "Missions", szMissions_ );
-    input.ReadField( "HLA", szHLA_ );
-    input.ReadField( "Populations", szPopulation_ );
+    input.ReadField( "Terrain", szTerrain_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Decisionnel", szDecisional_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Reseau", szNetwork_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Volumes", szSizes_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Protections", szArmors_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "DotationNatures", szDotationNatures_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Objets", szObjects_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Dotations", szEquipements_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Lanceurs", szLaunchers_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Armements", szWeapons_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Capteurs", szSensors_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Composantes", szComponents_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Pions", szUnits_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Automates", szAutomata_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "NBC", szNBC_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Meteo", szWeather_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Sante", szHealth_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "ClasseIDs", szIDs_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "FacteursHumains", szHumanFactors_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Pannes", szBreakdowns_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "GroupesConnaissance", szKnowledgeGroups_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Logistique", szLog_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Ravitaillement", szSupply_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Communications", szCom_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "ODB", szODB_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Pathfind", szPathfinder_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Missions", szMissions_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "HLA", szHLA_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Populations", szPopulation_, ADN_XmlInput_Helper::eThrow );
     input.EndSection();   // Donnees
 }
 
