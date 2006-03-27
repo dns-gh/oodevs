@@ -28,6 +28,7 @@
 #include "ObjectType.h"
 #include "ActionController.h"
 #include "Controllers.h"
+#include "OptionVariant.h"
 
 #include "moc_ObjectListView.cpp"
 
@@ -41,6 +42,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers )
     : QListView   ( pParent )
     , controllers_( controllers )
     , pPopupMenu_ ( 0 )
+    , currentTeam_( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Objets" );
@@ -134,4 +136,20 @@ void ObjectListView::Select( const Object& object )
 {
     setSelected( FindItem( &object, firstChild() ), true );
     ensureItemVisible( selectedItem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::OptionChanged
+// Created: AGE 2006-03-27
+// -----------------------------------------------------------------------------
+void ObjectListView::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "CurrentTeam" )
+        currentTeam_ = value.To< const Team* >();
+    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    while( item )
+    {
+        item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
+        item = (ValuedListItem*)( item->nextSibling() );
+    }
 }

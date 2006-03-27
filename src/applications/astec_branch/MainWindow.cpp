@@ -33,6 +33,7 @@
 #include "Controllers.h"
 #include "SIMControlToolbar.h"
 #include "MapToolbar.h"
+#include "ControllerToolbar.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -107,6 +108,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );
+    new ControllerToolbar( this, controllers );
 
     // This one refreshes the map display, and is called only a few time per second.
     QTimer* displayTimer = new QTimer( this );

@@ -1,4 +1,4 @@
-// *****************************************************************************
+xxxxxxxx// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -51,13 +51,14 @@ MapToolbar::MapToolbar( QMainWindow* pParent, Controllers& controllers )
 
     new QLabel( tr( "Grille:" ), this );
     ToolListButton< float >* pGridStep_ = new ToolListButton< float >( this, options_, "GridSize" );
-    pGridStep_->AddItem( "0.1km",  0.1f,  false );
-    pGridStep_->AddItem( "0.25km", 0.25f, false );
-    pGridStep_->AddItem( "0.5km",  0.5f,  false );
-    pGridStep_->AddItem( "1.0km",  1.0f,  false );
-    pGridStep_->AddItem( "2.5km",  2.5f,  false );
-    pGridStep_->AddItem( "5.0km",  5.0f,  false );
-    pGridStep_->AddItem( "10.0km", 10.0f, true  );
+    pGridStep_->AddItem( tr( "Off"    ),  -1,    false );
+    pGridStep_->AddItem( tr( "0.1km"  ),  0.1f,  false );
+    pGridStep_->AddItem( tr( "0.25km" ),  0.25f, false );
+    pGridStep_->AddItem( tr( "0.5km"  ),  0.5f,  false );
+    pGridStep_->AddItem( tr( "1.0km"  ),  1.0f,  false );
+    pGridStep_->AddItem( tr( "2.5km"  ),  2.5f,  false );
+    pGridStep_->AddItem( tr( "5.0km"  ),  5.0f,  false );
+    pGridStep_->AddItem( tr( "10.0km" ), 10.0f,  true  );
 
     addSeparator();
     p3DButton_ = new QToolButton( MAKE_ICON( threed ), tr( "3D" ), "", this, SLOT( On3DToggle() ), this ); // $$$$ AGE 2005-05-13: change icon

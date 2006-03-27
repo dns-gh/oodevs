@@ -10,7 +10,6 @@
 #include "astec_pch.h"
 #include "GlWidget.h"
 #include "TerrainLayer.h"
-#include "ElevationLayer.h"
 #include "AgentsLayer.h"
 #include "ObjectsLayer.h"
 #include "ColorStrategy.h"
@@ -21,6 +20,8 @@
 #include "LimitsLayer.h"
 #include "ParametersLayer.h"
 #include "Model.h"
+#include "graphics/ElevationLayer.h"
+#include "graphics/ElevationMap.h"
 
 using namespace geometry;
 
@@ -50,6 +51,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     : WorldParameters( scipioXml )
     , MapWidget( pParent, width_, height_ )
     , strategy_( *new ColorStrategy( controllers ) )
+    , elevation_( new ElevationMap( detection_ ) )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , frame_( 0 )
@@ -64,7 +66,7 @@ GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers&
     ParametersLayer* parameters = new ParametersLayer( *this );
 
     Register( *new SpyLayer( viewport_, frame_ ) );
-    Register( *new ElevationLayer( detection_ ) );
+    Register( *new ElevationLayer( *elevation_ ) );
     Register( *new TerrainLayer( graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new LimitsLayer( controllers, *this, strategy_, *parameters, model.limits_ ) );

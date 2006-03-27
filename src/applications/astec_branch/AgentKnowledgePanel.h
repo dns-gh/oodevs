@@ -21,7 +21,6 @@
 
 #include "Types.h"
 #include "InfoPanel_ABC.h"
-#include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "KnowledgeGroupSelectionObserver.h"
 

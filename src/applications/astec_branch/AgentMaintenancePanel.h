@@ -20,7 +20,6 @@
 #define __AgentMaintenancePanel_h_
 
 #include "InfoPanel_ABC.h"
-#include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 

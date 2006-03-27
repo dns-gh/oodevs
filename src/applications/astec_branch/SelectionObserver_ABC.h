@@ -10,7 +10,7 @@
 #ifndef __SelectionObserver_ABC_h_
 #define __SelectionObserver_ABC_h_
 
-#include "VirtualTemplate.h"
+#include "Observer_ABC.h"
 
 // =============================================================================
 /** @class  SelectionObserver_ABC

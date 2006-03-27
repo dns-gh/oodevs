@@ -22,7 +22,6 @@
 #include "Types.h"
 #include "InfoPanel_ABC.h"
 #include "TeamSelectionObserver.h"
-#include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 
 template< typename T > class ListDisplayer;

@@ -19,7 +19,6 @@
 #ifndef __AgentStatePanel_h_
 #define __AgentStatePanel_h_
 
-#include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "InfoPanel_ABC.h"

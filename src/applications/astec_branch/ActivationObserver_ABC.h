@@ -10,6 +10,8 @@
 #ifndef __ActivationObserver_ABC_h_
 #define __ActivationObserver_ABC_h_
 
+#include "Observer_ABC.h"
+
 // =============================================================================
 /** @class  ActivationObserver_ABC
     @brief  ActivationObserver_ABC

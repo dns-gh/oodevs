@@ -19,12 +19,13 @@
 #ifndef __ObjectListView_h_
 #define __ObjectListView_h_
 
-#include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "OptionsObserver_ABC.h"
 
 class Object;
 class Controllers;
+class Team;
 
 // =============================================================================
 /** @class  ObjectListView
@@ -36,6 +37,7 @@ class ObjectListView : public QListView
                      , public Observer_ABC
                      , public ElementObserver_ABC< Object >
                      , public SelectionObserver_Base< Object >
+                     , public OptionsObserver_ABC
 {
     Q_OBJECT;
 public:
@@ -69,6 +71,7 @@ private:
     virtual void NotifyCreated( const Object& object );
     virtual void NotifyDeleted( const Object& object );
     virtual void Select( const Object& object );
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
 private:
@@ -76,6 +79,7 @@ private:
     //@{
     Controllers& controllers_;
     QPopupMenu* pPopupMenu_;
+    const Team* currentTeam_;
     //@}
 };
 

@@ -21,8 +21,8 @@
 
 #include "ListView.h"
 #include "ElementObserver_ABC.h"
-#include "Observer_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "OptionsObserver_ABC.h"
 
 class Team;
 class KnowledgeGroup;
@@ -49,6 +49,7 @@ class AgentListView : public ListView< AgentListView >
                     , public SelectionObserver_Base< KnowledgeGroup >
                     , public SelectionObserver_Base< Agent >
                     , public SelectionObserver_ABC
+                    , public OptionsObserver_ABC
 {
    Q_OBJECT;
 public:
@@ -98,6 +99,7 @@ private:
     virtual void Select( const Agent& element );
     virtual void BeforeSelection();
     virtual void AfterSelection();
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
 
     template< typename ParentType, typename ChildType >
     void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
@@ -110,6 +112,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    const Team* currentTeam_;
     //@}
 };
 

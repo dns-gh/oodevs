@@ -61,7 +61,7 @@ void TerrainLayer::AddShape( GraphicShape& shape )
 bool TerrainLayer::ShouldLoad( const std::string& filename )
 {
     return filename.find( ".bin" )    != std::string::npos
-        && filename.find( "preview" ) == std::string::npos;
+        && filename.find( "review" ) == std::string::npos;
 }
 
 // -----------------------------------------------------------------------------

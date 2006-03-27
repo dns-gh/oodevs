@@ -13,10 +13,10 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "OptionVariant.h"
 
 class Observer_ABC;
 class OptionsObserver_ABC;
-class OptionVariant;
 class Settings;
 
 // =============================================================================

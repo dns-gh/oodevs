@@ -20,6 +20,7 @@ class Controllers;
 class ColorStrategy;
 class GlFont;
 class Model;
+class ElevationMap;
 
 // =============================================================================
 /** @class  GlWidget
@@ -73,6 +74,8 @@ private:
     //! @name Member data
     //@{
     ColorStrategy& strategy_;
+
+    std::auto_ptr< ElevationMap > elevation_; // $$$$ AGE 2006-03-27: move out !
 
     int windowHeight_;
     int windowWidth_;

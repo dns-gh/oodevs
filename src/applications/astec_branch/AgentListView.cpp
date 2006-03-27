@@ -27,6 +27,7 @@
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "AutomatDecisions.h"
+#include "OptionVariant.h"
 
 #include "moc_AgentListView.cpp"
 
@@ -39,6 +40,7 @@
 AgentListView::AgentListView( QWidget* pParent, Controllers& controllers )
     : ListView< AgentListView >( pParent, *this )
     , controllers_( controllers )
+    , currentTeam_( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Unités" );
@@ -51,7 +53,6 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers )
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controllers_.Register( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView destructor
@@ -130,7 +131,6 @@ void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* i
 {
     DeleteTail( ListView< AgentListView >::Display( value.CreateIterator(), item, (ValuedListItem*)( item->firstChild() ) ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Display
@@ -272,4 +272,20 @@ void AgentListView::BeforeSelection()
 void AgentListView::AfterSelection()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::OptionChanged
+// Created: AGE 2006-03-27
+// -----------------------------------------------------------------------------
+void AgentListView::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "CurrentTeam" )
+        currentTeam_ = value.To< const Team* >();
+    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    while( item )
+    {
+        item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
+        item = (ValuedListItem*)( item->nextSibling() );
+    }
 }

@@ -20,7 +20,6 @@
 #define __OptionsPanel_h_
 
 #include "OptionsObserver_ABC.h"
-#include "Observer_ABC.h"
 
 class QCheckBox;
 class Controllers;

@@ -75,21 +75,25 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& v )
 {
     geometry::Rectangle2f viewport = v.Intersect( extent_ );
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-    glColor4d( 1.0, 1.0, 1.0, 0.3 );
-    glLineWidth( 1.0 );
-    glBegin( GL_LINES );
-        for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize_ )
-        {
-            glVertex2f( x, viewport.Top()    );
-            glVertex2f( x, viewport.Bottom() );
-        }
 
-        for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridSize_ )
-        {
-            glVertex2f( viewport.Left(),  y );
-            glVertex2f( viewport.Right(), y );
-        }
-    glEnd();
+    if( gridSize_ > 0 )
+    {
+        glColor4d( 1.0, 1.0, 1.0, 0.3 );
+        glLineWidth( 1.0 );
+        glBegin( GL_LINES );
+            for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize_ )
+            {
+                glVertex2f( x, viewport.Top()    );
+                glVertex2f( x, viewport.Bottom() );
+            }
+
+            for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridSize_ )
+            {
+                glVertex2f( viewport.Left(),  y );
+                glVertex2f( viewport.Right(), y );
+            }
+        glEnd();
+    }
 
     if( ruling_ )
     {

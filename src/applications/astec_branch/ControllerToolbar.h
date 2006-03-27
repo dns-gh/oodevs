@@ -19,11 +19,12 @@
 #ifndef __ControllerToolbar_h_
 #define __ControllerToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
+#include "OptionsObserver_ABC.h"
 
 class Team;
+class Controllers;
 
 // =============================================================================
 /** @class  ControllerToolbar
@@ -32,36 +33,45 @@ class Team;
 // Created: APE 2004-09-21
 // =============================================================================
 class ControllerToolbar : public QToolBar
+                        , public Observer_ABC
+                        , public ElementObserver_ABC< Team >
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ControllerToolbar );
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ControllerToolbar( QMainWindow* pParent );
-    ~ControllerToolbar();
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void TeamChanged();
+             ControllerToolbar( QMainWindow* pParent, Controllers& controllers );
+    virtual ~ControllerToolbar();
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnTeamChanged( int nValue );
-    void OnTeamDeleted( Team& team );
-    void OnTeamCreated( Team& team );
     void LaunchScipio();
     void LaunchScipioDbg();
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const Team& );
+    virtual void NotifyDeleted( const Team& );
+    //@}
+
+private:
+    //! @name Slots
+    //@{
+    ControllerToolbar( const ControllerToolbar& );
+    ControllerToolbar& operator=( const ControllerToolbar& );
+    //@}
+
+private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
+    std::vector< const Team* > teams_;
     QComboBox* pTeamCombo_;
     //@}
 };

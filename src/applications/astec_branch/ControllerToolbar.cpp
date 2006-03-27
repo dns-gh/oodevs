@@ -16,20 +16,14 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "ControllerToolbar.h"
 #include "moc_ControllerToolbar.cpp"
-
-#include "App.h"
-#include "AgentManager.h"
 #include "Team.h"
-#include "MainWindow.h"
+#include "Controllers.h"
 #include "Options.h"
 
+#include <shellapi.h>
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar constructor
@@ -37,34 +31,28 @@
 */
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
-ControllerToolbar::ControllerToolbar( QMainWindow* pParent )
+ControllerToolbar::ControllerToolbar( QMainWindow* pParent, Controllers& controllers )
     : QToolBar( pParent, "controller toolbar" )
+    , controllers_( controllers )
 {
-    this->setLabel( tr( "Outils controlleur" ) );
+    setLabel( tr( "Outils controlleur" ) );
 
     // Team selection combo box
     new QLabel( tr( "Camp:" ), this );
     pTeamCombo_ = new QComboBox( this );
+    teams_.push_back( 0 ); // all
+    pTeamCombo_->insertItem( tr( "tous" ), 0 );
 
-    // Populate the combo box.
-    // $$$$ AGE 2006-02-13: 
-//    pTeamCombo_->insertItem( tr( "Tous" ), 0 );
-//    const AgentManager::T_TeamMap& teamMap = App::GetApp().GetAgentManager().GetTeams();
-//    for( AgentManager::CIT_TeamMap it = teamMap.begin(); it != teamMap.end(); ++it )
-//        pTeamCombo_->insertItem( it->second->GetName().c_str(), it->second->GetIdx() + 1 );
-//    pTeamCombo_->setCurrentItem( 0 );
 
     // Sim launch buttons
     new QToolButton( MAKE_ICON( sim ),    tr( "Lancer Scipio" ),       "", this, SLOT( LaunchScipio() ),    this );
     new QToolButton( MAKE_ICON( simdbg ), tr( "Lancer Scipio debug" ), "", this, SLOT( LaunchScipioDbg() ), this);
 
     // Connexions
-    connect( pTeamCombo_, SIGNAL( activated( int ) ), this,                             SLOT( OnTeamChanged( int ) ) );
-    connect( this,       SIGNAL( TeamChanged() ),    &MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ) );
-    connect( &App::GetApp(), SIGNAL( TeamCreated( Team& ) ), this,   SLOT( OnTeamCreated( Team& ) ) );
-    connect( &App::GetApp(), SIGNAL( TeamDeleted( Team& ) ), this,   SLOT( OnTeamDeleted( Team& ) ) );
-}
+    connect( pTeamCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTeamChanged( int ) ) );
 
+    controllers_.Register( *this );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar destructor
@@ -72,47 +60,18 @@ ControllerToolbar::ControllerToolbar( QMainWindow* pParent )
 // -----------------------------------------------------------------------------
 ControllerToolbar::~ControllerToolbar()
 {
+    controllers_.Remove( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar::OnTeamChanged
-/** @param  nValue 
-*/
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
 void ControllerToolbar::OnTeamChanged( int nValue )
 {
-    MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = nValue - 1;
-    // The "- 1" above is to take into account that index 0 is
-    // occupied by the 'all teams' (ie. controller view) option.
-
-    emit TeamChanged();
+    const Team* current = teams_.at( nValue );
+    controllers_.options_.Change( "CurrentTeam", current );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ControllerToolbar::OnTeamCreated
-// Created: AGE 2005-04-14
-// -----------------------------------------------------------------------------
-void ControllerToolbar::OnTeamCreated( Team& team )
-{
-    MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = Options::eController;
-    pTeamCombo_->insertItem( team.GetName().c_str(), team.GetIdx() + 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ControllerToolbar::OnTeamDeleted
-// Created: AGE 2005-09-21
-// -----------------------------------------------------------------------------
-void ControllerToolbar::OnTeamDeleted( Team& team )
-{
-    MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = Options::eController;
-    int nIndex = 0;
-    while( nIndex < pTeamCombo_->count() && pTeamCombo_->text( nIndex ) != team.GetName().c_str() )
-        ++nIndex;
-    pTeamCombo_->removeItem( nIndex );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar::LaunchScipio
@@ -123,7 +82,6 @@ void ControllerToolbar::LaunchScipio()
     ShellExecute( 0, "open", "sim.exe", "-nodisplay -forceodbcomposition", NULL, SW_SHOW );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar::LaunchScipioDbg
 // Created: APE 2004-06-18
@@ -131,4 +89,28 @@ void ControllerToolbar::LaunchScipio()
 void ControllerToolbar::LaunchScipioDbg()
 {
     ShellExecute( 0, "open", "sim_dbg.exe", "-nodisplay -forceodbcomposition", NULL, SW_SHOW );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControllerToolbar::NotifyCreated
+// Created: AGE 2006-03-27
+// -----------------------------------------------------------------------------
+void ControllerToolbar::NotifyCreated( const Team& team )
+{
+    teams_.push_back( &team );
+    pTeamCombo_->insertItem( team.GetName().c_str(), teams_.size() - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControllerToolbar::NotifyDeleted
+// Created: AGE 2006-03-27
+// -----------------------------------------------------------------------------
+void ControllerToolbar::NotifyDeleted( const Team& team )
+{
+    for( unsigned i = 0; i < teams_.size(); ++i )
+        if( teams_.at( i ) == &team )
+        {
+            teams_.erase( teams_.begin() + i );
+            pTeamCombo_->removeItem( i );
+        }
 }

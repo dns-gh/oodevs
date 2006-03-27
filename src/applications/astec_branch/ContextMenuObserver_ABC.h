@@ -10,6 +10,7 @@
 #ifndef __ContextMenuObserver_ABC_h_
 #define __ContextMenuObserver_ABC_h_
 
+#include "Observer_ABC.h"
 class QPopupMenu;
 
 // =============================================================================

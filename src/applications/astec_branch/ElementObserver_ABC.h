@@ -10,6 +10,8 @@
 #ifndef __ElementObserver_ABC_h_
 #define __ElementObserver_ABC_h_
 
+#include "Observer_ABC.h"
+
 // =============================================================================
 /** @class  ElementObserver_ABC
     @brief  Extension observer definition

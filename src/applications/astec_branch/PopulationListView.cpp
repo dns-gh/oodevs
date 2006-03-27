@@ -15,6 +15,7 @@
 #include "ValuedListItem.h"
 #include "ActionController.h"
 #include "Controllers.h"
+#include "OptionVariant.h"
 
 #include "moc_PopulationListView.cpp"
 
@@ -26,6 +27,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
     : QListView   ( pParent )
     , controllers_( controllers )
     , pPopupMenu_ ( 0 )
+    , currentTeam_( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( "Populations" );
@@ -106,4 +108,20 @@ void PopulationListView::Select( const Population& popu )
 {
     setSelected( FindItem( &popu, firstChild() ), true );
     ensureItemVisible( selectedItem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::OptionChanged
+// Created: AGE 2006-03-27
+// -----------------------------------------------------------------------------
+void PopulationListView::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "CurrentTeam" )
+        currentTeam_ = value.To< const Team* >();
+    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    while( item )
+    {
+        item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
+        item = (ValuedListItem*)( item->nextSibling() );
+    }
 }

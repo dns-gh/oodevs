@@ -11,6 +11,7 @@
 #define __OptionsObserver_ABC_h_
 
 #include <string>
+#include "Observer_ABC.h"
 class OptionVariant;
 
 // =============================================================================
