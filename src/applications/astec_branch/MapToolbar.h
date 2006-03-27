@@ -22,10 +22,10 @@
 #include "OptionsObserver_ABC.h"
 #include "Observer_ABC.h"
 
-class MT_ToolListButton;
 class QToolButton;
 class Controllers;
 class Options;
+template< typename T > class ToolListButton;
 
 // =============================================================================
 /** @class  MapToolbar
@@ -49,7 +49,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void FillButton( MT_ToolListButton& button );
+    void FillButton( ToolListButton< int >& button );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
@@ -63,11 +63,6 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void OnSmallText( float rValue );
-    void OnLargeText( float rValue );
-    void OnDetails( float rValue );
-    void OnTacticalLines( float rValue );
-    void OnGrid( float rValue );
     void OnWeatherToggled();
     void On3DToggle();
     //@}
@@ -80,12 +75,6 @@ private:
 
     QToolButton* pWeatherButton_;
     QToolButton* p3DButton_;
-
-    MT_ToolListButton* pSmallTextButton_;
-    MT_ToolListButton* pLargeTextButton_;
-    MT_ToolListButton* pDetailsButton_;
-    MT_ToolListButton* pTacticalLinesButton_;
-    MT_ToolListButton* pGridStep_;
     //@}
 };
 
