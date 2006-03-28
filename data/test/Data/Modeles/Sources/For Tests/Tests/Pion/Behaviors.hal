@@ -252,8 +252,8 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
     {
 
 //        TEsT CRASH 
-        T_Direction dir;
-        DEC_Geometrie_ConvertirPointEnLocalisation( dir );
+//        T_Direction dir;
+//        DEC_Geometrie_ConvertirPointEnLocalisation( dir );
     
         
     
