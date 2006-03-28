@@ -51,6 +51,18 @@ enum E_GDH_Qualificatif
 };
 
 
+enum E_HumanWound
+{
+    eHumanWound_NonBlesse,
+    eHumanWound_Mort,
+    eHumanWound_BlesseUrgence1,
+    eHumanWound_BlesseUrgence2,
+    eHumanWound_BlesseUrgence3,
+    eHumanWound_BlesseUrgenceExtreme,
+    eNbrHumanWound
+};
+
+
 enum E_UnitIdentificationLevel
 {
     eUnitIdentificationLevel_Identifiee,
@@ -317,18 +329,6 @@ enum E_NatureLevel
 };
 
 
-enum E_HumanWound
-{
-    eHumanWound_NonBlesse,
-    eHumanWound_Mort,
-    eHumanWound_BlesseUrgence1,
-    eHumanWound_BlesseUrgence2,
-    eHumanWound_BlesseUrgence3,
-    eHumanWound_BlesseUrgenceExtreme,
-    eNbrHumanWound
-};
-
-
 enum E_HumanRank
 {
     eHumanRank_Officier,
@@ -520,6 +520,32 @@ enum E_MissionInfNatureObjectif
     eMissionInfNatureObjectif_Objets,
     eMissionInfNatureObjectif_ElementsMobiles,
     eNbrMissionInfNatureObjectif
+};
+
+
+enum E_LogSanteTraitementEtat
+{
+    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve,
+    eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller,
+    eLogSanteTraitementEtat_AmbulanceReleveChargement,
+    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve,
+    eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour,
+    eLogSanteTraitementEtat_AmbulanceReleveDechargement,
+    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique,
+    eLogSanteTraitementEtat_Diagnostique,
+    eLogSanteTraitementEtat_RechercheSecteurTri,
+    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri,
+    eLogSanteTraitementEtat_Tri,
+    eLogSanteTraitementEtat_RechercheSecteurSoin,
+    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin,
+    eLogSanteTraitementEtat_Soin,
+    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage,
+    eLogSanteTraitementEtat_AmbulanceRamassageChargement,
+    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage,
+    eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller,
+    eLogSanteTraitementEtat_AmbulanceRamassageDechargement,
+    eLogSanteTraitementEtat_Termine,
+    eNbrLogSanteTraitementEtat
 };
 
 
@@ -738,32 +764,6 @@ enum E_MsgLogRavitaillementPousserFluxAck
     eMsgLogRavitaillementPousserFluxAck_ErrorInvalidReceveur,
     eMsgLogRavitaillementPousserFluxAck_ErrorRavitaillementEnCours,
     eNbrMsgLogRavitaillementPousserFluxAck
-};
-
-
-enum E_LogSanteTraitementEtat
-{
-    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve,
-    eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller,
-    eLogSanteTraitementEtat_AmbulanceReleveChargement,
-    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve,
-    eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour,
-    eLogSanteTraitementEtat_AmbulanceReleveDechargement,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique,
-    eLogSanteTraitementEtat_Diagnostique,
-    eLogSanteTraitementEtat_RechercheSecteurTri,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri,
-    eLogSanteTraitementEtat_Tri,
-    eLogSanteTraitementEtat_RechercheSecteurSoin,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin,
-    eLogSanteTraitementEtat_Soin,
-    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage,
-    eLogSanteTraitementEtat_AmbulanceRamassageChargement,
-    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage,
-    eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller,
-    eLogSanteTraitementEtat_AmbulanceRamassageDechargement,
-    eLogSanteTraitementEtat_Termine,
-    eNbrLogSanteTraitementEtat
 };
 
 
@@ -1261,7 +1261,6 @@ enum E_UnitMission
     eMission_Pion_LOG_TrierBlesses,
     eMission_Pion_LOG_TraiterBlesses,
     eMission_Pion_LOG_TrierEtTraiterBlesses,
-    eMission_Pion_LOG_SoignerBlesses,
     eMission_Pion_LOG_PrendreEnCompteReactionsMentales,
     eMission_Pion_LOG_DecontaminerBlesses,
     eMission_Pion_LOG_Reparer,

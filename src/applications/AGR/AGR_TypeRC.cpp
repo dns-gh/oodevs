@@ -392,6 +392,7 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_DemandeEvacuationSanitaire" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_DemandeEvacuationMateriel" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_AllocationConsentieBientotEpuisee" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_DepassementCapaciteStockage" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_EnCoursRavitaillement" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_RavitaillementTermine" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_HelicoptereEnObservation" ] = "eReportMission";

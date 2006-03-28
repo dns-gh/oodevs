@@ -48,6 +48,17 @@ ENT_Tr::T_ConverterGDH_Qualificatif ENT_Tr::GDH_QualificatifConverter_[] =
     T_ConverterGDH_Qualificatif( "", "", (E_GDH_Qualificatif)-1 )
 };
 
+ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
+{
+    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "non blesse" ), eHumanWound_NonBlesse ),
+    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "mort" ), eHumanWound_Mort ),
+    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 1" ), eHumanWound_BlesseUrgence1 ),
+    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 2" ), eHumanWound_BlesseUrgence2 ),
+    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 3" ), eHumanWound_BlesseUrgence3 ),
+    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence extreme" ), eHumanWound_BlesseUrgenceExtreme ),
+    T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
+};
+
 ENT_Tr::T_ConverterUnitIdentificationLevel ENT_Tr::UnitIdentificationLevelConverter_[] =
 {
     T_ConverterUnitIdentificationLevel( "identifiee", QT_TRANSLATE_NOOP( "ENT_Tr", "identifiee" ), eUnitIdentificationLevel_Identifiee ),
@@ -304,17 +315,6 @@ ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
     T_ConverterNatureLevel( "", "", (E_NatureLevel)-1 )
 };
 
-ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
-{
-    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "non blesse" ), eHumanWound_NonBlesse ),
-    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "mort" ), eHumanWound_Mort ),
-    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 1" ), eHumanWound_BlesseUrgence1 ),
-    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 2" ), eHumanWound_BlesseUrgence2 ),
-    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 3" ), eHumanWound_BlesseUrgence3 ),
-    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence extreme" ), eHumanWound_BlesseUrgenceExtreme ),
-    T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
-};
-
 ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
 {
     T_ConverterHumanRank( "officier", QT_TRANSLATE_NOOP( "ENT_Tr", "officier" ), eHumanRank_Officier ),
@@ -491,6 +491,31 @@ ENT_Tr::T_ConverterMissionInfNatureObjectif ENT_Tr::MissionInfNatureObjectifConv
     T_ConverterMissionInfNatureObjectif( "objets", QT_TRANSLATE_NOOP( "ENT_Tr", "objets" ), eMissionInfNatureObjectif_Objets ),
     T_ConverterMissionInfNatureObjectif( "elements mobiles", QT_TRANSLATE_NOOP( "ENT_Tr", "elements mobiles" ), eMissionInfNatureObjectif_ElementsMobiles ),
     T_ConverterMissionInfNatureObjectif( "", "", (E_MissionInfNatureObjectif)-1 )
+};
+
+ENT_Tr::T_ConverterLogSanteTraitementEtat ENT_Tr::LogSanteTraitementEtatConverter_[] =
+{
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance releve" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement aller" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve chargement" ), eLogSanteTraitementEtat_AmbulanceReleveChargement ),
+    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance releve" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement retour" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve dechargement" ), eLogSanteTraitementEtat_AmbulanceReleveDechargement ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour diagnostique" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique ),
+    T_ConverterLogSanteTraitementEtat( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostique" ), eLogSanteTraitementEtat_Diagnostique ),
+    T_ConverterLogSanteTraitementEtat( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur tri" ), eLogSanteTraitementEtat_RechercheSecteurTri ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour tri" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri ),
+    T_ConverterLogSanteTraitementEtat( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "tri" ), eLogSanteTraitementEtat_Tri ),
+    T_ConverterLogSanteTraitementEtat( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur soin" ), eLogSanteTraitementEtat_RechercheSecteurSoin ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour soin" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin ),
+    T_ConverterLogSanteTraitementEtat( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "soin" ), eLogSanteTraitementEtat_Soin ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance ramassage" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage ),
+    T_ConverterLogSanteTraitementEtat( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage chargement" ), eLogSanteTraitementEtat_AmbulanceRamassageChargement ),
+    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance ramassage" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage ),
+    T_ConverterLogSanteTraitementEtat( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage deplacement aller" ), eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller ),
+    T_ConverterLogSanteTraitementEtat( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage dechargement" ), eLogSanteTraitementEtat_AmbulanceRamassageDechargement ),
+    T_ConverterLogSanteTraitementEtat( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogSanteTraitementEtat_Termine ),
+    T_ConverterLogSanteTraitementEtat( "", "", (E_LogSanteTraitementEtat)-1 )
 };
 
 ENT_Tr::T_ConverterAutomateOrderFormation ENT_Tr::AutomateOrderFormationConverter_[] =
@@ -690,31 +715,6 @@ ENT_Tr::T_ConverterMsgLogRavitaillementPousserFluxAck ENT_Tr::MsgLogRavitailleme
     T_ConverterMsgLogRavitaillementPousserFluxAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eMsgLogRavitaillementPousserFluxAck_ErrorInvalidReceveur ),
     T_ConverterMsgLogRavitaillementPousserFluxAck( "error ravitaillement en cours", QT_TRANSLATE_NOOP( "ENT_Tr", "error ravitaillement en cours" ), eMsgLogRavitaillementPousserFluxAck_ErrorRavitaillementEnCours ),
     T_ConverterMsgLogRavitaillementPousserFluxAck( "", "", (E_MsgLogRavitaillementPousserFluxAck)-1 )
-};
-
-ENT_Tr::T_ConverterLogSanteTraitementEtat ENT_Tr::LogSanteTraitementEtatConverter_[] =
-{
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance releve" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement aller" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve chargement" ), eLogSanteTraitementEtat_AmbulanceReleveChargement ),
-    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance releve" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement retour" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve dechargement" ), eLogSanteTraitementEtat_AmbulanceReleveDechargement ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour diagnostique" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique ),
-    T_ConverterLogSanteTraitementEtat( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostique" ), eLogSanteTraitementEtat_Diagnostique ),
-    T_ConverterLogSanteTraitementEtat( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur tri" ), eLogSanteTraitementEtat_RechercheSecteurTri ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour tri" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri ),
-    T_ConverterLogSanteTraitementEtat( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "tri" ), eLogSanteTraitementEtat_Tri ),
-    T_ConverterLogSanteTraitementEtat( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur soin" ), eLogSanteTraitementEtat_RechercheSecteurSoin ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour soin" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin ),
-    T_ConverterLogSanteTraitementEtat( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "soin" ), eLogSanteTraitementEtat_Soin ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance ramassage" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage ),
-    T_ConverterLogSanteTraitementEtat( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage chargement" ), eLogSanteTraitementEtat_AmbulanceRamassageChargement ),
-    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance ramassage" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage ),
-    T_ConverterLogSanteTraitementEtat( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage deplacement aller" ), eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller ),
-    T_ConverterLogSanteTraitementEtat( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage dechargement" ), eLogSanteTraitementEtat_AmbulanceRamassageDechargement ),
-    T_ConverterLogSanteTraitementEtat( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogSanteTraitementEtat_Termine ),
-    T_ConverterLogSanteTraitementEtat( "", "", (E_LogSanteTraitementEtat)-1 )
 };
 
 ENT_Tr::T_ConverterAutomateState ENT_Tr::AutomateStateConverter_[] =
@@ -1192,7 +1192,6 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion LOG TrierBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TrierBlesses" ), eMission_Pion_LOG_TrierBlesses ),
     T_ConverterUnitMission( "Pion LOG TraiterBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TraiterBlesses" ), eMission_Pion_LOG_TraiterBlesses ),
     T_ConverterUnitMission( "Pion LOG TrierEtTraiterBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TrierEtTraiterBlesses" ), eMission_Pion_LOG_TrierEtTraiterBlesses ),
-    T_ConverterUnitMission( "Pion LOG SoignerBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG SoignerBlesses" ), eMission_Pion_LOG_SoignerBlesses ),
     T_ConverterUnitMission( "Pion LOG PrendreEnCompteReactionsMentales", QT_TRANSLATE_NOOP( "ENT", "Pion LOG PrendreEnCompteReactionsMentales" ), eMission_Pion_LOG_PrendreEnCompteReactionsMentales ),
     T_ConverterUnitMission( "Pion LOG DecontaminerBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG DecontaminerBlesses" ), eMission_Pion_LOG_DecontaminerBlesses ),
     T_ConverterUnitMission( "Pion LOG Reparer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG Reparer" ), eMission_Pion_LOG_Reparer ),
@@ -1338,6 +1337,7 @@ void ENT_Tr::InitTranslations()
 {
         InitTr( TypeLocalisationConverter_, "ENT_Tr" );
     InitTr( GDH_QualificatifConverter_, "ENT_Tr" );
+    InitTr( HumanWoundConverter_, "ENT_Tr" );
     InitTr( UnitIdentificationLevelConverter_, "ENT_Tr" );
     InitTr( FamilleDotationConverter_, "ENT_Tr" );
     InitTr( FamilleMunitionConverter_, "ENT_Tr" );
@@ -1348,7 +1348,6 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitNatureMobilityConverter_, "ENT_Tr" );
     InitTr( UnitCapaciteMissionConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
-    InitTr( HumanWoundConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
     InitTr( TempsBordeeConverter_, "ENT_Tr" );
     InitTr( MissionALAT_PorteeActionConverter_, "ENT_Tr" );
@@ -1365,6 +1364,7 @@ void ENT_Tr::InitTranslations()
     InitTr( TypeFosseACConverter_, "ENT_Tr" );
     InitTr( GenTypePontageConverter_, "ENT_Tr" );
     InitTr( MissionInfNatureObjectifConverter_, "ENT_Tr" );
+    InitTr( LogSanteTraitementEtatConverter_, "ENT_Tr" );
     InitTr( AutomateOrderFormationConverter_, "ENT_Tr" );
     InitTr( CtrlErrorCodeConverter_, "ENT_Tr" );
     InitTr( MsgCtrlClientAnnouncementConverter_, "ENT_Tr" );
@@ -1384,7 +1384,6 @@ void ENT_Tr::InitTranslations()
     InitTr( LogRavitaillementTraitementEtatConverter_, "ENT_Tr" );
     InitTr( MsgLogRavitaillementChangeQuotasAckConverter_, "ENT_Tr" );
     InitTr( MsgLogRavitaillementPousserFluxAckConverter_, "ENT_Tr" );
-    InitTr( LogSanteTraitementEtatConverter_, "ENT_Tr" );
     InitTr( AutomateStateConverter_, "ENT_Tr" );
     InitTr( UnitPostureConverter_, "ENT_Tr" );
     InitTr( EtatRapForConverter_, "ENT_Tr" );
@@ -1428,6 +1427,15 @@ const std::string& ENT_Tr::ConvertFromTypeLocalisation( E_TypeLocalisation nValu
 const std::string& ENT_Tr::ConvertFromGDH_Qualificatif( E_GDH_Qualificatif nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( GDH_QualificatifConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromHumanWound
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1518,15 +1526,6 @@ const std::string& ENT_Tr::ConvertFromUnitCapaciteMission( E_UnitCapaciteMission
 const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( NatureLevelConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1671,6 +1670,15 @@ const std::string& ENT_Tr::ConvertFromGenTypePontage( E_GenTypePontage nValue, E
 const std::string& ENT_Tr::ConvertFromMissionInfNatureObjectif( E_MissionInfNatureObjectif nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( MissionInfNatureObjectifConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLogSanteTraitementEtat
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( LogSanteTraitementEtatConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1842,15 +1850,6 @@ const std::string& ENT_Tr::ConvertFromMsgLogRavitaillementChangeQuotasAck( E_Msg
 const std::string& ENT_Tr::ConvertFromMsgLogRavitaillementPousserFluxAck( E_MsgLogRavitaillementPousserFluxAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( MsgLogRavitaillementPousserFluxAckConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogSanteTraitementEtat
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( LogSanteTraitementEtatConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2084,6 +2083,15 @@ E_GDH_Qualificatif ENT_Tr::ConvertToGDH_Qualificatif( const std::string& strName
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToHumanWound
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToUnitIdentificationLevel
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2171,15 +2179,6 @@ E_UnitCapaciteMission ENT_Tr::ConvertToUnitCapaciteMission( const std::string& s
 E_NatureLevel ENT_Tr::ConvertToNatureLevel( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( NatureLevelConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2324,6 +2323,15 @@ E_GenTypePontage ENT_Tr::ConvertToGenTypePontage( const std::string& strName )
 E_MissionInfNatureObjectif ENT_Tr::ConvertToMissionInfNatureObjectif( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( MissionInfNatureObjectifConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLogSanteTraitementEtat
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_LogSanteTraitementEtat ENT_Tr::ConvertToLogSanteTraitementEtat( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( LogSanteTraitementEtatConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2495,15 +2503,6 @@ E_MsgLogRavitaillementChangeQuotasAck ENT_Tr::ConvertToMsgLogRavitaillementChang
 E_MsgLogRavitaillementPousserFluxAck ENT_Tr::ConvertToMsgLogRavitaillementPousserFluxAck( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( MsgLogRavitaillementPousserFluxAckConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogSanteTraitementEtat
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogSanteTraitementEtat ENT_Tr::ConvertToLogSanteTraitementEtat( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( LogSanteTraitementEtatConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

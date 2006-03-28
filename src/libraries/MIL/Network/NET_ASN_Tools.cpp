@@ -796,6 +796,26 @@ void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_SantePriorites& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_MaintenancePriorites& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
@@ -1319,6 +1339,28 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites&
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyMaintenancePriorities
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1T_MaintenancePriorites& asn )
+{
+    assert( DEC_Tools::CheckTypeSantePriorites( dia ) );
+
+    T_MaintenancePriorityVector* pData = dia.ToUserPtr( pData );
+    if( !pData )
+        asn.n = 0;
+    else
+    {
+        asn.n    = pData->size();
+        asn.elem = new ASN1T_TypeEquipement[ pData->size() ];
+        uint i = 0;
+        for( CIT_MaintenancePriorityVector it = pData->begin(); it != pData->end(); ++it )
+            asn.elem[ i++ ] = (**it).GetMosID();
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyMaintenancePriorities
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
@@ -1353,6 +1395,28 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_
         pData->push_back( pWound );
     }
     dia.SetValue( pData, &DEC_Tools::GetTypeSantePriorites() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyMedicalPriorities
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& dia, ASN1T_SantePriorites& asn )
+{
+    assert( DEC_Tools::CheckTypeSantePriorites( dia ) );
+
+    T_MedicalPriorityVector* pData = dia.ToUserPtr( pData );
+    if( !pData )
+        asn.n = 0;
+    else
+    {
+        asn.n    = pData->size();
+        asn.elem = new ASN1T_EnumHumanWound[ pData->size() ];
+        uint i = 0;
+        for( CIT_MedicalPriorityVector it = pData->begin(); it != pData->end(); ++it )
+            asn.elem[ i++ ] = (**it).GetAsnID();
+    }
     return true;
 }
 

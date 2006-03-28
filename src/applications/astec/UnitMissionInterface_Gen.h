@@ -149,7 +149,6 @@
     void CreateMission_LOG_TrierBlesses();
     void CreateMission_LOG_TraiterBlesses();
     void CreateMission_LOG_TrierEtTraiterBlesses();
-    void CreateMission_LOG_SoignerBlesses();
     void CreateMission_LOG_PrendreEnCompteReactionsMentales();
     void CreateMission_LOG_DecontaminerBlesses();
     void CreateMission_LOG_Reparer();

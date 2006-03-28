@@ -1007,7 +1007,7 @@
     </message>
     <message>
         <source>Pion LOG SoignerBlesses</source>
-        <translation>Pion LOG SoignerBlesses</translation>
+        <translation type="obsolete">Pion LOG SoignerBlesses</translation>
     </message>
     <message>
         <source>Pion LOG PrendreEnCompteReactionsMentales</source>

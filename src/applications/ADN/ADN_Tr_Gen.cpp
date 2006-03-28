@@ -315,7 +315,6 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Pion LOG TrierBlesses", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG TrierBlesses"), eSMission_Pion_LOG_TrierBlesses ),
     T_ConverterSMission("Pion LOG TraiterBlesses", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG TraiterBlesses"), eSMission_Pion_LOG_TraiterBlesses ),
     T_ConverterSMission("Pion LOG TrierEtTraiterBlesses", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG TrierEtTraiterBlesses"), eSMission_Pion_LOG_TrierEtTraiterBlesses ),
-    T_ConverterSMission("Pion LOG SoignerBlesses", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG SoignerBlesses"), eSMission_Pion_LOG_SoignerBlesses ),
     T_ConverterSMission("Pion LOG PrendreEnCompteReactionsMentales", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG PrendreEnCompteReactionsMentales"), eSMission_Pion_LOG_PrendreEnCompteReactionsMentales ),
     T_ConverterSMission("Pion LOG DecontaminerBlesses", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG DecontaminerBlesses"), eSMission_Pion_LOG_DecontaminerBlesses ),
     T_ConverterSMission("Pion LOG Reparer", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion LOG Reparer"), eSMission_Pion_LOG_Reparer ),

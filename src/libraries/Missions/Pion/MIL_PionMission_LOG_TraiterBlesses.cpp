@@ -20,6 +20,7 @@
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
+int MIL_PionMission_LOG_TraiterBlesses::nDIABlessuresTraiteesIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -29,7 +30,8 @@
 // static
 void MIL_PionMission_LOG_TraiterBlesses::InitializeDIA( const MIL_PionMissionType& type )
 {
-    (void)DEC_Tools::GetDIAType( type.GetDIATypeName() );
+    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
+    nDIABlessuresTraiteesIdx_ = DEC_Tools::InitializeDIAField( "blessuresTraitees_", diaType );
 
 }
 
@@ -65,6 +67,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_TraiterBlesses::Initialize( const A
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
+    const ASN1T_Mission_Pion_LOG_TraiterBlesses& asnMission = *asnMsg.mission.u.mission_pion_log_traiter_blesses;
+    if( !NET_ASN_Tools::CopyMedicalPriorities( asnMission.blessures_traitees, GetVariable( nDIABlessuresTraiteesIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -79,7 +84,7 @@ bool MIL_PionMission_LOG_TraiterBlesses::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-
+    
     return true;    
 }
 
@@ -93,6 +98,7 @@ bool MIL_PionMission_LOG_TraiterBlesses::Initialize( MIL_PionMission_ABC& missio
         return false;
     MIL_PionMission_LOG_TraiterBlesses& mission = static_cast< MIL_PionMission_LOG_TraiterBlesses& >( missionTmp );
 
+    NET_ASN_Tools::CopyMedicalPriorities( mission.GetVariable( nDIABlessuresTraiteesIdx_ ), GetVariable( nDIABlessuresTraiteesIdx_ ) );
 
     return true;
 }                                                                    
@@ -103,7 +109,7 @@ bool MIL_PionMission_LOG_TraiterBlesses::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_TraiterBlesses::Terminate()
 {
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 
@@ -123,6 +129,7 @@ void MIL_PionMission_LOG_TraiterBlesses::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_log_traiter_blesses;
     asnMsg.mission.u.mission_pion_log_traiter_blesses  = &asnMission;
 
+    NET_ASN_Tools::CopyMedicalPriorities( GetVariable( nDIABlessuresTraiteesIdx_ ), asnMission.blessures_traitees );
 
 }
 
@@ -135,6 +142,7 @@ void MIL_PionMission_LOG_TraiterBlesses::CleanAfterSerialization( ASN1T_MsgPionO
     assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_log_traiter_blesses );
     ASN1T_Mission_Pion_LOG_TraiterBlesses& asnMission = *asnMsg.mission.u.mission_pion_log_traiter_blesses;
 
+    NET_ASN_Tools::Delete( asnMission.blessures_traitees );
 
     delete &asnMission;
 

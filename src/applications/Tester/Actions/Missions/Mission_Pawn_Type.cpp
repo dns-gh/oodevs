@@ -165,7 +165,6 @@
 #include "Pawn/Mission_Pawn_LOG_TrierBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_TraiterBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_TrierEtTraiterBlesses.cpp"
-#include "Pawn/Mission_Pawn_LOG_SoignerBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_PrendreEnCompteReactionsMentales.cpp"
 #include "Pawn/Mission_Pawn_LOG_DecontaminerBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_Reparer.cpp"
@@ -413,7 +412,6 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_LOG_TrierBlesses >( "Pion LOG TrierBlesses" );
     Register< Mission_Pawn_LOG_TraiterBlesses >( "Pion LOG TraiterBlesses" );
     Register< Mission_Pawn_LOG_TrierEtTraiterBlesses >( "Pion LOG TrierEtTraiterBlesses" );
-    Register< Mission_Pawn_LOG_SoignerBlesses >( "Pion LOG SoignerBlesses" );
     Register< Mission_Pawn_LOG_PrendreEnCompteReactionsMentales >( "Pion LOG PrendreEnCompteReactionsMentales" );
     Register< Mission_Pawn_LOG_DecontaminerBlesses >( "Pion LOG DecontaminerBlesses" );
     Register< Mission_Pawn_LOG_Reparer >( "Pion LOG Reparer" );

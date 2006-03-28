@@ -223,7 +223,6 @@ enum E_SMission
     eSMission_Pion_LOG_TrierBlesses,
     eSMission_Pion_LOG_TraiterBlesses,
     eSMission_Pion_LOG_TrierEtTraiterBlesses,
-    eSMission_Pion_LOG_SoignerBlesses,
     eSMission_Pion_LOG_PrendreEnCompteReactionsMentales,
     eSMission_Pion_LOG_DecontaminerBlesses,
     eSMission_Pion_LOG_Reparer,

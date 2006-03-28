@@ -10836,6 +10836,27 @@ void ASN1C_MsgLogRavitaillementQuotas::Print (ASN1ConstCharPtr name)
 
 #include "ScipioLogSante.h"
 
+void asn1Print_SantePriorites (ASN1ConstCharPtr name, ASN1T_SantePriorites* pvalue)
+{
+   char namebuf[512];
+
+   printf ("%s.n = %d\n", name, pvalue->n);
+   {
+   ASN1UINT xx1;
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      sprintf (namebuf, "%s.elem[%d]", name, xx1);
+      asn1Print_EnumHumanWound (namebuf, &pvalue->elem[xx1]);
+   }
+   }
+
+}
+
+void ASN1C_SantePriorites::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_SantePriorites (name, &msgData);
+}
+
 void asn1Print_EnumLogSanteTraitementEtat (ASN1ConstCharPtr name, ASN1T_EnumLogSanteTraitementEtat* pvalue)
 {
    printf ("%s = ", name);
@@ -10988,27 +11009,6 @@ void ASN1C_SanteDisponibiliteMoyens::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print_SanteDisponibiliteMoyens (name, &msgData);
-}
-
-void asn1Print_SantePriorites (ASN1ConstCharPtr name, ASN1T_SantePriorites* pvalue)
-{
-   char namebuf[512];
-
-   printf ("%s.n = %d\n", name, pvalue->n);
-   {
-   ASN1UINT xx1;
-   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
-      sprintf (namebuf, "%s.elem[%d]", name, xx1);
-      asn1Print_EnumHumanWound (namebuf, &pvalue->elem[xx1]);
-   }
-   }
-
-}
-
-void ASN1C_SantePriorites::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_SantePriorites (name, &msgData);
 }
 
 void asn1Print__SeqOfSanteDisponibiliteMoyens (ASN1ConstCharPtr name, ASN1T__SeqOfSanteDisponibiliteMoyens* pvalue)
@@ -16579,6 +16579,11 @@ void ASN1C_Mission_Pion_LOG_TrierBlesses::Print (ASN1ConstCharPtr name)
 
 void asn1Print_Mission_Pion_LOG_TraiterBlesses (ASN1ConstCharPtr name, ASN1T_Mission_Pion_LOG_TraiterBlesses* pvalue)
 {
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.blessures_traitees", name);
+   asn1Print_SantePriorites (namebuf, &pvalue->blessures_traitees);
+
 }
 
 void ASN1C_Mission_Pion_LOG_TraiterBlesses::Print (ASN1ConstCharPtr name)
@@ -16589,22 +16594,17 @@ void ASN1C_Mission_Pion_LOG_TraiterBlesses::Print (ASN1ConstCharPtr name)
 
 void asn1Print_Mission_Pion_LOG_TrierEtTraiterBlesses (ASN1ConstCharPtr name, ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses* pvalue)
 {
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.blessures_traitees", name);
+   asn1Print_SantePriorites (namebuf, &pvalue->blessures_traitees);
+
 }
 
 void ASN1C_Mission_Pion_LOG_TrierEtTraiterBlesses::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print_Mission_Pion_LOG_TrierEtTraiterBlesses (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_LOG_SoignerBlesses (ASN1ConstCharPtr name, ASN1T_Mission_Pion_LOG_SoignerBlesses* pvalue)
-{
-}
-
-void ASN1C_Mission_Pion_LOG_SoignerBlesses::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_LOG_SoignerBlesses (name, &msgData);
 }
 
 void asn1Print_Mission_Pion_LOG_PrendreEnCompteReactionsMentales (ASN1ConstCharPtr name, ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales* pvalue)
@@ -18711,371 +18711,366 @@ void asn1Print_Mission_Pion (ASN1ConstCharPtr name, ASN1T_Mission_Pion* pvalue)
          break;
 
       case 143:
-         sprintf (namebuf, "%s.u.mission_pion_log_soigner_blesses", name);
-         asn1Print_Mission_Pion_LOG_SoignerBlesses (namebuf, pvalue->u.mission_pion_log_soigner_blesses);
-         break;
-
-      case 144:
          sprintf (namebuf, "%s.u.mission_pion_log_prendre_en_compte_reactions_mentales", name);
          asn1Print_Mission_Pion_LOG_PrendreEnCompteReactionsMentales (namebuf, pvalue->u.mission_pion_log_prendre_en_compte_reactions_mentales);
          break;
 
-      case 145:
+      case 144:
          sprintf (namebuf, "%s.u.mission_pion_log_decontaminer_blesses", name);
          asn1Print_Mission_Pion_LOG_DecontaminerBlesses (namebuf, pvalue->u.mission_pion_log_decontaminer_blesses);
          break;
 
-      case 146:
+      case 145:
          sprintf (namebuf, "%s.u.mission_pion_log_reparer", name);
          asn1Print_Mission_Pion_LOG_Reparer (namebuf, pvalue->u.mission_pion_log_reparer);
          break;
 
-      case 147:
+      case 146:
          sprintf (namebuf, "%s.u.mission_pion_log_evacuer", name);
          asn1Print_Mission_Pion_LOG_Evacuer (namebuf, pvalue->u.mission_pion_log_evacuer);
          break;
 
-      case 148:
+      case 147:
          sprintf (namebuf, "%s.u.mission_pion_log_convoyer", name);
          asn1Print_Mission_Pion_LOG_Convoyer (namebuf, pvalue->u.mission_pion_log_convoyer);
          break;
 
-      case 149:
+      case 148:
          sprintf (namebuf, "%s.u.mission_pion_log_distribuer_ressources", name);
          asn1Print_Mission_Pion_LOG_DistribuerRessources (namebuf, pvalue->u.mission_pion_log_distribuer_ressources);
          break;
 
-      case 150:
+      case 149:
          sprintf (namebuf, "%s.u.mission_pion_log_constituer_convoi", name);
          asn1Print_Mission_Pion_LOG_ConstituerConvoi (namebuf, pvalue->u.mission_pion_log_constituer_convoi);
          break;
 
-      case 151:
+      case 150:
          sprintf (namebuf, "%s.u.mission_pion_log_livrer", name);
          asn1Print_Mission_Pion_LOG_Livrer (namebuf, pvalue->u.mission_pion_log_livrer);
          break;
 
-      case 152:
+      case 151:
          sprintf (namebuf, "%s.u.mission_pion_log_preparer_bascule", name);
          asn1Print_Mission_Pion_LOG_PreparerBascule (namebuf, pvalue->u.mission_pion_log_preparer_bascule);
          break;
 
-      case 153:
+      case 152:
          sprintf (namebuf, "%s.u.mission_pion_log_appuyer_mouvement", name);
          asn1Print_Mission_Pion_LOG_AppuyerMouvement (namebuf, pvalue->u.mission_pion_log_appuyer_mouvement);
          break;
 
-      case 154:
+      case 153:
          sprintf (namebuf, "%s.u.mission_pion_log_reconnaitre_itineraire", name);
          asn1Print_Mission_Pion_LOG_ReconnaitreItineraire (namebuf, pvalue->u.mission_pion_log_reconnaitre_itineraire);
          break;
 
-      case 155:
+      case 154:
          sprintf (namebuf, "%s.u.mission_pion_log_transporter_unite", name);
          asn1Print_Mission_Pion_LOG_TransporterUnite (namebuf, pvalue->u.mission_pion_log_transporter_unite);
          break;
 
-      case 156:
+      case 155:
          sprintf (namebuf, "%s.u.mission_pion_log_reconnaitre_zone_contaminee", name);
          asn1Print_Mission_Pion_LOG_ReconnaitreZoneContaminee (namebuf, pvalue->u.mission_pion_log_reconnaitre_zone_contaminee);
          break;
 
-      case 157:
+      case 156:
          sprintf (namebuf, "%s.u.mission_pion_log_appuyer_mouvement_dans_zone", name);
          asn1Print_Mission_Pion_LOG_AppuyerMouvementDansZone (namebuf, pvalue->u.mission_pion_log_appuyer_mouvement_dans_zone);
          break;
 
-      case 158:
+      case 157:
          sprintf (namebuf, "%s.u.mission_pion_log_mettre_en_oeuvre_zone_stationnement", name);
          asn1Print_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement (namebuf, pvalue->u.mission_pion_log_mettre_en_oeuvre_zone_stationnement);
          break;
 
-      case 159:
+      case 158:
          sprintf (namebuf, "%s.u.mission_pion_log_appuyer_franchissement_sur_un_point", name);
          asn1Print_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint (namebuf, pvalue->u.mission_pion_log_appuyer_franchissement_sur_un_point);
          break;
 
-      case 160:
+      case 159:
          sprintf (namebuf, "%s.u.mission_pion_log_bloquer_zone", name);
          asn1Print_Mission_Pion_LOG_BloquerZone (namebuf, pvalue->u.mission_pion_log_bloquer_zone);
          break;
 
-      case 161:
+      case 160:
          sprintf (namebuf, "%s.u.mission_pion_log_reconnaitre_zone_de_deploiement", name);
          asn1Print_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement (namebuf, pvalue->u.mission_pion_log_reconnaitre_zone_de_deploiement);
          break;
 
-      case 162:
+      case 161:
          sprintf (namebuf, "%s.u.mission_pion_log_armer_pia", name);
          asn1Print_Mission_Pion_LOG_ArmerPIA (namebuf, pvalue->u.mission_pion_log_armer_pia);
          break;
 
-      case 163:
+      case 162:
          sprintf (namebuf, "%s.u.mission_pion_log_surveiller", name);
          asn1Print_Mission_Pion_LOG_Surveiller (namebuf, pvalue->u.mission_pion_log_surveiller);
          break;
 
-      case 164:
+      case 163:
          sprintf (namebuf, "%s.u.mission_pion_test_heliporter", name);
          asn1Print_Mission_Pion_Test_Heliporter (namebuf, pvalue->u.mission_pion_test_heliporter);
          break;
 
-      case 165:
+      case 164:
          sprintf (namebuf, "%s.u.mission_pion_test_move_to", name);
          asn1Print_Mission_Pion_Test_MoveTo (namebuf, pvalue->u.mission_pion_test_move_to);
          break;
 
-      case 166:
+      case 165:
          sprintf (namebuf, "%s.u.mission_pion_test_create_object", name);
          asn1Print_Mission_Pion_Test_CreateObject (namebuf, pvalue->u.mission_pion_test_create_object);
          break;
 
-      case 167:
+      case 166:
          sprintf (namebuf, "%s.u.mission_pion_test_destroy_object", name);
          asn1Print_Mission_Pion_Test_DestroyObject (namebuf, pvalue->u.mission_pion_test_destroy_object);
          break;
 
-      case 168:
+      case 167:
          sprintf (namebuf, "%s.u.mission_pion_test_create_bypass", name);
          asn1Print_Mission_Pion_Test_CreateBypass (namebuf, pvalue->u.mission_pion_test_create_bypass);
          break;
 
-      case 169:
+      case 168:
          sprintf (namebuf, "%s.u.mission_pion_test_fire", name);
          asn1Print_Mission_Pion_Test_Fire (namebuf, pvalue->u.mission_pion_test_fire);
          break;
 
-      case 170:
+      case 169:
          sprintf (namebuf, "%s.u.mission_pion_test_change_posture", name);
          asn1Print_Mission_Pion_Test_ChangePosture (namebuf, pvalue->u.mission_pion_test_change_posture);
          break;
 
-      case 171:
+      case 170:
          sprintf (namebuf, "%s.u.mission_pion_test_path_find", name);
          asn1Print_Mission_Pion_Test_PathFind (namebuf, pvalue->u.mission_pion_test_path_find);
          break;
 
-      case 172:
+      case 171:
          sprintf (namebuf, "%s.u.mission_pion_test_find_position", name);
          asn1Print_Mission_Pion_Test_FindPosition (namebuf, pvalue->u.mission_pion_test_find_position);
          break;
 
-      case 173:
+      case 172:
          sprintf (namebuf, "%s.u.mission_pion_test_reinforce", name);
          asn1Print_Mission_Pion_Test_Reinforce (namebuf, pvalue->u.mission_pion_test_reinforce);
          break;
 
-      case 174:
+      case 173:
          sprintf (namebuf, "%s.u.mission_pion_plastron_ennemi", name);
          asn1Print_Mission_Pion_PlastronEnnemi (namebuf, pvalue->u.mission_pion_plastron_ennemi);
          break;
 
-      case 175:
+      case 174:
          sprintf (namebuf, "%s.u.mission_pion_faire_mouvement", name);
          asn1Print_Mission_Pion_FaireMouvement (namebuf, pvalue->u.mission_pion_faire_mouvement);
          break;
 
-      case 176:
+      case 175:
          sprintf (namebuf, "%s.u.mission_pion_suivre", name);
          asn1Print_Mission_Pion_Suivre (namebuf, pvalue->u.mission_pion_suivre);
          break;
 
-      case 177:
+      case 176:
          sprintf (namebuf, "%s.u.mission_pion_se_faire_decontaminer", name);
          asn1Print_Mission_Pion_SeFaireDecontaminer (namebuf, pvalue->u.mission_pion_se_faire_decontaminer);
          break;
 
-      case 178:
+      case 177:
          sprintf (namebuf, "%s.u.mission_pion_franchir", name);
          asn1Print_Mission_Pion_Franchir (namebuf, pvalue->u.mission_pion_franchir);
          break;
 
-      case 179:
+      case 178:
          sprintf (namebuf, "%s.u.mission_pion_decrocher", name);
          asn1Print_Mission_Pion_Decrocher (namebuf, pvalue->u.mission_pion_decrocher);
          break;
 
-      case 180:
+      case 179:
          sprintf (namebuf, "%s.u.mission_pion_stationner", name);
          asn1Print_Mission_Pion_Stationner (namebuf, pvalue->u.mission_pion_stationner);
          break;
 
-      case 181:
+      case 180:
          sprintf (namebuf, "%s.u.mission_pion_se_faire_transporter", name);
          asn1Print_Mission_Pion_SeFaireTransporter (namebuf, pvalue->u.mission_pion_se_faire_transporter);
          break;
 
-      case 182:
+      case 181:
          sprintf (namebuf, "%s.u.mission_pion_interdire_franchissement_populations", name);
          asn1Print_Mission_Pion_InterdireFranchissementPopulations (namebuf, pvalue->u.mission_pion_interdire_franchissement_populations);
          break;
 
-      case 183:
+      case 182:
          sprintf (namebuf, "%s.u.mission_pion_filtrer_populations", name);
          asn1Print_Mission_Pion_FiltrerPopulations (namebuf, pvalue->u.mission_pion_filtrer_populations);
          break;
 
-      case 184:
+      case 183:
          sprintf (namebuf, "%s.u.mission_pion_renseigner_sur_populations", name);
          asn1Print_Mission_Pion_RenseignerSurPopulations (namebuf, pvalue->u.mission_pion_renseigner_sur_populations);
          break;
 
-      case 185:
+      case 184:
          sprintf (namebuf, "%s.u.mission_pion_canaliser_populations", name);
          asn1Print_Mission_Pion_CanaliserPopulations (namebuf, pvalue->u.mission_pion_canaliser_populations);
          break;
 
-      case 186:
+      case 185:
          sprintf (namebuf, "%s.u.mission_pion_controler_populations_dans_zone", name);
          asn1Print_Mission_Pion_ControlerPopulationsDansZone (namebuf, pvalue->u.mission_pion_controler_populations_dans_zone);
          break;
 
-      case 187:
+      case 186:
          sprintf (namebuf, "%s.u.mission_pion_securiser_zone_contre_populations", name);
          asn1Print_Mission_Pion_SecuriserZoneContrePopulations (namebuf, pvalue->u.mission_pion_securiser_zone_contre_populations);
          break;
 
-      case 188:
+      case 187:
          sprintf (namebuf, "%s.u.mission_pion_generique", name);
          asn1Print_Mission_Pion_Generique (namebuf, pvalue->u.mission_pion_generique);
          break;
 
-      case 189:
+      case 188:
          sprintf (namebuf, "%s.u.mission_pion_milice_provoquer", name);
          asn1Print_Mission_Pion_MILICE_Provoquer (namebuf, pvalue->u.mission_pion_milice_provoquer);
          break;
 
-      case 190:
+      case 189:
          sprintf (namebuf, "%s.u.mission_pion_milice_prendre_et_tenir", name);
          asn1Print_Mission_Pion_MILICE_PrendreEtTenir (namebuf, pvalue->u.mission_pion_milice_prendre_et_tenir);
          break;
 
-      case 191:
+      case 190:
          sprintf (namebuf, "%s.u.mission_pion_milice_detruire_embuscade", name);
          asn1Print_Mission_Pion_MILICE_DetruireEmbuscade (namebuf, pvalue->u.mission_pion_milice_detruire_embuscade);
          break;
 
-      case 192:
+      case 191:
          sprintf (namebuf, "%s.u.mission_pion_joint_marine_transporter", name);
          asn1Print_Mission_Pion_JOINT_MARINE_Transporter (namebuf, pvalue->u.mission_pion_joint_marine_transporter);
          break;
 
-      case 193:
+      case 192:
          sprintf (namebuf, "%s.u.mission_pion_joint_air_effectuer_raid", name);
          asn1Print_Mission_Pion_JOINT_AIR_EffectuerRaid (namebuf, pvalue->u.mission_pion_joint_air_effectuer_raid);
          break;
 
-      case 194:
+      case 193:
          sprintf (namebuf, "%s.u.mission_pion_nbc_animer_un_plot_de_decontamination", name);
          asn1Print_Mission_Pion_NBC_AnimerUnPlotDeDecontamination (namebuf, pvalue->u.mission_pion_nbc_animer_un_plot_de_decontamination);
          break;
 
-      case 195:
+      case 194:
          sprintf (namebuf, "%s.u.mission_pion_nbc_reconnaitre_itineraire", name);
          asn1Print_Mission_Pion_NBC_ReconnaitreItineraire (namebuf, pvalue->u.mission_pion_nbc_reconnaitre_itineraire);
          break;
 
-      case 196:
+      case 195:
          sprintf (namebuf, "%s.u.mission_pion_nbc_reconnaitre_zone", name);
          asn1Print_Mission_Pion_NBC_ReconnaitreZone (namebuf, pvalue->u.mission_pion_nbc_reconnaitre_zone);
          break;
 
-      case 197:
+      case 196:
          sprintf (namebuf, "%s.u.mission_pion_nbc_decontaminer_zone", name);
          asn1Print_Mission_Pion_NBC_DecontaminerZone (namebuf, pvalue->u.mission_pion_nbc_decontaminer_zone);
          break;
 
-      case 198:
+      case 197:
          sprintf (namebuf, "%s.u.mission_pion_nbc_reconnaitre_un_site_rota", name);
          asn1Print_Mission_Pion_NBC_ReconnaitreUnSiteROTA (namebuf, pvalue->u.mission_pion_nbc_reconnaitre_un_site_rota);
          break;
 
-      case 199:
+      case 198:
          sprintf (namebuf, "%s.u.mission_pion_rens_rohum_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROHUM_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_rohum_renseigner_sur);
          break;
 
-      case 200:
+      case 199:
          sprintf (namebuf, "%s.u.mission_pion_rens_rohum_sexfiltrer", name);
          asn1Print_Mission_Pion_RENS_ROHUM_SExfiltrer (namebuf, pvalue->u.mission_pion_rens_rohum_sexfiltrer);
          break;
 
-      case 201:
+      case 200:
          sprintf (namebuf, "%s.u.mission_pion_rens_rohum_orienter_guider", name);
          asn1Print_Mission_Pion_RENS_ROHUM_OrienterGuider (namebuf, pvalue->u.mission_pion_rens_rohum_orienter_guider);
          break;
 
-      case 202:
+      case 201:
          sprintf (namebuf, "%s.u.mission_pion_rens_roem_appuyer", name);
          asn1Print_Mission_Pion_RENS_ROEM_Appuyer (namebuf, pvalue->u.mission_pion_rens_roem_appuyer);
          break;
 
-      case 203:
+      case 202:
          sprintf (namebuf, "%s.u.mission_pion_rens_roem_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROEM_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_roem_renseigner_sur);
          break;
 
-      case 204:
+      case 203:
          sprintf (namebuf, "%s.u.mission_pion_rens_roem_mettre_en_oeuvre", name);
          asn1Print_Mission_Pion_RENS_ROEM_MettreEnOeuvre (namebuf, pvalue->u.mission_pion_rens_roem_mettre_en_oeuvre);
          break;
 
-      case 205:
+      case 204:
          sprintf (namebuf, "%s.u.mission_pion_rens_radint_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_RADINT_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_radint_renseigner_sur);
          break;
 
-      case 206:
+      case 205:
          sprintf (namebuf, "%s.u.mission_pion_rens_radint_mettre_en_oeuvre", name);
          asn1Print_Mission_Pion_RENS_RADINT_MettreEnOeuvre (namebuf, pvalue->u.mission_pion_rens_radint_mettre_en_oeuvre);
          break;
 
-      case 207:
+      case 206:
          sprintf (namebuf, "%s.u.mission_pion_rens_roim_mettre_en_oeuvre", name);
          asn1Print_Mission_Pion_RENS_ROIM_MettreEnOeuvre (namebuf, pvalue->u.mission_pion_rens_roim_mettre_en_oeuvre);
          break;
 
-      case 208:
+      case 207:
          sprintf (namebuf, "%s.u.mission_pion_rens_roim_sdti_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_roim_sdti_renseigner_sur);
          break;
 
-      case 209:
+      case 208:
          sprintf (namebuf, "%s.u.mission_pion_rens_roim_cl289_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROIM_CL289_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_roim_cl289_renseigner_sur);
          break;
 
-      case 210:
+      case 209:
          sprintf (namebuf, "%s.u.mission_pion_trans_etablir_gerer_liaison", name);
          asn1Print_Mission_Pion_TRANS_EtablirGererLiaison (namebuf, pvalue->u.mission_pion_trans_etablir_gerer_liaison);
          break;
 
-      case 211:
+      case 210:
          sprintf (namebuf, "%s.u.mission_pion_asy_sinfiltrer", name);
          asn1Print_Mission_Pion_ASY_SInfiltrer (namebuf, pvalue->u.mission_pion_asy_sinfiltrer);
          break;
 
-      case 212:
+      case 211:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_attentatContrePopulation", name);
          asn1Print_Mission_Pion_ASY_CommettreAttentatContrePopulation (namebuf, pvalue->u.mission_pion_asy_commettre_attentatContrePopulation);
          break;
 
-      case 213:
+      case 212:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_attentatContreForcesArmees", name);
          asn1Print_Mission_Pion_ASY_CommettreAttentatContreForcesArmees (namebuf, pvalue->u.mission_pion_asy_commettre_attentatContreForcesArmees);
          break;
 
-      case 214:
+      case 213:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_attentatContreInstallation", name);
          asn1Print_Mission_Pion_ASY_CommettreAttentatContreInstallation (namebuf, pvalue->u.mission_pion_asy_commettre_attentatContreInstallation);
          break;
 
-      case 215:
+      case 214:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone", name);
          asn1Print_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone (namebuf, pvalue->u.mission_pion_asy_commettre_exactions_sur_population_dans_zone);
          break;
 
-      case 216:
+      case 215:
          sprintf (namebuf, "%s.u.mission_pion_asy_renseigner", name);
          asn1Print_Mission_Pion_ASY_Renseigner (namebuf, pvalue->u.mission_pion_asy_renseigner);
          break;

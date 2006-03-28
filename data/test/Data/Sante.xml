@@ -12,7 +12,7 @@
     <U3 esperanceVie="7200s" pourcentage="40" tempsSoin="18000s"/>
   </CategoriesBlesse>
 
-  <ReacMental pourcentage="0.5" tempsSoin="1080s"/>
+  <ReacMental pourcentage="50" tempsSoin="1080s"/>
 
   <Contamines tempsSoin="720s"/>
 

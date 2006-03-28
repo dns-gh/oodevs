@@ -402,6 +402,9 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human ) const
 {
+    if( human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
+        return false;
+
     return GetRole< PHY_RolePion_Composantes >().HasUsableDoctorForHealing( human );
 }
 

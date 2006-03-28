@@ -331,7 +331,6 @@ namespace missions
         eMission_Pion_LOG_TrierBlesses,
         eMission_Pion_LOG_TraiterBlesses,
         eMission_Pion_LOG_TrierEtTraiterBlesses,
-        eMission_Pion_LOG_SoignerBlesses,
         eMission_Pion_LOG_PrendreEnCompteReactionsMentales,
         eMission_Pion_LOG_DecontaminerBlesses,
         eMission_Pion_LOG_Reparer,

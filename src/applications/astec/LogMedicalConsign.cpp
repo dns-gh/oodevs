@@ -122,26 +122,26 @@ std::string LogMedicalConsign::GetStateString() const
 
     switch( nState_ )
     {        
-        case eWaitingForEvacuation               : strState = std::string( "En attente de relève" )                    ; break;
-        case eEvacuationGoingTo                  : strState = std::string( "Releve en route" )                         ; break;
-        case eEvacuationLoading                  : strState = std::string( "Releve en cours de chargement" )           ; break;
-        case eEvacuationWaitingForFullLoading    : strState = std::string( "Releve en attente de fin de chargement" )  ; break;
-        case eEvacuationGoingFrom                : strState = std::string( "Releve en retour" )                        ; break;
-        case eEvacuationUnloading                : strState = std::string( "Releve en cours de déchargement" )         ; break;
-        case eWaitingForDiagnostic               : strState = std::string( "En attente de diagnostique" )              ; break;
-        case eDiagnosing                         : strState = std::string( "Diagnostique en cours" )                   ; break;
-        case eSearchingForSortingArea            : strState = std::string( "Recherche d'un secteur de tri" )           ; break;
-        case eWaitingForSorting                  : strState = std::string( "En attente de tri" )                       ; break;
-        case eSorting                            : strState = std::string( "Tri en cours" )                            ; break;
-        case eSearchingForHealingArea            : strState = std::string( "Recherche d'un secteur de soin" )          ; break;
-        case eWaitingForHealing                  : strState = std::string( "En attente de soins" )                     ; break;
-        case eHealing                            : strState = std::string( "Soins en cours" )                          ; break;
-        case eWaitingForCollection               : strState = std::string( "En attente de ramassage" )                 ; break;
-        case eCollectionLoading                  : strState = std::string( "Ramassage en cours" )                      ; break;
-        case eCollectionWaitingForFullLoading    : strState = std::string( "En attente de fin de ramassage" )          ; break;
-        case eCollectionGoingTo                  : strState = std::string( "Ramassage en route" )                      ; break;
-        case eCollectionUnloading                : strState = std::string( "Dechargement du ramassage en cours" )      ; break;
-        case eFinished                           : strState = std::string( "Terminé" )                                 ; break;
+        case eWaitingForEvacuation               : strState = std::string( "Relève - En attente d'une ambulance" )                      ; break;
+        case eEvacuationGoingTo                  : strState = std::string( "Relève - Ambulance en route" )                              ; break;
+        case eEvacuationLoading                  : strState = std::string( "Relève - Embarquement dans ambulance" )                     ; break;
+        case eEvacuationWaitingForFullLoading    : strState = std::string( "Relève - En attente chargement complet de l'ambulance" )    ; break;
+        case eEvacuationGoingFrom                : strState = std::string( "Relève - Ambulance en retour" )                             ; break;
+        case eEvacuationUnloading                : strState = std::string( "Relève - Débarquement de l'ambulance" )                     ; break;
+        case eWaitingForDiagnostic               : strState = std::string( "En attente de diagnostique" )                               ; break;
+        case eDiagnosing                         : strState = std::string( "Diagnostique en cours" )                                    ; break;
+        case eSearchingForSortingArea            : strState = std::string( "Recherche d'un secteur de tri" )                            ; break;
+        case eWaitingForSorting                  : strState = std::string( "En attente de tri" )                                        ; break;
+        case eSorting                            : strState = std::string( "Tri en cours" )                                             ; break;
+        case eSearchingForHealingArea            : strState = std::string( "Recherche d'un secteur de soin" )                           ; break;
+        case eWaitingForHealing                  : strState = std::string( "En attente de soins" )                                      ; break;
+        case eHealing                            : strState = std::string( "Soins en cours" )                                           ; break;
+        case eWaitingForCollection               : strState = std::string( "Ramassage - En attente d'une ambulance" )                   ; break;
+        case eCollectionLoading                  : strState = std::string( "Ramassage - Embarquement dans ambulance" )                  ; break;
+        case eCollectionWaitingForFullLoading    : strState = std::string( "Ramassage - En attente chargement complet de l'ambulance" ) ; break;
+        case eCollectionGoingTo                  : strState = std::string( "Ramassage - Ambulance en route" )                           ; break;
+        case eCollectionUnloading                : strState = std::string( "Ramassage - Débarquement de l'ambulance" )                  ; break;
+        case eFinished                           : strState = std::string( "Terminé" )                                                  ; break;
         default:
             assert( false );
     }

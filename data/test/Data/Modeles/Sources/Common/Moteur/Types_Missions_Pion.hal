@@ -877,14 +877,12 @@ typedef struct T_Mission_Pion_LOG_TrierBlesses : T_Mission_Pion
 
 typedef struct T_Mission_Pion_LOG_TraiterBlesses : T_Mission_Pion
 {
+T_SantePriorites blessuresTraitees_;
 };
 
 typedef struct T_Mission_Pion_LOG_TrierEtTraiterBlesses : T_Mission_Pion
 {
-};
-
-typedef struct T_Mission_Pion_LOG_SoignerBlesses : T_Mission_Pion
-{
+T_SantePriorites blessuresTraitees_;
 };
 
 typedef struct T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales : T_Mission_Pion

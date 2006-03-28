@@ -43,6 +43,7 @@ public:
     //@}
 
 private:
+    static int nDIABlessuresTraiteesIdx_;
 
 };
 

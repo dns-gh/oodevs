@@ -195,6 +195,13 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
     }    
 }
 
+behavior MIS_Pion_LOG_TraiterBlesses( T_Mission_Pion_LOG_TraiterBlesses mission, id nDummy )
+{
+    if( DIA_ModuleBegins() )
+        DEC_Sante_ChangerPriorites( mission.blessuresTraitees_ );
+}
+
+
 
 behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDummy )
 {

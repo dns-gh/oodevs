@@ -92,10 +92,12 @@ public:
 
     //! @name Mission parameters tools : LOG specific
     //@{
-    static bool CopyMaintenancePriorities( const ASN1T_MaintenancePriorites& asn, DIA_Variable_ABC& dia );    
+    static bool CopyMaintenancePriorities( const ASN1T_MaintenancePriorites& asn, DIA_Variable_ABC& dia );
+    static bool CopyMaintenancePriorities( const DIA_Variable_ABC& dia, ASN1T_MaintenancePriorites& asn );    
     static bool CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_Variable_ABC& dia );    
+    static bool CopyMedicalPriorities( const DIA_Variable_ABC& dia, ASN1T_SantePriorites& asn );    
     static bool CopyMedicalPriorities( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
@@ -201,6 +203,8 @@ public:
     static void Delete( ASN1T_ListKnowledgeObject&  asn );
     static void Delete( ASN1T_ListMissionGenObject& asn );
     static void Delete( ASN1T_MissionGenObject&     asn );
+    static void Delete( ASN1T_SantePriorites&       asn );
+    static void Delete( ASN1T_MaintenancePriorites& asn );
     //@}
 
     //! @name Decoding tools

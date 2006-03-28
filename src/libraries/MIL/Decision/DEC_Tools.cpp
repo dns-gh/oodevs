@@ -334,9 +334,9 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypePerceptionObjectsLocalisation_ )
         ; // NOTHING
     else if( *pType == *pTypeMaintenancePriorites_ )
-        ; // NOTHING
+        delete static_cast< T_MaintenancePriorityVector* >( pPtr );
     else if( *pType == *pTypeSantePriorites_ )
-        assert( false );
+        delete static_cast< T_MedicalPriorityVector* >( pPtr );
     else if( *pType == *pTypePerceptionFlyingShell_ )
         assert( false );
     else

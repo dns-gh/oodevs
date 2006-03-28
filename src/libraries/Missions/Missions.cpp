@@ -311,7 +311,6 @@
 #include "Pion\MIL_PionMission_LOG_TrierBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_TraiterBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_TrierEtTraiterBlesses.cpp"
-#include "Pion\MIL_PionMission_LOG_SoignerBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_PrendreEnCompteReactionsMentales.cpp"
 #include "Pion\MIL_PionMission_LOG_DecontaminerBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_Reparer.cpp"
@@ -769,7 +768,6 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TrierBlesses>( "Pion LOG TrierBlesses", eMission_Pion_LOG_TrierBlesses, T_Mission_Pion_mission_pion_log_trier_blesses, "T_Mission_Pion_LOG_TrierBlesses", "MIS_Pion_LOG_TrierBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TraiterBlesses>( "Pion LOG TraiterBlesses", eMission_Pion_LOG_TraiterBlesses, T_Mission_Pion_mission_pion_log_traiter_blesses, "T_Mission_Pion_LOG_TraiterBlesses", "MIS_Pion_LOG_TraiterBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TrierEtTraiterBlesses>( "Pion LOG TrierEtTraiterBlesses", eMission_Pion_LOG_TrierEtTraiterBlesses, T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses, "T_Mission_Pion_LOG_TrierEtTraiterBlesses", "MIS_Pion_LOG_TrierEtTraiterBlesses");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_SoignerBlesses>( "Pion LOG SoignerBlesses", eMission_Pion_LOG_SoignerBlesses, T_Mission_Pion_mission_pion_log_soigner_blesses, "T_Mission_Pion_LOG_SoignerBlesses", "MIS_Pion_LOG_SoignerBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_PrendreEnCompteReactionsMentales>( "Pion LOG PrendreEnCompteReactionsMentales", eMission_Pion_LOG_PrendreEnCompteReactionsMentales, T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales, "T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales", "MIS_Pion_LOG_PrendreEnCompteReactionsMentales");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_DecontaminerBlesses>( "Pion LOG DecontaminerBlesses", eMission_Pion_LOG_DecontaminerBlesses, T_Mission_Pion_mission_pion_log_decontaminer_blesses, "T_Mission_Pion_LOG_DecontaminerBlesses", "MIS_Pion_LOG_DecontaminerBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Reparer>( "Pion LOG Reparer", eMission_Pion_LOG_Reparer, T_Mission_Pion_mission_pion_log_reparer, "T_Mission_Pion_LOG_Reparer", "MIS_Pion_LOG_Reparer");

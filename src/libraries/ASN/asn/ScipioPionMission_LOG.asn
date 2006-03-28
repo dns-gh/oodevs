@@ -9,10 +9,7 @@ ScipioPionMission_LOG DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, 
         Point, ListPoint, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
 
-Mission-Pion-LOG-SeDeployer ::= SEQUENCE
-{
-    position-deploiement    Point
-}
+-- SANTE
 
 Mission-Pion-LOG-DistribuerMoyens ::= SEQUENCE
 {
@@ -24,14 +21,12 @@ Mission-Pion-LOG-TrierBlesses ::= SEQUENCE
 
 Mission-Pion-LOG-TraiterBlesses ::= SEQUENCE
 {
+    blessures-traitees SantePriorites
 }
 
 Mission-Pion-LOG-TrierEtTraiterBlesses ::= SEQUENCE
 {
-}
-
-Mission-Pion-LOG-SoignerBlesses ::= SEQUENCE
-{
+    blessures-traitees SantePriorites
 }
 
 Mission-Pion-LOG-PrendreEnCompteReactionsMentales ::= SEQUENCE
@@ -42,6 +37,8 @@ Mission-Pion-LOG-DecontaminerBlesses ::= SEQUENCE
 {
 }
 
+-- MAINTENANCE
+
 Mission-Pion-LOG-Reparer ::= SEQUENCE
 {
 }
@@ -49,6 +46,9 @@ Mission-Pion-LOG-Reparer ::= SEQUENCE
 Mission-Pion-LOG-Evacuer ::= SEQUENCE
 {
 }
+
+
+-- RAV
 
 Mission-Pion-LOG-Convoyer ::= SEQUENCE
 {
@@ -66,11 +66,19 @@ Mission-Pion-LOG-Livrer ::= SEQUENCE
 {
 }
 
+-- COMMUNES
+Mission-Pion-LOG-SeDeployer ::= SEQUENCE
+{
+    position-deploiement    Point
+}
+
 Mission-Pion-LOG-PreparerBascule ::= SEQUENCE
 {
     automate-pour-bascule Automate
 }
 
+
+-- CIRCULATION
 
 Mission-Pion-LOG-AppuyerMouvement ::= SEQUENCE
 {
@@ -128,9 +136,5 @@ Mission-Pion-LOG-ArmerPIA ::= SEQUENCE
 {
     point Point
 }
-
-
-
-
 
 END -- ScipioPionMission_LOG

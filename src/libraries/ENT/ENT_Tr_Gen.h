@@ -38,6 +38,7 @@ public:
     // ConvertFrom functions 
     static const std::string& ConvertFromTypeLocalisation( E_TypeLocalisation, E_Conversion = eToSim );
     static const std::string& ConvertFromGDH_Qualificatif( E_GDH_Qualificatif, E_Conversion = eToSim );
+    static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromFamilleDotation( E_FamilleDotation, E_Conversion = eToSim );
     static const std::string& ConvertFromFamilleMunition( E_FamilleMunition, E_Conversion = eToSim );
@@ -48,7 +49,6 @@ public:
     static const std::string& ConvertFromUnitNatureMobility( E_UnitNatureMobility, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitCapaciteMission( E_UnitCapaciteMission, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
-    static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
     static const std::string& ConvertFromTempsBordee( E_TempsBordee, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionALAT_PorteeAction( E_MissionALAT_PorteeAction, E_Conversion = eToSim );
@@ -65,6 +65,7 @@ public:
     static const std::string& ConvertFromTypeFosseAC( E_TypeFosseAC, E_Conversion = eToSim );
     static const std::string& ConvertFromGenTypePontage( E_GenTypePontage, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionInfNatureObjectif( E_MissionInfNatureObjectif, E_Conversion = eToSim );
+    static const std::string& ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromAutomateOrderFormation( E_AutomateOrderFormation, E_Conversion = eToSim );
     static const std::string& ConvertFromCtrlErrorCode( E_CtrlErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromMsgCtrlClientAnnouncement( E_MsgCtrlClientAnnouncement, E_Conversion = eToSim );
@@ -84,7 +85,6 @@ public:
     static const std::string& ConvertFromLogRavitaillementTraitementEtat( E_LogRavitaillementTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromMsgLogRavitaillementChangeQuotasAck( E_MsgLogRavitaillementChangeQuotasAck, E_Conversion = eToSim );
     static const std::string& ConvertFromMsgLogRavitaillementPousserFluxAck( E_MsgLogRavitaillementPousserFluxAck, E_Conversion = eToSim );
-    static const std::string& ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromAutomateState( E_AutomateState, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitPosture( E_UnitPosture, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatRapFor( E_EtatRapFor, E_Conversion = eToSim );
@@ -113,6 +113,7 @@ public:
     // ConvertTo functions
     static E_TypeLocalisation ConvertToTypeLocalisation( const std::string& );
     static E_GDH_Qualificatif ConvertToGDH_Qualificatif( const std::string& );
+    static E_HumanWound ConvertToHumanWound( const std::string& );
     static E_UnitIdentificationLevel ConvertToUnitIdentificationLevel( const std::string& );
     static E_FamilleDotation ConvertToFamilleDotation( const std::string& );
     static E_FamilleMunition ConvertToFamilleMunition( const std::string& );
@@ -123,7 +124,6 @@ public:
     static E_UnitNatureMobility ConvertToUnitNatureMobility( const std::string& );
     static E_UnitCapaciteMission ConvertToUnitCapaciteMission( const std::string& );
     static E_NatureLevel ConvertToNatureLevel( const std::string& );
-    static E_HumanWound ConvertToHumanWound( const std::string& );
     static E_HumanRank ConvertToHumanRank( const std::string& );
     static E_TempsBordee ConvertToTempsBordee( const std::string& );
     static E_MissionALAT_PorteeAction ConvertToMissionALAT_PorteeAction( const std::string& );
@@ -140,6 +140,7 @@ public:
     static E_TypeFosseAC ConvertToTypeFosseAC( const std::string& );
     static E_GenTypePontage ConvertToGenTypePontage( const std::string& );
     static E_MissionInfNatureObjectif ConvertToMissionInfNatureObjectif( const std::string& );
+    static E_LogSanteTraitementEtat ConvertToLogSanteTraitementEtat( const std::string& );
     static E_AutomateOrderFormation ConvertToAutomateOrderFormation( const std::string& );
     static E_CtrlErrorCode ConvertToCtrlErrorCode( const std::string& );
     static E_MsgCtrlClientAnnouncement ConvertToMsgCtrlClientAnnouncement( const std::string& );
@@ -159,7 +160,6 @@ public:
     static E_LogRavitaillementTraitementEtat ConvertToLogRavitaillementTraitementEtat( const std::string& );
     static E_MsgLogRavitaillementChangeQuotasAck ConvertToMsgLogRavitaillementChangeQuotasAck( const std::string& );
     static E_MsgLogRavitaillementPousserFluxAck ConvertToMsgLogRavitaillementPousserFluxAck( const std::string& );
-    static E_LogSanteTraitementEtat ConvertToLogSanteTraitementEtat( const std::string& );
     static E_AutomateState ConvertToAutomateState( const std::string& );
     static E_UnitPosture ConvertToUnitPosture( const std::string& );
     static E_EtatRapFor ConvertToEtatRapFor( const std::string& );
@@ -189,6 +189,7 @@ private:
     // Typedefs
     typedef ENT_Tr::converter<E_TypeLocalisation> T_ConverterTypeLocalisation;
     typedef ENT_Tr::converter<E_GDH_Qualificatif> T_ConverterGDH_Qualificatif;
+    typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
     typedef ENT_Tr::converter<E_UnitIdentificationLevel> T_ConverterUnitIdentificationLevel;
     typedef ENT_Tr::converter<E_FamilleDotation> T_ConverterFamilleDotation;
     typedef ENT_Tr::converter<E_FamilleMunition> T_ConverterFamilleMunition;
@@ -199,7 +200,6 @@ private:
     typedef ENT_Tr::converter<E_UnitNatureMobility> T_ConverterUnitNatureMobility;
     typedef ENT_Tr::converter<E_UnitCapaciteMission> T_ConverterUnitCapaciteMission;
     typedef ENT_Tr::converter<E_NatureLevel> T_ConverterNatureLevel;
-    typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
     typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
     typedef ENT_Tr::converter<E_TempsBordee> T_ConverterTempsBordee;
     typedef ENT_Tr::converter<E_MissionALAT_PorteeAction> T_ConverterMissionALAT_PorteeAction;
@@ -216,6 +216,7 @@ private:
     typedef ENT_Tr::converter<E_TypeFosseAC> T_ConverterTypeFosseAC;
     typedef ENT_Tr::converter<E_GenTypePontage> T_ConverterGenTypePontage;
     typedef ENT_Tr::converter<E_MissionInfNatureObjectif> T_ConverterMissionInfNatureObjectif;
+    typedef ENT_Tr::converter<E_LogSanteTraitementEtat> T_ConverterLogSanteTraitementEtat;
     typedef ENT_Tr::converter<E_AutomateOrderFormation> T_ConverterAutomateOrderFormation;
     typedef ENT_Tr::converter<E_CtrlErrorCode> T_ConverterCtrlErrorCode;
     typedef ENT_Tr::converter<E_MsgCtrlClientAnnouncement> T_ConverterMsgCtrlClientAnnouncement;
@@ -235,7 +236,6 @@ private:
     typedef ENT_Tr::converter<E_LogRavitaillementTraitementEtat> T_ConverterLogRavitaillementTraitementEtat;
     typedef ENT_Tr::converter<E_MsgLogRavitaillementChangeQuotasAck> T_ConverterMsgLogRavitaillementChangeQuotasAck;
     typedef ENT_Tr::converter<E_MsgLogRavitaillementPousserFluxAck> T_ConverterMsgLogRavitaillementPousserFluxAck;
-    typedef ENT_Tr::converter<E_LogSanteTraitementEtat> T_ConverterLogSanteTraitementEtat;
     typedef ENT_Tr::converter<E_AutomateState> T_ConverterAutomateState;
     typedef ENT_Tr::converter<E_UnitPosture> T_ConverterUnitPosture;
     typedef ENT_Tr::converter<E_EtatRapFor> T_ConverterEtatRapFor;
@@ -264,6 +264,7 @@ private:
     // Converters
     static T_ConverterTypeLocalisation TypeLocalisationConverter_ [];
     static T_ConverterGDH_Qualificatif GDH_QualificatifConverter_ [];
+    static T_ConverterHumanWound HumanWoundConverter_ [];
     static T_ConverterUnitIdentificationLevel UnitIdentificationLevelConverter_ [];
     static T_ConverterFamilleDotation FamilleDotationConverter_ [];
     static T_ConverterFamilleMunition FamilleMunitionConverter_ [];
@@ -274,7 +275,6 @@ private:
     static T_ConverterUnitNatureMobility UnitNatureMobilityConverter_ [];
     static T_ConverterUnitCapaciteMission UnitCapaciteMissionConverter_ [];
     static T_ConverterNatureLevel NatureLevelConverter_ [];
-    static T_ConverterHumanWound HumanWoundConverter_ [];
     static T_ConverterHumanRank HumanRankConverter_ [];
     static T_ConverterTempsBordee TempsBordeeConverter_ [];
     static T_ConverterMissionALAT_PorteeAction MissionALAT_PorteeActionConverter_ [];
@@ -291,6 +291,7 @@ private:
     static T_ConverterTypeFosseAC TypeFosseACConverter_ [];
     static T_ConverterGenTypePontage GenTypePontageConverter_ [];
     static T_ConverterMissionInfNatureObjectif MissionInfNatureObjectifConverter_ [];
+    static T_ConverterLogSanteTraitementEtat LogSanteTraitementEtatConverter_ [];
     static T_ConverterAutomateOrderFormation AutomateOrderFormationConverter_ [];
     static T_ConverterCtrlErrorCode CtrlErrorCodeConverter_ [];
     static T_ConverterMsgCtrlClientAnnouncement MsgCtrlClientAnnouncementConverter_ [];
@@ -310,7 +311,6 @@ private:
     static T_ConverterLogRavitaillementTraitementEtat LogRavitaillementTraitementEtatConverter_ [];
     static T_ConverterMsgLogRavitaillementChangeQuotasAck MsgLogRavitaillementChangeQuotasAckConverter_ [];
     static T_ConverterMsgLogRavitaillementPousserFluxAck MsgLogRavitaillementPousserFluxAckConverter_ [];
-    static T_ConverterLogSanteTraitementEtat LogSanteTraitementEtatConverter_ [];
     static T_ConverterAutomateState AutomateStateConverter_ [];
     static T_ConverterUnitPosture UnitPostureConverter_ [];
     static T_ConverterEtatRapFor EtatRapForConverter_ [];

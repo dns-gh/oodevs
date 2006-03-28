@@ -11,6 +11,9 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+
+    DEC_Connaissances_AgentsPotentiellementDangereux();
+
     if( DEC_Agent_EstMort() )
         DEC_Debug( "OMG, I'M DEAD !!" );    
     if( DEC_Agent_EtatOps() == 0 )
@@ -244,8 +247,15 @@ behavior BEH_Defaut( id nDummy )
 
 behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
 {
+
     when updated:
     {
+
+//        TEsT CRASH 
+        T_Direction dir;
+        DEC_Geometrie_ConvertirPointEnLocalisation( dir );
+    
+        
     
     /*
         persistent T_PerceptionPoint perception  = 0;
