@@ -423,10 +423,11 @@ void DEC_KS_AgentQuerier::GetObjectsColliding( T_KnowledgeObjectCollisionVector&
 void DEC_KS_AgentQuerier::GetObjectsColliding( T_KnowledgeObjectDiaIDVector& container ) const
 {
     assert( pPion_ );
-
-    container.clear();
+    
     T_KnowledgeObjectCollisionVector objectsColliding;
     GetObjectsColliding( objectsColliding );
+
+    container.clear(); container.reserve( objectsColliding.size() );
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
         DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKSQuerier().GetKnowledgeObject( **itObjectColliding );
@@ -462,10 +463,11 @@ void DEC_KS_AgentQuerier::GetPopulationsColliding( T_KnowledgePopulationCollisio
 void DEC_KS_AgentQuerier::GetPopulationsColliding( T_KnowledgePopulationDiaIDVector& container ) const
 {
     assert( pPion_ );
-
-    container.clear();
     T_KnowledgePopulationCollisionVector populationsColliding;
     GetPopulationsColliding( populationsColliding );
+
+    container.clear();
+    container.reserve( populationsColliding.size() );
     for ( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
     {
         DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgePopulation( **it );

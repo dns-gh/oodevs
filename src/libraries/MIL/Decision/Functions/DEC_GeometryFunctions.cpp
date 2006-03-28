@@ -406,6 +406,8 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     // 7. Répartition des points
     T_PointVector* pOutPoints = new T_PointVector(); //$$$ RAM
 
+    pOutPoints->reserve( pions.size() + 1 );
+
     // Nombre impaire => un pion est au barycentre
     if( pions.size() % 2 )
         pOutPoints->push_back( vBarycenter );
@@ -826,14 +828,15 @@ void DEC_GeometryFunctions::ComputePosDeploiementASAOmni( DIA_Call_ABC& call, co
 {
     assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
 
-          uint         nNbrPos = (uint)call.GetParameter( 0 ).ToFloat  ();
+          int          nNbrPos = (int )call.GetParameter( 0 ).ToFloat  ();
           MT_Vector2D* pCenter =       call.GetParameter( 1 ).ToUserPtr( pCenter );
     const MT_Float     rRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
 
-    if( !nNbrPos )
+    if( nNbrPos <= 0 )
         return;
 
     T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
+    pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
     const MT_Float    rAngle = 2. * MT_PI / nNbrPos;
@@ -855,7 +858,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASANasse( DIA_Call_ABC& call, c
     assert( DEC_Tools::CheckTypePoint    ( call.GetParameter( 1 ) ) );
     assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 5 ) ) );
 
-          uint         nNbrPos        = (uint)call.GetParameter( 0 ).ToFloat  ();
+          int          nNbrPos        = (int )call.GetParameter( 0 ).ToFloat  ();
     const MT_Float     rSemiAngle     =       call.GetParameter( 2 ).ToFloat() * MT_PI / 360.; // ( / 360. = * 0.5 / 180., car demi-angle );
     const MT_Float     rIniDist       = MIL_Tools::ConvertMeterToSim( call.GetParameter( 3 ).ToFloat() );
     const MT_Float     rBetweenDist   = MIL_Tools::ConvertMeterToSim( call.GetParameter( 4 ).ToFloat() );
@@ -864,7 +867,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASANasse( DIA_Call_ABC& call, c
 
     assert( MT_IsZero( pMainDirection->SquareMagnitude() - 1. ) );
 
-    if( !nNbrPos )
+    if( nNbrPos <= 0 )
     {
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
@@ -876,6 +879,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASANasse( DIA_Call_ABC& call, c
     const MT_Vector2D vSupport2( pMainDirection->Rotated( -rSemiAngle ) * rBetweenDist );
 
     T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
+    pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
     if ( nNbrPos % 2 )
@@ -907,25 +911,26 @@ void DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( DIA_Call_ABC& 
     assert( DEC_Tools::CheckTypePoint    ( call.GetParameter( 1 ) ) );
     assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 5 ) ) );
 
-          uint         nNbrPos            = (uint)call.GetParameter( 0 ).ToFloat();
-          MT_Vector2D* pCenter            =       call.GetParameter( 1 ).ToUserPtr( pCenter );
+          int          nNbrPos            = (int)call.GetParameter( 0 ).ToFloat();
+          MT_Vector2D* pCenter            =      call.GetParameter( 1 ).ToUserPtr( pCenter );
     const MT_Float     rIniDist           = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
     const MT_Float     rBetweenLinesDist  = MIL_Tools::ConvertMeterToSim( call.GetParameter( 3 ).ToFloat() );
     const MT_Float     rBetweenPointsDist = MIL_Tools::ConvertMeterToSim( call.GetParameter( 4 ).ToFloat() );
-          MT_Vector2D  vDirection         =      *call.GetParameter( 5 ).ToUserPtr( pCenter );
+          MT_Vector2D  vDirection         =     *call.GetParameter( 5 ).ToUserPtr( pCenter );
 
     assert( MT_IsZero( vDirection.SquareMagnitude() - 1. ) );
 
     MT_Vector2D vSupport1( vDirection.Rotated90() );
     MT_Vector2D vSupport2( -vSupport1 );
 
-    if( !nNbrPos )
+    if( nNbrPos <= 0 )
     {
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
     }
 
     T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
+    pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
     pResult->push_back( *pCenter + rIniDist * vDirection + ( rBetweenPointsDist * .5 ) * vSupport1 );
@@ -1475,6 +1480,7 @@ T_PointVector* SplitListPoints( const T_PointVector& points, MT_Float rNbrParts 
         pResult->push_back( polyLine.GetPointAt( polyLine.Magnitude() / 2. ) );
     else
     {
+        pResult->reserve( (uint)rNbrParts + 1 );
         const MT_Float rPartSize = polyLine.Magnitude() / rNbrParts;
         MT_Float rDist = 0.;
         for( uint i = 0; i < rNbrParts + 1; ++i, rDist+= rPartSize )
@@ -1514,6 +1520,7 @@ void DEC_GeometryFunctions::SplitPath( DIA_Call_ABC& call )
 
     T_PointVector points;
     const DEC_Agent_Path::T_PathPointList& pathPoints = pPath->GetResult();
+    points.reserve( pathPoints.size() );
     for( DEC_Agent_Path::CIT_PathPointList it = pathPoints.begin(); it != pathPoints.end(); ++it )
         points.push_back( (**it).GetPos() );
 

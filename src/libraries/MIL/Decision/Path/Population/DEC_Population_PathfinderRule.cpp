@@ -30,6 +30,7 @@ DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Populati
     : TerrainRule_ABC()
 {
     const DEC_Population_Path::T_PopulationPathChannelerVector& channelers = path.GetChannelers();
+    channelers_.reserve( channelers.size() );
     for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
         channelers_.push_back( *it );
 }

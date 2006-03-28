@@ -60,6 +60,7 @@ TER_Polygon::TER_Polygon( const T_PointPtrVector& points,bool bConvexHull )
         return;
 
     // set ring
+    pData_->borderVector_.reserve( points.size() );
     for( CIT_PointPtrVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )   
         pData_->borderVector_.push_back( **itPoint );
 

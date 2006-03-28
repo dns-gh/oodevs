@@ -185,10 +185,9 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::UpdateCollisions()
 {
-    collidingAgents_.clear();
-
     TER_Agent_ABC::T_AgentPtrVector agents;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 100. ); //$$$ TEST
+    collidingAgents_.clear(); collidingAgents_.reserve( agents.size() );
     for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();

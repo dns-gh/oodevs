@@ -30,7 +30,7 @@ DEC_Knowledge_PopulationCollision* DEC_BlackBoard_CanContainKnowledgePopulationC
 inline
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulationCollision( T_KnowledgePopulationCollisionVector& container ) const
 {
-    container.clear();    
+    container.clear(); container.reserve( knowledgePopulationCollisionMap_.size() );
     for( CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.begin(); itKnowledge != knowledgePopulationCollisionMap_.end(); ++itKnowledge )
         container.push_back( itKnowledge->second );
 }

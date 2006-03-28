@@ -70,7 +70,7 @@ Deserializer& operator>>( Deserializer& deserializer, ObjectIdentifier& id )
 Serializer& operator<<( Serializer& serializer, const TER_Localisation& localisation )
 {
     serializer << TER_Localisation::ConvertLocalisationType( localisation.GetType() );
-    std::vector< std::string > coordinates;
+    std::vector< std::string > coordinates; coordinates.reserve( localisation.GetPoints().size() );
     for( CIT_PointVector it = localisation.GetPoints().begin(); it != localisation.GetPoints().end(); ++it )
     {
         std::string strCoordinate;
@@ -94,7 +94,7 @@ Deserializer& operator>>( Deserializer& deserializer, TER_Localisation& localisa
 
     std::vector< std::string > coordinates;
     deserializer >> coordinates;
-    T_PointVector points;
+    T_PointVector points; points.reserve( coordinates.size() );
     for( std::vector< std::string >::const_iterator it = coordinates.begin(); it != coordinates.end(); ++it )
     {
         MT_Vector2D vPosition;

@@ -53,6 +53,7 @@ Deserializer& operator>>( Deserializer& deserializer, std::vector< Type >& v )
 {
     uint32 nSize;
     deserializer >> nSize;
+    v.reserve( nSize );
     while( nSize-- > 0 )
     {
         v.push_back( Type() );

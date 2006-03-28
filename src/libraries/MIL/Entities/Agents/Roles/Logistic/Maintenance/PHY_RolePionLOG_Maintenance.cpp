@@ -102,6 +102,7 @@ namespace boost
         {
             uint nNbr;
             file >> nNbr;
+            vector.reserve( nNbr );
             while ( nNbr-- )
             {
                 ASN1T_TypeEquipement nID;
@@ -133,6 +134,7 @@ namespace boost
         {
             uint nNbr;
             file >> nNbr;
+            vector.reserve( nNbr );
             while ( nNbr-- )
             {
                 MIL_Automate* pAutomate;
@@ -160,6 +162,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uin
 
     uint nNbr;
     file >> nNbr;
+    consigns_.reserve( nNbr );
     while ( nNbr-- )
     {
         MIL_Automate* pAutomate;
@@ -303,7 +306,7 @@ void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& prio
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
     
-    consigns_.clear();
+    consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
     for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MaintenanceConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );

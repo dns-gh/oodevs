@@ -52,8 +52,8 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( DIA_Call_ABC& call, MIL_AgentPio
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::GetReinforcements( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    T_ObjectVector out;
     const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = callerAgent.GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
+    T_ObjectVector out; out.reserve( reinforcements.size() );
     for( PHY_RolePion_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
         out.push_back( &(**it).GetRole< DEC_RolePion_Decision >() );
 

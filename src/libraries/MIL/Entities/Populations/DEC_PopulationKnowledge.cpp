@@ -132,7 +132,7 @@ void DEC_PopulationKnowledge::Clean()
 // -----------------------------------------------------------------------------
 void DEC_PopulationKnowledge::GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const
 {
-    container.clear();
+    container.clear(); container.reserve( attackers_.size() );
     for( CIT_AgentSet it = attackers_.begin(); it != attackers_.end(); ++it )
         container.push_back( (void*)(**it).GetID() );        
 }
@@ -143,7 +143,7 @@ void DEC_PopulationKnowledge::GetPionsAttacking( T_PopulationKnowledgeAgentDiaID
 // -----------------------------------------------------------------------------
 void DEC_PopulationKnowledge::GetPionsSecuring( T_PopulationKnowledgeAgentDiaIDVector& container ) const
 {
-    container.clear();
+    container.clear(); container.reserve( securers_.size() );
     for( CIT_AgentSet it = securers_.begin(); it != securers_.end(); ++it )
         container.push_back( (void*)(**it).GetID() );
 }

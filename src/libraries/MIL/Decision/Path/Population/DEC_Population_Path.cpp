@@ -30,7 +30,7 @@ DEC_Population_Path::DEC_Population_Path( const MIL_PopulationFlow& flow, const 
     : flow_    ( flow )
     , profiler_()
 {
-    T_PointVector pointsTmp;
+    T_PointVector pointsTmp; pointsTmp.reserve( 2 );
     pointsTmp.push_back( flow_.GetPosition() ); // Head position
     pointsTmp.push_back( destination );
     Initialize( pointsTmp );
@@ -59,6 +59,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
 
     // initialize channeling points
     const DEC_PopulationKnowledge::T_LocationVector& channelingLocations = flow_.GetPopulation().GetKnowledge().GetChannelingLocations();
+    channelers_.reserve( channelingLocations.size() );
     for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin(); 
         itChanLocation != channelingLocations.end(); ++itChanLocation )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass, *itChanLocation ) );

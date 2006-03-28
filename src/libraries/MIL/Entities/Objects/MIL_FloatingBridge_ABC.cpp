@@ -99,7 +99,7 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
     if( pPathfindData_ )
         TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
     
-    T_PointVector tmpPoints;
+    T_PointVector tmpPoints; tmpPoints.reserve( points.size() * 2 );
     if( points.size() == 1 )
     {
         tmpPoints.push_back( points.front() );

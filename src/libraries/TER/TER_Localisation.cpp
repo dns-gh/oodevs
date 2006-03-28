@@ -115,6 +115,7 @@ TER_Localisation::TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius )
     , vCircleCenter_( vPos )
     , rCircleRadius_( rRadius )
 {
+    pointVector_.reserve( 2 );
     pointVector_.push_back( vPos );
     pointVector_.push_back( vPos + MT_Vector2D( rRadius, 0. ) );
     Initialize();
@@ -211,7 +212,7 @@ bool TER_Localisation::InitializePoint()
     // Transformation du point en rectangle
     const MT_Vector2D& vPos = *pointVector_.begin();
 
-    T_PointVector pointsTmp;
+    T_PointVector pointsTmp; pointsTmp.reserve( 5 );
     pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ - rRectSize, vPos.rY_ - rRectSize ) ));
     pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ + rRectSize, vPos.rY_ - rRectSize ) ));
     pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ + rRectSize, vPos.rY_ + rRectSize ) ));
@@ -236,7 +237,7 @@ bool TER_Localisation::InitializeCircle()
     vCircleCenter_ = pointVector_[0];
     rCircleRadius_ = ( vCircleCenter_.Distance( pointVector_[1] ) );
 
-    T_PointVector pointsTmp;
+    T_PointVector pointsTmp; pointsTmp.reserve( 10 );
     for( MT_Float rAngle = 0; rAngle < ( MT_PI * 2 ); rAngle += (MT_PI/8) )
     {
         MT_Float rX_ = vCircleCenter_.rX_ + ( rCircleRadius_ * cos( rAngle ) );
@@ -974,7 +975,7 @@ void TER_Localisation::Scale( MT_Float rDist )
             // Transformation du point en rectangle
             MT_Vector2D vPos = pointVector_.front();
 
-            pointVector_.clear();
+            pointVector_.clear(); pointVector_.reserve( 5 );
             pointVector_.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ - rNewRectSize, vPos.rY_ - rNewRectSize )) );
             pointVector_.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ + rNewRectSize, vPos.rY_ - rNewRectSize )) );
             pointVector_.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ + rNewRectSize, vPos.rY_ + rNewRectSize )) );

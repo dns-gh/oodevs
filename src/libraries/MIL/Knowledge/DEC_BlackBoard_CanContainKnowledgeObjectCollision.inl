@@ -30,7 +30,7 @@ DEC_Knowledge_ObjectCollision* DEC_BlackBoard_CanContainKnowledgeObjectCollision
 inline
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgesObjectCollision( T_KnowledgeObjectCollisionVector& container ) const
 {
-    container.clear();    
+    container.clear(); container.reserve( knowledgeObjectCollisionMap_.size() );
     for( CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.begin(); itKnowledge != knowledgeObjectCollisionMap_.end(); ++itKnowledge )
         container.push_back( itKnowledge->second );
 }

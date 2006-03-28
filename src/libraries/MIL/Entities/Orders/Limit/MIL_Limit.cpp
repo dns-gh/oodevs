@@ -114,6 +114,7 @@ void MIL_Limit::InitializeDistanceData()
     CIT_PointVector itCur  = points_.begin();
     CIT_PointVector itNext = itCur;
     ++ itNext;
+    distanceDatas_.reserve( points_.end() - itNext );
     for( ; itNext != points_.end(); ++itCur, ++itNext )
         distanceDatas_.push_back( DistanceData( *itCur, *itNext ) );
 }

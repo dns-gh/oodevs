@@ -50,7 +50,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
-
+    
+    pathPoints_.reserve( 1 + points.size() );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
     std::copy( points.begin(), points.end(), std::back_inserter( pathPoints_ ) );
     Initialize( pathPoints_ );
@@ -77,6 +78,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
 
+    pathPoints_.reserve( 2 );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
     pathPoints_.push_back( vPosEnd );
     Initialize( pathPoints_ );
@@ -206,6 +208,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
         queryMaker_.GetKSQuerier().GetPopulations( knowledgesPopulation );
+        pathKnowledgePopulationVector_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
             pathKnowledgePopulationVector_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, queryMaker_ ) );
     }
@@ -500,7 +503,7 @@ void DEC_Agent_Path::InsertDecPoints()
 
 
     //$$$$$ TEST
-    /*T_PointVector cock;
+    /*T_PointVector cock; cock.reserve( dick );
     std::cout << "========== BEGIN PATH ============" << std::endl;
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {

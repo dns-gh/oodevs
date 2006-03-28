@@ -32,6 +32,7 @@ DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate
 {
     assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
     T_ObjectVector selPions = call.GetParameter( 0 ).ToSelection();
+    pions_.reserve( selPions.size() );
     for( IT_ObjectVector itPion = selPions.begin(); itPion != selPions.end(); ++itPion )
     {
         MIL_AgentPion& pion = static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion();
@@ -45,7 +46,7 @@ DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate
 // -----------------------------------------------------------------------------
 DEC_FrontAndBackLinesComputer::~DEC_FrontAndBackLinesComputer()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

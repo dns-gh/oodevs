@@ -108,7 +108,7 @@ void DEC_DIAFunctions::CopyListLocalisation( DIA_Call_ABC& call )
           DIA_Variable_ObjectList& diaListTo   = static_cast<       DIA_Variable_ObjectList& >( call.GetParameter( 1 ) );
 
     T_LocalisationPtrVector localisationsFrom = diaListFrom.ToUserTypeList( localisationsFrom );
-    T_LocalisationPtrVector localisationsTo;
+    T_LocalisationPtrVector localisationsTo; localisationsTo.reserve( localisationsFrom.size() );
     for( CIT_LocalisationPtrVector itLoc = localisationsFrom.begin(); itLoc != localisationsFrom.end(); ++itLoc )
     {
         TER_Localisation* pNewLoc = new TER_Localisation(); //$$$$ RAM

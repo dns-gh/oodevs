@@ -68,7 +68,7 @@ void PHY_DotationCategory_IndirectMineFire::Fire( const MIL_AgentPion& firer, co
 
     const uint nNbrMines = (uint)( nNbrObjects_ * rInterventionTypeFired );
 
-    T_PointVector points;
+    T_PointVector points; points.reserve( 3 );
     points.push_back( vTargetPosition                         );
     points.push_back( vTargetPosition + vFireDirection        );
     points.push_back( vTargetPosition + vRotatedFireDirection );

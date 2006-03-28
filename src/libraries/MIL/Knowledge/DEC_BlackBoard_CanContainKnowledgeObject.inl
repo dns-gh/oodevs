@@ -33,6 +33,7 @@ DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObje
 inline
 void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const
 {
+    outContainer.reserve( knowledgeObjectFromIDMap_.size() );
     for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); ++itKnowledge )
         outContainer.push_back( itKnowledge->second );
 }

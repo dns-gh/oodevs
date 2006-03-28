@@ -69,7 +69,7 @@ bool NET_ASN_Tools::ReadLocation( const ASN1T_Localisation& asnLocalisation, TER
 {
     //$$$$ ACCEDER DIRECTEMENT A LA LOCALISATION (EVITER COPIE)
     T_PointVector pointVector;
-
+    pointVector.reserve( asnLocalisation.vecteur_point.n );
     for( uint i = 0; i < asnLocalisation.vecteur_point.n; ++i )
     {
         MT_Vector2D vPos;
@@ -129,7 +129,7 @@ bool NET_ASN_Tools::ReadPath( const ASN1T_Line& asn, T_PointVector& itineraire )
     if( asn.type != EnumTypeLocalisation::line || asn.vecteur_point.n < 1 )
         return false;
 
-    itineraire.clear();
+    itineraire.clear(); itineraire.reserve( asn.vecteur_point.n );
     for( uint i = 0; i < asn.vecteur_point.n; ++i )
     {
         MT_Vector2D vPos;
@@ -160,7 +160,7 @@ bool NET_ASN_Tools::ReadPolygon( const ASN1T_Polygon&      asn, TER_Localisation
 // static
 bool NET_ASN_Tools::ReadLocationList( const ASN1T_ListLocalisation& asnListLocalisation, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin )
 {
-    localisationVector.clear();
+    localisationVector.clear(); localisationVector.reserve( asnListLocalisation.n );
     for( uint i = 0; i < asnListLocalisation.n; ++i )
     {
         TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
@@ -189,7 +189,7 @@ bool NET_ASN_Tools::ReadPolygonList( const ASN1T_ListPolygon& asn, T_Localisatio
             return false;
     }
     
-    localisationVector.clear();
+    localisationVector.clear(); localisationVector.reserve( asn.n );
     for( i = 0; i < asn.n; ++i )
     {
         TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
@@ -213,8 +213,7 @@ bool NET_ASN_Tools::ReadPolygonList( const ASN1T_ListPolygon& asn, T_Localisatio
 // static
 bool NET_ASN_Tools::ReadPointList( const ASN1T_ListPoint& asn, T_PointVector& pointVector )
 {
-	pointVector.clear();
-
+	pointVector.clear(); pointVector.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         MT_Vector2D vPos;
@@ -231,7 +230,7 @@ bool NET_ASN_Tools::ReadPointList( const ASN1T_ListPoint& asn, T_PointVector& po
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadPathList( const ASN1T_ListItineraire&   asn, T_ItinerairePtrVector& itineraireVector )
 {
-    itineraireVector.clear();
+    itineraireVector.clear(); itineraireVector.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         T_PointVector* pItineraire = new T_PointVector(); //$$$ RAM
@@ -240,6 +239,7 @@ bool NET_ASN_Tools::ReadPathList( const ASN1T_ListItineraire&   asn, T_Itinerair
         else
         {
             MT_DELETEOWNED( itineraireVector );
+            itineraireVector.clear();
             return false;
         }
     }
@@ -270,8 +270,7 @@ DEC_RolePion_Decision* NET_ASN_Tools::ReadAgent( const ASN1T_Agent& asnAgent )
 // static
 bool NET_ASN_Tools::ReadAgentList( const ASN1T_ListAgent& asnListAgent, T_ObjectVector& unitList )
 {
-    unitList.clear();
-
+    unitList.clear(); unitList.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
     {
         DEC_RolePion_Decision* pAgent = ReadAgent( asnListAgent.elem[n] );
@@ -305,8 +304,7 @@ DEC_AutomateDecision* NET_ASN_Tools::ReadAutomate( const ASN1T_Agent& asnAgent )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadAutomateList( const ASN1T_ListAutomate& asnListAgent, T_ObjectVector& unitList )
 {
-    unitList.clear();
-
+    unitList.clear(); unitList.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
     {
         DEC_AutomateDecision* pAgent = ReadAutomate( asnListAgent.elem[n] );
@@ -336,7 +334,7 @@ DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_KnowledgeAge
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnListAgent, T_KnowledgeAgentDiaIDVector& knowledges, const DEC_KS_KnowledgeGroupQuerier& knowledge )
 {
-    knowledges.clear();
+    knowledges.clear(); knowledges.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
     {        
         DEC_Knowledge_Agent* pKnowledge = ReadAgentKnowledge( asnListAgent.elem[n], knowledge );
@@ -364,7 +362,7 @@ DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_KnowledgeO
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const DEC_KS_KnowledgeGroupQuerier& knowledge )
 {
-    knowledges.clear();
+    knowledges.clear(); knowledges.reserve( asnListObject.n );
     for( uint n = 0; n < asnListObject.n; ++n )
     {        
         DEC_Knowledge_Object* pKnowledge = ReadObjectKnowledge( asnListObject.elem[n], knowledge );
@@ -1320,6 +1318,7 @@ bool NET_ASN_Tools::CopyAutomateList( const DIA_Variable_ABC& diaFrom, DIA_Varia
 bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites& asn, DIA_Variable_ABC& dia )
 {
     T_MaintenancePriorityVector* pData = new T_MaintenancePriorityVector();
+    pData->reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         uint nCompTypeMosID = asn.elem[i];
@@ -1381,7 +1380,7 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, 
 bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_Variable_ABC& dia )
 {
     T_MedicalPriorityVector* pData = new T_MedicalPriorityVector();
-
+    pData->reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         ASN1T_EnumHumanWound nWoundID = asn.elem[i];
@@ -1485,6 +1484,7 @@ void NET_ASN_Tools::ResetGenObject( DIA_Variable_ABC& dia )
 bool NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia )
 {
     T_ObjectVector genObjects;
+    genObjects.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         DEC_Gen_Object* pGenObject = new DEC_Gen_Object();
@@ -1624,6 +1624,7 @@ void NET_ASN_Tools::CopyLocationList( const DIA_Variable_ABC& diaFrom, DIA_Varia
 
     T_LocalisationPtrVector localisationsFrom = diaListFrom.ToUserTypeList( localisationsFrom );
     T_LocalisationPtrVector localisationsTo;
+    localisationsTo.reserve( localisationsFrom.size() );
     for( CIT_LocalisationPtrVector itLoc = localisationsFrom.begin(); itLoc != localisationsFrom.end(); ++itLoc )
     {
         TER_Localisation* pNewLoc = new TER_Localisation(); //$$$$ RAM
@@ -1729,6 +1730,7 @@ void NET_ASN_Tools::CopyPolygonList( const DIA_Variable_ABC& diaFrom, DIA_Variab
 
     T_LocalisationPtrVector PolygonsFrom = diaListFrom.ToUserTypeList( PolygonsFrom );
     T_LocalisationPtrVector PolygonsTo;
+    PolygonsTo.reserve( PolygonsFrom.size() );
     for( CIT_LocalisationPtrVector itLoc = PolygonsFrom.begin(); itLoc != PolygonsFrom.end(); ++itLoc )
     {
         TER_Localisation* pNewLoc = new TER_Localisation(); //$$$$ RAM
@@ -1981,7 +1983,7 @@ bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& diaFrom, DIA_Variable_
           DIA_Variable_ObjectList& diaListTo   = static_cast<       DIA_Variable_ObjectList& >( diaTo );
 
     T_ItinerairePtrVector itinerairesFrom = diaListFrom.ToUserTypeList( itinerairesFrom );
-    T_ItinerairePtrVector itinerairesTo;
+    T_ItinerairePtrVector itinerairesTo; itinerairesTo.reserve( itinerairesFrom.size() );
     for( CIT_ItinerairePtrVector itIti = itinerairesFrom.begin(); itIti != itinerairesFrom.end(); ++itIti )
     {
         T_PointVector* pPointVector = new T_PointVector(); //$$$ RAM

@@ -123,12 +123,14 @@ void MIL_Fuseau::SplitLimit( const T_PointVector& limit, T_PointVectorVector& pa
 
 
     CIT_PointVector itPrev = limit.begin();
+    parts.reserve( 4 );
     parts.push_back( T_PointVector() );
 
     // 1st part
     if( itBeginLimaIntersection != limit.end() )
     {
         assert( itPrev <= itBeginLimaIntersection );
+        parts.back().reserve( itBeginLimaIntersection - itPrev + 1 );
         std::copy( itPrev, itBeginLimaIntersection, std::back_inserter( parts.back() ) );
         parts.back().push_back( vBeginLimaIntersection );
         parts.push_back( T_PointVector() );
@@ -147,6 +149,7 @@ void MIL_Fuseau::SplitLimit( const T_PointVector& limit, T_PointVectorVector& pa
     if( itEndLimaIntersection != limit.end() )
     {
         assert( itPrev <= itEndLimaIntersection );
+        parts.back().reserve( itEndLimaIntersection - itPrev + 2 );
         std::copy( itPrev, itEndLimaIntersection, std::back_inserter( parts.back() ) );
         parts.back().push_back( vEndLimaIntersection );
         parts.push_back( T_PointVector() );
@@ -163,6 +166,7 @@ void MIL_Fuseau::SplitLimit( const T_PointVector& limit, T_PointVectorVector& pa
     }
 
     // 3rd part
+    parts.back().reserve( limit.end() - itPrev + 1 );
     std::copy( itPrev, limit.end(), std::back_inserter( parts.back() ) );
 
 
@@ -194,6 +198,7 @@ void MIL_Fuseau::SplitLimit( const T_PointVector& limit, T_PointVectorVector& pa
 bool MIL_Fuseau::IsPointInsidePolygon( T_PointVector& leftPoints, T_PointVector& rightPoints, const MT_Vector2D& vPoint )
 {
     T_PointPtrVector pointsVector;
+    pointsVector.reserve( leftPoints.size() + rightPoints.size() + 1 );
     for( IT_PointVector itPoint = leftPoints.begin(); itPoint != leftPoints.end(); ++itPoint )
         pointsVector.push_back( &*itPoint );
     for( RIT_PointVector ritPoint = rightPoints.rbegin(); ritPoint != rightPoints.rend(); ++ritPoint )
@@ -275,6 +280,7 @@ void MIL_Fuseau::InitializePolygon()
 {
     // Create the ring
     T_PointPtrVector pointsVector;
+    pointsVector.reserve( leftPointVector_.size() + rightPointVector_.size() + 1 );
     for( IT_PointVector itPoint = leftPointVector_.begin(); itPoint != leftPointVector_.end(); ++itPoint )
         pointsVector.push_back( &*itPoint );
     for( RIT_PointVector ritPoint = rightPointVector_.rbegin(); ritPoint != rightPointVector_.rend(); ++ritPoint )
@@ -541,10 +547,14 @@ bool MIL_Fuseau::Split( uint nNbrSubFuseau, T_LimitConstPtrVector& limitVector )
     
         uint i = 1;
         for( IT_PointsVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it, ++i )
+        {
+            (*it).reserve( leftPointVectorTmp.size() );
             (*it).push_back( leftPointVectorTmp[j] + vTmp * (MT_Float)(i) );
+        }
     }
 
     // Limits creation
+    limitVector.reserve( 2 + limitsPoints.size() );
     limitVector.push_back( pLeftLimit_ );
     for( CIT_PointsVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
         limitVector.push_back( &MIL_AgentServer::GetWorkspace().GetLimitManager().CreateLimit( *it ) );
@@ -913,7 +923,7 @@ TER_DynamicData* MIL_Fuseau::CreateDynamicData() const
     assert( leftPointVectorTmp.size() == rightPointVectorTmp.size() );
     assert( !leftPointVectorTmp.empty() );
     ///
-    T_PointVector middle;
+    T_PointVector middle; middle.reserve( leftPointVectorTmp.size() );
     for( uint j = 0; j < leftPointVectorTmp.size(); ++j )
         middle.push_back( leftPointVectorTmp[j] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
 

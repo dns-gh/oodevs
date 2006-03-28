@@ -71,9 +71,10 @@ void DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC( DIA_Call_ABC& call, con
 // -----------------------------------------------------------------------------
 void DEC_AutomateFunctions::GetPionsWithPC( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
-    T_ObjectVector result;
+    T_ObjectVector result; 
 
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
+    result.reserve( pions.size() );
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         result.push_back( &(**itPion).GetDecision() );
     call.GetResult().SetValue( result );

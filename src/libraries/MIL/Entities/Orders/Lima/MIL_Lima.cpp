@@ -168,7 +168,7 @@ bool MIL_Lima::Update( const ASN1T_MsgLimaUpdate& asnMsg, MIL_MOSContextID nCtx 
 //-----------------------------------------------------------------------------
 void MIL_Lima::ReadPoints( const ASN1T__SeqOfCoordUTM& listPoint )
 {
-    pointVector_.clear();
+    pointVector_.clear(); pointVector_.reserve( listPoint.n );
     for( uint i = 0; i < listPoint.n; ++i )
     {
         MT_Vector2D vPosTmp;

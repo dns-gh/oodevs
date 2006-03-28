@@ -169,6 +169,7 @@ namespace boost
         {
             uint nNbr;
             file >> nNbr;
+            vector.reserve( nNbr );
             while ( nNbr-- )
             {
                 PHY_ComposantePion* pComp;

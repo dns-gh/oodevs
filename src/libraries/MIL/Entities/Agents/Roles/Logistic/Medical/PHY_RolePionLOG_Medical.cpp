@@ -47,6 +47,7 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_Ag
     , reservations_        ()
     , pWorkTime_           ( &PHY_LogWorkTime::time8Hours_ )
 {
+    priorities_.reserve( 5 );
     priorities_.push_back( & PHY_HumanWound::woundedUE_  );
     priorities_.push_back( & PHY_HumanWound::woundedU1_  );
     priorities_.push_back( & PHY_HumanWound::woundedU2_  );
@@ -110,6 +111,7 @@ namespace boost
     {
         uint nNbr;
         file >> nNbr;
+        vector.reserve( nNbr );
         while ( nNbr-- )
         {
             uint nID;
@@ -141,6 +143,7 @@ namespace boost
     {
         uint nNbr;
         file >> nNbr;
+        vector.reserve( nNbr );
         while ( nNbr-- )
         {
             MIL_Automate* pAutomate;
@@ -240,6 +243,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 
     uint nNbr;
     file >> nNbr;
+    consigns_.reserve( nNbr );
     while ( nNbr-- )
     {
         MIL_Automate* pAutomate;
@@ -461,7 +465,7 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_AutomateVector& prioriti
 {
     T_MedicalConsigns oldConsigns = consigns_;
 
-    consigns_.clear();
+    consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
     for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MedicalConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );

@@ -273,7 +273,7 @@ bool MIL_NuageNBC::UpdateShape( TER_Localisation& newLocalisation )
     }
     else
     {
-        T_PointVector points;
+        T_PointVector points; points.reserve( 12 );
 
         // demi cercle
         const MT_Float rInitialAngle = Angle( MT_Vector2D( 0., 1. ), wind.vWindDirection_ );

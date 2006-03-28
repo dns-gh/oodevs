@@ -105,6 +105,7 @@ void TER_AgentManager::GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentV
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< MT_Ellipse > finder( ellipse, agents );
+    agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
 
 }
@@ -118,6 +119,7 @@ void TER_AgentManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( vCenter.rX_ - rRadius, vCenter.rY_ - rRadius )
                                                         , geometry::Point2<MT_Float>( vCenter.rX_ + rRadius, vCenter.rY_ + rRadius ) );
     AgentFinder< Circle > finder( Circle( vCenter, rRadius ), agents );
+    agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
 }
 
@@ -131,6 +133,7 @@ void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& locali
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< TER_Localisation > finder( localisation, agents );
+    agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
 }
 
@@ -144,6 +147,7 @@ void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& locali
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinderPrecision< TER_Localisation > finder( localisation, rPrecision, agents );
+    agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
 }
 
@@ -157,6 +161,7 @@ void TER_AgentManager::GetListWithinPolygon( const TER_Polygon& polygon, T_Agent
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< TER_Polygon > finder( polygon, agents );
+    agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
 }
 

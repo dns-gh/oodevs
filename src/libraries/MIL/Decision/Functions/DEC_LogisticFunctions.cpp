@@ -76,6 +76,7 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( DIA_Call_AB
     T_ObjectVector data = call.GetParameter( 0 ).ToSelection();
 
     T_AutomateVector automates;
+    automates.reserve( data.size() );
     for( CIT_ObjectVector it = data.begin(); it != data.end(); ++it )
         automates.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
 
@@ -246,6 +247,7 @@ void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( DIA_Call_ABC& c
     T_ObjectVector data = call.GetParameter( 0 ).ToSelection();
 
     T_AutomateVector automates;
+    automates.reserve( data.size() );
     for( CIT_ObjectVector it = data.begin(); it != data.end(); ++it )
         automates.push_back( &static_cast< DEC_AutomateDecision& >( **it ).GetAutomate() );
 
