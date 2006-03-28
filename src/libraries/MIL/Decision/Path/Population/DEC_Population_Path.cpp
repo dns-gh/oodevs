@@ -13,6 +13,7 @@
 
 #include "DEC_Population_Path.h"
 
+#include "DEC_Population_PathClass.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
@@ -54,11 +55,13 @@ DEC_Population_Path::~DEC_Population_Path()
 // -----------------------------------------------------------------------------
 void DEC_Population_Path::Initialize( const T_PointVector& points )
 {
+    const DEC_Population_PathClass& pathClass = DEC_Population_PathClass::GetPathClass( "base" );
+
     // initialize channeling points
     const DEC_PopulationKnowledge::T_LocationVector& channelingLocations = flow_.GetPopulation().GetKnowledge().GetChannelingLocations();
     for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin(); 
         itChanLocation != channelingLocations.end(); ++itChanLocation )
-        channelers_.push_back( DEC_Population_Path_Channeler( *itChanLocation ) );
+        channelers_.push_back( DEC_Population_Path_Channeler( pathClass, *itChanLocation ) );
 
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;

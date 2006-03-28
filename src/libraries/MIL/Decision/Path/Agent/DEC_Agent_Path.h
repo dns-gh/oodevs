@@ -27,6 +27,7 @@ class DEC_Rep_PathPoint;
 class DEC_PathType;
 class MIL_Lima;
 class MIL_AgentPion;
+class DEC_Agent_PathClass;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -71,7 +72,7 @@ public:
     const T_PathKnowledgeAgentVector&       GetPathKnowledgeAgents      () const;
     const T_PathKnowledgePopulationVector&  GetPathKnowledgePopulations () const;
     const DEC_PathType&                     GetPathType                 () const;
-    const DEC_PathClass&                    GetPathClass                () const;         
+    const DEC_Agent_PathClass&              GetPathClass                () const;         
     //@}
     
     //! @name Tools
@@ -111,7 +112,7 @@ private:
     
     // Path calculation parameters
     const DEC_PathType&                   pathType_;
-    const DEC_PathClass&                  pathClass_;
+    const DEC_Agent_PathClass&            pathClass_;
           bool                            bRefine_;
           T_PointVector                   pathPoints_;
           MIL_Fuseau                      fuseau_;

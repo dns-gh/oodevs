@@ -14,7 +14,7 @@
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const DEC_PathClass& DEC_Agent_Path::GetPathClass() const
+const DEC_Agent_PathClass& DEC_Agent_Path::GetPathClass() const
 {
     return pathClass_;
 }

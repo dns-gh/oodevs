@@ -12,8 +12,7 @@
 #include "MIL_pch.h"
 #include "DEC_PathFunctions.h"
 
-#include "Decision/Path/Agent/DEC_PathType.h"
-#include "Decision/Path/Agent/DEC_PathClass.h"
+#include "Decision/Path/DEC_PathType.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
@@ -42,7 +41,7 @@ void DEC_PathFunctions::CreatePathToPoint( DIA_Call_ABC& call, MIL_AgentPion& ca
     assert( pPathType );
 
     DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pEnd, *pPathType );
-    pPath->IncDIARef();  
+    pPath->IncDIARef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
     call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );
 }

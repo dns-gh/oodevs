@@ -67,13 +67,13 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
                                       .Merge( TerrainData::LargeRoad  () )
                                       .Merge( TerrainData::UrbanBorder() ) );
 
-    const MT_Float rTerrainCost = terrainBetween.ContainsOne( preferedTerrain ) ? 0 : 10000.;
+    const double rTerrainCost = terrainBetween.ContainsOne( preferedTerrain ) ? 0 : 10000.;
 
     MT_Vector2D vFrom( from.X(), from.Y() ); 
     MT_Vector2D vTo  ( to.X()  , to.Y() );
-    MT_Float rChannelingCost = 0.;
+    double rChannelingCost = 0.;
     for( CIT_PathChannelers it = channelers_.begin(); it != channelers_.end(); ++it )
         rChannelingCost += it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween );
     
-    return from.Distance( to ) * ( 1 + rChannelingCost + rTerrainCost ) ;
+    return float( from.Distance( to ) * ( 1 + rChannelingCost + rTerrainCost ) );
 }

@@ -19,14 +19,14 @@
 #include "MIL_pch.h"
 #include "DEC_Path_KnowledgeAgent.h"
 
-#include "DEC_PathClass.h"
+#include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
+DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
     : vEnemyPosition_   ( knowledge.GetPosition() )
     , rSecurityDistance_( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
 { 

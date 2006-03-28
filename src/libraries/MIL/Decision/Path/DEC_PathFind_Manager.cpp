@@ -15,8 +15,8 @@
 #include "DEC_Path_ABC.h"
 
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "Agent/DEC_PathType.h"
-#include "Agent/DEC_PathClass.h"
+#include "DEC_PathType.h"
+#include "DEC_PathFactory.h"
 
 #include "TER/TER_PathfinderThread.h"
 #include "TER/TER_PathFindManager.h"
@@ -45,7 +45,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
     rulesArchive.Open( strRulesArchive );
 
     DEC_PathType::Initialize();
-    DEC_PathClass::Initialize( rulesArchive );
+    DEC_PathFactory::Initialize( rulesArchive );
 
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", nPathfindThreads ) );
 
@@ -59,8 +59,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::~DEC_PathFind_Manager()
 {
-    DEC_PathClass::Terminate();
-    DEC_PathType ::Terminate();    
+    DEC_PathFactory::Terminate();
+    DEC_PathType   ::Terminate();
 }
 
 // =============================================================================

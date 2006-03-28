@@ -20,33 +20,31 @@
 #define __DEC_PathClass_h_
 
 class DEC_PathType;
-class DEC_Path;
 class MIL_AgentPion;
 class MIL_RealObjectType;
 class MIL_PopulationAttitude;
-class TerrainRule_ABC;
 
 // =============================================================================
-/** @class  DEC_PathClass
-    @brief  DEC_PathClass
+/** @class  DEC_Agent_PathClass
+    @brief  DEC_Agent_PathClass
 */
 // Created: AGE 2005-08-04
 // =============================================================================
-class DEC_PathClass
+class DEC_Agent_PathClass
 {
 public:
     //! @name Manager
     //@{
     static void                 Initialize  ( MIL_InputArchive& archive );
     static void                 Terminate   ();
-    static const DEC_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion );
+    static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion );
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pCopyFrom = 0 );
-    virtual ~DEC_PathClass();
+             DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_Agent_PathClass* pCopyFrom = 0 );
+    virtual ~DEC_Agent_PathClass();
     //@}
 
     //! @name Accessors
@@ -81,6 +79,7 @@ public:
           MT_Float     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
           MT_Float     GetPopulationSecurityRange          () const;
           MT_Float     GetPopulationMaximumCost            () const;
+          MT_Float     GetCostOutsideOfPopulation          () const;
 
           bool         IsShort                             () const;
     //@}
@@ -103,7 +102,19 @@ private:
     static void InitializeRules      ( MIL_InputArchive& archive );
     static void CheckRulesExistence  ();
     //@}
-   
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< MT_Float >                              T_ObjectCosts;
+
+    typedef std::pair< bool /*bFlying*/, bool /*, bAutonomous*/> T_BooleanPair;
+    typedef std::pair< std::string, T_BooleanPair >              T_RuleType;
+    typedef std::map< T_RuleType, DEC_Agent_PathClass* >         T_Rules;
+
+    typedef std::map< const MIL_PopulationAttitude*, MT_Float >  T_PopulationAttitudeCosts;
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -134,26 +145,16 @@ private:
 
     MT_Float rPopulationSecurityRange_;
     MT_Float rPopulationMaximumCost_;
+    MT_Float rCostOutsideOfPopulation_;
+
+    T_PopulationAttitudeCosts populationAttitudeCosts_;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< MT_Float >                              T_ObjectCosts;
-
-    typedef std::pair< bool /*bFlying*/, bool /*, bAutonomous*/> T_BooleanPair;
-    typedef std::pair< std::string, T_BooleanPair >              T_RuleType;
-    typedef std::map< T_RuleType, DEC_PathClass* >               T_Rules;
-
-    typedef std::map< const MIL_PopulationAttitude*, MT_Float >  T_PopulationAttitudeCosts;
-    //@}
-
-private:
-    static T_Rules                   rules_;
-    static T_ObjectCosts             objectCosts_;
-    static T_PopulationAttitudeCosts populationAttitudeCosts_;
+    static T_Rules       rules_;
+    static T_ObjectCosts objectCosts_;
 };
 
-#include "DEC_PathClass.inl"
+#include "DEC_Agent_PathClass.inl"
 
 #endif // __DEC_PathClass_h_

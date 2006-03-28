@@ -13,8 +13,8 @@
 #include "DEC_Agent_Path.h"
 
 #include "DEC_Agent_PathSection.h"
-#include "DEC_PathType.h"
-#include "DEC_PathClass.h"
+#include "DEC_Agent_PathClass.h"
+#include "Decision/Path/DEC_PathType.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
@@ -44,7 +44,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
-    , pathClass_         ( DEC_PathClass::GetPathClass( pathType, queryMaker ) )
+    , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_( false )
     , pathPoints_        ()
 {
@@ -70,7 +70,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
-    , pathClass_         ( DEC_PathClass::GetPathClass( pathType, queryMaker ) )
+    , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_( false )
     , pathPoints_        ()
 {

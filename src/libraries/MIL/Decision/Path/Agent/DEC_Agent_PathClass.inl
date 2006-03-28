@@ -8,231 +8,231 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetEnemyMaximumCost
+// Name: DEC_Agent_PathClass::GetEnemyMaximumCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetEnemyMaximumCost() const
+MT_Float DEC_Agent_PathClass::GetEnemyMaximumCost() const
 {
     return rEnemyMaximumCost_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetEnemyCostOnContact
+// Name: DEC_Agent_PathClass::GetEnemyCostOnContact
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetEnemyCostOnContact() const
+MT_Float DEC_Agent_PathClass::GetEnemyCostOnContact() const
 {
     return rEnemyCostOnContact_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetEnemyCostAtSecurityRange
+// Name: DEC_Agent_PathClass::GetEnemyCostAtSecurityRange
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetEnemyCostAtSecurityRange() const
+MT_Float DEC_Agent_PathClass::GetEnemyCostAtSecurityRange() const
 {
     return rEnemyCostAtSecurityRange_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetPreferedTerrainCost
+// Name: DEC_Agent_PathClass::GetPreferedTerrainCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetPreferedTerrainCost() const
+MT_Float DEC_Agent_PathClass::GetPreferedTerrainCost() const
 {
     return rPreferedTerrainCost_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetPreferedTerrain
+// Name: DEC_Agent_PathClass::GetPreferedTerrain
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const TerrainData& DEC_PathClass::GetPreferedTerrain() const
+const TerrainData& DEC_Agent_PathClass::GetPreferedTerrain() const
 {
     return preferedTerrain_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetAvoidedTerrainCost_
+// Name: DEC_Agent_PathClass::GetAvoidedTerrainCost_
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetAvoidedTerrainCost() const
+MT_Float DEC_Agent_PathClass::GetAvoidedTerrainCost() const
 {
     return rAvoidedTerrainCost_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetAvoidedTerrain_
+// Name: DEC_Agent_PathClass::GetAvoidedTerrain_
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const TerrainData& DEC_PathClass::GetAvoidedTerrain() const
+const TerrainData& DEC_Agent_PathClass::GetAvoidedTerrain() const
 {
     return avoidedTerrain_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetAltitudePreference
+// Name: DEC_Agent_PathClass::GetAltitudePreference
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetAltitudePreference() const
+MT_Float DEC_Agent_PathClass::GetAltitudePreference() const
 {
     return rAltitudePreference_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetComfortFuseauDistance
+// Name: DEC_Agent_PathClass::GetComfortFuseauDistance
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetComfortFuseauDistance() const
+MT_Float DEC_Agent_PathClass::GetComfortFuseauDistance() const
 {
     return rComfortFuseauDistance_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetFuseauCostPerMeterOut
+// Name: DEC_Agent_PathClass::GetFuseauCostPerMeterOut
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetFuseauCostPerMeterOut() const
+MT_Float DEC_Agent_PathClass::GetFuseauCostPerMeterOut() const
 {
     return rFuseauCostPerMeterOut_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetFuseauCostPerMeterIn
+// Name: DEC_Agent_PathClass::GetFuseauCostPerMeterIn
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetFuseauCostPerMeterIn() const
+MT_Float DEC_Agent_PathClass::GetFuseauCostPerMeterIn() const
 {
     return rFuseauCostPerMeterIn_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetMaximumFuseauDistance
+// Name: DEC_Agent_PathClass::GetMaximumFuseauDistance
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetMaximumFuseauDistance() const
+MT_Float DEC_Agent_PathClass::GetMaximumFuseauDistance() const
 {
     return rMaximumFuseauDistance_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetMaximumFuseauDistanceWithAutomata
+// Name: DEC_Agent_PathClass::GetMaximumFuseauDistanceWithAutomata
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetMaximumFuseauDistanceWithAutomata() const
+MT_Float DEC_Agent_PathClass::GetMaximumFuseauDistanceWithAutomata() const
 {
     return rMaximumFuseauDistanceWithAutomata_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetAutomateFuseauCostPerMeterOut
+// Name: DEC_Agent_PathClass::GetAutomateFuseauCostPerMeterOut
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetAutomateFuseauCostPerMeterOut() const
+MT_Float DEC_Agent_PathClass::GetAutomateFuseauCostPerMeterOut() const
 {
     return rAutomataFuseauCostPerMeterOut_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetMaximumAutomataFuseauDistance
+// Name: DEC_Agent_PathClass::GetMaximumAutomataFuseauDistance
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetMaximumAutomataFuseauDistance() const
+MT_Float DEC_Agent_PathClass::GetMaximumAutomataFuseauDistance() const
 {
     return rMaximumAutomataFuseauDistance_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetDangerDirectionBaseCost
+// Name: DEC_Agent_PathClass::GetDangerDirectionBaseCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetDangerDirectionBaseCost() const
+MT_Float DEC_Agent_PathClass::GetDangerDirectionBaseCost() const
 {
     return rDangerDirectionBaseCost_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetDangerDirectionLinearCost
+// Name: DEC_Agent_PathClass::GetDangerDirectionLinearCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetDangerDirectionLinearCost() const
+MT_Float DEC_Agent_PathClass::GetDangerDirectionLinearCost() const
 {
     return rDangerDirectionLinearCost_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::AvoidObjects
+// Name: DEC_Agent_PathClass::AvoidObjects
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-bool DEC_PathClass::AvoidObjects() const
+bool DEC_Agent_PathClass::AvoidObjects() const
 {
     return bAvoidObjects_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::AvoidEnemies
+// Name: DEC_Agent_PathClass::AvoidEnemies
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-bool DEC_PathClass::AvoidEnemies() const
+bool DEC_Agent_PathClass::AvoidEnemies() const
 {
     return rEnemyCostOnContact_ || rEnemyCostAtSecurityRange_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::HandlePopulations
+// Name: DEC_Agent_PathClass::HandlePopulations
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 inline
-bool DEC_PathClass::HandlePopulations() const
+bool DEC_Agent_PathClass::HandlePopulations() const
 {
     return !populationAttitudeCosts_.empty();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::IsShort
+// Name: DEC_Agent_PathClass::IsShort
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-bool DEC_PathClass::IsShort() const
+bool DEC_Agent_PathClass::IsShort() const
 {
     return bShort_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetPopulationSecurityRange
+// Name: DEC_Agent_PathClass::GetPopulationSecurityRange
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetPopulationSecurityRange() const
+MT_Float DEC_Agent_PathClass::GetPopulationSecurityRange() const
 {
     return rPopulationSecurityRange_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetPopulationMaximumCost
+// Name: DEC_Agent_PathClass::GetPopulationMaximumCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathClass::GetPopulationMaximumCost() const
+MT_Float DEC_Agent_PathClass::GetPopulationMaximumCost() const
 {
     return rPopulationMaximumCost_;
 }

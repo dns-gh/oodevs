@@ -18,36 +18,35 @@
 
 #include "MIL_pch.h"
 
-#include "DEC_PathClass.h"
+#include "DEC_Agent_PathClass.h"
 
-#include "DEC_PathType.h"
+#include "Decision/Path/DEC_PathType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 
-DEC_PathClass::T_Rules                   DEC_PathClass::rules_;
-DEC_PathClass::T_ObjectCosts             DEC_PathClass::objectCosts_;
-DEC_PathClass::T_PopulationAttitudeCosts DEC_PathClass::populationAttitudeCosts_;
+DEC_Agent_PathClass::T_Rules       DEC_Agent_PathClass::rules_;
+DEC_Agent_PathClass::T_ObjectCosts DEC_Agent_PathClass::objectCosts_;
 
 // =============================================================================
 // MANAGER
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::Initialize
+// Name: DEC_Agent_PathClass::Initialize
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-void DEC_PathClass::Initialize( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::Initialize( MIL_InputArchive& archive )
 {
     InitializeObjectCosts();
-    InitializeRules      ( archive );
+    InitializeRules( archive );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::InitializeObjectCosts
+// Name: DEC_Agent_PathClass::InitializeObjectCosts
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathClass::InitializeObjectCosts()
+void DEC_Agent_PathClass::InitializeObjectCosts()
 {
     const MIL_RealObjectType::T_ObjectTypeMap& objectTypes = MIL_RealObjectType::GetObjectTypes();
     objectCosts_.resize( objectTypes.size() );
@@ -75,12 +74,12 @@ void DEC_PathClass::InitializeObjectCosts()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::InitializeRules
+// Name: DEC_Agent_PathClass::InitializeRules
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-void DEC_PathClass::InitializeRules( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::InitializeRules( MIL_InputArchive& archive )
 {
-    archive.BeginList( "Rules" );
+    archive.BeginList( "AgentRules" );
     while( archive.NextListElement() )
     {
         archive.Section( "Rule" );
@@ -93,29 +92,29 @@ void DEC_PathClass::InitializeRules( MIL_InputArchive& archive )
         archive.ReadAttribute( "autonomous", bAutonomous );
 
         std::string strBase;
-        const DEC_PathClass* pBase = 0;
+        const DEC_Agent_PathClass* pBase = 0;
         if( archive.ReadAttribute( "inherits", strBase, MIL_InputArchive::eNothing ) )
         {
             pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
             if( !pBase )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined", archive.GetContext() );
         }
-        DEC_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
+        DEC_Agent_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
         if( pRule )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined", archive.GetContext() );
-        pRule = new DEC_PathClass( archive, pBase );
+        pRule = new DEC_Agent_PathClass( archive, pBase );
         archive.EndSection(); // Rule
     };
-    archive.EndList(); // Rules
+    archive.EndList(); // AgentRules
 
     CheckRulesExistence();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::CheckRulesExistence
+// Name: DEC_Agent_PathClass::CheckRulesExistence
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-void DEC_PathClass::CheckRulesExistence()
+void DEC_Agent_PathClass::CheckRulesExistence()
 {
     const DEC_PathType::T_PathTypeMap& types = DEC_PathType::GetPathTypes();
     for( DEC_PathType::CIT_PathTypeMap it = types.begin(); it != types.end(); ++it )
@@ -133,12 +132,12 @@ void DEC_PathClass::CheckRulesExistence()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::Terminate
+// Name: DEC_Agent_PathClass::Terminate
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-void DEC_PathClass::Terminate()
+void DEC_Agent_PathClass::Terminate()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -146,10 +145,10 @@ void DEC_PathClass::Terminate()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass constructor
+// Name: DEC_Agent_PathClass constructor
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-DEC_PathClass::DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pCopyFrom /*= 0*/ )
+DEC_Agent_PathClass::DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_Agent_PathClass* pCopyFrom /*= 0*/ )
     : bShort_                            ( false )
     , rPreferedTerrainCost_              ( 0 )
     , rAvoidedTerrainCost_               ( 0 )
@@ -169,6 +168,7 @@ DEC_PathClass::DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pC
     , rEnemyMaximumCost_                 ( 100 )
     , rPopulationSecurityRange_          ( 50 )
     , rPopulationMaximumCost_            ( 100 )
+    , rCostOutsideOfPopulation_          ( 10 )
 {
     if( pCopyFrom )
         *this = *pCopyFrom;
@@ -220,10 +220,10 @@ DEC_PathClass::DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pC
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass destructor
+// Name: DEC_Agent_PathClass destructor
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-DEC_PathClass::~DEC_PathClass()
+DEC_Agent_PathClass::~DEC_Agent_PathClass()
 {
     //NOTHING
 }
@@ -233,10 +233,10 @@ DEC_PathClass::~DEC_PathClass()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::ReadTerrains
+// Name: DEC_Agent_PathClass::ReadTerrains
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathClass::ReadTerrains( MIL_InputArchive& archive, TerrainData& destinationData )
+void DEC_Agent_PathClass::ReadTerrains( MIL_InputArchive& archive, TerrainData& destinationData )
 {
     destinationData = TerrainData();
     while( archive.NextListElement() )
@@ -253,10 +253,10 @@ void DEC_PathClass::ReadTerrains( MIL_InputArchive& archive, TerrainData& destin
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::ReadFuseau
+// Name: DEC_Agent_PathClass::ReadFuseau
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathClass::ReadFuseau( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadFuseau( MIL_InputArchive& archive )
 {
     if( archive.Section( "ToleratedDistanceOutside", MIL_InputArchive::eNothing ) )
     {
@@ -274,10 +274,10 @@ void DEC_PathClass::ReadFuseau( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::ReadAutomataFuseau
+// Name: DEC_Agent_PathClass::ReadAutomataFuseau
 // Created: AGE 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_PathClass::ReadAutomataFuseau( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadAutomataFuseau( MIL_InputArchive& archive )
 {
     if( archive.Section( "ToleratedDistanceOutside", MIL_InputArchive::eNothing ) )
     {
@@ -290,20 +290,20 @@ void DEC_PathClass::ReadAutomataFuseau( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::ReadDangerDirection
+// Name: DEC_Agent_PathClass::ReadDangerDirection
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathClass::ReadDangerDirection( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadDangerDirection( MIL_InputArchive& archive )
 {
     archive.ReadField( "BaseCostBeyond"    , rDangerDirectionBaseCost_  , MIL_InputArchive::eNothing );
     archive.ReadField( "CostPerMeterBeyond", rDangerDirectionLinearCost_, MIL_InputArchive::eNothing );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::ReadEnemiesCost
+// Name: DEC_Agent_PathClass::ReadEnemiesCost
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathClass::ReadEnemiesCost( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadEnemiesCost( MIL_InputArchive& archive )
 {
     archive.ReadField( "CostOnContact"      , rEnemyCostOnContact_      , MIL_InputArchive::eNothing );
     archive.ReadField( "CostAtSecurityRange", rEnemyCostAtSecurityRange_, MIL_InputArchive::eNothing );
@@ -311,15 +311,16 @@ void DEC_PathClass::ReadEnemiesCost( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::ReadPopulationsCost
+// Name: DEC_Agent_PathClass::ReadPopulationsCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-void DEC_PathClass::ReadPopulationsCost( MIL_InputArchive& archive )
+void DEC_Agent_PathClass::ReadPopulationsCost( MIL_InputArchive& archive )
 {
     std::string strAttitude;
     MT_Float rCost = 0.0f;
-    archive.ReadField( "SecurityRange", rPopulationSecurityRange_, MIL_InputArchive::eNothing );
-    archive.ReadField( "MaximumCost", rPopulationMaximumCost_, MIL_InputArchive::eNothing );
+    archive.ReadField( "SecurityRange"         , rPopulationSecurityRange_, MIL_InputArchive::eNothing );
+    archive.ReadField( "MaximumCost"           , rPopulationMaximumCost_  , MIL_InputArchive::eNothing );
+    archive.ReadField( "CostOusideOfPopulation", rCostOutsideOfPopulation_, MIL_InputArchive::eNothing );
     archive.BeginList( "CostsOnContact", MIL_InputArchive::eNothing );
     while( archive.NextListElement() )
     {
@@ -341,37 +342,46 @@ void DEC_PathClass::ReadPopulationsCost( MIL_InputArchive& archive )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetPathClass
+// Name: DEC_Agent_PathClass::GetPathClass
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-const DEC_PathClass& DEC_PathClass::GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion )
+const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion )
 {
     const bool bCanFly     = pion.CanFly();
     const bool bAutonomous = pion.IsAutonomous();
 
-    const DEC_PathClass* pClass = rules_[ T_RuleType( pathType.GetName(), T_BooleanPair( bCanFly, bAutonomous ) ) ];
+    const DEC_Agent_PathClass* pClass = rules_[ T_RuleType( pathType.GetName(), T_BooleanPair( bCanFly, bAutonomous ) ) ];
     assert( pClass );
     return *pClass;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetObjectCosts
+// Name: DEC_Agent_PathClass::GetObjectCosts
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_PathClass::GetObjectCosts( const MIL_RealObjectType& objectType ) const
+MT_Float DEC_Agent_PathClass::GetObjectCosts( const MIL_RealObjectType& objectType ) const
 {
     assert( objectCosts_.size() > objectType.GetID() );
     return objectCosts_[ objectType.GetID() ];
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathClass::GetPopulationAttitudeCost
+// Name: DEC_Agent_PathClass::GetPopulationAttitudeCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-MT_Float DEC_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttitude& attitude ) const
+MT_Float DEC_Agent_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttitude& attitude ) const
 {
     T_PopulationAttitudeCosts::const_iterator it = populationAttitudeCosts_.find( &attitude );
     if( it == populationAttitudeCosts_.end() )
         return 0.0f;
     return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::GetCostOutsideOfPopulation
+// Created: SBO 2006-03-27
+// -----------------------------------------------------------------------------
+MT_Float DEC_Agent_PathClass::GetCostOutsideOfPopulation() const
+{
+    return rCostOutsideOfPopulation_;
 }

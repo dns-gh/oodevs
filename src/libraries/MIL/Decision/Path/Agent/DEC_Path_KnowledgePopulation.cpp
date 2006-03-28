@@ -10,7 +10,7 @@
 #include "MIL_pch.h"
 #include "DEC_Path_KnowledgePopulation.h"
 
-#include "DEC_PathClass.h"
+#include "DEC_Agent_PathClass.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -40,7 +40,7 @@ namespace
 // Name: DEC_Path_KnowledgePopulation constructor
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, const MIL_AgentPion& pion )
+DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, const MIL_AgentPion& pion )
     : elements_       ()
     , pPathClass_     ( &pathClass )
     , bAvoidPolicy_   ( !pion.GetType().IsTerrorist() )
@@ -88,7 +88,7 @@ MT_Float DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/,
     else // "loving" policy (terrorist)
     {
         if( !pClosestElement )
-            return 10.;
+            return pPathClass_->GetCostOutsideOfPopulation();
         return 0.;
     }
 }

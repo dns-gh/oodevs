@@ -18,7 +18,7 @@
 
 class DEC_Knowledge_Object;
 class DEC_Path;
-class DEC_PathClass;
+class DEC_Agent_PathClass;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -29,7 +29,7 @@ class DEC_Path_KnowledgeObject
 public:
     //! @name Constructors/Destructor
     //@{
-    DEC_Path_KnowledgeObject( const DEC_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+    DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
     ~DEC_Path_KnowledgeObject();
     //@}
 

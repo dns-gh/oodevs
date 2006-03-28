@@ -22,7 +22,7 @@
 #include "MIL.h"
 
 class DEC_Knowledge_Agent;
-class DEC_PathClass;
+class DEC_Agent_PathClass;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -34,7 +34,7 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Path_KnowledgeAgent( const DEC_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
+     DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
     ~DEC_Path_KnowledgeAgent();
     //@}
 
