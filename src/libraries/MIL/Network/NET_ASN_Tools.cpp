@@ -1406,11 +1406,11 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& dia, ASN1T_Sa
     assert( DEC_Tools::CheckTypeSantePriorites( dia ) );
 
     T_MedicalPriorityVector* pData = dia.ToUserPtr( pData );
-    if( !pData )
+    if( !pData || pData->empty() )
         asn.n = 0;
     else
     {
-        asn.n    = pData->size();
+        asn.n = pData->size();
         asn.elem = new ASN1T_EnumHumanWound[ pData->size() ];
         uint i = 0;
         for( CIT_MedicalPriorityVector it = pData->begin(); it != pData->end(); ++it )

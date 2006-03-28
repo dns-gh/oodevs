@@ -328,6 +328,21 @@ uint Testable_Entity::GetTestParam_GDH() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Testable_Entity::GetTestParam_MedicalPriorities
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+T_IdVector& Testable_Entity::GetTestParam_MedicalPriorities() const
+{
+    T_IdVector& priorities = *new T_IdVector();
+    priorities.push_back( EnumHumanWound::blesse_urgence_extreme );
+    priorities.push_back( EnumHumanWound::blesse_urgence_1 );
+    priorities.push_back( EnumHumanWound::blesse_urgence_2 );
+    priorities.push_back( EnumHumanWound::blesse_urgence_3 );
+
+    return priorities;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_Limas
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------

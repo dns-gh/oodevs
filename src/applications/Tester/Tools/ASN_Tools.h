@@ -79,6 +79,7 @@ public:
     static void CopyNatureAtlas        ( uint                     nValue        , ASN1T_NatureAtlas&          asn );
     static void CopyGDH                ( uint                     nTime         , ASN1T_GDH&                  asn );
     static void CopyPopulationKnowledge( uint                     nIdPopulation , ASN1T_KnowledgePopulation&  asn );
+    static void CopyMedicalPriorities  ( const T_IdVector&        ids           , ASN1T_SantePriorites&       asn );
     //@}
 
     template< typename T >
@@ -101,6 +102,7 @@ public:
     static void Delete( ASN1T_ListKnowledgeObject&  asn );
     static void Delete( ASN1T_MissionGenObject&     asn );
     static void Delete( ASN1T_ListMissionGenObject& asn );
+    static void Delete( ASN1T_SantePriorites&       asn );
     //@}
 
     //! @name Enumeration translation to/from strings

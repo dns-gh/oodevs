@@ -60,7 +60,7 @@ void Mission_Pawn_LOG_TrierEtTraiterBlesses::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses = &asnMission;
 
-    const & blessuresTraitees_ = pTarget_->GetTestParam_MedicalPriorities();
+    const T_IdVector& blessuresTraitees_ = pTarget_->GetTestParam_MedicalPriorities();
 
     ASN_Tools::CopyMedicalPriorities( blessuresTraitees_, asnMission.blessures_traitees );
 

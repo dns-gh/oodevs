@@ -386,6 +386,31 @@ void ASN_Tools::CopyGDH( uint nTime, ASN1T_GDH& asn )
     asn.qualificatif = EnumGDH_Qualificatif::at;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyMedicalPriorities
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyMedicalPriorities( const T_IdVector& ids, ASN1T_SantePriorites& asn )
+{
+    asn.n = ids.size();
+    if( !ids.empty() )
+    {
+        asn.elem = new ASN1T_EnumHumanWound[ ids.size() ];
+        uint i = 0;
+        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+            asn.elem[ i++ ] = (ASN1T_EnumHumanWound)*it;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_SantePriorites& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
