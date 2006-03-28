@@ -194,6 +194,15 @@ bool PHY_RolePion_Supply::CanContainStock( const PHY_DotationCategory& /*dotatio
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::CreateStock
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+PHY_DotationStock* PHY_RolePion_Supply::AddStock( const PHY_DotationCategory& /*dotationCategory*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::GetStock
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------

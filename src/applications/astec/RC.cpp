@@ -147,6 +147,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_demande_evacuation_sanitaire : strMsg << "demande evacuation sanitaire"; break;
         case T_MsgCR_cr_cr_demande_evacuation_materiel : strMsg << "demande evacuation materiel"; break;
         case T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee : strMsg << "allocation consentie bientot epuisee" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_allocation_consentie_bientot_epuisee; break;
+        case T_MsgCR_cr_cr_depassement_capacite_stockage : strMsg << "depassement capacite stockage"; break;
         case T_MsgCR_cr_cr_seuil_logistique_dotation_depasse : strMsg << "seuil logistique dotation depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_dotation_depasse; break;
         case T_MsgCR_cr_cr_seuil_logistique_stock_depasse : strMsg << "seuil logistique stock depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_stock_depasse; break;
         case T_MsgCR_cr_cr_ravitaillement_dotations_effectue : strMsg << "ravitaillement dotations effectue"; break;

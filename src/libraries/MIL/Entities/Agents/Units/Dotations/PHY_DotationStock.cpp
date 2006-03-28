@@ -101,7 +101,7 @@ void PHY_DotationStock::SetValue( MT_Float rValue )
     assert( pStockContainer_ );
     
     if ( (uint)rValue_ != (uint)rValue )
-        pStockContainer_->NotifyDotationChanged( *this );
+        pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
 
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
 

@@ -142,6 +142,7 @@ CR-DemandeRavitaillementStock               ::= NULL
 CR-DemandeEvacuationSanitaire               ::= NULL
 CR-DemandeEvacuationMateriel                ::= NULL
 CR-AllocationConsentieBientotEpuisee        ::= TypeDotation
+CR-DepassementCapaciteStockage              ::= NULL
 CR-SeuilLogistiqueDotationDepasse           ::= TypeDotation
 CR-SeuilLogistiqueStockDepasse              ::= TypeDotation
 CR-RavitaillementDotationsEffectue          ::= NULL
@@ -439,6 +440,7 @@ MsgCR ::= SEQUENCE
         cr-demande-evacuation-sanitaire                                 CR-DemandeEvacuationSanitaire,
         cr-demande-evacuation-materiel                                  CR-DemandeEvacuationMateriel,
         cr-allocation-consentie-bientot-epuisee                         CR-AllocationConsentieBientotEpuisee,
+        cr-depassement-capacite-stockage                                CR-DepassementCapaciteStockage,
         cr-seuil-logistique-dotation-depasse                            CR-SeuilLogistiqueDotationDepasse,
         cr-seuil-logistique-stock-depasse                               CR-SeuilLogistiqueStockDepasse,
         cr-ravitaillement-dotations-effectue                            CR-RavitaillementDotationsEffectue,

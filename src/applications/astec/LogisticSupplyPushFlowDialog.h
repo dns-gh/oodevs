@@ -43,7 +43,7 @@ private slots:
     void Validate     ();
     void Reject       ();
     void OnContextMenu( QListViewItem* pItem, const QPoint& pos, int );
-    void OnSuppliedChanged( int item );
+//    void OnSuppliedChanged( int item );
     //@}
 
 private:

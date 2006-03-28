@@ -18,9 +18,12 @@
 #include "PHY_DotationStock.h"
 #include "PHY_DotationType.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
@@ -30,9 +33,10 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
 PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RolePionLOG_Supply& roleSupply )
-    : pRoleSupply_   ( &roleSupply )
-    , stocks_       ()   
-    , stocksChanged_()
+    : pRoleSupply_          ( &roleSupply )
+    , stocks_               ()   
+    , stocksChanged_        ()
+    , bCheckStockCapacities_( false )
 {
 }
 
@@ -41,9 +45,10 @@ PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RolePionLOG_Supply& 
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_DotationStockContainer::PHY_DotationStockContainer()
-    : pRoleSupply_  ( 0 )
-    , stocks_       ()
-    , stocksChanged_()
+    : pRoleSupply_          ( 0 )
+    , stocks_               ()
+    , stocksChanged_        ()
+    , bCheckStockCapacities_( false )
 {
 }
 
@@ -240,7 +245,7 @@ PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCateg
 // Name: PHY_DotationStockContainer::AddStock
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive )
+PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive )
 {
     MT_Float rValue;
     archive.Read( rValue, CheckValueGreaterOrEqual( 0. ) );
@@ -250,6 +255,19 @@ void PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category,
     PHY_DotationStock*& pStock = stocks_[ &category ];
     if( !pStock )
         pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rValue );
+    return pStock;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::AddStock
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category )
+{
+    PHY_DotationStock*& pStock = stocks_[ &category ];
+    if( !pStock )
+        pStock = new PHY_DotationStock( *this, category, 0., 0. );
+    return pStock;
 }
 
 // -----------------------------------------------------------------------------
@@ -276,6 +294,82 @@ void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category,
     }
     else
         pStock->Supply( rNbr - pStock->GetValue() ); // set to rNbr
+}
+
+// =============================================================================
+// STOCK CAPACITIES CHECKER
+// =============================================================================
+
+
+
+namespace
+{
+    struct T_StockData
+    {
+        MT_Float rVolume_;
+        MT_Float rWeight_;
+    };
+    typedef std::map < const PHY_DotationNature*, T_StockData > T_NatureStockData;
+    typedef T_NatureStockData::const_iterator                   CIT_NatureStockData;
+
+    struct sStockChecker
+    {
+        void operator() ( const PHY_ComposantePion& composante )
+        {
+            const PHY_DotationNature* pStockTransporterNature = composante.GetType().GetStockTransporterNature();
+
+            if( /*!composante.GetType().CanBePartOfConvoy() && */pStockTransporterNature )
+            {
+                T_StockData& stockData = stockCapacities_[ pStockTransporterNature ];
+
+                MT_Float rWeight = 0.;
+                MT_Float rVolume = 0.;
+                composante.GetType().GetStockTransporterCapacity( rWeight, rVolume );
+
+                stockData.rVolume_ += rVolume;
+                stockData.rWeight_ += rWeight;
+            }
+        }
+
+        T_NatureStockData stockCapacities_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::CheckStockCapacities
+// Created: NLD 2006-03-24
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::CheckStockCapacities()
+{
+    T_NatureStockData stocksByNatures;
+
+    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    {
+        const PHY_DotationStock&    dotationStock    = *it->second;
+        const PHY_DotationCategory& dotationCategory = dotationStock.GetCategory();
+
+        T_StockData& stockData = stocksByNatures[ &dotationCategory.GetNature() ];
+        stockData.rVolume_ += dotationStock.GetValue() * dotationCategory.GetVolume();
+        stockData.rWeight_ += dotationStock.GetValue() * dotationCategory.GetWeight();
+    }
+
+    sStockChecker stockChecker;
+
+    assert( pRoleSupply_ );
+    pRoleSupply_->GetPion().GetRole< PHY_RolePion_Composantes >().Apply( stockChecker );
+
+    for( CIT_NatureStockData it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
+    {
+        const T_StockData& stock = it->second;
+
+        const T_StockData& stockCapacity = stockChecker.stockCapacities_[ it->first ];
+
+        if( stock.rVolume_ > stockCapacity.rVolume_ || stock.rWeight_ > stockCapacity.rWeight_ )
+        {
+            MIL_RC::pRcDepassementCapaciteStockage_->Send( pRoleSupply_->GetPion(), MIL_RC::eRcTypeEvent );
+            return;
+        }
+    }
 }
 
 // =============================================================================

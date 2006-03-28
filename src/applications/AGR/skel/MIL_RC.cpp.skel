@@ -46,6 +46,7 @@ const MIL_RC_TireParCivil*                      MIL_RC::pRcTireParCivil_        
 const MIL_RC*                                   MIL_RC::pRcDestructionPC_                      = 0;
 const MIL_RC_UniteDecontaminee*                 MIL_RC::pRcUniteDecontaminee_                  = 0;
 const MIL_RC_AllocationConsentieBientotEpuisee* MIL_RC::pRcAllocationConsentieBientotEpuisee_  = 0;
+const MIL_RC*                                   MIL_RC::pRcDepassementCapaciteStockage_        = 0;
 const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_                    = 0;
 const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                   = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
@@ -103,6 +104,7 @@ void MIL_RC::Initialize()
     pRcTireParCivil_                      = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                      ];
     pRcDestructionPC_                     =                                            rcs_[ eRC_DestructionPC                     ];
     pRcAllocationConsentieBientotEpuisee_ = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee ];
+    pRcDepassementCapaciteStockage_       =                                            rcs_[ eRC_DepassementCapaciteStockage       ];
     pRcMissionImpossible_                 =                                            rcs_[ eRC_MissionImpossible                 ];
     pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];
     pRcPlusDeCarburant_                   =                                            rcs_[ eRC_PlusDeCarburant                   ];

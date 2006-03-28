@@ -451,6 +451,16 @@ void PHY_ComposanteTypePion::GetStockTransporterCapacity( MT_Float& rWeightMax, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetStockTransporterNature
+// Created: NLD 2006-03-27
+// -----------------------------------------------------------------------------
+inline
+const PHY_DotationNature* PHY_ComposanteTypePion::GetStockTransporterNature() const
+{
+    return pStockTransporterNature_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::sBreakdownTypeProbability constructor
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------

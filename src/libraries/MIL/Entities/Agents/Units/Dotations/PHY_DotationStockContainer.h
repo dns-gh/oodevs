@@ -44,6 +44,12 @@ public:
     void ReadValues( MIL_InputArchive& archive );
     //@}
 
+    //! @name Main
+    //@{
+    void Clean ();
+    void Update();
+    //@}
+
     //! @name Operations
     //@{
     MT_Float AddReservation   ( const PHY_DotationCategory& category, MT_Float rNbr );
@@ -54,15 +60,15 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float            GetValue( const PHY_DotationCategory& category ) const;
-    PHY_DotationStock*  GetStock( const PHY_DotationCategory& category ) const;
+    MT_Float           GetValue( const PHY_DotationCategory& category ) const;
+    PHY_DotationStock* GetStock( const PHY_DotationCategory& category ) const;
+    PHY_DotationStock* AddStock( const PHY_DotationCategory& category );
     //@}
 
     //! @name Network
     //@{
-    void NotifyDotationChanged( const PHY_DotationStock& dotationStock );
+    void NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta );
     bool HasChanged           () const;
-    void Clean                ();
     void SendChangedState     ( NET_ASN_MsgLogRavitaillementEtat& asn ) const;
     void SendFullState        ( NET_ASN_MsgLogRavitaillementEtat& asn ) const;
     //@}
@@ -86,13 +92,15 @@ public:
 private:
     //! @name Tools
     //@{
-    void AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive );
+    PHY_DotationStock* AddStock            ( const PHY_DotationCategory& category, MIL_InputArchive& archive );
+    void               CheckStockCapacities();
     //@}
 
 private:
     PHY_RolePionLOG_Supply* pRoleSupply_;
     T_StockMap              stocks_;   
     T_StockSet              stocksChanged_;
+    bool                    bCheckStockCapacities_;
 };
 
 #include "PHY_DotationStockContainer.inl"

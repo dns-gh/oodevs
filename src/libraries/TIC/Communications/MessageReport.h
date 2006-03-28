@@ -157,6 +157,7 @@ private:
         eRC_DemandeEvacuationSanitaire,
         eRC_DemandeEvacuationMateriel,
         eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
+        eRC_DepassementCapaciteStockage,
         eRC_SeuilLogistiqueDotationDepasse, // Parametre : TypeDotation
         eRC_SeuilLogistiqueStockDepasse, // Parametre : TypeDotation
         eRC_RavitaillementDotationsEffectue,

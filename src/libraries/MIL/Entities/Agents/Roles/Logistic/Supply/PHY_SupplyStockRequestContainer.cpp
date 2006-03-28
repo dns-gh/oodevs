@@ -71,7 +71,16 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         }
 
         if( pionStocks.empty() )
-            continue;
+        {
+            PHY_DotationStock* pNewStock = 0;
+            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end() && !pNewStock; ++itPion )
+                pNewStock = (**itPion).GetRole< PHY_RolePion_Supply >().AddStock( *pDotationCategory );
+            
+            if( !pNewStock )
+                continue;
+
+            pionStocks.push_back( std::make_pair( pNewStock, 0. ) );
+        }
 
         // Priority for pions needing supply
         for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end() && rTotalValue > 0.; ++it )

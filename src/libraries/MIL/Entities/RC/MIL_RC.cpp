@@ -91,6 +91,7 @@ const MIL_RC_TireParCivil*                      MIL_RC::pRcTireParCivil_        
 const MIL_RC*                                   MIL_RC::pRcDestructionPC_                      = 0;
 const MIL_RC_UniteDecontaminee*                 MIL_RC::pRcUniteDecontaminee_                  = 0;
 const MIL_RC_AllocationConsentieBientotEpuisee* MIL_RC::pRcAllocationConsentieBientotEpuisee_  = 0;
+const MIL_RC*                                   MIL_RC::pRcDepassementCapaciteStockage_        = 0;
 const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_                    = 0;
 const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                   = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
@@ -220,6 +221,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_DemandeEvacuationSanitaire ] = new MIL_RC( eRC_DemandeEvacuationSanitaire, T_MsgCR_cr_cr_demande_evacuation_sanitaire );
 	rcs_[ eRC_DemandeEvacuationMateriel ] = new MIL_RC( eRC_DemandeEvacuationMateriel, T_MsgCR_cr_cr_demande_evacuation_materiel );
 	rcs_[ eRC_AllocationConsentieBientotEpuisee ] = new MIL_RC_AllocationConsentieBientotEpuisee( eRC_AllocationConsentieBientotEpuisee, T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee );
+	rcs_[ eRC_DepassementCapaciteStockage ] = new MIL_RC( eRC_DepassementCapaciteStockage, T_MsgCR_cr_cr_depassement_capacite_stockage );
 	rcs_[ eRC_SeuilLogistiqueDotationDepasse ] = new MIL_RC_SeuilLogistiqueDotationDepasse( eRC_SeuilLogistiqueDotationDepasse, T_MsgCR_cr_cr_seuil_logistique_dotation_depasse );
 	rcs_[ eRC_SeuilLogistiqueStockDepasse ] = new MIL_RC_SeuilLogistiqueStockDepasse( eRC_SeuilLogistiqueStockDepasse, T_MsgCR_cr_cr_seuil_logistique_stock_depasse );
 	rcs_[ eRC_RavitaillementDotationsEffectue ] = new MIL_RC( eRC_RavitaillementDotationsEffectue, T_MsgCR_cr_cr_ravitaillement_dotations_effectue );
@@ -389,6 +391,7 @@ void MIL_RC::Initialize()
     pRcTireParCivil_                      = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                      ];
     pRcDestructionPC_                     =                                            rcs_[ eRC_DestructionPC                     ];
     pRcAllocationConsentieBientotEpuisee_ = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee ];
+    pRcDepassementCapaciteStockage_       =                                            rcs_[ eRC_DepassementCapaciteStockage       ];
     pRcMissionImpossible_                 =                                            rcs_[ eRC_MissionImpossible                 ];
     pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];
     pRcPlusDeCarburant_                   =                                            rcs_[ eRC_PlusDeCarburant                   ];

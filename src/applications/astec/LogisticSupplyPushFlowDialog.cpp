@@ -59,7 +59,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* pParent  )
     pTypesMenu_ = new QPopupMenu( this );
 
     connect( pStocks_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ), SLOT(OnContextMenu( QListViewItem*, const QPoint&, int )) );
-    connect( pSuppliedComboBox_, SIGNAL( activated( int ) ), SLOT( OnSuppliedChanged( int ) ) );
+    //connect( pSuppliedComboBox_, SIGNAL( activated( int ) ), SLOT( OnSuppliedChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +96,38 @@ void LogisticSupplyPushFlowDialog::SetAgent( const Agent& agent )
             pSuppliedComboBox_->insertItem( itAgent->second->GetName().c_str() );
         }
     }
-    if( pSuppliedComboBox_->count() > 0 )
-        OnSuppliedChanged( pSuppliedComboBox_->currentItem() );
+
+    pTypesMenu_->clear();
+
+    
+    std::set< std::string > menuRessources;
+    const T_ResourceQty_Map& ressources = agent.pSupplyData_->stocks_;
+    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+    {
+        const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
+        pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+        menuRessources.insert( strRessourceName );
+    }
+
+    const Agent::T_AgentVector& childs = agent.children_;
+    for( Agent::CIT_AgentVector itChild = childs.begin(); itChild != childs.end(); ++itChild )
+    {
+        if( !( *itChild )->pSupplyData_ )
+            continue;
+        const T_ResourceQty_Map& ressources = ( *itChild )->pSupplyData_->stocks_;
+        for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+        {
+            const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
+            if( menuRessources.find( strRessourceName ) == menuRessources.end() )
+            {
+                pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+                menuRessources.insert( strRessourceName );
+            }
+        }
+    }
+
+//    if( pSuppliedComboBox_->count() > 0 )
+//        OnSuppliedChanged( pSuppliedComboBox_->currentItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +211,7 @@ void LogisticSupplyPushFlowDialog::OnContextMenu( QListViewItem* pItem, const QP
 // Name: LogisticSupplyPushFlowDialog::OnSuppliedChanged
 // Created: SBO 2005-10-27
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::OnSuppliedChanged( int nItem )
+/*void LogisticSupplyPushFlowDialog::OnSuppliedChanged( int nItem )
 {
     CIT_AgentIDMap itSupplied = automateComboBoxIDs_.find( nItem );
     assert( itSupplied != automateComboBoxIDs_.end() );
@@ -215,4 +245,4 @@ void LogisticSupplyPushFlowDialog::OnSuppliedChanged( int nItem )
             }
         }
     }
-}
+}*/

@@ -140,7 +140,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , bCanSortHumans_                            ( false )
     , bCanDiagnoseHumans_                        ( false )
     , bCanHealWounds_                            ( false )
-    , pNatureTransported_                        ( 0 )
+    , pStockTransporterNature_                   ( 0 )
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
     , nStockTransporterLoadingTime_              ( 0 )
@@ -625,8 +625,8 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
     {
         std::string strNature;
         archive.ReadField( "NatureTransportee", strNature );
-        pNatureTransported_ = PHY_DotationNature::Find( strNature );
-        if( !pNatureTransported_ )
+        pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
+        if( !pStockTransporterNature_ )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unkown dotation nature", archive.GetContext() );
 
         archive.Section( "Capacite" );
@@ -1105,7 +1105,7 @@ bool PHY_ComposanteTypePion::CanTransportStock( const PHY_DotationCategory& dota
     if( rStockTransporterWeightCapacity_ <= 0. || rStockTransporterVolumeCapacity_ <= 0. )
         return false;
 
-    if( pNatureTransported_ && *pNatureTransported_ != dotationCategory.GetNature() )
+    if( pStockTransporterNature_ && *pStockTransporterNature_ != dotationCategory.GetNature() )
         return false;
 
     return true;

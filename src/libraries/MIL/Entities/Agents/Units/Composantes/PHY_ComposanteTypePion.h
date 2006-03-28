@@ -167,12 +167,13 @@ public:
 
     //! @name Logistic - supply
     //@{
-    bool CanCommandConvoy                () const;
-    bool CanBePartOfConvoy               () const;
-    bool CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
-    void GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
-    uint GetStockTransporterLoadingTime  () const;
-    uint GetStockTransporterUnloadingTime() const;
+          bool                 CanCommandConvoy                () const;
+          bool                 CanBePartOfConvoy               () const;
+          bool                 CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
+          void                 GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
+          uint                 GetStockTransporterLoadingTime  () const;
+          uint                 GetStockTransporterUnloadingTime() const;
+    const PHY_DotationNature*  GetStockTransporterNature       () const;
     //@}
 
     //! @name Operators
@@ -303,7 +304,7 @@ private:
     bool                            bCanDiagnoseHumans_;
 
     // Logistic : supply
-    const PHY_DotationNature*       pNatureTransported_;
+    const PHY_DotationNature*       pStockTransporterNature_;
           MT_Float                  rStockTransporterWeightCapacity_;
           MT_Float                  rStockTransporterVolumeCapacity_;
           uint                      nStockTransporterLoadingTime_;

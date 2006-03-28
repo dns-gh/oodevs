@@ -256,6 +256,16 @@ bool PHY_RolePionLOG_Supply::CanContainStock( const PHY_DotationCategory& catego
     return pStocks_->GetStock( category ) != 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::AddStock
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+PHY_DotationStock* PHY_RolePionLOG_Supply::AddStock( const PHY_DotationCategory& category ) const
+{
+    assert( pStocks_ );
+    return pStocks_->AddStock( category );
+}
+
 // =============================================================================
 // MAIN
 // =============================================================================
@@ -266,7 +276,8 @@ bool PHY_RolePionLOG_Supply::CanContainStock( const PHY_DotationCategory& catego
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    assert( pStocks_ );
+    pStocks_->Update(); // Stock checking
 }
 
 // -----------------------------------------------------------------------------

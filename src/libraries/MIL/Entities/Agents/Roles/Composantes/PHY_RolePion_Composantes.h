@@ -166,26 +166,26 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-            void     FillDirectFireData             ( PHY_DirectFireData& data ) const;
-            void     FillIndirectFireData           ( PHY_IndirectFireData& data ) const;
-            void     FillIndirectFireData           ( PHY_SmokeData& data ) const;
-            bool     IsNeutralized                  () const;
-    virtual void     GetComposantesAbleToBeFired    ( T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     GetComposantesAbleToBeFired    ( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     Neutralize                     ();
-    virtual void     ApplyPopulationFire            ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
-    virtual void     ApplyDirectFire                ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void     ApplyExplosion                 ( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& result );
-            void     ApplyContamination             ( const MIL_NbcAgentType& nbcAgentType );
-            MT_Float GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToFireOn            ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMinRangeToFireOn            ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+            void     FillDirectFireData              ( PHY_DirectFireData& data ) const;
+            void     FillIndirectFireData            ( PHY_IndirectFireData& data ) const;
+            void     FillIndirectFireData            ( PHY_SmokeData& data ) const;
+            bool     IsNeutralized                   () const;
+    virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     Neutralize                      ();
+    virtual void     ApplyPopulationFire             ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
+    virtual void     ApplyDirectFire                 ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual void     ApplyIndirectFire               ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual void     ApplyExplosion                  ( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& result );
+            void     ApplyContamination              ( const MIL_NbcAgentType& nbcAgentType );
+            MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+            MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
+            MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToIndirectFire      ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
-            MT_Float GetMinRangeToIndirectFire      ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
-            MT_Float GetDangerosity                 ( const DEC_Knowledge_Agent& target ) const;
+            MT_Float GetMaxRangeToIndirectFire       ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
+            MT_Float GetMinRangeToIndirectFire       ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
+            MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const;
     //@}
 
     //! @name Perception / Knowledge

@@ -94,6 +94,7 @@ public:
     static const MIL_RC_TireParCivil*                       pRcTireParCivil_;
     static const MIL_RC*                                    pRcDestructionPC_;
     static const MIL_RC_AllocationConsentieBientotEpuisee*  pRcAllocationConsentieBientotEpuisee_;
+    static const MIL_RC*                                    pRcDepassementCapaciteStockage_;
     static const MIL_RC*                                    pRcMissionImpossible_;
     static const MIL_RC_UniteDecontaminee*                  pRcUniteDecontaminee_;
     static const MIL_RC*                                    pRcPlusDeCarburant_;
@@ -239,6 +240,7 @@ protected:
         eRC_DemandeEvacuationSanitaire,
         eRC_DemandeEvacuationMateriel,
         eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
+        eRC_DepassementCapaciteStockage,
         eRC_SeuilLogistiqueDotationDepasse, // Parametre : TypeDotation
         eRC_SeuilLogistiqueStockDepasse, // Parametre : TypeDotation
         eRC_RavitaillementDotationsEffectue,

@@ -14,9 +14,11 @@
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-void PHY_DotationStockContainer::NotifyDotationChanged( const PHY_DotationStock& dotationStock )
+void PHY_DotationStockContainer::NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta )
 {
     stocksChanged_.insert( &dotationStock );
+    if( rDelta > 0 )
+        bCheckStockCapacities_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -37,4 +39,16 @@ inline
 void PHY_DotationStockContainer::Clean()
 {
     stocksChanged_.clear();
+    bCheckStockCapacities_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::Update
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+inline
+void PHY_DotationStockContainer::Update()
+{
+    if( bCheckStockCapacities_ )
+        CheckStockCapacities();
 }

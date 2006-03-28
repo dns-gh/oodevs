@@ -12,10 +12,6 @@
 #include "MIL_pch.h"
 
 #include "PHY_SupplyStockRequest.h"
-//#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
-//#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-//#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
-//#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_SupplyStockRequest, "PHY_SupplyStockRequest" )
 
