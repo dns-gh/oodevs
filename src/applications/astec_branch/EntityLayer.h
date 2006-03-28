@@ -13,6 +13,7 @@
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
+#include "OptionsObserver_ABC.h"
 #include "graphics/MapLayer_ABC.h"
 
 class Controllers;
@@ -20,6 +21,7 @@ class GlTools_ABC;
 class ColorStrategy_ABC;
 class MapWidget;
 class Entity_ABC;
+class Team;
 
 // =============================================================================
 /** @class  EntityLayerBase
@@ -29,6 +31,7 @@ class Entity_ABC;
 // =============================================================================
 class EntityLayerBase : public MapLayer_ABC
                       , public Observer_ABC
+                      , public OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -46,6 +49,7 @@ protected:
     //! @name Events
     //@{    
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
     //! @name Helpers
@@ -59,7 +63,9 @@ protected:
 
     virtual void SelectColor( const Entity_ABC& );
     virtual void Select     ( const Entity_ABC& );
-    virtual void ContextMenu( const Entity_ABC&, const QPoint&  );
+    virtual void ContextMenu( const Entity_ABC&, const QPoint& );
+    virtual bool IsInTeam   ( const Entity_ABC& );
+    virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
     //@}
     
 private:
@@ -84,6 +90,7 @@ private:
 
     T_Entities entities_;
     unsigned selected_;
+    const Team* currentTeam_;
     //@}
 };
 
@@ -122,6 +129,7 @@ protected:
     virtual void SelectColor( const Entity_ABC& );
     virtual void Select     ( const Entity_ABC& );
     virtual void ContextMenu( const Entity_ABC&, const QPoint&  );
+    virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
     //@}
 
 private:

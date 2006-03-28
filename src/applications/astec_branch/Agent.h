@@ -23,6 +23,7 @@ class AgentType;
 class AutomatType;
 class KnowledgeGroup;
 class DecisionalModel;
+class Team;
 
 // =============================================================================
 /** @class  Agent
@@ -59,10 +60,11 @@ public:
     //@{
     // $$$$ AGE 2006-03-14: Gets de merde 
 
+    const Team& GetTeam() const;
     virtual std::string GetName() const;
     virtual unsigned long GetId() const;
     
-    KnowledgeGroup* GetKnowledgeGroup() const; // $$$$ AGE 2006-02-21: Ref ?
+    KnowledgeGroup& GetKnowledgeGroup() const;
 
     const DecisionalModel& GetDecisionalModel() const;
     const DecisionalModel* GetAutomatDecisionalModel() const;

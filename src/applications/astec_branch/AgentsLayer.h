@@ -25,7 +25,7 @@ class AgentsLayer : public EntityLayer< Agent >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer(  Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+             AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
     virtual ~AgentsLayer();
     //@}
 

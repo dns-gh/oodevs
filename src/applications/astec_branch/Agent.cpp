@@ -184,13 +184,22 @@ void Agent::RemoveChild( Agent& child )
 // Name: Agent::GetKnowledgeGroup
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup* Agent::GetKnowledgeGroup() const
+KnowledgeGroup& Agent::GetKnowledgeGroup() const
 {
     if( gtia_ )
-        return gtia_;
+        return *gtia_;
     if( superior_ )
         return superior_->GetKnowledgeGroup();
-    return 0;
+    throw std::runtime_error( "I have no knowledge group" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetTeam
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+const Team& Agent::GetTeam() const
+{
+    return GetKnowledgeGroup().GetTeam();
 }
 
 // -----------------------------------------------------------------------------

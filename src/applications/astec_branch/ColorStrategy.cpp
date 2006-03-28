@@ -115,7 +115,7 @@ void ColorStrategy::AfterSelection()
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Agent& agent )
 {
-    const Team& team = agent.GetKnowledgeGroup()->GetTeam();
+    const Team& team = agent.GetTeam();
     QColor color = teamColors_[ &team ].second;
     if( selectedAgent_ == &agent )
         color = SelectedColor( color );

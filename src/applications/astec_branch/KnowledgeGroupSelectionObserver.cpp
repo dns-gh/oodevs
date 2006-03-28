@@ -63,5 +63,5 @@ void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup& element )
 // -----------------------------------------------------------------------------
 void KnowledgeGroupSelectionObserver::Select( const Agent& element )
 {
-    selected_ = element.GetKnowledgeGroup();
+    selected_ = & element.GetKnowledgeGroup();
 }

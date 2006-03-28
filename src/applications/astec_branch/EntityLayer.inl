@@ -98,3 +98,13 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const Entity_ABC& entity, const
 {
     controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( entity ), pos );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::IsInTeam
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Team& team )
+{
+    return  & static_cast< const ConcreteEntity& >( entity ).GetTeam() == & team;
+}

@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "EntityLayer.h"
 #include "Entity_ABC.h"
+#include "OptionVariant.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
@@ -19,6 +20,7 @@ EntityLayerBase::EntityLayerBase( const GlTools_ABC& tools, MapWidget& widget )
     : tools_      ( tools )
     , widget_     ( widget )
     , selected_   ( 0 )
+    , currentTeam_( 0 )
 {
     // NOTHING
 }
@@ -53,12 +55,30 @@ void EntityLayerBase::Draw( const Entity_ABC& e, const geometry::Rectangle2f& vi
 {
     Entity_ABC& entity = const_cast< Entity_ABC& >( e ); // $$$$ AGE 2006-03-16: 
     const Positions& positions = entity.Get< Positions >();
-    if( positions.IsIn( viewport ) )
+    if( IsInTeam( e ) ) // && positions.IsIn( viewport ) )
     {
         SelectColor( e );
         const geometry::Point2f position = positions.GetPosition();
         entity.Apply( Drawable_ABC::Draw, position, tools_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::IsInTeam
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::IsInTeam( const Entity_ABC& entity )
+{
+    return ! currentTeam_ || IsInTeam( entity, *currentTeam_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::IsInTeam
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::IsInTeam( const Entity_ABC&, const Team& )
+{
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,13 +93,14 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     
     if( selected_ >= entities_.size() 
      || ! IsInSelection( *entities_[ selected_ ], point ) 
+     || ! IsInTeam( *entities_[ selected_ ] )
      || ( button == Qt::LeftButton && ++selected_ >= entities_.size() ) )
         selected_ = 0;
 
     for( ; selected_ < entities_.size(); ++selected_ )
     {
         const Entity_ABC& entity = *entities_[ selected_ ];
-        if( IsInSelection( entity, point ) )
+        if( IsInSelection( entity, point ) && IsInTeam( entity ) )
         {
             if( button == Qt::LeftButton )
                 Select( entity );
@@ -89,6 +110,16 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
         }
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::OptionChanged
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void EntityLayerBase::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "CurrentTeam" )
+        currentTeam_ = value.To< const Team* >();
 }
 
 // -----------------------------------------------------------------------------

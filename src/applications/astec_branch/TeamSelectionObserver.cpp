@@ -75,9 +75,7 @@ void TeamSelectionObserver::Select( const KnowledgeGroup& element )
 // -----------------------------------------------------------------------------
 void TeamSelectionObserver::Select( const Agent& element )
 {
-    const KnowledgeGroup* kg = element.GetKnowledgeGroup();
-    if( kg )
-        Select( *kg );
+    Select( element.GetTeam() );
 }
 
 // -----------------------------------------------------------------------------
