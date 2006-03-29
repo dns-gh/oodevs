@@ -132,7 +132,7 @@ bool LimitsLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f&
     
     if( selected_ >= lines_.size() 
      || ! IsInSelection( *lines_[ selected_ ], point ) 
-     || ( button == Qt::LeftButton && ++selected_ >= lines_.size() ) )
+     || ( button == Qt::LeftButton && ++selected_ > lines_.size() ) )
         selected_ = 0;
 
     for( ; selected_ < lines_.size(); ++selected_ )

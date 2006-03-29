@@ -10,7 +10,7 @@
 #ifndef __MetricsLayer_h_
 #define __MetricsLayer_h_
 
-#include "graphics/MapLayer_ABC.h"
+#include "Layer_ABC.h"
 #include "Observer_ABC.h"
 #include "OptionsObserver_ABC.h"
 class GlTools_ABC;
@@ -22,7 +22,7 @@ class Controllers;
 */
 // Created: AGE 2006-03-17
 // =============================================================================
-class MetricsLayer : public MapLayer_ABC
+class MetricsLayer : public Layer2d_ABC
                    , private Observer_ABC
                    , public OptionsObserver_ABC
 {

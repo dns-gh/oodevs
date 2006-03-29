@@ -3,110 +3,96 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: AGE 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/GL3DWidget.h $
-// $Author: Age $
-// $Modtime: 17/05/05 14:00 $
-// $Revision: 3 $
-// $Workfile: GL3DWidget.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __GL3DWidget_h_
-#define __GL3DWidget_h_
+#ifndef __Gl3dWidget_h_
+#define __Gl3dWidget_h_
 
-#include "graphics/MapWidget3D.h"
-#include "Types.h"
-#include "MapEventFilter_ABC.h"
+#include "graphics/Widget3D.h"
+#include "WorldParameters.h"
+#include "GlTools_ABC.h"
+#include "View_ABC.h"
+#include "SetGlOptions.h"
 
-class MT_GLDrawer;
-class QTimer;
+class Layer_ABC;
+class ElevationMap;
 
 // =============================================================================
-/** @class  GL3DWidget
-    @brief  GL3DWidget
+/** @class  Gl3dWidget
+    @brief  Gl3dWidget
 */
-// Created: AGE 2005-05-09
+// Created: AGE 2006-03-28
 // =============================================================================
-class GL3DWidget : public MapWidget3D
+class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3D, public GlTools_ABC, public View_ABC
 {
-    Q_OBJECT;
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GL3DWidget( QWidget* pParent );
-    virtual ~GL3DWidget();
+             Gl3dWidget( QWidget* pParent, const std::string& scipioXml, ElevationMap& elevation );
+    virtual ~Gl3dWidget();
     //@}
 
     //! @name Operations
     //@{
-    const T_MapEventFilterVector& GetMapEvents() const;
+    void Register( Layer_ABC& layer );
+    void SetDefaultLayer( Layer_ABC& layer );
 
-    virtual void hideEvent( QHideEvent* );
-    virtual void showEvent( QShowEvent* );
-    virtual bool event( QEvent* pEvent );
-    virtual void mouseMoveEvent( QMouseEvent* pMouseEvent );
-    virtual void paintGL();
-    virtual void initializeGL();
-    virtual void keyPressEvent( QKeyEvent* );
+    virtual float Pixels() const;
+    virtual unsigned short StipplePattern() const;
 
-    MT_Vector2D ScreenToGL ( const MT_Vector2D& v );
-    MT_Vector2D ScreenToGL ( const QMouseEvent& event );
-    MT_Vector2D ScreenToGL ( const QPoint& vScreenPos );
+    virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const;
+    virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
+    virtual void DrawLines      ( const T_PointVector& points ) const;
+    virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const;
+    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const; // $$$$ AGE 2006-03-23: 0 <= curveRatio <= 1
+    virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
+    virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const;
+    virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const;
+    virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const;
+    virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const;
 
-    void PushMapEventFilter( MapEventFilter_ABC& filter );
-    void PopMapEventFilter( MapEventFilter_ABC& filter );
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void OnCenterOnPoint( const MT_Vector2D& vPoint );
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void MouseMove( QMouseEvent* pMouseEvent, const MT_Vector2D& vGLPos );
+    virtual void CenterOn( const geometry::Point2f& point );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    GL3DWidget( const GL3DWidget& );            //!< Copy constructor
-    GL3DWidget& operator=( const GL3DWidget& ); //!< Assignement operator
+    Gl3dWidget( const Gl3dWidget& );            //!< Copy constructor
+    Gl3dWidget& operator=( const Gl3dWidget& ); //!< Assignement operator
     //@}
 
-private:
-    enum E_RulerState
-    {
-        eNone,
-        eStarting,
-        eExistant
-    };
+protected:
+    //! @name Helpers
+    //@{
+    virtual void mousePressEvent( QMouseEvent* );
+    virtual void mouseMoveEvent ( QMouseEvent* );
+    virtual void mouseReleaseEvent     ( QMouseEvent* );
+    virtual void mouseDoubleClickEvent ( QMouseEvent* );
+    virtual void keyPressEvent( QKeyEvent* );
+    virtual void Paint( const ViewFrustum& view );
+    virtual void initializeGL();
+    float ElevationAt( const geometry::Point2f& point ) const;
+    //@}
 
-private:
-    MT_Rect      viewport_;
-    MT_Float     rMetersPerPixel_;
-    E_RulerState nRulerState_;
-    MT_Vector2D  vRulerStartPos_;
-    MT_Vector2D  vRulerEndPos_;
-
-    T_MapEventFilterVector eventFilterStack_;
+    //! @name Types
+    //@{
+    typedef std::vector< Layer_ABC* >  T_Layers;
+    typedef T_Layers::iterator        IT_Layers;
+    typedef T_Layers::const_iterator CIT_Layers;
+    //@}
 
 private:
     //! @name Member data
     //@{
-    MT_GLDrawer* pGLDrawer_;
-    float        rZFactor_;
-    QTimer*      pTimer_;
+    ElevationMap& elevation_;
+    T_Layers layers_;
+    IT_Layers last_;
+    Layer_ABC* default_;
+    float zRatio_;
     //@}
 };
 
-#endif // __GL3DWidget_h_
+#endif // __Gl3dWidget_h_

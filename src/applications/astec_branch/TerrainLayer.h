@@ -10,7 +10,7 @@
 #ifndef __TerrainLayer_h_
 #define __TerrainLayer_h_
 
-#include "graphics/MapLayer_ABC.h"
+#include "Layer_ABC.h"
 #include "graphics/GraphicManager_ABC.h"
 #include "graphics/GraphicSetup_ABC.h"
 
@@ -23,7 +23,7 @@ class GraphicShape;
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class TerrainLayer : public MapLayer_ABC, private GraphicManager_ABC, private GraphicSetup_ABC
+class TerrainLayer : public Layer2d_ABC, private GraphicManager_ABC, private GraphicSetup_ABC
 {
 
 public:

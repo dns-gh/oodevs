@@ -21,8 +21,8 @@
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
-    : EntityLayerBase( tools, widget )
+EntityLayer< ConcreteEntity >::EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+    : EntityLayerBase( tools, view )
     , controllers_( controllers )
     , strategy_( strategy )
 {

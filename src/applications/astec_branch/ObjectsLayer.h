@@ -25,7 +25,7 @@ class ObjectsLayer : public EntityLayer< Object >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+             ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~ObjectsLayer();
     //@}
 

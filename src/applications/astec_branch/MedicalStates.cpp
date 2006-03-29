@@ -63,22 +63,19 @@ void MedicalStates::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
     {
         dispoRamassageAmbulances_.resize( message.disponibilites_ambulances_ramassage.n );
         for( uint i = 0; i < message.disponibilites_ambulances_ramassage.n; ++i )
-            dispoRamassageAmbulances_[i] = Availability( resolver_.Get( message.disponibilites_ambulances_ramassage.elem[i].type_equipement )
-                                                       , message.disponibilites_ambulances_ramassage.elem[i].pourcentage_disponibilite );
+            dispoRamassageAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_ramassage.elem[i] );
     }
     if( message.m.disponibilites_ambulances_relevePresent )
     {
         dispoReleveAmbulances_.resize( message.disponibilites_ambulances_releve.n );
         for( uint i = 0; i < message.disponibilites_ambulances_releve.n; ++i )
-            dispoReleveAmbulances_[i] = Availability( resolver_.Get( message.disponibilites_ambulances_releve.elem[i].type_equipement )
-                                                    , message.disponibilites_ambulances_releve.elem[i].pourcentage_disponibilite );
+            dispoReleveAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_releve.elem[i] );
     }
     if( message.m.disponibilites_medecinsPresent )
     {
         dispoDoctors_.resize( message.disponibilites_medecins.n );
         for( uint i = 0; i < message.disponibilites_medecins.n; ++i )
-            dispoDoctors_[i] = Availability( resolver_.Get( message.disponibilites_medecins.elem[i].type_equipement )
-                                           , message.disponibilites_medecins.elem[i].pourcentage_disponibilite );
+            dispoDoctors_[i] = Availability( resolver_, message.disponibilites_medecins.elem[i] );
     }
     controller_.Update( *this );
 }

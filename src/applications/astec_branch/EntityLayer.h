@@ -14,12 +14,12 @@
 #include "ElementObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
 #include "OptionsObserver_ABC.h"
-#include "graphics/MapLayer_ABC.h"
+#include "Layer_ABC.h"
 
 class Controllers;
 class GlTools_ABC;
 class ColorStrategy_ABC;
-class MapWidget;
+class View_ABC;
 class Entity_ABC;
 class Team;
 
@@ -29,14 +29,14 @@ class Team;
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class EntityLayerBase : public MapLayer_ABC
+class EntityLayerBase : public Layer_ABC
                       , public Observer_ABC
                       , public OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{    
-             EntityLayerBase( const GlTools_ABC& tools, MapWidget& widget );
+             EntityLayerBase( const GlTools_ABC& tools, View_ABC& view );
     virtual ~EntityLayerBase();
     //@}    
 
@@ -86,7 +86,7 @@ private:
     //! @name Member data
     //@{
     const GlTools_ABC& tools_;
-    MapWidget& widget_;
+    View_ABC& view_;
 
     T_Entities entities_;
     unsigned selected_;
@@ -109,7 +109,7 @@ class EntityLayer : public EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+             EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~EntityLayer();
     //@}
 

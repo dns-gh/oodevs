@@ -25,7 +25,7 @@ class PopulationsLayer : public EntityLayer< Population >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget );
+             PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~PopulationsLayer();
     //@}
 

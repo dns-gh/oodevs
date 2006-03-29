@@ -75,7 +75,7 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& v )
 {
     geometry::Rectangle2f viewport = v.Intersect( extent_ );
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-
+    // $$$$ AGE 2006-03-28: use tools
     if( gridSize_ > 0 )
     {
         glColor4d( 1.0, 1.0, 1.0, 0.3 );

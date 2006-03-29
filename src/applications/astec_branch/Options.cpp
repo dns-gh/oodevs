@@ -67,8 +67,8 @@ void Options::Remove( Observer_ABC& o )
 void Options::Change( const std::string& name, const OptionVariant& value )
 {
     options_[ name ] = value;
-    for( CIT_Observers it = observers_.begin(); it != observers_.end(); ++it )
-        (*it)->OptionChanged( name, value );
+    for( unsigned i = 0; i < observers_.size(); ++i )
+        observers_.at( i )->OptionChanged( name, value );
 }
 
 // -----------------------------------------------------------------------------

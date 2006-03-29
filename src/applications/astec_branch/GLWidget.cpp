@@ -9,19 +9,9 @@
 
 #include "astec_pch.h"
 #include "GlWidget.h"
-#include "TerrainLayer.h"
-#include "AgentsLayer.h"
-#include "ObjectsLayer.h"
-#include "ColorStrategy.h"
-#include "MetricsLayer.h"
 #include "GlFont.h"
-#include "DefaultLayer.h"
-#include "PopulationsLayer.h"
-#include "LimitsLayer.h"
-#include "ParametersLayer.h"
 #include "Model.h"
-#include "graphics/ElevationLayer.h"
-#include "graphics/ElevationMap.h"
+#include "graphics/MapLayer_ABC.h"
 
 using namespace geometry;
 
@@ -44,38 +34,28 @@ namespace
 };
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::GlWidget
+// Name: GlWidget::GlWidgexxxt
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml, Controllers& controllers, Model& model )
+GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml )
     : WorldParameters( scipioXml )
-    , MapWidget( pParent, width_, height_ )
-    , strategy_( *new ColorStrategy( controllers ) )
-    , elevation_( new ElevationMap( detection_ ) )
+    , SetGlOptions()
+    , MapWidget( context_, pParent, width_, height_ )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
-    , frame_( 0 )
     , circle_( 0 )
     , app6Font_( 0 )
     , app6OutlinedFont_( 0 )
+    , frame_( 0 )
 {
     SetReverse( true );
     SetExclusive( true );
     SetLastFocusFirst( true );
 
-    ParametersLayer* parameters = new ParametersLayer( *this );
-
     Register( *new SpyLayer( viewport_, frame_ ) );
-    Register( *new ElevationLayer( *elevation_ ) );
-    Register( *new TerrainLayer( graphicsDirectory_ ) );
-    Register( *new MetricsLayer( controllers, *this ) );
-    Register( *new LimitsLayer( controllers, *this, strategy_, *parameters, model.limits_ ) );
-    Register( *new ObjectsLayer( controllers, *this, strategy_, *this ) );
-    Register( *new PopulationsLayer( controllers, *this, strategy_, *this ) );
-    Register( *new AgentsLayer( controllers, *this, strategy_, *this ) );
-    Register( *parameters );
-    
-    SetDefaultLayer( *new DefaultLayer( controllers ) );
+
+    if( context() != context_ || ! context_->isValid() )
+        throw std::runtime_error( "Unable to create context" );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +66,6 @@ GlWidget::~GlWidget()
 {
     delete app6Font_;
     delete app6OutlinedFont_;
-    delete &strategy_;
     glDeleteLists( circle_, 1 );
 }
 
@@ -96,6 +75,7 @@ GlWidget::~GlWidget()
 // -----------------------------------------------------------------------------
 void GlWidget::initializeGL()
 {
+    glEnable( GL_TEXTURE_2D );
     MapWidget::initializeGL();
     circle_ = GenerateCircle();
     app6Font_         = new GlFont( "Scipio" );
@@ -229,8 +209,6 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
         DrawArrow( from, to, size );
         return;
     }
-    // $$$$ AGE 2006-03-23: revoir un peu...
-
     const Vector2f u( from, to );
     const Vector2f v( u.Normal() );
     const Point2f middle = from + 0.5f * u;
@@ -357,4 +335,13 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where )
     glPopAttrib();
 
     app6Font_->Print( center, symbol, size );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::CenterOn
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void GlWidget::CenterOn( const geometry::Point2f& point )
+{
+    Center( point );
 }

@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Availability.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Availability constructor
@@ -22,21 +23,23 @@ Availability::Availability()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Availability constructor
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-Availability::Availability( const EquipmentType& type, unsigned int available )
-    : type_( &type )
-    , available_( available )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Availability destructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 Availability::~Availability()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Availability::Display
+// Created: AGE 2006-03-29
+// -----------------------------------------------------------------------------
+void Availability::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Display( 0, type_ )
+             .Display( 0, total_)
+             .Display( 0, available_ )
+             .Display( 0, atWork_ )
+             .Display( 0, atRest_ );
 }

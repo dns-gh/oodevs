@@ -19,8 +19,8 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-class GL3DWidget;
-class GLWidget;
+#include "OptionsObserver_ABC.h"
+
 class MapEventHandler_ABC;
 class Options;
 class MapEventFilter_ABC;
@@ -29,6 +29,9 @@ class OptionsPanel;
 class QProgressBar;
 class Controllers;
 class Model;
+class GlLayers;
+class GlWidget;
+class Gl3dWidget;
 
 // =============================================================================
 /** @class  MainWindow
@@ -43,6 +46,8 @@ class Model;
 // Created: APE 2004-03-01
 // =============================================================================
 class MainWindow : public QMainWindow
+                 , public Observer_ABC
+                 , public OptionsObserver_ABC
 {
     Q_OBJECT;
 
@@ -56,8 +61,6 @@ public:
     //! @name Operations
     //@{
     Options& GetOptions() const;
-
-    QGLWidget* GetQGLWidget( bool b3Dmode ) const;
     //@}
 
 private:
@@ -69,6 +72,8 @@ private:
 
     void WriteOptions();
     void ReadOptions();
+
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
     //! @name Copy/Assignment
@@ -80,6 +85,14 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string scipioXml_;
+    GlLayers* layers_;
+    GlWidget*   widget2d_;
+    Gl3dWidget* widget3d_;
+    bool b3d_;
+
+    QTimer* displayTimer_;
+
     OptionsPanel* pOptionsPanel_;
 
     QDockWindow* pListDockWnd_;

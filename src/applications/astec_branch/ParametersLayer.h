@@ -10,7 +10,7 @@
 #ifndef __ParametersLayer_h_
 #define __ParametersLayer_h_
 
-#include "graphics/MapLayer_ABC.h"
+#include "Layer_ABC.h"
 class GlTools_ABC;
 class ShapeHandler_ABC;
 
@@ -20,7 +20,7 @@ class ShapeHandler_ABC;
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class ParametersLayer : public MapLayer_ABC
+class ParametersLayer : public Layer_ABC
 {
 
 public:

@@ -10,7 +10,7 @@
 #ifndef __LimitsLayer_h_
 #define __LimitsLayer_h_
 
-#include "graphics/MapLayer_ABC.h"
+#include "Layer_ABC.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "ContextMenuObserver_ABC.h"
@@ -32,7 +32,7 @@ class LimitsModel;
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public QObject
-                  , public MapLayer_ABC
+                  , public Layer_ABC
                   , private Observer_ABC
                   , public ElementObserver_ABC< Lima >
                   , public ElementObserver_ABC< Limit >

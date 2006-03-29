@@ -66,7 +66,10 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controll
                                    .AddColumn( "Disponibles" );
     dispoDispoDoctors_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     dispoDispoDoctors_->AddColumn( "Médecins" )
-                       .AddColumn( "Disponibles" );
+                       .AddColumn( "Total" )
+                       .AddColumn( "Disponibles" )
+                       .AddColumn( "Au travail" )
+                       .AddColumn( "Au repos" );
 
     controllers_.Register( *this );
 }
@@ -193,8 +196,7 @@ void AgentMedicalPanel::NotifyUpdated( const MedicalStates& consigns )
 // -----------------------------------------------------------------------------
 void AgentMedicalPanel::Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( 0, availability.type_ )
-             .Display( 0, availability.available_ * Units::percentage );
+    availability.Display( displayer );
 }
 
 // -----------------------------------------------------------------------------

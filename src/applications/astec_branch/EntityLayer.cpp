@@ -11,14 +11,15 @@
 #include "EntityLayer.h"
 #include "Entity_ABC.h"
 #include "OptionVariant.h"
+#include "View_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( const GlTools_ABC& tools, MapWidget& widget )
+EntityLayerBase::EntityLayerBase( const GlTools_ABC& tools, View_ABC& view )
     : tools_      ( tools )
-    , widget_     ( widget )
+    , view_       ( view )
     , selected_   ( 0 )
     , currentTeam_( 0 )
 {
@@ -94,7 +95,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( selected_ >= entities_.size() 
      || ! IsInSelection( *entities_[ selected_ ], point ) 
      || ! IsInTeam( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ++selected_ >= entities_.size() ) )
+     || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
         selected_ = 0;
 
     for( ; selected_ < entities_.size(); ++selected_ )
@@ -162,7 +163,7 @@ void EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::ActivateEntity( const Entity_ABC& entity )
 {
-    widget_.Center( entity.Get< Positions >().GetPosition() );
+    view_.CenterOn( entity.Get< Positions >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

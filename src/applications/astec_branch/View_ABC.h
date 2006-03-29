@@ -7,30 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __SetGlOptions_h_
-#define __SetGlOptions_h_
+#ifndef __View_ABC_h_
+#define __View_ABC_h_
+
+#include "geometry/Types.h"
 
 // =============================================================================
-/** @class  SetGlOptions
-    @brief  SetGlOptions
+/** @class  View_ABC
+    @brief  View_ABC
 */
-// Created: AGE 2006-03-16
+// Created: AGE 2006-03-28
 // =============================================================================
-class SetGlOptions
+class View_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SetGlOptions();
-    virtual ~SetGlOptions();
+             View_ABC() {};
+    virtual ~View_ABC() {};
     //@}
 
-protected:
-    //! @name Member data
+    //! @name Operations
     //@{
-    QGLContext* context_;
+    virtual void CenterOn( const geometry::Point2f& point ) = 0;
     //@}
 };
 
-#endif // __SetGlOptions_h_
+#endif // __View_ABC_h_

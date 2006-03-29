@@ -40,9 +40,12 @@ TerrainLayer::~TerrainLayer()
 // -----------------------------------------------------------------------------
 void TerrainLayer::Initialize( const geometry::Rectangle2f& )
 {
-    DataFactory dataFactory;
-    GraphicFactory factory( *this, *this, dataFactory );
-    factory.LoadGraphicDirectory( dataDirectory_ );
+    if( shapes_.empty() )
+    {
+        DataFactory dataFactory;
+        GraphicFactory factory( *this, *this, dataFactory );
+        factory.LoadGraphicDirectory( dataDirectory_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

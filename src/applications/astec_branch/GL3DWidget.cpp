@@ -3,286 +3,388 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: AGE 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/GL3DWidget.cpp $
-// $Author: Age $
-// $Modtime: 17/06/05 10:17 $
-// $Revision: 6 $
-// $Workfile: GL3DWidget.cpp $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "GL3DWidget.h"
-#include "MT_GLDrawer.h"
-#include "MainWindow.h"
-#include "GLTool.h"
-#include "MT_GLFont.h"
-#include "App.h"
-#include "World.h"
-#include "MapMouseEvent.h"
-#include "MapDropEvent.h"
-#include "moc_GL3DWidget.cpp"
+#include "Gl3dWidget.h"
+#include "AgentsLayer.h"
+#include "ObjectsLayer.h"
+#include "ColorStrategy.h"
+#include "GlFont.h"
+#include "PopulationsLayer.h"
+#include "LimitsLayer.h"
+#include "ColorStrategy.h"
+#include "Model.h"
+#include "ParametersLayer.h"
+#include "graphics/ElevationMap.h"
+#include "graphics/ElevationTextureTree.h"
+#include "graphics/Compass.h"
+#include "graphics/Visitor3d.h"
 
-namespace
+using namespace geometry;
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget constructor
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+Gl3dWidget::Gl3dWidget( QWidget* pParent, const std::string& scipioXml, ElevationMap& elevation )
+    : WorldParameters( scipioXml )
+    , SetGlOptions()
+    , Widget3D( context_, pParent )
+    , elevation_( elevation )
+    , last_( layers_.begin() )
+    , default_( 0 )
+    , zRatio_( 5 )
 {
-    // $$$$ AGE 2005-03-16: ...
-    // Helper function used for the MT_GLDrawer
-    MT_Vector2D ScreenToGL( const MT_Vector2D& screenPos, QGLWidget& glWidget )
-    {
-        return ((GL3DWidget&)glWidget).ScreenToGL( QPoint( screenPos.rX_, screenPos.rY_ ) );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget constructor
-// Created: AGE 2005-05-09
+// Name: Gl3dWidget destructor
+// Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-GL3DWidget::GL3DWidget( QWidget* pParent )
-    : MapWidget3D( pParent, App::GetApp().GetWorld().GetTerrainDirectory() ) // $$$$ AGE 2005-05-13: 
-    , pGLDrawer_( 0 )
-    , rZFactor_( 10 )
-    , rMetersPerPixel_( 100 )  // $$$$ AGE 2005-05-19: 
-    , viewport_( -std::numeric_limits< MT_Float >::infinity(), -std::numeric_limits< MT_Float >::infinity(), 
-                  std::numeric_limits< MT_Float >::infinity(),  std::numeric_limits< MT_Float >::infinity() )
-    , nRulerState_      ( eNone )
+Gl3dWidget::~Gl3dWidget()
 {
-    SetZRatio( rZFactor_ );
-
-    glInit();
-    pGLDrawer_ = new MT_GLDrawer( *this, &(::ScreenToGL), MainWindow::GetMainWindow(), false ); // $$$$ AGE 2005-03-16: ??
-    update();
-
-    pTimer_ = new QTimer( this );
-    pTimer_->start( 50 );
+    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        delete *it;
+    delete default_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget destructor
-// Created: AGE 2005-05-09
+// Name: Gl3dWidget::Register
+// Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-GL3DWidget::~GL3DWidget()
+void Gl3dWidget::Register( Layer_ABC& layer )
 {
-    //NOTHING
+    layers_.push_back( & layer );
+    last_ = layers_.begin();
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::event
-// Created: AGE 2005-05-10
+// Name: Gl3dWidget::SetDefaultLayer
+// Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-bool GL3DWidget::event( QEvent* pEvent )
+void Gl3dWidget::SetDefaultLayer( Layer_ABC& layer )
 {
-    bool bDealt = false;
-    // If it's a mouse event...
-    if( pEvent->type() == QEvent::MouseButtonPress   || pEvent->type() == QEvent::MouseMove ||
-        pEvent->type() == QEvent::MouseButtonRelease || pEvent->type() == QEvent::MouseButtonDblClick )
-    {
-        // Translate it into a custom map event and send it.
-        MapMouseEvent mapMouseEvent( *(QMouseEvent*)pEvent, ScreenToGL( *(QMouseEvent*)pEvent ), rMetersPerPixel_ );
-        bDealt = QGLWidget::event( &mapMouseEvent );
-    }
-    // If it's a drop event...
-    else if( pEvent->type() == QEvent::Drop )
-    {
-        // Translate it into a custom map event and send it.
-        MapDropEvent mapDropEvent( *(QDropEvent*)pEvent, ScreenToGL( ((QDropEvent*)pEvent)->pos() ) );
-        bDealt = QGLWidget::event( &mapDropEvent );
-    }
-    // If it's not a mouse event or drop event, use the standard event processing method.
-    else
-        bDealt = QGLWidget::event( pEvent );
-
-//    if( bDealt )
-//        Update();
-    return bDealt;
+    default_ = & layer;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::hideEvent
-// Created: AGE 2005-05-16
+// Name: Gl3dWidget::initializeGL
+// Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void GL3DWidget::hideEvent( QHideEvent* )
+void Gl3dWidget::initializeGL()
 {
-    pGLDrawer_->OnHide();
-    disconnect( &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), this,   SLOT( OnCenterOnPoint( const MT_Vector2D& ) ) );
-    disconnect( pTimer_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::showEvent
-// Created: AGE 2005-05-16
-// -----------------------------------------------------------------------------
-void GL3DWidget::showEvent( QShowEvent* )
-{
-    pGLDrawer_->OnShow();
-    connect( &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), this,   SLOT( OnCenterOnPoint( const MT_Vector2D& ) ) );
-    connect( pTimer_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::keyPressEvent
-// Created: AGE 2005-05-13
-// -----------------------------------------------------------------------------
-void GL3DWidget::keyPressEvent( QKeyEvent* pEvent )
-{
-    if( pEvent->key() == Qt::Key_Plus )
-    {
-        rZFactor_ *= 1.1f;
-        SetZRatio( rZFactor_ );
-    }
-    else if( pEvent->key() == Qt::Key_Minus )
-    {
-        rZFactor_ *= 0.9f;
-        SetZRatio( rZFactor_ );
-    }
-    else if( pEvent->key() == Qt::Key_Home )
-    {
-        CenterOn( geometry::Point3f( App::GetApp().GetWorld().GetRect().GetWidth () / 2, 
-                                     App::GetApp().GetWorld().GetRect().GetHeight() / 2,
-                                     App::GetApp().GetWorld().GetRect().GetWidth () / 2 ) );
-    }
-    Widget3D::keyPressEvent( pEvent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::initializeGL
-// Created: AGE 2005-05-10
-// -----------------------------------------------------------------------------
-void GL3DWidget::initializeGL()
-{
+    const geometry::Rectangle2f viewport( 0, 0, width_, height_ );
     Widget3D::initializeGL();
-//    QFont scipioFont( "Scipio", 64 );
-//    renderText( 0, 0, "", scipioFont );
-//    MT_GLFont::Font( "Arial", 11.0, ANSI_CHARSET, true, FW_BOLD );
-    GFX_Tools::InitializeFonts();
+    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        (*it)->Initialize( viewport );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::paintGL
-// Created: AGE 2005-05-09
+// Name: Gl3dWidget::Paint
+// Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void GL3DWidget::paintGL()
+void Gl3dWidget::Paint( const ViewFrustum& view )
 {
-    Widget3D::paintGL();
+    glLineWidth( 1.f );
+    glColor3f( 1, 1, 1 );
     glBindTexture( GL_TEXTURE_2D, 0 );
+    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        (*it)->Paint( view );
+}
 
-    GLTool::SetAltitudeRatio( rZFactor_ );
-    GLTool::Draw( viewport_, rMetersPerPixel_ );
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::Pixels
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+float Gl3dWidget::Pixels() const
+{
+    return 100.f; // $$$$ AGE 2006-03-28: 
+}
 
-    pGLDrawer_->Draw();
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::StipplePattern
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+unsigned short Gl3dWidget::StipplePattern() const
+{
+    return 0xFFFF; // $$$$ AGE 2006-03-28: 
+}
 
-    // Ruler
-    if( nRulerState_ == eExistant )
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawCross
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/ ) const
+{
+    if( size < 0 )
+        size = 10.f * Pixels();
+    const Vector2f u( size, size );
+    const Vector2f v( size, -size );
+    DrawLine( at + u, at - u );
+    DrawLine( at + v, at - v );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::ElevationAt
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+inline
+float Gl3dWidget::ElevationAt( const geometry::Point2f& point ) const
+{
+    return ( elevation_.ElevationAt( point ) + 20.f ) * zRatio_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawLine
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawLine( const Point2f& from, const Point2f& to ) const
+{
+    Vector2f u( from, to );
+    const float distance = u.Length();
+    if( distance > 0 )
+        u /= distance;
+    Point2f last = from;
+    glBegin( GL_LINE_STRIP );
+    glVertex3f( last.X(), last.Y(), ElevationAt( last ) );
+    for( float x = 100; x < distance; x += 100.f )
     {
-        glLineWidth( 2 );
-        glColor4d( 1.0, 1.0, 1.0, 1.0 );
-        double rDist = vRulerStartPos_.Distance( vRulerEndPos_ );
-        double rMeters = rDist;
-
-        MT_Vector2D vPosText =  MT_Vector2D( ( vRulerStartPos_ + vRulerEndPos_ ) / 2. );
-        GLTool::DrawLine( vRulerStartPos_, vRulerEndPos_, rMetersPerPixel_ * 25, true ); // $$$$ AGE 2005-03-17: 
-        MT_GLFont::Print( "Arial", vPosText, MT_FormatString( "  %5.2fm", rMeters  ), rMetersPerPixel_ * 25 );
+        last = last + 100.f * u;
+        glVertex3f( last .X(), last .Y(), ElevationAt( last ) );
     }
-
-	glFlush();
+    glVertex3f( to.X(), to.Y(), ElevationAt( to ) );
+    glEnd();
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::mouseMoveEvent
-// Created: AGE 2005-05-17
+// Name: Gl3dWidget::DrawLines
+// Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void GL3DWidget::mouseMoveEvent( QMouseEvent* pMouseEvent )
+void Gl3dWidget::DrawLines( const T_PointVector& points ) const
 {
-    Widget3D::mouseMoveEvent( pMouseEvent );
-    emit MouseMove( pMouseEvent, ScreenToGL( *pMouseEvent ) );
+    if( points.size() < 2 )
+        return;
+    for( CIT_PointVector it = points.begin(); it + 1 != points.end(); ++it )
+        DrawLine( *it, *(it+1) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::ScreenToGL
-// Created: AGE 2005-05-09
+// Name: Gl3dWidget::DrawArrow
+// Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-MT_Vector2D GL3DWidget::ScreenToGL( const MT_Vector2D& v )
+void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*= -1.f*/ ) const
 {
-    return ScreenToGL( QPoint( v.rX_, v.rY_ ) );
+    if( size < 0 )
+        size = 15.f * Pixels();
+
+    const Vector2f u = Vector2f( from, to ).Normalize() * size;
+    const Vector2f v = 0.5f * u.Normal();
+    const Point2f left  = to - u + v;
+    const Point2f right = to - u - v;
+
+    DrawLine( from, to );
+    DrawLine( to, left );
+    DrawLine( to, right );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawCurvedArrow
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
+{
+    if( curveRatio == 0 )
+    {
+        DrawArrow( from, to, size );
+        return;
+    }
+    Vector2f u( from, to );
+    const Vector2f v( u.Normal() );
     
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::ScreenToGL
-// Created: AGE 2005-05-09
-// -----------------------------------------------------------------------------
-MT_Vector2D GL3DWidget::ScreenToGL( const QMouseEvent& event )
-{
-    return ScreenToGL( event.pos() );
-}
+    const Point2f center = from + 0.5f * u;
+    const float distance = u.Length();
+    const float zCenter = distance * ( 1.f - 1.f / curveRatio );
+    if( distance )
+        u /= distance;
+    const float radius = Point3f( center.X(), center.Y(), zCenter ).Distance( Point3f( from.X(), from.Y(), ElevationAt( from ) ) );
 
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::ScreenToGL
-// Created: AGE 2005-05-09
-// -----------------------------------------------------------------------------
-MT_Vector2D GL3DWidget::ScreenToGL( const QPoint& vScreenPos )
-{
-    geometry::Point3f p = PointAt( vScreenPos );
-    return MT_Vector2D( p.X(), p.Y() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::OnCenterOnPoint
-// Created: AGE 2005-05-13
-// -----------------------------------------------------------------------------
-void GL3DWidget::OnCenterOnPoint( const MT_Vector2D& vPoint )
-{
-    CenterOn( geometry::Point2f( vPoint.rX_, vPoint.rY_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GL3DWidget::PushMapEventFilter
-// Created: AGE 2005-05-17
-// -----------------------------------------------------------------------------
-void GL3DWidget::PushMapEventFilter( MapEventFilter_ABC& filter )
-{
-    if( filter.IsBlocking() )
+    Point2f last = from;
+    glBegin( GL_LINE_STRIP );
+    glVertex3f( last.X(), last.Y(), ElevationAt( last ) );
+    for( float x = 100; x < distance; x += 100.f )
     {
-        for( RIT_MapEventFilterVector it = eventFilterStack_.rbegin(); it != eventFilterStack_.rend(); ++it )
-        {
-            this->removeEventFilter( (*it)->GetObject() );
-            if( (*it)->IsBlocking() )
-                break;
-        }
+        last = last + 100.f * u;
+        const float midDistance = x - distance / 2;
+        const float elevation = std::sqrt( radius * radius - midDistance * midDistance ) + zCenter ;
+        glVertex3f( last .X(), last .Y(), elevation );
+    }
+    glVertex3f( to.X(), to.Y(), ElevationAt( to ) );
+    glEnd();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawCircle
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) const
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawDisc
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawRectangle
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawRectangle( const Rectangle2f& rect ) const
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::Print
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawApp6Symbol
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::CenterOn
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::CenterOn( const geometry::Point2f& point )
+{
+    Widget3D::CenterOn( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::keyPressEvent
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
+{
+    if( event  && event ->key() == Qt::Key_Plus )
+        zRatio_ *= 1.1f;
+    if( event  && event ->key() == Qt::Key_Minus )
+        zRatio_ *= 0.9f;
+
+    bool found = false;
+    IT_Layers last = last_;
+    for( ; last_ != layers_.end() && ! found; ++last_ )
+        if( found = (*last_)->HandleKeyPress( event ) )
+            --last_;
+    for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
+         if( found = (*last_)->HandleKeyPress( event ) )
+            --last_;
+    if( ! found )
+        default_->HandleKeyPress( event  );
+
+    Widget3D::keyPressEvent( event  );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::mouseMoveEvent
+// Created: AGE 2006-03-29
+// -----------------------------------------------------------------------------
+void Gl3dWidget::mouseMoveEvent( QMouseEvent* event )
+{
+    const geometry::Point3f point3 = PointAt( event->pos() );
+    if( point3.Z() > -1000 )
+    {
+        const geometry::Point2f point( point3.X(), point3.Y() );
+
+        bool found = false;
+        IT_Layers last = last_;
+        for( ; last_ != layers_.end() && ! found; ++last_ )
+            if( found = (*last_)->HandleMouseMove( event, point ) )
+                --last_;
+        for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
+            if( found = (*last_)->HandleMouseMove( event, point ) )
+                --last_;
+        if( ! found )
+            default_->HandleMouseMove( event, point );
     }
 
-    this->installEventFilter( filter.GetObject() );
-    eventFilterStack_.push_back( &filter );
+    Widget3D::mouseMoveEvent( event );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::PopMapEventFilter
-// Created: AGE 2005-05-17
+// Name: Gl3dWidget::mouseDoubleClickEvent
+// Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GL3DWidget::PopMapEventFilter( MapEventFilter_ABC& filter )
+void Gl3dWidget::mouseDoubleClickEvent( QMouseEvent* event )
 {
-    assert( ! eventFilterStack_.empty() );
-    assert( eventFilterStack_.back() == &filter );
-
-    this->removeEventFilter( filter.GetObject() );
-    eventFilterStack_.pop_back();
-
-    for( RIT_MapEventFilterVector it = eventFilterStack_.rbegin(); it != eventFilterStack_.rend(); ++it )
+    const geometry::Point3f point3 = PointAt( event->pos() );
+    if( point3.Z() > -1000 )
     {
-        this->installEventFilter( (*it)->GetObject() );
-        if( (*it)->IsBlocking() )
-            break;
+        const geometry::Point2f point( point3.X(), point3.Y() );
+
+        bool found = false;
+        IT_Layers last = last_;
+        for( ; last_ != layers_.end() && ! found; ++last_ )
+            if( found = (*last_)->HandleMouseDoubleClick( event, point ) )
+                --last_;
+        for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
+            if( found = (*last_)->HandleMouseDoubleClick( event, point ) )
+                --last_;
+        if( ! found )
+            default_->HandleMouseDoubleClick( event, point );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: GL3DWidget::GetMapEvents
-// Created: AGE 2005-05-17
+// Name: Gl3dWidget::mouseReleaseEvent
+// Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-const T_MapEventFilterVector& GL3DWidget::GetMapEvents() const
+void Gl3dWidget::mouseReleaseEvent( QMouseEvent* event )
 {
-    return eventFilterStack_;
+    const geometry::Point3f point3 = PointAt( event->pos() );
+    if( point3.Z() > -1000 )
+    {
+        const geometry::Point2f point( point3.X(), point3.Y() );
+
+        bool found = false;
+        IT_Layers last = last_;
+        for( ; last_ != layers_.end() && ! found; ++last_ )
+            if( found = (*last_)->HandleMousePress( event, point ) )
+                --last_;
+        for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
+            if( found = (*last_)->HandleMousePress( event, point ) )
+                --last_;
+        if( ! found )
+            default_->HandleMousePress( event, point );
+    }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::mousePressEvent
+// Created: AGE 2006-03-29
+// -----------------------------------------------------------------------------
+void Gl3dWidget::mousePressEvent( QMouseEvent* event )
+{
+    Gl3dWidget::mouseReleaseEvent( event );
+    Widget3D::mousePressEvent( event );
+}   

@@ -21,6 +21,7 @@ SetGlOptions::SetGlOptions()
     format.setAlpha( true );
     format.setStencil( true );
     QGLFormat::setDefaultFormat( format );
+    context_ = new QGLContext( QGLFormat::defaultFormat() );
 }
 
 // -----------------------------------------------------------------------------

@@ -7,36 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __GlWidget_h_
-#define __GlWidget_h_
+#ifndef __GlProxy_h_
+#define __GlProxy_h_
 
-#include "graphics/MapWidget.h"
-
-#include "WorldParameters.h"
-#include "GlTools_ABC.h"
-#include "SetGlOptions.h"
 #include "View_ABC.h"
+#include "GlTools_ABC.h"
 
-class GlFont;
+class GlWidget;
+class Gl3dWidget;
+class Layer_ABC;
 
 // =============================================================================
-/** @class  GlWidget
-    @brief  GlWidget
+/** @class  GlProxy
+    @brief  GlProxy
 */
-// Created: AGE 2006-03-15
+// Created: AGE 2006-03-29
 // =============================================================================
-class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget, public GlTools_ABC, public View_ABC
+class GlProxy : public View_ABC, public GlTools_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, const std::string& scipioXml );
-    virtual ~GlWidget();
+             GlProxy();
+    virtual ~GlProxy();
     //@}
 
     //! @name Operations
     //@{
+    void RegisterTo( Gl3dWidget* newWidget );
+    void RegisterTo( GlWidget* newWidget );
+    void ChangeTo( Gl3dWidget* newWidget );
+    void ChangeTo( GlWidget* newWidget );
+
+    void Register       ( Layer_ABC& layer );
+    void AddDefaultLayer( Layer_ABC& layer );
+
+    virtual void CenterOn( const geometry::Point2f& point );
+
     virtual float Pixels() const;
     virtual unsigned short StipplePattern() const;
 
@@ -50,35 +58,38 @@ public:
     virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const;
-
-    virtual void CenterOn( const geometry::Point2f& point );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    GlWidget( const GlWidget& );            //!< Copy constructor
-    GlWidget& operator=( const GlWidget& ); //!< Assignement operator
+    GlProxy( const GlProxy& );            //!< Copy constructor
+    GlProxy& operator=( const GlProxy& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void initializeGL();
-    virtual void resizeGL( int w, int h );
-    unsigned int GenerateCircle();
+    void CheckView() const;
+    void CheckTools() const;
+    template< typename Widget >
+    void ReallyRegisterTo( Widget* widget );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< Layer_ABC* > T_Layers;
+    typedef T_Layers::iterator       IT_Layers;
     //@}
 
 private:
     //! @name Member data
     //@{
-    int windowHeight_;
-    int windowWidth_;
-    unsigned int circle_;
-    GlFont* app6Font_;
-    GlFont* app6OutlinedFont_;
-    geometry::Rectangle2f viewport_;
-    unsigned int frame_;
+    View_ABC*    view_;
+    GlTools_ABC* tools_;
+    
+    T_Layers layers_;
+    T_Layers defaults_;
     //@}
 };
 
-#endif // __GlWidget_h_
+#endif // __GlProxy_h_

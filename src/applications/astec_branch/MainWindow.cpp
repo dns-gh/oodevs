@@ -30,25 +30,36 @@
 #include "OptionsPanel.h"
 #include "MissionPanel.h"
 #include "GlWidget.h"
+#include "Gl3dWidget.h"
 #include "Controllers.h"
 #include "SIMControlToolbar.h"
 #include "MapToolbar.h"
 #include "ControllerToolbar.h"
+#include "OptionVariant.h"
+#include "GlLayers.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml )
-    : QMainWindow      ( 0, 0, Qt::WDestructiveClose )
+    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    , scipioXml_  ( scipioXml )
+    , layers_     ( 0 )
+    , widget2d_   ( 0 )
+    , widget3d_   ( 0 )
+    , b3d_        ( false )
 {
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-    GlWidget* pGlWiget = new GlWidget( this, scipioXml, controllers, model  );
-    setCentralWidget( pGlWiget );
-    pGlWiget->show();
+    widget2d_ = new GlWidget( this, scipioXml );;
+    setCentralWidget( widget2d_ );
+    layers_ = new GlLayers( scipioXml, controllers, model );
+    layers_->ChangeTo( widget2d_ );
+    layers_->RegisterTo( widget2d_ );
     
+
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pListDockWnd_, Qt::DockLeft );
@@ -110,10 +121,12 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );
 
+    controllers.Register( *this );
+
     // This one refreshes the map display, and is called only a few time per second.
-    QTimer* displayTimer = new QTimer( this );
-    connect( displayTimer, SIGNAL( timeout()), pGlWiget, SLOT( updateGL() ) );
-    displayTimer->start( 50 );
+    displayTimer_ = new QTimer( this );
+    connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
+    displayTimer_->start( 50 );
 
     ReadSettings();
     ReadOptions();
@@ -127,6 +140,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 MainWindow::~MainWindow()
 {
 //    delete pOptions_;
+    delete layers_;
 }
 
 // -----------------------------------------------------------------------------
@@ -199,5 +213,40 @@ void MainWindow::ReadOptions()
     Settings settings;
     settings.setPath( "MASA", "Astec" );
     pOptionsPanel_->ReadOptions( settings );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OptionChanged
+// Created: AGE 2006-03-28
+// -----------------------------------------------------------------------------
+void MainWindow::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "3D" )
+    {
+        bool new3d = value.To< bool >();
+        if( new3d != b3d_ )
+        {
+            centralWidget()->hide();
+            disconnect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
+            if( new3d )
+            {
+                if( ! widget3d_ )
+                {
+                    widget3d_ = new Gl3dWidget( this, scipioXml_, layers_->GetElevationMap() );
+                    layers_->RegisterTo( widget3d_ );
+                }
+                layers_->ChangeTo( widget3d_ );
+                setCentralWidget( widget3d_ );
+            }
+            else
+            {
+                layers_->ChangeTo( widget2d_ );
+                setCentralWidget( widget2d_ );
+            }
+            centralWidget()->show();
+            connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
+            b3d_ = new3d;
+        }
+    }
 }
 

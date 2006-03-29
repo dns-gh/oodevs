@@ -10,7 +10,11 @@
 #ifndef __Availability_h_
 #define __Availability_h_
 
+#include "ASN_Types.h"
+#include "Resolver_ABC.h"
+
 class EquipmentType;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  Availability
@@ -25,19 +29,30 @@ public:
     //! @name Constructors/Destructor
     //@{
              Availability();
-             Availability( const EquipmentType& type, unsigned int available );
+             template< typename Message >
+             Availability( const Resolver_ABC< EquipmentType >& resolver, const Message& message )
+                : type_     ( & resolver.Get( message.type_equipement ) )
+                , total_    ( message.nbr_total )
+                , available_( message.nbr_disponibles ) 
+                , atWork_   ( message.nbr_au_travail )
+                , atRest_   ( message.m.nbr_au_reposPresent ? message.nbr_au_repos : 0 )
+             {};
     virtual ~Availability();
     //@}
 
     //! @name Operations
     //@{
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 public:
     //! @name Member data
     //@{
     const EquipmentType* type_;
+    unsigned int total_;
     unsigned int available_;
+    unsigned int atWork_;
+    unsigned int atRest_;
     //@}
 };
 

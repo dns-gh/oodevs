@@ -14,8 +14,8 @@
 // Name: ObjectsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
-    : EntityLayer< Object >( controllers, tools, strategy, widget )
+ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+    : EntityLayer< Object >( controllers, tools, strategy, view )
 {
     // NOTHING
 }

@@ -9,4 +9,3 @@
 
 #include "astec_pch.h"
 #include "GlTools_ABC.h"
-

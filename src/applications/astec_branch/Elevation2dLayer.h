@@ -7,51 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef __DefaultLayer_h_
-#define __DefaultLayer_h_
+#ifndef __Elevation2dLayer_h_
+#define __Elevation2dLayer_h_
 
 #include "Layer_ABC.h"
-class Controllers;
+
+class ElevationMap;
+class ElevationLayer;
 
 // =============================================================================
-/** @class  DefaultLayer
-    @brief  DefaultLayer
+/** @class  Elevation2dLayer
+    @brief  Elevation2dLayer
 */
-// Created: AGE 2006-03-23
+// Created: AGE 2006-03-29
 // =============================================================================
-class DefaultLayer : public Layer_ABC
+class Elevation2dLayer : public Layer2d_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DefaultLayer( Controllers& controllers );
-    virtual ~DefaultLayer();
+    explicit Elevation2dLayer( const ElevationMap& elevation );
+    virtual ~Elevation2dLayer();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    DefaultLayer( const DefaultLayer& );            //!< Copy constructor
-    DefaultLayer& operator=( const DefaultLayer& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
+    Elevation2dLayer( const Elevation2dLayer& );            //!< Copy constructor
+    Elevation2dLayer& operator=( const Elevation2dLayer& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    geometry::Point2f point_;
+    const ElevationMap& elevation_;
+    ElevationLayer* layer_;
     //@}
 };
 
-#endif // __DefaultLayer_h_
+#endif // __Elevation2dLayer_h_

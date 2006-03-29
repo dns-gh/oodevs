@@ -70,7 +70,10 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controller
 
     pDispoCommanders_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
     pDispoCommanders_->AddColumn( "Chefs de convois" )
-                      .AddColumn( "Disponibles" );
+                      .AddColumn( "Total" )
+                      .AddColumn( "Disponibles" )
+                      .AddColumn( "Au travail" )
+                      .AddColumn( "Au repos" );
     
     controllers_.Register( *this );
 }
@@ -235,8 +238,7 @@ void AgentSupplyPanel::Display( const Dotation& quota, Displayer_ABC& displayer,
 // -----------------------------------------------------------------------------
 void AgentSupplyPanel::Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( 0, availability.type_ )
-             .Display( 0, availability.available_ * Units::percentage );
+    availability.Display( displayer );
 }
 
 // -----------------------------------------------------------------------------

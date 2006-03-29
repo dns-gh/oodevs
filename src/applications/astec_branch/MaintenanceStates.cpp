@@ -62,15 +62,13 @@ void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
     {
         dispoHaulers_.resize( message.disponibilites_remorqueurs.n );
         for( uint i = 0; i < message.disponibilites_remorqueurs.n; ++i )
-            dispoHaulers_[i] = Availability( resolver_.Get( message.disponibilites_remorqueurs.elem[i].type_equipement )
-                                            , message.disponibilites_remorqueurs.elem[i].pourcentage_disponibilite );
+            dispoHaulers_[i] = Availability( resolver_, message.disponibilites_remorqueurs.elem[i] );
     }
     if( message.m.disponibilites_reparateursPresent )
     {
         dispoRepairers_.resize( message.disponibilites_reparateurs.n );
         for( uint i = 0; i < message.disponibilites_reparateurs.n; ++i )
-            dispoRepairers_[i] = Availability( resolver_.Get( message.disponibilites_reparateurs.elem[i].type_equipement )
-                                              , message.disponibilites_reparateurs.elem[i].pourcentage_disponibilite );
+            dispoRepairers_[i] = Availability( resolver_, message.disponibilites_reparateurs.elem[i] );
     }
 
     controller_.Update( *this );

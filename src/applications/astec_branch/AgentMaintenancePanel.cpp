@@ -63,7 +63,10 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& 
                   .AddColumn( "Disponibles" );
     dispoRepairers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     dispoRepairers_->AddColumn( "Réparateur" )
-                    .AddColumn( "Disponibles" );
+                    .AddColumn( "Total" )
+                    .AddColumn( "Disponible" )
+                    .AddColumn( "Au travail" )
+                    .AddColumn( "Au repos" );
 
     controllers_.Register( *this );
 }
@@ -184,8 +187,7 @@ void AgentMaintenancePanel::NotifyUpdated( const MaintenanceStates& consigns )
 // -----------------------------------------------------------------------------
 void AgentMaintenancePanel::Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( 0, availability.type_ )
-             .Display( 0, availability.available_ * Units::percentage );
+    availability.Display( displayer );
 }
 
 // -----------------------------------------------------------------------------

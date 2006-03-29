@@ -14,8 +14,8 @@
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, MapWidget& widget )
-    : EntityLayer< Agent >( controllers, tools, strategy, widget )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+    : EntityLayer< Agent >( controllers, tools, strategy, view )
 {
     // NOTHING
 }
