@@ -98,6 +98,37 @@ protected:
     }
 
     template< typename Container, typename NameResolver >
+    void DisplayLogAvailabilities( const Container& cont, QListView& viewer, const NameResolver& resolver )
+    {
+//        int x = viewer.contentsX();
+        int y = viewer.contentsY();
+//        int w = viewer.contentsWidth();
+//        int h = viewer.contentsHeight();
+        viewer.clear();
+        for( Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
+        {
+            QString strEquipment    = resolver.GetName( it->nEquipmentType_ ).c_str();
+            QString strNbrTotal     = QString( "%1" ).arg( it->nNbrTotal_ );
+            QString strNbrAvailable = QString( "%1" ).arg( it->nNbrAvailable_ );
+            QString strNbrWorking   = QString( "%1" ).arg( it->nNbrWorking_ );
+            QString strNbrResting   = "-";
+            if( it->nNbrResting_ != std::numeric_limits< uint >::max() )
+                strNbrResting = QString( "%1" ).arg( it->nNbrResting_ );
+
+            new QListViewItem( &viewer, strEquipment, strNbrTotal, strNbrAvailable, strNbrWorking, strNbrResting );
+        }
+        viewer.scrollBy( 0, y );
+        viewer.show();
+    }
+
+    /*
+    pDispoReleveAmbulances_->addColumn( tr( "Total" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Disponibles" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Au travail" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Au repos" ) );
+    */
+
+    template< typename Container, typename NameResolver >
     void DisplayPriorities( const Container& cont, QListViewItem& viewer, const NameResolver& resolver )
     {
         QString strPriorities = cont.empty() ? tr( "Aucune" ) : "";

@@ -44,11 +44,10 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&           GetName             () const;
-          ASN1T_EnumTempsBordee  GetAsnID            () const;
-          MT_Float               GetRepairTimeFactor () const;
-          MT_Float               GetSortingTimeFactor() const;
-          MT_Float               GetHealingTimeFactor() const;
+    const std::string&           GetName                  () const;
+          ASN1T_EnumTempsBordee  GetAsnID                 () const;
+          uint                   GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const;
+          uint                   GetDelayBeforeWarningRC  () const;
     //@}
 
 private:
@@ -59,7 +58,7 @@ private:
     //@}
 
 private:
-     PHY_LogWorkTime( const std::string& strName, ASN1T_EnumTempsBordee asn );
+     PHY_LogWorkTime( const std::string& strName, ASN1T_EnumTempsBordee asn, uint nWorkTime );
     ~PHY_LogWorkTime();
 
     //! @name Init
@@ -70,9 +69,8 @@ private:
 private:
     const std::string           strName_;
     const ASN1T_EnumTempsBordee asn_;
-          MT_Float              rRepairTimeFactor_;
-          MT_Float              rSortingTimeFactor_;
-          MT_Float              rHealingTimeFactor_;
+    const MT_Float              rWorkerRatio_;
+          uint                  nDelayBeforeWarningRC_;
 
 private:
     static T_WorkTimeMap workTimes_;

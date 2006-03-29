@@ -827,6 +827,13 @@ EXTERN int asn1PE_SanteDisponibiliteMoyens (ASN1CTXT* ctxt_p, ASN1T_SanteDisponi
 
    rtdiag ("asn1PE_SanteDisponibiliteMoyens: start\n");
 
+   PU_NEWFIELD (ctxt_p, "nbr_au_reposPresent");
+
+   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.nbr_au_reposPresent);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+
    /* encode type_equipement */
 
    PU_PUSHNAME (ctxt_p, "type_equipement");
@@ -835,13 +842,39 @@ EXTERN int asn1PE_SanteDisponibiliteMoyens (ASN1CTXT* ctxt_p, ASN1T_SanteDisponi
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
-   /* encode pourcentage_disponibilite */
+   /* encode nbr_total */
 
-   PU_PUSHNAME (ctxt_p, "pourcentage_disponibilite");
+   PU_PUSHNAME (ctxt_p, "nbr_total");
 
-   stat = asn1PE_Pourcentage (ctxt_p, pvalue->pourcentage_disponibilite);
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_total);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
+
+   /* encode nbr_disponibles */
+
+   PU_PUSHNAME (ctxt_p, "nbr_disponibles");
+
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_disponibles);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode nbr_au_travail */
+
+   PU_PUSHNAME (ctxt_p, "nbr_au_travail");
+
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_au_travail);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode nbr_au_repos */
+
+   if (pvalue->m.nbr_au_reposPresent) {
+      PU_PUSHNAME (ctxt_p, "nbr_au_repos");
+
+      stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_au_repos);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+      PU_POPNAME (ctxt_p);
+   }
 
 
    rtdiag ("asn1PE_SanteDisponibiliteMoyens: end\n");
@@ -858,8 +891,21 @@ int ASN1C_SanteDisponibiliteMoyens::Encode ()
 EXTERN int asn1PD_SanteDisponibiliteMoyens (ASN1CTXT* ctxt_p, ASN1T_SanteDisponibiliteMoyens* pvalue)
 {
    int stat = ASN_OK;
+   ASN1BOOL optbit;
 
    rtdiag ("asn1PD_SanteDisponibiliteMoyens: start\n");
+
+   /* optional bits */
+
+   memset (&pvalue->m, 0, sizeof(pvalue->m));
+
+   PU_NEWFIELD (ctxt_p, "nbr_au_reposPresent");
+
+   stat = pd_bit (ctxt_p, &optbit);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   else pvalue->m.nbr_au_reposPresent = optbit;
+
+   PU_SETBITCOUNT (ctxt_p);
 
    /* decode type_equipement */
 
@@ -870,14 +916,43 @@ EXTERN int asn1PD_SanteDisponibiliteMoyens (ASN1CTXT* ctxt_p, ASN1T_SanteDisponi
 
    PU_POPNAME (ctxt_p);
 
-   /* decode pourcentage_disponibilite */
+   /* decode nbr_total */
 
-   PU_PUSHNAME (ctxt_p, "pourcentage_disponibilite");
+   PU_PUSHNAME (ctxt_p, "nbr_total");
 
-   stat = asn1PD_Pourcentage (ctxt_p, &pvalue->pourcentage_disponibilite);
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_total);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
+
+   /* decode nbr_disponibles */
+
+   PU_PUSHNAME (ctxt_p, "nbr_disponibles");
+
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_disponibles);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode nbr_au_travail */
+
+   PU_PUSHNAME (ctxt_p, "nbr_au_travail");
+
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_au_travail);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode nbr_au_repos */
+
+   if (pvalue->m.nbr_au_reposPresent) {
+      PU_PUSHNAME (ctxt_p, "nbr_au_repos");
+
+      stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_au_repos);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_POPNAME (ctxt_p);
+   }
 
 
    rtdiag ("asn1PD_SanteDisponibiliteMoyens: end\n");

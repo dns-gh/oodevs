@@ -54,8 +54,11 @@ MsgLogMaintenanceTraitementEquipementDestruction ::= SEQUENCE
 -- Etat des pions logistiques de la maintenance
 MaintenanceDisponibiliteMoyens ::= SEQUENCE
 {
-    type-equipement           TypeEquipement,
-    pourcentage-disponibilite Pourcentage
+    type-equipement  TypeEquipement,
+    nbr-total        INTEGER,
+    nbr-disponibles  INTEGER,       
+    nbr-au-travail   INTEGER,
+    nbr-au-repos     INTEGER OPTIONAL -- applicable uniquement à certains moyens
 }
 
 MaintenancePriorites ::= SEQUENCE OF TypeEquipement

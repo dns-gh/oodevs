@@ -383,6 +383,8 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_RenforcementBientotFini" ] = "eReportMission";
 	rcTypes_[ "eRC_SituationLogFavorable" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_SituationLogDefavorable" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_TempsBordeeMaintenanceDelaiDepasse" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_TempsBordeeSanteDelaiDepasse" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_SectionDeployee" ] = "eReportMission";
 	rcTypes_[ "eRC_MaterielRetourDeMaintenance" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_DemandeRavitaillementDotations" ] = "eReportLogisticSituation";

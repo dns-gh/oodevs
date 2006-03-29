@@ -21,6 +21,7 @@
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_MedicalSortingConsign.h"
 #include "PHY_MedicalHealingConsign.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogWorkTime.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
@@ -35,17 +36,18 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Medical, "PHY_RolePionLOG_Medical" )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion )
-    : PHY_RolePion_Medical ( role )
-    , pPion_               ( &pion )
-    , bHasChanged_         ( true )
-    , bSystemEnabled_      ( false )
-    , priorities_          ()
-    , tacticalPriorities_  ()
-    , consigns_            ()
-    , evacuationAmbulances_()
-    , collectionAmbulances_()
-    , reservations_        ()
-    , pWorkTime_           ( &PHY_LogWorkTime::time8Hours_ )
+    : PHY_RolePion_Medical   ( role )
+    , pPion_                 ( &pion )
+    , bHasChanged_           ( true )
+    , bSystemEnabled_        ( false )
+    , priorities_            ()
+    , tacticalPriorities_    ()
+    , consigns_              ()
+    , evacuationAmbulances_  ()
+    , collectionAmbulances_  ()
+    , reservations_          ()
+    , pWorkTime_             ( &PHY_LogWorkTime::time8Hours_ )
+    , nWorkTimeWarningRCTick_( 0 )
 {
     priorities_.reserve( 5 );
     priorities_.push_back( & PHY_HumanWound::woundedUE_  );
@@ -61,17 +63,18 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical()
-    : PHY_RolePion_Medical ()
-    , pPion_               ( 0 )
-    , bHasChanged_         ( true )
-    , bSystemEnabled_      ( false )
-    , priorities_          ()
-    , tacticalPriorities_  ()
-    , consigns_            ()
-    , evacuationAmbulances_()
-    , collectionAmbulances_()
-    , reservations_        ()
-    , pWorkTime_           ( 0 )
+    : PHY_RolePion_Medical   ()
+    , pPion_                 ( 0 )
+    , bHasChanged_           ( true )
+    , bSystemEnabled_        ( false )
+    , priorities_            ()
+    , tacticalPriorities_    ()
+    , consigns_              ()
+    , evacuationAmbulances_  ()
+    , collectionAmbulances_  ()
+    , reservations_          ()
+    , pWorkTime_             ( 0 )
+    , nWorkTimeWarningRCTick_( 0 )
 {
 }
 
@@ -233,7 +236,8 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 
     file >> boost::serialization::base_object< PHY_RolePion_Medical >( *this )
          >> pPion_
-         >> nID;
+         >> nID
+         >> nWorkTimeWarningRCTick_;
     pWorkTime_ = PHY_LogWorkTime::Find( nID );
     file >> priorities_
          >> tacticalPriorities_
@@ -265,6 +269,7 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint )
     file << boost::serialization::base_object< PHY_RolePion_Medical >( *this )
          << pPion_
          << pWorkTime_->GetAsnID()
+         << nWorkTimeWarningRCTick_
          << priorities_
          << tacticalPriorities_
          << evacuationAmbulances_
@@ -280,6 +285,7 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint )
 // =============================================================================
 // TOOLS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo
 // Created: NLD 2005-01-13
@@ -347,12 +353,48 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetNbrAvailableDoctorsForDiagnosingAllowedToWork
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+uint PHY_RolePionLOG_Medical::GetNbrAvailableDoctorsForDiagnosingAllowedToWork() const
+{
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetDoctorsUse( composanteUse );
+   
+    uint nNbrAllowedToWork = 0;
+    assert( pWorkTime_ );
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrAllowedToWork += std::max( (uint)0, pWorkTime_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ ) - it->second.nNbrUsed_ );
+
+    return nNbrAllowedToWork;
+}
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() const
 {
-    return GetRole< PHY_RolePion_Composantes >().GetAvailableDoctorForDiagnosing();
+    PHY_ComposantePion* pDoctor = GetRole< PHY_RolePion_Composantes >().GetAvailableDoctorForDiagnosing();
+    if( pDoctor && GetNbrAvailableDoctorsForDiagnosingAllowedToWork() > 0 )
+        return pDoctor;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetNbrAvailableDoctorsForSortingAllowedToWork
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+uint PHY_RolePionLOG_Medical::GetNbrAvailableDoctorsForSortingAllowedToWork() const
+{
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetDoctorsUseForSorting( composanteUse );
+   
+    uint nNbrAllowedToWork = 0;
+    assert( pWorkTime_ );
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrAllowedToWork += std::max( (uint)0, pWorkTime_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ ) - it->second.nNbrUsed_ );
+
+    return nNbrAllowedToWork;
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +403,27 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() c
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() const
 {
-    return GetRole< PHY_RolePion_Composantes >().GetAvailableDoctorForSorting();
+    PHY_ComposantePion* pDoctor = GetRole< PHY_RolePion_Composantes >().GetAvailableDoctorForSorting();
+    if( pDoctor && GetNbrAvailableDoctorsForSortingAllowedToWork() > 0 )
+        return pDoctor;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetNbrAvailableDoctorsForHealingAllowedToWork
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+uint PHY_RolePionLOG_Medical::GetNbrAvailableDoctorsForHealingAllowedToWork( const PHY_Human& human ) const
+{
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetDoctorsUseForHealing( composanteUse, human );
+   
+    uint nNbrAllowedToWork = 0;
+    assert( pWorkTime_ );
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrAllowedToWork += std::max( (uint)0, pWorkTime_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ ) - it->second.nNbrUsed_ );
+
+    return nNbrAllowedToWork;
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +432,10 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() cons
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const PHY_Human& human ) const
 {
-    return GetRole< PHY_RolePion_Composantes >().GetAvailableDoctorForHealing( human );
+    PHY_ComposantePion* pDoctor = GetRole< PHY_RolePion_Composantes >().GetAvailableDoctorForHealing( human );
+    if( pDoctor && GetNbrAvailableDoctorsForHealingAllowedToWork( human ) > 0 )
+        return pDoctor;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -443,6 +508,11 @@ void PHY_RolePionLOG_Medical::ChangeWorkTime( const PHY_LogWorkTime& workTime )
 {
     pWorkTime_   = &workTime;
     bHasChanged_ = true;
+
+    if( pWorkTime_->GetDelayBeforeWarningRC() == std::numeric_limits< uint >::max() )
+        nWorkTimeWarningRCTick_ = 0; 
+    else
+        nWorkTimeWarningRCTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWorkTime_->GetDelayBeforeWarningRC();
 }
 
 // -----------------------------------------------------------------------------
@@ -649,13 +719,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanSta
     if( !bSystemEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
-    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetDoctorsUseForHealing( composanteUse, humanState.GetHuman() );
-    uint nNbrDoctorAvailable = 0;
-    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
-        nNbrDoctorAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-    
-    return nNbrDoctorAvailable;
+    return GetNbrAvailableDoctorsForHealingAllowedToWork( humanState.GetHuman() );
 }
 
 // =============================================================================
@@ -668,7 +732,12 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanSta
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( nWorkTimeWarningRCTick_ != 0 && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() > nWorkTimeWarningRCTick_ )
+    {
+        nWorkTimeWarningRCTick_ = 0 ;
+        assert( pPion_ );
+        MIL_RC::pRcTempsBordeeSanteDelaiDepasse_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -753,7 +822,7 @@ void PHY_RolePionLOG_Medical::StopUsingForLogistic( PHY_ComposantePion& composan
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfSanteDisponibiliteMoyens& asn )
+void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfSanteDisponibiliteMoyens& asn, const PHY_LogWorkTime* pWorkTime )
 {
     asn.n = data.size();
     if( data.empty() )
@@ -764,10 +833,21 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         ASN1T_SanteDisponibiliteMoyens& data = pData[ i++ ];
-        data.type_equipement           = itData->first->GetMosID();
+        data.type_equipement = itData->first->GetMosID();
         assert( itData->second.nNbrTotal_ );
-        const uint nNbrUsable = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
-        data.pourcentage_disponibilite = (uint)( nNbrUsable * 100. / itData->second.nNbrTotal_ );
+
+        data.nbr_total       = itData->second.nNbrTotal_;
+        data.nbr_au_travail  = itData->second.nNbrUsed_;
+        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
+
+        if( pWorkTime )
+        {
+            uint nNbrAvailableAllowedToWork = std::max( (uint)0, pWorkTime->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ ) - itData->second.nNbrUsed_ );
+
+            data.m.nbr_au_reposPresent = 1;
+            data.nbr_disponibles = nNbrAvailableAllowedToWork;
+            data.nbr_au_repos    = itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_;
+        }
     }
     asn.elem = pData;
 }
@@ -815,15 +895,15 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     GetRole< PHY_RolePion_Composantes >().GetEvacuationAmbulancesUse( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_ambulances_releve );
+    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_ambulances_releve, 0 );
 
     composanteUse.clear();
     GetRole< PHY_RolePion_Composantes >().GetCollectionAmbulancesUse( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_ambulances_ramassage );
+    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_ambulances_ramassage, 0 );
 
     composanteUse.clear();
     GetRole< PHY_RolePion_Composantes >().GetDoctorsUse( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_medecins );
+    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_medecins, pWorkTime_ );
 
     asn.Send();
 

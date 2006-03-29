@@ -202,8 +202,18 @@ EXTERN void asn1Print_MsgLogSanteTraitementHumainDestruction (ASN1ConstCharPtr n
 /**************************************************************/
 
 typedef struct EXTERN ASN1T_SanteDisponibiliteMoyens {
+   struct {
+      unsigned nbr_au_reposPresent : 1;
+   } m;
    ASN1T_TypeEquipement  type_equipement;
-   ASN1T_Pourcentage  pourcentage_disponibilite;
+   ASN1INT   nbr_total;
+   ASN1INT   nbr_disponibles;
+   ASN1INT   nbr_au_travail;
+   ASN1INT   nbr_au_repos;
+
+   ASN1T_SanteDisponibiliteMoyens () {
+      m.nbr_au_reposPresent = 0;
+   }
 } ASN1T_SanteDisponibiliteMoyens;
 
 class EXTERN ASN1C_SanteDisponibiliteMoyens : public ASN1CType {

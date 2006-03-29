@@ -15,7 +15,6 @@
 #include "PHY_RolePion_Medical.h"
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogWorkTime.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -108,7 +107,7 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eHealing );
-    nTimer_ = (uint)( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) * GetPionMedical().GetWorkTime().GetHealingTimeFactor() );
+    nTimer_ = (uint)( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
 }
 
 // -----------------------------------------------------------------------------

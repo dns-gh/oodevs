@@ -89,7 +89,6 @@ public:
     //@{
           MIL_AutomateLOG&      GetAutomate() const;
     const MIL_AgentPionLOG_ABC& GetPion    () const;
-    const PHY_LogWorkTime&      GetWorkTime() const;
     //@}
 
     //! @name Network
@@ -130,11 +129,14 @@ private:
     void InsertConsign ( PHY_MedicalConsign_ABC&  );
     void InsertConsigns( const T_MedicalConsigns& );
 
-    bool HasUsableEvacuationAmbulance() const;
-    bool HasUsableCollectionAmbulance() const;
-    bool HasUsableDoctorForSorting   () const;
-    bool HasUsableDoctorForHealing   ( const PHY_Human& human ) const;
-    bool HasUsableDoctorForHealing   () const;
+    bool HasUsableEvacuationAmbulance                    () const;
+    bool HasUsableCollectionAmbulance                    () const;
+    bool HasUsableDoctorForSorting                       () const;
+    bool HasUsableDoctorForHealing                       () const;
+    bool HasUsableDoctorForHealing                       ( const PHY_Human& human ) const;
+    uint GetNbrAvailableDoctorsForHealingAllowedToWork   ( const PHY_Human& human ) const;
+    uint GetNbrAvailableDoctorsForDiagnosingAllowedToWork() const;
+    uint GetNbrAvailableDoctorsForSortingAllowedToWork   () const;
     //@}    
 
 private:
@@ -142,6 +144,7 @@ private:
           bool                    bHasChanged_;
           bool                    bSystemEnabled_;
     const PHY_LogWorkTime*        pWorkTime_;
+          uint                    nWorkTimeWarningRCTick_;
           T_MedicalPriorityVector priorities_;
           T_AutomateVector        tacticalPriorities_;
 

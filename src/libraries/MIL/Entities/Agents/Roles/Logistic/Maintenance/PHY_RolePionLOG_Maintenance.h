@@ -81,7 +81,6 @@ public:
     //@{
           MIL_AutomateLOG&      GetAutomate() const;
     const MIL_AgentPionLOG_ABC& GetPion    () const;
-    const PHY_LogWorkTime&      GetWorkTime() const;
     //@}
 
     //! @name Network
@@ -108,8 +107,9 @@ private:
     void InsertConsign ( PHY_MaintenanceConsign_ABC& consign );
     void InsertConsigns( const T_MaintenanceConsigns& );
 
-    bool HasUsableHauler  ( const PHY_ComposanteTypePion& composanteType ) const;
-    bool HasUsableRepairer( const PHY_Breakdown& breakdown ) const;
+    bool HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
+    bool HasUsableRepairer                    ( const PHY_Breakdown& breakdown ) const;
+    uint GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
     //@}    
 
 private:
@@ -117,6 +117,7 @@ private:
           bool                        bHasChanged_;
           bool                        bSystemEnabled_;
     const PHY_LogWorkTime*            pWorkTime_;
+          uint                        nWorkTimeWarningRCTick_;
           T_MaintenancePriorityVector priorities_;
           T_AutomateVector            tacticalPriorities_;
           T_MaintenanceConsigns       consigns_;

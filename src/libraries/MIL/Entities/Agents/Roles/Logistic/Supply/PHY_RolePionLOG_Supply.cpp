@@ -320,10 +320,21 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         ASN1T_RavitaillementDisponibiliteMoyens& data = pData[ i++ ];
-        data.type_equipement           = itData->first->GetMosID();
+        data.type_equipement = itData->first->GetMosID();
         assert( itData->second.nNbrTotal_ );
-        const uint nNbrUsable = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
-        data.pourcentage_disponibilite = (uint)( nNbrUsable * 100. / itData->second.nNbrTotal_ );
+
+        data.nbr_total       = itData->second.nNbrTotal_;
+        data.nbr_au_travail  = itData->second.nNbrUsed_;
+        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
+
+//        if( pWorkTime )
+//        {
+//            uint nNbrAllowedToWork = std::max( (uint)0, pWorkTime->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ ) - itData->second.nNbrUsed_ );
+//
+//            data.m.nbr_au_reposPresent = 1;
+//            data.nbr_disponibles = nNbrAllowedToWork;
+//            data.nbr_au_repos    = itData->second.nNbrAvailable_ - nNbrAllowedToWork - itData->second.nNbrUsed_;
+//        }
     }
     asn.elem = pData;
 }

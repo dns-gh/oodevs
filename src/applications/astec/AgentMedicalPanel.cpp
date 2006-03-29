@@ -49,7 +49,10 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
     
     pDispoReleveAmbulances_ = new QListView( this, tr( "Disponibilités ambulances relève" ) );
     pDispoReleveAmbulances_->addColumn( tr( "Disponibilités ambulances relève" ) );
-    pDispoReleveAmbulances_->addColumn( "" );
+    pDispoReleveAmbulances_->addColumn( tr( "Total" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Disponibles" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Au travail" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Au repos" ) );
     pDispoReleveAmbulances_->setMargin( 5 );
     pDispoReleveAmbulances_->setLineWidth( 2 );
     pDispoReleveAmbulances_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -58,7 +61,10 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
 
     pDispoRamassageAmbulances_ = new QListView( this, tr( "Disponibilités ambulances ramassage" ) );
     pDispoRamassageAmbulances_->addColumn( tr( "Disponibilités ambulances ramassage" ) );
-    pDispoRamassageAmbulances_->addColumn( "" );
+    pDispoRamassageAmbulances_->addColumn( tr( "Total" ) );
+    pDispoRamassageAmbulances_->addColumn( tr( "Disponibles" ) );
+    pDispoRamassageAmbulances_->addColumn( tr( "Au travail" ) );
+    pDispoRamassageAmbulances_->addColumn( tr( "Au repos" ) );
     pDispoRamassageAmbulances_->setMargin( 5 );
     pDispoRamassageAmbulances_->setLineWidth( 2 );
     pDispoRamassageAmbulances_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -67,7 +73,10 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
 
     pDispoDoctors_ = new QListView( this, tr( "Disponibilités médecins" ) );
     pDispoDoctors_->addColumn( tr( "Disponibilités médecins" ) );
-    pDispoDoctors_->addColumn( "" );
+    pDispoDoctors_->addColumn( tr( "Total" ) );
+    pDispoDoctors_->addColumn( tr( "Disponibles" ) );
+    pDispoDoctors_->addColumn( tr( "Au travail" ) );
+    pDispoDoctors_->addColumn( tr( "Au repos" ) );
     pDispoDoctors_->setMargin( 5 );
     pDispoDoctors_->setLineWidth( 2 );
     pDispoDoctors_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -166,7 +175,7 @@ void AgentMedicalPanel::OnAgentUpdated( Agent& agent )
 
     pState_->show();
 
-    DisplayAvailabilities( data.dispoDoctors_, *pDispoDoctors_, EquipmentResolver(), "%" );
-    DisplayAvailabilities( data.dispoReleveAmbulances_, *pDispoReleveAmbulances_, EquipmentResolver(), "%" );
-    DisplayAvailabilities( data.dispoRamassageAmbulances_, *pDispoRamassageAmbulances_, EquipmentResolver(), "%" );
+    DisplayLogAvailabilities( data.dispoDoctors_, *pDispoDoctors_, EquipmentResolver() );
+    DisplayLogAvailabilities( data.dispoReleveAmbulances_, *pDispoReleveAmbulances_, EquipmentResolver() );
+    DisplayLogAvailabilities( data.dispoRamassageAmbulances_, *pDispoRamassageAmbulances_, EquipmentResolver() );
 }

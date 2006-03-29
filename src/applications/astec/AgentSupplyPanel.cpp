@@ -62,7 +62,10 @@ AgentSupplyPanel::AgentSupplyPanel( QWidget* pParent )
     
     pDispoTransporters_ = new QListView( this, tr( "Disponibilités transporteurs pour convois" ) );
     pDispoTransporters_->addColumn( tr( "Disponibilités transporteurs pour convois" ) );
-    pDispoTransporters_->addColumn( "" );
+    pDispoTransporters_->addColumn( tr( "Total" ) );
+    pDispoTransporters_->addColumn( tr( "Disponibles" ) );
+    pDispoTransporters_->addColumn( tr( "Au travail" ) );
+    pDispoTransporters_->addColumn( tr( "Au repos" ) );
     pDispoTransporters_->setMargin( 5 );
     pDispoTransporters_->setLineWidth( 2 );
     pDispoTransporters_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -71,7 +74,10 @@ AgentSupplyPanel::AgentSupplyPanel( QWidget* pParent )
 
     pDispoCommanders_ = new QListView( this, tr( "Disponibilités chefs de convois" ) );
     pDispoCommanders_->addColumn( tr( "Disponibilités chefs de convois" ) );
-    pDispoCommanders_->addColumn( "" );
+    pDispoCommanders_->addColumn( tr( "Total" ) );
+    pDispoCommanders_->addColumn( tr( "Disponibles" ) );
+    pDispoCommanders_->addColumn( tr( "Au travail" ) );
+    pDispoCommanders_->addColumn( tr( "Au repos" ) );
     pDispoCommanders_->setMargin( 5 );
     pDispoCommanders_->setLineWidth( 2 );
     pDispoCommanders_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -153,8 +159,9 @@ void AgentSupplyPanel::OnAgentUpdated( Agent& agent )
     Agent::T_SupplyData& data = *agent.pSupplyData_;
     pStateChainEnabled_->setText( 1, data.bChainEnabled_ ? tr( "Activée" ) : tr( "Désactivée" ) );
 
-    DisplayAvailabilities( data.dispoCommanders_, *pDispoCommanders_, EquipmentResolver(), "%");
-    DisplayAvailabilities( data.dispoTransporters_, *pDispoTransporters_, EquipmentResolver(), "%" );
+    DisplayLogAvailabilities( data.dispoCommanders_, *pDispoCommanders_, EquipmentResolver() );
+    DisplayLogAvailabilities( data.dispoTransporters_, *pDispoTransporters_, EquipmentResolver() );
+
     DisplayAvailabilities( data.stocks_, *pStocks_, ResourceResolver(), "" );
     DisplayAvailabilities( data.quotas_, *pQuotas_, ResourceResolver(), "" );
 

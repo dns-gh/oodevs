@@ -138,6 +138,8 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_obstacle_en_attente_activation : strMsg << "obstacle en attente activation" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_obstacle_en_attente_activation ); break;
         case T_MsgCR_cr_cr_debut_amenagement_berges : strMsg << "debut amenagement berges"; break;
         case T_MsgCR_cr_cr_fin_amenagement_berges : strMsg << "fin amenagement berges"; break;
+        case T_MsgCR_cr_cr_temps_bordee_maintenance_delai_depasse : strMsg << "temps bordee maintenance delai depasse"; break;
+        case T_MsgCR_cr_cr_temps_bordee_sante_delai_depasse : strMsg << "temps bordee sante delai depasse"; break;
         case T_MsgCR_cr_cr_section_deployee : strMsg << "section deployee"; break;
         case T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation : strMsg << "a nouveau disponible apres reparation"; break;
         case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance" << " - TypeEquipement : " << " " << asnMsg.cr.u.cr_materiel_retour_de_maintenance; break;

@@ -17,7 +17,7 @@
 #include "PHY_MaintenanceRepairConsign.h"
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_MaintenanceComposanteState.h"
-
+#include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogWorkTime.h"
@@ -43,6 +43,7 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MT_RoleContainer& role
     , tacticalPriorities_     ()
     , consigns_               ()
     , pWorkTime_              ( &PHY_LogWorkTime::time8Hours_ )
+    , nWorkTimeWarningRCTick_ ( 0 )
 {
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );
 }
@@ -60,6 +61,7 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance()
     , tacticalPriorities_     ()
     , consigns_               ()
     , pWorkTime_              ( 0 )
+    , nWorkTimeWarningRCTick_ ( 0 )
 {
 }
 
@@ -159,6 +161,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uin
     ASN1T_EnumTempsBordee nID;
     file >> nID;
     pWorkTime_ = PHY_LogWorkTime::Find( nID );
+    file >> nWorkTimeWarningRCTick_;
 
     uint nNbr;
     file >> nNbr;
@@ -184,7 +187,8 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
          << pPion_
          << priorities_
          << tacticalPriorities_
-         << pWorkTime_->GetAsnID();
+         << pWorkTime_->GetAsnID()
+         << nWorkTimeWarningRCTick_;
 
     file << consigns_.size();
     for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
@@ -214,12 +218,31 @@ bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion&
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const
+{
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse, breakdown );
+    uint nNbrAllowedToWork = 0;
+    assert( pWorkTime_ );
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrAllowedToWork += std::max( (uint)0, pWorkTime_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ ) - it->second.nNbrUsed_ );
+
+    return nNbrAllowedToWork;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableRepairer
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY_Breakdown& breakdown ) const
 {
-    return GetRole< PHY_RolePion_Composantes >().GetAvailableRepairer( breakdown );
+    PHY_ComposantePion* pRepairer = GetRole< PHY_RolePion_Composantes >().GetAvailableRepairer( breakdown );
+    if( pRepairer && GetNbrAvailableRepairersAllowedToWork( breakdown ) > 0 )
+        return pRepairer;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -284,6 +307,11 @@ void PHY_RolePionLOG_Maintenance::ChangeWorkTime( const PHY_LogWorkTime& workTim
 {
     pWorkTime_   = &workTime;
     bHasChanged_ = true;
+
+    if( pWorkTime_->GetDelayBeforeWarningRC() == std::numeric_limits< uint >::max() )
+        nWorkTimeWarningRCTick_ = 0; 
+    else
+        nWorkTimeWarningRCTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWorkTime_->GetDelayBeforeWarningRC();
 }
 
 // -----------------------------------------------------------------------------
@@ -353,7 +381,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
 {
     IT_MaintenanceConsigns itTact = consigns_.begin();
     for ( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
-        if ( itTact->first == pAutomate )
+        if ( itTact->first == pAutomate ) // $$$ A TESTER => || itTact->first == pAutomate->GetTC2()
             break;
             
     if ( itTact == consigns_.end() )
@@ -452,13 +480,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
         rRatioPartsAvailable /= parts.size();
 
     // Repairers score
-    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse, composanteState.GetComposanteBreakdown() );
-    uint nNbrRepairersAvailable = 0;
-    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
-        nNbrRepairersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-
-    return (uint)( nNbrRepairersAvailable * rRatioPartsAvailable );
+    return (uint)( GetNbrAvailableRepairersAllowedToWork( composanteState.GetComposanteBreakdown() ) * rRatioPartsAvailable );
 }
 
 // =============================================================================
@@ -471,7 +493,12 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
+    if( nWorkTimeWarningRCTick_ != 0 && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() > nWorkTimeWarningRCTick_ )
+    {
+        nWorkTimeWarningRCTick_ = 0;
+        assert( pPion_ );
+        MIL_RC::pRcTempsBordeeMaintenanceDelaiDepasse_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -532,7 +559,7 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfMaintenanceDisponibiliteMoyens& asn )
+void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data, ASN1T__SeqOfMaintenanceDisponibiliteMoyens& asn, const PHY_LogWorkTime* pWorkTime )
 {
     asn.n = data.size();
     if( data.empty() )
@@ -543,10 +570,21 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         ASN1T_MaintenanceDisponibiliteMoyens& data = pData[ i++ ];
-        data.type_equipement           = itData->first->GetMosID();
+        data.type_equipement = itData->first->GetMosID();
         assert( itData->second.nNbrTotal_ );
-        const uint nNbrUsable = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
-        data.pourcentage_disponibilite = (uint)( nNbrUsable * 100. / itData->second.nNbrTotal_ );
+
+        data.nbr_total       = itData->second.nNbrTotal_;
+        data.nbr_au_travail  = itData->second.nNbrUsed_;
+        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
+
+        if( pWorkTime )
+        {
+            uint nNbrAvailableAllowedToWork = std::max( (uint)0, pWorkTime->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ ) - itData->second.nNbrUsed_ );
+
+            data.m.nbr_au_reposPresent = 1;
+            data.nbr_disponibles = nNbrAvailableAllowedToWork;
+            data.nbr_au_repos    = itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_;
+        }
     }
     asn.elem = pData;
 }
@@ -593,11 +631,11 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
    
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     GetRole< PHY_RolePion_Composantes >().GetHaulersUse( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_remorqueurs );
+    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_remorqueurs, 0 );
 
     composanteUse.clear();
     GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_reparateurs );
+    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_reparateurs, pWorkTime_ );
 
     asn.Send();
 

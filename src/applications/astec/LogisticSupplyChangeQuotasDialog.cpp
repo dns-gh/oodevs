@@ -125,7 +125,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     {
         if ( pQuotas_->childCount() > 0 )
         {
-            Agent::T_LogisticAvailabilities& quotas = supplied.pSupplyData_->quotas_;
+            Agent::T_LogisticStockAvailabilities& quotas = supplied.pSupplyData_->quotas_;
             quotas.clear();
             QListViewItem* pItem = pQuotas_->firstChild();
             while( pItem )
@@ -245,8 +245,8 @@ void LogisticSupplyChangeQuotasDialog::OnSuppliedChanged( int nItem )
     }
 
     pQuotas_->clear();
-    const Agent::T_LogisticAvailabilities quotas = supplied.pSupplyData_->quotas_;
-    for ( Agent::CIT_LogisticAvailabilities it = quotas.begin(); it != quotas.end(); ++it )
+    const Agent::T_LogisticStockAvailabilities quotas = supplied.pSupplyData_->quotas_;
+    for ( Agent::CIT_LogisticStockAvailabilities it = quotas.begin(); it != quotas.end(); ++it )
     {
         std::string str = App::GetApp().GetResourceName( it->first );
         int value = it->second;

@@ -21,17 +21,6 @@ const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Medical::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Medical::GetWorkTime
-// Created: NLD 2005-01-06
-// -----------------------------------------------------------------------------
-inline
-const PHY_LogWorkTime& PHY_RolePionLOG_Medical::GetWorkTime() const
-{
-    assert( pWorkTime_ );
-    return *pWorkTime_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::EnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------

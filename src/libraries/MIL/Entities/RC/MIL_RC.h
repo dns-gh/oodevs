@@ -108,6 +108,8 @@ public:
     static const MIL_RC_UniteNeutreIdentifiee*              pRcUniteNeutreIdentifiee_;    
     static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;   
     static const MIL_RC*                                    pRcRendu_;
+    static const MIL_RC*                                    pRcTempsBordeeMaintenanceDelaiDepasse_;
+    static const MIL_RC*                                    pRcTempsBordeeSanteDelaiDepasse_;
     //@}
    
 public:
@@ -231,6 +233,8 @@ protected:
         eRC_ObstacleEnAttenteActivation, // Parametre : T_ConnaissanceObjet
         eRC_DebutAmenagementBerges,
         eRC_FinAmenagementBerges,
+        eRC_TempsBordeeMaintenanceDelaiDepasse,
+        eRC_TempsBordeeSanteDelaiDepasse,
         eRC_SectionDeployee,
         eRC_ANouveauDisponibleApresReparation,
         eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement

@@ -121,6 +121,8 @@ void MessageReport::Initialize()
 	messages_[ "ObstacleEnAttenteActivation" ] = new MessageReport( "ObstacleEnAttenteActivation", eRC_ObstacleEnAttenteActivation, T_MsgCR_cr_cr_obstacle_en_attente_activation, CommunicationType::eReportObstacle );
 	messages_[ "DebutAmenagementBerges" ] = new MessageReport( "DebutAmenagementBerges", eRC_DebutAmenagementBerges, T_MsgCR_cr_cr_debut_amenagement_berges, CommunicationType::eReportMission );
 	messages_[ "FinAmenagementBerges" ] = new MessageReport( "FinAmenagementBerges", eRC_FinAmenagementBerges, T_MsgCR_cr_cr_fin_amenagement_berges, CommunicationType::eReportMission );
+	messages_[ "TempsBordeeMaintenanceDelaiDepasse" ] = new MessageReport( "TempsBordeeMaintenanceDelaiDepasse", eRC_TempsBordeeMaintenanceDelaiDepasse, T_MsgCR_cr_cr_temps_bordee_maintenance_delai_depasse, CommunicationType::eReportLogisticSituation );
+	messages_[ "TempsBordeeSanteDelaiDepasse" ] = new MessageReport( "TempsBordeeSanteDelaiDepasse", eRC_TempsBordeeSanteDelaiDepasse, T_MsgCR_cr_cr_temps_bordee_sante_delai_depasse, CommunicationType::eReportLogisticSituation );
 	messages_[ "SectionDeployee" ] = new MessageReport( "SectionDeployee", eRC_SectionDeployee, T_MsgCR_cr_cr_section_deployee, CommunicationType::eReportMission );
 	messages_[ "ANouveauDisponibleApresReparation" ] = new MessageReport( "ANouveauDisponibleApresReparation", eRC_ANouveauDisponibleApresReparation, T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation, CommunicationType::eReportLogisticSituation );
 	messages_[ "MaterielRetourDeMaintenance" ] = new MessageReport( "MaterielRetourDeMaintenance", eRC_MaterielRetourDeMaintenance, T_MsgCR_cr_cr_materiel_retour_de_maintenance, CommunicationType::eReportLogisticSituation );

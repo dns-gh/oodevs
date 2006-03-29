@@ -56,8 +56,11 @@ MsgLogRavitaillementTraitementDestruction ::= SEQUENCE
 -- Etat des pions logistiques du ravitaillement
 RavitaillementDisponibiliteMoyens ::= SEQUENCE
 {
-    type-equipement           TypeEquipement,
-    pourcentage-disponibilite Pourcentage
+    type-equipement  TypeEquipement,
+    nbr-total        INTEGER,
+    nbr-disponibles  INTEGER,       
+    nbr-au-travail   INTEGER,
+    nbr-au-repos     INTEGER OPTIONAL -- applicable uniquement à certains moyens
 }
 
 DotationStock ::= SEQUENCE 

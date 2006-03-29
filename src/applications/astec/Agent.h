@@ -268,11 +268,21 @@ public:
     typedef std::set< LogMedicalConsign* > T_MedicalConsigns;
     typedef T_MedicalConsigns::iterator        IT_MedicalConsigns;
 
-    typedef std::vector< std::pair< uint, uint > >    T_LogisticAvailabilities;
-    typedef T_LogisticAvailabilities::const_iterator  CIT_LogisticAvailabilities;
+    struct T_LogisticAvailability
+    {
+        uint nEquipmentType_;
+        uint nNbrTotal_;
+        uint nNbrAvailable_;
+        uint nNbrWorking_;
+        uint nNbrResting_; // std::numeric_limits< uint >::max() quand pas applicable
+    };
 
+    typedef std::vector< T_LogisticAvailability >    T_LogisticAvailabilities;
+    typedef T_LogisticAvailabilities::const_iterator CIT_LogisticAvailabilities;
+
+    typedef std::vector< std::pair< uint, uint > > T_LogisticStockAvailabilities;
+    typedef T_LogisticStockAvailabilities::const_iterator CIT_LogisticStockAvailabilities;
     //@}
-
 
 //$$$$$ Foutre tout ce binz en public ou utiliser des friend pour eviter d'avoir 34846 fonctions set/get
 //$$$$$ qui puent.
@@ -366,8 +376,8 @@ public:
         bool                     bChainEnabled_;
         T_LogisticAvailabilities dispoTransporters_;
         T_LogisticAvailabilities dispoCommanders_;  
-        T_ResourceQty_Map        stocks_;
-        T_LogisticAvailabilities quotas_;
+        T_ResourceQty_Map             stocks_;
+        T_LogisticStockAvailabilities quotas_;
     } T_SupplyData;
     T_SupplyData* pSupplyData_;
 

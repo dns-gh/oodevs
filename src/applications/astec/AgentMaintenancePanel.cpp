@@ -50,7 +50,10 @@ AgentMaintenancePanel::AgentMaintenancePanel( QWidget* pParent )
 
     pDispoHaulers_ = new QListView( this, tr( "Disponibilités remorqueurs" ) );
     pDispoHaulers_->addColumn( tr( "Disponibilités remorqueurs" ) );
-    pDispoHaulers_->addColumn( "" );
+    pDispoHaulers_->addColumn( tr( "Total" ) );
+    pDispoHaulers_->addColumn( tr( "Disponibles" ) );
+    pDispoHaulers_->addColumn( tr( "Au travail" ) );
+    pDispoHaulers_->addColumn( tr( "Au repos" ) );
     pDispoHaulers_->setMargin( 5 );
     pDispoHaulers_->setLineWidth( 2 );
     pDispoHaulers_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -59,7 +62,10 @@ AgentMaintenancePanel::AgentMaintenancePanel( QWidget* pParent )
 
     pDispoRepairers_ = new QListView( this, tr( "Disponibilités réparateurs" ) );
     pDispoRepairers_->addColumn( tr( "Disponibilités réparateurs" ) );
-    pDispoRepairers_->addColumn( "" );
+    pDispoRepairers_->addColumn( tr( "Total" ) );
+    pDispoRepairers_->addColumn( tr( "Disponibles" ) );
+    pDispoRepairers_->addColumn( tr( "Au travail" ) );
+    pDispoRepairers_->addColumn( tr( "Au repos" ) );
     pDispoRepairers_->setMargin( 5 );
     pDispoRepairers_->setLineWidth( 2 );
     pDispoRepairers_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -131,6 +137,6 @@ void AgentMaintenancePanel::OnAgentUpdated( Agent& agent )
 
     pState_->show();
 
-    DisplayAvailabilities( data.dispoHaulers_, *pDispoHaulers_, EquipmentResolver(), "%" );
-    DisplayAvailabilities( data.dispoRepairers_, *pDispoRepairers_, EquipmentResolver(), "%" );
+    DisplayLogAvailabilities( data.dispoHaulers_, *pDispoHaulers_, EquipmentResolver() );
+    DisplayLogAvailabilities( data.dispoRepairers_, *pDispoRepairers_, EquipmentResolver() );
 }

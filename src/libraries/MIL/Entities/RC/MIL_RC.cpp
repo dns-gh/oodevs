@@ -110,6 +110,8 @@ const MIL_RC_UniteEnnemieIdentifiee*            MIL_RC::pRcUniteEnnemieIdentifie
 const MIL_RC_UniteNeutreIdentifiee*             MIL_RC::pRcUniteNeutreIdentifiee_              = 0;
 const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
 const MIL_RC*                                   MIL_RC::pRcRendu_                              = 0;
+const MIL_RC*                                   MIL_RC::pRcTempsBordeeMaintenanceDelaiDepasse_ = 0;
+const MIL_RC*                                   MIL_RC::pRcTempsBordeeSanteDelaiDepasse_       = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -212,6 +214,8 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_ObstacleEnAttenteActivation ] = new MIL_RC_ObstacleEnAttenteActivation( eRC_ObstacleEnAttenteActivation, T_MsgCR_cr_cr_obstacle_en_attente_activation );
 	rcs_[ eRC_DebutAmenagementBerges ] = new MIL_RC( eRC_DebutAmenagementBerges, T_MsgCR_cr_cr_debut_amenagement_berges );
 	rcs_[ eRC_FinAmenagementBerges ] = new MIL_RC( eRC_FinAmenagementBerges, T_MsgCR_cr_cr_fin_amenagement_berges );
+	rcs_[ eRC_TempsBordeeMaintenanceDelaiDepasse ] = new MIL_RC( eRC_TempsBordeeMaintenanceDelaiDepasse, T_MsgCR_cr_cr_temps_bordee_maintenance_delai_depasse );
+	rcs_[ eRC_TempsBordeeSanteDelaiDepasse ] = new MIL_RC( eRC_TempsBordeeSanteDelaiDepasse, T_MsgCR_cr_cr_temps_bordee_sante_delai_depasse );
 	rcs_[ eRC_SectionDeployee ] = new MIL_RC( eRC_SectionDeployee, T_MsgCR_cr_cr_section_deployee );
 	rcs_[ eRC_ANouveauDisponibleApresReparation ] = new MIL_RC( eRC_ANouveauDisponibleApresReparation, T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation );
 	rcs_[ eRC_MaterielRetourDeMaintenance ] = new MIL_RC_MaterielRetourDeMaintenance( eRC_MaterielRetourDeMaintenance, T_MsgCR_cr_cr_materiel_retour_de_maintenance );
@@ -363,48 +367,50 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_ExecutionAttentat ] = new MIL_RC( eRC_ExecutionAttentat, T_MsgCR_cr_cr_execution_attentat );
 	
 
-    pRcDemandeRavitaillementDotations_    =                                            rcs_[ eRC_DemandeRavitaillementDotations    ];
-    pRcDemandeRavitaillementStocks_       =                                            rcs_[ eRC_DemandeRavitaillementStock        ];
-    pRcSeuilLogistiqueStockDepasse_       = (MIL_RC_SeuilLogistiqueStockDepasse*)      rcs_[ eRC_SeuilLogistiqueStockDepasse       ];
-    pRcSeuilLogistiqueDotationDepasse_    = (MIL_RC_SeuilLogistiqueDotationDepasse*)   rcs_[ eRC_SeuilLogistiqueDotationDepasse    ];
-    pRcRavitaillementDotationsAnnule_     =                                            rcs_[ eRC_RavitaillementDotationsAnnule     ];
-    pRcRavitaillementStockAnnule_         =                                            rcs_[ eRC_RavitaillementStockAnnule         ];
-    pRcRavitaillementDotationsEffectue_   =                                            rcs_[ eRC_RavitaillementDotationsEffectue   ];
-    pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
-    pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
-    pRcANouveauDisponibleApresReparation_ =                                            rcs_[ eRC_ANouveauDisponibleApresReparation ];
-    pRcMaterielRepareSurPlace_            = (MIL_RC_MaterielRepareSurPlace*)           rcs_[ eRC_MaterielRepareSurPlace            ];
-    pRcMaterielRetourDeMaintenance_       = (MIL_RC_MaterielRetourDeMaintenance*)      rcs_[ eRC_MaterielRetourDeMaintenance       ];
-    pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
-    pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];
-    pRcDemandeEvacuationSanitaire_        =                                            rcs_[ eRC_DemandeEvacuationSanitaire        ];
-    pRcDemandeEvacuationMateriel_         =                                            rcs_[ eRC_DemandeEvacuationMateriel         ];
-    pRcDecesBlesse_                       =                                            rcs_[ eRC_DecesBlesse                       ];
-    pRcDecesBlessePendantTransport_       =                                            rcs_[ eRC_DecesBlessePendantTransport       ];
-    pRcDecesBlessePendantHospitalisation_ =                                            rcs_[ eRC_DecesBlessePendantHospitalisation ];
-    pRcTirDansZoneInterdite_              =                                            rcs_[ eRC_TirDansZoneInterdite              ];
-    pRcTirSurCampAmi_                     = (MIL_RC_TirSurCampAmi*)                    rcs_[ eRC_TirSurCampAmi                     ];
-    pRcTireParCampAmi_                    = (MIL_RC_TireParCampAmi*)                   rcs_[ eRC_TireParCampAmi                    ];
-    pRcTirSurCampNeutre_                  = (MIL_RC_TirSurCampNeutre*)                 rcs_[ eRC_TirSurCampNeutre                  ];
-    pRcTireParCampNeutre_                 = (MIL_RC_TireParCampNeutre*)                rcs_[ eRC_TireParCampNeutre                 ];
-    pRcTirSurCivil_                       = (MIL_RC_TirSurCivil*)                      rcs_[ eRC_TirSurCivil                       ];
-    pRcTireParCivil_                      = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                      ];
-    pRcDestructionPC_                     =                                            rcs_[ eRC_DestructionPC                     ];
-    pRcAllocationConsentieBientotEpuisee_ = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee ];
-    pRcDepassementCapaciteStockage_       =                                            rcs_[ eRC_DepassementCapaciteStockage       ];
-    pRcMissionImpossible_                 =                                            rcs_[ eRC_MissionImpossible                 ];
-    pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];
-    pRcPlusDeCarburant_                   =                                            rcs_[ eRC_PlusDeCarburant                   ];
-    pRcTerrainDifficile_                  =                                            rcs_[ eRC_TerrainDifficile                  ];
-    pRcUniteDetectee_                     = (MIL_RC_UniteDetectee*)                    rcs_[ eRC_UniteDetectee                     ];
-    pRcUniteAmieReconnue_                 = (MIL_RC_UniteAmieReconnue*)                rcs_[ eRC_UniteAmieReconnue                 ];
-    pRcUniteEnnemieReconnue_              = (MIL_RC_UniteEnnemieReconnue*)             rcs_[ eRC_UniteEnnemieReconnue              ];
-    pRcUniteNeutreReconnue_               = (MIL_RC_UniteNeutreReconnue*)              rcs_[ eRC_UniteNeutreReconnue               ];
-    pRcUniteAmieIdentifiee_               = (MIL_RC_UniteAmieIdentifiee*)              rcs_[ eRC_UniteAmieIdentifiee               ];
-    pRcUniteEnnemieIdentifiee_            = (MIL_RC_UniteEnnemieIdentifiee*)           rcs_[ eRC_UniteEnnemieIdentifiee            ];
-    pRcUniteNeutreIdentifiee_             = (MIL_RC_UniteNeutreIdentifiee*)            rcs_[ eRC_UniteNeutreIdentifiee             ];
-    pRcObjetDetecte_                      = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                      ];
-    pRcRendu_                             =                                            rcs_[ eRC_Rendu                             ];
+    pRcDemandeRavitaillementDotations_     =                                            rcs_[ eRC_DemandeRavitaillementDotations     ];
+    pRcDemandeRavitaillementStocks_        =                                            rcs_[ eRC_DemandeRavitaillementStock         ];
+    pRcSeuilLogistiqueStockDepasse_        = (MIL_RC_SeuilLogistiqueStockDepasse*)      rcs_[ eRC_SeuilLogistiqueStockDepasse        ];
+    pRcSeuilLogistiqueDotationDepasse_     = (MIL_RC_SeuilLogistiqueDotationDepasse*)   rcs_[ eRC_SeuilLogistiqueDotationDepasse     ];
+    pRcRavitaillementDotationsAnnule_      =                                            rcs_[ eRC_RavitaillementDotationsAnnule      ];
+    pRcRavitaillementStockAnnule_          =                                            rcs_[ eRC_RavitaillementStockAnnule          ];
+    pRcRavitaillementDotationsEffectue_    =                                            rcs_[ eRC_RavitaillementDotationsEffectue    ];
+    pRcRavitaillementStockEffectue_        =                                            rcs_[ eRC_RavitaillementStockEffectue        ];
+    pRcHumainRetourDeSante_                =                                            rcs_[ eRC_HumainRetourDeSante                ];
+    pRcANouveauDisponibleApresReparation_  =                                            rcs_[ eRC_ANouveauDisponibleApresReparation  ];
+    pRcMaterielRepareSurPlace_             = (MIL_RC_MaterielRepareSurPlace*)           rcs_[ eRC_MaterielRepareSurPlace             ];
+    pRcMaterielRetourDeMaintenance_        = (MIL_RC_MaterielRetourDeMaintenance*)      rcs_[ eRC_MaterielRetourDeMaintenance        ];
+    pRcEnCoursDeFranchissement_            =                                            rcs_[ eRC_EnCoursDeFranchissement            ];
+    pRcObservationTirIndirect_             = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect             ];
+    pRcDemandeEvacuationSanitaire_         =                                            rcs_[ eRC_DemandeEvacuationSanitaire         ];
+    pRcDemandeEvacuationMateriel_          =                                            rcs_[ eRC_DemandeEvacuationMateriel          ];
+    pRcDecesBlesse_                        =                                            rcs_[ eRC_DecesBlesse                        ];
+    pRcDecesBlessePendantTransport_        =                                            rcs_[ eRC_DecesBlessePendantTransport        ];
+    pRcDecesBlessePendantHospitalisation_  =                                            rcs_[ eRC_DecesBlessePendantHospitalisation  ];
+    pRcTirDansZoneInterdite_               =                                            rcs_[ eRC_TirDansZoneInterdite               ];
+    pRcTirSurCampAmi_                      = (MIL_RC_TirSurCampAmi*)                    rcs_[ eRC_TirSurCampAmi                      ];
+    pRcTireParCampAmi_                     = (MIL_RC_TireParCampAmi*)                   rcs_[ eRC_TireParCampAmi                     ];
+    pRcTirSurCampNeutre_                   = (MIL_RC_TirSurCampNeutre*)                 rcs_[ eRC_TirSurCampNeutre                   ];
+    pRcTireParCampNeutre_                  = (MIL_RC_TireParCampNeutre*)                rcs_[ eRC_TireParCampNeutre                  ];
+    pRcTirSurCivil_                        = (MIL_RC_TirSurCivil*)                      rcs_[ eRC_TirSurCivil                        ];
+    pRcTireParCivil_                       = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                       ];
+    pRcDestructionPC_                      =                                            rcs_[ eRC_DestructionPC                      ];
+    pRcAllocationConsentieBientotEpuisee_  = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee  ];
+    pRcDepassementCapaciteStockage_        =                                            rcs_[ eRC_DepassementCapaciteStockage        ];
+    pRcMissionImpossible_                  =                                            rcs_[ eRC_MissionImpossible                  ];
+    pRcUniteDecontaminee_                  = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                  ];
+    pRcPlusDeCarburant_                    =                                            rcs_[ eRC_PlusDeCarburant                    ];
+    pRcTerrainDifficile_                   =                                            rcs_[ eRC_TerrainDifficile                   ];
+    pRcUniteDetectee_                      = (MIL_RC_UniteDetectee*)                    rcs_[ eRC_UniteDetectee                      ];
+    pRcUniteAmieReconnue_                  = (MIL_RC_UniteAmieReconnue*)                rcs_[ eRC_UniteAmieReconnue                  ];
+    pRcUniteEnnemieReconnue_               = (MIL_RC_UniteEnnemieReconnue*)             rcs_[ eRC_UniteEnnemieReconnue               ];
+    pRcUniteNeutreReconnue_                = (MIL_RC_UniteNeutreReconnue*)              rcs_[ eRC_UniteNeutreReconnue                ];
+    pRcUniteAmieIdentifiee_                = (MIL_RC_UniteAmieIdentifiee*)              rcs_[ eRC_UniteAmieIdentifiee                ];
+    pRcUniteEnnemieIdentifiee_             = (MIL_RC_UniteEnnemieIdentifiee*)           rcs_[ eRC_UniteEnnemieIdentifiee             ];
+    pRcUniteNeutreIdentifiee_              = (MIL_RC_UniteNeutreIdentifiee*)            rcs_[ eRC_UniteNeutreIdentifiee              ];
+    pRcObjetDetecte_                       = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                       ];
+    pRcRendu_                              =                                            rcs_[ eRC_Rendu                              ];
+    pRcTempsBordeeMaintenanceDelaiDepasse_ =                                            rcs_[ eRC_TempsBordeeMaintenanceDelaiDepasse ];
+    pRcTempsBordeeSanteDelaiDepasse_       =                                            rcs_[ eRC_TempsBordeeSanteDelaiDepasse       ];
 }
 
 // -----------------------------------------------------------------------------

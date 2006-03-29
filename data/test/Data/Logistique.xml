@@ -2,30 +2,18 @@
 <Logistique>
 
   <TempsDeBordee>
-    <Bordee8Heures>
-      <CoefTempsReparation>1</CoefTempsReparation>
-      <CoefTempsSoin>1</CoefTempsSoin>
-      <CoefTempsTri>1</CoefTempsTri>
-    </Bordee8Heures>
+    <Bordee8Heures/>
     <Bordee12Heures>
-      <CoefTempsReparation>0.75</CoefTempsReparation>
-      <CoefTempsSoin>0.75</CoefTempsSoin>
-      <CoefTempsTri>0.75</CoefTempsTri>
+      <DelaiAvantAvertissement>30s</DelaiAvantAvertissement>    
     </Bordee12Heures>
     <Bordee16Heures>
-      <CoefTempsReparation>0.5</CoefTempsReparation>
-      <CoefTempsSoin>0.5</CoefTempsSoin>
-      <CoefTempsTri>0.5</CoefTempsTri>
+      <DelaiAvantAvertissement>48h</DelaiAvantAvertissement>    
     </Bordee16Heures>
     <Bordee20Heures>
-      <CoefTempsReparation>0.4</CoefTempsReparation>
-      <CoefTempsSoin>0.4</CoefTempsSoin>
-      <CoefTempsTri>0.4</CoefTempsTri>
+      <DelaiAvantAvertissement>36h</DelaiAvantAvertissement>    
     </Bordee20Heures>
     <Bordee24Heures>
-      <CoefTempsReparation>0.3</CoefTempsReparation>
-      <CoefTempsSoin>0.3</CoefTempsSoin>
-      <CoefTempsTri>0.3</CoefTempsTri>
+      <DelaiAvantAvertissement>24h</DelaiAvantAvertissement>
     </Bordee24Heures>
   </TempsDeBordee>
 

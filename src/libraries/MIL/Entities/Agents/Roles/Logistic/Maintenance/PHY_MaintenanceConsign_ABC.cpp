@@ -16,7 +16,6 @@
 #include "PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogWorkTime.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePionLOG_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
@@ -360,7 +359,7 @@ void PHY_MaintenanceConsign_ABC::EnterStateRepairing()
     assert( pMaintenance_ );
     
     SetState( eRepairing );
-    nTimer_ = (int)( pComposanteState_->GetComposanteBreakdown().GetRepairTime() * pMaintenance_->GetWorkTime().GetRepairTimeFactor() );
+    nTimer_ = (int)( pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
 }
 
 // -----------------------------------------------------------------------------

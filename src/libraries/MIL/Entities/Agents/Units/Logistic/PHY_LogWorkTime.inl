@@ -20,36 +20,6 @@ ASN1T_EnumTempsBordee PHY_LogWorkTime::GetAsnID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetRepairTimeFactor
-// Created: NLD 2005-01-06
-// -----------------------------------------------------------------------------
-inline
-MT_Float PHY_LogWorkTime::GetRepairTimeFactor() const
-{
-    return rRepairTimeFactor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetSortingTimeFactor
-// Created: NLD 2005-01-14
-// -----------------------------------------------------------------------------
-inline
-MT_Float PHY_LogWorkTime::GetSortingTimeFactor() const
-{
-    return rSortingTimeFactor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetHealingTimeFactor
-// Created: NLD 2005-01-14
-// -----------------------------------------------------------------------------
-inline
-MT_Float PHY_LogWorkTime::GetHealingTimeFactor() const
-{
-    return rHealingTimeFactor_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_LogWorkTime::GetName
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
@@ -72,4 +42,24 @@ const PHY_LogWorkTime* PHY_LogWorkTime::Find( ASN1T_EnumTempsBordee nID )
             return it->second;
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LogWorkTime::GetNbrWorkerAllowedToWork
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+inline
+uint PHY_LogWorkTime::GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const
+{
+    return (uint)ceil( rWorkerRatio_ * nNbrAvailable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LogWorkTime::GetDelayBeforeWarningRC
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+inline
+uint PHY_LogWorkTime::GetDelayBeforeWarningRC() const
+{
+    return nDelayBeforeWarningRC_;
 }

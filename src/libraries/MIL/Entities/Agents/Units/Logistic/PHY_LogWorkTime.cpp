@@ -13,14 +13,15 @@
 
 #include "PHY_LogWorkTime.h"
 #include "PHY_Breakdown.h"
+#include "Tools/MIL_Tools.h"
 
 PHY_LogWorkTime::T_WorkTimeMap PHY_LogWorkTime::workTimes_;
 
-PHY_LogWorkTime PHY_LogWorkTime::time8Hours_ ( "Bordee8Heures" , EnumTempsBordee::temps_8_heures  );
-PHY_LogWorkTime PHY_LogWorkTime::time12Hours_( "Bordee12Heures", EnumTempsBordee::temps_12_heures );
-PHY_LogWorkTime PHY_LogWorkTime::time16Hours_( "Bordee16Heures", EnumTempsBordee::temps_16_heures );
-PHY_LogWorkTime PHY_LogWorkTime::time20Hours_( "Bordee20Heures", EnumTempsBordee::temps_20_heures );
-PHY_LogWorkTime PHY_LogWorkTime::time24Hours_( "Bordee24Heures", EnumTempsBordee::temps_24_heures );
+PHY_LogWorkTime PHY_LogWorkTime::time8Hours_ ( "Bordee8Heures" , EnumTempsBordee::temps_8_heures , 8  );
+PHY_LogWorkTime PHY_LogWorkTime::time12Hours_( "Bordee12Heures", EnumTempsBordee::temps_12_heures, 12 );
+PHY_LogWorkTime PHY_LogWorkTime::time16Hours_( "Bordee16Heures", EnumTempsBordee::temps_16_heures, 16 );
+PHY_LogWorkTime PHY_LogWorkTime::time20Hours_( "Bordee20Heures", EnumTempsBordee::temps_20_heures, 20 );
+PHY_LogWorkTime PHY_LogWorkTime::time24Hours_( "Bordee24Heures", EnumTempsBordee::temps_24_heures, 24 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_LogWorkTime::Initialize
@@ -64,12 +65,11 @@ void PHY_LogWorkTime::Terminate()
 // Name: PHY_LogWorkTime constructor
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-PHY_LogWorkTime::PHY_LogWorkTime( const std::string& strName, ASN1T_EnumTempsBordee asn )
-    : strName_           ( strName )
-    , asn_               ( asn )
-    , rRepairTimeFactor_ ( 1. )
-    , rSortingTimeFactor_( 1. )
-    , rHealingTimeFactor_( 1. )
+PHY_LogWorkTime::PHY_LogWorkTime( const std::string& strName, ASN1T_EnumTempsBordee asn, uint nWorkTime )
+    : strName_              ( strName )
+    , asn_                  ( asn )
+    , rWorkerRatio_         ( nWorkTime / 24. )
+    , nDelayBeforeWarningRC_( std::numeric_limits< uint >::max() )
 {
 }
 
@@ -88,7 +88,6 @@ PHY_LogWorkTime::~PHY_LogWorkTime()
 // -----------------------------------------------------------------------------
 void PHY_LogWorkTime::ReadData( MIL_InputArchive& archive )
 {
-    archive.ReadField( "CoefTempsReparation", rRepairTimeFactor_ , CheckValueGreater( 0. ) );
-    archive.ReadField( "CoefTempsSoin"      , rHealingTimeFactor_, CheckValueGreater( 0. ) );
-    archive.ReadField( "CoefTempsTri"       , rSortingTimeFactor_, CheckValueGreater( 0. ) );
+    if( archive.ReadTimeField( "DelaiAvantAvertissement", nDelayBeforeWarningRC_, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
+        nDelayBeforeWarningRC_ = MIL_Tools::ConvertSecondsToSim( nDelayBeforeWarningRC_ );
 }

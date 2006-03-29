@@ -16,7 +16,6 @@
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePionLOG_Medical.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogWorkTime.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalSortingConsign, "PHY_MedicalSortingConsign" )
@@ -106,7 +105,7 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eSorting );
-    nTimer_ = (uint)( PHY_HumanWound::GetSortingTime() * GetPionMedical().GetWorkTime().GetSortingTimeFactor() );
+    nTimer_ = (uint)( PHY_HumanWound::GetSortingTime() );
 }
     
 // -----------------------------------------------------------------------------

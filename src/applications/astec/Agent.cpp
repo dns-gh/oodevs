@@ -575,13 +575,31 @@ void Agent::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& a
     {
         data.dispoHaulers_.resize( asn.disponibilites_remorqueurs.n );
         for( uint i = 0; i < asn.disponibilites_remorqueurs.n; ++i )
-            data.dispoHaulers_[i] = std::make_pair( asn.disponibilites_remorqueurs.elem[i].type_equipement, asn.disponibilites_remorqueurs.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoHaulers_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_remorqueurs.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_remorqueurs.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_remorqueurs.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_remorqueurs.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_remorqueurs.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_remorqueurs.elem[i].nbr_au_repos;
+        }
     }
     if( asn.m.disponibilites_reparateursPresent )
     {
         data.dispoRepairers_.resize( asn.disponibilites_reparateurs.n );
         for( uint i = 0; i < asn.disponibilites_reparateurs.n; ++i )
-            data.dispoRepairers_[i] = std::make_pair( asn.disponibilites_reparateurs.elem[i].type_equipement, asn.disponibilites_reparateurs.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoRepairers_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_reparateurs.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_reparateurs.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_reparateurs.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_reparateurs.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_reparateurs.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_reparateurs.elem[i].nbr_au_repos;
+        }
     }
 }
 
@@ -619,19 +637,46 @@ void Agent::OnReceiveMsgLogMedicalEtat( const ASN1T_MsgLogSanteEtat& asn )
     {
         data.dispoRamassageAmbulances_.resize( asn.disponibilites_ambulances_ramassage.n );
         for( uint i = 0; i < asn.disponibilites_ambulances_ramassage.n; ++i )
-            data.dispoRamassageAmbulances_[i] = std::make_pair( asn.disponibilites_ambulances_ramassage.elem[i].type_equipement, asn.disponibilites_ambulances_ramassage.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoRamassageAmbulances_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_ambulances_ramassage.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_ambulances_ramassage.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_ambulances_ramassage.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_ambulances_ramassage.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_ambulances_ramassage.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_ambulances_ramassage.elem[i].nbr_au_repos;
+        }
     }
     if( asn.m.disponibilites_ambulances_relevePresent )
     {
         data.dispoReleveAmbulances_.resize( asn.disponibilites_ambulances_releve.n );
         for( uint i = 0; i < asn.disponibilites_ambulances_releve.n; ++i )
-            data.dispoReleveAmbulances_[i] = std::make_pair( asn.disponibilites_ambulances_releve.elem[i].type_equipement, asn.disponibilites_ambulances_releve.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoReleveAmbulances_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_ambulances_releve.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_ambulances_releve.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_ambulances_releve.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_ambulances_releve.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_ambulances_releve.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_ambulances_releve.elem[i].nbr_au_repos;
+        }
     }
     if( asn.m.disponibilites_medecinsPresent )
     {
         data.dispoDoctors_.resize( asn.disponibilites_medecins.n );
         for( uint i = 0; i < asn.disponibilites_medecins.n; ++i )
-            data.dispoDoctors_[i] = std::make_pair( asn.disponibilites_medecins.elem[i].type_equipement, asn.disponibilites_medecins.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoDoctors_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_medecins.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_medecins.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_medecins.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_medecins.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_medecins.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_medecins.elem[i].nbr_au_repos;
+        }
     }
 }
 
@@ -652,13 +697,31 @@ void Agent::OnReceiveMsgLogSupplyEtat( const ASN1T_MsgLogRavitaillementEtat& asn
     {
         data.dispoTransporters_.resize( asn.disponibilites_transporteurs_convois.n );
         for( uint i = 0; i < asn.disponibilites_transporteurs_convois.n; ++i )
-            data.dispoTransporters_[i] = std::make_pair( asn.disponibilites_transporteurs_convois.elem[i].type_equipement, asn.disponibilites_transporteurs_convois.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoTransporters_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_transporteurs_convois.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_transporteurs_convois.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_transporteurs_convois.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_transporteurs_convois.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_transporteurs_convois.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_transporteurs_convois.elem[i].nbr_au_repos;
+        }
     }
     if( asn.m.disponibilites_chefs_convoisPresent )
     {
         data.dispoCommanders_.resize( asn.disponibilites_chefs_convois.n );
         for( uint i = 0; i < asn.disponibilites_chefs_convois.n; ++i )
-            data.dispoCommanders_[i] = std::make_pair( asn.disponibilites_chefs_convois.elem[i].type_equipement, asn.disponibilites_chefs_convois.elem[i].pourcentage_disponibilite );
+        {   
+            T_LogisticAvailability& dataDispo = data.dispoCommanders_[i];
+            dataDispo.nEquipmentType_   = asn.disponibilites_chefs_convois.elem[i].type_equipement;
+            dataDispo.nNbrTotal_        = asn.disponibilites_chefs_convois.elem[i].nbr_total;
+            dataDispo.nNbrAvailable_    = asn.disponibilites_chefs_convois.elem[i].nbr_disponibles;
+            dataDispo.nNbrWorking_      = asn.disponibilites_chefs_convois.elem[i].nbr_au_travail;
+            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
+            if( asn.disponibilites_chefs_convois.elem[i].m.nbr_au_reposPresent )
+                dataDispo.nNbrResting_ = asn.disponibilites_chefs_convois.elem[i].nbr_au_repos;
+        }
     }
 
     if( asn.m.stocksPresent )
@@ -1022,7 +1085,7 @@ void Agent::WriteODB( MT_XXmlOutputArchive& archive )
 					archive.Section( "Quotas" );
                     if ( pSupplyData_->quotas_.size() > 0 )
                     {
-                        for( Agent::CIT_LogisticAvailabilities itQuota = pSupplyData_->quotas_.begin(); itQuota != pSupplyData_->quotas_.end(); ++itQuota )
+                        for( Agent::CIT_LogisticStockAvailabilities itQuota = pSupplyData_->quotas_.begin(); itQuota != pSupplyData_->quotas_.end(); ++itQuota )
                         {
                             const Resource& resource = App::GetApp().GetResource( itQuota->first );
                             archive.Section( "Dotation" );
