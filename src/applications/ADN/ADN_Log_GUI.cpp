@@ -24,6 +24,8 @@
 #include "ADN_EditLine.h"
 #include "ADN_Table.h"
 #include "ADN_TableItem_Edit.h"
+#include "ADN_TableItem_TimeField.h"
+#include "ADN_TableItem_CheckItem.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -70,8 +72,8 @@ void ADN_Log_GUI::Build()
     QGroupBox* pGroup = new QHGroupBox( tr( "Temps de bordée" ), pMainWidget_ );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
-    pTable->setNumCols( data_.vWorkTimeModifiers_.size() );
-    pTable->setNumRows( 3 );
+    pTable->setNumCols( 2 );
+    pTable->setNumRows( data_.vWorkTimeModifiers_.size() );
     pTable->verticalHeader()->show();
     pTable->setLeftMargin( 5 );
     pTable->setSorting( false );
@@ -79,22 +81,23 @@ void ADN_Log_GUI::Build()
     uint n = 0;
     for( ADN_Log_Data::IT_WorkTimeModifiersInfo_Vector it = data_.vWorkTimeModifiers_.begin(); it != data_.vWorkTimeModifiers_.end(); ++it )
     {
-        pTable->horizontalHeader()->setLabel( n, ENT_Tr::ConvertFromTempsBordee( ( **it ).nType_, ENT_Tr::eToTr ).c_str() );
+        pTable->verticalHeader()->setLabel( n, ENT_Tr::ConvertFromTempsBordee( ( **it ).nType_, ENT_Tr::eToTr ).c_str() );
         pTable->setColumnStretchable( n, true );
         ++n;
     }
 
-    pTable->verticalHeader()->setLabel( 0, tr( "Speed factor" ) );
-    pTable->verticalHeader()->setLabel( 1, tr( "Sorting time factor" ) );
-    pTable->verticalHeader()->setLabel( 2, tr( "Treating time factor" ) );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Specify delay" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Warning delay" ) );
 
     n = 0;
     for( ADN_Log_Data::IT_WorkTimeModifiersInfo_Vector it = data_.vWorkTimeModifiers_.begin(); it != data_.vWorkTimeModifiers_.end(); ++it )
     {
         ADN_Log_Data::WorkTimeModifiersInfo& modifiers = **it;
-        builder.AddTableCell< ADN_TableItem_Double >( pTable, &modifiers, 0, n, modifiers.rRepairModifier_, eGreaterZero );
-        builder.AddTableCell< ADN_TableItem_Double >( pTable, &modifiers, 1, n, modifiers.rSortModifier_, eGreaterZero );
-        builder.AddTableCell< ADN_TableItem_Double >( pTable, &modifiers, 2, n, modifiers.rTreatModifier_, eGreaterZero );
+        
+        ADN_TableItem_CheckItem* pWorkingTimeSet = new ADN_TableItem_CheckItem( pTable, *it );
+        pTable->setItem( n, 0, pWorkingTimeSet );
+        pWorkingTimeSet->GetConnector().Connect( &modifiers.bWorkingTimeSet_ );
+        builder.AddTableCell< ADN_TableItem_TimeField >( pTable, &modifiers, n, 1, modifiers.workingTime_ );
         ++n;
     }
 

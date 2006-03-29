@@ -55,10 +55,8 @@ public:
 
     public:
         E_TempsBordee nType_;
-
-        ADN_Type_Double rRepairModifier_;
-        ADN_Type_Double rTreatModifier_;
-        ADN_Type_Double rSortModifier_;
+        ADN_Type_Bool bWorkingTimeSet_;
+        ADN_Type_Time workingTime_;
     };
 
     typedef ADN_Type_Vector_ABC< WorkTimeModifiersInfo > T_WorkTimeModifiersInfo_Vector;

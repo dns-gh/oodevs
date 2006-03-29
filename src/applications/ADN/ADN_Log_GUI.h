@@ -37,8 +37,8 @@ class ADN_Log_GUI : public ADN_GUI_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Log_GUI( ADN_Log_Data& data );
-    ~ADN_Log_GUI();
+    explicit ADN_Log_GUI( ADN_Log_Data& data );
+    virtual ~ADN_Log_GUI();
     //@}
 
     //! @name Operations

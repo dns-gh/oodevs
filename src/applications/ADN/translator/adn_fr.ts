@@ -3357,19 +3357,27 @@ du tireur</translation>
     <name>ADN_Log_GUI</name>
     <message>
         <source>Speed factor</source>
-        <translation>Modificateur de vitesse</translation>
+        <translation type="obsolete">Modificateur de vitesse</translation>
     </message>
     <message>
         <source>Sorting time factor</source>
-        <translation>Modificateur de temps de tri</translation>
+        <translation type="obsolete">Modificateur de temps de tri</translation>
     </message>
     <message>
         <source>Treating time factor</source>
-        <translation>Modificateur de temps de traitement</translation>
+        <translation type="obsolete">Modificateur de temps de traitement</translation>
     </message>
     <message>
         <source>Temps de bord&#xe9;e</source>
         <translation>Temps de bordée</translation>
+    </message>
+    <message>
+        <source>Warning delay</source>
+        <translation>Délai avant avertissement</translation>
+    </message>
+    <message>
+        <source>Specify delay</source>
+        <translation>Délai spécifié</translation>
     </message>
 </context>
 <context>

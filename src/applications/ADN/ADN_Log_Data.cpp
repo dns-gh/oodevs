@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Log_Data.cpp $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 4 $
-// $Workfile: ADN_Log_Data.cpp $
-//
-// *****************************************************************************
 
 #include "ADN_pch.h"
 #include "ADN_Log_Data.h"
@@ -38,9 +29,8 @@ ADN_Log_Data::WorkTimeModifiersInfo::WorkTimeModifiersInfo( E_TempsBordee nType 
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nType_              ( nType )
-, rRepairModifier_    ( 0.0 )
-, rSortModifier_      ( 0.0 )
-, rTreatModifier_     ( 0.0 )
+, bWorkingTimeSet_    ( false )
+, workingTime_        ()
 {
 }
 
@@ -72,9 +62,8 @@ std::string ADN_Log_Data::WorkTimeModifiersInfo::GetItemName()
 void ADN_Log_Data::WorkTimeModifiersInfo::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( ADN_Tools::ComputeWorkingTimeScriptName( nType_ ) );
-    input.ReadField( "CoefTempsReparation", rRepairModifier_ );
-    input.ReadField( "CoefTempsSoin", rTreatModifier_ );
-    input.ReadField( "CoefTempsTri", rSortModifier_ );
+    if( input.ReadField( "DelaiAvantAvertissement", workingTime_, ADN_XmlInput_Helper::eNothing ) )
+        bWorkingTimeSet_ = true;
     input.EndSection();
 }
 
@@ -86,9 +75,8 @@ void ADN_Log_Data::WorkTimeModifiersInfo::ReadArchive( ADN_XmlInput_Helper& inpu
 void ADN_Log_Data::WorkTimeModifiersInfo::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( ADN_Tools::ComputeWorkingTimeScriptName( nType_ ) );
-    output.WriteField( "CoefTempsReparation", rRepairModifier_.GetData() );
-    output.WriteField( "CoefTempsSoin", rTreatModifier_.GetData() );
-    output.WriteField( "CoefTempsTri", rSortModifier_.GetData() );
+    if( bWorkingTimeSet_ == true )
+        output.WriteField( "DelaiAvantAvertissement", workingTime_.GetData() );
     output.EndSection();
 }
 
