@@ -93,6 +93,9 @@ private:
     IT_Layers last_;
     Layer_ABC* default_;
     float zRatio_;
+
+    unsigned int frame_;
+    float pixels_;
     //@}
 };
 

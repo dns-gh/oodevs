@@ -22,6 +22,7 @@
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Compass.h"
 #include "graphics/Visitor3d.h"
+#include "graphics/ViewFrustum.h"
 
 using namespace geometry;
 
@@ -38,6 +39,8 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::s
     , last_( layers_.begin() )
     , default_( 0 )
     , zRatio_( 5 )
+    , frame_( 0 )
+    , pixels_( 100.f )
 {
     // NOTHING
 }
@@ -90,6 +93,8 @@ void Gl3dWidget::initializeGL()
 // -----------------------------------------------------------------------------
 void Gl3dWidget::Paint( const ViewFrustum& view )
 {
+    pixels_ = view.ExpectedDetailLevel();
+    ++frame_;
     glLineWidth( 1.f );
     glColor3f( 1, 1, 1 );
     glBindTexture( GL_TEXTURE_2D, 0 );
@@ -103,7 +108,7 @@ void Gl3dWidget::Paint( const ViewFrustum& view )
 // -----------------------------------------------------------------------------
 float Gl3dWidget::Pixels() const
 {
-    return 100.f; // $$$$ AGE 2006-03-28: 
+    return pixels_;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +117,13 @@ float Gl3dWidget::Pixels() const
 // -----------------------------------------------------------------------------
 unsigned short Gl3dWidget::StipplePattern() const
 {
-    return 0xFFFF; // $$$$ AGE 2006-03-28: 
+    static unsigned short pattern[] = {
+        0x00FF, 0x01FE, 0x03FC, 0x07F8,
+        0x0FF0, 0x1FE0, 0x3FC0, 0x7F80,
+        0xFF00, 0xFE01, 0xFC03, 0xF807,
+        0xF00F, 0xE01F, 0xC03F, 0x807F
+    };
+    return pattern[ frame_%16 ]; 
 }
 
 // -----------------------------------------------------------------------------
@@ -225,6 +236,7 @@ void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float 
     }
     glVertex3f( to.X(), to.Y(), ElevationAt( to ) );
     glEnd();
+    // Arrow !
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +245,19 @@ void Gl3dWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float 
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) const
 {
+    static const float twoPi = 2.f * std::acos( -1.f );
+    if( radius < 0 )
+        radius = 10.f * Pixels();
 
+    float px = radius, py = 0;
+    for( float angle = twoPi / 40.f; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
+    {
+        float cx = radius * std::cos( angle );
+        float cy = radius * std::sin( angle );
+        DrawLine( Point2f( px, py ), Point2f( cx, cy ) );
+        px = cx; py = cy;
+    }
+    DrawLine( Point2f( px, py ), Point2f( radius, 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +266,8 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) co
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 {
-
+    // $$$$ AGE 2006-03-30: sphere ?
+    DrawCircle( center, radius );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +276,10 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawRectangle( const Rectangle2f& rect ) const
 {
-
+    DrawLine( Point2f( rect.Left(), rect.Top() ), Point2f( rect.Right(), rect.Top() ) );
+    DrawLine( Point2f( rect.Right(), rect.Top() ), Point2f( rect.Right(), rect.Bottom() ) );
+    DrawLine( Point2f( rect.Right(), rect.Bottom() ), Point2f( rect.Left(), rect.Bottom() ) );
+    DrawLine( Point2f( rect.Left(), rect.Bottom() ), Point2f( rect.Left(), rect.Top() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,7 +288,8 @@ void Gl3dWidget::DrawRectangle( const Rectangle2f& rect ) const
 // -----------------------------------------------------------------------------
 void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 {
-
+    QGLWidget* that = const_cast< Gl3dWidget* >( this );
+    that->renderText( where.X(), where.Y(), ElevationAt( where ), message.c_str() );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,9 +31,11 @@ public:
 
     //! @name Operations
     //@{
+    // $$$$ AGE 2006-03-30: pas terrible
     virtual void Select( bool );
     virtual bool ShouldDisplay( const std::string& name ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
+    // $$$$ AGE 2006-03-30: /pas terrible
 
     virtual float Pixels() const = 0;
     virtual unsigned short StipplePattern() const = 0;
