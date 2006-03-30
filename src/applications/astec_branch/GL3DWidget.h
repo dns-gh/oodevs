@@ -56,6 +56,7 @@ public:
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
+    virtual void CenterView();
     //@}
 
 private:

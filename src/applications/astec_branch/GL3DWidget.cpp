@@ -81,10 +81,16 @@ void Gl3dWidget::SetDefaultLayer( Layer_ABC& layer )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::initializeGL()
 {
-    const geometry::Rectangle2f viewport( 0, 0, width_, height_ );
-    Widget3D::initializeGL();
-    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->Initialize( viewport );
+    static bool isInitialized = false;
+    if( !isInitialized )
+    {
+        const geometry::Rectangle2f viewport( 0, 0, width_, height_ );
+        Widget3D::initializeGL();
+        for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+            (*it)->Initialize( viewport );
+        isInitialized = true;
+        CenterView();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -316,10 +322,29 @@ void Gl3dWidget::CenterOn( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
 {
-    if( event  && event ->key() == Qt::Key_Plus )
-        zRatio_ *= 1.1f;
-    if( event  && event ->key() == Qt::Key_Minus )
-        zRatio_ *= 0.9f;
+    if( event )
+    {
+        const float speedFactor = ( event->state() == Qt::ShiftButton ) ? 10.f : 1.f;
+
+        if( event->key() == Qt::Key_Plus )
+            zRatio_ *= 1.1f;
+        if( event->key() == Qt::Key_Minus )
+            zRatio_ *= 0.9f;
+        if( event->key() == Qt::Key_Home )
+            CenterView();
+        if( event->key() == Qt::Key_Left )
+            Rotate( Vector3f( 0, 0, 1 ), 0.02f * speedFactor );
+        if( event->key() == Qt::Key_Right )
+            Rotate( Vector3f( 0, 0, 1 ), -0.02f * speedFactor );
+        if( event->key() == Qt::Key_Up )
+            Translate( Vector3f( 0, 1, 0 ), 500.f * speedFactor );
+        if( event->key() == Qt::Key_Down )
+            Translate( Vector3f( 0, 1, 0 ), -500.f * speedFactor );
+        if( event->key() == Qt::Key_PageUp )
+            Translate( Vector3f( 0, 0, 1 ), 500.f * speedFactor );
+        if( event->key() == Qt::Key_PageDown )
+            Translate( Vector3f( 0, 0, 1 ), -500.f * speedFactor );
+    }
 
     bool found = false;
     IT_Layers last = last_;
@@ -418,3 +443,16 @@ void Gl3dWidget::mousePressEvent( QMouseEvent* event )
     Gl3dWidget::mouseReleaseEvent( event );
     Widget3D::mousePressEvent( event );
 }   
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::CenterView
+// Created: SBO 2006-03-30
+// -----------------------------------------------------------------------------
+void Gl3dWidget::CenterView()
+{
+    const geometry::Rectangle2f& extent = elevation_.Extent();
+    const Point3f eye( extent.Width() / 2, -extent.Height() / 2, std::min( extent.Width(), extent.Height() ) );
+    Widget3D::CenterOn( eye );
+    const Vector3f target = Vector3f( eye, Point3f( extent.Width() / 2, extent.Height() / 2, 0 ) ).Normalize();
+    LookTowards( target );
+}
