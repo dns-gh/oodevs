@@ -19,49 +19,27 @@
 #ifndef __RecorderToolbar_h_
 #define __RecorderToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 class MsgRecorder;
-
 
 // =============================================================================
 /** @class  RecorderToolbar
     @brief  RecorderToolbar
-    @par    Using example
-    @code
-    RecorderToolbar;
-    @endcode
 */
 // Created: APE 2004-10-20
 // =============================================================================
 class RecorderToolbar : public QToolBar
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( RecorderToolbar );
 
 public:
     //! @name Constructors/Destructor
     //@{
-     RecorderToolbar( QMainWindow* pParent );
-    ~RecorderToolbar();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
+    explicit RecorderToolbar( QMainWindow* pParent );
+    virtual ~RecorderToolbar();
     //@}
 
 private slots:
-    //! @name Operators
+    //! @name Slots
     //@{
     void Play();
     void Stop();
@@ -71,13 +49,14 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    RecorderToolbar( const RecorderToolbar& );
+    RecorderToolbar& operator=( const RecorderToolbar& );
     //@}
 
 private:
     //! @name Member data
     //@{
     MsgRecorder& msgRecorder_;
-
     QToolButton* pPlayButton_;
     QToolButton* pStopButton_;
     QToolButton* pRecButton_;

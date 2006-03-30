@@ -464,7 +464,6 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& message )
 void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& message )
 {
     simulation_.BeginTick( message );
-    msgRecorder_.OnTimeTick( simulation_.GetTime() );
 }
 
 // -----------------------------------------------------------------------------

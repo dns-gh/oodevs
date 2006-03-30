@@ -21,6 +21,10 @@
 
 #include "ASN_Types.h"
 class AgentServerMsgMgr;
+namespace internal
+{
+    class Message;
+};
 
 // =============================================================================
 /** @class  MsgRecorder
@@ -30,67 +34,26 @@ class AgentServerMsgMgr;
 // =============================================================================
 class MsgRecorder
 {
-private:
-    class Msg
-    {
-        public:
-             Msg();
-             Msg(  ASN1PEREncodeBuffer& asnPEREncodeBuffer, int nTime, int nOffset );
-             Msg( MIL_MOSContextID nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer, int nTime, int nOffset );
-            ~Msg();
-
-            int GetOffset() const;
-            int GetTime() const;
-
-            void SendSelf( AgentServerMsgMgr& msgManager );
-            
-//            void ReadArchive( MT_InputArchive_ABC& archive );
-//            void WriteArchive( MT_OutputArchive_ABC& archive ) const;
-
-        private:
-            bool bContext_;
-            MIL_MOSContextID nContext_;
-            ASN1OCTET* pMsg_;
-            int nMsgLength_;
-            int nTime_;
-            int nOffset_;
-    };
-
-    typedef std::vector< Msg* >         T_MsgVector;
-    typedef T_MsgVector::iterator       IT_MsgVector;
-    typedef T_MsgVector::const_iterator CIT_MsgVector;
-
-public:
-    enum E_State
-    {
-        eStopped,
-        eRecording,
-        ePlaying
-    };
 
 public:
     //! @name Constructors/Destructor
     //@{
-     MsgRecorder( AgentServerMsgMgr& msgManager );
-    ~MsgRecorder();
+    explicit MsgRecorder( AgentServerMsgMgr& msgManager );
+    virtual ~MsgRecorder();
     //@}
 
     //! @name Operations
     //@{
-    E_State GetState() const;
-
     void OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
     void OnNewMsgWithContext( int nType, MIL_MOSContextID nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
 
     void Play();
     void Record();
-    void Stop();
+    bool Stop();
     void Clear();
 
-    void OnTimeTick( int nTime );
-
-//    void ReadArchive( MT_InputArchive_ABC& archive );
-//    void WriteArchive( MT_OutputArchive_ABC& archive ) const;
+    void Read( const std::string& filename );
+    void Write( const std::string& filename ) const;
     //@}
 
 private:
@@ -101,17 +64,21 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< internal::Message* >  T_Messages;
+    typedef T_Messages::iterator              IT_Messages;
+    typedef T_Messages::const_iterator       CIT_Messages;
+    //@}
+
+private:
     //! @name Member data
     //@{
     AgentServerMsgMgr& msgManager_;
 
-    E_State nState_;
-    int nTimeStart_;
-
-    T_MsgVector messages_;
+    bool recording_;
+    T_Messages messages_;
     //@}
 };
-
-#include "MsgRecorder.inl"
 
 #endif // __MsgRecorder_h_

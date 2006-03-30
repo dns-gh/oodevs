@@ -39,6 +39,7 @@
 #include "GlLayers.h"
 #include "UnitToolbar.h"
 #include "LogisticToolbar.h"
+#include "RecorderToolbar.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -125,6 +126,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers );
+    new RecorderToolbar( this );
 
     controllers.Register( *this );
 

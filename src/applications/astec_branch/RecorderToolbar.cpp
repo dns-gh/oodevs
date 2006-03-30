@@ -16,23 +16,15 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "RecorderToolbar.h"
 #include "moc_RecorderToolbar.cpp"
-
 #include "Network.h"
+#include "AgentServerMsgMgr.h"
 #include "MsgRecorder.h"
 #include "App.h"
-#include "AgentServerMsgMgr.h"
 #include "resources.h"
-
-//#include "res/recrec.xpm"
-//#include "res/recstop.xpm"
-//#include "res/recplay.xpm"
+#include <fstream>
 
 // -----------------------------------------------------------------------------
 // Name: RecorderToolbar constructor
@@ -42,10 +34,9 @@
 // -----------------------------------------------------------------------------
 RecorderToolbar::RecorderToolbar( QMainWindow* pParent )
     : QToolBar      ( pParent )
-    , msgRecorder_  ( App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() )
+    , msgRecorder_  ( App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() ) // $$$$ AGE 2006-03-30: caca boudin
 {
-    this->setCaption( tr("Enregisteur d'ordres") );
-    // $$$$ AGE 2005-03-14: icons
+    setCaption( tr("Enregisteur d'ordres") );
     pPlayButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Rejouer un fichier d'ordres" ), "", this, SLOT( Play() ),   this );
     pStopButton_ = new QToolButton( QPixmap( xpm_recstop ), tr( "Stop" ),                        "", this, SLOT( Stop() ), this );
     pRecButton_ =  new QToolButton( QPixmap( xpm_recrec ),  tr( "Enregister des ordres" ),       "", this, SLOT( Record() ),   this );
@@ -60,6 +51,7 @@ RecorderToolbar::RecorderToolbar( QMainWindow* pParent )
 // -----------------------------------------------------------------------------
 RecorderToolbar::~RecorderToolbar()
 {
+    // NOTHING
 }
 
 
@@ -73,18 +65,9 @@ void RecorderToolbar::Play()
     if( strFileName == QString::null )
         return;
 
-    MT_BinaryInputArchive archive;
-    archive.EnableExceptions( true );
-    archive.Open( strFileName.ascii() );
-    msgRecorder_.ReadArchive( archive );
-
+    msgRecorder_.Read( strFileName.ascii() );
     msgRecorder_.Play();
-
-//    pPlayButton_->setEnabled( false );
-//    pRecButton_->setEnabled( false );
-//    pStopButton_->setEnabled( true );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RecorderToolbar::Stop
@@ -92,21 +75,15 @@ void RecorderToolbar::Play()
 // -----------------------------------------------------------------------------
 void RecorderToolbar::Stop()
 {
-    if( msgRecorder_.GetState() == MsgRecorder::eRecording )
+    if( msgRecorder_.Stop() )
     {
-        msgRecorder_.Stop();
         QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Fichiers d'ordres (*.ord)" ), 0, 0, tr("Enregistrer") );
         if( strFileName == QString::null )
             return;
         if( strFileName.right( 4 ) != ".ord" )
             strFileName += ".ord";
-        MT_BinaryOutputArchive archive;
-        archive.EnableExceptions( true );
-        msgRecorder_.WriteArchive( archive );
-        archive.WriteToFile( strFileName.ascii() );
+        msgRecorder_.Write( strFileName.ascii() );
     }
-    else
-        msgRecorder_.Stop();
 
     pPlayButton_->setEnabled( true );
     pRecButton_->setEnabled( true );
