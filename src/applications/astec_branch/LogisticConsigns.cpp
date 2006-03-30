@@ -10,6 +10,10 @@
 #include "astec_pch.h"
 #include "LogisticConsigns.h"
 #include "Controller.h"
+#include "GlTools_ABC.h"
+#include "LogSupplyConsign.h"
+#include "LogMaintenanceConsign.h"
+#include "LogMedicalConsign.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsigns constructor
@@ -148,4 +152,42 @@ void LogisticConsigns::TerminateConsign( LogMedicalConsign& consign )
 {
     handledMedical_.erase( &consign );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsigns::Draw
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+void LogisticConsigns::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+        return;
+
+    const bool handledOnly = tools.ShouldDisplay( "RealTimeLogistic", false );
+
+
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glLineWidth( 2.0 );
+    glColor4d( COLOR_MAROON );
+    for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
+            (*it)->Draw( where, tools );
+    if( ! handledOnly )
+        for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
+            (*it)->Draw( where, tools );
+
+    
+    for( T_MedicalConsigns::const_iterator it = handledMedical_.begin(); it != handledMedical_.end(); ++it )
+            (*it)->Draw( where, tools );
+    if( ! handledOnly )
+        for( T_MedicalConsigns::const_iterator it = requestedMedical_.begin(); it != requestedMedical_.end(); ++it )
+            (*it)->Draw( where, tools );
+
+    
+    for( T_SupplyConsigns::const_iterator it = handledSupplies_.begin(); it != handledSupplies_.end(); ++it )
+            (*it)->Draw( where, tools );
+    if( ! handledOnly )
+        for( T_SupplyConsigns::const_iterator it = requestedSupplies_.begin(); it != requestedSupplies_.end(); ++it )
+            (*it)->Draw( where, tools );
+
+    glPopAttrib();
 }

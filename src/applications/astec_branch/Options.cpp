@@ -72,6 +72,17 @@ void Options::Change( const std::string& name, const OptionVariant& value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Options::GetOption
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+const OptionVariant& Options::GetOption( const std::string& name, const OptionVariant& defaultValue )
+{
+    if( options_.find( name ) == options_.end() )
+        options_[ name ] = defaultValue;
+    return options_[ name ];
+}
+
+// -----------------------------------------------------------------------------
 // Name: Options::LoadBoolean
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------

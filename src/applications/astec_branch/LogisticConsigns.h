@@ -12,6 +12,7 @@
 
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
+#include "Drawable_ABC.h"
 
 class LogSupplyConsign;
 class LogMaintenanceConsign;
@@ -24,7 +25,7 @@ class Controller;
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class LogisticConsigns : public Extension_ABC
+class LogisticConsigns : public Extension_ABC, public Drawable_ABC
 {
 
 public:
@@ -53,6 +54,8 @@ public:
 
     void HandleConsign   ( LogMedicalConsign& consign );
     void TerminateConsign( LogMedicalConsign& consign );
+
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

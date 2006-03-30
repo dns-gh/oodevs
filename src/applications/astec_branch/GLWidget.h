@@ -18,6 +18,7 @@
 #include "View_ABC.h"
 
 class GlFont;
+class Controllers;
 
 // =============================================================================
 /** @class  GlWidget
@@ -31,7 +32,7 @@ class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, const std::string& scipioXml );
+             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml );
     virtual ~GlWidget();
     //@}
 

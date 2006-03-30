@@ -37,6 +37,8 @@
 #include "ControllerToolbar.h"
 #include "OptionVariant.h"
 #include "GlLayers.h"
+#include "UnitToolbar.h"
+#include "LogisticToolbar.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -44,6 +46,7 @@
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    , controllers_( controllers )
     , scipioXml_  ( scipioXml )
     , layers_     ( 0 )
     , widget2d_   ( 0 )
@@ -53,9 +56,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-    widget2d_ = new GlWidget( this, scipioXml );;
+    widget2d_ = new GlWidget( this, controllers, scipioXml );
     setCentralWidget( widget2d_ );
-    layers_ = new GlLayers( scipioXml, controllers, model );
+    layers_ = new GlLayers( *widget2d_, scipioXml, controllers, model );
     layers_->ChangeTo( widget2d_ );
     layers_->RegisterTo( widget2d_ );
     
@@ -120,6 +123,8 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );
+    new UnitToolbar( this, controllers );
+    new LogisticToolbar( this, controllers );
 
     controllers.Register( *this );
 
@@ -232,7 +237,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( this, scipioXml_, layers_->GetElevationMap() );
+                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, layers_->GetElevationMap() );
                     layers_->RegisterTo( widget3d_ );
                 }
                 layers_->ChangeTo( widget3d_ );

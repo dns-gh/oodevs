@@ -15,6 +15,8 @@
 #include "ElementObserver_ABC.h"
 #include "ContextMenuObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "OptionsObserver_ABC.h"
+#include "TristateOption.h"
 
 class Controllers;
 class Lima;
@@ -37,6 +39,7 @@ class LimitsLayer : public QObject
                   , public ElementObserver_ABC< Lima >
                   , public ElementObserver_ABC< Limit >
                   , public ContextMenuObserver_ABC< geometry::Point2f >
+                  , public OptionsObserver_ABC
                   , private ShapeHandler_ABC
                   
 {
@@ -89,6 +92,8 @@ private:
     void ContextMenu( const TacticalLine_ABC& line, const QPoint& point );
 
     virtual void Handle( const T_PointVector& points );
+
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
     //! @name Types
@@ -107,6 +112,7 @@ private:
     ParametersLayer& parameters_;
     LimitsModel& model_;
 
+    TristateOption drawLines_;
     T_Lines lines_;
     unsigned selected_;
     int type_;

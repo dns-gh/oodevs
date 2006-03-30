@@ -17,8 +17,9 @@ x// ****************************************************************************
 // Name: GlProxy constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlProxy::GlProxy()
-    : view_   ( 0 )
+GlProxy::GlProxy( Controllers& controllers )
+    : GlTools_ABC( controllers )
+    , view_   ( 0 )
     , tools_  ( 0 )
 {
     // NOTHING
@@ -133,6 +134,36 @@ void GlProxy::CenterOn( const geometry::Point2f& point )
 {
     CheckView();
     view_->CenterOn( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Select
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+void GlProxy::Select( bool b )
+{
+    CheckTools();
+    tools_->Select( b );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::ShouldDisplay
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+bool GlProxy::ShouldDisplay( const std::string& name ) const
+{
+    CheckTools();
+    return tools_->ShouldDisplay( name );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: GlProxy::ShouldDisplay
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
+{
+    CheckTools();
+    return tools_->ShouldDisplay( name, autoCondition );
 }
 
 // -----------------------------------------------------------------------------

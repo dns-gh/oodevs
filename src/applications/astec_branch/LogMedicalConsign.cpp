@@ -14,6 +14,8 @@
 #include "LogisticConsigns.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "GlTools_ABC.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign constructor
@@ -78,78 +80,6 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
     controller_.Update( *this );
 }
 
-// $$$$ AGE 2006-02-28: remove !
-
-// -----------------------------------------------------------------------------
-// Name: LogMedicalConsign::GetWoundString
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-const char* LogMedicalConsign::GetWoundString() const
-{
-    switch( wound_ )
-    {
-        case EnumHumanWound::non_blesse: return "Non blessé";
-        case EnumHumanWound::mort    : return "Mort";
-        case EnumHumanWound::blesse_urgence_1 : return "U1";
-        case EnumHumanWound::blesse_urgence_2 : return "U2";
-        case EnumHumanWound::blesse_urgence_3 : return "U3";
-        case EnumHumanWound::blesse_urgence_extreme : return "UE";
-        default: return "";
-    }
-}
-// -----------------------------------------------------------------------------
-// Name: LogMedicalConsign::GetStateString
-// Created: HME 2006-01-30
-// -----------------------------------------------------------------------------
-const char* LogMedicalConsign::GetStateString() const
-{
-    switch( nState_ )
-    {
-        case EnumLogSanteTraitementEtat::attente_disponibilite_ambulance_releve:
-            return "En attente d'évacuation";
-        case EnumLogSanteTraitementEtat::ambulance_releve_deplacement_aller:
-            return "Ambulance en route";
-        case EnumLogSanteTraitementEtat::ambulance_releve_chargement:
-            return "Ambulance en cours de chargement";
-        case EnumLogSanteTraitementEtat::attente_chargement_complet_ambulance_releve:
-            return "Ambulance en attente de fin de chargement";
-        case EnumLogSanteTraitementEtat::ambulance_releve_deplacement_retour:
-            return "Ambulance en retour";
-        case EnumLogSanteTraitementEtat::ambulance_releve_dechargement:
-            return "Ambulance en cours de déchargement";
-        case EnumLogSanteTraitementEtat::attente_disponibilite_medecin_pour_diagnostique:
-            return "En attente de diagnostique";
-        case EnumLogSanteTraitementEtat::diagnostique:
-            return "Diagnostique en cours";
-        case EnumLogSanteTraitementEtat::recherche_secteur_tri:
-            return "Recherche d'un secteur de tri";
-        case EnumLogSanteTraitementEtat::attente_disponibilite_medecin_pour_tri:
-            return "En attente de tri";
-        case EnumLogSanteTraitementEtat::tri:
-            return "Tri en cours";
-        case EnumLogSanteTraitementEtat::recherche_secteur_soin:
-            return "Recherche d'un secteur de soin";
-        case EnumLogSanteTraitementEtat::attente_disponibilite_medecin_pour_soin:
-            return "En attente de soins";
-        case EnumLogSanteTraitementEtat::soin:
-            return "Soins en cours";
-        case EnumLogSanteTraitementEtat::attente_disponibilite_ambulance_ramassage:
-            return "En attente de ramassage";
-        case EnumLogSanteTraitementEtat::ambulance_ramassage_chargement:
-            return "Ramassage en cours";
-        case EnumLogSanteTraitementEtat::attente_chargement_complet_ambulance_ramassage:
-            return "En attente de fin de ramassage";
-        case EnumLogSanteTraitementEtat::ambulance_ramassage_deplacement_aller:
-            return "Ramassage en route";
-        case EnumLogSanteTraitementEtat::ambulance_ramassage_dechargement:
-            return "Dechargement du ramassage en cours";
-        case EnumLogSanteTraitementEtat::termine:
-            return "Terminé";
-        default:
-            return "";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign::Display
 // Created: AGE 2006-02-28
@@ -163,4 +93,29 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
              .Display( "Reac. mental :", bMentalDeceased_ )
              .Display( "Contaminé NBC :", bContaminated_ )
              .Display( "Etat :", nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::Draw
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+void LogMedicalConsign::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+        return;
+
+    glColor4d( COLOR_PINK );
+    switch( nState_ )
+    {
+    case eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller:
+    case eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller:
+        glLineStipple( 1, tools.StipplePattern() );
+        break;
+    case eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour:
+        glLineStipple( 1, ~tools.StipplePattern() );
+        break;
+    default:
+        glLineStipple( 1, 0x00FF );
+    }
+    tools.DrawCurvedArrow( pPionLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.4f );
 }

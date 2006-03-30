@@ -62,17 +62,15 @@ void ToolListButtonBase::AddItem( const QString& label, int i, bool selected /*=
         connect( menu_, SIGNAL( activated( int ) ), this, SLOT( OnItemSelected( int ) ) );
         selected_ = 0;
     }
-
     int n = menu_->insertItem( label, i );
     if( selected )
     {
         menu_->setItemChecked( selected_, false );
         selected_ = n;
         menu_->setItemChecked( selected_, true );
-        
+        setTextLabel( label );
+        OnSelected( i );
     }
-
-    setTextLabel( label );
     QToolTip::add( this, toolTip_ );
 }
 

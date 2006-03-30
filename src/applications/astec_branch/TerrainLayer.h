@@ -13,8 +13,11 @@
 #include "Layer_ABC.h"
 #include "graphics/GraphicManager_ABC.h"
 #include "graphics/GraphicSetup_ABC.h"
+#include "OptionsObserver_ABC.h"
+#include "TristateOption.h"
 
 class GraphicShape;
+class Controllers;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -23,13 +26,17 @@ class GraphicShape;
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class TerrainLayer : public Layer2d_ABC, private GraphicManager_ABC, private GraphicSetup_ABC
+class TerrainLayer : public Layer2d_ABC
+                   , private GraphicManager_ABC
+                   , private GraphicSetup_ABC
+                   , private Observer_ABC
+                   , public OptionsObserver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainLayer( const std::string& dataDirectory );
+             TerrainLayer( Controllers& controllers, QGLWidget& widget, const std::string& dataDirectory );
     virtual ~TerrainLayer();
     //@}
 
@@ -54,10 +61,14 @@ private:
     void DrawInnerShapes  ( const geometry::Rectangle2f& viewport ) const;
     void DrawShapesBorders( const geometry::Rectangle2f& viewport ) const;
     void DrawLinearShapes ( const geometry::Rectangle2f& viewport ) const;
+    void DrawNames        ( const geometry::Rectangle2f& viewport ) const;
+    bool IsLinear         ( const GraphicShape& shape ) const;
 
     virtual void SetupLineGraphics  ( const Data_ABC* pData );
     virtual void SetupBorderGraphics( const Data_ABC* pData );
     virtual void SetupAreaGraphics  ( const Data_ABC* pData );
+
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
     //! @name Types
@@ -69,8 +80,12 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
+    QGLWidget& widget_;
     const std::string dataDirectory_;
     T_Shapes shapes_;
+    TristateOption smallNames_;
+    TristateOption bigNames_;
     //@}
 };
 

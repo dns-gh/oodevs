@@ -23,6 +23,7 @@ class Controllers;
 class TacticalLine_ABC;
 class Lima;
 class Limit;
+class GlTools_ABC;
 
 // =============================================================================
 /** @class  ColorStrategy
@@ -44,7 +45,7 @@ class ColorStrategy : public ColorStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ColorStrategy( Controllers& controllers );
+             ColorStrategy( Controllers& controllers, GlTools_ABC& tools );
     virtual ~ColorStrategy();
     //@}
 
@@ -97,6 +98,8 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    GlTools_ABC& tools_;
+
     const Object*     selectedObject_;
     const Agent*      selectedAgent_;
     const Agent*      selectedSuperior_;

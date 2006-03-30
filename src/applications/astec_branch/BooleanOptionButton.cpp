@@ -8,55 +8,52 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "GlTools_ABC.h"
-#include "Controllers.h"
+#include "BooleanOptionButton.h"
+#include "moc_BooleanOptionButton.cpp"
 #include "Options.h"
-#include "TristateOption.h"
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC constructor
+// Name: BooleanOptionButton constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-GlTools_ABC::GlTools_ABC( Controllers& controllers )
-    : controllers_( controllers )
-    , selected_( false )
+BooleanOptionButton::BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, Options& options, const std::string& option)
+    : QToolButton( iconSet, "", "", 0, "", parent, "" )
+    , options_( options )
+    , option_( option )
+    , toolTip_( toolTip )
 {
-    // NOTHING
+    QToolTip::add( this, toolTip_ );
+    setUsesTextLabel( true );                  
+    setTextPosition( QToolButton::BesideIcon );
+    setToggleButton( true );
+    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( OnToggled( bool ) ) );
+    options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC destructor
+// Name: BooleanOptionButton destructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-GlTools_ABC::~GlTools_ABC()
+BooleanOptionButton::~BooleanOptionButton()
 {
-    // NOTHING
+    options_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC::Select
+// Name: BooleanOptionButton::OnToggled
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void GlTools_ABC::Select( bool dummy )
+void BooleanOptionButton::OnToggled( bool on )
 {
-    selected_ = dummy;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: GlTools_ABC::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlTools_ABC::ShouldDisplay( const std::string& name ) const
-{
-    return ShouldDisplay( name, selected_ );
+    options_.Change( option_, on );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC::ShouldDisplay
+// Name: BooleanOptionButton::OptionChanged
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-bool GlTools_ABC::ShouldDisplay( const std::string& name, bool autoCondition ) const
+void BooleanOptionButton::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    return controllers_.options_.GetOption( name, TristateOption::auto_ )
-        .To< TristateOption >().IsSet( autoCondition );
+    if( name == option_ && isOn() != value.To< bool >() )
+        setOn( value.To< bool >() );
 }

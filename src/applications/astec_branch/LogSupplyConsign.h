@@ -22,6 +22,7 @@
 #include "Types.h"
 #include "ASN_Types.h"
 #include "Resolver.h"
+#include "Drawable_ABC.h"
 
 class DotationRequest;
 class Agent;
@@ -32,7 +33,7 @@ class DotationType ;
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogSupplyConsign : public Resolver< DotationRequest >
+class LogSupplyConsign : public Resolver< DotationRequest >, public Drawable_ABC
 {
 
 public:
@@ -45,7 +46,7 @@ public:
     //! @name Accessors
     //@{
     void Display( Displayer_ABC& displayer ) const;
-    const char* GetStateString() const;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network events

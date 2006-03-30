@@ -18,6 +18,7 @@
 
 class Layer_ABC;
 class ElevationMap;
+class Controllers;
 
 // =============================================================================
 /** @class  Gl3dWidget
@@ -31,7 +32,7 @@ class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, const std::string& scipioXml, ElevationMap& elevation );
+             Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, ElevationMap& elevation );
     virtual ~Gl3dWidget();
     //@}
 

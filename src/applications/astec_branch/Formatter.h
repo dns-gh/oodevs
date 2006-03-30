@@ -266,6 +266,27 @@ struct Formatter< E_HumanWound >
     void operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const;
 };
 
+template< >
+struct Formatter< E_LogRavitaillementTraitementEtat >
+{
+    void operator()( const E_LogRavitaillementTraitementEtat& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< E_LogSanteTraitementEtat >
+{
+    void operator()( const E_LogSanteTraitementEtat& e, Displayer_ABC& displayer ) const;
+};
+
+
+template< >
+struct Formatter< E_LogMaintenanceTraitementEtat >
+{
+    void operator()( const E_LogMaintenanceTraitementEtat& e, Displayer_ABC& displayer ) const;
+};
+
+
+
 // =============================================================================
 /** @class  Formatter
     @brief  Containers

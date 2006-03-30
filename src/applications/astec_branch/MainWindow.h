@@ -85,6 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     std::string scipioXml_;
     GlLayers* layers_;
     GlWidget*   widget2d_;
@@ -94,21 +95,6 @@ private:
     QTimer* displayTimer_;
 
     OptionsPanel* pOptionsPanel_;
-
-    QDockWindow* pListDockWnd_;
-    QDockWindow* pInfoDockWnd_;
-    QDockWindow* pLogDockWnd_;
-    QDockWindow* pWeatherDockWnd_;
-    QDockWindow* pCreationDockWnd_;
-    QDockWindow* pOptionsDockWnd_;
-
-    QLabel* pTimeLabel_;
-    QLabel* pLocationLabel_;
-    QLabel* pLocationLabel2_;
-	QLabel* pLocationLabel3_;
-    QLabel* pTickLabel_;
-
-    QTimer* pLagTimer_;
     //@}
 };
 

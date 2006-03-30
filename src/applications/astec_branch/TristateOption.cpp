@@ -8,55 +8,52 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "GlTools_ABC.h"
-#include "Controllers.h"
-#include "Options.h"
 #include "TristateOption.h"
+#include "ToolListButton.h"
+
+const TristateOption TristateOption::off_( "Off" );
+const TristateOption TristateOption::on_( "On" );
+const TristateOption TristateOption::auto_( "Auto" );
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC constructor
+// Name: TristateOption constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-GlTools_ABC::GlTools_ABC( Controllers& controllers )
-    : controllers_( controllers )
-    , selected_( false )
+TristateOption::TristateOption( const std::string& state )
+    : state_( '0' )
+{
+    if( state == "On" )
+        state_ = '1';
+    else if( state == "Auto" )
+        state_ = 'a';
+}
+            
+// -----------------------------------------------------------------------------
+// Name: TristateOption destructor
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+TristateOption::~TristateOption()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC destructor
+// Name: TristateOption::Populate
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-GlTools_ABC::~GlTools_ABC()
+void TristateOption::Populate( ToolListButton< TristateOption >& button )
 {
-    // NOTHING
+    button.AddItem( qApp->tr( "Auto" ), auto_, true );
+    button.AddItem( qApp->tr( "Oui" ),  on_,   false );
+    button.AddItem( qApp->tr( "Non" ),  off_,  false );
+    button.setMinimumWidth( 55 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlTools_ABC::Select
+// Name: TristateOption::IsSet
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void GlTools_ABC::Select( bool dummy )
+bool TristateOption::IsSet( bool automaticCondition ) const
 {
-    selected_ = dummy;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: GlTools_ABC::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlTools_ABC::ShouldDisplay( const std::string& name ) const
-{
-    return ShouldDisplay( name, selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlTools_ABC::ShouldDisplay
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-bool GlTools_ABC::ShouldDisplay( const std::string& name, bool autoCondition ) const
-{
-    return controllers_.options_.GetOption( name, TristateOption::auto_ )
-        .To< TristateOption >().IsSet( autoCondition );
+    return state_ == '1' || ( automaticCondition && state_ == 'a' );
 }

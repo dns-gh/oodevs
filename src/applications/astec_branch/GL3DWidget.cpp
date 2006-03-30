@@ -29,10 +29,11 @@ using namespace geometry;
 // Name: Gl3dWidget constructor
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-Gl3dWidget::Gl3dWidget( QWidget* pParent, const std::string& scipioXml, ElevationMap& elevation )
+Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, ElevationMap& elevation )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , Widget3D( context_, pParent )
+    , GlTools_ABC( controllers )
     , elevation_( elevation )
     , last_( layers_.begin() )
     , default_( 0 )

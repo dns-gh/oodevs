@@ -23,6 +23,8 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "ValuedListItem.h"
+#include "GlTools_ABC.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign constructor
@@ -37,7 +39,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const Reso
     , nEquipmentTypeID_( message.type_equipement )
     , nBreakdownTypeID_( message.type_panne )
     , diagnosed_       ( false )
-    , nState_          ( EnumLogMaintenanceTraitementEtat::termine )
+    , nState_          ( eLogMaintenanceTraitementEtat_Termine )
 {
     pion_.Get< LogisticConsigns >().AddConsign( *this );
 }
@@ -70,52 +72,10 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogisticConsigns >().HandleConsign( *this );
     if( message.m.etatPresent )
-        nState_ = message.etat;
+        nState_ = E_LogMaintenanceTraitementEtat( message.etat );
     if( message.m.diagnostique_effectuePresent )
         diagnosed_ = message.diagnostique_effectue;
     controller_.Update( *this );
-}
-
-// $$$$ AGE 2006-02-28: degager
-// -----------------------------------------------------------------------------
-// Name: LogMaintenanceConsign::GetStateString
-// Created: HME 2006-01-30
-// -----------------------------------------------------------------------------
-const char* LogMaintenanceConsign::GetStateString() const
-{
-    switch( nState_ )
-    {
-        case EnumLogMaintenanceTraitementEtat::deplacement_vers_chaine:
-            return "En déplacement vers la chaine";
-        case EnumLogMaintenanceTraitementEtat::attente_disponibilite_remorqueur: 
-            return "En attente d'un remorqueur";
-        case EnumLogMaintenanceTraitementEtat::remorqueur_deplacement_aller: 
-            return "Remorqueur en route";
-        case EnumLogMaintenanceTraitementEtat::remorqueur_chargement: 
-            return "Remorqueur en cours de chargement";
-        case EnumLogMaintenanceTraitementEtat::remorqueur_deplacement_retour: 
-            return "Remorqueur en retour";
-        case EnumLogMaintenanceTraitementEtat::remorqueur_dechargement: 
-            return "Remorqueur en cours de déchargement";
-        case EnumLogMaintenanceTraitementEtat::diagnostique: 
-            return "Diagnostique en cours";
-        case EnumLogMaintenanceTraitementEtat::attente_prise_en_charge_par_niveau_superieur: 
-            return "En attente de prise en charge par le niveau supérieur";
-        case EnumLogMaintenanceTraitementEtat::attente_disponibilite_pieces: 
-            return "En attente de pièces";
-        case EnumLogMaintenanceTraitementEtat::attente_disponibilite_reparateur: 
-            return "En attente d'un réparateur";
-        case EnumLogMaintenanceTraitementEtat::reparation: 
-            return "En cours de réparation";
-        case EnumLogMaintenanceTraitementEtat::attente_retour_pion: 
-            return "En attente de retour";
-        case EnumLogMaintenanceTraitementEtat::retour_pion: 
-            return "Retour en cours";
-        case EnumLogMaintenanceTraitementEtat::termine: 
-            return "Terminé";
-        default:
-            return "";
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -130,4 +90,28 @@ void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
              .Display( "Type d'équipement :", nEquipmentTypeID_ ) // $$$$ AGE 2006-03-21: only if diagnosed
              .Display( "Type de panne :", nBreakdownTypeID_ )     // $$$$ AGE 2006-03-21: only if diagnosed
              .Display( "Etat :", nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::Draw
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+void LogMaintenanceConsign::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+        return;
+
+    glColor4d( COLOR_MAROON );
+    switch( nState_ )
+    {
+    case eLogMaintenanceTraitementEtat_RemorqueurDeplacementAller:
+        glLineStipple( 1, tools.StipplePattern() );
+        break;
+    case eLogMaintenanceTraitementEtat_RemorqueurDeplacementRetour:
+        glLineStipple( 1, ~tools.StipplePattern() );
+        break;
+    default:
+        glLineStipple( 1, 0x00FF );
+    }
+    tools.DrawCurvedArrow( pPionLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.5f );
 }

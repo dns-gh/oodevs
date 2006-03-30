@@ -41,6 +41,7 @@ public:
     void Remove  ( Observer_ABC& observer );
 
     void Change( const std::string& name, const OptionVariant& value );
+    const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );
 
     void LoadBoolean( Settings& settings, const std::string& name, bool defaultValue );
     void LoadInteger( Settings& settings, const std::string& name, int defatulValue );

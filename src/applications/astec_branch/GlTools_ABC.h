@@ -11,6 +11,7 @@
 #define __GlTools_ABC_h_
 
 #include "GLToolColors.h"
+class Controllers;
 
 // =============================================================================
 /** @class  GlTools_ABC
@@ -24,12 +25,16 @@ class GlTools_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GlTools_ABC() {};
-    virtual ~GlTools_ABC() {};
+    explicit GlTools_ABC( Controllers& controllers );
+    virtual ~GlTools_ABC();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Select( bool );
+    virtual bool ShouldDisplay( const std::string& name ) const;
+    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
+
     virtual float Pixels() const = 0;
     virtual unsigned short StipplePattern() const = 0;
 
@@ -43,6 +48,20 @@ public:
     virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const = 0;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const = 0;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    GlTools_ABC( const GlTools_ABC& );
+    GlTools_ABC& operator=( const GlTools_ABC& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Controllers& controllers_;
+    bool selected_;
     //@}
 };
 

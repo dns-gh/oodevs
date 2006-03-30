@@ -22,6 +22,7 @@
 #include "Types.h"
 #include "ASN_Types.h"
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class Agent;
 class Controller;
@@ -30,7 +31,7 @@ class Displayer_ABC;
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogMaintenanceConsign
+class LogMaintenanceConsign : public Drawable_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -42,11 +43,7 @@ public:
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-    const char* GetStateString() const;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network events
@@ -70,7 +67,7 @@ private:
     uint    nEquipmentTypeID_; // $$$$ AGE 2006-02-28: resolve
     uint    nBreakdownTypeID_;
     bool    diagnosed_;
-    ASN1T_EnumLogMaintenanceTraitementEtat nState_;
+    E_LogMaintenanceTraitementEtat nState_;
 };
 
 #endif // __LogMaintenanceConsign_h_

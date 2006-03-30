@@ -37,10 +37,11 @@ namespace
 // Name: GlWidget::GlWidgexxxt
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, const std::string& scipioXml )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , MapWidget( context_, pParent, width_, height_ )
+    , GlTools_ABC( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_( 0 )

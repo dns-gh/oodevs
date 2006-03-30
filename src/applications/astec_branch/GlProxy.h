@@ -29,7 +29,7 @@ class GlProxy : public View_ABC, public GlTools_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GlProxy();
+    explicit GlProxy( Controllers& controllers );
     virtual ~GlProxy();
     //@}
 
@@ -44,6 +44,10 @@ public:
     void AddDefaultLayer( Layer_ABC& layer );
 
     virtual void CenterOn( const geometry::Point2f& point );
+
+    virtual void Select( bool );
+    virtual bool ShouldDisplay( const std::string& name ) const;
+    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
 
     virtual float Pixels() const;
     virtual unsigned short StipplePattern() const;

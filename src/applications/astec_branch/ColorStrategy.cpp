@@ -17,13 +17,15 @@
 #include "Population.h"
 #include "Lima.h"
 #include "Limit.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-ColorStrategy::ColorStrategy( Controllers& controllers )
+ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     : controllers_( controllers )
+    , tools_             ( tools )
     , selectedObject_    ( 0 )
     , selectedAgent_     ( 0 )
     , selectedSuperior_  ( 0 )
@@ -118,9 +120,19 @@ void ColorStrategy::SelectColor( const Agent& agent )
     const Team& team = agent.GetTeam();
     QColor color = teamColors_[ &team ].second;
     if( selectedAgent_ == &agent )
+    {
+        tools_.Select( true );
         color = SelectedColor( color );
-    else if( selectedAgent_ == agent.GetSuperior() || selectedSuperior_ == agent.GetSuperior() )
+    }
+    else if( ( selectedAgent_    && selectedAgent_    == agent.GetSuperior() )
+          || ( selectedSuperior_ && selectedSuperior_ == agent.GetSuperior() ) )
+    {
+        tools_.Select( true );
         color = SuperiorSelectedColor( color );
+    }
+    else
+        tools_.Select( false );
+        
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -134,6 +146,7 @@ void ColorStrategy::SelectColor( const Object& object )
     QColor color = teamColors_[ &team ].second;
     if( selectedObject_ == &object )
         color = SelectedColor( color );
+    tools_.Select( selectedObject_ == &object );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -147,6 +160,7 @@ void ColorStrategy::SelectColor( const Population& population )
      QColor color = teamColors_[ &team ].second;
     if( selectedPopulation_ == &population )
         color = SelectedColor( color );
+    tools_.Select( selectedPopulation_ == &population );
     glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
 }
 
@@ -160,6 +174,7 @@ void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
         glColor3f( 1.f, 0.5f, 0.05f );
     else
         glColor3f( 1.f, 1.f, 1.f );
+    tools_.Select( & line == selectedLine_ );
 }
 
 // -----------------------------------------------------------------------------

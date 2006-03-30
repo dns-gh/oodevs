@@ -20,6 +20,7 @@
 #include "Tools.h"
 #include "ParametersLayer.h"
 #include "LimitsModel.h"
+#include "OptionVariant.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer constructor
@@ -52,10 +53,13 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 void LimitsLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
+    if( drawLines_.IsSet( true ) )// $$$$ AGE 2006-03-30: condition pour auto ?
     {
-        strategy_.SelectColor( **it );
-        (*it)->Draw( viewport, tools_ );
+        for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
+        {
+            strategy_.SelectColor( **it );
+            (*it)->Draw( viewport, tools_ );
+        }
     }
 }
 
@@ -241,4 +245,14 @@ void LimitsLayer::Handle( const T_PointVector& points )
         model_.CreateLimit( points );
     else
         model_.CreateLima( E_FuncLimaType( type_ ), points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::OptionChanged
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+void LimitsLayer::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    if( name == "TacticalLines" )
+        drawLines_ = value.To< TristateOption >();
 }

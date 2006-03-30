@@ -145,9 +145,9 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, const GlTools_ABC& tools, float curve ) const
 {
-    if( agent )
+    if( agent && tools.ShouldDisplay( "LogisticLinks" ) )
         tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
-    else // $$$$ AGE 2006-03-17: Pas vraiment ca non plus
+    else if( ! agent && tools.ShouldDisplay( "MissingLogisticLinks" ) ) // $$$$ AGE 2006-03-17: Pas juste !agent : test BLT, ...
         tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }
 

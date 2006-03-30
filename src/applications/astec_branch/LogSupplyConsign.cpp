@@ -24,6 +24,8 @@
 #include "LogisticConsigns.h"
 #include "Displayer_ABC.h"
 #include "DotationRequest.h"
+#include "GlTools_ABC.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign constructor
@@ -114,36 +116,6 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
     }
     controller_.Update( *this );
 }
-// $$$$ AGE 2006-02-28: degager
-// -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::GetStateString
-// Created: HME 2006-01-30
-// -----------------------------------------------------------------------------
-const char* LogSupplyConsign::GetStateString() const
-{
-    switch( nState_ )
-    {
-        case EnumLogRavitaillementTraitementEtat::convoi_en_attente_camions:
-            return "Convoi en attente de camions";
-        case EnumLogRavitaillementTraitementEtat::convoi_en_attente_chef_convoi:
-            return "Convoi en attente d'un chef de convoi";
-        case EnumLogRavitaillementTraitementEtat::convoi_constitution:
-            return "Convoi en cours de constitution";
-        case EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_chargement:
-            return "Convoi en déplacement vers point de chargement";
-        case EnumLogRavitaillementTraitementEtat::convoi_chargement:
-            return "Convoi en cours de chargement";
-        case EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_dechargement:
-            return "Convoi en déplacement vers point de déchargement";
-        case EnumLogRavitaillementTraitementEtat::convoi_dechargement:
-            return "Convoi en cours de déchargement";
-        case EnumLogRavitaillementTraitementEtat::convoi_deplacement_retour:
-            return "Convoi en retour";
-        case EnumLogRavitaillementTraitementEtat::termine:
-            return "Terminé";
-        default: return "";
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::Display
@@ -157,4 +129,29 @@ void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
              .Display( "Pion fournissant les moyens :", pAutomateLogProvidingConvoyResources_ )
              .Display( "Pion convoyant :", pPionLogConvoying_ )
              .Display( "Etat :", nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::Draw
+// Created: AGE 2006-03-30
+// -----------------------------------------------------------------------------
+void LogSupplyConsign::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! pAutomateLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+        return;
+
+    glColor4d( COLOR_ORANGE );
+    switch( nState_ )
+    {
+    case eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement:
+    case eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointDechargement:
+        glLineStipple( 1, tools.StipplePattern() );
+        break;
+    case eLogRavitaillementTraitementEtat_ConvoiDeplacementRetour:
+        glLineStipple( 1, ~tools.StipplePattern() );
+        break;
+    default:
+        glLineStipple( 1, 0x00FF );
+    }
+    tools.DrawCurvedArrow( pAutomateLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.6f );
 }

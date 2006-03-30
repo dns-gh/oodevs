@@ -99,21 +99,28 @@ void Paths::UpdatePathfind()
 // -----------------------------------------------------------------------------
 void Paths::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools ) const
 {
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-
-    glColor4d( COLOR_PATH );
-    glLineWidth( 3 );
-    glEnable( GL_LINE_STIPPLE );
-    glLineStipple( 1, tools.StipplePattern()  );
-    tools.DrawLines( plannedPath_ );
-
-    glDisable( GL_LINE_STIPPLE );
-    glColor4d( COLOR_BLACK );
-    glLineWidth( 3 );
-    tools.DrawLines( previousPath_ );
-    glColor4d( COLOR_OLDPATH );
-    glLineWidth( 2 );
-    tools.DrawLines( previousPath_ );
-
-    glPopAttrib();
+    const bool displayPath    = tools.ShouldDisplay( "Paths" );
+    const bool displayOldPath = tools.ShouldDisplay( "OldPaths" );
+    if( displayPath || displayOldPath )
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+    if( displayPath )
+    {
+        glColor4d( COLOR_PATH );
+        glLineWidth( 3 );
+        glEnable( GL_LINE_STIPPLE );
+        glLineStipple( 1, tools.StipplePattern()  );
+        tools.DrawLines( plannedPath_ );
+        glDisable( GL_LINE_STIPPLE );
+    }
+    if( displayOldPath )
+    {
+        glColor4d( COLOR_BLACK );
+        glLineWidth( 3 );
+        tools.DrawLines( previousPath_ );
+        glColor4d( COLOR_OLDPATH );
+        glLineWidth( 2 );
+        tools.DrawLines( previousPath_ );
+    }
+    if( displayPath || displayOldPath )
+        glPopAttrib();
 }

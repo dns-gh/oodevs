@@ -19,54 +19,29 @@
 #ifndef __UnitToolbar_h_
 #define __UnitToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-#include "Options.h"
-
+class Controllers;
 
 // =============================================================================
 /** @class  UnitToolbar
     @brief  UnitToolbar
-    @par    Using example
-    @code
-    UnitToolbar;
-    @endcode
 */
 // Created: APE 2004-09-21
 // =============================================================================
 class UnitToolbar : public QToolBar
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( UnitToolbar );
-
 public:
     //! @name Constructors/Destructor
     //@{
-     UnitToolbar( QMainWindow* pParent );
-    ~UnitToolbar();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnVisionLines( float rValue );
-    void OnVisionCones( float rValue );
-    void OnVisionSurfaces( float rValue );
-    void OnPaths( float rValue );
-
-    void OnOldPathsToggled();
+             UnitToolbar( QMainWindow* pParent, Controllers& controllers );
+    virtual ~UnitToolbar();
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy / Assignment
     //@{
-    void FillButton( MT_ToolListButton& button, Options::E_State nState );
+    UnitToolbar( const UnitToolbar& );
+    UnitToolbar& operator=( const UnitToolbar& );
     //@}
-
-private:
-    QToolButton* pOldPathsButton_;
 };
 
 
