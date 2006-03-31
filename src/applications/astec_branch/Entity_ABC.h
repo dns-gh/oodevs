@@ -14,6 +14,7 @@
 #include "InterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
+class GlTools_ABC;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -41,6 +42,8 @@ public:
         if( ! applied )
             throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() ) + " could be updated with message type " + typeid( T ).name() );
     }
+
+    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

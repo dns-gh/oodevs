@@ -19,65 +19,72 @@
 #ifndef __ParamPath_h_
 #define __ParamPath_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
-#include "ParamListView.h"
+#include "ContextMenuObserver_ABC.h"
+#include "ShapeHandler_ABC.h"
 
+class ParametersLayer;
+class CoordinateConverter;
+class MT_ParameterLabel;
 class Agent_ABC;
-class ShapeEditorMapEventFilter;
-class QPopupMenu;
-
 
 // =============================================================================
 /** @class  ParamPath
     @brief  ParamPath
-    @par    Using example
-    @code
-    ParamPath;
-    @endcode
 */
 // Created: APE 2004-03-25
 // =============================================================================
-class ParamPath : public ParamListView, public Param_ABC
+class ParamPath : public QHBox, public Param_ABC
+                , public ContextMenuObserver_ABC< geometry::Point2f >
+                , private ShapeHandler_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamPath );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamPath( ASN1T_Itineraire& asnListPoint, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-    ~ParamPath();
+             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter, const Agent_ABC& agent );
+    virtual ~ParamPath();
     //@}
 
     //! @name Operations
     //@{
-    void Draw();
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
+    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual bool CheckValidity();
+    virtual void Commit();
+    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
+    virtual void Handle( const T_PointVector& points );
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void StartPath();
-    void PathDone();
+    //@}
 
 private:
-    std::string strMenuText_;
-    ASN1T_Itineraire& asnListPoint_;
+    //! @name Copy/Assignment
+    //@{
+    ParamPath( const ParamPath& );
+    ParamPath& operator=( const ParamPath& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ParametersLayer& layer_;
+    const CoordinateConverter& converter_;
+    ASN1T_Itineraire& asn_;
+
+    std::string menu_;
+    MT_ParameterLabel* pLabel_;
+    QLabel*            pPosLabel_;
+    
+    geometry::Point2f agentPos_;
+    T_PointVector points_;
     ASN1T_CoordUTM* pUMTCoords_;
-    Agent_ABC& agent_;
-
-    T_PointVector pointList_;
-
-    ShapeEditorMapEventFilter* pLineEditor_;
+    //@}
 };
-
-#   include "ParamPath.inl"
 
 #endif // __ParamPath_h_

@@ -34,6 +34,10 @@ public:
 
     //! @name Operations
     //@{
+    virtual void RemoveFromController();
+    virtual void SetOptional( bool );
+    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual void RegisterIn( ActionController& controller );
     virtual bool CheckValidity();
     virtual void Commit();
     //@}

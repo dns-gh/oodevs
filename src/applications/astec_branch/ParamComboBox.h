@@ -102,7 +102,7 @@ void ParamComboBox<T>::AddItem( const std::string strLabel, const T& value )
 template< class T >
 void ParamComboBox<T>::Commit()
 {
-    output_ = pComboBox_->GetValue();
+    asn_ = pComboBox_->GetValue();
 }
 
 #endif // __ParamComboBox_h_

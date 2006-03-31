@@ -8,43 +8,33 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Entity_ABC.h"
-#include "Drawable_ABC.h"
+#include "MissionLayer.h"
+#include "MissionPanel.h"
 
 // -----------------------------------------------------------------------------
-// Name: Entity_ABC constructor
-// Created: AGE 2006-02-07
-// -----------------------------------------------------------------------------
-Entity_ABC::Entity_ABC()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC destructor
-// Created: AGE 2006-02-07
-// -----------------------------------------------------------------------------
-Entity_ABC::~Entity_ABC()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::AddExtension
-// Created: AGE 2006-02-07
-// -----------------------------------------------------------------------------
-void Entity_ABC::AddExtension( Extension_ABC*& where, Extension_ABC* ext )
-{
-    Register( *ext );
-    Extendable< Extension_ABC >::AddExtension( where, ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::Draw
+// Name: MissionLayer constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void Entity_ABC::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+MissionLayer::MissionLayer( MissionPanel& panel )
+    : panel_( panel )
 {
-    Entity_ABC* that = const_cast< Entity_ABC* >( this );
-    that->Apply( Drawable_ABC::Draw, where, tools );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionLayer destructor
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+MissionLayer::~MissionLayer()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionLayer::Paint
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void MissionLayer::Paint( const geometry::Rectangle2f& viewport )
+{
+    panel_.Draw( viewport );
 }

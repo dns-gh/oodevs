@@ -34,17 +34,17 @@ GlLayers::GlLayers( QGLWidget& widget, const std::string& scipioXml, Controllers
     , strategy_( new ColorStrategy( controllers, *this ) )
     , elevation_( new ElevationMap( detection_ ) )
 {
-    ParametersLayer* parameters = new ParametersLayer( *this );
+    parameters_ = new ParametersLayer( *this );
 
     Register( *new Elevation2dLayer( *elevation_ ) );
     Register( *new Elevation3dLayer( *elevation_ ) );
     Register( *new TerrainLayer( controllers, widget, graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
-    Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters, model.limits_ ) );
+    Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters_, model.limits_ ) );
     Register( *new ObjectsLayer( controllers, *this, *strategy_, *this ) );
     Register( *new PopulationsLayer( controllers, *this, *strategy_, *this ) );
     Register( *new AgentsLayer( controllers, *this, *strategy_, *this ) );
-    Register( *parameters );
+    Register( *parameters_ );
     
     AddDefaultLayer( *new DefaultLayer( controllers ) );
 }

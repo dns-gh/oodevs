@@ -92,7 +92,9 @@ public:
         , option_( option )
     {}
     virtual ~ToolListButton()
-    {};
+    {
+        options_.Remove( *this );
+    };
     //@}
 
     //! @name Operations

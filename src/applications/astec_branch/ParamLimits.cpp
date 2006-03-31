@@ -19,7 +19,7 @@ ParamLimits::ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, cons
     : limit1_( new EntityParameter< Limit >( pParent, id1, label1, menu1 ) )
     , limit2_( new EntityParameter< Limit >( pParent, id2, label2, menu2 ) )
 {
-    // NOTHING
+    id1 = id2 = MIL_NULL_LINE_ID;
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +29,49 @@ ParamLimits::ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, cons
 ParamLimits::~ParamLimits()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimits::RemoveFromController
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParamLimits::RemoveFromController()
+{
+    Param_ABC::RemoveFromController();
+    limit1_->RemoveFromController();
+    limit2_->RemoveFromController();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimits::Draw
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParamLimits::Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const
+{
+    limit1_->Draw( point, tools );
+    limit2_->Draw( point, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimits::RegisterIn
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParamLimits::RegisterIn( ActionController& controller )
+{
+    Param_ABC::RegisterIn( controller );
+    limit1_->RegisterIn( controller );
+    limit2_->RegisterIn( controller );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLimits::SetOptional
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParamLimits::SetOptional( bool bDenis )
+{
+    Param_ABC::SetOptional( bDenis );
+    limit1_->SetOptional( bDenis );
+    limit2_->SetOptional( bDenis );
 }
 
 // -----------------------------------------------------------------------------

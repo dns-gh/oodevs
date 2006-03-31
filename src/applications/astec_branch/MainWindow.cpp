@@ -40,6 +40,7 @@
 #include "UnitToolbar.h"
 #include "LogisticToolbar.h"
 #include "RecorderToolbar.h"
+#include "MissionLayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -60,9 +61,6 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     widget2d_ = new GlWidget( this, controllers, scipioXml );
     setCentralWidget( widget2d_ );
     layers_ = new GlLayers( *widget2d_, scipioXml, controllers, model );
-    layers_->ChangeTo( widget2d_ );
-    layers_->RegisterTo( widget2d_ );
-    
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -94,11 +92,12 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, layers_->GetParametersLayer(), *layers_ );
     this->moveDockWindow( pMissionPanel_, Qt::DockLeft );
     pMissionPanel_->hide();
     this->setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     this->setAppropriate( pMissionPanel_, false );
+    layers_->Register( *new MissionLayer( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31: 
 
     // Logger
     QDockWindow*pLogDockWnd_ = new QDockWindow( this );
@@ -128,7 +127,10 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new LogisticToolbar( this, controllers );
     new RecorderToolbar( this );
 
-    controllers.Register( *this );
+    controllers_.Register( *this );
+
+    layers_->ChangeTo( widget2d_ );
+    layers_->RegisterTo( widget2d_ );
 
     // This one refreshes the map display, and is called only a few time per second.
     displayTimer_ = new QTimer( this );
@@ -146,6 +148,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
+    controllers_.Remove( *this );
 //    delete pOptions_;
     delete layers_;
 }

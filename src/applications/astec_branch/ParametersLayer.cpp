@@ -19,7 +19,7 @@
 ParametersLayer::ParametersLayer( const GlTools_ABC& tools )
     : tools_( tools )
     , handler_( 0 )
-    , type_( GL_LINE_STRIP )
+    , type_( polygon )
     , expected_( 0 )
 {
     // NOTHING
@@ -54,13 +54,19 @@ void ParametersLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4d( COLOR_UNDERCONST );
         glLineWidth( 3.f );
-        if( type_ == GL_POINTS )
+        if( type_ == points )
             for( T_PointVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
                 tools_.DrawCross( *it );
-        else 
+        else if( type_ == lines )
             tools_.DrawLines( points_ );
-        if( type_ == GL_LINE_LOOP && ! points_.empty() )
+        else if( type_ == polygon && ! points_.empty() )
+        {
+            tools_.DrawLines( points_ );
             tools_.DrawLine( points_.back(), points_.front() );
+        }
+        else if( type_ == circle && points_.size() >= 2 )
+            tools_.DrawCircle( points_.front(), points_.front().Distance( points_.back() ) );
+
     glPopAttrib();
 }
 
@@ -112,16 +118,23 @@ bool ParametersLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Poin
     if( world_.IsInside( point ) )
     {
         if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton )
-        {
-            points_.push_back( point );
-            if( IsDone() )
-                NotifyDone();
-        }
+            AddPoint( point );
 
         if( mouse->button() == Qt::RightButton && mouse->state() == Qt::NoButton && ! points_.empty() )
             points_.pop_back();
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::AddPoint
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParametersLayer::AddPoint( const geometry::Point2f& point )
+{
+    points_.push_back( point );
+    if( IsDone() )
+        NotifyDone();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,14 +156,50 @@ bool ParametersLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry
 
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer::Start
-// Created: AGE 2006-03-23
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParametersLayer::Start( ShapeHandler_ABC& handler, int type, unsigned expected )
+void ParametersLayer::Start( ShapeHandler_ABC& handler, unsigned expected, E_Type type )
 {
     points_.clear();
     handler_ = &handler;
-    type_     = type;
+    type_ = type;
     expected_ = expected;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartPoints
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartPoints( ShapeHandler_ABC& handler, unsigned expected /*= 1*/ )
+{
+    Start( handler, expected, points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartLine
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartLine( ShapeHandler_ABC& handler, unsigned expected /*= std::numeric_limits< unsigned >::max()*/ )
+{
+    Start( handler, expected, lines );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartPolygon
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartPolygon( ShapeHandler_ABC& handler, unsigned expected /*= std::numeric_limits< unsigned >::max()*/ )
+{
+    Start( handler, expected, polygon );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartCircle
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartCircle( ShapeHandler_ABC& handler )
+{
+     Start( handler, 2, circle );
 }
 
 // -----------------------------------------------------------------------------

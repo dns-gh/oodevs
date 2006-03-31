@@ -61,7 +61,11 @@ template< typename ConcreteEntity >
 void EntityParameter< ConcreteEntity >::Commit()
 {
     if( ! selected_ )
+    {
+        if( IsOptional() )
+            return;
         throw std::runtime_error( "Entity not set!" );
+    }
     SetId( selected_->GetId() );
 }
 

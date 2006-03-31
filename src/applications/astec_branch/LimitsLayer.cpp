@@ -222,7 +222,7 @@ void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu 
 void LimitsLayer::OnCreateLimit()
 {
     type_ = -1;
-    parameters_.Start( *this );
+    parameters_.StartLine( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void LimitsLayer::OnCreateLimit()
 void LimitsLayer::OnCreateLima( int i )
 {
     type_ = i;
-    parameters_.Start( *this );
+    parameters_.StartLine( *this );
 }
 
 // -----------------------------------------------------------------------------

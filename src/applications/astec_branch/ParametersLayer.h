@@ -32,7 +32,12 @@ public:
 
     //! @name Operations
     //@{
-    void Start( ShapeHandler_ABC& handler, int type = GL_LINE_STRIP, unsigned expected = std::numeric_limits< unsigned >::max() );
+    void StartPoints( ShapeHandler_ABC& handler, unsigned expected = 1 );
+    void StartLine( ShapeHandler_ABC& handler, unsigned expected = std::numeric_limits< unsigned >::max() );
+    void StartPolygon( ShapeHandler_ABC& handler, unsigned expected = std::numeric_limits< unsigned >::max() );
+    void StartCircle( ShapeHandler_ABC& handler );
+
+    void AddPoint( const geometry::Point2f& point );
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
@@ -44,6 +49,16 @@ private:
     ParametersLayer( const ParametersLayer& );            //!< Copy constructor
     ParametersLayer& operator=( const ParametersLayer& ); //!< Assignement operator
     //@}
+        
+    //! @name Types
+    //@{
+    enum E_Type {
+        points,
+        lines,
+        polygon,
+        circle
+    };
+    //@}
 
     //! @name Helpers
     //@{
@@ -54,6 +69,8 @@ private:
 
     bool IsDone() const;
     void NotifyDone();
+
+    void Start( ShapeHandler_ABC& handler, unsigned expected, E_Type type );
     //@}
 
 private:
@@ -62,7 +79,7 @@ private:
     const GlTools_ABC& tools_;
     ShapeHandler_ABC* handler_;
     geometry::Rectangle2f world_;
-    int type_;
+    E_Type type_;
     unsigned expected_;
     T_PointVector points_;
     //@}

@@ -17,6 +17,7 @@ class Controllers;
 class Model;
 class ColorStrategy;
 class ElevationMap;
+class ParametersLayer;
 
 // =============================================================================
 /** @class  GlLayers
@@ -37,7 +38,9 @@ public:
 
     //! @name Accessors
     //@{
-    ElevationMap& GetElevationMap() { return *elevation_; };
+    // $$$$ AGE 2006-03-31: 
+    ElevationMap&    GetElevationMap()    { return *elevation_; };
+    ParametersLayer& GetParametersLayer() { return *parameters_; };
     //@}
 
 private:
@@ -52,6 +55,7 @@ private:
     //@{
     ColorStrategy* strategy_;
     ElevationMap*  elevation_;
+    ParametersLayer* parameters_;
 
     // $$$$ AGE 2006-03-29: 
     geometry::Rectangle2f viewport_;

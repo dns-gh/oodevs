@@ -158,7 +158,6 @@ UnitMissionInterface::~UnitMissionInterface()
         case T_Mission_Pion_mission_pion_log_trier_blesses : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_trier_blesses; break;
         case T_Mission_Pion_mission_pion_log_traiter_blesses : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_traiter_blesses; break;
         case T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses; break;
-        case T_Mission_Pion_mission_pion_log_soigner_blesses : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_soigner_blesses; break;
         case T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_prendre_en_compte_reactions_mentales; break;
         case T_Mission_Pion_mission_pion_log_decontaminer_blesses : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_decontaminer_blesses; break;
         case T_Mission_Pion_mission_pion_log_reparer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_reparer; break;
@@ -389,7 +388,6 @@ void UnitMissionInterface::CreateInterface()
         case eMission_Pion_LOG_TrierBlesses : CreateMission_LOG_TrierBlesses(); break;
         case eMission_Pion_LOG_TraiterBlesses : CreateMission_LOG_TraiterBlesses(); break;
         case eMission_Pion_LOG_TrierEtTraiterBlesses : CreateMission_LOG_TrierEtTraiterBlesses(); break;
-        case eMission_Pion_LOG_SoignerBlesses : CreateMission_LOG_SoignerBlesses(); break;
         case eMission_Pion_LOG_PrendreEnCompteReactionsMentales : CreateMission_LOG_PrendreEnCompteReactionsMentales(); break;
         case eMission_Pion_LOG_DecontaminerBlesses : CreateMission_LOG_DecontaminerBlesses(); break;
         case eMission_Pion_LOG_Reparer : CreateMission_LOG_Reparer(); break;
@@ -2519,6 +2517,7 @@ void UnitMissionInterface::CreateMission_LOG_TraiterBlesses()
     ASN1T_Mission_Pion_LOG_TraiterBlesses& asnMission = *new ASN1T_Mission_Pion_LOG_TraiterBlesses();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_traiter_blesses;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_traiter_blesses = &asnMission;
+    CreateMedicalPriorities( asnMission.blessures_traitees, "Blessures traitees", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -2530,17 +2529,7 @@ void UnitMissionInterface::CreateMission_LOG_TrierEtTraiterBlesses()
     ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses& asnMission = *new ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses = &asnMission;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_LOG_SoignerBlesses
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_LOG_SoignerBlesses()
-{
-    ASN1T_Mission_Pion_LOG_SoignerBlesses& asnMission = *new ASN1T_Mission_Pion_LOG_SoignerBlesses();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_soigner_blesses;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_soigner_blesses = &asnMission;
+    CreateMedicalPriorities( asnMission.blessures_traitees, "Blessures traitees", false );
 }
 
 // -----------------------------------------------------------------------------

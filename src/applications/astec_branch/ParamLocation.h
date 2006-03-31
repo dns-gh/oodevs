@@ -19,77 +19,73 @@
 #ifndef __ParamLocation_h_
 #define __ParamLocation_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
+#include "ContextMenuObserver_ABC.h"
+#include "ShapeHandler_ABC.h"
 
-class ShapeEditorMapEventFilter;
-
+class ParametersLayer;
+class CoordinateConverter;
+class MT_ParameterLabel;
 
 // =============================================================================
 /** @class  ParamLocation
     @brief  ParamLocation
-    @par    Using example
-    @code
-    ParamLocation;
-    @endcode
 */
 // Created: APE 2004-05-06
 // =============================================================================
 class ParamLocation : public QHBox, public Param_ABC
+                    , public ContextMenuObserver_ABC< geometry::Point2f >
+                    , private ShapeHandler_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamLocation );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData = false );
+             ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
     virtual ~ParamLocation();
     //@}
 
     //! @name Operations
     //@{
-    void Draw();
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
-
-    void Clear();
+    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual bool CheckValidity();
+    virtual void Commit();
+    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
+    virtual void Handle( const T_PointVector& points );
     //@}
 
-    const T_PointVector& GetPointList();
-    ASN1T_EnumTypeLocalisation GetType();
-
 private slots:
-    void StartTracing( int nLocationType );
-    void TracingDone();
+    //! @name Slots
+    //@{
+    void Start( int );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ParamLocation( const ParamLocation& );
+    ParamLocation& operator=( const ParamLocation& );
+    //@}
 
 private:
     //! @name Member data
     //@{
-    std::string strMenuText_;
-
+    ParametersLayer& layer_;
+    const CoordinateConverter& converter_;
+    ASN1T_Localisation& asn_;
+    
+    std::string menu_;
     MT_ParameterLabel* pLabel_;
     QLabel* pShapeLabel_;
     QPopupMenu* pPopupMenu_;
-    MT_Vector2D popupPoint_;
 
-    ASN1T_Localisation& asnListPoint_;
+    geometry::Point2f popupPoint_;
+    T_PointVector points_;
     ASN1T_CoordUTM* pUMTCoords_;
-    bool bOutsideData_;
-
-    T_PointVector pointList_;
     ASN1T_EnumTypeLocalisation nType_;
-
-    ShapeEditorMapEventFilter* pLineEditor_;
     //@}
 };
-
-#   include "ParamLocation.inl"
 
 #endif // __ParamLocation_h_

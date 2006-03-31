@@ -19,6 +19,7 @@
 class Layer_ABC;
 class ElevationMap;
 class Controllers;
+class GlFont;
 
 // =============================================================================
 /** @class  Gl3dWidget
@@ -94,7 +95,8 @@ private:
     IT_Layers last_;
     Layer_ABC* default_;
     float zRatio_;
-
+    GlFont* app6Font_;
+    GlFont* app6OutlinedFont_;
     unsigned int frame_;
     float pixels_;
     //@}

@@ -31,6 +31,10 @@ class Population;
 class MissionInterface_ABC;
 class Mission;
 class Controllers;
+class ParametersLayer;
+class CoordinateConverter;
+class Model;
+class GlTools_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -46,12 +50,13 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, Controllers& controllers );
+             MissionPanel( QWidget* pParent, Controllers& controllers, Model& model, ParametersLayer& layer, const GlTools_ABC& tools );
     virtual ~MissionPanel();
     //@}
 
     //! @name Operations
     //@{
+    void Draw( const geometry::Rectangle2f& viewport );
     void hideEvent( QHideEvent* pEvent );
     //@}
 
@@ -82,6 +87,10 @@ private:
     //! @name Member Data
     //@{
     Controllers& controllers_;
+    ParametersLayer& layer_;
+    const CoordinateConverter& converter_;
+    const GlTools_ABC& tools_;
+
     MissionInterface_ABC* pMissionInterface_;
     const Agent* selected_;
     //@}

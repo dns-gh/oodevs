@@ -27,6 +27,9 @@ class Agent_ABC;
 class MissionPanel;
 class Agent;
 class Param_ABC;
+class ParametersLayer;
+class CoordinateConverter;
+class GlTools_ABC;
 
 // =============================================================================
 /** @class  MissionInterface_ABC
@@ -40,13 +43,14 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
     virtual ~MissionInterface_ABC();
     //@}
 
     //! @name Operations
     //@{
     bool CheckValidity();
+    void Draw( const GlTools_ABC& tools ) const;
     //@}
 
 protected:
@@ -77,6 +81,8 @@ protected:
     void CreateBool               ( ASN1BOOL& asn                  , const std::string& strName, bool bOptional, QWidget* pParent = 0 );
     void CreateNumeric            ( ASN1INT&  asn                  , const std::string& strName, bool bOptional );
     void CreateNumeric            ( ASN1REAL& asn                  , const std::string& strName, bool bOptional );
+    void CreateLimaList           ( ASN1T_ListOID& asn             , const std::string& strName, bool bOptional );
+    void CreateLimits             ( ASN1T_OID& id1, ASN1T_OID& id2 , const std::string& name1, const std::string& name2, bool bOptional );
 
     void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName, bool bOptional );
     void CreateMedicalPriorities    ( ASN1T_SantePriorites&       asn, const std::string& strName, bool bOptional );
@@ -84,8 +90,8 @@ protected:
     template < class T >
     ParamComboBox< T >& CreateVarList( T& value, const std::string& strName, bool bOptional )
     {
-        ParamComboBox< T >* pParam = new ParamComboBox<T>( value, strName, this, bOptional );
-        paramVector_.push_back( pParam );
+        ParamComboBox< T >* pParam = new ParamComboBox<T>( this, value, strName );
+        AddParameter( *pParam, bOptional );
         return *pParam;
     }
     //@}
@@ -106,9 +112,11 @@ private:
     typedef T_Parameters::const_iterator CIT_Parameters;
     //@}
 
+protected:
     //! @name Helpers
     //@{
     void AddParameter( Param_ABC& parameter, bool optional );
+    void Commit();
     //@}
 
 private:
@@ -116,6 +124,8 @@ private:
     //@{
     ActionController& controller_;
     Agent_ABC& agent_;
+    ParametersLayer& layer_;
+    const CoordinateConverter& converter_;
     T_Parameters  parameters_;
     //@}
 };

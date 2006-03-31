@@ -22,6 +22,7 @@ EntityListParameterBase::EntityListParameterBase( QWidget* pParent, unsigned int
     , menu_( menu )
     , pPopupMenu_( new QPopupMenu( this ) )
 {
+    ids_ = 0;
     addColumn( label.c_str() );
     setResizeMode( QListView::LastColumn );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
@@ -113,10 +114,10 @@ bool EntityListParameterBase::CheckValidity()
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::Commit()
 {
+    n_ = childCount();
     if( ! childCount() )
         return;
-
-    n_ = childCount();
+    
     delete ids_;
     ids_ = new ASN1T_OID[ n_ ];
 

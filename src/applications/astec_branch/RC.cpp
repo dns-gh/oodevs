@@ -294,7 +294,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
             break;
         }  */
     default:
-        assert( false );
+        strMsg << "Unknown RC " << asnMsg.cr.t;
     }
 
     strTitle_ = strMsg.str();

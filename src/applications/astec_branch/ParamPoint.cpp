@@ -16,31 +16,25 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "ParamPoint.h"
 #include "moc_ParamPoint.cpp"
-
-#include "App.h"
-#include "World.h"
-#include "ActionContext.h"
+#include "CoordinateConverter.h"
+#include "MT/MT_Qt/MT_ParameterLabel.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint constructor
-// Created: APE 2004-03-18
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
-    : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
-    , asnPoint_     ( asnPoint )
-    , strMenuText_  ( strMenuText )
-    , point_        ( 0.0, 0.0 )
+ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter& converter )
+    : QHBox     ( pParent )
+    , asn_      ( asn )
+    , converter_( converter )
+    , menu_     ( menu )
 {
-    this->setSpacing( 5 );
-    pLabel_ = new MT_ParameterLabel( strLabel.c_str(), false, this, "" );
+    setSpacing( 5 );
+    pLabel_ = new MT_ParameterLabel( label.c_str(), false, this, "" );
 
     pPosLabel_ = new QLabel( "---", this );
     pPosLabel_->setMinimumWidth( 100 );
@@ -48,15 +42,14 @@ ParamPoint::ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const
     pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ParamPoint destructor
-// Created: APE 2004-03-18
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 ParamPoint::~ParamPoint()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint::CheckValidity
@@ -69,46 +62,42 @@ bool ParamPoint::CheckValidity()
         pLabel_->TurnRed( 3000 );
         return false;
     }
-
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamPoint::WriteMsg
-// Created: APE 2004-03-18
+// Name: ParamPoint::Draw
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::WriteMsg( std::stringstream& strMsg )
+void ParamPoint::Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const
 {
-    strMsg << pLabel_->text().latin1() << ": ";
+    if( pPosLabel_->text() != "---" )
+        tools.DrawCross( popupPoint_ );
+}
 
-    asnPoint_.type                  = EnumTypeLocalisation::point;
-    asnPoint_.vecteur_point.n       = 1;
-    asnPoint_.vecteur_point.elem    = &asnPos_;
-    std::string strPos;
-    App::GetApp().GetWorld().SimToMosMgrsCoord( point_, strPos );
-    asnPos_ = strPos.c_str();
-    strMsg << strPos;
+// -----------------------------------------------------------------------------
+// Name: ParamPoint::Commit
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParamPoint::Commit()
+{
+    asn_.type                  = EnumTypeLocalisation::point;
+    asn_.vecteur_point.n       = 1;
+    asn_.vecteur_point.elem    = &asnPoint_;
+    const std::string coord = converter_.ConvertToMgrs( popupPoint_ );
+    asnPoint_ = coord.c_str();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ParamPoint::FillRemotePopupMenu
-// Created: APE 2004-03-23
+// Name: ParamPoint::NotifyContextMenu
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context )
+void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, QPopupMenu& menu )
 {
-    if( context.pPoint_ == 0 )
-        return;
-
-    const MT_Rect& rectWorld = App::GetApp().GetWorld().GetRect();
-    if( ! rectWorld.IsInside( *(context.pPoint_) ) )
-        return;
-
-    popupMenuPoint_ = *(context.pPoint_);
-
-    popupMenu.insertItem( strMenuText_.c_str(), this, SLOT( AcceptPopupMenuPoint() ) );
+    popupPoint_ = point;
+    menu.insertItem( menu_.c_str(), this, SLOT( AcceptPopupMenuPoint() ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint::AcceptPopupMenuPoint
@@ -116,18 +105,5 @@ void ParamPoint::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext
 // -----------------------------------------------------------------------------
 void ParamPoint::AcceptPopupMenuPoint()
 {
-    point_ = popupMenuPoint_;
-    std::string strPos;
-    App::GetApp().GetWorld().SimToMosMgrsCoord( point_, strPos );
-    pPosLabel_->setText( strPos.c_str() );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ParamPoint::Clear
-// Created: APE 2004-08-27
-// -----------------------------------------------------------------------------
-void ParamPoint::Clear()
-{
-    pPosLabel_->setText( "---" );
+    pPosLabel_->setText( converter_.ConvertToMgrs( popupPoint_ ).c_str() );
 }

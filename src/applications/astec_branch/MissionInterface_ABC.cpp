@@ -21,15 +21,15 @@
 #include "moc_MissionInterface_ABC.cpp"
 
 #include "MissionPanel.h"
-//#include "ParamPoint.h"
+#include "ParamPoint.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
-//#include "ParamPath.h"
+#include "ParamPath.h"
 //#include "ParamPathList.h"
 #include "ParamGDH.h"
 //#include "ParamComboBox.h"
 #include "ParamBool.h"
-//#include "ParamLocation.h"
+#include "ParamLocation.h"
 //#include "ParamLocationList.h"
 //#include "ParamAgentType.h"
 #include "ParamAgentKnowledge.h"
@@ -48,15 +48,21 @@
 #include "ObjectKnowledge.h"
 #include "AgentKnowledge.h"
 #include "PopulationKnowledge.h"
+#include "ParamLimits.h"
+#include "ParamLimaList.h"
+#include "Lima.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
     : QVBox      ( parent )
     , controller_( controller )
     , agent_     ( agent )
+    , layer_     ( layer )
+    , converter_ ( converter )
 {
     setMargin( 5 );
     setSpacing( 4 );
@@ -68,7 +74,8 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, A
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::~MissionInterface_ABC()
 {
-    // NOTHING
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        (*it)->RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +118,26 @@ void MissionInterface_ABC::AddParameter( Param_ABC& parameter, bool optional )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Commit
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::Commit()
+{
+    for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
+        (*it)->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Draw
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::Draw( const GlTools_ABC& tools ) const
+{
+    for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
+        (*it)->Draw( agent_.Get< Positions >().GetPosition(), tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateNatureAtlas
 // Created: APE 2004-04-30
 // -----------------------------------------------------------------------------
@@ -143,7 +170,7 @@ void MissionInterface_ABC::CreateDirection( ASN1T_Direction& asn, const std::str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePoint( ASN1T_Point& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamPoint( asn, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamPoint( this, asn, strName, strName, converter_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +179,7 @@ void MissionInterface_ABC::CreatePoint( ASN1T_Point& asn, const std::string& str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePath( ASN1T_Itineraire& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamPath( asn, agent_, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamPath( this, asn, strName, strName, layer_, converter_, agent_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,7 +233,7 @@ void MissionInterface_ABC::CreateAutomate( ASN1T_Agent& asn, const std::string& 
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamLocation( asn, strName, strName, this, bOptional ) );
+    AddParameter( *new ParamLocation( this, asn, strName, strName, layer_, converter_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,4 +370,22 @@ void MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, c
 void MissionInterface_ABC::CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn, const std::string& strName, bool bOptional )
 {
     AddParameter( *new ParamPopulationKnowledge( this, asn, strName, strName ), bOptional );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CreateLimaList
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CreateLimaList( ASN1T_ListOID& asn, const std::string& strName, bool bOptional )
+{
+    AddParameter( *new ParamLimaList( this, asn, "Limas", strName ), bOptional );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CreateLimits
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CreateLimits( ASN1T_OID& id1, ASN1T_OID& id2 , const std::string& name1, const std::string& name2, bool bOptional )
+{
+    AddParameter( *new ParamLimits( this, id1, id2, "Limite 1", "Limite 2", name1, name2 ), bOptional );
 }

@@ -52,15 +52,14 @@ void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 // Name: EntityLayerBase::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Draw( const Entity_ABC& e, const geometry::Rectangle2f& viewport )
+void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2f& viewport )
 {
-    Entity_ABC& entity = const_cast< Entity_ABC& >( e ); // $$$$ AGE 2006-03-16: 
     const Positions& positions = entity.Get< Positions >();
-    if( IsInTeam( e ) ) // && positions.IsIn( viewport ) )
+    if( IsInTeam( entity ) ) // && positions.IsIn( viewport ) )
     {
-        SelectColor( e );
+        SelectColor( entity );
         const geometry::Point2f position = positions.GetPosition();
-        entity.Apply( Drawable_ABC::Draw, position, tools_ );
+        entity.Draw( position, tools_ );
     }
 }
 

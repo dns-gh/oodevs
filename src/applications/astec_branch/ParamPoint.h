@@ -19,47 +19,38 @@
 #ifndef __ParamPoint_h_
 #define __ParamPoint_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
+#include "ContextMenuObserver_ABC.h"
 
+class CoordinateConverter;
+class MT_ParameterLabel;
 
 // =============================================================================
 /** @class  ParamPoint
     @brief  ParamPoint
-    @par    Using example
-    @code
-    ParamPoint;
-    @endcode
 */
 // Created: APE 2004-03-18
 // =============================================================================
 class ParamPoint : public QHBox, public Param_ABC
+                 , public ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamPoint );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-    ~ParamPoint();
+             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter& converter );
+    virtual ~ParamPoint();
     //@}
 
     //! @name Operations
     //@{
-    void Draw();
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
-
-    const MT_Vector2D& GetPoint();
-    void Clear();
+    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual bool CheckValidity();
+    virtual void Commit();
+    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
     //@}
-
 
 private slots:
     //! @name Operations
@@ -68,20 +59,25 @@ private slots:
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
+    ParamPoint( const ParamPoint& );
+    ParamPoint& operator=( const ParamPoint& );
     //@}
 
 private:
-    std::string     strMenuText_;
-    ASN1T_Point&    asnPoint_;
-    ASN1T_CoordUTM  asnPos_;
-    MT_Vector2D     point_;
+    //! @name Member data
+    //@{
+    ASN1T_Point&       asn_;
+    const CoordinateConverter& converter_;
 
+    std::string        menu_;
     MT_ParameterLabel* pLabel_;
-    QLabel* pPosLabel_;
+    QLabel*            pPosLabel_;
 
-    MT_Vector2D popupMenuPoint_;
+    ASN1T_CoordUTM    asnPoint_;
+    geometry::Point2f popupPoint_;
+    //@}
 };
 
 #endif // __ParamPoint_h_

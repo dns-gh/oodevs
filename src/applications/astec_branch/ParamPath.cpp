@@ -3,149 +3,128 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-25 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPath.cpp $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:35 $
-// $Revision: 8 $
-// $Workfile: ParamPath.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ParamPath.h"
 #include "moc_ParamPath.cpp"
-
-#include "App.h"
-#include "World.h"
-#include "ActionContext.h"
-#include "ShapeEditorMapEventFilter.h"
+#include "ParametersLayer.h"
+#include "MT/MT_Qt/MT_ParameterLabel.h"
+#include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 #include "Agent_ABC.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath constructor
-// Created: APE 2004-04-13
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( ASN1T_Itineraire& asnListPoint, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
-    : ParamListView ( strLabel, false, pParent )
-    , Param_ABC     ( bOptional )
-    , strMenuText_      ( strMenuText )
-    , asnListPoint_     ( asnListPoint )
-    , pUMTCoords_       ( 0 )
-    , agent_            ( agent )
-    , pLineEditor_      ( new ShapeEditorMapEventFilter( this ) )
+ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter, const Agent_ABC& agent )
+    : QHBox( pParent )
+    , asn_( asn )
+    , menu_( menu )
+    , layer_( layer )
+    , converter_( converter )
+    , agentPos_( agent.Get< Positions >().GetPosition() )
+    , pUMTCoords_( 0 )
 {
-    connect( pLineEditor_, SIGNAL( Done() ), this, SLOT( PathDone() ) );
-}
+    setSpacing( 5 );
+    pLabel_ = new MT_ParameterLabel( label.c_str(), false, this, "" );
 
+    pPosLabel_ = new QLabel( "---", this );
+    pPosLabel_->setMinimumWidth( 100 );
+    pPosLabel_->setAlignment( Qt::AlignCenter );
+    pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath destructor
-// Created: APE 2004-04-13
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
     delete pUMTCoords_;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamPath::FillRemotePopupMenu
-// Created: APE 2004-04-13
+// Name: ParamPath::Draw
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context )
+void ParamPath::Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const
 {
-    if( context.pPoint_ != 0 && ! context.selectedElement_.IsAMapElementSelected() )
-        popupMenu.insertItem( strMenuText_.c_str(), this, SLOT( StartPath() ) );
+    if( ! points_.empty() )
+    {
+        tools.DrawLine( point, points_.front() );
+        tools.DrawLines( points_ );
+    }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::CheckValidity
-// Created: APE 2004-04-13
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 bool ParamPath::CheckValidity()
 {
-    if( ! pointList_.empty() )
-        return true;
-
-    // If the pointlist is empty, flash the header red.
-    this->TurnHeaderRed( 3000 );
-    return false;
+    if( points_.size() <= 1 )
+    {
+        pLabel_->TurnRed( 3000 );
+        return false;
+    }
+    return true;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamPath::WriteMsg
-// Created: APE 2004-04-13
+// Name: ParamPath::Commit
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::WriteMsg( std::stringstream& strMsg )
+void ParamPath::Commit()
 {
-    strMsg << this->header()->label(0).latin1() << ": ";
-
-    assert( pointList_.size() >= 1 );
-    uint nNbrPoints = pointList_.size();
-    strMsg << nNbrPoints << " points. [";
-
-    asnListPoint_.type               = EnumTypeLocalisation::line;
-    asnListPoint_.vecteur_point.n    = nNbrPoints;
+    unsigned nNbrPoints  = points_.size() - 1;
+    asn_.type            = EnumTypeLocalisation::line;
+    asn_.vecteur_point.n = nNbrPoints;
 
     delete[] pUMTCoords_;
     pUMTCoords_ = new ASN1T_CoordUTM[ nNbrPoints ];
-    asnListPoint_.vecteur_point.elem = pUMTCoords_;
+    asn_.vecteur_point.elem = pUMTCoords_;
 
-    for( uint i = 0; i < nNbrPoints; ++i )
+    for( unsigned i = 0; i < nNbrPoints; ++i )
     {
-        std::string strValue;
-        App::GetApp().GetWorld().SimToMosMgrsCoord( pointList_[i], strValue );
-        assert( strValue.size() == 15 );
-        asnListPoint_.vecteur_point.elem[i] = strValue.c_str();
-        strMsg << strValue << (i < nNbrPoints-1 ? ", " : "");
+        const std::string coord = converter_.ConvertToMgrs( points_[i+1] );
+        asn_.vecteur_point.elem[i] = coord.c_str();
     }
-    strMsg << "]";
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamPath::NotifyContextMenu
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void ParamPath::NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu )
+{   
+    menu.insertItem( menu_.c_str(), this, SLOT( StartPath() ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::StartPath
-// Created: APE 2004-04-13
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 void ParamPath::StartPath()
 {
-    this->clear();
-    pointList_.clear();
-    
-    // Push map event handler.
-    pLineEditor_->PrepareNewLine( ShapeEditorMapEventFilter::ePath );
-    pLineEditor_->Push();
+    points_.clear();
+    layer_.StartLine( *this );
+    layer_.AddPoint( agentPos_ );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamPath::PathDone
-// Created: APE 2004-04-22
+// Name: ParamPath::Handle
+// Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::PathDone()
+void ParamPath::Handle( const T_PointVector& points )
 {
-    T_PointVector& pointList = pLineEditor_->GetPointList();
-    if( pointList.empty() )
+    if( points.empty() )
         return;
 
-    pointList_ = pointList;
-    for( IT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
-    {
-        std::string strPos;
-        App::GetApp().GetWorld().SimToMosMgrsCoord( *it, strPos );
-        QListViewItem* pItem = new QListViewItem( this, strPos.c_str() );
-        pItem->moveItem( this->lastItem() );
-        this->ensureItemVisible( this->lastItem() );
-    }
+    points_ = points;
+    pPosLabel_->setText( converter_.ConvertToMgrs( points_.back() ).c_str() );
 }

@@ -37,6 +37,15 @@ Param_ABC::Param_ABC()
 // -----------------------------------------------------------------------------
 Param_ABC::~Param_ABC()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::RemoveFromController
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void Param_ABC::RemoveFromController()
+{
     if( controller_ )
         controller_->Remove( *this );
 }
@@ -60,6 +69,14 @@ void Param_ABC::SetOptional( bool optional )
     bIsOptional_ = optional;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::Draw
+// Created: AGE 2006-03-31
+// -----------------------------------------------------------------------------
+void Param_ABC::Draw( const geometry::Point2f&, const GlTools_ABC& ) const
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: Param_ABC::CheckValidity

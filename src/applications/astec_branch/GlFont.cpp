@@ -73,7 +73,7 @@ void GlFont::Print( const geometry::Point2f& where, const std::string& message, 
 
     glPushMatrix();
     glTranslatef( where.X(), where.Y(), 0.0f );
-    glScalef( size, size, 1.f );
+    glScalef( size, size, size );
     glPushAttrib( GL_LIST_BIT );
     glListBase( baseList_ );
     glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );

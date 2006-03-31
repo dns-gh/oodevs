@@ -39,6 +39,8 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::s
     , last_( layers_.begin() )
     , default_( 0 )
     , zRatio_( 5 )
+    , app6Font_( 0 )
+    , app6OutlinedFont_( 0 )
     , frame_( 0 )
     , pixels_( 100.f )
 {
@@ -88,6 +90,8 @@ void Gl3dWidget::initializeGL()
         Widget3D::initializeGL();
         for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
             (*it)->Initialize( viewport );
+        app6Font_         = new GlFont( "Scipio" );
+        app6OutlinedFont_ = new GlFont( "Scipio", true );
         isInitialized = true;
         CenterView();
     }
@@ -255,15 +259,15 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/ ) co
     if( radius < 0 )
         radius = 10.f * Pixels();
 
-    float px = radius, py = 0;
+    float px = center.X() + radius, py = center.Y();
     for( float angle = twoPi / 40.f; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
     {
-        float cx = radius * std::cos( angle );
-        float cy = radius * std::sin( angle );
+        float cx = center.X() + radius * std::cos( angle );
+        float cy = center.Y() + radius * std::sin( angle );
         DrawLine( Point2f( px, py ), Point2f( cx, cy ) );
         px = cx; py = cy;
     }
-    DrawLine( Point2f( px, py ), Point2f( radius, 0 ) );
+    DrawLine( Point2f( px, py ), Point2f( center.X() + radius, center.Y() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +308,8 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
 {
-
+    QGLWidget* that = const_cast< Gl3dWidget* >( this );
+    that->renderText( where.X(), where.Y(), ElevationAt( where ), symbol.c_str(), QFont( "Scipio" ) );
 }
 
 // -----------------------------------------------------------------------------

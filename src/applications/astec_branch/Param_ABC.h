@@ -20,12 +20,15 @@
 #define __Param_ABC_h_
 
 #include "Observer_ABC.h"
+#include "Drawable_ABC.h"
+
 class ActionController;
+class GlTools_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-18
 // =============================================================================
-class Param_ABC : private Observer_ABC
+class Param_ABC : private Observer_ABC, public Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -36,9 +39,11 @@ public:
 
     //! @name Operations
     //@{
-    void RegisterIn( ActionController& controller );
-    void SetOptional( bool );
+    virtual void RemoveFromController();
+    virtual void RegisterIn( ActionController& controller );
+    virtual void SetOptional( bool );
 
+    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit() = 0;
     //@}

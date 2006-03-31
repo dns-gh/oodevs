@@ -44,8 +44,11 @@ Interface* InterfaceContainer< BaseType >::Cast( BaseType* ext )
 template< typename BaseType >
 void InterfaceContainer< BaseType >::Register( BaseType& i )
 {
-    interfaces_.push_back( &i );
+    T_Interfaces::iterator it = std::find( interfaces_.begin(), interfaces_.end(), &i );
+    if( it != interfaces_.end() )
+        throw std::runtime_error( "Interface already registered" );
 
+    interfaces_.push_back( &i );
     for( unsigned int index = 0; index < implementations_.size(); ++index )
     {
         T_Implementations* imps = implementations_.at( index );
@@ -67,24 +70,28 @@ template< typename BaseType >
 void InterfaceContainer< BaseType >::Remove( BaseType& i )
 {
     T_Interfaces::iterator it = std::find( interfaces_.begin(), interfaces_.end(), &i );
-    if( it != interfaces_.end() )
+    if( it == interfaces_.end() )
+        throw std::runtime_error( "Interface not registered" );
+
+    std::swap( *it, interfaces_.back() ); 
+    interfaces_.pop_back();
+
+    for( unsigned int index = 0; index < implementations_.size(); ++index )
     {
-        interfaces_.erase( it );
-        for( unsigned int index = 0; index < implementations_.size(); ++index )
+        T_Implementations* imps = implementations_.at( index );
+        if( imps )
         {
-            T_Implementations* imps = implementations_.at( index );
-            if( imps )
+            T_Caster caster = imps->first;
+            void* imp = caster( &i );
+            T_UntypedInterfaces::iterator impIt = std::find( imps->second.begin(), imps->second.end(), imp );
+            if( impIt != imps->second.end() )
             {
-                T_Caster caster = imps->first;
-                void* imp = caster( &i );
-                T_UntypedInterfaces::iterator impIt = std::find( imps->second.begin(), imps->second.end(), imp );
-                if( impIt != imps->second.end() )
-                    imps->second.erase( impIt );
+                std::swap( *impIt, imps->second.back() );
+                imps->second.pop_back();
             }
         }
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: InterfaceContainer< BaseType >::FindImplementations
