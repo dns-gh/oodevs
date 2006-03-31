@@ -28,7 +28,7 @@ public:
 
     //! @name Operations
     //@{
-    void Print( const geometry::Point2f& where, const std::string& message, float rFontSize = 1.0f );
+    void Print( const std::string& message );
     geometry::Vector2f GetTextSize( const std::string& message ) const;
     //@}
 

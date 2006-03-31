@@ -66,19 +66,14 @@ GlFont::~GlFont()
 // Name: GlFont::Print
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void GlFont::Print( const geometry::Point2f& where, const std::string& message, float size /*= 1.0f*/ )
+void GlFont::Print( const std::string& message )
 {
     if( message.empty() )
         return;
-
-    glPushMatrix();
-    glTranslatef( where.X(), where.Y(), 0.0f );
-    glScalef( size, size, size );
     glPushAttrib( GL_LIST_BIT );
     glListBase( baseList_ );
     glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
     glPopAttrib();
-    glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------

@@ -323,19 +323,26 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where )
     const float size = 600.f;
     const Point2f center = Point2f( where.X() - fontSize.X() * size * 0.5f, where.Y() );
 
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+    glPushMatrix();
+        glTranslatef( center.X(), center.Y(), 0.0f );
+        glScalef( size, size, 1.f );
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
 
-    float shadowedColor[4];
-    glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
-    for(unsigned i = 0;i < 3; ++i )
-        shadowedColor[i]/=5.f;
-    shadowedColor[3] = 0.9f;
-    glColor4fv( shadowedColor );
-    glLineWidth( 4.0f );
-    app6OutlinedFont_->Print( center, symbol, size );
-    glPopAttrib();
+        float shadowedColor[4];
+        glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
+        for(unsigned i = 0;i < 3; ++i )
+            shadowedColor[i]/=5.f;
+        shadowedColor[3] = 0.9f;
+        glColor4fv( shadowedColor );
 
-    app6Font_->Print( center, symbol, size );
+        glLineWidth( 4.0f );
+        glPushMatrix();
+        app6OutlinedFont_->Print( symbol );
+        glPopMatrix();
+        glPopAttrib();
+
+        app6Font_->Print( symbol );
+    glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------

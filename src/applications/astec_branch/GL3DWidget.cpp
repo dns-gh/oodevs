@@ -308,8 +308,36 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
 {
-    QGLWidget* that = const_cast< Gl3dWidget* >( this );
-    that->renderText( where.X(), where.Y(), ElevationAt( where ), symbol.c_str(), QFont( "Scipio" ) );
+    const Vector2f& fontSize = app6Font_->GetTextSize( symbol );
+    const float size = 600.f;
+    glPushMatrix();
+        glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+        float modelview[ 16 ];
+	    glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
+	    for( uint i = 0; i < 3; i++ ) 
+	        for( uint j = 0; j < 3; j++ )
+                modelview[ i * 4 + j ] = ( i == j ) ? 1.0 : 0.0;
+	    glLoadMatrixf( modelview );
+        glTranslatef( - fontSize.X() * size * 0.5f, 0, 0 );
+
+        glScalef( size, size, size );
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+
+        float shadowedColor[4];
+        glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
+        for(unsigned i = 0;i < 3; ++i )
+            shadowedColor[i]/=5.f;
+        shadowedColor[3] = 0.9f;
+        glColor4fv( shadowedColor );
+
+        glLineWidth( 4.0f );
+        glPushMatrix();
+        app6OutlinedFont_->Print( symbol );
+        glPopMatrix();
+        glPopAttrib();
+
+        app6Font_->Print( symbol );
+    glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------
