@@ -15,6 +15,7 @@
 #include "MIL_AutomateTypeLOG.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
+#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePion_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalCollectionAmbulance.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
@@ -50,8 +51,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
     , bQuotasHaveChanged_         ( false )
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
-{
-    
+{   
 }
 
 // -----------------------------------------------------------------------------
@@ -309,14 +309,20 @@ void MIL_AutomateLOG::ReadLogisticHierarchy( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( MIL_AgentPion& pion, PHY_ComposantePion& composante )
 {
+    int nScore = std::numeric_limits< int >::min();
+    PHY_RolePion_Maintenance* pSelectedRoleMaintenance = 0;
     const T_PionVector& pions = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        PHY_MaintenanceComposanteState* pState = (**itPion).GetRole< PHY_RolePion_Maintenance >().HandleComposanteForTransport( pion, composante );
-        if( pState )
-            return pState;
+        PHY_RolePion_Maintenance& roleMaintenance = (**itPion).GetRole< PHY_RolePion_Maintenance >();
+        const int nNewScore = roleMaintenance.GetAvailabilityScoreForTransport( composante );
+        if( nNewScore > nScore )
+        {
+            nScore                   = nNewScore;
+            pSelectedRoleMaintenance = &roleMaintenance;
+        }
     }
-    return 0;
+    return pSelectedRoleMaintenance ? pSelectedRoleMaintenance->HandleComposanteForTransport( pion, composante ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -325,13 +331,20 @@ PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForT
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState )
 {
+    int nScore = std::numeric_limits< int >::min();
+    PHY_RolePion_Maintenance* pSelectedRoleMaintenance = 0;
     const T_PionVector& pions = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        if( (**itPion).GetRole< PHY_RolePion_Maintenance >().HandleComposanteForTransport( composanteState ) )
-            return true;
+        PHY_RolePion_Maintenance& roleMaintenance = (**itPion).GetRole< PHY_RolePion_Maintenance >();
+        const int nNewScore = roleMaintenance.GetAvailabilityScoreForTransport( composanteState.GetComposante() );
+        if( nNewScore > nScore )
+        {
+            nScore                   = nNewScore;
+            pSelectedRoleMaintenance = &roleMaintenance;
+        }
     }
-    return false;
+    return pSelectedRoleMaintenance ? pSelectedRoleMaintenance->HandleComposanteForTransport( composanteState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -382,14 +395,20 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty(
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, PHY_Human& human )
 {
-    const T_PionVector& pions  = GetPions();
+    int nScore = std::numeric_limits< int >::min();
+    PHY_RolePion_Medical* pSelectedRoleMedical = 0;
+    const T_PionVector& pions = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        PHY_MedicalHumanState* pState = (**itPion).GetRole< PHY_RolePion_Medical >().HandleHumanForEvacuation( pion, human );
-        if( pState )
-            return pState;
+        PHY_RolePion_Medical& roleMedical = (**itPion).GetRole< PHY_RolePion_Medical >();
+        const int nNewScore = roleMedical.GetAvailabilityScoreForEvacuation();
+        if( nNewScore > nScore )
+        {
+            nScore               = nNewScore;
+            pSelectedRoleMedical = &roleMedical;
+        }
     }
-    return 0;
+    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForEvacuation( pion, human ) : 0;    
 }
 
 // -----------------------------------------------------------------------------
@@ -398,13 +417,20 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_Age
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MedicalHandleHumanForCollection( PHY_MedicalHumanState& humanState )
 {
-    const T_PionVector& pions  = GetPions();
+    int nScore = std::numeric_limits< int >::min();
+    PHY_RolePion_Medical* pSelectedRoleMedical = 0;
+    const T_PionVector& pions = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        if( (**itPion).GetRole< PHY_RolePion_Medical >().HandleHumanForCollection( humanState ) )
-            return true;
+        PHY_RolePion_Medical& roleMedical = (**itPion).GetRole< PHY_RolePion_Medical >();
+        const int nNewScore = roleMedical.GetAvailabilityScoreForCollection();
+        if( nNewScore > nScore )
+        {
+            nScore               = nNewScore;
+            pSelectedRoleMedical = &roleMedical;
+        }
     }
-    return false;
+    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForCollection( humanState ) : false;
 }
 
 // -----------------------------------------------------------------------------

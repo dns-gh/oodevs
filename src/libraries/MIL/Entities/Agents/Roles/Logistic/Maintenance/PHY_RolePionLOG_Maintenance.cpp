@@ -429,12 +429,30 @@ PHY_MaintenanceComposanteState* PHY_RolePionLOG_Maintenance::HandleComposanteFor
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState )
 {    
-    if ( !bSystemEnabled_ || ( composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposanteType() ) ) )
+    if ( !bSystemEnabled_ || ( composanteState.GetComposanteBreakdown().AffectMobility() && !HasUsableHauler( composanteState.GetComposante().GetType() ) ) )
         return false;
 
     PHY_MaintenanceTransportConsign* pConsign = new PHY_MaintenanceTransportConsign( *this, composanteState );
     InsertConsign( *pConsign );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante )
+{
+    if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
+        return std::numeric_limits< int >::min();
+
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetHaulersUse( composanteUse );
+    uint nNbrHaulersAvailable = 0;
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrHaulersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
+
+    return nNbrHaulersAvailable;
 }
 
 // -----------------------------------------------------------------------------

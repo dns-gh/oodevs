@@ -30,6 +30,16 @@ bool PHY_RolePion_Maintenance::HandleComposanteForTransport( PHY_MaintenanceComp
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Maintenance::GetAvailabilityScoreForTransport
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+inline
+int PHY_RolePion_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& /*composante*/ )
+{
+    return std::numeric_limits< int >::min();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Maintenance::HandleComposanteForRepair
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------

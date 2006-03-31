@@ -56,9 +56,11 @@ public:
     virtual void ChangePriorities( const T_AutomateVector& priorities );
     virtual void ChangeWorkTime  ( const PHY_LogWorkTime& workTime );
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human     ); // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation        ( MIL_AgentPion& pion, PHY_Human& human     ); // Releve
-    virtual bool                   HandleHumanForCollection        ( PHY_MedicalHumanState& humanState         ); // Ramassage
+    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, PHY_Human& human ); // Imex
+    virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
+    virtual int                    GetAvailabilityScoreForEvacuation() const;
+    virtual bool                   HandleHumanForCollection         ( PHY_MedicalHumanState& humanState ); // Ramassage
+    virtual int                    GetAvailabilityScoreForCollection() const;
 
     virtual void                   HandleHumanForSorting           ( const PHY_MedicalCollectionAmbulance& ambulance, PHY_MedicalHumanState& humanState         );
     virtual int                    GetAvailabilityScoreForSorting  ( const PHY_MedicalCollectionAmbulance& ambulance ) const;

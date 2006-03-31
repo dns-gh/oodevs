@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 class PHY_ComposantePion;
-class PHY_ComposanteTypePion;
 class PHY_MaintenanceConsign_ABC;
 class PHY_Breakdown;
 class MIL_AgentPion;
@@ -43,16 +42,16 @@ public:
     
     //! @name Accessors
     //@{
-    const MIL_Automate&           GetAutomate              () const;
-    const PHY_ComposanteTypePion& GetComposanteType        () const;
-    const PHY_Breakdown&          GetComposanteBreakdown   () const;
-    const MT_Vector2D&            GetComposantePosition    () const;
-          void                    SetComposantePosition    ( const MT_Vector2D& vPosition );
-    const MT_Vector2D&            GetPionPosition          () const;          
-          MT_Float                GetComposanteWeight      () const;
-          uint                    ApproximateTravelTime    ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
-          bool                    NeedDiagnosis            () const;
-          void                    NotifyDiagnosed          ();
+    const MIL_Automate&       GetAutomate           () const;
+    const PHY_ComposantePion& GetComposante         () const;
+    const PHY_Breakdown&      GetComposanteBreakdown() const;
+    const MT_Vector2D&        GetComposantePosition () const;
+          void                SetComposantePosition ( const MT_Vector2D& vPosition );
+    const MT_Vector2D&        GetPionPosition       () const;          
+          MT_Float            GetComposanteWeight   () const;
+          uint                ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
+          bool                NeedDiagnosis         () const;
+          void                NotifyDiagnosed       ();
     //@}
 
     //! @name Operations

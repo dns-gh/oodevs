@@ -110,16 +110,6 @@ const MT_Vector2D& PHY_MaintenanceComposanteState::GetPionPosition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceComposanteState::GetComposanteType
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-const PHY_ComposanteTypePion& PHY_MaintenanceComposanteState::GetComposanteType() const
-{
-    assert( pComposante_ );
-    return pComposante_->GetType();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::GetComposanteBreakdown
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------

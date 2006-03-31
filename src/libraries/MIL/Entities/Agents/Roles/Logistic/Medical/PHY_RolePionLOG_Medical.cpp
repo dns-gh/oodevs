@@ -640,6 +640,24 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation() const
+{
+    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance() )
+        return std::numeric_limits< int >::min();
+
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetEvacuationAmbulancesUse( composanteUse );
+    uint nNbrAmbulanceAvailable = 0;
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrAmbulanceAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
+
+    return nNbrAmbulanceAvailable;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::HandleHumanForCollection
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
@@ -651,6 +669,24 @@ bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& h
     PHY_MedicalCollectionConsign* pConsign = new PHY_MedicalCollectionConsign( *this, humanState );
     InsertConsign( *pConsign );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection() const
+{
+    if( !bSystemEnabled_ || !HasUsableCollectionAmbulance() )
+        return std::numeric_limits< int >::min();
+
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetCollectionAmbulancesUse( composanteUse );
+    uint nNbrAmbulanceAvailable = 0;
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrAmbulanceAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
+
+    return nNbrAmbulanceAvailable;
 }
 
 // -----------------------------------------------------------------------------

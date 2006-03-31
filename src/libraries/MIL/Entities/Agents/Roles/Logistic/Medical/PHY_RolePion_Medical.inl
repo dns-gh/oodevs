@@ -28,6 +28,16 @@ PHY_MedicalHumanState* PHY_RolePion_Medical::HandleHumanForEvacuation( MIL_Agent
 {
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::GetAvailabilityScoreForEvacuation
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+inline
+int PHY_RolePion_Medical::GetAvailabilityScoreForEvacuation() const
+{
+    return std::numeric_limits< int >::min();
+}
     
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Medical::HandleHumanForCollection
@@ -37,6 +47,16 @@ inline
 bool PHY_RolePion_Medical::HandleHumanForCollection( PHY_MedicalHumanState& /*humanState*/ )
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::GetAvailabilityScoreForCollection
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+inline
+int PHY_RolePion_Medical::GetAvailabilityScoreForCollection() const
+{
+    return std::numeric_limits< int >::min();
 }
 
 // -----------------------------------------------------------------------------

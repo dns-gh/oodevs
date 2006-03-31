@@ -34,6 +34,17 @@ void PHY_MaintenanceComposanteState::SetComposantePosition( const MT_Vector2D& v
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::GetComposante
+// Created: NLD 2006-03-29
+// -----------------------------------------------------------------------------
+inline
+const PHY_ComposantePion& PHY_MaintenanceComposanteState::GetComposante() const
+{
+    assert( pComposante_ );
+    return *pComposante_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::GetComposantePosition
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------

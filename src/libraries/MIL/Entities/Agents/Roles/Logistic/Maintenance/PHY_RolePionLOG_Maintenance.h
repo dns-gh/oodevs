@@ -59,10 +59,11 @@ public:
     virtual void ChangePriorities( const T_AutomateVector& priorities );
     virtual void ChangeWorkTime  ( const PHY_LogWorkTime& workTime );
 
-    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_AgentPion& pion, PHY_ComposantePion& composante );
-    virtual bool                            HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
-    virtual bool                            HandleComposanteForRepair   ( PHY_MaintenanceComposanteState& composanteState );
+    virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_AgentPion& pion, PHY_ComposantePion& composante );
+    virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState );
+    virtual int                             GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante );
 
+    virtual bool                            HandleComposanteForRepair    ( PHY_MaintenanceComposanteState& composanteState );
     virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
     //@}
 

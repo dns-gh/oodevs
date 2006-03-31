@@ -61,6 +61,7 @@ PHY_MaintenanceConsign_ABC::~PHY_MaintenanceConsign_ABC()
 // =============================================================================
 // ACCESSORS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::GetComposanteType
 // Created: NLD 2004-12-23
@@ -68,7 +69,7 @@ PHY_MaintenanceConsign_ABC::~PHY_MaintenanceConsign_ABC()
 const PHY_ComposanteTypePion& PHY_MaintenanceConsign_ABC::GetComposanteType() const
 {
     assert( pComposanteState_ );
-    return pComposanteState_->GetComposanteType();
+    return pComposanteState_->GetComposante().GetType();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +116,7 @@ bool PHY_MaintenanceConsign_ABC::DoWaitingForCarrier()
     assert( !pActor_ );
     
     nTimer_ = 0;
-    pActor_ = pMaintenance_->GetAvailableHauler( pComposanteState_->GetComposanteType() );
+    pActor_ = pMaintenance_->GetAvailableHauler( GetComposanteType() );
     if( pActor_ )
         pMaintenance_->StartUsingForLogistic( *pActor_ );
     return pActor_ != 0;
