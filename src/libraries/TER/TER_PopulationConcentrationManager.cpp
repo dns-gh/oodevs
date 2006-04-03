@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PopulationConcentrationManager.cpp $
-// $Author: Age $
-// $Modtime: 4/03/05 14:46 $
-// $Revision: 2 $
-// $Workfile: TER_PopulationConcentrationManager.cpp $
-//
-// *****************************************************************************
 
 #include "ter_pch.h"
 
@@ -80,7 +71,7 @@ void TER_PopulationConcentrationManager::GetListIntersectingLine( const MT_Vecto
 // -----------------------------------------------------------------------------
 TER_PopulationConcentration_ABC::T_Hint TER_PopulationConcentrationManager::UpdatePosition( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint )
 {
-    concentrations_.Erase( &concentration, hint );
+    concentrations_.ForceErase( &concentration, hint );
     return concentrations_.Insert( &concentration );
 }
 

@@ -109,6 +109,7 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
     assert( pushingFlows_.empty() );
 
     SendDestruction();
+    RemoveFromPatch();
 } 
 
 // =============================================================================

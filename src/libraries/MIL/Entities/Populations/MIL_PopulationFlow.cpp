@@ -103,6 +103,7 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
     assert( !pDestConcentration_   );    
 
     SendDestruction();
+    RemoveFromPatch();
 }
 
 // =============================================================================

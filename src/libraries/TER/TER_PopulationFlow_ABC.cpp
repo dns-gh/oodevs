@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PopulationFlow_ABC.cpp $
-// $Author: Jvt $
-// $Modtime: 23/03/05 18:25 $
-// $Revision: 2 $
-// $Workfile: TER_PopulationFlow_ABC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -32,7 +30,7 @@ TER_PopulationFlow_ABC::TER_PopulationFlow_ABC()
 // -----------------------------------------------------------------------------
 TER_PopulationFlow_ABC::~TER_PopulationFlow_ABC()
 {
-    RemoveFromPatch();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

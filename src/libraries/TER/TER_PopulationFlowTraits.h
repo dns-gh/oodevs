@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/ter/src/TER_PopulationFlowTraits.h $
-// $Author: Age $
-// $Modtime: 31/01/05 17:39 $
-// $Revision: 1 $
-// $Workfile: TER_PopulationFlowTraits.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_PopulationFlowTraits_h_
 #define __TER_PopulationFlowTraits_h_

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PopulationConcentrationManager.h $
-// $Author: Age $
-// $Modtime: 4/03/05 14:45 $
-// $Revision: 2 $
-// $Workfile: TER_PopulationConcentrationManager.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_PopulationConcentrationManager_h_
 #define __TER_PopulationConcentrationManager_h_

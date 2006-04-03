@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PopulationFlowManager.cpp $
-// $Author: Age $
-// $Modtime: 4/03/05 14:46 $
-// $Revision: 2 $
-// $Workfile: TER_PopulationFlowManager.cpp $
-//
-// *****************************************************************************
 
 #include "ter_pch.h"
 
@@ -46,7 +37,7 @@ TER_PopulationFlowManager::~TER_PopulationFlowManager()
 // -----------------------------------------------------------------------------
 TER_PopulationFlow_ABC::T_Hint TER_PopulationFlowManager::UpdatePosition( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint )
 {
-    flows_.Erase( &flow, hint );
+    flows_.ForceErase( &flow, hint );
     return flows_.Insert( &flow );
 }
 

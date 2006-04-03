@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PopulationFlow_ABC.h $
-// $Author: Jvt $
-// $Modtime: 5/04/05 18:36 $
-// $Revision: 3 $
-// $Workfile: TER_PopulationFlow_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_PopulationFlow_ABC_h_
 #define __TER_PopulationFlow_ABC_h_

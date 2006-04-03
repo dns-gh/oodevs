@@ -39,7 +39,7 @@ TER_Agent_ABC::TER_Agent_ABC()
 // -----------------------------------------------------------------------------
 TER_Agent_ABC::~TER_Agent_ABC()
 {
-    RemoveFromPatch();
+    RemoveFromPatch(); // $$$$ SBO 2006-03-31: Pure virtual function call GetLocation()
 }
 
 // -----------------------------------------------------------------------------
