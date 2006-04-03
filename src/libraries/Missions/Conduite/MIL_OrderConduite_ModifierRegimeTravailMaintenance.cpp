@@ -10,35 +10,35 @@
 // *****************************************************************************
 
 #include "Missions_pch.h"
-#include "MIL_OrderConduite_ModifierTempsBordeeSante.h"
+#include "MIL_OrderConduite_ModifierRegimeTravailMaintenance.h"
 
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_OrderConduite_ModifierTempsBordeeSante::nDIAOrderConduiteModifierTempsBordeeSanteIdx_ = 0 ;
+int MIL_OrderConduite_ModifierRegimeTravailMaintenance::nDIAOrderConduiteModifierRegimeTravailMaintenanceIdx_ = 0 ;
 
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_ModifierTempsBordeeSante::InitializeDIA
+// Name: MIL_OrderConduite_ModifierRegimeTravailMaintenance::InitializeDIA
 // Created: AGR 
 //-----------------------------------------------------------------------------
 // static
-void MIL_OrderConduite_ModifierTempsBordeeSante::InitializeDIA( const MIL_OrderConduiteType& type )
+void MIL_OrderConduite_ModifierRegimeTravailMaintenance::InitializeDIA( const MIL_OrderConduiteType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetConduiteDIATypeName() );
-    nDIAOrderConduiteModifierTempsBordeeSanteIdx_ = DEC_Tools::InitializeDIAField( "orderConduiteModifierTempsBordeeSante_", diaType );
+    nDIAOrderConduiteModifierRegimeTravailMaintenanceIdx_ = DEC_Tools::InitializeDIAField( "orderConduiteModifierRegimeTravailMaintenance_", diaType );
 
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_ModifierTempsBordeeSante constructor
+// Name: MIL_OrderConduite_ModifierRegimeTravailMaintenance constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_ModifierTempsBordeeSante::MIL_OrderConduite_ModifierTempsBordeeSante( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+MIL_OrderConduite_ModifierRegimeTravailMaintenance::MIL_OrderConduite_ModifierRegimeTravailMaintenance( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
     : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
@@ -46,10 +46,10 @@ MIL_OrderConduite_ModifierTempsBordeeSante::MIL_OrderConduite_ModifierTempsBorde
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_ModifierTempsBordeeSante destructor
+// Name: MIL_OrderConduite_ModifierRegimeTravailMaintenance destructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_ModifierTempsBordeeSante::~MIL_OrderConduite_ModifierTempsBordeeSante()
+MIL_OrderConduite_ModifierRegimeTravailMaintenance::~MIL_OrderConduite_ModifierRegimeTravailMaintenance()
 {
     // NOTHING
 }
@@ -59,29 +59,29 @@ MIL_OrderConduite_ModifierTempsBordeeSante::~MIL_OrderConduite_ModifierTempsBord
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_ModifierTempsBordeeSante::Initialize
+// Name: MIL_OrderConduite_ModifierRegimeTravailMaintenance::Initialize
 // Created: AGR 
 // -----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierTempsBordeeSante::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierRegimeTravailMaintenance::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_OrderConduite_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode; 
 
-    const ASN1T_OrderConduite_ModifierTempsBordeeSante& asnMission = asnMsg.u.order_conduite_modifier_temps_bordee_sante;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission, GetVariable( nDIAOrderConduiteModifierTempsBordeeSanteIdx_ ) ) )
+    const ASN1T_OrderConduite_ModifierRegimeTravailMaintenance& asnMission = asnMsg.u.order_conduite_modifier_regime_travail_maintenance;
+    if( !NET_ASN_Tools::CopyEnumeration( asnMission, GetVariable( nDIAOrderConduiteModifierRegimeTravailMaintenanceIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_ModifierTempsBordeeSante::Initialize
+// Name: MIL_OrderConduite_ModifierRegimeTravailMaintenance::Initialize
 // Created: AGR 
 // -----------------------------------------------------------------------------
-void MIL_OrderConduite_ModifierTempsBordeeSante::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
+void MIL_OrderConduite_ModifierRegimeTravailMaintenance::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyEnumeration( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduiteModifierTempsBordeeSanteIdx_));
+    NET_ASN_Tools::CopyEnumeration( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduiteModifierRegimeTravailMaintenanceIdx_));
 
 }

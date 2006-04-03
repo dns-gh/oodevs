@@ -9,26 +9,26 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_OrderConduite_ModifierTempsBordeeSante_h_
-#define __MIL_OrderConduite_ModifierTempsBordeeSante_h_
+#ifndef __MIL_OrderConduite_ModifierRegimeTravailMaintenance_h_
+#define __MIL_OrderConduite_ModifierRegimeTravailMaintenance_h_
 
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "TER/TER_Localisation.h"
 
 // =============================================================================
-/** @class  MIL_OrderConduite_ModifierTempsBordeeSante
-    @brief  MIL_OrderConduite_ModifierTempsBordeeSante
+/** @class  MIL_OrderConduite_ModifierRegimeTravailMaintenance
+    @brief  MIL_OrderConduite_ModifierRegimeTravailMaintenance
 */
 // Created: AGR 
 // =============================================================================
-class MIL_OrderConduite_ModifierTempsBordeeSante : public MIL_OrderConduite_ABC
+class MIL_OrderConduite_ModifierRegimeTravailMaintenance : public MIL_OrderConduite_ABC
 {
-    MT_COPYNOTALLOWED( MIL_OrderConduite_ModifierTempsBordeeSante );
+    MT_COPYNOTALLOWED( MIL_OrderConduite_ModifierRegimeTravailMaintenance );
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderConduite_ModifierTempsBordeeSante( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
-    virtual ~MIL_OrderConduite_ModifierTempsBordeeSante();
+             MIL_OrderConduite_ModifierRegimeTravailMaintenance( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
+    virtual ~MIL_OrderConduite_ModifierRegimeTravailMaintenance();
     //@}
 
     //-------------------------------------------------------------------------
@@ -42,8 +42,8 @@ public:
     //@}
 
 private:
-    static int nDIAOrderConduiteModifierTempsBordeeSanteIdx_;
+    static int nDIAOrderConduiteModifierRegimeTravailMaintenanceIdx_;
 
 };
 
-#endif // __MIL_OrderConduite_ModifierTempsBordeeSante_h_
+#endif // __MIL_OrderConduite_ModifierRegimeTravailMaintenance_h_
