@@ -381,8 +381,8 @@ ADN_Composantes_Data::LogMaintenanceInfos::LogMaintenanceInfos()
 : ADN_DataTreeNode_ABC()
 , bIsTower_           ( false )
 , rCapacity_          ( 0 )
-, loadTimePerTon_     ( "0s" )
-, unloadTimePerTon_   ( "0s" )
+, loadTime_           ( "0s" )
+, unloadTime_         ( "0s" )
 , NTI1Infos_          ( "NTI1" )
 , NTI2Infos_          ( "NTI2" )
 , NTI3Infos_          ( "NTI3" )
@@ -416,10 +416,10 @@ std::string ADN_Composantes_Data::LogMaintenanceInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::LogMaintenanceInfos::CopyFrom( LogMaintenanceInfos& src )
 {
-    bIsTower_ = src.bIsTower_.GetData();
-    rCapacity_ = src.rCapacity_.GetData();
-    loadTimePerTon_ = src.loadTimePerTon_.GetData();
-    unloadTimePerTon_ = src.unloadTimePerTon_.GetData();
+    bIsTower_   = src.bIsTower_.GetData();
+    rCapacity_  = src.rCapacity_.GetData();
+    loadTime_   = src.loadTime_.GetData();
+    unloadTime_ = src.unloadTime_.GetData();
 
     NTI1Infos_.CopyFrom( src.NTI1Infos_ );
     NTI2Infos_.CopyFrom( src.NTI2Infos_ );
@@ -437,8 +437,8 @@ void ADN_Composantes_Data::LogMaintenanceInfos::ReadArchive( ADN_XmlInput_Helper
     {
         bIsTower_ = true;
         input.ReadField( "Capacite", rCapacity_ );
-        input.ReadField( "TempsChargementParTonne", loadTimePerTon_ );
-        input.ReadField( "TempsDechargementParTonne", unloadTimePerTon_ );
+        input.ReadField( "TempsChargement", loadTime_ );
+        input.ReadField( "TempsDechargement", unloadTime_ );
         input.EndSection(); // Remorqueur
     }
     NTI1Infos_.ReadArchive( input );
@@ -457,8 +457,8 @@ void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( MT_OutputArchive_A
     {
         output.Section( "Remorqueur" );
         output.WriteField( "Capacite", rCapacity_.GetData() );
-        output.WriteField( "TempsChargementParTonne", loadTimePerTon_.GetData() );
-        output.WriteField( "TempsDechargementParTonne", unloadTimePerTon_.GetData() );
+        output.WriteField( "TempsChargement", loadTime_.GetData() );
+        output.WriteField( "TempsDechargement", unloadTime_.GetData() );
         output.EndSection();
     }
     NTI1Infos_.WriteArchive( output );
@@ -479,7 +479,6 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , loadTime_           ( "0s" )
 , unloadTime_         ( "0s" )
 , ptrDotationNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-, bIsConvoyLeader_    ( false )
 , bIsConveyor_        ( false )
 {
 }
@@ -516,7 +515,6 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
     loadTime_   = src.loadTime_.GetData();
     unloadTime_ = src.unloadTime_.GetData();
     ptrDotationNature_ = src.ptrDotationNature_.GetData();
-    bIsConvoyLeader_ = src.bIsConvoyLeader_.GetData();
     bIsConveyor_  = src.bIsConveyor_.GetData();
 }
 
@@ -547,11 +545,6 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& inp
         input.EndSection(); // Transporteur
     }
 
-    if( input.Section( "ChefDeConvoi", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsConvoyLeader_ = true;
-        input.EndSection(); // ChefDeConvoi
-    }
     if( input.Section( "Convoyeur", ADN_XmlInput_Helper::eNothing ) )
     {
         bIsConveyor_ = true;
@@ -577,12 +570,6 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& o
         output.WriteField( "TempsDechargementMoyen", unloadTime_.GetData() );
         output.WriteField( "NatureTransportee", ptrDotationNature_.GetData()->GetData() );
         output.EndSection(); // Transporteur
-    }
-
-    if( bIsConvoyLeader_.GetData() )
-    {
-        output.Section( "ChefDeConvoi" );
-        output.EndSection(); // ChefDeConvoi
     }
 
     if( bIsConveyor_.GetData() )

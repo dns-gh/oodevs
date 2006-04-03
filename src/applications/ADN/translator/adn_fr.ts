@@ -958,7 +958,7 @@
     </message>
     <message>
         <source>Convoy leader</source>
-        <translation>Chef de convoi</translation>
+        <translation type="obsolete">Chef de convoi</translation>
     </message>
     <message>
         <source>Carrier</source>
@@ -966,11 +966,11 @@
     </message>
     <message>
         <source>Load time per ton</source>
-        <translation>Temps de chargement par tonne</translation>
+        <translation type="obsolete">Temps de chargement par tonne</translation>
     </message>
     <message>
         <source>Unload time per ton</source>
-        <translation>Temps de déchargement par tonne</translation>
+        <translation type="obsolete">Temps de déchargement par tonne</translation>
     </message>
     <message>
         <source>Maintenance</source>
@@ -1123,6 +1123,14 @@
     <message>
         <source>Carried nature</source>
         <translation>Nature transportée</translation>
+    </message>
+    <message>
+        <source>Load time</source>
+        <translation>Temps chargement</translation>
+    </message>
+    <message>
+        <source>Unload time</source>
+        <translation>Temps déchargement</translation>
     </message>
 </context>
 <context>
@@ -3369,15 +3377,15 @@ du tireur</translation>
     </message>
     <message>
         <source>Temps de bord&#xe9;e</source>
-        <translation>Temps de bordée</translation>
+        <translation type="obsolete">Temps de bordée</translation>
     </message>
     <message>
         <source>Warning delay</source>
-        <translation>Délai avant avertissement</translation>
+        <translation type="obsolete">Délai avant avertissement</translation>
     </message>
     <message>
         <source>Specify delay</source>
-        <translation>Délai spécifié</translation>
+        <translation type="obsolete">Délai spécifié</translation>
     </message>
 </context>
 <context>
@@ -4066,7 +4074,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation>Log</translation>
+        <translation type="obsolete">Log</translation>
     </message>
     <message>
         <source>Supply</source>
@@ -4175,6 +4183,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Max computation time</source>
         <translation>Temps max de calcul</translation>
+    </message>
+    <message>
+        <source>Maintenance</source>
+        <translation>Maintenance</translation>
     </message>
 </context>
 <context>
@@ -6379,6 +6391,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Maintenance</source>
+        <translation>Maintenance</translation>
     </message>
 </context>
 <context>

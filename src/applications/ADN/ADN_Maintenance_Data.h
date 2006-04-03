@@ -6,18 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Log_Data.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 3 $
-// $Workfile: ADN_Log_Data.h $
-//
-// *****************************************************************************
 
-#ifndef __ADN_Log_Data_h_
-#define __ADN_Log_Data_h_
+#ifndef __ADN_Maintenance_Data_h_
+#define __ADN_Maintenance_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
@@ -27,25 +18,25 @@ class ADN_XmlInput_Helper;
 
 
 // =============================================================================
-/** @class  ADN_Log_Data
-    @brief  ADN_Log_Data
+/** @class  ADN_Maintenance_Data
+    @brief  ADN_Maintenance_Data
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_Log_Data
+class ADN_Maintenance_Data
 : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Log_Data )
+    MT_COPYNOTALLOWED( ADN_Maintenance_Data )
 
 public:
 // *****************************************************************************
-    class WorkTimeModifiersInfo
+    class WorkingSchemeInfo
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( WorkTimeModifiersInfo )
+        MT_COPYNOTALLOWED( WorkingSchemeInfo )
     public:
-        WorkTimeModifiersInfo( E_TempsBordee nType );
+        WorkingSchemeInfo( unsigned int nIdx );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -54,21 +45,21 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        E_TempsBordee nType_;
-        ADN_Type_Bool bWorkingTimeSet_;
-        ADN_Type_Time workingTime_;
+        ADN_Type_Int  nIdx_; 
+        ADN_Type_Int  nWorkTime_;
+        ADN_Type_Time warningDelay_;
     };
 
-    typedef ADN_Type_Vector_ABC< WorkTimeModifiersInfo > T_WorkTimeModifiersInfo_Vector;
-    typedef T_WorkTimeModifiersInfo_Vector::iterator     IT_WorkTimeModifiersInfo_Vector;
+    typedef ADN_Type_Vector_ABC< WorkingSchemeInfo >  T_WorkingSchemeInfo_Vector;
+    typedef T_WorkingSchemeInfo_Vector::iterator     IT_WorkingSchemeInfo_Vector;
 
 
 // *****************************************************************************
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Log_Data();
-    ~ADN_Log_Data();
+    ADN_Maintenance_Data();
+    ~ADN_Maintenance_Data();
     //@}
 
     //! @name Operations
@@ -82,7 +73,7 @@ private:
     void WriteArchive( MT_OutputArchive_ABC& output );
 
 public:
-    T_WorkTimeModifiersInfo_Vector vWorkTimeModifiers_;
+    T_WorkingSchemeInfo_Vector vWorkingSchemes_;
 };
 
-#endif // __ADN_Log_Data_h_
+#endif // __ADN_Maintenance_Data_h_

@@ -235,9 +235,9 @@ void ADN_Composantes_GUI::Build()
     pLogPage->setSpacing( 5 );
     pTabWidget->addTab( pLogPage, tr( "Log" ) );
 
-    this->BuildHealth( pLogPage, vInfosConnectors );
-    this->BuildSupply( pLogPage, vInfosConnectors );
-    this->BuildMaintenance( pLogPage, vInfosConnectors );
+    BuildHealth     ( pLogPage, vInfosConnectors );
+    BuildSupply     ( pLogPage, vInfosConnectors );
+    BuildMaintenance( pLogPage, vInfosConnectors );
 
 
     // Connect the gui to the data.
@@ -358,7 +358,6 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     QWidget* pHolder = new QWidget( pSupplyGroup );
     new QGridLayout( pHolder, 0, 3, 5, 5 );
 
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Convoy leader" ), vInfosConnectors[eIsConvoyLeader] );
     builder.AddField<ADN_CheckBox>( pHolder, tr( "Conveyor" ), vInfosConnectors[eIsConveyor] );
 
     ADN_GroupBox* pCarrierGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Carrier" ), pSupplyGroup );
@@ -387,8 +386,8 @@ QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVec
     ADN_GroupBox* pTowerGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Tower" ), pMaintenanceGroup );
     vInfosConnectors[eIsTower] = & pTowerGroup->GetConnector();
     builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Capacity" ), vInfosConnectors[eTowerCapacity], tr( "T" ), eGreaterZero ); 
-    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Load time per ton" ), vInfosConnectors[eMaintenanceLoadTimePerTon] ); 
-    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unload time per ton" ), vInfosConnectors[eMaintenanceUnloadTimePerTon] ); 
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Load time" ), vInfosConnectors[eMaintenanceLoadTime] ); 
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unload time" ), vInfosConnectors[eMaintenanceUnloadTime] ); 
 
     QHBox* pNTIHolder = new QHBox( pMaintenanceGroup );
 

@@ -140,8 +140,8 @@ public:
     public:
         ADN_Type_Bool bIsTower_;
         ADN_Type_Double rCapacity_;
-        ADN_Type_Time loadTimePerTon_;
-        ADN_Type_Time unloadTimePerTon_;
+        ADN_Type_Time loadTime_;
+        ADN_Type_Time unloadTime_;
 
         NTIInfos NTI1Infos_;
         NTIInfos NTI2Infos_;
@@ -174,7 +174,6 @@ public:
         ADN_Type_Time unloadTime_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
 
-        ADN_Type_Bool bIsConvoyLeader_;
         ADN_Type_Bool bIsConveyor_;
     };
 

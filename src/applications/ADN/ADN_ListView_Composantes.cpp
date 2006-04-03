@@ -117,11 +117,10 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eLogUnloadTime]->Connect( &pInfos->logInfos_.supplyInfos_.unloadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptrDotationNature_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eIsConvoyLeader]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConvoyLeader_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsConveyor]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConveyor_, bConnect );
     
-    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTimePerTon]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTimePerTon_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceUnloadTimePerTon]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceUnloadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eTowerCapacity]->Connect( &pInfos->logInfos_.maintenanceInfos_.rCapacity_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsTower]->Connect( &pInfos->logInfos_.maintenanceInfos_.bIsTower_, bConnect );
 

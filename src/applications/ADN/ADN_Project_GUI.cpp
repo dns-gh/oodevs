@@ -89,7 +89,7 @@ void ADN_Project_GUI::Build()
     builder.AddFileField( pFilesGroup, tr( "Human factors" ), data_.dataInfos_.szHumanFactors_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Breakdowns" ), data_.dataInfos_.szBreakdowns_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Knowledge groups" ), data_.dataInfos_.szKnowledgeGroups_, XML_FILTER );
-    builder.AddFileField( pFilesGroup, tr( "Log" ), data_.dataInfos_.szLog_, XML_FILTER );
+    builder.AddFileField( pFilesGroup, tr( "Maintenance" ), data_.dataInfos_.szMaintenance_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Supply" ), data_.dataInfos_.szSupply_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Com" ), data_.dataInfos_.szCom_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "ODB" ), data_.dataInfos_.szODB_, XML_FILTER );

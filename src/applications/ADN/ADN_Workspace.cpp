@@ -47,8 +47,8 @@
 #include "ADN_Communications_Data.h"
 #include "ADN_HumanFactors_GUI.h"
 #include "ADN_HumanFactors_Data.h"
-#include "ADN_Log_GUI.h"
-#include "ADN_Log_Data.h"
+#include "ADN_Maintenance_GUI.h"
+#include "ADN_Maintenance_Data.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_KnowledgeGroups_GUI.h"
@@ -132,7 +132,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eBreakdowns]     = new ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI >( tr( "Breakdowns" ) );
     elements_[eCommunications] = new ADN_WorkspaceElement< ADN_Communications_Data, ADN_Communications_GUI>( tr( "Communications" ) );
     elements_[eHumanFactors]   = new ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI>( tr( "Human factors" ) );
-    elements_[eLog]            = new ADN_WorkspaceElement< ADN_Log_Data, ADN_Log_GUI>( tr( "Log" ) );
+    elements_[eMaintenance]    = new ADN_WorkspaceElement< ADN_Maintenance_Data, ADN_Maintenance_GUI>( tr( "Maintenance" ) );
     elements_[eMissions]       = new ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI>( tr( "Missions" ) );
     elements_[eKnowledgeGroups]= new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>( tr( "Knowledge groups" ) );
     elements_[eHLA]            = new ADN_WorkspaceElement< ADN_HLA_Data, ADN_HLA_GUI>( tr( "HLA" ) );
@@ -191,10 +191,10 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     QWidget* pLogPage = new QWidget();
     QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );
     
-    elements_[eLog]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
+    elements_[eMaintenance]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eSupply]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eHealth]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
-    pLayout->addWidget( elements_[eLog]->GetGuiABC().GetMainWidget() );
+    pLayout->addWidget( elements_[eMaintenance]->GetGuiABC().GetMainWidget() );
     pLayout->addWidget( elements_[eSupply]->GetGuiABC().GetMainWidget() );
     pLayout->addWidget( elements_[eHealth]->GetGuiABC().GetMainWidget() );
     ADN_GuiBuilder builder;

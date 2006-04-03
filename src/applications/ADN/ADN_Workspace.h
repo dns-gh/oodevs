@@ -129,7 +129,7 @@ private:
         eAutomata,
         eCommunications,
         eHumanFactors,
-        eLog,
+        eMaintenance,
         eMissions,
         eKnowledgeGroups,
         eHLA,

@@ -97,7 +97,7 @@ public:
         ADN_Type_String szHumanFactors_;
         ADN_Type_String szBreakdowns_;
         ADN_Type_String szKnowledgeGroups_;
-        ADN_Type_String szLog_;
+        ADN_Type_String szMaintenance_;
         ADN_Type_String szSupply_;
         ADN_Type_String szCom_;
         ADN_Type_String szODB_;

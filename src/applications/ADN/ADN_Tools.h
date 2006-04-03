@@ -65,7 +65,6 @@ public:
 
     static std::string Scriptify( const std::string& strFieldName );
     static std::string ComputePostureScriptName( E_UnitPosture nPosture );
-    static std::string ComputeWorkingTimeScriptName( E_TempsBordee nBordee );
 
     static void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
 

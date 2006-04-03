@@ -8,37 +8,37 @@
 // *****************************************************************************
 //
 // $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Log_GUI.h $
+// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Maintenance_GUI.h $
 // $Author: Ape $
 // $Modtime: 21/03/05 12:18 $
 // $Revision: 1 $
-// $Workfile: ADN_Log_GUI.h $
+// $Workfile: ADN_Maintenance_GUI.h $
 //
 // *****************************************************************************
 
-#ifndef __ADN_Log_GUI_h_
-#define __ADN_Log_GUI_h_
+#ifndef __ADN_Maintenance_GUI_h_
+#define __ADN_Maintenance_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 
-#include "ADN_Log_Data.h"
+#include "ADN_Maintenance_Data.h"
 
 
 // =============================================================================
-/** @class  ADN_Log_GUI
-    @brief  ADN_Log_GUI
+/** @class  ADN_Maintenance_GUI
+    @brief  ADN_Maintenance_GUI
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Log_GUI : public ADN_GUI_ABC
+class ADN_Maintenance_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Log_GUI )
+    MT_COPYNOTALLOWED( ADN_Maintenance_GUI )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Log_GUI( ADN_Log_Data& data );
-    virtual ~ADN_Log_GUI();
+    ADN_Maintenance_GUI( ADN_Maintenance_Data& data );
+    ~ADN_Maintenance_GUI();
     //@}
 
     //! @name Operations
@@ -49,9 +49,9 @@ public:
 private:
     //! @name Member data
     //@{
-    ADN_Log_Data& data_;
+    ADN_Maintenance_Data& data_;
     //@}
 };
 
 
-#endif // __ADN_Log_GUI_h_
+#endif // __ADN_Maintenance_GUI_h_

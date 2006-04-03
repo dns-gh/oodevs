@@ -152,7 +152,7 @@ ADN_Project_Data::DataInfos::DataInfos()
 , szHumanFactors_()
 , szBreakdowns_ ()
 , szKnowledgeGroups_()
-, szLog_()
+, szMaintenance_()
 , szSupply_()
 , szCom_()
 , szODB_()
@@ -191,7 +191,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "FacteursHumains", szHumanFactors_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Pannes", szBreakdowns_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "GroupesConnaissance", szKnowledgeGroups_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Logistique", szLog_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Maintenance", szMaintenance_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Ravitaillement", szSupply_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Communications", szCom_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "ODB", szODB_, ADN_XmlInput_Helper::eThrow );
@@ -231,7 +231,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "FacteursHumains", szHumanFactors_.GetData() );
     output.WriteField( "Pannes", szBreakdowns_.GetData() );
     output.WriteField( "GroupesConnaissance", szKnowledgeGroups_.GetData() );
-    output.WriteField( "Logistique", szLog_.GetData() );
+    output.WriteField( "Maintenance", szMaintenance_.GetData() );
     output.WriteField( "Ravitaillement", szSupply_.GetData() );
     output.WriteField( "Communications", szCom_.GetData() );
     output.WriteField( "ODB", szODB_.GetData() );

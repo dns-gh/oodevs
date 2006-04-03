@@ -147,20 +147,6 @@ std::string ADN_Tools::ComputePostureScriptName( E_UnitPosture nPosture )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::ComputeWorkingTimeScriptName
-// Created: APE 2005-03-21
-// -----------------------------------------------------------------------------
-std::string ADN_Tools::ComputeWorkingTimeScriptName( E_TempsBordee nBordee )
-{
-    std::string strName = ENT_Tr::ConvertFromTempsBordee( nBordee );
-    assert( strName.length() > std::string( "temps " ).length() );
-    strName = "Bordee " + strName.substr( std::string( "temps " ).length() );
-
-    return ADN_Tools::Scriptify( strName );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tools::CheckConnectorVector
 // Created: APE 2005-03-01
 // -----------------------------------------------------------------------------

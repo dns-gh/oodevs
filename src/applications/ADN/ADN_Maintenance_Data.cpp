@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "ADN_pch.h"
-#include "ADN_Log_Data.h"
+#include "ADN_Maintenance_Data.h"
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -22,131 +22,135 @@
 
 
 // -----------------------------------------------------------------------------
-// Name: WorkTimeModifiersInfo::WorkTimeModifiersInfo
+// Name: WorkingSchemeInfo::WorkingSchemeInfo
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-ADN_Log_Data::WorkTimeModifiersInfo::WorkTimeModifiersInfo( E_TempsBordee nType )
+ADN_Maintenance_Data::WorkingSchemeInfo::WorkingSchemeInfo( unsigned int nIdx )
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
-, nType_              ( nType )
-, bWorkingTimeSet_    ( false )
-, workingTime_        ()
+, nIdx_               ( nIdx )
+, nWorkTime_          ( 0 )
+, warningDelay_       ()
 {
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: WorkTimeModifiersInfo::GetNodeName
+// Name: WorkingSchemeInfo::GetNodeName
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-std::string ADN_Log_Data::WorkTimeModifiersInfo::GetNodeName()
+std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetNodeName()
 {
     return std::string();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: WorkTimeModifiersInfo::GetItemName
+// Name: WorkingSchemeInfo::GetItemName
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-std::string ADN_Log_Data::WorkTimeModifiersInfo::GetItemName()
+std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetItemName()
 {
     return std::string();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: WorkTimeModifiersInfo::ReadArchive
+// Name: WorkingSchemeInfo::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Log_Data::WorkTimeModifiersInfo::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Maintenance_Data::WorkingSchemeInfo::ReadArchive( ADN_XmlInput_Helper& input )
 {
-    input.Section( ADN_Tools::ComputeWorkingTimeScriptName( nType_ ) );
-    if( input.ReadField( "DelaiAvantAvertissement", workingTime_, ADN_XmlInput_Helper::eNothing ) )
-        bWorkingTimeSet_ = true;
+    input.Section( QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).ascii() );
+    input.ReadAttribute( "dureeTravail", nWorkTime_ );
+    input.ReadAttribute( "delaiAvantAvertissement", warningDelay_, ADN_XmlInput_Helper::eNothing );
     input.EndSection();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: WorkTimeModifiersInfo::WriteArchive
+// Name: WorkingSchemeInfo::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Log_Data::WorkTimeModifiersInfo::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( MT_OutputArchive_ABC& output )
 {
-    output.Section( ADN_Tools::ComputeWorkingTimeScriptName( nType_ ) );
-    if( bWorkingTimeSet_ == true )
-        output.WriteField( "DelaiAvantAvertissement", workingTime_.GetData() );
+    output.Section( QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).ascii() );
+    output.WriteAttribute( "dureeTravail", nWorkTime_.GetData() );
+    if(  ! warningDelay_.GetData().empty()
+        && warningDelay_.GetData() != "0s"
+        && warningDelay_.GetData() != "0m"
+        && warningDelay_.GetData() != "0h" )
+        output.WriteAttribute( "delaiAvantAvertissement", warningDelay_.GetData() );
     output.EndSection();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Log_Data constructor
+// Name: ADN_Maintenance_Data constructor
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-ADN_Log_Data::ADN_Log_Data()
+ADN_Maintenance_Data::ADN_Maintenance_Data()
 : ADN_Data_ABC()
 {
-    for( int n = 0; n < eNbrTempsBordee; ++n )
-        vWorkTimeModifiers_.AddItem( new WorkTimeModifiersInfo( (E_TempsBordee)n ) );
+    for( int n = 0; n < 5; ++n )
+        vWorkingSchemes_.AddItem( new WorkingSchemeInfo( n ) );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Log_Data destructor
+// Name: ADN_Maintenance_Data destructor
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-ADN_Log_Data::~ADN_Log_Data()
+ADN_Maintenance_Data::~ADN_Maintenance_Data()
 {
-    vWorkTimeModifiers_.Reset();
+    vWorkingSchemes_.Reset();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Log_Data::FilesNeeded
+// Name: ADN_Maintenance_Data::FilesNeeded
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Log_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Maintenance_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szLog_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szMaintenance_.GetData() );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Log_Data::Reset
+// Name: ADN_Maintenance_Data::Reset
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Log_Data::Reset()
+void ADN_Maintenance_Data::Reset()
 {
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Log_Data::ReadArchive
+// Name: ADN_Maintenance_Data::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Log_Data::ReadArchive( ADN_XmlInput_Helper& input )
+void ADN_Maintenance_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
-    input.Section( "Logistique" );
-    input.Section( "TempsDeBordee" );
-    for( IT_WorkTimeModifiersInfo_Vector it = vWorkTimeModifiers_.begin(); it != vWorkTimeModifiers_.end(); ++it )
+    input.Section( "Maintenance" );
+    input.Section( "RegimesTravail" );
+    for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->ReadArchive( input );
-    input.EndSection(); // TempsDeBordee
-    input.EndSection(); // Logistique
+    input.EndSection(); // RegimesTravail
+    input.EndSection(); // Maintenance
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Log_Data::WriteArchive
+// Name: ADN_Maintenance_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Log_Data::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Maintenance_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
-    output.Section( "Logistique" );
-    output.Section( "TempsDeBordee" );
-    for( IT_WorkTimeModifiersInfo_Vector it = vWorkTimeModifiers_.begin(); it != vWorkTimeModifiers_.end(); ++it )
+    output.Section( "Maintenance" );
+    output.Section( "RegimesTravail" );
+    for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );
-    output.EndSection(); // TempsDeBordee
-    output.EndSection(); // Logistique
+    output.EndSection(); // RegimesTravail
+    output.EndSection(); // Maintenance
 }
