@@ -711,8 +711,8 @@
       <Maintenance>
         <Remorqueur>
           <Capacite>5</Capacite>
-          <TempsChargementParTonne>15s</TempsChargementParTonne>
-          <TempsDechargementParTonne>10s</TempsDechargementParTonne>
+          <TempsChargement>15s</TempsChargement>
+          <TempsDechargement>10s</TempsDechargement>
         </Remorqueur>
       </Maintenance>
     </FonctionsLogistiques>
@@ -819,8 +819,8 @@
       <Maintenance>
         <Remorqueur>
           <Capacite>3</Capacite>
-          <TempsChargementParTonne>1s</TempsChargementParTonne>
-          <TempsDechargementParTonne>1s</TempsDechargementParTonne>
+          <TempsChargement>100s</TempsChargement>
+          <TempsDechargement>60s</TempsDechargement>
         </Remorqueur>
       </Maintenance>
     </FonctionsLogistiques>

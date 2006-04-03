@@ -40,7 +40,7 @@ LogSupplyConsign_ListView_Item::LogSupplyConsign_ListView_Item( QListView* pPare
     pListViewItemDotations_                           = new QListViewItem( this, pListViewItemState_                               , tr( "Dotations demandées/accordées" ) );
 
     Update();
-    setOpen( true );
+//    setOpen( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +86,8 @@ void LogSupplyConsign_ListView_Item::Update()
                    << itDot->second.nNbrConvoyed_;
         new QListViewItem( pListViewItemDotations_, streamItem.str().c_str() );
     }
+
+    setText( 0, tr( "Consigne " ) + itostring( pConsign_->GetID() ).c_str() + " - " + pConsign_->GetStateString().c_str() );
 }
 
 // -----------------------------------------------------------------------------

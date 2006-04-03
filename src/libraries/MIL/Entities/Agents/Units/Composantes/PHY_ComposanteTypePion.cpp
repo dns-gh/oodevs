@@ -125,9 +125,9 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , rPionTransporterWeightCapacity_            ( 0. )
     , rPionTransporterWeightLoadedPerTimeStep_   ( 0. )
     , rPionTransporterWeightUnloadedPerTimeStep_ ( 0. )
-    , rHaulWeightCapacity_                       ( 0. )
-    , rHaulWeightLoadedPerTimeStep_              ( 0. )
-    , rHaulWeightUnloadedPerTimeStep_            ( 0. )
+    , rHaulerWeightCapacity_                     ( 0. )
+    , rHaulerLoadingTime_                        ( 0. )
+    , rHaulerUnloadingTime_                      ( 0. )
     , nAmbulanceCollectionCapacity_              ( 0 )
     , rNbrHumansLoadedForCollectionPerTimeStep_  ( 0. )
     , rNbrHumansUnloadedForCollectionPerTimeStep_( 0. )
@@ -482,20 +482,21 @@ void PHY_ComposanteTypePion::InitializeConsumptions( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeLogisticMaintenance( MIL_InputArchive& archive )
 {
-    rHaulWeightLoadedPerTimeStep_   = 0.;
-    rHaulWeightUnloadedPerTimeStep_ = 0.;
+    rHaulerLoadingTime_    = 0.;
+    rHaulerUnloadingTime_  = 0.;
+    rHaulerWeightCapacity_ = 0.;
 
     if( !archive.Section( "Maintenance", MIL_InputArchive::eNothing ) )
         return;
 
     if( archive.Section( "Remorqueur", MIL_InputArchive::eNothing ) )
     {
-        archive.ReadField    ( "Capacite"                 , rHaulWeightCapacity_           , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsChargementParTonne"  , rHaulWeightLoadedPerTimeStep_  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementParTonne", rHaulWeightUnloadedPerTimeStep_, CheckValueGreater( 0. ) );
+        archive.ReadField    ( "Capacite"         , rHaulerWeightCapacity_ , CheckValueGreater       ( 0. ) );
+        archive.ReadTimeField( "TempsChargement"  , rHaulerLoadingTime_    , CheckValueGreaterOrEqual( 0. ) );
+        archive.ReadTimeField( "TempsDechargement", rHaulerUnloadingTime_  , CheckValueGreaterOrEqual( 0. ) );
 
-        rHaulWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rHaulWeightLoadedPerTimeStep_   );
-        rHaulWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rHaulWeightUnloadedPerTimeStep_ );
+        rHaulerLoadingTime_   = MIL_Tools::ConvertSecondsToSim( rHaulerLoadingTime_ );
+        rHaulerUnloadingTime_ = MIL_Tools::ConvertSecondsToSim( rHaulerUnloadingTime_ );
 
         archive.EndSection(); // Remorqueur
     }
@@ -1002,7 +1003,7 @@ bool PHY_ComposanteTypePion::CanRepair( const PHY_Breakdown& breakdown ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanHaul( const PHY_ComposanteTypePion& type ) const
 {
-    return ( rHaulWeightCapacity_ - type.GetWeight() ) >= 0.;
+    return ( rHaulerWeightCapacity_ - type.GetWeight() ) >= 0.;
 }
 
 // -----------------------------------------------------------------------------

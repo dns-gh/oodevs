@@ -262,37 +262,37 @@ bool PHY_ComposanteTypePion::CanRepair() const
 inline
 bool PHY_ComposanteTypePion::CanHaul() const
 {
-    return rHaulWeightLoadedPerTimeStep_ > 0.;
+    return rHaulerWeightCapacity_ > 0.;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetHaulWeightCapacity
+// Name: PHY_ComposanteTypePion::GetHaulerWeightCapacity
 // Created: NLD 2005-03-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetHaulWeightCapacity() const
+MT_Float PHY_ComposanteTypePion::GetHaulerWeightCapacity() const
 {
-    return rHaulWeightCapacity_;
+    return rHaulerWeightCapacity_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetHaulWeightLoadedPerTimeStep
+// Name: PHY_ComposanteTypePion::GetHaulerLoadingTime
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetHaulWeightLoadedPerTimeStep() const
+MT_Float PHY_ComposanteTypePion::GetHaulerLoadingTime() const
 {
-    return rHaulWeightLoadedPerTimeStep_;
+    return rHaulerLoadingTime_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetHaulWeightUnloadedPerTimeStep
+// Name: PHY_ComposanteTypePion::GetHaulerUnloadingTime
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetHaulWeightUnloadedPerTimeStep() const
+MT_Float PHY_ComposanteTypePion::GetHaulerUnloadingTime() const
 {
-    return rHaulWeightUnloadedPerTimeStep_;
+    return rHaulerUnloadingTime_;
 }
 
 // =============================================================================

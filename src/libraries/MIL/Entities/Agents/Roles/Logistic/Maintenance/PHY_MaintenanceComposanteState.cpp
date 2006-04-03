@@ -120,16 +120,6 @@ const PHY_Breakdown& PHY_MaintenanceComposanteState::GetComposanteBreakdown() co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceComposanteState::GetComposanteWeight
-// Created: NLD 2004-12-24
-// -----------------------------------------------------------------------------
-MT_Float PHY_MaintenanceComposanteState::GetComposanteWeight() const
-{
-    assert( pComposante_ );
-    return pComposante_->GetWeight();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::ApproximateTravelTime
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------

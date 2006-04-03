@@ -43,7 +43,7 @@ LogMedicalConsign_ListView_Item::LogMedicalConsign_ListView_Item( QListView* pPa
 
     Update();
 
-    setOpen( true );
+//    setOpen( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +72,8 @@ void LogMedicalConsign_ListView_Item::Update()
     pListViewItemWound_ ->setText( 0, tr( "Blessure : " ) + tr( pConsign_->GetWoundAsString().c_str() ) );
     pListViewItemMental_->setText( 0, pConsign_->IsMentalDeceased() ? tr( "Reac. mental" ) : tr( "Non reac. mental" ) );
     pListViewItemNBC_   ->setText( 0, pConsign_->IsContaminated() ? tr( "Contaminé NBC" ) : tr( "Non contaminé NBC" ) );
+
+    setText( 0, tr( "Consigne " ) + itostring( pConsign_->GetID() ).c_str() + " - " + pConsign_->GetStateString().c_str() );
 }
 
 // -----------------------------------------------------------------------------

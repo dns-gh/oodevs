@@ -48,7 +48,6 @@ public:
     const MT_Vector2D&        GetComposantePosition () const;
           void                SetComposantePosition ( const MT_Vector2D& vPosition );
     const MT_Vector2D&        GetPionPosition       () const;          
-          MT_Float            GetComposanteWeight   () const;
           uint                ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
           bool                NeedDiagnosis         () const;
           void                NotifyDiagnosed       ();

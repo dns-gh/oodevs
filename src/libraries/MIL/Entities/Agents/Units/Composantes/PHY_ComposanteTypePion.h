@@ -135,13 +135,13 @@ public:
 
     //! @name Logistic - maintenance
     //@{
-    bool     CanRepair                       ( const PHY_Breakdown& breakdown ) const;
-    bool     CanRepair                       () const;
-    bool     CanHaul                         () const;
-    bool     CanHaul                         ( const PHY_ComposanteTypePion& type ) const;
-    MT_Float GetHaulWeightCapacity           () const;    
-    MT_Float GetHaulWeightLoadedPerTimeStep  () const;
-    MT_Float GetHaulWeightUnloadedPerTimeStep() const;
+    bool     CanRepair              ( const PHY_Breakdown& breakdown ) const;
+    bool     CanRepair              () const;
+    bool     CanHaul                () const;
+    bool     CanHaul                ( const PHY_ComposanteTypePion& type ) const;
+    MT_Float GetHaulerWeightCapacity() const;    
+    MT_Float GetHaulerLoadingTime   () const;
+    MT_Float GetHaulerUnloadingTime () const;
     
     const PHY_BreakdownType& GetRandomBreakdownType   () const;
     const PHY_BreakdownType& GetAttritionBreakdownType() const;
@@ -279,13 +279,13 @@ private:
     MT_Float  rWeight_;
 
     // Logistic : Breakdowns
-    T_BreakdownTypeProbabilityVector  randomBreakdownTypeProbabilities_;
-    T_BreakdownTypeProbabilityVector  attritionBreakdownTypeProbabilities_;    
+    T_BreakdownTypeProbabilityVector randomBreakdownTypeProbabilities_;
+    T_BreakdownTypeProbabilityVector attritionBreakdownTypeProbabilities_;    
 
     // Logistic : maintenance
-    MT_Float            rHaulWeightCapacity_;
-    MT_Float            rHaulWeightLoadedPerTimeStep_;
-    MT_Float            rHaulWeightUnloadedPerTimeStep_;
+    MT_Float            rHaulerWeightCapacity_;
+    MT_Float            rHaulerLoadingTime_;
+    MT_Float            rHaulerUnloadingTime_;
     T_NTICapabilitySet  ntiCapabilities_;
 
     // Logistic : medical

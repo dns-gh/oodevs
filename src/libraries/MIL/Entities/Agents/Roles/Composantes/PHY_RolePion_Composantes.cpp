@@ -1516,7 +1516,7 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableHauler( const PHY_Comp
         if( !hauler.CanHaul( composanteType ) )
             continue;
 
-        MT_Float rNewScore = hauler.GetType().GetHaulWeightCapacity() - composanteType.GetWeight();
+        MT_Float rNewScore = hauler.GetType().GetHaulerWeightCapacity() - composanteType.GetWeight();
         assert( rNewScore >= 0. );
         if( rNewScore < rScore )
         {

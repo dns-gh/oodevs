@@ -41,7 +41,7 @@ LogMaintenanceConsign_ListView_Item::LogMaintenanceConsign_ListView_Item( QListV
 
     Update();
 
-    setOpen( true );
+//    setOpen( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,6 +66,8 @@ void LogMaintenanceConsign_ListView_Item::Update()
 
     pListViewItemState_    ->setText( 0, tr( "Etat : " ) +  QString( pConsign_->GetStateString().c_str() ) );
     pListViewItemDiagnosed_->setText( 0, pConsign_->IsDiagnosed() ? tr( "Diagnostique effectué" ) : tr( "Diagnostique non effectué" ) );
+
+    setText( 0, tr( "Consigne " ) + itostring( pConsign_->GetID() ).c_str() + " - " + pConsign_->GetStateString().c_str() );
 }
 
 // -----------------------------------------------------------------------------

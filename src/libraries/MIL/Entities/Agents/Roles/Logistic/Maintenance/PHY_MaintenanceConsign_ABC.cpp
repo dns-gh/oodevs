@@ -252,7 +252,7 @@ void PHY_MaintenanceConsign_ABC::EnterStateCarrierLoading()
     assert( pActor_ );
     
     SetState( eCarrierLoading );
-    nTimer_ = (int)( pComposanteState_->GetComposanteWeight() / pActor_->GetType().GetHaulWeightLoadedPerTimeStep() );
+    nTimer_ = pActor_->GetType().GetHaulerLoadingTime();
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -279,7 +279,7 @@ void PHY_MaintenanceConsign_ABC::EnterStateCarrierUnloading()
     assert( pActor_ );
     
     SetState( eCarrierUnloading );
-    nTimer_ = (int)( pComposanteState_->GetComposanteWeight() / pActor_->GetType().GetHaulWeightUnloadedPerTimeStep() );
+    nTimer_ = pActor_->GetType().GetHaulerUnloadingTime();
 }
 
 // -----------------------------------------------------------------------------
