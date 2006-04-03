@@ -275,6 +275,8 @@ void GLTool::DrawDetection( World& world )
         glColor3f( 1, 1, 1 );
         world.pDetection_->Draw();
         glBindTexture( GL_TEXTURE_2D, 0 );
+        glDisable(GL_TEXTURE_GEN_S);
+	    glDisable(GL_TEXTURE_GEN_T);
     }
 }
 
