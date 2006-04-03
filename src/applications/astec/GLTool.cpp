@@ -271,7 +271,10 @@ void GLTool::Draw( World& world )
 void GLTool::DrawDetection( World& world )
 {
     if( world.pDetection_ )
+    {
+        glColor4d( 1, 1, 1, 1 );
         world.pDetection_->Draw();
+    }
 }
 
 // -----------------------------------------------------------------------------
