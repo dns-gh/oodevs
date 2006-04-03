@@ -50,7 +50,6 @@ public:
     static const std::string& ConvertFromUnitCapaciteMission( E_UnitCapaciteMission, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
-    static const std::string& ConvertFromTempsBordee( E_TempsBordee, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionALAT_PorteeAction( E_MissionALAT_PorteeAction, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionALAT_AmbianceMission( E_MissionALAT_AmbianceMission, E_Conversion = eToSim );
     static const std::string& ConvertFromModeDeploiement( E_ModeDeploiement, E_Conversion = eToSim );
@@ -81,6 +80,7 @@ public:
     static const std::string& ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromCtrlErrorCodeLauncher( E_CtrlErrorCodeLauncher, E_Conversion = eToSim );
+    static const std::string& ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceTraitementEtat( E_LogMaintenanceTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromLogRavitaillementTraitementEtat( E_LogRavitaillementTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromMsgLogRavitaillementChangeQuotasAck( E_MsgLogRavitaillementChangeQuotasAck, E_Conversion = eToSim );
@@ -125,7 +125,6 @@ public:
     static E_UnitCapaciteMission ConvertToUnitCapaciteMission( const std::string& );
     static E_NatureLevel ConvertToNatureLevel( const std::string& );
     static E_HumanRank ConvertToHumanRank( const std::string& );
-    static E_TempsBordee ConvertToTempsBordee( const std::string& );
     static E_MissionALAT_PorteeAction ConvertToMissionALAT_PorteeAction( const std::string& );
     static E_MissionALAT_AmbianceMission ConvertToMissionALAT_AmbianceMission( const std::string& );
     static E_ModeDeploiement ConvertToModeDeploiement( const std::string& );
@@ -156,6 +155,7 @@ public:
     static E_ChangeLiensLogistiquesErrorCode ConvertToChangeLiensLogistiquesErrorCode( const std::string& );
     static E_ChangeAutomateErrorCode ConvertToChangeAutomateErrorCode( const std::string& );
     static E_CtrlErrorCodeLauncher ConvertToCtrlErrorCodeLauncher( const std::string& );
+    static E_LogMaintenanceRegimeTravail ConvertToLogMaintenanceRegimeTravail( const std::string& );
     static E_LogMaintenanceTraitementEtat ConvertToLogMaintenanceTraitementEtat( const std::string& );
     static E_LogRavitaillementTraitementEtat ConvertToLogRavitaillementTraitementEtat( const std::string& );
     static E_MsgLogRavitaillementChangeQuotasAck ConvertToMsgLogRavitaillementChangeQuotasAck( const std::string& );
@@ -201,7 +201,6 @@ private:
     typedef ENT_Tr::converter<E_UnitCapaciteMission> T_ConverterUnitCapaciteMission;
     typedef ENT_Tr::converter<E_NatureLevel> T_ConverterNatureLevel;
     typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
-    typedef ENT_Tr::converter<E_TempsBordee> T_ConverterTempsBordee;
     typedef ENT_Tr::converter<E_MissionALAT_PorteeAction> T_ConverterMissionALAT_PorteeAction;
     typedef ENT_Tr::converter<E_MissionALAT_AmbianceMission> T_ConverterMissionALAT_AmbianceMission;
     typedef ENT_Tr::converter<E_ModeDeploiement> T_ConverterModeDeploiement;
@@ -232,6 +231,7 @@ private:
     typedef ENT_Tr::converter<E_ChangeLiensLogistiquesErrorCode> T_ConverterChangeLiensLogistiquesErrorCode;
     typedef ENT_Tr::converter<E_ChangeAutomateErrorCode> T_ConverterChangeAutomateErrorCode;
     typedef ENT_Tr::converter<E_CtrlErrorCodeLauncher> T_ConverterCtrlErrorCodeLauncher;
+    typedef ENT_Tr::converter<E_LogMaintenanceRegimeTravail> T_ConverterLogMaintenanceRegimeTravail;
     typedef ENT_Tr::converter<E_LogMaintenanceTraitementEtat> T_ConverterLogMaintenanceTraitementEtat;
     typedef ENT_Tr::converter<E_LogRavitaillementTraitementEtat> T_ConverterLogRavitaillementTraitementEtat;
     typedef ENT_Tr::converter<E_MsgLogRavitaillementChangeQuotasAck> T_ConverterMsgLogRavitaillementChangeQuotasAck;
@@ -276,7 +276,6 @@ private:
     static T_ConverterUnitCapaciteMission UnitCapaciteMissionConverter_ [];
     static T_ConverterNatureLevel NatureLevelConverter_ [];
     static T_ConverterHumanRank HumanRankConverter_ [];
-    static T_ConverterTempsBordee TempsBordeeConverter_ [];
     static T_ConverterMissionALAT_PorteeAction MissionALAT_PorteeActionConverter_ [];
     static T_ConverterMissionALAT_AmbianceMission MissionALAT_AmbianceMissionConverter_ [];
     static T_ConverterModeDeploiement ModeDeploiementConverter_ [];
@@ -307,6 +306,7 @@ private:
     static T_ConverterChangeLiensLogistiquesErrorCode ChangeLiensLogistiquesErrorCodeConverter_ [];
     static T_ConverterChangeAutomateErrorCode ChangeAutomateErrorCodeConverter_ [];
     static T_ConverterCtrlErrorCodeLauncher CtrlErrorCodeLauncherConverter_ [];
+    static T_ConverterLogMaintenanceRegimeTravail LogMaintenanceRegimeTravailConverter_ [];
     static T_ConverterLogMaintenanceTraitementEtat LogMaintenanceTraitementEtatConverter_ [];
     static T_ConverterLogRavitaillementTraitementEtat LogRavitaillementTraitementEtatConverter_ [];
     static T_ConverterMsgLogRavitaillementChangeQuotasAck MsgLogRavitaillementChangeQuotasAckConverter_ [];

@@ -100,11 +100,11 @@ void PHY_RolePion_Maintenance::ChangePriorities( const T_AutomateVector& /*prior
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Maintenance::ChangeWorkTime
+// Name: PHY_RolePion_Maintenance::ChangeWorkRate
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Maintenance::ChangeWorkTime( const PHY_LogWorkTime& /*workTime*/ )
+void PHY_RolePion_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate& /*workRate*/ )
 {
     // NOTHING
 }

@@ -45,9 +45,9 @@
 #include "Agents/Units/Humans/PHY_HumanWound.h"
 #include "Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Agents/Units/Composantes/PHY_ComposanteState.h"
-#include "Agents/Units/Logistic/PHY_LogWorkTime.h"
-#include "Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
+#include "Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Agents/Roles/Logistic/Supply/PHY_Convoy_ABC.h"
 #include "Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -105,7 +105,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     MIL_PopulationAttitude       ::Initialize();
     PHY_DotationLogisticType     ::Initialize();
 
-    InitializeType< PHY_LogWorkTime             >( archive, "Logistique"          );
+    InitializeType< PHY_MaintenanceWorkRate     >( archive, "Maintenance"         );
     InitializeType< PHY_Experience              >( archive, "FacteursHumains"     );
     InitializeType< PHY_Tiredness               >( archive, "FacteursHumains"     );    
     InitializeType< PHY_Volume                  >( archive, "Volumes"             );
@@ -287,7 +287,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_NatureAtlas              ::Terminate();
     PHY_MissionCapacity          ::Terminate();
     PHY_RoePopulation            ::Terminate();
-    PHY_LogWorkTime              ::Terminate();
+    PHY_MaintenanceWorkRate      ::Terminate();
     PHY_Convoy_ABC               ::Terminate();
     PHY_RadarType                ::Terminate();
     MIL_PopulationType           ::Terminate();

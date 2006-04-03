@@ -338,17 +338,6 @@ enum E_HumanRank
 };
 
 
-enum E_TempsBordee
-{
-    eTempsBordee_Temps8Heures,
-    eTempsBordee_Temps12Heures,
-    eTempsBordee_Temps16Heures,
-    eTempsBordee_Temps20Heures,
-    eTempsBordee_Temps24Heures,
-    eNbrTempsBordee
-};
-
-
 enum E_MissionALAT_PorteeAction
 {
     eMissionALAT_PorteeAction_CourtePortee,
@@ -710,6 +699,17 @@ enum E_CtrlErrorCodeLauncher
     eCtrlErrorCodeLauncher_ErrorErrorCheckpointInit,
     eCtrlErrorCodeLauncher_ErrorSimKilledByRemote,
     eNbrCtrlErrorCodeLauncher
+};
+
+
+enum E_LogMaintenanceRegimeTravail
+{
+    eLogMaintenanceRegimeTravail_Regime0,
+    eLogMaintenanceRegimeTravail_Regime1,
+    eLogMaintenanceRegimeTravail_Regime2,
+    eLogMaintenanceRegimeTravail_Regime3,
+    eLogMaintenanceRegimeTravail_Regime4,
+    eNbrLogMaintenanceRegimeTravail
 };
 
 
@@ -1378,8 +1378,7 @@ enum E_FragOrder
     eOrdreConduite_Pion_RenforcerEnVSRAM,
     eOrdreConduite_Pion_TransfererVSRAM,
     eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM,
-    eOrdreConduite_ModifierTempsBordeeMaintenance,
-    eOrdreConduite_ModifierTempsBordeeSante,
+    eOrdreConduite_ModifierRegimeTravailMaintenance,
     eOrdreConduite_ModifierPrioritesReparations,
     eOrdreConduite_ModifierPrioritesBlesses,
     eOrdreConduite_ModifierPrioritesTactiquesReparations,

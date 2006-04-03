@@ -6,8 +6,16 @@
 
 ScipioLogMaintenance DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory, EnumTempsBordee FROM ScipioBase;
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory FROM ScipioBase;
 
+EnumLogMaintenanceRegimeTravail ::= ENUMERATED
+{
+    regime-0,
+    regime-1,
+    regime-2,
+    regime-3,
+    regime-4    
+}
 
 MsgLogMaintenanceTraitementEquipementCreation ::= SEQUENCE
 {
@@ -67,7 +75,7 @@ MsgLogMaintenanceEtat ::= SEQUENCE
 {
     oid-pion                   Agent,
     chaine-activee             BOOLEAN                                    OPTIONAL,
-    temps-de-bordee            EnumTempsBordee                            OPTIONAL,
+    regime-travail             EnumLogMaintenanceRegimeTravail            OPTIONAL,
     priorites                  MaintenancePriorites                       OPTIONAL, 
     priorites-tactiques        ListAutomate                               OPTIONAL,
     disponibilites-remorqueurs SEQUENCE OF MaintenanceDisponibiliteMoyens OPTIONAL,

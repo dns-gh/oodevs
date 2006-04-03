@@ -28,12 +28,12 @@
     <Automates>Data/Automates.xml</Automates>
     <NBC>Data/NBC.xml</NBC>
     <Meteo>Data/Meteo.xml</Meteo>
-    <Sante>Data/Sante.xml</Sante>
     <ClasseIDs>Data/IDClasses.xml</ClasseIDs>
     <FacteursHumains>Data/FacteursHumains.xml</FacteursHumains>
     <Pannes>Data/Pannes.xml</Pannes>
     <GroupesConnaissance>Data/GroupesConnaissance.xml</GroupesConnaissance>
-    <Logistique>Data/Logistique.xml</Logistique>
+    <Sante>Data/Sante.xml</Sante>    
+    <Maintenance>Data/Maintenance.xml</Maintenance>
     <Ravitaillement>Data/Ravitaillement.xml</Ravitaillement>
     <Communications>Data/Communications.xml</Communications>
     <ODB>Data/ODB.xml</ODB>

@@ -61,7 +61,7 @@ private:
 
     QListView* pState_;
     QListViewItem* pStateChainEnabled_;
-    QListViewItem* pStateTempsBordee_;
+    QListViewItem* pStateWorkRate_;
     QListViewItem* pStatePriorites_;
     QListViewItem* pStateTacticalPriorites_;
 

@@ -386,7 +386,7 @@ public:
     typedef struct
     {
         bool                        bChainEnabled_;
-        uint                        nTempsBordee_;
+        uint                        nWorkRate_;
         T_Priorities                priorities_;
         T_Priorities                tacticalPriorities_;
         T_LogisticAvailabilities    dispoHaulers_;
@@ -399,7 +399,6 @@ public:
     typedef struct
     {
         bool                     bChainEnabled_;
-        uint                     nTempsBordee_;
         T_LogisticAvailabilities dispoReleveAmbulances_;
         T_LogisticAvailabilities dispoRamassageAmbulances_;  
         T_LogisticAvailabilities dispoDoctors_;

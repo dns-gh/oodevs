@@ -43,8 +43,8 @@ AgentMaintenancePanel::AgentMaintenancePanel( QWidget* pParent )
     pState_->setLineWidth( 2 );
     pState_->setFrameStyle( QFrame::Sunken | QFrame::Box );
     pStateChainEnabled_      = new QListViewItem( pState_, tr( "Etat chaine" ), " - " );
-    pStateTempsBordee_       = new QListViewItem( pState_, pStateChainEnabled_, tr( "Temps de bordée" ), " - " );
-    pStatePriorites_         = new QListViewItem( pState_, pStateTempsBordee_ , tr( "Priorités" ), " - " );  
+    pStateWorkRate_          = new QListViewItem( pState_, pStateChainEnabled_, tr( "Régime de travail" ), " - " );
+    pStatePriorites_         = new QListViewItem( pState_, pStateWorkRate_    , tr( "Priorités" ), " - " );  
     pStateTacticalPriorites_ = new QListViewItem( pState_, pStatePriorites_   , tr( "Priorités tactiques" ), " - " );  
     pState_->hide();
 
@@ -131,7 +131,7 @@ void AgentMaintenancePanel::OnAgentUpdated( Agent& agent )
 
     Agent::T_MaintenanceData& data = *agent.pMaintenanceData_;
     pStateChainEnabled_->setText( 1, data.bChainEnabled_ ? tr( "Activée" ) : tr( "Désactivée" ) );
-    pStateTempsBordee_ ->setText( 1, ( QString( "%1 " ) + tr( "heures" ) ).arg( data.nTempsBordee_ ) );
+    pStateWorkRate_    ->setText( 1, ( QString( "R%1" ) ).arg( data.nWorkRate_ ) );
     DisplayPriorities( data.priorities_, *pStatePriorites_, EquipmentResolver() );    
     DisplayPriorities( data.tacticalPriorities_, *pStateTacticalPriorites_, AutomateResolver() );
 

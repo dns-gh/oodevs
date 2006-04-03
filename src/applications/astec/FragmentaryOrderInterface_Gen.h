@@ -36,8 +36,7 @@
     void CreateOrder_Pion_RenforcerEnVSRAM();
     void CreateOrder_Pion_TransfererVSRAM();
     void CreateOrder_Pion_ReprendreAuxOrdresVSRAM();
-    void CreateOrder_ModifierTempsBordeeMaintenance();
-    void CreateOrder_ModifierTempsBordeeSante();
+    void CreateOrder_ModifierRegimeTravailMaintenance();
     void CreateOrder_ModifierPrioritesReparations();
     void CreateOrder_ModifierPrioritesBlesses();
     void CreateOrder_ModifierPrioritesTactiquesReparations();

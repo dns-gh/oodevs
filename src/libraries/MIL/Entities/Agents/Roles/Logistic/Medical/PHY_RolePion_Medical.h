@@ -19,7 +19,6 @@
 class PHY_MedicalHumanState;
 class PHY_Human;
 class MIL_AgentPion;
-class PHY_LogWorkTime;
 class PHY_MedicalCollectionAmbulance;
 
 // =============================================================================
@@ -54,7 +53,6 @@ public:
 
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities );
     virtual void ChangePriorities( const T_AutomateVector& priorities );
-    virtual void ChangeWorkTime  ( const PHY_LogWorkTime& workTime );
 
     virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, PHY_Human& human ); // Imex
     virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, PHY_Human& human ); // Releve

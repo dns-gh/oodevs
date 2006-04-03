@@ -63,10 +63,8 @@ private:
 
     QListView* pState_;
     QListViewItem* pStateChainEnabled_;
-    QListViewItem* pStateTempsBordee_;
     QListViewItem* pStatePriorites_;
     QListViewItem* pStateTacticalPriorites_;
-
 
     QListView* pDispoReleveAmbulances_;
     QListView* pDispoRamassageAmbulances_;

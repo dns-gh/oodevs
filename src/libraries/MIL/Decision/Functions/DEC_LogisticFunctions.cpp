@@ -15,7 +15,7 @@
 
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogWorkTime.h"
+#include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_RolePion_Medical.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
@@ -84,16 +84,16 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( DIA_Call_AB
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::PionMaintenanceChangeWorkTime
+// Name: DEC_LogisticFunctions::PionMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangeWorkTime( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
-    const PHY_LogWorkTime* pWorkTime = PHY_LogWorkTime::Find( (ASN1T_EnumTempsBordee)call.GetParameter( 0 ).ToId() );
-    if( !pWorkTime )
+    const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( (ASN1T_EnumLogMaintenanceRegimeTravail)call.GetParameter( 0 ).ToId() );
+    if( !pWorkRate )
         assert( false );
     else
-        callerAgent.GetRole< PHY_RolePion_Maintenance >().ChangeWorkTime( *pWorkTime );
+        callerAgent.GetRole< PHY_RolePion_Maintenance >().ChangeWorkRate( *pWorkRate );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,12 +133,12 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( DIA_Cal
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::AutomateMaintenanceChangeWorkTime
+// Name: DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkTime( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
+void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
 {
-    PionMaintenanceChangeWorkTime( call, callerAutomate.GetPionPC() );
+    PionMaintenanceChangeWorkRate( call, callerAutomate.GetPionPC() );
 }
 
 // =============================================================================
@@ -255,19 +255,6 @@ void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( DIA_Call_ABC& c
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::PionMedicalChangeWorkTime
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalChangeWorkTime( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    const PHY_LogWorkTime* pWorkTime = PHY_LogWorkTime::Find( (ASN1T_EnumTempsBordee)call.GetParameter( 0 ).ToId() );
-    if( !pWorkTime )
-        assert( false );
-    else
-        callerAgent.GetRole< PHY_RolePion_Medical >().ChangeWorkTime( *pWorkTime );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -303,15 +290,6 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( DIA_Call_AB
     PionMedicalChangeTacticalPriorities( call, callerAutomate.GetPionPC() );
 }
     
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::AutomateMedicalChangeWorkTime
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateMedicalChangeWorkTime( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
-{
-    PionMedicalChangeWorkTime( call, callerAutomate.GetPionPC() );
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
 // Created: JVT 2005-01-17

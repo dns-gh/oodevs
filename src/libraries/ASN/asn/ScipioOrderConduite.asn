@@ -6,13 +6,14 @@
 ScipioOrderConduite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH, Agent, KnowledgeObject FROM ScipioBase
-IMPORTS Itineraire, Point, Direction, Segment, TypeEquipement, ListAgent, EnumTempsBordee FROM ScipioBase
-IMPORTS EnumOrderErrorCode         FROM ScipioOrder
-IMPORTS MissionGenObject           FROM ScipioAutomateMission_GEN
-IMPORTS MaintenancePriorites       FROM ScipioLogMaintenance
-IMPORTS SantePriorites             FROM ScipioLogSante
-IMPORTS EnumRoe, EnumRoePopulation FROM ScipioUnitAttr
-IMPORTS EnumPopulationAttitude     FROM ScipioPopulation;
+IMPORTS Itineraire, Point, Direction, Segment, TypeEquipement, ListAgent FROM ScipioBase
+IMPORTS EnumOrderErrorCode              FROM ScipioOrder
+IMPORTS MissionGenObject                FROM ScipioAutomateMission_GEN
+IMPORTS MaintenancePriorites            FROM ScipioLogMaintenance
+IMPORTS SantePriorites                  FROM ScipioLogSante
+IMPORTS EnumRoe, EnumRoePopulation      FROM ScipioUnitAttr
+IMPORTS EnumLogMaintenanceRegimeTravail FROM ScipioLogMaintenance
+IMPORTS EnumPopulationAttitude          FROM ScipioPopulation;
 
 EnumAmbianceMission ::= ENUMERATED
 {
@@ -40,8 +41,7 @@ OrderConduite-ChangerAmbiance              ::= EnumAmbianceMission
 
 OrderConduite-Deboucher                             ::= NULL 
 OrderConduite-Decrocher                             ::= NULL
-OrderConduite-ModifierTempsBordeeMaintenance        ::= EnumTempsBordee
-OrderConduite-ModifierTempsBordeeSante              ::= EnumTempsBordee
+OrderConduite-ModifierRegimeTravailMaintenance      ::= EnumLogMaintenanceRegimeTravail
 OrderConduite-ModifierPrioritesReparations          ::= MaintenancePriorites
 OrderConduite-ModifierPrioritesBlesses              ::= SantePriorites
 OrderConduite-ModifierPrioritesTactiquesReparations ::= ListAutomate
@@ -207,8 +207,7 @@ MsgOrderConduite ::= SEQUENCE
         order-conduite-pion-renforcer-en-vs-ram                         OrderConduite-Pion-RenforcerEnVSRAM,
         order-conduite-pion-transferer-vs-ram                           OrderConduite-Pion-TransfererVSRAM,
         order-conduite-pion-reprendre-aux-ordres-vs-ram                 OrderConduite-Pion-ReprendreAuxOrdresVSRAM,        
-        order-conduite-modifier-temps-bordee-maintenance                OrderConduite-ModifierTempsBordeeMaintenance,
-        order-conduite-modifier-temps-bordee-sante                      OrderConduite-ModifierTempsBordeeSante,               
+        order-conduite-modifier-regime-travail-maintenance              OrderConduite-ModifierRegimeTravailMaintenance,
         order-conduite-modifier-priorites-reparations                   OrderConduite-ModifierPrioritesReparations,
         order-conduite-modifier-priorites-blesses                       OrderConduite-ModifierPrioritesBlesses,
         order-conduite-modifier-priorites-tactiques-reparations         OrderConduite-ModifierPrioritesTactiquesReparations,

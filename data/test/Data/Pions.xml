@@ -1248,7 +1248,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin soin chirurgical">1</Equipement>
+      <!--<Equipement nom="Medecin soin chirurgical">1</Equipement>-->
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1463,7 +1463,7 @@
     </Nature>
     <Equipements>
       <Equipement nom="Medecin tri">1</Equipement>
-      <Equipement nom="Medecin soin chirurgical">1</Equipement>
+      <!--<Equipement nom="Medecin soin chirurgical">1</Equipement>-->
       <Equipement nom="Medecin soin mental">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>

@@ -27,13 +27,12 @@ MIL_AutomateTypeLOG::MIL_AutomateTypeLOG( const std::string& strName, MIL_InputA
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceDisableSystem           , "DEC_Maintenance_DesactiverChaine"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceChangePriorities        , "DEC_Maintenance_ChangerPriorites"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities, "DEC_Maintenance_ChangerPrioritesTactiques" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceChangeWorkTime          , "DEC_Maintenance_ChangerTempsBordee"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate          , "DEC_Maintenance_ChangerRegimeTravail"      );
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalEnableSystem            , "DEC_Sante_ActiverChaine"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalDisableSystem           , "DEC_Sante_DesactiverChaine"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalChangePriorities        , "DEC_Sante_ChangerPriorites"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities, "DEC_Sante_ChangerPrioritesTactiques" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalChangeWorkTime          , "DEC_Sante_ChangerTempsBordee"        );
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateSupplyEnableSystem    , "DEC_Ravitaillement_ActiverChaine"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateSupplyDisableSystem   , "DEC_Ravitaillement_DesactiverChaine"   );

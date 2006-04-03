@@ -110,8 +110,7 @@ const MIL_RC_UniteEnnemieIdentifiee*            MIL_RC::pRcUniteEnnemieIdentifie
 const MIL_RC_UniteNeutreIdentifiee*             MIL_RC::pRcUniteNeutreIdentifiee_              = 0;
 const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
 const MIL_RC*                                   MIL_RC::pRcRendu_                              = 0;
-const MIL_RC*                                   MIL_RC::pRcTempsBordeeMaintenanceDelaiDepasse_ = 0;
-const MIL_RC*                                   MIL_RC::pRcTempsBordeeSanteDelaiDepasse_       = 0;
+const MIL_RC*                                   MIL_RC::pRcRegimeMaintenanceDelaiDepasse_      = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -214,8 +213,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_ObstacleEnAttenteActivation ] = new MIL_RC_ObstacleEnAttenteActivation( eRC_ObstacleEnAttenteActivation, T_MsgCR_cr_cr_obstacle_en_attente_activation );
 	rcs_[ eRC_DebutAmenagementBerges ] = new MIL_RC( eRC_DebutAmenagementBerges, T_MsgCR_cr_cr_debut_amenagement_berges );
 	rcs_[ eRC_FinAmenagementBerges ] = new MIL_RC( eRC_FinAmenagementBerges, T_MsgCR_cr_cr_fin_amenagement_berges );
-	rcs_[ eRC_TempsBordeeMaintenanceDelaiDepasse ] = new MIL_RC( eRC_TempsBordeeMaintenanceDelaiDepasse, T_MsgCR_cr_cr_temps_bordee_maintenance_delai_depasse );
-	rcs_[ eRC_TempsBordeeSanteDelaiDepasse ] = new MIL_RC( eRC_TempsBordeeSanteDelaiDepasse, T_MsgCR_cr_cr_temps_bordee_sante_delai_depasse );
+	rcs_[ eRC_RegimeMaintenanceDelaiDepasse ] = new MIL_RC( eRC_RegimeMaintenanceDelaiDepasse, T_MsgCR_cr_cr_regime_maintenance_delai_depasse );
 	rcs_[ eRC_SectionDeployee ] = new MIL_RC( eRC_SectionDeployee, T_MsgCR_cr_cr_section_deployee );
 	rcs_[ eRC_ANouveauDisponibleApresReparation ] = new MIL_RC( eRC_ANouveauDisponibleApresReparation, T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation );
 	rcs_[ eRC_MaterielRetourDeMaintenance ] = new MIL_RC_MaterielRetourDeMaintenance( eRC_MaterielRetourDeMaintenance, T_MsgCR_cr_cr_materiel_retour_de_maintenance );
@@ -409,8 +407,7 @@ void MIL_RC::Initialize()
     pRcUniteNeutreIdentifiee_              = (MIL_RC_UniteNeutreIdentifiee*)            rcs_[ eRC_UniteNeutreIdentifiee              ];
     pRcObjetDetecte_                       = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                       ];
     pRcRendu_                              =                                            rcs_[ eRC_Rendu                              ];
-    pRcTempsBordeeMaintenanceDelaiDepasse_ =                                            rcs_[ eRC_TempsBordeeMaintenanceDelaiDepasse ];
-    pRcTempsBordeeSanteDelaiDepasse_       =                                            rcs_[ eRC_TempsBordeeSanteDelaiDepasse       ];
+    pRcRegimeMaintenanceDelaiDepasse_      =                                            rcs_[ eRC_RegimeMaintenanceDelaiDepasse      ];
 }
 
 // -----------------------------------------------------------------------------

@@ -338,7 +338,14 @@
             </LiensHierarchiques>
             <Position>31TBN9902580746</Position>
         </Pion>                                                      -->
-        <Pion id="6000009" type="Groupe evacuation sante BLD" >
+        <Pion id="6000009" type="Groupe evacuation sante BLD " >
+            <LiensHierarchiques>
+                <Automate>5000003</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9902580746</Position>
+        </Pion>                                                                
+        
+        <Pion id="6000079" type="Groupe evacuation sante BLD" >
             <LiensHierarchiques>
                 <Automate>5000003</Automate>
             </LiensHierarchiques>
@@ -382,8 +389,22 @@
             <Position>31TBN9996078882</Position>
         </Pion>                 
         
+        <Pion id="6000085" type="Groupe evacuation sante BLT" >
+            <LiensHierarchiques>
+                <Automate>5000006</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>                 
+        
 
         <Pion id="6000016" type="Groupe evacuation maintenance BLD" >
+            <LiensHierarchiques>
+                <Automate>5000002</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9902580746</Position>
+        </Pion>
+        
+        <Pion id="6000086" type="Groupe evacuation maintenance BLD" >
             <LiensHierarchiques>
                 <Automate>5000002</Automate>
             </LiensHierarchiques>

@@ -556,8 +556,8 @@ void Agent::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& a
 
     if( asn.m.chaine_activeePresent )
         data.bChainEnabled_ = asn.chaine_activee;
-    if( asn.m.temps_de_bordeePresent )
-        data.nTempsBordee_ = 8 + asn.temps_de_bordee * 4;
+    if( asn.m.regime_travailPresent )
+        data.nWorkRate_ = asn.regime_travail;
 
     if( asn.m.prioritesPresent )
     {
@@ -616,9 +616,6 @@ void Agent::OnReceiveMsgLogMedicalEtat( const ASN1T_MsgLogSanteEtat& asn )
 
     if( asn.m.chaine_activeePresent )
         data.bChainEnabled_ = asn.chaine_activee;
-
-    if( asn.m.temps_de_bordeePresent )
-        data.nTempsBordee_ = 8 + 4 * asn.temps_de_bordee;
 
     if( asn.m.prioritesPresent )
     {

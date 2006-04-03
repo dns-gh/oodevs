@@ -280,23 +280,15 @@ behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDum
                 }
                 
                 
-                case eOrdreConduite_ModifierTempsBordeeMaintenance:
+                case eOrdreConduite_ModifierRegimeTravailMaintenance:
                 {
-                    Rep_OrderConduite_ModifierTempsBordeeMaintenance tmp = ordre;
-                    DEC_Maintenance_ChangerTempsBordee( tmp.orderConduiteModifierTempsBordeeMaintenance_ );
+                    Rep_OrderConduite_ModifierRegimeTravailMaintenance tmp = ordre;
+                    DEC_Maintenance_ChangerRegimeTravail( tmp.orderConduiteModifierRegimeTravailMaintenance_ );
                     DIA_RemoveFromCategory( "ordres_recus", ordre );
 				    DIA_DeleteRepresentation( ordre );
                     break;
                 }
-                
-                case eOrdreConduite_ModifierTempsBordeeSante:
-                {
-                    Rep_OrderConduite_ModifierTempsBordeeSante tmp = ordre;
-                    DEC_Sante_ChangerTempsBordee( tmp.orderConduiteModifierTempsBordeeSante_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }
+               
                 
                 case eOrdreConduite_Pion_RenforcerEnVSRAM:
                 {

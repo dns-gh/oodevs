@@ -1470,14 +1470,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modifier Temps Bordee Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Temps Bordee Sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Modifier Priorites Reparations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1655,6 +1647,10 @@
     </message>
     <message>
         <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Regime Travail Maintenance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2534,26 +2530,6 @@
     </message>
     <message>
         <source>mdr</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>temps 8 heures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>temps 12 heures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>temps 16 heures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>temps 20 heures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>temps 24 heures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3502,6 +3478,26 @@
     </message>
     <message>
         <source>dispersion par moyens de defense actifs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

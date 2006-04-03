@@ -142,11 +142,8 @@ void FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM :
              CreateOrder_Pion_ReprendreAuxOrdresVSRAM();
              break;
-        case eOrdreConduite_ModifierTempsBordeeMaintenance :
-             CreateOrder_ModifierTempsBordeeMaintenance();
-             break;
-        case eOrdreConduite_ModifierTempsBordeeSante :
-             CreateOrder_ModifierTempsBordeeSante();
+        case eOrdreConduite_ModifierRegimeTravailMaintenance :
+             CreateOrder_ModifierRegimeTravailMaintenance();
              break;
         case eOrdreConduite_ModifierPrioritesReparations :
              CreateOrder_ModifierPrioritesReparations();
@@ -492,36 +489,19 @@ void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresVSRAM()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance
+// Name: FragmentaryOrderInterface::CreateOrder_ModifierRegimeTravailMaintenance
 // Created: AGR
 // -----------------------------------------------------------------------------
-void FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance()
+void FragmentaryOrderInterface::CreateOrder_ModifierRegimeTravailMaintenance()
 {
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_maintenance;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance, "Order conduite modifier temps bordee maintenance", false );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 20 heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 24 heures", EnumTempsBordee::temps_24_heures );
-#undef asnMission
-}
-
-// -----------------------------------------------------------------------------
-// Name: FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante
-// Created: AGR
-// -----------------------------------------------------------------------------
-void FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante()
-{
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_sante;
-#define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante, "Order conduite modifier temps bordee sante", false );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 20 heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 24 heures", EnumTempsBordee::temps_24_heures );
+    ParamComboBox< ASN1T_EnumLogMaintenanceRegimeTravail >* pSelector_order_conduite_modifier_regime_travail_maintenance = &CreateVarList( asnMission.order_conduite_modifier_regime_travail_maintenance, "Order conduite modifier regime travail maintenance", false );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 0", EnumLogMaintenanceRegimeTravail::regime_0 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 1", EnumLogMaintenanceRegimeTravail::regime_1 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 2", EnumLogMaintenanceRegimeTravail::regime_2 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 3", EnumLogMaintenanceRegimeTravail::regime_3 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 4", EnumLogMaintenanceRegimeTravail::regime_4 );
 #undef asnMission
 }
 

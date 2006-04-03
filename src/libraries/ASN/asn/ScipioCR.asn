@@ -133,8 +133,7 @@ CR-EchecRenforcement                        ::= SEQUENCE
 }
                                            
 -- Log          
-CR-TempsBordeeMaintenanceDelaiDepasse       ::= NULL
-CR-TempsBordeeSanteDelaiDepasse             ::= NULL                            
+CR-RegimeMaintenanceDelaiDepasse            ::= NULL
 CR-SectionDeployee                          ::= NULL
 CR-ANouveauDisponibleApresReparation        ::= NULL
 CR-MaterielRepareSurPlace                   ::= TypeEquipement
@@ -432,9 +431,8 @@ MsgCR ::= SEQUENCE
         cr-debut-amenagement-berges                                     CR-DebutAmenagementBerges,      
         cr-fin-amenagement-berges                                       CR-FinAmenagementBerges,        
                                                                                                                                                                                                            
-        -- log    
-        cr-temps-bordee-maintenance-delai-depasse                       CR-TempsBordeeMaintenanceDelaiDepasse,
-        cr-temps-bordee-sante-delai-depasse                             CR-TempsBordeeSanteDelaiDepasse,
+        -- log   
+        cr-regime-maintenance-delai-depasse                             CR-RegimeMaintenanceDelaiDepasse,
         cr-section-deployee                                             CR-SectionDeployee,       
         cr-a-nouveau-disponible-apres-reparation                        CR-ANouveauDisponibleApresReparation,
         cr-materiel-retour-de-maintenance                               CR-MaterielRetourDeMaintenance,

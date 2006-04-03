@@ -158,16 +158,6 @@ void PHY_RolePion_Medical::ChangePriorities( const T_AutomateVector& /*prioritie
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Medical::ChangeWorkTime
-// Created: NLD 2005-01-06
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Medical::ChangeWorkTime( const PHY_LogWorkTime& /*workTime*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Medical::CanCollectionAmbulanceGo
 // Created: NLD 2005-01-13
 // -----------------------------------------------------------------------------

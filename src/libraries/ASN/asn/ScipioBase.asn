@@ -382,15 +382,6 @@ EnumHumanRank ::= ENUMERATED
     sous-officer(1),
     mdr         (2)
 }
-
-EnumTempsBordee ::= ENUMERATED
-{
-    temps-8-heures    (0),   
-    temps-12-heures   (1),
-    temps-16-heures   (2),
-    temps-20-heures   (3),
-    temps-24-heures   (4)
-}
-                    
+                  
 
 END -- ScipioBase

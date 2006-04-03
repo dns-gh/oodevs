@@ -135,14 +135,9 @@ T_Pion pionRenforce_;
 float nbrAmbulances_;
 };
 
-typedef struct Rep_OrderConduite_ModifierTempsBordeeMaintenance : Rep_OrdreConduite
+typedef struct Rep_OrderConduite_ModifierRegimeTravailMaintenance : Rep_OrdreConduite
 {
-id orderConduiteModifierTempsBordeeMaintenance_;
-};
-
-typedef struct Rep_OrderConduite_ModifierTempsBordeeSante : Rep_OrdreConduite
-{
-id orderConduiteModifierTempsBordeeSante_;
+id orderConduiteModifierRegimeTravailMaintenance_;
 };
 
 typedef struct Rep_OrderConduite_ModifierPrioritesReparations : Rep_OrdreConduite

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Maintenance>
+    <RegimesTravail>
+        <Regime0 dureeTravail="8"  />
+        <Regime1 dureeTravail="12" delaiAvantAvertissement="30s"/>
+        <Regime2 dureeTravail="16" delaiAvantAvertissement="48h"/>
+        <Regime3 dureeTravail="20" delaiAvantAvertissement="36h"/>
+        <Regime4 dureeTravail="24" delaiAvantAvertissement="24h"/>
+    </RegimesTravail>
+</Maintenance>
+

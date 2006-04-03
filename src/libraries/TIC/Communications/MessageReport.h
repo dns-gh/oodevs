@@ -148,8 +148,7 @@ private:
         eRC_ObstacleEnAttenteActivation, // Parametre : T_ConnaissanceObjet
         eRC_DebutAmenagementBerges,
         eRC_FinAmenagementBerges,
-        eRC_TempsBordeeMaintenanceDelaiDepasse,
-        eRC_TempsBordeeSanteDelaiDepasse,
+        eRC_RegimeMaintenanceDelaiDepasse,
         eRC_SectionDeployee,
         eRC_ANouveauDisponibleApresReparation,
         eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement

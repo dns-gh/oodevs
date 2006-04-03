@@ -65,8 +65,7 @@ const MIL_RC_UniteEnnemieIdentifiee*            MIL_RC::pRcUniteEnnemieIdentifie
 const MIL_RC_UniteNeutreIdentifiee*             MIL_RC::pRcUniteNeutreIdentifiee_              = 0;
 const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
 const MIL_RC*                                   MIL_RC::pRcRendu_                              = 0;
-const MIL_RC*                                   MIL_RC::pRcTempsBordeeMaintenanceDelaiDepasse_ = 0;
-const MIL_RC*                                   MIL_RC::pRcTempsBordeeSanteDelaiDepasse_       = 0;
+const MIL_RC*                                   MIL_RC::pRcRegimeMaintenanceDelaiDepasse_      = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -120,8 +119,7 @@ void MIL_RC::Initialize()
     pRcUniteNeutreIdentifiee_              = (MIL_RC_UniteNeutreIdentifiee*)            rcs_[ eRC_UniteNeutreIdentifiee              ];
     pRcObjetDetecte_                       = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                       ];
     pRcRendu_                              =                                            rcs_[ eRC_Rendu                              ];
-    pRcTempsBordeeMaintenanceDelaiDepasse_ =                                            rcs_[ eRC_TempsBordeeMaintenanceDelaiDepasse ];
-    pRcTempsBordeeSanteDelaiDepasse_       =                                            rcs_[ eRC_TempsBordeeSanteDelaiDepasse       ];
+    pRcRegimeMaintenanceDelaiDepasse_      =                                            rcs_[ eRC_RegimeMaintenanceDelaiDepasse      ];
 }
 
 // -----------------------------------------------------------------------------

@@ -31,13 +31,12 @@ MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceDisableSystem           , "DEC_Maintenance_DesactiverChaine"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceChangePriorities        , "DEC_Maintenance_ChangerPriorites"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities, "DEC_Maintenance_ChangerPrioritesTactiques" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceChangeWorkTime          , "DEC_Maintenance_ChangerTempsBordee"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMaintenanceChangeWorkRate          , "DEC_Maintenance_ChangerRegimeTravail"      );
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalEnableSystem                , "DEC_Sante_ActiverChaine"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalDisableSystem               , "DEC_Sante_DesactiverChaine"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalChangePriorities            , "DEC_Sante_ChangerPriorites"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities    , "DEC_Sante_ChangerPrioritesTactiques" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalChangeWorkTime              , "DEC_Sante_ChangerTempsBordee"        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendComposante >, "DEC_Sante_StartPreterVSRAM"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendCollectionComposantes          , "DEC_Sante_RecupererVSRAM"            );
 

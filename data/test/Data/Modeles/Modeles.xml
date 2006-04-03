@@ -33,8 +33,7 @@
             <OrdreConduite nom="ModifierPrioritesBlesses"/>
             <OrdreConduite nom="ModifierPrioritesTactiquesReparations"/>
             <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
-            <OrdreConduite nom="ModifierTempsBordeeMaintenance"/>
-            <OrdreConduite nom="ModifierTempsBordeeSante"/>
+            <OrdreConduite nom="ModifierRegimeTravailMaintenance"/>
             <OrdreConduite nom="Pion RenforcerEnVSRAM"/>
             <OrdreConduite nom="Pion ReprendreAuxOrdresVSRAM"/>
           </OrdresConduite>

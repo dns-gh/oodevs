@@ -19,7 +19,7 @@
 class PHY_MaintenanceComposanteState;
 class PHY_ComposantePion;
 class MIL_AgentPion;
-class PHY_LogWorkTime;
+class PHY_MaintenanceWorkRate;
 
 // =============================================================================
 // @class  PHY_RolePion_Maintenance
@@ -52,9 +52,8 @@ public:
     virtual void DisableSystem();
 
     virtual void ChangePriorities( const T_MaintenancePriorityVector& priorities );
-    virtual void ChangePriorities( const T_AutomateVector& priorities );
-    virtual void ChangeWorkTime  ( const PHY_LogWorkTime& workTime );
-
+    virtual void ChangePriorities( const T_AutomateVector&            priorities );
+    virtual void ChangeWorkRate  ( const PHY_MaintenanceWorkRate&     workRate   );
 
     virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport    ( MIL_AgentPion& pion, PHY_ComposantePion& composante );
     virtual bool                            HandleComposanteForTransport    ( PHY_MaintenanceComposanteState& composanteState );

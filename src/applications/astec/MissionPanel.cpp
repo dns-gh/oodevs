@@ -492,8 +492,7 @@ void MissionPanel::ActivateFragmentaryOrder( int nOrderId )
         case eOrdreConduite_Pion_RenforcerEnVSRAM:
         case eOrdreConduite_Pion_TransfererVSRAM:
         case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM:
-        case eOrdreConduite_ModifierTempsBordeeMaintenance:
-        case eOrdreConduite_ModifierTempsBordeeSante:
+        case eOrdreConduite_ModifierRegimeTravailMaintenance:
         case eOrdreConduite_ModifierPrioritesReparations:
         case eOrdreConduite_ModifierPrioritesBlesses:
         case eOrdreConduite_ModifierPrioritesTactiquesBlesses:

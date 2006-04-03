@@ -284,13 +284,13 @@ typedef enum E_FacteurHumain_Experience
 // Logistique
 // -----------------------------------------------------------------------------
 
-typedef enum E_TempsBordee
+typedef enum E_MaintenanceRegimeTravail
 {
-    eTempsBordee_8heures,
-    eTempsBordee_12heures,
-    eTempsBordee_16heures,
-    eTempsBordee_20heures,
-    eTempsBordee_24heures
+    eMaintenance_R0,
+    eMaintenance_R1,
+    eMaintenance_R2,
+    eMaintenance_R3,
+    eMaintenance_R4
 };
 
 // -----------------------------------------------------------------------------

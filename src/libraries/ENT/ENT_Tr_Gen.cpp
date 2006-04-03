@@ -323,16 +323,6 @@ ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
     T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
 };
 
-ENT_Tr::T_ConverterTempsBordee ENT_Tr::TempsBordeeConverter_[] =
-{
-    T_ConverterTempsBordee( "temps 8 heures", QT_TRANSLATE_NOOP( "ENT_Tr", "temps 8 heures" ), eTempsBordee_Temps8Heures ),
-    T_ConverterTempsBordee( "temps 12 heures", QT_TRANSLATE_NOOP( "ENT_Tr", "temps 12 heures" ), eTempsBordee_Temps12Heures ),
-    T_ConverterTempsBordee( "temps 16 heures", QT_TRANSLATE_NOOP( "ENT_Tr", "temps 16 heures" ), eTempsBordee_Temps16Heures ),
-    T_ConverterTempsBordee( "temps 20 heures", QT_TRANSLATE_NOOP( "ENT_Tr", "temps 20 heures" ), eTempsBordee_Temps20Heures ),
-    T_ConverterTempsBordee( "temps 24 heures", QT_TRANSLATE_NOOP( "ENT_Tr", "temps 24 heures" ), eTempsBordee_Temps24Heures ),
-    T_ConverterTempsBordee( "", "", (E_TempsBordee)-1 )
-};
-
 ENT_Tr::T_ConverterMissionALAT_PorteeAction ENT_Tr::MissionALAT_PorteeActionConverter_[] =
 {
     T_ConverterMissionALAT_PorteeAction( "courte portee", QT_TRANSLATE_NOOP( "ENT_Tr", "courte portee" ), eMissionALAT_PorteeAction_CourtePortee ),
@@ -665,6 +655,16 @@ ENT_Tr::T_ConverterCtrlErrorCodeLauncher ENT_Tr::CtrlErrorCodeLauncherConverter_
     T_ConverterCtrlErrorCodeLauncher( "error error checkpoint init", QT_TRANSLATE_NOOP( "ENT_Tr", "error error checkpoint init" ), eCtrlErrorCodeLauncher_ErrorErrorCheckpointInit ),
     T_ConverterCtrlErrorCodeLauncher( "error sim killed by remote", QT_TRANSLATE_NOOP( "ENT_Tr", "error sim killed by remote" ), eCtrlErrorCodeLauncher_ErrorSimKilledByRemote ),
     T_ConverterCtrlErrorCodeLauncher( "", "", (E_CtrlErrorCodeLauncher)-1 )
+};
+
+ENT_Tr::T_ConverterLogMaintenanceRegimeTravail ENT_Tr::LogMaintenanceRegimeTravailConverter_[] =
+{
+    T_ConverterLogMaintenanceRegimeTravail( "regime 0", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 0" ), eLogMaintenanceRegimeTravail_Regime0 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 1", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 1" ), eLogMaintenanceRegimeTravail_Regime1 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 2", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 2" ), eLogMaintenanceRegimeTravail_Regime2 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 3", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 3" ), eLogMaintenanceRegimeTravail_Regime3 ),
+    T_ConverterLogMaintenanceRegimeTravail( "regime 4", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 4" ), eLogMaintenanceRegimeTravail_Regime4 ),
+    T_ConverterLogMaintenanceRegimeTravail( "", "", (E_LogMaintenanceRegimeTravail)-1 )
 };
 
 ENT_Tr::T_ConverterLogMaintenanceTraitementEtat ENT_Tr::LogMaintenanceTraitementEtatConverter_[] =
@@ -1309,8 +1309,7 @@ ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
     T_ConverterFragOrder( "Pion RenforcerEnVSRAM", QT_TRANSLATE_NOOP( "ENT", "Pion: Renforcer En VSRAM" ), eOrdreConduite_Pion_RenforcerEnVSRAM ),
     T_ConverterFragOrder( "Pion TransfererVSRAM", QT_TRANSLATE_NOOP( "ENT", "Pion: Transferer VSRAM" ), eOrdreConduite_Pion_TransfererVSRAM ),
     T_ConverterFragOrder( "Pion ReprendreAuxOrdresVSRAM", QT_TRANSLATE_NOOP( "ENT", "Pion: Reprendre Aux Ordres VSRAM" ), eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM ),
-    T_ConverterFragOrder( "ModifierTempsBordeeMaintenance", QT_TRANSLATE_NOOP( "ENT", "Modifier Temps Bordee Maintenance" ), eOrdreConduite_ModifierTempsBordeeMaintenance ),
-    T_ConverterFragOrder( "ModifierTempsBordeeSante", QT_TRANSLATE_NOOP( "ENT", "Modifier Temps Bordee Sante" ), eOrdreConduite_ModifierTempsBordeeSante ),
+    T_ConverterFragOrder( "ModifierRegimeTravailMaintenance", QT_TRANSLATE_NOOP( "ENT", "Modifier Regime Travail Maintenance" ), eOrdreConduite_ModifierRegimeTravailMaintenance ),
     T_ConverterFragOrder( "ModifierPrioritesReparations", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Reparations" ), eOrdreConduite_ModifierPrioritesReparations ),
     T_ConverterFragOrder( "ModifierPrioritesBlesses", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Blesses" ), eOrdreConduite_ModifierPrioritesBlesses ),
     T_ConverterFragOrder( "ModifierPrioritesTactiquesReparations", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Tactiques Reparations" ), eOrdreConduite_ModifierPrioritesTactiquesReparations ),
@@ -1349,7 +1348,6 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitCapaciteMissionConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
-    InitTr( TempsBordeeConverter_, "ENT_Tr" );
     InitTr( MissionALAT_PorteeActionConverter_, "ENT_Tr" );
     InitTr( MissionALAT_AmbianceMissionConverter_, "ENT_Tr" );
     InitTr( ModeDeploiementConverter_, "ENT_Tr" );
@@ -1380,6 +1378,7 @@ void ENT_Tr::InitTranslations()
     InitTr( ChangeLiensLogistiquesErrorCodeConverter_, "ENT_Tr" );
     InitTr( ChangeAutomateErrorCodeConverter_, "ENT_Tr" );
     InitTr( CtrlErrorCodeLauncherConverter_, "ENT_Tr" );
+    InitTr( LogMaintenanceRegimeTravailConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceTraitementEtatConverter_, "ENT_Tr" );
     InitTr( LogRavitaillementTraitementEtatConverter_, "ENT_Tr" );
     InitTr( MsgLogRavitaillementChangeQuotasAckConverter_, "ENT_Tr" );
@@ -1535,15 +1534,6 @@ const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr_
 const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( HumanRankConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTempsBordee
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTempsBordee( E_TempsBordee nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TempsBordeeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1814,6 +1804,15 @@ const std::string& ENT_Tr::ConvertFromChangeAutomateErrorCode( E_ChangeAutomateE
 const std::string& ENT_Tr::ConvertFromCtrlErrorCodeLauncher( E_CtrlErrorCodeLauncher nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( CtrlErrorCodeLauncherConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLogMaintenanceRegimeTravail
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( LogMaintenanceRegimeTravailConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2191,15 +2190,6 @@ E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTempsBordee
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TempsBordee ENT_Tr::ConvertToTempsBordee( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TempsBordeeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToMissionALAT_PorteeAction
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2467,6 +2457,15 @@ E_ChangeAutomateErrorCode ENT_Tr::ConvertToChangeAutomateErrorCode( const std::s
 E_CtrlErrorCodeLauncher ENT_Tr::ConvertToCtrlErrorCodeLauncher( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( CtrlErrorCodeLauncherConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLogMaintenanceRegimeTravail
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_LogMaintenanceRegimeTravail ENT_Tr::ConvertToLogMaintenanceRegimeTravail( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( LogMaintenanceRegimeTravailConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

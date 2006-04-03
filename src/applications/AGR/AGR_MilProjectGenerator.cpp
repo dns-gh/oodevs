@@ -62,7 +62,7 @@ void AGR_MilProjectGenerator::Generate( const AGR_Workspace& workspace, const st
     MT_MakeDir( strOutputPath + "/Missions/Population" );
 
     std::cout << "Generating MIL project files" << std::endl;
-    GenerateMissionsProjectFile( workspace, strOutputPath );
+//    GenerateMissionsProjectFile( workspace, strOutputPath );
     GenerateMissionsCPPFile    ( workspace, strOutputPath );
     GenerateMissionsHeaderFile ( workspace, strOutputPath );
 }

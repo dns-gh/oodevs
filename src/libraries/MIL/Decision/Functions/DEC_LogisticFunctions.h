@@ -29,13 +29,13 @@ public:
     static void PionMaintenanceDisableSystem           ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMaintenanceChangePriorities        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMaintenanceChangeTacticalPriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void PionMaintenanceChangeWorkTime          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void PionMaintenanceChangeWorkRate          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
 
     static void AutomateMaintenanceEnableSystem            ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMaintenanceDisableSystem           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMaintenanceChangePriorities        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMaintenanceChangeTacticalPriorities( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void AutomateMaintenanceChangeWorkTime          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AutomateMaintenanceChangeWorkRate          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     //@}
 
     //! @name Medical
@@ -44,14 +44,12 @@ public:
     static void PionMedicalDisableSystem           ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMedicalChangePriorities        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMedicalChangeTacticalPriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void PionMedicalChangeWorkTime          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
 
     static void AutomateMedicalEnableSystem            ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMedicalDisableSystem           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMedicalChangePriorities        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMedicalChangeTacticalPriorities( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void AutomateMedicalChangeWorkTime          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    
+
     static void UndoLendCollectionComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent ); 
 
     static void EvacuateWoundedHumansToTC2       ( DIA_Call_ABC& call );

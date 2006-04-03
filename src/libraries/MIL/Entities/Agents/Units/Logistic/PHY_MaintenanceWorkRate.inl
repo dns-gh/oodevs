@@ -1,42 +1,22 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Logistic/PHY_LogWorkTime.inl $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.inl $
 // $Author: Jvt $
 // $Modtime: 12/04/05 14:26 $
 // $Revision: 4 $
-// $Workfile: PHY_LogWorkTime.inl $
+// $Workfile: PHY_MaintenanceWorkRate.inl $
 //
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetAsnID
+// Name: PHY_MaintenanceWorkRate::Find
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumTempsBordee PHY_LogWorkTime::GetAsnID() const
+const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( ASN1T_EnumLogMaintenanceRegimeTravail nID )
 {
-    return asn_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetName
-// Created: NLD 2005-01-06
-// -----------------------------------------------------------------------------
-inline
-const std::string& PHY_LogWorkTime::GetName() const
-{
-    return strName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::Find
-// Created: NLD 2005-01-06
-// -----------------------------------------------------------------------------
-inline
-const PHY_LogWorkTime* PHY_LogWorkTime::Find( ASN1T_EnumTempsBordee nID )
-{
-    for( CIT_WorkTimeMap it = workTimes_.begin(); it != workTimes_.end(); ++it )
+    for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
     {
         if( it->second->GetAsnID() == nID )
             return it->second;
@@ -45,21 +25,41 @@ const PHY_LogWorkTime* PHY_LogWorkTime::Find( ASN1T_EnumTempsBordee nID )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetNbrWorkerAllowedToWork
-// Created: NLD 2006-03-28
+// Name: PHY_MaintenanceWorkRate::GetAsnID
+// Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
 inline
-uint PHY_LogWorkTime::GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const
+ASN1T_EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
 {
-    return (uint)ceil( rWorkerRatio_ * nNbrAvailable );
+    return asn_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_LogWorkTime::GetDelayBeforeWarningRC
+// Name: PHY_MaintenanceWorkRate::GetName
+// Created: NLD 2005-01-06
+// -----------------------------------------------------------------------------
+inline
+const std::string& PHY_MaintenanceWorkRate::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
 inline
-uint PHY_LogWorkTime::GetDelayBeforeWarningRC() const
+uint PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const
+{
+    return std::min( nNbrAvailable, (uint)ceil( rWorkerRatio_ * nNbrAvailable ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC
+// Created: NLD 2006-03-28
+// -----------------------------------------------------------------------------
+inline
+uint PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC() const
 {
     return nDelayBeforeWarningRC_;
 }

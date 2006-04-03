@@ -59,7 +59,6 @@ public:
 
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities );
     virtual void ChangePriorities( const T_AutomateVector& priorities );
-    virtual void ChangeWorkTime  ( const PHY_LogWorkTime& workTime );
 
     virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, PHY_Human& human ); // Imex
     virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
@@ -131,30 +130,25 @@ private:
     void InsertConsign ( PHY_MedicalConsign_ABC&  );
     void InsertConsigns( const T_MedicalConsigns& );
 
-    bool HasUsableEvacuationAmbulance                    () const;
-    bool HasUsableCollectionAmbulance                    () const;
-    bool HasUsableDoctorForSorting                       () const;
-    bool HasUsableDoctorForHealing                       () const;
-    bool HasUsableDoctorForHealing                       ( const PHY_Human& human ) const;
-    uint GetNbrAvailableDoctorsForHealingAllowedToWork   ( const PHY_Human& human ) const;
-    uint GetNbrAvailableDoctorsForDiagnosingAllowedToWork() const;
-    uint GetNbrAvailableDoctorsForSortingAllowedToWork   () const;
+    bool HasUsableEvacuationAmbulance() const;
+    bool HasUsableCollectionAmbulance() const;
+    bool HasUsableDoctorForSorting   () const;
+    bool HasUsableDoctorForHealing   () const;
+    bool HasUsableDoctorForHealing   ( const PHY_Human& human ) const;
     //@}    
 
 private:
-          MIL_AgentPionLOG_ABC*   pPion_;
-          bool                    bHasChanged_;
-          bool                    bSystemEnabled_;
-    const PHY_LogWorkTime*        pWorkTime_;
-          uint                    nWorkTimeWarningRCTick_;
-          T_MedicalPriorityVector priorities_;
-          T_AutomateVector        tacticalPriorities_;
+    MIL_AgentPionLOG_ABC*   pPion_;
+    bool                    bHasChanged_;
+    bool                    bSystemEnabled_;
+    T_MedicalPriorityVector priorities_;
+    T_AutomateVector        tacticalPriorities_;
 
-          T_MedicalConsigns          consigns_;
-          T_EvacuationAmbulancesMMap evacuationAmbulances_;
-          T_CollectionAmbulancesList collectionAmbulances_;
+    T_MedicalConsigns          consigns_;
+    T_EvacuationAmbulancesMMap evacuationAmbulances_;
+    T_CollectionAmbulancesList collectionAmbulances_;
 
-          T_CollectionAmbulancesSet  reservations_;
+    T_CollectionAmbulancesSet  reservations_;
 };
 
 #include "PHY_RolePionLOG_Medical.inl"
