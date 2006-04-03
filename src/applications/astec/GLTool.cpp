@@ -272,8 +272,9 @@ void GLTool::DrawDetection( World& world )
 {
     if( world.pDetection_ )
     {
-        glColor4d( 1, 1, 1, 1 );
+        glColor3f( 1, 1, 1 );
         world.pDetection_->Draw();
+        glBindTexture( GL_TEXTURE_2D, 0 );
     }
 }
 
