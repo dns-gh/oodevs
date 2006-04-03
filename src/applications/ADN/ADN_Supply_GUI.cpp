@@ -69,7 +69,7 @@ void ADN_Supply_GUI::Build()
 
     // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Supply" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Supply" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
 
@@ -79,6 +79,14 @@ void ADN_Supply_GUI::Build()
     QGroupBox* pTrucksGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Convoy setup times" ), pGroup );
     ADN_Supply_TrucksTable* pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
     pTrucksTable->GetConnector().Connect( & data_.vConvoySetupInfos_ );
+
+    pTrucksGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Convoy loading times" ), pGroup );
+    pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
+    pTrucksTable->GetConnector().Connect( & data_.vConvoyLoadingInfos_ );
+
+    pTrucksGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Convoy unloading times" ), pGroup );
+    pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
+    pTrucksTable->GetConnector().Connect( & data_.vConvoyUnloadingInfos_ );
 
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );

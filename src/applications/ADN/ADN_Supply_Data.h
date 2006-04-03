@@ -39,13 +39,13 @@ class ADN_Supply_Data
 
 public:
 // *****************************************************************************
-    class ConvoySetupInfo
+    class ConvoyInfo
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ConvoySetupInfo )
+        MT_COPYNOTALLOWED( ConvoyInfo )
     public:
-        ConvoySetupInfo();
+        ConvoyInfo();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -55,12 +55,11 @@ public:
 
     public:
         ADN_Type_Int  nNbrTrucks_;
-        ADN_Type_Time setupTime_;
+        ADN_Type_Time time_;
     };
 
-    typedef ADN_Type_Vector_ABC<ConvoySetupInfo>  T_ConvoySetupInfoVector;
-    typedef T_ConvoySetupInfoVector::iterator    IT_ConvoySetupInfoVector;
-
+    typedef ADN_Type_Vector_ABC<ConvoyInfo>  T_ConvoyInfoVector;
+    typedef T_ConvoyInfoVector::iterator    IT_ConvoyInfoVector;
 
 // *****************************************************************************
 public:
@@ -84,7 +83,9 @@ public:
     ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
     ADN_Type_Enum<E_UnitMission, eNbrUnitMission> nSupplyMission_;
 
-    T_ConvoySetupInfoVector vConvoySetupInfos_;
+    T_ConvoyInfoVector vConvoySetupInfos_;
+    T_ConvoyInfoVector vConvoyLoadingInfos_;
+    T_ConvoyInfoVector vConvoyUnloadingInfos_;
 };
 
 

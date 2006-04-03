@@ -365,8 +365,6 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[eLogCarryWeightCapacity], tr( "T" ), eGreaterZero ); 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero ); 
-    builder.AddField<ADN_TimeField>( pCarrierGroup , tr( "Average load time"   ), vInfosConnectors[eLogLoadTime] ); 
-    builder.AddField<ADN_TimeField>( pCarrierGroup , tr( "Average unload time" ), vInfosConnectors[eLogUnloadTime] ); 
     builder.AddField<ADN_ComboBox_Equipment_Nature>( pCarrierGroup, tr( "Carried nature" ), vInfosConnectors[eLogCarryNature] );
 
     return pSupplyGroup;

@@ -476,8 +476,6 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , bIsCarrier_         ( false )
 , rWeight_            ( 0 )
 , rVolume_            ( 0 )
-, loadTime_           ( "0s" )
-, unloadTime_         ( "0s" )
 , ptrDotationNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 , bIsConveyor_        ( false )
 {
@@ -512,8 +510,6 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
     bIsCarrier_  = src.bIsCarrier_.GetData();
     rWeight_     = src.rWeight_.GetData();
     rVolume_     = src.rVolume_.GetData();
-    loadTime_   = src.loadTime_.GetData();
-    unloadTime_ = src.unloadTime_.GetData();
     ptrDotationNature_ = src.ptrDotationNature_.GetData();
     bIsConveyor_  = src.bIsConveyor_.GetData();
 }
@@ -532,8 +528,6 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& inp
         input.ReadField( "Masse", rWeight_ );
         input.ReadField( "Volume", rVolume_ );
         input.EndSection(); // Capacite
-        input.ReadField( "TempsChargementMoyen", loadTime_ );
-        input.ReadField( "TempsDechargementMoyen", unloadTime_ );
 
         std::string strNature;
         input.ReadField( "NatureTransportee", strNature );
@@ -566,8 +560,6 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& o
         output.WriteField( "Masse" , rWeight_.GetData() );
         output.WriteField( "Volume", rVolume_.GetData() );
         output.EndSection();
-        output.WriteField( "TempsChargementMoyen", loadTime_.GetData() );
-        output.WriteField( "TempsDechargementMoyen", unloadTime_.GetData() );
         output.WriteField( "NatureTransportee", ptrDotationNature_.GetData()->GetData() );
         output.EndSection(); // Transporteur
     }

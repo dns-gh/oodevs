@@ -99,8 +99,6 @@ public:
         eIsLogCarrier,
         eLogCarryWeightCapacity,
         eLogCarryVolumeCapacity,
-        eLogLoadTime,
-        eLogUnloadTime,
         eLogCarryNature,
         eIsConveyor,
         eIsMaintenance,

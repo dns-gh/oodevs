@@ -27,7 +27,7 @@
 #include "ADN_TableItem_TimeField.h"
 #include "ADN_Validator.h"
 
-typedef ADN_Supply_Data::ConvoySetupInfo ConvoySetupInfo;
+typedef ADN_Supply_Data::ConvoyInfo ConvoyInfo;
 
 
 //-----------------------------------------------------------------------------
@@ -53,8 +53,8 @@ public:
         pItemNbrTrucks->GetValidator().setBottom( 1 );
 
         // Connect the items.
-        pItemNbrTrucks->GetConnector().Connect( &static_cast<ConvoySetupInfo*>(pObj)->nNbrTrucks_ );
-        pItemTime->GetConnector().Connect( &static_cast<ConvoySetupInfo*>(pObj)->setupTime_ );
+        pItemNbrTrucks->GetConnector().Connect( &static_cast<ConvoyInfo*>(pObj)->nNbrTrucks_ );
+        pItemTime->GetConnector().Connect( &static_cast<ConvoyInfo*>(pObj)->time_ );
     }
 };
 
@@ -120,7 +120,7 @@ void ADN_Supply_TrucksTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QP
     else if( nMenuResult == 1 )
     {
         // Delete the current element.
-        ConvoySetupInfo* pCurrentPart = (ConvoySetupInfo*)GetCurrentData();
+        ConvoyInfo* pCurrentPart = (ConvoyInfo*)GetCurrentData();
         if( pCurrentPart != 0 )
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentPart );
     }
@@ -128,7 +128,7 @@ void ADN_Supply_TrucksTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QP
     {
         assert( nMenuResult == 0 );
         // Create a new element
-        ConvoySetupInfo* pNewInfo = new ConvoySetupInfo();
+        ConvoyInfo* pNewInfo = new ConvoyInfo();
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );  

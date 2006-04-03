@@ -1094,11 +1094,11 @@
     </message>
     <message>
         <source>Average load time</source>
-        <translation>Temps moyen de chargement</translation>
+        <translation type="obsolete">Temps moyen de chargement</translation>
     </message>
     <message>
         <source>Average unload time</source>
-        <translation>Temps moyen de déchargement</translation>
+        <translation type="obsolete">Temps moyen de déchargement</translation>
     </message>
     <message>
         <source>Max weight carried</source>
@@ -4711,6 +4711,14 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Supply</source>
         <translation>Ravitaillement</translation>
+    </message>
+    <message>
+        <source>Convoy loading times</source>
+        <translation>Temps chargement convois</translation>
+    </message>
+    <message>
+        <source>Convoy unloading times</source>
+        <translation>Temps déchargement convois</translation>
     </message>
 </context>
 <context>

@@ -170,8 +170,6 @@ public:
         ADN_Type_Bool bIsCarrier_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rVolume_;
-        ADN_Type_Time loadTime_;
-        ADN_Type_Time unloadTime_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
 
         ADN_Type_Bool bIsConveyor_;
