@@ -3,94 +3,82 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-05-07 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamLocationList.h $
-// $Author: Ape $
-// $Modtime: 7/09/04 17:16 $
-// $Revision: 4 $
-// $Workfile: ParamLocationList.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __ParamLocationList_h_
 #define __ParamLocationList_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
+#include "ShapeHandler_ABC.h"
 #include "ParamListView.h"
 
-class ShapeEditorMapEventFilter;
-
+class LocationCreator;
+class ParametersLayer;
+class CoordinateConverter;
 
 // =============================================================================
 /** @class  ParamLocationList
     @brief  ParamLocationList
-    @par    Using example
-    @code
-    ParamLocationList;
-    @endcode
 */
-// Created: APE 2004-05-07
+// Created: AGE 2006-04-03
 // =============================================================================
-class ParamLocationList : public ParamListView, public Param_ABC
+class ParamLocationList : public ParamListView, public Param_ABC, private ShapeHandler_ABC
 {
-    Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamLocationList );
-    friend class GLTool;
-
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamLocationList( ASN1T_ListLocalisation& asnListLoc,   const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-     ParamLocationList( ASN1T_ListPolygon&      asnListPoly,  const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-     ParamLocationList( ASN1T_ListPoint&        asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-    ~ParamLocationList();
-    //@}
+             ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn,      const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn,        const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
+    virtual ~ParamLocationList();
 
     //! @name Operations
     //@{
-    void Draw();
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
+    virtual void RemoveFromController();
+    virtual void RegisterIn( ActionController& controller );
+    virtual void Handle( const T_PointVector& points );
+    virtual bool CheckValidity();
+    virtual void Commit();
     //@}
 
-private slots:
-    void StartTracing( int nLocationType );
-    void TracingDone();
+public:
+    //! @name Slots
+    //@{
+    virtual void OnDeleteSelectedItem();
+    virtual void OnClearList();
+    //@}
 
 private:
-    typedef std::pair< ASN1T_EnumTypeLocalisation, T_PointVector > T_Location;
-    typedef MT_ValuedListViewItem<T_Location> T_LocationItem;
+    //! @name Copy/Assignement
+    //@{
+    ParamLocationList( const ParamLocationList& );            //!< Copy constructor
+    ParamLocationList& operator=( const ParamLocationList& ); //!< Assignement operator
+    //@}
 
-    typedef std::vector< ASN1T_CoordUTM* > T_ASNUMTCoordPrtVector;
-    typedef T_ASNUMTCoordPrtVector::iterator IT_ASNUMTCoordPrtVector;
+    //! @name Types
+    //@{
+    typedef std::vector< T_PointVector >              T_Points;
+    typedef std::vector< ASN1T_EnumTypeLocalisation > T_Types;
+    typedef std::vector< ASN1T_CoordUTM* > T_CoordVector;
+    typedef T_CoordVector::iterator       IT_CoordVector;
+    //@}
 
 private:
     //! @name Member data
     //@{
-    std::string strMenuText_;
-
-    ASN1T_ListLocalisation& asnListLoc_;
+    const CoordinateConverter& converter_;
+    ASN1T_ListLocalisation& asn_;
     ASN1T_Localisation* pAsnLocalisationList_;
-    T_ASNUMTCoordPrtVector asnUMTCoordPtrList_;
+    T_CoordVector asnUMTCoordPtrList_;
 
-    QPopupMenu* pPopupMenu_;
-    MT_Vector2D popupPoint_;
-    T_LocationItem* pItemUnderConstruction_;
-
-    ShapeEditorMapEventFilter* pLineEditor_;
+    LocationCreator* creator_;
+    T_Points points_;
+    T_Types  types_;
+    ActionController* controller_;
     //@}
 };
-
-#   include "ParamLocationList.inl"
 
 #endif // __ParamLocationList_h_

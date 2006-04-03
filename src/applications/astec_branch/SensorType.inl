@@ -27,9 +27,9 @@ float SensorType::GetAngle() const
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
 inline
-float SensorType::ComputeExtinction( const RawVisionData::Iterator& env, const Agent& srcAgent ) const
+float SensorType::ComputeExtinction( /*const RawVisionData::Iterator& env,*/ const Agent& srcAgent ) const
 {
-    return ComputeExtinction( env, srcAgent, rDetectionDist_ );
+    return ComputeExtinction( /*env,*/ srcAgent, rDetectionDist_ );
 }
 
 // -----------------------------------------------------------------------------

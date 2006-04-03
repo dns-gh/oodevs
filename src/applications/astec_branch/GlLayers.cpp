@@ -28,7 +28,7 @@
 // Name: GlLayers constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlLayers::GlLayers( QGLWidget& widget, const std::string& scipioXml, Controllers& controllers, Model& model )
+GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model )
     : WorldParameters( scipioXml )
     , GlProxy( controllers )
     , strategy_( new ColorStrategy( controllers, *this ) )
@@ -38,7 +38,7 @@ GlLayers::GlLayers( QGLWidget& widget, const std::string& scipioXml, Controllers
 
     Register( *new Elevation2dLayer( *elevation_ ) );
     Register( *new Elevation3dLayer( *elevation_ ) );
-    Register( *new TerrainLayer( controllers, widget, graphicsDirectory_ ) );
+    Register( *new TerrainLayer( controllers, *this, graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters_, model.limits_ ) );
     Register( *new ObjectsLayer( controllers, *this, *strategy_, *this ) );

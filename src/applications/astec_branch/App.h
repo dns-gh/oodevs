@@ -68,6 +68,7 @@ private:
     //! @name Helpers
     //@{
     std::string RetrieveValidConfigFile( const std::string& conffile );
+    void Initialize( int nArgc, char** ppArgv );
     void Initialize( const std::string& scipioXml );
     void InitializeHumanFactors ( xml::xistream& xis, const std::string& conffile );
     void SetSplashText( const QString& strText );

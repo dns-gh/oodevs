@@ -78,6 +78,7 @@ void GlWidget::initializeGL()
 {
     glEnable( GL_TEXTURE_2D );
     MapWidget::initializeGL();
+    glDisable( GL_DEPTH_TEST );
     circle_ = GenerateCircle();
     app6Font_         = new GlFont( "Scipio" );
     app6OutlinedFont_ = new GlFont( "Scipio", true );

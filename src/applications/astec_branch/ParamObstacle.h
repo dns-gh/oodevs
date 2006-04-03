@@ -31,16 +31,11 @@ class ParamLocation;
 // =============================================================================
 /** @class  ParamObstacle
     @brief  ParamObstacle
-    @par    Using example
-    @code
-    ParamObstacle;
-    @endcode
 */
 // Created: APE 2004-05-18
 // =============================================================================
 class ParamObstacle : public QGroupBox, public Param_ABC
 {
-    MT_COPYNOTALLOWED( ParamObstacle );
     friend class GLTool;
 
 public:
@@ -52,15 +47,16 @@ public:
 
     //! @name Operations
     //@{
-    void Draw               ();
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity      ();
-    void WriteMsg           ( std::stringstream& strMsg );
+    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual bool CheckValidity();
+    virtual void Commit();
     //@}
 
-    //! @name Accessors
+private:
+    //! @name Copy/Assignment
     //@{
-    const T_PointVector& GetPointList();
+    ParamObstacle( const ParamObstacle& );
+    ParamObstacle& operator=( const ParamObstacle& );
     //@}
 
 private:
@@ -73,11 +69,8 @@ private:
     QComboBox*                                  pUrgencyCombo_;
     QComboBox*                                  pPreliminaryCombo_;
     QComboBox*                                  pPriorityCombo_;
-
     ParamLocation*      pLocation_;
     //@}
 };
-
-#   include "ParamObstacle.inl"
 
 #endif // __ParamObstacle_h_

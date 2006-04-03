@@ -19,47 +19,49 @@
 #ifndef __ParamListView_h_
 #define __ParamListView_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-
 // =============================================================================
 /** @class  ParamListView
     @brief  ParamListView
-    @par    Using example
-    @code
-    ParamListView;
-    @endcode
 */
 // Created: APE 2004-04-19
 // =============================================================================
 class ParamListView : public QListView
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamListView );
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamListView( const std::string& strLabel, bool bPopupMenu, QWidget* pParent );
-    ~ParamListView();
+             ParamListView( QWidget* pParent, const QString& label );
+    virtual ~ParamListView();
     //@}
 
-    void TurnHeaderRed( int nMSec );
-
-private slots:
-    //! @name Private slots
+    //! @name Operations
     //@{
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
-    void OnDeleteSelectedItem();
-    void OnClearList();
-
-    void TurnHeaderBlack();
+    bool Invalid();
     //@}
 
-protected:
+public slots:
+    //! @name slots
+    //@{
+    virtual void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
+    virtual void OnDeleteSelectedItem();
+    virtual void OnClearList();
+    virtual void TurnHeaderBlack();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ParamListView( const ParamListView& );
+    ParamListView& operator=( const ParamListView& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     QPopupMenu* pPopupMenu_;
+    //@}
 };
 
 #endif // __ParamListView_h_

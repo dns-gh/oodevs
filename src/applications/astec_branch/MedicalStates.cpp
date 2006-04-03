@@ -43,9 +43,6 @@ void MedicalStates::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;
 
-    if( message.m.temps_de_bordeePresent )
-        nTempsBordee_ = 8 + 4 * message.temps_de_bordee;
-
     if( message.m.prioritesPresent )
     {
         priorities_.resize( message.priorites.n );
@@ -88,7 +85,6 @@ void MedicalStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Etat chaine santé" )
                 .Display( "Etat chaine", bChainEnabled_ ? "Activée" : "Désactivée" )
-                .Display( "Temps de bordée", nTempsBordee_ * Units::hours )
                 .Display( "Priorités", priorities_ )
                 .Display( "Priorités tactiques", tacticalPriorities_ );
 }

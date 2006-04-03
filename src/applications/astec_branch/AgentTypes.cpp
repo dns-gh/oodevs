@@ -12,7 +12,7 @@
 #include "AgentType.h"
 #include "ComponentType.h"
 #include "DecisionalModel.h"
-//#include "SensorType.h"
+#include "SensorType.h"
 #include "AutomatType.h"
 #include "PopulationType.h"
 #include "DotationType.h"
@@ -157,9 +157,19 @@ void AgentTypes::ReadSensors( const std::string& sensors )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadSensor( xml::xistream& xis )
 {
+    std::string name;
+    xis >> attribute( "nom", name )
+        >> list( "DetectionAgents", *this, ReallyReadSensor, name );
+}
 
-//    SensorType* type = new SensorType( xis );
-//    Resolver< SensorType, std::string >::Register( type->GetName(), *type );
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReallyReadSensor
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void AgentTypes::ReallyReadSensor( xml::xistream& xis, const std::string& sensor )
+{
+//    SensorType* type = new SensorType( sensor, xis );
+//    Resolver< SensorType, std::string >::Register( sensor, *type );
 }
 
 // -----------------------------------------------------------------------------

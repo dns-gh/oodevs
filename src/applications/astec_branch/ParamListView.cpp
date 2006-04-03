@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "ParamListView.h"
 #include "moc_ParamListView.cpp"
@@ -28,18 +24,14 @@
 // Name: ParamListView constructor
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-ParamListView::ParamListView( const std::string& strLabel, bool bPopupMenu, QWidget* pParent )
+ParamListView::ParamListView( QWidget* pParent, const QString& label )
     : QListView     ( pParent )
     , pPopupMenu_   ( new QPopupMenu( this ) )
 {
-    this->addColumn( strLabel.c_str() );
-    this->setResizeMode( QListView::LastColumn );
-
-    if( bPopupMenu )
-        connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
-
+    addColumn( label );
+    setResizeMode( QListView::LastColumn );
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamListView destructor
@@ -47,27 +39,22 @@ ParamListView::ParamListView( const std::string& strLabel, bool bPopupMenu, QWid
 // -----------------------------------------------------------------------------
 ParamListView::~ParamListView()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamListView::TurnHeaderRed
-/** @param  nMSec 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-void ParamListView::TurnHeaderRed( int nMSec )
+bool ParamListView::Invalid()
 {
-    this->header()->setPaletteForegroundColor( Qt::red );
-    QTimer::singleShot( nMSec, this, SLOT( TurnHeaderBlack() ) );
+    header()->setPaletteForegroundColor( Qt::red );
+    QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
+    return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamListView::OnRequestPopup
-/** @param  pItem 
-    @param  pos 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 void ParamListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
@@ -79,17 +66,14 @@ void ParamListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
     pPopupMenu_->popup( pos );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ParamListView::OnDeleteSelectedItem
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 void ParamListView::OnDeleteSelectedItem()
 {
-    assert( this->currentItem() != 0 );
-    delete this->currentItem();
+    delete selectedItem();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamListView::OnClearList
@@ -97,9 +81,8 @@ void ParamListView::OnDeleteSelectedItem()
 // -----------------------------------------------------------------------------
 void ParamListView::OnClearList()
 {
-    this->clear();
+    clear();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamListView::TurnHeaderBlack
@@ -107,6 +90,5 @@ void ParamListView::OnClearList()
 // -----------------------------------------------------------------------------
 void ParamListView::TurnHeaderBlack()
 {
-    this->header()->setPaletteForegroundColor( Qt::black );
+    header()->setPaletteForegroundColor( Qt::black );
 }
-

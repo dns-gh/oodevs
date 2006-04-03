@@ -54,7 +54,7 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& 
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Etat chaine maintenance" )
                 .AddLabel( "Etat chaine" )
-                .AddLabel( "Temps de bordée" )
+                .AddLabel( "Régime de travail" )
                 .AddLabel( "Priorités" )
                 .AddLabel( "Priorités tactiques" );
 

@@ -60,7 +60,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
     widget2d_ = new GlWidget( this, controllers, scipioXml );
     setCentralWidget( widget2d_ );
-    layers_ = new GlLayers( *widget2d_, scipioXml, controllers, model );
+    layers_ = new GlLayers( scipioXml, controllers, model );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );

@@ -78,6 +78,7 @@ private:
     void ReadAutomatType( xml::xistream& xis );
     void ReadPopulationType( xml::xistream& xis );
     void ReadComponent( xml::xistream& xis );
+    void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );
     void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver );
     //@}

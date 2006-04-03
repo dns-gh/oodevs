@@ -21,12 +21,12 @@
 
 #include "ASN_Types.h"
 #include "Param_ABC.h"
-#include "ContextMenuObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
 
 class ParametersLayer;
 class CoordinateConverter;
 class MT_ParameterLabel;
+class LocationCreator;
 
 // =============================================================================
 /** @class  ParamLocation
@@ -34,12 +34,8 @@ class MT_ParameterLabel;
 */
 // Created: APE 2004-05-06
 // =============================================================================
-class ParamLocation : public QHBox, public Param_ABC
-                    , public ContextMenuObserver_ABC< geometry::Point2f >
-                    , private ShapeHandler_ABC
+class ParamLocation : public QHBox, public Param_ABC, private ShapeHandler_ABC
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -49,17 +45,12 @@ public:
 
     //! @name Operations
     //@{
+    virtual void RemoveFromController();
+    virtual void RegisterIn( ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();
-    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
     virtual void Handle( const T_PointVector& points );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void Start( int );
     //@}
 
 private:
@@ -72,19 +63,16 @@ private:
 private:
     //! @name Member data
     //@{
-    ParametersLayer& layer_;
-    const CoordinateConverter& converter_;
     ASN1T_Localisation& asn_;
-    
-    std::string menu_;
+    const CoordinateConverter& converter_;
+
+    LocationCreator* creator_;
     MT_ParameterLabel* pLabel_;
     QLabel* pShapeLabel_;
-    QPopupMenu* pPopupMenu_;
-
-    geometry::Point2f popupPoint_;
     T_PointVector points_;
     ASN1T_CoordUTM* pUMTCoords_;
     ASN1T_EnumTypeLocalisation nType_;
+    ActionController* controller_; // $$$$ AGE 2006-04-03: sucks
     //@}
 };
 

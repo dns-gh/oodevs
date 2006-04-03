@@ -83,6 +83,7 @@ Experience::Experience( const std::string& strName, E_ExperienceType nType, ASN1
 // -----------------------------------------------------------------------------
 Experience::~Experience()
 {
+    // NOTHING
 }
 
 

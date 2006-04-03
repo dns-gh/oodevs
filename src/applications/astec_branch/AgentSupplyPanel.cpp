@@ -68,13 +68,6 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controller
     pDispoTransporters_->AddColumn( "Transporteurs pour convois" )
                         .AddColumn( "Disponibles" );
 
-    pDispoCommanders_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
-    pDispoCommanders_->AddColumn( "Chefs de convois" )
-                      .AddColumn( "Total" )
-                      .AddColumn( "Disponibles" )
-                      .AddColumn( "Au travail" )
-                      .AddColumn( "Au repos" );
-    
     controllers_.Register( *this );
 }
 
@@ -127,7 +120,6 @@ void AgentSupplyPanel::NotifySelected( const Agent* agent )
             pStocks_->hide();
             pQuotas_->hide();
             pDispoTransporters_->hide();
-            pDispoCommanders_->hide();
 
             Show();
             NotifyUpdated( selected_->Get< LogisticConsigns >() );
@@ -207,10 +199,6 @@ void AgentSupplyPanel::NotifyUpdated( const SupplyStates& consigns )
 
     pDispoTransporters_->DeleteTail( 
         pDispoTransporters_->DisplayList( consigns.dispoTransporters_.begin(), consigns.dispoTransporters_.end() )
-        );
-
-    pDispoCommanders_->DeleteTail( 
-        pDispoCommanders_->DisplayList( consigns.dispoCommanders_.begin(), consigns.dispoCommanders_.end() )
         );
 
     pQuotas_->DeleteTail( 

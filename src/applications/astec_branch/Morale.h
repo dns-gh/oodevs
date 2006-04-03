@@ -42,7 +42,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static       void         Initialize ();
+    
     static       void         Terminate  ();
     static const Morale*  Find       ( const std::string& strName );
     static const Morale*  Find       ( ASN1T_EnumUnitMoral nAsnID );
@@ -75,6 +75,7 @@ private:
     //@}
 
 private:
+    static T_MoraleMap Initialize();
      Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMoral nAsnID );
     ~Morale();
     Morale( const Morale& );

@@ -65,7 +65,6 @@ public:
     const Resolver_ABC< Agent >&         agentResolver_;
 
     bool             bChainEnabled_;
-    unsigned         nTempsBordee_;
     T_Availabilities dispoReleveAmbulances_;
     T_Availabilities dispoRamassageAmbulances_;  
     T_Availabilities dispoDoctors_;

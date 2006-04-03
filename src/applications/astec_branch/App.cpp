@@ -38,6 +38,12 @@ namespace po = boost::program_options;
 
 App* App::pInstance_ = 0;
 
+namespace 
+{
+    struct CatchMeIfYouCan {};
+}
+
+
 //-----------------------------------------------------------------------------
 // Name: App constructor
 // Created: NLD 2002-07-15
@@ -46,6 +52,28 @@ App::App( int nArgc, char** ppArgv )
     : QApplication  ( nArgc, ppArgv )
     , splashScreen_( 0 )
     , mainWindow_( 0 )
+{
+    try
+    {
+        Initialize( nArgc, ppArgv );
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, APP_NAME, e.what() );
+        throw CatchMeIfYouCan();
+    }
+    catch( ... )
+    {
+        QMessageBox::critical( 0, APP_NAME, "Whooops. Astec has crashed" );
+        throw CatchMeIfYouCan();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::Initialize
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void App::Initialize( int nArgc, char** ppArgv )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
@@ -57,7 +85,7 @@ App::App( int nArgc, char** ppArgv )
         ( "conffile,c", po::value< std::string >( &conffile )->default_value( "./scipio.xml" ), "specify main config file (scipio.xml)" )
     ;
     po::variables_map vm;
-    po::store( po::parse_command_line( argc(), argv(), desc ), vm );
+    po::store( po::parse_command_line( nArgc, ppArgv, desc ), vm );
     po::notify( vm );
     
     // Prepare the splash screen displayed during the initialization.
@@ -154,7 +182,6 @@ void App::InitializeHumanFactors( xistream& xis, const std::string& conffile )
 
     Tiredness ::Initialize( factors );
     Experience::Initialize( factors );
-    Morale    ::Initialize();
 }
 
 //-----------------------------------------------------------------------------

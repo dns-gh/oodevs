@@ -13,7 +13,7 @@
 
 #include "Morale.h"
 
-Morale::T_MoraleMap Morale::morales_;
+
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
@@ -24,16 +24,20 @@ const Morale Morale::moyen_    ( "Moyen"    , eMoyen    , EnumUnitMoral::moyen  
 const Morale Morale::bon_      ( "Bon"      , eBon      , EnumUnitMoral::bon       );
 const Morale Morale::fanatique_( "Fanatique", eFanatique, EnumUnitMoral::fanatique );
 
+Morale::T_MoraleMap Morale::morales_ = Initialize();
+
 // -----------------------------------------------------------------------------
 // Name: Morale::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void Morale::Initialize()
+Morale::T_MoraleMap Morale::Initialize()
 {
-    morales_[ mauvais_  .GetName() ] = &mauvais_;
-    morales_[ moyen_    .GetName() ] = &moyen_;
-    morales_[ bon_      .GetName() ] = &bon_;
-    morales_[ fanatique_.GetName() ] = &fanatique_;
+    T_MoraleMap morales;
+    morales[ mauvais_  .GetName() ] = &mauvais_;
+    morales[ moyen_    .GetName() ] = &moyen_;
+    morales[ bon_      .GetName() ] = &bon_;
+    morales[ fanatique_.GetName() ] = &fanatique_;
+    return morales;
 }
 
 // -----------------------------------------------------------------------------

@@ -30,7 +30,7 @@
 //#include "ParamComboBox.h"
 #include "ParamBool.h"
 #include "ParamLocation.h"
-//#include "ParamLocationList.h"
+#include "ParamLocationList.h"
 //#include "ParamAgentType.h"
 #include "ParamAgentKnowledge.h"
 #include "ParamAgentKnowledgeList.h"
@@ -242,7 +242,8 @@ void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const std::s
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateLocationList( ASN1T_ListLocalisation& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
+    // $$$$ AGE 2006-04-03: bOptional ?
+    AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +252,7 @@ void MissionInterface_ABC::CreateLocationList( ASN1T_ListLocalisation& asn, cons
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePolygonList( ASN1T_ListPolygon& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,7 +261,7 @@ void MissionInterface_ABC::CreatePolygonList( ASN1T_ListPolygon& asn, const std:
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePointList( ASN1T_ListPoint& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamLocationList( asn, strName, strName, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), true );
 }
 
 // -----------------------------------------------------------------------------

@@ -181,8 +181,8 @@ void AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const Agent& ag
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    // $$$$ AGE 2006-02-10: 
-    SendMsgEnableUnitVisionCones();
+    // NOTHING
+//    SendMsgEnableUnitVisionCones();
 }
 
 // -----------------------------------------------------------------------------

@@ -7,24 +7,25 @@
 #include "Surface.h"
 #include "Net_Def.h"
 #include "SensorType.h"
-#include "App.h"
-#include "GLTool.h"
+#include "GlTools_ABC.h"
+
+using namespace geometry;
 
 // -----------------------------------------------------------------------------
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const VisionConesMessage& input )
+Surface::Surface( const VisionConesMessage& input, const Resolver_ABC< SensorType, std::string >& resolver )
 {
-    input >> vOrigin_;
-    input >> rHeight_;
+    double oX, oY, rHeight;
+    input >> oX, oY; origin_ = Point2f( float( oX ), float( oY ) );
+    input >> rHeight; height = float( rHeight );
 
     std::string strTypeName;
     input >> strTypeName;
 
-//    pSensorType_ = App::GetApp().FindSensorType( strTypeName );
-//    assert( pSensorType_ );
-
+    pSensorType_ = & resolver.Get( strTypeName );
+ 
     unsigned long nNbrSectors;
     input >> nNbrSectors;
     sectors_.reserve( nNbrSectors );
@@ -32,7 +33,7 @@ Surface::Surface( const VisionConesMessage& input )
     {
         double x, y;
         input >> x >> y;
-        sectors_.push_back( MT_Sector( vOrigin_, geometry::Point2f( float(x), float(y) ), 12 /*pSensorType_->GetAngle()*/ ) ); // $$$$ AGE 2006-02-14: 
+        sectors_.push_back( Sector( origin_, Vector2f( float(x), float(y) ), pSensorType_->GetAngle() ) );
     }
 }
 
@@ -42,46 +43,46 @@ Surface::Surface( const VisionConesMessage& input )
 // -----------------------------------------------------------------------------
 Surface::~Surface()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Surface::Draw
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void Surface::Draw( const Agent& agent ) const
+void Surface::Draw( const Agent& agent, const GlTools_ABC& tools ) const
 {
     float rRadius = pSensorType_->GetMaxDistance( agent );
 
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
     {
-        const MT_Sector& sector = *itSector;
+        const Sector& sector = *itSector;
 
-        const float angle = sector.GetAngle() * 0.5;
-        MT_Vector2D dir      = sector.GetDirection();
-        const MT_Vector2D& pos    = sector.GetOrigin();
+        const float     angle = sector.GetAngle() * 0.5f;
+        const Vector2f& dir   = sector.GetDirection();
+        const Point2f&  pos   = sector.GetOrigin();
 
-//        if( pos.IsZero() )
-//            GLTool::DrawCircle( pos, rRadius );
-//        else
-//        {
-//            MT_Vector2D dir1 = dir;
-//            MT_Vector2D dir2 = dir;
-//
-//            dir1.Rotate( -angle ).Normalize() *= rRadius;
-//            dir2.Rotate( angle ).Normalize() *= rRadius;
-//            dir1 += pos;
-//            dir2 += pos;
-//
-//            T_PointVector points; points.reserve( 3 );
-//            points.push_back( dir2 ); points.push_back( pos ); points.push_back( dir1 ); 
-//            GLTool::DrawLine( points );
-//
-//            MT_Float A0 = acos( dir.rX_ );
-//            if( asin( dir.rY_ ) < 0 ) A0 = -A0;
-//
-//            GLTool::DrawArc( pos, rRadius, A0 + angle, A0 - angle );
-//        }
+        if( pos.IsZero() )
+            tools.DrawCircle( pos, rRadius );
+        else
+        {
+            Vector2f dir1 = dir;
+            Vector2f dir2 = dir;
+
+            dir1.Rotate( -angle ).Normalize() *= rRadius;
+            dir2.Rotate( angle ).Normalize() *= rRadius;
+            dir1 += pos;
+            dir2 += pos;
+
+            T_PointVector points; points.reserve( 3 );
+            points.push_back( dir2 ); points.push_back( pos ); points.push_back( dir1 ); 
+            GLTool::DrawLine( points );
+
+            MT_Float A0 = acos( dir.rX_ );
+            if( asin( dir.rY_ ) < 0 ) A0 = -A0;
+
+            GLTool::DrawArc( pos, rRadius, A0 + angle, A0 - angle );
+        }
     }
 }
 

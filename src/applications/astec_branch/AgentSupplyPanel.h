@@ -93,7 +93,6 @@ private:
     ListDisplayer< AgentSupplyPanel >* pStocks_;
     ListDisplayer< AgentSupplyPanel >* pQuotas_;
     ListDisplayer< AgentSupplyPanel >* pDispoTransporters_;
-    ListDisplayer< AgentSupplyPanel >* pDispoCommanders_;
     //@}
 };
 

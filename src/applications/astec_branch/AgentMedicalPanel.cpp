@@ -54,7 +54,6 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controll
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Etat chaine santé" )
                 .AddLabel( "Etat chaine" )
-                .AddLabel( "Temps de bordée" )
                 .AddLabel( "Priorités" )
                 .AddLabel( "Priorités tactiques" );
 

@@ -69,7 +69,6 @@ public:
 
     bool             bChainEnabled_;
     T_Availabilities dispoTransporters_;
-    T_Availabilities dispoCommanders_;  
     T_Dotations      quotas_;
     //@}
 };

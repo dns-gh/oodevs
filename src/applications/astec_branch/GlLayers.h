@@ -31,8 +31,7 @@ class GlLayers : private WorldParameters, public GlProxy
 public:
     //! @name Constructors/Destructor
     //@{
-             // $$$$ AGE 2006-03-30: QGLWidget& widget sucks
-             GlLayers( QGLWidget& widget, const std::string& scipioXml, Controllers& controllers, Model& model );
+             GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model );
     virtual ~GlLayers();
     //@}
 

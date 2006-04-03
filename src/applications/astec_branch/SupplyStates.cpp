@@ -48,12 +48,6 @@ void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
         for( uint i = 0; i < message.disponibilites_transporteurs_convois.n; ++i )
             dispoTransporters_[i] = Availability( resolver_, message.disponibilites_transporteurs_convois.elem[i] );
     }
-    if( message.m.disponibilites_chefs_convoisPresent )
-    {
-        dispoCommanders_.resize( message.disponibilites_chefs_convois.n );
-        for( uint i = 0; i < message.disponibilites_chefs_convois.n; ++i )
-            dispoCommanders_[i] = Availability( resolver_, message.disponibilites_chefs_convois.elem[i] );
-    }
 
     if( message.m.stocksPresent )
     {
