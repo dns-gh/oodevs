@@ -96,11 +96,14 @@ private:
     //@{
     static void InitializeConvoyUnitType( MIL_InputArchive& archive );
     static void InitializeConvoyMission ( MIL_InputArchive& archive );
-    static void InitializeFormingTimes  ( MIL_InputArchive& archive );
+
+    static void InitializeInterpolatedTime( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
     //@}
 
 protected:
     static       MT_InterpolatedFunction< MT_Float > formingTime_;
+    static       MT_InterpolatedFunction< MT_Float > loadingTime_;
+    static       MT_InterpolatedFunction< MT_Float > unloadingTime_;
     static const MIL_AgentTypePion*                  pConvoyAgentType_;
     static const MIL_PionMissionType*                pConvoyMissionType_;
 };

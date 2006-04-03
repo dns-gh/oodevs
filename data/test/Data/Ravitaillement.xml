@@ -9,6 +9,19 @@
       <Temps nbCamions="500">18000s</Temps>
       <Temps nbCamions="5000">54000s</Temps>
     </TempsConstitution>
+    
+    <TempsChargement>
+      <Temps nbCamions="1">60s</Temps>
+      <Temps nbCamions="100">120s</Temps>
+      <Temps nbCamions="5000">300s</Temps>
+    </TempsChargement>
+    
+    <TempsDechargement>
+      <Temps nbCamions="1">60s</Temps>
+      <Temps nbCamions="100">120s</Temps>
+      <Temps nbCamions="5000">300s</Temps>
+    </TempsDechargement>                     
+          
     <TypeUnite nom="Pion Convoi"/>
     <Mission nom="Pion LOG Convoyer"/>
   </Convois>

@@ -29,6 +29,8 @@
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::formingTime_;
+      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::loadingTime_;
+      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::unloadingTime_;
 const MIL_AgentTypePion*                  PHY_Convoy_ABC::pConvoyAgentType_   = 0;
 const MIL_PionMissionType*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
 
@@ -49,7 +51,10 @@ void PHY_Convoy_ABC::Initialize( MIL_InputArchive& archive )
 
     InitializeConvoyUnitType( archive );
     InitializeConvoyMission ( archive );
-    InitializeFormingTimes  ( archive );
+
+    InitializeInterpolatedTime( archive, "TempsConstitution", formingTime_   );
+    InitializeInterpolatedTime( archive, "TempsChargement"  , loadingTime_   );
+    InitializeInterpolatedTime( archive, "TempsDechargement", unloadingTime_ );
    
     archive.EndSection(); // Convois
     archive.EndSection(); // Ravitaillement
@@ -94,14 +99,14 @@ void PHY_Convoy_ABC::InitializeConvoyMission( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::InitializeFormingTimes
+// Name: PHY_Convoy_ABC::InitializeInterpolatedTime
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::InitializeFormingTimes( MIL_InputArchive& archive )
+void PHY_Convoy_ABC::InitializeInterpolatedTime( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data )
 {
-    archive.BeginList( "TempsConstitution" );
+    archive.BeginList( strTagName );
 
-    formingTime_.AddNewPoint( 0., 0. );
+    data.AddNewPoint( 0., 0. );
     uint     nMaxNbrCamions         = 0;
     MT_Float rTimeWhenMaxNbrCamions = 0.;
     while( archive.NextListElement() )
@@ -115,7 +120,7 @@ void PHY_Convoy_ABC::InitializeFormingTimes( MIL_InputArchive& archive )
         archive.ReadTime     (              rTime      , CheckValueGreater( 0. ) );
         rTime = MIL_Tools::ConvertSecondsToSim( rTime );
 
-        formingTime_.AddNewPoint( nNbrCamions, rTime ); 
+        data.AddNewPoint( nNbrCamions, rTime ); 
 
         if( nNbrCamions >= nMaxNbrCamions )
         {
@@ -124,9 +129,9 @@ void PHY_Convoy_ABC::InitializeFormingTimes( MIL_InputArchive& archive )
         }
         archive.EndSection(); // Temps
     }   
-    formingTime_.SetAfterValue( rTimeWhenMaxNbrCamions );
+    data.SetAfterValue( rTimeWhenMaxNbrCamions );
 
-    archive.EndList(); // TempsConstitution
+    archive.EndList(); // strTagName
 }
 
 // -----------------------------------------------------------------------------
@@ -244,34 +249,6 @@ const MIL_Automate* PHY_Convoy_ABC::GetSuppliedAutomate() const
 {
     assert( pConsign_ );
     return pConsign_->GetSuppliedAutomate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetLoadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-uint PHY_Convoy_ABC::GetLoadingTime() const
-{
-    uint nLoadingTime = 0;
-
-    for ( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
-        nLoadingTime = std::max( nLoadingTime, it->second->GetLoadingTime() );
-
-    return nLoadingTime;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetUnloadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-uint PHY_Convoy_ABC::GetUnloadingTime() const
-{
-    uint nUnloadingTime = 0;
-    
-    for ( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
-        nUnloadingTime = std::max( nUnloadingTime, it->second->GetUnloadingTime() );
-
-    return nUnloadingTime;
 }
 
 // =============================================================================

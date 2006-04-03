@@ -40,7 +40,7 @@ LogSupplyConsign_ListView_Item::LogSupplyConsign_ListView_Item( QListView* pPare
     pListViewItemDotations_                           = new QListViewItem( this, pListViewItemState_                               , tr( "Dotations demandées/accordées" ) );
 
     Update();
-//    setOpen( true );
+    setOpen( false );
 }
 
 // -----------------------------------------------------------------------------

@@ -306,8 +306,6 @@ private:
     const PHY_DotationNature*       pStockTransporterNature_;
           MT_Float                  rStockTransporterWeightCapacity_;
           MT_Float                  rStockTransporterVolumeCapacity_;
-          uint                      nStockTransporterLoadingTime_;
-          uint                      nStockTransporterUnloadingTime_;
           bool                      bCanBePartOfConvoy_;
 
 private:

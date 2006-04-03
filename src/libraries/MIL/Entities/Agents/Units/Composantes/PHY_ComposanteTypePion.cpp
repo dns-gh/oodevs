@@ -143,8 +143,6 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , pStockTransporterNature_                   ( 0 )
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
-    , nStockTransporterLoadingTime_              ( 0 )
-    , nStockTransporterUnloadingTime_            ( 0 )
     , bCanBePartOfConvoy_                        ( false )
 {
     archive.ReadField( "DeniveleMaximum", rMaxSlope_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
@@ -633,15 +631,6 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
         archive.ReadField( "Masse" , rStockTransporterWeightCapacity_, CheckValueGreater( 0. ) );
         archive.ReadField( "Volume", rStockTransporterVolumeCapacity_, CheckValueGreater( 0. ) );
         archive.EndSection(); // Capacite
-
-        MT_Float rLoadingTimeTmp;
-        MT_Float rUnloadingTimeTmp;
-       
-        archive.ReadTimeField( "TempsChargementMoyen"  , rLoadingTimeTmp  , CheckValueGreater( 0. ) );
-        archive.ReadTimeField( "TempsDechargementMoyen", rUnloadingTimeTmp, CheckValueGreater( 0. ) );
-
-        nStockTransporterLoadingTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rLoadingTimeTmp   );
-        nStockTransporterUnloadingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUnloadingTimeTmp );
 
         archive.EndSection(); // Transporteur
     }

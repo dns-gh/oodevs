@@ -223,28 +223,6 @@ void PHY_ComposantePion::GetStockTransporterCapacity( MT_Float& rWeightMax, MT_F
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetStockTransporterLoadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-uint PHY_ComposantePion::GetStockTransporterLoadingTime() const
-{
-    assert( pType_ );
-    return pType_->GetStockTransporterLoadingTime();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetStockTransporterUnloadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-uint PHY_ComposantePion::GetStockTransporterUnloadingTime() const
-{
-    assert( pType_ );
-    return pType_->GetStockTransporterUnloadingTime();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::StartUsingForLogistic
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------

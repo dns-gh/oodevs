@@ -41,7 +41,7 @@ LogMaintenanceConsign_ListView_Item::LogMaintenanceConsign_ListView_Item( QListV
 
     Update();
 
-//    setOpen( true );
+    setOpen( false );
 }
 
 // -----------------------------------------------------------------------------

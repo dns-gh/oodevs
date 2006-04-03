@@ -19,6 +19,25 @@ uint PHY_Convoy_ABC::GetFormingTime() const
     return (uint)( formingTime_( conveyors_.size() ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetLoadingTime
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+inline
+uint PHY_Convoy_ABC::GetLoadingTime() const
+{
+    return (uint)( loadingTime_( conveyors_.size() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetUnloadingTime
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+inline
+uint PHY_Convoy_ABC::GetUnloadingTime() const
+{
+    return (uint)( unloadingTime_( conveyors_.size() ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetLoadingPoint
@@ -29,6 +48,7 @@ const MT_Vector2D& PHY_Convoy_ABC::GetLoadingPoint() const
 {
     return loadingPoint_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetUnloadingPoint
 // Created: NLD 2005-12-16

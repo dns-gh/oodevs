@@ -209,26 +209,6 @@ void PHY_Conveyor::NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Conveyor::GetLoadingTime
-// Created: NLD 2005-07-19
-// -----------------------------------------------------------------------------
-uint PHY_Conveyor::GetLoadingTime() const
-{
-    assert( pConveyorComp_ );
-    return pConveyorComp_->GetStockTransporterLoadingTime();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Conveyor::GetUnloadingTime
-// Created: NLD 2005-07-19
-// -----------------------------------------------------------------------------
-uint PHY_Conveyor::GetUnloadingTime() const
-{
-    assert( pConveyorComp_ );
-    return pConveyorComp_->GetStockTransporterUnloadingTime();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Conveyor::ApproximateTravelTime
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------

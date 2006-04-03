@@ -408,26 +408,6 @@ bool PHY_ComposanteTypePion::CanBePartOfConvoy() const
 {
     return bCanBePartOfConvoy_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetStockTransporterLoadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-uint PHY_ComposanteTypePion::GetStockTransporterLoadingTime() const
-{
-    return nStockTransporterLoadingTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetStockTransporterUnloadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-uint PHY_ComposanteTypePion::GetStockTransporterUnloadingTime() const
-{
-    return nStockTransporterUnloadingTime_;
-}
     
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetStockTransporterCapacity

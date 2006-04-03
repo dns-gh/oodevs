@@ -47,10 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    uint GetLoadingTime         () const;
-    uint GetUnloadingTime       () const;
-    uint ApproximateTravelTime  ( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );
-    
+    uint ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );   
     //@}
 
     //! @name Serialization

@@ -43,7 +43,7 @@ LogMedicalConsign_ListView_Item::LogMedicalConsign_ListView_Item( QListView* pPa
 
     Update();
 
-//    setOpen( true );
+    setOpen( false );
 }
 
 // -----------------------------------------------------------------------------
