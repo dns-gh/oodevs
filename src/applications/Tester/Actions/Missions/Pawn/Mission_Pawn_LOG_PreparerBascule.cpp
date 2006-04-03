@@ -62,6 +62,7 @@ void Mission_Pawn_LOG_PreparerBascule::Serialize()
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.automate_pour_bascule );
+    ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.rester_sur_place );
 
 
 }

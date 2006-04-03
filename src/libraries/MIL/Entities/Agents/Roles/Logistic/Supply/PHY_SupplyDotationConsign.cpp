@@ -30,7 +30,7 @@ PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplying
     pConvoy_ = new PHY_DotationConvoy( *this ); 
 
     pSupplyState_->SetConsign( this );
-    EnterStateConvoyWaitingForCommander();
+    EnterStateConvoyWaitingForTransporters();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,16 +143,6 @@ const MIL_Automate* PHY_SupplyDotationConsign::GetSuppliedAutomate() const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationConsign::EnterStateConvoyWaitingForCommander
-// Created: NLD 2005-12-14
-// -----------------------------------------------------------------------------
-void PHY_SupplyDotationConsign::EnterStateConvoyWaitingForCommander()
-{
-    nTimer_ = 0;
-    SetState( eConvoyWaitingForCommander );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::EnterStateConvoyWaitingForTransporters
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
@@ -257,7 +247,6 @@ bool PHY_SupplyDotationConsign::Update()
 
     switch( GetState() )
     {
-        case eConvoyWaitingForCommander     : if( pConvoy_->ReserveCommander   () )  EnterStateConvoyWaitingForTransporters (); break;
         case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters() )  EnterStateConvoyForming                (); break;
         case eConvoyForming                 :                                        EnterStateConvoyGoingToLoadingPoint    (); break;
         case eConvoyGoingToLoadingPoint     :                                        EnterStateConvoyLoading                (); break;

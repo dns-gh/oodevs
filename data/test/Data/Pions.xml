@@ -21,7 +21,6 @@
       <Equipement nom="VSB (releve)">5</Equipement>
       <Equipement nom="VSR (ramassage)">5</Equipement>
       <Equipement nom="Medecin TC2">10</Equipement>
-      <Equipement nom="Chef de convoi">2</Equipement>
       <Equipement nom="Camion transport solide">15</Equipement>
       <Equipement nom="Camion transport liquide">15</Equipement>
     </Equipements>
@@ -2239,86 +2238,7 @@
     <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
-  <Unite nom="Pion RAV commandement" type="Pion LOG BLD Ravitaillement">
-    <MosID>32</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
-    <Nature>
-      <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
-      <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
-    </Nature>
-    <Equipements>
-      <Equipement nom="Chef de convoi">50</Equipement>
-    </Equipements>
-    <RepartitionDuCommandement>
-      <Officier>1</Officier>
-      <SousOfficier>2</SousOfficier>
-    </RepartitionDuCommandement>
-    <ContenanceTC1>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="10" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="10" contenance="100" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
-    </ContenanceTC1>
-    <Stocks>
-        <SeuilsLogistiques>        
-            <SeuilLogistique categorie="Unite essence" seuil="10"/>
-            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
-            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
-            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
-            <SeuilLogistique categorie="Pieces" seuil="10"/>
-        </SeuilsLogistiques>    
-    </Stocks>
-    <TempsMiseEnPosture>
-      <PosteReflexe>30s</PosteReflexe>
-      <Poste>300s</Poste>
-      <PosteAmenage>1800s</PosteAmenage>
-      <PostePrepareGenie>1800s</PostePrepareGenie>
-    </TempsMiseEnPosture>
-    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
-    <DistancesAvantPoints>
-      <Point type="foret">500</Point>
-      <Point type="urbain">500</Point>
-      <Point type="carrefour">500</Point>
-      <Point type="pont">500</Point>
-    </DistancesAvantPoints>
-    <CoupDeSonde>
-      <Largeur>100</Largeur>
-      <Longueur>5000</Longueur>
-    </CoupDeSonde>
-    <RapportDeForce>
-      <TempsDeRemontee>100s</TempsDeRemontee>
-    </RapportDeForce>
-    <PorteeArmes>100</PorteeArmes>
-    <PorteeCapteurs>100</PorteeCapteurs>
-  </Unite>
-
+ 
   <Unite nom="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
     <MosID>33</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>

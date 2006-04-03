@@ -10523,14 +10523,13 @@ void asn1Print_EnumLogRavitaillementTraitementEtat (ASN1ConstCharPtr name, ASN1T
    printf ("%s = ", name);
    switch (*pvalue) {
       case 0: printf ("convoi_en_attente_camions\n"); break;
-      case 1: printf ("convoi_en_attente_chef_convoi\n"); break;
-      case 2: printf ("convoi_constitution\n"); break;
-      case 3: printf ("convoi_deplacement_vers_point_chargement\n"); break;
-      case 4: printf ("convoi_chargement\n"); break;
-      case 5: printf ("convoi_deplacement_vers_point_dechargement\n"); break;
-      case 6: printf ("convoi_dechargement\n"); break;
-      case 7: printf ("convoi_deplacement_retour\n"); break;
-      case 8: printf ("termine\n"); break;
+      case 1: printf ("convoi_constitution\n"); break;
+      case 2: printf ("convoi_deplacement_vers_point_chargement\n"); break;
+      case 3: printf ("convoi_chargement\n"); break;
+      case 4: printf ("convoi_deplacement_vers_point_dechargement\n"); break;
+      case 5: printf ("convoi_dechargement\n"); break;
+      case 6: printf ("convoi_deplacement_retour\n"); break;
+      case 7: printf ("termine\n"); break;
       default: printf ("???\n");
    }
 }
@@ -10703,7 +10702,6 @@ void asn1Print_MsgLogRavitaillementEtat (ASN1ConstCharPtr name, ASN1T_MsgLogRavi
 
    printf ("%s.m.chaine_activeePresent = %d\n", name, (int)pvalue->m.chaine_activeePresent);
    printf ("%s.m.stocksPresent = %d\n", name, (int)pvalue->m.stocksPresent);
-   printf ("%s.m.disponibilites_chefs_convoisPresent = %d\n", name, (int)pvalue->m.disponibilites_chefs_convoisPresent);
    printf ("%s.m.disponibilites_transporteurs_convoisPresent = %d\n", name, (int)pvalue->m.disponibilites_transporteurs_convoisPresent);
    sprintf (namebuf, "%s.oid_pion", name);
    asn1Print_Agent (namebuf, &pvalue->oid_pion);
@@ -10716,11 +10714,6 @@ void asn1Print_MsgLogRavitaillementEtat (ASN1ConstCharPtr name, ASN1T_MsgLogRavi
    if (pvalue->m.stocksPresent) {
       sprintf (namebuf, "%s.stocks", name);
       asn1Print__SeqOfDotationStock (namebuf, &pvalue->stocks);
-   }
-
-   if (pvalue->m.disponibilites_chefs_convoisPresent) {
-      sprintf (namebuf, "%s.disponibilites_chefs_convois", name);
-      asn1Print__SeqOfRavitaillementDisponibiliteMoyens (namebuf, &pvalue->disponibilites_chefs_convois);
    }
 
    if (pvalue->m.disponibilites_transporteurs_convoisPresent) {
@@ -16721,6 +16714,9 @@ void asn1Print_Mission_Pion_LOG_PreparerBascule (ASN1ConstCharPtr name, ASN1T_Mi
 
    sprintf (namebuf, "%s.automate_pour_bascule", name);
    asn1Print_Automate (namebuf, &pvalue->automate_pour_bascule);
+
+   sprintf (namebuf, "%s.rester_sur_place", name);
+   rtPrintBoolean (namebuf, pvalue->rester_sur_place);
 
 }
 

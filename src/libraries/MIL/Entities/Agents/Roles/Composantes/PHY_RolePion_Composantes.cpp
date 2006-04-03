@@ -2096,45 +2096,6 @@ void PHY_RolePion_Composantes::GetConvoyTransporters( T_ComposanteUseMap& compos
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableConvoyCommander
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyCommander() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanCommandConvoy() )
-            return *it;
-    }
-    return 0;
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetConvoyCommanders
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetConvoyCommanders( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanCommandConvoy() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanCommandConvoy() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
 // =============================================================================
 // PRISONERS
 // =============================================================================

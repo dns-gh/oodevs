@@ -107,17 +107,6 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Supply::GetAvailableConvoyCommander
-// Created: NLD 2005-02-07
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyCommander() const
-{
-    if( !bSystemEnabled_ )
-        return 0;
-    return GetRole< PHY_RolePion_Composantes >().GetAvailableConvoyCommander();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetStockAvailablity
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
@@ -348,7 +337,6 @@ void PHY_RolePionLOG_Supply::SendFullState() const
     NET_ASN_MsgLogRavitaillementEtat asn;
 
     asn.GetAsnMsg().m.chaine_activeePresent                       = 1;
-    asn.GetAsnMsg().m.disponibilites_chefs_convoisPresent         = 1;
     asn.GetAsnMsg().m.disponibilites_transporteurs_convoisPresent = 1;
 
     assert( pPion_ );
@@ -359,17 +347,11 @@ void PHY_RolePionLOG_Supply::SendFullState() const
     GetRole< PHY_RolePion_Composantes >().GetConvoyTransporters( composanteUse );
     SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_transporteurs_convois  );
 
-    composanteUse.clear();
-    GetRole< PHY_RolePion_Composantes >().GetConvoyCommanders( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_chefs_convois );
-
     assert( pStocks_ );
     pStocks_->SendFullState( asn );
 
     asn.Send();
 
-    if( asn.GetAsnMsg().disponibilites_chefs_convois.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_chefs_convois.elem;
     if( asn.GetAsnMsg().disponibilites_transporteurs_convois.n > 0 )
         delete [] asn.GetAsnMsg().disponibilites_transporteurs_convois.elem;
     if( asn.GetAsnMsg().stocks.n > 0 )
@@ -393,7 +375,6 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
     if( bHasChanged_ || GetRole< PHY_RolePion_Composantes >().HasChanged() )
     {
         asn.GetAsnMsg().m.chaine_activeePresent                       = 1;
-        asn.GetAsnMsg().m.disponibilites_chefs_convoisPresent         = 1;
         asn.GetAsnMsg().m.disponibilites_transporteurs_convoisPresent = 1;
 
         asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
@@ -401,18 +382,12 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
         GetRole< PHY_RolePion_Composantes >().GetConvoyTransporters( composanteUse );
         SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_transporteurs_convois );
-
-        composanteUse.clear();
-        GetRole< PHY_RolePion_Composantes >().GetConvoyCommanders( composanteUse );
-        SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_chefs_convois );
     }
 
     pStocks_->SendChangedState( asn );    
 
     asn.Send();
 
-    if( asn.GetAsnMsg().m.disponibilites_chefs_convoisPresent && asn.GetAsnMsg().disponibilites_chefs_convois.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_chefs_convois.elem;
     if( asn.GetAsnMsg().m.disponibilites_transporteurs_convoisPresent && asn.GetAsnMsg().disponibilites_transporteurs_convois.n > 0 )
         delete [] asn.GetAsnMsg().disponibilites_transporteurs_convois.elem;
     if( asn.GetAsnMsg().m.stocksPresent && asn.GetAsnMsg().stocks.n > 0 )

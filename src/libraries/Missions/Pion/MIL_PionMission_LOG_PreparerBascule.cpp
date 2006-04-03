@@ -21,6 +21,7 @@
 #include "MIL/Decision/DEC_Tools.h"
 
 int MIL_PionMission_LOG_PreparerBascule::nDIAAutomatePourBasculeIdx_ = 0 ;
+int MIL_PionMission_LOG_PreparerBascule::nDIAResterSurPlaceIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -32,6 +33,7 @@ void MIL_PionMission_LOG_PreparerBascule::InitializeDIA( const MIL_PionMissionTy
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAAutomatePourBasculeIdx_ = DEC_Tools::InitializeDIAField( "automatePourBascule_", diaType );
+    nDIAResterSurPlaceIdx_ = DEC_Tools::InitializeDIAField( "resterSurPlace_", diaType );
 
 }
 
@@ -70,6 +72,8 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_PreparerBascule::Initialize( const 
     const ASN1T_Mission_Pion_LOG_PreparerBascule& asnMission = *asnMsg.mission.u.mission_pion_log_preparer_bascule;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.automate_pour_bascule, GetVariable( nDIAAutomatePourBasculeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.rester_sur_place, GetVariable( nDIAResterSurPlaceIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -84,7 +88,7 @@ bool MIL_PionMission_LOG_PreparerBascule::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
+        
     return true;    
 }
 
@@ -99,6 +103,7 @@ bool MIL_PionMission_LOG_PreparerBascule::Initialize( MIL_PionMission_ABC& missi
     MIL_PionMission_LOG_PreparerBascule& mission = static_cast< MIL_PionMission_LOG_PreparerBascule& >( missionTmp );
 
     NET_ASN_Tools::CopyAutomate( mission.GetVariable( nDIAAutomatePourBasculeIdx_ ), GetVariable( nDIAAutomatePourBasculeIdx_ ) );
+    NET_ASN_Tools::CopyBool( mission.GetVariable( nDIAResterSurPlaceIdx_ ), GetVariable( nDIAResterSurPlaceIdx_ ) );
 
     return true;
 }                                                                    
@@ -130,6 +135,7 @@ void MIL_PionMission_LOG_PreparerBascule::Serialize( ASN1T_MsgPionOrder& asnMsg 
     asnMsg.mission.u.mission_pion_log_preparer_bascule  = &asnMission;
 
     NET_ASN_Tools::CopyAutomate( GetVariable( nDIAAutomatePourBasculeIdx_ ), asnMission.automate_pour_bascule );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIAResterSurPlaceIdx_ ), asnMission.rester_sur_place );
 
 }
 

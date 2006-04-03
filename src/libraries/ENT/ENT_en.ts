@@ -3157,10 +3157,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>convoi en attente chef convoi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>convoi constitution</source>
         <translation type="unfinished"></translation>
     </message>

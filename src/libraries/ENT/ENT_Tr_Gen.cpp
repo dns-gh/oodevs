@@ -689,7 +689,6 @@ ENT_Tr::T_ConverterLogMaintenanceTraitementEtat ENT_Tr::LogMaintenanceTraitement
 ENT_Tr::T_ConverterLogRavitaillementTraitementEtat ENT_Tr::LogRavitaillementTraitementEtatConverter_[] =
 {
     T_ConverterLogRavitaillementTraitementEtat( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi en attente camions" ), eLogRavitaillementTraitementEtat_ConvoiEnAttenteCamions ),
-    T_ConverterLogRavitaillementTraitementEtat( "convoi en attente chef convoi", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi en attente chef convoi" ), eLogRavitaillementTraitementEtat_ConvoiEnAttenteChefConvoi ),
     T_ConverterLogRavitaillementTraitementEtat( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi constitution" ), eLogRavitaillementTraitementEtat_ConvoiConstitution ),
     T_ConverterLogRavitaillementTraitementEtat( "convoi deplacement vers point chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement vers point chargement" ), eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement ),
     T_ConverterLogRavitaillementTraitementEtat( "convoi chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi chargement" ), eLogRavitaillementTraitementEtat_ConvoiChargement ),

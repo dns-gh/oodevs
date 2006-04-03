@@ -70,19 +70,7 @@ AgentSupplyPanel::AgentSupplyPanel( QWidget* pParent )
     pDispoTransporters_->setLineWidth( 2 );
     pDispoTransporters_->setFrameStyle( QFrame::Sunken | QFrame::Box );
     pDispoTransporters_->setSorting( -1, FALSE );
-    pDispoTransporters_->hide();
-
-    pDispoCommanders_ = new QListView( this, tr( "Disponibilités chefs de convois" ) );
-    pDispoCommanders_->addColumn( tr( "Disponibilités chefs de convois" ) );
-    pDispoCommanders_->addColumn( tr( "Total" ) );
-    pDispoCommanders_->addColumn( tr( "Disponibles" ) );
-    pDispoCommanders_->addColumn( tr( "Au travail" ) );
-    pDispoCommanders_->addColumn( tr( "Au repos" ) );
-    pDispoCommanders_->setMargin( 5 );
-    pDispoCommanders_->setLineWidth( 2 );
-    pDispoCommanders_->setFrameStyle( QFrame::Sunken | QFrame::Box );
-    pDispoCommanders_->setSorting( -1, FALSE );
-    pDispoCommanders_->hide();
+    pDispoTransporters_->hide();  
 
     connect( &App::GetApp(), SIGNAL( AgentUpdated( Agent& ) ), this, SLOT( OnAgentUpdated( Agent& ) ) );
 }
@@ -132,7 +120,6 @@ void AgentSupplyPanel::OnClearSelection()
     pStocks_                ->hide();
     pQuotas_                ->hide();
     pDispoTransporters_     ->hide();
-    pDispoCommanders_       ->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,14 +139,12 @@ void AgentSupplyPanel::OnAgentUpdated( Agent& agent )
         pStocks_->hide();
         pQuotas_->hide();
         pDispoTransporters_->hide();
-        pDispoCommanders_->hide();
         return;
     }
 
     Agent::T_SupplyData& data = *agent.pSupplyData_;
     pStateChainEnabled_->setText( 1, data.bChainEnabled_ ? tr( "Activée" ) : tr( "Désactivée" ) );
 
-    DisplayLogAvailabilities( data.dispoCommanders_, *pDispoCommanders_, EquipmentResolver() );
     DisplayLogAvailabilities( data.dispoTransporters_, *pDispoTransporters_, EquipmentResolver() );
 
     DisplayAvailabilities( data.stocks_, *pStocks_, ResourceResolver(), "" );

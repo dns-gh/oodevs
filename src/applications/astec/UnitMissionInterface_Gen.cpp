@@ -2630,6 +2630,7 @@ void UnitMissionInterface::CreateMission_LOG_PreparerBascule()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_preparer_bascule;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_preparer_bascule = &asnMission;
     CreateAutomate( asnMission.automate_pour_bascule, "Automate pour bascule", false );
+    CreateBool( asnMission.rester_sur_place, "Rester sur place", false );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,11 +62,6 @@ PHY_StockConvoy::~PHY_StockConvoy()
         for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
             it->second->UndoLend();
 
-        assert( pCommanderComp_ );
-        assert( pCommanderPion_ );
-        pCommanderPion_->GetRole< PHY_RolePion_Composantes >().UndoLendComposante( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommanderComp_ );
-        pCommanderPion_->GetRole< PHY_RolePion_Supply      >().StartUsingForLogistic( *pCommanderComp_ );
-
         pPionConvoy_->GetRole< PHY_RolePion_Supply >().UnassignConvoy( *this );
         pPionConvoy_->GetAutomate().DestroyPion( *pPionConvoy_ );
     }
@@ -122,10 +117,6 @@ bool PHY_StockConvoy::Form()
     pPionConvoy_->GetRole< PHY_RolePion_Supply >().AssignConvoy( *this );
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
         it->second->LendTo( *pPionConvoy_ );
-
-    assert( pCommanderComp_ );
-    pCommanderPion_->GetRole< PHY_RolePion_Supply      >().StopUsingForLogistic( *pCommanderComp_ );
-    pCommanderPion_->GetRole< PHY_RolePion_Composantes >().LendComposante      ( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommanderComp_ );
     return true;
 }
 

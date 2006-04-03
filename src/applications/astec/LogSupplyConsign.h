@@ -38,7 +38,6 @@ public:
     enum E_State
     {
         eConvoyWaitingForTransporters,
-        eConvoyWaitingForCommander,
         eConvoyForming,
         eConvoyGoingToLoadingPoint,
         eConvoyLoading,

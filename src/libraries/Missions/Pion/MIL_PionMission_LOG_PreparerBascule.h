@@ -44,6 +44,7 @@ public:
 
 private:
     static int nDIAAutomatePourBasculeIdx_;
+    static int nDIAResterSurPlaceIdx_;
 
 };
 

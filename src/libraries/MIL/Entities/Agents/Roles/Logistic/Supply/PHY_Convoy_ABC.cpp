@@ -144,8 +144,6 @@ void PHY_Convoy_ABC::Terminate()
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
     : pConsign_          ( &consign )
-    , pCommanderComp_    ( 0 )
-    , pCommanderPion_    ( 0 ) 
     , conveyors_         ()
 //    , formingPoint_      ( pConsign_->GetConvoyingAutomate() .GetAlivePionsBarycenter() )
 //    , loadingPoint_      ( pConsign_->GetSupplyingAutomate() .GetAlivePionsBarycenter() )
@@ -162,8 +160,6 @@ PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC()
     : pConsign_          ( 0 )
-    , pCommanderComp_    ( 0 )
-    , pCommanderPion_    ( 0 ) 
     , conveyors_         ()
     , formingPoint_      ()
     , loadingPoint_      ()
@@ -230,8 +226,6 @@ template< typename Archive >
 void PHY_Convoy_ABC::serialize( Archive& file, const uint )
 {
     file & const_cast< PHY_SupplyConsign_ABC*& >( pConsign_ )
-         & pCommanderComp_
-         & pCommanderPion_
          & conveyors_
          & formingPoint_
          & loadingPoint_
@@ -293,29 +287,6 @@ void PHY_Convoy_ABC::UnlockConvoy()
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
         delete it->second; // Will do the 'StopUsingForLogistic()'
     conveyors_.clear();
-    if( pCommanderComp_ )
-        pCommanderPion_->GetRole< PHY_RolePion_Supply >().StopUsingForLogistic( *pCommanderComp_ );
-    pCommanderComp_ = 0;
-    pCommanderPion_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::ReserveCommander
-// Created: NLD 2005-12-14
-// -----------------------------------------------------------------------------
-bool PHY_Convoy_ABC::ReserveCommander()
-{
-    assert( pConsign_ );
-    assert( ( pCommanderPion_ && pCommanderComp_ ) || ( !pCommanderPion_ && !pCommanderComp_ ) );
-
-    if( pCommanderComp_ )
-        return true;
-    
-    if( !pConsign_->GetConvoyingAutomate().SupplyGetAvailableConvoyCommander( pCommanderComp_, pCommanderPion_ ) )
-        return false;
-
-    pCommanderPion_->GetRole< PHY_RolePion_Supply >().StartUsingForLogistic( *pCommanderComp_ );
-    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -370,6 +341,7 @@ bool PHY_Convoy_ABC::ReserveTransporters()
     pConsign_->CancelMerchandiseOverheadReservation();
     return true; 
 }
+
 // =============================================================================
 // EVENTS
 // =============================================================================

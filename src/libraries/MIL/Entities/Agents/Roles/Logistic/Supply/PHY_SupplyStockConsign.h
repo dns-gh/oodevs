@@ -67,7 +67,6 @@ public:
 private:
     //! @name Operations
     //@{
-    void EnterStateConvoyWaitingForCommander    ();
     void EnterStateConvoyWaitingForTransporters ();
     void EnterStateConvoyForming                ();
     void EnterStateConvoyGoingToLoadingPoint    ();

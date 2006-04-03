@@ -107,7 +107,6 @@ public:
 
     //! @name Logistic - Supply
     //@{
-    bool CanCommandConvoy                () const;
     bool CanBePartOfConvoy               () const;
     bool CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const; // Indépendamment du fait que la composante peut faire partie d'un convoi
     void GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;

@@ -736,7 +736,6 @@ enum E_LogMaintenanceTraitementEtat
 enum E_LogRavitaillementTraitementEtat
 {
     eLogRavitaillementTraitementEtat_ConvoiEnAttenteCamions,
-    eLogRavitaillementTraitementEtat_ConvoiEnAttenteChefConvoi,
     eLogRavitaillementTraitementEtat_ConvoiConstitution,
     eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement,
     eLogRavitaillementTraitementEtat_ConvoiChargement,

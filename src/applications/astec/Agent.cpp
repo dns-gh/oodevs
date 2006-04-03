@@ -705,21 +705,6 @@ void Agent::OnReceiveMsgLogSupplyEtat( const ASN1T_MsgLogRavitaillementEtat& asn
                 dataDispo.nNbrResting_ = asn.disponibilites_transporteurs_convois.elem[i].nbr_au_repos;
         }
     }
-    if( asn.m.disponibilites_chefs_convoisPresent )
-    {
-        data.dispoCommanders_.resize( asn.disponibilites_chefs_convois.n );
-        for( uint i = 0; i < asn.disponibilites_chefs_convois.n; ++i )
-        {   
-            T_LogisticAvailability& dataDispo = data.dispoCommanders_[i];
-            dataDispo.nEquipmentType_   = asn.disponibilites_chefs_convois.elem[i].type_equipement;
-            dataDispo.nNbrTotal_        = asn.disponibilites_chefs_convois.elem[i].nbr_total;
-            dataDispo.nNbrAvailable_    = asn.disponibilites_chefs_convois.elem[i].nbr_disponibles;
-            dataDispo.nNbrWorking_      = asn.disponibilites_chefs_convois.elem[i].nbr_au_travail;
-            dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
-            if( asn.disponibilites_chefs_convois.elem[i].m.nbr_au_reposPresent )
-                dataDispo.nNbrResting_ = asn.disponibilites_chefs_convois.elem[i].nbr_au_repos;
-        }
-    }
 
     if( asn.m.stocksPresent )
     {

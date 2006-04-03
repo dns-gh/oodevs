@@ -632,28 +632,6 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
     return false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::SupplyGetAvailableConvoyCommander
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::SupplyGetAvailableConvoyCommander( PHY_ComposantePion*& pConvoyCommander, MIL_AgentPion*& pConvoyCommanderPion   ) const
-{
-    pConvoyCommander     = 0;
-    pConvoyCommanderPion = 0;
-
-    const T_PionVector& pions  = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        pConvoyCommander = (**itPion).GetRole< PHY_RolePion_Supply >().GetAvailableConvoyCommander();
-        if( pConvoyCommander )
-        {
-            pConvoyCommanderPion = *itPion;
-            return true;
-        }
-    }
-    return false;
-}
-
 // =============================================================================
 // UPDATE
 // =============================================================================

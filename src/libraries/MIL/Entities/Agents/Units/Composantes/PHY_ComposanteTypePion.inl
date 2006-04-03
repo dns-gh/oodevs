@@ -400,16 +400,6 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanCommandConvoy
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposanteTypePion::CanCommandConvoy() const
-{
-    return bCanCommandConvoy_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanBePartOfConvoy
 // Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------

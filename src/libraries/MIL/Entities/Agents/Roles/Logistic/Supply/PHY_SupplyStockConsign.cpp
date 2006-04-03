@@ -30,7 +30,7 @@ PHY_SupplyStockConsign::PHY_SupplyStockConsign( MIL_AutomateLOG& supplyingAutoma
 {
     pConvoy_ = new PHY_StockConvoy( *this );
     pSupplyState_->SetConsign( this );
-    EnterStateConvoyWaitingForCommander();
+    EnterStateConvoyWaitingForTransporters();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +58,7 @@ PHY_SupplyStockConsign::~PHY_SupplyStockConsign()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::serialize
 // Created: JVT 2005-04-11
@@ -140,16 +141,6 @@ const MIL_Automate* PHY_SupplyStockConsign::GetSuppliedAutomate() const
 // =============================================================================
 // STATES
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockConsign::EnterStateConvoyWaitingForCommander
-// Created: NLD 2005-12-14
-// -----------------------------------------------------------------------------
-void PHY_SupplyStockConsign::EnterStateConvoyWaitingForCommander()
-{
-    nTimer_ = 0;
-    SetState( eConvoyWaitingForCommander );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::EnterStateConvoyWaitingForTransporters
@@ -303,7 +294,6 @@ bool PHY_SupplyStockConsign::Update()
 
     switch( GetState() )
     {
-        case eConvoyWaitingForCommander     : if( pConvoy_->ReserveCommander   () )  EnterStateConvoyWaitingForTransporters (); break;
         case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters() )  EnterStateConvoyForming                (); break;
         case eConvoyForming                 :                                        EnterStateConvoyGoingToLoadingPoint    (); break;
         case eConvoyGoingToLoadingPoint     :                                                                                   break; // Transition gérée par scripts 

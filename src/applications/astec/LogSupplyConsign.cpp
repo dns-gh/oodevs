@@ -138,7 +138,6 @@ std::string LogSupplyConsign::GetStateString() const
 
     switch( nState_ )
     {     
-        case eConvoyWaitingForCommander     : strState = std::string( "Convoi en attente d'un chef de convoi" ); break;
         case eConvoyWaitingForTransporters  : strState = std::string( "Convoi en attente de camions" ); break;
         case eConvoyForming                 : strState = std::string( "Convoi en cours de constitution" ); break;
         

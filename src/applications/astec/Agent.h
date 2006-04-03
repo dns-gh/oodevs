@@ -373,9 +373,8 @@ public:
     T_SupplyConsigns        handledSupplies_;
     typedef struct
     {
-        bool                     bChainEnabled_;
-        T_LogisticAvailabilities dispoTransporters_;
-        T_LogisticAvailabilities dispoCommanders_;  
+        bool                          bChainEnabled_;
+        T_LogisticAvailabilities      dispoTransporters_;
         T_ResourceQty_Map             stocks_;
         T_LogisticStockAvailabilities quotas_;
     } T_SupplyData;

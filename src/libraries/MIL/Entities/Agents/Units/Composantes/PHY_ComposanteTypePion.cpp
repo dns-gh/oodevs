@@ -146,7 +146,6 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , nStockTransporterLoadingTime_              ( 0 )
     , nStockTransporterUnloadingTime_            ( 0 )
     , bCanBePartOfConvoy_                        ( false )
-    , bCanCommandConvoy_                         ( false )    
 {
     archive.ReadField( "DeniveleMaximum", rMaxSlope_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
@@ -646,16 +645,10 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
         archive.EndSection(); // Transporteur
     }
 
-    if( archive.Section( "ChefDeConvoi", MIL_InputArchive::eNothing ) )
-    {
-        bCanCommandConvoy_ = true;
-        archive.EndSection(); // ChefDeConvoi
-    }
-
     if( archive.Section( "Convoyeur", MIL_InputArchive::eNothing ) )
     {
         bCanBePartOfConvoy_ = true;
-        archive.EndSection(); // ChefDeConvoi
+        archive.EndSection(); // Convoyeur
     }
 
     archive.EndSection(); // Ravitaillement

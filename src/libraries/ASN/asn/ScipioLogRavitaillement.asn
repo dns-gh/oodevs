@@ -26,14 +26,13 @@ MsgLogRavitaillementTraitementCreation ::= SEQUENCE
 EnumLogRavitaillementTraitementEtat ::= ENUMERATED
 { 
     convoi-en-attente-camions                   (0),
-    convoi-en-attente-chef-convoi               (1),
-    convoi-constitution                         (2),
-    convoi-deplacement-vers-point-chargement    (3),
-    convoi-chargement                           (4),
-    convoi-deplacement-vers-point-dechargement  (5),
-    convoi-dechargement                         (6),
-    convoi-deplacement-retour                   (7),
-    termine                                     (8)
+    convoi-constitution                         (1),
+    convoi-deplacement-vers-point-chargement    (2),
+    convoi-chargement                           (3),
+    convoi-deplacement-vers-point-dechargement  (4),
+    convoi-dechargement                         (5),
+    convoi-deplacement-retour                   (6),
+    termine                                     (7)
 }
 
 MsgLogRavitaillementTraitementUpdate ::= SEQUENCE
@@ -74,7 +73,6 @@ MsgLogRavitaillementEtat ::= SEQUENCE
     oid-pion                             Agent,    
     chaine-activee                       BOOLEAN                                       OPTIONAL,
     stocks                               SEQUENCE OF DotationStock                     OPTIONAL, -- Seules les dotations qui ont changées sont envoyées
-    disponibilites-chefs-convois         SEQUENCE OF RavitaillementDisponibiliteMoyens OPTIONAL,
     disponibilites-transporteurs-convois SEQUENCE OF RavitaillementDisponibiliteMoyens OPTIONAL
 }
 

@@ -64,7 +64,6 @@ private:
     QListView* pStocks_;
     QListView* pQuotas_;
     QListView* pDispoTransporters_;
-    QListView* pDispoCommanders_;
     //@}
 };
 

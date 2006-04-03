@@ -34,7 +34,7 @@ LogSupplyConsign_ListView_Item::LogSupplyConsign_ListView_Item( QListView* pPare
 
     pListViewItemPion_                                = new QListViewItem( this                                                    , tr( "ID Automate demandeur : " ) + consign.GetPion().GetName().c_str() );
     pListViewItemLogAutomateHandling_                 = new QListViewItem( this, pListViewItemPion_                                , tr( "Pas d'automate log traitant la consigne" ) );
-    pListViewItemLogAutomateProvidingConvoyResources_ = new QListViewItem( this, pListViewItemLogAutomateHandling_                 , tr( "Pas d'automate log fournissant les moyens (camions/chef) du convoi" ) );
+    pListViewItemLogAutomateProvidingConvoyResources_ = new QListViewItem( this, pListViewItemLogAutomateHandling_                 , tr( "Pas d'automate log fournissant les moyens (camions) du convoi" ) );
     pListViewItemLogPionConvoying_                    = new QListViewItem( this, pListViewItemLogAutomateProvidingConvoyResources_ , tr( "Pas de pion convoi" ) );
     pListViewItemState_                               = new QListViewItem( this, pListViewItemLogPionConvoying_                    , "" );
     pListViewItemDotations_                           = new QListViewItem( this, pListViewItemState_                               , tr( "Dotations demandées/accordées" ) );
@@ -69,9 +69,9 @@ void LogSupplyConsign_ListView_Item::Update()
         pListViewItemLogPionConvoying_->setText( 0, tr( "Pas de convoi" ) );
 
     if( pConsign_->GetAutomateLogProvidingConvoyResources() )
-        pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Automate fournissant les moyens (camions/chef) du convoi : " ) + pConsign_->GetAutomateLogProvidingConvoyResources()->GetName().c_str() );
+        pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Automate fournissant les moyens (camions) du convoi : " ) + pConsign_->GetAutomateLogProvidingConvoyResources()->GetName().c_str() );
     else
-        pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Pas d'automate fournissant les moyens (camions/chef) du convoi" ) );
+        pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Pas d'automate fournissant les moyens (camions) du convoi" ) );
 
     pListViewItemState_->setText( 0, tr( "Etat : " ) + QString( pConsign_->GetStateString().c_str() ) );
 

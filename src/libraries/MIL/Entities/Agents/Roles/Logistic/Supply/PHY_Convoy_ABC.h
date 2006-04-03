@@ -51,7 +51,6 @@ public:
     
     //! @name Operations
     //@{
-    bool ReserveCommander   ();
     bool ReserveTransporters();
     //@}                
 
@@ -81,8 +80,6 @@ public:
 protected:
     PHY_SupplyConsign_ABC* pConsign_;
     T_ConveyorMap          conveyors_;
-    PHY_ComposantePion*    pCommanderComp_;
-    MIL_AgentPion*         pCommanderPion_;
 
     MT_Vector2D            formingPoint_;
     MT_Vector2D            loadingPoint_;

@@ -220,15 +220,6 @@ PHY_ComposantePion* PHY_RolePion_Supply::GetAvailableConvoyTransporter( const PH
     return 0;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::GetAvailableConvoyCommander
-// Created: NLD 2005-02-07
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Supply::GetAvailableConvoyCommander() const
-{
-    return 0;
-}
-
 // =============================================================================
 // CONVOY
 // =============================================================================

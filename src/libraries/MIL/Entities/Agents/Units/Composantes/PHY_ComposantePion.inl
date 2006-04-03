@@ -190,17 +190,6 @@ bool PHY_ComposantePion::CanSortHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanCommandConvoy
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposantePion::CanCommandConvoy() const
-{
-    assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && pType_->CanCommandConvoy();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanBePartOfConvoy
 // Created: NLD 2006-03-23
 // -----------------------------------------------------------------------------
