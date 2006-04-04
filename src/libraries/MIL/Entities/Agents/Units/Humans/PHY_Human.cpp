@@ -406,15 +406,16 @@ void PHY_Human::Update()
 
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
+        const MIL_RC* pRcToSend = 0;
+        if( !pMedicalState_ )
+            pRcToSend = MIL_RC::pRcDecesBlesse_;
+        else if( pMedicalState_->IsInAmbulance() )
+            pRcToSend = MIL_RC::pRcDecesBlessePendantTransport_;
+        else
+            pRcToSend = MIL_RC::pRcDecesBlessePendantHospitalisation_;
+
         if( SetWound( PHY_HumanWound::killed_ ) )
-        {
-            if( !pMedicalState_ )
-                MIL_RC::pRcDecesBlesse_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
-            else if( pMedicalState_->IsInAmbulance() )
-                MIL_RC::pRcDecesBlessePendantTransport_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
-            else
-                MIL_RC::pRcDecesBlessePendantHospitalisation_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
-        }
+            pRcToSend->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
     }
 
     // Demande santé

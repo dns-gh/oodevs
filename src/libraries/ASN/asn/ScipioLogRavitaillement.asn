@@ -87,7 +87,7 @@ MsgLogRavitaillementChangeQuotas ::= SEQUENCE
 {
     oid-donneur  Automate,
     oid-receveur Automate,
-    quotas       SEQUENCE OF DotationQuota -- Seuls les quotas envoyés sont changés, les valeurs des quotas non surchargés ne bougent pas
+    quotas       SEQUENCE OF DotationQuota -- Tous les quotas sont envoyés, même ceux dont la valeur n'a pas changé
 }
 MsgLogRavitaillementChangeQuotasAck ::= ENUMERATED
 {

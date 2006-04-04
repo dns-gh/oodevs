@@ -28,7 +28,10 @@ PHY_MedicalSortingConsign::PHY_MedicalSortingConsign( PHY_RolePionLOG_Medical& m
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pDoctor_              ( 0 )
 {
-    EnterStateWaitingForSorting();
+    if( humanState.NeedSorting() )
+        EnterStateWaitingForSorting();
+    else 
+        EnterStateSearchingForHealingArea();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,11 +118,17 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
 void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
 {
     assert( pHumanState_ );
-    assert( pDoctor_ );
+    
     SetState( eSearchingForHealingArea );
     nTimer_ = 0;
-    GetPionMedical().StopUsingForLogistic( *pDoctor_ );
-    pDoctor_ = 0;
+
+    // Sorting
+    if( pDoctor_ ) 
+    {
+        pHumanState_->NotifySorted();
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
 }
     
 // -----------------------------------------------------------------------------

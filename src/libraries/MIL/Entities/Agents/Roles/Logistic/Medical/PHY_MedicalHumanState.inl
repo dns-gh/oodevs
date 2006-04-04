@@ -61,7 +61,7 @@ const MT_Vector2D& PHY_MedicalHumanState::GetHumanPosition() const
 inline
 bool PHY_MedicalHumanState::NeedDiagnosis() const
 {
-    return bDiagnosed_ == false;
+    return !bDiagnosed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +72,26 @@ inline
 void PHY_MedicalHumanState::NotifyDiagnosed()
 {
     bDiagnosed_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NeedSorting
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+inline
+bool PHY_MedicalHumanState::NeedSorting() const
+{
+    return !bSorted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::NotifySorted
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+inline
+void PHY_MedicalHumanState::NotifySorted()
+{
+    bSorted_ = true;
 }
 
 // -----------------------------------------------------------------------------

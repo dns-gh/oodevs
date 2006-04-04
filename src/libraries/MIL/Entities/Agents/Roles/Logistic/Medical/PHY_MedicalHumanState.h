@@ -49,11 +49,13 @@ public:
           void          SetHumanPosition     ( const MT_Vector2D& vPosition );
     const MT_Vector2D&  GetPionPosition      () const;
           bool          NeedDiagnosis        () const;
+          bool          NeedSorting          () const;
           bool          IsAnEmergency        () const;
           bool          IsInAmbulance        () const;
           bool          EvacuatedByThirdParty() const;
           bool          ShouldGoBackToWar    () const;
           void          NotifyDiagnosed      ();     
+          void          NotifySorted         ();
     //@}
 
     //! @name Operations
@@ -94,6 +96,7 @@ private:
           bool                    bHasChanged_;
           bool                    bHumanStateHasChanged_;
           bool                    bDiagnosed_;
+          bool                    bSorted_;
           bool                    bHandledByMedical_;
           bool                    bEvacuatedByThirdParty_;
 };

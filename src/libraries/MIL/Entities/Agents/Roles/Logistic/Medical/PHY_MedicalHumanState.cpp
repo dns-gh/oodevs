@@ -37,6 +37,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& hu
     , bHasChanged_           ( true )
     , bHumanStateHasChanged_ ( false )
     , bDiagnosed_            ( false )
+    , bSorted_               ( false )
     , bHandledByMedical_     ( false )
     , bShouldGoBackToWar_    ( false )
     , bEvacuatedByThirdParty_( bEvacuatedByThirdParty )
@@ -57,6 +58,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState()
     , bHasChanged_           ( true )
     , bHumanStateHasChanged_ ( false )
     , bDiagnosed_            ( false )
+    , bSorted_               ( false )
     , bHandledByMedical_     ( false )
     , bShouldGoBackToWar_    ( false )
     , bEvacuatedByThirdParty_( false )
@@ -88,6 +90,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
          >> pConsign_
          >> vHumanPosition_
          >> bDiagnosed_
+         >> bSorted_
          >> bShouldGoBackToWar_
          >> bHandledByMedical_
          >> bEvacuatedByThirdParty_;
@@ -105,6 +108,7 @@ void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const uint ) c
          << pConsign_
          << vHumanPosition_
          << bDiagnosed_
+         << bSorted_
          << bShouldGoBackToWar_
          << bHandledByMedical_
          << bEvacuatedByThirdParty_;
