@@ -109,6 +109,16 @@ public:
     static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;   
     static const MIL_RC*                                    pRcRendu_;
     static const MIL_RC*                                    pRcRegimeMaintenanceDelaiDepasse_;
+    static const MIL_RC*                                    pRcPretMaterielEnCours_;
+    static const MIL_RC*                                    pRcPretMaterielAnnule_;
+    static const MIL_RC*                                    pRcPretMaterielEffectue_;
+    static const MIL_RC*                                    pRcPretMaterielPartiellementEffectue_;
+    static const MIL_RC*                                    pRcPretMaterielImpossible_;
+    static const MIL_RC*                                    pRcRecuperationMaterielPreteEffectuee_;
+    static const MIL_RC*                                    pRcRecuperationMaterielPretePartiellementEffectuee_;
+    static const MIL_RC*                                    pRcRecuperationMaterielPreteImpossible_;
+    static const MIL_RC*                                    pRcMaterielPrete_;
+    static const MIL_RC*                                    pRcMaterielRendu_;
     //@}
    
 public:
@@ -250,10 +260,16 @@ protected:
         eRC_RavitaillementDotationsAnnule,
         eRC_RavitaillementStockAnnule,
         eRC_HumainRetourDeSante,
-        eRC_VSRAM_PretEnCours,
-        eRC_VSRAM_PretAnnule,
-        eRC_VSRAM_PretEffectue,
-        eRC_VSRAM_RecuperationEffectuee,
+        eRC_PretMaterielEnCours, // Parametre : TypeEquipement
+        eRC_PretMaterielAnnule, // Parametre : TypeEquipement
+        eRC_PretMaterielEffectue, // Parametre : TypeEquipement
+        eRC_PretMaterielImpossible, // Parametre : TypeEquipement
+        eRC_PretMaterielPartiellementEffectue, // Parametre : TypeEquipement
+        eRC_RecuperationMaterielPreteImpossible, // Parametre : TypeEquipement
+        eRC_RecuperationMaterielPreteEffectuee, // Parametre : TypeEquipement
+        eRC_RecuperationMaterielPretePartiellementEffectuee, // Parametre : TypeEquipement
+        eRC_MaterielPrete, // Parametre : TypeEquipement
+        eRC_MaterielRendu, // Parametre : TypeEquipement
         eRC_Convoi_DeplacementVersPointChargement,
         eRC_Convoi_ChargementEnCours,
         eRC_Convoi_ChargementEffectue,

@@ -1,32 +1,34 @@
 // *****************************************************************************
 //
 // $Created: JVT 2005-05-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/ComposanteLending/PHY_ActionLendComposante.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/ComposanteLending/PHY_ActionLendComposantes.cpp $
 // $Author: Jvt $
 // $Modtime: 12/05/05 15:25 $
 // $Revision: 1 $
-// $Workfile: PHY_ActionLendComposante.cpp $
+// $Workfile: PHY_ActionLendComposantes.cpp $
 //
 // *****************************************************************************
 
 #include "MIL_pch.h"
-#include "PHY_ActionLendComposante.h"
+#include "PHY_ActionLendComposantes.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionLendComposante constructor
+// Name: PHY_ActionLendComposantes constructor
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-PHY_ActionLendComposante::PHY_ActionLendComposante( MIL_AgentPion& pion, DIA_Call_ABC& call )
+PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_Call_ABC& call, T_ComposantePredicate predicate )
     : PHY_Action_ABC    ( pion, call )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
-    , nNbrComposantes_  ( (uint)call.GetParameter( 1 ).ToFloat() )
+    , nNbrToLend_       ( (uint)call.GetParameter( 1 ).ToFloat() )
     , pTarget_          ( 0 )
     , diaReturnVariable_( call.GetParameter( 2 ) )
+    , predicate_        ( predicate )
 {
     assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
 
@@ -34,39 +36,54 @@ PHY_ActionLendComposante::PHY_ActionLendComposante( MIL_AgentPion& pion, DIA_Cal
     assert( pAgent );
     
     pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();
-    
-    nTimer_ = role_.GetLendCollectionComposantesTime( *pTarget_, nNbrComposantes_ );
+   
+    nTimer_ = role_.GetLendComposantesTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+    MIL_RC::pRcPretMaterielEnCours_->Send( pion, MIL_RC::eRcTypeOperational );
     
     diaReturnVariable_.SetValue( false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionLendComposante destructor
+// Name: PHY_ActionLendComposantes destructor
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-PHY_ActionLendComposante::~PHY_ActionLendComposante()
+PHY_ActionLendComposantes::~PHY_ActionLendComposantes()
 {
+    if( diaReturnVariable_.ToBool() == false )
+        MIL_RC::pRcPretMaterielAnnule_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionLendComposante::Execute
+// Name: PHY_ActionLendComposantes::Execute
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-void PHY_ActionLendComposante::Execute()
+void PHY_ActionLendComposantes::Execute()
 {
     if ( !nTimer_-- )
     {
         assert( pTarget_ );
-        role_.LendCollectionComposantes( *pTarget_, nNbrComposantes_ );
+        const uint nNbrLent = role_.LendComposantes( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+
+        if( nNbrLent == 0 )
+            MIL_RC::pRcPretMaterielImpossible_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+        else
+        {
+            MIL_RC::pRcMaterielPrete_->Send( pTarget_->GetPion(), MIL_RC::eRcTypeOperational );
+            if( nNbrLent < nNbrToLend_ )
+                MIL_RC::pRcPretMaterielPartiellementEffectue_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+            else
+                MIL_RC::pRcPretMaterielEffectue_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+        }
+
         diaReturnVariable_.SetValue( true );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionLendComposante::ExecuteSuspended
+// Name: PHY_ActionLendComposantes::ExecuteSuspended
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-void PHY_ActionLendComposante::ExecuteSuspended()
+void PHY_ActionLendComposantes::ExecuteSuspended()
 {
     assert( false );
     Execute();

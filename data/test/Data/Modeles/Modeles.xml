@@ -36,6 +36,8 @@
             <OrdreConduite nom="ModifierRegimeTravailMaintenance"/>
             <OrdreConduite nom="Pion RenforcerEnVSRAM"/>
             <OrdreConduite nom="Pion ReprendreAuxOrdresVSRAM"/>
+            <OrdreConduite nom="Pion RenforcerEnRemorqueurs"/>
+            <OrdreConduite nom="Pion ReprendreAuxOrdresRemorqueurs"/>
           </OrdresConduite>
         </Mission>
       </Missions>

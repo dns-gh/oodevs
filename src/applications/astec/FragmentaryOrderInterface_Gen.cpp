@@ -27,6 +27,15 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_vs_ram;
              break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_remorqueurs;
+             break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_remorqueurs;
+             break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_remorqueurs;
+             break;
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_realiser_variantement;
              break;
@@ -141,6 +150,15 @@ void FragmentaryOrderInterface::CreateInterface()
              break;
         case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM :
              CreateOrder_Pion_ReprendreAuxOrdresVSRAM();
+             break;
+        case eOrdreConduite_Pion_RenforcerEnRemorqueurs :
+             CreateOrder_Pion_RenforcerEnRemorqueurs();
+             break;
+        case eOrdreConduite_Pion_TransfererRemorqueurs :
+             CreateOrder_Pion_TransfererRemorqueurs();
+             break;
+        case eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs :
+             CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs();
              break;
         case eOrdreConduite_ModifierRegimeTravailMaintenance :
              CreateOrder_ModifierRegimeTravailMaintenance();
@@ -486,6 +504,46 @@ void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresVSRAM()
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_vs_ram = &asnMission;
     CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
     CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnRemorqueurs
+// Created: AGR
+// -----------------------------------------------------------------------------
+void FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnRemorqueurs()
+{
+    ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_remorqueurs = &asnMission;
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface::CreateOrder_Pion_TransfererRemorqueurs
+// Created: AGR
+// -----------------------------------------------------------------------------
+void FragmentaryOrderInterface::CreateOrder_Pion_TransfererRemorqueurs()
+{
+    ASN1T_OrderConduite_Pion_TransfererRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_TransfererRemorqueurs();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_remorqueurs = &asnMission;
+    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs
+// Created: AGR
+// -----------------------------------------------------------------------------
+void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs()
+{
+    ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_remorqueurs = &asnMission;
+    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
 }
 
 // -----------------------------------------------------------------------------

@@ -98,9 +98,9 @@ public:
 
     //! @name Pret de composantes
     //@{
-    uint LendCollectionComposantes       ( PHY_RolePion_Composantes& newRole, uint nNbr );
-    uint GetLendCollectionComposantesTime( PHY_RolePion_Composantes& newRole, uint nNbr );
-    uint UndoLendCollectionComposantes   ( PHY_RolePion_Composantes& role,    uint nNbr );
+    template < typename T > uint LendComposantes       ( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate );
+    template < typename T > uint GetLendComposantesTime( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate );
+    template < typename T > uint UndoLendComposantes   ( PHY_RolePion_Composantes& role,    uint nNbr, T funcPredicate );
 
     void LendComposante    ( PHY_RolePion_Composantes& newRole, PHY_ComposantePion& composante );
     void UndoLendComposante( PHY_RolePion_Composantes& newRole, PHY_ComposantePion& composante );

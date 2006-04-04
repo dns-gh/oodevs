@@ -30,7 +30,6 @@
 #include "Decision/Functions/DEC_PathFunctions.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/Functions/DEC_ObjectFunctions.h"
-#include "Decision/Functions/DEC_ActionFunctions.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Tools.h"
 
@@ -47,6 +46,8 @@
 #include "Entities/Specialisations/LOG/Maintenance/MIL_AgentTypePionLOGMaintenance.h"
 #include "Entities/Specialisations/LOG/Supply/MIL_AgentTypePionLOGSupply.h"
 #include "Entities/Specialisations/LOG/Convoy/MIL_AgentTypePionLOGConvoy.h"
+#include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
+#include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h" 
 #include "Entities/Agents/Actions/Objects/PHY_ActionPrepareObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDestroyObject.h"
@@ -577,9 +578,13 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::ChangeAutomate             , "DEC_Pion_ChangeAutomate"        );
 
     // Logistique
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                 , "DEC_Pion_TC2"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionRequestSupply          , "DEC_DemandeDeRavitaillement"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationValueUsingTC2, "DEC_ChangeValeurDotations"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendCollectionComposantes >, "DEC_StartPreterVSRAM"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionLendHaulerComposantes     >, "DEC_StartPreterRemorqueurs"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendCollectionComposantes                     , "DEC_RecupererVSRAM"          );   
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendHaulerComposantes                         , "DEC_RecupererRemorqueurs"    );   
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                                        , "DEC_Pion_TC2"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionRequestSupply                                 , "DEC_DemandeDeRavitaillement" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationValueUsingTC2                       , "DEC_ChangeValeurDotations"   );
     
     // Transport / Héliportage
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPion                       , "DEC_Transport_AjouterPion"              );

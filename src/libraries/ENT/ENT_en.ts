@@ -1653,6 +1653,18 @@
         <source>Modifier Regime Travail Maintenance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pion: Renforcer En Remorqueurs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Transferer Remorqueurs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Reprendre Aux Ordres Remorqueurs</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>

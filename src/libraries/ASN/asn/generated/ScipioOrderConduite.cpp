@@ -2628,6 +2628,263 @@ int ASN1C_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::Decode ()
 
 /**************************************************************/
 /*                                                            */
+/*  OrderConduite_Pion_RenforcerEnRemorqueurs                 */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_OrderConduite_Pion_RenforcerEnRemorqueurs::ASN1C_OrderConduite_Pion_RenforcerEnRemorqueurs (
+   ASN1MessageBuffer& msgBuf, ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_OrderConduite_Pion_RenforcerEnRemorqueurs (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_OrderConduite_Pion_RenforcerEnRemorqueurs: start\n");
+
+   /* encode pion_a_renforcer */
+
+   PU_PUSHNAME (ctxt_p, "pion_a_renforcer");
+
+   stat = asn1PE_Agent (ctxt_p, pvalue->pion_a_renforcer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode nbr_remorqueurs */
+
+   PU_PUSHNAME (ctxt_p, "nbr_remorqueurs");
+
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_remorqueurs);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_OrderConduite_Pion_RenforcerEnRemorqueurs: end\n");
+   return (stat);
+}
+
+int ASN1C_OrderConduite_Pion_RenforcerEnRemorqueurs::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_OrderConduite_Pion_RenforcerEnRemorqueurs (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_OrderConduite_Pion_RenforcerEnRemorqueurs (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_OrderConduite_Pion_RenforcerEnRemorqueurs: start\n");
+
+   /* decode pion_a_renforcer */
+
+   PU_PUSHNAME (ctxt_p, "pion_a_renforcer");
+
+   stat = asn1PD_Agent (ctxt_p, &pvalue->pion_a_renforcer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode nbr_remorqueurs */
+
+   PU_PUSHNAME (ctxt_p, "nbr_remorqueurs");
+
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_remorqueurs);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_OrderConduite_Pion_RenforcerEnRemorqueurs: end\n");
+
+   return (stat);
+}
+
+int ASN1C_OrderConduite_Pion_RenforcerEnRemorqueurs::Decode ()
+{
+   return asn1PD_OrderConduite_Pion_RenforcerEnRemorqueurs (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  OrderConduite_Pion_TransfererRemorqueurs                  */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_OrderConduite_Pion_TransfererRemorqueurs::ASN1C_OrderConduite_Pion_TransfererRemorqueurs (
+   ASN1MessageBuffer& msgBuf, ASN1T_OrderConduite_Pion_TransfererRemorqueurs& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_OrderConduite_Pion_TransfererRemorqueurs (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Pion_TransfererRemorqueurs* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_OrderConduite_Pion_TransfererRemorqueurs: start\n");
+
+   /* encode pion_renforce */
+
+   PU_PUSHNAME (ctxt_p, "pion_renforce");
+
+   stat = asn1PE_Agent (ctxt_p, pvalue->pion_renforce);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode pion_a_renforcer */
+
+   PU_PUSHNAME (ctxt_p, "pion_a_renforcer");
+
+   stat = asn1PE_Agent (ctxt_p, pvalue->pion_a_renforcer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode nbr_remorqueurs */
+
+   PU_PUSHNAME (ctxt_p, "nbr_remorqueurs");
+
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_remorqueurs);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_OrderConduite_Pion_TransfererRemorqueurs: end\n");
+   return (stat);
+}
+
+int ASN1C_OrderConduite_Pion_TransfererRemorqueurs::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_OrderConduite_Pion_TransfererRemorqueurs (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_OrderConduite_Pion_TransfererRemorqueurs (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Pion_TransfererRemorqueurs* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_OrderConduite_Pion_TransfererRemorqueurs: start\n");
+
+   /* decode pion_renforce */
+
+   PU_PUSHNAME (ctxt_p, "pion_renforce");
+
+   stat = asn1PD_Agent (ctxt_p, &pvalue->pion_renforce);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode pion_a_renforcer */
+
+   PU_PUSHNAME (ctxt_p, "pion_a_renforcer");
+
+   stat = asn1PD_Agent (ctxt_p, &pvalue->pion_a_renforcer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode nbr_remorqueurs */
+
+   PU_PUSHNAME (ctxt_p, "nbr_remorqueurs");
+
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_remorqueurs);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_OrderConduite_Pion_TransfererRemorqueurs: end\n");
+
+   return (stat);
+}
+
+int ASN1C_OrderConduite_Pion_TransfererRemorqueurs::Decode ()
+{
+   return asn1PD_OrderConduite_Pion_TransfererRemorqueurs (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs          */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs::ASN1C_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (
+   ASN1MessageBuffer& msgBuf, ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs: start\n");
+
+   /* encode pion_renforce */
+
+   PU_PUSHNAME (ctxt_p, "pion_renforce");
+
+   stat = asn1PE_Agent (ctxt_p, pvalue->pion_renforce);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode nbr_remorqueurs */
+
+   PU_PUSHNAME (ctxt_p, "nbr_remorqueurs");
+
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nbr_remorqueurs);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs: end\n");
+   return (stat);
+}
+
+int ASN1C_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs: start\n");
+
+   /* decode pion_renforce */
+
+   PU_PUSHNAME (ctxt_p, "pion_renforce");
+
+   stat = asn1PD_Agent (ctxt_p, &pvalue->pion_renforce);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode nbr_remorqueurs */
+
+   PU_PUSHNAME (ctxt_p, "nbr_remorqueurs");
+
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nbr_remorqueurs);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs: end\n");
+
+   return (stat);
+}
+
+int ASN1C_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs::Decode ()
+{
+   return asn1PD_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
 /*  OrderConduite_ModifierRegimeTravailMaintenance            */
 /*                                                            */
 /**************************************************************/
@@ -3612,7 +3869,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 42);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 45);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -3911,8 +4168,38 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
 
          break;
 
-      /* order_conduite_modifier_regime_travail_maintenance */
+      /* order_conduite_pion_renforcer_en_remorqueurs */
       case 30:
+         PU_PUSHNAME (ctxt_p, "u.order_conduite_pion_renforcer_en_remorqueurs");
+
+         stat = asn1PE_OrderConduite_Pion_RenforcerEnRemorqueurs (ctxt_p, pvalue->u.order_conduite_pion_renforcer_en_remorqueurs);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* order_conduite_pion_transferer_remorqueurs */
+      case 31:
+         PU_PUSHNAME (ctxt_p, "u.order_conduite_pion_transferer_remorqueurs");
+
+         stat = asn1PE_OrderConduite_Pion_TransfererRemorqueurs (ctxt_p, pvalue->u.order_conduite_pion_transferer_remorqueurs);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* order_conduite_pion_reprendre_aux_ordres_remorqueurs */
+      case 32:
+         PU_PUSHNAME (ctxt_p, "u.order_conduite_pion_reprendre_aux_ordres_remorqueurs");
+
+         stat = asn1PE_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (ctxt_p, pvalue->u.order_conduite_pion_reprendre_aux_ordres_remorqueurs);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* order_conduite_modifier_regime_travail_maintenance */
+      case 33:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_regime_travail_maintenance");
 
          stat = asn1PE_OrderConduite_ModifierRegimeTravailMaintenance (ctxt_p, pvalue->u.order_conduite_modifier_regime_travail_maintenance);
@@ -3922,7 +4209,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_reparations */
-      case 31:
+      case 34:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_reparations");
 
          stat = asn1PE_OrderConduite_ModifierPrioritesReparations (ctxt_p, pvalue->u.order_conduite_modifier_priorites_reparations);
@@ -3932,7 +4219,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_blesses */
-      case 32:
+      case 35:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_blesses");
 
          stat = asn1PE_OrderConduite_ModifierPrioritesBlesses (ctxt_p, pvalue->u.order_conduite_modifier_priorites_blesses);
@@ -3942,7 +4229,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_tactiques_reparations */
-      case 33:
+      case 36:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_tactiques_reparations");
 
          stat = asn1PE_OrderConduite_ModifierPrioritesTactiquesReparations (ctxt_p, pvalue->u.order_conduite_modifier_priorites_tactiques_reparations);
@@ -3952,7 +4239,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_tactiques_blesses */
-      case 34:
+      case 37:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_tactiques_blesses");
 
          stat = asn1PE_OrderConduite_ModifierPrioritesTactiquesBlesses (ctxt_p, pvalue->u.order_conduite_modifier_priorites_tactiques_blesses);
@@ -3962,7 +4249,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_realiser_variantement */
-      case 35:
+      case 38:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_realiser_variantement");
 
          stat = asn1PE_OrderConduite_Automate_RealiserVariantement (ctxt_p, pvalue->u.order_conduite_automate_realiser_variantement);
@@ -3972,7 +4259,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_desequiper_site_franchissement */
-      case 36:
+      case 39:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_desequiper_site_franchissement");
 
          stat = asn1PE_OrderConduite_Automate_DesequiperSiteFranchissement (ctxt_p, pvalue->u.order_conduite_automate_desequiper_site_franchissement);
@@ -3982,7 +4269,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_reagir_face_a_eni */
-      case 37:
+      case 40:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_reagir_face_a_eni");
 
          stat = asn1PE_OrderConduite_Automate_ReagirFaceAEni (ctxt_p, pvalue->u.order_conduite_automate_reagir_face_a_eni);
@@ -3992,7 +4279,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_affecter_pion_a_obstacle */
-      case 38:
+      case 41:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_affecter_pion_a_obstacle");
 
          stat = asn1PE_OrderConduite_Automate_AffecterPionAObstacle (ctxt_p, pvalue->u.order_conduite_automate_affecter_pion_a_obstacle);
@@ -4002,7 +4289,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_reconnaitre_zone_implantation */
-      case 39:
+      case 42:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_reconnaitre_zone_implantation");
 
          stat = asn1PE_OrderConduite_Automate_ReconnaitreZoneImplantation (ctxt_p, pvalue->u.order_conduite_automate_reconnaitre_zone_implantation);
@@ -4012,7 +4299,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_tc2_gerer_materiel_avant_deplacement */
-      case 40:
+      case 43:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_tc2_gerer_materiel_avant_deplacement");
 
          stat = asn1PE_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement (ctxt_p, pvalue->u.order_conduite_automate_tc2_gerer_materiel_avant_deplacement);
@@ -4022,7 +4309,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_activer_obstacle */
-      case 41:
+      case 44:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_activer_obstacle");
 
          stat = asn1PE_OrderConduite_Automate_ActiverObstacle (ctxt_p, pvalue->u.order_conduite_automate_activer_obstacle);
@@ -4032,7 +4319,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_transferer_renforts */
-      case 42:
+      case 45:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_transferer_renforts");
 
          stat = asn1PE_OrderConduite_Automate_TransfererRenforts (ctxt_p, pvalue->u.order_conduite_automate_transferer_renforts);
@@ -4042,7 +4329,7 @@ EXTERN int asn1PE_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_population_changer_attitude */
-      case 43:
+      case 46:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_population_changer_attitude");
 
          stat = asn1PE_OrderConduite_Population_ChangerAttitude (ctxt_p, pvalue->u.order_conduite_population_changer_attitude);
@@ -4075,7 +4362,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 42);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 45);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    else pvalue->t = ui + 1;
 
@@ -4429,8 +4716,53 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
 
          break;
 
-      /* order_conduite_modifier_regime_travail_maintenance */
+      /* order_conduite_pion_renforcer_en_remorqueurs */
       case 29:
+         PU_PUSHNAME (ctxt_p, "u.order_conduite_pion_renforcer_en_remorqueurs");
+
+         pvalue->u.order_conduite_pion_renforcer_en_remorqueurs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs);
+         if (pvalue->u.order_conduite_pion_renforcer_en_remorqueurs == NULL)
+            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
+
+         stat = asn1PD_OrderConduite_Pion_RenforcerEnRemorqueurs (ctxt_p, pvalue->u.order_conduite_pion_renforcer_en_remorqueurs);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* order_conduite_pion_transferer_remorqueurs */
+      case 30:
+         PU_PUSHNAME (ctxt_p, "u.order_conduite_pion_transferer_remorqueurs");
+
+         pvalue->u.order_conduite_pion_transferer_remorqueurs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Pion_TransfererRemorqueurs);
+         if (pvalue->u.order_conduite_pion_transferer_remorqueurs == NULL)
+            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
+
+         stat = asn1PD_OrderConduite_Pion_TransfererRemorqueurs (ctxt_p, pvalue->u.order_conduite_pion_transferer_remorqueurs);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* order_conduite_pion_reprendre_aux_ordres_remorqueurs */
+      case 31:
+         PU_PUSHNAME (ctxt_p, "u.order_conduite_pion_reprendre_aux_ordres_remorqueurs");
+
+         pvalue->u.order_conduite_pion_reprendre_aux_ordres_remorqueurs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs);
+         if (pvalue->u.order_conduite_pion_reprendre_aux_ordres_remorqueurs == NULL)
+            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
+
+         stat = asn1PD_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs (ctxt_p, pvalue->u.order_conduite_pion_reprendre_aux_ordres_remorqueurs);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* order_conduite_modifier_regime_travail_maintenance */
+      case 32:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_regime_travail_maintenance");
 
          stat = asn1PD_OrderConduite_ModifierRegimeTravailMaintenance (ctxt_p, &pvalue->u.order_conduite_modifier_regime_travail_maintenance);
@@ -4441,7 +4773,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_reparations */
-      case 30:
+      case 33:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_reparations");
 
          pvalue->u.order_conduite_modifier_priorites_reparations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_ModifierPrioritesReparations);
@@ -4456,7 +4788,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_blesses */
-      case 31:
+      case 34:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_blesses");
 
          pvalue->u.order_conduite_modifier_priorites_blesses = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_ModifierPrioritesBlesses);
@@ -4471,7 +4803,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_tactiques_reparations */
-      case 32:
+      case 35:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_tactiques_reparations");
 
          pvalue->u.order_conduite_modifier_priorites_tactiques_reparations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations);
@@ -4486,7 +4818,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_modifier_priorites_tactiques_blesses */
-      case 33:
+      case 36:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_modifier_priorites_tactiques_blesses");
 
          pvalue->u.order_conduite_modifier_priorites_tactiques_blesses = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses);
@@ -4501,7 +4833,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_realiser_variantement */
-      case 34:
+      case 37:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_realiser_variantement");
 
          pvalue->u.order_conduite_automate_realiser_variantement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Automate_RealiserVariantement);
@@ -4516,7 +4848,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_desequiper_site_franchissement */
-      case 35:
+      case 38:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_desequiper_site_franchissement");
 
          pvalue->u.order_conduite_automate_desequiper_site_franchissement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement);
@@ -4531,7 +4863,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_reagir_face_a_eni */
-      case 36:
+      case 39:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_reagir_face_a_eni");
 
          pvalue->u.order_conduite_automate_reagir_face_a_eni = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Automate_ReagirFaceAEni);
@@ -4546,7 +4878,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_affecter_pion_a_obstacle */
-      case 37:
+      case 40:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_affecter_pion_a_obstacle");
 
          pvalue->u.order_conduite_automate_affecter_pion_a_obstacle = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Automate_AffecterPionAObstacle);
@@ -4561,7 +4893,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_reconnaitre_zone_implantation */
-      case 38:
+      case 41:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_reconnaitre_zone_implantation");
 
          pvalue->u.order_conduite_automate_reconnaitre_zone_implantation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Automate_ReconnaitreZoneImplantation);
@@ -4576,7 +4908,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_tc2_gerer_materiel_avant_deplacement */
-      case 39:
+      case 42:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_tc2_gerer_materiel_avant_deplacement");
 
          stat = asn1PD_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement (ctxt_p, &pvalue->u.order_conduite_automate_tc2_gerer_materiel_avant_deplacement);
@@ -4587,7 +4919,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_activer_obstacle */
-      case 40:
+      case 43:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_activer_obstacle");
 
          stat = asn1PD_OrderConduite_Automate_ActiverObstacle (ctxt_p, &pvalue->u.order_conduite_automate_activer_obstacle);
@@ -4598,7 +4930,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_automate_transferer_renforts */
-      case 41:
+      case 44:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_automate_transferer_renforts");
 
          pvalue->u.order_conduite_automate_transferer_renforts = ALLOC_ASN1ELEM (ctxt_p, ASN1T_OrderConduite_Automate_TransfererRenforts);
@@ -4613,7 +4945,7 @@ EXTERN int asn1PD_MsgOrderConduite_order_conduite (ASN1CTXT* ctxt_p, ASN1T_MsgOr
          break;
 
       /* order_conduite_population_changer_attitude */
-      case 42:
+      case 45:
          PU_PUSHNAME (ctxt_p, "u.order_conduite_population_changer_attitude");
 
          stat = asn1PD_OrderConduite_Population_ChangerAttitude (ctxt_p, &pvalue->u.order_conduite_population_changer_attitude);

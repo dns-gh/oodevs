@@ -13,8 +13,6 @@ signatures
     V              A::DEC_Sante_DesactiverChaine         ();
     V              A::DEC_Sante_ChangerPriorites         ( U /*T_SantePriorites*/ );
     V              A::DEC_Sante_ChangerPrioritesTactiques( S /*T_ListeAutomates*/ );
-    U /*T_Action*/ A::DEC_Sante_StartPreterVSRAM         ( A /*T_Pion*/, R /*nombre*/, B /*action terminee ?*/ );
-    V              A::DEC_Sante_RecupererVSRAM           ( A /*T_Pion*/, R /*nombre*/ );
     
     V                A::DEC_Ravitaillement_ActiverChaine                ();
     V                A::DEC_Ravitaillement_DesactiverChaine             ();       

@@ -101,6 +101,23 @@ OrderConduite-Pion-ReprendreAuxOrdresVSRAM ::= SEQUENCE
     nbr-ambulances INTEGER -- Le nombre d'ambulances que l'on reprend aux ordres
 }
 
+OrderConduite-Pion-RenforcerEnRemorqueurs ::= SEQUENCE
+{
+    pion-a-renforcer Agent,   -- 
+    nbr-remorqueurs  INTEGER 
+}
+OrderConduite-Pion-TransfererRemorqueurs ::= SEQUENCE
+{
+    pion-renforce    Agent,  -- pion dont on veut extraire les moyens
+    pion-a-renforcer Agent,  -- pion destinataire
+    nbr-remorqueurs  INTEGER 
+}
+OrderConduite-Pion-ReprendreAuxOrdresRemorqueurs ::= SEQUENCE
+{
+    pion-renforce  Agent,   -- pion dont on veut extraire les moyens
+    nbr-remorqueurs INTEGER -- Le nombre de remorqueurs que l'on reprend aux ordres
+}
+
 ---------------------------------------
 -- Ordres de conduite automate
 ---------------------------------------
@@ -207,6 +224,9 @@ MsgOrderConduite ::= SEQUENCE
         order-conduite-pion-renforcer-en-vs-ram                         OrderConduite-Pion-RenforcerEnVSRAM,
         order-conduite-pion-transferer-vs-ram                           OrderConduite-Pion-TransfererVSRAM,
         order-conduite-pion-reprendre-aux-ordres-vs-ram                 OrderConduite-Pion-ReprendreAuxOrdresVSRAM,        
+        order-conduite-pion-renforcer-en-remorqueurs                    OrderConduite-Pion-RenforcerEnRemorqueurs,
+        order-conduite-pion-transferer-remorqueurs                      OrderConduite-Pion-TransfererRemorqueurs,
+        order-conduite-pion-reprendre-aux-ordres-remorqueurs            OrderConduite-Pion-ReprendreAuxOrdresRemorqueurs,        
         order-conduite-modifier-regime-travail-maintenance              OrderConduite-ModifierRegimeTravailMaintenance,
         order-conduite-modifier-priorites-reparations                   OrderConduite-ModifierPrioritesReparations,
         order-conduite-modifier-priorites-blesses                       OrderConduite-ModifierPrioritesBlesses,

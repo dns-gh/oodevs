@@ -10,6 +10,7 @@
 // *****************************************************************************
 
 #include "MIL_AgentServer.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h" 
 
 // -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_RolePion_Composantes::Apply
@@ -144,4 +145,90 @@ inline
 bool PHY_RolePion_Composantes::IsNeutralized() const
 {
     return nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+}
+
+// =============================================================================
+// LEND
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::LendComposantes
+// Created: NLD 2006-04-03
+// -----------------------------------------------------------------------------
+template < typename T >
+uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate )
+{
+    uint nNbrDone = 0;
+    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
+    {
+        PHY_ComposantePion& composante = **it;
+
+        if( composante.CanBeLent() && funcPredicate( composante ) )
+        {
+            ++nNbrDone;
+            LendComposante( newRole, composante );
+            it = composantes_.rbegin(); // LendComposante->TransfertComposante modifie composantes_
+        }
+        else
+            ++it;
+    }
+    return nNbrDone;
+}
+
+// -----------------------------------------------------------------------------
+// Name: template < typename T > uint PHY_RolePion_Composantes::UndoLendComposantes
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+template < typename T > 
+uint PHY_RolePion_Composantes::UndoLendComposantes( PHY_RolePion_Composantes& role, uint nNbr, T funcPredicate )
+{
+    uint nNbrDone = 0;
+    while( nNbrDone < nNbr )
+    {
+        IT_LentComposanteMap it = lentComposantes_.find( &role );
+        if( it == lentComposantes_.end() )
+            return nNbrDone;
+
+        PHY_ComposantePion* pComposante = 0;
+        const T_ComposantePionVector& lentComps = it->second;
+        for( CIT_ComposantePionVector itLend = lentComps.begin(); itLend != lentComps.end(); ++itLend )
+        {
+            PHY_ComposantePion& composante = **itLend;
+            if( funcPredicate( composante ) )
+                pComposante = &composante;
+        }
+        if( !pComposante )
+            return nNbrDone;
+
+        ++ nNbrDone;
+        UndoLendComposante( role, *pComposante );
+    }
+    return nNbrDone;
+}
+   
+// -----------------------------------------------------------------------------
+// Name: template < typename T > uint PHY_RolePion_Composantes::GetLendComposantesTime
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+template < typename T > 
+uint PHY_RolePion_Composantes::GetLendComposantesTime( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate )
+{
+    uint nNbrDone = 0;
+    uint nTime    = 0;
+
+    const MT_Vector2D& srcPos  =         GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& destPos = newRole.GetRole< PHY_RolePion_Location >().GetPosition();
+
+    for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+
+        if( composante.CanBeLent() && funcPredicate( composante ) )
+        {
+            ++nNbrDone;
+            nTime = std::max( nTime, composante.ApproximateTravelTime( srcPos, destPos ) );
+        }
+    }
+    return nTime;
 }

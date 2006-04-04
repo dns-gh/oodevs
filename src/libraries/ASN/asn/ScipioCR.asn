@@ -151,10 +151,18 @@ CR-RavitaillementStockEffectue              ::= NULL
 CR-RavitaillementDotationsAnnule            ::= NULL
 CR-RavitaillementStockAnnule                ::= NULL
 CR-HumainRetourDeSante                      ::= NULL
-CR-VSRAM-PretEnCours                        ::= NULL
-CR-VSRAM-PretAnnule                         ::= NULL
-CR-VSRAM-PretEffectue                       ::= NULL
-CR-VSRAM-RecuperationEffectuee              ::= NULL
+
+CR-PretMaterielEnCours                              ::= NULL
+CR-PretMaterielAnnule                               ::= NULL
+CR-PretMaterielEffectue                             ::= NULL
+CR-PretMaterielPartiellementEffectue                ::= NULL
+CR-PretMaterielImpossible                           ::= NULL
+CR-RecuperationMaterielPreteEffectuee               ::= NULL
+CR-RecuperationMaterielPretePartiellementEffectuee  ::= NULL
+CR-RecuperationMaterielPreteImpossible              ::= NULL
+CR-MaterielPrete                                    ::= NULL
+CR-MaterielRendu                                    ::= NULL
+
 CR-Convoi-DeplacementVersPointChargement    ::= NULL
 CR-Convoi-ChargementEnCours                 ::= NULL
 CR-Convoi-ChargementEffectue                ::= NULL
@@ -449,11 +457,17 @@ MsgCR ::= SEQUENCE
         cr-ravitaillement-stock-effectue                                CR-RavitaillementStockEffectue,
         cr-ravitaillement-dotations-annule                              CR-RavitaillementDotationsAnnule,
         cr-ravitaillement-stock-annule                                  CR-RavitaillementStockAnnule,
-        cr-humain-retour-de-sante                                       CR-HumainRetourDeSante,
-        cr-vsram-pret-en-cours                                          CR-VSRAM-PretEnCours,
-        cr-vsram-pret-annule                                            CR-VSRAM-PretAnnule,
-        cr-vsram-pret-effectue                                          CR-VSRAM-PretEffectue,
-        cr-vsram-recuperation-effectuee                                 CR-VSRAM-RecuperationEffectuee,       
+        cr-humain-retour-de-sante                                       CR-HumainRetourDeSante,      
+        cr-pret-materiel-en-cours                                       CR-PretMaterielEnCours,
+        cr-pret-materiel-annule                                         CR-PretMaterielAnnule,
+        cr-pret-materiel-effectue                                       CR-PretMaterielEffectue,
+        cr-pret-materiel-impossible                                     CR-PretMaterielImpossible,
+        cr-pret-materiel-partiellement-effectue                         CR-PretMaterielPartiellementEffectue,
+        cr-recuperation-materiel-prete-impossible                       CR-RecuperationMaterielPreteImpossible,
+        cr-recuperation-materiel-prete-effectuee                        CR-RecuperationMaterielPreteEffectuee,
+        cr-recuperation-materiel-prete-partiellement-effectuee          CR-RecuperationMaterielPretePartiellementEffectuee,
+        cr-materiel-prete                                               CR-MaterielPrete,
+        cr-materiel-rendu                                               CR-MaterielRendu,
         cr-convoi-deplacement-vers-point-chargement                     CR-Convoi-DeplacementVersPointChargement,
         cr-convoi-chargement-en-cours                                   CR-Convoi-ChargementEnCours,               
         cr-convoi-chargement-effectue                                   CR-Convoi-ChargementEffectue,              

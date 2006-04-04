@@ -28,6 +28,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Decision/DEC_Tools.h"
 
 // =============================================================================
@@ -290,43 +291,6 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( DIA_Call_AB
     PionMedicalChangeTacticalPriorities( call, callerAutomate.GetPionPC() );
 }
     
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
-// Created: JVT 2005-01-17
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendCollectionComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pAgent = call.GetParameter( 0 ).ToUserObject( pAgent );
-    assert( pAgent );
-    
-    const uint nNbr = (uint)call.GetParameter( 1 ).ToFloat();
-    
-    callerAgent.GetRole< PHY_RolePion_Composantes >().UndoLendCollectionComposantes( pAgent->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbr );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::PionGetTC2
-// Created: JVT 2005-01-17
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionGetTC2( DIA_Call_ABC& call, const MIL_AgentPion& agent )
-{
-    MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2();    
-    call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::AutomateGetTC2
-// Created: JVT 2005-01-17
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateGetTC2( DIA_Call_ABC& call, const MIL_Automate& agent )
-{
-    MIL_AutomateLOG* pTC2 = agent.GetTC2();    
-    call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
-}
-
 // =============================================================================
 // SUPPLY
 // =============================================================================
@@ -461,4 +425,76 @@ void DEC_LogisticFunctions::ConvoyEndMission( DIA_Call_ABC& /*call*/, MIL_AgentP
     callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyEndMission();
 }
 
+// =============================================================================
+// MISC
+// =============================================================================
+
+namespace
+{
+    typedef bool (PHY_ComposantePion::*T_ComposantePredicate)() const;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndoLendComposantes
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+static void UndoLendComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent, T_ComposantePredicate funcPredicate )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+
+    DEC_RolePion_Decision* pTarget = call.GetParameter( 0 ).ToUserObject( pTarget );
+    assert( pTarget );
+    
+    const uint nNbrToGetBack = (uint)call.GetParameter( 1 ).ToFloat();
+    const uint nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().UndoLendComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
+
+    if( nNbrGotBack == 0 )
+        MIL_RC::pRcRecuperationMaterielPreteImpossible_->Send( callerAgent, MIL_RC::eRcTypeOperational );
+    else
+    {
+        MIL_RC::pRcMaterielRendu_->Send( pTarget->GetPion(), MIL_RC::eRcTypeOperational );
+        if( nNbrGotBack < nNbrToGetBack )
+            MIL_RC::pRcRecuperationMaterielPretePartiellementEffectuee_->Send( callerAgent, MIL_RC::eRcTypeOperational );
+        else
+            MIL_RC::pRcRecuperationMaterielPreteEffectuee_->Send( callerAgent, MIL_RC::eRcTypeOperational );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
+// Created: JVT 2005-01-17
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::UndoLendCollectionComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    UndoLendComposantes( call, callerAgent, &PHY_ComposantePion::CanCollectCasualties );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::UndoLendHaulerComposantes
+// Created: NLD 2006-04-04
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::UndoLendHaulerComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    UndoLendComposantes( call, callerAgent, &PHY_ComposantePion::CanHaul );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::PionGetTC2
+// Created: JVT 2005-01-17
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::PionGetTC2( DIA_Call_ABC& call, const MIL_AgentPion& agent )
+{
+    MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2();    
+    call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::AutomateGetTC2
+// Created: JVT 2005-01-17
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::AutomateGetTC2( DIA_Call_ABC& call, const MIL_Automate& agent )
+{
+    MIL_AutomateLOG* pTC2 = agent.GetTC2();    
+    call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
+}
 

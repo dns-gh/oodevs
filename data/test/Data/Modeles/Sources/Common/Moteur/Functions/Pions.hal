@@ -320,6 +320,11 @@ signatures
     B                                       A::DEC_Pion_ChangeAutomate       ( A /*T_Automate*/ );
                                             
     // Logistique                           
+    U /*T_Action*/                          A::DEC_StartPreterVSRAM      ( A /*T_Pion*/, R /*nombre*/, B /*action terminee ?*/ );
+    V                                       A::DEC_RecupererVSRAM        ( A /*T_Pion*/, R /*nombre*/ );
+    U /*T_Action*/                          A::DEC_StartPreterRemorqueurs( A /*T_Pion*/, R /*nombre*/, B /*action terminee ?*/ );
+    V                                       A::DEC_RecupererRemorqueurs  ( A /*T_Pion*/, R /*nombre*/ );
+        
     A /*T_Automate*/                        A::DEC_Pion_TC2                  (); // ATTENTION : La valeur de retour peut être nulle
     V                                       A::DEC_DemandeDeRavitaillement   ();
     V                                       A::DEC_ChangeValeurDotations     ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );

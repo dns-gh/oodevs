@@ -109,6 +109,16 @@ public:
     static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;   
     static const MIL_RC*                                    pRcRendu_;
     static const MIL_RC*                                    pRcRegimeMaintenanceDelaiDepasse_;
+    static const MIL_RC*                                    pRcPretMaterielEnCours_;
+    static const MIL_RC*                                    pRcPretMaterielAnnule_;
+    static const MIL_RC*                                    pRcPretMaterielEffectue_;
+    static const MIL_RC*                                    pRcPretMaterielPartiellementEffectue_;
+    static const MIL_RC*                                    pRcPretMaterielImpossible_;
+    static const MIL_RC*                                    pRcRecuperationMaterielPreteEffectuee_;
+    static const MIL_RC*                                    pRcRecuperationMaterielPretePartiellementEffectuee_;
+    static const MIL_RC*                                    pRcRecuperationMaterielPreteImpossible_;
+    static const MIL_RC*                                    pRcMaterielPrete_;
+    static const MIL_RC*                                    pRcMaterielRendu_;
     //@}
    
 public:

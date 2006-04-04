@@ -416,6 +416,9 @@
 #include "Conduite\MIL_OrderConduite_Pion_RenforcerEnVSRAM.cpp"
 #include "Conduite\MIL_OrderConduite_Pion_TransfererVSRAM.cpp"
 #include "Conduite\MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM.cpp"
+#include "Conduite\MIL_OrderConduite_Pion_RenforcerEnRemorqueurs.cpp"
+#include "Conduite\MIL_OrderConduite_Pion_TransfererRemorqueurs.cpp"
+#include "Conduite\MIL_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs.cpp"
 #include "Conduite\MIL_OrderConduite_ModifierRegimeTravailMaintenance.cpp"
 #include "Conduite\MIL_OrderConduite_ModifierPrioritesReparations.cpp"
 #include "Conduite\MIL_OrderConduite_ModifierPrioritesBlesses.cpp"
@@ -878,6 +881,9 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_RenforcerEnVSRAM>( "Pion RenforcerEnVSRAM", eOrdreConduite_Pion_RenforcerEnVSRAM, T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_vs_ram, "Rep_OrderConduite_Pion_RenforcerEnVSRAM", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_TransfererVSRAM>( "Pion TransfererVSRAM", eOrdreConduite_Pion_TransfererVSRAM, T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_vs_ram, "Rep_OrderConduite_Pion_TransfererVSRAM", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM>( "Pion ReprendreAuxOrdresVSRAM", eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM, T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram, "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM", false, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_RenforcerEnRemorqueurs>( "Pion RenforcerEnRemorqueurs", eOrdreConduite_Pion_RenforcerEnRemorqueurs, T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs, "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs", false, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_TransfererRemorqueurs>( "Pion TransfererRemorqueurs", eOrdreConduite_Pion_TransfererRemorqueurs, T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs, "Rep_OrderConduite_Pion_TransfererRemorqueurs", false, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs>( "Pion ReprendreAuxOrdresRemorqueurs", eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs, T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs, "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ModifierRegimeTravailMaintenance>( "ModifierRegimeTravailMaintenance", eOrdreConduite_ModifierRegimeTravailMaintenance, T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance, "Rep_OrderConduite_ModifierRegimeTravailMaintenance", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ModifierPrioritesReparations>( "ModifierPrioritesReparations", eOrdreConduite_ModifierPrioritesReparations, T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations, "Rep_OrderConduite_ModifierPrioritesReparations", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ModifierPrioritesBlesses>( "ModifierPrioritesBlesses", eOrdreConduite_ModifierPrioritesBlesses, T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses, "Rep_OrderConduite_ModifierPrioritesBlesses", false, false );
