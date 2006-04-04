@@ -53,7 +53,7 @@ private:
     //! @name Member data
     //@{
     ColorStrategy* strategy_;
-    ElevationMap*  elevation_;
+    ElevationMap*  elevation_; // $$$$ AGE 2006-04-04: Move out !
     ParametersLayer* parameters_;
 
     // $$$$ AGE 2006-03-29: 

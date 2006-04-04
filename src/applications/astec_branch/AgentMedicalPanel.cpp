@@ -39,9 +39,11 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controll
 {
     pConsignListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );
+    pConsignListView_->AddColumn( "" );
 
     pConsignHandledListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     pConsignHandledListView_->AddColumn( "Consignes en traitement" );
+    pConsignHandledListView_->AddColumn( "" );
 
     logDisplay_ = new SubItemDisplayer( "Consigne :" );
     logDisplay_->AddChild( "Pion demandeur :" )

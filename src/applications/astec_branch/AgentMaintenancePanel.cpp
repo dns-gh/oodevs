@@ -40,9 +40,11 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& 
 {
     pConsignListView_        = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );
+    pConsignListView_->AddColumn( "" );
     
     pConsignHandledListView_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     pConsignHandledListView_->AddColumn( "Consignes en traitement" );
+    pConsignHandledListView_->AddColumn( "" );
 
     logDisplay_ = new SubItemDisplayer( "Consigne :" );
     logDisplay_->AddChild( "Pion demandeur :" )

@@ -58,7 +58,7 @@ MapToolbar::MapToolbar( QMainWindow* pParent, Controllers& controllers )
     pGridStep_->AddItem( tr( "10.0km" ), 10.0f,  true  );
 
     addSeparator();
-    new BooleanOptionButton( MAKE_ICON( threed ), tr( "3D" ), this, controllers.options_, "3D" ); // $$$$ AGE 2005-05-13: change icon
+    new BooleanOptionButton( MAKE_ICON( threed ), tr( "3D" ), this, controllers.options_, "3D" );
 }
 
 // -----------------------------------------------------------------------------

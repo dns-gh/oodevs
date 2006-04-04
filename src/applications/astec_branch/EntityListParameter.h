@@ -60,6 +60,7 @@ private:
     //! @name Member data
     //@{
     unsigned int& n_;
+    ASN1T_OID* pIds_;
     ASN1T_OID*& ids_;
     std::string menu_;
     QPopupMenu* pPopupMenu_;

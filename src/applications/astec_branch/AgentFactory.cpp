@@ -90,6 +90,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
+    result->Attach( *new VisionCones( *result, model_.types_ ) );
     result->Update( asnMsg );
     return result;
 }
@@ -104,6 +105,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
+    result->Attach( *new VisionCones( *result, model_.types_ ) );
     return result;
 }
 
@@ -141,7 +143,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Logistics( agent, controllers_.controller_, model_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new AgentDetections( controllers_.controller_, model_.agents_ ) );
-    agent.Attach( *new VisionCones() );
     agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );

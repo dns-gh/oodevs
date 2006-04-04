@@ -168,6 +168,7 @@ void LogisticConsigns::Draw( const geometry::Point2f& where, const GlTools_ABC& 
 
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.0 );
+    glEnable( GL_LINE_STIPPLE );
     glColor4d( COLOR_MAROON );
     for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
             (*it)->Draw( where, tools );
@@ -188,6 +189,6 @@ void LogisticConsigns::Draw( const geometry::Point2f& where, const GlTools_ABC& 
     if( ! handledOnly )
         for( T_SupplyConsigns::const_iterator it = requestedSupplies_.begin(); it != requestedSupplies_.end(); ++it )
             (*it)->Draw( where, tools );
-
+    glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
 }

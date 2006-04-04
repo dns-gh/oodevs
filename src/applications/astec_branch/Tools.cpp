@@ -383,50 +383,6 @@ const char* Tools::ToString( const ASN1T_EnumObjectErrorCode& nCode )
     }
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: Tools::ToSymbol
-/** @param  strUnitType 
-    @return 
-    */
-// Created: APE 2004-08-30
-// -----------------------------------------------------------------------------
-const char* Tools::ToSymbol( const std::string& strUnitType )
-{
-    if( strUnitType == "CompagnieInfanterie"                 ) return "4I";
-    if( strUnitType == "SectionInfanteriePied"               ) return "3I";
-    if( strUnitType == "SectionInfanterieMecaniseeRoue"      ) return "3H";
-    if( strUnitType == "SectionInfanterieMecaniseeChenille"  ) return "3M";
-    if( strUnitType == "SectionInfanterieAntichar"           ) return "3*";
-    if( strUnitType == "SectionInfanterieMecaniseeAntichar"  ) return "3P";
-    if( strUnitType == "EscadronBlinde"                      ) return "4A";
-    if( strUnitType == "PelotonBlinde"                       ) return "3A";
-    if( strUnitType == "PelotonBlindeRoue"                   ) return "3C";
-    if( strUnitType == "PelotonBlindeReco"                   ) return "3R";
-    if( strUnitType == "PelotonBlindeRecoRoue"               ) return "3'";
-    if( strUnitType == "PatrouilleBlindeEclairInvest"        ) return "2J";
-    if( strUnitType == "PelotonBlindeAppuiDirect"            ) return "3B";
-    if( strUnitType == "CompagnieGenie"                      ) return "4E";
-    if( strUnitType == "SectionGeniePied"                    ) return "3E";
-    if( strUnitType == "SectionGenieMecanisee"               ) return "3D";
-    if( strUnitType == "GroupeGenieAppui"                    ) return "2a";
-    if( strUnitType == "GroupeGenieAppuiEQT"                 ) return "2b";
-    if( strUnitType == "GroupeGenieAppuiTECH"                ) return "2c";
-    if( strUnitType == "GroupeGenieAppuiOBST"                ) return "2d";
-    if( strUnitType == "GroupeGenieAppuiPont"                ) return "2e";
-    if( strUnitType == "CompagnieArtillerie"                 ) return "4#";
-    if( strUnitType == "SectionArtillerie"                   ) return "3#";
-    if( strUnitType == "SectionArtillerieBlinde"             ) return "3(";
-    if( strUnitType == "SectionArtillerieReco"               ) return "3\xDA";
-    if( strUnitType == "SectionArtillerieSolAir"             ) return "3:"; 
-    if( strUnitType == "SectionSante"                        ) return "3F"; 
-    if( strUnitType == "CompagnieSante"                      ) return "4F"; 
-    if( strUnitType == "GroupeRecoALAT"                      ) return "3S"; 
-    if( strUnitType == ""                                    ) return "?";
-    return "?";
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: Tools::FromString
 /** @param  szString 

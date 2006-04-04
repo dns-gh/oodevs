@@ -23,6 +23,7 @@
 #include "Elevation2dLayer.h"
 #include "Elevation3dLayer.h"
 #include "graphics/ElevationMap.h"
+#include "MeteoLayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor
@@ -44,6 +45,7 @@ GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Mode
     Register( *new ObjectsLayer( controllers, *this, *strategy_, *this ) );
     Register( *new PopulationsLayer( controllers, *this, *strategy_, *this ) );
     Register( *new AgentsLayer( controllers, *this, *strategy_, *this ) );
+    Register( *new MeteoLayer( controllers, *this ) );
     Register( *parameters_ );
     
     AddDefaultLayer( *new DefaultLayer( controllers ) );

@@ -29,6 +29,7 @@ public:
 
     //! @name Operations
     //@{
+    // $$$$ AGE 2006-04-04: Agent...
     void Draw( const Agent& agent, const GlTools_ABC& tools ) const;
 //    void UpdateVisionMatrice( const Agent& agent, T_VisionResultMap& res ) const;
     //@}

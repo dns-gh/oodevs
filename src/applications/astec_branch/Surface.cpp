@@ -18,7 +18,7 @@ using namespace geometry;
 Surface::Surface( const VisionConesMessage& input, const Resolver_ABC< SensorType, std::string >& resolver )
 {
     double oX, oY, rHeight;
-    input >> oX, oY; origin_ = Point2f( float( oX ), float( oY ) );
+    input >> oX >> oY; origin_ = Point2f( float( oX ), float( oY ) );
     input >> rHeight; height = float( rHeight );
 
     std::string strTypeName;
@@ -69,19 +69,22 @@ void Surface::Draw( const Agent& agent, const GlTools_ABC& tools ) const
             Vector2f dir1 = dir;
             Vector2f dir2 = dir;
 
-            dir1.Rotate( -angle ).Normalize() *= rRadius;
-            dir2.Rotate( angle ).Normalize() *= rRadius;
-            dir1 += pos;
-            dir2 += pos;
+            dir1.Normalize() *= rRadius;
+            dir2.Normalize() *= rRadius;
+            const float rSin = std::sin( angle );
+            const float rCos = std::cos( angle );
+            dir1 = Vector2f( dir1.X() * rCos + dir1.Y() * rSin
+                           , dir1.Y() * rCos - dir1.X() * rSin );
+            dir2 = Vector2f( dir2.X() * rCos - dir2.Y() * rSin
+                           , dir2.Y() * rCos + dir2.X() * rSin );
+            tools.DrawLine( pos, pos + dir1 );
+            tools.DrawLine( pos, pos + dir2 );
 
-            T_PointVector points; points.reserve( 3 );
-            points.push_back( dir2 ); points.push_back( pos ); points.push_back( dir1 ); 
-            GLTool::DrawLine( points );
-
-            MT_Float A0 = acos( dir.rX_ );
-            if( asin( dir.rY_ ) < 0 ) A0 = -A0;
-
-            GLTool::DrawArc( pos, rRadius, A0 + angle, A0 - angle );
+            float A0 = std::acos( dir.X() );
+            if( std::asin( dir.Y() ) < 0 )
+                A0 = -A0;
+            // $$$$ AGE 2006-04-04: 
+//            GLTool::DrawArc( pos, rRadius, A0 + angle, A0 - angle );
         }
     }
 }
@@ -90,9 +93,9 @@ void Surface::Draw( const Agent& agent, const GlTools_ABC& tools ) const
 // Name: Surface::CalcVisionMatrice
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-void Surface::UpdateVisionMatrice( const Agent& src, T_VisionResultMap& res ) const
-{
+//void Surface::UpdateVisionMatrice( const Agent& src, T_VisionResultMap& res ) const
+//{
 //    if ( pSensorType_ )
 //        for ( CIT_SectorVector itVision = sectors_.begin(); itVision != sectors_.end(); ++itVision )
 //            App::GetApp().GetRawVisionData().UpdateVisionMatrice( res, *pSensorType_, *itVision, rHeight_, src );
-}
+//}

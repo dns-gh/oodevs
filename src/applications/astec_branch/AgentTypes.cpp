@@ -65,7 +65,7 @@ AgentTypes::~AgentTypes()
     Resolver< AutomatType >::DeleteAll();
     Resolver< ComponentType, std::string >::DeleteAll();
     Resolver< DecisionalModel, std::string >::DeleteAll();
-//    Resolver< SensorType, std::string >::DeleteAll();
+    Resolver< SensorType, std::string >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -168,8 +168,8 @@ void AgentTypes::ReadSensor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReallyReadSensor( xml::xistream& xis, const std::string& sensor )
 {
-//    SensorType* type = new SensorType( sensor, xis );
-//    Resolver< SensorType, std::string >::Register( sensor, *type );
+    SensorType* type = new SensorType( sensor, xis );
+    Resolver< SensorType, std::string >::Register( sensor, *type );
 }
 
 // -----------------------------------------------------------------------------

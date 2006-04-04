@@ -18,11 +18,11 @@
 EntityListParameterBase::EntityListParameterBase( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const std::string& label, const std::string& menu )
     : QListView( pParent )
     , n_( n )
+    , pIds_( 0 )
     , ids_( ids )
     , menu_( menu )
     , pPopupMenu_( new QPopupMenu( this ) )
 {
-    ids_ = 0;
     addColumn( label.c_str() );
     setResizeMode( QListView::LastColumn );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
@@ -34,7 +34,7 @@ EntityListParameterBase::EntityListParameterBase( QWidget* pParent, unsigned int
 // -----------------------------------------------------------------------------
 EntityListParameterBase::~EntityListParameterBase()
 {
-    delete[] ids_;
+    delete[] pIds_;
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +118,8 @@ void EntityListParameterBase::Commit()
     if( ! childCount() )
         return;
     
-    delete ids_;
-    ids_ = new ASN1T_OID[ n_ ];
+    delete pIds_;
+    ids_ = pIds_ = new ASN1T_OID[ n_ ];
 
     unsigned int i = 0;
     ValuedListItem* item = (ValuedListItem*)( firstChild() );

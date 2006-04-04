@@ -39,6 +39,7 @@
 #include "FiresModel.h"
 #include "App.h"
 #include "DIN_Types.h"
+#include "WeatherModel.h"
 
 using namespace DIN;
 
@@ -182,7 +183,7 @@ void AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const Agent& ag
 void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
     // NOTHING
-//    SendMsgEnableUnitVisionCones();
+    SendMsgEnableUnitVisionCones(); // $$$$ AGE 2006-04-04: a la demande
 }
 
 // -----------------------------------------------------------------------------
@@ -1379,9 +1380,7 @@ void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& m
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEffect& message )
 {
-    // $$$$ AGE 2006-03-13: 
-//    MT_LOG_INFO( "Start ammunition meteo effect - ID: " << message.oid_effet << " Type:" << message.type, eReceived, 0 );
-//    App::GetApp().GetWeatherManager().RegisterAmmoMeteoEffect( message );
+    model_.weather_.CreateAmmoEffect( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1390,9 +1389,7 @@ void AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEff
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffect& message )
 {
-    // $$$$ AGE 2006-03-13: 
-//    MT_LOG_INFO( "Stop ammunition meteo effect - ID: " << message, eReceived, 0 );
-//    App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( message );
+    model_.weather_.DeleteAmmoEffect( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1401,9 +1398,7 @@ void AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffec
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& message )
 {
-    // fire results
     model_.objects_.GetObject( message.oid_objet ).Update( message );
-    MT_LOG_INFO( "Explosion" << " - ID objet " << message.oid_objet, eReceived, 0 );
 }
 
 // -----------------------------------------------------------------------------

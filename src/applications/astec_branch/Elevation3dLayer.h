@@ -12,6 +12,7 @@
 
 #include "Layer_ABC.h"
 #include "graphics/ElevationColor_ABC.h"
+#include "graphics/ViewFrustum.h"
 
 class ElevationMap;
 class ElevationTextureTree;
@@ -54,6 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ViewFrustum lastFrustum_;
     const ElevationMap& elevation_;
     ElevationTextureTree* tree_;
     float zRatio_;

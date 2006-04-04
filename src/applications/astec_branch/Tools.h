@@ -43,23 +43,13 @@ public:
     static QString ToString( ASN1T_EnumMissionGenSousTypeObstacle nType );
     static QString ToString( ASN1T_EnumMissionGenPriorite nObject );
 
-//    static QString ToString( Meteo_ABC::E_WeatherType nType );
-
     static const char* ToString( const ASN1T_EnumInfoContextErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumCtrlErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumOrderErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumUnitAttrErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumObjectErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumPopulationAttrErrorCode& nCode );
-
-
-    //$$$$$ bof bof - N'IMPORTE QUOI !
-    static const char* ToSymbol( const std::string& strUnitType );
     static void FromString( const char* szString, ASN1T_EnumTypeLocalisation& nId );
-
-//    static bool PointNearLine( const MT_Vector2D& point, const T_PointVector& line, MT_Float rMinDist, bool bLineLoop = false );
-
-
 
 
 public:

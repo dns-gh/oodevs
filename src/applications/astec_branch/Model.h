@@ -30,6 +30,7 @@ class FireResultFactory;
 class FiresModel;
 class CoordinateConverter;
 class FireFactory;
+class WeatherModel;
 
 // =============================================================================
 /** @class  Model
@@ -74,6 +75,7 @@ public:
     LogisticsModel& logistics_;
     LimitsModel&    limits_;
     FiresModel&     fires_;
+    WeatherModel&   weather_;
 
     FireResultFactory& fireResultsFactory_;
     //@}

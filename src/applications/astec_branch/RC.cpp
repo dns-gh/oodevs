@@ -42,7 +42,6 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
     std::stringstream strMsg;
     switch( asnMsg.cr.t )
     {
-    
         case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
@@ -136,6 +135,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_obstacle_en_attente_activation : strMsg << "obstacle en attente activation" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_obstacle_en_attente_activation ); break;
         case T_MsgCR_cr_cr_debut_amenagement_berges : strMsg << "debut amenagement berges"; break;
         case T_MsgCR_cr_cr_fin_amenagement_berges : strMsg << "fin amenagement berges"; break;
+        case T_MsgCR_cr_cr_regime_maintenance_delai_depasse : strMsg << "regime maintenance delai depasse"; break;
         case T_MsgCR_cr_cr_section_deployee : strMsg << "section deployee"; break;
         case T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation : strMsg << "a nouveau disponible apres reparation"; break;
         case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance" << " - TypeEquipement : " << " " << asnMsg.cr.u.cr_materiel_retour_de_maintenance; break;
@@ -145,6 +145,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_demande_evacuation_sanitaire : strMsg << "demande evacuation sanitaire"; break;
         case T_MsgCR_cr_cr_demande_evacuation_materiel : strMsg << "demande evacuation materiel"; break;
         case T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee : strMsg << "allocation consentie bientot epuisee" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_allocation_consentie_bientot_epuisee; break;
+        case T_MsgCR_cr_cr_depassement_capacite_stockage : strMsg << "depassement capacite stockage"; break;
         case T_MsgCR_cr_cr_seuil_logistique_dotation_depasse : strMsg << "seuil logistique dotation depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_dotation_depasse; break;
         case T_MsgCR_cr_cr_seuil_logistique_stock_depasse : strMsg << "seuil logistique stock depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_stock_depasse; break;
         case T_MsgCR_cr_cr_ravitaillement_dotations_effectue : strMsg << "ravitaillement dotations effectue"; break;
@@ -152,10 +153,16 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_ravitaillement_dotations_annule : strMsg << "ravitaillement dotations annule"; break;
         case T_MsgCR_cr_cr_ravitaillement_stock_annule : strMsg << "ravitaillement stock annule"; break;
         case T_MsgCR_cr_cr_humain_retour_de_sante : strMsg << "humain retour de sante"; break;
-        case T_MsgCR_cr_cr_vsram_pret_en_cours : strMsg << "vsram_ pret en cours"; break;
-        case T_MsgCR_cr_cr_vsram_pret_annule : strMsg << "vsram_ pret annule"; break;
-        case T_MsgCR_cr_cr_vsram_pret_effectue : strMsg << "vsram_ pret effectue"; break;
-        case T_MsgCR_cr_cr_vsram_recuperation_effectuee : strMsg << "vsram_ recuperation effectuee"; break;
+        case T_MsgCR_cr_cr_pret_materiel_en_cours : strMsg << "pret materiel en cours"; break;
+        case T_MsgCR_cr_cr_pret_materiel_annule : strMsg << "pret materiel annule"; break;
+        case T_MsgCR_cr_cr_pret_materiel_effectue : strMsg << "pret materiel effectue"; break;
+        case T_MsgCR_cr_cr_pret_materiel_impossible : strMsg << "pret materiel impossible"; break;
+        case T_MsgCR_cr_cr_pret_materiel_partiellement_effectue : strMsg << "pret materiel partiellement effectue"; break;
+        case T_MsgCR_cr_cr_recuperation_materiel_prete_impossible : strMsg << "recuperation materiel prete impossible"; break;
+        case T_MsgCR_cr_cr_recuperation_materiel_prete_effectuee : strMsg << "recuperation materiel prete effectuee"; break;
+        case T_MsgCR_cr_cr_recuperation_materiel_prete_partiellement_effectuee : strMsg << "recuperation materiel prete partiellement effectuee"; break;
+        case T_MsgCR_cr_cr_materiel_prete : strMsg << "materiel prete"; break;
+        case T_MsgCR_cr_cr_materiel_rendu : strMsg << "materiel rendu"; break;
         case T_MsgCR_cr_cr_convoi_deplacement_vers_point_chargement : strMsg << "convoi_ deplacement vers point chargement"; break;
         case T_MsgCR_cr_cr_convoi_chargement_en_cours : strMsg << "convoi_ chargement en cours"; break;
         case T_MsgCR_cr_cr_convoi_chargement_effectue : strMsg << "convoi_ chargement effectue"; break;

@@ -27,6 +27,7 @@
 #include "FiresModel.h"
 #include "CoordinateConverter.h"
 #include "FireFactory.h"
+#include "WeatherModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -50,6 +51,7 @@ Model::Model( Controllers& controllers, const Simulation& simulation, const std:
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel( *this, controllers ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
+    , weather_( *new WeatherModel( controllers, *this ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
 {
     // NOTHING
@@ -61,8 +63,9 @@ Model::Model( Controllers& controllers, const Simulation& simulation, const std:
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    delete &fires_;
     delete &fireResultsFactory_;
+    delete &weather_;
+    delete &fires_;
     delete &limits_;
     delete &logistics_;
     delete &knowledgeGroups_;

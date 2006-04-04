@@ -14,8 +14,13 @@
 #include "DIN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
+#include "Resolver_ABC.h"
 
 class Surface;
+class CoordinateConverter;
+class SensorType;
+class Agent;
 
 // =============================================================================
 /** @class  VisionCones
@@ -26,17 +31,19 @@ class Surface;
 class VisionCones : public Extension_ABC
                   , public Updatable_ABC< VisionConesMessage >
                   , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+                  , public Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones();
+             VisionCones( const Agent& agent, const Resolver_ABC< SensorType, std::string >& resolver );
     virtual ~VisionCones();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -61,6 +68,8 @@ private:
 private:
     //! @name Member data
     //@{
+    const Agent& agent_;
+    const Resolver_ABC< SensorType, std::string >& resolver_;
     T_Surfaces surfaces_;
     double elongationFactor_;
     bool needsUpdating_;

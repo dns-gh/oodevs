@@ -73,10 +73,11 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     glPushMatrix(); 
         glScalef( 1.f, 1.f, zRatio_ );
         glColor3f( 1, 1, 1 );
-        Visitor3d visitor( elevation_, frustum );
+        Visitor3d visitor( elevation_, frustum, frustum != lastFrustum_ );
         tree_->Accept( visitor );
     glPopMatrix();
     glPopAttrib();
+    lastFrustum_ = frustum;
 }
 
 namespace
