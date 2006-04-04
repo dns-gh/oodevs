@@ -522,6 +522,16 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_FinMesure" ] = "eReportMission";
 	rcTypes_[ "eRC_FinInstallation" ] = "eReportMission";
     rcTypes_[ "eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles" ] = "eReportScipio";
+    rcTypes_[ "eRC_PretMaterielEnCours" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_PretMaterielAnnule" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_PretMaterielEffectue" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_PretMaterielPartiellementEffectue" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_PretMaterielImpossible" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_RecuperationMaterielPreteEffectuee" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_RecuperationMaterielPretePartiellementEffectuee" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_RecuperationMaterielPreteImpossible" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_MaterielPrete" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_MaterielRendu" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_VSRAM_PretEnCours" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_VSRAM_PretAnnule" ] = "eReportLogisticSituation";    
 	rcTypes_[ "eRC_VSRAM_PretEffectue" ] = "eReportLogisticSituation";
