@@ -21,7 +21,6 @@
 #include "Object.h"
 #include "Team.h"
 #include "Tools.h"
-#include "SelectedElement.h"
 #include "ASN_Messages.h"
 #include "Controller.h"
 #include "ValuedListItem.h"

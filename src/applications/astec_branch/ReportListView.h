@@ -27,7 +27,6 @@
 class Agent_ABC;
 class Report_ABC;
 class ActionContext;
-class SelectedElement;
 class ReportFilterOptions;
 class Reports;
 

@@ -28,7 +28,6 @@ class Team;
 class KnowledgeGroup;
 class Agent;
 class ActionContext;
-class SelectedElement;
 class Controllers;
 class ValuedListItem;
 class AutomatDecisions;
