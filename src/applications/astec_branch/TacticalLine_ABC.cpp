@@ -93,7 +93,7 @@ void TacticalLine_ABC::Delete()
 // Name: TacticalLine_ABC::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& )
+void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& ack )
 {
     // $$$$ AGE 2006-03-24: test ack !
     nState_ = eStateOk;
@@ -104,7 +104,7 @@ void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& )
 // Name: TacticalLine_ABC::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& )
+void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& ack )
 {
     // $$$$ AGE 2006-03-24: test ack !
     nState_ = eStateOk;
@@ -115,7 +115,7 @@ void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& )
 // Name: TacticalLine_ABC::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& )
+void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& ack )
 {
     // $$$$ AGE 2006-03-24: test ack !
     nState_ = eStateOk;
@@ -126,7 +126,7 @@ void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& )
 // Name: TacticalLine_ABC::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimaUpdateAck& )
+void TacticalLine_ABC::Update( const ASN1T_MsgLimaUpdateAck& ack )
 {
     // $$$$ AGE 2006-03-24: test ack !
     nState_ = eStateOk;

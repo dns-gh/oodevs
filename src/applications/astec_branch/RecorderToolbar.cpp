@@ -28,13 +28,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: RecorderToolbar constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-RecorderToolbar::RecorderToolbar( QMainWindow* pParent )
-    : QToolBar      ( pParent )
-    , msgRecorder_  ( App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() ) // $$$$ AGE 2006-03-30: caca boudin
+RecorderToolbar::RecorderToolbar( QMainWindow* pParent, MsgRecorder& msgRecorder )
+    : QToolBar    ( pParent )
+    , msgRecorder_( msgRecorder )
 {
     setCaption( tr("Enregisteur d'ordres") );
     pPlayButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Rejouer un fichier d'ordres" ), "", this, SLOT( Play() ),   this );

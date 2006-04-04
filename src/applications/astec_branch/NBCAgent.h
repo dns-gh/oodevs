@@ -7,50 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef __EquipmentType_h_
-#define __EquipmentType_h_
+#ifndef __NBCAgent_h_
+#define __NBCAgent_h_
 
 namespace xml { class xistream; };
 
 // =============================================================================
-/** @class  EquipmentType
-    @brief  EquipmentType
+/** @class  NBCAgent
+    @brief  NBCAgent
 */
-// Created: AGE 2006-02-21
+// Created: AGE 2006-04-04
 // =============================================================================
-class EquipmentType
+class NBCAgent
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EquipmentType( xml::xistream& xis );
-    virtual ~EquipmentType();
+    explicit NBCAgent( xml::xistream& input );
+    virtual ~NBCAgent();
     //@}
 
     //! @name Operations
     //@{
-    std::string GetName() const;
     unsigned long GetId() const;
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    EquipmentType( const EquipmentType& );            //!< Copy constructor
-    EquipmentType& operator=( const EquipmentType& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    std::string GetName() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string name_;
     unsigned long id_;
+    std::string name_;
     //@}
 };
 
-#endif // __EquipmentType_h_
+#endif // __NBCAgent_h_

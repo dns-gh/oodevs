@@ -50,7 +50,7 @@ public:
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
 
     virtual float Pixels() const;
-    virtual unsigned short StipplePattern() const;
+    virtual unsigned short StipplePattern( int factor = 1 ) const;
 
     virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const;
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const;

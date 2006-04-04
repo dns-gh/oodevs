@@ -34,7 +34,7 @@ class RecorderToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RecorderToolbar( QMainWindow* pParent );
+             RecorderToolbar( QMainWindow* pParent, MsgRecorder& msgRecorder );
     virtual ~RecorderToolbar();
     //@}
 

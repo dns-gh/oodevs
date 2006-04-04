@@ -16,10 +16,11 @@
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Contaminations::Contaminations( Controller& controller )
-    : controller_( controller )    
+Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver )
+    : controller_( controller )
+    , resolver_( resolver )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Contaminations::Contaminations( Controller& controller )
 // -----------------------------------------------------------------------------
 Contaminations::~Contaminations()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,9 +44,9 @@ void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.contamine_par_agents_nbcPresent )
     {
         contaminatingNbcAgents_.clear();
-        contaminatingNbcAgents_.resize( message.contamine_par_agents_nbc.n );
+        contaminatingNbcAgents_.reserve( message.contamine_par_agents_nbc.n );
         for( uint i = 0; i < message.contamine_par_agents_nbc.n; ++i )
-            contaminatingNbcAgents_.push_back( message.contamine_par_agents_nbc.elem[i] );
+            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamine_par_agents_nbc.elem[i] ) );
     }
 
     if( message.m.en_tenue_de_protection_nbcPresent )

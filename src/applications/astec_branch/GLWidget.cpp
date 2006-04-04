@@ -126,7 +126,7 @@ float GlWidget::Pixels() const
 // Name: GlWidget::StipplePattern
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-unsigned short GlWidget::StipplePattern() const
+unsigned short GlWidget::StipplePattern( int factor /*= 1*/ ) const
 {
     static unsigned short pattern[] = {
         0x00FF, 0x01FE, 0x03FC, 0x07F8,
@@ -134,7 +134,7 @@ unsigned short GlWidget::StipplePattern() const
         0xFF00, 0xFE01, 0xFC03, 0xF807,
         0xF00F, 0xE01F, 0xC03F, 0x807F
     };
-    return pattern[ frame_%16 ]; 
+    return pattern[ ( factor * frame_ ) % 16 ]; 
 }
 
 // -----------------------------------------------------------------------------

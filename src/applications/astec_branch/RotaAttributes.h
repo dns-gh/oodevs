@@ -19,6 +19,7 @@
 class Controller;
 class Object;
 class Displayer_ABC;
+class NBCAgent;
 
 // =============================================================================
 /** @class  RotaAttributes
@@ -35,7 +36,7 @@ class RotaAttributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaAttributes( Controller& controller );
+             RotaAttributes( Controller& controller, const Resolver_ABC< NBCAgent >& resolver );
     virtual ~RotaAttributes();
     //@}
 
@@ -53,7 +54,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< unsigned long > T_NbcIds;
+    typedef std::vector< const NBCAgent* > T_Nbcs;
     //@}
 
     //! @name Helpers
@@ -69,8 +70,9 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
+    const Resolver_ABC< NBCAgent >& resolver_;
     OptionalValue< unsigned int > danger_;
-    T_NbcIds agents_;
+    T_Nbcs agents_;
     //@}
 };
 

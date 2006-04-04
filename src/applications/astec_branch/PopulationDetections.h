@@ -67,6 +67,7 @@ private:
     Controller& controller_;
     const Resolver_ABC< Population >& resolver_;
     T_Parts perceived_;
+    T_PointVector shape_;
     //@}
 };
 

@@ -38,7 +38,7 @@ public:
     // $$$$ AGE 2006-03-30: /pas terrible
 
     virtual float Pixels() const = 0;
-    virtual unsigned short StipplePattern() const = 0;
+    virtual unsigned short StipplePattern( int factor = 1 ) const = 0;
 
     virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const = 0;
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;

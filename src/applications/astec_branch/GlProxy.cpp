@@ -180,10 +180,10 @@ float GlProxy::Pixels() const
 // Name: GlProxy::StipplePattern
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-unsigned short GlProxy::StipplePattern() const
+unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 {
     CheckTools();
-    return tools_->StipplePattern();
+    return tools_->StipplePattern( factor );
 }
 
 // -----------------------------------------------------------------------------

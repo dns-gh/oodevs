@@ -128,7 +128,7 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 void AgentFactory::AttachExtensions( Agent_ABC& agent )
 {
     agent.Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
-    agent.Attach( *new Contaminations( controllers_.controller_ ) );
+    agent.Attach( *new Contaminations( controllers_.controller_, model_.objectTypes_ ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_ ) );
     agent.Attach( *new Equipments( controllers_.controller_, model_.objectTypes_ ) );

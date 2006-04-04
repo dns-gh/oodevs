@@ -63,7 +63,7 @@ AgentTypes::~AgentTypes()
     Resolver< PopulationType >::DeleteAll();
     Resolver< AgentType >::DeleteAll();
     Resolver< AutomatType >::DeleteAll();
-    Resolver< ComponentType, std::string >::DeleteAll();
+    Resolver< ComponentType >::DeleteAll();
     Resolver< DecisionalModel, std::string >::DeleteAll();
     Resolver< SensorType, std::string >::DeleteAll();
 }
@@ -87,6 +87,7 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 {
     ComponentType* component = new ComponentType( xis );
     Resolver< ComponentType, std::string >::Register( component->GetName(), *component );
+    Resolver< ComponentType >::Register( component->GetId(), *component );
 }
 
 // -----------------------------------------------------------------------------

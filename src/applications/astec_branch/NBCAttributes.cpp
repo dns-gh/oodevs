@@ -16,8 +16,10 @@
 // Name: NBCAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-NBCAttributes::NBCAttributes( Controller& controller )
+NBCAttributes::NBCAttributes( Controller& controller, const Resolver_ABC< NBCAgent >& resolver )
     : controller_( controller )
+    , resolver_( resolver )
+    , nbc_( 0 )
 {
     // NOTHING
 }
@@ -42,12 +44,12 @@ void NBCAttributes::UpdateData( const T& message )
     {
         if( message.attributs_specifiques.t == T_AttrObjectSpecific_nuage_nbc )
         {
-            nbcId_  = message.attributs_specifiques.u.nuage_nbc->agent_nbc;
+            nbc_ = & resolver_.Get( message.attributs_specifiques.u.nuage_nbc->agent_nbc );
             controller_.Update( *this );
         }
         else if( message.attributs_specifiques.t == T_AttrObjectSpecific_zone_nbc )
         {
-            nbcId_  = message.attributs_specifiques.u.zone_nbc->agent_nbc;
+            nbc_ = & resolver_.Get( message.attributs_specifiques.u.zone_nbc->agent_nbc );
             controller_.Update( *this );
         }
     }
@@ -87,5 +89,5 @@ void NBCAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 void NBCAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Nuage/Zone NBC" )
-        .Display( "Agent NBC:", nbcId_ ); // $$$$ AGE 2006-02-17: resolve
+        .Display( "Agent NBC:", nbc_ );
 }

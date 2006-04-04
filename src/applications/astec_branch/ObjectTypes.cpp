@@ -12,6 +12,7 @@
 #include "ObjectType.h"
 #include "DotationType.h"
 #include "EquipmentType.h"
+#include "NBCAgent.h"
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
@@ -127,4 +128,26 @@ void ObjectTypes::ReadEquipment( xml::xistream& xis )
 {
     EquipmentType* equipment = new EquipmentType( xis );
     Resolver< EquipmentType >::Register( equipment->GetId(), *equipment );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadNBC
+// Created: AGE 2006-04-04
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadNBC( const std::string& nbc )
+{
+    xifstream xis( nbc );
+    xis >> start( "NBC" )
+            >> start( "AgentsNBC" )
+                >> list( "AgentNBC", *this, ReadNBCAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadNBCAgent
+// Created: AGE 2006-04-04
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
+{
+    NBCAgent* nbc = new NBCAgent( xis );
+    Resolver< NBCAgent >::Register( nbc->GetId(), *nbc );
 }

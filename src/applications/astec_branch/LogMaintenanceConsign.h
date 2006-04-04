@@ -27,6 +27,7 @@
 class Agent;
 class Controller;
 class Displayer_ABC;
+class ComponentType;
 
 // =============================================================================
 // Created: NLD 2004-03-18
@@ -36,7 +37,8 @@ class LogMaintenanceConsign : public Drawable_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             LogMaintenanceConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn );
+             LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn,
+                                    const Resolver_ABC< Agent >& resolver, const Resolver_ABC< ComponentType >& componentResolver );
     virtual ~LogMaintenanceConsign();
     //@}
 
@@ -64,8 +66,8 @@ private:
     uint    nID_;
     Agent&  pion_;
     Agent*  pPionLogHandling_;
-    uint    nEquipmentTypeID_; // $$$$ AGE 2006-02-28: resolve
-    uint    nBreakdownTypeID_;
+    const ComponentType* equipmentType_;
+    uint    nBreakdownTypeID_; // $$$$ AGE 2006-02-28: resolve
     bool    diagnosed_;
     E_LogMaintenanceTraitementEtat nState_;
 };

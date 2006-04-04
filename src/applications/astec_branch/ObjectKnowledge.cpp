@@ -22,13 +22,14 @@
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent >& agentResolver )
+ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, 
+                                  const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
     : converter_     ( converter )
     , objectResolver_( objectResolver )
     , agentResolver_ ( agentResolver )
     , controller_    ( controller )
     , id_            ( message.oid_connaissance ) 
-    , type_          ( message.type )
+    , type_          ( & typeResolver.Get( message.type ) )
     , pRealObject_   ( 0 )
 {
     // $$$$ AGE 2006-02-14: Team !
@@ -109,7 +110,6 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
     displayer.Group( "Détails" )
                 .Display( "Id:", id_ )
                 .Display( "Objet associé:", pRealObject_ )
-//                .Display( "Position:", IfSet( k.strPos_, k.strPos_ ) ) // $$$$ AGE 2006-02-24: 
                 .Display( "Type:", type_ )
                 .Display( "Construction:", nPourcentageConstruction_ * Units::percentage )
                 .Display( "Valeur:", nPourcentageValorisation_ * Units::percentage )
@@ -117,6 +117,9 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( "En préparation:", bEnPreparation_ )
                 .Display( "Perçu:", bIsPerceived_ )
                 .Display( "Pertinence:", nRelevance_ );
+    if( ! points_.empty() )
+        displayer.Group( "Détails" ).Display( "Position:", converter_.ConvertToMgrs( points_.front() ) );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +128,10 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "Objets connus" ).Start( id_ ).End(); // $$$$ AGE 2006-02-24: pas id
+    if( pRealObject_ )
+        displayer.Display( "Objets connus", pRealObject_ );
+    else
+        displayer.Display( "Objets connus", id_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 class Controller;
 class Object;
 class Displayer_ABC;
+class NBCAgent;
 
 // =============================================================================
 /** @class  NBCAttributes
@@ -35,7 +36,7 @@ class NBCAttributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCAttributes( Controller& controller );
+             NBCAttributes( Controller& controller, const Resolver_ABC< NBCAgent >& resolver );
     virtual ~NBCAttributes();
     //@}
 
@@ -64,7 +65,8 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    OptionalValue< unsigned long > nbcId_; // $$$$ AGE 2006-02-14: resolve
+    const Resolver_ABC< NBCAgent >& resolver_;
+    const NBCAgent* nbc_;
     //@}
 };
 

@@ -18,6 +18,7 @@
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
 #include "Controllers.h"
+#include "ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
@@ -45,7 +46,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // -----------------------------------------------------------------------------
 ObjectKnowledge* ObjectKnowledgeFactory::Create( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    ObjectKnowledge* knowledge = new ObjectKnowledge( message, controllers_.controller_, model_.coordinateConverter_, model_.objects_, model_.agents_ );
+    ObjectKnowledge* knowledge = new ObjectKnowledge( message, controllers_.controller_, model_.coordinateConverter_, model_.objects_, model_.agents_, model_.objectTypes_ );
     
     switch( message.type )
     {
@@ -54,10 +55,10 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const ASN1T_MsgObjectKnowledgeC
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        knowledge->Attach( *new NBCAttributes( controllers_.controller_ ) );
+        knowledge->Attach( *new NBCAttributes( controllers_.controller_, model_.objectTypes_ ) );
         break;
     case EnumObjectType::rota:
-        knowledge->Attach( *new RotaAttributes( controllers_.controller_ ) );
+        knowledge->Attach( *new RotaAttributes( controllers_.controller_, model_.objectTypes_ ) );
         break;
     case EnumObjectType::site_franchissement:
         knowledge->Attach( *new CrossingSiteAttributes( controllers_.controller_ ) );

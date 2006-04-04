@@ -16,8 +16,9 @@
 // Name: RotaAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-RotaAttributes::RotaAttributes( Controller& controller )
+RotaAttributes::RotaAttributes( Controller& controller, const Resolver_ABC< NBCAgent >& resolver )
     : controller_( controller )
+    , resolver_( resolver )
 {
     // NOTHING
 }
@@ -44,7 +45,7 @@ void RotaAttributes::UpdateData( const T& message )
         danger_ = message.attributs_specifiques.u.rota->niveau_danger;
         agents_.resize( message.attributs_specifiques.u.rota->agents_nbc.n );
         for( uint i = 0; i < message.attributs_specifiques.u.rota->agents_nbc.n; ++i )
-            agents_[ i ] = message.attributs_specifiques.u.rota->agents_nbc.elem[ i ];
+            agents_[ i ] = & resolver_.Get( message.attributs_specifiques.u.rota->agents_nbc.elem[ i ] );
         controller_.Update( *this );
     }
 }
@@ -84,5 +85,5 @@ void RotaAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "ROTA" )
                 .Display( "Danger:", danger_ )
-                .Display( "Agents NBC:", agents_ ); // $$$$ AGE 2006-02-23: resolve
+                .Display( "Agents NBC:", agents_ );
 }

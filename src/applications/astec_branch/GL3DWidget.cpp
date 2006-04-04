@@ -112,6 +112,8 @@ void Gl3dWidget::Paint( const ViewFrustum& view )
         (*it)->Paint( view );
 }
 
+// $$$$ AGE 2006-04-04: ceci n'est pas un copy/paste
+
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::Pixels
 // Created: AGE 2006-03-28
@@ -125,7 +127,7 @@ float Gl3dWidget::Pixels() const
 // Name: Gl3dWidget::StipplePattern
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-unsigned short Gl3dWidget::StipplePattern() const
+unsigned short Gl3dWidget::StipplePattern( int factor /*= 1*/ ) const
 {
     static unsigned short pattern[] = {
         0x00FF, 0x01FE, 0x03FC, 0x07F8,
@@ -133,7 +135,7 @@ unsigned short Gl3dWidget::StipplePattern() const
         0xFF00, 0xFE01, 0xFC03, 0xF807,
         0xF00F, 0xE01F, 0xC03F, 0x807F
     };
-    return pattern[ frame_%16 ]; 
+    return pattern[ ( factor * frame_ )%16 ]; 
 }
 
 // -----------------------------------------------------------------------------

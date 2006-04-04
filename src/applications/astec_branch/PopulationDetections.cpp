@@ -70,15 +70,14 @@ void PopulationDetections::DoUpdate( const FlowDetectionMessage& message )
 
     unsigned long nNbrPoints;
     message >> nNbrPoints;
-    // $$$$ AGE 2006-02-27: 
-//
-//    T_PointVector shape;
-//    for( uint i = 0; i < nNbrPoints; ++i )
-//    {
-//        MT_Vector2D vTmp;
-//        input >> vTmp;
-//        shape.push_back( vTmp );
-//    }
+
+    shape_.clear(); shape_.reserve( nNbrPoints );
+    for( unsigned i = 0; i < nNbrPoints; ++i )
+    {
+        double x, y;
+        message >> x >> y;
+        shape_.push_back( geometry::Point2f( float( x ), float( y ) ) );
+    }
 
     if( nNbrPoints )
         perceived_.insert( pFlow );

@@ -60,3 +60,12 @@ const std::string& ComponentType::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetId
+// Created: AGE 2006-04-04
+// -----------------------------------------------------------------------------
+unsigned long ComponentType::GetId() const
+{
+    return id_;
+}

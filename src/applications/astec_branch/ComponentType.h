@@ -30,6 +30,7 @@ public:
 
     //! @name Operations
     //@{
+    unsigned long GetId() const;
     const std::string& GetName() const;
     //@}
 

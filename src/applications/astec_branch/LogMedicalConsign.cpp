@@ -89,10 +89,13 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
     displayer.Display( "Consigne :", nID_ )
              .Display( "Pion demandeur :", pion_ )
              .Display( "Pion traitant :", pPionLogHandling_ )
-             .Display( "Blessure :", wound_ )// $$$$ AGE 2006-03-21: only if diagnosed
              .Display( "Reac. mental :", bMentalDeceased_ )
              .Display( "Contaminé NBC :", bContaminated_ )
              .Display( "Etat :", nState_ );
+    if( diagnosed_ )
+        displayer.Display( "Blessure :", wound_ );
+    else
+        displayer.Display( "Blessure :", "?" ); // $$$$ AGE 2006-04-04: 
 }
 
 // -----------------------------------------------------------------------------

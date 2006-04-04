@@ -16,6 +16,7 @@
 #include "LogMedicalConsign.h"
 #include "ObjectTypes.h"
 #include "Controllers.h"
+#include "AgentTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory constructor
@@ -43,7 +44,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
 {
-    return new LogMaintenanceConsign( controllers_.controller_, model_.agents_, message );
+    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, model_.types_ );
 }
 
 // -----------------------------------------------------------------------------

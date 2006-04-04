@@ -43,6 +43,9 @@
 #include "MissionLayer.h"
 #include "DetectionMap.h"
 #include "Model.h"
+#include "App.h"
+#include "Network.h"
+#include "AgentServerMsgMgr.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -128,7 +131,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers );
-    new RecorderToolbar( this );
+    new RecorderToolbar( this, App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-04-04: 
 
     controllers_.Register( *this );
 

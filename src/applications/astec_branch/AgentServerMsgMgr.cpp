@@ -20,7 +20,6 @@
 #include "Net_Def.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
-#include "Meteo_Manager.h"
 #include "Tools.h"
 #include "MsgRecorder.h"
 #include "LogMaintenanceConsign.h"

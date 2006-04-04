@@ -13,9 +13,11 @@
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Resolver_ABC.h"
 
 class Controller;
 class Displayer_ABC;
+class NBCAgent;
 
 // =============================================================================
 /** @class  Contaminations
@@ -30,7 +32,7 @@ class Contaminations : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Contaminations( Controller& controller );
+             Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver );
     virtual ~Contaminations();
     //@}
 
@@ -48,7 +50,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< unsigned > T_NbcAgents; // $$$$ AGE 2006-02-13: resolve
+    typedef std::vector< const NBCAgent* > T_NbcAgents;
     //@}
 
     //! @name Helpers
@@ -60,6 +62,7 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
+    const Resolver_ABC< NBCAgent >& resolver_;
     bool        bNbcProtectionSuitWorn_;
     T_NbcAgents contaminatingNbcAgents_;
     int         nContamination_;

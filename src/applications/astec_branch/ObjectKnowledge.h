@@ -23,6 +23,7 @@ class Controller;
 class Agent;
 class Team;
 class CoordinateConverter;
+class ObjectType;
 
 // =============================================================================
 /** @class  ObjectKnowledge
@@ -41,7 +42,8 @@ public:
              ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message,
                               Controller& controller, const CoordinateConverter& converter,
                               const Resolver_ABC< Object >& objectResolver,
-                              const Resolver_ABC< Agent >& agentResolver );
+                              const Resolver_ABC< Agent >& agentResolver, 
+                              const Resolver_ABC< ObjectType >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
 
@@ -82,7 +84,7 @@ private:
     Controller& controller_;
 
     unsigned long id_;
-    unsigned long type_; // $$$$ AGE 2006-02-24: resolve !
+    const ObjectType* type_;
 
     T_PointVector points_;
     Object* pRealObject_;

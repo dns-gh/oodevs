@@ -17,6 +17,7 @@
 class ObjectType;
 class DotationType;
 class EquipmentType;
+class NBCAgent;
 
 namespace xml { class xistream; };
 
@@ -30,6 +31,7 @@ class ObjectTypes
     : public Resolver< ObjectType >
     , public Resolver< DotationType >
     , public Resolver< EquipmentType >
+    , public Resolver< NBCAgent >
 {
 
 public:
@@ -37,10 +39,6 @@ public:
     //@{
              ObjectTypes( const std::string& scipioXml );
     virtual ~ObjectTypes();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -64,6 +62,8 @@ private:
     void ReadCategory( xml::xistream& xis, const std::string& name );
     void ReadEquipments( const std::string& equipments );
     void ReadEquipment( xml::xistream& xis );
+    void ReadNBC( const std::string& nbc );
+    void ReadNBCAgent( xml::xistream& xis );
     //@}
 
 private:

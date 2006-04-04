@@ -36,6 +36,7 @@ class AgentTypes : public Resolver< AgentType >
                  , public Resolver< PopulationType >
                  , public Resolver< PopulationType, std::string >
                  , public Resolver< AutomatType >
+                 , public Resolver< ComponentType >
                  , public Resolver< ComponentType, std::string >
                  , public Resolver< SensorType, std::string >
                  , public Resolver< DecisionalModel, std::string >

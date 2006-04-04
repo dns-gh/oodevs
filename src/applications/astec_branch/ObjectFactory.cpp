@@ -65,11 +65,11 @@ Object* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        result->Attach( *new NBCAttributes( controllers_.controller_ ) );
+        result->Attach( *new NBCAttributes( controllers_.controller_, model_.objectTypes_ ) );
         result->Update( message );
         break;
     case EnumObjectType::rota:
-        result->Attach( *new RotaAttributes( controllers_.controller_ ) );
+        result->Attach( *new RotaAttributes( controllers_.controller_, model_.objectTypes_ ) );
         result->Update( message );
         break;
     case EnumObjectType::site_franchissement:
