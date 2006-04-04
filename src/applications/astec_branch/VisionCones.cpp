@@ -11,15 +11,17 @@
 #include "VisionCones.h"
 #include "Surface.h"
 #include "GlTools_ABC.h"
+#include "SurfaceFactory.h"
+#include "VisionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-VisionCones::VisionCones( const Agent& agent, const Resolver_ABC< SensorType, std::string >& resolver )
+VisionCones::VisionCones( const Agent& agent, SurfaceFactory& factory )
     : agent_( agent )
-    , resolver_( resolver )
-    , needsUpdating_( false )
+    , factory_( factory )
+    , map_( new VisionMap() )
 {
     // NOTHING
 }
@@ -32,6 +34,7 @@ VisionCones::~VisionCones()
 {
      for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
+     delete map_;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,10 +50,9 @@ void VisionCones::DoUpdate( const VisionConesMessage& message )
     message >> nNbrSurfaces;
     surfaces_.reserve( nNbrSurfaces );
     for( uint i = 0; i < nNbrSurfaces; ++i )
-        surfaces_.push_back( new Surface( message, resolver_ ) );
+        surfaces_.push_back( factory_.CreateSurface( agent_, message ) );
 
-    message >> elongationFactor_;
-    needsUpdating_ = true;
+    message >> elongationFactor_; // $$$$ AGE 2006-04-04: wtf ?
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +64,17 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.positionPresent 
      || message.m.experiencePresent 
      || message.m.fatiguePresent )
-        needsUpdating_ = true;
+        Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::Update
+// Created: AGE 2006-04-04
+// -----------------------------------------------------------------------------
+void VisionCones::Update()
+{
+    for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        (*it)->Update( *map_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,5 +85,7 @@ void VisionCones::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) co
 {
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
-            (*it)->Draw( agent_, tools );
+            (*it)->Draw( tools );
+    if( tools.ShouldDisplay( "VisionSurfaces" ) )
+        map_->Draw( tools );
 }

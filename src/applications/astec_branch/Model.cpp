@@ -28,6 +28,8 @@
 #include "CoordinateConverter.h"
 #include "FireFactory.h"
 #include "WeatherModel.h"
+#include "DetectionMap.h"
+#include "SurfaceFactory.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
@@ -35,6 +37,7 @@
 // -----------------------------------------------------------------------------
 Model::Model( Controllers& controllers, const Simulation& simulation, const std::string& scipioXml )
     : coordinateConverter_( *new CoordinateConverter( scipioXml ) )
+    , detection_( *new DetectionMap( scipioXml ) )
     , types_( *new AgentTypes( scipioXml ) )
     , objectTypes_( *new ObjectTypes( scipioXml ) )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this ) )
@@ -43,6 +46,7 @@ Model::Model( Controllers& controllers, const Simulation& simulation, const std:
     , agentFactory_( *new AgentFactory( controllers, types_, *this, simulation ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this ) )
     , fireFactory_( *new FireFactory( *this ) )
+    , surfaceFactory_( *new SurfaceFactory( detection_, types_ ) )
     , objectFactory_( *new ObjectFactory( controllers, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
@@ -72,6 +76,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &surfaceFactory_;
     delete &fireFactory_;
     delete &logisticFactory_;
     delete &objectFactory_;
@@ -81,6 +86,7 @@ Model::~Model()
     delete &objectKnowledgeFactory_;
     delete &objectTypes_;
     delete &types_;
+    delete &detection_;
     delete &coordinateConverter_;
 }
     

@@ -30,11 +30,12 @@ namespace
 // Name: DetectionMap constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-DetectionMap::DetectionMap( const std::string& filename )
-    : ElevationMap( filename )
+DetectionMap::DetectionMap( const std::string& scipioXml )
+    : WorldParameters( scipioXml )
+    , ElevationMap( detection_ )
     , environment_( 0 )
 {
-    InputBinaryStream archive( filename );
+    InputBinaryStream archive( detection_ );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
     cellsize_ = static_cast< float >( rcs );

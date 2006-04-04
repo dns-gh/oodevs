@@ -86,7 +86,9 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Model& model_;
     std::string scipioXml_;
+
     GlLayers* layers_;
     GlWidget*   widget2d_;
     Gl3dWidget* widget3d_;

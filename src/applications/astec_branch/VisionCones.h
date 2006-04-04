@@ -16,11 +16,14 @@
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
 #include "Resolver_ABC.h"
+#include "Perception_Def.h"
 
 class Surface;
 class CoordinateConverter;
 class SensorType;
 class Agent;
+class SurfaceFactory;
+class VisionMap;
 
 // =============================================================================
 /** @class  VisionCones
@@ -37,7 +40,7 @@ class VisionCones : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones( const Agent& agent, const Resolver_ABC< SensorType, std::string >& resolver );
+             VisionCones( const Agent& agent, SurfaceFactory& factory );
     virtual ~VisionCones();
     //@}
 
@@ -63,16 +66,17 @@ private:
     //@{
     virtual void DoUpdate( const VisionConesMessage& message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    void Update();
     //@}
 
 private:
     //! @name Member data
     //@{
     const Agent& agent_;
-    const Resolver_ABC< SensorType, std::string >& resolver_;
+    SurfaceFactory& factory_;
+    VisionMap* map_;
     T_Surfaces surfaces_;
     double elongationFactor_;
-    bool needsUpdating_;
     //@}
 };
 

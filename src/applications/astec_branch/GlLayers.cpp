@@ -24,6 +24,7 @@
 #include "Elevation3dLayer.h"
 #include "graphics/ElevationMap.h"
 #include "MeteoLayer.h"
+#include "DetectionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor
@@ -33,12 +34,11 @@ GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Mode
     : WorldParameters( scipioXml )
     , GlProxy( controllers )
     , strategy_( new ColorStrategy( controllers, *this ) )
-    , elevation_( new ElevationMap( detection_ ) )
 {
     parameters_ = new ParametersLayer( *this );
 
-    Register( *new Elevation2dLayer( *elevation_ ) );
-    Register( *new Elevation3dLayer( *elevation_ ) );
+    Register( *new Elevation2dLayer( model.detection_ ) );
+    Register( *new Elevation3dLayer( model.detection_ ) );
     Register( *new TerrainLayer( controllers, *this, graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters_, model.limits_ ) );
@@ -57,6 +57,5 @@ GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Mode
 // -----------------------------------------------------------------------------
 GlLayers::~GlLayers()
 {
-    delete elevation_;
     delete strategy_;
 }

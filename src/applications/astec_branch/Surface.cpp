@@ -8,6 +8,7 @@
 #include "Net_Def.h"
 #include "SensorType.h"
 #include "GlTools_ABC.h"
+#include "DetectionMap.h"
 
 using namespace geometry;
 
@@ -15,7 +16,10 @@ using namespace geometry;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const VisionConesMessage& input, const Resolver_ABC< SensorType, std::string >& resolver )
+Surface::Surface( const Agent& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
+    : agent_( agent )
+    , map_( map )
+    , needsUpdating_( true )
 {
     double oX, oY, rHeight;
     input >> oX >> oY; origin_ = Point2f( float( oX ), float( oY ) );
@@ -50,9 +54,9 @@ Surface::~Surface()
 // Name: Surface::Draw
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void Surface::Draw( const Agent& agent, const GlTools_ABC& tools ) const
+void Surface::Draw( const GlTools_ABC& tools ) const
 {
-    float rRadius = pSensorType_->GetMaxDistance( agent );
+    float rRadius = pSensorType_->GetMaxDistance( agent_ );
 
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
     {
@@ -90,12 +94,10 @@ void Surface::Draw( const Agent& agent, const GlTools_ABC& tools ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Surface::CalcVisionMatrice
-// Created: JVT 2004-09-27
+// Name: Surface::Update
+// Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-//void Surface::UpdateVisionMatrice( const Agent& src, T_VisionResultMap& res ) const
-//{
-//    if ( pSensorType_ )
-//        for ( CIT_SectorVector itVision = sectors_.begin(); itVision != sectors_.end(); ++itVision )
-//            App::GetApp().GetRawVisionData().UpdateVisionMatrice( res, *pSensorType_, *itVision, rHeight_, src );
-//}
+void Surface::Update( VisionMap& map )
+{
+
+}

@@ -90,7 +90,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.types_ ) );
+    result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
     result->Update( asnMsg );
     return result;
 }
@@ -105,7 +105,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.types_ ) );
+    result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
     return result;
 }
 

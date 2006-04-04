@@ -13,6 +13,8 @@
 class SensorType;
 class Agent;
 class GlTools_ABC;
+class DetectionMap;
+class VisionMap;
 
 //*****************************************************************************
 // Created: JVT 02-08-30
@@ -23,15 +25,14 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const VisionConesMessage& input, const Resolver_ABC< SensorType, std::string >& resolver );
+             Surface( const Agent& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver );
     virtual ~Surface();
     //@}
 
     //! @name Operations
     //@{
-    // $$$$ AGE 2006-04-04: Agent...
-    void Draw( const Agent& agent, const GlTools_ABC& tools ) const;
-//    void UpdateVisionMatrice( const Agent& agent, T_VisionResultMap& res ) const;
+    void Draw( const GlTools_ABC& tools ) const;
+    void Update( VisionMap& map );
     //@}
 
 private:
@@ -49,10 +50,16 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
+    const Agent& agent_;
+    const DetectionMap& map_;
     geometry::Point2f origin_;
     float height;
     T_SectorVector sectors_;
     const SensorType* pSensorType_;
+    bool needsUpdating_;
+    //@}
 };
 
 #endif // __Surface_h_

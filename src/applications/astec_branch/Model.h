@@ -31,6 +31,8 @@ class FiresModel;
 class CoordinateConverter;
 class FireFactory;
 class WeatherModel;
+class DetectionMap;
+class SurfaceFactory;
 
 // =============================================================================
 /** @class  Model
@@ -56,6 +58,8 @@ public:
     //! @name Member data
     //@{
     CoordinateConverter& coordinateConverter_;
+    DetectionMap& detection_;
+
     AgentTypes& types_;
     ObjectTypes& objectTypes_;
 
@@ -67,6 +71,7 @@ public:
     ObjectFactory_ABC&          objectFactory_;
     LogisticConsignFactory_ABC& logisticFactory_;
     FireFactory&                fireFactory_;
+    SurfaceFactory&             surfaceFactory_;
 
     AgentsModel&    agents_;
     ObjectsModel&   objects_;

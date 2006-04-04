@@ -41,6 +41,8 @@
 #include "LogisticToolbar.h"
 #include "RecorderToolbar.h"
 #include "MissionLayer.h"
+#include "DetectionMap.h"
+#include "Model.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -49,6 +51,7 @@
 MainWindow::MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_( controllers )
+    , model_      ( model )
     , scipioXml_  ( scipioXml )
     , layers_     ( 0 )
     , widget2d_   ( 0 )
@@ -242,7 +245,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, layers_->GetElevationMap() );
+                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, model_.detection_ );
                     layers_->RegisterTo( widget3d_ );
                 }
                 layers_->ChangeTo( widget3d_ );

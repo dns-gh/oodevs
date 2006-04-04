@@ -10,6 +10,7 @@
 #ifndef __DetectionMap_h_
 #define __DetectionMap_h_
 
+#include "WorldParameters.h"
 #include "graphics/ElevationMap.h"
 
 // =============================================================================
@@ -18,7 +19,7 @@
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class DetectionMap : public ElevationMap
+class DetectionMap : private WorldParameters, public ElevationMap
 {
 
 public:
@@ -40,7 +41,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DetectionMap( const std::string& filename );
+    explicit DetectionMap( const std::string& scipioXml );
     virtual ~DetectionMap();
     //@}
 
