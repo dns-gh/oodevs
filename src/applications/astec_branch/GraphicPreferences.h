@@ -11,7 +11,9 @@
 #define __GraphicPreferences_h_
 
 #include "pathfind/TerrainData.h"
+#include "graphics/GraphicSetup_ABC.h"
 
+namespace xml { class xistream; class xostream; };
 class QTabWidget;
 class TerrainPreference;
 
@@ -21,7 +23,7 @@ class TerrainPreference;
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicPreferences
+class GraphicPreferences : public GraphicSetup_ABC
 {
 
 public:
@@ -35,8 +37,12 @@ public:
     //@{
     void AddPanels( QTabWidget* parent ) const;
 
-    void ReadPreferences ();
-    void WritePreferences();
+    virtual void SetupLineGraphics  ( const Data_ABC* pData );
+    virtual void SetupBorderGraphics( const Data_ABC* pData );
+    virtual void SetupAreaGraphics  ( const Data_ABC* pData );
+
+    void Commit();
+    void Revert();
     //@}
 
     //! @name Accessors
@@ -55,20 +61,25 @@ private:
     //@{
     void InitializeTerrainPreferences();
     void AddTerrainPanel( QTabWidget* parent ) const;
+    void ReadTerrainPreference( xml::xistream& xis );
+    void Save() const;
+    void Save( xml::xostream& xos, const TerrainPreference& preference ) const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< TerrainData, TerrainPreference* > T_TerrainPreferences;
-    typedef T_TerrainPreferences::iterator             IT_TerrainPreferences;
     typedef T_TerrainPreferences::const_iterator      CIT_TerrainPreferences;
+    typedef std::vector< TerrainPreference* >           T_Displays;
+    typedef T_Displays::const_iterator                CIT_Displays;
     //@}
 
 private:
     //! @name Member data
     //@{
     T_TerrainPreferences terrainPrefs_;
+    T_Displays displays_;
     //@}
 };
 

@@ -21,6 +21,7 @@
 class GraphicShape;
 class Controllers;
 class GlTools_ABC;
+class GraphicSetup_ABC;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -37,7 +38,7 @@ class TerrainLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, const std::string& dataDirectory );
+             TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup, const std::string& dataDirectory );
     virtual ~TerrainLayer();
     //@}
 
@@ -95,6 +96,8 @@ private:
     //@{
     Controllers& controllers_;
     const GlTools_ABC& tools_;
+    GraphicSetup_ABC& setup_;
+
     const std::string dataDirectory_;
     geometry::Rectangle2f world_;
     T_Shapes shapes_;

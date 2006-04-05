@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "TerrainLayer.h"
-#include "graphics/GraphicSetup.h"
+#include "graphics/GraphicSetup_ABC.h"
 #include "graphics/DataFactory.h"
 #include "graphics/GraphicFactory.h"
 #include "graphics/GraphicShape.h"
@@ -24,10 +24,11 @@ using namespace pathfind;
 // Name: TerrainLayer constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, const std::string& dataDirectory )
+TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup, const std::string& dataDirectory )
     : controllers_  ( controllers )
     , dataDirectory_( dataDirectory )
     , tools_        ( tools )
+    , setup_        ( setup )
 {
     controllers_.Register( *this );
 }
@@ -291,9 +292,8 @@ bool TerrainLayer::ShouldDisplayLinear( const TerrainData& data, const geometry:
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetupLineGraphics( const TerrainData& d ) const
 {
-     static GraphicSetup setup; // $$$$ AGE 2005-10-20:
      const GraphicData data( d );
-     setup.SetupLineGraphics( &data );
+     setup_.SetupLineGraphics( &data );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,9 +302,8 @@ void TerrainLayer::SetupLineGraphics( const TerrainData& d ) const
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetupBorderGraphics( const TerrainData& d ) const
 {
-     static GraphicSetup setup; // $$$$ AGE 2005-10-20:
      const GraphicData data( d );
-     setup.SetupBorderGraphics( &data );
+     setup_.SetupBorderGraphics( &data );
 }
     
 // -----------------------------------------------------------------------------
@@ -313,20 +312,8 @@ void TerrainLayer::SetupBorderGraphics( const TerrainData& d ) const
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetupAreaGraphics( const TerrainData& d ) const
 {
-     static GraphicSetup setup; // $$$$ AGE 2005-10-20:
      const GraphicData data( d );
-     setup.SetupAreaGraphics( &data );
-
-     float colors[4];
-     glGetFloatv( GL_CURRENT_COLOR, colors );
-     QColor color( colors[0]*255, colors[1]*255, colors[2]*255 );
-     int hsv[4];
-     color.hsv( hsv, hsv+1, hsv+2 );
-
-     static int factor = 0;
-     (*hsv) = ( *hsv + factor++ ) % 360;
-     color.setHsv( *hsv,*(hsv+1),*(hsv+2) );
-     glColor4f( color.red()/255.f, color.green()/255.f, color.blue()/255.f, colors[3] );
+     setup_.SetupAreaGraphics( &data );
 }
 
 // -----------------------------------------------------------------------------

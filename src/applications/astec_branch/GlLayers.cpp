@@ -30,7 +30,7 @@
 // Name: GlLayers constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model )
+GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model, GraphicSetup_ABC& setup )
     : WorldParameters( scipioXml )
     , GlProxy( controllers )
     , strategy_( new ColorStrategy( controllers, *this ) )
@@ -39,7 +39,7 @@ GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Mode
 
     Register( *new Elevation2dLayer( model.detection_ ) );
     Register( *new Elevation3dLayer( model.detection_ ) );
-    Register( *new TerrainLayer( controllers, *this, graphicsDirectory_ ) );
+    Register( *new TerrainLayer( controllers, *this, setup, graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters_, model.limits_ ) );
     Register( *new ObjectsLayer( controllers, *this, *strategy_, *this ) );

@@ -16,6 +16,8 @@ class TerrainData;
 class ColorButton;
 class SizeButton;
 
+namespace xml { class xistream; class xostream; };
+
 // =============================================================================
 /** @class  TerrainPreference
     @brief  Terrain preference
@@ -25,28 +27,22 @@ class SizeButton;
 class TerrainPreference : public QWidget
                         , public GraphicPreference_ABC
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainPreference( const std::string& name );
+    explicit TerrainPreference( xml::xistream& xis );
     virtual ~TerrainPreference();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Read();
-    virtual void Write() const;
     virtual void Display( QWidget* parent );
+    void SetLineWidth() const;
+    void SetColor( float alpha ) const;
+    virtual void Commit();
+    virtual void Revert();
 
-    float GetLineWidth() const { return lineWidth_; }
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void SlotSetLineWidth();
+    void Save( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -59,10 +55,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string name_;
+    std::string name_;
     ColorButton* colorButton_;
     SizeButton*  sizeButton_;
     float  lineWidth_;
+    QColor color_;
     //@}
 };
 

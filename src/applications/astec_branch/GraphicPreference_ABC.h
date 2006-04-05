@@ -28,9 +28,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Read() = 0;
-    virtual void Write() const = 0;
     virtual void Display( QWidget* parent ) = 0;
+    virtual void Commit() = 0;
+    virtual void Revert() = 0;
     //@}
 };
 

@@ -47,6 +47,7 @@
 #include "App.h"
 #include "Network.h"
 #include "AgentServerMsgMgr.h"
+#include "GraphicPreferences.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -65,9 +66,20 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
+    // Graphic preference window
+    QDockWindow* pGraphicPrefDockWnd = new QDockWindow( this );
+    moveDockWindow( pGraphicPrefDockWnd, Qt::DockRight );
+    pGraphicPrefDockWnd->hide();
+    GraphicsPanel* pGraphicPrefPanel_ = new GraphicsPanel( pGraphicPrefDockWnd );
+    pGraphicPrefDockWnd->setWidget( pGraphicPrefPanel_ );
+    pGraphicPrefDockWnd->setResizeEnabled( true );
+    pGraphicPrefDockWnd->setCloseMode( QDockWindow::Always );
+    pGraphicPrefDockWnd->setCaption( tr( "Graphic preferences" ) );
+    setDockEnabled( pGraphicPrefDockWnd, Qt::DockTop, false );
+
     widget2d_ = new GlWidget( this, controllers, scipioXml );
     setCentralWidget( widget2d_ );
-    layers_ = new GlLayers( scipioXml, controllers, model );
+    layers_ = new GlLayers( scipioXml, controllers, model, pGraphicPrefPanel_->GetPreferences() );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -126,17 +138,6 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
     this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
-
-    // Graphic preference window
-    QDockWindow* pGraphicPrefDockWnd = new QDockWindow( this );
-    moveDockWindow( pGraphicPrefDockWnd, Qt::DockRight );
-    pGraphicPrefDockWnd->hide();
-    pGraphicPrefPanel_ = new GraphicsPanel( pGraphicPrefDockWnd );
-    pGraphicPrefDockWnd->setWidget( pGraphicPrefPanel_ );
-    pGraphicPrefDockWnd->setResizeEnabled( true );
-    pGraphicPrefDockWnd->setCloseMode( QDockWindow::Always );
-    pGraphicPrefDockWnd->setCaption( tr( "Graphic preferences" ) );
-    setDockEnabled( pGraphicPrefDockWnd, Qt::DockTop, false );
 
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );

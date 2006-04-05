@@ -18,8 +18,11 @@
 // Name: ColorButton constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-ColorButton::ColorButton( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
+ColorButton::ColorButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, QColor color /*= black*/ )
     : QPushButton( parent, name )
+    , changed_( false )
+    , previous_( color )
+    , current_( color )
 {
     setMaximumWidth( height() * 4 / 3 );
     connect( this, SIGNAL( clicked() ), this, SLOT( OnClick() ) );
@@ -51,19 +54,18 @@ void ColorButton::drawButton( QPainter* painter )
 // -----------------------------------------------------------------------------
 void ColorButton::OnClick()
 {
-    bool bOk = false;
-    QRgb rgb = QColorDialog::getRgba( QRgb(), &bOk, this );
-    if( bOk )
-        SetColor( rgb );
+    SetColor( QColorDialog::getColor( previous_, this ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ColorButton::SetColor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-void ColorButton::SetColor( const QRgb& rgb )
+void ColorButton::SetColor( const QColor& rgb )
 {
-    previous_ = current_;
+    if( ! changed_ )
+        previous_ = current_;
+    changed_ = true;
     current_ = rgb;
     repaint();
 }
@@ -72,7 +74,7 @@ void ColorButton::SetColor( const QRgb& rgb )
 // Name: ColorButton::GetColor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-QRgb ColorButton::GetColor() const
+QColor ColorButton::GetColor() const
 {
     return current_;
 }
@@ -83,5 +85,16 @@ QRgb ColorButton::GetColor() const
 // -----------------------------------------------------------------------------
 void ColorButton::Revert()
 {
+    changed_ = false;
     current_  = previous_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorButton::Commit
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void ColorButton::Commit()
+{
+    previous_ = current_;
+    changed_ = false;
 }

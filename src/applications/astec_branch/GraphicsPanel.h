@@ -18,14 +18,25 @@ class GraphicPreferences;
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicsPanel : public QWidget
+class GraphicsPanel : public QVBox
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GraphicsPanel( QWidget* parent );
+    explicit GraphicsPanel( QWidget* parent );
     virtual ~GraphicsPanel();
+    //@}
+
+    GraphicPreferences& GetPreferences(); // $$$$ AGE 2006-04-05: 
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnOk();
+    void OnApply();
+    void OnCancel();
     //@}
 
 private:
@@ -33,10 +44,6 @@ private:
     //@{
     GraphicsPanel( const GraphicsPanel& );            //!< Copy constructor
     GraphicsPanel& operator=( const GraphicsPanel& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

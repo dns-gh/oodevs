@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "GraphicsPanel.h"
+#include "moc_GraphicsPanel.cpp"
 #include "GraphicPreferences.h"
 
 // -----------------------------------------------------------------------------
@@ -16,17 +17,21 @@
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 GraphicsPanel::GraphicsPanel( QWidget* parent )
-    : QWidget     ( parent )
+    : QVBox     ( parent )
     , preferences_( *new GraphicPreferences() )
 {
-    QVBoxLayout* pLayout = new QVBoxLayout( this );
-    pLayout->setMargin( 5 );
-    pLayout->setSpacing( 5 );
-
     QTabWidget* pTabWidget = new QTabWidget( this );
-    pLayout->addWidget( pTabWidget );
-
     preferences_.AddPanels( pTabWidget );
+
+    QHBox* buttons = new QHBox( this );
+    QPushButton* ok     = new QPushButton( tr( "Okay" ), buttons );
+    QPushButton* apply  = new QPushButton( tr( "Appliquer" ), buttons );
+    QPushButton* cancel = new QPushButton( tr( "Nope" ), buttons );
+    ok->setDefault( true );
+
+    connect( ok, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
+    connect( apply, SIGNAL( clicked() ), this, SLOT( OnApply() ) );
+    connect( cancel, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -36,4 +41,42 @@ GraphicsPanel::GraphicsPanel( QWidget* parent )
 GraphicsPanel::~GraphicsPanel()
 {
     delete &preferences_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GraphicsPanel::GetPreferences
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+GraphicPreferences& GraphicsPanel::GetPreferences()
+{
+    return preferences_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GraphicsPanel::OnOk
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void GraphicsPanel::OnOk()
+{
+    preferences_.Commit();
+    parentWidget()->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GraphicsPanel::OnApply
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void GraphicsPanel::OnApply()
+{
+    preferences_.Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GraphicsPanel::OnCancel
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void GraphicsPanel::OnCancel()
+{
+    preferences_.Revert();
+    parentWidget()->hide();
 }

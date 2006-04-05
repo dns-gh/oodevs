@@ -17,6 +17,7 @@ class Controllers;
 class Model;
 class ColorStrategy;
 class ParametersLayer;
+class GraphicSetup_ABC;
 
 // =============================================================================
 /** @class  GlLayers
@@ -30,7 +31,7 @@ class GlLayers : private WorldParameters, public GlProxy
 public:
     //! @name Constructors/Destructor
     //@{
-             GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model );
+             GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model, GraphicSetup_ABC& setup );
     virtual ~GlLayers();
     //@}
 

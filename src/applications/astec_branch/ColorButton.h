@@ -25,15 +25,16 @@ class ColorButton : public QPushButton
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorButton( QWidget* parent = 0, const char* name = 0 );
+             ColorButton( QWidget* parent = 0, const char* name = 0, QColor color = black );
     virtual ~ColorButton();
     //@}
 
     //! @name Operations
     //@{
-    void SetColor( const QRgb& rgb );
-    QRgb GetColor() const;
+    void SetColor( const QColor& rgb );
+    QColor GetColor() const;
     void Revert();
+    void Commit();
     //@}
 
 protected:
@@ -58,8 +59,9 @@ private:
 private:
     //! @name Member data
     //@{
-    QRgb previous_;
-    QRgb current_;
+    bool changed_;
+    QColor previous_;
+    QColor current_;
     //@}
 };
 
