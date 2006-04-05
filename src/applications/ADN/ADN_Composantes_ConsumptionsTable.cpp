@@ -93,7 +93,8 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable(  ADN_ListV
     setShowGrid( false );
     setLeftMargin( 0 );
 
-    this->setMaximumHeight( 300 );
+    setMinimumHeight( 115 );
+    setMaximumHeight( 115 );
 
     // Hide the vertical header.
     verticalHeader()->hide();
@@ -101,8 +102,9 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable(  ADN_ListV
     // Setup 3 columns.
     setNumCols( 3 );
     setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
+//    setColumnStretchable( 0, true );
+//    setColumnStretchable( 1, true );
+//    setColumnStretchable( 2, false );
 
     horizontalHeader()->setLabel( 0, tr( "Activity" ) );
     horizontalHeader()->setLabel( 1, tr( "Consumed item" ) );

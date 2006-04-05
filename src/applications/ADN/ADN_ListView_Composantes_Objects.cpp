@@ -57,7 +57,9 @@ ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pPa
 {
     // Add one column.
     addColumn( tr( "Objects" ) );
-    setResizeMode(QListView::AllColumns);
+//    setResizeMode(QListView::AllColumns);
+
+    setMaximumHeight( 270 );
 
     // Connector creation.
     pConnector_ = new ADN_Connector_Objects( *this );

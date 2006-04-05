@@ -85,6 +85,9 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const std::str
     setSelectionMode( QTable::Single );
     setShowGrid( false );
 
+    setMinimumHeight( 150 );
+    setMaximumHeight( 150 );
+
     // hide vertical header
     verticalHeader()->hide();
     setLeftMargin( 0 );
@@ -92,8 +95,8 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const std::str
     // tab with 2 columns
     setNumCols( 2 );
     setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
+//    setColumnStretchable( 0, true );
+//    setColumnStretchable( 1, false );
 
     horizontalHeader()->setLabel( 0, strName.c_str() );
     horizontalHeader()->setLabel( 1, tr( "Odds (%)" ) );

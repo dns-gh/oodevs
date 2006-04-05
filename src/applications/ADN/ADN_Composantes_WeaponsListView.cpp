@@ -30,7 +30,10 @@ ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pPare
 {
     // Add one column.
     addColumn( tr( "Weapons" ) );
-    setResizeMode( QListView::AllColumns );
+//    setResizeMode( QListView::AllColumns );
+
+    setMinimumHeight( 115 );
+    setMaximumHeight( 115 );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<WeaponInfos>(*this);

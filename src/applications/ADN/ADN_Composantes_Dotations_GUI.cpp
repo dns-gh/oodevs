@@ -79,6 +79,8 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     setSelectionMode( QTable::NoSelection );
     setShowGrid( false );
 
+    setMaximumHeight( 270 );
+
     // Hide the vertical header.
     verticalHeader()->hide();
     setLeftMargin( 0 );
@@ -86,11 +88,11 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     // Setup the columns.
     setNumCols( bIncludeNormalizedConsumption ? 4 : 3 );
     setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    setColumnStretchable( 2, true );
-    if( bIncludeNormalizedConsumption )
-        setColumnStretchable( 3, true );
+//    setColumnStretchable( 0, true );
+//    setColumnStretchable( 1, true );
+//    setColumnStretchable( 2, false );
+//    if( bIncludeNormalizedConsumption )
+//        setColumnStretchable( 3, false );
 
     horizontalHeader()->setLabel( 0, tr( "Category" ) );
     horizontalHeader()->setLabel( 1, tr( "Qty" ) );

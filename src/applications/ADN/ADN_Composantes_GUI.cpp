@@ -231,6 +231,7 @@ void ADN_Composantes_GUI::Build()
 
     // Log page.
     QVBox* pLogPage = new QVBox( pTabWidget );
+    pLogPage->layout()->setAlignment( Qt::AlignTop );
     pLogPage->setMargin( 5 );
     pLogPage->setSpacing( 5 );
     pTabWidget->addTab( pLogPage, tr( "Log" ) );
@@ -243,49 +244,28 @@ void ADN_Composantes_GUI::Build()
     // Connect the gui to the data.
     pComposanteList_->SetItemConnectors( vInfosConnectors );
 
-
     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10 );
     pMainLayout->addWidget( pComposanteList_, 1 );
-    pMainLayout->addWidget( pGroup, 5 );
+    pMainLayout->addWidget( pGroup, 6 );
 
-    QVBoxLayout* pDataLayout = new QVBoxLayout( pDataPage, 5, 5 );
+    QGridLayout* pDataPageLayout = new QGridLayout( pDataPage, 6, 4, 5 );
+    pDataPageLayout->setAlignment( Qt::AlignTop );
+    
+    pDataPageLayout->addMultiCellWidget( pParamHolder      , 0, 0, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 5, 0, 0 );
 
-    QHBoxLayout* pTopLayout = new QHBoxLayout( pDataLayout, 5 );
-    QVBoxLayout* pTopLayoutCol1 = new QVBoxLayout( pTopLayout, 5 );
-    QVBoxLayout* pTopLayoutCol2 = new QVBoxLayout( pTopLayout, 5 );
-    QVBoxLayout* pTopLayoutCol3 = new QVBoxLayout( pTopLayout, 5 );
+    pDataPageLayout->addMultiCellWidget( pCargoGroupBox    , 0, 0, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pTroopGroupBox    , 1, 1, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pSensorsGroup     , 2, 2, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pRadarsGroup      , 3, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pWeaponsGroup     , 4, 4, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup, 5, 5, 1, 1 );
 
-
-
-    QHBoxLayout* pBottomLayout = new QHBoxLayout( pDataLayout, 5 );
-    QVBoxLayout* pBottomLayoutCol1 = new QVBoxLayout( pBottomLayout, 5 );
-    QVBoxLayout* pBottomLayoutCol2 = new QVBoxLayout( pBottomLayout, 5 );
-    QVBoxLayout* pBottomLayoutCol3 = new QVBoxLayout( pBottomLayout, 5 );
-    pBottomLayout->setStretchFactor( pBottomLayoutCol1, 2 );
-    pBottomLayout->setStretchFactor( pBottomLayoutCol2, 3 );
-    pBottomLayout->setStretchFactor( pBottomLayoutCol3, 4 );
-
-    pDataLayout->setStretchFactor( pBottomLayout, 500 );
-    pDataLayout->setStretchFactor( pTopLayout, 1 );
-
-    pTopLayoutCol1->addWidget( pParamHolder );
-    pTopLayoutCol2->addWidget( pCargoGroupBox );
-
-    pTopLayoutCol1->addWidget( pIdGroupBox );
-    pTopLayoutCol2->addWidget( pTroopGroupBox );
-
-    pTopLayoutCol3->addWidget( pBreakdownsGroup_ );
-
-    pBottomLayoutCol1->addWidget( pSpeedGroup );
-
-    pBottomLayoutCol2->addWidget( pSensorsGroup );
-    pBottomLayoutCol2->addWidget( pRadarsGroup );
-    pBottomLayoutCol2->addWidget( pWeaponsGroup );
-    pBottomLayoutCol2->addWidget( pConsumptionsGroup );
-
-    pBottomLayoutCol3->addWidget( pDotationGroup );
-    pBottomLayoutCol3->addWidget( pObjectsGroup );
+    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 0, 1, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pDotationGroup    , 2, 3, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pObjectsGroup     , 4, 5, 2, 2 );
 }
 
 

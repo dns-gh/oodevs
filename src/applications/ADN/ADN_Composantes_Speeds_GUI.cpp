@@ -68,13 +68,13 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI(QWidget * parent )
     verticalHeader()->hide();
     
     // tab with 2 columns
-    setNumCols(2);
-    setNumRows(0);
-    setColumnStretchable(0,true);
-    setColumnStretchable(1,true);
+    setNumCols( 2 );
+    setNumRows( 0 );
+//    setColumnStretchable( 0, true );
+//    setColumnStretchable( 1, false );
     
-    horizontalHeader()->setLabel(0, tr( "Ground type"));
-    horizontalHeader()->setLabel(1, tr( "Speed (km/h)"));
+    horizontalHeader()->setLabel( 0, tr( "Ground type") );
+    horizontalHeader()->setLabel( 1, tr( "Speed (km/h)") );
 
     // connector creation
     pConnector_=new ADN_CT_Composantes_Speeds(*this);

@@ -35,8 +35,6 @@ ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char
     addColumn( tr( "Composantes" ) );
     setResizeMode(QListView::AllColumns);
 
-    setMinimumWidth( 200 );
-
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<ComposanteInfos>( *this );
 

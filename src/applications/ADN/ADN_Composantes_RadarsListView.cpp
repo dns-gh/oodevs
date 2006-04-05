@@ -31,12 +31,15 @@ ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent
 {
     // Add one column.
     addColumn( tr( "Special sensors" ) );
-    setResizeMode( QListView::AllColumns );
+    //setResizeMode( QListView::AllColumns );
+    
+    setMinimumHeight( 115 );
+    setMaximumHeight( 115 );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);
 
-    this->SetDeletionEnabled( true );
+    SetDeletionEnabled( true );
 }
 
 

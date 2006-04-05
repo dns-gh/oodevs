@@ -79,14 +79,17 @@ ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI(QWidget * parent )
     setShowGrid(false);
     setLeftMargin(0);
 
+    setMinimumHeight( 115 );
+    setMaximumHeight( 115 );
+
     // hide vertical header
     verticalHeader()->hide();
     
     // tab with 2 columns
     setNumCols(2);
     setNumRows(0);
-    setColumnStretchable(0,true);
-    setColumnStretchable(1,true);
+//    setColumnStretchable( 0, true );
+//    setColumnStretchable( 1, false );
     
     horizontalHeader()->setLabel(0, tr( "Sensor"));
     horizontalHeader()->setLabel(1, tr( "Height (m)"));
