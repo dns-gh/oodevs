@@ -25,6 +25,7 @@ class MapEventHandler_ABC;
 class Options;
 class MapEventFilter_ABC;
 class OptionsPanel;
+class GraphicsPanel;
 
 class QProgressBar;
 class Controllers;
@@ -96,7 +97,8 @@ private:
 
     QTimer* displayTimer_;
 
-    OptionsPanel* pOptionsPanel_;
+    OptionsPanel*  pOptionsPanel_;
+    GraphicsPanel* pGraphicPrefPanel_;
     //@}
 };
 

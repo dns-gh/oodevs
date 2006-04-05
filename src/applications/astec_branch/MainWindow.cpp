@@ -29,6 +29,7 @@
 #include "Settings.h"
 #include "OptionsPanel.h"
 #include "MissionPanel.h"
+#include "GraphicsPanel.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
 #include "Controllers.h"
@@ -125,6 +126,17 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
     this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
+
+    // Graphic preference window
+    QDockWindow* pGraphicPrefDockWnd = new QDockWindow( this );
+    moveDockWindow( pGraphicPrefDockWnd, Qt::DockRight );
+    pGraphicPrefDockWnd->hide();
+    pGraphicPrefPanel_ = new GraphicsPanel( pGraphicPrefDockWnd );
+    pGraphicPrefDockWnd->setWidget( pGraphicPrefPanel_ );
+    pGraphicPrefDockWnd->setResizeEnabled( true );
+    pGraphicPrefDockWnd->setCloseMode( QDockWindow::Always );
+    pGraphicPrefDockWnd->setCaption( tr( "Graphic preferences" ) );
+    setDockEnabled( pGraphicPrefDockWnd, Qt::DockTop, false );
 
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );
