@@ -33,7 +33,7 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pat
     if( rSecurityDistance_ < 1000. )
         rSecurityDistance_ = 1000.;
 
-    rFactor_ = ( pathClass.GetEnemyCostAtSecurityRange() - pathClass.GetEnemyCostOnContact() ) / rSecurityDistance_;
+    rFactor_ = ( pathClass.GetEnemyCostOnContact() - pathClass.GetEnemyCostAtSecurityRange() ) / rSecurityDistance_;
     rOffset_ = pathClass.GetEnemyCostOnContact();
 }
 
@@ -62,5 +62,5 @@ MT_Float DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT
 
     if( rDistBtwUnitAndEnemy > rSecurityDistance_ )
         return 0.;
-    return rFactor_ * rDistBtwUnitAndEnemy + rOffset_;
+    return rOffset_ - rFactor_ * rDistBtwUnitAndEnemy;
 }

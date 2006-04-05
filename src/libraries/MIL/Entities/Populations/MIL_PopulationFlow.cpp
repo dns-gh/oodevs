@@ -283,7 +283,7 @@ void MIL_PopulationFlow::ManageSplit()
 // Name: MIL_PopulationFlow::ApplyMove
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
+void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float /*rSpeed*/, MT_Float /*rWalkedDistance*/ )
 {
     const MT_Float rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
 
@@ -304,7 +304,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         return;
 
     SetDirection( direction );
-    SetSpeed    ( rSpeed    );
+    SetSpeed    ( rWalkedDistance ); // $$$$ SBO 2006-04-03: euh... non rien
 
     // Head management
     SetHeadPosition( position );
@@ -527,8 +527,8 @@ void MIL_PopulationFlow::SendFullState() const
     NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
     asnMsg.GetAsnMsg().attitude           = GetAttitude().GetAsnID();
     asnMsg.GetAsnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
-    asnMsg.GetAsnMsg().nb_humains_vivants = (uint)GetNbrAliveHumans(); 
-    asnMsg.GetAsnMsg().nb_humains_morts   = (uint)GetNbrDeadHumans ();
+    asnMsg.GetAsnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+    asnMsg.GetAsnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
 
     asnMsg.Send();
 
@@ -576,8 +576,8 @@ void MIL_PopulationFlow::SendChangedState() const
     {
         asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1; 
         asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().nb_humains_vivants          = (uint)GetNbrAliveHumans();
-        asnMsg.GetAsnMsg().nb_humains_morts            = (uint)GetNbrDeadHumans ();
+        asnMsg.GetAsnMsg().nb_humains_vivants          = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+        asnMsg.GetAsnMsg().nb_humains_morts            = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
     }
 
     if( bSpeedUpdated_ )

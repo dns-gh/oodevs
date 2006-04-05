@@ -216,6 +216,52 @@ MT_Float MIL_PopulationElement_ABC::Exterminate( MT_Float rSurface )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::Kill
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationElement_ABC::Kill( uint count )
+{
+    uint kills = count;
+    if( count > rNbrAliveHumans_ )
+    {
+        kills = uint( ceil( rNbrAliveHumans_ ) );
+        rNbrDeadHumans_ += rNbrAliveHumans_;
+        rNbrAliveHumans_ = 0.f;
+    }
+    else
+    {
+        rNbrAliveHumans_ -= kills;
+        rNbrDeadHumans_  += kills;
+    }
+    bHumansUpdated_ = true;
+    return kills;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::Resurrect
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationElement_ABC::Resurrect( uint count )
+{
+    uint resurrections = count;
+    if( count > rNbrDeadHumans_ )
+    {
+        resurrections = uint( ceil( rNbrDeadHumans_ ) );
+        rNbrAliveHumans_ += rNbrDeadHumans_;
+        rNbrDeadHumans_ = 0.f;
+    }
+    else
+    {
+        rNbrAliveHumans_ += resurrections;
+        rNbrDeadHumans_  -= resurrections;
+    }
+    bHumansUpdated_ = true;
+    return resurrections;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::IsDead
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------

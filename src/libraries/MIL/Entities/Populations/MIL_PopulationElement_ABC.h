@@ -68,6 +68,8 @@ public:
     T_Humans PullHumans   ( MT_Float rNbr );
     void     KillAllHumans();
     MT_Float Exterminate  ( MT_Float rSurface );
+    uint     Kill         ( uint count );
+    uint     Resurrect    ( uint count );
     //@}
 
     //! @name Actions

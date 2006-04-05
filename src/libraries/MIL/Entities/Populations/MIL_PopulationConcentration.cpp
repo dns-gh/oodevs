@@ -303,8 +303,8 @@ void MIL_PopulationConcentration::SendFullState() const
     asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
     
     asnMsg.GetAsnMsg().attitude           = GetAttitude().GetAsnID();
-    asnMsg.GetAsnMsg().nb_humains_morts   = (uint)GetNbrDeadHumans ();
-    asnMsg.GetAsnMsg().nb_humains_vivants = (uint)GetNbrAliveHumans();
+    asnMsg.GetAsnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+    asnMsg.GetAsnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
 
     asnMsg.Send();
 }
@@ -333,8 +333,8 @@ void MIL_PopulationConcentration::SendChangedState() const
         asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
         asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
     
-        asnMsg.GetAsnMsg().nb_humains_morts   = (uint)GetNbrDeadHumans ();
-        asnMsg.GetAsnMsg().nb_humains_vivants = (uint)GetNbrAliveHumans();
+        asnMsg.GetAsnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+        asnMsg.GetAsnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
     }
 
     asnMsg.Send();

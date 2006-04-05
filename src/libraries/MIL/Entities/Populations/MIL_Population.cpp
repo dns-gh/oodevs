@@ -46,10 +46,11 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     , nID_                    ( nID )
     , pArmy_                  ( 0 )
     , strName_                ( type.GetName() )
+    , pDefaultAttitude_       ( 0 )
+    , rPeopleCount_           ( 0. )
     , pKnowledge_             ( 0 )
     , pDecision_              ( 0 )
     , orderManager_           ( *this )
-    , pDefaultAttitude_       ( 0 )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
@@ -74,8 +75,10 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
 
     pKnowledge_ = new DEC_PopulationKnowledge();
     pDecision_  = new DEC_PopulationDecision( *this );
-    
-    concentrations_.push_back( new MIL_PopulationConcentration( *this, archive ) );    
+
+    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, archive );
+    concentrations_.push_back( pConcentration );
+    rPeopleCount_ = pConcentration->GetNbrAliveHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,10 +91,11 @@ MIL_Population::MIL_Population()
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
     , strName_                ()
+    , pDefaultAttitude_       ( 0 )
+    , rPeopleCount_           ( 0. )
     , pKnowledge_             ()
     , pDecision_              ( 0 )
     , orderManager_           ( *this )
-    , pDefaultAttitude_       ( 0 )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
@@ -135,7 +139,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     assert( pDefaultAttitude_ );
 
-    file >> concentrations_
+    file >> rPeopleCount_
+         >> concentrations_
          >> flows_
          >> trashedConcentrations_
          >> trashedFlows_
@@ -159,6 +164,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pArmy_
          << strName_
          << pDefaultAttitude_->GetID()
+         << rPeopleCount_
          << concentrations_
          << flows_
          << trashedConcentrations_
@@ -773,6 +779,8 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagic
         case T_MsgPopulationMagicAction_action_move_to           : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
         case T_MsgPopulationMagicAction_action_destruction_totale: asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll    (); break;
         case T_MsgPopulationMagicAction_action_change_attitude   : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
+        case T_MsgPopulationMagicAction_action_tuer              : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgKill          ( asnMsg.action.u.tuer ); break;
+        case T_MsgPopulationMagicAction_action_ressusciter       : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResurrect     ( asnMsg.action.u.ressusciter ); break;
         default:
             assert( false );
     }
@@ -865,6 +873,50 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( AS
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgKill
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgKill( ASN1T_MagicActionPopulationTuer& asn )
+{
+    uint remainingKills = asn;
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    {
+        if( remainingKills == 0 )
+            return EnumPopulationAttrErrorCode::no_error;
+        remainingKills -= (**it).Kill( remainingKills );
+    }
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    {
+        if( remainingKills == 0 )
+            return EnumPopulationAttrErrorCode::no_error;
+        remainingKills -= (**it).Kill( remainingKills );
+    }
+    return EnumPopulationAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgResurrect
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgResurrect( ASN1T_MagicActionPopulationRessusciter& asn )
+{
+    uint remainingResurrections = asn;
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    {
+        if( remainingResurrections == 0 )
+            return EnumPopulationAttrErrorCode::no_error;
+        remainingResurrections -= (**it).Resurrect( remainingResurrections );
+    }
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    {
+        if( remainingResurrections == 0 )
+            return EnumPopulationAttrErrorCode::no_error;
+        remainingResurrections -= (**it).Resurrect( remainingResurrections );
+    }
+    return EnumPopulationAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::SendCreation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
@@ -892,7 +944,7 @@ void MIL_Population::SendCreation() const
 // Name: MIL_Population::SendFullState
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_Population::SendFullState() const
+void MIL_Population::SendFullState()
 {
     assert( pDecision_ );
 
@@ -901,15 +953,24 @@ void MIL_Population::SendFullState() const
     pDecision_->SendFullState( asnMsg );
     asnMsg.Send();
 
+    sPeopleCounter counter( rPeopleCount_ );
+    sPeopleCounter trashCounter( rPeopleCount_ );
+
+    SetCurrentCounter( counter );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         (**it).SendFullState();
+    SetCurrentCounter( trashCounter );
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         (**it).SendFullState();
 
+    SetCurrentCounter( counter );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         (**it).SendFullState();
+    SetCurrentCounter( trashCounter );
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
         (**it).SendFullState();
+
+    ResetCounter();
 }
 
 // -----------------------------------------------------------------------------
@@ -927,15 +988,24 @@ void MIL_Population::UpdateNetwork()
         asnMsg.Send();
     }
 
+    sPeopleCounter counter( rPeopleCount_ );
+    sPeopleCounter trashCounter( rPeopleCount_ );
+
+    SetCurrentCounter( counter );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         (**it).SendChangedState();
+    SetCurrentCounter( trashCounter );
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         (**it).SendChangedState();
 
+    SetCurrentCounter( counter );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         (**it).SendChangedState();
+    SetCurrentCounter( trashCounter );
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
         (**it).SendChangedState();
+
+    ResetCounter();
 }
 
 // -----------------------------------------------------------------------------
@@ -948,4 +1018,19 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
         visitor.Visit( **it );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         visitor.Visit( **it );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetBoundedPeople
+// Created: SBO 2006-04-03
+// -----------------------------------------------------------------------------
+uint MIL_Population::GetBoundedPeople( MT_Float rPeople )
+{
+    if( !pPeopleCounter_ )
+        return uint( floor( rPeople + 0.5 ) );
+    uint nResult = std::min( pPeopleCounter_->nPeople_, int( ceil( rPeople ) ) );
+    pPeopleCounter_->nPeople_ -= nResult;
+    if( pPeopleCounter_->nPeople_ < 0. )
+        pPeopleCounter_->nPeople_ = 0;
+    return nResult;
 }

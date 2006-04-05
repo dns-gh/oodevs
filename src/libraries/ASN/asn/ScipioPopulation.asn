@@ -108,6 +108,8 @@ MagicActionPopulationChangeAttitude ::= SEQUENCE
 
 MagicActionPopulationMoveTo				::= CoordUTM    -- Position
 MagicActionPopulationDestructionTotale	::= NULL
+MagicActionPopulationTuer               ::= INTEGER     -- nombre de personne tuées
+MagicActionPopulationRessusciter        ::= INTEGER     -- nombre de personne ressuscitées
 
 MsgPopulationMagicAction ::= SEQUENCE
 {
@@ -116,7 +118,9 @@ MsgPopulationMagicAction ::= SEQUENCE
     {       
         change-attitude    MagicActionPopulationChangeAttitude,
         move-to            MagicActionPopulationMoveTo,
-        destruction-totale MagicActionPopulationDestructionTotale
+        destruction-totale MagicActionPopulationDestructionTotale,
+        tuer               MagicActionPopulationTuer,
+        ressusciter        MagicActionPopulationRessusciter
     }       
 }
 

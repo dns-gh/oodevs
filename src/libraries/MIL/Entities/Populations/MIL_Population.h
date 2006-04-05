@@ -107,8 +107,8 @@ public:
     void CleanKnowledges ();
     void UpdateDecision  ();
     void UpdateState     ();
-    void UpdateNetwork   ();
     void Clean           ();
+    uint GetBoundedPeople( MT_Float rPeople );
     //@}
 
     //! @name Actions
@@ -134,8 +134,8 @@ public:
     void OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgOrderConduite  ( ASN1T_MsgOrderConduite& msg, MIL_MOSContextID nCtx );
     void SendCreation               () const;
-    void SendFullState              () const;
-    void UpdateNetwork              () const;    
+    void SendFullState              ();
+    void UpdateNetwork              ();
 
     void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, MIL_MOSContextID nCtx );
     //@}
@@ -165,6 +165,8 @@ private:
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgMagicMove     ( ASN1T_MagicActionPopulationMoveTo& asn );
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgDestroyAll    ();
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
+    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgKill          ( ASN1T_MagicActionPopulationTuer& asn );
+    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgResurrect     ( ASN1T_MagicActionPopulationRessusciter& asn );
     //@}
 
     //! @name Network
@@ -189,12 +191,25 @@ private:
     typedef T_FlowVector::const_iterator                CIT_FlowVector;
     //@}
 
+    //! @name People Counter
+    //@{
+    struct sPeopleCounter
+    {
+        sPeopleCounter( MT_Float rInit ) : nPeople_ ( uint( rInit ) ) {}
+        int nPeople_;
+    };
+    void SetCurrentCounter( sPeopleCounter& counter ) { pPeopleCounter_ = &counter; }
+    void ResetCounter     ()                          { pPeopleCounter_ = 0; }
+    //@}
+
 private:
     const MIL_PopulationType*        pType_;
     const uint                       nID_;
     const MIL_Army*                  pArmy_;
           std::string                strName_;
     const MIL_PopulationAttitude*    pDefaultAttitude_;
+          MT_Float                   rPeopleCount_;
+          sPeopleCounter*            pPeopleCounter_;
 
           T_ConcentrationVector      concentrations_;
           T_FlowVector               flows_;

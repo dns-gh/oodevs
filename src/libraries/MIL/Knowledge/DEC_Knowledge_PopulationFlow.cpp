@@ -362,8 +362,8 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
         asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
         asnMsg.GetAsnMsg().m.attitudePresent           = 1;
 
-        asnMsg.GetAsnMsg().nb_humains_morts   = (uint)rNbrDeadHumans_;
-        asnMsg.GetAsnMsg().nb_humains_vivants = (uint)rNbrAliveHumans_;
+        asnMsg.GetAsnMsg().nb_humains_morts   = uint( floor( rNbrDeadHumans_  + 0.5f ) );
+        asnMsg.GetAsnMsg().nb_humains_vivants = uint( floor( rNbrAliveHumans_ + 0.5f ) );
         asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
     }
 
@@ -439,8 +439,8 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         {
             asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
             asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-            asnMsg.GetAsnMsg().nb_humains_morts            = (uint)rNbrDeadHumans_;
-            asnMsg.GetAsnMsg().nb_humains_vivants          = (uint)rNbrAliveHumans_;
+            asnMsg.GetAsnMsg().nb_humains_morts            = uint( floor( rNbrDeadHumans_  + 0.5f ) );
+            asnMsg.GetAsnMsg().nb_humains_vivants          = uint( floor( rNbrAliveHumans_ + 0.5f ) );
         }
 
         if( bAttitudeUpdated_ )
