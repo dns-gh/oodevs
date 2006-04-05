@@ -35,7 +35,7 @@ class AutomateMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+             AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
     virtual ~AutomateMissionInterface();
     //@}
 
@@ -68,7 +68,6 @@ private:
     //! @name Member data
     //@{
     Agent&                agent_;
-    MissionPanel&         parentPanel_;
     uint                  nMissionId_;
     ASN_MsgAutomateOrder* pASNMsgOrder_;
     //@}

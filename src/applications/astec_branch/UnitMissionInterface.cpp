@@ -20,10 +20,9 @@
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-UnitMissionInterface::UnitMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
-    : MissionInterface_ABC( & parentPanel, agent, controller, layer, converter )
+UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
+    : MissionInterface_ABC( parent, agent, controller, layer, converter )
     , agent_              ( agent )
-    , parentPanel_        ( parentPanel )
     , nMissionId_         ( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPionOrder();
@@ -69,7 +68,7 @@ void UnitMissionInterface::OnOk()
     pASNMsgOrder_->Send( 45 );
 
     agent_.Update( order );
-    parentPanel_.hide();
+    parentWidget()->hide();
 }
 
 #include "UnitMissionInterface_Gen.cpp"

@@ -38,6 +38,12 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    Mission* AddFragOrders( Mission* mission );
+    //@}
+
+private:
     //! @name Copy/Assignement
     //@{
     MissionFactory( const MissionFactory& );            //!< Copy constructor

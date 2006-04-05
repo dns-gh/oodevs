@@ -54,6 +54,8 @@ private:
     //@{
     void ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
     void ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory );
+    void RegisterDefaultFragOrders( MissionFactory& factory );
+    void RegisterFragOrder( MissionFactory& factory, const std::string& order );
     //@}
 
 private:

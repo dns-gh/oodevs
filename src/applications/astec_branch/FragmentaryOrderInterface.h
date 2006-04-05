@@ -26,7 +26,7 @@ class FragmentaryOrderInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FragmentaryOrderInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+             FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
     virtual ~FragmentaryOrderInterface();
     //@}
 
@@ -54,8 +54,6 @@ private:
 private:
     //! @name Member data
     //@{
-    Agent& agent_;
-    MissionPanel& parentPanel_;
     uint nMissionId_;
     ASN_MsgOrderConduite* pASNMsgOrder_;
     //@}

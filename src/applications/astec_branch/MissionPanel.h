@@ -65,6 +65,7 @@ private slots:
     //@{
     void ActivateAgentMission( int );
     void ActivateAutomatMission( int );
+    void ActivateFragOrder( int );
     //@}
 
 private:
@@ -81,6 +82,8 @@ private:
     int AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, const QString& name, const char* slot );
     void AddAgentMissions( const Decisions& decisions, QPopupMenu& menu ); 
     void AddAutomatMissions( const AutomatDecisions& decisions, QPopupMenu& menu ); 
+    template< typename D >
+    int AddFragOrders( const D& decisions, QPopupMenu& menu, const QString& name, const char* slot );
     //@}
 
 private:

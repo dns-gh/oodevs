@@ -25,7 +25,6 @@
 
 class ActionController;
 class Agent_ABC;
-class MissionPanel;
 class Agent;
 class Param_ABC;
 class ParametersLayer;
@@ -52,6 +51,13 @@ public:
     //@{
     bool CheckValidity();
     void Draw( const GlTools_ABC& tools ) const;
+    bool IsEmpty() const;
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    virtual void OnOk() = 0;
     //@}
 
 protected:
@@ -104,9 +110,6 @@ protected:
         return *pParam;
     }
     //@}
-
-protected slots:
-    virtual void OnOk() = 0;
 
 private:
     //! @name Copy/Assignment

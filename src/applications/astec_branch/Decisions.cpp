@@ -21,6 +21,9 @@ Decisions::Decisions( Controller& controller, const Agent& agent )
     : controller_( controller )
     , agent_( agent )
     , bEmbraye_( false )
+    , lastOrderId_( unsigned( -1 ) )
+    , current_( 0 )
+    , next_( 0 )
 {
     // NOTHING
 }
@@ -46,6 +49,29 @@ void Decisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Decisions::DoUpdate
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
+{
+    lastOrderId_ = message.order_id;
+    next_ = & agent_.GetDecisionalModel().Resolver< Mission >::Get( message.mission.t );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::DoUpdate
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void Decisions::DoUpdate( const ASN1T_MsgPionOrderAck& message )
+{
+    if( message.order_id == lastOrderId_ )
+    {
+        current_ = next_;
+        controller_.Update( *this );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Decisions::IsEmbraye
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -64,10 +90,28 @@ Iterator< const Mission& > Decisions::GetMissions() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Iterator< const FragOrder& > Decisions::GetFragOrders
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+Iterator< const FragOrder& > Decisions::GetFragOrders() const
+{
+    return agent_.GetDecisionalModel().Resolver< FragOrder >::CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Decisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 const Agent& Decisions::GetAgent() const
 {
     return agent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::GetCurrentMission
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+const Mission* Decisions::GetCurrentMission() const
+{
+    return current_;
 }

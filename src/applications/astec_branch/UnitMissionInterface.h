@@ -26,7 +26,7 @@ class UnitMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+             UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
     virtual ~UnitMissionInterface();
     //@}
 
@@ -59,7 +59,6 @@ private:
     //! @name Member data
     //@{
     Agent& agent_;
-    MissionPanel& parentPanel_;
     uint nMissionId_;
     ASN_MsgPionOrder* pASNMsgOrder_;
     //@}

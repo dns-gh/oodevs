@@ -20,14 +20,12 @@
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 
-#include "MissionPanel.h"
 #include "ParamPoint.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
 #include "ParamPath.h"
 //#include "ParamPathList.h"
 #include "ParamGDH.h"
-//#include "ParamComboBox.h"
 #include "ParamBool.h"
 #include "ParamLocation.h"
 #include "ParamLocationList.h"
@@ -90,6 +88,14 @@ bool MissionInterface_ABC::CheckValidity()
     return b;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::IsEmpty
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+bool MissionInterface_ABC::IsEmpty() const
+{
+    return parameters_.empty();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateOkCancelButtons
@@ -306,7 +312,7 @@ void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject&
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateGenObject( ASN1T_MissionGenObject& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamObstacle( asn, strName, strName, this, bOptional ) );
+//    AddParameter( *new ParamObstacle( this, asn, strName, strName ), bOptional ) ;
 }
 
 // -----------------------------------------------------------------------------

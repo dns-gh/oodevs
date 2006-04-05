@@ -20,6 +20,9 @@
 AutomatDecisions::AutomatDecisions( Controller& controller, const Agent& agent )
     : controller_( controller )
     , agent_( agent )
+    , lastOrderId_( unsigned( -1 ) )
+    , current_( 0 )
+    , next_( 0 )
 {
     // NOTHING
 }
@@ -45,6 +48,29 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatDecisions::DoUpdate
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
+{
+    lastOrderId_ = message.order_id;
+    next_ = & agent_.GetAutomatDecisionalModel()->Resolver< Mission >::Get( message.mission.t );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::DoUpdate
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrderAck& message )
+{
+    if( message.order_id == lastOrderId_ )
+    {
+        current_ = next_;
+        controller_.Update( *this );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Iterator< const Mission& > AutomatDecisions::GetMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -53,6 +79,26 @@ Iterator< const Mission& > AutomatDecisions::GetMissions() const
     if( ! agent_.GetAutomatDecisionalModel() )
         throw std::runtime_error( "AutomatDecisions attached on agent" );
     return agent_.GetAutomatDecisionalModel()->Resolver< Mission >::CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Iterator< const FragOrder& > AutomatDecisions::GetFragOrders
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
+{
+    if( ! agent_.GetAutomatDecisionalModel() )
+        throw std::runtime_error( "AutomatDecisions attached on agent" );
+    return agent_.GetAutomatDecisionalModel()->Resolver< FragOrder >::CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::GetCurrentMission
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+const Mission* AutomatDecisions::GetCurrentMission() const
+{
+    return current_;
 }
 
 // -----------------------------------------------------------------------------

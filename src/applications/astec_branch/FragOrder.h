@@ -26,7 +26,13 @@ public:
     virtual ~FragOrder();
     //@}
 
-public:
+    //! @name Accessors
+    //@{
+    unsigned long GetId() const;
+    std::string GetName() const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     std::string name_;

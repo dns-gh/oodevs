@@ -32,11 +32,30 @@ Mission::~Mission()
     DeleteAll();
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: Mission::AddAvailableOrder
-// Created: AGE 2006-03-14
+// Name: Mission::GetId
+// Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void Mission::AddAvailableOrder( FragOrder& order )
+unsigned long Mission::GetId() const
 {
-    Register( order.id_, order );
+    return id_;
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: Mission::GetName
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+std::string Mission::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission::IsAutomat
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+bool Mission::IsAutomat() const
+{
+    return automat_;
 }

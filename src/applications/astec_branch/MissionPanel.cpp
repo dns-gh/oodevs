@@ -27,9 +27,12 @@
 #include "AutomatDecisions.h"
 #include "Model.h"
 #include "GlTools_ABC.h"
+#include "FragOrder.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
+#include "FragmentaryOrderInterface.h"
+
 //#include "PopulationMissionInterface.h"
 
 // -----------------------------------------------------------------------------
@@ -87,10 +90,46 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, 
     while( it.HasMoreElements() )
     {
         const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( mission.name_.c_str(), this, slot );
-        missions.setItemParameter( nId, mission.id_ );
+        int nId = missions.insertItem( mission.GetName().c_str(), this, slot );
+        missions.setItemParameter( nId, mission.GetId() );
     }
     return menu.insertItem( name, &missions  );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::AddFragOrders
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+template< typename D >
+int MissionPanel::AddFragOrders( const D& decisions, QPopupMenu& menu, const QString& name, const char* slot )
+{
+    std::set< unsigned long > fragOrders_;
+    QPopupMenu& orders = *new QPopupMenu( &menu );
+    Iterator< const FragOrder& > fragIt = decisions.GetFragOrders();
+    while( fragIt.HasMoreElements() )
+    {
+        const FragOrder& fragOrder = fragIt.NextElement();
+        if( fragOrders_.insert( fragOrder.GetId() ).second )
+        {
+            int nId = orders.insertItem( fragOrder.GetName().c_str(), this, slot );
+            orders.setItemParameter( nId, fragOrder.GetId() );
+        }
+    }
+    if( decisions.GetCurrentMission() )
+    {
+        const Mission& mission = *decisions.GetCurrentMission();
+        Iterator< const FragOrder& > fragIt = mission.CreateIterator();
+        while( fragIt.HasMoreElements() )
+        {
+            const FragOrder& fragOrder = fragIt.NextElement();
+            if( fragOrders_.insert( fragOrder.GetId() ).second )
+            {
+                int nId = orders.insertItem( fragOrder.GetName().c_str(), this, slot );
+                orders.setItemParameter( nId, fragOrder.GetId() );
+            }
+        }
+    }
+    return menu.insertItem( name, &orders  );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +140,8 @@ void MissionPanel::AddAgentMissions( const Decisions& decisions, QPopupMenu& men
 {
     const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Pion" ), SLOT( ActivateAgentMission( int ) ) );
     menu.setItemEnabled( id, ! decisions.IsEmbraye() );
+    if( ! decisions.IsEmbraye() )
+        AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +152,8 @@ void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, QPopup
 {
     const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Automate" ), SLOT( ActivateAutomatMission( int ) ) );
     menu.setItemEnabled( id, decisions.IsEmbraye() );
+    if( decisions.IsEmbraye() )
+        AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +165,7 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new UnitMissionInterface( const_cast< Agent& >( *selected_ ), (uint)id , *this, controllers_.actions_, layer_, converter_ );
+    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -140,13 +183,30 @@ void MissionPanel::ActivateAutomatMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new AutomateMissionInterface( const_cast< Agent& >( *selected_ ), (uint)id , *this, controllers_.actions_, layer_, converter_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_ );
     setWidget( pMissionInterface_ );
-
-    // For some magic reason, the following line resizes the widget
-    // to a nice size (but not the minimal one).
     resize( 10, 10 );
     show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::ActivateFragOrder
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void MissionPanel::ActivateFragOrder( int id )
+{
+    hide();
+    delete pMissionInterface_;
+    // $$$$ AGE 2006-03-31: 
+    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_ );
+    if( pMissionInterface_->IsEmpty() )
+        pMissionInterface_->OnOk();
+    else
+    {
+        setWidget( pMissionInterface_ );
+        resize( 10, 10 );
+        show();
+    }
 }
 
 // -----------------------------------------------------------------------------

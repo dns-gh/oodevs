@@ -18,6 +18,7 @@
 class Agent;
 class Controller;
 class Mission;
+class FragOrder;
 
 // =============================================================================
 /** @class  AutomatDecisions
@@ -27,6 +28,8 @@ class Mission;
 // =============================================================================
 class AutomatDecisions : public Extension_ABC
                        , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+                       , public Updatable_ABC< ASN1T_MsgAutomateOrder >
+                       , public Updatable_ABC< ASN1T_MsgAutomateOrderAck >
 {
 
 public:
@@ -41,6 +44,8 @@ public:
     const Agent& GetAgent() const;
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     virtual Iterator< const Mission& > GetMissions() const;
+    virtual Iterator< const FragOrder& > GetFragOrders() const;
+    const Mission* GetCurrentMission() const;
     //@}
 
 private:
@@ -53,6 +58,8 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomateOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomateOrderAck& message );
     //@}
 
 private:
@@ -61,6 +68,10 @@ private:
     Controller& controller_;
     const Agent& agent_;
     bool bEmbraye_;
+
+    unsigned long lastOrderId_;
+    const Mission* current_;
+    const Mission* next_;
     //@}
 };
 

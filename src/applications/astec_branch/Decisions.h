@@ -18,6 +18,7 @@
 class Agent;
 class Controller;
 class Mission;
+class FragOrder;
 
 // =============================================================================
 /** @class  Decisions
@@ -27,12 +28,14 @@ class Mission;
 // =============================================================================
 class Decisions : public Extension_ABC
                 , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+                , public Updatable_ABC< ASN1T_MsgPionOrder >
+                , public Updatable_ABC< ASN1T_MsgPionOrderAck >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Decisions( Controller& controller, const Agent& agent );
+             Decisions( Controller& controller, const Agent& agent ); // $$$$ AGE 2006-04-05: Agent, pas terrible...
     virtual ~Decisions();
     //@}
 
@@ -41,6 +44,8 @@ public:
     const Agent& GetAgent() const;
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     virtual Iterator< const Mission& > GetMissions() const;
+    virtual Iterator< const FragOrder& > GetFragOrders() const;
+    const Mission* GetCurrentMission() const;
     //@}
 
 private:
@@ -53,6 +58,8 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
+    virtual void DoUpdate( const ASN1T_MsgPionOrderAck& message );
     //@}
 
 private:
@@ -61,6 +68,10 @@ private:
     Controller& controller_;
     const Agent& agent_;
     bool bEmbraye_;
+
+    unsigned long lastOrderId_;
+    const Mission* current_;
+    const Mission* next_;
     //@}
 };
 

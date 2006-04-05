@@ -19,8 +19,6 @@
 #include "astec_pch.h"
 #include "AutomateMissionInterface.h"
 #include "moc_AutomateMissionInterface.cpp"
-
-#include "MissionPanel.h"
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
 #include "Agent.h"
@@ -29,10 +27,9 @@
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
-    : MissionInterface_ABC( & parentPanel, agent, controller, layer, converter )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
+    : MissionInterface_ABC( parent, agent, controller, layer, converter )
     , agent_( agent )
-    , parentPanel_( parentPanel )
     , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgAutomateOrder();
@@ -80,9 +77,8 @@ void AutomateMissionInterface::OnOk()
     Commit();
     pASNMsgOrder_->Send( 45 );
 
-    // $$$$ AGE 2006-04-05: 
-//    agent_.Update( pASNMsgOrder_->GetAsnMsg() );
-    parentPanel_.hide();
+    agent_.Update( pASNMsgOrder_->GetAsnMsg() );
+    parentWidget()->hide();
 }
 
 #include "AutomateMissionInterface_Gen.cpp"

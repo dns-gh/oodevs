@@ -29,12 +29,14 @@ public:
     virtual ~Mission();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
-    void AddAvailableOrder( FragOrder& order );
+    unsigned long GetId() const;
+    std::string GetName() const;
+    bool IsAutomat() const;
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     std::string name_;

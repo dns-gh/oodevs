@@ -40,7 +40,7 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
     E_UnitMission mission = ENT_Tr::ConvertToUnitMission( name );
     if( mission == -1 )
         throw std::runtime_error( "unknown agent mission '" + name + "'" );
-    return new Mission( name, mission, false );
+    return AddFragOrders( new Mission( name, mission, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
     E_AutomataMission mission = ENT_Tr::ConvertToAutomataMission( name );
     if( mission == -1 )
         throw std::runtime_error( "unknown automat mission '" + name + "'" );
-    return new Mission( name, mission, true );
+    return AddFragOrders( new Mission( name, mission, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,4 +77,22 @@ FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
     if( order == -1 )
         throw std::runtime_error( "unknown frag order '" + name + "'" );
     return new FragOrder( name, order );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionFactory::AddFragOrders
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+Mission* MissionFactory::AddFragOrders( Mission* mission )
+{
+    // $$$$ AGE 2006-04-05: Hard coded crap !
+    FragOrder* order = CreateFragOrder( "AttendreSePoster" );
+    mission->Register( order->GetId(), *order );
+    order = CreateFragOrder( "Poursuivre" );
+    mission->Register( order->GetId(), *order );
+    order = CreateFragOrder( "Interrompre" );
+    mission->Register( order->GetId(), *order );
+    order = CreateFragOrder( "ChangerAmbiance" );
+    mission->Register( order->GetId(), *order );
+    return mission;
 }

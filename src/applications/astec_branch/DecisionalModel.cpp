@@ -27,6 +27,7 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
             >> start( "Missions" )
                 >> list( "Mission", *this, ReadMission, factory, missionResolver )
             >> end();
+    RegisterDefaultFragOrders( factory );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,6 +37,7 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
 DecisionalModel::~DecisionalModel()
 {
     Resolver< Mission >::DeleteAll();
+    Resolver< FragOrder >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +49,7 @@ void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, 
     std::string name;
     xis >> attribute( "nom", name );
     Mission* mission = (factory.*missionResolver)( name );
-    Resolver< Mission >::Register( mission->id_, *mission );
+    Resolver< Mission >::Register( mission->GetId(), *mission );
 
     xis >> optional() 
         >> start( "OrdresConduite" )
@@ -64,9 +66,10 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
     std::string name;
     xis >> attribute( "nom", name );
     FragOrder* order = factory.CreateFragOrder( name );
-    mission.AddAvailableOrder( *order );
-    if( ! Resolver< FragOrder >::Find( order->id_ ) )
-        Resolver< FragOrder >::Register( order->id_, *order );
+    if( ! mission.Find( order->GetId() ) )
+        mission.Register( order->GetId(), *order );
+    else 
+        delete order;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,3 +80,34 @@ const std::string& DecisionalModel::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DecisionalModel::RegisterDefaultFragOrders
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory )
+{
+    // $$$$ AGE 2006-04-05: 
+    RegisterFragOrder( factory, "MettreTenueNBC" );
+    RegisterFragOrder( factory, "EnleverTenueNBC" );
+    RegisterFragOrder( factory, "PasserEnSilenceRadio" );
+    RegisterFragOrder( factory, "ArreterSilenceRadio" );
+    RegisterFragOrder( factory, "PasserEnSilenceRadar" );
+    RegisterFragOrder( factory, "ArreterSilenceRadar" );
+    RegisterFragOrder( factory, "ChangerReglesEngagement" );
+    RegisterFragOrder( factory, "RecupererTransporteurs" );
+    RegisterFragOrder( factory, "ChangerReglesEngagementPopulation" );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: DecisionalModel::RegisterFragOrder
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void DecisionalModel::RegisterFragOrder( MissionFactory& factory, const std::string& name )
+{
+    FragOrder* order = factory.CreateFragOrder( name );
+    Resolver< FragOrder >::Register( order->GetId(), *order );
+}
+
+
