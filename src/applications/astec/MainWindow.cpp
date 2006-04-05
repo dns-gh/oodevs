@@ -66,7 +66,7 @@ MainWindow::MainWindow()
     assert( pInstance_ == 0 );
     pInstance_ = this;
 
-    this->setIcon( MAKE_PIXMAP( mosicon ) );
+    this->setIcon( MAKE_PIXMAP( astec ) );
     this->setCaption( APP_NAME );
 
     pOptions_ = new Options();
