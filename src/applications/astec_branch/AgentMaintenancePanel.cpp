@@ -62,7 +62,10 @@ AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& 
 
     dispoHaulers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     dispoHaulers_->AddColumn( "Remorqueur" )
-                  .AddColumn( "Disponibles" );
+                  .AddColumn( "Total" )
+                  .AddColumn( "Disponible" )
+                  .AddColumn( "Au travail" )
+                  .AddColumn( "Au repos" );
     dispoRepairers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     dispoRepairers_->AddColumn( "Réparateur" )
                     .AddColumn( "Total" )

@@ -18,6 +18,7 @@ class ObjectType;
 class DotationType;
 class EquipmentType;
 class NBCAgent;
+class BreakdownType;
 
 namespace xml { class xistream; };
 
@@ -29,9 +30,10 @@ namespace xml { class xistream; };
 // =============================================================================
 class ObjectTypes
     : public Resolver< ObjectType >
-    , public Resolver< DotationType >
+    , public Resolver< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
     , public Resolver< EquipmentType >
     , public Resolver< NBCAgent >
+    , public Resolver< BreakdownType >
 {
 
 public:
@@ -64,6 +66,8 @@ private:
     void ReadEquipment( xml::xistream& xis );
     void ReadNBC( const std::string& nbc );
     void ReadNBCAgent( xml::xistream& xis );
+    void ReadBreakdowns( const std::string& breakdowns );
+    void ReadBreakdown( xml::xistream& xis );
     //@}
 
 private:

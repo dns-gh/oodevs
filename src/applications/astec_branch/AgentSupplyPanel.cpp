@@ -68,7 +68,10 @@ AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controller
     
     pDispoTransporters_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
     pDispoTransporters_->AddColumn( "Transporteurs pour convois" )
-                        .AddColumn( "Disponibles" );
+                        .AddColumn( "Total" )
+                        .AddColumn( "Disponible" )
+                        .AddColumn( "Au travail" )
+                        .AddColumn( "Au repos" );
 
     controllers_.Register( *this );
 }

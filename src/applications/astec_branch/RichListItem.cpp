@@ -303,8 +303,9 @@ void RichListItem::setText( int column, const QString& text )
     while( (int)columns_.size() <= column )
         columns_.push_back( RichText( "", CreateRichText( "" ) ) );
     RichText& richText = columns_[ column ];
-    delete richText.rich; 
+    QSimpleRichText* old = richText.rich;
     richText = RichText( text, CreateRichText( text ) );
+    delete old; 
     widthChanged();
 }
 

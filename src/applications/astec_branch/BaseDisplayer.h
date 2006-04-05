@@ -19,6 +19,9 @@ class EquipmentType;
 class Population;
 class PopulationConcentration;
 class CoordinateConverter;
+class NBCAgent;
+class ComponentType;
+class BreakdownType;
 
 // =============================================================================
 /** @class  BaseDisplayer
@@ -35,6 +38,9 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< Team >
                   , public Caller< DotationType >
                   , public Caller< EquipmentType >
+                  , public Caller< NBCAgent >
+                  , public Caller< ComponentType >
+                  , public Caller< BreakdownType >
 {
 
 public:
@@ -61,6 +67,9 @@ private:
     virtual void Call( const Team& value );
     virtual void Call( const DotationType& value );
     virtual void Call( const EquipmentType& value );
+    virtual void Call( const NBCAgent& value );
+    virtual void Call( const ComponentType& value );
+    virtual void Call( const BreakdownType& value );
     //@}
 };
 

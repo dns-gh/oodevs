@@ -13,6 +13,7 @@
 #include "DotationType.h"
 #include "EquipmentType.h"
 #include "NBCAgent.h"
+#include "BreakdownType.h"
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
@@ -26,12 +27,14 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
     // $$$$ SBO 2006-03-16: qfileinfo?
     const std::string baseDirectory = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
     xml::xifstream scipio( scipioXml );
-    std::string idFile, dotations, equipments;
+    std::string idFile, dotations, equipments, nbc, pannes;
     scipio >> start( "Scipio" )
                 >> start( "Donnees" )
                     >> content( "ClasseIDs", idFile )
                     >> content( "Dotations", dotations )
-                    >> content( "Composantes", equipments );
+                    >> content( "Composantes", equipments )
+                    >> content( "NBC", nbc )
+                    >> content( "Pannes", pannes );
 
     xml::xifstream xis( baseDirectory + idFile );
     xis >> start( "Classes" )
@@ -39,6 +42,8 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
 
     ReadDotations( baseDirectory + dotations );
     ReadEquipments( baseDirectory + equipments );
+    ReadNBC( baseDirectory + nbc );
+    ReadBreakdowns( baseDirectory + pannes );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +55,8 @@ ObjectTypes::~ObjectTypes()
     Resolver< ObjectType >::DeleteAll();
     Resolver< DotationType >::DeleteAll();
     Resolver< EquipmentType >::DeleteAll();
+    Resolver< NBCAgent >::DeleteAll();
+    Resolver< BreakdownType >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -150,4 +157,35 @@ void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
 {
     NBCAgent* nbc = new NBCAgent( xis );
     Resolver< NBCAgent >::Register( nbc->GetId(), *nbc );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadBreakdowns
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadBreakdowns( const std::string& breakdowns )
+{
+    xifstream xis( breakdowns );
+    xis >> start( "Pannes" )
+            >> start( "Types" )
+                >> start( "NTI1" )
+                    >> list( "Panne", *this, ReadBreakdown )
+                >> end()
+                >> start( "NTI2" )
+                    >> list( "Panne", *this, ReadBreakdown )
+                >> end()
+                >> start( "NTI3" )
+                    >> list( "Panne", *this, ReadBreakdown )
+                >> end();
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadBreakdown
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadBreakdown( xml::xistream& xis )
+{
+    BreakdownType* breakdown = new BreakdownType( xis );
+    Resolver< BreakdownType >::Register( breakdown->GetId(), *breakdown );
 }

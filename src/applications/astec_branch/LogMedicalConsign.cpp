@@ -115,10 +115,10 @@ void LogMedicalConsign::Draw( const geometry::Point2f& where, const GlTools_ABC&
         glLineStipple( 1, tools.StipplePattern() );
         break;
     case eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour:
-        glLineStipple( 1, ~tools.StipplePattern() );
+        glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:
-        glLineStipple( 1, 0x00FF );
+        glLineStipple( 1, tools.StipplePattern(0) );
     }
     tools.DrawCurvedArrow( pPionLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.4f );
 }

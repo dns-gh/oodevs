@@ -17,6 +17,9 @@
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "CoordinateConverter.h"
+#include "NBCAgent.h"
+#include "ComponentType.h"
+#include "BreakdownType.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -104,6 +107,33 @@ void BaseDisplayer::Call( const Population& value )
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const PopulationConcentration& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const NBCAgent& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const ComponentType& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const BreakdownType& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

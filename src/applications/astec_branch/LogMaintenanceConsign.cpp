@@ -30,14 +30,14 @@
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< ComponentType >& componentResolver )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< ComponentType >& componentResolver, const Resolver_ABC< BreakdownType >& breakdownResolver )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne )
     , pion_            ( resolver_.Get( message.oid_pion ) )
     , pPionLogHandling_( 0 )
     , equipmentType_   ( & componentResolver.Get( message.type_equipement ) )
-    , nBreakdownTypeID_( message.type_panne )
+    , breakdownType_   ( & breakdownResolver.Get( message.type_panne ) )
     , diagnosed_       ( false )
     , nState_          ( eLogMaintenanceTraitementEtat_Termine )
 {
@@ -90,7 +90,7 @@ void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
              .Display( "Pion demandeur :", pion_ )
              .Display( "Pion traitant :", pPionLogHandling_ )
              .Display( "Type d'équipement :", diagnosed_ ? equipmentType_ : 0 )
-             .Display( "Type de panne :", diagnosed_ ? nBreakdownTypeID_ : 0 )
+             .Display( "Type de panne :", diagnosed_ ? breakdownType_ : 0 )
              .Display( "Etat :", nState_ );
 }
 
@@ -110,10 +110,10 @@ void LogMaintenanceConsign::Draw( const geometry::Point2f& where, const GlTools_
         glLineStipple( 1, tools.StipplePattern() );
         break;
     case eLogMaintenanceTraitementEtat_RemorqueurDeplacementRetour:
-        glLineStipple( 1, ~tools.StipplePattern() );
+        glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:
-        glLineStipple( 1, 0x00FF );
+        glLineStipple( 1, tools.StipplePattern(0) );
     }
     tools.DrawCurvedArrow( pPionLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.5f );
 }

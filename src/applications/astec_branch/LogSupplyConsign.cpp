@@ -148,10 +148,10 @@ void LogSupplyConsign::Draw( const geometry::Point2f& where, const GlTools_ABC& 
         glLineStipple( 1, tools.StipplePattern() );
         break;
     case eLogRavitaillementTraitementEtat_ConvoiDeplacementRetour:
-        glLineStipple( 1, ~tools.StipplePattern() ); // $$$$ AGE 2006-04-04: inversion bit a bit
+        glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:
-        glLineStipple( 1, 0x00FF );
+        glLineStipple( 1, tools.StipplePattern(0) );
     }
     tools.DrawCurvedArrow( pAutomateLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.6f );
 }

@@ -44,7 +44,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
 {
-    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, model_.types_ );
+    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, model_.types_, model_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------

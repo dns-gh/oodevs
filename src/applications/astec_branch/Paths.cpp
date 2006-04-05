@@ -108,7 +108,7 @@ void Paths::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools )
         glColor4d( COLOR_PATH );
         glLineWidth( 3 );
         glEnable( GL_LINE_STIPPLE );
-        glLineStipple( 1, tools.StipplePattern()  );
+        glLineStipple( 1, tools.StipplePattern() );
         tools.DrawLines( plannedPath_ );
         glDisable( GL_LINE_STIPPLE );
     }

@@ -61,10 +61,16 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controll
 
     dispoReleveAmbulances_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     dispoReleveAmbulances_->AddColumn( "Ambulances relève" )
-                           .AddColumn( "Disponibles" );
+                           .AddColumn( "Total" )
+                           .AddColumn( "Disponible" )
+                           .AddColumn( "Au travail" )
+                           .AddColumn( "Au repos" );
     dispoDispoRamassageAmbulances_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     dispoDispoRamassageAmbulances_->AddColumn( "Ambulances ramassage" )
-                                   .AddColumn( "Disponibles" );
+                                   .AddColumn( "Total" )
+                                   .AddColumn( "Disponible" )
+                                   .AddColumn( "Au travail" )
+                                   .AddColumn( "Au repos" );
     dispoDispoDoctors_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     dispoDispoDoctors_->AddColumn( "Médecins" )
                        .AddColumn( "Total" )
