@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/UnitMissionInterface.h $
-// $Author: Ape $
-// $Modtime: 25/10/04 10:14 $
-// $Revision: 3 $
-// $Workfile: UnitMissionInterface.h $
-//
-// *****************************************************************************
 
 #ifndef __UnitMissionInterface_h_
 #define __UnitMissionInterface_h_

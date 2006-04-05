@@ -21,6 +21,7 @@
 
 #include "ASN_Types.h"
 #include "ParamComboBox.h"
+#include "ParamRadioBtnGroup.h"
 
 class ActionController;
 class Agent_ABC;
@@ -91,6 +92,14 @@ protected:
     ParamComboBox< T >& CreateVarList( T& value, const std::string& strName, bool bOptional )
     {
         ParamComboBox< T >* pParam = new ParamComboBox<T>( this, value, strName );
+        AddParameter( *pParam, bOptional );
+        return *pParam;
+    }
+
+    template < class T >
+    ParamRadioBtnGroup< T >& CreateRadioButtonGroup( T& value, const std::string& strName, bool bOptional )
+    {
+        ParamRadioBtnGroup< T >* pParam = new ParamRadioBtnGroup<T>( this, value, strName );
         AddParameter( *pParam, bOptional );
         return *pParam;
     }

@@ -6,27 +6,15 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-12 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/FragmentaryOrderInterface.h $
-// $Author: Ape $
-// $Modtime: 25/10/04 16:26 $
-// $Revision: 2 $
-// $Workfile: FragmentaryOrderInterface.h $
-//
-// *****************************************************************************
 
 #ifndef __FragmentaryOrderInterface_h_
 #define __FragmentaryOrderInterface_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MissionInterface_ABC.h"
 
+class Mission;
 class ASN_MsgOrderConduite;
-
+class Agent;
 
 // =============================================================================
 // Created: APE 2004-05-12
@@ -34,13 +22,12 @@ class ASN_MsgOrderConduite;
 class FragmentaryOrderInterface : public MissionInterface_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( FragmentaryOrderInterface );
 
 public:
     //! @name Constructors/Destructor
     //@{
-     FragmentaryOrderInterface( Agent_ABC& agent, uint nMissionId, MissionPanel& parentPanel );
-    ~FragmentaryOrderInterface();
+             FragmentaryOrderInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+    virtual ~FragmentaryOrderInterface();
     //@}
 
 private:
@@ -52,13 +39,25 @@ private:
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void OnOk();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    FragmentaryOrderInterface( const FragmentaryOrderInterface& );
+    FragmentaryOrderInterface& operator=( const FragmentaryOrderInterface& );
+    //@}
 
 private:
     //! @name Member data
     //@{
-    ASN_MsgOrderConduite*   pASNMsgOrder_;
-    uint                        nMissionId_;
+    Agent& agent_;
+    MissionPanel& parentPanel_;
+    uint nMissionId_;
+    ASN_MsgOrderConduite* pASNMsgOrder_;
     //@}
 };
 

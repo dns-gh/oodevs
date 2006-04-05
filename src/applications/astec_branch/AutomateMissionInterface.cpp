@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "AutomateMissionInterface.h"
 #include "moc_AutomateMissionInterface.cpp"
@@ -27,31 +23,21 @@
 #include "MissionPanel.h"
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
-#include "ParamPoint.h"
-#include "ParamAgent.h"
-#include "ParamAgentList.h"
-#include "ParamPath.h"
-#include "ParamLimits.h"
-#include "ParamLimaList.h"
-#include "ParamRadioBtnGroup.h"
-#include "ParamGDH.h"
-#include "ParamComboBox.h"
-#include "ParamBool.h"
-#include "ParamDirection.h"
 #include "Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel )
-    : MissionInterface_ABC( agent, parentPanel )
-    , nMissionId_             ( nMissionId )
-    , pParamLimits_           ( 0 )
+AutomateMissionInterface::AutomateMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
+    : MissionInterface_ABC( & parentPanel, agent, controller, layer, converter )
+    , agent_( agent )
+    , parentPanel_( parentPanel )
+    , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgAutomateOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent_);
-    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetID();
+    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetId();
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( nMissionId_ ) ).c_str(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
@@ -60,7 +46,7 @@ AutomateMissionInterface::AutomateMissionInterface( Agent& agent, uint nMissionI
     font.setBold( true );
     pLabel->setFont( font );
 
-    this->CreateInterface();
+    CreateInterface();
 }
 
 
@@ -70,41 +56,15 @@ AutomateMissionInterface::AutomateMissionInterface( Agent& agent, uint nMissionI
 // -----------------------------------------------------------------------------
 void AutomateMissionInterface::CreateDefaultParameters()
 {
-
     ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
+    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2", false );
+    CreateLimaList( order.oid_limas, "Ajouter aux limas", true );
+    ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>& buttonGroup
+        = CreateRadioButtonGroup( order.formation, "Formation", false );
+    buttonGroup.AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
+    buttonGroup.AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
 
-    // Limits
-    // saved so we can check validity later...
-    pParamLimits_ = new ParamLimits( order.oid_limite_gauche,
-                                        order.oid_limite_droite,
-                                        "Limites" ,
-                                        "Fixer limite 1",
-                                        "Fixer limite 2",
-                                        this,
-                                        false );
-    paramVector_.push_back( pParamLimits_ );
-
-    // Limas
-    paramVector_.push_back( new ParamLimaList( order.oid_limas,
-                                                   "Limas",
-                                                   "Ajouter aux limas",
-                                                   this,
-                                                   false ) );
-
-    // Formation
-    ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>* pParam 
-        = new ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>( order.formation,
-                                                                 "Formation",
-                                                                 2,
-                                                                 Qt::Horizontal,
-                                                                 this,
-                                                                 false );
-    pParam->AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
-    pParam->AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
-    paramVector_.push_back( pParam );
-
-    // Dangerous direction
-    paramVector_.push_back( new ParamDirection( order.direction_dangereuse, "Direction dangeureuse", this, false ) );
+    CreateDirection( order.direction_dangereuse, "Direction dangeureuse", true );
 }
 
 
@@ -114,39 +74,15 @@ void AutomateMissionInterface::CreateDefaultParameters()
 // -----------------------------------------------------------------------------
 void AutomateMissionInterface::OnOk()
 {
-    if( ! this->CheckValidity() || ! pParamLimits_->CheckValidityWhenRequired() )
+    if( ! CheckValidity() )
         return;
 
-    std::stringstream strMsg;
-    for( IT_ParamVector it = paramVector_.begin() ; it != paramVector_.end() ; ++it )
-    {
-        if( it != paramVector_.begin() )
-            strMsg << "\n";
-        (*it)->WriteMsg( strMsg );
-    }
-
-    std::stringstream strMsgTitle;
-    strMsgTitle << "Mission automate " << ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( nMissionId_ ) ) << " pour agent " << agent_.GetName();
-    MT_LOG_INFO( strMsgTitle.str().c_str(), eSent, strMsg.str().c_str() );
-
+    Commit();
     pASNMsgOrder_->Send( 45 );
 
+    // $$$$ AGE 2006-04-05: 
+//    agent_.Update( pASNMsgOrder_->GetAsnMsg() );
     parentPanel_.hide();
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_Test_MoveTo
-// Created: APE 2004-05-27
-// -----------------------------------------------------------------------------
-//void AutomateMissionInterface::CreateMission_Test_MoveTo()
-//{
-//    ASN1T_Mission_Automate_Test_MoveTo& asnMission = *new ASN1T_Mission_Automate_Test_MoveTo();
-//    pASNMsgOrder_->GetAsnMsg().mission.t                              = T_Mission_Automate_mission_automate_test_move_to;
-//    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_test_move_to = &asnMission;
-//
-//    //$$$$ ?
-//}
-
 
 #include "AutomateMissionInterface_Gen.cpp"

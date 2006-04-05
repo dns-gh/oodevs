@@ -29,7 +29,7 @@
 #include "GlTools_ABC.h"
 
 #include "UnitMissionInterface.h"
-//#include "AutomateMissionInterface.h"
+#include "AutomateMissionInterface.h"
 //#include "PopulationMissionInterface.h"
 
 // -----------------------------------------------------------------------------
@@ -135,9 +135,18 @@ void MissionPanel::ActivateAgentMission( int id )
 // Name: MissionPanel::ActivateAutomatMission
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::ActivateAutomatMission( int )
+void MissionPanel::ActivateAutomatMission( int id )
 {
+    hide();
+    delete pMissionInterface_;
+    // $$$$ AGE 2006-03-31: 
+    pMissionInterface_ = new AutomateMissionInterface( const_cast< Agent& >( *selected_ ), (uint)id , *this, controllers_.actions_, layer_, converter_ );
+    setWidget( pMissionInterface_ );
 
+    // For some magic reason, the following line resizes the widget
+    // to a nice size (but not the minimal one).
+    resize( 10, 10 );
+    show();
 }
 
 // -----------------------------------------------------------------------------

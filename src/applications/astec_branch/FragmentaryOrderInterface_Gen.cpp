@@ -27,6 +27,15 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_vs_ram;
              break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_remorqueurs;
+             break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_remorqueurs;
+             break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_remorqueurs;
+             break;
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_realiser_variantement;
              break;
@@ -142,11 +151,17 @@ void FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM :
              CreateOrder_Pion_ReprendreAuxOrdresVSRAM();
              break;
-        case eOrdreConduite_ModifierTempsBordeeMaintenance :
-             CreateOrder_ModifierTempsBordeeMaintenance();
+        case eOrdreConduite_Pion_RenforcerEnRemorqueurs :
+             CreateOrder_Pion_RenforcerEnRemorqueurs();
              break;
-        case eOrdreConduite_ModifierTempsBordeeSante :
-             CreateOrder_ModifierTempsBordeeSante();
+        case eOrdreConduite_Pion_TransfererRemorqueurs :
+             CreateOrder_Pion_TransfererRemorqueurs();
+             break;
+        case eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs :
+             CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs();
+             break;
+        case eOrdreConduite_ModifierRegimeTravailMaintenance :
+             CreateOrder_ModifierRegimeTravailMaintenance();
              break;
         case eOrdreConduite_ModifierPrioritesReparations :
              CreateOrder_ModifierPrioritesReparations();
@@ -492,36 +507,59 @@ void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresVSRAM()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance
+// Name: FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnRemorqueurs
 // Created: AGR
 // -----------------------------------------------------------------------------
-void FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance()
+void FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnRemorqueurs()
 {
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_maintenance;
-#define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance, "Order conduite modifier temps bordee maintenance", false );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 20 heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 24 heures", EnumTempsBordee::temps_24_heures );
-#undef asnMission
+    ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_remorqueurs = &asnMission;
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante
+// Name: FragmentaryOrderInterface::CreateOrder_Pion_TransfererRemorqueurs
 // Created: AGR
 // -----------------------------------------------------------------------------
-void FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante()
+void FragmentaryOrderInterface::CreateOrder_Pion_TransfererRemorqueurs()
 {
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_sante;
+    ASN1T_OrderConduite_Pion_TransfererRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_TransfererRemorqueurs();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_remorqueurs = &asnMission;
+    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs
+// Created: AGR
+// -----------------------------------------------------------------------------
+void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs()
+{
+    ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_remorqueurs = &asnMission;
+    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface::CreateOrder_ModifierRegimeTravailMaintenance
+// Created: AGR
+// -----------------------------------------------------------------------------
+void FragmentaryOrderInterface::CreateOrder_ModifierRegimeTravailMaintenance()
+{
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante, "Order conduite modifier temps bordee sante", false );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 20 heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 24 heures", EnumTempsBordee::temps_24_heures );
+    ParamComboBox< ASN1T_EnumLogMaintenanceRegimeTravail >* pSelector_order_conduite_modifier_regime_travail_maintenance = &CreateVarList( asnMission.order_conduite_modifier_regime_travail_maintenance, "Order conduite modifier regime travail maintenance", false );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 0", EnumLogMaintenanceRegimeTravail::regime_0 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 1", EnumLogMaintenanceRegimeTravail::regime_1 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 2", EnumLogMaintenanceRegimeTravail::regime_2 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 3", EnumLogMaintenanceRegimeTravail::regime_3 );
+    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 4", EnumLogMaintenanceRegimeTravail::regime_4 );
 #undef asnMission
 }
 

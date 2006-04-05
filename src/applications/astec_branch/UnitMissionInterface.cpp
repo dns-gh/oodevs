@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/UnitMissionInterface.cpp $
-// $Author: Nld $
-// $Modtime: 10/05/05 17:02 $
-// $Revision: 10 $
-// $Workfile: UnitMissionInterface.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "UnitMissionInterface.h"
@@ -31,9 +22,9 @@
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
     : MissionInterface_ABC( & parentPanel, agent, controller, layer, converter )
-    , agent_( agent )
-    , parentPanel_( parentPanel )
-    , nMissionId_( nMissionId )
+    , agent_              ( agent )
+    , parentPanel_        ( parentPanel )
+    , nMissionId_         ( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPionOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent);

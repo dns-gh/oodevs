@@ -19,15 +19,11 @@
 #ifndef __AutomateMissionInterface_h_
 #define __AutomateMissionInterface_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MissionInterface_ABC.h"
 
 class Mission;
 class ASN_MsgAutomateOrder;
-class ParamLimits;
+class Agent;
 
 // =============================================================================
 // Created: APE 2004-04-20
@@ -35,13 +31,12 @@ class ParamLimits;
 class AutomateMissionInterface : public MissionInterface_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( AutomateMissionInterface );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    AutomateMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel );
-    ~AutomateMissionInterface();
+             AutomateMissionInterface( Agent& agent, uint nMissionId, MissionPanel& parentPanel, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+    virtual ~AutomateMissionInterface();
     //@}
 
 private:
@@ -57,14 +52,25 @@ private:
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void OnOk();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    AutomateMissionInterface( const AutomateMissionInterface& );
+    AutomateMissionInterface& operator=( const AutomateMissionInterface& );
+    //@}
 
 private:
     //! @name Member data
     //@{
-    uint                      nMissionId_;
+    Agent&                agent_;
+    MissionPanel&         parentPanel_;
+    uint                  nMissionId_;
     ASN_MsgAutomateOrder* pASNMsgOrder_;
-    ParamLimits*          pParamLimits_;
     //@}
 };
 
