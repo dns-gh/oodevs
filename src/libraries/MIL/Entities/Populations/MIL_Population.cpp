@@ -574,11 +574,14 @@ MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Fl
 // -----------------------------------------------------------------------------
 const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
 {
-    if( !concentrations_.empty() )
-        return concentrations_.front()->GetAttitude();
-    if( !flows_.empty() )
-        return flows_.front()->GetAttitude();
-    return GetDefaultAttitude();
+    const MIL_PopulationAttitude* attitude = &GetDefaultAttitude();
+    for( CIT_ConcentrationVector itC = concentrations_.begin(); itC != concentrations_.end(); ++itC )
+        if( (*itC)->GetAttitude() > *attitude )
+            attitude = &(*itC)->GetAttitude();
+    for( CIT_FlowVector itF = flows_.begin(); itF != flows_.end(); ++itF )
+        if( (*itF)->GetAttitude() > *attitude )
+            attitude = &(*itF)->GetAttitude();
+    return *attitude;
 }
 
 // -----------------------------------------------------------------------------

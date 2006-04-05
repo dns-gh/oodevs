@@ -11,7 +11,7 @@
 
 #include "DEC_FunctionsTools.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-
+#include "Entities/Populations/MIL_PopulationAttitude.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::GetDominationState
@@ -33,7 +33,26 @@ void DEC_KnowledgePopulationFunctions::GetDominationState( DIA_Call_ABC& call, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgePopulationFunctions::IsRecon
+// Name: DEC_KnowledgePopulationFunctions::GetAttitude
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_KnowledgePopulationFunctions::GetAttitude( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0. );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( (int)pKnowledge->GetAttitude().GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsRecon
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
 template< typename T > 

@@ -317,6 +317,17 @@ MT_Float DEC_Knowledge_Population::GetDangerosity( const MIL_AgentPion& target )
     return pPopulationKnown_->GetDangerosity( target );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetAttitude
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+const MIL_PopulationAttitude& DEC_Knowledge_Population::GetAttitude() const
+{
+    assert( pPopulationKnown_ );
+    return pPopulationKnown_->GetAttitude();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::IsInZone
 // Created: NLD 2005-12-02

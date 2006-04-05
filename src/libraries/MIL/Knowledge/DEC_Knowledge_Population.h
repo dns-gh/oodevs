@@ -19,6 +19,7 @@
 class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
+class MIL_PopulationAttitude;
 class MIL_KnowledgeGroup;
 class MIL_AgentPion;
 class MIL_Army;
@@ -76,18 +77,19 @@ public:
 
     //! @name Accessors
     //@{
-          uint                GetID             () const;
-    const MIL_Army&           GetArmy           () const;
-    const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
-          MIL_Population&     GetPopulationKnown() const;
-          MT_Float            GetDangerosity    ( const MIL_AgentPion&    target        ) const;
-          bool                IsRecon           () const;
-          bool                IsInZone          ( const TER_Localisation& loc           ) const;
-          MT_Float            GetDominationState() const;
+          uint                    GetID             () const;
+    const MIL_Army&               GetArmy           () const;
+    const MIL_KnowledgeGroup&     GetKnowledgeGroup () const;
+          MIL_Population&         GetPopulationKnown() const;
+          MT_Float                GetDangerosity    ( const MIL_AgentPion&    target        ) const;
+          bool                    IsRecon           () const;
+          bool                    IsInZone          ( const TER_Localisation& loc           ) const;
+          MT_Float                GetDominationState() const;
+    const MIL_PopulationAttitude& GetAttitude       () const;
           
-          MT_Vector2D         GetClosestPoint   ( const MT_Vector2D&      refPos        ) const;
-          MT_Vector2D         GetSecuringPoint  ( const MIL_Agent_ABC&    securingAgent ) const;
-          MT_Vector2D         GetSafetyPosition ( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
+          MT_Vector2D             GetClosestPoint   ( const MT_Vector2D&      refPos        ) const;
+          MT_Vector2D             GetSecuringPoint  ( const MIL_Agent_ABC&    securingAgent ) const;
+          MT_Vector2D             GetSafetyPosition ( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
 
     //@}
 
