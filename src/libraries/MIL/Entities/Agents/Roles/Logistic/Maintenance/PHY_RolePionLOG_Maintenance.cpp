@@ -384,11 +384,11 @@ inline
 void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& consign )
 {
     IT_MaintenanceConsigns itTact = consigns_.begin();
-    for ( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
-        if ( itTact->first == pAutomate ) // $$$ A TESTER => || itTact->first == pAutomate->GetTC2()
+    for( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
+        if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
             
-    if ( itTact == consigns_.end() )
+    if( itTact == consigns_.end() )
     {
         assert( !consigns_.empty() );
         itTact = consigns_.end() - 1;
@@ -396,7 +396,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
     }
 
     IT_MaintenancePriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetComposanteType() );
-    if ( itPriorityLowerBound == priorities_.end() )
+    if( itPriorityLowerBound == priorities_.end() )
         itTact->second.push_back( &consign );
     else
     {
@@ -404,6 +404,21 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
         T_MaintenanceConsignList::reverse_iterator itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriorityLowerBound, sIsPriorityEqual() );
         itTact->second.insert( itConsign.base(), &consign );
     }
+
+    //$$$$ TEST
+    ////////////////////////////////
+    printf( "BEGIN ==================\n" );
+    for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
+        for ( CIT_MaintenanceConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+        {
+            const PHY_MaintenanceConsign_ABC& consign = **it2;
+            const MIL_Automate& automate = consign.GetComposanteState().GetAutomate();
+
+            printf( "Consign for automate %d / automate's TC2 %d (pion %d)\n", automate.GetID(), automate.GetTC2() ? automate.GetTC2()->GetID() : 0, consign.GetComposanteState().GetComposante().GetRole().GetPion().GetID() );
+        }
+    printf( "END ==================\n" );
+    ////////////////////////////////
+
 }
 
 // =============================================================================

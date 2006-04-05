@@ -497,10 +497,10 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 {
     IT_MedicalConsigns itTact = consigns_.begin();
     for ( const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate(); itTact != consigns_.end(); ++itTact )
-        if ( itTact->first == pAutomate )
+        if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
 
-    if ( itTact == consigns_.end() )
+    if( itTact == consigns_.end() )
     {
         assert( !consigns_.empty() );
         itTact = consigns_.end() - 1;
@@ -509,7 +509,7 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
     
     IT_MedicalPriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
 
-    if ( itPriorityLowerBound == priorities_.end() )
+    if( itPriorityLowerBound == priorities_.end() )
         itTact->second.push_back( &consign );
     else
     {
