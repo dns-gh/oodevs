@@ -59,6 +59,8 @@ void ADN_Models_Data::OrderInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.Section( "OrdreConduite" );
     input.ReadAttribute( "nom", strName_ );
     nOrderType_ = ENT_Tr::ConvertToFragOrder( strName_.GetData() );
+    if( nOrderType_ == (E_FragOrder)-1 )
+        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid frag order: " ).append( strName_.GetData().c_str() ).ascii() );
     input.EndSection(); // OrdreConduite
 }
 

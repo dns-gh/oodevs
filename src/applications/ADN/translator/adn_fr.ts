@@ -3576,6 +3576,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Models_Data::OrderInfos</name>
+    <message>
+        <source>Data error</source>
+        <translation>Erreur dans les données</translation>
+    </message>
+    <message>
+        <source>Invalid frag order: </source>
+        <translation>Ordre de conduite inconnu: </translation>
+    </message>
+</context>
+<context>
     <name>ADN_Models_GUI</name>
     <message>
         <source>Unit models</source>
