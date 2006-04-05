@@ -199,6 +199,11 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, MT_Float rPrecision 
 {
     if (IsNull())
         return false;
+
+    if( pData_->borderVector_.size() > 8
+   && ! pData_->boundingBox_.Intersect2D( line ) 
+   && ! pData_->boundingBox_.IsInside( line.GetPosStart() ) )
+        return false;
    
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
