@@ -3508,6 +3508,25 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Maintenance_GUI</name>
+    <message>
+        <source>Regimes de travail</source>
+        <translation>Régime de travail</translation>
+    </message>
+    <message>
+        <source>Regime</source>
+        <translation>Regime</translation>
+    </message>
+    <message>
+        <source>Work time</source>
+        <translation>Durée travail</translation>
+    </message>
+    <message>
+        <source>Warning Delay</source>
+        <translation>Délai avant avertissement</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Mission_ConfigurationDlg</name>
     <message>
         <source>Mission configuration</source>
