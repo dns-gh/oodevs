@@ -112,14 +112,14 @@ void Lima::UpdateToSim( E_State state )
 // Name: Lima::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Lima::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Lima::Draw( const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 5.0 );
-        TacticalLine_ABC::Draw( viewport, tools );
+        TacticalLine_ABC::Draw( tools );
         glLineWidth( 3.0 );
         glColor4d( 0.55, 0.3, 0.1, 1.0 );
-        TacticalLine_ABC::Draw( viewport, tools );
+        TacticalLine_ABC::Draw( tools );
         glColor3f( 0.f, 0.f, 0.f );
         DrawName( tools );
     glPopAttrib();

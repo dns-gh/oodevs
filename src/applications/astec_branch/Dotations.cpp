@@ -23,7 +23,7 @@ Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >
     , resolver_( resolver )
     , bEmptyGasTank_( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,9 +54,10 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
             dotation->quantity_ = value.quantite_disponible;
         else
             Register( value.ressource_id, *new Dotation( type, value.quantite_disponible ) );
-        // $$$$ AGE 2006-02-13: 
-//        if( App::GetApp().GetResource( equipId ).GetDotationName() == "carburant" )
-//            bEmptyGasTank_ = (qty == 0);
+        if( type.GetName() == "carburant" )
+            bEmptyGasTank_ = ( value.quantite_disponible == 0 );
     }
     controller_.Update( *this );
 }
+
+// $$$$ AGE 2006-04-06: Display out of gas

@@ -20,7 +20,7 @@ ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< 
     : controller_( controller )
     , resolver_( resolver )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< 
 // -----------------------------------------------------------------------------
 ObjectDetections::~ObjectDetections()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,3 +50,5 @@ void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
         perceivedObjects_.insert( object );
     controller_.Update( *this );
 }
+
+// $$$$ AGE 2006-04-06: Draw something

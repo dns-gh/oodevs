@@ -58,7 +58,7 @@ void LimitsLayer::Paint( const geometry::Rectangle2f& viewport )
         for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
         {
             strategy_.SelectColor( **it );
-            (*it)->Draw( viewport, tools_ );
+            (*it)->Draw( tools_ );
         }
     }
 }

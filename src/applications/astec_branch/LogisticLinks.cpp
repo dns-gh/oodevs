@@ -27,7 +27,7 @@ LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent 
     , medicalSuperior_( 0 )
     , supplySuperior_( 0 )
 {
-    
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent 
 // -----------------------------------------------------------------------------
 LogisticLinks::~LogisticLinks()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

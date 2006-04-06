@@ -63,6 +63,17 @@ void TerrainLayer::Initialize( const geometry::Rectangle2f& world )
         GraphicFactory factory( *this, dataFactory );
         factory.LoadGraphicDirectory( dataDirectory_ );
     }
+//    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
+//    {
+//        const std::string name = it->first.ToString();
+//        const T_ShapeContainer& container = *it->second;
+//        std::cout << name << " :\n"
+//            << "\tsize = " << container.Size() << ",\n"
+//            << "\tmax depth = " << container.MaxDepth() << ",\n"
+//            << "\taverage depth = " << container.AverageDepth() << ",\n"
+//            << "\tnode number = " << container.NodeNumber() << ",\n"
+//            << "\troot size = " << container.RootSize() << std::endl;
+//    }
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +97,7 @@ void TerrainLayer::AddShape( TesselatedShape& shape )
     if( ! container )
     {
         container = new T_ShapeContainer( world_ );
-        container->SetRefinementPolicy( 63 );
+        container->SetRefinementPolicy( 15 );
     }
     container->Insert( &shape );
 }
@@ -118,16 +129,26 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 namespace 
 {
     struct Drawer {
+        explicit Drawer( const geometry::Rectangle2f& viewport )
+            : viewport_( viewport )
+        {};
         bool operator()( const TesselatedShape* shape ) const  {
-            shape->Draw();
+            if( ! viewport_.Intersect( shape->BoundingBox() ).IsEmpty() )
+                shape->Draw();
             return true;
         }
+        geometry::Rectangle2f viewport_;
     };
     struct DrawBorderser {
+        explicit DrawBorderser( const geometry::Rectangle2f& viewport )
+            : viewport_( viewport )
+        {};
         bool operator()( const TesselatedShape* shape )  const {
-            shape->DrawBorders();
+            if( ! viewport_.Intersect( shape->BoundingBox() ).IsEmpty() )
+                shape->DrawBorders();
             return true;
         }
+        geometry::Rectangle2f viewport_;
     };
 }
 
@@ -148,13 +169,14 @@ void TerrainLayer::Apply( const T_ShapeContainer& container, const geometry::Rec
 // -----------------------------------------------------------------------------
 void TerrainLayer::DrawInnerShapes( const geometry::Rectangle2f& viewport ) const
 {
+    const Drawer drawer( viewport );
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
     {
         const TerrainData& data = it->first;
         if( ShouldDisplayArea( data, viewport ) )
         {
             SetupAreaGraphics( data );
-            Apply( *it->second, viewport, Drawer() );
+            Apply( *it->second, viewport, drawer );
         }
     }
 }
@@ -165,6 +187,7 @@ void TerrainLayer::DrawInnerShapes( const geometry::Rectangle2f& viewport ) cons
 // -----------------------------------------------------------------------------
 void TerrainLayer::DrawShapesBorders( const geometry::Rectangle2f& viewport ) const
 {
+    const DrawBorderser drawer( viewport );
     glClear( GL_STENCIL_BUFFER_BIT );
     glEnable( GL_STENCIL_TEST );
 
@@ -174,7 +197,7 @@ void TerrainLayer::DrawShapesBorders( const geometry::Rectangle2f& viewport ) co
     {
         const TerrainData& data = it->first;
         if( ShouldDisplayBorder( data, viewport ) )
-            Apply( *it->second, viewport, DrawBorderser() );
+            Apply( *it->second, viewport, drawer );
     }
        
     glStencilFunc( GL_GEQUAL, 1, 0xFFFFFFFF );
@@ -184,7 +207,7 @@ void TerrainLayer::DrawShapesBorders( const geometry::Rectangle2f& viewport ) co
         if( ShouldDisplayBorder( data, viewport ) )
         {
             SetupBorderGraphics( data );
-            Apply( *it->second, viewport, DrawBorderser() );
+            Apply( *it->second, viewport, drawer );
         }
     }
     glDisable( GL_STENCIL_TEST );
@@ -196,13 +219,14 @@ void TerrainLayer::DrawShapesBorders( const geometry::Rectangle2f& viewport ) co
 // -----------------------------------------------------------------------------
 void TerrainLayer::DrawLinearShapes( const geometry::Rectangle2f& viewport ) const
 {
+    const DrawBorderser drawer( viewport );
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
     {
         const TerrainData& data = it->first;
         if( ShouldDisplayLinear( data, viewport ) )
         {
             SetupLineGraphics( data );
-            Apply( *it->second, viewport, DrawBorderser() );
+            Apply( *it->second, viewport, drawer );
         }
     }
 }
@@ -210,12 +234,17 @@ void TerrainLayer::DrawLinearShapes( const geometry::Rectangle2f& viewport ) con
 namespace
 {
     struct Printer {
-        Printer( const GlTools_ABC& tools ) : tools_( &tools ) {};
+        Printer( const GlTools_ABC& tools, const geometry::Rectangle2f& viewport )
+            : tools_( &tools ) 
+            , viewport_( viewport )
+        {};
         bool operator()( const TesselatedShape* shape ) const {
-            tools_->Print( shape->GetName(), shape->BoundingBox().Center() );
+            if( ! viewport_.Intersect( shape->BoundingBox() ).IsEmpty() )
+                tools_->Print( shape->GetName(), shape->BoundingBox().Center() );
             return true;
         }
         const GlTools_ABC* tools_;
+        geometry::Rectangle2f viewport_;
     };
 }
 
@@ -225,17 +254,19 @@ namespace
 // -----------------------------------------------------------------------------
 void TerrainLayer::DrawNames( const geometry::Rectangle2f& viewport ) const
 {
+    
     if( ! bigNames_  .IsSet( viewport.Width() < 30000.f )
      && ! smallNames_.IsSet( viewport.Width() < 10000.f ) )
         return;
 
+    const Printer printer( tools_, viewport );
     glColor3f( 0, 0, 0 );
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
     {
         const TerrainData& data = it->first;
         if( (  data.Linear() && smallNames_.IsSet( viewport.Width() < 10000.f ) )
           ||( !data.Linear() && bigNames_  .IsSet( viewport.Width() < 30000.f ) ) )
-            Apply( *it->second, viewport, Printer( tools_ ) );
+            Apply( *it->second, viewport, printer );
     }
 }
 

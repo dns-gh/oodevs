@@ -67,3 +67,5 @@ void Reinforcements::Display( Displayer_ABC& displayer ) const
         .Display( "Renforce:", reinforced_ )
         .Display( "Est renforcé par:", reinforcements_ );
 }
+
+// $$$$ AGE 2006-04-06: Draw something

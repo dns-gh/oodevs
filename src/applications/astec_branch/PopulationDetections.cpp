@@ -93,3 +93,5 @@ void PopulationDetections::DoUpdate( const PopulationCollisionMessage& message )
 {
     // $$$$ AGE 2006-03-17: 
 }
+
+// $$$$ AGE 2006-04-06: draw something

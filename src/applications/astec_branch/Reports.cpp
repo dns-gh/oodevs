@@ -13,6 +13,7 @@
 #include "Trace.h"
 #include "Controller.h"
 #include "WaitingForFragOrder.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Reports constructor
@@ -67,4 +68,14 @@ void Reports::DoUpdate( const TraceMessage& msg )
     Report_ABC& trace = *new Trace( agent_, simulation_, msg );
     reports_.push_back( &trace );
     controller_.Create( trace );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reports::Draw
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+void Reports::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( tools.ShouldDisplay( "DrawRCs" ) )
+        ;// $$$$ AGE 2006-04-06: ...
 }

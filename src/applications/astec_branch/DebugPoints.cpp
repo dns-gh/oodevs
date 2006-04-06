@@ -55,6 +55,7 @@ void DebugPoints::DoUpdate( const DebugPointsMessage& message )
 // -----------------------------------------------------------------------------
 void DebugPoints::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) const
 {
-    for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-        tools.DrawCross( *it, GL_CROSSSIZE );
+    if( tools.ShouldDisplay( "DebugPoints" ) )
+        for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+            tools.DrawCross( *it, GL_CROSSSIZE );
 }

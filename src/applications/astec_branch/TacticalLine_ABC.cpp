@@ -184,7 +184,7 @@ void TacticalLine_ABC::UpdateToSim()
 // Name: TacticalLine_ABC::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Draw( const geometry::Rectangle2f&, const GlTools_ABC& tools ) const
+void TacticalLine_ABC::Draw( const GlTools_ABC& tools ) const
 {
     tools.DrawLines( pointList_ );
 }

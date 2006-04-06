@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const GlTools_ABC& tools ) const;
     virtual void Select( ActionController& actions ) const;
     virtual void ContextMenu( ActionController& actions, const QPoint& point ) const;
     //@}

@@ -24,7 +24,7 @@
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
-    : controllers_( controllers )
+    : controllers_       ( controllers )
     , tools_             ( tools )
     , selectedObject_    ( 0 )
     , selectedAgent_     ( 0 )
@@ -127,7 +127,7 @@ void ColorStrategy::SelectColor( const Agent& agent )
     else if( ( selectedAgent_    && selectedAgent_    == agent.GetSuperior() )
           || ( selectedSuperior_ && selectedSuperior_ == agent.GetSuperior() ) )
     {
-        tools_.Select( true );
+        tools_.Select( false );
         color = SuperiorSelectedColor( color );
     }
     else

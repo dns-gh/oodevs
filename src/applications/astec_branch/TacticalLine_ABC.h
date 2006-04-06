@@ -54,7 +54,7 @@ public:
     void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
     void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
 
-    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const GlTools_ABC& tools ) const;
 
     void UpdateToSim();
 

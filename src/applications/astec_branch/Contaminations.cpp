@@ -66,3 +66,5 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
                 .Display( "Agents contaminants:", contaminatingNbcAgents_ )
                 .Display( "Contamination:", nContamination_ );
 }
+
+// $$$$ AGE 2006-04-06: Draw Icon

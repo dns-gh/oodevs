@@ -104,24 +104,24 @@ void Limit::UpdateToSim( E_State state )
 // Name: Limit::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Limit::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Limit::Draw( const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         if( nLevel_ == eNatureLevel_ooo )
         {
             glLineWidth( 4.f );
-            TacticalLine_ABC::Draw( viewport, tools );
+            TacticalLine_ABC::Draw( tools );
             glColor3f( 0.5f, 0.5f, 0.5f );
             glLineWidth( 2.f );
         }
         else
         {
             glLineWidth( 5.f );
-            TacticalLine_ABC::Draw( viewport, tools );
+            TacticalLine_ABC::Draw( tools );
             glColor3f( 0.1f, 0.1f, 0.1f );
             glLineWidth( 3.f );
         }
-        TacticalLine_ABC::Draw( viewport, tools );
+        TacticalLine_ABC::Draw( tools );
         glColor3f( 0.f, 0.f, 0.f );
         DrawName( tools );
     glPopAttrib();

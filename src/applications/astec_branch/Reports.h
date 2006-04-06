@@ -14,6 +14,7 @@
 #include "DIN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 class Report_ABC;
 class Controller;
@@ -30,6 +31,7 @@ class Reports : public Extension_ABC
               , public Updatable_ABC< ASN1T_MsgCR >
               , public Updatable_ABC< ASN1T_MsgAttenteOrdreConduite >
               , public Updatable_ABC< TraceMessage >
+              , public Drawable_ABC
 {
 
 public:
@@ -41,6 +43,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

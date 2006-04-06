@@ -9,6 +9,8 @@
 
 #include "astec_pch.h"
 #include "Limits.h"
+#include "GlTools_ABC.h"
+#include "TacticalLine_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Limits constructor
@@ -52,4 +54,20 @@ void Limits::DoUpdate( const ASN1T_MsgPionOrder& message )
 void Limits::DoUpdate( const ASN1T_MsgPionOrderAck& message )
 {
     acknowledged_ = message.error_code == EnumObjectErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limits::Draw
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+void Limits::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! tools.ShouldDisplay( "TacticalLines", false ) 
+       && tools.ShouldDisplay( "TacticalLines" ) )
+    {
+       if( right_ )
+           right_->Draw( tools );
+       if( left_ )
+           left_->Draw( tools );
+    }
 }

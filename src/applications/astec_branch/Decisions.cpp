@@ -115,3 +115,5 @@ const Mission* Decisions::GetCurrentMission() const
 {
     return current_;
 }
+
+// $$$$ AGE 2006-04-06: Display embraye
