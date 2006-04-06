@@ -10,7 +10,6 @@ IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire
 
 EnumLogMaintenanceRegimeTravail ::= ENUMERATED
 {
-    regime-0,
     regime-1,
     regime-2,
     regime-3,

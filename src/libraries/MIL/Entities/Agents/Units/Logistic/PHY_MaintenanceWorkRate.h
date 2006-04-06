@@ -27,7 +27,6 @@ class PHY_MaintenanceWorkRate
 public:
     //! @name Types
     //@{
-    static PHY_MaintenanceWorkRate r0_;
     static PHY_MaintenanceWorkRate r1_;
     static PHY_MaintenanceWorkRate r2_;
     static PHY_MaintenanceWorkRate r3_;

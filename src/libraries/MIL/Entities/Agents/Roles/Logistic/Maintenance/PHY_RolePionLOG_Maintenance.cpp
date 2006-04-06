@@ -42,7 +42,7 @@ PHY_RolePionLOG_Maintenance::PHY_RolePionLOG_Maintenance( MT_RoleContainer& role
     , priorities_             ()
     , tacticalPriorities_     ()
     , consigns_               ()
-    , pWorkRate_              ( &PHY_MaintenanceWorkRate::r0_ )
+    , pWorkRate_              ( &PHY_MaintenanceWorkRate::r1_ )
     , nWorkRateWarningRCTick_ ( 0 )
 {
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );

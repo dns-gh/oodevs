@@ -136,7 +136,7 @@ void MIL_RC::Initialize()
     pRcPretMaterielPartiellementEffectue_               =                                            rcs_[ eRC_PretMaterielPartiellementEffectue                ];
     pRcPretMaterielImpossible_                          =                                            rcs_[ eRC_PretMaterielImpossible                           ];
     pRcRecuperationMaterielPreteEffectuee_              =                                            rcs_[ eRC_RecuperationMaterielPreteEffectuee               ];
-    pRcRecuperationMaterielPretePartiellementEffectuee_ =                                            rcs_[ eRC_RecuperationMaterielPretePartiellementEffectuee_ ];
+    pRcRecuperationMaterielPretePartiellementEffectuee_ =                                            rcs_[ eRC_RecuperationMaterielPretePartiellementEffectuee  ];
     pRcRecuperationMaterielPreteImpossible_             =                                            rcs_[ eRC_RecuperationMaterielPreteImpossible              ];
     pRcMaterielPrete_                                   =                                            rcs_[ eRC_MaterielPrete                                    ];
     pRcMaterielRendu_                                   =                                            rcs_[ eRC_MaterielRendu                                    ];

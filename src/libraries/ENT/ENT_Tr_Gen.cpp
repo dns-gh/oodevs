@@ -659,7 +659,6 @@ ENT_Tr::T_ConverterCtrlErrorCodeLauncher ENT_Tr::CtrlErrorCodeLauncherConverter_
 
 ENT_Tr::T_ConverterLogMaintenanceRegimeTravail ENT_Tr::LogMaintenanceRegimeTravailConverter_[] =
 {
-    T_ConverterLogMaintenanceRegimeTravail( "regime 0", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 0" ), eLogMaintenanceRegimeTravail_Regime0 ),
     T_ConverterLogMaintenanceRegimeTravail( "regime 1", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 1" ), eLogMaintenanceRegimeTravail_Regime1 ),
     T_ConverterLogMaintenanceRegimeTravail( "regime 2", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 2" ), eLogMaintenanceRegimeTravail_Regime2 ),
     T_ConverterLogMaintenanceRegimeTravail( "regime 3", QT_TRANSLATE_NOOP( "ENT_Tr", "regime 3" ), eLogMaintenanceRegimeTravail_Regime3 ),

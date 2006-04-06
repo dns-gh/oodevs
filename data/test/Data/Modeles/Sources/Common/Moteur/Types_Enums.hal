@@ -286,7 +286,6 @@ typedef enum E_FacteurHumain_Experience
 
 typedef enum E_MaintenanceRegimeTravail
 {
-    eMaintenance_R0,
     eMaintenance_R1,
     eMaintenance_R2,
     eMaintenance_R3,

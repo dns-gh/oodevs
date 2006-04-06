@@ -3757,10 +3757,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>regime 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>regime 1</source>
         <translation type="unfinished"></translation>
     </message>

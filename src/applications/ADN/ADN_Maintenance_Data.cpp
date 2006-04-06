@@ -92,8 +92,8 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( MT_OutputArchive_ABC
 ADN_Maintenance_Data::ADN_Maintenance_Data()
 : ADN_Data_ABC()
 {
-    for( int n = 0; n < 5; ++n )
-        vWorkingSchemes_.AddItem( new WorkingSchemeInfo( n ) );
+    for( int n = 0; n < 4; ++n )
+        vWorkingSchemes_.AddItem( new WorkingSchemeInfo( n+1 ) );
 }
 
 

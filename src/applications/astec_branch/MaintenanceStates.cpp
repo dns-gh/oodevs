@@ -82,7 +82,7 @@ void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Etat chaine maintenance" )
                 .Display( "Etat chaine", bChainEnabled_ ? "Activée" : "Désactivée" )
-                .Display( "Régime de travail", QString( "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
+                .Display( "Régime de travail", QString( "R%1" ).arg( nWorkRate_ + 1 ) ) // $$$$ AGE 2006-04-03: 
                 .Display( "Priorités", priorities_ )
                 .Display( "Priorités tactiques", tacticalPriorities_ );
 }

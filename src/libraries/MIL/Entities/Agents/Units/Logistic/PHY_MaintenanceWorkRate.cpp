@@ -17,7 +17,6 @@
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r0_( "Regime0", EnumLogMaintenanceRegimeTravail::regime_0 );
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", EnumLogMaintenanceRegimeTravail::regime_1 );
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", EnumLogMaintenanceRegimeTravail::regime_2 );
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", EnumLogMaintenanceRegimeTravail::regime_3 );
@@ -29,7 +28,6 @@ PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", EnumLogMaintena
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceWorkRate::Initialize( MIL_InputArchive& archive )
 {
-    workRates_[ r0_.GetName() ] = &r0_;
     workRates_[ r1_.GetName() ] = &r1_;
     workRates_[ r2_.GetName() ] = &r2_;
     workRates_[ r3_.GetName() ] = &r3_;

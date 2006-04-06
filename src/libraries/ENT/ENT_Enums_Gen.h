@@ -704,7 +704,6 @@ enum E_CtrlErrorCodeLauncher
 
 enum E_LogMaintenanceRegimeTravail
 {
-    eLogMaintenanceRegimeTravail_Regime0,
     eLogMaintenanceRegimeTravail_Regime1,
     eLogMaintenanceRegimeTravail_Regime2,
     eLogMaintenanceRegimeTravail_Regime3,

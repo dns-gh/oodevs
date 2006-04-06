@@ -131,7 +131,7 @@ void AgentMaintenancePanel::OnAgentUpdated( Agent& agent )
 
     Agent::T_MaintenanceData& data = *agent.pMaintenanceData_;
     pStateChainEnabled_->setText( 1, data.bChainEnabled_ ? tr( "Activée" ) : tr( "Désactivée" ) );
-    pStateWorkRate_    ->setText( 1, ( QString( "R%1" ) ).arg( data.nWorkRate_ ) );
+    pStateWorkRate_    ->setText( 1, ( QString( "R%1" ) ).arg( data.nWorkRate_ + 1 ) );
     DisplayPriorities( data.priorities_, *pStatePriorites_, EquipmentResolver() );    
     DisplayPriorities( data.tacticalPriorities_, *pStateTacticalPriorites_, AutomateResolver() );
 
