@@ -72,7 +72,7 @@ bool ParamPoint::CheckValidity()
 void ParamPoint::Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const
 {
     if( pPosLabel_->text() != "---" )
-        tools.DrawCross( popupPoint_ );
+        tools.DrawCross( popupPoint_, GL_CROSSSIZE );
 }
 
 // -----------------------------------------------------------------------------

@@ -45,7 +45,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< Sector >       T_SectorVector;
+    typedef std::vector< Sector >            T_SectorVector;
     typedef T_SectorVector::const_iterator CIT_SectorVector;
     //@}
 

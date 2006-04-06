@@ -13,6 +13,7 @@
 #include "Perception_Def.h"
 
 class GlTools_ABC;
+class DetectionMap;
 
 // =============================================================================
 /** @class  VisionMap
@@ -26,13 +27,17 @@ class VisionMap
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionMap();
+    explicit VisionMap( const DetectionMap& map );
     virtual ~VisionMap();
     //@}
 
     //! @name Operations
     //@{
     void Draw( const GlTools_ABC& tools ) const;
+
+    void Clear();
+    bool ShouldUpdate( const std::pair< unsigned, unsigned >& cell );
+    void Update( const std::pair< unsigned, unsigned >& cell, E_PerceptionResult perception );
     //@}
 
 private:
@@ -51,11 +56,14 @@ private:
         };
     };
     typedef std::map< T_Cell, E_PerceptionResult, CellLess > T_VisionMap;
+    typedef T_VisionMap::const_iterator                     CIT_VisionMap;
     //@}
 
 private:
     //! @name Member data
     //@{
+    const DetectionMap& map_;
+    T_VisionMap vision_;
     //@}
 };
 

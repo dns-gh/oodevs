@@ -24,7 +24,7 @@ public:
              Sector();
     virtual ~Sector();
 
-    //! @name Operators
+    //! @name Operations
     //@{
     bool IsInCone  ( const geometry::Point2f& vPos, float rRadius ) const;
     bool IsInSector( const geometry::Point2f& vPos ) const;

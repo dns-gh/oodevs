@@ -92,7 +92,7 @@ void ObjectPositions::Draw( const geometry::Point2f&, const GlTools_ABC& tools )
     if( points_.size() >= 2 )
         tools.DrawLines( points_ );
     else if( ! points_.empty() )
-        tools.DrawCross( points_.front() );
+        tools.DrawCross( points_.front(), GL_CROSSSIZE );
     glPopAttrib();
 }
 

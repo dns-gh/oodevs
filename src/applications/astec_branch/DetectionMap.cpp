@@ -83,3 +83,12 @@ DetectionMap::Environment DetectionMap::EnvironmentAt( const geometry::Point2f& 
     const std::pair< unsigned, unsigned > p = Unmap( point );
     return *EnvironmentData( p.first, p.second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DetectionMap::GetCellSize
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+float DetectionMap::GetCellSize() const
+{
+    return cellsize_;
+}

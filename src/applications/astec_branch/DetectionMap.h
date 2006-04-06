@@ -27,9 +27,10 @@ public:
     //@{
     struct Environment
     {
-        bool          InInTown() const    { return data_ & town_; };
-        bool          InInForest() const  { return data_ & forest_; };
+        bool          IsInTown() const    { return data_ & town_; };
+        bool          IsInForest() const  { return data_ & forest_; };
         unsigned char MeteoEffect() const { return data_ & meteoMask_; };
+        short         ElevationDelta() const { return IsInTown() ? 20 : ( IsInForest() ? 10 : 0 ); };
 
         static const unsigned char town_      = 0x80;
         static const unsigned char forest_    = 0x40;
@@ -49,6 +50,7 @@ public:
     //@{
     const Environment* EnvironmentData( unsigned x, unsigned y ) const;
     Environment        EnvironmentAt( const geometry::Point2f& point ) const;
+    float              GetCellSize() const;
     //@}
 
 private:

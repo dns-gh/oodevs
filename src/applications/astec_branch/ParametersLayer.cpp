@@ -56,7 +56,7 @@ void ParametersLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
         glLineWidth( 3.f );
         if( type_ == points )
             for( T_PointVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
-                tools_.DrawCross( *it );
+                tools_.DrawCross( *it, GL_CROSSSIZE );
         else if( type_ == lines )
             tools_.DrawLines( points_ );
         else if( type_ == polygon && ! points_.empty() )

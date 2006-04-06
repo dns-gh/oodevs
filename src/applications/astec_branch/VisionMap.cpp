@@ -9,12 +9,15 @@
 
 #include "astec_pch.h"
 #include "VisionMap.h"
+#include "GlTools_ABC.h"
+#include "DetectionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionMap constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-VisionMap::VisionMap()
+VisionMap::VisionMap( const DetectionMap& map )
+    : map_( map )
 {
     // NOTHING
 }
@@ -34,5 +37,54 @@ VisionMap::~VisionMap()
 // -----------------------------------------------------------------------------
 void VisionMap::Draw( const GlTools_ABC& tools ) const
 {
+    static const double colors[3][4] =
+    {
+        { COLOR_DETECTED   },
+        { COLOR_RECO       },
+        { COLOR_IDENTIFIED }
+    };
+    const float translation = map_.GetCellSize() * 0.5;
+    glPushMatrix();
+    glTranslatef( translation, translation, 0 );
+    glPushAttrib( GL_CURRENT_BIT );
+    glPointSize( map_.GetCellSize() / tools.Pixels() );
+        glBegin( GL_POINTS );
+            for( CIT_VisionMap it = vision_.begin(); it != vision_.end(); ++it )
+            {
+                const geometry::Point2f p = map_.Map( it->first.first, it->first.second );
+                glColor4dv( colors[it->second] );
+                glVertex2fv( (float*)(&p) );
+            }
+        glEnd();
+    glPopAttrib();
+    glPopMatrix();
+}
 
+// -----------------------------------------------------------------------------
+// Name: VisionMap::Clear
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+void VisionMap::Clear()
+{
+    vision_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionMap::ShouldUpdate
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+bool VisionMap::ShouldUpdate( const std::pair< unsigned, unsigned >& cell )
+{
+    CIT_VisionMap it = vision_.find( cell );
+    return it == vision_.end() || it->second < eIdentification;
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionMap::Update
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+void VisionMap::Update( const std::pair< unsigned, unsigned >& cell, E_PerceptionResult perception )
+{
+    if( perception )
+        vision_[ cell ] = perception;
 }
