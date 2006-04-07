@@ -32,7 +32,8 @@ Mission-Pion-Test-MoveTo ::= SEQUENCE
         assault,
         retreat,
         backup,
-        mine-clearance
+        mine-clearance,
+        logistic
     },
     debarque           BOOLEAN,
 

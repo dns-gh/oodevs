@@ -35,17 +35,17 @@
         <Reparation tempsMoyen="360s" variance="120s"/>
         <Pieces/>
       </Panne>
-       <Panne nom="Panne 6" type="M">
-        <MosID>6</MosID>
+      <Panne nom="Panne 6" type="M">
+        <MosID>5</MosID>
         <Reparation tempsMoyen="360s" variance="0s"/>
         <Pieces>
-            <Piece categorie="Truc pour reparer la mobilite 1">2</Piece>
+          <Piece categorie="Truc pour reparer la mobilite 1">2</Piece>
         </Pieces>
       </Panne>
     </NTI2>
     <NTI3>
       <Panne nom="Panne 5" type="M">
-        <MosID>5</MosID>
+        <MosID>6</MosID>
         <Reparation tempsMoyen="480s" variance="120s"/>
         <Pieces>
           <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>

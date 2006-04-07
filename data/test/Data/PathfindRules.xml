@@ -116,6 +116,12 @@
             <AvoidObjects>false</AvoidObjects>
         </Rule>
         
+        <Rule type="logistic" flying="false" autonomous="false" inherits="movement">
+            <AutomataFuseau>
+                <ToleratedDistanceOutside costPerMeter="0">1000000</ToleratedDistanceOutside>
+            </AutomataFuseau>        
+        </Rule>                
+        
         <!-- ================== -->
         <!-- Flying stuff rules -->
         <!-- ================== -->
@@ -206,6 +212,10 @@
             <AvoidObjects>false</AvoidObjects>
         </Rule>
         
+        <Rule type="logistic" flying="true" autonomous="false" inherits="movement">
+        </Rule>              
+        
+        
         <!-- =========== -->
         <!-- Drone rules -->
         <!-- =========== -->
@@ -280,6 +290,9 @@
             
         <Rule type="minesweep" flying="false" autonomous="true" inherits="base"/>
         <Rule type="minesweep" flying="true" autonomous="true" inherits="base"/>
+        
+        <Rule type="logistic" flying="false" autonomous="true" inherits="base"/>
+        <Rule type="logistic" flying="true" autonomous="true" inherits="base"/>        
     </AgentRules>
     
     <PopulationRules>

@@ -20,6 +20,9 @@ const DEC_PathType DEC_PathType::assault_      ( eAssault      , "assault"      
 const DEC_PathType DEC_PathType::retreat_      ( eRetreat      , "retreat"      );
 const DEC_PathType DEC_PathType::backup_       ( eBackup       , "backup"       );
 const DEC_PathType DEC_PathType::mineClearance_( eMineClearance, "minesweep"    );
+const DEC_PathType DEC_PathType::logistic_     ( eLogistic     , "logistic"     );
+
+
 
 DEC_PathType::T_PathTypeFromIDVector DEC_PathType::pathTypesFromID_;
 DEC_PathType::T_PathTypeMap          DEC_PathType::pathTypes_;
@@ -41,6 +44,7 @@ void DEC_PathType::Initialize()
     pathTypes_[ retreat_      .GetName() ] = &retreat_;
     pathTypes_[ backup_       .GetName() ] = &backup_;
     pathTypes_[ mineClearance_.GetName() ] = &mineClearance_;
+    pathTypes_[ logistic_     .GetName() ] = &logistic_;    
 
     pathTypesFromID_.assign( pathTypes_.size(), 0 );
     for( CIT_PathTypeMap it = pathTypes_.begin(); it != pathTypes_.end(); ++it )

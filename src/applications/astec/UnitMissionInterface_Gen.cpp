@@ -2799,6 +2799,7 @@ void UnitMissionInterface::CreateMission_Test_MoveTo()
     pSelector_type_itineraire->AddItem( "Retreat", Mission_Pion_Test_MoveTo_type_itineraire::retreat );
     pSelector_type_itineraire->AddItem( "Backup", Mission_Pion_Test_MoveTo_type_itineraire::backup );
     pSelector_type_itineraire->AddItem( "Mine clearance", Mission_Pion_Test_MoveTo_type_itineraire::mine_clearance );
+    pSelector_type_itineraire->AddItem( "Logistic", Mission_Pion_Test_MoveTo_type_itineraire::logistic );
     CreateBool( asnMission.debarque, "Debarque", false );
     ParamComboBox< ASN1T_Mission_Pion_Test_MoveTo_verrouillage_vision >* pSelector_verrouillage_vision = &CreateVarList( asnMission.verrouillage_vision, "Verrouillage vision", false );
     pSelector_verrouillage_vision->AddItem( "Rien", Mission_Pion_Test_MoveTo_verrouillage_vision::rien );

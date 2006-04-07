@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Dotations>
+
   <Dotation nom="munition">
     <Categories>
       <Categorie nom="Balle Classique 12,7">
         <TrancheD/>
         <MosID>1</MosID>
         <Type>Mitraille</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>0.2</Masse>
@@ -16,6 +16,7 @@
         <CodeEMAT8>Balle Classique 12,7</CodeEMAT8>
         <CodeLFRIL>Balle Classique 12,7</CodeLFRIL>
         <CodeNNO>Balle Classique 12,7</CodeNNO>
+        <Nature>Solide</Nature>
         <Attritions>
           <ProtectionTypeCharLourd>
             <Destruction>0.3</Destruction>
@@ -57,7 +58,6 @@
       <Categorie nom="Obus 120 mm">
         <MosID>2</MosID>
         <Type>Obus</Type>
-        <Nature>Liquide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>0.6</Masse>
@@ -67,6 +67,7 @@
         <CodeEMAT8>Obus 120 mm</CodeEMAT8>
         <CodeLFRIL>Obus 120 mm</CodeLFRIL>
         <CodeNNO>Obus 120 mm</CodeNNO>
+        <Nature>Liquide</Nature>
         <Attritions>
           <ProtectionTypeCharLourd>
             <Destruction>0.3</Destruction>
@@ -125,7 +126,6 @@
       <Categorie nom="Fusse a jupette 53mm">
         <MosID>3</MosID>
         <Type>MissileSol</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -135,6 +135,7 @@
         <CodeEMAT8>Fusse a jupette 53mm</CodeEMAT8>
         <CodeLFRIL>Fusse a jupette 53mm</CodeLFRIL>
         <CodeNNO>Fusse a jupette 53mm</CodeNNO>
+        <Nature>Solide</Nature>
         <Attritions>
           <ProtectionTypeCharLourd>
             <Destruction>0.3</Destruction>
@@ -193,7 +194,6 @@
       <Categorie nom="Fusse a ailettes 50mm">
         <MosID>4</MosID>
         <Type>MissileAir</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -203,6 +203,7 @@
         <CodeEMAT8>Fusse a ailettes 50mm</CodeEMAT8>
         <CodeLFRIL>Fusse a ailettes 50mm</CodeLFRIL>
         <CodeNNO>Fusse a ailettes 50mm</CodeNNO>
+        <Nature>Solide</Nature>
         <Attritions>
           <ProtectionTypeCharLourd>
             <Destruction>0.3</Destruction>
@@ -261,7 +262,6 @@
       <Categorie nom="Missile Hot">
         <MosID>5</MosID>
         <Type>MissileSol</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -271,6 +271,7 @@
         <CodeEMAT8>Missile Hot</CodeEMAT8>
         <CodeLFRIL>Missile Hot</CodeLFRIL>
         <CodeNNO>Missile Hot</CodeNNO>
+        <Nature>Solide</Nature>
         <Attritions>
           <ProtectionTypeCharLourd>
             <Destruction>0.3</Destruction>
@@ -329,7 +330,6 @@
       <Categorie nom="Obus eclairant">
         <MosID>6</MosID>
         <Type>Obus</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -339,6 +339,7 @@
         <CodeEMAT8>Obus eclairant</CodeEMAT8>
         <CodeLFRIL>Obus eclairant</CodeLFRIL>
         <CodeNNO>Obus eclairant</CodeNNO>
+        <Nature>Solide</Nature>
         <TirIndirect type="eclairant">
           <InterventionType>3</InterventionType>
           <DispersionX>1000</DispersionX>
@@ -350,7 +351,6 @@
       <Categorie nom="Obus mine">
         <MosID>7</MosID>
         <Type>Obus</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -360,6 +360,7 @@
         <CodeEMAT8>Obus mine</CodeEMAT8>
         <CodeLFRIL>Obus mine</CodeLFRIL>
         <CodeNNO>Obus mine</CodeNNO>
+        <Nature>Solide</Nature>
         <TirIndirect type="mine">
           <InterventionType>6</InterventionType>
           <DispersionX>1000</DispersionX>
@@ -370,7 +371,6 @@
       <Categorie nom="Obus fumigene">
         <MosID>8</MosID>
         <Type>Obus</Type>
-        <Nature>Solide</Nature>
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -380,6 +380,7 @@
         <CodeEMAT8>Obus mine</CodeEMAT8>
         <CodeLFRIL>Obus mine</CodeLFRIL>
         <CodeNNO>Obus mine</CodeNNO>
+        <Nature>Solide</Nature>
         <TirIndirect type="fumigene">
           <InterventionType>10</InterventionType>
           <DispersionX>450</DispersionX>
@@ -395,7 +396,6 @@
     <Categories>
       <Categorie nom="gasoil">
         <MosID>9</MosID>
-        <Nature>Liquide</Nature>
         <Conditionnement>
           <Nombre>50</Nombre>
           <Masse>6</Masse>
@@ -405,6 +405,7 @@
         <CodeEMAT8>gasoil</CodeEMAT8>
         <CodeLFRIL>gasoil</CodeLFRIL>
         <CodeNNO>gasoil</CodeNNO>
+        <Nature>Liquide</Nature>
       </Categorie>
     </Categories>
   </Dotation>
@@ -413,7 +414,6 @@
     <Categories>
       <Categorie nom="explosif classique">
         <MosID>10</MosID>
-        <Nature>Solide</Nature>        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -423,6 +423,7 @@
         <CodeEMAT8>explosif classique</CodeEMAT8>
         <CodeLFRIL>explosif classique</CodeLFRIL>
         <CodeNNO>explosif classique</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
     </Categories>
   </Dotation>
@@ -431,7 +432,6 @@
     <Categories>
       <Categorie nom="mine classique">
         <MosID>11</MosID>
-        <Nature>Solide</Nature>                
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -441,10 +441,10 @@
         <CodeEMAT8>mine classique</CodeEMAT8>
         <CodeLFRIL>mine classique</CodeLFRIL>
         <CodeNNO>mine classique</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
       <Categorie nom="pont flottant de la mort">
         <MosID>12</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -454,6 +454,7 @@
         <CodeEMAT8>pont flottant</CodeEMAT8>
         <CodeLFRIL>pont flottant</CodeLFRIL>
         <CodeNNO>pont flottant</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
     </Categories>
   </Dotation>
@@ -462,7 +463,6 @@
     <Categories>
       <Categorie nom="barbele classique">
         <MosID>13</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -472,6 +472,7 @@
         <CodeEMAT8>barbele classique</CodeEMAT8>
         <CodeLFRIL>barbele classique</CodeLFRIL>
         <CodeNNO>barbele classique</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
     </Categories>
   </Dotation>
@@ -480,7 +481,6 @@
     <Categories>
       <Categorie nom="Truc pour reparer la mobilite 1">
         <MosID>14</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -490,10 +490,10 @@
         <CodeEMAT8>Truc pour reparer la mobilite 1</CodeEMAT8>
         <CodeLFRIL>Truc pour reparer la mobilite 1</CodeLFRIL>
         <CodeNNO>Truc pour reparer la mobilite 1</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
       <Categorie nom="Truc pour reparer la mobilite 2">
         <MosID>15</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -503,10 +503,10 @@
         <CodeEMAT8>Truc pour reparer la mobilite 2</CodeEMAT8>
         <CodeLFRIL>Truc pour reparer la mobilite 2</CodeLFRIL>
         <CodeNNO>Truc pour reparer la mobilite 2</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
       <Categorie nom="Truc pour reparer la mobilite 3">
         <MosID>16</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -516,10 +516,10 @@
         <CodeEMAT8>Truc pour reparer la mobilite 3</CodeEMAT8>
         <CodeLFRIL>Truc pour reparer la mobilite 3</CodeLFRIL>
         <CodeNNO>Truc pour reparer la mobilite 3</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
       <Categorie nom="Truc pour reparer l'electronique 1">
         <MosID>17</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -529,6 +529,7 @@
         <CodeEMAT8>Truc pour reparer l'electronique 1</CodeEMAT8>
         <CodeLFRIL>Truc pour reparer l'electronique 1</CodeLFRIL>
         <CodeNNO>Truc pour reparer l'electronique 1</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
     </Categories>
   </Dotation>
@@ -537,7 +538,6 @@
     <Categories>
       <Categorie nom="bouffe">
         <MosID>18</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -547,10 +547,10 @@
         <CodeEMAT8>bouffe</CodeEMAT8>
         <CodeLFRIL>bouffe</CodeLFRIL>
         <CodeNNO>bouffe</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
       <Categorie nom="flotte">
         <MosID>19</MosID>
-        <Nature>Solide</Nature>                        
         <Conditionnement>
           <Nombre>5</Nombre>
           <Masse>65</Masse>
@@ -560,6 +560,7 @@
         <CodeEMAT8>flotte</CodeEMAT8>
         <CodeLFRIL>flotte</CodeLFRIL>
         <CodeNNO>flotte</CodeNNO>
+        <Nature>Solide</Nature>
       </Categorie>
     </Categories>
   </Dotation>

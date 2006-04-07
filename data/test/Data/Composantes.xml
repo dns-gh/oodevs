@@ -7,6 +7,7 @@
     <CodeEMAT8>Drone</CodeEMAT8>
     <CodeLFRIL>Drone</CodeLFRIL>
     <CodeNNO>Drone</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>Aeronef</Protection>
     <Volume>Petit</Volume>
     <Vitesses maximum="90">
@@ -179,6 +180,7 @@
     <CodeEMAT8>CompTestEMAT8</CodeEMAT8>
     <CodeLFRIL>CompTestLFRIL</CodeLFRIL>
     <CodeNNO>CompTestNNO</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -351,6 +353,7 @@
     <CodeEMAT8>CompTest2</CodeEMAT8>
     <CodeLFRIL>CompTest2</CodeLFRIL>
     <CodeNNO>CompTest2</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Petit</Volume>
     <Vitesses maximum="10">
@@ -485,6 +488,7 @@
     <CodeEMAT8>CompNBC</CodeEMAT8>
     <CodeLFRIL>CompNBC</CodeLFRIL>
     <CodeNNO>CompNBC</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -609,7 +613,6 @@
     </Objets>
     <Pannes>
       <PannesAleatoires>
-        <!--<Panne nom="Panne 4" pourcentage="50"/>-->
         <Panne nom="Panne 6" pourcentage="100"/>
       </PannesAleatoires>
       <PannesAttritions>
@@ -626,6 +629,7 @@
     <CodeEMAT8>Remorqueur</CodeEMAT8>
     <CodeLFRIL>Remorqueur</CodeLFRIL>
     <CodeNNO>Remorqueur</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -727,13 +731,14 @@
       </PannesAttritions>
     </Pannes>
   </Composante>
-  
+
   <Composante Commentaire="" nom="Remorqueur 3T">
-    <MosID>500</MosID>
+    <MosID>6</MosID>
     <CodeEMAT6>Remorqueur</CodeEMAT6>
     <CodeEMAT8>Remorqueur</CodeEMAT8>
     <CodeLFRIL>Remorqueur</CodeLFRIL>
     <CodeNNO>Remorqueur</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -834,14 +839,15 @@
         <Panne nom="Panne 3" pourcentage="40"/>
       </PannesAttritions>
     </Pannes>
-  </Composante>  
+  </Composante>
 
   <Composante Commentaire="" nom="NTI TC2">
-    <MosID>6</MosID>
+    <MosID>7</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -942,11 +948,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLD M">
-    <MosID>7</MosID>
+    <MosID>8</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1049,11 +1056,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLD EA">
-    <MosID>8</MosID>
+    <MosID>9</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1156,11 +1164,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLT M">
-    <MosID>9</MosID>
+    <MosID>10</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1266,11 +1275,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLT EA">
-    <MosID>10</MosID>
+    <MosID>11</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1376,11 +1386,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="VSB (releve)">
-    <MosID>11</MosID>
+    <MosID>12</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1482,11 +1493,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="VSR (ramassage)">
-    <MosID>12</MosID>
+    <MosID>13</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1589,11 +1601,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin TC2">
-    <MosID>13</MosID>
+    <MosID>14</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1691,11 +1704,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin tri">
-    <MosID>14</MosID>
+    <MosID>15</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1795,11 +1809,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin chirurgical">
-    <MosID>15</MosID>
+    <MosID>16</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -1902,11 +1917,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin chirurgical U2/U3">
-    <MosID>16</MosID>
+    <MosID>17</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2009,11 +2025,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin mental">
-    <MosID>17</MosID>
+    <MosID>18</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2113,11 +2130,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin NBC">
-    <MosID>18</MosID>
+    <MosID>19</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2217,11 +2235,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Camion transport solide">
-    <MosID>19</MosID>
+    <MosID>20</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2304,11 +2323,11 @@
     <FonctionsLogistiques>
       <Ravitaillement>
         <Transporteur>
-          <NatureTransportee>Solide</NatureTransportee>
           <Capacite>
             <Masse>33</Masse>
             <Volume>10</Volume>
-          </Capacite>          
+          </Capacite>
+          <NatureTransportee>Solide</NatureTransportee>
         </Transporteur>
         <Convoyeur/>
       </Ravitaillement>
@@ -2324,13 +2343,14 @@
       </PannesAttritions>
     </Pannes>
   </Composante>
-  
-    <Composante Commentaire="" nom="Camion transport liquide">
-    <MosID>190</MosID>
+
+  <Composante Commentaire="" nom="Camion transport liquide">
+    <MosID>21</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
     <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
@@ -2413,11 +2433,11 @@
     <FonctionsLogistiques>
       <Ravitaillement>
         <Transporteur>
-          <NatureTransportee>Liquide</NatureTransportee>
           <Capacite>
             <Masse>33</Masse>
             <Volume>10</Volume>
-          </Capacite>          
+          </Capacite>
+          <NatureTransportee>Liquide</NatureTransportee>
         </Transporteur>
         <Convoyeur/>
       </Ravitaillement>
@@ -2435,11 +2455,12 @@
   </Composante>
 
   <Composante Commentaire="" nom="Truc Volant">
-    <MosID>21</MosID>
+    <MosID>22</MosID>
     <CodeEMAT6></CodeEMAT6>
     <CodeEMAT8></CodeEMAT8>
     <CodeLFRIL></CodeLFRIL>
     <CodeNNO></CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">

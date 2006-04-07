@@ -61,6 +61,7 @@ behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
             T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( pion, eMission_Pion_Test_MoveTo );
             if( missionPion != 0 )
             {
+                missionPion.typeItineraire_ = eTypeItiLogistique;
                 DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
                 DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
             }
@@ -75,7 +76,7 @@ behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
     when updated:
     {   
     
-        persistent bool bDummy = false;
+      /*  persistent bool bDummy = false;
         T_Lima lima = DEC_GetLima( eTypeLima_LC );
         if( lima != 0 )
             DEC_SetMissionLimaFlag( lima, bDummy );
@@ -100,11 +101,12 @@ behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
         
 //        float rProut3 = DEC_CalculeDistanceLigneMoyenne( myself.composants_ );
 //        DEC_Debug( "Distance ligne moyenne : " + FloatToString( rProut3 ) );
+    */
     }
         
     on spontaneous end:
     {
-        DEC_Geometrie_StopCalculLignesAvantEtArriere( tacheTmp );
+    //    DEC_Geometrie_StopCalculLignesAvantEtArriere( tacheTmp );
     }        
 }
 

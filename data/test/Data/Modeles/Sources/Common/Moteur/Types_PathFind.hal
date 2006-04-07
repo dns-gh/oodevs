@@ -20,7 +20,8 @@ typedef enum E_TypeItineraire
     eTypeItiAttaque,
     eTypeItiRepli,
     eTypeItiAppui,
-    eTypeItiDeminage
+    eTypeItiDeminage,
+    eTypeItiLogistique
 };
 
 //-----------------------------------------------------------------------------

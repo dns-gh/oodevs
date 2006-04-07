@@ -6,7 +6,7 @@
   <DistanceThreshold>15000</DistanceThreshold>
 
   <Rules>PathfindRules.xml</Rules>
-  
+
   <TempsMaxCalcul>1</TempsMaxCalcul>
 
 </Pathfind>

@@ -11,14 +11,10 @@
 #define __DEC_PathFactory_h_
 
 // =============================================================================
-/** @class  DEC_PathFactory
-    @brief  Path factory
-*/
 // Created: SBO 2006-03-27
 // =============================================================================
 class DEC_PathFactory
 {
-
 public:
     //! @name Singleton
     //@{
