@@ -220,11 +220,6 @@ void ADN_Supply_Data::WriteArchive( MT_OutputArchive_ABC& output )
         output.EndList(); // TempsDechargement
     }
 
-    output.BeginList( "TempsConstitution", vConvoySetupInfos_.size() );
-    for( IT_ConvoyInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
-        (*it)->WriteArchive( output );
-    output.EndList(); // TempsConstitution 
-
     if( ptrUnit_.GetData() == 0 )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Convoy unit undefined." ).ascii() );
 
