@@ -48,7 +48,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void SelectColor( short elevation, short maxElevation, unsigned char* color );
+    virtual void SelectColor( short elevation, float slope, short maxElevation, unsigned char* color );
     virtual bool HandleKeyPress( QKeyEvent* event );
     //@}
 

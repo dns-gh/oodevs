@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "WorldParameters.h"
 #include "xeumeuleu/xml.h"
+#include "App.h"
 
 using namespace xml;
 
@@ -19,13 +20,12 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 WorldParameters::WorldParameters( const std::string& scipioXml )
 {
-    dataDirectory_ = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
     xml::xifstream scipio( scipioXml );
     std::string terrain;
     scipio >> start( "Scipio" )
                 >> start( "Donnees" )
                     >> content( "Terrain", terrain );
-    ReadTerrain( dataDirectory_ + terrain );
+    ReadTerrain( App::BuildChildPath( scipioXml, terrain ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ WorldParameters::~WorldParameters()
 // -----------------------------------------------------------------------------
 void WorldParameters::ReadTerrain( const std::string& terrain )
 {
-    terrainDirectory_ = QFileInfo( terrain.c_str() ).dirPath().ascii() + std::string( "/" );
+    terrainDirectory_ = App::BuildChildPath( terrain, "." );
     xifstream xis( terrain );
 
     std::string world, geoid, graphics, detection;
@@ -53,10 +53,10 @@ void WorldParameters::ReadTerrain( const std::string& terrain )
             >> content( "RawVision", detection )
             >> content( "Graphics", graphics );
 
-    detection_ = terrainDirectory_ + detection + "/detection.dat";
-    geoid_ = terrainDirectory_ + geoid;
-    graphicsDirectory_ = terrainDirectory_ + graphics + "/";
-    ReadWorld( terrainDirectory_ + world );
+    detection_ = App::BuildChildPath( terrain, detection ) + "/detection.dat";
+    geoid_ = App::BuildChildPath( terrain, geoid );
+    graphicsDirectory_ = App::BuildChildPath( terrain, graphics ) + "/";
+    ReadWorld( App::BuildChildPath( terrain, world ) );
 }
 
 // -----------------------------------------------------------------------------

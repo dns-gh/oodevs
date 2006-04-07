@@ -34,13 +34,11 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::s
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , Widget3D( context_, pParent )
-    , GlTools_ABC( controllers )
+    , GlToolsBase( controllers )
     , elevation_( elevation )
     , last_( layers_.begin() )
     , default_( 0 )
     , zRatio_( 5 )
-    , app6Font_( 0 )
-    , app6OutlinedFont_( 0 )
     , frame_( 0 )
     , pixels_( 100.f )
 {
@@ -90,8 +88,6 @@ void Gl3dWidget::initializeGL()
         Widget3D::initializeGL();
         for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
             (*it)->Initialize( viewport );
-        app6Font_         = new GlFont( "Scipio" );
-        app6OutlinedFont_ = new GlFont( "Scipio", true );
         isInitialized = true;
         CenterView();
     }
@@ -310,7 +306,7 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
 {
-    const Vector2f& fontSize = app6Font_->GetTextSize( symbol );
+    const Vector2f& fontSize = Base().GetSize( symbol );
     const float size = 600.f;
     glPushMatrix();
         glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
@@ -334,12 +330,21 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 
         glLineWidth( 4.0f );
         glPushMatrix();
-        app6OutlinedFont_->Print( symbol );
+        Base().PrintApp6( symbol, true );
         glPopMatrix();
         glPopAttrib();
 
-        app6Font_->Print( symbol );
+        Base().PrintApp6( symbol, false );
     glPopMatrix();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawIcon
+// Created: AGE 2006-04-07
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
+{
+
 }
 
 // -----------------------------------------------------------------------------

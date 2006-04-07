@@ -21,7 +21,7 @@
 VisionCones::VisionCones( const Agent& agent, SurfaceFactory& factory )
     : agent_( agent )
     , factory_( factory )
-    , map_( new VisionMap() )
+    , map_( factory_.CreateVisionMap() )
 {
     // NOTHING
 }

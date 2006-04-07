@@ -14,6 +14,7 @@
 #include "EquipmentType.h"
 #include "NBCAgent.h"
 #include "BreakdownType.h"
+#include "App.h"
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
@@ -24,8 +25,6 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ObjectTypes::ObjectTypes( const std::string& scipioXml )
 {
-    // $$$$ SBO 2006-03-16: qfileinfo?
-    const std::string baseDirectory = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
     xml::xifstream scipio( scipioXml );
     std::string idFile, dotations, equipments, nbc, pannes;
     scipio >> start( "Scipio" )
@@ -36,14 +35,14 @@ ObjectTypes::ObjectTypes( const std::string& scipioXml )
                     >> content( "NBC", nbc )
                     >> content( "Pannes", pannes );
 
-    xml::xifstream xis( baseDirectory + idFile );
+    xml::xifstream xis( App::BuildChildPath( scipioXml, idFile ) );
     xis >> start( "Classes" )
         >> list( "Classe", *this, ReadObjectTypes );
 
-    ReadDotations( baseDirectory + dotations );
-    ReadEquipments( baseDirectory + equipments );
-    ReadNBC( baseDirectory + nbc );
-    ReadBreakdowns( baseDirectory + pannes );
+    ReadDotations( App::BuildChildPath( scipioXml, dotations ) );
+    ReadEquipments( App::BuildChildPath( scipioXml, equipments ) );
+    ReadNBC( App::BuildChildPath( scipioXml, nbc ) );
+    ReadBreakdowns( App::BuildChildPath( scipioXml, pannes ) );
 }
 
 // -----------------------------------------------------------------------------

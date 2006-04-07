@@ -9,7 +9,6 @@
 
 #include "astec_pch.h"
 #include "GlWidget.h"
-#include "GlFont.h"
 #include "Model.h"
 #include "graphics/MapLayer_ABC.h"
 
@@ -34,19 +33,17 @@ namespace
 };
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::GlWidgexxxt
+// Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , MapWidget( context_, pParent, width_, height_ )
-    , GlTools_ABC( controllers )
+    , GlToolsBase( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_( 0 )
-    , app6Font_( 0 )
-    , app6OutlinedFont_( 0 )
     , frame_( 0 )
 {
     SetReverse( true );
@@ -65,8 +62,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
 // -----------------------------------------------------------------------------
 GlWidget::~GlWidget()
 {
-    delete app6Font_;
-    delete app6OutlinedFont_;
     glDeleteLists( circle_, 1 );
 }
 
@@ -80,8 +75,6 @@ void GlWidget::initializeGL()
     MapWidget::initializeGL();
     glDisable( GL_DEPTH_TEST );
     circle_ = GenerateCircle();
-    app6Font_         = new GlFont( "Scipio" );
-    app6OutlinedFont_ = new GlFont( "Scipio", true );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +313,7 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
 {
-    const Vector2f& fontSize = app6Font_->GetTextSize( symbol );
+    const Vector2f fontSize = Base().GetSize( symbol );
     const float size = 600.f;
     const Point2f center = Point2f( where.X() - fontSize.X() * size * 0.5f, where.Y() );
 
@@ -338,11 +331,39 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where )
 
         glLineWidth( 4.0f );
         glPushMatrix();
-        app6OutlinedFont_->Print( symbol );
+        Base().PrintApp6( symbol, true );
         glPopMatrix();
         glPopAttrib();
 
-        app6Font_->Print( symbol );
+        Base().PrintApp6( symbol, false );
+    glPopMatrix();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawIcon
+// Created: AGE 2006-04-07
+// -----------------------------------------------------------------------------
+void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= -1.f*/ ) const
+{
+    if( size < 0 )
+        size = 32 * Pixels();
+    size *= 0.5f;
+    glPushMatrix();
+    glPushAttrib( GL_TEXTURE_BIT );
+    Base().BindIcon( xpm );
+    const Point2f iconTranslation = Base().IconLocation( xpm );
+    glTranslatef( where.X() + iconTranslation.X(), where.Y() + iconTranslation.Y(), 0.f );
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0.f, 1.f );
+            glVertex2f( -size, -size );
+            glTexCoord2f( 1.f, 1.f );
+            glVertex2f( size, -size );
+            glTexCoord2f( 1.f, 0.f );
+            glVertex2f( size, size );
+            glTexCoord2f( 0.f, 0.f );
+            glVertex2f( -size, size );
+        glEnd();
+    glPopAttrib();
     glPopMatrix();
 }
 
@@ -350,7 +371,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where )
 // Name: GlWidget::CenterOn
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void GlWidget::CenterOn( const geometry::Point2f& point )
+void GlWidget::CenterOn( const Point2f& point )
 {
     Center( point );
 }

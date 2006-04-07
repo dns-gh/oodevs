@@ -99,5 +99,5 @@ void Surface::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 void Surface::Update( VisionMap& map )
 {
-
+    
 }

@@ -76,6 +76,5 @@ void Reports::DoUpdate( const TraceMessage& msg )
 // -----------------------------------------------------------------------------
 void Reports::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
-    if( tools.ShouldDisplay( "DrawRCs" ) )
-        ;// $$$$ AGE 2006-04-06: ...
+    // $$$$ AGE 2006-04-06: 
 }

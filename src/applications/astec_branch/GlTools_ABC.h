@@ -25,16 +25,16 @@ class GlTools_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GlTools_ABC( Controllers& controllers );
-    virtual ~GlTools_ABC();
+             GlTools_ABC() {};
+    virtual ~GlTools_ABC() {};
     //@}
 
     //! @name Operations
     //@{
     // $$$$ AGE 2006-03-30: pas terrible
-    virtual void Select( bool );
-    virtual bool ShouldDisplay( const std::string& name ) const;
-    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
+    virtual void Select( bool ) = 0;
+    virtual bool ShouldDisplay( const std::string& name ) const = 0;
+    virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;
     // $$$$ AGE 2006-03-30: /pas terrible
 
     virtual float Pixels() const = 0;
@@ -50,6 +50,7 @@ public:
     virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const = 0;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const = 0;
+    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const = 0;
     //@}
 
 private:
@@ -59,12 +60,6 @@ private:
     GlTools_ABC& operator=( const GlTools_ABC& );
     //@}
 
-private:
-    //! @name Member data
-    //@{
-    Controllers& controllers_;
-    bool selected_;
-    //@}
 };
 
 #endif // __GlTools_ABC_h_

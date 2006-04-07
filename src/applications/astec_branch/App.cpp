@@ -31,10 +31,13 @@
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/program_options.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 
 using namespace xml;
 namespace po = boost::program_options;
+namespace bfs = boost::filesystem;
 
 App* App::pInstance_ = 0;
 
@@ -123,21 +126,32 @@ void App::Initialize( int nArgc, char** ppArgv )
 }
 
 // -----------------------------------------------------------------------------
+// Name: App::BuildChildPath
+// Created: AGE 2006-04-06
+// -----------------------------------------------------------------------------
+std::string App::BuildChildPath( const std::string& parent, const std::string& child )
+{
+    bfs::path parentPath( parent.c_str(), bfs::native );
+    bfs::path childPath( child.c_str(), bfs::native );
+
+    return ( parentPath.branch_path() / childPath ).native_file_string();
+
+}
+
+// -----------------------------------------------------------------------------
 // Name: App::Initialize
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 void App::Initialize( const std::string& scipioXml )
 {
-    const std::string absoluteConfigFile = QFileInfo( scipioXml.c_str() ).absFilePath().ascii();
-
-    xifstream xis( absoluteConfigFile );
+    xifstream xis( scipioXml );
     xis >> start( "Scipio" )
             >> start( "Donnees" );
-    InitializeHumanFactors ( xis, absoluteConfigFile ); 
+    InitializeHumanFactors ( xis, scipioXml ); 
 
     controllers_ = new Controllers();
     simulation_  = new Simulation( *controllers_ );
-    model_       = new Model( *controllers_, *simulation_, absoluteConfigFile );
+    model_       = new Model( *controllers_, *simulation_, scipioXml );
     network_     = new Network( *model_, *simulation_ );
 }
 
@@ -157,13 +171,14 @@ App::~App()
 std::string App::RetrieveValidConfigFile( const std::string& conffile )
 {
     std::string current = conffile;
-    while( ! QFileInfo( current.c_str() ).exists() )
+    while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
         const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Open scipio.xml" );
-        if( ! filename.isEmpty() )
-            current = filename;
-        else
+        if( filename.isEmpty() )
             throw std::exception( "No scipio.xml file specified." );
+        current = filename;
+        if( current.substr( 0, 2 ) == "//" )
+            std::replace( current.begin(), current.end(), '/', '\\' );
     }
     return current;
 }
@@ -174,11 +189,10 @@ std::string App::RetrieveValidConfigFile( const std::string& conffile )
 // -----------------------------------------------------------------------------
 void App::InitializeHumanFactors( xistream& xis, const std::string& conffile )
 {
-    const std::string baseDirectory = QFileInfo( conffile.c_str() ).dirPath().ascii() + std::string( "/" );
-
     std::string strHumanFactorsFile;
     xis >> content( "FacteursHumains", strHumanFactorsFile );
-    xifstream factors( baseDirectory + strHumanFactorsFile );
+    const std::string factorsName = BuildChildPath( conffile, strHumanFactorsFile );
+    xifstream factors( factorsName );
 
     Tiredness ::Initialize( factors );
     Experience::Initialize( factors );

@@ -53,7 +53,7 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 void LimitsLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( drawLines_.IsSet( true ) )// $$$$ AGE 2006-03-30: condition pour auto ?
+    if( drawLines_.IsSet( false ) )
     {
         for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
         {

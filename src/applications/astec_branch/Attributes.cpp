@@ -171,6 +171,19 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Attributes::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
+    glPushAttrib( GL_CURRENT_BIT );
+    glColor3f( 1, 1, 1 );
+    tools.DrawIcon( xpm_cadenas, where );
+    tools.DrawIcon( xpm_radars_on, where );
+    tools.DrawIcon( xpm_brouillage, where );
+    tools.DrawIcon( xpm_talkie_interdit, where );
+    tools.DrawIcon( xpm_gas, where );
+    tools.DrawIcon( xpm_ammo, where );
+    tools.DrawIcon( xpm_nbc, where );
+    tools.DrawIcon( xpm_construction, where );
+    tools.DrawIcon( xpm_observe, where );
+    glPopAttrib();
+
     // $$$$ AGE 2006-04-06: life.
     // $$$$ AGE 2006-03-17: Move out ?
     tools.DrawCross( where, GL_CROSSSIZE );

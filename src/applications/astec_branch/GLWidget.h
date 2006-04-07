@@ -13,11 +13,10 @@
 #include "graphics/MapWidget.h"
 
 #include "WorldParameters.h"
-#include "GlTools_ABC.h"
 #include "SetGlOptions.h"
 #include "View_ABC.h"
+#include "GlToolsBase.h"
 
-class GlFont;
 class Controllers;
 
 // =============================================================================
@@ -26,7 +25,7 @@ class Controllers;
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget, public GlTools_ABC, public View_ABC
+class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget, public GlToolsBase, public View_ABC
 {
 
 public:
@@ -51,6 +50,7 @@ public:
     virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const;
+    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     //@}
@@ -75,8 +75,7 @@ private:
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
-    GlFont* app6Font_;
-    GlFont* app6OutlinedFont_;
+    
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
     //@}

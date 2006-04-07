@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "SurfaceFactory.h"
 #include "Surface.h"
+#include "VisionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: SurfaceFactory constructor
@@ -38,4 +39,13 @@ SurfaceFactory::~SurfaceFactory()
 Surface* SurfaceFactory::CreateSurface( const Agent& agent, const VisionConesMessage& input )
 {
     return new Surface( agent, input, map_, resolver_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceFactory::CreateVisionMap
+// Created: AGE 2006-04-07
+// -----------------------------------------------------------------------------
+VisionMap* SurfaceFactory::CreateVisionMap()
+{
+    return new VisionMap( map_ );
 }

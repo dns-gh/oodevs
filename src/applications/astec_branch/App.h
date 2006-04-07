@@ -38,6 +38,7 @@ class App : public QApplication
 
 public:
     static App& GetApp(); // $$$$ SBO 2006-03-16: 
+    static std::string BuildChildPath( const std::string& parent, const std::string& child );
 
     //! @name Constructor/destructor
     //@{

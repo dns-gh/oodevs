@@ -59,6 +59,8 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
 // -----------------------------------------------------------------------------
 void AgentDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
+    if( ! tools.ShouldDisplay( "VisionLines" ) )
+        return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 1.f );
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )

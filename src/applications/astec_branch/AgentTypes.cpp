@@ -19,6 +19,7 @@
 #include "MissionFactory.h"
 #include "SymbolFactory.h"
 #include "xeumeuleu/xml.h"
+#include "App.h"
 
 using namespace xml;
 
@@ -30,9 +31,6 @@ AgentTypes::AgentTypes( const std::string& scipioXml )
 {
     xml::xifstream xisSymbols( "symbols.xml" ); // $$$$ SBO 2006-03-20: !!!
     symbolFactory_ = new SymbolFactory( xisSymbols );
-
-    // $$$$ SBO 2006-03-16: qfileinfo?
-    const std::string baseDirectory = QFileInfo( scipioXml.c_str() ).dirPath().ascii() + std::string( "/" );
 
     xml::xifstream xis( scipioXml );
     xis >> start( "Scipio" )    
@@ -46,12 +44,12 @@ AgentTypes::AgentTypes( const std::string& scipioXml )
         >> content( "Automates", automats )
         >> content( "Populations", populations );
 
-    ReadComponents( baseDirectory + components );
-    ReadDecisional( baseDirectory + decisional );
-    ReadSensors( baseDirectory + sensors );
-    ReadAgents( baseDirectory + agents );
-    ReadAutomats( baseDirectory + automats );
-    ReadPopulations( baseDirectory + populations );
+    ReadComponents( App::BuildChildPath( scipioXml, components ) );
+    ReadDecisional( App::BuildChildPath( scipioXml, decisional ) );
+    ReadSensors( App::BuildChildPath( scipioXml, sensors ) );
+    ReadAgents( App::BuildChildPath( scipioXml, agents ) );
+    ReadAutomats( App::BuildChildPath( scipioXml, automats ) );
+    ReadPopulations( App::BuildChildPath( scipioXml, populations ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,14 +94,12 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadDecisional( const std::string& decisional )
 {
-    const std::string baseDirectory = QFileInfo( decisional.c_str() ).dirPath().ascii() + std::string( "/" );
-
     xifstream xis( decisional );
     std::string models;
     xis >> start( "Decisionnel" )
             >> start( "DirectIA" )
                 >> content( "Modeles", models );
-    ReadModels(baseDirectory +  models );
+    ReadModels( App::BuildChildPath( decisional, models ) );
 }
 
 // -----------------------------------------------------------------------------

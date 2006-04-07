@@ -12,7 +12,7 @@
 
 #include "graphics/Widget3D.h"
 #include "WorldParameters.h"
-#include "GlTools_ABC.h"
+#include "GlToolsBase.h"
 #include "View_ABC.h"
 #include "SetGlOptions.h"
 
@@ -27,7 +27,7 @@ class GlFont;
 */
 // Created: AGE 2006-03-28
 // =============================================================================
-class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3D, public GlTools_ABC, public View_ABC
+class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3D, public GlToolsBase, public View_ABC
 {
 
 public:
@@ -55,6 +55,7 @@ public:
     virtual void DrawRectangle  ( const geometry::Rectangle2f& rect ) const;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const;
+    virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void CenterView();
@@ -95,8 +96,6 @@ private:
     IT_Layers last_;
     Layer_ABC* default_;
     float zRatio_;
-    GlFont* app6Font_;
-    GlFont* app6OutlinedFont_;
     unsigned int frame_;
     float pixels_;
     //@}

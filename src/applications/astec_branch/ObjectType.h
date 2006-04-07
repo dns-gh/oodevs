@@ -45,8 +45,7 @@ private:
 
     //! @name Helpers
     //@{
-    void GenerateTexture();
-    QImage TypeIcon();
+    const char** TypeIcon();
     //@}
 
 public:
@@ -56,7 +55,7 @@ public:
 
     unsigned long id_;
     std::string name_;
-    unsigned int texture_;
+    const char** xpm_;
     //@}
 };
 

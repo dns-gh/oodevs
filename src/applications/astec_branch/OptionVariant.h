@@ -35,7 +35,13 @@ public:
     template< typename T >
     T To() const
     {
-        return boost::any_cast< T >( value_ );
+        try
+        {
+            return boost::any_cast< T >( value_ );
+        } catch( ... )
+        {
+            throw std::runtime_error( std::string( "OptionVariant : Could not cast from " ) + value_.type().name() + " to " + typeid( T ).name() );
+        }
     };
     //@}
 

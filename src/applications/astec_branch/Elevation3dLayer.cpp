@@ -92,6 +92,16 @@ namespace
         const float rOut   = nOutMin + rRatio * ( float( nOutMax ) - float( nOutMin ) );
         return unsigned char( floor( rOut ) );
     }
+
+     
+    inline
+    unsigned char Multiply( unsigned char c, float r )
+    {
+        float result = c * r;
+        if( result < 255 )
+            return (unsigned char)( std::floor( result ) );
+        return 255;
+    };
 }
 
 
@@ -99,7 +109,7 @@ namespace
 // Name: Elevation3dLayer::SelectColor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Elevation3dLayer::SelectColor( short elevation, short maxElevation, unsigned char* color )
+void Elevation3dLayer::SelectColor( short elevation, float slope, short maxElevation, unsigned char* color )
 {
     static const unsigned char colors[6][3] =
     {
@@ -124,6 +134,11 @@ void Elevation3dLayer::SelectColor( short elevation, short maxElevation, unsigne
         const int nSlice = elevation / nSliceLength;
         for( unsigned int nComposante = 0; nComposante < 3; ++nComposante )
             *( color + nComposante ) = Map( elevation, short( nSlice * nSliceLength ), short( ( nSlice + 1 ) * nSliceLength ), colors[nSlice][nComposante], colors[nSlice+1][nComposante] );
-        
     }
+
+    float rFactor = 1 + 0.5 * slope;
+    if( rFactor <= 0 ) rFactor = 0.1f;
+    if( rFactor >  2 ) rFactor = 2.0f;
+    for( unsigned int nComposante = 0; nComposante < 3; ++nComposante )
+        *( color + nComposante ) = Multiply( *( color + nComposante ), rFactor );
 }

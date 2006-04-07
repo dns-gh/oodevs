@@ -32,7 +32,6 @@
 // -----------------------------------------------------------------------------
 GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model, GraphicSetup_ABC& setup )
     : WorldParameters( scipioXml )
-    , GlProxy( controllers )
     , strategy_( new ColorStrategy( controllers, *this ) )
 {
     parameters_ = new ParametersLayer( *this );
