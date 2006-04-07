@@ -404,21 +404,6 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
         T_MaintenanceConsignList::reverse_iterator itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriorityLowerBound, sIsPriorityEqual() );
         itTact->second.insert( itConsign.base(), &consign );
     }
-
-    //$$$$ TEST
-    ////////////////////////////////
-    printf( "BEGIN ==================\n" );
-    for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
-        for ( CIT_MaintenanceConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
-        {
-            const PHY_MaintenanceConsign_ABC& consign = **it2;
-            const MIL_Automate& automate = consign.GetComposanteState().GetAutomate();
-
-            printf( "Consign for automate %d / automate's TC2 %d (pion %d)\n", automate.GetID(), automate.GetTC2() ? automate.GetTC2()->GetID() : 0, consign.GetComposanteState().GetComposante().GetRole().GetPion().GetID() );
-        }
-    printf( "END ==================\n" );
-    ////////////////////////////////
-
 }
 
 // =============================================================================
