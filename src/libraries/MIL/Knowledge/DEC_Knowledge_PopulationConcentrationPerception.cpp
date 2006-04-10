@@ -85,7 +85,7 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
+    file << pPopulationKnowledge_
          << pPopulationConcentrationPerceived_
          << pCurrentPerceptionLevel_->GetID()
          << pPreviousPerceptionLevel_->GetID();

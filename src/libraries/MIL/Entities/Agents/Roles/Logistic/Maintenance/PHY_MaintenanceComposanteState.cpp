@@ -87,7 +87,7 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << const_cast< uint& >( nID_ )
+    file << nID_
          << pPion_
          << pComposante_
          << pConsign_

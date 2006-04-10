@@ -956,7 +956,7 @@ void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg,
 void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
 {
     functor.Serialize( "armee", false, GetArmy().GetName() );
-    functor.Serialize( "type", false, GetType().GetName() );
+    functor.Serialize( "type" , false, GetType().GetName() );
     const bool bUpdateStatuses = GetRole< PHY_RolePion_Composantes    >().HasChanged()
                               || GetRole< PHY_RolePion_Communications >().HasChanged()
                               || GetRole< PHY_RolePion_NBC            >().HasChanged()

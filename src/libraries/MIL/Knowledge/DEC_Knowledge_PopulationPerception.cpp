@@ -157,7 +157,7 @@ void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, co
 void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
+         << pAgentPerceiving_
          << pPopulationPerceived_
          << concentrations_
          << flows_

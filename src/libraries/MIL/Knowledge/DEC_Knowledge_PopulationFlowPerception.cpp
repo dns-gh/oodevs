@@ -91,7 +91,7 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
+    file << pPopulationKnowledge_
          << pPopulationFlowPerceived_
          << shape_
          << previousShape_

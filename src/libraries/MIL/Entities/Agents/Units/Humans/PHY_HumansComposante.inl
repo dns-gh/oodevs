@@ -14,7 +14,6 @@
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 template< typename Archive >
-inline
 void PHY_HumansComposante::serialize( Archive& file, const uint )
 {
     file & pComposante_

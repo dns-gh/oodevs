@@ -361,7 +361,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
          >> pPullingFlow_
          >> pushingFlows_
          >> rPullingFlowsDensity_
-         >> const_cast< MIL_RealObject_ABC* >( pSplittingObject_ );
+         >> const_cast< MIL_RealObject_ABC*& >( pSplittingObject_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -87,7 +87,7 @@ void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const 
 void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+         << pAgentPerceiving_ 
          << pObjectPerceived_
          << pCurrentPerceptionLevel_->GetID()
          << pPreviousPerceptionLevel_->GetID();

@@ -62,13 +62,13 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
     , pMaintenanceState_           ( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_       ( 0 )
-    , humans_                      ( *this, pType_->GetNbrHumanInCrew() )
+    , pHumans_                     ( new PHY_HumansComposante( *this, pType_->GetNbrHumanInCrew() ) )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
 
     pRole_->NotifyComposanteAdded( *this );
-    if( !humans_.IsViable() )
+    if( !pHumans_->IsViable() )
         ReinitializeState( PHY_ComposanteState::dead_ );
 }
 
@@ -86,12 +86,12 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bUsedForLogistic_            ( false )
     , weapons_                     ()
     , sensors_                     () 
-    , humans_                      ()
+    , pHumans_                     ()
     , nAutoRepairTimeStep_         ()
     , pBreakdown_                  ()
     , pMaintenanceState_           ( 0 )
     , nRandomBreakdownNextTimeStep_()
-    , pRandomBreakdownState_       ( 0 )
+    , pRandomBreakdownState_       ( 0 )    
 {
 }
 
@@ -111,6 +111,8 @@ PHY_ComposantePion::~PHY_ComposantePion()
 
     assert( pRole_ );
     pRole_->NotifyComposanteRemoved( *this );
+
+    delete pHumans_;
 }
 
 // =============================================================================
@@ -141,13 +143,13 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
     file >> const_cast< bool& >( bMajor_ )
          >> const_cast< bool& >( bLoadable_ )
          >> bUsedForLogistic_
-         >> humans_
+         >> pHumans_
          >> nAutoRepairTimeStep_
          >> const_cast< PHY_Breakdown*& >( pBreakdown_ )
          >> pMaintenanceState_
          >> nRandomBreakdownNextTimeStep_;
    
-    if ( nRandomBreakdownNextTimeStep_ )
+    if( nRandomBreakdownNextTimeStep_ )
     {
         file >> nID;
         pRandomBreakdownState_ = &PHY_ComposanteState::FindComposanteState( nID );
@@ -169,7 +171,7 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << bMajor_
          << bLoadable_
          << bUsedForLogistic_
-         << humans_
+         << pHumans_
          << nAutoRepairTimeStep_
          << pBreakdown_
          << pMaintenanceState_
@@ -193,11 +195,12 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
 void PHY_ComposantePion::TransfertComposante( PHY_RolePion_Composantes& newRole )
 {
     assert( pRole_ );
+    assert( pHumans_ );
 
     // Annulation log maintenance
     if( pMaintenanceState_ )
     {
-        humans_.NotifyComposanteBackFromMaintenance();
+        pHumans_->NotifyComposanteBackFromMaintenance();
         assert( pRole_ );
         pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
         pMaintenanceState_->Cancel();
@@ -205,7 +208,7 @@ void PHY_ComposantePion::TransfertComposante( PHY_RolePion_Composantes& newRole 
         pMaintenanceState_ = 0;
     }
 
-    humans_.NotifyComposanteTransfered( *pRole_, newRole );
+    pHumans_->NotifyComposanteTransfered( *pRole_, newRole );
 
     pRole_->NotifyComposanteRemoved( *this );
     pRole_ = &newRole;
@@ -274,7 +277,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
     else if( *pState_ == PHY_ComposanteState::dead_ )
-        humans_.KillAllUsableHumans();    
+        pHumans_->KillAllUsableHumans();    
     ManageEndMaintenance();
 
     assert( pRole_ );
@@ -411,7 +414,7 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
             pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
         else if( *pState_ == PHY_ComposanteState::dead_ )
-            humans_.KillAllUsableHumans( fireDamages );        
+            pHumans_->KillAllUsableHumans( fireDamages );        
         ManageEndMaintenance();
        
         pRole_->NotifyComposanteChanged( *this, oldState );
@@ -469,7 +472,8 @@ void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotation
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ApplyContamination( const MIL_NbcAgentType& nbcAgentType )
 {
-    humans_.ApplyWounds( nbcAgentType );
+    assert( pHumans_ );
+    pHumans_->ApplyWounds( nbcAgentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,7 +568,8 @@ MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_IndirectFireDo
 // -----------------------------------------------------------------------------
 bool PHY_ComposantePion::HasWoundedHumansToEvacuate() const
 {
-    return humans_.HasWoundedHumansToEvacuate();
+    assert( pHumans_ );
+    return pHumans_->HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------
@@ -573,7 +578,8 @@ bool PHY_ComposantePion::HasWoundedHumansToEvacuate() const
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    humans_.EvacuateWoundedHumans( destinationTC2 );
+    assert( pHumans_ );
+    pHumans_->EvacuateWoundedHumans( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -640,7 +646,7 @@ void PHY_ComposantePion::ManageEndMaintenance()
     // Appelée uniquement au changement de 'state'
     if( *pState_ != PHY_ComposanteState::maintenance_ && *pState_ != PHY_ComposanteState::repairableWithEvacuation_ )
     {
-        if ( pBreakdown_ )
+        if( pBreakdown_ )
         {
             delete pBreakdown_;
             pBreakdown_ = 0;        
@@ -648,7 +654,8 @@ void PHY_ComposantePion::ManageEndMaintenance()
         
         if( pMaintenanceState_ )
         {
-            humans_.NotifyComposanteBackFromMaintenance();
+            assert( pHumans_ );
+            pHumans_->NotifyComposanteBackFromMaintenance();
             assert( pRole_ );
             pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
             pMaintenanceState_->Cancel();
@@ -656,7 +663,7 @@ void PHY_ComposantePion::ManageEndMaintenance()
             pMaintenanceState_ = 0;
         }
 
-        if ( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
+        if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
         {
             assert( pType_ );
             nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pType_->GetProtection().GetNeutralizationTime() );
@@ -670,8 +677,9 @@ void PHY_ComposantePion::ManageEndMaintenance()
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::NotifyHandledByMaintenance()
 {
+    assert( pHumans_ );
     ReinitializeState( PHY_ComposanteState::maintenance_ );
-    humans_.NotifyComposanteHandledByMaintenance();
+    pHumans_->NotifyComposanteHandledByMaintenance();
 }
 
 // -----------------------------------------------------------------------------

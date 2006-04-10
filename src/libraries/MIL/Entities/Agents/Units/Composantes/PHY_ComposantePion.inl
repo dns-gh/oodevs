@@ -18,7 +18,8 @@
 inline
 void PHY_ComposantePion::ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages )
 {
-    humans_.ApplyWounds( composanteNewState, fireDamages );
+    assert( pHumans_ );
+    pHumans_->ApplyWounds( composanteNewState, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +33,8 @@ MT_Float PHY_ComposantePion::GetOperationalState() const
     if( *pState_ != PHY_ComposanteState::undamaged_ )
         return 0.;
 
-    return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * humans_.GetOperationalState();
+    assert( pHumans_ );
+    return ( 1. - rOpStateWeightHumans_ ) + rOpStateWeightHumans_ * pHumans_->GetOperationalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +44,8 @@ MT_Float PHY_ComposantePion::GetOperationalState() const
 inline
 uint PHY_ComposantePion::GetNbrUsableHumans() const
 {
-    return humans_.GetNbrUsableHumans();
+    assert( pHumans_ );
+    return pHumans_->GetNbrUsableHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -585,8 +588,9 @@ MT_Float PHY_ComposantePion::GetBypassTime( const MIL_RealObjectType& objectType
 inline
 void PHY_ComposantePion::HealAllHumans()
 {
+    assert( pHumans_ );
     if( *pState_ != PHY_ComposanteState::dead_ ) 
-        humans_.HealAllHumans();
+        pHumans_->HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -596,8 +600,9 @@ void PHY_ComposantePion::HealAllHumans()
 inline
 uint PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, uint nNbrToChange )
 {
+    assert( pHumans_ );
     if( *pState_ != PHY_ComposanteState::dead_ )
-        return humans_.HealHumans( rank, nNbrToChange );
+        return pHumans_->HealHumans( rank, nNbrToChange );
     return 0;
 }
 
@@ -608,8 +613,9 @@ uint PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, uint nNbrToChang
 inline
 uint PHY_ComposantePion::WoundHumans( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& wound )
 {
+    assert( pHumans_ );
     if( *pState_ != PHY_ComposanteState::dead_ )
-        return humans_.WoundHumans( rank, nNbrToChange, wound );
+        return pHumans_->WoundHumans( rank, nNbrToChange, wound );
     return 0;    
 }
 
@@ -620,7 +626,8 @@ uint PHY_ComposantePion::WoundHumans( const PHY_HumanRank& rank, uint nNbrToChan
 inline
 bool PHY_ComposantePion::ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound )
 {
-    return humans_.ChangeHumanRank( oldRank, newRank, wound );
+    assert( pHumans_ );
+    return pHumans_->ChangeHumanRank( oldRank, newRank, wound );
 }
 
 // -----------------------------------------------------------------------------

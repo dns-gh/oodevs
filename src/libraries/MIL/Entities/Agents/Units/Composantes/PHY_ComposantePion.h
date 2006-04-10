@@ -242,7 +242,7 @@ private:
           bool                      bUsedForLogistic_;
           T_WeaponVector            weapons_;
           T_SensorVector            sensors_;
-          PHY_HumansComposante      humans_;
+          PHY_HumansComposante*     pHumans_;
 
     // Breakdowns
           uint                            nAutoRepairTimeStep_;
