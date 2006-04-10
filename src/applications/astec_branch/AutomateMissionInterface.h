@@ -30,8 +30,6 @@ class Agent;
 // =============================================================================
 class AutomateMissionInterface : public MissionInterface_ABC
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -51,7 +49,7 @@ private:
     #include "AutomateMissionInterface_Gen.h" 
     //@}
 
-private slots:
+private:
     //! @name Slots
     //@{
     void OnOk();

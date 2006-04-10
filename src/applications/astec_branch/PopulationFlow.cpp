@@ -12,6 +12,8 @@
 #include "CoordinateConverter.h"
 #include "GlTools_ABC.h"
 
+using namespace geometry;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
@@ -126,4 +128,48 @@ void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC
     glLineWidth( 10.f );
     tools.DrawLines( flow_ );
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetPosition
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+geometry::Point2f PopulationFlow::GetPosition() const
+{
+    if( ! flow_.empty() )
+        return flow_.front();
+    return Point2f();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::IsAt
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/ ) const
+{
+    // $$$$ AGE 2006-04-10: Factoriser ce basard
+    if( flow_.empty() )
+        return false;
+    precision*=precision;
+    if( flow_.size() == 1 )
+        return flow_.front().SquareDistance( point ) <= precision;
+
+    CIT_PointVector previous = flow_.begin();
+    for( CIT_PointVector current = previous + 1; current != flow_.end(); ++current )
+    {
+        const geometry::Segment2f segment( *previous, *current );
+        if( segment.SquareDistance( point ) < precision )
+            return true;
+        previous = current;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::IsIn
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool PopulationFlow::IsIn( const geometry::Rectangle2f& ) const
+{
+    return true; // $$$$ AGE 2006-04-10: 
 }

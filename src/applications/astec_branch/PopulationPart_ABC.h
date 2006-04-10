@@ -15,6 +15,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
+#include "Positions.h"
 
 // =============================================================================
 /** @class  PopulationPart_ABC
@@ -23,11 +24,10 @@
 // Created: AGE 2006-02-20
 // =============================================================================
 class PopulationPart_ABC : public Entity_ABC
-                         , private Extension_ABC
                          , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
                          , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
                          , public Drawable_ABC
-                           
+                         , public Positions
 {
 
 public:

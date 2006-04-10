@@ -19,6 +19,10 @@
 PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter& converter, float density )
     : position_( converter.ConvertToXY( asnMsg.position ) )
     , density_ ( density )
+    , nLivingHumans_( 0 )
+    , nDeadHumans_( 0 )
+    , radius_( 0 )
+    , deadRadius_( 0 )
 {
     // NOTHING
 }
@@ -29,6 +33,7 @@ PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConce
 // -----------------------------------------------------------------------------
 PopulationConcentration::~PopulationConcentration()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +52,7 @@ std::string PopulationConcentration::GetName() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
+    static const float oneOnpi = 1.f / std::acos( -1.f );
     if( asnMsg.m.nb_humains_vivantsPresent )
         nLivingHumans_ = asnMsg.nb_humains_vivants;
 
@@ -54,6 +60,11 @@ void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUp
         nDeadHumans_ = asnMsg.nb_humains_morts;
 
     PopulationPart_ABC::DoUpdate( asnMsg );
+    if( density_ > 0 )
+    {
+        radius_     = std::sqrt( ( ( nLivingHumans_ + nDeadHumans_ ) / density_ ) * oneOnpi );
+        deadRadius_ = std::sqrt( ( nDeadHumans_ / density_ ) * oneOnpi );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -89,13 +100,37 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools ) const
 {
-    static const float pi = std::acos( -1.f );
-    const float radius     = std::sqrt( ( ( nLivingHumans_ + nDeadHumans_ ) / density_ ) / pi );
-    const float deadRadius = std::sqrt( ( nDeadHumans_ / density_ ) / pi );
-    tools.DrawDisc( position_, radius );
+    tools.DrawDisc( position_, radius_ );
     glPushAttrib( GL_CURRENT_BIT );
     glColor4d( COLOR_BLACK );
-    tools.DrawDisc( position_, deadRadius );
+    tools.DrawDisc( position_, deadRadius_ );
     glPopAttrib();
 }
     
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetPosition
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+geometry::Point2f PopulationConcentration::GetPosition() const
+{
+    return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::IsAt
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool PopulationConcentration::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+{
+    const float maxSquareRadius = ( radius_ + precision ) * ( radius_ + precision );
+    return pos.SquareDistance( position_ ) < maxSquareRadius;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::IsIn
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool PopulationConcentration::IsIn( const geometry::Rectangle2f& ) const
+{
+    return true; // $$$$ AGE 2006-04-10: whatever
+}

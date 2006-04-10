@@ -252,7 +252,7 @@ void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f
 void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
 {
     CheckTools();
-    tools_->DrawCircle( center, radius );
+    tools_->DrawDisc( center, radius );
 }
 
 // -----------------------------------------------------------------------------

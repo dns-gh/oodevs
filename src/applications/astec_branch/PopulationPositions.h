@@ -11,6 +11,7 @@
 #define __PopulationPositions_h_
 
 #include "Positions.h"
+class Population;
 
 // =============================================================================
 /** @class  PopulationPositions
@@ -24,7 +25,7 @@ class PopulationPositions : public Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPositions();
+    explicit PopulationPositions( const Population& popu ); // $$$$ AGE 2006-04-10: 
     virtual ~PopulationPositions();
     //@}
 
@@ -45,6 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const Population& population_;
     //@}
 };
 

@@ -37,6 +37,8 @@ public:
     unsigned long GetId() const;
 
     float GetDensity() const;
+
+    const DecisionalModel& GetDecisionalModel() const;
     //@}
 
 private:

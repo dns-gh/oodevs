@@ -18,7 +18,6 @@
 
 #include "astec_pch.h"
 #include "AutomateMissionInterface.h"
-#include "moc_AutomateMissionInterface.cpp"
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
 #include "Agent.h"

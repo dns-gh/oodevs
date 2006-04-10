@@ -9,7 +9,6 @@
 
 #include "astec_pch.h"
 #include "FragmentaryOrderInterface.h"
-#include "moc_FragmentaryOrderInterface.cpp"
 
 #include "ASN_Messages.h"
 #include "ASN_Types.h"

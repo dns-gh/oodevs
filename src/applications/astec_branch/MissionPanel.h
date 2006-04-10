@@ -66,6 +66,7 @@ private slots:
     void ActivateAgentMission( int );
     void ActivateAutomatMission( int );
     void ActivateFragOrder( int );
+    void ActivatePopulationMission( int );
     //@}
 
 private:
@@ -96,6 +97,7 @@ private:
 
     MissionInterface_ABC* pMissionInterface_;
     const Agent* selected_;
+    const Population* selectedPopulation_;
     //@}
 };
 

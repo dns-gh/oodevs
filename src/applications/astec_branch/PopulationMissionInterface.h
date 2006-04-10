@@ -10,10 +10,6 @@
 #ifndef __PopulationMissionInterface_h_
 #define __PopulationMissionInterface_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MissionInterface_ABC.h"
 
 class Mission;
@@ -26,17 +22,13 @@ class Population;
 // =============================================================================
 class PopulationMissionInterface : public MissionInterface_ABC
 {
-    Q_OBJECT
-    MT_COPYNOTALLOWED( PopulationMissionInterface );
-
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationMissionInterface( Population& population, uint nMissionId, MissionPanel& parentPanel );
-    ~PopulationMissionInterface();
+             PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+    virtual ~PopulationMissionInterface();
     //@}
    
-
 private:
     //! @name Helpers
     //@{
@@ -44,14 +36,22 @@ private:
     void CreateInterface();
     //@}
 
-
     //! @name Generated helpers
     //@{
      #include "PopulationMissionInterface_Gen.h" 
     //@}
 
-private slots:
-    void OnOk();
+    //! @name Slots
+    //@{
+    virtual void OnOk();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    PopulationMissionInterface( const PopulationMissionInterface& );
+    PopulationMissionInterface& operator=( const PopulationMissionInterface& );
+    //@}
 
 private:
     //! @name Member data

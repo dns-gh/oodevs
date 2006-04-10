@@ -37,6 +37,10 @@ public:
     virtual unsigned int GetDensity() const;
 
     virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+
+    virtual geometry::Point2f GetPosition() const;
+    virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
+    virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     //@}
     //! @name Accessors
     //@{

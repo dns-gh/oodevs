@@ -38,7 +38,8 @@ PopulationKnowledge::PopulationKnowledge( Controller& controller, const Coordina
 // -----------------------------------------------------------------------------
 PopulationKnowledge::~PopulationKnowledge()
 {
-    DeleteAll();
+    Resolver< PopulationFlowKnowledge >::DeleteAll();
+    Resolver< PopulationConcentrationKnowledge >::DeleteAll();
     controller_.Delete( *this );
 }
 
@@ -80,10 +81,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& )
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    if( ! Find( message.oid_connaissance_concentration ) )
+    if( ! Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
     {
         PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
-        Register( message.oid_connaissance_concentration, *pKnowledge );
+        Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
     };
     controller_.Update( *this );
 }
@@ -94,8 +95,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    PopulationPartKnowledge_ABC* part = &Get( message.oid_connaissance_concentration );
-    ((PopulationConcentrationKnowledge*)( part ))->Update( message ); // $$$$ AGE 2006-02-27: 
+    Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration )
+        .Update( message );
 }
     
 // -----------------------------------------------------------------------------
@@ -104,8 +105,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    delete Find( message.oid_connaissance_concentration );
-    Remove( message.oid_connaissance_concentration );
+    delete Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
+    Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
     controller_.Update( *this );
 }
 
@@ -115,10 +116,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
 {
-    if( ! Find( message.oid_connaissance_flux ) )
+    if( ! Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
     {
         PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, converter_, popu_, message );
-        Register( message.oid_connaissance_flux, *pKnowledge );
+        Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
     };
     controller_.Update( *this );
 }
@@ -129,8 +130,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
 {
-    PopulationPartKnowledge_ABC* part = &Get( message.oid_connaissance_flux );
-    ((PopulationFlowKnowledge*)( part ))->Update( message ); // $$$$ AGE 2006-02-27: 
+    Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux )
+        .Update( message );
 }
     
 // -----------------------------------------------------------------------------
@@ -139,8 +140,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& 
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
 {
-    delete Find( message.oid_connaissance_flux );
-    Remove( message.oid_connaissance_flux );
+    delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
+    Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
     controller_.Update( *this );
 }
 

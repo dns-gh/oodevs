@@ -56,6 +56,7 @@
 #include "PopulationPositions.h"
 #include "Controllers.h"
 #include "Life.h"
+#include "PopulationDecisions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -129,7 +130,8 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.types_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
-    result->Attach< Positions >( *new PopulationPositions() );
+    result->Attach< Positions >          ( *new PopulationPositions( *result ) );
+    result->Attach( *new PopulationDecisions( *result ) );
     return result;
 }
 

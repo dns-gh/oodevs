@@ -23,11 +23,14 @@ class Population;
 class TypePopulation;
 class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
+class PopulationConcentrationKnowledge;
+class PopulationFlowKnowledge;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public Resolver< PopulationPartKnowledge_ABC >
+class PopulationKnowledge : public Resolver< PopulationConcentrationKnowledge >
+                          , public Resolver< PopulationFlowKnowledge >
 {
 public:
     //! @name Constructor/Destructor

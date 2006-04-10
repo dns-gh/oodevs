@@ -131,7 +131,7 @@ void AgentListView::NotifyUpdated( const Agent& agent )
 template< typename ParentType, typename ChildType >
 void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* item )
 {
-    DeleteTail( ListView< AgentListView >::Display( value.CreateIterator(), item, (ValuedListItem*)( item->firstChild() ) ) );
+    DeleteTail( ListView< AgentListView >::Display( value.CreateIterator(), item ) );
 }
 
 // -----------------------------------------------------------------------------

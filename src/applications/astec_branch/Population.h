@@ -19,6 +19,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
+#include "Positions.h"
 
 class PopulationPart_ABC;
 class PopulationConcentration;
@@ -32,8 +33,9 @@ class CoordinateConverter;
 // Created: HME 2005-09-29
 // =============================================================================
 class Population : public Agent_ABC
-                 , public Resolver< PopulationPart_ABC >
-                 , private Extension_ABC
+//                 , public Resolver< PopulationPart_ABC >
+                 , public Resolver< PopulationFlow >
+                 , public Resolver< PopulationConcentration >
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
@@ -42,6 +44,7 @@ class Population : public Agent_ABC
                  , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
                  , public Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
                  , public Drawable_ABC
+                 , public Positions
 {
 public:
     //! @name Constructor/Destructor
@@ -65,13 +68,18 @@ public:
     virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
+
+    virtual geometry::Point2f GetPosition() const;
+    virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
+    virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     //@}
 
     //! @name Accessors
     //@{
     const Team& GetTeam() const;
-    virtual unsigned long     GetId() const;
-    virtual std::string       GetName() const;
+    virtual unsigned long GetId() const;
+    virtual std::string   GetName() const;
+    const PopulationType& GetType() const;
     //@}
     
 private:
@@ -93,6 +101,8 @@ private:
     void DoUpdate( const ASN1T_MsgPopulationConcentrationCreation&    message );
 	void DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate&      message );
 	void DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& message );
+
+    void ComputeCenter();
     //@}
 
 private:
@@ -104,6 +114,8 @@ private:
 	std::string                strName_;
     const PopulationType&      type_;
 	Team&                      team_;
+
+    geometry::Point2f          center_;
     //@}
 
 private:

@@ -9,12 +9,14 @@
 
 #include "astec_pch.h"
 #include "PopulationPositions.h"
+#include "Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-PopulationPositions::PopulationPositions()
+PopulationPositions::PopulationPositions( const Population& popu )
+    : population_( popu )
 {
     // NOTHING
 }
@@ -34,7 +36,7 @@ PopulationPositions::~PopulationPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f PopulationPositions::GetPosition() const
 {
-    return geometry::Point2f();
+    return population_.GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +45,7 @@ geometry::Point2f PopulationPositions::GetPosition() const
 // -----------------------------------------------------------------------------
 bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
 {
-    return false;
+    return population_.IsAt( pos, precision );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,5 +54,5 @@ bool PopulationPositions::IsAt( const geometry::Point2f& pos, float precision /*
 // -----------------------------------------------------------------------------
 bool PopulationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return true;
+    return population_.IsIn( rectangle );
 }

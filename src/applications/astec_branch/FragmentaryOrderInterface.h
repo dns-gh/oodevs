@@ -21,8 +21,6 @@ class Agent;
 // =============================================================================
 class FragmentaryOrderInterface : public MissionInterface_ABC
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,7 +36,7 @@ private:
 #include "FragmentaryOrderInterface_Gen.h"
     //@}
 
-private slots:
+private:
     //! @name Slots
     //@{
     void OnOk();

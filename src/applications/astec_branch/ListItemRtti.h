@@ -148,4 +148,28 @@ struct ListItemRtti< const Lima* > {
     enum { rtti = 1021 };
 };
 
+class PopulationConcentration;
+template< >
+struct ListItemRtti< const PopulationConcentration* > {
+    enum { rtti = 1022 };
+};
+
+class PopulationFlow;
+template< >
+struct ListItemRtti< const PopulationFlow* > {
+    enum { rtti = 1023 };
+};
+
+class PopulationConcentrationKnowledge;
+template< >
+struct ListItemRtti< const PopulationConcentrationKnowledge* > {
+    enum { rtti = 1024 };
+};
+
+class PopulationFlowKnowledge;
+template< >
+struct ListItemRtti< const PopulationFlowKnowledge* > {
+    enum { rtti = 1025 };
+};
+
 #endif // __ListItemRtti_h_

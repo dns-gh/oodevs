@@ -9,7 +9,6 @@
 
 #include "astec_pch.h"
 #include "UnitMissionInterface.h"
-#include "moc_UnitMissionInterface.cpp"
 
 #include "MissionPanel.h"
 #include "ASN_Messages.h"

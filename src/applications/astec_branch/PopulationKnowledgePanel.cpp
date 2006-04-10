@@ -178,9 +178,9 @@ void PopulationKnowledgePanel::Display( const PopulationKnowledge& knowledge, Di
     {
         item->SetValue( &knowledge );
         knowledge.DisplayInList( displayer );
-        knowledgeList_->DeleteTail( 
-            knowledgeList_->DisplayList( knowledge.CreateIterator(), item  )
-            );
+        ValuedListItem* subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
+        subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
+        knowledgeList_->DeleteTail( subItem );
     }
 }
 

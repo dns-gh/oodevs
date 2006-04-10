@@ -50,34 +50,46 @@ public:
     ValuedListItem* DisplayList( Iterator< const Element& > it ) {
         if( it.HasMoreElements() )
             show();
-        return T_Parent::Display( it, this, (ValuedListItem*)( firstChild() ) );
+        return T_Parent::Display( it, this );
     }
     template< typename Element >
     ValuedListItem* DisplayList( Iterator< const Element& > it, QListViewItem* parent ) {
         if( it.HasMoreElements() )
             show();
-        return T_Parent::Display( it, parent, (ValuedListItem*)( parent->firstChild() ) );
+        return T_Parent::Display( it, parent );
+    }
+    template< typename Element >
+    ValuedListItem* DisplayList( Iterator< const Element& > it, QListView* parent, ValuedListItem* after ) {
+        if( it.HasMoreElements() )
+            show();
+        return T_Parent::Display( it, parent, after );
+    }
+    template< typename Element >
+    ValuedListItem* DisplayList( Iterator< const Element& > it, QListViewItem* parent, ValuedListItem* after ) {
+        if( it.HasMoreElements() )
+            show();
+        return T_Parent::Display( it, parent, after );
     }
 
     template< typename Iterator >
     ValuedListItem* DisplayList( const Iterator& from, const Iterator& to ) {
         if( from != to )
             show();
-        return T_Parent::Display( from, to, this, (ValuedListItem*)( firstChild() ) );
+        return T_Parent::Display( from, to, this );
     };
 
     template< typename Iterator >
     ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListViewItem* parent ) {
         if( from != to )
             show();
-        return T_Parent::Display( from, to, (ValuedListItem*)( parent->firstChild() ) );
+        return T_Parent::Display( from, to, parent );
     };
 
     template< typename Iterator >
-    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListView* parent, QListViewItem* after ) {
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListView* parent, ValuedListItem* after ) {
         if( from != to )
             show();
-        return T_Parent::Display( from, to, parent, (ValuedListItem*)( after ) );
+        return T_Parent::Display( from, to, parent, after );
     };
 
     template< typename T >

@@ -128,7 +128,7 @@ void EntityLayerBase::OptionChanged( const std::string& name, const OptionVarian
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::Point2f& point ) const
 {
-    return entity.Get< Positions >().IsAt( point );
+    return entity.Get< Positions >().IsAt( point, 10.f * tools_.Pixels() );
 }
     
 // -----------------------------------------------------------------------------

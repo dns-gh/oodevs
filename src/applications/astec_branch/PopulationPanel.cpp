@@ -90,7 +90,8 @@ void PopulationPanel::NotifySelected( const Population* popu )
 // -----------------------------------------------------------------------------
 void PopulationPanel::DisplayParts( const Population& population )
 {
-    ValuedListItem* item = pPartsListView_->DisplayList( population.CreateIterator() );
+    ValuedListItem* item = pPartsListView_->DisplayList( population.Resolver< PopulationConcentration >::CreateIterator() );
+    item = pPartsListView_->DisplayList( population.Resolver< PopulationFlow >::CreateIterator(), pPartsListView_, item );
     pPartsListView_->DeleteTail( item );
 }
 

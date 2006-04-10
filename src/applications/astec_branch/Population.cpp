@@ -18,6 +18,8 @@
 #include "Model.h"
 #include "Controller.h"
 
+using namespace geometry;
+
 MIL_AgentID Population::nMaxId_ = 200;
 
 // -----------------------------------------------------------------------------
@@ -43,7 +45,8 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
 Population::~Population()
 {
     controller_.Delete( *this );
-    Resolver< PopulationPart_ABC >::DeleteAll();
+    Resolver< PopulationFlow >::DeleteAll();
+    Resolver< PopulationConcentration >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,9 +56,16 @@ Population::~Population()
 unsigned int Population::GetDeadHumans() const
 {
     unsigned int dead = 0;
-    Iterator< const PopulationPart_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-        dead += it.NextElement().GetDeadHumans();
+    {
+        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        while( it.HasMoreElements() )
+            dead += it.NextElement().GetDeadHumans();
+    }
+    {
+        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        while( it.HasMoreElements() )
+            dead += it.NextElement().GetDeadHumans();
+    }
     return dead;
 }
 
@@ -66,9 +76,16 @@ unsigned int Population::GetDeadHumans() const
 unsigned int Population::GetLivingHumans() const
 {
     unsigned int living = 0;
-    Iterator< const PopulationPart_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-        living += it.NextElement().GetLivingHumans();
+    {
+        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        while( it.HasMoreElements() )
+            living += it.NextElement().GetLivingHumans();
+    }
+    {
+        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        while( it.HasMoreElements() )
+            living += it.NextElement().GetLivingHumans();
+    }
     return living;
 }
 
@@ -78,7 +95,8 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-    Resolver< PopulationPart_ABC >::Get( asnMsg.oid_flux ).Update( asnMsg );
+    Resolver< PopulationFlow >::Get( asnMsg.oid_flux ).Update( asnMsg );
+    ComputeCenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +105,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-    Resolver< PopulationPart_ABC >::Get( asnMsg.oid_concentration ).Update( asnMsg );
+    Resolver< PopulationConcentration >::Get( asnMsg.oid_concentration ).Update( asnMsg );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +115,12 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-    if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux ) )
-        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
+    if( ! Resolver< PopulationFlow >::Find( asnMsg.oid_flux ) )
+    {
+        Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
+        ComputeCenter();
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -106,8 +129,12 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    if( ! Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration ) )
-        Resolver< PopulationPart_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
+    if( ! Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration ) )
+    {
+        Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
+        ComputeCenter();
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -116,8 +143,10 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
-    delete Resolver< PopulationPart_ABC >::Find( asnMsg.oid_flux );
-    Resolver< PopulationPart_ABC >::Remove( asnMsg.oid_flux );
+    delete Resolver< PopulationFlow >::Find( asnMsg.oid_flux );
+    Resolver< PopulationFlow >::Remove( asnMsg.oid_flux );
+    ComputeCenter();
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,8 +155,10 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-    delete Resolver< PopulationPart_ABC >::Find( asnMsg.oid_concentration );
-    Resolver< PopulationPart_ABC >::Remove( asnMsg.oid_concentration );
+    delete Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration );
+    Resolver< PopulationConcentration >::Remove( asnMsg.oid_concentration );
+    ComputeCenter();
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,9 +185,7 @@ unsigned long Population::GetId() const
 // -----------------------------------------------------------------------------
 const PopulationConcentration* Population::FindConcentration( uint nID ) const
 {
-    const PopulationPart_ABC* part = Resolver< PopulationPart_ABC >::Find( nID );
-    assert( ! part || dynamic_cast< const PopulationConcentration* >( part ) ); // $$$$ AGE 2006-02-20:
-    return static_cast< const PopulationConcentration* >( part );
+    return Resolver< PopulationConcentration >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,9 +194,7 @@ const PopulationConcentration* Population::FindConcentration( uint nID ) const
 // -----------------------------------------------------------------------------
 const PopulationFlow* Population::FindFlow( uint nID ) const
 {
-    const PopulationPart_ABC* part = Resolver< PopulationPart_ABC >::Find( nID );
-    assert( ! part || dynamic_cast< const PopulationFlow* >( part ) ); // $$$$ AGE 2006-02-20:
-    return static_cast< const PopulationFlow* >( part );
+    return Resolver< PopulationFlow >::Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,8 +203,7 @@ const PopulationFlow* Population::FindFlow( uint nID ) const
 // -----------------------------------------------------------------------------
 const PopulationConcentration& Population::GetConcentration( uint nID ) const
 {
-    const PopulationPart_ABC& part = Resolver< PopulationPart_ABC >::Get( nID );
-    return static_cast< const PopulationConcentration& >( part );
+    return Resolver< PopulationConcentration >::Get( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,8 +212,7 @@ const PopulationConcentration& Population::GetConcentration( uint nID ) const
 // -----------------------------------------------------------------------------
 const PopulationFlow& Population::GetFlow( uint nID ) const
 {
-    const PopulationPart_ABC& part = Resolver< PopulationPart_ABC >::Get( nID );
-    return static_cast< const PopulationFlow& >( part );
+    return Resolver< PopulationFlow >::Get( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +239,106 @@ const Team& Population::GetTeam() const
 // -----------------------------------------------------------------------------
 void Population::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
-    Iterator< const PopulationPart_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-        it.NextElement().Draw( where, tools );
+    {
+        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        while( it.HasMoreElements() )
+            it.NextElement().Draw( where, tools );
+    }
+    {
+        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        while( it.HasMoreElements() )
+            it.NextElement().Draw( where, tools );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::ComputeCenter
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void Population::ComputeCenter()
+{
+    center_.Set( 0, 0 );
+    float nParts = 0;
+
+    // $$$$ AGE 2006-04-10: Crappy crap !
+    {
+        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Point2f center = it.NextElement().GetPosition();
+            center_.Set( center_.X() + center.X(), center_.Y() + center.Y() );
+            ++nParts;
+        }
+    }
+    {
+        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Point2f center = it.NextElement().GetPosition();
+            center_.Set( center_.X() + center.X(), center_.Y() + center.Y() );
+            ++nParts;
+        }
+    }
+    if( nParts )
+        center_.Set( center_.X() / nParts, center_.Y() / nParts );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetPosition
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+geometry::Point2f Population::GetPosition() const
+{
+    return center_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Population::IsAt
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
+{
+    {
+        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        while( it.HasMoreElements() )
+            if( it.NextElement().IsAt( pos, precision ) )
+                return true;
+    }
+    {
+        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        while( it.HasMoreElements() )
+            if( it.NextElement().IsAt( pos, precision ) )
+                return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::IsIn
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
+{
+    {
+        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        while( it.HasMoreElements() )
+            if( it.NextElement().IsIn( rectangle ) )
+                return true;
+    }
+    {
+        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        while( it.HasMoreElements() )
+            if( it.NextElement().IsIn( rectangle ) )
+                return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetType
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+const PopulationType& Population::GetType() const
+{
+    return type_;
 }

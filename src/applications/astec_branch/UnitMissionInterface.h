@@ -21,8 +21,6 @@ class Agent;
 // =============================================================================
 class UnitMissionInterface : public MissionInterface_ABC
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -49,10 +47,10 @@ private:
 #include "UnitMissionInterface_Gen.h" 
     //@}
 
-private slots:
+private:
     //! @name Slots
     //@{
-    void OnOk();
+    virtual void OnOk();
     //@}
 
 private:

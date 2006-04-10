@@ -63,3 +63,12 @@ float PopulationType::GetDensity() const
 {
     return density_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationType::GetDecisionalModel
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+const DecisionalModel& PopulationType::GetDecisionalModel() const
+{
+    return *model_;
+}

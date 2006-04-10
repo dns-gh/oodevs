@@ -277,9 +277,6 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
             glVertex2f( 0.f, 0.f );
             glCallList( circle_ );
         glEnd();
-        glBegin( GL_LINE_STRIP );
-            glCallList( circle_ );
-        glEnd();
     glPopMatrix();
 }
 

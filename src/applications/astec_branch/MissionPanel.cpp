@@ -28,12 +28,13 @@
 #include "Model.h"
 #include "GlTools_ABC.h"
 #include "FragOrder.h"
+#include "PopulationDecisions.h"
+#include "Population.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
+#include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
-
-//#include "PopulationMissionInterface.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor
@@ -47,6 +48,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, Model& m
     , tools_            ( tools )
     , pMissionInterface_( 0 )
     , selected_         ( 0 )
+    , selectedPopulation_( 0 )
 {
     setResizeEnabled( true );
     setCaption( tr( "Mission" ) );
@@ -215,20 +217,34 @@ void MissionPanel::ActivateFragOrder( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyContextMenu( const Population& agent, QPopupMenu& menu )
 {
-//    if( popupMenu.count() > 0 )
-//        popupMenu.insertSeparator();
-//
-//    // Create and fill the unit menu.
-//    QPopupMenu* pPopulationMenu = new QPopupMenu( &popupMenu );
-//    const AgentModel::T_MissionVector& missions = population.GetModel().GetAvailableMissions();
-//    for( AgentModel::CIT_MissionVector it = missions.begin(); it != missions.end(); ++it )
-//    {
-//        int nId = pPopulationMenu->insertItem( ENT_Tr::ConvertFromPopulationMission( E_PopulationMission( *it ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
-//        pPopulationMenu->setItemParameter( nId, (int)*it );
-//    }
-//
-//    // Add the unit mission menu.
-//    popupMenu.insertItem( tr( "Missions Population" ), pPopulationMenu );
+    selectedPopulation_ = &agent;
+    if( menu.count() > 0 )
+        menu.insertSeparator();
+
+    QPopupMenu& missions = *new QPopupMenu( &menu );
+    Iterator< const Mission& > it = agent.Get< PopulationDecisions >().GetMissions();
+    while( it.HasMoreElements() )
+    {
+        const Mission& mission = it.NextElement();
+        int nId = missions.insertItem( mission.GetName().c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
+        missions.setItemParameter( nId, mission.GetId() );
+    }
+    menu.insertItem( tr( "Missions Population" ), &missions  );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::ActivatePopulationMission
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void MissionPanel::ActivatePopulationMission( int id )
+{
+    hide();
+    delete pMissionInterface_;
+    // $$$$ AGE 2006-03-31: 
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_ );
+    setWidget( pMissionInterface_ );
+    resize( 10, 10 );
+    show();
 }
 
 // -----------------------------------------------------------------------------
