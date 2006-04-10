@@ -72,7 +72,9 @@ ReportListView::~ReportListView()
 // -----------------------------------------------------------------------------
 void ReportListView::showEvent( QShowEvent* )
 {
-
+    const Agent_ABC* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
 }
 
 // -----------------------------------------------------------------------------
