@@ -41,8 +41,6 @@ public:
         if( ! parent )
             throw std::runtime_error( "Missing parent !" );
         ValuedListItem* previousItem = currentItem;
-        if( currentItem )
-            currentItem = (ValuedListItem*)currentItem->nextSibling();
         while( it.HasMoreElements() )
         {
             const Element& element = it.NextElement();
@@ -52,16 +50,14 @@ public:
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( element, previousItem );
         }
-        return previousItem;
+        return currentItem;
     };
     template< typename Iterator, typename Parent >
     ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent, ValuedListItem* currentItem = 0 )
     {
         if( ! parent )
-            throw std::runtime_error( "Missing parent !" );
+            throw std::runtime_error( "Missing parent !" ); // $$$$ AGE 2006-02-22: 
         ValuedListItem* previousItem = currentItem;
-        if( currentItem )
-            currentItem = (ValuedListItem*)currentItem->nextSibling();
         while( from != to )
         {
             if( ! currentItem  ) 
@@ -71,13 +67,11 @@ public:
             list_.Display( *from, previousItem );
             ++from;
         }
-        return previousItem;
+        return currentItem;
     };
 
     void DeleteTail( ValuedListItem* item )
     {
-        if( item )
-            item = (ValuedListItem*) item->nextSibling();
         while( item )
         {
             ValuedListItem* next = (ValuedListItem*) item->nextSibling();

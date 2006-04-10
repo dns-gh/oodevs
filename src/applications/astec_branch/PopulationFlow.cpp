@@ -25,6 +25,9 @@ PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, c
     , flow_      ( 2, geometry::Point2f( 0, 0 ) )
     , nDirection_( 0 )
     , nSpeed_    ( 0 )
+    , nLivingHumans_( 0 )
+    , nDeadHumans_( 0 )
+    , rDensity_( 0 )
 {
     // NOTHING
 }

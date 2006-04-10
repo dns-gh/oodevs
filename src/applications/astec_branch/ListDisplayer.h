@@ -42,7 +42,6 @@ public:
     //@{
     ListDisplayer& AddColumn( const char* column ) {
         addColumn( tr( column ) );
-        setResizeMode( QListView::LastColumn );
         itemDisplayer_.AddColumn( column );
         return *this;
     }
@@ -50,46 +49,46 @@ public:
     ValuedListItem* DisplayList( Iterator< const Element& > it ) {
         if( it.HasMoreElements() )
             show();
-        return T_Parent::Display( it, this );
+        return T_Parent::Display( it, this, (ValuedListItem*)( firstChild() ) );
     }
     template< typename Element >
     ValuedListItem* DisplayList( Iterator< const Element& > it, QListViewItem* parent ) {
         if( it.HasMoreElements() )
             show();
-        return T_Parent::Display( it, parent );
+        return T_Parent::Display( it, parent, (ValuedListItem*)( parent->firstChild() ) );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( Iterator< const Element& > it, QListView* parent, ValuedListItem* after ) {
+    ValuedListItem* DisplayList( Iterator< const Element& > it, QListView* parent, ValuedListItem* at ) {
         if( it.HasMoreElements() )
             show();
-        return T_Parent::Display( it, parent, after );
+        return T_Parent::Display( it, parent, at );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( Iterator< const Element& > it, QListViewItem* parent, ValuedListItem* after ) {
+    ValuedListItem* DisplayList( Iterator< const Element& > it, ValuedListItem* parent, ValuedListItem* at ) {
         if( it.HasMoreElements() )
             show();
-        return T_Parent::Display( it, parent, after );
+        return T_Parent::Display( it, parent, at );
     }
 
     template< typename Iterator >
     ValuedListItem* DisplayList( const Iterator& from, const Iterator& to ) {
         if( from != to )
             show();
-        return T_Parent::Display( from, to, this );
+        return T_Parent::Display( from, to, this, (ValuedListItem*)( firstChild() ) );
     };
 
     template< typename Iterator >
     ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListViewItem* parent ) {
         if( from != to )
             show();
-        return T_Parent::Display( from, to, parent );
+        return T_Parent::Display( from, to, parent, (ValuedListItem*)( parent->firstChild() ) );
     };
 
     template< typename Iterator >
-    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListView* parent, ValuedListItem* after ) {
+    ValuedListItem* DisplayList( const Iterator& from, const Iterator& to, QListView* parent, ValuedListItem* at ) {
         if( from != to )
             show();
-        return T_Parent::Display( from, to, parent, after );
+        return T_Parent::Display( from, to, parent, at );
     };
 
     template< typename T >
