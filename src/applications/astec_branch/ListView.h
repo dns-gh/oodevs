@@ -50,7 +50,7 @@ public:
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( element, previousItem );
         }
-        return currentItem;
+        return currentItem ? currentItem : new EmptyListItem( parent, previousItem );
     };
     template< typename Iterator, typename Parent >
     ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent, ValuedListItem* currentItem = 0 )
@@ -67,7 +67,7 @@ public:
             list_.Display( *from, previousItem );
             ++from;
         }
-        return currentItem;
+        return currentItem ? currentItem : new EmptyListItem( parent, previousItem );
     };
 
     void DeleteTail( ValuedListItem* item )
