@@ -134,7 +134,7 @@ void DEC_PopulationKnowledge::GetPionsAttacking( T_PopulationKnowledgeAgentDiaID
 {
     container.clear(); container.reserve( attackers_.size() );
     for( CIT_AgentSet it = attackers_.begin(); it != attackers_.end(); ++it )
-        container.push_back( (void*)(**it).GetID() );        
+        container.push_back( (void*)(**it).GetID() );
 }
 
 // -----------------------------------------------------------------------------

@@ -170,7 +170,8 @@ void MIL_PopulationElement_ABC::ApplyFire( uint nNbrAmmoFired, PHY_FireResults_A
 void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult )
 {
     assert( pPopulation_ );
-    MT_Float rTmp = std::min( rNbrAliveHumans_, rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) );
+    // $$$$ SBO 2006-04-07: 2% kill, at least one kill
+    MT_Float rTmp = ceil( 0.02f * std::min( rNbrAliveHumans_, rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) ) );
 
     rNbrDeadHumans_  += rTmp;
     rNbrAliveHumans_ -= rTmp;
