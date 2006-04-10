@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class Population;
@@ -29,6 +30,7 @@ class PopulationDetections : public Extension_ABC
                            , public Updatable_ABC< ConcentrationDetectionMessage >
                            , public Updatable_ABC< FlowDetectionMessage >
                            , public Updatable_ABC< PopulationCollisionMessage >
+                           , public Drawable_ABC
 {
 
 public:
@@ -40,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

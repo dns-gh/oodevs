@@ -282,12 +282,9 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 // Name: Gl3dWidget::DrawRectangle
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawRectangle( const Rectangle2f& rect ) const
+void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float height ) const
 {
-    DrawLine( Point2f( rect.Left(), rect.Top() ), Point2f( rect.Right(), rect.Top() ) );
-    DrawLine( Point2f( rect.Right(), rect.Top() ), Point2f( rect.Right(), rect.Bottom() ) );
-    DrawLine( Point2f( rect.Right(), rect.Bottom() ), Point2f( rect.Left(), rect.Bottom() ) );
-    DrawLine( Point2f( rect.Left(), rect.Bottom() ), Point2f( rect.Left(), rect.Top() ) );
+    // $$$$ AGE 2006-04-10: 
 }
 
 // -----------------------------------------------------------------------------

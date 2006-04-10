@@ -11,6 +11,7 @@
 #include "Contaminations.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Contaminations constructor
@@ -67,4 +68,12 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
                 .Display( "Contamination:", nContamination_ );
 }
 
-// $$$$ AGE 2006-04-06: Draw Icon
+// -----------------------------------------------------------------------------
+// Name: Contaminations::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void Contaminations::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! contaminatingNbcAgents_.empty() )
+        tools.DrawIcon( xpm_nbc, where, 150.f );
+}

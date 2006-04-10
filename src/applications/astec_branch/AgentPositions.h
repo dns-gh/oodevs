@@ -13,6 +13,7 @@
 #include "ASN_Types.h"
 #include "Updatable_ABC.h"
 #include "Positions.h"
+#include "Drawable_ABC.h"
 
 class CoordinateConverter;
 
@@ -24,6 +25,7 @@ class CoordinateConverter;
 // =============================================================================
 class AgentPositions : public Positions
                      , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+                     , public Drawable_ABC
 {
 
 public:
@@ -38,6 +40,7 @@ public:
     virtual geometry::Point2f GetPosition() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

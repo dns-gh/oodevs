@@ -32,7 +32,7 @@ class Team;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent : public Agent_ABC
-            , private Extension_ABC
+            , public Extension_ABC
             , public Updatable_ABC< ASN1T_MsgChangeAutomateAck >
             , public Updatable_ABC< ASN1T_MsgChangeAutomate >
             , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >

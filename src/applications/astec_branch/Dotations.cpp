@@ -13,6 +13,7 @@
 #include "Controller.h"
 #include "Dotation.h"
 #include "DotationType.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
@@ -54,10 +55,18 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
             dotation->quantity_ = value.quantite_disponible;
         else
             Register( value.ressource_id, *new Dotation( type, value.quantite_disponible ) );
-        if( type.GetName() == "carburant" )
+        if( type.IsGas() ) // $$$$ AGE 2006-04-10: 
             bEmptyGasTank_ = ( value.quantite_disponible == 0 );
     }
     controller_.Update( *this );
 }
 
-// $$$$ AGE 2006-04-06: Display out of gas
+// -----------------------------------------------------------------------------
+// Name: Dotations::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void Dotations::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( bEmptyGasTank_ )
+        tools.DrawIcon( xpm_gas, where, 150.f );
+}

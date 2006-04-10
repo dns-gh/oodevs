@@ -12,6 +12,7 @@
 #include "Agent.h"
 #include "Controller.h"
 #include "DecisionalModel.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Decisions constructor
@@ -116,4 +117,14 @@ const Mission* Decisions::GetCurrentMission() const
     return current_;
 }
 
-// $$$$ AGE 2006-04-06: Display embraye
+   
+// -----------------------------------------------------------------------------
+// Name: Decisions::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void Decisions::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( bEmbraye_ )
+        tools.DrawIcon( xpm_cadenas, where, 150.f );
+}
+

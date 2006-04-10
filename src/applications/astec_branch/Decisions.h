@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver.h"
+#include "Drawable_ABC.h"
 
 class Agent;
 class Controller;
@@ -30,6 +31,7 @@ class Decisions : public Extension_ABC
                 , public Updatable_ABC< ASN1T_MsgUnitAttributes >
                 , public Updatable_ABC< ASN1T_MsgPionOrder >
                 , public Updatable_ABC< ASN1T_MsgPionOrderAck >
+                , public Drawable_ABC
 {
 
 public:
@@ -46,6 +48,8 @@ public:
     virtual Iterator< const Mission& > GetMissions() const;
     virtual Iterator< const FragOrder& > GetFragOrders() const;
     const Mission* GetCurrentMission() const;
+
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

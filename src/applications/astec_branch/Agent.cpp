@@ -34,7 +34,6 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     , gtia_( 0 )
 {
     // $$$$ AGE 2006-02-16: message.oid_camp
-    InterfaceContainer< Extension_ABC >::Register( *this );
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
     controller_.Create( *this );
 }
@@ -57,7 +56,6 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     , superior_( 0 )
     , gtia_( 0 )
 {
-    InterfaceContainer< Extension_ABC >::Register( *this );
     ChangeSuperior( message.oid_automate );
     controller_.Create( *this );
 }

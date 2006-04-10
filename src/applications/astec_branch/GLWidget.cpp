@@ -287,13 +287,19 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 // Name: GlWidget::DrawRectangle
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawRectangle( const Rectangle2f& rect ) const
+void GlWidget::DrawRectangle( const Point2f& where, float h ) const
 {
+    const Vector2f fontSize = Base().GetSize( "a" );
+    // $$$$ AGE 2006-04-10: hard coded voodoo numbers
+    const float halfWidth   = fontSize.X() * 600.f * 0.5f * 0.92f;
+    const float deltaHeight = fontSize.Y() * 600.f * 0.062f;
+    const float height      = fontSize.Y() * 600.f * h * 0.876f + deltaHeight;
+
     glBegin( GL_QUADS );
-        glVertex2f( rect.Left(), rect.Bottom() );
-        glVertex2f( rect.Left(), rect.Top() );
-        glVertex2f( rect.Right(), rect.Top() );
-        glVertex2f( rect.Right(), rect.Bottom() );
+        glVertex2f( where.X() - halfWidth, where.Y() + deltaHeight );
+        glVertex2f( where.X() + halfWidth, where.Y() + deltaHeight);
+        glVertex2f( where.X() + halfWidth, where.Y() + height );
+        glVertex2f( where.X() - halfWidth, where.Y() + height);
     glEnd();
 }
 

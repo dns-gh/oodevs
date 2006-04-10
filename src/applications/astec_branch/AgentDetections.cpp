@@ -18,9 +18,10 @@
 // Name: AgentDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent >& resolver )
+AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent >& resolver, const Team& team )
     : controller_( controller )
-    , resolver_( resolver )
+    , resolver_  ( resolver )
+    , team_      ( team )
 {
     // NOTHING
 }
@@ -65,17 +66,19 @@ void AgentDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& t
     glLineWidth( 1.f );
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
-//        const Agent& agent = *it->first;
-//        if( agent.GetKnowledgeGroup()->GetTeam() ...
-        if( it->second == eVisTypeRecognized )
-            glColor4d( COLOR_RECO );
-        else if( it->second == eVisTypeIdentified )
-            glColor4d( COLOR_IDENTIFIED );
-        else if( it->second == E_UnitVisType( 4 ) )
-            glColor4d( COLOR_RECORDED );
-        else
-            glColor4d( COLOR_DETECTED );
-        tools.DrawLine( where, it->first->Get< Positions >().GetPosition() );
+        const Agent& agent = *it->first;
+        if( & agent.GetTeam() != &team_ )
+        {
+            if( it->second == eVisTypeRecognized )
+                glColor4d( COLOR_RECO );
+            else if( it->second == eVisTypeIdentified )
+                glColor4d( COLOR_IDENTIFIED );
+            else if( it->second == E_UnitVisType( 4 ) )
+                glColor4d( COLOR_RECORDED );
+            else
+                glColor4d( COLOR_DETECTED );
+            tools.DrawLine( where, it->first->Get< Positions >().GetPosition() );
+        }
     }
     glPopAttrib();
 }

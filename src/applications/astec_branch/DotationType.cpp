@@ -19,6 +19,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 DotationType::DotationType( const std::string& dotationName, xistream& xis )
     : name_( dotationName )
+    , gaz_( name_ == "carburant" ) // $$$$ AGE 2006-04-10: 
 {
     int id;
     xis >> attribute( "nom", category_ )
@@ -60,4 +61,13 @@ std::string DotationType::GetName() const
 std::string DotationType::GetCategory() const
 {
     return category_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::IsGas
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+bool DotationType::IsGas() const
+{
+    return gaz_;
 }

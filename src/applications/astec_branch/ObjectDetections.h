@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class Object;
@@ -37,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -53,7 +55,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const Object* > T_Objects;
+    typedef std::set< const Object* >   T_Objects;
+    typedef T_Objects::const_iterator CIT_Objects;
     //@}
 
 private:

@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "AgentPositions.h"
 #include "CoordinateConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions constructor
@@ -69,4 +70,13 @@ bool AgentPositions::IsAt( const geometry::Point2f& pos, float /*precision*/ /*=
 bool AgentPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     return rectangle.IsInside( position_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void AgentPositions::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    tools.DrawCross( where, GL_CROSSSIZE );    
 }

@@ -7,55 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __DotationType_h_
-#define __DotationType_h_
+#ifndef __Life_h_
+#define __Life_h_
 
-namespace xml { class xistream; };
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
+#include "ASN_Types.h"
 
 // =============================================================================
-/** @class  DotationType
-    @brief  DotationType
+/** @class  Life
+    @brief  Life
 */
-// Created: AGE 2006-02-21
+// Created: AGE 2006-04-10
 // =============================================================================
-class DotationType
+class Life : public Extension_ABC
+           , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+           , public Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationType( const std::string& dotationName, xml::xistream& xis );
-    virtual ~DotationType();
+             Life();
+    virtual ~Life();
     //@}
 
     //! @name Operations
     //@{
-    unsigned long GetId() const;
-    std::string GetName() const;
-    std::string GetCategory() const;
-
-    bool IsGas() const;
+    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    DotationType( const DotationType& );            //!< Copy constructor
-    DotationType& operator=( const DotationType& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    Life( const Life& );            //!< Copy constructor
+    Life& operator=( const Life& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned long id_;
-    std::string name_;
-    std::string category_;
-    bool gaz_;
+    float life_;
     //@}
 };
 
-#endif // __DotationType_h_
+#endif // __Life_h_

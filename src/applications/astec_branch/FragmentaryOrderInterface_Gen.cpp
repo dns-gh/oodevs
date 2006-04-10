@@ -555,7 +555,6 @@ void FragmentaryOrderInterface::CreateOrder_ModifierRegimeTravailMaintenance()
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
     ParamComboBox< ASN1T_EnumLogMaintenanceRegimeTravail >* pSelector_order_conduite_modifier_regime_travail_maintenance = &CreateVarList( asnMission.order_conduite_modifier_regime_travail_maintenance, "Order conduite modifier regime travail maintenance", false );
-    pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 0", EnumLogMaintenanceRegimeTravail::regime_0 );
     pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 1", EnumLogMaintenanceRegimeTravail::regime_1 );
     pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 2", EnumLogMaintenanceRegimeTravail::regime_2 );
     pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 3", EnumLogMaintenanceRegimeTravail::regime_3 );

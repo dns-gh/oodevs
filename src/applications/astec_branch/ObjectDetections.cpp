@@ -11,6 +11,9 @@
 #include "ObjectDetections.h"
 #include "Controller.h"
 #include "Attr_Def.h"
+#include "GlTools_ABC.h"
+#include "Object.h"
+#include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectDetections constructor
@@ -51,4 +54,18 @@ void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
     controller_.Update( *this );
 }
 
-// $$$$ AGE 2006-04-06: Draw something
+// -----------------------------------------------------------------------------
+// Name: ObjectDetections::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void ObjectDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( ! tools.ShouldDisplay( "VisionLines" ) )
+        return;
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glColor4d( COLOR_DETECTED );
+    glLineWidth( 1.f );
+    for( CIT_Objects it = perceivedObjects_.begin(); it != perceivedObjects_.end(); ++it )
+        tools.DrawLine( where, (*it)->Get< Positions >().GetPosition() );
+    glPopAttrib();
+}

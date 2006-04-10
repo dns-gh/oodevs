@@ -68,4 +68,4 @@ void Reinforcements::Display( Displayer_ABC& displayer ) const
         .Display( "Est renforcé par:", reinforcements_ );
 }
 
-// $$$$ AGE 2006-04-06: Draw something
+// $$$$ AGE 2006-04-06: Draw something ?

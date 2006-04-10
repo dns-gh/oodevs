@@ -118,4 +118,3 @@ bool AutomatDecisions::IsEmbraye() const
 {
     return bEmbraye_;
 }
-   

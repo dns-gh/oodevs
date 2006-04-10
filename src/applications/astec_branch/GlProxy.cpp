@@ -259,10 +259,10 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/
 // Name: GlProxy::DrawRectangle
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawRectangle( const geometry::Rectangle2f& rect ) const
+void GlProxy::DrawRectangle( const geometry::Point2f& center, float height ) const
 {
     CheckTools();
-    tools_->DrawRectangle( rect );
+    tools_->DrawRectangle( center, height );
 }
 
 // -----------------------------------------------------------------------------

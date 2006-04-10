@@ -94,4 +94,13 @@ void PopulationDetections::DoUpdate( const PopulationCollisionMessage& message )
     // $$$$ AGE 2006-03-17: 
 }
 
-// $$$$ AGE 2006-04-06: draw something
+// -----------------------------------------------------------------------------
+// Name: PopulationDetections::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void PopulationDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    // $$$$ AGE 2006-04-06: draw something
+}
+
+

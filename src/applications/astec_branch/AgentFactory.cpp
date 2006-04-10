@@ -55,6 +55,7 @@
 #include "AgentPositions.h"
 #include "PopulationPositions.h"
 #include "Controllers.h"
+#include "Life.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -78,6 +79,9 @@ AgentFactory::~AgentFactory()
     // NOTHING
 }
 
+// $$$$ AGE 2006-04-10: C'est l'ordre d'attach qui impose l'ordre de dessin. 
+// $$$$ AGE 2006-04-10: C'est pas terrible
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
@@ -85,12 +89,16 @@ AgentFactory::~AgentFactory()
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
+    result->Attach( *new Life() );
+    result->InterfaceContainer< Extension_ABC >::Register( *result );
+    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
+    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Update( asnMsg );
     return result;
 }
@@ -102,10 +110,14 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
+    result->Attach( *new Life() );
+    result->InterfaceContainer< Extension_ABC >::Register( *result );
+    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
+    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     return result;
 }
 
@@ -127,7 +139,6 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentFactory::AttachExtensions( Agent_ABC& agent )
 {
-    agent.Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     agent.Attach( *new Contaminations( controllers_.controller_, model_.objectTypes_ ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_ ) );
@@ -142,7 +153,6 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Troops( controllers_.controller_ ) );
     agent.Attach( *new Logistics( agent, controllers_.controller_, model_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
-    agent.Attach( *new AgentDetections( controllers_.controller_, model_.agents_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );

@@ -1,4 +1,3 @@
-//*****************************************************************************
 // File: resources.h
 // 
 // $Created:  CBX 01-06-22 $
@@ -114,5 +113,8 @@ DECLARE_ICON( desaggregate );
 DECLARE_ICON( recrec );
 DECLARE_ICON( recplay );
 DECLARE_ICON( recstop );
+DECLARE_ICON( flare );
+DECLARE_ICON( smoke );
+DECLARE_ICON( skull );
 
 #endif // __demo_resources_h_

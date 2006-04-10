@@ -15,6 +15,8 @@
 #include "CoordinateConverter.h"
 #include "GlTools_ABC.h"
 
+using namespace geometry;
+
 // -----------------------------------------------------------------------------
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
@@ -169,22 +171,20 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Attributes::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Attributes::Draw( const Point2f& where, const GlTools_ABC& tools ) const
 {
+    if( ! bDead_ && ! bRadioSilence_ && ! bRadarEnabled_ && ! bCommJammed_ )
+        return;
+
     glPushAttrib( GL_CURRENT_BIT );
     glColor3f( 1, 1, 1 );
-    tools.DrawIcon( xpm_cadenas, where );
-    tools.DrawIcon( xpm_radars_on, where );
-    tools.DrawIcon( xpm_brouillage, where );
-    tools.DrawIcon( xpm_talkie_interdit, where );
-    tools.DrawIcon( xpm_gas, where );
-    tools.DrawIcon( xpm_ammo, where );
-    tools.DrawIcon( xpm_nbc, where );
-    tools.DrawIcon( xpm_construction, where );
-    tools.DrawIcon( xpm_observe, where );
+    if( bDead_ )
+        tools.DrawIcon( xpm_skull, where, 150.f );
+    if( bRadioSilence_ )
+        tools.DrawIcon( xpm_talkie_interdit, where, 150.f );
+    if( bRadarEnabled_ )
+        tools.DrawIcon( xpm_radars_on, where, 150.f );
+    if( bCommJammed_ )
+        tools.DrawIcon( xpm_brouillage, where, 150.f );
     glPopAttrib();
-
-    // $$$$ AGE 2006-04-06: life.
-    // $$$$ AGE 2006-03-17: Move out ?
-    tools.DrawCross( where, GL_CROSSSIZE );
 }
