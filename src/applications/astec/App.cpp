@@ -89,7 +89,11 @@ App::App( int nArgc, char** ppArgv )
     // to disable 3d mode
     b3dEnabled_ = ! cmdLine.IsOptionSet( "-no3d" );
 
-    SetSplashText( tr("Initialisation de l'interface...") );
+    SetSplashText( tr( "Chargement des préférences..." ) );
+    pOptions_ = new Options();
+    pOptions_->Read();
+
+    SetSplashText( tr( "Initialisation de l'interface..." ) );
     pMainWindow_ = new MainWindow();
     pMainWindow_->show();
 
@@ -136,23 +140,35 @@ App::~App()
     // Save the tactical lines to file.
     if( pLineManager_->NeedSaving() )
     {
-        const std::string strInitialDir = MT_GetCurrentDir();
-        MT_ChangeDir( strRootDirectory_ );
-        MT_XXmlOutputArchive archive;
-        pLineManager_->Write( archive );
-        while( ! archive.WriteToFile( "TacticalLines.xml" ) )
+        bool saveFile = true;
+        if( pOptions_->bAskForTacticalLineSavingOnExit_ )
+            saveFile = QMessageBox::question( 0, tr( "TacticalLines.xml" ), 
+                                                 tr( "Les limites/limas ont été modifiées:\n voulez-vous sauvegarder TacticalLines.xml ?" ),
+                                                 QMessageBox::Yes,
+                                                 QMessageBox::No ) == QMessageBox::Yes;
+        if( saveFile )
         {
-            int nResult = QMessageBox::warning( 0, 
-                tr("Erreur d'écriture fichier"),
-                tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
-                "Vérifiez qu'il ne soit pas portegé en écriture"),
-                QMessageBox::Retry,
-                QMessageBox::Abort );
-            if( nResult == QMessageBox::Abort )
-                break;
+            const std::string strInitialDir = MT_GetCurrentDir();
+            MT_ChangeDir( strRootDirectory_ );
+            MT_XXmlOutputArchive archive;
+            pLineManager_->Write( archive );
+            while( ! archive.WriteToFile( "TacticalLines.xml" ) )
+            {
+                int nResult = QMessageBox::warning( 0, 
+                    tr("Erreur d'écriture fichier"),
+                    tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
+                    "Vérifiez qu'il ne soit pas portegé en écriture"),
+                    QMessageBox::Retry,
+                    QMessageBox::Abort );
+                if( nResult == QMessageBox::Abort )
+                    break;
+            }
+            MT_ChangeDir( strInitialDir );
         }
-        MT_ChangeDir( strInitialDir );
     }
+    
+    delete pOptions_;
+
 }
 
 
@@ -1089,9 +1105,9 @@ unsigned int App::GetRessourceID( const std::string& strRessource ) const
 // Name: App::Is3D
 // Created: AGE 2005-05-10
 // -----------------------------------------------------------------------------
-bool App::Is3D()
+bool App::Is3D() const
 {
-    return pMainWindow_ && pMainWindow_->GetOptions().b3D_;
+    return pMainWindow_ && pOptions_->b3D_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1208,4 +1224,13 @@ uint App::GetTickDuration() const
 void App::NotifyPopulationDeleted( Population& population )
 {
     emit PopulationDeleted( population );
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::GetOptions
+// Created: SBO 2006-04-11
+// -----------------------------------------------------------------------------
+Options& App::GetOptions() const
+{
+    return *pOptions_;
 }

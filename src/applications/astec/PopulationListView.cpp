@@ -131,7 +131,7 @@ void PopulationListView::SetSelectedElement( SelectedElement& selectedElement )
             disconnect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
             setSelected( it.current(), true );
             connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-            if( MainWindow::GetMainWindow().GetOptions().bOpenTreeToItem_ )
+            if( App::GetApp().GetOptions().bOpenTreeToItem_ )
                 ensureItemVisible( it.current() );
             return;
         }

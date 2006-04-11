@@ -6,33 +6,15 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/UnitToolbar.h $
-// $Author: Ape $
-// $Modtime: 21/09/04 16:07 $
-// $Revision: 1 $
-// $Workfile: UnitToolbar.h $
-//
-// *****************************************************************************
 
 #ifndef __UnitToolbar_h_
 #define __UnitToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Options.h"
-
 
 // =============================================================================
 /** @class  UnitToolbar
     @brief  UnitToolbar
-    @par    Using example
-    @code
-    UnitToolbar;
-    @endcode
 */
 // Created: APE 2004-09-21
 // =============================================================================
@@ -66,6 +48,7 @@ private:
     //@}
 
 private:
+    Options& options_;
     QToolButton* pOldPathsButton_;
 };
 

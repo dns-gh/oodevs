@@ -26,6 +26,7 @@
 #include "graphics/GraphicFactory.h"
 
 #include "terrain/TesselatedShape.h"
+#include "App.h"
 #include "MainWindow.h"
 #include "Options.h"
 
@@ -260,7 +261,7 @@ void World::AddShape( GraphicShape& shape )
 // -----------------------------------------------------------------------------
 bool World::ShouldUseList( const std::string& filename )
 {
-    return ! MainWindow::GetMainWindow().GetOptions().bNoList_ && filename.find( "list" ) != std::string::npos;
+    return ! App::GetApp().GetOptions().bNoList_ && filename.find( "list" ) != std::string::npos;
 }
 
 

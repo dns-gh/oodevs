@@ -46,6 +46,7 @@ DECLARE_ICON( conflict );
 // -----------------------------------------------------------------------------
 EventToolbar::EventToolbar( QMainWindow* pParent )
     : QToolBar( pParent, "message toolbar" )
+    , options_( App::GetApp().GetOptions() )
 {
     this->setLabel( tr( "Messagerie" ) );
     
@@ -145,13 +146,12 @@ void EventToolbar::UnsubscribeFromAgent()
 // -----------------------------------------------------------------------------
 void EventToolbar::OnTeamChanged()
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
     for( IT_ButtonVector it = agentButtons_.begin(); it != agentButtons_.end(); ++it )
     {
         Agent* pAgent = App::GetApp().GetAgentManager().FindAgent( (*it)->GetFilterId() );
         assert( pAgent != 0 );
 
-        if( (int)( pAgent->GetTeam().GetIdx() ) == options.nPlayedTeam_ )
+        if( (int)( pAgent->GetTeam().GetIdx() ) == options_.nPlayedTeam_ )
             (*it)->show();
         else
             (*it)->hide();
@@ -216,8 +216,7 @@ void EventToolbar::OnConflictEnded( Agent_ABC& origin )
 void EventToolbar::OnReportCreated( Agent_ABC& agent )
 {
     // Only receive events from agents on the team we are currently playing.
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    if( options.nPlayedTeam_ != Options::eController && options.nPlayedTeam_ != (int)(agent.GetTeam().GetIdx()) )
+    if( options_.nPlayedTeam_ != Options::eController && options_.nPlayedTeam_ != (int)(agent.GetTeam().GetIdx()) )
         return;
     emit ReportCreated( agent.GetID() );
 }

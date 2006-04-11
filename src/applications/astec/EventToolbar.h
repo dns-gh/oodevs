@@ -6,29 +6,16 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/EventToolbar.h $
-// $Author: Ape $
-// $Modtime: 4/10/04 14:38 $
-// $Revision: 1 $
-// $Workfile: EventToolbar.h $
-//
-// *****************************************************************************
 
 #ifndef __EventToolbar_h_
 #define __EventToolbar_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 class Agent;
 class Agent_ABC;
 class SelectedElement;
 class ActionContext;
 class EventToolButton;
-
+class Options;
 
 // =============================================================================
 // Created: APE 2004-09-21
@@ -41,8 +28,8 @@ class EventToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-     EventToolbar( QMainWindow* pParent );
-    ~EventToolbar();
+    explicit EventToolbar( QMainWindow* pParent );
+    virtual ~EventToolbar();
     //@}
 
 private slots:
@@ -85,6 +72,7 @@ signals:
 private:
     //! @name Member data
     //@{
+    Options& options_;
     Agent_ABC* pSelectedAgent_;
 
     typedef std::vector< EventToolButton* >   T_ButtonVector;

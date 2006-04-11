@@ -215,7 +215,7 @@ bool DefaultMapEventHandler::OnMouseMove( const MapMouseEvent& mouseEvent )
     }
     
     //deal with over events, the test is only here for performance
-    if( MainWindow::GetMainWindow().GetOptions().bDisplayHoveredInfo_ )
+    if( App::GetApp().GetOptions().bDisplayHoveredInfo_ )
         HoverElementAtPos( mouseEvent.GetMapPos(), mouseEvent.GetDistancePerPixel() ) ;
     
     vOldMousePos_ = mouseEvent.GetMapPos();
@@ -440,7 +440,7 @@ void DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, floa
             nSelectionState = ePhaseSelectionObject;
             break;
         case ePhaseSelectionObject:
-            if( MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != Options::eController )
+            if( App::GetApp().GetOptions().nPlayedTeam_ != Options::eController )
             {
                 nSelectionState = ePhaseSelectionAgentKnowledge;
                 break;
@@ -453,7 +453,7 @@ void DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, floa
             nSelectionState = ePhaseSelectionAgentKnowledge;;
             break;
         case ePhaseSelectionAgentKnowledge:
-            if( MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == Options::eController )
+            if( App::GetApp().GetOptions().nPlayedTeam_ == Options::eController )
             {
                 nSelectionState = ePhaseSelectionObjectKnowledge;
                 break;
@@ -466,7 +466,7 @@ void DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, floa
             nSelectionState = ePhaseSelectionObjectKnowledge;
             break;
         case ePhaseSelectionObjectKnowledge:
-            if( MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == Options::eController )
+            if( App::GetApp().GetOptions().nPlayedTeam_ == Options::eController )
             {
                 nSelectionState = ePhaseSelectionPopulationConcentration;
                 break;
@@ -511,7 +511,7 @@ void DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, floa
         }
     }
     //... or a tactical line
-    if( MainWindow::GetMainWindow().GetOptions().nDrawTacticalLines_ != Options::eOff )
+    if( App::GetApp().GetOptions().nDrawTacticalLines_ != Options::eOff )
     {
         TacticalLine_ABC* pLine = GetLineAtPos( vGLPos, rDistancePerPixel );
         if( pLine != 0 )
@@ -543,7 +543,7 @@ Population* DefaultMapEventHandler::GetPopulationAtPos( const MT_Vector2D& vGLPo
 bool DefaultMapEventHandler::GetPopulationConcentrationAtPos( PopulationConcentration*& pPopulationConcentrationReturned, const MT_Vector2D& vGLPos )
 {
     bool bRescan = false;
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
 
     AgentManager::CT_PopulationMap& populationMap = App::GetApp().GetAgentManager().GetPopulationList();
     if( ! populationMap.size() )
@@ -605,7 +605,7 @@ bool DefaultMapEventHandler::GetPopulationConcentrationAtPos( PopulationConcentr
 bool DefaultMapEventHandler::GetPopulationFlowAtPos( PopulationFlow*& pPopulationFlowReturned, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     bool bRescan = false;
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
 
     AgentManager::CT_PopulationMap& populationMap = App::GetApp().GetAgentManager().GetPopulationList();
     if( ! populationMap.size() )
@@ -687,7 +687,7 @@ bool DefaultMapEventHandler::IsPopulationFlowAtPos( const PopulationFlow& flow, 
 void DefaultMapEventHandler::HoverElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
 
-    if( MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != Options::eController )
+    if( App::GetApp().GetOptions().nPlayedTeam_ != Options::eController )
     {
         AgentKnowledge* pAgentKnowledge = 0;
         GetAgentKnowledgeAtPos( pAgentKnowledge, vGLPos );
@@ -756,7 +756,7 @@ void DefaultMapEventHandler::HoverElementAtPos( const MT_Vector2D& vGLPos, float
 bool DefaultMapEventHandler::GetAgentAtPos( Agent*& pAgentReturned, const MT_Vector2D& vGLPos )
 {
     bool bRescan = false;
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
 
     AgentManager::CT_AgentMap& agentMap = App::GetApp().GetAgentManager().GetAgentList();
     if( ! agentMap.size() )
@@ -807,7 +807,7 @@ bool DefaultMapEventHandler::GetAgentAtPos( Agent*& pAgentReturned, const MT_Vec
 bool DefaultMapEventHandler::GetAgentKnowledgeAtPos( AgentKnowledge*& pAgentKnowledgeReturned, const MT_Vector2D& vGLPos )
 {
     bool bRescan = false; 
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
     assert( nPlayedTeam != Options::eController );  // You can't select agent knowledges on the map when in 'all teams' mode (ie. controller view).
 
     Team* pPlayedTeam = App::GetApp().GetAgentManager().FindTeamFromIdx( nPlayedTeam );
@@ -990,7 +990,7 @@ bool DefaultMapEventHandler::IsObjectAtPos( const Object_ABC& object, const MT_V
 bool DefaultMapEventHandler::GetObjectKnowledgeAtPos( ObjectKnowledge*& pObjectKnowledgeReturned, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     bool bRescan = false; 
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
     assert( options.nPlayedTeam_ != Options::eController );
     Team* pTeam = App::GetApp().GetAgentManager().FindTeamFromIdx( options.nPlayedTeam_ );
     assert( pTeam != 0 );

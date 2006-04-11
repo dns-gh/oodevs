@@ -38,7 +38,7 @@
 OptionsPanel::OptionsPanel( QWidget* pParent )
     : QWidget( pParent )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
 
     QVBoxLayout* pLayout = new QVBoxLayout( this );
     pLayout->setMargin( 5 );
@@ -117,8 +117,11 @@ OptionsPanel::OptionsPanel( QWidget* pParent )
     pAutoOpenCheckbox_->setChecked( options.bOpenTreeToItem_ );
     pAutoSaveLoadCheckbox_ = new QCheckBox( tr( "Lecture/sauvegarde lima/limites" ), pOtherPanel );
     pAutoSaveLoadCheckbox_->setChecked( options.bSaveLoadTacticalLines_ );
-    pSubLayout3->addMultiCellWidget( pAutoOpenCheckbox_, 0, 0, 0, 0 );
-    pSubLayout3->addMultiCellWidget( pAutoOpenCheckbox_, 0, 0, 1, 1 );
+    pAskForTacticalLineSavingOnExit_ = new QCheckBox( tr( "Confirmer sauvegarde lima/limites" ), pOtherPanel );
+    pAskForTacticalLineSavingOnExit_->setChecked( options.bAskForTacticalLineSavingOnExit_ );
+    pSubLayout3->addMultiCellWidget( pAutoOpenCheckbox_              , 0, 0, 0, 0 );
+    pSubLayout3->addMultiCellWidget( pAutoSaveLoadCheckbox_          , 1, 1, 0, 0 );
+    pSubLayout3->addMultiCellWidget( pAskForTacticalLineSavingOnExit_, 2, 2, 0, 0 );
     pSubLayout3->setRowStretch( 1, 10 );
 
     // Ok Apply Cancel buttons
@@ -174,7 +177,7 @@ void OptionsPanel::OnCheckpoint()
 // -----------------------------------------------------------------------------
 void OptionsPanel::Apply()
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
     ASN_MsgCtrlCheckPointSetFrequency asnMsg;
     asnMsg.GetAsnMsg() = pCheckpointSpinbox_->value();
     asnMsg.Send();
@@ -190,7 +193,7 @@ void OptionsPanel::Apply()
     options.bDisplayTracesOnMap_ = pDisplayTracesOnMap_->isChecked();
     options.bDisplayIdentificationLevelOnMap_ = pDisplayIdentificationLevelOnMap_->isChecked();
     options.bDisplayOnlySubscribedAgentsRC_ = pDisplayOnlySubscribedAgentsRC_->isChecked();
-
+    options.bAskForTacticalLineSavingOnExit_ = pAskForTacticalLineSavingOnExit_->isChecked();
 }
 
 // -----------------------------------------------------------------------------

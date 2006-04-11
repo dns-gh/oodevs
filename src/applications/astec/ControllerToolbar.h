@@ -6,24 +6,12 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ControllerToolbar.h $
-// $Author: Age $
-// $Modtime: 14/04/05 12:53 $
-// $Revision: 2 $
-// $Workfile: ControllerToolbar.h $
-//
-// *****************************************************************************
 
 #ifndef __ControllerToolbar_h_
 #define __ControllerToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 class Team;
+class Options;
 
 // =============================================================================
 /** @class  ControllerToolbar
@@ -62,6 +50,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    Options& options_;
     QComboBox* pTeamCombo_;
     //@}
 };

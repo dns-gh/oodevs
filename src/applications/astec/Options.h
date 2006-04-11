@@ -6,28 +6,13 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-16 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Options.h $
-// $Author: Age $
-// $Modtime: 16/05/05 16:39 $
-// $Revision: 10 $
-// $Workfile: Options.h $
-//
-// *****************************************************************************
 
 #ifndef __Options_h_
 #define __Options_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 
 class MT_Settings;
-
-
 // =============================================================================
 /** @class  Options
     @brief  Contains all of the gui's options.
@@ -63,8 +48,15 @@ public:
 
     //! @name Read/Write operations
     //@{
-    void WriteSettings( MT_Settings& settings );
-    void ReadSettings( MT_Settings& settings );
+    void Read();
+    void Write() const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadSettings ( MT_Settings& settings );
+    void WriteSettings( MT_Settings& settings ) const;
     //@}
 
 public:
@@ -89,6 +81,7 @@ public:
     bool    bDisplayTracesOnMap_;
     bool    bDisplayIdentificationLevelOnMap_;
     bool    bDisplayOnlySubscribedAgentsRC_;
+    bool    bAskForTacticalLineSavingOnExit_;
 
     MT_Float rGridStep_;
 

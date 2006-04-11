@@ -6,22 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MainWindow.h $
-// $Author: Age $
-// $Modtime: 17/05/05 14:05 $
-// $Revision: 14 $
-// $Workfile: MainWindow.h $
-//
-// *****************************************************************************
 
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 class GL3DWidget;
 class GLWidget;
@@ -35,7 +22,6 @@ class SelectedElement;
 class ActionContext;
 class WeatherPanel;
 class Logger;
-class Options;
 class ObjectCreationPanel;
 class AgentCreationPanel;
 class PopulationCreationPanel;
@@ -83,8 +69,6 @@ public:
     void PopMapEventFilter( MapEventFilter_ABC& filter );
     const T_MapEventFilterVector& GetMapEvents() const;
 
-    Options& GetOptions() const;
-
     QGLWidget* GetQGLWidget( bool b3Dmode ) const;
     //@}
 
@@ -110,9 +94,6 @@ private:
 
     void WriteSettings();
     void ReadSettings();
-
-    void WriteOptions();
-    void ReadOptions();
 
 private:
     //! @name Member data
@@ -145,8 +126,6 @@ private:
     QLabel* pTickLabel_;
 
     QTimer* pLagTimer_;
-
-    Options* pOptions_;
     //@}
 
 private:

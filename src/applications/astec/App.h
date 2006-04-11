@@ -54,6 +54,7 @@ class SensorType;
 class LogSupplyConsign;
 class LogMedicalConsign;
 class LogMaintenanceConsign;
+class Options;
 
 //=============================================================================
 // Created: NLD 2002-07-15
@@ -76,7 +77,7 @@ public:
 
     void InitializeData( const std::string& strFilename );
 
-    bool Is3D();
+    bool Is3D() const;
     bool Is3DEnabled() const;
     bool IsODBEdition();
     void ReadODB( std::string strFilename );
@@ -157,9 +158,7 @@ public:
     void NotifyTypePopulationCreated( TypePopulation& type );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     Network&       GetNetwork       () const;
     AgentManager&  GetAgentManager  () const;
@@ -169,18 +168,16 @@ public:
     RawVisionData& GetRawVisionData ();
     Meteo_Manager& GetWeatherManager() const;
     MainWindow&    GetMainWindow    () const;
-    uint               GetTime          () const;
-    uint               GetTickDuration  () const;
+    uint           GetTime          () const;
+    uint           GetTickDuration  () const;
     //@}
 
     void SetSplashText( const QString& strText );
 
-    //-------------------------------------------------------------------------
-    /** @name Helpers */
-    //-------------------------------------------------------------------------
+    //! @name Helpers
     //@{
     std::string                 GetResourceName         ( MIL_AgentID )                     const;
-    const Resource&         GetResource             ( MIL_AgentID )                     const;
+    const Resource&             GetResource             ( MIL_AgentID )                     const;
     std::string                 GetEquipmentName        ( MIL_AgentID )                     const;
     uint                        GetEquipementID         ( const std::string& strName )      const;
     std::string                 GetTransportDotationName( MIL_AgentID )                     const;
@@ -190,8 +187,13 @@ public:
     const T_MosId_String_Map&   GetNBCNames             ()                                  const;
     const T_MosId_String_Map&   GetResourceNames        ()                                  const;
     const T_MosId_String_Map&   GetEquipmentNames       ()                                  const;
-    const SensorType*       FindSensorType          ( const std::string& strName )      const;
+    const SensorType*           FindSensorType          ( const std::string& strName )      const;
     unsigned int                GetRessourceID          ( const std::string& strRessource ) const;
+    //@}
+
+    //! @name Options
+    //@{
+    Options& GetOptions() const;
     //@}
 
 signals:
@@ -320,6 +322,7 @@ private:
 
     QTimer*            pNetworkTimer_;
     QTimer*            pDisplayTimer_;
+    Options*           pOptions_;
     //@}
 
 private:

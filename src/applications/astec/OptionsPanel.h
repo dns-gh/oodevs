@@ -6,25 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-07-09 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/OptionsPanel.h $
-// $Author: Age $
-// $Modtime: 31/03/05 16:59 $
-// $Revision: 3 $
-// $Workfile: OptionsPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __OptionsPanel_h_
 #define __OptionsPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 class QCheckBox;
-
 
 // =============================================================================
 // Created: APE 2004-07-09
@@ -37,8 +23,8 @@ class OptionsPanel : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-    OptionsPanel( QWidget* pParent );
-    ~OptionsPanel();
+    explicit OptionsPanel( QWidget* pParent );
+    virtual ~OptionsPanel();
     //@}
 
 private slots:
@@ -68,7 +54,8 @@ private:
     QCheckBox* pDisplayMessagesOnMap_;
     QCheckBox* pDisplayTracesOnMap_;
     QCheckBox* pDisplayIdentificationLevelOnMap_ ;
-    QCheckBox* pDisplayOnlySubscribedAgentsRC_ ;
+    QCheckBox* pDisplayOnlySubscribedAgentsRC_;
+    QCheckBox* pAskForTacticalLineSavingOnExit_;
     
     //@}
 };

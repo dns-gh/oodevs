@@ -96,7 +96,7 @@ AgentListView::~AgentListView()
 // -----------------------------------------------------------------------------
 void AgentListView::AddAgent( Agent& agent )
 {
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
     if( nPlayedTeam != Options::eController && nPlayedTeam != (int)agent.GetTeam().GetIdx() )
         return;
 
@@ -193,7 +193,7 @@ void AgentListView::AddAgent( Agent& agent )
 // -----------------------------------------------------------------------------
 void AgentListView::AddGtia( Gtia& gtia )
 {
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
     if( nPlayedTeam != Options::eController && nPlayedTeam != (int)gtia.GetTeam().GetIdx() )
         return;
 
@@ -273,7 +273,7 @@ void AgentListView::SetSelectedElement( SelectedElement& selectedElement )
             disconnect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
             this->setSelected( it.current(), true );
             connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-            if( MainWindow::GetMainWindow().GetOptions().bOpenTreeToItem_ )
+            if( App::GetApp().GetOptions().bOpenTreeToItem_ )
                 this->ensureItemVisible( it.current() );
             return;
         }

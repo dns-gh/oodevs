@@ -6,19 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ControllerToolbar.cpp $
-// $Author: Age $
-// $Modtime: 14/04/05 12:53 $
-// $Revision: 2 $
-// $Workfile: ControllerToolbar.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ControllerToolbar.h"
@@ -33,12 +20,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 ControllerToolbar::ControllerToolbar( QMainWindow* pParent )
     : QToolBar( pParent, "controller toolbar" )
+    , options_( App::GetApp().GetOptions() )
 {
     this->setLabel( tr( "Outils controlleur" ) );
 
@@ -76,13 +62,11 @@ ControllerToolbar::~ControllerToolbar()
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar::OnTeamChanged
-/** @param  nValue 
-*/
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
 void ControllerToolbar::OnTeamChanged( int nValue )
 {
-    MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = nValue - 1;
+    options_.nPlayedTeam_ = nValue - 1;
     // The "- 1" above is to take into account that index 0 is
     // occupied by the 'all teams' (ie. controller view) option.
 
@@ -95,7 +79,7 @@ void ControllerToolbar::OnTeamChanged( int nValue )
 // -----------------------------------------------------------------------------
 void ControllerToolbar::OnTeamCreated( Team& team )
 {
-    MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = Options::eController;
+    options_.nPlayedTeam_ = Options::eController;
     pTeamCombo_->insertItem( team.GetName().c_str(), team.GetIdx() + 1 );
 }
 
@@ -105,7 +89,7 @@ void ControllerToolbar::OnTeamCreated( Team& team )
 // -----------------------------------------------------------------------------
 void ControllerToolbar::OnTeamDeleted( Team& team )
 {
-    MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = Options::eController;
+    options_.nPlayedTeam_ = Options::eController;
     int nIndex = 0;
     while( nIndex < pTeamCombo_->count() && pTeamCombo_->text( nIndex ) != team.GetName().c_str() )
         ++nIndex;

@@ -57,6 +57,7 @@
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent )
     : QDockWindow                        ( pParent )
+    , options_                           ( App::GetApp().GetOptions() )
     , pMissionInterface_                 ( 0 )
     , pAgentMagicMovePositionEditor_     ( new ShapeEditorMapEventFilter( this ) )
     , pPopulationMagicMovePositionEditor_( new ShapeEditorMapEventFilter( this ) )
@@ -64,15 +65,15 @@ MissionPanel::MissionPanel( QWidget* pParent )
     , pPopupPopulationConcentration_     ( 0 )
     , pPopupPopulationFlow_              ( 0 )
 {
-    this->setResizeEnabled( true );
-    this->setCaption( tr( "Mission" ) );
-    this->setCloseMode( QDockWindow::Always );
+    setResizeEnabled( true );
+    setCaption( tr( "Mission" ) );
+    setCloseMode( QDockWindow::Always );
 
     connect( pAgentMagicMovePositionEditor_     , SIGNAL( Done() ), this, SLOT( MagicMoveDone() ) );
     connect( pPopulationMagicMovePositionEditor_, SIGNAL( Done() ), this, SLOT( PopulationMagicMoveDone() ) );
 
-    connect( &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), this,   SLOT( FillRemotePopupMenu( QPopupMenu&, const ActionContext& ) ) );
-    connect( &MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ),                                         this,   SLOT( hide() ) );
+    connect( &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), this, SLOT( FillRemotePopupMenu( QPopupMenu&, const ActionContext& ) ) );
+    connect( &MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ),                                     this, SLOT( hide() ) );
 }
 
 
@@ -96,7 +97,7 @@ void MissionPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionConte
 
     if( context.selectedElement_.pAgent_ != 0 )
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pAgent_ );
-    if( context.selectedElement_.pTeam_ != 0 && MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
+    if( context.selectedElement_.pTeam_ != 0 && options_.bControllerMode_ )
         FillDiplomacyPopupMenu( popupMenu, *context.selectedElement_.pTeam_ );
     if( context.selectedElement_.pPopulation_ )
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulation_ );
@@ -163,7 +164,7 @@ void MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, Population& pop
     int nFragId = popupMenu.insertItem( tr( "Ordres de conduite" ), pFragOrdersMenu );
 
     // Add the magic orders if playing as controller.
-    if( MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
+    if( options_.bControllerMode_ )
     {
         QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
         pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( PopulationMagicMove() ) );
@@ -293,7 +294,7 @@ void MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, Agent& agent )
         popupMenu.setItemEnabled( nFragId, false );
 
     // Add the magic orders if playing as controller.
-    if( MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
+    if( options_.bControllerMode_ )
     {
         QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
         int nId;
@@ -337,7 +338,7 @@ void MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, Agent& agent )
         popupMenu.insertItem( agent.IsEmbraye() ? tr( "Débrayer automate" ) : tr( "Embrayer automate" ), this, SLOT( ToggleAutomate() ) );
         popupMenu.insertItem( agent.IsAggregated() ? tr( "Désaggréger l'automate" ) : tr( "Aggréger l'automate" ), this, SLOT( ToggleAggregation() ) );
         popupMenu.insertSeparator();
-        if( MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
+        if( options_.bControllerMode_ )
             popupMenu.insertItem( tr( "Liens logistiques" ), this, SLOT( MagicChangeLogisticLinks() ) );
     }
 

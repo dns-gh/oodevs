@@ -90,7 +90,7 @@ ObjectListView::~ObjectListView()
 // -----------------------------------------------------------------------------
 void ObjectListView::AddObject( Object_ABC& object )
 {
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
     if( nPlayedTeam != Options::eController && nPlayedTeam != (int)object.GetTeam().GetIdx() )
         return;
 

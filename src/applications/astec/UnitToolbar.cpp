@@ -20,38 +20,33 @@
 #include "UnitToolbar.h"
 #include "moc_UnitToolbar.cpp"
 
-#include "MainWindow.h"
-#include "Options.h"
-
+#include "App.h"
 
 // -----------------------------------------------------------------------------
 // Name: UnitToolbar constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 UnitToolbar::UnitToolbar( QMainWindow* pParent )
     : QToolBar( pParent, "unit toolbar" )
+    , options_( App::GetApp().GetOptions() )
 {
-    this->setLabel( tr( "Options unité" ) );
-
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    setLabel( tr( "Options unité" ) );
 
     MT_ToolListButton* pVisionLinesButton = new MT_ToolListButton( MAKE_ICON( visionlines ), tr( "Afficher lines de vision" ), "", this, SLOT( OnVisionLines( float ) ), this );
-    this->FillButton( *pVisionLinesButton, options.nDrawVisionLines_ );
+    this->FillButton( *pVisionLinesButton, options_.nDrawVisionLines_ );
 
     MT_ToolListButton* pVisionConesButton = new MT_ToolListButton( MAKE_ICON( visioncones ), tr( "Afficher cones de vision" ), "", this, SLOT( OnVisionCones( float ) ), this );
-    this->FillButton( *pVisionConesButton, options.nDrawVisionCones_ );
+    this->FillButton( *pVisionConesButton, options_.nDrawVisionCones_ );
 
     MT_ToolListButton* pVisionSurfacesButton = new MT_ToolListButton( MAKE_ICON( visionsurfaces ), tr( "Afficher surfaces de vision" ), "", this, SLOT( OnVisionSurfaces( float ) ), this );
-    this->FillButton( *pVisionSurfacesButton, options.nDrawVisionSurfaces_ );
+    this->FillButton( *pVisionSurfacesButton, options_.nDrawVisionSurfaces_ );
 
     MT_ToolListButton* pPathsButton = new MT_ToolListButton( MAKE_ICON( path ), tr( "Afficher les itinéraires" ), "", this, SLOT( OnPaths( float ) ), this );
-    this->FillButton( *pPathsButton, options.nDrawPaths_ );
+    this->FillButton( *pPathsButton, options_.nDrawPaths_ );
 
     pOldPathsButton_ = new QToolButton( MAKE_ICON( oldpath ), tr( "Afficher chemin parcouru" ), "", this, SLOT( OnOldPathsToggled() ), this );
     pOldPathsButton_->setToggleButton( true );
-    pOldPathsButton_->setOn( MainWindow::GetMainWindow().GetOptions().bDrawOldPaths_ );
+    pOldPathsButton_->setOn( options_.bDrawOldPaths_ );
 }
 
 
@@ -66,10 +61,6 @@ UnitToolbar::~UnitToolbar()
 
 // -----------------------------------------------------------------------------
 // Name: UnitToolbar::FillButton
-/** @param  pButton 
-    @param  iconSet 
-    @param  strToolTip 
-*/
 // Created: APE 2004-03-17
 // -----------------------------------------------------------------------------
 void UnitToolbar::FillButton( MT_ToolListButton& button, Options::E_State nState )
@@ -89,47 +80,37 @@ void UnitToolbar::FillButton( MT_ToolListButton& button, Options::E_State nState
 // -----------------------------------------------------------------------------
 void UnitToolbar::OnVisionLines( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawVisionLines_ = (Options::E_State)(int)(rValue);
+    options_.nDrawVisionLines_ = (Options::E_State)(int)(rValue);
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: UnitToolbar::OnVisionCones
-/** @param  rValue 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 void UnitToolbar::OnVisionCones( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawVisionCones_ = (Options::E_State)(int)(rValue);
+    options_.nDrawVisionCones_ = (Options::E_State)(int)(rValue);
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: UnitToolbar::OnVisionSurfaces
-/** @param  rValue 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 void UnitToolbar::OnVisionSurfaces( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawVisionSurfaces_ = (Options::E_State)(int)(rValue);
+    options_.nDrawVisionSurfaces_ = (Options::E_State)(int)(rValue);
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: UnitToolbar::OnPaths
-/** @param  rValue 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 void UnitToolbar::OnPaths( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawPaths_ = (Options::E_State)(int)(rValue);
+    options_.nDrawPaths_ = (Options::E_State)(int)(rValue);
 }
 
 
@@ -139,6 +120,5 @@ void UnitToolbar::OnPaths( float rValue )
 // -----------------------------------------------------------------------------
 void UnitToolbar::OnOldPathsToggled()
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.bDrawOldPaths_ = pOldPathsButton_->isOn();
+    options_.bDrawOldPaths_ = pOldPathsButton_->isOn();
 }

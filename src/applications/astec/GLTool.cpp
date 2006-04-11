@@ -218,7 +218,7 @@ void GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
 
     Draw( App::GetApp().GetObjectManager() );
     Draw( App::GetApp().GetAgentManager() );
-    if( MainWindow::GetMainWindow().GetOptions().nDrawTacticalLines_ != Options::eNone )
+    if( App::GetApp().GetOptions().nDrawTacticalLines_ != Options::eNone )
         Draw( App::GetApp().GetLineManager() );
     Draw( App::GetApp().GetWeatherManager() );
 
@@ -365,7 +365,7 @@ void GLTool::DrawNameObjects( World& world )
 
 
     unsigned int nMaxLod = 0;
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
     if( options.nDrawLargeText_ == Options::eOn
    || ( options.nDrawLargeText_ == Options::eAuto && extent.Width() < 20000 ) )
         nMaxLod = 1;
@@ -393,7 +393,7 @@ void GLTool::DrawNameObjects( World& world )
 // -----------------------------------------------------------------------------
 void GLTool::Draw( AgentManager& manager )
 {
-    int nPlayedTeam = MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+    int nPlayedTeam = App::GetApp().GetOptions().nPlayedTeam_;
 
     // Draw all the team object knowledges, but not in 'all teams' mode (ie. controller view),
     // otherwise most knowledges and objects would overlap)
@@ -453,7 +453,7 @@ void GLTool::Draw( AgentManager& manager )
         }
 
     //Draw the real time logistic actions
-    if ( MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
+    if ( App::GetApp().GetOptions().bDisplayRealTimeLog_ )
     {
         //glLineStipple( 1, GLTool::stipplePattern_[ (nFrame_  % 16) ] );
         glEnable( GL_LINE_STIPPLE );
@@ -561,7 +561,7 @@ void GLTool::Draw( AgentManager& manager )
 // -----------------------------------------------------------------------------
 void GLTool::Draw( Agent& agent, E_State nState )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
 
 
     //Is this unit hidden in an aggregation ?
@@ -701,8 +701,8 @@ void GLTool::Draw( Agent& agent, E_State nState )
 
 
     if ( agent.IsAutomate() && (
-            MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == Options::eOn
-            || ( nState == eSelected && (MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == Options::eAuto ))))
+            App::GetApp().GetOptions().nDisplayMissingLogLinks_ == Options::eOn
+            || ( nState == eSelected && (App::GetApp().GetOptions().nDisplayMissingLogLinks_ == Options::eAuto ))))
     {
         // Display the missing links
         MT_Vector2D translation = MT_Vector2D(0, 150);
@@ -747,8 +747,8 @@ void GLTool::Draw( Agent& agent, E_State nState )
     }
     // Draw the logistic links of the selected automata
     if ( agent.IsAutomate() && (
-        MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == Options::eOn
-        || ( nState == eSelected && (MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == Options::eAuto ))))
+        App::GetApp().GetOptions().nDisplayLogLinks_ == Options::eOn
+        || ( nState == eSelected && (App::GetApp().GetOptions().nDisplayLogLinks_ == Options::eAuto ))))
     {
         float offset = 100.0;
         glLineWidth( 3 );
@@ -787,8 +787,8 @@ void GLTool::Draw( Agent& agent, E_State nState )
     }
 
     //Draw the RC tooltips
-    if( MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_
-        && ( agent.bListened_ || ! MainWindow::GetMainWindow().GetOptions().bDisplayOnlySubscribedAgentsRC_ ) )
+    if( App::GetApp().GetOptions().bDisplayRConMap_
+        && ( agent.bListened_ || ! App::GetApp().GetOptions().bDisplayOnlySubscribedAgentsRC_ ) )
     {
         QGLWidget* pWidget = MainWindow::GetMainWindow().GetQGLWidget( App::GetApp().Is3D() );
         const Agent::T_ReportVector& reports = agent.GetReports();
@@ -804,13 +804,13 @@ void GLTool::Draw( Agent& agent, E_State nState )
             int time = App::GetApp().GetTime() - (*it)->GetTime();
             if( ((*it)->GetType() == Report_ABC::eRC 
                   || (*it)->GetType() == Report_ABC::eWarning 
-                  || ( (*it)->GetType() == Report_ABC::eTrace && MainWindow::GetMainWindow().GetOptions().bDisplayTracesOnMap_ )
+                  || ( (*it)->GetType() == Report_ABC::eTrace && App::GetApp().GetOptions().bDisplayTracesOnMap_ )
                   || (*it)->GetType() == Report_ABC::eEvent 
-                  || ( (*it)->GetType() == Report_ABC::eMessage && MainWindow::GetMainWindow().GetOptions().bDisplayMessagesOnMap_ ))
+                  || ( (*it)->GetType() == Report_ABC::eMessage && App::GetApp().GetOptions().bDisplayMessagesOnMap_ ))
                 && time  < duration )
             {     
                 bTodo = true;
-                if( MainWindow::GetMainWindow().GetOptions().bDisplayIdentificationLevelOnMap_ || (*it)->IsInteresting() )
+                if( App::GetApp().GetOptions().bDisplayIdentificationLevelOnMap_ || (*it)->IsInteresting() )
                     tooltip.AddLine( (*it)->GetStrippedTitle(), 128.0 * time / duration , 128.0 * time / duration , 128.0 * time / duration, 1.0 , true );
             }
             else if ( time  > 4 )
@@ -853,7 +853,7 @@ void GLTool::Draw( Population& population, E_State nState /*= eNormal*/ )
         DrawCross( *itCur, GL_CROSSSIZE, 4.0 );
     }
     //Draw the RC tooltips
-    if( MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_ )
+    if( App::GetApp().GetOptions().bDisplayRConMap_ )
     {
         QGLWidget* pWidget = MainWindow::GetMainWindow().GetQGLWidget( App::GetApp().Is3D() );
         const Agent::T_ReportVector& reports = population.GetReports();
@@ -869,9 +869,9 @@ void GLTool::Draw( Population& population, E_State nState /*= eNormal*/ )
             int time = App::GetApp().GetTime() - (*it)->GetTime();
             if( ((*it)->GetType() == Report_ABC::eRC 
                   || (*it)->GetType() == Report_ABC::eWarning
-                  || ( (*it)->GetType() == Report_ABC::eTrace && MainWindow::GetMainWindow().GetOptions().bDisplayTracesOnMap_ )
+                  || ( (*it)->GetType() == Report_ABC::eTrace && App::GetApp().GetOptions().bDisplayTracesOnMap_ )
                   || (*it)->GetType() == Report_ABC::eEvent 
-                  || ( (*it)->GetType() == Report_ABC::eMessage && MainWindow::GetMainWindow().GetOptions().bDisplayMessagesOnMap_ ))
+                  || ( (*it)->GetType() == Report_ABC::eMessage && App::GetApp().GetOptions().bDisplayMessagesOnMap_ ))
                 && time  < duration )
             {     
                 bTodo = true;
@@ -993,7 +993,7 @@ void GLTool::Draw( PopulationFlow& flow, E_State nState /*= eNormal*/ )
 // -----------------------------------------------------------------------------
 void GLTool::DrawPath( Agent& agent )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
     // Update the path data.
     agent.UpdatePathFind();
 
@@ -1265,7 +1265,7 @@ void GLTool::Draw( PopulationFlowKnowledge& knowledge, E_State nState /*= eNorma
 void GLTool::Draw( ObjectManager& manager )
 {
     // Only draw the real objects when in all teams mode (ie. controller view).
-    if( MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != Options::eController )
+    if( App::GetApp().GetOptions().nPlayedTeam_ != Options::eController )
         return;
 
     for( ObjectManager::IT_ObjectMap it = manager.ObjectMap_.begin(); it != manager.ObjectMap_.end(); ++it )
@@ -1316,7 +1316,7 @@ void GLTool::Draw( Object_ABC& object, E_State nState )
         default:
             DrawLine( p );
     }
-    if ( MainWindow::GetMainWindow().GetOptions().bDrawObjetIcons_ )
+    if ( App::GetApp().GetOptions().bDrawObjetIcons_ )
     {
         E_Icon objectIcon = IconOfObjectType( (E_ObjectType) object.GetType() );
         if ( objectIcon != eNoneIcon && p.size() > 0 )
@@ -1423,7 +1423,7 @@ void GLTool::Draw( TacticalLine_ABC& line, E_State nState, int nSelectedPoint )
         }
     }
 
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
     float rSize = 300 * (options.nFontSize_ / 10.0);
 
     QGLWidget* pWidget = MainWindow::GetMainWindow().GetQGLWidget( App::GetApp().Is3D() );
@@ -1497,7 +1497,7 @@ void GLTool::Draw( Meteo_Manager& weatherManager )
     }
 
     // Only display the weather if enabled in the options.
-    if( ! MainWindow::GetMainWindow().GetOptions().bDisplayWeather_ )
+    if( ! App::GetApp().GetOptions().bDisplayWeather_ )
         return;
 
     glLineWidth( 2 );
@@ -1544,7 +1544,7 @@ void GLTool::Draw( WeatherPanel& panel )
         return;
 
     // If the weather is not displayed, display it while the panel is visible.
-    Options& options = MainWindow::GetMainWindow().GetOptions();
+    Options& options = App::GetApp().GetOptions();
     if( ! options.bDisplayWeather_ )
     {
         options.bDisplayWeather_ = true;
@@ -1880,7 +1880,7 @@ void GLTool::Draw( const DefaultMapEventHandler& eventHandler )
     
     //Draw an info box under the mouse if a pawn is Hovered
     if( ! App::GetApp().IsODBEdition()
-        && MainWindow::GetMainWindow().GetOptions().bDisplayHoveredInfo_ )
+        && App::GetApp().GetOptions().bDisplayHoveredInfo_ )
     {
         if( eventHandler.hoveredElement_.pAgent_ 
             && eventHandler.hoveredElement_.pAgent_ != eventHandler.selectedElement_.pAgent_  )
@@ -1975,7 +1975,7 @@ void GLTool::Draw( const DefaultMapEventHandler& eventHandler )
             }
 
             //write the current consigns
-            if( MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
+            if( App::GetApp().GetOptions().bDisplayRealTimeLog_ )
             {
                 const AgentManager::T_MaintenanceConsigns& consignsMain = App::GetApp().GetAgentManager().GetMaintenanceConsigns();
                 for( AgentManager::CIT_MaintenanceConsigns itMain = consignsMain.begin(); itMain != consignsMain.end(); ++itMain )
@@ -2699,7 +2699,7 @@ void GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float rAng
 // -----------------------------------------------------------------------------
 void GLTool::DrawGrid( World& world )
 {
-    MT_Float rGridStep = MainWindow::GetMainWindow().GetOptions().rGridStep_;
+    MT_Float rGridStep = App::GetApp().GetOptions().rGridStep_;
     const MT_Rect& worldRect = world.GetRect();
 
     glColor4d( 1.0, 1.0, 1.0, 0.3 );

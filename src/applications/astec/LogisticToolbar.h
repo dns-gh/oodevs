@@ -10,10 +10,6 @@
 #ifndef __LogisticToolbar_h_
 #define __LogisticToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Options.h"
 
 // =============================================================================
@@ -44,7 +40,7 @@ private:
 
 
 private:
-
+    Options& options_;
     //QToolButton* pAutoSetLogisticLinksButton_;
     QToolButton* pRealTimeLogButton_;
     QToolButton*  pAggregateAllButton_;

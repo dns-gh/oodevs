@@ -25,12 +25,12 @@
 #include "moc_MapToolbar.cpp"
 
 #include "App.h"
+#include "MainWindow.h"
 #include "Options.h"
 #include "AgentManager.h"
 #include "Agent.h"
 #include "Team.h"
 #include "SelectedElement.h"
-#include "MainWindow.h"
 #include "Report_ABC.h"
 
 #include "resources.h"
@@ -43,33 +43,32 @@
 // -----------------------------------------------------------------------------
 MapToolbar::MapToolbar( QMainWindow* pParent )
     : QToolBar( pParent, "map toolbar" )
+    , options_( App::GetApp().GetOptions() )
 {
     this->setLabel( tr( "Options carte" ) );
 
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-
     MT_ToolListButton* pSmallTextButton = new MT_ToolListButton( MAKE_ICON( textsmall ), tr( "Afficher petits textes" ), "", this, SLOT( OnSmallText( float ) ), this );
-    this->FillButton( *pSmallTextButton, options.nDrawSmallText_ );
+    this->FillButton( *pSmallTextButton, options_.nDrawSmallText_ );
 
     MT_ToolListButton* pLargeTextButton = new MT_ToolListButton( MAKE_ICON( textbig ), tr( "Afficher grands textes" ), "", this, SLOT( OnLargeText( float ) ), this );
-    this->FillButton( *pLargeTextButton, options.nDrawLargeText_ );
+    this->FillButton( *pLargeTextButton, options_.nDrawLargeText_ );
 
     MT_ToolListButton* pDetailsButton = new MT_ToolListButton( MAKE_ICON( crossings ), tr( "Afficher détails" ), "", this, SLOT( OnDetails( float ) ), this );
-    this->FillButton( *pDetailsButton, options.nDrawDetails_ );
+    this->FillButton( *pDetailsButton, options_.nDrawDetails_ );
 
     MT_ToolListButton* pTacticalLinesButton = new MT_ToolListButton( MAKE_ICON( tacticallines ), tr( "Afficher lines tactiques" ), "", this, SLOT( OnTacticalLines( float ) ), this );
-    this->FillButton( *pTacticalLinesButton, options.nDrawTacticalLines_ );
+    this->FillButton( *pTacticalLinesButton, options_.nDrawTacticalLines_ );
 
     pWeatherButton_ = new QToolButton( MAKE_ICON( weather ), tr( "Afficher météo" ), "", this, SLOT( OnWeatherToggled() ), this );
     pWeatherButton_->setToggleButton( true );
-    pWeatherButton_->setOn( MainWindow::GetMainWindow().GetOptions().bDisplayWeather_ );
+    pWeatherButton_->setOn( options_.bDisplayWeather_ );
 
     this->addSeparator();
 
     new QLabel( tr( "Grille:" ), this );
     MT_ToolListButton* pGridStep = new MT_ToolListButton( this );
     connect( pGridStep, SIGNAL( ItemSelected( float ) ), this, SLOT( OnGrid( float ) ) );
-    MT_Float rGridStep = options.rGridStep_;
+    MT_Float rGridStep = options_.rGridStep_;
     pGridStep->AddItem( "0.1km",  0.1f,  rGridStep == 0.1 );
     pGridStep->AddItem( "0.25km", 0.25f, rGridStep == 0.25 );
     pGridStep->AddItem( "0.5km",  0.5f,  rGridStep == 0.5 );
@@ -83,7 +82,7 @@ MapToolbar::MapToolbar( QMainWindow* pParent )
     {
         p3DButton_ = new QToolButton( MAKE_ICON( threed ), tr( "3D" ), "", this, SLOT( On3DToggle() ), this ); // $$$$ AGE 2005-05-13: change icon
         p3DButton_->setToggleButton( true );
-        p3DButton_->setOn( MainWindow::GetMainWindow().GetOptions().b3D_ );
+        p3DButton_->setOn( options_.b3D_ );
     }
 }
 
@@ -122,8 +121,7 @@ void MapToolbar::FillButton( MT_ToolListButton& button, Options::E_State nState 
 // -----------------------------------------------------------------------------
 void MapToolbar::OnSmallText( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawSmallText_ = (Options::E_State)(int)(rValue);
+    options_.nDrawSmallText_ = (Options::E_State)(int)(rValue);
 }
 
 
@@ -135,47 +133,37 @@ void MapToolbar::OnSmallText( float rValue )
 // -----------------------------------------------------------------------------
 void MapToolbar::OnLargeText( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawLargeText_ = (Options::E_State)(int)(rValue);
+    options_.nDrawLargeText_ = (Options::E_State)(int)(rValue);
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MapToolbar::OnTacticalLines
-/** @param  rValue 
-*/
 // Created: APE 2004-09-22
 // -----------------------------------------------------------------------------
 void MapToolbar::OnTacticalLines( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawTacticalLines_ = (Options::E_State)(int)(rValue);
+    options_.nDrawTacticalLines_ = (Options::E_State)(int)(rValue);
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MapToolbar::OnDetails
-/** @param  rValue 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 void MapToolbar::OnDetails( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDrawDetails_ = (Options::E_State)(int)(rValue);
+    options_.nDrawDetails_ = (Options::E_State)(int)(rValue);
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MapToolbar::OnGrid
-/** @param  rValue 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 void MapToolbar::OnGrid( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.rGridStep_ = rValue;
+    options_.rGridStep_ = rValue;
 }
 
 
@@ -185,8 +173,7 @@ void MapToolbar::OnGrid( float rValue )
 // -----------------------------------------------------------------------------
 void MapToolbar::OnWeatherToggled()
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.bDisplayWeather_ = pWeatherButton_->isOn();
+    options_.bDisplayWeather_ = pWeatherButton_->isOn();
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +182,6 @@ void MapToolbar::OnWeatherToggled()
 // -----------------------------------------------------------------------------
 void MapToolbar::On3DToggle()
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.b3D_ = p3DButton_->isOn();
+    options_.b3D_ = p3DButton_->isOn();
     MainWindow::GetMainWindow().DimensionsChanged();
 }

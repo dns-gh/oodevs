@@ -19,10 +19,6 @@
 #ifndef __MapToolbar_h_
 #define __MapToolbar_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Options.h"
 
 class MT_ToolListButton;
@@ -32,7 +28,7 @@ class Agent;
 class RC;
 class Report_ABC;
 class SelectedElement;
-
+class Options;
 
 // =============================================================================
 /** @class  MapToolbar
@@ -75,6 +71,8 @@ private slots:
     //@}
 
 private:
+    Options& options_;
+
     QToolButton* pWeatherButton_;
     QToolButton* p3DButton_;
 };

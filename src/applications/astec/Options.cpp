@@ -58,7 +58,8 @@ Options::Options()
     , bDisplayMessagesOnMap_    ( false )
     , bDisplayTracesOnMap_      ( false )
     , bDisplayIdentificationLevelOnMap_ ( false )
-    , bDisplayOnlySubscribedAgentsRC_   (false )
+    , bDisplayOnlySubscribedAgentsRC_   ( false )
+    , bAskForTacticalLineSavingOnExit_  ( true )
 {
     MT_CommandLine arguments( qApp->argc(), qApp->argv() );
     bNoList_ = arguments.IsOptionSet( "-nolist" );
@@ -73,14 +74,35 @@ Options::~Options()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: Options::WriteOptions
+// Created: APE 2004-07-12
+// -----------------------------------------------------------------------------
+void Options::Write() const
+{
+    MT_Settings settings;
+    settings.setPath( "MASA", "Light2" );
+    WriteSettings( settings );
+}
+    
+
+// -----------------------------------------------------------------------------
+// Name: Options::ReadOptions
+// Created: APE 2004-07-12
+// -----------------------------------------------------------------------------
+void Options::Read()
+{
+    MT_Settings settings;
+    settings.setPath( "MASA", "Light2" );
+    ReadSettings( settings );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: Options::WriteSettings
-/** @param  settings 
-*/
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-void Options::WriteSettings( MT_Settings& settings )
+void Options::WriteSettings( MT_Settings& settings ) const
 {
     settings.beginGroup( "/Options" );
     settings.writeEntry( "/smallText",      nDrawSmallText_ );
@@ -106,6 +128,7 @@ void Options::WriteSettings( MT_Settings& settings )
     settings.writeEntry( "/displayLogLinks",                    nDisplayLogLinks_ );
     settings.writeEntry( "/displayMissingLogLinks",             nDisplayMissingLogLinks_ );
     settings.writeEntry( "/DisplayOnlySubscribedAgentsRC_",     bDisplayOnlySubscribedAgentsRC_ );
+    settings.writeEntry( "/AskForTacticalLineSavingOnExit",     bAskForTacticalLineSavingOnExit_ );
     settings.endGroup();
 }
 
@@ -142,7 +165,7 @@ void Options::ReadSettings( MT_Settings& settings )
     nDisplayLogLinks_                   = (E_State)settings.readNumEntry( "/displayLogLinks", eNone );
     nDisplayMissingLogLinks_            = (E_State)settings.readNumEntry( "/displayMissingLogLinks", eNone );
     bDisplayOnlySubscribedAgentsRC_     = settings.readBoolEntry( "/DisplayOnlySubscribedAgentsRC_", false );
-
+    bAskForTacticalLineSavingOnExit_    = settings.readBoolEntry( "/AskForTacticalLineSavingOnExit", true );
     
     settings.endGroup();
 }

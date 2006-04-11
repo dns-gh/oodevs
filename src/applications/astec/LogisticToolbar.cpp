@@ -29,22 +29,21 @@
 // -----------------------------------------------------------------------------
 LogisticToolbar::LogisticToolbar( QMainWindow* pParent )
     : QToolBar( pParent, "logistic toolbar" )
+    , options_( App::GetApp().GetOptions() )
 {
     this->setLabel( tr( "Options logistique" ) );
 
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-
     MT_ToolListButton* pLinksButton = new MT_ToolListButton( MAKE_ICON( loglink ), tr( "Afficher les liens logistiques" ), "", this, SLOT( OnLogisticLinks( float ) ), this );
-    this->FillButton( *pLinksButton, options.nDisplayLogLinks_ );
+    this->FillButton( *pLinksButton, options_.nDisplayLogLinks_ );
 
     MT_ToolListButton* pMissingLinksButton = new MT_ToolListButton( MAKE_ICON( missinglog ), tr( "Afficher les liens logistiques manquant" ), "", this, SLOT( OnMissingLogisticLinks( float ) ), this );
-    this->FillButton( *pMissingLinksButton, options.nDisplayMissingLogLinks_ );
+    this->FillButton( *pMissingLinksButton, options_.nDisplayMissingLogLinks_ );
     
     //pAutoSetLogisticLinksButton_ = new QToolButton( MAKE_ICON( autolog ), tr( "Calcul automatique des liens logistiques" ), "", this, SLOT( OnAutoSetLogisticLinks() ), this );
     
     pRealTimeLogButton_ = new QToolButton( MAKE_ICON( realtimelog ), tr( "Affichage temps réel des actions logistiques" ), "", this, SLOT( OnRealTimeLog() ), this );  
     pRealTimeLogButton_->setToggleButton( true );
-    pRealTimeLogButton_->setOn( options.bDisplayRealTimeLog_ );
+    pRealTimeLogButton_->setOn( options_.bDisplayRealTimeLog_ );
 
     pAggregateAllButton_ = new QToolButton( MAKE_ICON( aggregate ), tr( "Aggréger tous les automates" ), "", this, SLOT( OnAggregateAll() ), this );
     pAggregateAllButton_->setToggleButton( false );
@@ -81,8 +80,7 @@ void LogisticToolbar::FillButton( MT_ToolListButton& button, Options::E_State nS
 // -----------------------------------------------------------------------------
 void LogisticToolbar::OnLogisticLinks( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDisplayLogLinks_ = (Options::E_State)(int)(rValue);
+    options_.nDisplayLogLinks_ = (Options::E_State)(int)(rValue);
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +89,7 @@ void LogisticToolbar::OnLogisticLinks( float rValue )
 // -----------------------------------------------------------------------------
 void LogisticToolbar::OnMissingLogisticLinks( float rValue )
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.nDisplayMissingLogLinks_ = (Options::E_State)(int)(rValue);
+    options_.nDisplayMissingLogLinks_ = (Options::E_State)(int)(rValue);
 }
 
 // -----------------------------------------------------------------------------
@@ -101,9 +98,8 @@ void LogisticToolbar::OnMissingLogisticLinks( float rValue )
 // -----------------------------------------------------------------------------
 void LogisticToolbar::OnRealTimeLog()
 {
-    Options& options = MainWindow::GetMainWindow().GetOptions();
-    options.bDisplayRealTimeLog_ =! options.bDisplayRealTimeLog_;
-    pRealTimeLogButton_->setOn( options.bDisplayRealTimeLog_ );
+    options_.bDisplayRealTimeLog_ = !options_.bDisplayRealTimeLog_;
+    pRealTimeLogButton_->setOn( options_.bDisplayRealTimeLog_ );
 }
 
 //// -----------------------------------------------------------------------------

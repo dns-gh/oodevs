@@ -69,9 +69,6 @@ MainWindow::MainWindow()
     this->setIcon( MAKE_PIXMAP( astec ) );
     this->setCaption( APP_NAME );
 
-    pOptions_ = new Options();
-    this->ReadOptions();
-
     if( App::GetApp().Is3DEnabled() )
         pGL3DWidget_ = new GL3DWidget( this );
     pGLWidget_   = new GLWidget( this, pGL3DWidget_ );
@@ -239,9 +236,6 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
     assert( pInstance_ != 0 );
-
-    delete pOptions_;
-
     pInstance_ = 0;
 }
 
@@ -370,8 +364,8 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     // Not done in the destructor, as the windows would already be hidden and we wouldn't
     // be able to correctly record their hidden/visible state.
-    this->WriteSettings();
-    this->WriteOptions();
+    WriteSettings();
+    App::GetApp().GetOptions().Write();
 
     QMainWindow::closeEvent( pEvent );
 }
@@ -429,37 +423,13 @@ void MainWindow::ReadSettings()
     // Always keep the mission panel hidden hidden at launch.
     pMissionPanel_->hide();
 
-    if( ! pOptions_->bControllerMode_ )
+    if( ! App::GetApp().GetOptions().bControllerMode_ )
     {
-        this->setAppropriate( pCreationDockWnd_, false );
-        this->setAppropriate( pWeatherDockWnd_, false );
+        setAppropriate( pCreationDockWnd_, false );
+        setAppropriate( pWeatherDockWnd_, false );
         pCreationDockWnd_->hide();
         pWeatherDockWnd_->hide();
     }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::WriteOptions
-// Created: APE 2004-07-12
-// -----------------------------------------------------------------------------
-void MainWindow::WriteOptions()
-{
-    MT_Settings settings;
-    settings.setPath( "MASA", "Light2" );
-    pOptions_->WriteSettings( settings );
-}
-    
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ReadOptions
-// Created: APE 2004-07-12
-// -----------------------------------------------------------------------------
-void MainWindow::ReadOptions()
-{
-    MT_Settings settings;
-    settings.setPath( "MASA", "Light2" );
-    pOptions_->ReadSettings( settings );
 }
 
 // -----------------------------------------------------------------------------
