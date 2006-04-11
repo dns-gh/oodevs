@@ -8,68 +8,83 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Life.h"
+#include "Lives.h"
 #include "GlTools_ABC.h"
+#include "Agent.h"
 
 // -----------------------------------------------------------------------------
-// Name: Life constructor
+// Name: Lives constructor
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-Life::Life( bool automat )
-    : life_( 1.f )
-    , automat_( automat )
+Lives::Lives( const Agent& agent )
+    : agent_( agent ) 
+    , life_( 1.f )
     , bEmbraye_( false )
+    , aggregated_( false )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Life destructor
+// Name: Lives destructor
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-Life::~Life()
+Lives::~Lives()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Life::Draw
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-void Life::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
-{
-    glPushAttrib( GL_CURRENT_BIT );
-    if( automat_ && bEmbraye_ )
-        glColor4f( 1, 1, 0, 0.4f );
-    else
-        glColor4f( 1, 1, 1, 0.4f );
-    tools.DrawRectangle( where, life_ );
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Life::DrawAggregated
+// Name: Lives::GetLife
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void Life::DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+float Lives::GetLife() const
+{
+    if( ! aggregated_ )
+        return life_;
+    float result = life_;
+    unsigned count = 1;
+    Iterator< const Agent& > children = agent_.CreateIterator();
+    while( children.HasMoreElements() )
+    {
+        result += children.NextElement().Get< Lives >().GetLife();
+        ++count;
+    }
+    return result / count;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lives::Draw
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void Lives::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_CURRENT_BIT );
-    if( automat_ && bEmbraye_ )
+    if( agent_.GetAutomatDecisionalModel() && bEmbraye_ )
         glColor4f( 1, 1, 0, 0.4f );
     else
         glColor4f( 1, 1, 1, 0.4f );
-    tools.DrawRectangle( where, life_, 2.f );
+    tools.DrawRectangle( where, GetLife(), aggregated_ ? 2.f : 1.f );
     glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Life::DoUpdate
+// Name: Lives::DoUpdate
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Life::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Lives::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.etat_operationnel_brutPresent )
         life_ = message.etat_operationnel_brut * 0.01f;
     if( message.m.etat_automatePresent )
         bEmbraye_ = ( message.etat_automate == EnumAutomateState::embraye );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lives::Aggregate
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void Lives::Aggregate( const bool& bms )
+{
+    aggregated_ = bms;
 }

@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
+#include "Aggregatable_ABC.h"
 
 class Controller;
 class Displayer_ABC;
@@ -28,6 +29,7 @@ class CoordinateConverter;
 class Attributes : public Extension_ABC
                  , public Updatable_ABC< ASN1T_MsgUnitAttributes >
                  , public Drawable_ABC
+                 , public Aggregatable_ABC
 {
 
 public:
@@ -53,6 +55,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void Aggregate( const bool& );
     //@}
 
 private:
@@ -94,6 +97,8 @@ private:
     bool bPrisoner_;
     bool bSurrendered_;
     bool bRefugeesManaged_;
+
+    bool aggregated_;
     //@}
 };
 

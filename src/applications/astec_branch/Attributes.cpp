@@ -24,6 +24,7 @@ using namespace geometry;
 Attributes::Attributes( Controller& controller, const CoordinateConverter& converter )
     : controller_( controller )
     , converter_ ( converter )
+    , aggregated_( false ) 
 {
     // NOTHING
 }
@@ -173,7 +174,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Attributes::Draw( const Point2f& where, const GlTools_ABC& tools ) const
 {
-    if( ! bDead_ && ! bRadioSilence_ && ! bRadarEnabled_ && ! bCommJammed_ )
+    if( aggregated_ || ( ! bDead_ && ! bRadioSilence_ && ! bRadarEnabled_ && ! bCommJammed_ ) )
         return;
 
     glPushAttrib( GL_CURRENT_BIT );
@@ -187,4 +188,13 @@ void Attributes::Draw( const Point2f& where, const GlTools_ABC& tools ) const
     if( bCommJammed_ )
         tools.DrawIcon( xpm_brouillage, where, 150.f );
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::Aggregate
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void Attributes::Aggregate( const bool& bDoMe )
+{
+    aggregated_ = bDoMe;
 }

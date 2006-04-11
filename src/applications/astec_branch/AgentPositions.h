@@ -14,8 +14,10 @@
 #include "Updatable_ABC.h"
 #include "Positions.h"
 #include "Drawable_ABC.h"
+#include "Aggregatable_ABC.h"
 
 class CoordinateConverter;
+class Agent;
 
 // =============================================================================
 /** @class  AgentPositions
@@ -26,12 +28,13 @@ class CoordinateConverter;
 class AgentPositions : public Positions
                      , public Updatable_ABC< ASN1T_MsgUnitAttributes >
                      , public Drawable_ABC
+                     , public Aggregatable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentPositions( const CoordinateConverter& converter );
+             AgentPositions( const Agent& agent, const CoordinateConverter& converter );
     virtual ~AgentPositions();
     //@}
 
@@ -53,13 +56,16 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void Aggregate( const bool& );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const Agent& agent_;
     const CoordinateConverter& converter_;
     geometry::Point2f position_;
+    bool aggregated_;
     //@}
 };
 

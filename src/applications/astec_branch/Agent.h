@@ -17,6 +17,7 @@
 #include "Updatable_ABC.h"
 #include "Resolver.h"
 #include "Drawable_ABC.h"
+#include "Aggregatable_ABC.h"
 
 class Controller;
 class AgentType;
@@ -36,6 +37,7 @@ class Agent : public Agent_ABC
             , public Updatable_ABC< ASN1T_MsgChangeAutomateAck >
             , public Updatable_ABC< ASN1T_MsgChangeAutomate >
             , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
+            , public Aggregatable_ABC
             , public Resolver< Agent > // $$$$ AGE 2006-02-16: Split Agent and Automat
             , public Drawable_ABC
 {
@@ -68,9 +70,6 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     const DecisionalModel* GetAutomatDecisionalModel() const;
     const Agent* GetSuperior() const;
-
-    // $$$$ AGE 2006-04-11: 
-    void DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -91,6 +90,7 @@ private:
     void ChangeSuperior( unsigned long id );
     void AddChild   ( Agent& child );
     void RemoveChild( Agent& child );
+    virtual void Aggregate( const bool& );
 
     void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
@@ -113,6 +113,8 @@ private:
 
     // Automat only
     KnowledgeGroup* gtia_;
+
+    bool aggregated_;
     //@}
 };
 

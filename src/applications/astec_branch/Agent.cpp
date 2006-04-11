@@ -32,6 +32,7 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     , type_( automatType_->GetTypePC() )
     , superior_( 0 )
     , gtia_( 0 )
+    , aggregated_( false )
 {
     // $$$$ AGE 2006-02-16: message.oid_camp
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
@@ -55,6 +56,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     , type_( & resolver.Get( message.type_pion ) )
     , superior_( 0 )
     , gtia_( 0 )
+    , aggregated_( false )
 {
     ChangeSuperior( message.oid_automate );
     controller_.Create( *this );
@@ -233,18 +235,19 @@ const Agent* Agent::GetSuperior() const
 // -----------------------------------------------------------------------------
 void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
-    if( automatType_ )
+    if( automatType_ && ! aggregated_ )
         automatType_->Draw( where, tools );
-    if( type_ )
+    if( type_ && ! aggregated_ )
         type_->Draw( where, tools );
+    if( type_ && aggregated_ )
+        type_->DrawAggregated( where, tools );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::DrawAggregated
+// Name: Agent::Aggregate
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void Agent::DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Agent::Aggregate( const bool& bDenis )
 {
-    if( type_ )
-        type_->DrawAggregated( where, tools );
+    aggregated_ = bDenis;
 }

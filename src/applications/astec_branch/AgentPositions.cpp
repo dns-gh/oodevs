@@ -11,13 +11,18 @@
 #include "AgentPositions.h"
 #include "CoordinateConverter.h"
 #include "GlTools_ABC.h"
+#include "Agent.h"
+
+using namespace geometry;
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( const CoordinateConverter& converter )
-    : converter_( converter )
+AgentPositions::AgentPositions( const Agent& agent, const CoordinateConverter& converter )
+    : agent_( agent )
+    , converter_( converter )
+    , aggregated_( false )
 {
     // NOTHING
 }
@@ -35,10 +40,26 @@ AgentPositions::~AgentPositions()
 // Name: AgentPositions::GetPosition
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-geometry::Point2f AgentPositions::GetPosition() const
+Point2f AgentPositions::GetPosition() const
 {
-    return position_;
-}
+    if( ! aggregated_ )
+        return position_;
+    if( agent_.GetSuperior() )
+        return agent_.GetSuperior()->Get< Positions >().GetPosition();
+
+    Point2f aggregatedPosition = position_;
+    unsigned count = 1;
+    Iterator< const Agent& > children = agent_.CreateIterator();
+    while( children.HasMoreElements() )
+    {
+        const Positions& childPositions = children.NextElement().Get< Positions >();
+        // $$$$ AGE 2006-04-11: Crado
+        const Point2f childPosition = ((const AgentPositions&)( childPositions )).position_;
+        aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+        ++count;
+    }
+    return Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count );
+}   
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions::DoUpdate
@@ -54,12 +75,13 @@ void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: AgentPositions::IsAt
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-bool AgentPositions::IsAt( const geometry::Point2f& pos, float /*precision*/ /*= 100.f*/ ) const // $$$$ AGE 2006-03-23: 
+bool AgentPositions::IsAt( const Point2f& pos, float /*precision*/ /*= 100.f*/ ) const // $$$$ AGE 2006-03-23: 
 {
-    const float halfSizeX = 500.f * 0.5f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f;
-    const geometry::Rectangle2f agentBBox( position_.X() - halfSizeX, position_.Y(),
-                                           position_.X() + halfSizeX, position_.Y() + sizeY );
+    const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 2.f : 1.f ); // $$$$ SBO 2006-03-21: use font size?
+    const float sizeY     = 400.f * ( aggregated_ ? 2.f : 1.f );
+    const Point2f position = GetPosition();
+    const Rectangle2f agentBBox( position.X() - halfSizeX, position.Y(),
+                                 position.X() + halfSizeX, position.Y() + sizeY );
     return agentBBox.IsInside( pos );
 }
 
@@ -67,16 +89,25 @@ bool AgentPositions::IsAt( const geometry::Point2f& pos, float /*precision*/ /*=
 // Name: AgentPositions::IsIn
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-bool AgentPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
+bool AgentPositions::IsIn( const Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( position_ );
+    return rectangle.IsInside( GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void AgentPositions::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void AgentPositions::Draw( const Point2f& where, const GlTools_ABC& tools ) const
 {
     tools.DrawCross( where, GL_CROSSSIZE );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::Aggregate
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void AgentPositions::Aggregate( const bool& bDummy )
+{
+    aggregated_ = bDummy;
 }

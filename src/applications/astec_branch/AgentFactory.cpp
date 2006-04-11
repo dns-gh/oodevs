@@ -55,9 +55,8 @@
 #include "AgentPositions.h"
 #include "PopulationPositions.h"
 #include "Controllers.h"
-#include "Life.h"
+#include "Lives.h"
 #include "PopulationDecisions.h"
-#include "Aggregations.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -91,17 +90,16 @@ AgentFactory::~AgentFactory()
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new Life( true ) );
+    result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
-    result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
-    result->Attach( *new Aggregations( *result ) );
     result->Update( asnMsg );
     return result;
 }
@@ -113,12 +111,12 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new Life( false ) );
+    result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
-    result->Attach< Positions >( *new AgentPositions( model_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     return result;

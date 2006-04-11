@@ -11,7 +11,7 @@
 #include "AgentsLayer.h"
 #include "moc_AgentsLayer.cpp"
 #include "Agent.h"
-#include "Aggregations.h"
+#include "Aggregatable_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -19,7 +19,6 @@
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
     : EntityLayer< Agent >( controllers, tools, strategy, view )
-    , tools_( tools )
     , selected_( 0 )
 {
     // NOTHING
@@ -35,32 +34,21 @@ AgentsLayer::~AgentsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::Paint
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentsLayer::Paint( const geometry::Rectangle2f& viewport )
-{
-    EntityLayer< Agent >::Paint( viewport );
-    for( CIT_Agents it = aggregatedAutomats_.begin(); it != aggregatedAutomats_.end(); ++it )
-    {
-        const Agent& agent = **it;
-        agent.Get< Aggregations >().Draw( agent.Get< Positions >().GetPosition(), tools_ );
-    };
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsLayer::Aggregate
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
 void AgentsLayer::Aggregate( const Agent& automat )
 {
-    if( automat.GetSuperior() || ! RemoveEntity( automat ) )
+    if( automat.GetSuperior() )
         return;
     
     aggregatedAutomats_.push_back( &automat );
     Iterator< const Agent& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
         RemoveEntity( children.NextElement() );
+    Entity_ABC& entity = const_cast< Agent& >( automat );  // $$$$ AGE 2006-04-11: 
+    bool aggregate = true;
+    entity.Apply( Aggregatable_ABC::Aggregate, aggregate );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +64,12 @@ void AgentsLayer::Disaggregate( const Agent& automat )
     std::swap( *it, aggregatedAutomats_.back() );
     aggregatedAutomats_.pop_back();
 
-    AddEntity( automat );
     Iterator< const Agent& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
         AddEntity( children.NextElement() );
+    Entity_ABC& entity = const_cast< Agent& >( automat );  // $$$$ AGE 2006-04-11: 
+    bool aggregate = false;
+    entity.Apply( Aggregatable_ABC::Aggregate, aggregate );
 }
 
 // -----------------------------------------------------------------------------

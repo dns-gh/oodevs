@@ -17,9 +17,6 @@
 // =============================================================================
 /** @class  AgentsLayer
     @brief  AgentsLayer
-    // $$$$ AGE 2006-04-11: Trouver autre chose pour gérer l'aggregation.
-    // $$$$ AGE 2006-04-11: Quelque chose de plus centré sur l'agent.
-    // $$$$ AGE 2006-04-11: Aggregatable_ABC ? Puis selon, affichage, ... ? +
 */
 // Created: AGE 2006-03-23
 // =============================================================================
@@ -52,7 +49,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
     void Aggregate   ( const Agent& automat );
     void Disaggregate( const Agent& automat );
@@ -62,13 +58,11 @@ private:
     //@{
     typedef std::vector< const Agent* > T_Agents;
     typedef T_Agents::iterator         IT_Agents;
-    typedef T_Agents::const_iterator  CIT_Agents;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
     T_Agents aggregatedAutomats_;
     const Agent* selected_;
     //@}
