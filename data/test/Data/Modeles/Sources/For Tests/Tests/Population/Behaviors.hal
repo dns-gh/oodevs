@@ -129,7 +129,6 @@ behavior MIS_Population_CommettreExactions( T_Mission_Population_CommettreExacti
     {
         //if( actionMove != 0 )
             //DEC_StopAction( actionMove );    
-        //DEC_Geometrie_DetruirePoint( ptDest );
     } 
 }
 

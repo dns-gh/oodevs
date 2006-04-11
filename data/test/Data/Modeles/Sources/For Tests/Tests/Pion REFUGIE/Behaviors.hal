@@ -108,9 +108,7 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
 
                 DEC_Debug( "Points extrapolation : " + DEC_PointToString( vExtr1 ) + " " + DEC_PointToString( vExtr2 ) );
                 
-                DEC_Geometrie_DetruirePoint( vExtr1 );
-                DEC_Geometrie_DetruirePoint( vExtr2 );
-                    
+                   
                 T_ConnaissanceObjet objet;
                 float               rDist;
                 E_ValiditeRequete   nValidite;

@@ -14,15 +14,10 @@ signatures
     B                    DEC_Geometrie_EstPointDansLocalisation     ( U /*T_Point*/, U /*T_Localisation*/ );
     B                    DEC_Geometrie_LocalisationsEgales          ( U /*T_Localisation*/, U /*T_Localisation*/ );
     U /*T_Localition*/   DEC_Geometrie_CreerLocalisation            ();
-    V                    DEC_Geometrie_DetruireLocalisation         ( U /*T_Localisation*/ );
-    V                    DEC_Geometrie_DetruireListeLocalisations   ( S /*T_ListeLocalisation*/ );
     U /*T_ListePoints*/  DEC_Geometrie_CreerListePoints             ();
-    V                    DEC_Geometrie_DetruireListePoints          ( U /*T_ListePoints*/        );
     U /*T_Point*/        DEC_Geometrie_CreerPoint                   (); 
-    V                    DEC_Geometrie_DetruirePoint                ( U /*T_Point*/ ); 
     U /*T_Direction*/    DEC_Geometrie_CreerDirection               ( U /*T_Point src*/, U /*T_Point dest*/);
     U /*T_Direction*/    DEC_Geometrie_CreerDirectionPerpendiculaire( U /*T_Direction*/, * /* B = sens trigo ?*/ );
-    V                    DEC_Geometrie_DetruireDirection            ( U /*T_Direction*/ );
     V                    DEC_Geometrie_InverseDirection             ( U /*T_Direction*/ );
     V                    DEC_Geometrie_RotateDirection              ( U /*T_Direction*/, R /*angle en degré : dans sens trigo*/ );
     U /*T_Direction*/    DEC_Geometrie_CopieEtInverseDirection      ( U /*T_Direction*/ );

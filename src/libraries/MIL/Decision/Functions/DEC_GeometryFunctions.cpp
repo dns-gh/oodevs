@@ -88,42 +88,6 @@ void DEC_GeometryFunctions::CreateLocalisation( DIA_Call_ABC& call )
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::DeleteLocalisation
-// Created: NLD 2003-08-19
-//-----------------------------------------------------------------------------
-void DEC_GeometryFunctions::DeleteLocalisation( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
-//    TER_Localisation* pLoc = call.GetParameter( 0 ).ToUserPtr( pLoc );
-//    delete pLoc; 
-//    call.GetParameter( 0 ).SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::DeleteListLocalisation
-// Created: NLD 2003-08-22
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::DeleteListLocalisation( DIA_Call_ABC&  call )
-{
-    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) );
-//    T_LocalisationPtrVector localisations = diaObjectList.ToUserTypeList( localisations );
-//    for( CIT_LocalisationPtrVector itLoc = localisations.begin(); itLoc != localisations.end(); ++itLoc )
-//        delete *itLoc;
-
-//    const T_ObjectVariableVector& diaList = diaObjectList.GetContainer();
-//    for( CIT_ObjectVariableVector it = diaList.begin(); it != diaList.end(); ++it )
-//    {
-//        DIA_Variable_ABC& var = const_cast< DIA_Variable_ABC& >(**it);
-//        TER_Localisation* pLoc = var.ToUserPtr( pLoc );
-//        delete pLoc;
-//        var.SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
-//    }
-    diaObjectList.Reset();
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateListPoint
 // Created: NLD 2003-09-15
 //-----------------------------------------------------------------------------
@@ -131,20 +95,6 @@ void DEC_GeometryFunctions::CreateListPoint( DIA_Call_ABC& call )
 {
     T_PointVector* pResult = new T_PointVector(); //$$ RAM
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::DeleteListPoint
-// Created: NLD 2003-09-15
-//-----------------------------------------------------------------------------
-void DEC_GeometryFunctions::DeleteListPoint( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
-//    T_PointVector* pListPoint = call.GetParameter( 0 ).ToUserPtr( pListPoint );
-//    if( !pListPoint )
-//        return;
-//    delete pListPoint;
-//    call.GetParameter( 0 ).SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
 }
 
 //-----------------------------------------------------------------------------
@@ -156,20 +106,6 @@ void DEC_GeometryFunctions::CreatePoint( DIA_Call_ABC& call )
 {
     MT_Vector2D* pVect = new MT_Vector2D(); //$$$ RAM
     call.GetResult().SetValue( (void*)pVect, &DEC_Tools::GetTypePoint() );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::DeletePoint
-// Created: AGN 03-01-14
-//-----------------------------------------------------------------------------
-void DEC_GeometryFunctions::DeletePoint( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
-//    MT_Vector2D* pPos = call.GetParameter( 0 ).ToUserPtr( pPos );
-//    if( !pPos )
-//        return;
-//    delete pPos;
-//    call.GetParameter( 0 ).SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
 }
 
 //-----------------------------------------------------------------------------
@@ -220,19 +156,6 @@ void DEC_GeometryFunctions::CreateOrthoDirection( DIA_Call_ABC& call )
         pDir->Rotate90ClockWise();
 
     call.GetResult().SetValue( (void*)pDir, &DEC_Tools::GetTypeDirection() );
-}
-//-----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::DeleteDirection
-// Created: AGN 03-01-14
-//-----------------------------------------------------------------------------
-void DEC_GeometryFunctions::DeleteDirection( DIA_Call_ABC& call )
-{
-    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 0 ) ) );
-//    MT_Vector2D* pPos = call.GetParameter( 0 ).ToUserPtr( pPos );
-//    if( !pPos )
-//        return;
-//    delete pPos;
-//    call.GetParameter( 0 ).SetValue( (void*)0, &DEC_Tools::GetTypeDirection() );
 }
 
 // =============================================================================

@@ -29,15 +29,10 @@ public:
     //@{
     // Creation / destruction
     static void CreateLocalisation     ( DIA_Call_ABC& );
-    static void DeleteLocalisation     ( DIA_Call_ABC& );
-    static void DeleteListLocalisation ( DIA_Call_ABC& );
     static void CreateListPoint        ( DIA_Call_ABC& );
-    static void DeleteListPoint        ( DIA_Call_ABC& );
     static void CreatePoint            ( DIA_Call_ABC& );  
-    static void DeletePoint            ( DIA_Call_ABC& );
     static void CreateDirection        ( DIA_Call_ABC& );
     static void CreateOrthoDirection   ( DIA_Call_ABC& );
-    static void DeleteDirection        ( DIA_Call_ABC& );
 
     static void ReverseDirection             ( DIA_Call_ABC& );
     static void RotateDirection              ( DIA_Call_ABC& );

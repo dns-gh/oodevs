@@ -354,9 +354,7 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
 
                 DEC_Debug( "Points extrapolation : " + DEC_PointToString( vExtr1 ) + " " + DEC_PointToString( vExtr2 ) );
                 
-                DEC_Geometrie_DetruirePoint( vExtr1 );
-                DEC_Geometrie_DetruirePoint( vExtr2 );
-                    
+                   
                 T_ConnaissanceObjet objet;
                 float               rDist;
                 E_ValiditeRequete   nValidite;
@@ -514,8 +512,7 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
                 //currentAction = DEC_StartAttenteTransporteurs( nDebarquementReturn );
                 currentAction = DEC_StartEmbarquement( nDebarquementReturn );
             }
-            DEC_Geometrie_DetruirePoint( point );
-        }
+       }
                 
         if( mission.debarque_ )
             DEC_Debug( "Etat Debarquement : " + EnumToString( nDebarquementReturn, E_EtatActionEmbarquerDebarquer ) );
@@ -541,7 +538,7 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
     when updated:
     {
         persistent bool                           bState;
-
+        
         //persistent T_PerceptionLocalisationObjet perception = 0; 
         if ( DIA_ModuleBegins() )
         {
@@ -592,7 +589,6 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         {
             T_Point pPt = DEC_ConnaissancePopulation_PointPlusProche( x, nFusse );
             DEC_Debug( "Pt plus proche : " + DEC_PointToString( pPt ) );
-            DEC_Geometrie_DetruirePoint( pPt );
             if( DEC_ConnaissancePopulation_EstDansZone( x, mission.forme_ ) )
                 DEC_ConnaissancePopulation_Securiser( x, nFusse );
         }
@@ -993,8 +989,6 @@ behavior BEH_Esquive( T_ConnaissanceAgent ennemi )
     on spontaneous end:
     {
         DEC_Debug( "MIS_Pion_Test_Fire : on spontaneous end" );
-        if( ptSurete != 0 )
-            DEC_Geometrie_DetruirePoint( ptSurete );
     }          
 }
 

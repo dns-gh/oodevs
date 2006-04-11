@@ -135,8 +135,6 @@ behavior MIS_Automate_MRT_SeRendre( T_Mission_Automate_SeRendre mission, id nDum
                               
           }
           DEC_MRT_Valide();
-          
-          DEC_Geometrie_DetruirePoint( posCampPrisonnier );
         }
     }
 }
@@ -172,8 +170,6 @@ behavior MIS_Automate_MRT_FaireMouvementVersCampRefugies( T_Mission_Automate_Fai
                   DEC_Copie_Point               ( posCampPrisonnier                 , missionPion.visionPoint_     );
               }
               DEC_MRT_Valide();
-              
-              DEC_Geometrie_DetruirePoint( posCampPrisonnier );
            }
         }
     }
