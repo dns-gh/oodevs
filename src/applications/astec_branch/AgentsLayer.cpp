@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "AgentsLayer.h"
+#include "moc_AgentsLayer.cpp"
 #include "Agent.h"
 #include "Aggregations.h"
 
@@ -19,6 +20,7 @@
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
     : EntityLayer< Agent >( controllers, tools, strategy, view )
     , tools_( tools )
+    , selected_( 0 )
 {
     // NOTHING
 }
@@ -78,4 +80,42 @@ void AgentsLayer::Disaggregate( const Agent& automat )
     Iterator< const Agent& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
         AddEntity( children.NextElement() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::NotifyContextMenu
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void AgentsLayer::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+{
+    if( agent.GetSuperior() )
+        return;
+    if( menu.count() > 0 )
+        menu.insertSeparator();
+
+    selected_ = &agent;
+    if( std::find( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), selected_ ) == aggregatedAutomats_.end() )
+        menu.insertItem( tr( "Aggreger" ), this, SLOT( Aggregate() ) );
+    else
+        menu.insertItem( tr( "Désaggreger" ), this, SLOT( Disaggregate() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Aggregate
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void AgentsLayer::Aggregate()
+{
+    if( selected_ )
+        Aggregate( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Disaggregate
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void AgentsLayer::Disaggregate()
+{
+    if( selected_ )
+        Disaggregate( *selected_ );
 }

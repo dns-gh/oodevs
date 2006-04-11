@@ -12,15 +12,22 @@
 
 #include "EntityLayer.h"
 #include "Agent.h"
+#include "ContextMenuObserver_ABC.h"
 
 // =============================================================================
 /** @class  AgentsLayer
     @brief  AgentsLayer
+    // $$$$ AGE 2006-04-11: Trouver autre chose pour gérer l'aggregation.
+    // $$$$ AGE 2006-04-11: Quelque chose de plus centré sur l'agent.
+    // $$$$ AGE 2006-04-11: Aggregatable_ABC ? Puis selon, affichage, ... ? +
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class AgentsLayer : public EntityLayer< Agent >
+class AgentsLayer : public QObject
+                  , public EntityLayer< Agent >
+                  , public ContextMenuObserver_ABC< Agent >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -29,12 +36,11 @@ public:
     virtual ~AgentsLayer();
     //@}
 
-    //! @name Operations
+public slots:
+    //! @name Slots
     //@{
-    void Aggregate   ( const Agent& automat );
-    void Disaggregate( const Agent& automat );
-
-    virtual void Paint( const geometry::Rectangle2f& viewport );
+    void Aggregate   ();
+    void Disaggregate();
     //@}
 
 private:
@@ -42,6 +48,14 @@ private:
     //@{
     AgentsLayer( const AgentsLayer& );            //!< Copy constructor
     AgentsLayer& operator=( const AgentsLayer& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    void Aggregate   ( const Agent& automat );
+    void Disaggregate( const Agent& automat );
     //@}
 
     //! @name Types
@@ -56,6 +70,7 @@ private:
     //@{
     const GlTools_ABC& tools_;
     T_Agents aggregatedAutomats_;
+    const Agent* selected_;
     //@}
 };
 
