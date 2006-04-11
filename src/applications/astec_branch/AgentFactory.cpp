@@ -90,7 +90,7 @@ AgentFactory::~AgentFactory()
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new Life() );
+    result->Attach( *new Life( true ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
@@ -111,7 +111,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new Life() );
+    result->Attach( *new Life( false ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );

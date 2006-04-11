@@ -137,14 +137,15 @@ bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::P
 // -----------------------------------------------------------------------------
 void EntityLayerBase::AddEntity( const Entity_ABC& entity )
 {
-    entities_.push_back( &entity );
+    if( std::find( entities_.begin(), entities_.end(), &entity ) == entities_.end() )
+        entities_.push_back( &entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::RemoveEntity
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
+bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
 {
     IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
     if( it != entities_.end() )
@@ -153,7 +154,9 @@ void EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
             selected_ = it - entities_.begin();
         std::swap( *it, entities_.back() );
         entities_.pop_back();
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

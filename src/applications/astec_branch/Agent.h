@@ -59,7 +59,6 @@ public:
     //! @name Operations
     //@{
     // $$$$ AGE 2006-03-14: Gets de merde 
-
     const Team& GetTeam() const;
     virtual std::string GetName() const;
     virtual unsigned long GetId() const;
@@ -69,6 +68,9 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     const DecisionalModel* GetAutomatDecisionalModel() const;
     const Agent* GetSuperior() const;
+
+    // $$$$ AGE 2006-04-11: 
+    void DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     //@}
 
 private:

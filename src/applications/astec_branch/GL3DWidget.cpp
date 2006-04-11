@@ -282,7 +282,7 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 // Name: Gl3dWidget::DrawRectangle
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float height ) const
+void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-04-10: 
 }
@@ -301,10 +301,10 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
     const Vector2f& fontSize = Base().GetSize( symbol );
-    const float size = 600.f;
+    const float size = 600.f * factor;
     glPushMatrix();
         glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
         float modelview[ 16 ];

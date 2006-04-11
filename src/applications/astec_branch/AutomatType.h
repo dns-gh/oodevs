@@ -52,10 +52,6 @@ private:
     AutomatType& operator=( const AutomatType& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

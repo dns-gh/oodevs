@@ -259,10 +259,10 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/
 // Name: GlProxy::DrawRectangle
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawRectangle( const geometry::Point2f& center, float height ) const
+void GlProxy::DrawRectangle( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
 {
     CheckTools();
-    tools_->DrawRectangle( center, height );
+    tools_->DrawRectangle( center, height, factor );
 }
 
 // -----------------------------------------------------------------------------
@@ -279,10 +279,10 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where 
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /*= 1.f*/ ) const
 {
     CheckTools();
-    tools_->DrawApp6Symbol( symbol, where );
+    tools_->DrawApp6Symbol( symbol, where, factor );
 }
 
 // -----------------------------------------------------------------------------

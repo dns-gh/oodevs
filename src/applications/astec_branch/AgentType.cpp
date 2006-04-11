@@ -100,3 +100,12 @@ void AgentType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools )
     tools.DrawApp6Symbol( symbol_, where );
     tools.DrawApp6Symbol( levelSymbol_, where );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::DrawAggregated
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void AgentType::DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools )
+{
+    tools.DrawApp6Symbol( symbol_, where, 2.f );
+}

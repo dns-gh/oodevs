@@ -29,11 +29,33 @@ public:
     virtual ~AgentsLayer();
     //@}
 
+    //! @name Operations
+    //@{
+    void Aggregate   ( const Agent& automat );
+    void Disaggregate( const Agent& automat );
+
+    virtual void Paint( const geometry::Rectangle2f& viewport );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
     AgentsLayer( const AgentsLayer& );            //!< Copy constructor
     AgentsLayer& operator=( const AgentsLayer& ); //!< Assignement operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const Agent* > T_Agents;
+    typedef T_Agents::iterator         IT_Agents;
+    typedef T_Agents::const_iterator  CIT_Agents;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const GlTools_ABC& tools_;
+    T_Agents aggregatedAutomats_;
     //@}
 };
 

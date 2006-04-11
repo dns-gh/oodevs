@@ -284,13 +284,13 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 // Name: GlWidget::DrawRectangle
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawRectangle( const Point2f& where, float h ) const
+void GlWidget::DrawRectangle( const Point2f& where, float h, float factor /*= 1.f*/ ) const
 {
     const Vector2f fontSize = Base().GetSize( "a" );
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
-    const float halfWidth   = fontSize.X() * 600.f * 0.5f * 0.92f;
-    const float deltaHeight = fontSize.Y() * 600.f * 0.062f;
-    const float height      = fontSize.Y() * 600.f * h * 0.876f + deltaHeight;
+    const float halfWidth   = fontSize.X() * factor * 600.f * 0.5f * 0.92f;
+    const float deltaHeight = fontSize.Y() * factor * 600.f * 0.062f;
+    const float height      = fontSize.Y() * factor * 600.f * h * 0.876f + deltaHeight;
 
     glBegin( GL_QUADS );
         glVertex2f( where.X() - halfWidth, where.Y() + deltaHeight );
@@ -314,10 +314,10 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
 // Name: GLWidget::DrawApp6Symbol
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
     const Vector2f fontSize = Base().GetSize( symbol );
-    const float size = 600.f;
+    const float size = 600.f * factor;
     const Point2f center = Point2f( where.X() - fontSize.X() * size * 0.5f, where.Y() );
 
     glPushMatrix();

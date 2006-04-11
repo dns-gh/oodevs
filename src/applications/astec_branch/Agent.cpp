@@ -227,7 +227,6 @@ const Agent* Agent::GetSuperior() const
     return superior_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
@@ -238,4 +237,14 @@ void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) con
         automatType_->Draw( where, tools );
     if( type_ )
         type_->Draw( where, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DrawAggregated
+// Created: AGE 2006-04-11
+// -----------------------------------------------------------------------------
+void Agent::DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+{
+    if( type_ )
+        type_->DrawAggregated( where, tools );
 }

@@ -29,12 +29,15 @@ class Life : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Life();
+    explicit Life( bool automat );
     virtual ~Life();
     //@}
 
     //! @name Operations
     //@{
+    // $$$$ AGE 2006-04-11: 
+    void DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+
     virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
@@ -50,6 +53,8 @@ private:
     //! @name Member data
     //@{
     float life_;
+    bool automat_;
+    bool bEmbraye_;
     //@}
 };
 

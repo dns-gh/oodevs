@@ -44,6 +44,7 @@ public:
     const std::string& GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    void DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools );
     //@}
 
 private:

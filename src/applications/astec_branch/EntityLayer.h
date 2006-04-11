@@ -58,7 +58,7 @@ protected:
     virtual void Draw( const Entity_ABC& entity, const geometry::Rectangle2f& viewport );
 
     virtual void AddEntity( const Entity_ABC& );
-    virtual void RemoveEntity( const Entity_ABC& );
+    virtual bool RemoveEntity( const Entity_ABC& );
     virtual void ActivateEntity( const Entity_ABC& );
 
     virtual void SelectColor( const Entity_ABC& );

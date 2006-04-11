@@ -47,9 +47,9 @@ public:
     virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const = 0; // $$$$ AGE 2006-03-23: 0 <= curveRatio <= 1
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
-    virtual void DrawRectangle  ( const geometry::Point2f& center, float height ) const = 0;
+    virtual void DrawRectangle  ( const geometry::Point2f& center, float height, float factor = 1.f ) const = 0;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const = 0;
-    virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where ) const = 0;
+    virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const = 0;
     virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const = 0;
     //@}
 
