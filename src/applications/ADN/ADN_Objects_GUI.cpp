@@ -115,7 +115,7 @@ void ADN_Objects_GUI::Build()
     connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
 
     // Outgoing population density
-    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Outgoing population density"), vInfosConnectors[eOutgoingPopulationDensity], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_EditLine_Double>( pParamGroup, tr( "Outgoing population density"), vInfosConnectors[eHasOutgoingPopulationDensity], vInfosConnectors[eOutgoingPopulationDensity], tr( "people/m²" ), eGreaterEqualZero );
 
     // Users
     builder.AddField<ADN_EditLine_Int>( pParamGroup, tr( "Max nbr of animators"), vInfosConnectors[eMaxNbrUsers], 0, eGreaterEqualZero );

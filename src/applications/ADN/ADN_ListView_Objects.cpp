@@ -68,6 +68,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eDefaultConsumption]->Connect(&pInfos->nDefaultConsumption_, bConnect );
 
     vItemConnectors_[ADN_Objects_GUI::eMaxAgentSpeedPercentage]->Connect(&pInfos->rMaxAgentSpeedPercentage_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eHasOutgoingPopulationDensity]->Connect(&pInfos->bHasOutgoingPopulationDensity_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eOutgoingPopulationDensity]->Connect(&pInfos->rOutgoingPopulationDensity_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eMaxNbrUsers]->Connect(&pInfos->nMaxNbrUsers_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eToBuild]->Connect(&pInfos->ptrToBuild_, bConnect );
