@@ -260,6 +260,7 @@ signatures
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_Populations                     (); 
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_PopulationsPrenantAPartie       (); 
     
+    // NB : Les refugies et unités rendues ne sont jamais retournées dans les fonctions autre que DEC_Connaissances_RefugiesAProximite() et DEC_Connaissances_UnitesRenduesAProximite()
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesPrenantAPartie                   ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereuses              ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercues          ();
@@ -267,9 +268,9 @@ signatures
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansFuseau              ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDansZone                 ( U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesAmiesDansZone                    ( U /*T_Localisation*/ );
+    B                                       A::DEC_Connaissances_PresenceEnnemieDansZone                ( U /*T_Point centre cercle zone*/, R /*rayon*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_RefugiesAProximite                     ( R /*distance*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesRenduesAProximite                ( R /*distance*/ );
-    B                                       A::DEC_Connaissances_PresenceEnnemieDansZone                ( U /*T_Point centre cercle zone*/, R /*rayon*/ );
     R                                       A::DEC_RapportDeForceLocal                                  (); // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
                                             
     // Ordres                               
