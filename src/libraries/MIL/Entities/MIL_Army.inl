@@ -63,25 +63,14 @@ const MIL_Army::T_KnowledgeGroupMap& MIL_Army::GetKnowledgeGroups() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::GetKSQuerier
-// Created: NLD 2004-09-01
+// Name: MIL_Army::GetKnowledge
+// Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 inline
-const DEC_KS_ArmyQuerier& MIL_Army::GetKSQuerier() const
+DEC_KnowledgeBlackBoard_Army& MIL_Army::GetKnowledge() const
 {
-    assert( pKsQuerier_ );
-    return *pKsQuerier_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::GetKSObjectKnowledgeSynthetizer
-// Created: NLD 2004-09-01
-// -----------------------------------------------------------------------------
-inline
-DEC_KS_ObjectKnowledgeSynthetizer& MIL_Army::GetKSObjectKnowledgeSynthetizer()
-{
-    assert( pKsObjectKnowledgeSynthetizer_ );
-    return *pKsObjectKnowledgeSynthetizer_;
+    assert( pKnowledgeBlackBoard_ );
+    return *pKnowledgeBlackBoard_;
 }
 
 //-----------------------------------------------------------------------------

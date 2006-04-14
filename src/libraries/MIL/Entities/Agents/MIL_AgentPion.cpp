@@ -59,14 +59,10 @@
 
 #include "Decision/DEC_ModelPion.h"
 
-#include "Knowledge/DEC_KnowledgeBlackBoard.h"
-#include "Knowledge/DEC_KS_NetworkUpdater.h"
-#include "Knowledge/DEC_KS_ObjectInteraction.h"
-#include "Knowledge/DEC_KS_PopulationInteraction.h"
-#include "Knowledge/DEC_KS_Fire.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KS_Fire.h"
 
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_AS_MOSServer.h"
@@ -90,13 +86,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Input
     , bIsPC_                   ( false )
     , strName_                 ( pType_->GetName() )
     , pAutomate_               ( 0 )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard     () )
-    , pKsObjectInteraction_    (  new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsPopulationInteraction_(  new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this ) )
-    , pKsFire_                 (  new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsQuerier_              (  new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_       (  new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ ) )
-    , orderManager_            ( *new MIL_PionOrderManager        ( *this ) )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
     // Liens hiérarchiques
     archive.Section( "LiensHierarchiques" );
@@ -122,13 +113,8 @@ MIL_AgentPion::MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive 
     , bIsPC_                   ( true )
     , strName_                 ( pType_->GetName() )
     , pAutomate_               ( &automate )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard     () )
-    , pKsObjectInteraction_    (  new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsPopulationInteraction_(  new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this ) )
-    , pKsFire_                 (  new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsQuerier_              (  new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_       (  new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ ) )
-    , orderManager_            ( *new MIL_PionOrderManager        ( *this ) )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
     Initialize( archive );
 }
@@ -144,13 +130,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
     , bIsPC_                   ( false )
     , strName_                 ( pType_->GetName() )
     , pAutomate_               ( &automate )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard     () )
-    , pKsObjectInteraction_    (  new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsPopulationInteraction_(  new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this ) )
-    , pKsFire_                 (  new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsQuerier_              (  new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_       (  new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ ) )
-    , orderManager_            ( *new MIL_PionOrderManager        ( *this ) )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
     Initialize( vPosition );
 }
@@ -160,17 +141,12 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion()
-    : MIL_Agent_ABC            ()
-    , PHY_Actor                ()
-    , pType_                   ( 0 )
-    , bIsPC_                   ()
-    , pKnowledgeBlackBoard_    ( 0 )
-    , pKsObjectInteraction_    ( 0 )
-    , pKsPopulationInteraction_( 0 )
-    , pKsFire_                 ( 0 )
-    , pKsQuerier_              ( 0 )
-    , pKsNetworkUpdater_       ( 0 )
-    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
+    : MIL_Agent_ABC        ()
+    , PHY_Actor            ()
+    , pType_               ( 0 )
+    , bIsPC_               ()
+    , pKnowledgeBlackBoard_( 0 )
+    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
 {
 }
 
@@ -198,14 +174,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_;
-         
-    pKsObjectInteraction_     = new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this );
-    pKsPopulationInteraction_ = new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this );
-    pKsFire_                  = new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this );
-    pKsQuerier_               = new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this );
-    pKsNetworkUpdater_        = new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ );
-    
-
+           
     { NET_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Reinforcement    * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Posture          * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -298,7 +267,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RolePion_Dotations         >( *this );
     RegisterRole< PHY_RolePion_Humans            >( *this );
     RegisterRole< PHY_RolePion_Composantes       >( *this );
-    RegisterRole< PHY_RolePion_Perceiver         >( *this, *pKnowledgeBlackBoard_ );
+    RegisterRole< PHY_RolePion_Perceiver         >( *this );
     RegisterRole< PHY_RolePion_NBC               >( *this );
     RegisterRole< PHY_RolePion_Communications    >( *this );
     RegisterRole< PHY_RolePion_HumanFactors      >();
@@ -366,11 +335,6 @@ MIL_AgentPion::~MIL_AgentPion()
     pAutomate_->UnregisterPion( *this );
 
     delete &orderManager_;
-    delete pKsNetworkUpdater_;
-    delete pKsQuerier_;
-    delete pKsFire_;
-    delete pKsObjectInteraction_;
-    delete pKsPopulationInteraction_;
     delete pKnowledgeBlackBoard_;
 }
 
@@ -647,8 +611,8 @@ void MIL_AgentPion::SendFullState()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SendKnowledge()
 {
-    assert( pKsNetworkUpdater_ );
-    pKsNetworkUpdater_->SendFullState();
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1035,7 +999,7 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
     else if( GetArmy().IsAFriend( attacker.GetArmy() ) == eTristate_True )
         MIL_RC::pRcTireParCampAmi_->Send( *this, MIL_RC::eRcTypeEvent, attacker );
 
-    pKsFire_->NotifyAttackedBy( attacker );
+    GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
 }
 
 // -----------------------------------------------------------------------------
@@ -1045,7 +1009,7 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
 void MIL_AgentPion::NotifyAttackedBy( MIL_Population& attacker )
 {
     //$$$ RCs ??
-    pKsFire_->NotifyAttackedBy( attacker );
+    GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
 }
 
 // -----------------------------------------------------------------------------
@@ -1081,7 +1045,6 @@ void MIL_AgentPion::NotifyAttacking( MIL_Population& target ) const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsPerceived( const MIL_Agent_ABC& agent ) const
 {
-    assert( pKsQuerier_ );
-    return pKsQuerier_->IsPerceived( agent );    
+    return GetKnowledge().IsPerceived( agent );    
 }
 

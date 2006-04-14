@@ -496,7 +496,7 @@ std::string AGR_Mission::KnowledgeAccessor() const
         strAccessor = "population_";
     else
         strAccessor = "pion_";
-    strAccessor += ".GetKnowledgeGroup().GetKSQuerier()";
+    strAccessor += ".GetKnowledgeGroup()";
     return strAccessor;
 }
 

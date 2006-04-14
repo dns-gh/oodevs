@@ -24,7 +24,7 @@ class DEC_Knowledge_Population;
 class MT_Ellipse;
 class DEC_AutomateDecision;
 class DEC_RolePion_Decision;
-class DEC_KS_KnowledgeGroupQuerier;
+class MIL_KnowledgeGroup;
 
 //=============================================================================
 // Created: NLD 2003-02-28
@@ -35,30 +35,30 @@ class NET_ASN_Tools
 public:
     //! @name Mission parameters tools : Knowledge object DIA - SIM - ASN
     //@{
-    static bool CopyObjectKnowledge ( const ASN1T_KnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
-    static bool CopyObjectKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgeObject& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static bool CopyObjectKnowledge ( const ASN1T_KnowledgeObject& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge  );
+    static bool CopyObjectKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgeObject& asn, const MIL_KnowledgeGroup& knowledge  );
     static void CopyObjectKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyObjectKnowledgeList ( const ASN1T_ListKnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
-    static bool CopyObjectKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeObject& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static bool CopyObjectKnowledgeList ( const ASN1T_ListKnowledgeObject& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge  );
+    static bool CopyObjectKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeObject& asn, const MIL_KnowledgeGroup& knowledge  );
     static void CopyObjectKnowledgeList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
     //! @name Mission parameters tools : Knowledge agent DIA - SIM - ASN
     //@{
-    static bool CopyAgentKnowledge ( const ASN1T_KnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
-    static bool CopyAgentKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgeAgent& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static bool CopyAgentKnowledge ( const ASN1T_KnowledgeAgent& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge  );
+    static bool CopyAgentKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgeAgent& asn, const MIL_KnowledgeGroup& knowledge  );
     static void CopyAgentKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
-    static bool CopyAgentKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static bool CopyAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge  );
+    static bool CopyAgentKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const MIL_KnowledgeGroup& knowledge  );
     static void CopyAgentKnowledgeList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
     //! @name Mission parameters tools : Knowledge Population DIA - SIM - ASN
     //@{
-    static bool CopyPopulationKnowledge ( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
-    static bool CopyPopulationKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static bool CopyPopulationKnowledge ( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge  );
+    static bool CopyPopulationKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const MIL_KnowledgeGroup& knowledge  );
     static void CopyPopulationKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
@@ -251,12 +251,12 @@ private:
     static bool                         ReadAgentList          ( const ASN1T_ListAgent&           asn, T_ObjectVector& unitList );
     static DEC_AutomateDecision*        ReadAutomate           ( const ASN1T_Agent&               asn );
     static bool                         ReadAutomateList       ( const ASN1T_ListAutomate&        asn, T_ObjectVector& unitList );
-    static DEC_Knowledge_Agent*         ReadAgentKnowledge     ( const ASN1T_KnowledgeAgent&      asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static bool                         ReadAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent&  asn, T_KnowledgeAgentDiaIDVector& knowledgeList, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static DEC_Knowledge_Agent*         ReadAgentKnowledge     ( const ASN1T_KnowledgeAgent&      asn, const MIL_KnowledgeGroup& knowledge );
+    static bool                         ReadAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent&  asn, T_KnowledgeAgentDiaIDVector& knowledgeList, const MIL_KnowledgeGroup& knowledge );
+    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, const MIL_KnowledgeGroup& knowledge );
 
-    static DEC_Knowledge_Object*        ReadObjectKnowledge    ( const ASN1T_KnowledgeObject&     asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static bool                         ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static DEC_Knowledge_Object*        ReadObjectKnowledge    ( const ASN1T_KnowledgeObject&     asn, const MIL_KnowledgeGroup& knowledge );
+    static bool                         ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const MIL_KnowledgeGroup& knowledge );
     static uint                         ReadGDH                ( const ASN1T_GDH&                 asn );
     //@}
     
@@ -276,8 +276,8 @@ private:
     static void WriteAutomateList               ( const T_ObjectVector&               unitList  , ASN1T_ListAutomate& asn );   
     static void WriteAgentKnowledge             ( const DEC_Knowledge_Agent&          knowledge , ASN1T_KnowledgeAgent&      asnKnowledge );
     static void WriteObjectKnowledge            ( const DEC_Knowledge_Object&         knowledge , ASN1T_KnowledgeObject&     asnKnowledge );
-    static void WriteAgentKnowledgeList         ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_ListKnowledgeAgent&  asnListKnowledge, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static void WriteObjectKnowledgeList        ( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static void WriteAgentKnowledgeList         ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_ListKnowledgeAgent&  asnListKnowledge, const MIL_KnowledgeGroup& knowledge );
+    static void WriteObjectKnowledgeList        ( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const MIL_KnowledgeGroup& knowledge );
 
     static void WriteGDH                ( ASN1T_GDH& asnGDH );
     static void WriteGDH                ( uint nRealTimeSec, ASN1T_GDH& asnGDH );

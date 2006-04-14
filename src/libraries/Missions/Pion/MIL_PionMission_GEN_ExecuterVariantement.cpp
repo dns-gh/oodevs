@@ -74,7 +74,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_ExecuterVariantement::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_ExecuterVariantement& asnMission = *asnMsg.mission.u.mission_pion_gen_executer_variantement;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_objet_planifie, GetVariable( nDIAOidObjetPlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -144,7 +144,7 @@ void MIL_PionMission_GEN_ExecuterVariantement::Serialize( ASN1T_MsgPionOrder& as
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_gen_executer_variantement;
     asnMsg.mission.u.mission_pion_gen_executer_variantement  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ), asnMission.site_franchissement, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ), asnMission.site_franchissement, pion_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyID( GetVariable( nDIAOidObjetPlanifieIdx_ ), asnMission.oid_objet_planifie );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIATypePontageIdx_ ), asnMission.type_pontage );

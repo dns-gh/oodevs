@@ -84,7 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_Fire::Initialize( const ASN1T_MsgP
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNumeric( asnMission.nb_obus, GetVariable( nDIANbObusIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.targets, GetVariable( nDIATargetsIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.targets, GetVariable( nDIATargetsIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -153,7 +153,7 @@ void MIL_PionMission_Test_Fire::Serialize( ASN1T_MsgPionOrder& asnMsg )
     NET_ASN_Tools::CopyBool( GetVariable( nDIATirIndirectIdx_ ), asnMission.tir_indirect );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAMunitionsIdx_ ), asnMission.munitions );
     NET_ASN_Tools::CopyNumeric( GetVariable( nDIANbObusIdx_ ), asnMission.nb_obus );
-    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIATargetsIdx_ ), asnMission.targets, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIATargetsIdx_ ), asnMission.targets, pion_.GetKnowledgeGroup() );
 
 }
 

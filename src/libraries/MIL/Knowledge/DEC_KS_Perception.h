@@ -16,7 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_PopulationPerception;
@@ -41,17 +41,14 @@ class DEC_KS_Perception : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_Perception( DEC_KnowledgeBlackBoard& blackBoard, MIL_AgentPion& agentPerceiving );
+    explicit DEC_KS_Perception( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
              DEC_KS_Perception();
     virtual ~DEC_KS_Perception();
     //@}
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( boost::archive::binary_iarchive&, const uint );
-    void save( boost::archive::binary_oarchive&, const uint ) const;
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Accessors
@@ -96,10 +93,10 @@ public:
     //@}
 
 private:
-    T_AgentPerceptionMap    externalPerceptions_;
-    MIL_AgentPion*          pAgentPerceiving_;
-    bool                    bMakePerceptionsAvailable_;
-    bool                    bMakePerceptionsAvailableTimed_;
+    DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
+    T_AgentPerceptionMap               externalPerceptions_;
+    bool                               bMakePerceptionsAvailable_;
+    bool                               bMakePerceptionsAvailableTimed_;
 };
 
 #include "DEC_KS_Perception.inl"

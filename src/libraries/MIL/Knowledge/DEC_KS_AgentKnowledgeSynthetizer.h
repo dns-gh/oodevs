@@ -16,7 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Agent;
 
@@ -38,7 +38,8 @@ class DEC_KS_AgentKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_AgentKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup );
+    explicit DEC_KS_AgentKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
+             DEC_KS_AgentKnowledgeSynthetizer();
     virtual ~DEC_KS_AgentKnowledgeSynthetizer();
     //@}
     
@@ -47,6 +48,11 @@ public:
     virtual void Prepare();
     virtual void Talk   ();
     virtual void Clean  ();
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
 private:
@@ -58,10 +64,7 @@ private:
     //@}
 
 private:
-    //! @name Members
-    //@{
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
-    //@}
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
 #include "DEC_KS_AgentKnowledgeSynthetizer.inl"

@@ -50,33 +50,11 @@ const MIL_KnowledgeGroup::T_AutomateVector& MIL_KnowledgeGroup::GetAutomates() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetKSQuerier
-// Created: NLD 2004-09-01
-// -----------------------------------------------------------------------------
-inline
-const DEC_KS_KnowledgeGroupQuerier& MIL_KnowledgeGroup::GetKSQuerier() const
-{
-    assert( pKsQuerier_ );
-    return *pKsQuerier_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetKSSharing
-// Created: NLD 2004-11-08
-// -----------------------------------------------------------------------------
-inline
-DEC_KS_Sharing& MIL_KnowledgeGroup::GetKSSharing()
-{
-    assert( pKsSharing_ );
-    return *pKsSharing_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetKnowledge
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
 inline
-const DEC_KnowledgeBlackBoard& MIL_KnowledgeGroup::GetKnowledge() const
+const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
     return *pKnowledgeBlackBoard_;

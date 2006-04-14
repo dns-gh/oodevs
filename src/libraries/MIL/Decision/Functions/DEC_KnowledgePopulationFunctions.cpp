@@ -15,9 +15,9 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
-#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Recon
@@ -161,6 +161,6 @@ void DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, c
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bIsPerceived = caller.GetKSQuerier().IsPerceived( pKnowledge->GetPopulationKnown() );
+    bool bIsPerceived = caller.GetKnowledge().IsPerceived( pKnowledge->GetPopulationKnown() );
     call.GetResult().SetValue( bIsPerceived );
 }

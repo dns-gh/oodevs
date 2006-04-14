@@ -26,25 +26,30 @@ class DEC_KnowledgeFunctions
 public:
     //! @name Rapport de force
     //@{
-    static void GetRapForLocal               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetRapForGlobal              ( DIA_Call_ABC& call, const MIL_Automate&  callerAgent );
-    static void GetAgentsAttacking           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetPotentiallyDangerousAgents( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMilitiaAgents             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetTerroristAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetRefugeeAgents             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetSurrenderedAgents         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetPerceivedAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
-    static void GetClosestObject             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
-    static void GetClosestFriendObject       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
-    static void GetObjectsColliding          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetPopulationsColliding      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetPopulationsAttacking      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetRapForLocal         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetRapForGlobal        ( DIA_Call_ABC& call, const MIL_Automate&  callerAgent );
 
+    static void GetAgentsAttacking               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetDangerousEnemies              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetLivingEnemiesPerceived        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+//    static void GetLivingTerroristsPerceived     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetDetectedAgentsInFuseau        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetEnemiesInZone                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetNearbyRefugees                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetNearbySurrenderedAgents       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void EnemyPresenceInCircle            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    template< typename T > static void GetFriendsInZone         ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ShareKnowledgesWith      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetObjects               ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetFriendsInZone         ( DIA_Call_ABC& call, const T& caller );
+       
+    static void GetClosestObject       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
+    static void GetClosestFriendObject ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
+    static void GetObjectsColliding    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    template< typename T > static void GetObjects               ( DIA_Call_ABC& call, const T& caller );   
+
+    static void GetPopulationsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetPopulationsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     template< typename T > static void GetPopulations           ( DIA_Call_ABC& call, const T& caller );
     //@}
 };

@@ -24,7 +24,8 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_IndirectFire constructor
@@ -93,7 +94,7 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 {
     if( nTargetKnowledgeID_ == 0 )
         return;
-    const DEC_Knowledge_Agent* pTargetKnowledge = firer_.GetKSQuerier().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+    const DEC_Knowledge_Agent* pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
     if( !pTargetKnowledge )
     {
         nTargetKnowledgeID_ = 0;

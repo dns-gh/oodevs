@@ -13,10 +13,7 @@
 
 #include "MIL_Army.h"
 
-#include "Knowledge/DEC_KnowledgeBlackBoard.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/DEC_KS_NetworkUpdater.h"
-#include "Knowledge/DEC_KS_ArmyQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -53,12 +50,9 @@ void MIL_Army::Terminate()
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army( const std::string& strName, uint nID, MIL_InputArchive& archive )
-    : strName_                      ( strName )
-    , nID_                          ( nID )
-    , pKnowledgeBlackBoard_         ( new DEC_KnowledgeBlackBoard          () )
-    , pKsObjectKnowledgeSynthetizer_( new DEC_KS_ObjectKnowledgeSynthetizer( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_            ( new DEC_KS_NetworkUpdater            ( *pKnowledgeBlackBoard_ ) )
-    , pKsQuerier_                   ( new DEC_KS_ArmyQuerier               ( *pKnowledgeBlackBoard_, *this ) )
+    : strName_             ( strName )
+    , nID_                 ( nID )
+    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
 {
     archive.BeginList( "GroupesConnaissance" );
 
@@ -107,9 +101,6 @@ MIL_Army::~MIL_Army()
         delete it->second;
     knowledgeGroups_.clear();
 
-    delete pKsQuerier_;
-    delete pKsNetworkUpdater_;
-    delete pKsObjectKnowledgeSynthetizer_;
     delete pKnowledgeBlackBoard_;
 }
 
@@ -164,10 +155,6 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const uint )
          >> knowledgeGroups_
          >> relations_
          >> pKnowledgeBlackBoard_;
-
-    pKsObjectKnowledgeSynthetizer_ = new DEC_KS_ObjectKnowledgeSynthetizer( *pKnowledgeBlackBoard_, *this );
-    pKsNetworkUpdater_             = new DEC_KS_NetworkUpdater            ( *pKnowledgeBlackBoard_ );
-    pKsQuerier_                    = new DEC_KS_ArmyQuerier               ( *pKnowledgeBlackBoard_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -398,8 +385,8 @@ void MIL_Army::SendFullState()
 // -----------------------------------------------------------------------------
 void MIL_Army::SendKnowledge()
 {
-    assert( pKsNetworkUpdater_ );
-    pKsNetworkUpdater_->SendFullState();
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->SendFullState();
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
         itKnowledgeGroup->second->SendKnowledge();
 }

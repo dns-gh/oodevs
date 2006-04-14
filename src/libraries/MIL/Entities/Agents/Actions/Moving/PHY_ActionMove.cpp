@@ -107,7 +107,7 @@ void PHY_ActionMove::AvoidObstacles()
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
 
-    if( !role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetObjectTypesToAvoid(), rDistanceCollision, &pObjectColliding ) )
+    if( !role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetHatedObjectTypes(), rDistanceCollision, &pObjectColliding ) )
         return;
 
     assert( pObjectColliding );

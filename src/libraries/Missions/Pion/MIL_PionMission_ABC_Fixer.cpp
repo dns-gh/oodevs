@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Fixer::Initialize( const ASN1T_MsgP
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_Fixer& asnMission = *asnMsg.mission.u.mission_pion_abc_fixer;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_a_fixer, GetVariable( nDIAUniteAFixerIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_a_fixer, GetVariable( nDIAUniteAFixerIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_ABC_Fixer::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_abc_fixer;
     asnMsg.mission.u.mission_pion_abc_fixer  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteAFixerIdx_ ), asnMission.unite_a_fixer, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteAFixerIdx_ ), asnMission.unite_a_fixer, pion_.GetKnowledgeGroup() );
 
 }
 

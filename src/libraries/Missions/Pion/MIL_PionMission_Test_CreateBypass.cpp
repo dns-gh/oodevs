@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_CreateBypass::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Pion_Test_CreateBypass& asnMission = *asnMsg.mission.u.mission_pion_test_create_bypass;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.objet, GetVariable( nDIAObjetIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.objet, GetVariable( nDIAObjetIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_Test_CreateBypass::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_test_create_bypass;
     asnMsg.mission.u.mission_pion_test_create_bypass  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObjetIdx_ ), asnMission.objet, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObjetIdx_ ), asnMission.objet, pion_.GetKnowledgeGroup() );
 
 }
 

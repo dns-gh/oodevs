@@ -10,6 +10,17 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetKnowledge
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+inline
+DEC_KnowledgeBlackBoard_Automate& MIL_Automate::GetKnowledge() const
+{
+    assert( pKnowledgeBlackBoard_ );
+    return *pKnowledgeBlackBoard_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetLimas
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
@@ -161,16 +172,6 @@ inline
 const MT_Vector2D& MIL_Automate::GetDirDanger() const
 {
     return orderManager_.GetDirDanger();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetKSQuerier
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-inline
-const DEC_KS_AutomateQuerier& MIL_Automate::GetKSQuerier() const
-{
-    return ksQuerier_;
 }
 
 // -----------------------------------------------------------------------------

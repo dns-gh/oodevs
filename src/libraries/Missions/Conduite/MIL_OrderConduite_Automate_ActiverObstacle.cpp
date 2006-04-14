@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ActiverObstacle::Initialize(
     const ASN1T_OrderConduite_Automate_ActiverObstacle& asnMission = asnMsg.u.order_conduite_automate_activer_obstacle;
     if( !pKnowledgeGroup_ )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission, GetVariable( nDIAOrderConduiteAutomateActiverObstacleIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission, GetVariable( nDIAOrderConduiteAutomateActiverObstacleIdx_ ), *pKnowledgeGroup_ ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;

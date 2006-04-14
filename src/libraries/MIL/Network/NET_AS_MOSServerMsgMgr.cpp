@@ -142,7 +142,7 @@ void NET_AS_MOSServerMsgMgr::DeleteMessagesFrom( DIN_Link& dinLink )
     }
     {
         MT_CriticalSectionLocker lockerWithCtxList( ctlWithCtxListCriticalSection_ );
-        for( T_MessageWithCtxControllerVector::iterator it = messageWithCtxControllerList_.begin(); it != messageWithCtxControllerList_.end(); ++it )
+        for( T_MessageWithCtxControllerVector::iterator it = messageWithCtxControllerList_.begin(); it != messageWithCtxControllerList_.end(); )
             if( (**it).GetLink() == &dinLink )
             {
                 delete *it;

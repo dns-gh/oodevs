@@ -10,72 +10,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyPerception
-// Created: NLD 2004-08-20
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
-{
-    assert( pKsPerception_ );
-    pKsPerception_->NotifyPerception( agent, level, bPerceptionRecorded );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyPerception
-// Created: NLD 2004-08-20
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
-{
-    assert( pKsPerception_ );
-    pKsPerception_->NotifyPerception( agent, level, bRecordModeEnabled_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyPerception
-// Created: NLD 2004-08-20
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_RealObject_ABC& object, const PHY_PerceptionLevel& level )
-{
-    assert( pKsPerception_ ); 
-    pKsPerception_->NotifyPerception( object, level, bRecordModeEnabled_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyPerception
-// Created: NLD 2005-10-11
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
-{
-    assert( pKsPerception_ );
-    pKsPerception_->NotifyPerception( concentration, level, bRecordModeEnabled_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyPerception
-// Created: NLD 2005-10-12
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
-{
-    assert( pKsPerception_ );
-    pKsPerception_->NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifytExternalPerception
-// Created: NLD 2005-03-23
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
-{
-    assert( pKsPerception_ );
-    pKsPerception_->NotifyExternalPerception( agent, level );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::IsPeriphericalVisionEnabled
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
@@ -152,29 +86,6 @@ void PHY_RolePion_Perceiver::GetMainPerceptionDirection( MT_Vector2D& vDirection
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnableRecordMode
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::EnableRecordMode()
-{
-    bRecordModeEnabled_ = true;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::DisableRecordMode
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-void PHY_RolePion_Perceiver::DisableRecordMode()
-{
-    bRecordModeEnabled_ = false;
-    
-    assert( pKsPerception_ );
-    pKsPerception_->MakePerceptionsAvailable();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::HasRadarStateChanged
 // Created: NLD 2005-02-23
 // -----------------------------------------------------------------------------
@@ -197,17 +108,6 @@ void PHY_RolePion_Perceiver::Clean()
 {
     bHasChanged_           = false;
     bRadarStateHasChanged_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::HasDelayedPerceptions
-// Created: JVT 2004-12-03
-// -----------------------------------------------------------------------------
-inline
-bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
-{
-    assert( pKsPerception_ );
-    return pKsPerception_->HasDelayedPerceptions();
 }
 
 // =============================================================================

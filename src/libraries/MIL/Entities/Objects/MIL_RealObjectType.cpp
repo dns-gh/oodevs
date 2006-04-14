@@ -62,7 +62,7 @@
 #include "Tools/MIL_IDManager.h"
 
 MIL_RealObjectType::T_ObjectTypeMap     MIL_RealObjectType::objectTypes_;
-MIL_RealObjectTypeFilter*               MIL_RealObjectType::pObjectTypesToAvoid_ = 0;
+MIL_RealObjectTypeFilter*               MIL_RealObjectType::pHatedObjectTypes_ = 0;
 
 const MIL_RealObjectType& MIL_RealObjectType::fosseAntiChar_            = *new MIL_RealObjectType( "fosse anti char"           , eObjectTypeFosseAntiChar          , EnumObjectType::fosse_anti_char          , &MIL_FosseAntiChar              ::Create, eHate   );  
 const MIL_RealObjectType& MIL_RealObjectType::abattis_                  = *new MIL_RealObjectType( "abattis"                   , eObjectTypeAbattis                , EnumObjectType::abattis                  , &MIL_Abattis                    ::Create, eHate   );  
@@ -156,7 +156,7 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
     objectTypes_[ zoneImplantationMortier_.GetID() ] = &zoneImplantationMortier_;
     objectTypes_[ installation_           .GetID() ] = &installation_;
 
-    pObjectTypesToAvoid_ = new MIL_RealObjectTypeFilter();
+    pHatedObjectTypes_ = new MIL_RealObjectTypeFilter();
 
     archive.Section  ( "Objets" );
     archive.BeginList( "ObjetsReels" );
@@ -191,8 +191,8 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::Terminate()
 {
-    delete pObjectTypesToAvoid_;
-    pObjectTypesToAvoid_ = 0;
+    delete pHatedObjectTypes_;
+    pHatedObjectTypes_ = 0;
     objectTypes_.clear();
 }
 
@@ -374,8 +374,8 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
     if( bInitialized_ ) 
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Object types are already initialized" );
 
-    if( nBehavior_ == eHate || nBehavior_ == eAvoid )
-        pObjectTypesToAvoid_->Set( *this );
+    if( nBehavior_ == eHate )
+        pHatedObjectTypes_->Set( *this );
 
     pIDManager_ = MIL_IDManager::FindObjectIDManager( strName_ );
     if( !pIDManager_ )

@@ -15,6 +15,8 @@
 #include "DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForLocal, "DEC_Knowledge_RapForLocal" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForLocal constructor
 // Created: NLD 2004-03-11
@@ -44,8 +46,10 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_KnowledgeAgentVector& enemies, const T_KnowledgeAgentVector& friends )
 {
-    T_KnowledgeAgentVector agentLocalEnemies;
+    dangerousEnemies_.clear();
 
+    T_KnowledgeAgentVector agentLocalEnemies;
+    
     MT_Float rTotalFightScoreEnemy  = 0;
     MT_Float rTotalFightScoreFriend = 0;
 
@@ -58,6 +62,8 @@ void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_Knowl
         {
             rTotalFightScoreEnemy += rDangerosity;
             agentLocalEnemies.push_back( &knowledgeEnemy );
+
+            dangerousEnemies_.push_back( (void*)knowledgeEnemy.GetID() );
         }
     }
 

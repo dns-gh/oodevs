@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::In
         return nCode;        
 
     const ASN1T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint& asnMission = *asnMsg.mission.u.mission_pion_log_appuyer_franchissement_sur_un_point;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.pont_flottant, GetVariable( nDIAPontFlottantIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.pont_flottant, GetVariable( nDIAPontFlottantIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Serialize( ASN1T_MsgPi
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_log_appuyer_franchissement_sur_un_point;
     asnMsg.mission.u.mission_pion_log_appuyer_franchissement_sur_un_point  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ), asnMission.pont_flottant, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ), asnMission.pont_flottant, pion_.GetKnowledgeGroup() );
 
 }
 

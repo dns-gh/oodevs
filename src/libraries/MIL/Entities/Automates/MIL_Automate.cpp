@@ -41,7 +41,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Decision/DEC_ModelAutomate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KS_AutomateQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 
@@ -58,8 +58,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
     , pPionPC_                           ( 0 )
     , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
-    , knowledgeBlackBoard_               ()
-    , ksQuerier_                         ( knowledgeBlackBoard_, *this )
+    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , bEmbraye_                          ( true )
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
@@ -118,8 +117,7 @@ MIL_Automate::MIL_Automate()
     , pPionPC_                           ( 0 )
     , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
-    , knowledgeBlackBoard_               ()
-    , ksQuerier_                         ( knowledgeBlackBoard_, *this )
+    , pKnowledgeBlackBoard_              ( 0 )
     , bEmbraye_                          ( true )
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
@@ -213,7 +211,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> bDotationSupplyNeeded_
          >> bDotationSupplyExplicitlyRequested_
          >> dotationSupplyStates_
-         >> knowledgeBlackBoard_
+         >> pKnowledgeBlackBoard_
          >> bSurrendered_
          >> bPrisoner_
          >> const_cast< MIL_CampPrisonniers*& >( pPrisonerCamp_ )
@@ -261,7 +259,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << bDotationSupplyNeeded_
          << bDotationSupplyExplicitlyRequested_
          << dotationSupplyStates_
-         << knowledgeBlackBoard_
+         << pKnowledgeBlackBoard_
          << bSurrendered_
          << bPrisoner_
          << pPrisonerCamp_
@@ -339,7 +337,9 @@ void MIL_Automate::UpdateKnowledges()
     // Pions (+ PC)
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         (**itPion).UpdateKnowledges();
-    knowledgeBlackBoard_.Update();
+
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -348,7 +348,8 @@ void MIL_Automate::UpdateKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_Automate::CleanKnowledges()
 {
-    knowledgeBlackBoard_.Clean();
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->Clean();
 
     // Pions (+ PC)
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )

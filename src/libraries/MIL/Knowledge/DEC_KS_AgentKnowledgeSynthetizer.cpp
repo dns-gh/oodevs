@@ -12,24 +12,37 @@
 #include "MIL_pch.h"
 #include "DEC_KS_AgentKnowledgeSynthetizer.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_Agent.h"
-
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
  
+BOOST_CLASS_EXPORT_GUID( DEC_KS_AgentKnowledgeSynthetizer, "DEC_KS_AgentKnowledgeSynthetizer" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_AgentKnowledgeSynthetizer::DEC_KS_AgentKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup )
+DEC_KS_AgentKnowledgeSynthetizer::DEC_KS_AgentKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pKnowledgeGroup_       ( &knowledgeGroup )
+    , pBlackBoard_           ( &blackBoard )
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );       
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentKnowledgeSynthetizer constructor
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KS_AgentKnowledgeSynthetizer::DEC_KS_AgentKnowledgeSynthetizer()
+    : DEC_KnowledgeSource_ABC()
+    , pBlackBoard_           ( 0 )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -38,8 +51,6 @@ DEC_KS_AgentKnowledgeSynthetizer::DEC_KS_AgentKnowledgeSynthetizer( DEC_Knowledg
 // -----------------------------------------------------------------------------
 DEC_KS_AgentKnowledgeSynthetizer::~DEC_KS_AgentKnowledgeSynthetizer()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );
 }
 
 // =============================================================================
@@ -52,7 +63,7 @@ DEC_KS_AgentKnowledgeSynthetizer::~DEC_KS_AgentKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_AgentKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Prepare ) );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,12 +74,11 @@ inline
 DEC_Knowledge_Agent& DEC_KS_AgentKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Agent_ABC& agentKnown ) const
 {
     assert( pBlackBoard_ );
-    DEC_Knowledge_Agent* pKnowledge = pBlackBoard_->GetKnowledgeAgent( agentKnown );
+    DEC_Knowledge_Agent* pKnowledge = pBlackBoard_->GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
     if( pKnowledge )
         return *pKnowledge;
     
-    assert( pKnowledgeGroup_ );
-    return pBlackBoard_->CreateKnowledgeAgent( *pKnowledgeGroup_, agentKnown );
+    return pBlackBoard_->GetKnowledgeAgentContainer().CreateKnowledgeAgent( pBlackBoard_->GetKnowledgeGroup(), agentKnown );
 }
   
 // -----------------------------------------------------------------------------
@@ -88,29 +98,28 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( cons
 // -----------------------------------------------------------------------------
 void DEC_KS_AgentKnowledgeSynthetizer::Talk()
 {
-    assert( pKnowledgeGroup_ );
     assert( pBlackBoard_ );
 
     class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_AgentPerception> method( DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, *this );
 
     // Synthèse de la perception des subordonnés
     // Ajout automatique de la connaissance de chaque subordonné    
-    const MIL_KnowledgeGroup::T_AutomateVector& automates = pKnowledgeGroup_->GetAutomates();
+    const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup().GetAutomates();
     for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
         const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         {
             MIL_AgentPion& pion = **itPion;
-            pion.GetKnowledge().ApplyOnKnowledgesAgentPerception( method );
+            pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( method );
         }
     }
     
     // Extrapolation
-    pBlackBoard_->ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Extrapolate ) );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Extrapolate ) );
 
     // Relevance
-    pBlackBoard_->ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::UpdateRelevance ) );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::UpdateRelevance ) );
 }
 
 
@@ -124,11 +133,10 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
 // -----------------------------------------------------------------------------
 void DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
 {
+    assert( pBlackBoard_ );
+
     if( knowledge.Clean() )
-    {
-        assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
-    }
+        pBlackBoard_->GetKnowledgeAgentContainer().DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
 }
 
 // -----------------------------------------------------------------------------
@@ -140,5 +148,5 @@ void DEC_KS_AgentKnowledgeSynthetizer::Clean()
     assert( pBlackBoard_ );
 
     class_mem_fun_void_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent, *this );
-    pBlackBoard_->ApplyOnKnowledgesAgent( methodAgent );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( methodAgent );
 }

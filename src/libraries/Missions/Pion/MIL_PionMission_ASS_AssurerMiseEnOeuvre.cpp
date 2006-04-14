@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( co
         return nCode;        
 
     const ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre& asnMission = *asnMsg.mission.u.mission_pion_ass_assurer_mise_en_oeuvre;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.zone_implantation, GetVariable( nDIAZoneImplantationIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.zone_implantation, GetVariable( nDIAZoneImplantationIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.presence_contre_batterie, GetVariable( nDIAPresenceContreBatterieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -134,7 +134,7 @@ void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Serialize( ASN1T_MsgPionOrder& asn
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre;
     asnMsg.mission.u.mission_pion_ass_assurer_mise_en_oeuvre  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAZoneImplantationIdx_ ), asnMission.zone_implantation, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAZoneImplantationIdx_ ), asnMission.zone_implantation, pion_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyBool( GetVariable( nDIAPresenceContreBatterieIdx_ ), asnMission.presence_contre_batterie );
 
 }

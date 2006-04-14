@@ -52,7 +52,7 @@ void MIL_RC_ObstacleEnAttenteActivation::Send( const MIL_AgentPion& sender, E_Rc
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_obstacle_en_attente_activation, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_obstacle_en_attente_activation, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -66,7 +66,7 @@ void MIL_RC_ObstacleEnAttenteActivation::Send( const MIL_Automate& sender, E_RcT
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_obstacle_en_attente_activation, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_obstacle_en_attente_activation, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

@@ -16,7 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_AgentPion;
 class MIL_Population;
 
@@ -37,19 +37,25 @@ class DEC_KS_Fire : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_Fire( DEC_KnowledgeBlackBoard& blackBoard, MIL_AgentPion& agentInteracting );
+    explicit DEC_KS_Fire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
+             DEC_KS_Fire();
     virtual ~DEC_KS_Fire();
     //@}
     
     //! @name Operations
     //@{
-    virtual void Talk   ();
+    virtual void Talk();
     //@}
 
     //! @name Events
     //@{
     void NotifyAttackedBy( MIL_AgentPion&  attacker );
     void NotifyAttackedBy( MIL_Population& attacker );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
 private:
@@ -63,10 +69,9 @@ private:
     //@}
 
 private:
-    MIL_AgentPion*  pAgentInteracting_;
-
-    T_PionSet       pionsAttacking_;
-    T_PopulationSet populationsAttacking_;
+    DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
+    T_PionSet                          pionsAttacking_;
+    T_PopulationSet                    populationsAttacking_;
 };
 
 #include "DEC_KS_Fire.inl"

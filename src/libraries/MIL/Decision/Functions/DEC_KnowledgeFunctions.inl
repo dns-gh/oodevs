@@ -15,8 +15,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
-#include "Knowledge/DEC_KS_AutomateQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Sharing.h"
 
 // -----------------------------------------------------------------------------
@@ -33,7 +35,7 @@ void DEC_KnowledgeFunctions::ShareKnowledgesWith( DIA_Call_ABC& call, const T& c
     const uint                  nShareTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (uint)rTime;
 
     assert( pAutomate );
-    pAutomate->GetAutomate().GetKnowledgeGroup().GetKSSharing().ShareFromSource( caller.GetKnowledgeGroup(), nShareTimeStep );
+    pAutomate->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), nShareTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +53,7 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( DIA_Call_ABC& call, cons
           MT_Float              rSharedCircleRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
 
     assert( pAutomate );
-    pAutomate->GetAutomate().GetKnowledgeGroup().GetKSSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *pSharedCircleCenter, rSharedCircleRadius );
+    pAutomate->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *pSharedCircleCenter, rSharedCircleRadius );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +66,7 @@ void DEC_KnowledgeFunctions::GetObjects( DIA_Call_ABC& call, const T& caller )
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
     
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetKSQuerier().GetObjects( knowledges, objectsFilter );
+    caller.GetArmy().GetKnowledge().GetObjects( knowledges, objectsFilter );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
@@ -82,7 +84,7 @@ void DEC_KnowledgeFunctions::GetFriendsInZone( DIA_Call_ABC& call, const T& call
     assert( pZone );
 
     T_KnowledgeAgentDiaIDVector knowledges;
-    caller.GetKSQuerier().GetFriendsInZone( knowledges, *pZone );
+    caller.GetKnowledgeGroup().GetKnowledge().GetFriendsInZone( knowledges, *pZone );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
@@ -96,7 +98,7 @@ template< typename T >
 void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller )
 {
     T_KnowledgePopulationDiaIDVector knowledges;
-    caller.GetKSQuerier().GetPopulations( knowledges );
+    caller.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledges );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissancePopulation() );

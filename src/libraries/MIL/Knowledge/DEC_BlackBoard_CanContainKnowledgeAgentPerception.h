@@ -41,8 +41,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_BlackBoard_CanContainKnowledgeAgentPerception();
-    ~DEC_BlackBoard_CanContainKnowledgeAgentPerception();
+             DEC_BlackBoard_CanContainKnowledgeAgentPerception();
+    virtual ~DEC_BlackBoard_CanContainKnowledgeAgentPerception();
     //@}
 
     //! @name CheckPoints

@@ -16,6 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
@@ -30,7 +31,8 @@ class DEC_KS_Sharing : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_Sharing( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup );
+    explicit DEC_KS_Sharing( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
+             DEC_KS_Sharing();
     virtual ~DEC_KS_Sharing();
     //@}
 
@@ -41,6 +43,11 @@ public:
 
     void ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep );
     void ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
 public:
@@ -62,8 +69,8 @@ public:
     //@}
     
 private:
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
-          T_ShareSourceMMap   shareSources_;
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
+    T_ShareSourceMMap                       shareSources_;
 };
 
 #include "DEC_KS_Sharing.inl"

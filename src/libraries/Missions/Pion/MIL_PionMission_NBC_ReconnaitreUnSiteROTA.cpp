@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_NBC_ReconnaitreUnSiteROTA::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Pion_NBC_ReconnaitreUnSiteROTA& asnMission = *asnMsg.mission.u.mission_pion_nbc_reconnaitre_un_site_rota;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_ROTA, GetVariable( nDIASiteROTAIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_ROTA, GetVariable( nDIASiteROTAIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_NBC_ReconnaitreUnSiteROTA::Serialize( ASN1T_MsgPionOrder& a
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_nbc_reconnaitre_un_site_rota;
     asnMsg.mission.u.mission_pion_nbc_reconnaitre_un_site_rota  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteROTAIdx_ ), asnMission.site_ROTA, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteROTAIdx_ ), asnMission.site_ROTA, pion_.GetKnowledgeGroup() );
 
 }
 

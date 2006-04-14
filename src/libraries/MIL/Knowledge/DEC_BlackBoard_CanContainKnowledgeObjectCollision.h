@@ -41,8 +41,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_BlackBoard_CanContainKnowledgeObjectCollision();
-    ~DEC_BlackBoard_CanContainKnowledgeObjectCollision();
+             DEC_BlackBoard_CanContainKnowledgeObjectCollision();
+    virtual ~DEC_BlackBoard_CanContainKnowledgeObjectCollision();
     //@}
     
     //! @name CheckPoints

@@ -12,7 +12,11 @@
 #include "MIL_pch.h"
 #include "DEC_KS_PopulationKnowledgeSynthetizer.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_Population.h"
@@ -21,16 +25,27 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
  
+BOOST_CLASS_EXPORT_GUID( DEC_KS_PopulationKnowledgeSynthetizer, "DEC_KS_PopulationKnowledgeSynthetizer" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup )
+DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pKnowledgeGroup_       ( &knowledgeGroup )
+    , pBlackBoard_           ( &blackBoard )
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );       
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationKnowledgeSynthetizer constructor
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer()
+    : DEC_KnowledgeSource_ABC( )
+    , pBlackBoard_           ( 0 )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -39,8 +54,6 @@ DEC_KS_PopulationKnowledgeSynthetizer::DEC_KS_PopulationKnowledgeSynthetizer( DE
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationKnowledgeSynthetizer::~DEC_KS_PopulationKnowledgeSynthetizer()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );
 }
 
 // =============================================================================
@@ -53,7 +66,7 @@ DEC_KS_PopulationKnowledgeSynthetizer::~DEC_KS_PopulationKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_PopulationKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::Prepare ) );
+    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,12 +77,11 @@ inline
 DEC_Knowledge_Population& DEC_KS_PopulationKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Population& populationKnown ) const
 {
     assert( pBlackBoard_ );
-    DEC_Knowledge_Population* pKnowledge = pBlackBoard_->GetKnowledgePopulation( populationKnown );
+    DEC_Knowledge_Population* pKnowledge = pBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
     if( pKnowledge )
         return *pKnowledge;
     
-    assert( pKnowledgeGroup_ );
-    return pBlackBoard_->CreateKnowledgePopulation( *pKnowledgeGroup_, populationKnown );
+    return pBlackBoard_->GetKnowledgePopulationContainer().CreateKnowledgePopulation( pBlackBoard_->GetKnowledgeGroup(), populationKnown );
 }
   
 // -----------------------------------------------------------------------------
@@ -97,7 +109,6 @@ void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision( const
 // -----------------------------------------------------------------------------
 void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
 {
-    assert( pKnowledgeGroup_ );
     assert( pBlackBoard_ );
 
     class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationPerception > methodPerception( DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, *this );
@@ -105,20 +116,20 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
 
     // Synthèse de la perception des subordonnés
     // Ajout automatique de la connaissance de chaque subordonné    
-    const MIL_KnowledgeGroup::T_AutomateVector& automates = pKnowledgeGroup_->GetAutomates();
+    const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup().GetAutomates();
     for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
         const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         {
             MIL_AgentPion& pion = **itPion;
-            pion.GetKnowledge().ApplyOnKnowledgesPopulationPerception( methodPerception );
-            pion.GetKnowledge().ApplyOnKnowledgesPopulationCollision ( methodCollision  );
+            pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPerception );
+            pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( methodCollision  );
         }
     }
     
     // Relevance
-    pBlackBoard_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateRelevance ) );
+    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateRelevance ) );
 }
 
 // =============================================================================
@@ -134,7 +145,7 @@ void DEC_KS_PopulationKnowledgeSynthetizer::CleanKnowledgePopulation( DEC_Knowle
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgePopulation( knowledge ); // The knowledge will be deleted
+        pBlackBoard_->GetKnowledgePopulationContainer().DestroyKnowledgePopulation( knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -147,5 +158,5 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Clean()
     assert( pBlackBoard_ );
 
     class_mem_fun_void_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( DEC_KS_PopulationKnowledgeSynthetizer::CleanKnowledgePopulation, *this );
-    pBlackBoard_->ApplyOnKnowledgesPopulation( methodPopulation );
+    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
 }

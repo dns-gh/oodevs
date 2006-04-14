@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_PrendrePreciserContact::Initialize(
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_PrendrePreciserContact& asnMission = *asnMsg.mission.u.mission_pion_inf_prendre_preciser_contact;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_INF_PrendrePreciserContact::Serialize( ASN1T_MsgPionOrder& 
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_inf_prendre_preciser_contact;
     asnMsg.mission.u.mission_pion_inf_prendre_preciser_contact  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ), asnMission.ennemi, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ), asnMission.ennemi, pion_.GetKnowledgeGroup() );
 
 }
 

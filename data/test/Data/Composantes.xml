@@ -340,9 +340,9 @@
         <Panne nom="Panne 1" pourcentage="100"/>
       </PannesAleatoires>
       <PannesAttritions>
-        <Panne nom="Panne 1" pourcentage="30"/>
-        <Panne nom="Panne 2" pourcentage="30"/>
-        <Panne nom="Panne 3" pourcentage="40"/>
+        <Panne nom="Panne 1" pourcentage="100"/>
+        <Panne nom="Panne 2" pourcentage="0"/>
+        <Panne nom="Panne 3" pourcentage="0"/>
       </PannesAttritions>
     </Pannes>
   </Composante>

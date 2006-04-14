@@ -12,7 +12,8 @@
 #include "MIL_pch.h"
 #include "DEC_KS_PopulationInteraction.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -24,12 +25,10 @@ BOOST_CLASS_EXPORT_GUID( DEC_KS_PopulationInteraction, "DEC_KS_PopulationInterac
 // Name: DEC_KS_PopulationInteraction constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& agentInteracting )
+DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pAgentInteracting_     ( &agentInteracting )
+    , pBlackBoard_           ( &blackBoard )
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,11 +37,8 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBo
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction()
     : DEC_KnowledgeSource_ABC ()
-    , pAgentInteracting_      ( 0 )
-    , flowCollisions_         ()
-    , concentrationCollisions_()
+    , pBlackBoard_            ( 0 )
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,8 +47,23 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction()
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );    
+}
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void DEC_KS_PopulationInteraction::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_PopulationInteraction::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_
+            & concentrationCollisions_
+            & flowCollisions_;
 }
 
 // =============================================================================
@@ -65,7 +76,8 @@ DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 // -----------------------------------------------------------------------------
 void DEC_KS_PopulationInteraction::Prepare()
 {
-    pBlackBoard_->ApplyOnKnowledgesPopulationCollision( std::mem_fun_ref( &DEC_Knowledge_PopulationCollision::Prepare ) );
+    assert( pBlackBoard_ );
+    pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( std::mem_fun_ref( &DEC_Knowledge_PopulationCollision::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +88,9 @@ DEC_Knowledge_PopulationCollision& DEC_KS_PopulationInteraction::GetKnowledgePop
 {
     assert( pBlackBoard_ );
     
-    DEC_Knowledge_PopulationCollision* pKnowledge = pBlackBoard_->GetKnowledgePopulationCollision( population );
+    DEC_Knowledge_PopulationCollision* pKnowledge = pBlackBoard_->GetKnowledgePopulationCollisionContainer().GetKnowledgePopulationCollision( population );
     if( !pKnowledge )
-        pKnowledge = &pBlackBoard_->CreateKnowledgePopulationCollision( *pAgentInteracting_, population );
+        pKnowledge = &pBlackBoard_->GetKnowledgePopulationCollisionContainer().CreateKnowledgePopulationCollision( pBlackBoard_->GetPion(), population );
     return *pKnowledge;
 }
 
@@ -121,7 +133,7 @@ void DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision( DEC_Knowle
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgePopulationCollision( knowledge ); // NB - The knowledge will be deleted
+        pBlackBoard_->GetKnowledgePopulationCollisionContainer().DestroyKnowledgePopulationCollision( knowledge ); // NB - The knowledge will be deleted
     }
 }
 
@@ -134,33 +146,5 @@ void DEC_KS_PopulationInteraction::Clean()
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
     class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );        
-    pBlackBoard_->ApplyOnKnowledgesPopulationCollision( method );    
-}
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationInteraction::load
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-void DEC_KS_PopulationInteraction::load( boost::archive::binary_iarchive& file, const uint )
-{
-    file >> boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-         >> const_cast< MIL_AgentPion*& >( pAgentInteracting_ )
-         >> concentrationCollisions_
-         >> flowCollisions_;    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationInteraction::save
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-void DEC_KS_PopulationInteraction::save( boost::archive::binary_oarchive& file, const uint ) const
-{
-    file << boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-         << pAgentInteracting_
-         << concentrationCollisions_
-         << flowCollisions_;
+    pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );    
 }

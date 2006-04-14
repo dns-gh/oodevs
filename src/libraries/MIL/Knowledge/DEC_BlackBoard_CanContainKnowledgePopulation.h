@@ -38,8 +38,8 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_BlackBoard_CanContainKnowledgePopulation();
-    ~DEC_BlackBoard_CanContainKnowledgePopulation();
+             DEC_BlackBoard_CanContainKnowledgePopulation();
+    virtual ~DEC_BlackBoard_CanContainKnowledgePopulation();
     //@}
 
     //! @name CheckPoints

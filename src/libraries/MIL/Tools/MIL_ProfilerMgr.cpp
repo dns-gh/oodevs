@@ -19,6 +19,7 @@
 #include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
 #include "Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "MIL_AgentServer.h"
 
 #include <direct.h>
 

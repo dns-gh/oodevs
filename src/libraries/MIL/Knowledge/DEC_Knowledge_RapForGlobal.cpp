@@ -17,6 +17,8 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForGlobal, "DEC_Knowledge_RapForGlobal" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForGlobal constructor
 // Created: NLD 2004-03-11

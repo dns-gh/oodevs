@@ -12,7 +12,6 @@
 #include "MIL_pch.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"

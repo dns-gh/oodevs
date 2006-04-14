@@ -14,15 +14,44 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Agent.h"
+#include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/MIL_Army.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeAgent, "DEC_BlackBoard_CanContainKnowledgeAgent" )
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent constructor
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup )
+    : pKnowledgeGroup_           ( &knowledgeGroup )
+    , nLastCacheUpdateTick_      ( 0 )
+    , detectedContainer_         ()
+    , friendsContainer_          ()
+    , enemiesContainer_          ()
+    , militiasContainer_         ()
+    , terroristsContainer_       ()
+    , refugeesContainer_         ()
+    , surrenderedAgentsContainer_()
+{
+
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent()
+    : pKnowledgeGroup_           ( 0 )
+    , nLastCacheUpdateTick_      ( 0 )
+    , detectedContainer_         ()
+    , friendsContainer_          ()
+    , enemiesContainer_          ()
+    , militiasContainer_         ()
+    , terroristsContainer_       ()
+    , refugeesContainer_         ()
+    , surrenderedAgentsContainer_()
 {
 	
 }
@@ -87,7 +116,9 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> realAgentMap_
+    file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
+         >> nLastCacheUpdateTick_
+         >> realAgentMap_
          >> knowledgeAgentFromIDMap_;
 }
 
@@ -97,7 +128,9 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << realAgentMap_
+    file << pKnowledgeGroup_
+         << nLastCacheUpdateTick_
+         << realAgentMap_
          << knowledgeAgentFromIDMap_;
 }
 
@@ -121,7 +154,6 @@ DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAge
     return knowledge;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent
 // Created: NLD 2004-03-16
@@ -133,5 +165,67 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowled
     nOut = knowledgeAgentFromIDMap_.erase( knowledge.GetID() );
     assert( nOut == 1 );
     delete &knowledge;
+}
+
+// =============================================================================
+// QUERIES
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
+{
+    if( nLastCacheUpdateTick_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+        return;
+
+    nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+
+    detectedContainer_         .clear();
+    friendsContainer_          .clear();
+    enemiesContainer_          .clear();
+    militiasContainer_         .clear();
+    terroristsContainer_       .clear();
+    refugeesContainer_         .clear();
+    surrenderedAgentsContainer_.clear();
+
+    assert( pKnowledgeGroup_ ); 
+    const MIL_Army& army = pKnowledgeGroup_->GetArmy();
+
+    for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
+    {
+        DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
+
+        if( knowledge.IsRefugee() )
+            refugeesContainer_.push_back( &knowledge );
+
+        else if( knowledge.IsSurrendered() )
+        {
+            if( !knowledge.GetArmy() || *knowledge.GetArmy() != army ) 
+                surrenderedAgentsContainer_.push_back( &knowledge );
+        }
+
+        else
+        {
+            if( !knowledge.GetArmy() )
+            {
+                if( army.IsAFriend( knowledge.GetAgentKnown().GetArmy() ) != eTristate_True )
+                    detectedContainer_.push_back( &knowledge );
+            }
+
+            else if( army.IsAFriend( knowledge ) == eTristate_True )
+                friendsContainer_.push_back( &knowledge );
+            
+            else if( army.IsAnEnemy( knowledge ) == eTristate_True )
+                enemiesContainer_.push_back( &knowledge );
+
+            if( knowledge.IsMilitia() )
+                militiasContainer_.push_back( &knowledge );
+
+            if( knowledge.IsTerrorist() )
+                terroristsContainer_.push_back( &knowledge );
+        }
+    }
 }
 

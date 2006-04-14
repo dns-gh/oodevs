@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_ContreAttaquer::Initialize( const A
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_ContreAttaquer& asnMission = *asnMsg.mission.u.mission_pion_inf_contre_attaquer;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_INF_ContreAttaquer::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_inf_contre_attaquer;
     asnMsg.mission.u.mission_pion_inf_contre_attaquer  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ), asnMission.ennemi, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ), asnMission.ennemi, pion_.GetKnowledgeGroup() );
 
 }
 

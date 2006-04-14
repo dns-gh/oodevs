@@ -36,6 +36,14 @@ public:
     //@{
     void Update( const MIL_AgentPion& pion, const T_KnowledgeAgentVector& enemies, const T_KnowledgeAgentVector& friends );
     //@}
+
+    //! @name Accessors
+    //@{
+    const T_KnowledgeAgentDiaIDVector& GetDangerousEnemies() const;
+    //@}
+
+private:
+    T_KnowledgeAgentDiaIDVector dangerousEnemies_;
 };
 
 #include "DEC_Knowledge_RapForLocal.inl"

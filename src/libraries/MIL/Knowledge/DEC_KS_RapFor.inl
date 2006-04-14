@@ -8,3 +8,18 @@
 // $Workfile: DEC_KS_RapFor.inl $
 //
 // *****************************************************************************
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void DEC_KS_RapFor::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_RapFor::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_;
+}

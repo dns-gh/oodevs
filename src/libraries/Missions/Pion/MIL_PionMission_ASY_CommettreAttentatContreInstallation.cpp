@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASY_CommettreAttentatContreInstallation
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_repli, GetVariable( nDIAPointRepliIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.installation_cible, GetVariable( nDIAInstallationCibleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.installation_cible, GetVariable( nDIAInstallationCibleIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -141,7 +141,7 @@ void MIL_PionMission_ASY_CommettreAttentatContreInstallation::Serialize( ASN1T_M
 
     NET_ASN_Tools::CopyPath( GetVariable( nDIAItineraireIdx_ ), asnMission.itineraire );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRepliIdx_ ), asnMission.point_repli );
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAInstallationCibleIdx_ ), asnMission.installation_cible, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAInstallationCibleIdx_ ), asnMission.installation_cible, pion_.GetKnowledgeGroup() );
 
 }
 

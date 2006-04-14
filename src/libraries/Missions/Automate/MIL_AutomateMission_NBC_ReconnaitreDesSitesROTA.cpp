@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_ReconnaitreDesSitesROTA::Initia
         return nCode;        
 
     const ASN1T_Mission_Automate_NBC_ReconnaitreDesSitesROTA& asnMission = *asnMsg.mission.u.mission_automate_nbc_reconnaitre_des_sites_rota;
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.sites_ROTA, GetVariable( nDIASitesROTAIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.sites_ROTA, GetVariable( nDIASitesROTAIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -100,7 +100,7 @@ void MIL_AutomateMission_NBC_ReconnaitreDesSitesROTA::Serialize( ASN1T_MsgAutoma
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_nbc_reconnaitre_des_sites_rota;
     asnMsg.mission.u.mission_automate_nbc_reconnaitre_des_sites_rota  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIASitesROTAIdx_ ), asnMission.sites_ROTA, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIASitesROTAIdx_ ), asnMission.sites_ROTA, automate_.GetKnowledgeGroup() );
 
 }
 

@@ -24,6 +24,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
 
@@ -320,7 +321,7 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& population )
 {
     assert( pPion_ );
-    pPion_->GetKSPopulationInteraction().NotifyPopulationCollision( population );
+    pPion_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,7 +331,7 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& popul
 void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentration& population )
 {
     assert( pPion_ );
-    pPion_->GetKSPopulationInteraction().NotifyPopulationCollision( population );
+    pPion_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +341,7 @@ void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentrati
 void PHY_RolePion_Location::NotifyObjectCollision( MIL_RealObject_ABC& object )
 {
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectCollision( object, vPosition_ );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, vPosition_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -26,7 +26,7 @@ class DEC_Knowledge_RapFor_ABC : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_RapFor_ABC( );
+             DEC_Knowledge_RapFor_ABC();
     virtual ~DEC_Knowledge_RapFor_ABC();
     //@}
 

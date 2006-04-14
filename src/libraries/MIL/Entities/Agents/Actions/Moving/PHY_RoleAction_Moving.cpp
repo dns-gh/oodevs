@@ -30,8 +30,9 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/RC/MIL_RC.h"
+#include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathPoint.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -346,7 +347,7 @@ bool PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectT
 {
     assert( pPion_ );
     T_KnowledgeObjectVector knowledges;
-    pPion_->GetKSQuerier().GetObjects( knowledges, objectsToAvoid_ );
+    pPion_->GetArmy().GetKnowledge().GetObjects( knowledges, objectsToAvoid_ );
     const PHY_RolePion_Location& roleLocation = pPion_->GetRole< PHY_RolePion_Location >();
     const MT_Float               rHeight      = roleLocation.GetHeight();
     for( IT_KnowledgeObjectVector it = knowledges.begin(); it != knowledges.end(); )

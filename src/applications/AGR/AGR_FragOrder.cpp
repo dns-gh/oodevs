@@ -420,7 +420,7 @@ std::string AGR_FragOrder::DIATypeName() const
 // -----------------------------------------------------------------------------
 std::string AGR_FragOrder::KnowledgeAccessor() const
 {
-    return "pKnowledgeGroup_->GetKSQuerier()";
+    return "*pKnowledgeGroup_";
 }
 
 // -----------------------------------------------------------------------------

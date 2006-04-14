@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Init
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *asnMsg.mission.u.mission_pion_gen_reconnaitre_site_franchissement;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Serialize( ASN1T_MsgPion
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement;
     asnMsg.mission.u.mission_pion_gen_reconnaitre_site_franchissement  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ), asnMission.site_franchissement, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ), asnMission.site_franchissement, pion_.GetKnowledgeGroup() );
 
 }
 

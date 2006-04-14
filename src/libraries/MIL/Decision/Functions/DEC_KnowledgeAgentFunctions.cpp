@@ -12,18 +12,15 @@
 #include "MIL_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
 
-#include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
-#include "Entities/MIL_Army.h"
-
 #include "Entities/Agents/Units/Categories/PHY_NatureWeapon.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
-
+#include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Decision/DEC_Tools.h"
-
 #include "MT_Tools/MT_Sector.h"
 
 // =============================================================================
@@ -153,7 +150,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const 
     }
 
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bIsPerceived = callerAgent.GetKSQuerier().IsPerceived( pKnowledge->GetAgentKnown() );
+    bool bIsPerceived = callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
     call.GetResult().SetValue( bIsPerceived );
 }
 

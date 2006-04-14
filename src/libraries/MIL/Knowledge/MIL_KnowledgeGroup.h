@@ -14,13 +14,7 @@
 
 #include "MIL.h"
 
-class DEC_KnowledgeBlackBoard;
-class DEC_KS_AgentKnowledgeSynthetizer;
-class DEC_KS_PopulationKnowledgeSynthetizer;
-class DEC_KS_RapFor;
-class DEC_KS_NetworkUpdater;
-class DEC_KS_KnowledgeGroupQuerier;
-class DEC_KS_Sharing;
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 
@@ -74,13 +68,11 @@ public:
 
     //! @name Accessors
     //@{
-          uint                          GetID       () const;
-    const MIL_KnowledgeGroupType&       GetType     () const;
-          MIL_Army&                     GetArmy     () const;
-    const T_AutomateVector&             GetAutomates() const;
-    const DEC_KnowledgeBlackBoard&      GetKnowledge() const;
-    const DEC_KS_KnowledgeGroupQuerier& GetKSQuerier() const;
-          DEC_KS_Sharing&               GetKSSharing();
+          uint                                    GetID       () const;
+    const MIL_KnowledgeGroupType&                 GetType     () const;
+          MIL_Army&                               GetArmy     () const;
+    const T_AutomateVector&                       GetAutomates() const;
+    const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
     //@}
 
     //! @name Network
@@ -94,13 +86,7 @@ private:
     const uint                    nID_;
           MIL_Army*               pArmy_;
 
-    DEC_KnowledgeBlackBoard*                pKnowledgeBlackBoard_;
-    DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;
-    DEC_KS_PopulationKnowledgeSynthetizer*  pKsPopulationKnowledgeSynthetizer_;
-    DEC_KS_Sharing*                         pKsSharing_;
-    DEC_KS_RapFor*                          pKsRapFor_;    
-    DEC_KS_NetworkUpdater*                  pKsNetworkUpdater_;
-    DEC_KS_KnowledgeGroupQuerier*           pKsQuerier_;
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
 
     T_AutomateVector automates_;
 

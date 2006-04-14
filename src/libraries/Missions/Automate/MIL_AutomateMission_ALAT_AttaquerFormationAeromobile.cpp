@@ -78,11 +78,11 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::I
         return nCode;        
 
     const ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *asnMsg.mission.u.mission_automate_alat_attaquer_formation_aeromobile;
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.unites_a_attaquer, GetVariable( nDIAUnitesAAttaquerIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.unites_a_attaquer, GetVariable( nDIAUnitesAAttaquerIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -120,9 +120,9 @@ void MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::Serialize( ASN1T_MsgA
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile;
     asnMsg.mission.u.mission_automate_alat_attaquer_formation_aeromobile  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAUnitesAAttaquerIdx_ ), asnMission.unites_a_attaquer, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAUnitesAAttaquerIdx_ ), asnMission.unites_a_attaquer, automate_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
-    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );

@@ -22,13 +22,7 @@
 #include "Entities/MIL_Army.h"
 
 #include "DEC_Knowledge_Agent.h"
-#include "DEC_KnowledgeBlackBoard.h"
-#include "DEC_KS_AgentKnowledgeSynthetizer.h"
-#include "DEC_KS_PopulationKnowledgeSynthetizer.h"
-#include "DEC_KS_RapFor.h"
-#include "DEC_KS_NetworkUpdater.h"
-#include "DEC_KS_KnowledgeGroupQuerier.h"
-#include "DEC_KS_Sharing.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 std::set< uint > MIL_KnowledgeGroup::ids_;
 
@@ -39,17 +33,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_KnowledgeGroup, "MIL_KnowledgeGroup" )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army& army, MIL_InputArchive& /*archive*/ )
-    : pType_                            ( &type )
-    , nID_                              ( nID )
-    , pArmy_                            ( &army )
-    , pKnowledgeBlackBoard_             ( new DEC_KnowledgeBlackBoard )
-    , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer     ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer( *pKnowledgeBlackBoard_, *this ) )
-    , pKsSharing_                       ( new DEC_KS_Sharing                       ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsRapFor_                        ( new DEC_KS_RapFor                        ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_                ( new DEC_KS_NetworkUpdater                ( *pKnowledgeBlackBoard_ ) )
-    , pKsQuerier_                       ( new DEC_KS_KnowledgeGroupQuerier         ( *pKnowledgeBlackBoard_, *this ) )
-    , automates_                        ()
+    : pType_               ( &type )
+    , nID_                 ( nID )
+    , pArmy_               ( &army )
+    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
+    , automates_           ()
 {
     if ( !ids_.insert( nID_ ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "KnowledgeGroup id %d is already used", nID_ ) );
@@ -60,17 +48,11 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup()
-    : pType_                            ( 0 )
-    , nID_                              ( 0 )
-    , pArmy_                            ( 0 )
-    , pKnowledgeBlackBoard_             ( 0 )
-    , pKsAgentKnowledgeSynthetizer_     ( 0 )
-    , pKsPopulationKnowledgeSynthetizer_( 0 )
-    , pKsRapFor_                        ( 0 )
-    , pKsSharing_                       ( 0 )
-    , pKsNetworkUpdater_                ( 0 )
-    , pKsQuerier_                       ( 0 )
-    , automates_                        ()
+    : pType_               ( 0 )
+    , nID_                 ( 0 )
+    , pArmy_               ( 0 )
+    , pKnowledgeBlackBoard_( 0 )
+    , automates_           ()
 {
 }
 
@@ -81,13 +63,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
     delete pKnowledgeBlackBoard_;
-    delete pKsAgentKnowledgeSynthetizer_;
-    delete pKsPopulationKnowledgeSynthetizer_;
-    delete pKsRapFor_;                 
-    delete pKsSharing_;          
-    delete pKsNetworkUpdater_;
-    delete pKsQuerier_;
-
     ids_.erase( nID_ );
 }
 
@@ -110,13 +85,6 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const uint )
          >> pKnowledgeBlackBoard_
          >> automates_;
          
-    pKsAgentKnowledgeSynthetizer_      = new DEC_KS_AgentKnowledgeSynthetizer     ( *pKnowledgeBlackBoard_, *this );
-    pKsPopulationKnowledgeSynthetizer_ = new DEC_KS_PopulationKnowledgeSynthetizer( *pKnowledgeBlackBoard_, *this );
-    pKsSharing_                        = new DEC_KS_Sharing                       ( *pKnowledgeBlackBoard_, *this );
-    pKsRapFor_                         = new DEC_KS_RapFor                        ( *pKnowledgeBlackBoard_, *this );    
-    pKsNetworkUpdater_                 = new DEC_KS_NetworkUpdater                ( *pKnowledgeBlackBoard_ );
-    pKsQuerier_                        = new DEC_KS_KnowledgeGroupQuerier         ( *pKnowledgeBlackBoard_, *this );
-
     ids_.insert( nID_ );
 }
 
@@ -205,7 +173,7 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
 // Name: MIL_KnowledgeGroup::SendCreation
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SendCreation( )
+void MIL_KnowledgeGroup::SendCreation()
 {
     assert( pArmy_ );
 
@@ -223,6 +191,6 @@ void MIL_KnowledgeGroup::SendCreation( )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SendKnowledge()
 {
-    assert( pKsNetworkUpdater_ );
-    pKsNetworkUpdater_->SendFullState();   
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->SendFullState();   
 }

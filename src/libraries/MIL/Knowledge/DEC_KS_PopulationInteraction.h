@@ -16,7 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_Knowledge_PopulationCollision;
 class MIL_Population;
 class MIL_PopulationFlow;
@@ -36,7 +36,7 @@ class DEC_KS_PopulationInteraction : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& agentInteracting );
+    explicit DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
              DEC_KS_PopulationInteraction();
     virtual ~DEC_KS_PopulationInteraction();
     //@}
@@ -56,10 +56,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( boost::archive::binary_iarchive&, const uint );
-    void save( boost::archive::binary_oarchive&, const uint ) const;
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
 private:
@@ -84,9 +81,9 @@ private:
     //@}
 
 private:
-    const MIL_AgentPion*                  pAgentInteracting_;
-          T_PopulationFlowVector          flowCollisions_;
-          T_PopulationConcentrationVector concentrationCollisions_;
+    DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
+    T_PopulationFlowVector             flowCollisions_;
+    T_PopulationConcentrationVector    concentrationCollisions_;
 };
 
 #include "DEC_KS_PopulationInteraction.inl"

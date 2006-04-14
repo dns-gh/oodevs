@@ -38,7 +38,12 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/RC/MIL_RC_ObservationTirIndirect.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KS_Perception.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_AS_MOSServer.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
@@ -58,10 +63,9 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Perceiver, "PHY_RolePion_Perceiver" )
 // Name: PHY_RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_AgentPion& pion, DEC_KnowledgeBlackBoard& knowledgeBlackBoard )
+PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_AgentPion& pion )
     : PHY_RoleInterface_Perceiver  ( role )
     , pPion_                       ( &pion )
-    , pKsPerception_               ( new DEC_KS_Perception( knowledgeBlackBoard, pion ) )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -93,7 +97,6 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_Agen
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     : PHY_RoleInterface_Perceiver  ()
     , pPion_                       ()
-    , pKsPerception_               ( 0 )
     , rMaxAgentPerceptionDistance_ ( 0. )
     , rMaxObjectPerceptionDistance_( 0. )
     , bPeriphericalVisionEnabled_  ( false )
@@ -127,7 +130,6 @@ PHY_RolePion_Perceiver::~PHY_RolePion_Perceiver()
     for( CIT_PerceptionVector it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
         delete *it;
     activePerceptions_.clear();
-    delete pKsPerception_;
 }
 
 // =============================================================================
@@ -210,7 +212,6 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
          & pPion_
-         & pKsPerception_
          & bPeriphericalVisionEnabled_
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
@@ -295,7 +296,8 @@ void PHY_RolePion_Perceiver::DisableRecoAlat()
     activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionAlat_ ) );
     delete pPerceptionAlat_;
     pPerceptionAlat_ = 0;
-    pKsPerception_->MakePerceptionsAvailableTimed();
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
 }
 
 // -----------------------------------------------------------------------------
@@ -1058,7 +1060,7 @@ const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsKnown( agent );
+    return pPion_->GetKnowledgeGroup().GetKnowledge().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1068,7 +1070,7 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsIdentified( agent );
+    return pPion_->GetKnowledge().IsIdentified( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1078,7 +1080,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 bool PHY_RolePion_Perceiver::WasPerceived( const MIL_Agent_ABC& agent  ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().WasPerceived( agent );
+    return pPion_->GetKnowledge().WasPerceived( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1088,7 +1090,7 @@ bool PHY_RolePion_Perceiver::WasPerceived( const MIL_Agent_ABC& agent  ) const
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_RealObject_ABC& object ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsKnown( object );
+    return pPion_->GetArmy().GetKnowledge().IsKnown( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1098,7 +1100,7 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_RealObject_ABC& object ) const
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_RealObject_ABC& object ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsIdentified( object );
+    return pPion_->GetKnowledge().IsIdentified( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1108,7 +1110,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_RealObject_ABC& object ) co
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concentration ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsIdentified( concentration );
+    return pPion_->GetKnowledge().IsIdentified( concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -1119,6 +1121,97 @@ void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& fl
 {
     assert( pPion_ );
     MIL_RC::pRcObservationTirIndirect_->Send( *pPion_, MIL_RC::eRcTypeOperational, flyingShell );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
+{
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bPerceptionRecorded );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
+{
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2004-08-20
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_RealObject_ABC& object, const PHY_PerceptionLevel& level )
+{
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().NotifyPerception( object, level, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2005-10-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
+{
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
+{
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifytExternalPerception
+// Created: NLD 2005-03-23
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
+{
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().NotifyExternalPerception( agent, level );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnableRecordMode
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::EnableRecordMode()
+{
+    bRecordModeEnabled_ = true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::DisableRecordMode
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::DisableRecordMode()
+{
+    bRecordModeEnabled_ = false;
+    
+    assert( pPion_ );
+    pPion_->GetKnowledge().GetKsPerception().MakePerceptionsAvailable();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::HasDelayedPerceptions
+// Created: JVT 2004-12-03
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
+{
+    assert( pPion_ );
+    return pPion_->GetKnowledge().GetKsPerception().HasDelayedPerceptions();
 }
 
 // =============================================================================

@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASY_CommettreAttentatContrePopulation::
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_repli, GetVariable( nDIAPointRepliIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPopulationKnowledge( asnMission.population_cible, GetVariable( nDIAPopulationCibleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyPopulationKnowledge( asnMission.population_cible, GetVariable( nDIAPopulationCibleIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -141,7 +141,7 @@ void MIL_PionMission_ASY_CommettreAttentatContrePopulation::Serialize( ASN1T_Msg
 
     NET_ASN_Tools::CopyPath( GetVariable( nDIAItineraireIdx_ ), asnMission.itineraire );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRepliIdx_ ), asnMission.point_repli );
-    NET_ASN_Tools::CopyPopulationKnowledge( GetVariable( nDIAPopulationCibleIdx_ ), asnMission.population_cible, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyPopulationKnowledge( GetVariable( nDIAPopulationCibleIdx_ ), asnMission.population_cible, pion_.GetKnowledgeGroup() );
 
 }
 

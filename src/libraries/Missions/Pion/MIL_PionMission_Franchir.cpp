@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Franchir::Initialize( const ASN1T_MsgPi
         return nCode;        
 
     const ASN1T_Mission_Pion_Franchir& asnMission = *asnMsg.mission.u.mission_pion_franchir;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.pont_flottant, GetVariable( nDIAPontFlottantIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.pont_flottant, GetVariable( nDIAPontFlottantIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_arrivee, GetVariable( nDIAPointArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -134,7 +134,7 @@ void MIL_PionMission_Franchir::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_franchir;
     asnMsg.mission.u.mission_pion_franchir  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ), asnMission.pont_flottant, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ), asnMission.pont_flottant, pion_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointArriveeIdx_ ), asnMission.point_arrivee );
 
 }

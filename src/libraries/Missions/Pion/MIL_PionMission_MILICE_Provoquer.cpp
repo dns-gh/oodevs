@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_MILICE_Provoquer::Initialize( const ASN
         return nCode;        
 
     const ASN1T_Mission_Pion_MILICE_Provoquer& asnMission = *asnMsg.mission.u.mission_pion_milice_provoquer;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_a_provoquer, GetVariable( nDIAUniteAProvoquerIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_a_provoquer, GetVariable( nDIAUniteAProvoquerIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_MILICE_Provoquer::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_milice_provoquer;
     asnMsg.mission.u.mission_pion_milice_provoquer  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteAProvoquerIdx_ ), asnMission.unite_a_provoquer, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteAProvoquerIdx_ ), asnMission.unite_a_provoquer, pion_.GetKnowledgeGroup() );
 
 }
 

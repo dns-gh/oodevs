@@ -14,22 +14,11 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetKSQuerier
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-inline
-const DEC_KS_AgentQuerier& MIL_AgentPion::GetKSQuerier() const
-{
-    assert( pKsQuerier_ );
-    return *pKsQuerier_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::GetKnowledge
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
 inline
-const DEC_KnowledgeBlackBoard& MIL_AgentPion::GetKnowledge() const
+DEC_KnowledgeBlackBoard_AgentPion& MIL_AgentPion::GetKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
     return *pKnowledgeBlackBoard_;
@@ -136,28 +125,6 @@ inline
 const std::string& MIL_AgentPion::GetName() const
 {
     return strName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetKSObjectInteraction
-// Created: NLD 2004-09-15
-// -----------------------------------------------------------------------------
-inline
-DEC_KS_ObjectInteraction& MIL_AgentPion::GetKSObjectInteraction()
-{
-    assert( pKsObjectInteraction_ );
-    return *pKsObjectInteraction_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetKSPopulationInteraction
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-inline
-DEC_KS_PopulationInteraction& MIL_AgentPion::GetKSPopulationInteraction()
-{
-    assert( pKsPopulationInteraction_ );
-    return *pKsPopulationInteraction_;
 }
 
 // =============================================================================

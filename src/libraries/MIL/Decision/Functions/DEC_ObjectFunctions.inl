@@ -17,7 +17,6 @@
 #include "Entities/MIL_Army.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "DEC_FunctionsTools.h"
 
 // -----------------------------------------------------------------------------
@@ -59,7 +58,6 @@ void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller
     {
         pObject->Construct();
         pObject->Mine     ();
-        caller.GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject );
     }
 }
 

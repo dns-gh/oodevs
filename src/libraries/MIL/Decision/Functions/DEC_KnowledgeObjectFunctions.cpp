@@ -18,7 +18,8 @@
 #include "Entities/Objects/MIL_ItineraireLogistique.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -82,7 +83,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( DIA_Call_ABC& call, const 
     objectsFilter.Set( MIL_RealObjectType::zoneNBC_ );
 
     T_KnowledgeObjectVector knowledges;
-    callerAgent.GetKSQuerier().GetObjects( knowledges, objectsFilter );
+    callerAgent.GetArmy().GetKnowledge().GetObjects( knowledges, objectsFilter );
 
     for( CIT_KnowledgeObjectVector it = knowledges.begin(); it != knowledges.end(); ++it )
     {

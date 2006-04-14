@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DegagerAbattisMine::Initialize( con
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_DegagerAbattisMine& asnMission = *asnMsg.mission.u.mission_pion_gen_degager_abattis_mine;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.obstacle, GetVariable( nDIAObstacleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.obstacle, GetVariable( nDIAObstacleIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_GEN_DegagerAbattisMine::Serialize( ASN1T_MsgPionOrder& asnM
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_gen_degager_abattis_mine;
     asnMsg.mission.u.mission_pion_gen_degager_abattis_mine  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObstacleIdx_ ), asnMission.obstacle, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObstacleIdx_ ), asnMission.obstacle, pion_.GetKnowledgeGroup() );
 
 }
 

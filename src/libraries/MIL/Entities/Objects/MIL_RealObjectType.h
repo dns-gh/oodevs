@@ -103,7 +103,7 @@ public:
     static const MIL_RealObjectType* FindObjectType( uint nDiaID );
     static const MIL_RealObjectType* FindObjectType( ASN1T_EnumObjectType nAsnID );
 
-    static const MIL_RealObjectTypeFilter& GetObjectTypesToAvoid();
+    static const MIL_RealObjectTypeFilter& GetHatedObjectTypes();
     //@}
 
     //! @name Accessors
@@ -250,7 +250,7 @@ private:
 
 private:
     static T_ObjectTypeMap           objectTypes_;
-    static MIL_RealObjectTypeFilter* pObjectTypesToAvoid_;
+    static MIL_RealObjectTypeFilter* pHatedObjectTypes_;
 };
 
 #include "MIL_RealObjectType.inl"

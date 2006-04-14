@@ -16,7 +16,7 @@
 
 #include "DEC_Knowledge_Def.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeSource_ABC
@@ -33,12 +33,12 @@ class DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard& blackBoard, uint nPriority );
+    explicit DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, uint nPriority );
              DEC_KnowledgeSource_ABC();
     virtual ~DEC_KnowledgeSource_ABC();
     //@}
 
-    //! @name CheckPoints
+    //! @name Checkpoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
@@ -55,12 +55,9 @@ public:
     uint GetPriority() const;
     //@}
 
-protected:
-    //! @name Member data
-    //@{
-    DEC_KnowledgeBlackBoard* pBlackBoard_;
-    uint                     nPriority_;
-    //@}
+private:
+    uint                         nPriority_;
+    DEC_KnowledgeBlackBoard_ABC* pBlackBoard_;
 };
 
 #include "DEC_KnowledgeSource_ABC.inl"

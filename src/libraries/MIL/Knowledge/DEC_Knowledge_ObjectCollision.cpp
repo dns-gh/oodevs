@@ -12,8 +12,6 @@
 #include "MIL_pch.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 

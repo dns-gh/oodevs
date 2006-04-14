@@ -50,7 +50,7 @@ void MIL_RC_UniteAmieReconnue::Send( const MIL_AgentPion& sender, E_RcType nType
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_amie_reconnue, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_amie_reconnue, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -62,7 +62,7 @@ void MIL_RC_UniteAmieReconnue::Send( const MIL_Automate& sender, E_RcType nType,
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_amie_reconnue, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_amie_reconnue, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

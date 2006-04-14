@@ -47,3 +47,80 @@ DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentF
     CIT_KnowledgeAgentIDMap itKnowledge = knowledgeAgentFromIDMap_.find( nID );
     return itKnowledge == knowledgeAgentFromIDMap_.end() ? 0 : itKnowledge->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetDetected
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetDetected()
+{
+    UpdateQueriesCache();
+    return detectedContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetFriends
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetFriends()
+{
+    UpdateQueriesCache();
+    return friendsContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetEnemies
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetEnemies()
+{
+    UpdateQueriesCache();
+    return enemiesContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetMilitias
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetMilitias()
+{
+    UpdateQueriesCache();
+    return militiasContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetTerrorists
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetTerrorists()
+{
+    UpdateQueriesCache();
+    return terroristsContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetRefugees
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetRefugees()
+{
+    UpdateQueriesCache();
+    return refugeesContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetSurrenderedAgents
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+inline
+const T_KnowledgeAgentVector& DEC_BlackBoard_CanContainKnowledgeAgent::GetSurrenderedAgents()
+{
+    UpdateQueriesCache();
+    return surrenderedAgentsContainer_;
+}

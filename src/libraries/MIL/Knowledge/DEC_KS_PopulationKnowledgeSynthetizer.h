@@ -16,11 +16,10 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_PopulationPerception;
 class DEC_Knowledge_Population;
 
-class MIL_KnowledgeGroup;
 class MIL_Population;
 
 // =============================================================================
@@ -33,7 +32,8 @@ class DEC_KS_PopulationKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_PopulationKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup );
+    explicit DEC_KS_PopulationKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
+             DEC_KS_PopulationKnowledgeSynthetizer();
     virtual ~DEC_KS_PopulationKnowledgeSynthetizer();
     //@}
     
@@ -42,6 +42,11 @@ public:
     virtual void Prepare();
     virtual void Talk   ();
     virtual void Clean  ();
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
 private:
@@ -54,10 +59,7 @@ private:
     //@}
 
 private:
-    //! @name Members
-    //@{
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
-    //@}
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
 #include "DEC_KS_PopulationKnowledgeSynthetizer.inl"

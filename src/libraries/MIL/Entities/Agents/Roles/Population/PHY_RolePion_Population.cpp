@@ -14,7 +14,7 @@
 #include "PHY_RolePion_Population.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -89,7 +89,7 @@ MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
         return rSpeed;
 
     T_KnowledgePopulationCollisionVector collisions;
-    pPion_->GetKSQuerier().GetPopulationsColliding( collisions );
+    pPion_->GetKnowledge().GetPopulationsColliding( collisions );
 
     MT_Float rMaxSpeed = rSpeed;
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
@@ -112,7 +112,7 @@ MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) 
         return rDuration;
 
     T_KnowledgePopulationCollisionVector collisions;
-    pPion_->GetKSQuerier().GetPopulationsColliding( collisions );
+    pPion_->GetKnowledge().GetPopulationsColliding( collisions );
 
     MT_Float rFactor = 1.;
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
@@ -131,7 +131,7 @@ MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) 
 MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
     T_KnowledgePopulationCollisionVector populationsColliding;
-    pPion_->GetKSQuerier().GetPopulationsColliding( populationsColliding );
+    pPion_->GetKnowledge().GetPopulationsColliding( populationsColliding );
     MT_Float rPopulationDensity = 0.;
     for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
         rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );

@@ -42,12 +42,12 @@ signatures
     U /*T_Action*/                          A::DEC_StartTirIndirectSurConnaissance                 ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*connaissance*/ );    
     U /*T_Action*/                          A::DEC_StartTirSurPopulation                           ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissancePopulation*/ );
     V                                       A::DEC_Tir_LancerFumigeneSurConnaissance               ( U /*T_ConnaissanceAgent*/ );
-    R                                       A::DEC_Tir_PorteeMaxPourTirerSurAgent                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                       A::DEC_Tir_PorteeMinPourTirerSurAgent                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                       A::DEC_Tir_PorteeMaxPourTirerSurAgentPosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                       A::DEC_Tir_PorteeMinPourTirerSurAgentPosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );    
-    R                                       A::DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                       A::DEC_Tir_PorteeMaxPourEtreTireParAgent               ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxPourTirerSurUnite                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMinPourTirerSurUnite                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );    
+    R                                       A::DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxPourEtreTireParUnite               ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
     R                                       A::DEC_Tir_PorteeMaxTirIndirect                        ( I /*E_TypeObus*/ );
     R                                       A::DEC_Tir_PorteeMinTirIndirect                        ( I /*E_TypeObus*/ );
     R                                       A::DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( I /*E_TypeObus*/ );
@@ -257,17 +257,20 @@ signatures
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetAmiLePlusProche            ( * /*E_TypeObjects*/ );        
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_CollisionsPopulations           ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPrenantAPartie            ();
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_Populations                     (); 
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_PopulationsPrenantAPartie       (); 
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AmisDansZone                    ( U /*T_Localisation*/ ); 
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPercus                    ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPotentiellementDangereux  ();     
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_Milices                         ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_Terroristes                     ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_Refugies                        ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsRendus                    ();    
-    R                                       A::DEC_RapportDeForceLocal                           (); // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
+    
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesPrenantAPartie                   ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereuses              ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercues          ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansFuseau              ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDansZone                 ( U /*T_Localisation*/ );
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesAmiesDansZone                    ( U /*T_Localisation*/ );
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_RefugiesAProximite                     ( R /*distance*/ );
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesRenduesAProximite                ( R /*distance*/ );
+    B                                       A::DEC_Connaissances_PresenceEnnemieDansZone                ( U /*T_Point centre cercle zone*/, R /*rayon*/ );
+    R                                       A::DEC_RapportDeForceLocal                                  (); // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
                                             
     // Ordres                               
     V                                       A::DEC_AttenteOrdre      ( * /* Paramètres de type E_TypeOrdreConduite + 1 paramètre optionnel de type string (= hint)*/ );
@@ -284,24 +287,24 @@ signatures
     B                                       A::DEC_Automate_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
                                             
     // Geometrie                            
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                    ( A /*T_Pion*/, R /*rDist*/ ); 
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionEmbuscade                ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSurete                   ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecPopulation     ( U /*T_ConnaissancePopulation*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecObjectif       ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionObstacle                 ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
-    B                                       A::DEC_Geometrie_CalculePointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
-    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisation                      ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisationSurface               ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    S /*T_LIsteLocalisations*/              A::DEC_Geometrie_DecoupeFuseauEnTroncons                  ( R /*profondeur des segments en m*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau  ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    B                                       A::DEC_Geometrie_EstPointDansFuseau                       ( U /*T_Point*/ );
-    U /*T_Point*/                           A::DEC_Geometrie_CalculeEntreeFuseauLaPlusProche          ();           
-    U /*T_Point*/                           A::DEC_Geometrie_CalculePointArrivee                      ();
-    U /*T_Point*/                           A::DEC_Geometrie_CalculePointDepart                       ();    
-    U /*T_Point*/                           A::DEC_Geometrie_CalculeBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
-    A                                       A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
-    A                                       A::DEC_Geometrie_PionDerriere                             ( S /*T_ListePions*/, U /*T_Direction*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                     ( A /*T_Pion*/, R /*rDist*/ ); 
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionEmbuscade                 ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSurete                    ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecPopulation      ( U /*T_ConnaissancePopulation*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecObjectif        ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionObstacle                  ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
+    B                                       A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
+    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisation                       ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisationSurface                ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    S /*T_LIsteLocalisations*/              A::DEC_Geometrie_DecoupeFuseauEnTroncons                   ( R /*profondeur des segments en m*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau  ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    B                                       A::DEC_Geometrie_EstPointDansFuseau                        ( U /*T_Point*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerEntreeFuseauLaPlusProche          ();           
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPointArrivee                      ();
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPointDepart                       ();    
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
+    A                                       A::DEC_Geometrie_PionDevant                                ( S /*T_ListePions*/, U /*T_Direction*/ );
+    A                                       A::DEC_Geometrie_PionDerriere                              ( S /*T_ListePions*/, U /*T_Direction*/ );
                                             
     // Etat                                 
     V                                       A::DEC_Elongation( R /*facteur d'élongation du pion*/ );

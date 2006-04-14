@@ -21,8 +21,6 @@ class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 
 // =============================================================================
-/** @class  DEC_BlackBoard_CanContainKnowledgeAgent
-*/
 // Created: NLD 2004-03-11
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeAgent
@@ -32,8 +30,9 @@ class DEC_BlackBoard_CanContainKnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_BlackBoard_CanContainKnowledgeAgent();
-    ~DEC_BlackBoard_CanContainKnowledgeAgent();
+             DEC_BlackBoard_CanContainKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup );
+             DEC_BlackBoard_CanContainKnowledgeAgent();
+    virtual ~DEC_BlackBoard_CanContainKnowledgeAgent();
     //@}
 
     //! @name CheckPoints
@@ -75,6 +74,23 @@ public:
     typedef T_KnowledgeAgentMap::const_iterator                    CIT_KnowledgeAgentMap;
     //@}
 
+    //! @name Queries
+    //@{
+    const T_KnowledgeAgentVector& GetDetected         ();
+    const T_KnowledgeAgentVector& GetFriends          ();
+    const T_KnowledgeAgentVector& GetEnemies          ();
+    const T_KnowledgeAgentVector& GetMilitias         ();
+    const T_KnowledgeAgentVector& GetTerrorists       ();
+    const T_KnowledgeAgentVector& GetRefugees         ();
+    const T_KnowledgeAgentVector& GetSurrenderedAgents();
+    //@}
+
+private:
+    //! @name Tools
+    //@{
+    void UpdateQueriesCache();
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -86,8 +102,22 @@ private:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeAgentMap   realAgentMap_;
-    T_KnowledgeAgentIDMap knowledgeAgentFromIDMap_;
+    const MIL_KnowledgeGroup*   pKnowledgeGroup_;
+          T_KnowledgeAgentMap   realAgentMap_;
+          T_KnowledgeAgentIDMap knowledgeAgentFromIDMap_;
+    //@}
+
+    //! @name Queries caches
+    //@{
+    uint nLastCacheUpdateTick_;
+
+    T_KnowledgeAgentVector detectedContainer_;
+    T_KnowledgeAgentVector friendsContainer_;
+    T_KnowledgeAgentVector enemiesContainer_;
+    T_KnowledgeAgentVector militiasContainer_;
+    T_KnowledgeAgentVector terroristsContainer_;
+    T_KnowledgeAgentVector refugeesContainer_;
+    T_KnowledgeAgentVector surrenderedAgentsContainer_;
     //@}
 };
 

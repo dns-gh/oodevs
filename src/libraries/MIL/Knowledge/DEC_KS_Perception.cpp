@@ -12,11 +12,13 @@
 #include "MIL_pch.h"
 #include "DEC_KS_Perception.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
-
+#include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -29,14 +31,12 @@ BOOST_CLASS_EXPORT_GUID( DEC_KS_Perception, "DEC_KS_Perception" )
 // Name: DEC_KS_Perception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_Perception::DEC_KS_Perception( DEC_KnowledgeBlackBoard& blackBoard, MIL_AgentPion& agentPerceiving )
+DEC_KS_Perception::DEC_KS_Perception( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     : DEC_KnowledgeSource_ABC        ( blackBoard, 2 )
-    , pAgentPerceiving_              ( &agentPerceiving )
+    , pBlackBoard_                   ( &blackBoard )
     , bMakePerceptionsAvailable_     ( false )
     , bMakePerceptionsAvailableTimed_( false )
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );    
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ DEC_KS_Perception::DEC_KS_Perception( DEC_KnowledgeBlackBoard& blackBoard, MIL_A
 // -----------------------------------------------------------------------------
 DEC_KS_Perception::DEC_KS_Perception ()
     : DEC_KnowledgeSource_ABC        ()
-    , pAgentPerceiving_              ( 0 )
+    , pBlackBoard_                   ( 0 )
     , bMakePerceptionsAvailable_     ( false )
     , bMakePerceptionsAvailableTimed_( false )
 {
@@ -53,17 +53,17 @@ DEC_KS_Perception::DEC_KS_Perception ()
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception destructor
-// Created: NLD 2004-08-19
+// Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 DEC_KS_Perception::~DEC_KS_Perception()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );    
+
 }
 
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 namespace boost
 {
     namespace serialization
@@ -106,32 +106,17 @@ namespace boost
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::load
-// Created: JVT 2005-04-05
+// Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
+// Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::load( boost::archive::binary_iarchive& file, const uint )
+template< typename Archive > 
+void DEC_KS_Perception::serialize( Archive& archive, const uint )
 {
-    file >> boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-         >> externalPerceptions_
-         >> pAgentPerceiving_
-         >> bMakePerceptionsAvailable_
-         >> bMakePerceptionsAvailableTimed_;
-
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::save
-// Created: JVT 2005-04-05
-// -----------------------------------------------------------------------------
-void DEC_KS_Perception::save( boost::archive::binary_oarchive& file, const uint ) const
-{
-    file << boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-         << externalPerceptions_
-         << pAgentPerceiving_
-         << bMakePerceptionsAvailable_
-         << bMakePerceptionsAvailableTimed_;
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_
+            & externalPerceptions_
+            & bMakePerceptionsAvailable_
+            & bMakePerceptionsAvailableTimed_;
 }
 
 // =============================================================================
@@ -145,9 +130,9 @@ void DEC_KS_Perception::save( boost::archive::binary_oarchive& file, const uint 
 void DEC_KS_Perception::Prepare()
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::Prepare ) );
-    pBlackBoard_->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::Prepare ) );
-    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::Prepare ) );
+    pBlackBoard_->GetKnowledgeAgentPerceptionContainer     ().ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::Prepare ) );
+    pBlackBoard_->GetKnowledgeObjectPerceptionContainer    ().ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::Prepare ) );
+    pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::Prepare ) );
 }
 
 // =============================================================================
@@ -163,7 +148,7 @@ void DEC_KS_Perception::CleanKnowledgeAgentPerception( DEC_Knowledge_AgentPercep
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgeAgentPerception( knowledge ); // The knowledge will be deleted
+        pBlackBoard_->GetKnowledgeAgentPerceptionContainer().DestroyKnowledgeAgentPerception( knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -176,7 +161,7 @@ void DEC_KS_Perception::CleanKnowledgeObjectPerception( DEC_Knowledge_ObjectPerc
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgeObjectPerception( knowledge ); // The knowledge will be deleted
+        pBlackBoard_->GetKnowledgeObjectPerceptionContainer().DestroyKnowledgeObjectPerception( knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -189,7 +174,7 @@ void DEC_KS_Perception::CleanKnowledgePopulationPerception( DEC_Knowledge_Popula
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgePopulationPerception( knowledge ); // The knowledge will be deleted
+        pBlackBoard_->GetKnowledgePopulationPerceptionContainer().DestroyKnowledgePopulationPerception( knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -202,13 +187,13 @@ void DEC_KS_Perception::Clean()
     assert( pBlackBoard_ );
 
     class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception > methodAgent( DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
-    pBlackBoard_->ApplyOnKnowledgesAgentPerception( methodAgent );
+    pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( methodAgent );
 
     class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception > methodObject( DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
-    pBlackBoard_->ApplyOnKnowledgesObjectPerception( methodObject );
+    pBlackBoard_->GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( methodObject );
 
     class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_PopulationPerception > methodPopulation( DEC_KS_Perception::CleanKnowledgePopulationPerception, *this );
-    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( methodPopulation );
+    pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPopulation );
 }
 
 
@@ -238,12 +223,9 @@ void DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const P
 
     assert( pBlackBoard_ );
 
-    DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerception( agentPerceived );
+    DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( agentPerceived );
     if ( !pKnowledge )
-    {
-        assert( pAgentPerceiving_ );
-        pKnowledge = &pBlackBoard_->CreateKnowledgeAgentPerception( *pAgentPerceiving_, agentPerceived );
-    }
+        pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( pBlackBoard_->GetPion(), agentPerceived );
     
     pKnowledge->Update( level, bRecordModeEnabled );
 }
@@ -259,12 +241,10 @@ void DEC_KS_Perception::NotifyPerception( MIL_RealObject_ABC& objectPerceived, c
 
     assert( pBlackBoard_ );
 
-    DEC_Knowledge_ObjectPerception* pKnowledge = pBlackBoard_->GetKnowledgeObjectPerception( objectPerceived );
+    DEC_Knowledge_ObjectPerception* pKnowledge = pBlackBoard_->GetKnowledgeObjectPerceptionContainer().GetKnowledgeObjectPerception( objectPerceived );
     if ( !pKnowledge )
-    {
-        assert( pAgentPerceiving_ );
-        pKnowledge = &pBlackBoard_->CreateKnowledgeObjectPerception( *pAgentPerceiving_, objectPerceived );
-    }
+        pKnowledge = &pBlackBoard_->GetKnowledgeObjectPerceptionContainer().CreateKnowledgeObjectPerception( pBlackBoard_->GetPion(), objectPerceived );
+
     pKnowledge->Update( level );
 }
 
@@ -279,12 +259,10 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationConcentration& concentra
 
     assert( pBlackBoard_ );
 
-    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( concentrationPerceived.GetPopulation() );
+    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( concentrationPerceived.GetPopulation() );
     if( !pKnowledge )
-    {
-        assert( pAgentPerceiving_ );
-        pKnowledge = &pBlackBoard_->CreateKnowledgePopulationPerception( *pAgentPerceiving_, concentrationPerceived.GetPopulation() );
-    }
+        pKnowledge = &pBlackBoard_->GetKnowledgePopulationPerceptionContainer().CreateKnowledgePopulationPerception( pBlackBoard_->GetPion(), concentrationPerceived.GetPopulation() );
+
     pKnowledge->Update( concentrationPerceived, level );
 }
 
@@ -299,12 +277,10 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, con
 
     assert( pBlackBoard_ );
 
-    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( flowPerceived.GetPopulation() );
+    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( flowPerceived.GetPopulation() );
     if( !pKnowledge )
-    {
-        assert( pAgentPerceiving_ );
-        pKnowledge = &pBlackBoard_->CreateKnowledgePopulationPerception( *pAgentPerceiving_, flowPerceived.GetPopulation() );
-    }
+        pKnowledge = &pBlackBoard_->GetKnowledgePopulationPerceptionContainer().CreateKnowledgePopulationPerception( pBlackBoard_->GetPion(), flowPerceived.GetPopulation() );
+
     pKnowledge->Update( flowPerceived, level, shape );
 }
 
@@ -367,10 +343,9 @@ private:
 // -----------------------------------------------------------------------------
 void DEC_KS_Perception::Talk()
 {
-    assert( pAgentPerceiving_ );
     assert( pBlackBoard_ );
 
-    pAgentPerceiving_->GetRole< PHY_RolePion_Perceiver >().ExecutePerceptions();
+    pBlackBoard_->GetPion().GetRole< PHY_RolePion_Perceiver >().ExecutePerceptions();
 
     for( CIT_AgentPerceptionMap itExt = externalPerceptions_.begin(); itExt != externalPerceptions_.end(); ++itExt )
         NotifyPerception( *itExt->first, *itExt->second, false );
@@ -378,7 +353,7 @@ void DEC_KS_Perception::Talk()
 
     if( bMakePerceptionsAvailable_ )
     {
-        pBlackBoard_->ApplyOnKnowledgesAgentPerception( std::bind2nd( std::mem_fun_ref( & DEC_Knowledge_AgentPerception::MakeAvailable ), 0) );
+        pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( std::bind2nd( std::mem_fun_ref( & DEC_Knowledge_AgentPerception::MakeAvailable ), 0) );
         bMakePerceptionsAvailable_ = false;
     }
 
@@ -386,12 +361,12 @@ void DEC_KS_Perception::Talk()
     {
         uint nReferenceTimeStep = std::numeric_limits< uint >::max();
         sReferenceTimeCalculator functor( nReferenceTimeStep );
-        pBlackBoard_->ApplyOnKnowledgesAgentPerception( functor );
+        pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
 
         if ( nReferenceTimeStep != std::numeric_limits< uint >::max() )
         {
             sMakePerceptionAvailableTimedFunctor functor2( nReferenceTimeStep );
-            pBlackBoard_->ApplyOnKnowledgesAgentPerception( functor2 );
+            pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor2 );
         }
 
         bMakePerceptionsAvailableTimed_ = false;
@@ -423,7 +398,7 @@ bool DEC_KS_Perception::HasDelayedPerceptions() const
 {
     bool bHasDelayedPerceptions = false;
     assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesAgentPerception( sDelayedPerceptionFinder( bHasDelayedPerceptions ) );
+    pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( sDelayedPerceptionFinder( bHasDelayedPerceptions ) );
     return bHasDelayedPerceptions;
 }
 

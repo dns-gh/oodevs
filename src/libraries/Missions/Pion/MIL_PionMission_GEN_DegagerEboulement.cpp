@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DegagerEboulement::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_DegagerEboulement& asnMission = *asnMsg.mission.u.mission_pion_gen_degager_eboulement;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.obstacle, GetVariable( nDIAObstacleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.obstacle, GetVariable( nDIAObstacleIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_GEN_DegagerEboulement::Serialize( ASN1T_MsgPionOrder& asnMs
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_gen_degager_eboulement;
     asnMsg.mission.u.mission_pion_gen_degager_eboulement  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObstacleIdx_ ), asnMission.obstacle, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObstacleIdx_ ), asnMission.obstacle, pion_.GetKnowledgeGroup() );
 
 }
 

@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASY_CommettreAttentatContreForcesArmees
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type_attentat_forces_armees, GetVariable( nDIATypeAttentatForcesArmeesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_cible, GetVariable( nDIAUniteCibleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_cible, GetVariable( nDIAUniteCibleIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -147,7 +147,7 @@ void MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Serialize( ASN1T_M
     NET_ASN_Tools::CopyPath( GetVariable( nDIAItineraireIdx_ ), asnMission.itineraire );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRepliIdx_ ), asnMission.point_repli );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIATypeAttentatForcesArmeesIdx_ ), asnMission.type_attentat_forces_armees );
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteCibleIdx_ ), asnMission.unite_cible, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteCibleIdx_ ), asnMission.unite_cible, pion_.GetKnowledgeGroup() );
 
 }
 

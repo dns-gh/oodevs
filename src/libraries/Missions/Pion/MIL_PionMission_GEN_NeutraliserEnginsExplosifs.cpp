@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_NeutraliserEnginsExplosifs::Initial
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_NeutraliserEnginsExplosifs& asnMission = *asnMsg.mission.u.mission_pion_gen_neutraliser_engins_explosifs;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.obstacle, GetVariable( nDIAObstacleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.obstacle, GetVariable( nDIAObstacleIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_GEN_NeutraliserEnginsExplosifs::Serialize( ASN1T_MsgPionOrd
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs;
     asnMsg.mission.u.mission_pion_gen_neutraliser_engins_explosifs  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObstacleIdx_ ), asnMission.obstacle, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAObstacleIdx_ ), asnMission.obstacle, pion_.GetKnowledgeGroup() );
 
 }
 

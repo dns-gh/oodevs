@@ -20,10 +20,11 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "PHY_RoleAction_Objects_DataComputer.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
 #include "MIL_AgentServer.h"
@@ -86,7 +87,7 @@ MIL_RealObject_ABC* PHY_RoleAction_Objects::GetRealObject( uint nKnowledgeObject
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeObjectID );
+    DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
         return 0;
 
@@ -94,7 +95,7 @@ MIL_RealObject_ABC* PHY_RoleAction_Objects::GetRealObject( uint nKnowledgeObject
     if( pObject )
         return pObject;
 
-    pPion_->GetArmy().GetKSObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
+    pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
     return 0;
 }
 
@@ -172,7 +173,7 @@ int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC& object )
     }
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( object );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
     object.Construct( rDeltaPercentage );
     if( pDotationCategory )
@@ -197,7 +198,7 @@ int PHY_RoleAction_Objects::Construct( MIL_RealObject_ABC* pObject, DEC_Knowledg
     }
 
     assert( pPion_ );
-    pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObject( *pObject );
+    pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
     return Construct( *pObject );
 }
 
@@ -235,7 +236,7 @@ int PHY_RoleAction_Objects::Prepare( MIL_RealObject_ABC& object )
     }
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( object );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
     object.Prepare( rDeltaPercentage );
     if( pDotationCategory )
@@ -260,7 +261,7 @@ int PHY_RoleAction_Objects::Prepare( MIL_RealObject_ABC* pObject, DEC_Knowledge_
     }
 
     assert( pPion_ );
-    pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObject( *pObject );
+    pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
     return Prepare( *pObject );
 }
 
@@ -272,13 +273,13 @@ int PHY_RoleAction_Objects::Destroy( uint nKnowledgeObjectID )
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeObjectID );
+    DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
         return eImpossible;
     MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject )
     {
-        pPion_->GetArmy().GetKSObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
+        pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
         return eImpossible;
     }
 
@@ -298,7 +299,7 @@ int PHY_RoleAction_Objects::Destroy( uint nKnowledgeObjectID )
             return eNoCapacity;
         }
 
-        pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
         pObject->Demine( rDeltaPercentage );
         return eRunning;
     }
@@ -325,10 +326,10 @@ int PHY_RoleAction_Objects::Destroy( uint nKnowledgeObjectID )
 
         if( pObject->GetConstructionPercentage() == 0. )
         {
-            pPion_->GetArmy().GetKSObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
+            pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
             return eFinished;
         }
-        pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+        pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
         return eRunning;
     }
 }
@@ -354,7 +355,7 @@ int PHY_RoleAction_Objects::Mine( MIL_RealObject_ABC& object )
     }
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( object );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object.Mine( rDeltaPercentage );
     if( object.GetMiningPercentage() == 1. )
         return eFinished;
@@ -399,7 +400,7 @@ int PHY_RoleAction_Objects::Demine( uint nKnowledgeObjectID )
     }
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
     pObject->Demine( rDeltaPercentage );
     if( pObject->GetMiningPercentage() == 0. )
         return eFinished;
@@ -432,7 +433,7 @@ int PHY_RoleAction_Objects::Bypass( uint nKnowledgeObjectID )
 
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
     pObject->Bypass( rDeltaPercentage );
     if( pObject->GetBypassPercentage() == 1. )
         return eFinished;
@@ -446,13 +447,13 @@ int PHY_RoleAction_Objects::Bypass( uint nKnowledgeObjectID )
 int PHY_RoleAction_Objects::ResumeWork( uint nKnowledgeObjectID )
 {
     assert( pPion_ );
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeObjectID );
+    DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
         return eImpossible;
     MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject )
     {
-        pPion_->GetArmy().GetKSObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
+        pPion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pKnowledge );
         return eImpossible;
     }
 
@@ -479,7 +480,7 @@ void PHY_RoleAction_Objects::StartAnimateObject( uint nKnowledgeObjectID )
         return;
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
     pObject->AddAnimator( *pPion_ );
 }
 
@@ -494,7 +495,7 @@ void PHY_RoleAction_Objects::StopAnimateObject( uint nKnowledgeObjectID )
         return;
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
     pObject->RemoveAnimator( *pPion_ );
 }
 
@@ -509,7 +510,7 @@ void PHY_RoleAction_Objects::StartOccupyingObject( uint nKnowledgeObjectID )
         return;
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
     pObject->AddOccupier( *pPion_ );
 }
 
@@ -524,7 +525,7 @@ void PHY_RoleAction_Objects::StopOccupyingObject( uint nKnowledgeObjectID )
         return;
 
     assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
+    pPion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
     pObject->RemoveOccupier( *pPion_ );
 }
 

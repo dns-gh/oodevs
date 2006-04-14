@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Reduire::Initialize( const ASN1T_Ms
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_Reduire& asnMission = *asnMsg.mission.u.mission_pion_abc_reduire;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_a_reduire, GetVariable( nDIAUniteAReduireIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.unite_a_reduire, GetVariable( nDIAUniteAReduireIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -129,7 +129,7 @@ void MIL_PionMission_ABC_Reduire::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_abc_reduire;
     asnMsg.mission.u.mission_pion_abc_reduire  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteAReduireIdx_ ), asnMission.unite_a_reduire, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAUniteAReduireIdx_ ), asnMission.unite_a_reduire, pion_.GetKnowledgeGroup() );
 
 }
 

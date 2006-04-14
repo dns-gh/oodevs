@@ -16,8 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
-class MIL_KnowledgeGroup;
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 
 // =============================================================================
 /** @class  DEC_KS_RapFor
@@ -32,7 +31,8 @@ class DEC_KS_RapFor : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_RapFor( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup );
+    explicit DEC_KS_RapFor( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
+             DEC_KS_RapFor();
     virtual ~DEC_KS_RapFor();
     //@}
 
@@ -42,8 +42,13 @@ public:
     virtual void Talk   ();
     //@}
 
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
+    //@}
+
 private:
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
 };
 
 #include "DEC_KS_RapFor.inl"

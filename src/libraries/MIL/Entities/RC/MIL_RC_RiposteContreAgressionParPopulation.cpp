@@ -53,7 +53,7 @@ void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_AgentPion& send
     
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 
@@ -67,7 +67,7 @@ void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_Automate& sende
     
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

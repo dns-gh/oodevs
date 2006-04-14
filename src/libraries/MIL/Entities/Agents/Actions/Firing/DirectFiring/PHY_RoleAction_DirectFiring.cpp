@@ -22,9 +22,10 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Actions/PHY_FireResults_Default.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/MIL_Knowledgegroup.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_DirectFiring, "PHY_RoleAction_DirectFiring" )
 
@@ -82,7 +83,7 @@ MIL_Agent_ABC* PHY_RoleAction_DirectFiring::GetAgentTarget( uint nTargetKnowledg
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Agent* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeAgentFromID( nTargetKnowledgeID );
+    DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID );
     return pKnowledge ? &pKnowledge->GetAgentKnown() : 0;
 }
 
@@ -94,7 +95,7 @@ MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKn
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Population* pKnowledge = pPion_->GetKSQuerier().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+    DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
     return pKnowledge ? &pKnowledge->GetPopulationKnown() : 0;
 }
 

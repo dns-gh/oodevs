@@ -17,7 +17,6 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 
 // -----------------------------------------------------------------------------
@@ -50,7 +49,7 @@ void MIL_RC_UniteNeutreIdentifiee::Send( const MIL_AgentPion& sender, E_RcType n
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_identifiee, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_identifiee, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -62,7 +61,7 @@ void MIL_RC_UniteNeutreIdentifiee::Send( const MIL_Automate& sender, E_RcType nT
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_identifiee, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_identifiee, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

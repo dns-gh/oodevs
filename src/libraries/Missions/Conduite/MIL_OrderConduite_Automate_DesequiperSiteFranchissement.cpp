@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_DesequiperSiteFranchissement
     const ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement& asnMission = *asnMsg.u.order_conduite_automate_desequiper_site_franchissement;
     if( !pKnowledgeGroup_ )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), *pKnowledgeGroup_ ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;

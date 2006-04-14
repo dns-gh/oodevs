@@ -22,11 +22,7 @@
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
-class DEC_KnowledgeBlackBoard;
-class DEC_KS_NetworkUpdater;
-class DEC_KS_ObjectInteraction;
-class DEC_KS_PopulationInteraction;
-class DEC_KS_Fire;
+class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_KS_AgentQuerier;
 class DEC_RolePion_Decision;
 class HLA_UpdateFunctor;
@@ -62,15 +58,12 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                  GetName                   () const;
-    const DEC_KnowledgeBlackBoard&      GetKnowledge              () const;        
-    const DEC_KS_AgentQuerier&          GetKSQuerier              () const;
-          DEC_KS_ObjectInteraction&     GetKSObjectInteraction    ();
-          DEC_KS_PopulationInteraction& GetKSPopulationInteraction();
-    const MIL_PionOrderManager&         GetOrderManager           () const;
-          MIL_PionOrderManager&         GetOrderManager           ();
-          DEC_RolePion_Decision&        GetDecision               (); //$$$ Dérolifier DEC_RolePion_Decision
-    const DEC_RolePion_Decision&        GetDecision               () const; //$$$ Dérolifier DEC_RolePion_Decision
+    const std::string&                       GetName        () const;
+          DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const;        
+    const MIL_PionOrderManager&              GetOrderManager() const;
+          MIL_PionOrderManager&              GetOrderManager();
+          DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
+    const DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
     
     virtual MIL_Army&                 GetArmy            () const;
             MIL_KnowledgeGroup&       GetKnowledgeGroup  () const;
@@ -166,12 +159,7 @@ private:
           MIL_Automate*       pAutomate_;
 
     // Knowledge
-    DEC_KnowledgeBlackBoard*      pKnowledgeBlackBoard_;
-    DEC_KS_ObjectInteraction*     pKsObjectInteraction_;
-    DEC_KS_PopulationInteraction* pKsPopulationInteraction_;
-    DEC_KS_Fire*                  pKsFire_;
-    DEC_KS_AgentQuerier*          pKsQuerier_;
-    DEC_KS_NetworkUpdater*        pKsNetworkUpdater_;
+    DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
 
     MIL_PionOrderManager&     orderManager_;
 };

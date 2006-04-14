@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_FranchirDeViveForce::Initialize
         return nCode;        
 
     const ASN1T_Mission_Automate_GEN_FranchirDeViveForce& asnMission = *asnMsg.mission.u.mission_automate_gen_franchir_de_vive_force;
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.obstacles_a_franchir, GetVariable( nDIAObstaclesAFranchirIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.obstacles_a_franchir, GetVariable( nDIAObstaclesAFranchirIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -100,7 +100,7 @@ void MIL_AutomateMission_GEN_FranchirDeViveForce::Serialize( ASN1T_MsgAutomateOr
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_gen_franchir_de_vive_force;
     asnMsg.mission.u.mission_automate_gen_franchir_de_vive_force  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAObstaclesAFranchirIdx_ ), asnMission.obstacles_a_franchir, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAObstaclesAFranchirIdx_ ), asnMission.obstacles_a_franchir, automate_.GetKnowledgeGroup() );
 
 }
 

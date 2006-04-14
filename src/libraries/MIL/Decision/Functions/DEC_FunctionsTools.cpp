@@ -12,9 +12,8 @@
 #include "MIL_pch.h"
 #include "DEC_FunctionsTools.h"
 
-#include "Knowledge/DEC_KS_KnowledgeGroupQuerier.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
-#include "Knowledge/DEC_KS_ArmyQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -34,7 +33,7 @@ DEC_Knowledge_Population* DEC_FunctionsTools::GetKnowledgePopulationFromDia( con
     assert( DEC_Tools::CheckTypeConnaissancePopulation( diaVar ) );
 
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKSQuerier().GetKnowledgePopulationFromID( nKnowledgeID_ );
+    return caller.GetKnowledge().GetKnowledgePopulationFromID( nKnowledgeID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +45,7 @@ DEC_Knowledge_Agent* DEC_FunctionsTools::GetKnowledgeAgentFromDia( const DIA_Var
     assert( DEC_Tools::CheckTypeConnaissanceAgent( diaVar ) );
 
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKSQuerier().GetKnowledgeAgentFromID( nKnowledgeID_ );
+    return caller.GetKnowledge().GetKnowledgeAgentFromID( nKnowledgeID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +57,7 @@ DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_V
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaVar ) );
 
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
+    return caller.GetKnowledge().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
 }
 
 

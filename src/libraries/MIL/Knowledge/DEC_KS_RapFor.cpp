@@ -12,24 +12,35 @@
 #include "MIL_pch.h"
 #include "DEC_KS_RapFor.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_Knowledge_Agent.h"
-#include "DEC_KS_AgentQuerier.h"
-#include "DEC_KS_KnowledgeGroupQuerier.h"
+#include "DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "DEC_KnowledgeBlackBoard_Automate.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+
+BOOST_CLASS_EXPORT_GUID( DEC_KS_RapFor, "DEC_KS_RapFor" )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_RapFor constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_RapFor::DEC_KS_RapFor( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup )
+DEC_KS_RapFor::DEC_KS_RapFor( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 2 )
-    , pKnowledgeGroup_       ( &knowledgeGroup )
+    , pBlackBoard_           ( &blackBoard )
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );        
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_RapFor constructor
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KS_RapFor::DEC_KS_RapFor()
+    : DEC_KnowledgeSource_ABC( )
+    , pBlackBoard_           ( 0 )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -38,8 +49,6 @@ DEC_KS_RapFor::DEC_KS_RapFor( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Kno
 // -----------------------------------------------------------------------------
 DEC_KS_RapFor::~DEC_KS_RapFor()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );        
 }
 
 // =============================================================================
@@ -61,24 +70,21 @@ void DEC_KS_RapFor::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_KS_RapFor::Talk()
 {
-    T_KnowledgeAgentVector enemies;
-    T_KnowledgeAgentVector friends;
+    assert( pBlackBoard_ );
 
-    // Get the knowledge group's enemies and friends
-    assert( pKnowledgeGroup_ );
-    pKnowledgeGroup_->GetKSQuerier().GetEnemies( enemies );
-    pKnowledgeGroup_->GetKSQuerier().GetFriends( friends );
+    const T_KnowledgeAgentVector& enemies = pBlackBoard_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
+    const T_KnowledgeAgentVector& friends = pBlackBoard_->GetKnowledgeGroup().GetKnowledge().GetFriends();
 
     // Compute and update the RapFor for all the subordinates
-    const MIL_KnowledgeGroup::T_AutomateVector& automates = pKnowledgeGroup_->GetAutomates();
+    const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup().GetAutomates();
     for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
         MIL_Automate& automate = **itAutomate;
-        automate.GetKSQuerier().GetKnowledgeRapForGlobal().Update( automate, enemies, friends );
+        automate.GetKnowledge().GetKnowledgeRapForGlobal().Update( automate, enemies, friends );
 
         const MIL_Automate::T_PionVector& pions = automate.GetPions();
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-            (**itPion).GetKSQuerier().GetKnowledgeRapForLocal().Update( **itPion, enemies, friends );
+            (**itPion).GetKnowledge().GetKnowledgeRapForLocal().Update( **itPion, enemies, friends );
     }
 }
 

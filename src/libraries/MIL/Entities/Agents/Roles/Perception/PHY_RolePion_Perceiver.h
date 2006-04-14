@@ -16,11 +16,9 @@
 
 #include "PHY_RoleInterface_Perceiver.h"
 
-#include "Knowledge/DEC_KS_Perception.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceObject.h"
 
-class DEC_KnowledgeBlackBoard;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class PHY_PerceptionLevel;
@@ -40,6 +38,7 @@ class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
 class MIL_Army;
 class MIL_KnowledgeGroup;
+class MIL_AgentPion;
 class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
@@ -70,7 +69,7 @@ public:
     //@}
 
 public:
-             PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_AgentPion& pion, DEC_KnowledgeBlackBoard& knowledgeBlackBoard );
+             PHY_RolePion_Perceiver( MT_RoleContainer& role, MIL_AgentPion& pion );
              PHY_RolePion_Perceiver();
     virtual ~PHY_RolePion_Perceiver();
 
@@ -203,11 +202,10 @@ private:
     //@}
 
 private:
-    MIL_AgentPion*       pPion_;
-    DEC_KS_Perception*   pKsPerception_;
-    bool                 bPeriphericalVisionEnabled_;
-    uint                 nNextPeriphericalVisionStep_;
-    bool                 bRecordModeEnabled_;
+    MIL_AgentPion* pPion_;
+    bool           bPeriphericalVisionEnabled_;
+    uint           nNextPeriphericalVisionStep_;
+    bool           bRecordModeEnabled_;
     
     // Perceptions
     T_RadarsPerClassMap radars_;

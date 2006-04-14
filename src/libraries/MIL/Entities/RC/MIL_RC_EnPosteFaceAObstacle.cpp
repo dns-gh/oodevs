@@ -52,7 +52,7 @@ void MIL_RC_EnPosteFaceAObstacle::Send( const MIL_AgentPion& sender, E_RcType nT
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_en_poste_face_a_obstacle, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_en_poste_face_a_obstacle, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -66,7 +66,7 @@ void MIL_RC_EnPosteFaceAObstacle::Send( const MIL_Automate& sender, E_RcType nTy
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_en_poste_face_a_obstacle, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_en_poste_face_a_obstacle, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

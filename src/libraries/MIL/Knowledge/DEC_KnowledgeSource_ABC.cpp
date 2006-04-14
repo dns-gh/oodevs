@@ -12,19 +12,17 @@
 #include "MIL_pch.h"
 #include "DEC_KnowledgeSource_ABC.h"
 
-
-#include "DEC_KnowledgeBlackBoard.h"
-
-BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeSource_ABC, "DEC_KnowledgeSource_ABC" )
+#include "DEC_KnowledgeBlackBoard_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeSource_ABC constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard& blackBoard, uint nPriority )
-    : pBlackBoard_( &blackBoard )
-    , nPriority_  ( nPriority   )
+DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, uint nPriority )
+    : nPriority_  ( nPriority   )
+    , pBlackBoard_( &blackBoard )
 {
+    blackBoard.AddToScheduler( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,8 +30,8 @@ DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard& black
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC()
-    : pBlackBoard_( 0 )
-    , nPriority_  ( 0 )
+    : nPriority_  ( 0 )
+    , pBlackBoard_( 0 )
 {
 }
 
@@ -43,7 +41,14 @@ DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeSource_ABC::~DEC_KnowledgeSource_ABC()
 {
+    pBlackBoard_->RemoveFromScheduler( *this );
 }
+
+
+
+// =============================================================================
+// MAIN
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeSource_ABC::Talk

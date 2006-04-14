@@ -90,9 +90,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Generique::Initialize( const ASN1T_MsgP
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAutomateList( asnMission.automates, GetVariable( nDIAAutomatesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.connaissances_agents, GetVariable( nDIAConnaissancesAgentsIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.connaissances_agents, GetVariable( nDIAConnaissancesAgentsIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.connaissances_objets, GetVariable( nDIAConnaissancesObjetsIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.connaissances_objets, GetVariable( nDIAConnaissancesObjetsIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -164,8 +164,8 @@ void MIL_PionMission_Generique::Serialize( ASN1T_MsgPionOrder& asnMsg )
     NET_ASN_Tools::CopyPathList( GetVariable( nDIAItinerairesIdx_ ), asnMission.itineraires );
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesIdx_ ), asnMission.unites );
     NET_ASN_Tools::CopyAutomateList( GetVariable( nDIAAutomatesIdx_ ), asnMission.automates );
-    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAConnaissancesAgentsIdx_ ), asnMission.connaissances_agents, pion_.GetKnowledgeGroup().GetKSQuerier() );
-    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAConnaissancesObjetsIdx_ ), asnMission.connaissances_objets, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAConnaissancesAgentsIdx_ ), asnMission.connaissances_agents, pion_.GetKnowledgeGroup() );
+    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAConnaissancesObjetsIdx_ ), asnMission.connaissances_objets, pion_.GetKnowledgeGroup() );
 
 }
 

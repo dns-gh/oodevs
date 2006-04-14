@@ -9,6 +9,25 @@
 //
 // *****************************************************************************
 
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void DEC_KS_ObjectKnowledgeSynthetizer::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_KS_ObjectKnowledgeSynthetizer::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+            & pBlackBoard_;
+}
+
+// =============================================================================
+// TOOLS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge
 // Created: NLD 2004-03-30

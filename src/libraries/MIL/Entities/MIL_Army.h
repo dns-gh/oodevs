@@ -16,10 +16,7 @@
 
 #include "MT_Tools/MT_Converter.h"
 
-class DEC_KnowledgeBlackBoard;
-class DEC_KS_ObjectKnowledgeSynthetizer;
-class DEC_KS_NetworkUpdater;
-class DEC_KS_ArmyQuerier;
+class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Population;
@@ -88,11 +85,10 @@ public:
 
     //! @name Accessors
     //@{
-          uint                               GetID                          () const;
-    const std::string&                       GetName                        () const;
-    const T_KnowledgeGroupMap&               GetKnowledgeGroups             () const;
-    const DEC_KS_ArmyQuerier&                GetKSQuerier                   () const;
-          DEC_KS_ObjectKnowledgeSynthetizer& GetKSObjectKnowledgeSynthetizer();
+          uint                          GetID             () const;
+    const std::string&                  GetName           () const;
+    const T_KnowledgeGroupMap&          GetKnowledgeGroups() const;
+          DEC_KnowledgeBlackBoard_Army& GetKnowledge      () const;
     //@}
 
     //! @name Network
@@ -131,10 +127,7 @@ private:
     T_KnowledgeGroupMap knowledgeGroups_;
     T_ArmyRelationMap   relations_;
 
-    DEC_KnowledgeBlackBoard*           pKnowledgeBlackBoard_;
-    DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
-    DEC_KS_NetworkUpdater*             pKsNetworkUpdater_;
-    DEC_KS_ArmyQuerier*                pKsQuerier_;
+    DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
 
 private:
     static MT_Converter< std::string, E_Diplomacy > relationConverter_;

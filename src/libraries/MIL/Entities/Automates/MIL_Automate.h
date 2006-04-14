@@ -16,8 +16,6 @@
 
 #include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Orders/Automate/MIL_AutomateOrderManager.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard.h"
-#include "Knowledge/DEC_KS_AutomateQuerier.h"
 
 class MIL_AutomateType;
 class MIL_AgentPion;
@@ -35,6 +33,7 @@ class DEC_AutomateDecision;
 class PHY_SupplyDotationState;
 class PHY_DotationCategory;
 class NET_ASN_MsgAutomateCreation;
+class DEC_KnowledgeBlackBoard_Automate;
 
 // =============================================================================
 // @class  MIL_Automate
@@ -78,21 +77,21 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&              GetName          () const;
-          uint                      GetID            () const;
-    const MIL_AutomateType&         GetType          () const;
-          MIL_Army&                 GetArmy          () const;
-          MIL_KnowledgeGroup&       GetKnowledgeGroup() const;
-          MIL_AutomateLOG*          GetTC2           () const;
-    const MIL_AutomateOrderManager& GetOrderManager  () const;
-          MIL_AutomateOrderManager& GetOrderManager  ();
-    const DEC_KS_AutomateQuerier&   GetKSQuerier     () const;
-          MIL_AgentPion&            GetPionPC        () const;
-    const T_PionVector&             GetPions         () const; // Including pion PC
-          DEC_AutomateDecision&     GetDecision      () const;
-    const MIL_Fuseau&               GetFuseau        () const;
-    const MT_Vector2D&              GetDirDanger     () const;
-    const T_LimaFlagedPtrMap&       GetLimas         () const;
+    const std::string&                      GetName          () const;
+          uint                              GetID            () const;
+    const MIL_AutomateType&                 GetType          () const;
+          MIL_Army&                         GetArmy          () const;
+          MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
+          MIL_AutomateLOG*                  GetTC2           () const;
+    const MIL_AutomateOrderManager&         GetOrderManager  () const;
+          MIL_AutomateOrderManager&         GetOrderManager  ();
+          MIL_AgentPion&                    GetPionPC        () const;
+    const T_PionVector&                     GetPions         () const; // Including pion PC
+          DEC_AutomateDecision&             GetDecision      () const;
+    const MIL_Fuseau&                       GetFuseau        () const;
+    const MT_Vector2D&                      GetDirDanger     () const;
+    const T_LimaFlagedPtrMap&               GetLimas         () const;
+          DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
     //@}
         
     //! @name Operations
@@ -213,8 +212,7 @@ private:
     uint                     nTickRcDotationSupplyQuerySent_;
 
     // Knowledge
-    DEC_KnowledgeBlackBoard knowledgeBlackBoard_;
-    DEC_KS_AutomateQuerier  ksQuerier_;
+    DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;
 
     // Surrendered / prisoner
           bool                  bSurrendered_;

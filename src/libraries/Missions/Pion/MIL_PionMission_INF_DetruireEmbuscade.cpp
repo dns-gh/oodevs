@@ -78,7 +78,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_DetruireEmbuscade::Initialize( cons
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.position_regroupement, GetVariable( nDIAPositionRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.nature_obstacle, GetVariable( nDIANatureObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -146,7 +146,7 @@ void MIL_PionMission_INF_DetruireEmbuscade::Serialize( ASN1T_MsgPionOrder& asnMs
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionEmbuscadeIdx_ ), asnMission.position_embuscade );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionRegroupementIdx_ ), asnMission.position_regroupement );
-    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ), asnMission.ennemi, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ), asnMission.ennemi, pion_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIANatureObstacleIdx_ ), asnMission.nature_obstacle );
 
 }

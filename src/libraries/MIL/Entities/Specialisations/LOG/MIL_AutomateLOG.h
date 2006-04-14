@@ -31,6 +31,7 @@ class PHY_SupplyStockState;
 class PHY_SupplyStockRequestContainer;
 class PHY_SupplyDotationRequestContainer;
 class PHY_SupplyConsign_ABC;
+class PHY_ComposantePion;
 
 template < typename T > class PHY_ActionLogistic;
 

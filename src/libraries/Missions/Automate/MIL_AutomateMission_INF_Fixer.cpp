@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Fixer::Initialize( const ASN1T_
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_Fixer& asnMission = *asnMsg.mission.u.mission_automate_inf_fixer;
-    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.ennemis, GetVariable( nDIAEnnemisIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.ennemis, GetVariable( nDIAEnnemisIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -100,7 +100,7 @@ void MIL_AutomateMission_INF_Fixer::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_inf_fixer;
     asnMsg.mission.u.mission_automate_inf_fixer  = &asnMission;
 
-    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAEnnemisIdx_ ), asnMission.ennemis, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAEnnemisIdx_ ), asnMission.ennemis, automate_.GetKnowledgeGroup() );
 
 }
 

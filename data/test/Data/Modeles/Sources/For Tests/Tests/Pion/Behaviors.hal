@@ -11,9 +11,6 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
-
-    DEC_Connaissances_AgentsPotentiellementDangereux();
-
     if( DEC_Agent_EstMort() )
         DEC_Debug( "OMG, I'M DEAD !!" );    
     if( DEC_Agent_EtatOps() == 0 )
@@ -464,10 +461,16 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 {
     when updated:
     {
-    
-        T_ListeConnaissancesAgent fusse = DEC_Connaissances_AgentsPotentiellementDangereux();
-        DEC_Debug( FloatToString( DIA_Size( fusse ) ) + " unites potentiellement dangereuse" );
-    
+        // Affichage connaissance        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesPrenantAPartie() ) ) + " prenant a partie" );
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDangereuses() ) ) + " unites ennemies dangereuse" );
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercues() ) ) + " unites ennemies vivantes percues" );        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau() ) ) + " unites ennemies vivantes percues dans fuseau" );        
+        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesDetecteesDansFuseau() ) ) + " unites detectees dans fuseau" );        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_RefugiesAProximite( 2000 ) ) ) + " refugies à moins de 2000 metres" );        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesRenduesAProximite( 2000 ) ) ) + " unites rendues à moins de 2000 metres" );
+   
     
         //T_Point cock = DEC_ListePoints_GetAt( mission.itineraire_, 0 );
         //DEC_Debug( DEC_PointToString( cock ) );
@@ -497,7 +500,7 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
             if( echantillon != 0 )
                 DEC_DebugAffichePoints( echantillon );            
         
-            T_Point point = DEC_Geometrie_CalculeEntreeFuseauLaPlusProche();            
+            T_Point point = DEC_Geometrie_CalculerEntreeFuseauLaPlusProche();            
             //DEC_DebugAffichePoint( point );
             DEC_RC( eRC_RAS );
                        
@@ -552,7 +555,7 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
             // DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
             
             T_Point fusse;
-            if( DEC_Geometrie_CalculePointProcheLocalisationDansFuseau( mission.forme_, fusse ) )
+            if( DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( mission.forme_, fusse ) )
                 DEC_DebugAffichePoint( fusse );
         }
 
@@ -563,11 +566,11 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         if( DIA_ModuleBegins() )
         {
             //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
-            currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, gNullID, mission.forme_, mission.param_, false );
+            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, gNullID, mission.forme_, mission.param_, false );
             
             //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
             
-            //DEC_CreerObjetSansDelais( mission.type_, gNullID, mission.forme_, mission.param_, false );
+            DEC_CreerObjetSansDelais( mission.type_, gNullID, mission.forme_, mission.param_, false );
         }
         
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
@@ -580,6 +583,13 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         }
         else
             DEC_Debug( "MIS_Pion_Test_CreateObject : pas de connaissance retournée" );
+            
+            
+        // Connaissance
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDansZone( mission.forme_) ) ) + " unites ennemies dans zone" );
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesAmiesDansZone   ( mission.forme_) ) ) + " unites amies dans zone" );
+        DEC_Debug( BoolToString( DEC_Connaissances_PresenceEnnemieDansZone( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) + " unites ennemies dans zone" );
+    
         
         // connaissance popu / securisation
         E_ValiditeRequete              nFusse;
@@ -804,42 +814,42 @@ action ACT_TirDirect( T_ConnaissanceAgent target, bool bOnlyTransporteurs )
             DEC_Trace( "Connaissance non valide " );
             DEC_Debug( "Connaissance non valide " );
         }
-        
+
         DEC_Debug( "Etat tir direct : " + EnumToString( nTirDirectState, E_EtatActionTirDirect ) );
-        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite );
+        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite );
         DEC_Debug( "Portee max myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite );
         DEC_Debug( "Portee min myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
-        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite );
+        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite );
         DEC_Debug( "Portee max myself=>eni debarque: " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite );
+        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite );
         DEC_Debug( "Portee max eni=>myself: " + FloatToString( rPorteeLuiSurMoi ) );
 
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite, 0.5 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0.5 );
         DEC_Debug( "Portee max myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite );
         DEC_Debug( "Portee min myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );                
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite, 0.5 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0.5 );
         DEC_Debug( "Portee max myself=>eni debarque (PH 0.5): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0.5 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite, 0.5 );
         DEC_Debug( "Portee max eni=>myself (PH 0.5): " + FloatToString( rPorteeLuiSurMoi ) );
 
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite, 0.1 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0.1 );
         DEC_Debug( "Portee max myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );        
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite, 0.1 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite, 0.1 );
         DEC_Debug( "Portee min myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );                
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite, 0.1 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0.1 );
         DEC_Debug( "Portee max myself=>eni debarque (PH 0.1): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0.1 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite( target, nValidite, 0.1 );
         DEC_Debug( "Portee max eni=>myself (PH 0.1): " + FloatToString( rPorteeLuiSurMoi ) );
         
-        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite, 0 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurUnite( target, nValidite, 0 );
         DEC_Debug( "Portee max myself=>eni (PH 0): " + FloatToString( rPorteeMoiSurLui ) );        
-        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite, 0 );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurUnite( target, nValidite, 0 );
         DEC_Debug( "Portee min myself=>eni (PH 0): " + FloatToString( rPorteeMoiSurLui ) );                
-        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite, 0 );
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( target, nValidite, 0 );
         DEC_Debug( "Portee max myself=>eni debarque (PH 0): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
-        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0 );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParUnite ( target, nValidite, 0 );
         DEC_Debug( "Portee max eni=>myself (PH 0): " + FloatToString( rPorteeLuiSurMoi ) );        
 
         float rEtatOpsMoi= DEC_Agent_EtatOps();
@@ -973,7 +983,7 @@ behavior BEH_Esquive( T_ConnaissanceAgent ennemi )
         
         if( DIA_ModuleBegins() )
         {
-            float rDistanceEsquive = DEC_Tir_PorteeMaxPourEtreTireParAgent( ennemi, nValidite, 0 );
+            float rDistanceEsquive = DEC_Tir_PorteeMaxPourEtreTireParUnite( ennemi, nValidite, 0 );
             DEC_Debug( "Portee eni=>myself (PH 0): " + FloatToString( rDistanceEsquive ) );        
             
             ptSurete = DEC_Geometrie_CalculerPositionSurete( ennemi, rDistanceEsquive, nValidite );
@@ -983,7 +993,7 @@ behavior BEH_Esquive( T_ConnaissanceAgent ennemi )
         
         DEC_Debug( "Dangerosité ENI: " + FloatToString( DEC_ConnaissanceAgent_Dangerosite( ennemi, nValidite  ) ) );
         DEC_Debug( "Rapfor Local: " + FloatToString( DEC_RapportDeForceLocal() ) );
-        DEC_Debug( "Distance sureté : " + FloatToString( DEC_Tir_PorteeMaxPourEtreTireParAgent( ennemi, nValidite, 0 ) ) );
+        DEC_Debug( "Distance sureté : " + FloatToString( DEC_Tir_PorteeMaxPourEtreTireParUnite( ennemi, nValidite, 0 ) ) );
     }
     
     on spontaneous end:

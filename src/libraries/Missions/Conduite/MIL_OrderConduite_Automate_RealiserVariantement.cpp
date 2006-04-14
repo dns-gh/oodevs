@@ -73,11 +73,11 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_RealiserVariantement::Initia
     const ASN1T_OrderConduite_Automate_RealiserVariantement& asnMission = *asnMsg.u.order_conduite_automate_realiser_variantement;
     if( !pKnowledgeGroup_ )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement_original, GetVariable( nDIASiteFranchissementOriginalIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement_original, GetVariable( nDIASiteFranchissementOriginalIdx_ ), *pKnowledgeGroup_ ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !pKnowledgeGroup_ )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement_variante, GetVariable( nDIASiteFranchissementVarianteIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement_variante, GetVariable( nDIASiteFranchissementVarianteIdx_ ), *pKnowledgeGroup_ ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;

@@ -12,9 +12,12 @@
 #include "MIL_pch.h"
 #include "DEC_KS_Sharing.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_Knowledge_Agent.h"
 #include "MIL_KnowledgeGroup.h"
+
+BOOST_CLASS_EXPORT_GUID( DEC_KS_Sharing, "DEC_KS_Sharing" )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Sharing::sShareSource::sShareSource
@@ -53,12 +56,21 @@ DEC_KS_Sharing::sShareSource::sShareSource( const MIL_KnowledgeGroup& shareSourc
 // Name: DEC_KS_Sharing constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_Sharing::DEC_KS_Sharing( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup )
+DEC_KS_Sharing::DEC_KS_Sharing( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pKnowledgeGroup_       ( &knowledgeGroup )
+    , pBlackBoard_           ( &blackBoard )
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Sharing constructor
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+DEC_KS_Sharing::DEC_KS_Sharing()
+    : DEC_KnowledgeSource_ABC()
+    , pBlackBoard_          ( 0 )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +79,6 @@ DEC_KS_Sharing::DEC_KS_Sharing( DEC_KnowledgeBlackBoard& blackBoard, const MIL_K
 // -----------------------------------------------------------------------------
 DEC_KS_Sharing::~DEC_KS_Sharing()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );    
 }
 
 // =============================================================================
@@ -91,7 +101,7 @@ void DEC_KS_Sharing::Prepare()
 class sKnowledgeSharer
 {
 public:
-    sKnowledgeSharer( const MIL_KnowledgeGroup& knowledgeGroup, DEC_KnowledgeBlackBoard& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
+    sKnowledgeSharer( const MIL_KnowledgeGroup& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
         : knowledgeGroup_( knowledgeGroup )
         , blackBoard_    ( blackBoard )
         , shareSource_   ( shareSource )
@@ -112,9 +122,9 @@ public:
     }
 
 private:
-    const MIL_KnowledgeGroup&            knowledgeGroup_;
-          DEC_KnowledgeBlackBoard&       blackBoard_;
-    const DEC_KS_Sharing::sShareSource&  shareSource_;
+    const MIL_KnowledgeGroup&                      knowledgeGroup_;
+          DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard_;
+    const DEC_KS_Sharing::sShareSource&            shareSource_;
 };
 
 // -----------------------------------------------------------------------------
@@ -124,13 +134,12 @@ private:
 void DEC_KS_Sharing::Talk()
 {
     assert( pBlackBoard_ );
-    assert( pKnowledgeGroup_ );
 
     IT_ShareSourceMMap itShareSourceEnd = shareSources_.upper_bound( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
     for( IT_ShareSourceMMap itShareSource = shareSources_.begin(); itShareSource != itShareSourceEnd; ++itShareSource )
     {
-        sKnowledgeSharer func( *pKnowledgeGroup_, *pBlackBoard_, itShareSource->second );
-        itShareSource->second.pShareSource_->GetKnowledge().ApplyOnKnowledgesAgent( func );
+        sKnowledgeSharer func( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
+        itShareSource->second.pShareSource_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func );
     }
     shareSources_.erase( shareSources_.begin(), itShareSourceEnd );
 }

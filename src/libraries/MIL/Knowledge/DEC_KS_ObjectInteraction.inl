@@ -14,17 +14,6 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_ObjectInteraction::GetAgentInteracting
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-inline
-const MIL_AgentPion& DEC_KS_ObjectInteraction::GetAgentInteracting() const
-{
-    assert( pAgentInteracting_ );
-    return *pAgentInteracting_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::NotifyObjectInteraction
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------

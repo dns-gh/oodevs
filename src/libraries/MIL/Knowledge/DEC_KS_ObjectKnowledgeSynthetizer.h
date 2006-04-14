@@ -16,7 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Object;
@@ -39,8 +39,14 @@ class DEC_KS_ObjectKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Army& army );
+    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_Army& blackBoard );
+             DEC_KS_ObjectKnowledgeSynthetizer();
     virtual ~DEC_KS_ObjectKnowledgeSynthetizer();
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Events
@@ -85,10 +91,10 @@ private:
 private:
     //! @name Members
     //@{
-    const MIL_Army*         pArmy_;
-    T_ObjectVector          ephemeralKnowledges_;
-    T_ObjectVector          objectsToForget_;
-    T_KnowledgeObjectVector knowledgesObjectToForget_;
+    DEC_KnowledgeBlackBoard_Army* pBlackBoard_;
+    T_ObjectVector                ephemeralKnowledges_;
+    T_ObjectVector                objectsToForget_;
+    T_KnowledgeObjectVector       knowledgesObjectToForget_;
     //@}
 };
 

@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireDecontaminer::Initialize( co
     const ASN1T_Mission_Automate_SeFaireDecontaminer& asnMission = *asnMsg.mission.u.mission_automate_se_faire_decontaminer;
     if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_arrivee, GetVariable( nDIAZoneArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_decontamination, GetVariable( nDIASiteDecontaminationIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_decontamination, GetVariable( nDIASiteDecontaminationIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -105,7 +105,7 @@ void MIL_AutomateMission_SeFaireDecontaminer::Serialize( ASN1T_MsgAutomateOrder&
     asnMsg.mission.u.mission_automate_se_faire_decontaminer  = &asnMission;
 
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneArriveeIdx_ ), asnMission.zone_arrivee );
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ), asnMission.site_decontamination, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ), asnMission.site_decontamination, automate_.GetKnowledgeGroup() );
 
 }
 

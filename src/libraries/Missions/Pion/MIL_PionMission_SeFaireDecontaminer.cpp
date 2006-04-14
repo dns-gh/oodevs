@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_SeFaireDecontaminer::Initialize( const 
     const ASN1T_Mission_Pion_SeFaireDecontaminer& asnMission = *asnMsg.mission.u.mission_pion_se_faire_decontaminer;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_arrivee, GetVariable( nDIAPointArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_decontamination, GetVariable( nDIASiteDecontaminationIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_decontamination, GetVariable( nDIASiteDecontaminationIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -135,7 +135,7 @@ void MIL_PionMission_SeFaireDecontaminer::Serialize( ASN1T_MsgPionOrder& asnMsg 
     asnMsg.mission.u.mission_pion_se_faire_decontaminer  = &asnMission;
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointArriveeIdx_ ), asnMission.point_arrivee );
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ), asnMission.site_decontamination, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ), asnMission.site_decontamination, pion_.GetKnowledgeGroup() );
 
 }
 

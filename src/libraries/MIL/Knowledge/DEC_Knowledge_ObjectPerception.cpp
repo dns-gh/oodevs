@@ -12,7 +12,6 @@
 #include "MIL_pch.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"

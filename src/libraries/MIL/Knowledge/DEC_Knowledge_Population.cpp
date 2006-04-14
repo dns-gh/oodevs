@@ -12,7 +12,6 @@
 #include "MIL_pch.h"
 #include "DEC_Knowledge_Population.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_PopulationConcentration.h"
 #include "DEC_Knowledge_PopulationFlow.h"
 #include "DEC_Knowledge_PopulationPerception.h"

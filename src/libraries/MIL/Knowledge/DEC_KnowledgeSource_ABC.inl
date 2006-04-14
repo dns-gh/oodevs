@@ -9,16 +9,19 @@
 //
 // *****************************************************************************
 
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeSource_ABC::serialize
-// Created: JVT 2005-03-31
+// Name: template< typename Archive > void DEC_KnowledgeSource_ABC::serialize
+// Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-inline
-void DEC_KnowledgeSource_ABC::serialize( Archive& file, const uint )
+void DEC_KnowledgeSource_ABC::serialize( Archive& archive, const uint )
 {
-    file & pBlackBoard_
-         & nPriority_;
+    archive & nPriority_
+            & pBlackBoard_;
 }
 
 // -----------------------------------------------------------------------------

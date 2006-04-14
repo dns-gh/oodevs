@@ -16,7 +16,7 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
-class DEC_KnowledgeBlackBoard;
+class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_RealObject_ABC;
 class MIL_AgentPion;
 class DEC_Knowledge_ObjectCollision;
@@ -33,9 +33,9 @@ class DEC_KS_ObjectInteraction : public DEC_KnowledgeSource_ABC
     MT_COPYNOTALLOWED( DEC_KS_ObjectInteraction ) 
 public:
     //! @name Constructors/Destructor
-    //@{
+    //@{   
+    explicit DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard );
              DEC_KS_ObjectInteraction();
-             DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& agentInteracting );
     virtual ~DEC_KS_ObjectInteraction();
     //@}
 
@@ -54,10 +54,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( boost::archive::binary_iarchive&, const uint );
-    void save( boost::archive::binary_oarchive&, const uint ) const;
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
 private:
@@ -74,7 +71,6 @@ private:
 private:
     //! @name Accessors
     //@{
-    const MIL_AgentPion&            GetAgentInteracting         () const;
     DEC_Knowledge_ObjectPerception& GetKnowledgeObjectPerception( MIL_RealObject_ABC& object ) const;
     DEC_Knowledge_ObjectCollision&  GetKnowledgeObjectCollision ( MIL_RealObject_ABC& object ) const;
     //@}
@@ -85,9 +81,9 @@ private:
     //@}
 
 private:
-    const MIL_AgentPion*    pAgentInteracting_;
-    T_ObjectVector          objectInteractions_;
-    T_ObjectCollisionVector objectCollisions_;
+    DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
+    T_ObjectVector                     objectInteractions_;
+    T_ObjectCollisionVector            objectCollisions_;
 };
 
 #include "DEC_KS_ObjectInteraction.inl"

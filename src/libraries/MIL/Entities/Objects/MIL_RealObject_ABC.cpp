@@ -15,6 +15,7 @@
 
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 
 #include "MIL_RealObjectType.h"
 #include "PHY_ObjectExplosionFireResult.h"
@@ -246,6 +247,8 @@ void MIL_RealObject_ABC::InitializeCommon( MIL_Army& army, const TER_Localisatio
         strName_ = pType_->GetName();
 
     InitializeAvoidanceLocalisation();
+
+    GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +275,6 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_
         strName = asnCreateObject.nom;
 
     InitializeCommon( *pArmy, localisation, nID, strName );
-    GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 
     return EnumObjectErrorCode::no_error;
 }
@@ -326,7 +328,6 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
     archive.ReadField( "nom", strName, MIL_InputArchive::eNothing );
 
     InitializeCommon( *pArmy, localisation, nID, strName );
-    GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +338,6 @@ void MIL_RealObject_ABC::Initialize( MIL_Army& army, const TER_Localisation& loc
 {
     assert( pType_ );
     InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID(), "" );
-    GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
 //=============================================================================
@@ -863,7 +863,7 @@ void MIL_RealObject_ABC::Destroy()
     // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
     const MIL_EntityManager::T_ArmyMap& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
     for( MIL_EntityManager::CIT_ArmyMap itArmy = armies.begin(); itArmy != armies.end(); ++itArmy )
-        itArmy->second->GetKSObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *this );   
+        itArmy->second->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *this );   
 }
 
 // -----------------------------------------------------------------------------

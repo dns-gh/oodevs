@@ -14,10 +14,10 @@
 // Created: NLD 2005-07-01
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectTypeFilter& MIL_RealObjectType::GetObjectTypesToAvoid()
+const MIL_RealObjectTypeFilter& MIL_RealObjectType::GetHatedObjectTypes()
 {
-    assert( pObjectTypesToAvoid_ );
-    return *pObjectTypesToAvoid_;
+    assert( pHatedObjectTypes_ );
+    return *pHatedObjectTypes_;
 }
 
 // -----------------------------------------------------------------------------

@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_FaireFranchir::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Automate_GEN_FaireFranchir& asnMission = *asnMsg.mission.u.mission_automate_gen_faire_franchir;
-    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.sites_de_franchissement, GetVariable( nDIASitesDeFranchissementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.sites_de_franchissement, GetVariable( nDIASitesDeFranchissementIdx_ ), automate_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyLocation( asnMission.zone_regroupement, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -104,7 +104,7 @@ void MIL_AutomateMission_GEN_FaireFranchir::Serialize( ASN1T_MsgAutomateOrder& a
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_gen_faire_franchir;
     asnMsg.mission.u.mission_automate_gen_faire_franchir  = &asnMission;
 
-    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIASitesDeFranchissementIdx_ ), asnMission.sites_de_franchissement, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIASitesDeFranchissementIdx_ ), asnMission.sites_de_franchissement, automate_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyLocation( GetVariable( nDIAZoneRegroupementIdx_ ), asnMission.zone_regroupement );
 
 }

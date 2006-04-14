@@ -29,6 +29,7 @@
 #include "Decision/Functions/DEC_ObjectFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
 #include "DIA/DIA_SDK_Manager.h"
 #include "MT_Tools/MT_ArchiveDirectoryHelper.h"
@@ -116,8 +117,8 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::RotateDirection               , "DEC_Geometrie_RotateDirection"               );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection       , "DEC_Geometrie_CopieEtInverseDirection"       );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection        , "DEC_Geometrie_CopieEtRotateDirection"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine , "DEC_Geometrie_CalculeDistanceLigneMoyenne"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter , "DEC_Geometrie_CalculeBarycentreLocalisation" );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine , "DEC_Geometrie_CalculerDistanceLigneMoyenne"  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter , "DEC_Geometrie_CalculerBarycentreLocalisation");
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeMeanDirection          , "DEC_Geometrie_DirectionMoyenne"              );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointOnCircle    , "DEC_Geometrie_PositionAleatoireSurCercle"    );
     pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle    , "DEC_Geometrie_PositionAleatoireDansCercle"   );

@@ -74,7 +74,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_AcquerirLanceursEni::Initialize( co
     const ASN1T_Mission_Pion_ASS_AcquerirLanceursEni& asnMission = *asnMsg.mission.u.mission_pion_ass_acquerir_lanceurs_eni;
     if( !NET_ASN_Tools::CopyPolygonList( asnMission.zones_a_observer, GetVariable( nDIAZonesAObserverIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.zone_implantation, GetVariable( nDIAZoneImplantationIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.zone_implantation, GetVariable( nDIAZoneImplantationIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.menance_roem, GetVariable( nDIAMenanceRoemIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -140,7 +140,7 @@ void MIL_PionMission_ASS_AcquerirLanceursEni::Serialize( ASN1T_MsgPionOrder& asn
     asnMsg.mission.u.mission_pion_ass_acquerir_lanceurs_eni  = &asnMission;
 
     NET_ASN_Tools::CopyPolygonList( GetVariable( nDIAZonesAObserverIdx_ ), asnMission.zones_a_observer );
-    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAZoneImplantationIdx_ ), asnMission.zone_implantation, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIAZoneImplantationIdx_ ), asnMission.zone_implantation, pion_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyBool( GetVariable( nDIAMenanceRoemIdx_ ), asnMission.menance_roem );
 
 }

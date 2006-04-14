@@ -18,7 +18,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
 
@@ -54,7 +53,7 @@ void MIL_RC_ObjetDetecte::Send( const MIL_AgentPion& sender, E_RcType nType, DIA
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_objet_detecte, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_objet_detecte, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -68,7 +67,7 @@ void MIL_RC_ObjetDetecte::Send( const MIL_Automate& sender, E_RcType nType, DIA_
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_objet_detecte, sender.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyObjectKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_objet_detecte, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

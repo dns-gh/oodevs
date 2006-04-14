@@ -12,28 +12,40 @@
 #include "MIL_pch.h"
 #include "DEC_KS_ObjectKnowledgeSynthetizer.h"
 
-#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_KnowledgeBlackBoard_Army.h"
+#include "DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_Object.h"
-
+#include "MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+
+BOOST_CLASS_EXPORT_GUID( DEC_KS_ObjectKnowledgeSynthetizer, "DEC_KS_ObjectKnowledgeSynthetizer" )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Army& army )
+DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_Army& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pArmy_                 ( &army )
+    , pBlackBoard_           ( &blackBoard )
 {
-    assert( pBlackBoard_ );
-    
-    pBlackBoard_->AddToScheduler( *this );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer constructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer()
+    : DEC_KnowledgeSource_ABC(  )
+    , pBlackBoard_           ( 0 )
+{
 }
 
 // -----------------------------------------------------------------------------
@@ -42,8 +54,6 @@ DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer( DEC_Knowle
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
 {
-    assert( pBlackBoard_ );
-    pBlackBoard_->RemoveFromScheduler( *this );
 }
 
 // =============================================================================
@@ -56,7 +66,7 @@ DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::Prepare ) );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,13 +77,12 @@ inline
 DEC_Knowledge_Object& DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_RealObject_ABC& objectKnown ) const
 {
     assert( pBlackBoard_ );    
-    DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObject( objectKnown );
+    DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( objectKnown );
 
     if( pKnowledge )
         return *pKnowledge;
     
-    assert( pArmy_ );
-    return pBlackBoard_->CreateKnowledgeObject( *pArmy_, objectKnown );
+    return pBlackBoard_->GetKnowledgeObjectContainer().CreateKnowledgeObject( pBlackBoard_->GetArmy(), objectKnown );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,10 +113,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 {
     class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectPerception> methodUpdateKnowledgesFromObjectPerception( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, *this );
     class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectCollision > methodUpdateKnowledgesFromObjectCollision ( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , *this );
-
-    assert( pArmy_ );
     
-    const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pArmy_->GetKnowledgeGroups();
+    const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
     for( MIL_Army::CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
     {
         const MIL_KnowledgeGroup::T_AutomateVector& automates = itKnowledgeGroup->second->GetAutomates();
@@ -117,8 +124,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
-                pion.GetKnowledge().ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
-                pion.GetKnowledge().ApplyOnKnowledgesObjectCollision ( methodUpdateKnowledgesFromObjectCollision  );
+                pion.GetKnowledge().GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
+                pion.GetKnowledge().GetKnowledgeObjectCollisionContainer ().ApplyOnKnowledgesObjectCollision ( methodUpdateKnowledgesFromObjectCollision  );
             }
         }
     }
@@ -150,9 +157,9 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
 
     for( CIT_ObjectVector itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
     {
-        DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObject( **itObject );
+        DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( **itObject );
         if( pKnowledge )
-            pBlackBoard_->DestroyKnowledgeObject( *pKnowledge );
+            pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( *pKnowledge );
     }
     objectsToForget_.clear();    
 }
@@ -166,7 +173,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
     assert( pBlackBoard_ );
     
     for( CIT_KnowledgeObjectVector itKnowledge = knowledgesObjectToForget_.begin(); itKnowledge != knowledgesObjectToForget_.end(); ++itKnowledge )
-        pBlackBoard_->DestroyKnowledgeObject( **itKnowledge );
+        pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( **itKnowledge );
     knowledgesObjectToForget_.clear();
 }
 
@@ -182,7 +189,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( DEC_Knowledge_
     const MIL_RealObject_ABC* pObjectKnown = knowledge.GetObjectKnown();
     knowledge.UpdateRelevance();
     if( pObjectKnown && !knowledge.GetObjectKnown() )
-        pBlackBoard_->NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, knowledge );
+        pBlackBoard_->GetKnowledgeObjectContainer().NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, knowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +212,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
 
     // Relevance
     class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodRelevance( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, *this );
-    pBlackBoard_->ApplyOnKnowledgesObject( methodRelevance );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodRelevance );
 }
 
 // =============================================================================
@@ -221,7 +228,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject( DEC_Knowledge_Obje
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
-        pBlackBoard_->DestroyKnowledgeObject( knowledge ); // The knowledge will be deleted
+        pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -234,5 +241,5 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Clean()
     assert( pBlackBoard_ );
 
     class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodObject( DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
-    pBlackBoard_->ApplyOnKnowledgesObject( methodObject );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodObject );
 }

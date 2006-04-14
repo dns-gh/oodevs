@@ -25,9 +25,12 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/Lima/MIL_Lima.h"
+#include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Tools/MIL_Tools.h"
 
 //-----------------------------------------------------------------------------
@@ -176,9 +179,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     if( pathClass_.AvoidEnemies() )
     {
-        T_KnowledgeAgentVector knowledgesAgent;
-        queryMaker_.GetKSQuerier().GetEnemies( knowledgesAgent );
-        for( CIT_KnowledgeAgentVector itKnowledgeAgent = knowledgesAgent.begin(); itKnowledgeAgent != knowledgesAgent.end(); ++itKnowledgeAgent )
+        const T_KnowledgeAgentVector& enemies = queryMaker_.GetKnowledgeGroup().GetKnowledge().GetEnemies();
+        for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( fuseau_.IsInside( knowledge.GetPosition() ) )
@@ -190,7 +192,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     if( pathClass_.AvoidObjects() )
     {
         T_KnowledgeObjectVector knowledgesObject;    
-        queryMaker_.GetKSQuerier().GetObjects( knowledgesObject );
+        queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
@@ -207,7 +209,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     if( pathClass_.HandlePopulations() )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
-        queryMaker_.GetKSQuerier().GetPopulations( knowledgesPopulation );
+        queryMaker_.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulationVector_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
             pathKnowledgePopulationVector_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, queryMaker_ ) );
