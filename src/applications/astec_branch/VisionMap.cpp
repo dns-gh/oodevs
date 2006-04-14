@@ -43,6 +43,8 @@ void VisionMap::Draw( const GlTools_ABC& tools ) const
         { COLOR_RECO       },
         { COLOR_IDENTIFIED }
     };
+    if( vision_.empty() )
+        return;
     const float translation = map_.GetCellSize() * 0.5;
     glPushMatrix();
     glTranslatef( translation, translation, 0 );

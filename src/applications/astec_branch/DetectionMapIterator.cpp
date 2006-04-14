@@ -31,13 +31,19 @@ DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const geome
     const float yDelta = yEnd_ - yCurrent_;
     if( std::fabs( xDelta ) > std::fabs( yDelta ) )
     {
-        xIncrease_ = cellSize_;
-        yIncrease_ = ( yEnd_ - yCurrent_ ) / xDelta * cellSize_;
+        if( xDelta > 0 )
+            xIncrease_ = cellSize_; 
+        else
+            xIncrease_ = - cellSize_; 
+        yIncrease_ = yDelta / xDelta * xIncrease_;
     }
     else
     {
-        yIncrease_ = cellSize_;
-        xIncrease_ = ( xEnd_ - xCurrent_ ) / yDelta * cellSize_;
+        if( yDelta > 0 )
+            yIncrease_ = cellSize_; 
+        else
+            yIncrease_ = - cellSize_;
+        xIncrease_ = xDelta / yDelta * yIncrease_;
     }
 }
 
@@ -89,7 +95,7 @@ void DetectionMapIterator::Increment()
 // -----------------------------------------------------------------------------
 bool DetectionMapIterator::IsDone() const
 {
-    return currentCell_ == endCell_;
+    return CurrentPoint().SquareDistance( geometry::Point2f( xEnd_, yEnd_ ) ) < cellSize_ * cellSize_;
 }
 
 // -----------------------------------------------------------------------------

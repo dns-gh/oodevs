@@ -67,7 +67,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& t
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent& agent = *it->first;
-        if( & agent.GetTeam() != &team_ )
+        if( & agent.GetTeam() != &team_ && it->second != eVisTypeInvisible )
         {
             if( it->second == eVisTypeRecognized )
                 glColor4d( COLOR_RECO );

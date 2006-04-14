@@ -53,6 +53,7 @@ void VisionCones::DoUpdate( const VisionConesMessage& message )
         surfaces_.push_back( factory_.CreateSurface( agent_, message ) );
 
     message >> elongationFactor_; // $$$$ AGE 2006-04-04: wtf ?
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,6 +74,7 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void VisionCones::Update()
 {
+    map_->Clear();
     for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
         (*it)->Update( *map_ );
 }

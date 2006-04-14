@@ -27,7 +27,6 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     , postureSourceFactors_( eNbrUnitPosture, 0. )
     , weatherFactors_      ( eNbrWeatherType, 0. )
     , lightingFactors_     ( eNbrLightingType, 0. )
-//    , environementFactors_ ( RawVisionData::eNbrVisionObjects, 0. )
 {
     InitializeAngle    ( xis );
     InitializeDistances( xis );
@@ -58,20 +57,11 @@ SensorType::~SensorType()
 // -----------------------------------------------------------------------------
 void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 {
-//    archive.Section( "Environnements" );
-//    for ( unsigned idx = 0; idx < RawVisionData::eNbrVisionObjects; ++idx )
-//    {
-//        assert( environementFactors_.size() > idx );
-//        float& rFactor = environementFactors_[ idx ];
-//
-//        if ( !archive.ReadField( Tools::ConvertEnvironementType( RawVisionData::ConvertObjectIdxToEnvironnement( idx ) ), rFactor ) )
-//            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-//
-//        if ( rFactor < 0. || rFactor > 1. )
-//            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-//    }
-//
-//    archive.EndSection(); // Environnements    
+    xis >> start( "Environnements" )
+            >> content( "Foret", factorInForest_ )
+            >> content( "Urbain", factorInTown_ )
+            >> content( "Sol", factorInGround_ )
+        >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -213,34 +203,31 @@ float SensorType::GetMaxDistance( const Agent& agent ) const
 // Modified: JVT 2004-09-27
 //-----------------------------------------------------------------------------
 inline
-float SensorType::ComputeEnvironementFactor( /*RawVisionData::envBits nEnv*/ ) const
+float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool inGround ) const
 {
-    return 1.f;
-//    float res = nEnv & RawVisionData::eVisionEmpty ? environementFactors_[ 0 ] : 1.;
-//
-//    for( unsigned mask = 1, idx = 1; idx < RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
-//        if( mask & nEnv )
-//            res *= environementFactors_[ idx ];
-//    return res;
+    float res = 1.f;
+    if( inForest )
+        res *= factorInForest_;
+    if( inTown )
+        res *= factorInTown_;
+    if( inGround )
+        res *= factorInGround_;
+    return res;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( /*const RawVisionData::Iterator& env,*/ const Agent& srcAgent, float rCurrentNRJ ) const
+float SensorType::ComputeExtinction( const Agent& srcAgent, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance  ) const
 {
-//    assert( rCurrentNRJ <= rDetectionDist_ );
-//    assert( rCurrentNRJ > 0 );
-//
-//    float rDistanceModificator = GetDistanceModificator( srcAgent );
-//    // Prise en compte de l'éclairement
+    assert( rCurrentNRJ <= rDetectionDist_ );
+    assert( rCurrentNRJ > 0 );
+
+    float rDistanceModificator = GetDistanceModificator( srcAgent );
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
-//    // Prise en compte des précipitations
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
-//    // Prise en compte des objets
-//    rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv() );
-//    return rDistanceModificator <= MT_Epsilon ? -1. : rCurrentNRJ - env.Length() / rDistanceModificator;
-    return rCurrentNRJ;
+    rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );
+    return rDistanceModificator <= MT_Epsilon ? -1. : rCurrentNRJ - distance / rDistanceModificator;
 }
 

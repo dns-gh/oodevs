@@ -32,8 +32,8 @@ public:
     //! @name Operations
     //@{
     float GetMaxDistance   ( const Agent& agent ) const;
-    float ComputeExtinction( /*const RawVisionData::Iterator& env,*/ const Agent& srcAgent, float rCurrentNRJ ) const;
-    float ComputeExtinction( /*const RawVisionData::Iterator& env,*/ const Agent& srcAgent ) const;
+    float ComputeExtinction( const Agent& srcAgent, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance ) const;
+    float ComputeExtinction( const Agent& srcAgent, bool inForest, bool inTown, bool inGround, float distance ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
 
@@ -65,7 +65,7 @@ private:
     void InitializeAngle               ( xml::xistream& xis );
 
     float GetPostureSourceFactor    ( const Agent& agent ) const;
-    float ComputeEnvironementFactor ( /*RawVisionData::envBits nEnv*/ ) const;
+    float ComputeEnvironementFactor ( bool inForest, bool inTown, bool inGround ) const;
     //@}
 
 private:
@@ -83,6 +83,10 @@ private:
     T_FactorVector postureSourceFactors_;
     T_FactorVector lightingFactors_;
     T_FactorVector weatherFactors_;
+
+    float factorInForest_;
+    float factorInTown_;
+    float factorInGround_;
 //    T_FactorVector environementFactors_;
 
     // Population

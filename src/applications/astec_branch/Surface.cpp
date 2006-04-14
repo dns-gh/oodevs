@@ -9,6 +9,8 @@
 #include "SensorType.h"
 #include "GlTools_ABC.h"
 #include "DetectionMap.h"
+#include "VisionLine.h"
+#include "VisionMap.h"
 
 using namespace geometry;
 
@@ -19,7 +21,6 @@ using namespace geometry;
 Surface::Surface( const Agent& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
     : agent_( agent )
     , map_( map )
-    , needsUpdating_( true )
 {
     double oX, oY, rHeight;
     input >> oX >> oY; origin_ = Point2f( float( oX ), float( oY ) );
@@ -39,6 +40,7 @@ Surface::Surface( const Agent& agent, const VisionConesMessage& input, const Det
         input >> x >> y;
         sectors_.push_back( Sector( origin_, Vector2f( float(x), float(y) ), pSensorType_->GetAngle() ) );
     }
+    maxRadius_ = pSensorType_->GetMaxDistance( agent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,5 +101,71 @@ void Surface::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 void Surface::Update( VisionMap& map )
 {
+    Rectangle2< unsigned > extent = MappedExtent();
+    for( unsigned i = extent.Left(); i <= extent.Right(); ++i )
+        for( unsigned j = extent.Bottom(); j < extent.Top(); ++j )
+        {
+            const Point2f point = map_.Map( i, j );
+            const std::pair< unsigned, unsigned > mappedPoint( i, j );
+            if( IsInSector( point ) && map.ShouldUpdate( mappedPoint ) )
+            {
+                E_PerceptionResult perception = ComputePerception( point );
+                map.Update( mappedPoint, perception );
+            }
+        };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Surface::Extent
+// Created: AGE 2006-04-14
+// -----------------------------------------------------------------------------
+Rectangle2f Surface::Extent() const
+{
+    return Rectangle2f( origin_.X() - maxRadius_, origin_.Y() - maxRadius_,     
+                        origin_.X() + maxRadius_, origin_.Y() + maxRadius_ ).Intersect( map_.Extent() );
+}
     
+// -----------------------------------------------------------------------------
+// Name: Rectangle2< unsigned > Surface::MappedExtent
+// Created: AGE 2006-04-14
+// -----------------------------------------------------------------------------
+Rectangle2< unsigned > Surface::MappedExtent() const
+{
+    Rectangle2f extent = Extent();
+    std::pair< unsigned, unsigned > bl = map_.Unmap( extent.BottomLeft() );
+    std::pair< unsigned, unsigned > tr = map_.Unmap( extent.TopRight() );
+    return Rectangle2< unsigned >( bl.first, bl.second, tr.first, tr.second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Surface::IsInSector
+// Created: AGE 2006-04-14
+// -----------------------------------------------------------------------------
+bool Surface::IsInSector( const geometry::Point2f& point ) const
+{
+    for( CIT_SectorVector it = sectors_.begin(); it != sectors_.end(); ++it )
+        if( it->IsInCone( point, maxRadius_ ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Surface::ComputePerception
+// Created: AGE 2006-04-14
+// -----------------------------------------------------------------------------
+E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
+{
+    VisionLine line( map_, origin_, point );
+    float skyrock = -0.12f;
+    while( ! line.IsDone() && skyrock > -0.5f )
+    {
+        line.Increment();
+        if( skyrock == -0.12f )
+            skyrock = pSensorType_->ComputeExtinction( agent_,
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
+        else
+            skyrock = pSensorType_->ComputeExtinction( agent_, skyrock,
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
+    }
+    return pSensorType_->InterpreteNRJ( skyrock );
 }

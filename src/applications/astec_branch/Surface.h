@@ -9,6 +9,7 @@
 #include "Sector.h"
 #include "DIN_Types.h"
 #include "Resolver_ABC.h"
+#include "Perception_Def.h"
 
 class SensorType;
 class Agent;
@@ -49,6 +50,14 @@ private:
     typedef T_SectorVector::const_iterator CIT_SectorVector;
     //@}
 
+    //! @name Helpers
+    //@{
+    geometry::Rectangle2f               Extent() const;
+    geometry::Rectangle2< unsigned >    MappedExtent() const;
+    bool IsInSector( const geometry::Point2f& point ) const;
+    E_PerceptionResult ComputePerception( const geometry::Point2f& point ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -58,7 +67,7 @@ private:
     float height;
     T_SectorVector sectors_;
     const SensorType* pSensorType_;
-    bool needsUpdating_;
+    float maxRadius_;
     //@}
 };
 
