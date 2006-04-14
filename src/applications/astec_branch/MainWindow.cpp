@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MainWindow.cpp $
-// $Author: Age $
-// $Modtime: 17/05/05 14:05 $
-// $Revision: 20 $
-// $Workfile: MainWindow.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "MainWindow.h"
@@ -48,6 +39,7 @@
 #include "Network.h"
 #include "AgentServerMsgMgr.h"
 #include "GraphicPreferences.h"
+#include "StatusBar.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -150,6 +142,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
     layers_->ChangeTo( widget2d_ );
     layers_->RegisterTo( widget2d_ );
+
+    pStatus_ = new StatusBar( statusBar(), model_.detection_, model_.coordinateConverter_, controllers_ );
+    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
 
     // This one refreshes the map display, and is called only a few time per second.
     displayTimer_ = new QTimer( this );
@@ -262,6 +257,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
                 if( ! widget3d_ )
                 {
                     widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, model_.detection_ );
+                    connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
                     layers_->RegisterTo( widget3d_ );
                 }
                 layers_->ChangeTo( widget3d_ );

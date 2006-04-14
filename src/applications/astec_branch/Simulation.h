@@ -24,6 +24,10 @@ class Simulation
 {
 
 public:
+    struct sStartTick{};
+    struct sEndTick{};
+    
+public:
     //! @name Constructors/Destructor
     //@{
     explicit Simulation( Controllers& controllers );
@@ -63,6 +67,8 @@ private:
     bool paused_;
     bool tickStart_;
     bool connected_;
+    sStartTick startTick_;
+    sEndTick endTick_;
     //@}
 };
 

@@ -32,8 +32,14 @@ public:
 
     //! @name Coordinate conversions
     //@{
-    std::string       ConvertToMgrs( const geometry::Point2f& pos  ) const;
+    std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
     geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
+    geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
+    //@}
+
+    //! @name Operations
+    //@{
+    bool IsInBoundaries( const geometry::Point2f& point ) const;
     //@}
 
 private:

@@ -60,3 +60,27 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const ASN1T_CoordUTM& mgrs )
     geometry::Point2f pos( planar_.GetX(), planar_.GetY() );
     return pos + translation_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::ConvertToGeo
+// Created: SBO 2006-04-14
+// -----------------------------------------------------------------------------
+geometry::Point2f CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
+{
+    static const float r180OverPi = 180. / std::acos( -1. );
+    const geometry::Point2f translated = pos - translation_;
+    planar_.Set( translated.X(), translated.Y() );
+    geodetic_.SetCoordinates( planar_ );
+    geometry::Point2f result;
+    result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude()  * r180OverPi );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::IsInBoundaries
+// Created: SBO 2006-04-14
+// -----------------------------------------------------------------------------
+bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
+{
+    return extent_.IsInside( point );
+}

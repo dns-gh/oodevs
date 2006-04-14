@@ -32,6 +32,7 @@ class Model;
 class GlLayers;
 class GlWidget;
 class Gl3dWidget;
+class StatusBar;
 
 // =============================================================================
 /** @class  MainWindow
@@ -97,6 +98,7 @@ private:
     QTimer* displayTimer_;
 
     OptionsPanel*  pOptionsPanel_;
+    StatusBar*     pStatus_;
     //@}
 };
 

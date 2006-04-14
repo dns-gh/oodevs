@@ -20,6 +20,7 @@ SetGlOptions::SetGlOptions()
     QGLFormat format;
     format.setAlpha( true );
     format.setStencil( true );
+    format.setOverlay( true );
     QGLFormat::setDefaultFormat( format );
     context_ = new QGLContext( QGLFormat::defaultFormat() );
 }
