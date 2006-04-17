@@ -263,7 +263,7 @@
     ============================================================================
     -->
     <target name="test" depends="" description="run all tests">
-        <exec executable="${bin.dir}/release/applications/SIM/SIM.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+        <exec executable="${out.dir}/release/applications/SIM/SIM.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
             <arg value="${data.dir}/test/scipio.xml"/>
             <arg value="-test"/>
@@ -279,8 +279,8 @@
     <!--<target name="package" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/oscar-2A.zip">
-            <zipfileset dir="${bin.dir}/release/libraries/oscar-2A" includes="*.dll"/>
-            <zipfileset dir="${bin.dir}/release/applications/oscar-2A_app" includes="*.exe"/>
+            <zipfileset dir="${out.dir}/release/libraries/oscar-2A" includes="*.dll"/>
+            <zipfileset dir="${out.dir}/release/applications/oscar-2A_app" includes="*.exe"/>
             <zipfileset dir="${libraries.dir}/proxy" includes="**"/>
         </zip>
     </target> -->
