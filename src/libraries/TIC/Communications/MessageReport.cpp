@@ -216,7 +216,7 @@ void MessageReport::Initialize()
 	messages_[ "TireParCampNeutre" ] = new MessageReport( "TireParCampNeutre", eRC_TireParCampNeutre, T_MsgCR_cr_cr_tire_par_camp_neutre, CommunicationType::eReportEnemy );
 	messages_[ "TirSurCivil" ] = new MessageReport( "TirSurCivil", eRC_TirSurCivil, T_MsgCR_cr_cr_tir_sur_civil, CommunicationType::eReportEnemy );
 	messages_[ "TireParCivil" ] = new MessageReport( "TireParCivil", eRC_TireParCivil, T_MsgCR_cr_cr_tire_par_civil, CommunicationType::eReportEnemy );
-messages_[ "TirIndirectFratricide" ] = new MessageReport( "TirIndirectFratricide", eRC_TirIndirectFratricide, T_MsgCR_cr_cr_tir_indirect_fratricide, CommunicationType::eReportArtillery );
+    messages_[ "TirIndirectFratricide" ] = new MessageReport( "TirIndirectFratricide", eRC_TirIndirectFratricide, T_MsgCR_cr_cr_tir_indirect_fratricide, CommunicationType::eReportArtillery );
 	messages_[ "TirIndirectSurPopulation" ] = new MessageReport( "TirIndirectSurPopulation", eRC_TirIndirectSurPopulation, T_MsgCR_cr_cr_tir_indirect_sur_population, CommunicationType::eReportArtillery );
 	messages_[ "DestructionPC" ] = new MessageReport( "DestructionPC", eRC_DestructionPC, T_MsgCR_cr_cr_destruction_pc, CommunicationType::eReportEnemy );
 	messages_[ "DecesBlesse" ] = new MessageReport( "DecesBlesse", eRC_DecesBlesse, T_MsgCR_cr_cr_deces_blesse, CommunicationType::eReportLogisticSituation );
