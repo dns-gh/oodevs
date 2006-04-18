@@ -10,7 +10,6 @@
 #include "astec_pch.h"
 #include "ParamGDH.h"
 #include "moc_ParamGDH.cpp"
-#include "MT/MT_Qt/MT_ParameterLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamGDH constructor
@@ -24,7 +23,7 @@ ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH& asn, const std::string& label )
     setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
 
     // Title
-    MT_ParameterLabel* pLabel = new MT_ParameterLabel( label.c_str(), this, "" );
+    QLabel* pLabel = new QLabel( label.c_str(), this, "" );
     pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), this );
     pCheckbox_ = new QCheckBox( this );
 

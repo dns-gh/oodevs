@@ -25,7 +25,7 @@
 
 class ParametersLayer;
 class CoordinateConverter;
-class MT_ParameterLabel;
+class RichLabel;
 class LocationCreator;
 
 // =============================================================================
@@ -67,7 +67,7 @@ private:
     const CoordinateConverter& converter_;
 
     LocationCreator* creator_;
-    MT_ParameterLabel* pLabel_;
+    RichLabel* pLabel_;
     QLabel* pShapeLabel_;
     T_PointVector points_;
     ASN1T_CoordUTM* pUMTCoords_;

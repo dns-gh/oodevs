@@ -26,7 +26,7 @@
 
 class ParametersLayer;
 class CoordinateConverter;
-class MT_ParameterLabel;
+class RichLabel;
 class Agent_ABC;
 
 // =============================================================================
@@ -78,7 +78,7 @@ private:
     ASN1T_Itineraire& asn_;
 
     std::string menu_;
-    MT_ParameterLabel* pLabel_;
+    RichLabel* pLabel_;
     QLabel*            pPosLabel_;
     
     geometry::Point2f agentPos_;

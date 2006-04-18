@@ -6,21 +6,12 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamComboBox.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:36 $
-// $Revision: 3 $
-// $Workfile: ParamComboBox.h $
-//
-// *****************************************************************************
 
 #ifndef __ParamComboBox_h_
 #define __ParamComboBox_h_
 
 #include "Param_ABC.h"
-#include "MT/MT_Qt/MT_ValuedComboBox.h" // $$$$ AGE 2006-03-15: move
+#include "ValuedComboBox.h"
 
 // =============================================================================
 /** @class  ParamComboBox
@@ -56,7 +47,7 @@ private:
     //! @name Member data
     //@{
     T& asn_;
-    MT_ValuedComboBox<T>* pComboBox_; // $$$$ AGE 2006-03-15: MT_Caca
+    ValuedComboBox<T>* pComboBox_;
     //@}
 };
 
@@ -71,7 +62,7 @@ ParamComboBox<T>::ParamComboBox( QWidget* parent, T& asn, const std::string labe
 {
     QLabel* pLabel = new QLabel( label.c_str(), this );
     pLabel->setAlignment( AlignVCenter | AlignLeft );
-    pComboBox_ = new MT_ValuedComboBox<T>( this );
+    pComboBox_ = new ValuedComboBox<T>( this );
     pComboBox_->setSorting( true );
 }
 

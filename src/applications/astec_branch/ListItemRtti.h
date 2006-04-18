@@ -172,4 +172,10 @@ struct ListItemRtti< const PopulationFlowKnowledge* > {
     enum { rtti = 1025 };
 };
 
+struct sLoggerLayer;
+template< >
+struct ListItemRtti< const sLoggerLayer* > {
+    enum { rtti = 1026 };
+};
+
 #endif // __ListItemRtti_h_

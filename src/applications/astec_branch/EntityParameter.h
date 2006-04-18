@@ -14,7 +14,8 @@
 #include "Param_ABC.h"
 #include "ContextMenuObserver_ABC.h"
 #include "ElementObserver_ABC.h"
-#include "MT/MT_Qt/MT_ParameterLabel.h"
+
+class RichLabel;
 
 // =============================================================================
 /** @class  EntityParameterBase
@@ -53,7 +54,7 @@ private:
     //@{
     ASN1T_OID& id_;
     std::string menu_;
-    MT_ParameterLabel* pLabel_; // $$$$ AGE 2006-03-14: MT_Caca.
+    RichLabel* pLabel_;
     QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     //@}
 };

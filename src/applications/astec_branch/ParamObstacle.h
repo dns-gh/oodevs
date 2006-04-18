@@ -65,7 +65,7 @@ private:
     std::string             strMenuText_;
     ASN1T_MissionGenObject& asnObject_;
 
-    MT_ValuedComboBox< ASN1T_EnumObjectType >*  pTypeCombo_;
+    ValuedComboBox< ASN1T_EnumObjectType >*  pTypeCombo_;
     QComboBox*                                  pUrgencyCombo_;
     QComboBox*                                  pPreliminaryCombo_;
     QComboBox*                                  pPriorityCombo_;

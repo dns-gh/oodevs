@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamComboBox.cpp $
-// $Author: Ape $
-// $Modtime: 21/04/04 11:18 $
-// $Revision: 1 $
-// $Workfile: ParamComboBox.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ParamComboBox.h"

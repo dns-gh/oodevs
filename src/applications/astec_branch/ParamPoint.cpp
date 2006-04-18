@@ -6,21 +6,12 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPoint.cpp $
-// $Author: Ape $
-// $Modtime: 27/08/04 17:15 $
-// $Revision: 7 $
-// $Workfile: ParamPoint.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ParamPoint.h"
 #include "moc_ParamPoint.cpp"
 #include "CoordinateConverter.h"
-#include "MT/MT_Qt/MT_ParameterLabel.h"
+#include "RichLabel.h"
 #include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -34,7 +25,7 @@ ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string la
     , menu_     ( menu )
 {
     setSpacing( 5 );
-    pLabel_ = new MT_ParameterLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
 
     pPosLabel_ = new QLabel( "---", this );
     pPosLabel_->setMinimumWidth( 100 );
@@ -59,7 +50,7 @@ bool ParamPoint::CheckValidity()
 {
     if( pPosLabel_->text() == "---" )
     {
-        pLabel_->TurnRed( 3000 );
+        pLabel_->Warn( 3000 );
         return false;
     }
     return true;
@@ -69,7 +60,7 @@ bool ParamPoint::CheckValidity()
 // Name: ParamPoint::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const
+void ParamPoint::Draw( const geometry::Point2f& /*point*/, const GlTools_ABC& tools ) const
 {
     if( pPosLabel_->text() != "---" )
         tools.DrawCross( popupPoint_, GL_CROSSSIZE );

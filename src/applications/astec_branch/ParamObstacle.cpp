@@ -46,7 +46,7 @@ ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::stri
         pTypeCombo_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n1 ).c_str(), n1 );
     */
 
-    pTypeCombo_ = new MT_ValuedComboBox< ASN1T_EnumObjectType >( this );
+    pTypeCombo_ = new ValuedComboBox< ASN1T_EnumObjectType >( this );
     // sorted obstacle type list
     pTypeCombo_->setSorting( true );
     for( uint n = 0; n < eNbrObjectType; ++n )

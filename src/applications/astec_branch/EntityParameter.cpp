@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "EntityParameter.h"
 #include "moc_EntityParameter.cpp"
+#include "RichLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityParameterBase constructor
@@ -20,7 +21,7 @@ EntityParameterBase::EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const
     , id_       ( id )
     , menu_     ( menu )
 {
-    pLabel_ = new MT_ParameterLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
 
     entityLabel_ = new QLabel( "---", this );
     entityLabel_->setMinimumWidth( 100 );
@@ -44,7 +45,7 @@ EntityParameterBase::~EntityParameterBase()
 // -----------------------------------------------------------------------------
 bool EntityParameterBase::Invalid()
 {
-    pLabel_->TurnRed( 3000 );
+    pLabel_->Warn( 3000 );
     return false;
 }
 

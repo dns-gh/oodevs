@@ -11,7 +11,7 @@
 #include "ParamPath.h"
 #include "moc_ParamPath.cpp"
 #include "ParametersLayer.h"
-#include "MT/MT_Qt/MT_ParameterLabel.h"
+#include "RichLabel.h"
 #include "CoordinateConverter.h"
 #include "GlTools_ABC.h"
 #include "Agent_ABC.h"
@@ -31,7 +31,7 @@ ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string
     , pUMTCoords_( 0 )
 {
     setSpacing( 5 );
-    pLabel_ = new MT_ParameterLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
 
     pPosLabel_ = new QLabel( "---", this );
     pPosLabel_->setMinimumWidth( 100 );
@@ -69,7 +69,7 @@ bool ParamPath::CheckValidity()
 {
     if( points_.size() <= 1 )
     {
-        pLabel_->TurnRed( 3000 );
+        pLabel_->Warn( 3000 );
         return false;
     }
     return true;

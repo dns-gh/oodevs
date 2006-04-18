@@ -24,7 +24,7 @@
 #include "ContextMenuObserver_ABC.h"
 
 class CoordinateConverter;
-class MT_ParameterLabel;
+class RichLabel;
 
 // =============================================================================
 /** @class  ParamPoint
@@ -72,7 +72,7 @@ private:
     const CoordinateConverter& converter_;
 
     std::string        menu_;
-    MT_ParameterLabel* pLabel_;
+    RichLabel*         pLabel_;
     QLabel*            pPosLabel_;
 
     ASN1T_CoordUTM    asnPoint_;

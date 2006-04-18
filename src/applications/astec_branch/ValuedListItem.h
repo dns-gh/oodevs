@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-19 $
-// $Archive: /tools/MT/build/libraries/MT_Qt/src/ValuedListItem.h $
-// $Author: Ape $
-// $Modtime: 12/05/04 9:58 $
-// $Revision: 2 $
-// $Workfile: ValuedListItem.h $
-//
-// *****************************************************************************
 
 #ifndef __ValuedListItem_h_
 #define __ValuedListItem_h_

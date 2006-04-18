@@ -11,7 +11,7 @@
 #include "ParamLocation.h"
 #include "CoordinateConverter.h"
 #include "ParametersLayer.h"
-#include "MT/MT_Qt/MT_ParameterLabel.h"
+#include "RichLabel.h"
 #include "Tools.h"
 #include "GlTools_ABC.h"
 #include "LocationCreator.h"
@@ -29,7 +29,7 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const s
     , controller_( 0 )
 {
     setSpacing( 5 );
-    pLabel_ = new MT_ParameterLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
 
     pShapeLabel_ = new QLabel( "---", this );
     pShapeLabel_->setMinimumWidth( 100 );
@@ -85,7 +85,7 @@ bool ParamLocation::CheckValidity()
 {
     if( ! IsOptional() && points_.empty() )
     {
-        pLabel_->TurnRed( 3000 );
+        pLabel_->Warn( 3000 );
         return false;
     }
     return true;

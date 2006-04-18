@@ -19,7 +19,15 @@
 #ifndef __Logger_h_
 #define __Logger_h_
 
+#include "Types.h"
 #include "MT/MT_logger/MT_Logger_ABC.h"
+
+struct sLoggerLayer
+{
+    sLoggerLayer( E_DataFlow code, QColor color ) : code_ ( code ), color_ ( color ) {}
+    E_DataFlow code_;
+    QColor color_;
+};
 
 // =============================================================================
 /** @class  Logger
@@ -42,19 +50,28 @@ protected:
     //! @name Operations
     //@{
     void LogString( const char* szLayerName, E_LogLevel nLevel, const char* szMsg, const char* szContext, int nCode );
-
-    QSize sizeHint() const;
+    QSize sizeHint() const { return QSize( 400, 250 ); }
     //@}
 
 private slots:
     void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
 
 private:
+    //! @name Copy constructor/assignement
+    //@{
     Logger( const Logger &);
     Logger& operator=( const Logger& );
-    QPopupMenu popupMenu_;
-};
+    //@}
 
-#   include "Logger.inl"
+    //! @name Types
+    //@{
+    typedef std::map< E_DataFlow, const sLoggerLayer* > T_Layers;
+    typedef T_Layers::iterator                         IT_Layers;
+    //@}
+
+private:
+    QPopupMenu popupMenu_;
+    T_Layers layers_;
+};
 
 #endif // __Logger_h_
