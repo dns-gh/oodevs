@@ -487,6 +487,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived                               , "DEC_Connaissances_UnitesEnnemiesVivantesPercues"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau                       , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau                               , "DEC_Connaissances_UnitesDetecteesDansFuseau"                );
+    XXXXXX
+        danszone
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetEnemiesInZone                                        , "DEC_Connaissances_UnitesEnnemiesDansZone"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetNearbyRefugees                                       , "DEC_Connaissances_RefugiesAProximite"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetNearbySurrenderedAgents                              , "DEC_Connaissances_UnitesRenduesAProximite"                  );

@@ -233,6 +233,8 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_tire_par_camp_neutre : strMsg << "tire par camp neutre" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_neutre ); break;
         case T_MsgCR_cr_cr_tir_sur_civil : strMsg << "tir sur civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_civil ); break;
         case T_MsgCR_cr_cr_tire_par_civil : strMsg << "tire par civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_civil ); break;
+        case T_MsgCR_cr_cr_tir_indirect_fratricide : strMsg << "tir indirect fratricide"; break;
+        case T_MsgCR_cr_cr_tir_indirect_sur_population : strMsg << "tir indirect sur population"; break;
         case T_MsgCR_cr_cr_destruction_pc : strMsg << "destruction pc"; break;
         case T_MsgCR_cr_cr_deces_blesse : strMsg << "deces blesse"; break;
         case T_MsgCR_cr_cr_deces_blesse_pendant_transport : strMsg << "deces blesse pendant transport"; break;

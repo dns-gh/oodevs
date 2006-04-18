@@ -13,13 +13,15 @@
 
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "Entities/MIL_Army.h"
+#include "Entities/RC/MIL_RC.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "TER/TER_Agent_ABC.h"
 #include "TER/TER_PopulationConcentration_ABC.h"
@@ -81,7 +83,7 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 // Name: PHY_DotationCategory_IndirectFire::Fire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& /*firer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
     MT_Vector2D vFireDirection        = ( vTargetPosition - vSourcePosition ).Normalize();
     MT_Vector2D vRotatedFireDirection = vFireDirection;
@@ -90,9 +92,11 @@ void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& /*firer*/, co
     vFireDirection        *= ( rInterventionTypeFired * rDispersionX_ );
     vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
 
+    // Agents
     {
         const MT_Ellipse attritionSurface     ( vTargetPosition, vTargetPosition + ( vFireDirection                        ),  vTargetPosition + ( vRotatedFireDirection                        ) );
         const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
+        bool bRCSent = false;
 
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
@@ -107,32 +111,46 @@ void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& /*firer*/, co
             targetRoleComposantes.Neutralize();
             if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
                 targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
+
+            if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
+            {
+                MIL_RC::pRcTirIndirectFratricide_->Send( firer, MIL_RC::eRcTypeEvent );
+                bRCSent = true;
+            }
         }
     }
 
-    const MT_Float  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
-                                                 vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
-    const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
+    // Populations
     {
+        const MT_Float  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
+                                                     vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
+        const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
+        bool bRCSent = false;
+    
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
-                             .GetListWithinCircle ( vTargetPosition, rAttritionRadius, concentrations );
-        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
-            itConcentration != concentrations.end(); ++itConcentration )
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle ( vTargetPosition, rAttritionRadius, concentrations );
+        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
         {
-            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
+            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
         }
-    }
-
-    {
-        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager()
-                             .GetListWithinCircle ( vTargetPosition, rAttritionRadius, flows );
-        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
+        if( !concentrations.empty() && !bRCSent )
         {
-            MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
+            MIL_RC::pRcTirIndirectSurPopulation_->Send( firer, MIL_RC::eRcTypeEvent );
+            bRCSent = true;
+        }
+
+        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle ( vTargetPosition, rAttritionRadius, flows );
+        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector it = flows.begin(); it != flows.end(); ++it )
+        {
+            MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *it );
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
+        }
+        if( !flows.empty() && !bRCSent )
+        {
+            MIL_RC::pRcTirIndirectSurPopulation_->Send( firer, MIL_RC::eRcTypeEvent );
+            bRCSent = true;
         }
     }
 }

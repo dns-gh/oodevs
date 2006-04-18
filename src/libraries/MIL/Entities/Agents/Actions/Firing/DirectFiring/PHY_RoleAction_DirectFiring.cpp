@@ -165,20 +165,13 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_DirectFiring::FirePion( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
+    assert( pPion_ );
     MIL_Agent_ABC* pTarget = GetAgentTarget( nTargetKnowledgeID );
     if( !pTarget )
         return eImpossible;
 
     if( pTarget->IsDead() )
         return eEnemyDestroyed;
-
-    assert( pPion_ );
-    
-    if( !pFireResult )
-        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
-
-    pPion_ ->NotifyAttacking ( *pTarget );
-    pTarget->NotifyAttackedBy( *pPion_  );
 
     // Firers
     PHY_DirectFireData firerWeapons( *pPion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass );
@@ -194,6 +187,10 @@ int PHY_RoleAction_DirectFiring::FirePion( uint nTargetKnowledgeID, PHY_DirectFi
         return eNoCapacity;
     }
 
+    
+    pPion_ ->NotifyAttacking ( *pTarget );
+    pTarget->NotifyAttackedBy( *pPion_  );
+
     // Targets
     PHY_RoleInterface_Composantes::T_ComposanteVector targets;
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
@@ -202,6 +199,10 @@ int PHY_RoleAction_DirectFiring::FirePion( uint nTargetKnowledgeID, PHY_DirectFi
         return eEnemyDestroyed;
 
     assert( targets.size() == nNbrWeaponsUsable );    
+
+    if( !pFireResult )
+        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
+
     FirePion( firerWeapons, *pTarget, targets, *pFireResult );
     return eRunning;
 }
@@ -277,9 +278,6 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
     if( !pPopulationElement )
         return eEnemyDestroyed;
    
-    if( !pFireResult )
-        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
-
     // Firers
     PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ );
     GetRole< PHY_RolePion_Composantes >().FillDirectFireData( firerWeapons );
@@ -296,6 +294,9 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
 
     pPion_ ->NotifyAttacking ( *pTarget );
     pTarget->NotifyAttackedBy( *pPion_  );
+
+    if( !pFireResult )
+        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
 
     // Tir
     PHY_ComposantePion* pFirer       = 0;

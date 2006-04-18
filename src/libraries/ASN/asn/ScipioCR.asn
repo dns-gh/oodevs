@@ -240,6 +240,8 @@ CR-TraceID  ::= INTEGER
 
 -- Evenements exceptionnels
 CR-TirDansZoneInterdite              ::= NULL
+CR-TirIndirectFratricide             ::= NULL
+CR-TirIndirectSurPopulation          ::= NULL
 CR-TirSurCampAmi                     ::= Agent -- Agent = Tiré
 CR-TireParCampAmi                    ::= Agent -- Agent = Tireur
 CR-TirSurCampNeutre                  ::= Agent -- Agent = Tiré
@@ -545,6 +547,8 @@ MsgCR ::= SEQUENCE
         cr-tire-par-camp-neutre                                         CR-TireParCampNeutre,
         cr-tir-sur-civil                                                CR-TirSurCivil,
         cr-tire-par-civil                                               CR-TireParCivil,
+        cr-tir-indirect-fratricide                                      CR-TirIndirectFratricide,
+        cr-tir-indirect-sur-population                                  CR-TirIndirectSurPopulation,
         cr-destruction-pc                                               CR-DestructionPC,
         cr-deces-blesse                                                 CR-DecesBlesse,
         cr-deces-blesse-pendant-transport                               CR-DecesBlessePendantTransport,

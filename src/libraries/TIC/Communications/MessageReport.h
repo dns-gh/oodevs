@@ -243,6 +243,8 @@ private:
         eRC_TireParCampNeutre, // Parametre : T_Pion
         eRC_TirSurCivil, // Parametre : T_Pion
         eRC_TireParCivil, // Parametre : T_Pion
+        eRC_TirIndirectFratricide,
+        eRC_TirIndirectSurPopulation,
         eRC_DestructionPC,
         eRC_DecesBlesse,
         eRC_DecesBlessePendantTransport,

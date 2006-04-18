@@ -86,6 +86,8 @@ public:
     static const MIL_RC*                                    pRcDecesBlessePendantTransport_;
     static const MIL_RC*                                    pRcDecesBlessePendantHospitalisation_;
     static const MIL_RC*                                    pRcTirDansZoneInterdite_;
+    static const MIL_RC*                                    pRcTirIndirectFratricide_;
+    static const MIL_RC*                                    pRcTirIndirectSurPopulation_;
     static const MIL_RC_TirSurCampAmi*                      pRcTirSurCampAmi_;
     static const MIL_RC_TireParCampAmi*                     pRcTireParCampAmi_;
     static const MIL_RC_TirSurCampNeutre*                   pRcTirSurCampNeutre_;
@@ -337,6 +339,8 @@ protected:
         eRC_TireParCampNeutre, // Parametre : T_Pion
         eRC_TirSurCivil, // Parametre : T_Pion
         eRC_TireParCivil, // Parametre : T_Pion
+        eRC_TirIndirectFratricide,
+        eRC_TirIndirectSurPopulation,
         eRC_DestructionPC,
         eRC_DecesBlesse,
         eRC_DecesBlessePendantTransport,
