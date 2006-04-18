@@ -105,6 +105,10 @@ private:
 
     template< typename Type >
     void Update( const Type& value );
+
+    QDragObject* dragObject();
+    void dropEvent( QDropEvent* pEvent );
+    void dragEnterEvent( QDragEnterEvent* pEvent );
     //@}
 
 private:
