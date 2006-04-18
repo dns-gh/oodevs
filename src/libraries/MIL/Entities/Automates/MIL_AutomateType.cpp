@@ -400,6 +400,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesInZoneWith             < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                            < MIL_Automate >, "DEC_Connaissances_Objets"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetFriendsInZone                      < MIL_Automate >, "DEC_Connaissances_UnitesAmiesDansZone"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetLivingEnemiesPerceivedByPion                       , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                       , "DEC_RapportDeForceGlobal"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                        < MIL_Automate >, "DEC_Connaissances_Populations"                           );
     

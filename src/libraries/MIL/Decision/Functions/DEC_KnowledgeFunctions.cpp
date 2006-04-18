@@ -17,10 +17,41 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Decision/DEC_Tools.h"
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgeAgentDiaIDVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetFuseau() );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetDetectedAgentsInZone
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetDetectedAgentsInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
+    assert( pZone );
+
+    T_KnowledgeAgentDiaIDVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, *pZone );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetAgentsAttacking
@@ -59,6 +90,24 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceived( DIA_Call_ABC& call, cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion
+// Created: NLD 2006-04-18
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+
+    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    assert( pPion );
+
+    T_KnowledgeAgentDiaIDVector knowledges;
+    pPion->GetPion().GetKnowledge().GetLivingEnemiesPerceived( knowledges );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
@@ -72,32 +121,47 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& ca
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
-// Created: NLD 2006-04-14
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInZone
+// Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetFuseau() );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
-
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetEnemiesInZone
-// Created: NLD 2006-04-14
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetEnemiesInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
     TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
     assert( pZone );
 
     T_KnowledgeAgentDiaIDVector knowledges;
-    callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemiesInZone( knowledges, *pZone );
+    callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, *pZone );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesInZone
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetLivingEnemiesInZone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
+    assert( pZone );
+
+    T_KnowledgeAgentDiaIDVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, *pZone );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgeAgentDiaIDVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, callerAgent.GetFuseau() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );

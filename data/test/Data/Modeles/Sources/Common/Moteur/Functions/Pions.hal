@@ -261,12 +261,15 @@ signatures
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_PopulationsPrenantAPartie       (); 
     
     // NB : Les refugies et unités rendues ne sont jamais retournées dans les fonctions autre que DEC_Connaissances_RefugiesAProximite() et DEC_Connaissances_UnitesRenduesAProximite()
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansFuseau              ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansZone                ( U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesPrenantAPartie                   ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereuses              ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercues          ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansFuseau              ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDansZone                 ( U /*T_Localisation*/ );
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansZone  ( U /*T_Localisation*/ );
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau       ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesDansZone         ( U /*T_Localisation*/ );        
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesAmiesDansZone                    ( U /*T_Localisation*/ );
     B                                       A::DEC_Connaissances_PresenceEnnemieDansZone                ( U /*T_Point centre cercle zone*/, R /*rayon*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_RefugiesAProximite                     ( R /*distance*/ );

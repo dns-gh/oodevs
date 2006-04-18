@@ -204,10 +204,11 @@ bool DEC_KnowledgeBlackBoard_AgentPion::WasPerceived( const MIL_Agent_ABC& agent
 }
 
 namespace {
+    template< class T >
     class sLivingEnemiesPerceivedInsertor
     {
     public:
-        sLivingEnemiesPerceivedInsertor( const MIL_AgentPion& pion, T_KnowledgeAgentDiaIDVector& container, const TER_Polygon* pZone = 0 )
+        sLivingEnemiesPerceivedInsertor( const MIL_AgentPion& pion, T_KnowledgeAgentDiaIDVector& container, const T* pZone = 0 )
             : pContainer_( &container )
             , pPion_     ( &pion )
             , pArmy_     ( &pion.GetArmy() )
@@ -237,7 +238,7 @@ namespace {
               T_KnowledgeAgentDiaIDVector* pContainer_;
         const MIL_AgentPion*               pPion_;
         const MIL_Army*                    pArmy_;
-        const TER_Polygon*                 pZone_;
+        const T*                           pZone_;
     };
 }
 
@@ -251,7 +252,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceived( T_KnowledgeOb
     assert( pKnowledgeAgentPerceptionContainer_ );
 
     container.clear();
-    sLivingEnemiesPerceivedInsertor functor( *pPion_, container );
+    sLivingEnemiesPerceivedInsertor< TER_Polygon > functor( *pPion_, container );
     pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
 }
 
@@ -265,7 +266,21 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_Knowl
     assert( pKnowledgeAgentPerceptionContainer_ );
 
     container.clear();
-    sLivingEnemiesPerceivedInsertor functor( *pPion_, container, &zone );
+    sLivingEnemiesPerceivedInsertor< TER_Polygon > functor( *pPion_, container, &zone );
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone
+// Created: NLD 2005-03-23
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_KnowledgeObjectDiaIDVector& container, const TER_Localisation& zone ) const
+{
+    assert( pPion_ );
+    assert( pKnowledgeAgentPerceptionContainer_ );
+
+    container.clear();
+    sLivingEnemiesPerceivedInsertor< TER_Localisation > functor( *pPion_, container, &zone );
     pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
 }
 

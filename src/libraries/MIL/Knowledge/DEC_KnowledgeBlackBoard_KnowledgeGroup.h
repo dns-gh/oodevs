@@ -73,12 +73,14 @@ public:
           bool                         IsKnown                     ( const MIL_Agent_ABC& agent ) const;
           DEC_Knowledge_Agent*         GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
           DEC_Knowledge_Agent*         GetKnowledgeAgentFromID     ( uint nID ) const;
-          void                         GetDetectedAgentsInZone     ( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon& zone ) const;          
+          void                         GetDetectedAgentsInZone     ( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon&      zone ) const;          
+          void                         GetDetectedAgentsInZone     ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;          
 
     const T_KnowledgeAgentVector&      GetFriends                  () const;
           void                         GetFriendsInZone            ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
     const T_KnowledgeAgentVector&      GetEnemies                  () const;
-          void                         GetEnemiesInZone            ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;    
+          void                         GetLivingEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon&      zone ) const;    
+          void                         GetLivingEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;    
           bool                         EnemyPresenceInCircle       ( const MT_Vector2D& center, MT_Float rRadius ) const;
 
           void                         GetRefugeesInCircle         ( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;

@@ -29,13 +29,19 @@ public:
     static void GetRapForLocal         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetRapForGlobal        ( DIA_Call_ABC& call, const MIL_Automate&  callerAgent );
 
+    static void GetDetectedAgentsInFuseau        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetDetectedAgentsInZone          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetAgentsAttacking               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetDangerousEnemies              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+//    static void GetLivingTerroristsPerceived     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesPerceived        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetLivingEnemiesPerceivedInFuseau( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-//    static void GetLivingTerroristsPerceived     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetDetectedAgentsInFuseau        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetEnemiesInZone                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetLivingEnemiesPerceivedInZone  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetLivingEnemiesInZone           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetLivingEnemiesInFuseau         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+
+    static void GetLivingEnemiesPerceivedByPion  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+
     static void GetNearbyRefugees                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNearbySurrenderedAgents       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void EnemyPresenceInCircle            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

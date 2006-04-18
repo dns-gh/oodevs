@@ -172,6 +172,22 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_Knowledg
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+{
+    container.clear();
+    const T_KnowledgeAgentVector& detected = pKnowledgeAgentContainer_->GetDetected();
+    for( CIT_KnowledgeAgentVector it = detected.begin(); it != detected.end(); ++it )
+    {
+        const DEC_Knowledge_Agent& knowledge = **it;
+        if( zone.IsInside( knowledge.GetPosition() ) )
+            container.push_back( (void*)knowledge.GetID() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriends
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
@@ -208,17 +224,33 @@ const T_KnowledgeAgentVector& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetEnemies
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetEnemiesInZone
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
     {
         const DEC_Knowledge_Agent& knowledge = **it;
-        if( zone.IsInside( knowledge.GetPosition() ) )
+        if( !knowledge.IsDead() && zone.IsInside( knowledge.GetPosition() ) )
+            container.push_back( (void*)knowledge.GetID() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon& zone ) const
+{
+    container.clear();
+    const T_KnowledgeAgentVector& enemies = GetEnemies();
+    for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
+    {
+        const DEC_Knowledge_Agent& knowledge = **it;
+        if( !knowledge.IsDead() && zone.IsInside( knowledge.GetPosition() ) )
             container.push_back( (void*)knowledge.GetID() );
     }
 }

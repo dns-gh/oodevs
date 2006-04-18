@@ -584,6 +584,8 @@ void AGR_TypeRC::Initialize()
     rcTypes_[ "eRC_RiposteContrePopulation" ] = "eReportMission";
     rcTypes_[ "eRC_EsquiveFaceAPopulation" ] = "eReportMission";
     rcTypes_[ "eRC_PopulationReconnue" ] = "eReportMission";
+    rcTypes_[ "eRC_TirIndirectFratricide" ] =  "eReportArtillery";
+    rcTypes_[ "eRC_TirIndirectSurPopulation" ] = "eReportArtillery";
 }
     
 // -----------------------------------------------------------------------------
