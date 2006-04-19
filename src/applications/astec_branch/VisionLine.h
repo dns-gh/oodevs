@@ -24,14 +24,18 @@ class VisionLine : public DetectionMapIterator
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionLine( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to );
+             VisionLine( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height );
     virtual ~VisionLine();
     //@}
 
     //! @name Operations
     //@{
     void Increment();
+
     bool IsInGround() const;
+    bool IsInTown() const;
+    bool IsInForest() const;
+
     float Length() const;
     //@}
 

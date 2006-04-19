@@ -23,6 +23,7 @@ AgentPositions::AgentPositions( const Agent& agent, const CoordinateConverter& c
     : agent_( agent )
     , converter_( converter )
     , aggregated_( false )
+    , height_( 0 )
 {
     // NOTHING
 }
@@ -59,7 +60,16 @@ Point2f AgentPositions::GetPosition() const
         ++count;
     }
     return Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count );
-}   
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::GetHeight
+// Created: AGE 2006-04-18
+// -----------------------------------------------------------------------------
+float AgentPositions::GetHeight() const
+{
+    return height_; // $$$$ AGE 2006-04-18: aggregated
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions::DoUpdate
@@ -69,19 +79,21 @@ void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.positionPresent )
         position_ = converter_.ConvertToXY( message.position );
+    if( message.m.hauteurPresent )
+        height_ = message.hauteur;
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions::IsAt
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-bool AgentPositions::IsAt( const Point2f& pos, float /*precision*/ /*= 100.f*/ ) const // $$$$ AGE 2006-03-23: 
+bool AgentPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/ ) const
 {
     const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 2.f : 1.f ); // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f * ( aggregated_ ? 2.f : 1.f );
     const Point2f position = GetPosition();
-    const Rectangle2f agentBBox( position.X() - halfSizeX, position.Y(),
-                                 position.X() + halfSizeX, position.Y() + sizeY );
+    const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
+                                 position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
 }
 

@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition() const = 0;
+    virtual float             GetHeight() const = 0;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const = 0;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const = 0;
     //@}

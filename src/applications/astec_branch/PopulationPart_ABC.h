@@ -46,6 +46,8 @@ public:
     virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const = 0;
 
     virtual std::string  GetAttitude() const;
+
+    virtual float GetHeight() const;
     //@}
 
 protected:

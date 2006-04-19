@@ -11,22 +11,29 @@
 #include "DetectionMapIterator.h"
 #include "DetectionMap.h"
 
+using namespace geometry;
+
 // -----------------------------------------------------------------------------
 // Name: DetectionMapIterator constructor
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
-DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to )
+DetectionMapIterator::DetectionMapIterator( const DetectionMap& map, const Point2f& from, const Point2f& to )
     : map_( map )
     , cellSize_( map_.GetCellSize() )
     , endCell_( map.Unmap( to ) )
     , xEnd_( to.X() )
     , yEnd_( to.Y() )
-    , currentCell_( map.Unmap( from ) )
+    , currentCell_( map_.Unmap( from ) )
     , xCurrent_( from.X() )
     , yCurrent_( from.Y() )
     , xOffset_( 0 )
     , yOffset_( 0 )
+    , horizontalLine_( false )
 {
+    const Point2f cellCenter = map_.Map( currentCell_.first, currentCell_.second );
+    xOffset_ = xCurrent_ - cellCenter.X();
+    yOffset_ = yCurrent_ - cellCenter.Y();
+
     const float xDelta = xEnd_ - xCurrent_;
     const float yDelta = yEnd_ - yCurrent_;
     if( std::fabs( xDelta ) > std::fabs( yDelta ) )
@@ -62,31 +69,48 @@ DetectionMapIterator::~DetectionMapIterator()
 // -----------------------------------------------------------------------------
 void DetectionMapIterator::Increment()
 {
-    xCurrent_ += xIncrease_;
-    xOffset_  += xIncrease_;
-    if( xOffset_ >= cellSize_ )
+    Vector2f increment = ComputeIncrement();
+
+    xCurrent_ += increment.X();
+    xOffset_  += increment.X();
+    if( xOffset_ >= cellSize_ * .5f )
     {
         ++currentCell_.first;
         xOffset_ -= cellSize_;
     }
-    else if( xOffset_ <= -cellSize_ )
+    else if( xOffset_ <= - cellSize_ * .5f )
     {
         --currentCell_.first;
         xOffset_ += cellSize_;
     } 
 
-    yCurrent_ += yIncrease_;
-    yOffset_  += yIncrease_;
-    if( yOffset_ >= cellSize_ )
+    yCurrent_ += increment.Y();
+    yOffset_  += increment.Y();
+    if( yOffset_ >= cellSize_ * .5f )
     {
         ++currentCell_.second;
         yOffset_ -= cellSize_;
     }
-    else if( yOffset_ <= -cellSize_ )
+    else if( yOffset_ <= -cellSize_ * .5f )
     {
         --currentCell_.second;
         yOffset_ += cellSize_;
     } 
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectionMapIterator::ComputeIncrement
+// Created: AGE 2006-04-19
+// -----------------------------------------------------------------------------
+Vector2f DetectionMapIterator::ComputeIncrement()
+{
+    float xDelta = ( ( xIncrease_ > 0 ) ? cellSize_*.5f : -cellSize_*.5f ) - xOffset_;
+    float yDelta = ( ( yIncrease_ > 0 ) ? cellSize_*.5f : -cellSize_*.5f ) - yOffset_;
+    horizontalLine_ = ( xIncrease_ == 0 )
+        || ( ( yIncrease_ != 0 ) && ( yDelta / yIncrease_ < xDelta / xIncrease_ ) );
+    return horizontalLine_ ? 
+                Vector2f( yDelta / yIncrease_ * xIncrease_, yDelta ) :
+                Vector2f( xDelta, xDelta / xIncrease_ * yIncrease_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +119,7 @@ void DetectionMapIterator::Increment()
 // -----------------------------------------------------------------------------
 bool DetectionMapIterator::IsDone() const
 {
-    return CurrentPoint().SquareDistance( geometry::Point2f( xEnd_, yEnd_ ) ) < cellSize_ * cellSize_;
+    return CurrentPoint().SquareDistance( Point2f( xEnd_, yEnd_ ) ) < cellSize_ * cellSize_;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +128,28 @@ bool DetectionMapIterator::IsDone() const
 // -----------------------------------------------------------------------------
 short DetectionMapIterator::Altitude() const
 {
-    return *map_.Data( currentCell_.first, currentCell_.second );
+    short base = *map_.Data( currentCell_.first, currentCell_.second );
+    short next;
+    float alpha;
+    if( horizontalLine_ )
+    {
+        //assert( yOffset_ ~= cellSize_/2 );
+        unsigned nextX = currentCell_.first;
+        if( currentCell_.first < map_.Width() - 1 ) 
+            ++nextX;
+        alpha = ( cellSize_ *.5f - xOffset_ ) / cellSize_;
+        next = *map_.Data( nextX, currentCell_.second );
+    }
+    else
+    {
+        //assert( xOffset_ ~= cellSize_/2 );
+        unsigned nextY = currentCell_.second;
+        if( currentCell_.first < map_.Height() - 1 ) 
+            ++nextY;
+        alpha = ( cellSize_ *.5f - yOffset_ ) / cellSize_;
+        next = *map_.Data( currentCell_.first, nextY );
+    }
+    return alpha *  base + ( 1 - alpha ) * next;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +183,7 @@ bool DetectionMapIterator::IsInForest() const
 // Name: DetectionMapIterator::CurrentPoint
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
-geometry::Point2f DetectionMapIterator::CurrentPoint() const
+Point2f DetectionMapIterator::CurrentPoint() const
 {
-    return geometry::Point2f( xCurrent_, yCurrent_ );
+    return Point2f( xCurrent_, yCurrent_ );
 }

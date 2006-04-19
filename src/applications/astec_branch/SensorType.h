@@ -87,7 +87,6 @@ private:
     float factorInForest_;
     float factorInTown_;
     float factorInGround_;
-//    T_FactorVector environementFactors_;
 
     // Population
     float rPopulationDensity_;

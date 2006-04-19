@@ -48,6 +48,11 @@ private:
     DetectionMapIterator& operator=( const DetectionMapIterator& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    geometry::Vector2f ComputeIncrement();
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -62,6 +67,8 @@ private:
 
     float xOffset_, yOffset_;
     float xIncrease_, yIncrease_;
+
+    bool horizontalLine_;
     //@}
 };
 

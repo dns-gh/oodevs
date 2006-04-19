@@ -56,7 +56,7 @@ void Decisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
     lastOrderId_ = message.order_id;
-    next_ = & agent_.GetDecisionalModel().Resolver< Mission >::Get( message.mission.t );
+    next_ = & agent_.GetDecisionalModel().Resolver< Mission >::Get( message.mission.t - 1 ); // $$$$ AGE 2006-04-19: -1 car enum != asn...
 }
 
 // -----------------------------------------------------------------------------

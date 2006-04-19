@@ -64,7 +64,7 @@ private:
     const Agent& agent_;
     const DetectionMap& map_;
     geometry::Point2f origin_;
-    float height;
+    float height_;
     T_SectorVector sectors_;
     const SensorType* pSensorType_;
     float maxRadius_;

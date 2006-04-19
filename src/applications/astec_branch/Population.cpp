@@ -291,6 +291,15 @@ geometry::Point2f Population::GetPosition() const
 {
     return center_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetHeight
+// Created: AGE 2006-04-18
+// -----------------------------------------------------------------------------
+float Population::GetHeight() const
+{
+    return 0;
+}
     
 // -----------------------------------------------------------------------------
 // Name: Population::IsAt

@@ -74,6 +74,7 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void VisionCones::Update()
 {
+    // $$$$ AGE 2006-04-19: Mettre un actor par la
     map_->Clear();
     for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
         (*it)->Update( *map_ );

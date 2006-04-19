@@ -70,6 +70,7 @@ public:
     unsigned int GetDeadHumans() const;
 
     virtual geometry::Point2f GetPosition() const;
+    virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     //@}

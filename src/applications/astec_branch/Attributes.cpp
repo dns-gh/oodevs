@@ -198,3 +198,13 @@ void Attributes::Aggregate( const bool& bDoMe )
 {
     aggregated_ = bDoMe;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::ComputePostureFactor
+// Created: AGE 2006-04-19
+// -----------------------------------------------------------------------------
+float Attributes::ComputePostureFactor( const std::vector< float >& factors ) const
+{
+    const float ratio = 0.01f * nPostureCompletionPourcentage_;
+    return factors.at( nOldPosture_ ) * ( 1.f - ratio ) + factors.at( nCurrentPosture_ ) * ratio;
+}

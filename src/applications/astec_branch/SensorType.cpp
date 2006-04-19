@@ -160,14 +160,7 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 float SensorType::GetPostureSourceFactor( const Agent& agent ) const
 {
-    return 1.f;
-//    E_UnitPosture nOldPosture     = agent.GetOldStance();
-//    E_UnitPosture nCurrentPosture = agent.GetStance();
-//    float         rPourcentage    = agent.GetStanceCompletion() / 100.;
-//
-//    assert( postureSourceFactors_.size() > (unsigned)nOldPosture );
-//    assert( postureSourceFactors_.size() > (unsigned)nCurrentPosture );
-//    return postureSourceFactors_[ nOldPosture ] + rPourcentage * ( postureSourceFactors_[ nCurrentPosture ] - postureSourceFactors_[ nOldPosture ] );
+    return agent.Get< Attributes >().ComputePostureFactor( postureSourceFactors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,11 +174,11 @@ float SensorType::GetDistanceModificator( const Agent& agent ) const
 //    if( rPopulationCollisionDensity != 0. )
 //        rPopulationFactor = std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
 //       
-//    return    GetPostureSourceFactor( agent ) * agent.GetElongationFactor()
+    return    GetPostureSourceFactor( agent );
+//            * agent.GetElongationFactor()
 //            * agent.GetTiredness ().GetCoefSensorDistanceModificator()
 //            * agent.GetExperience().GetCoefSensorDistanceModificator()
 //            * rPopulationFactor;
-    return 1.f;
 }
 
 // -----------------------------------------------------------------------------

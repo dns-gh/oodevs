@@ -214,7 +214,7 @@ void MainWindow::ReadSettings()
     settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
 
     // Always keep the mission panel hidden hidden at launch.
-//    pMissionPanel_->hide();
+//    pMissionPanel_->hide(); // $$$$ AGE 2006-04-19: 
 }
 
 // -----------------------------------------------------------------------------

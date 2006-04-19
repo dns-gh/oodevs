@@ -56,3 +56,12 @@ bool PopulationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     return population_.IsIn( rectangle );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::GetHeight
+// Created: AGE 2006-04-18
+// -----------------------------------------------------------------------------
+float PopulationPositions::GetHeight() const
+{
+    return population_.GetHeight();
+}

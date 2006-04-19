@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition() const;
+    virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
@@ -65,6 +66,7 @@ private:
     const Agent& agent_;
     const CoordinateConverter& converter_;
     geometry::Point2f position_;
+    float height_;
     bool aggregated_;
     //@}
 };

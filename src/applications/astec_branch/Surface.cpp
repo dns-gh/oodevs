@@ -11,6 +11,8 @@
 #include "DetectionMap.h"
 #include "VisionLine.h"
 #include "VisionMap.h"
+#include "Positions.h"
+#include "Agent.h"
 
 using namespace geometry;
 
@@ -24,7 +26,7 @@ Surface::Surface( const Agent& agent, const VisionConesMessage& input, const Det
 {
     double oX, oY, rHeight;
     input >> oX >> oY; origin_ = Point2f( float( oX ), float( oY ) );
-    input >> rHeight; height = float( rHeight );
+    input >> rHeight; height_ = float( rHeight );
 
     std::string strTypeName;
     input >> strTypeName;
@@ -155,12 +157,12 @@ bool Surface::IsInSector( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
 {
-    VisionLine line( map_, origin_, point );
-    float skyrock = -0.12f;
-    while( ! line.IsDone() && skyrock > -0.5f )
+    VisionLine line( map_, origin_, point, height_ + agent_.Get< Positions >().GetHeight() );
+    float skyrock = std::numeric_limits< float >::infinity();
+    while( ! line.IsDone() && skyrock > 0 )
     {
         line.Increment();
-        if( skyrock == -0.12f )
+        if( skyrock == std::numeric_limits< float >::infinity() )
             skyrock = pSensorType_->ComputeExtinction( agent_,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
         else

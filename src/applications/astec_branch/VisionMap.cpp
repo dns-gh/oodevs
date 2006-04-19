@@ -39,22 +39,24 @@ void VisionMap::Draw( const GlTools_ABC& tools ) const
 {
     static const double colors[3][4] =
     {
-        { COLOR_DETECTED   },
-        { COLOR_RECO       },
-        { COLOR_IDENTIFIED }
+        { COLOR_VISION_DETECTED  },
+        { COLOR_VISION_RECO      },
+        { COLOR_VISION_IDENTIED  }
     };
+
     if( vision_.empty() )
         return;
     const float translation = map_.GetCellSize() * 0.5;
     glPushMatrix();
     glTranslatef( translation, translation, 0 );
     glPushAttrib( GL_CURRENT_BIT );
-    glPointSize( map_.GetCellSize() / tools.Pixels() );
+    glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
         glBegin( GL_POINTS );
             for( CIT_VisionMap it = vision_.begin(); it != vision_.end(); ++it )
             {
                 const geometry::Point2f p = map_.Map( it->first.first, it->first.second );
-                glColor4dv( colors[it->second] );
+                assert( it->second >= 1 );
+                glColor4dv( colors[it->second-1] );
                 glVertex2fv( (float*)(&p) );
             }
         glEnd();
