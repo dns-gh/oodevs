@@ -237,13 +237,9 @@ int main( uint nArgc, char* pArgv[] )
 {
      __try
     {
-#ifndef  _DEBUG
-        Win32Exception::InstallHandler();
-#endif
         return Run( nArgc, pArgv );
     }
 //    __except( WriteMiniDump( GetExceptionInformation() ) )
-    // $$$$ AGE 2006-03-07: Haaahahaha continue execution !
     __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
     }
