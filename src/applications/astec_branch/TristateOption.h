@@ -44,6 +44,7 @@ public:
     //@{
     bool IsSet( bool automaticCondition ) const;
     bool operator==( const TristateOption& rhs ) const { return rhs.state_ == state_; };
+    operator const char*() const;
     //@}
 
 private:

@@ -118,46 +118,6 @@ void OptionsPanel::OptionChanged( const std::string& name, const OptionVariant& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionsPanel::ReadOptions
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::ReadOptions( Settings& settings )
-{
-    settings.beginGroup( "/Options" );
-
-    options_.LoadInteger( settings, "FontSize", 10 );
-    options_.LoadBoolean( settings, "DrawObjectsIcons", true );
-    options_.LoadBoolean( settings, "DrawHoveredInfos", true );
-    options_.LoadBoolean( settings, "DrawRCs", true );
-    options_.LoadBoolean( settings, "DrawSubscribedRCsOnly", false );
-    options_.LoadBoolean( settings, "DrawMessages", false );
-    options_.LoadBoolean( settings, "DrawTraces", false );
-    options_.LoadBoolean( settings, "DrawIdentifications", false );
-
-    settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::WriteOptions
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::WriteOptions( Settings& settings )
-{
-    settings.beginGroup( "/Options" );
-
-    options_.SaveInteger( settings, "FontSize" );
-    options_.SaveBoolean( settings, "DrawObjectsIcons" );
-    options_.SaveBoolean( settings, "DrawHoveredInfos" );
-    options_.SaveBoolean( settings, "DrawRCs" );
-    options_.SaveBoolean( settings, "DrawSubscribedRCsOnly" );
-    options_.SaveBoolean( settings, "DrawMessages" );
-    options_.SaveBoolean( settings, "DrawTraces" );
-    options_.SaveBoolean( settings, "DrawIdentifications" );
-
-    settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
 // Name: OptionsPanel::FontSizeChanged
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------

@@ -225,7 +225,9 @@ void MainWindow::WriteOptions()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
-    pOptionsPanel_->WriteOptions( settings );
+    settings.beginGroup( "/Options" );
+    controllers_.options_.Save( settings );
+    settings.endGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +238,9 @@ void MainWindow::ReadOptions()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
-    pOptionsPanel_->ReadOptions( settings );
+    settings.beginGroup( "/Options" );
+    controllers_.options_.Load( settings );
+    settings.endGroup();
 }
 
 // -----------------------------------------------------------------------------

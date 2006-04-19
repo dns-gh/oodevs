@@ -45,8 +45,6 @@ public:
     //! @name Operations
     //@{
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
-    void ReadOptions( Settings& settings );
-    void WriteOptions( Settings& settings );
     //@}
 
 private:

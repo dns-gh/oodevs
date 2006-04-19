@@ -38,14 +38,23 @@ TristateOption::~TristateOption()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TristateOption::operator const char*
+// Created: AGE 2006-04-19
+// -----------------------------------------------------------------------------
+TristateOption::operator const char*() const
+{
+    return state_ == 'a' ? "Auto" : ( state_ == '1' ? "On" : "Off" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TristateOption::Populate
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
 void TristateOption::Populate( ToolListButton< TristateOption >& button )
 {
-    button.AddItem( qApp->tr( "Auto" ), auto_, true );
-    button.AddItem( qApp->tr( "Oui" ),  on_,   false );
-    button.AddItem( qApp->tr( "Non" ),  off_,  false );
+    button.AddItem( qApp->tr( auto_ ), auto_, true );
+    button.AddItem( qApp->tr( on_ ),   on_,   false );
+    button.AddItem( qApp->tr( off_ ),  off_,  false );
     button.setMinimumWidth( 55 );
 }
 

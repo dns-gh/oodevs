@@ -14,6 +14,7 @@
 #include "OptionVariant.h"
 #include <algorithm>
 #include "Settings.h"
+#include "TristateOption.h"
 
 // -----------------------------------------------------------------------------
 // Name: Options constructor
@@ -83,39 +84,51 @@ const OptionVariant& Options::GetOption( const std::string& name, const OptionVa
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::LoadBoolean
-// Created: AGE 2006-02-27
+// Name: Options::Load
+// Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-void Options::LoadBoolean( Settings& settings, const std::string& name, bool defaultValue )
+template< typename T >
+void Options::Load( Settings& settings, const std::string& name, T defaultValue )
 {
-    Change( name, settings.readBoolEntry( ( "/" + name ).c_str(), defaultValue ) );
+    Change( name, OptionVariant( settings, name, defaultValue ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::LoadInteger
-// Created: AGE 2006-02-27
+// Name: Options::Load
+// Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-void Options::LoadInteger( Settings& settings, const std::string& name, int defaultValue )
+void Options::Load( Settings& settings )
 {
-    Change( name, settings.readNumEntry( ( "/" + name ).c_str(), defaultValue ) );
+    // $$$$ AGE 2006-04-19: Sauvegarder le type de l'option puis recharger la liste.
+    Load( settings, "BigText", TristateOption::auto_ );
+    Load( settings, "DebugPoints", TristateOption::auto_ );
+    Load( settings, "DrawHoveredInfos", true );
+    Load( settings, "DrawIdentifications", false );
+    Load( settings, "DrawMessages", false );
+    Load( settings, "DrawObjectsIcons", true );
+    Load( settings, "DrawRCs", true );
+    Load( settings, "DrawSubscribedRCsOnly", false );
+    Load( settings, "DrawTraces", false );
+    Load( settings, "FontSize", 10 );
+    Load( settings, "GridSize", 10.0f );
+    Load( settings, "LogisticLinks", TristateOption::auto_ );
+    Load( settings, "MissingLogisticLinks", TristateOption::auto_ );
+    Load( settings, "OldPaths", TristateOption::auto_ );
+    Load( settings, "Paths", TristateOption::auto_ );
+    Load( settings, "RealTimeLogistic", TristateOption::auto_ );
+    Load( settings, "SmallText", TristateOption::auto_ );
+    Load( settings, "TacticalLines", TristateOption::auto_ );
+    Load( settings, "VisionCones", TristateOption::auto_ );
+    Load( settings, "VisionLines", TristateOption::auto_ );
+    Load( settings, "VisionSurfaces", TristateOption::auto_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::SaveBoolean
-// Created: AGE 2006-02-27
+// Name: Options::Save
+// Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-void Options::SaveBoolean( Settings& settings, const std::string& name )
+void Options::Save( Settings& settings )
 {
-    if( options_.find( name ) != options_.end() )
-        settings.writeEntry( ( "/" + name ).c_str(), options_[ name ].To< bool >() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Options::SaveInteger
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void Options::SaveInteger( Settings& settings, const std::string& name )
-{
-    if( options_.find( name ) != options_.end() )
-        settings.writeEntry( ( "/" + name ).c_str(), options_[ name ].To< int >() );
+    for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
+        it->second.Save( settings, it->first );
 }

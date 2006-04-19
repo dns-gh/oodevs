@@ -43,11 +43,8 @@ public:
     void Change( const std::string& name, const OptionVariant& value );
     const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );
 
-    void LoadBoolean( Settings& settings, const std::string& name, bool defaultValue );
-    void LoadInteger( Settings& settings, const std::string& name, int defatulValue );
-
-    void SaveBoolean( Settings& settings, const std::string& name );
-    void SaveInteger( Settings& settings, const std::string& name );
+    void Load( Settings& settings );
+    void Save( Settings& settings );
     //@}
 
 private:
@@ -64,6 +61,12 @@ private:
 
     typedef std::map< std::string, OptionVariant > T_Options;
     typedef T_Options::const_iterator            CIT_Options;
+    //@}
+
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void Load( Settings& settings, const std::string& name, T defaultValue );
     //@}
 
 private:

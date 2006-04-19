@@ -23,6 +23,7 @@
 
 class QDockWindow;
 class QMainWindow;
+class TristateOption;
 
 // =============================================================================
 // Created: APE 2004-06-01
@@ -36,6 +37,24 @@ public:
              Settings();
     explicit Settings( QSettings::Format nFormat );
     virtual ~Settings();
+    //@}
+
+    //! @name Helpers
+    //@{
+    void Save( const std::string& name, int value );
+    void Save( const std::string& name, bool value );
+    void Save( const std::string& name, float value );
+    void Save( const std::string& name, const TristateOption& value );
+
+    int            Load( const std::string& name, int defaultValue );
+    bool           Load( const std::string& name, bool defaultValue );
+    float          Load( const std::string& name, float defaultValue );
+    TristateOption Load( const std::string& name, const TristateOption& defaultValue );
+
+    template< typename T >
+    void Save( const std::string&, T ) {};
+    template< typename T >
+    T Load( const std::string&, T defaultValue ) { return defaultValue; };
     //@}
 
     //! @name Operations

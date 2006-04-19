@@ -90,7 +90,9 @@ public:
         : ToolListButtonBase( iconSet, toolTip, parent )
         , options_( options )
         , option_( option )
-    {}
+    {
+        options_.Register( *this );
+    }
     virtual ~ToolListButton()
     {
         options_.Remove( *this );
