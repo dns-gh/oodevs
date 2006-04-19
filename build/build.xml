@@ -60,7 +60,7 @@
     </target>
 
     <target name="library.TIC_Export" description="build TIC_Export dynamic library" depends="library.TIC">
-        <build-lib name="TIC_Export" outtype="shared" debug="false">
+        <build-lib name="TIC_Export" outtype="shared" mode="release">
             <defineset define="ENGINE_EXPORT"/>
             <libset dir="${lib.dir}/vc71" libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                                                 MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,MT_Time,MT_Thread,MT_Memory,
