@@ -95,7 +95,7 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> flows_
          >> bIsRecon_
          >> bReconAttributesValid_
-         >> rDominationState_;
+         >> rDominationState_
          >> const_cast< MIL_Army*& >( pArmy_ );
 
     assert( pPopulationKnown_ );
