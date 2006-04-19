@@ -218,6 +218,9 @@ namespace {
 
         void operator() ( DEC_Knowledge_AgentPerception& knowledge )
         {
+            if( !knowledge.IsAvailable() ) // Record mode
+                return;
+                
             DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );
             assert( pKnowledge );
 
@@ -306,7 +309,7 @@ namespace {
 
         void operator() ( DEC_Knowledge_AgentPerception& knowledge )
         {
-            if( !knowledge.IsAttacker() )
+            if( !knowledge.IsAttacker() || !knowledge.IsAvailable() ) // Record mode
                 return;
 
             DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgent( knowledge );

@@ -59,7 +59,8 @@
         <Mission nom="Pion Test CreateBypass"/>
         <Mission nom="Pion Test Reinforce"/>
         <Mission nom="Pion Test Fire"/>
-        <Mission nom="Pion ALAT Freiner"/>
+        <Mission nom="Pion LOG DistribuerMoyens"/>
+        <Mission nom="Pion LOG TrierBlesses"/>
         <Mission nom="Pion CanaliserPopulations"/>
       </Missions>
     </Modele>

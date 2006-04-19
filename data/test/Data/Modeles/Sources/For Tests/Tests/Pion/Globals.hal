@@ -4,6 +4,8 @@
 
 include "Common/Moteur/Functions/Pions.hal";
 
+float gTest = 1;
+    
 signatures
 {
 }

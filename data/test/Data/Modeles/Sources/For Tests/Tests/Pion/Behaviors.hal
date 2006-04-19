@@ -2,7 +2,7 @@ use_priority        =   no;
 max_instances       =   10;
 max_activations     =   10;
 
-actuators = deplacement, ordre;
+actuators = deplacement, ordre, toto;
 
 /*behavior BEH_Cock( T_ConnaissanceAgent prout )
 {
@@ -11,6 +11,8 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+    DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau();
+
     if( DEC_Agent_EstMort() )
         DEC_Debug( "OMG, I'M DEAD !!" );    
     if( DEC_Agent_EtatOps() == 0 )
@@ -1080,10 +1082,93 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
     }       
 }
 
-behavior MIS_Pion_ALAT_Freiner( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
+
+// TEST
+
+behavior TestOnSpontaneousEndNotCalled()
 {
-    
+    when updated:
+    {
+        persistent float cock = gTest;
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "TestOnSpontaneousEndNotCalled::begin " + FloatToString( gTest ) );
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::updated " + FloatToString( gTest ) );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::on spontaneous end " + FloatToString( gTest ) );
+    }            
 }
+
+
+behavior MIS_Pion_LOG_DistribuerMoyens( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::begin" );
+            gTest ++;
+        }
+        
+        DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::updated" );            
+        behavior TestOnSpontaneousEndNotCalled();  
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::on spontaneous end" );
+    }         
+}
+
+
+
+action TestOnSpontaneousShouldNotBeCalled( float bite ) using toto
+{
+    when selected:
+    {
+        persistent float cock = gTest;
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "TestOnSpontaneousEndNotCalled::begin " + FloatToString( gTest ) );
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::updated " + FloatToString( gTest ) );
+    }
+   
+    on focus loss:
+    {
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::on focus loss " + FloatToString( gTest ) + "/" + FloatToString( bite ) );
+    }            
+    
+    on spontaneous end:
+    {
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::on spontaneous end " + FloatToString( gTest ) + "/" + FloatToString( bite ) );
+    }                
+}
+
+
+behavior MIS_Pion_LOG_TrierBlesses( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Debug( "MIS_Pion_LOG_TrierBlesses::begin" );
+            gTest ++;
+        }
+        
+        DEC_Debug( "MIS_Pion_LOG_TrierBlesses::updated" );            
+        
+        action TestOnSpontaneousShouldNotBeCalled( 1 );  
+        action TestOnSpontaneousShouldNotBeCalled( 2 );  
+                
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_LOG_TrierBlesses::on spontaneous end" );
+    }         
+}
+
+
+
+
 
 behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations mission, id nDummy )
 {
