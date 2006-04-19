@@ -92,7 +92,7 @@ void Settings::ReadEntry( const QString& field, QWidget& widget, int nW, int nH,
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, int value )
 {
-    writeEntry( ( "/" + name ).c_str(), value );
+    writeEntry( ( "/" + ( intPrefix + name ) ).c_str(), value );
 }
     
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ void Settings::Save( const std::string& name, int value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, bool value )
 {
-    writeEntry( ( "/" + name ).c_str(), value );
+    writeEntry( ( "/" + ( boolPrefix + name ) ).c_str(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void Settings::Save( const std::string& name, bool value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, float value )
 {
-    writeEntry( ( "/" + name ).c_str(), value );
+    writeEntry( ( "/" + ( floatPrefix + name ) ).c_str(), value );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void Settings::Save( const std::string& name, float value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, const TristateOption& value )
 {
-    writeEntry( ( "/" + name ).c_str(), (const char*)value );
+    writeEntry( ( "/" + ( tristatePrefix + name ) ).c_str(), (const char*)value );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void Settings::Save( const std::string& name, const TristateOption& value )
 // -----------------------------------------------------------------------------
 int Settings::Load( const std::string& name, int defaultValue )
 {
-    return readNumEntry( ( "/" + name ).c_str(), defaultValue );
+    return readNumEntry( ( "/" + ( intPrefix + name ) ).c_str(), defaultValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ int Settings::Load( const std::string& name, int defaultValue )
 // -----------------------------------------------------------------------------
 bool Settings::Load( const std::string& name, bool defaultValue )
 {
-    return readBoolEntry( ( "/" + name ).c_str(), defaultValue );
+    return readBoolEntry( ( "/" + ( boolPrefix + name  )).c_str(), defaultValue );
 }
     
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ bool Settings::Load( const std::string& name, bool defaultValue )
 // -----------------------------------------------------------------------------
 float Settings::Load( const std::string& name, float defaultValue )
 {
-    return readNumEntry( ( "/" + name ).c_str(), defaultValue );
+    return readNumEntry( ( "/" + ( floatPrefix + name ) ).c_str(), defaultValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +155,6 @@ float Settings::Load( const std::string& name, float defaultValue )
 // -----------------------------------------------------------------------------
 TristateOption Settings::Load( const std::string& name, const TristateOption& defaultValue )
 {
-    QString value = readEntry( ( "/" + name ).c_str(), QString( defaultValue ) );
+    QString value = readEntry( ( "/" + ( tristatePrefix + name ) ).c_str(), QString( defaultValue ) );
     return TristateOption( value.ascii() );
 }

@@ -32,6 +32,14 @@ class Settings : public QSettings
 {
 
 public:
+    //! @name Constants
+    //@{
+    static const char intPrefix      = 'I';
+    static const char boolPrefix     = 'B';
+    static const char floatPrefix    = 'F';
+    static const char tristatePrefix = 'T';
+    //@}
+
     //! @name Constructors/Destructor
     //@{
              Settings();

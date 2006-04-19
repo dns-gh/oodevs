@@ -99,28 +99,24 @@ void Options::Load( Settings& settings, const std::string& name, T defaultValue 
 // -----------------------------------------------------------------------------
 void Options::Load( Settings& settings )
 {
-    // $$$$ AGE 2006-04-19: Sauvegarder le type de l'option puis recharger la liste.
-    Load( settings, "BigText", TristateOption::auto_ );
-    Load( settings, "DebugPoints", TristateOption::auto_ );
-    Load( settings, "DrawHoveredInfos", true );
-    Load( settings, "DrawIdentifications", false );
-    Load( settings, "DrawMessages", false );
-    Load( settings, "DrawObjectsIcons", true );
-    Load( settings, "DrawRCs", true );
-    Load( settings, "DrawSubscribedRCsOnly", false );
-    Load( settings, "DrawTraces", false );
-    Load( settings, "FontSize", 10 );
-    Load( settings, "GridSize", 10.0f );
-    Load( settings, "LogisticLinks", TristateOption::auto_ );
-    Load( settings, "MissingLogisticLinks", TristateOption::auto_ );
-    Load( settings, "OldPaths", TristateOption::auto_ );
-    Load( settings, "Paths", TristateOption::auto_ );
-    Load( settings, "RealTimeLogistic", TristateOption::auto_ );
-    Load( settings, "SmallText", TristateOption::auto_ );
-    Load( settings, "TacticalLines", TristateOption::auto_ );
-    Load( settings, "VisionCones", TristateOption::auto_ );
-    Load( settings, "VisionLines", TristateOption::auto_ );
-    Load( settings, "VisionSurfaces", TristateOption::auto_ );
+    QStringList list = settings.entryList( "/" );
+    for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
+    {
+        const std::string typedName = (*it).ascii();
+        if( ! typedName.empty() )
+        {
+            char type = typedName[0];
+            const std::string name = typedName.substr( 1 );
+            if( type == Settings::intPrefix ) // $$$$ AGE 2006-04-19: kaka
+                Load( settings, name, 1 );
+            else if( type == Settings::boolPrefix )
+                Load( settings, name, false );
+            else if( type == Settings::floatPrefix )
+                Load( settings, name, 1.f );
+            else if( type == Settings::tristatePrefix )
+                Load( settings, name, TristateOption::auto_ );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
