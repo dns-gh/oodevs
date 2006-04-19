@@ -21,6 +21,7 @@
 #include "OptionsPanel.h"
 #include "MissionPanel.h"
 #include "GraphicsPanel.h"
+#include "ObjectCreationPanel.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
 #include "Controllers.h"
@@ -35,6 +36,7 @@
 #include "MissionLayer.h"
 #include "DetectionMap.h"
 #include "Model.h"
+#include "ObjectTypes.h"
 #include "App.h"
 #include "Network.h"
 #include "AgentServerMsgMgr.h"
@@ -130,6 +132,18 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
     this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
+
+    // object creation window
+    QDockWindow* pObjectCreationWnd = new QDockWindow( this );
+    moveDockWindow( pObjectCreationWnd, Qt::DockRight );
+    pObjectCreationWnd->hide();
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, model_ );
+    pObjectCreationWnd->setWidget( objectCreationPanel );
+    pObjectCreationWnd->setResizeEnabled( true );
+    pObjectCreationWnd->setCloseMode( QDockWindow::Always );
+    pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
+    setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
+
 
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );

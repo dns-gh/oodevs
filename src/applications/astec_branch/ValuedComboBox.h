@@ -54,6 +54,7 @@ public:
 
     void RemoveItem( const T& value );
 
+    int GetItemIndex( const T& value );
     void SetCurrentItem( const T& value );
 	void Clear();
 
@@ -69,7 +70,6 @@ private:
 
     //! @name Helpers
     //@{
-    int GetItemIndex( const T& value );
     //@}
 
 private:

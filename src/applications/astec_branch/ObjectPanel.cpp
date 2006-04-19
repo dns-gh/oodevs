@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-06-11 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectPanel.cpp $
-// $Author: Age $
-// $Modtime: 5/04/05 17:12 $
-// $Revision: 7 $
-// $Workfile: ObjectPanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ObjectPanel.h"
@@ -39,8 +30,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
 ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers )

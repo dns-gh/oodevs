@@ -12,6 +12,7 @@
 #include "LabelDisplayer.h"
 #include "SpinBoxDisplayer.h"
 #include "CheckBoxDisplayer.h"
+#include "TextFieldDisplayer.h"
 #include <stdexcept>
 
 // -----------------------------------------------------------------------------
@@ -73,6 +74,19 @@ GroupDisplayer& GroupDisplayer::AddCheckBox( const char* name )
     return *this;
 }
 
+// -----------------------------------------------------------------------------
+// Name: GroupDisplayer::AddTextField
+// Created: SBO 2006-04-18
+// -----------------------------------------------------------------------------
+GroupDisplayer& GroupDisplayer::AddTextField( const char* name )
+{
+    Displayer_ABC*& item = items_[ std::string( name ) ];
+    if( item )
+        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
+    item = new TextFieldDisplayer( this, name );
+    return *this;
+}
+    
 // -----------------------------------------------------------------------------
 // Name: GroupDisplayer::SubItem
 // Created: AGE 2006-02-22
