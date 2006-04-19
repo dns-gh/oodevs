@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "Elevation2dLayer.h"
-#include "graphics/ElevationLayer.h"
+#include "ColoredElevationLayer.h"
 #include "GLTools_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ void Elevation2dLayer::Initialize( const geometry::Rectangle2f& extent )
 {
     if( !layer_ )
     {
-        layer_ = new ElevationLayer( elevation_ );
+        layer_ = new ColoredElevationLayer( elevation_ );
         layer_->Initialize( extent );
     };
 }

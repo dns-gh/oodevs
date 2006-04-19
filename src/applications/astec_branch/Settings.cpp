@@ -146,7 +146,7 @@ bool Settings::Load( const std::string& name, bool defaultValue )
 // -----------------------------------------------------------------------------
 float Settings::Load( const std::string& name, float defaultValue )
 {
-    return readNumEntry( ( "/" + ( floatPrefix + name ) ).c_str(), defaultValue );
+    return (float)readDoubleEntry( ( "/" + ( floatPrefix + name ) ).c_str(), defaultValue );
 }
 
 // -----------------------------------------------------------------------------
