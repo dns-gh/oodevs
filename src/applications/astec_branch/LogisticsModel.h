@@ -38,6 +38,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     void CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg );
     LogMaintenanceConsign& GetMaintenanceConsign( unsigned long id );
     void DeleteMaintenanceConsign( unsigned long id );

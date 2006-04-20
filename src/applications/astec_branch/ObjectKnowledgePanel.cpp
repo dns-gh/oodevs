@@ -39,9 +39,9 @@
 ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "C. objet" ) )
     , controllers_ ( controllers )
-    , owner_       ( 0 )
-    , selected_    ( 0 )
-    , subSelected_ ( 0 )
+    , owner_       ( controllers )
+    , selected_    ( controllers )
+    , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this );
     pKnowledgeListView_->AddColumn( "Objets connus" );

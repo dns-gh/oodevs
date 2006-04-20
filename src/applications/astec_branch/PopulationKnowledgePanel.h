@@ -13,6 +13,7 @@
 #include "InfoPanel_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "KnowledgeGroupSelectionObserver.h"
+#include "SafePointer.h"
 
 class Controllers;
 class DisplayBuilder;
@@ -83,12 +84,12 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Team* owner_;
+    SafePointer< Team > owner_;
     ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     DisplayBuilder* display_;
-    const PopulationKnowledges* selected_;
-    const PopulationKnowledge* subSelected_;
-    const PopulationPartKnowledge_ABC* selectedPart_;
+    SafePointer< PopulationKnowledges >        selected_;
+    SafePointer< PopulationKnowledge >         subSelected_;
+    SafePointer< PopulationPartKnowledge_ABC > selectedPart_; // $$$$ AGE 2006-04-20: won't do
 
     QCheckBox* pOwnTeamCheckBox_;
     //@}

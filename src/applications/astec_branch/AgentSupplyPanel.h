@@ -22,6 +22,7 @@
 #include "InfoPanel_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "SafePointer.h"
 
 class DisplayBuilder;
 class Controllers;
@@ -83,7 +84,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Agent* selected_;
+    SafePointer< Agent > selected_;
     ListDisplayer< AgentSupplyPanel >* pConsignListView_;
     ListDisplayer< AgentSupplyPanel >* pConsignHandledListView_;
     SubItemDisplayer* logDisplay_;

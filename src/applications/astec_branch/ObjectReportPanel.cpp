@@ -32,7 +32,7 @@
 ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, "Rapports" )
     , controllers_ ( controllers )
-    , selected_    ( 0 )
+    , selected_    ( controllers )
 {
     reports_ = new FireResultListView( this );
 

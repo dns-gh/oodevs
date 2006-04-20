@@ -70,7 +70,11 @@ void PopulationListView::NotifyCreated( const Population& popu )
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyDeleted( const Population& popu )
 {
-    delete FindItem( &popu, firstChild() );
+    QListViewItem* item = FindItem( &popu, firstChild() );
+    QListViewItem* teamItem = item ? item->parent() : 0;
+    delete item;
+    if( teamItem && ! teamItem->childCount() )
+        delete teamItem;
 }
 
 // $$$$ AGE 2006-03-22: somehow factor these things

@@ -30,6 +30,15 @@ WeatherModel::WeatherModel( Controllers& controllers, Model& model )
 // -----------------------------------------------------------------------------
 WeatherModel::~WeatherModel()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherModel::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void WeatherModel::Purge()
+{
     DeleteAll();
 }
 

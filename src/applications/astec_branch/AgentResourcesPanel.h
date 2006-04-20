@@ -23,6 +23,7 @@
 #include "InfoPanel_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "SafePointer.h"
 
 template< typename T > class ListDisplayer;
 class Agent;
@@ -101,7 +102,7 @@ private:
     T_ListView* pResources_;
     T_ListView* pTroops_;
     T_ListView* pLends_;
-    const Agent* selected_;
+    SafePointer< Agent > selected_;
     //@}
 };
 

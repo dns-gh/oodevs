@@ -11,8 +11,10 @@
 #define __KnowledgeGroupSelectionObserver_h_
 
 #include "SelectionObserver_ABC.h"
+
 class Agent;
 class KnowledgeGroup;
+class Controllers;
 
 // =============================================================================
 /** @class  KnowledgeGroupSelectionObserver

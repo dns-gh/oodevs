@@ -35,6 +35,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     void CreateAmmoEffect( const ASN1T_MsgStartFireEffect& message );
     void DeleteAmmoEffect( const ASN1T_MsgStopFireEffect& message );
     //@}

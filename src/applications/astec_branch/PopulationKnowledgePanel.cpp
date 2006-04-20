@@ -29,10 +29,10 @@
 PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, "C. popu" )
     , controllers_ ( controllers )
-    , owner_       ( 0 )
-    , selected_    ( 0 )
-    , subSelected_ ( 0 )
-    , selectedPart_( 0 )
+    , owner_       ( controllers )
+    , selected_    ( controllers )
+    , subSelected_ ( controllers )
+    , selectedPart_( controllers )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this );
     knowledgeList_->AddColumn( "Populations connues" );

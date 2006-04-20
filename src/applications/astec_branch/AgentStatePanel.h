@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentStatePanel.h $
-// $Author: Nld $
-// $Modtime: 8/07/05 15:25 $
-// $Revision: 14 $
-// $Workfile: AgentStatePanel.h $
-//
-// *****************************************************************************
 
 #ifndef __AgentStatePanel_h_
 #define __AgentStatePanel_h_
@@ -22,6 +13,7 @@
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "InfoPanel_ABC.h"
+#include "SafePointer.h"
 
 class Agent;
 class ReportListView;
@@ -87,7 +79,7 @@ private:
     //@{
     Controllers& controllers_;
     DisplayBuilder* display_;
-    const Agent* selected_;
+    SafePointer< Agent > selected_;
     //@}
 };
 

@@ -33,6 +33,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     virtual KnowledgeGroup* Find( const unsigned long& identifier ) const;
     virtual KnowledgeGroup& Get( const unsigned long& identifier ) const;
     //@}

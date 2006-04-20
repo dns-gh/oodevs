@@ -112,6 +112,10 @@ struct Formatter< const T* >
 template< typename T >
 struct Formatter< T* > : public Formatter< const T* > {};
 
+template< typename T > class SafePointer;
+template< typename T >
+struct Formatter< SafePointer< T > > : public Formatter< const T* > {};
+
 // =============================================================================
 /** @class  Formatter
     @brief  OptionalValue

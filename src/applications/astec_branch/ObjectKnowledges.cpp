@@ -21,7 +21,7 @@ ObjectKnowledges::ObjectKnowledges( Controller& controller, ObjectKnowledgeFacto
     : controller_( controller )
     , factory_( factory )
 {
-
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,6 +30,7 @@ ObjectKnowledges::ObjectKnowledges( Controller& controller, ObjectKnowledgeFacto
 // -----------------------------------------------------------------------------
 ObjectKnowledges::~ObjectKnowledges()
 {
+    controller_.Delete( *this );
     DeleteAll();
 }
 

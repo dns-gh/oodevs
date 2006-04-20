@@ -28,6 +28,15 @@ ObjectsModel::ObjectsModel( ObjectFactory_ABC& objectFactory )
 // -----------------------------------------------------------------------------
 ObjectsModel::~ObjectsModel()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsModel::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void ObjectsModel::Purge()
+{
     Resolver< Object >::DeleteAll();
 }
 

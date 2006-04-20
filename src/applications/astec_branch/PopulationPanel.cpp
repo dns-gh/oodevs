@@ -27,7 +27,7 @@
 PopulationPanel::PopulationPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC ( pParent, tr( "Population" ) )
     , controllers_  ( controllers )
-    , selected_     ( 0 )
+    , selected_     ( controllers )
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )

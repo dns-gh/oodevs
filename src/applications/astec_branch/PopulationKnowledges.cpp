@@ -20,7 +20,8 @@
 PopulationKnowledges::PopulationKnowledges( Controller& controller, PopulationKnowledgeFactory_ABC& factory )
     : controller_( controller )
     , factory_( factory )
-{ 
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,6 +30,7 @@ PopulationKnowledges::PopulationKnowledges( Controller& controller, PopulationKn
 // -----------------------------------------------------------------------------
 PopulationKnowledges::~PopulationKnowledges()
 {
+    controller_.Delete( *this );
     DeleteAll();
 }
 

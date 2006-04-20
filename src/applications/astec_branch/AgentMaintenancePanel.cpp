@@ -36,7 +36,7 @@
 AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Ch. maint." ) )
     , controllers_ ( controllers )
-    , selected_    ( 0 )
+    , selected_    ( controllers )
 {
     pConsignListView_        = new ListDisplayer< AgentMaintenancePanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );

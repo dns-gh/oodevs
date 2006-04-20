@@ -57,7 +57,6 @@
 #include <qdial.h>
 #include <qhbox.h>
 #include <qtoolbutton.h>
-#include <qcombobox.h>
 #include <qtooltip.h>
 #include <qdragobject.h> 
 #include <qcheckbox.h>

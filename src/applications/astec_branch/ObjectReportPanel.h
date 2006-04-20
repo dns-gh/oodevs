@@ -22,6 +22,7 @@
 #include "InfoPanel_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "SafePointer.h"
 
 class FireResultListView;
 class Object;
@@ -76,7 +77,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Object* selected_;
+    SafePointer< Object > selected_;
     FireResultListView* reports_;
     //@}
 };

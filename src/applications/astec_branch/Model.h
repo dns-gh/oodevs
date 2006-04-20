@@ -52,6 +52,7 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
     //@}
 
 public:

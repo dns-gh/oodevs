@@ -89,6 +89,22 @@ Model::~Model()
     delete &detection_;
     delete &coordinateConverter_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Model::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void Model::Purge()
+{
+    agents_.Purge();
+    objects_.Purge();
+    teams_.Purge();
+    knowledgeGroups_.Purge();
+    logistics_.Purge();
+//    limits_.Purge();
+    fires_.Purge();
+    weather_.Purge();
+}
     
 
     

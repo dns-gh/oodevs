@@ -42,6 +42,8 @@
 #include "AgentServerMsgMgr.h"
 #include "GraphicPreferences.h"
 #include "StatusBar.h"
+#include "Dialogs.h"
+#include "Simulation.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -159,6 +161,8 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
     pStatus_ = new StatusBar( statusBar(), model_.detection_, model_.coordinateConverter_, controllers_ );
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+
+    pDialogs_ = new Dialogs( this, controllers );
 
     // This one refreshes the map display, and is called only a few time per second.
     displayTimer_ = new QTimer( this );
@@ -290,6 +294,24 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
             b3d_ = new3d;
         }
+    }
+}
+
+namespace
+{
+    struct Nothing {};
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyUpdated
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyUpdated( const Simulation& simulation )
+{
+    if( ! simulation.IsConnected() )
+    {
+        controllers_.actions_.Select( Nothing() );
+        model_.Purge();
     }
 }
 

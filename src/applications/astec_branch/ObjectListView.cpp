@@ -108,6 +108,17 @@ void ObjectListView::NotifyCreated( const Object& object )
 
     new ValuedListItem( &object, typeItem, object.GetName().c_str() );
 }
+
+namespace
+{
+    void DeleteHierarchy( QListViewItem* item )
+    {
+        QListViewItem* parent = item ? item->parent() : 0;
+        delete item;
+        if( parent && ! parent->childCount() )
+            DeleteHierarchy( parent );
+    };  
+}
  
 // -----------------------------------------------------------------------------
 // Name: ObjectListView::NotifyDeleted
@@ -115,7 +126,7 @@ void ObjectListView::NotifyCreated( const Object& object )
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyDeleted( const Object& object )
 {
-    delete FindItem( &object, firstChild() );
+    DeleteHierarchy( FindItem( &object, firstChild() ) );
 }
     
 // -----------------------------------------------------------------------------

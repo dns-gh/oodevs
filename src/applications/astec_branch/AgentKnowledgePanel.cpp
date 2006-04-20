@@ -42,9 +42,9 @@
 AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "C. agent" ) )
     , controllers_ ( controllers )
-    , owner_       ( 0 )
-    , selected_    ( 0 )
-    , subSelected_ ( 0 )
+    , owner_       ( controllers )
+    , selected_    ( controllers )
+    , subSelected_ ( controllers )
     , display_     ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );

@@ -21,7 +21,7 @@ AgentKnowledges::AgentKnowledges( Controller& controller, AgentKnowledgeFactory_
     : controller_( controller )
     , factory_( factory )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,6 +30,7 @@ AgentKnowledges::AgentKnowledges( Controller& controller, AgentKnowledgeFactory_
 // -----------------------------------------------------------------------------
 AgentKnowledges::~AgentKnowledges()
 {
+    controller_.Delete( *this );
     Resolver< AgentKnowledge >::DeleteAll();
 }
 
@@ -37,7 +38,7 @@ AgentKnowledges::~AgentKnowledges()
 // Name: AgentKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation&    message )
+void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
     if( ! Find( message.oid_connaissance ) )
     {

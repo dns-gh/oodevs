@@ -23,6 +23,7 @@
 #include "InfoPanel_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "KnowledgeGroupSelectionObserver.h"
+#include "SafePointer.h"
 
 template< typename T > class ListDisplayer;
 class Controllers;
@@ -98,9 +99,9 @@ private:
     DisplayBuilder* display_;
     ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
-    const Team* owner_;
-    const AgentKnowledges* selected_;
-    const AgentKnowledge* subSelected_;
+    SafePointer< Team >            owner_;
+    SafePointer< AgentKnowledges > selected_;
+    SafePointer< AgentKnowledge >  subSelected_;
     QCheckBox* pOwnTeamCheckBox_;
     //@}
 };

@@ -33,7 +33,7 @@
 AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers )
     : InfoPanel_ABC( info, tr( "Etat" ) )
     , controllers_( controllers )
-    , selected_( 0 )
+    , selected_( controllers )
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Info" )

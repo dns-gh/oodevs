@@ -70,6 +70,8 @@ Agent::~Agent()
 {
     ChangeKnowledgeGroup( 0 );
     ChangeSuperior( 0 );
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->superior_ = 0;
     controller_.Delete( *this );
 }
 

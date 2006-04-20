@@ -32,6 +32,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const
     , nID_ ( nId )
 {
     idManager_.LockIdentifier( nID_ );
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +41,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
+    controller_.Delete( *this );
     idManager_.ReleaseIdentifier( nID_ );
 }
 

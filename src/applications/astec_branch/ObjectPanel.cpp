@@ -35,7 +35,7 @@
 ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers )
     : InfoPanel_ABC ( info, tr( "Objet" ) )
     , controllers_( controllers )
-    , selected_( 0 )
+    , selected_( controllers )
 {
     display_ = new DisplayBuilder( this );
     display_->AddGroup( "Informations" )

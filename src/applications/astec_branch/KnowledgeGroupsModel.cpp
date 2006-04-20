@@ -18,7 +18,7 @@
 KnowledgeGroupsModel::KnowledgeGroupsModel( TeamsModel& teams )
     : teams_( teams )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -27,7 +27,16 @@ KnowledgeGroupsModel::KnowledgeGroupsModel( TeamsModel& teams )
 // -----------------------------------------------------------------------------
 KnowledgeGroupsModel::~KnowledgeGroupsModel()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupsModel::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroupsModel::Purge()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

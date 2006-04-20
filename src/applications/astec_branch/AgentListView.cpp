@@ -93,7 +93,7 @@ void AgentListView::NotifyUpdated( const Team& team )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyDeleted( const Team& team )
 {
-    delete FindChild( &team, firstChild() );
+    delete FindSibling( &team, firstChild() );
 }
 
 // -----------------------------------------------------------------------------

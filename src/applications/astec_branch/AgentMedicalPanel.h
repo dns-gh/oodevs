@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentMedicalPanel.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 18:27 $
-// $Revision: 3 $
-// $Workfile: AgentMedicalPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __AgentMedicalPanel_h_
 #define __AgentMedicalPanel_h_
@@ -22,6 +13,7 @@
 #include "InfoPanel_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "SafePointer.h"
 
 class DisplayBuilder;
 class Controllers;
@@ -79,7 +71,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Agent* selected_;
+    SafePointer< Agent > selected_;
     ListDisplayer< AgentMedicalPanel >* pConsignListView_;
     ListDisplayer< AgentMedicalPanel >* pConsignHandledListView_;
     SubItemDisplayer* logDisplay_;

@@ -35,6 +35,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     void AddFire        ( const ASN1T_MsgStartPionFire& message );
     void AddFire        ( const ASN1T_MsgStartPopulationFire& message );
     Agent_ABC* FindFirer( const ASN1T_MsgStopPionFire& message );

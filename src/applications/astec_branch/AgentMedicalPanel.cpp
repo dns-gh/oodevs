@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentMedicalPanel.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 18:28 $
-// $Revision: 3 $
-// $Workfile: AgentMedicalPanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "AgentMedicalPanel.h"
@@ -35,7 +26,7 @@
 AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Ch. medicale" ) )
     , controllers_( controllers )
-    , selected_( 0 )
+    , selected_( controllers )
 {
     pConsignListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this );
     pConsignListView_->AddColumn( "Demandes logistiques" );

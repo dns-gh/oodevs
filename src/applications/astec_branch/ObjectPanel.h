@@ -22,6 +22,7 @@
 #include "InfoPanel_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
+#include "SafePointer.h"
 
 class Object;
 class CampAttributes;
@@ -93,7 +94,7 @@ private:
     //@{
     Controllers& controllers_;
     DisplayBuilder* display_;
-    const Object* selected_;
+    SafePointer< Object > selected_;
 
 //    QPushButton* pApplyButton_;
 //    QPushButton* pCancelButton_;

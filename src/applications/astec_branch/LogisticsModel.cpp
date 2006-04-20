@@ -30,6 +30,15 @@ LogisticsModel::LogisticsModel( LogisticConsignFactory_ABC& factory )
 // -----------------------------------------------------------------------------
 LogisticsModel::~LogisticsModel()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void LogisticsModel::Purge()
+{
     Resolver< LogMaintenanceConsign >::DeleteAll();
     Resolver< LogMedicalConsign >::DeleteAll();
     Resolver< LogSupplyConsign >::DeleteAll();
@@ -63,7 +72,7 @@ LogMaintenanceConsign& LogisticsModel::GetMaintenanceConsign( unsigned long id )
 {
     return Resolver< LogMaintenanceConsign >::Get( id );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: LogisticsModel::DeleteMaintenanceConsign
 // Created: AGE 2006-02-10

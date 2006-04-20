@@ -20,6 +20,7 @@
 #define __MainWindow_h_
 
 #include "OptionsObserver_ABC.h"
+#include "ElementObserver_ABC.h"
 
 class MapEventHandler_ABC;
 class Options;
@@ -33,6 +34,8 @@ class GlLayers;
 class GlWidget;
 class Gl3dWidget;
 class StatusBar;
+class Dialogs;
+class Simulation;
 
 // =============================================================================
 /** @class  MainWindow
@@ -49,6 +52,7 @@ class StatusBar;
 class MainWindow : public QMainWindow
                  , public Observer_ABC
                  , public OptionsObserver_ABC
+                 , public ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 
@@ -75,6 +79,7 @@ private:
     void ReadOptions();
 
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void NotifyUpdated( const Simulation& simulation );
     //@}
 
     //! @name Copy/Assignment
@@ -99,6 +104,7 @@ private:
 
     OptionsPanel*  pOptionsPanel_;
     StatusBar*     pStatus_;
+    Dialogs*       pDialogs_;
     //@}
 };
 

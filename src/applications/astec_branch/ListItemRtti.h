@@ -178,4 +178,9 @@ struct ListItemRtti< const sLoggerLayer* > {
     enum { rtti = 1026 };
 };
 
+template< typename T > class SafePointer;
+template< typename T >
+struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 
+{};
+
 #endif // __ListItemRtti_h_

@@ -30,6 +30,15 @@ TeamsModel::TeamsModel( TeamFactory_ABC& factory )
 // -----------------------------------------------------------------------------
 TeamsModel::~TeamsModel()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void TeamsModel::Purge()
+{
     Resolver< Team >::DeleteAll();
 }
 

@@ -61,6 +61,8 @@ public:
     void CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg );
     Population& GetPopulation( unsigned long id );
     Population* FindPopulation( unsigned long id );
+
+    void Purge();
     //@}
 
 private:

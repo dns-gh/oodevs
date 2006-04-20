@@ -40,6 +40,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     void CreateTeam( DIN::DIN_Input& );
     Team& GetTeam( unsigned long id );
     Team* FindTeam( const std::string& team );

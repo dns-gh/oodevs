@@ -13,6 +13,7 @@
 #include "InfoPanel_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "SafePointer.h"
 
 class QListViewItem;
 class DisplayBuilder;
@@ -57,7 +58,7 @@ private:
 
 private:
     Controllers& controllers_;
-    const Population* selected_;
+    SafePointer< Population > selected_;
     DisplayBuilder* display_;
     ListDisplayer< PopulationPanel >* pPartsListView_;
 };

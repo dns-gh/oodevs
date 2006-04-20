@@ -35,6 +35,8 @@ public:
 
     //! @name Operations
     //@{
+    void Purge();
+
     void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
     Object& GetObject( unsigned long id );
     void DeleteObject( unsigned long id );

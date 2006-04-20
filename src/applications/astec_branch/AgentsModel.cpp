@@ -30,6 +30,15 @@ AgentsModel::AgentsModel( AgentFactory_ABC& agentFactory )
 // -----------------------------------------------------------------------------
 AgentsModel::~AgentsModel()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void AgentsModel::Purge()
+{
     Resolver< Agent >::DeleteAll();
     Resolver< Population >::DeleteAll();
 }

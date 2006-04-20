@@ -41,6 +41,7 @@
 AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers )
     : InfoPanel_ABC( pParent, tr( "Res." ) )
     , controllers_( controllers )
+    , selected_( controllers )
 {
     pEquipment_ = new T_ListView( this, *this );
     pEquipment_->AddColumn( "Equipement" )

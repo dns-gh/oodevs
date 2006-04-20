@@ -23,6 +23,7 @@
 #include "InfoPanel_ABC.h"
 #include "TeamSelectionObserver.h"
 #include "ElementObserver_ABC.h"
+#include "SafePointer.h"
 
 template< typename T > class ListDisplayer;
 class Team;
@@ -106,12 +107,12 @@ private:
     //@{
     Controllers& controllers_;
 
-    const Team* owner_;
-    const ObjectKnowledges* selected_;
+    SafePointer< Team > owner_;
+    SafePointer< ObjectKnowledges > selected_;
     ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
     QCheckBox* pOwnTeamCheckBox_;
-    const ObjectKnowledge* subSelected_;
+    SafePointer< ObjectKnowledge > subSelected_;
     DisplayBuilder* display_;
 
     ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;

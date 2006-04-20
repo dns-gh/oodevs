@@ -47,7 +47,6 @@ AgentKnowledge::~AgentKnowledge()
     controller_.Delete( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::DoUpdate
 // Created: NLD 2004-03-18
