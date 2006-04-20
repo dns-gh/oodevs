@@ -35,6 +35,7 @@ class AutomatDecisions;
 // =============================================================================
 /** @class  AgentListView
     @brief  Displays the agent list sorted by team, gtia and group.
+    // $$$$ AGE 2006-04-20: watch for agent activations and ensure visibility ?
 */
 // Created: APE 2004-03-15
 // =============================================================================

@@ -35,10 +35,6 @@ public:
     virtual ~AgentSelectionObserver();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

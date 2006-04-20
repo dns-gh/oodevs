@@ -49,10 +49,6 @@ private:
     FireResultListView& operator=( const FireResultListView& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

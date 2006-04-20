@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ReportListView.h $
-// $Author: Ape $
-// $Modtime: 4/10/04 15:42 $
-// $Revision: 2 $
-// $Workfile: ReportListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ReportListView_h_
 #define __ReportListView_h_
@@ -86,7 +77,7 @@ private:
     //@{
     Controllers&               controllers_;
     const ReportFilterOptions& filter_;
-    const Agent_ABC*           selected_;
+    const Agent_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
     //@}
 };
 

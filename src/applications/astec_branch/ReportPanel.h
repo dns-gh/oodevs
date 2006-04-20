@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Agent_ABC*     selected_;
+    const Agent_ABC*     selected_; // $$$$ AGE 2006-04-20: watch deletions !
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;
     FireResultListView*  pFireResultListView_;

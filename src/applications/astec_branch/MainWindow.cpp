@@ -44,6 +44,7 @@
 #include "StatusBar.h"
 #include "Dialogs.h"
 #include "Simulation.h"
+#include "EntitySearchToolbar.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -153,6 +154,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers );
     new RecorderToolbar( this, App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-04-04: 
+    new EntitySearchToolbar( this, controllers );
 
     controllers_.Register( *this );
 
