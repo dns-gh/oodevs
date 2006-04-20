@@ -17,11 +17,11 @@
 #include "ElementObserver_ABC.h"
 
 class Agent;
-class Displayer_ABC;
-class DisplayBuilder;
 class Controllers;
 
 struct ASN1T_MagicActionCreateObject;
+struct ASN1T_AttrObjectCampPrisonniers;
+struct ASN1T_AttrObjectCampRefugies;
 
 // =============================================================================
 /** @class  CampPrototype
@@ -36,16 +36,15 @@ class CampPrototype : public ObjectPrototypeAttributes_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             CampPrototype( DisplayBuilder& builder, Controllers& controllers, const Resolver< Agent >& agents );
+             CampPrototype( QWidget* parent, Controllers& controllers, const Resolver< Agent >& agents );
     virtual ~CampPrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    virtual void Serialize( ASN1T_MagicActionCreateObject& msg ) const;
-    virtual void Show() const;
-    virtual void Hide();
+    virtual void Serialize( ASN1T_MagicActionCreateObject& msg );
+    virtual void Clean();
     //@}
 
 private:
@@ -65,8 +64,9 @@ private:
 private:
     //! @name Member Data
     //@{
-    DisplayBuilder& display_;
     ValuedComboBox< const Agent* >* tc2s_;
+    ASN1T_AttrObjectCampPrisonniers* attrPrisonners_;
+    ASN1T_AttrObjectCampRefugies* attrRefugees_;
     //@}
 };
 

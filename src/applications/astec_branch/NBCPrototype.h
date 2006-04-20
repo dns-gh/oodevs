@@ -7,30 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossingSitePrototype_h_
-#define __CrossingSitePrototype_h_
+#ifndef __NBCPrototype_h_
+#define __NBCPrototype_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
+#include "Resolver.h"
+#include "ValuedComboBox.h"
 
-class QSpinBox;
-class QCheckBox;
+class NBCAgent;
 
-struct ASN1T_AttrObjectSiteFranchissement;
+struct ASN1T_AttrObjectZoneNBC;
+struct ASN1T_AttrObjectNuageNBC;
 
 // =============================================================================
-/** @class  CrossingSitePrototype
-    @brief  CrossingSitePrototype
+/** @class  NBCPrototype
+    @brief  NBCPrototype
 */
-// Created: SBO 2006-04-19
+// Created: SBO 2006-04-20
 // =============================================================================
-class CrossingSitePrototype : public ObjectPrototypeAttributes_ABC
+class NBCPrototype : public ObjectPrototypeAttributes_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CrossingSitePrototype( QWidget* parent );
-    virtual ~CrossingSitePrototype();
+             NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver );
+    virtual ~NBCPrototype();
     //@}
 
     //! @name Operations
@@ -43,8 +45,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    CrossingSitePrototype( const CrossingSitePrototype& );            //!< Copy constructor
-    CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignement operator
+    NBCPrototype( const NBCPrototype& );            //!< Copy constructor
+    NBCPrototype& operator=( const NBCPrototype& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -54,12 +56,10 @@ private:
 private:
     //! @name Member data
     //@{
-    QSpinBox* width_;
-    QSpinBox* depth_;
-    QSpinBox* speed_;
-    QCheckBox* needsConstruction_;
-    ASN1T_AttrObjectSiteFranchissement* attr_;
+    ValuedComboBox< const NBCAgent* >* nbcAgents_;
+    ASN1T_AttrObjectZoneNBC* nbcArea_;
+    ASN1T_AttrObjectNuageNBC* nbcCloud_;
     //@}
 };
 
-#endif // __CrossingSitePrototype_h_
+#endif // __NBCPrototype_h_

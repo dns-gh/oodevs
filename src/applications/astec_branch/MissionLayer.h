@@ -7,44 +7,47 @@
 //
 // *****************************************************************************
 
-#ifndef __MissionLayer_h_
-#define __MissionLayer_h_
+#ifndef __MiscLayer_h_
+#define __MiscLayer_h_
 
 #include "Layer_ABC.h"
 
-class MissionPanel;
 // =============================================================================
-/** @class  MissionLayer
-    @brief  MissionLayer
+/** @class  MiscLayer
+    @brief  MiscLayer
 */
 // Created: AGE 2006-03-31
 // =============================================================================
-class MissionLayer : public Layer_ABC
+template< typename Panel >
+class MiscLayer : public Layer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionLayer( MissionPanel& panel );
-    virtual ~MissionLayer();
+    explicit MiscLayer( Panel& panel ) : panel_( panel ) {};
+    virtual ~MiscLayer() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& );
+    virtual void Paint( const geometry::Rectangle2f& viewport )
+    {
+        panel_.Draw( viewport );
+    }
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    MissionLayer( const MissionLayer& );            //!< Copy constructor
-    MissionLayer& operator=( const MissionLayer& ); //!< Assignement operator
+    MiscLayer( const MiscLayer& );            //!< Copy constructor
+    MiscLayer& operator=( const MiscLayer& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    MissionPanel& panel_;
+    Panel& panel_;
     //@}
 };
 

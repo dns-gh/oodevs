@@ -109,43 +109,44 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
      // Mission panel
     MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, layers_->GetParametersLayer(), *layers_ );
-    this->moveDockWindow( pMissionPanel_, Qt::DockLeft );
+    moveDockWindow( pMissionPanel_, Qt::DockLeft );
     pMissionPanel_->hide();
-    this->setDockEnabled( pMissionPanel_, Qt::DockTop, false );
-    this->setAppropriate( pMissionPanel_, false );
-    layers_->Register( *new MissionLayer( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31: 
+    setDockEnabled( pMissionPanel_, Qt::DockTop, false );
+    setAppropriate( pMissionPanel_, false );
+    layers_->Register( *new MiscLayer< MissionPanel >( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31: 
 
     // Logger
     QDockWindow*pLogDockWnd_ = new QDockWindow( this );
-    this->moveDockWindow( pLogDockWnd_, Qt::DockBottom );
+    moveDockWindow( pLogDockWnd_, Qt::DockBottom );
     Logger* pLogPanel_ = new Logger( pLogDockWnd_ );
     pLogDockWnd_->setWidget( pLogPanel_ );
     pLogDockWnd_->setResizeEnabled( true );
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
     pLogDockWnd_->setCaption( tr( "Log" ) );
-    this->setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
+    setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
 
     // Options window
     QDockWindow* pOptionsDockWnd_ = new QDockWindow( this );
-    this->moveDockWindow( pOptionsDockWnd_, Qt::DockRight );
+    ( pOptionsDockWnd_, Qt::DockRight );
     pOptionsDockWnd_->hide();
     pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, controllers );
     pOptionsDockWnd_->setWidget( pOptionsPanel_ );
     pOptionsDockWnd_->setResizeEnabled( true );
     pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
     pOptionsDockWnd_->setCaption( tr( "Options" ) );
-    this->setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
+    setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
 
     // object creation window
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
     moveDockWindow( pObjectCreationWnd, Qt::DockRight );
     pObjectCreationWnd->hide();
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, model_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, model_, layers_->GetParametersLayer(), *layers_ );
     pObjectCreationWnd->setWidget( objectCreationPanel );
     pObjectCreationWnd->setResizeEnabled( true );
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
     pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
+    layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) );
 
 
     new SIMControlToolbar( this, controllers );

@@ -9,20 +9,27 @@
 
 #include "astec_pch.h"
 #include "CrossingSitePrototype.h"
-#include "DisplayBuilder.h"
+#include "ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CrossingSitePrototype::CrossingSitePrototype( DisplayBuilder& builder )
-    : display_( builder )
+CrossingSitePrototype::CrossingSitePrototype( QWidget* parent )
+    : ObjectPrototypeAttributes_ABC( parent, tr( "Site de franchissement" ) )
+    , attr_( 0 )
 {
-    display_.AddGroup( "Site de franchissement" )
-                .AddSpinBox( "Largeur:", 1, 10000, 10 )
-                .AddSpinBox( "Profondeur:", 0, 1000, 10 )
-                .AddSpinBox( "Vitesse courant:", 0, 100, 1 )
-                .AddCheckBox( "Berges à aménager:" );
+    new QLabel( tr( "Largeur:" ), this );
+    width_ = new QSpinBox( 1, 10000, 10, this );
+
+    new QLabel( tr( "Profondeur:" ), this );
+    depth_ = new QSpinBox( 0, 1000, 10, this );
+
+    new QLabel( tr( "Vitesse courant:" ), this );
+    speed_ = new QSpinBox( 0, 100, 1, this );
+
+    new QLabel( tr( "Berges à aménager:" ), this );
+    needsConstruction_ = new QCheckBox( this );
 }
     
 // -----------------------------------------------------------------------------
@@ -47,25 +54,27 @@ bool CrossingSitePrototype::CheckValidity() const
 // Name: CrossingSitePrototype::Serialize
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CrossingSitePrototype::Serialize( ASN1T_MagicActionCreateObject& msg ) const
+void CrossingSitePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 {
+    if( msg.type != EnumObjectType::site_franchissement )
+        return;
+
+    attr_ = new ASN1T_AttrObjectSiteFranchissement();
     
+    attr_->largeur           = width_->value();
+    attr_->profondeur        = depth_->value();
+    attr_->vitesse_courant   = speed_->value();
+    attr_->berges_a_amenager = needsConstruction_->isOn();
+    msg.m.attributs_specifiquesPresent    = 1;
+    msg.attributs_specifiques.t           = T_AttrObjectSpecific_site_franchissement;
+    msg.attributs_specifiques.u.site_franchissement = attr_;
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: CrossingSitePrototype::Show
-// Created: SBO 2006-04-19
+// Name: CrossingSitePrototype::Clean
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CrossingSitePrototype::Show() const
+void CrossingSitePrototype::Clean()
 {
-    display_.Group( "Site de franchissement" ).show();
-}
-    
-// -----------------------------------------------------------------------------
-// Name: CrossingSitePrototype::Hide
-// Created: SBO 2006-04-19
-// -----------------------------------------------------------------------------
-void CrossingSitePrototype::Hide()
-{
-    display_.Group( "Site de franchissement" ).Hide();
+    delete attr_;
 }

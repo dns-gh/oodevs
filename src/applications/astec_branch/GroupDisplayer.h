@@ -11,7 +11,6 @@
 #define __GroupDisplayer_h_
 
 #include "Displayer_ABC.h"
-#include "ComboBoxDisplayer.h"
 
 #include <qlabel.h>
 #include <qgroupbox.h>
@@ -40,10 +39,6 @@ public:
     GroupDisplayer& AddLabel( const char* name, bool bold = false );
     GroupDisplayer& AddSpinBox( const char* name, int min, int max, int step );
     GroupDisplayer& AddCheckBox( const char* name );
-
-    GroupDisplayer& AddTextField( const char* name );
-    template< typename ConcreteList, typename Element >
-    GroupDisplayer& AddComboBox( const char* name, const ConcreteList& elements );
     virtual void Hide();
     //@}
 
@@ -74,20 +69,5 @@ private:
     T_Items items_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: GroupDisplayer::AddComboBox
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-template< typename ConcreteList, typename Element > 
-GroupDisplayer& GroupDisplayer::AddComboBox( const char* name, const ConcreteList& elements )
-{
-    Displayer_ABC*& item = items_[ std::string( name ) ];
-    if( item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
-    new QLabel( qApp->tr( name ), this );
-    item = new ComboBoxDisplayer< const ConcreteList, Element >( this, name, elements );
-    return *this;
-}
 
 #endif // __GroupDisplayer_h_

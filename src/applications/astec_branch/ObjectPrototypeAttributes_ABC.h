@@ -10,23 +10,25 @@
 #ifndef __ObjectPrototypeAttributes_ABC_h_
 #define __ObjectPrototypeAttributes_ABC_h_
 
+#include <qgroupbox.h>
+
 struct ASN1T_MagicActionCreateObject;
 
-class ObjectPrototypeAttributes_ABC
+class ObjectPrototypeAttributes_ABC : public QGroupBox
 {
 public:
     //! @name Constructor/Destructor
     //@{
-             ObjectPrototypeAttributes_ABC() {};
+             ObjectPrototypeAttributes_ABC( QWidget* parent = 0, const char* name = 0 )
+                 : QGroupBox( 2, Qt::Horizontal, name, parent ) {};
     virtual ~ObjectPrototypeAttributes_ABC() {};
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const = 0;
-    virtual void Serialize( ASN1T_MagicActionCreateObject& msg ) const = 0;
-    virtual void Show() const = 0;
-    virtual void Hide() = 0;
+    virtual void Serialize( ASN1T_MagicActionCreateObject& msg ) = 0;
+    virtual void Clean() = 0;
     //@}
 };
 

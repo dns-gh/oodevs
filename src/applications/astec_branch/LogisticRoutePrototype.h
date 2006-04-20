@@ -7,30 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossingSitePrototype_h_
-#define __CrossingSitePrototype_h_
+#ifndef __LogisticRoutePrototype_h_
+#define __LogisticRoutePrototype_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
 
-class QSpinBox;
-class QCheckBox;
-
-struct ASN1T_AttrObjectSiteFranchissement;
+struct ASN1T_AttrObjectItineraireLogistique;
 
 // =============================================================================
-/** @class  CrossingSitePrototype
-    @brief  CrossingSitePrototype
+/** @class  LogisticRoutePrototype
+    @brief  LogisticRoutePrototype
 */
-// Created: SBO 2006-04-19
+// Created: SBO 2006-04-20
 // =============================================================================
-class CrossingSitePrototype : public ObjectPrototypeAttributes_ABC
+class LogisticRoutePrototype : public ObjectPrototypeAttributes_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CrossingSitePrototype( QWidget* parent );
-    virtual ~CrossingSitePrototype();
+    explicit LogisticRoutePrototype( QWidget* parent );
+    virtual ~LogisticRoutePrototype();
     //@}
 
     //! @name Operations
@@ -43,8 +40,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    CrossingSitePrototype( const CrossingSitePrototype& );            //!< Copy constructor
-    CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignement operator
+    LogisticRoutePrototype( const LogisticRoutePrototype& );            //!< Copy constructor
+    LogisticRoutePrototype& operator=( const LogisticRoutePrototype& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -54,12 +51,13 @@ private:
 private:
     //! @name Member data
     //@{
+    QSpinBox* flow_;
     QSpinBox* width_;
-    QSpinBox* depth_;
-    QSpinBox* speed_;
-    QCheckBox* needsConstruction_;
-    ASN1T_AttrObjectSiteFranchissement* attr_;
+    QSpinBox* length_;
+    QSpinBox* maxWeight_;
+    QCheckBox* equipped_;
+    ASN1T_AttrObjectItineraireLogistique* attr_;
     //@}
 };
 
-#endif // __CrossingSitePrototype_h_
+#endif // __LogisticRoutePrototype_h_

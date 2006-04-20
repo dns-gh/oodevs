@@ -15,8 +15,8 @@
 #include "ElementObserver_ABC.h"
 #include "ValuedComboBox.h"
 #include "ASN_Types.h"
+#include "ShapeHandler_ABC.h"
 
-class DisplayBuilder;
 class Controllers;
 class Model;
 class Team;
@@ -24,6 +24,12 @@ class ObjectType;
 class ObjectPrototypeAttributes_ABC;
 class CampPrototype;
 class CrossingSitePrototype;
+class LogisticRoutePrototype;
+class NBCPrototype;
+class RotaPrototype;
+class LocationCreator;
+class ParametersLayer;
+
 class ASN_MsgObjectMagicAction;
 
 // =============================================================================
@@ -32,24 +38,31 @@ class ASN_MsgObjectMagicAction;
 */
 // Created: SBO 2006-04-18
 // =============================================================================
-class ObjectPrototype : public QObject
+class ObjectPrototype : public QGroupBox
                       , public Entity_ABC
                       , public Observer_ABC
                       , public ElementObserver_ABC< Team >
+                      , public ShapeHandler_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, Controllers& controllers, const Model& model );
+             ObjectPrototype( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 
     //! @name Operations
     //@{
     bool CheckValidity() const;
-    void Serialize( ASN_MsgObjectMagicAction& msg ) const;
+    void Serialize( ASN_MsgObjectMagicAction& msg );
+    void Clean();
+
+    void Draw( const GlTools_ABC& tools ) const;
+
+    virtual void Handle( const T_PointVector& points );
+    const ObjectType& GetType() const;
     //@}
 
 private slots:
@@ -77,13 +90,22 @@ private:
     //@{
     Controllers& controllers_;
     const Model& model_;
-    DisplayBuilder* display_;
     ValuedComboBox< const Team* >* teams_;
     ValuedComboBox< const ObjectType* >* objectTypes_;
+    QLineEdit* name_;
+
+    LocationCreator* locationCreator_;
+    ASN1T_EnumTypeLocalisation locationType_;
+    T_PointVector locationPoints_;
+    QLabel* locationLabel_;
+    ASN1T_CoordUTM* umtCoords_;
 
     ObjectPrototypeAttributes_ABC* activeAttributes_;
     CampPrototype* campAttributes_;
     CrossingSitePrototype* crossingSiteAttributes_;
+    LogisticRoutePrototype* logisticRouteAttributes_;
+    NBCPrototype* nbcAttributes_;
+    RotaPrototype* rotaAttributes_;
     //@}
 };
 

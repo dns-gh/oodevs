@@ -15,6 +15,8 @@
 class ObjectPrototype;
 class Controllers;
 class Model;
+class ParametersLayer;
+class GlTools_ABC;
 
 // =============================================================================
 /** @class  ObjectCreationPanel
@@ -29,8 +31,13 @@ class ObjectCreationPanel : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, Controllers& controllers, const Model& model );
+             ObjectCreationPanel( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer, const GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Draw( const geometry::Rectangle2f& viewport );
     //@}
 
 private slots:
@@ -49,6 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const GlTools_ABC& tools_;
     ObjectPrototype* created_;
     //@}
 };

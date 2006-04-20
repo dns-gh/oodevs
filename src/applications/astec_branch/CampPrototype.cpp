@@ -10,7 +10,6 @@
 #include "astec_pch.h"
 #include "CampPrototype.h"
 #include "Agent.h"
-#include "DisplayBuilder.h"
 #include "Controllers.h"
 #include "ASN_Messages.h"
 
@@ -18,12 +17,13 @@
 // Name: CampPrototype::CampPrototype
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CampPrototype::CampPrototype( DisplayBuilder& builder, Controllers& controllers, const Resolver< Agent >& agents )
-    : display_( builder )
+CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, const Resolver< Agent >& agents )
+    : ObjectPrototypeAttributes_ABC( parent, tr( "Camp" ) )
+    , attrPrisonners_( 0 )
+    , attrRefugees_( 0 )
 {
-    display_.AddGroup( "Camp" );
-    new QLabel( qApp->tr( "TC2:" ), &display_.Group( "Camp" ) );
-    tc2s_ = new ValuedComboBox< const Agent* >( &display_.Group( "Camp" ) );
+    new QLabel( qApp->tr( "TC2:" ), this );
+    tc2s_ = new ValuedComboBox< const Agent* >( this );
 
     Iterator< const Agent& > it( agents.CreateIterator() );
     while( it.HasMoreElements() )
@@ -58,42 +58,34 @@ bool CampPrototype::CheckValidity() const
 // Name: CampPrototype::Serialize
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CampPrototype::Serialize( ASN1T_MagicActionCreateObject& msg ) const
+void CampPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 {
     if( msg.type == EnumObjectType::camp_prisonniers )
     {
-        ASN1T_AttrObjectCampPrisonniers& attributsCampPrisonniers = *new ASN1T_AttrObjectCampPrisonniers();
-        attributsCampPrisonniers.tc2 = tc2s_->GetValue()->GetId();
+        attrPrisonners_ = new ASN1T_AttrObjectCampPrisonniers();
+        attrPrisonners_->tc2 = tc2s_->GetValue()->GetId();
         msg.m.attributs_specifiquesPresent    = 1;
         msg.attributs_specifiques.t           = T_AttrObjectSpecific_camp_prisonniers;
-        msg.attributs_specifiques.u.camp_prisonniers= &attributsCampPrisonniers;
+        msg.attributs_specifiques.u.camp_prisonniers= attrPrisonners_;
     }
     else if( msg.type == EnumObjectType::camp_refugies )
     {
-        ASN1T_AttrObjectCampRefugies& attributsCampRefugies = *new ASN1T_AttrObjectCampRefugies();
-        attributsCampRefugies.tc2 = tc2s_->GetValue()->GetId();
+        attrRefugees_ = new ASN1T_AttrObjectCampRefugies();
+        attrRefugees_->tc2 = tc2s_->GetValue()->GetId();
         msg.m.attributs_specifiquesPresent    = 1;
         msg.attributs_specifiques.t           = T_AttrObjectSpecific_camp_refugies;
-        msg.attributs_specifiques.u.camp_refugies = &attributsCampRefugies;
+        msg.attributs_specifiques.u.camp_refugies = attrRefugees_;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Display
-// Created: SBO 2006-04-19
+// Name: CampPrototype::Clean
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Show() const
+void CampPrototype::Clean()
 {
-    display_.Group( "Camp" ).show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CampPrototype::Hide
-// Created: SBO 2006-04-19
-// -----------------------------------------------------------------------------
-void CampPrototype::Hide()
-{
-    display_.Group( "Camp").Hide();
+    delete attrPrisonners_;
+    delete attrRefugees_;
 }
 
 // -----------------------------------------------------------------------------
