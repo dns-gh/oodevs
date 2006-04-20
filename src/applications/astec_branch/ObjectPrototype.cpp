@@ -32,6 +32,7 @@
 #include "LocationCreator.h"
 #include "ParametersLayer.h"
 #include "Tools.h"
+#include "RichLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype constructor
@@ -61,7 +62,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
         objectTypes_->AddItem( element.GetName().c_str(), &element );
     }
 
-    new QLabel( tr( "Position:" ), this );
+    location_ = new RichLabel( tr( "Position:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
@@ -105,9 +106,17 @@ ObjectPrototype::~ObjectPrototype()
 // -----------------------------------------------------------------------------
 bool ObjectPrototype::CheckValidity() const
 {
-    return teams_->count() && teams_->GetValue()
-        && objectTypes_->count() && objectTypes_->GetValue() 
-        && ( !activeAttributes_ || activeAttributes_->CheckValidity() );
+    if( !teams_->count() || !teams_->GetValue() )
+        return false;
+    if( !objectTypes_->count() || !objectTypes_->GetValue() )
+        return false;
+
+    if( !locationPoints_.size() )
+    {
+        location_->Warn( 3000 );
+        return false;
+    }
+    return ( !activeAttributes_ || activeAttributes_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------

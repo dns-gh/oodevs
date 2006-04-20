@@ -44,7 +44,7 @@ ObjectCreationPanel::~ObjectCreationPanel()
 void ObjectCreationPanel::Commit()
 {
     if( !created_->CheckValidity() )
-        return; // $$$$ SBO 2006-04-20: explicit error description
+        return;
 
     ASN_MsgObjectMagicAction msg;
     msg.GetAsnMsg().oid_objet = created_->GetType().manager_.GetFreeIdentifier();

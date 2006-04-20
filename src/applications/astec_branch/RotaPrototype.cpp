@@ -13,6 +13,7 @@
 #include "ASN_Messages.h"
 #include "ValuedListItem.h"
 #include "Iterator.h"
+#include "RichLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: RotaPrototype constructor
@@ -24,7 +25,7 @@ RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resol
     new QLabel( tr( "Danger:" ), this );
     danger_ = new QSpinBox( 0, 100, 1, this );
 
-    new QLabel( tr( "Agent(s) NBC:" ), this );
+    nbcAgentsLabel_ = new RichLabel( tr( "Agent(s) NBC:" ), this );
     nbcAgents_ = new QListView( this );
     nbcAgents_->setSelectionMode( QListView::Multi );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // $$$$ SBO 2006-04-20: 3 lines visible
@@ -53,7 +54,12 @@ RotaPrototype::~RotaPrototype()
 // -----------------------------------------------------------------------------
 bool RotaPrototype::CheckValidity() const
 {
-    return GetAgentCount();
+    if( !GetAgentCount() )
+    {
+        nbcAgentsLabel_->Warn( 3000 );
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------

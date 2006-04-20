@@ -29,6 +29,7 @@ class NBCPrototype;
 class RotaPrototype;
 class LocationCreator;
 class ParametersLayer;
+class RichLabel;
 
 class ASN_MsgObjectMagicAction;
 
@@ -99,6 +100,7 @@ private:
     T_PointVector locationPoints_;
     QLabel* locationLabel_;
     ASN1T_CoordUTM* umtCoords_;
+    RichLabel* location_;
 
     ObjectPrototypeAttributes_ABC* activeAttributes_;
     CampPrototype* campAttributes_;

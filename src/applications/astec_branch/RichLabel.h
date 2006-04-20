@@ -23,8 +23,8 @@ class RichLabel : public QLabel
 public:
     //! @name Constructors/Destructor
     //@{
-             RichLabel( const QString& text, QWidget* parent, const char* name );
-             RichLabel( const QString& text, bool required, QWidget* parent, const char* name );
+             RichLabel( const QString& text, QWidget* parent = 0, const char* name = 0 );
+             RichLabel( const QString& text, bool required, QWidget* parent = 0, const char* name = 0 );
     virtual ~RichLabel();
     //@}
 

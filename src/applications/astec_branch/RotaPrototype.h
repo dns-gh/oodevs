@@ -14,6 +14,7 @@
 #include "Resolver.h"
 
 class NBCAgent;
+class RichLabel;
 
 struct ASN1T_AttrObjectROTA;
 
@@ -55,6 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
+    RichLabel* nbcAgentsLabel_;
     QSpinBox* danger_;
     QListView* nbcAgents_;
     ASN1T_AttrObjectROTA* attr_;

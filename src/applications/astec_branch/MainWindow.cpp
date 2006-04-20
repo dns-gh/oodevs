@@ -127,7 +127,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
     // Options window
     QDockWindow* pOptionsDockWnd_ = new QDockWindow( this );
-    ( pOptionsDockWnd_, Qt::DockRight );
+    moveDockWindow( pOptionsDockWnd_, Qt::DockRight );
     pOptionsDockWnd_->hide();
     pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, controllers );
     pOptionsDockWnd_->setWidget( pOptionsPanel_ );
