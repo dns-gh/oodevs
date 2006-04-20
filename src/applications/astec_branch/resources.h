@@ -44,6 +44,7 @@ DECLARE_ICON( new );
 DECLARE_ICON( open );
 DECLARE_ICON( save );
 DECLARE_ICON( saveas );
+DECLARE_ICON( search );
 DECLARE_ICON( gas );
 DECLARE_ICON( ammo );
 DECLARE_ICON( nbc );

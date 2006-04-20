@@ -124,6 +124,7 @@
 #include "res/recrec.xpm"
 #include "res/recplay.xpm"
 #include "res/recstop.xpm"
+#include "res/search.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

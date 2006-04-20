@@ -44,7 +44,11 @@
 #include "StatusBar.h"
 #include "Dialogs.h"
 #include "Simulation.h"
-#include "EntitySearchToolbar.h"
+
+#include "Agent.h"
+#include "Object.h"
+#include "Population.h"
+#include "EntitySearchBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -80,17 +84,27 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
-    this->moveDockWindow( pListDockWnd_, Qt::DockLeft );
+    moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-    AgentListView* pAgentList_ = new AgentListView( pListsTabWidget, controllers );
-    pListsTabWidget->addTab( pAgentList_, tr( "Agents" ) );
+
+    QVBox* agentPanel = new QVBox();
+    new EntitySearchBox< Agent >( agentPanel, controllers );
+    AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers );
+    pListsTabWidget->addTab( agentPanel, tr( "Agents" ) );
     pAgentList_->header()->hide();
-    ObjectListView* pObjectList_ = new ObjectListView( pListsTabWidget, controllers );
-    pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
+
+    QVBox* objectPanel = new QVBox();
+    new EntitySearchBox< Object >( objectPanel, controllers );
+    ObjectListView* pObjectList_ = new ObjectListView( objectPanel, controllers );
+    pListsTabWidget->addTab( objectPanel, tr( "Objets" ) );
     pObjectList_->header()->hide();
-    PopulationListView* pPopulationList_ = new PopulationListView( pListsTabWidget, controllers );
-	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
+
+    QVBox* populationPanel = new QVBox();
+    new EntitySearchBox< Population >( populationPanel, controllers );
+    PopulationListView* pPopulationList_ = new PopulationListView( populationPanel, controllers );
+	pListsTabWidget->addTab( populationPanel, tr( "Populations" ) );
 	pPopulationList_->header()->hide();
+
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
@@ -155,7 +169,6 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers );
     new RecorderToolbar( this, App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-04-04: 
-    new EntitySearchToolbar( this, controllers );
 
     controllers_.Register( *this );
 
