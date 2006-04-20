@@ -46,6 +46,7 @@ public:
     uint GetNbrShortRequests      () const;
     uint GetNbrLongRequests       () const;
     uint GetNbrRequests           () const;
+    uint GetNbrTreatedRequests    () const;
     uint GetMaxComputationDuration() const;
     //@}
 
@@ -75,6 +76,7 @@ private:
     T_Requests longRequests_;
     MT_Float   rDistanceThreshold_;
     uint       nMaxComputationDuration_;
+    uint       treatedRequests_;
 
     T_PathFindThreadPtrVector  pathFindThreads_;
 

@@ -29,6 +29,7 @@
 DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
     : nMaxComputationDuration_( std::numeric_limits< uint >::max() )
     , rDistanceThreshold_     ( 0. )
+    , treatedRequests_        ( 0 )
 {
     archive.Section( "Pathfind" );
     int nPathfindThreads = 1;
@@ -97,6 +98,15 @@ uint DEC_PathFind_Manager::GetNbrLongRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return longRequests_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::GetNbrTreatedRequests
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+uint DEC_PathFind_Manager::GetNbrTreatedRequests() const
+{
+    return treatedRequests_;
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +204,7 @@ TER_PathFindRequest_ABC* DEC_PathFind_Manager::GetMessage( unsigned int nThread 
             longRequests_.pop_front();
         }
     }
+    ++treatedRequests_;
     return pRequest;
 }
 
