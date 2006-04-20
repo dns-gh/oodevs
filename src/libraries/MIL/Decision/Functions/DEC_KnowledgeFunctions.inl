@@ -13,6 +13,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -20,6 +21,41 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Sharing.h"
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion
+// Created: NLD 2006-04-18
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call, const T& /*caller*/ )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+
+    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    assert( pPion );
+
+    T_KnowledgeAgentDiaIDVector knowledges;
+    pPion->GetPion().GetKnowledge().GetLivingEnemiesPerceived( knowledges );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetDangerousEnemiesForPion
+// Created: NLD 2006-04-20
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::GetDangerousEnemiesForPion( DIA_Call_ABC& call, const T& /*caller*/ )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+
+    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    assert( pPion );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( pPion->GetPion().GetKnowledge().GetDangerousEnemies(), DEC_Tools::GetTypeConnaissanceAgent() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::ShareKnowledgesWith
@@ -103,3 +139,4 @@ void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissancePopulation() );
 }
+

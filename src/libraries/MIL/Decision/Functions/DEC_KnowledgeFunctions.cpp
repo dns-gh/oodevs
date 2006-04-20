@@ -17,7 +17,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -84,24 +83,6 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceived( DIA_Call_ABC& call, cons
 {
     T_KnowledgeAgentDiaIDVector knowledges;
     callerAgent.GetKnowledge().GetLivingEnemiesPerceived( knowledges );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion
-// Created: NLD 2006-04-18
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    const DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    assert( pPion );
-
-    T_KnowledgeAgentDiaIDVector knowledges;
-    pPion->GetPion().GetKnowledge().GetLivingEnemiesPerceived( knowledges );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );

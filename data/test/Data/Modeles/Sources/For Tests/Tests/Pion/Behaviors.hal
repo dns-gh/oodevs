@@ -473,6 +473,9 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesDetecteesDansFuseau() ) ) + " unites detectees dans fuseau" );        
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_RefugiesAProximite( 2000 ) ) ) + " refugies à moins de 2000 metres" );        
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesRenduesAProximite( 2000 ) ) ) + " unites rendues à moins de 2000 metres" );
+        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDangereusesPourPion   ( DEC_Pion_PionPC() ) ) ) + " unites ennemies dangereuse pour PC" );
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( DEC_Pion_PionPC() ) ) ) + " unites ennemies vivantes percues par PC" );                   
    
     
         //T_Point cock = DEC_ListePoints_GetAt( mission.itineraire_, 0 );
