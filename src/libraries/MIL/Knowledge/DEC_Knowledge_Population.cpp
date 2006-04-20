@@ -40,7 +40,6 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
     , pPopulationKnown_     ( &populationKnown )
     , concentrations_       ()
     , flows_                ()
-    , pArmy_                ( &populationKnown.GetArmy() )
     , bIsRecon_             ( false )
     , bReconAttributesValid_( false )
     , bDecStateUpdated_     ( false )
@@ -60,7 +59,6 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , pPopulationKnown_     ( 0 )
     , concentrations_       ()
     , flows_                ()
-    , pArmy_                ( 0 )
     , bIsRecon_             ( false )
     , bReconAttributesValid_( false )
     , bDecStateUpdated_     ( false )
@@ -95,11 +93,9 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> flows_
          >> bIsRecon_
          >> bReconAttributesValid_
-         >> rDominationState_
-         >> const_cast< MIL_Army*& >( pArmy_ );
+         >> rDominationState_;
 
     assert( pPopulationKnown_ );
-    assert( pArmy_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,8 +112,7 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const uint 
          << flows_
          << bIsRecon_
          << bReconAttributesValid_
-         << rDominationState_
-         << pArmy_;
+         << rDominationState_;
 }
 
 // =============================================================================
@@ -330,6 +325,16 @@ const MIL_PopulationAttitude& DEC_Knowledge_Population::GetAttitude() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetArmy
+// Created: HME 2005-12-29
+// -----------------------------------------------------------------------------
+const MIL_Army& DEC_Knowledge_Population::GetArmy() const
+{
+    assert( pPopulationKnown_ );
+    return pPopulationKnown_->GetArmy();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::IsInZone
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
@@ -381,14 +386,13 @@ void DEC_Knowledge_Population::SendMsgCreation() const
 {
     assert( pKnowledgeGroup_ );
     assert( pPopulationKnown_ );
-    assert( pArmy_ );
 
     NET_ASN_MsgPopulationKnowledgeCreation asnMsg;
 
     asnMsg.GetAsnMsg().oid_connaissance      = nID_;
     asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
     asnMsg.GetAsnMsg().oid_population_reelle = pPopulationKnown_->GetID();    
-    asnMsg.GetAsnMsg().camp                  = pArmy_           ->GetID();
+    asnMsg.GetAsnMsg().camp                  = GetArmy()         .GetID();
     asnMsg.Send();
 }
 

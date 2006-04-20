@@ -131,7 +131,6 @@ private:
     const uint                nID_;
           T_ConcentrationMap  concentrations_;
           T_FlowMap           flows_;
-    const MIL_Army*           pArmy_;
           bool                bIsRecon_;
 
           bool                bReconAttributesValid_;

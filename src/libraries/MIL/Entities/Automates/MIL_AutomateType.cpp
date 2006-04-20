@@ -468,7 +468,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionDirection                           , "DEC_Automate_PionDirection"                                    );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::MakePionRelievePion                        , "DEC_Automate_PionRelevePion"                                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionRelievePion                         , "DEC_Automate_PionPeutReleverPion"                              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::GetNextObjectOnPionPath                        , "DEC_Automate_ProchainObjetSurItinerairePion"                   );       
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPointInPionFuseau                        , "DEC_Automate_EstPointDansFuseauPion"                           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::ComputePointBeforeLimaForPion              , "DEC_Automate_CalculerPositionParRapportALimaPourPion"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau, "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion");

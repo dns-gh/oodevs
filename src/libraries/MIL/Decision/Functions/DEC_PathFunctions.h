@@ -25,15 +25,14 @@ class DEC_PathFunctions
 public:
     //! @name Functions
     //@{
-    static void CreatePathToPoint      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void CreatePathToPointList  ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DeletePath             ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void GetPathState           ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void GetNextObjectOnPath    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetNextObjectOnPionPath( DIA_Call_ABC& call, const MIL_Automate& callerAgent  );
-    static void ExtrapolatePosition    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetLastPointOfPath     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void IsMovingOnPath         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void CreatePathToPoint    ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void CreatePathToPointList( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void DeletePath           ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void GetPathState         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void GetNextObjectOnPath  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ExtrapolatePosition  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetLastPointOfPath   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsMovingOnPath       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     //@}
 };
 

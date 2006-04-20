@@ -135,7 +135,6 @@ signatures
     B                                A::DEC_Automate_PionEstEnVol                                     ( A /*T_Pion*/ );
     
     // Objets
-    B                                A::DEC_Automate_ProchainObjetSurItinerairePion      ( A /*T_Pion*/, U /*OUT T_ConnaissanceObjet*/, R /*OUT Distance*/, * /*Liste de E_TypeObject à prendre en compte*/ );    
     B                                A::DEC_Automate_PionPeutConstruireObjet             ( A /*T_Pion*/, I /*E_TypeObject*/ );         
     B                                A::DEC_Automate_PionPeutConstruireContournementObjet( A /*T_Pion*/, I /*E_TypeObject*/ );
     B                                A::DEC_Automate_PionPeutDetruireObjet               ( A /*T_Pion*/, I /*E_TypeObject*/ );   

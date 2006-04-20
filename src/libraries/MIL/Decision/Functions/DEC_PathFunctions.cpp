@@ -130,35 +130,6 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::GetNextObjectOnPionPath
-// Created: JVT 2004-12-17
-// -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetNextObjectOnPionPath( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    
-    assert( pPion );
-    assert( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) != callerAutomate.GetPions().end() );
-
-    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 3 );
-    
-    const DEC_Knowledge_Object* pObjectColliding   = 0;
-          MT_Float              rDistanceCollision = 0.;
-    if( !pPion->GetPion().GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, rDistanceCollision, &pObjectColliding ) )
-    {
-        call.GetResult().SetValue( false );
-        return;
-    }
-    assert( pObjectColliding );
-    
-    call.GetParameter( 1 ).SetValue( (void*)pObjectColliding->GetID(), &DEC_Tools::GetTypeConnaissanceObjet() );
-    call.GetParameter( 2 ).SetValue( (float)rDistanceCollision );
-    call.GetResult().SetValue( true );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetLastPointOfPath
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
