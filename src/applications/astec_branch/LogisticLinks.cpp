@@ -14,14 +14,16 @@
 #include "GlTools_ABC.h"
 #include "Positions.h"
 #include "Agent.h"
+#include "AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver )
+LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type )
     : controller_( controller )
     , resolver_( resolver )
+    , type_( type )
     , tc2_( 0 )
     , maintenanceSuperior_( 0 )
     , medicalSuperior_( 0 )
@@ -143,11 +145,11 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
 // Name: LogisticLinks::DrawLink
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, const GlTools_ABC& tools, float curve ) const
+void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
 {
-    if( agent && tools.ShouldDisplay( "LogisticLinks" ) )
+    if( agent && link )
         tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
-    else if( ! agent && tools.ShouldDisplay( "MissingLogisticLinks" ) ) // $$$$ AGE 2006-03-17: Pas juste !agent : test BLT, ...
+    else if( ! agent && missing )
         tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }
 
@@ -157,20 +159,25 @@ void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, cons
 // -----------------------------------------------------------------------------
 void LogisticLinks::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
 {
+    const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
+    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" );
+    if( ! displayLinks && ! displayMissing )
+        return;
+
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
     
-    glColor4d( COLOR_YELLOW );  
-    DrawLink( where, GetTC2(), tools, 0.3f );
+    glColor4d( COLOR_YELLOW );
+    DrawLink( where, GetTC2(), tools, 0.3f, displayLinks, displayMissing );
 
     glColor4d( COLOR_PINK );
-    DrawLink( where, GetMedical(), tools, 0.4f );
+    DrawLink( where, GetMedical(), tools, 0.4f, displayLinks, displayMissing && type_.IsLogisticMedical() );
 
     glColor4d( COLOR_MAROON );
-    DrawLink( where, GetMaintenance(), tools, 0.5f );
+    DrawLink( where, GetMaintenance(), tools, 0.5f, displayLinks, displayMissing && type_.IsLogisticMaintenance() );
 
     glColor4d( COLOR_ORANGE );
-    DrawLink( where, GetSupply(), tools, 0.6f );    
+    DrawLink( where, GetSupply(), tools, 0.6f, displayLinks, displayMissing && type_.IsLogisticSupply() );    
 
     glPopAttrib();
 }

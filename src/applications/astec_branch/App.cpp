@@ -22,6 +22,7 @@
 #include "Model.h"
 #include "Simulation.h"
 #include "Controllers.h"
+#include "Workers.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -151,7 +152,8 @@ void App::Initialize( const std::string& scipioXml )
 
     controllers_ = new Controllers();
     simulation_  = new Simulation( *controllers_ );
-    model_       = new Model( *controllers_, *simulation_, scipioXml );
+    workers_     = new Workers();
+    model_       = new Model( *controllers_, *simulation_, *workers_, scipioXml );
     network_     = new Network( *model_, *simulation_ );
 }
 

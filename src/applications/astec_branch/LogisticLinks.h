@@ -19,6 +19,7 @@
 class Controller;
 class Agent;
 class Displayer_ABC;
+class AutomatType;
 
 // =============================================================================
 /** @class  LogisticLinks
@@ -35,7 +36,7 @@ class LogisticLinks : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver );
+             LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type );
     virtual ~LogisticLinks();
     //@}
 
@@ -66,7 +67,7 @@ private:
     void UpdateData( const T& message );
 
     Agent* Resolve( Agent*& agent, unsigned long id ) const;
-    void DrawLink( const geometry::Point2f& from, Agent* to, const GlTools_ABC& tools, float curve ) const;
+    void DrawLink( const geometry::Point2f& from, Agent* to, const GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     //@}
 
 private:
@@ -74,6 +75,7 @@ private:
     //@{
     Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
+    const AutomatType& type_;
 
     unsigned long idTc2_;         mutable Agent* tc2_;
     unsigned long idMaintenance_; mutable Agent* maintenanceSuperior_;

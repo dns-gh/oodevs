@@ -70,6 +70,8 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     const DecisionalModel* GetAutomatDecisionalModel() const;
     const Agent* GetSuperior() const;
+
+    const AutomatType* GetAutomatType() const;
     //@}
 
 private:

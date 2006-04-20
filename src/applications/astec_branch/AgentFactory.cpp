@@ -62,11 +62,11 @@
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, AgentTypes& types, Model& model, const Simulation& simulation )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const Simulation& simulation, Workers& workers )
     : controllers_( controllers )
     , model_( model )
-    , types_( types )
     , simulation_( simulation )
+    , workers_( workers )
 {
     // NOTHING
 }
@@ -89,16 +89,16 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
+    Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_ ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType() ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
+    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Update( asnMsg );
     return result;
@@ -110,14 +110,14 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, types_, model_.agents_, model_.knowledgeGroups_ );
+    Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.surfaceFactory_ ) );
+    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     return result;
 }

@@ -13,15 +13,18 @@
 #include "GlTools_ABC.h"
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
+#include "Workers.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-VisionCones::VisionCones( const Agent& agent, SurfaceFactory& factory )
+VisionCones::VisionCones( const Agent& agent, SurfaceFactory& factory, Workers& workers )
     : agent_( agent )
     , factory_( factory )
+    , workers_( workers )
     , map_( factory_.CreateVisionMap() )
+    , needUpdating_( true )
 {
     // NOTHING
 }
@@ -53,7 +56,7 @@ void VisionCones::DoUpdate( const VisionConesMessage& message )
         surfaces_.push_back( factory_.CreateSurface( agent_, message ) );
 
     message >> elongationFactor_; // $$$$ AGE 2006-04-04: wtf ?
-    Update();
+    needUpdating_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,19 +68,41 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.positionPresent 
      || message.m.experiencePresent 
      || message.m.fatiguePresent )
-        Update();
+        needUpdating_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::Updater
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+VisionCones::Updater::Updater( const VisionCones& cones )
+    : cones_( & cones )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: VisionCones::operator()
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void VisionCones::Updater::operator()()
+{
+    cones_->updating_ = true;
+    cones_->map_->Clear();
+    for( CIT_Surfaces it = cones_->surfaces_.begin(); it != cones_->surfaces_.end(); ++it )
+        (*it)->Update( *cones_->map_ );
+    cones_->needUpdating_ = false;
+    cones_->updating_ = false;
+    // $$$$ AGE 2006-04-20: add a ninja kung fu grip ?
 }
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones::Update
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionCones::Update()
+void VisionCones::Update() const
 {
-    // $$$$ AGE 2006-04-19: Mettre un actor par la
-    map_->Clear();
-    for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
-        (*it)->Update( *map_ );
+    workers_.Enqueue( Updater( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,5 +115,10 @@ void VisionCones::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) co
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( tools );
     if( tools.ShouldDisplay( "VisionSurfaces" ) )
-        map_->Draw( tools );
+    {
+        if( needUpdating_ )
+            Update();
+        else if( ! updating_ )
+            map_->Draw( tools );
+    }
 }

@@ -43,6 +43,11 @@ public:
     AgentType* GetTypePC();
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+
+    bool IsTC2() const;
+    bool IsLogisticSupply() const;
+    bool IsLogisticMaintenance() const;
+    bool IsLogisticMedical() const;
     //@}
 
 private:

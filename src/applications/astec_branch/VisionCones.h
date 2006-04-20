@@ -24,6 +24,7 @@ class SensorType;
 class Agent;
 class SurfaceFactory;
 class VisionMap;
+class Workers;
 
 // =============================================================================
 /** @class  VisionCones
@@ -40,7 +41,7 @@ class VisionCones : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones( const Agent& agent, SurfaceFactory& factory );
+             VisionCones( const Agent& agent, SurfaceFactory& factory, Workers& workers );
     virtual ~VisionCones();
     //@}
 
@@ -60,13 +61,19 @@ private:
     //@{
     typedef std::vector< Surface* >      T_Surfaces;
     typedef T_Surfaces::const_iterator CIT_Surfaces;
+    struct Updater
+    {
+        Updater( const VisionCones& cones );
+        void operator()();
+        const VisionCones* cones_;
+    };
     //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const VisionConesMessage& message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
-    void Update();
+    void Update() const;
     //@}
 
 private:
@@ -74,9 +81,12 @@ private:
     //@{
     const Agent& agent_;
     SurfaceFactory& factory_;
+    Workers& workers_;
     VisionMap* map_;
     T_Surfaces surfaces_;
     double elongationFactor_;
+    mutable volatile bool updating_;
+    mutable bool needUpdating_;
     //@}
 };
 

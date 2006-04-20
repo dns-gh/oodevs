@@ -84,3 +84,42 @@ void AutomatType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools
 {
     tools.DrawApp6Symbol( symbol_, where );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::IsTC2
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+bool AutomatType::IsTC2() const
+{
+    return name_.find( "TC2" ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::IsLogisticSupply
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+bool AutomatType::IsLogisticSupply() const
+{
+    return type_ == "Automate LOG BLD Ravitaillement"
+        || type_ == "Automate LOG BLT Ravitaillement";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::IsLogisticMaintenance
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+bool AutomatType::IsLogisticMaintenance() const
+{
+    return type_ == "Automate LOG BLD Maintenance"
+        || type_ == "Automate LOG BLT Maintenance";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::IsLogisticMedical
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+bool AutomatType::IsLogisticMedical() const
+{
+    return type_ == "Automate LOG BLD Sante"
+        || type_ == "Automate LOG BLT Sante";
+}

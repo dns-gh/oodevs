@@ -35,7 +35,7 @@
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const Simulation& simulation, const std::string& scipioXml )
+Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers, const std::string& scipioXml )
     : coordinateConverter_( *new CoordinateConverter( scipioXml ) )
     , detection_( *new DetectionMap( scipioXml ) )
     , types_( *new AgentTypes( scipioXml ) )
@@ -43,7 +43,7 @@ Model::Model( Controllers& controllers, const Simulation& simulation, const std:
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this ) )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
-    , agentFactory_( *new AgentFactory( controllers, types_, *this, simulation ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, simulation, workers ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this ) )
     , fireFactory_( *new FireFactory( *this ) )
     , surfaceFactory_( *new SurfaceFactory( detection_, types_ ) )

@@ -23,6 +23,7 @@ class QSplashScreen;
 class Model;
 class Simulation;
 class Controllers;
+class Workers;
 
 namespace xml { class xistream; }
 
@@ -81,6 +82,7 @@ private:
     Controllers*    controllers_;
     Model*          model_;
     Simulation*     simulation_;
+    Workers*        workers_;
 
     Network*        network_;
     

@@ -33,6 +33,7 @@ class FireFactory;
 class WeatherModel;
 class DetectionMap;
 class SurfaceFactory;
+class Workers;
 
 // =============================================================================
 /** @class  Model
@@ -46,7 +47,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controllers& controllers, const Simulation& simulation, const std::string& scipioXml );
+             Model( Controllers& controllers, const Simulation& simulation, Workers& workers, const std::string& scipioXml );
     virtual ~Model();
     //@}
 

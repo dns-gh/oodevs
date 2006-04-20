@@ -239,9 +239,9 @@ void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) con
 {
     if( automatType_ && ! aggregated_ )
         automatType_->Draw( where, tools );
-    if( type_ && ! aggregated_ )
+    else if( type_ && ! aggregated_ )
         type_->Draw( where, tools );
-    if( type_ && aggregated_ )
+    else if( type_ && aggregated_ )
         type_->DrawAggregated( where, tools );
 }
 
@@ -252,4 +252,13 @@ void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) con
 void Agent::Aggregate( const bool& bDenis )
 {
     aggregated_ = bDenis;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetAutomatType
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+const AutomatType* Agent::GetAutomatType() const
+{
+    return automatType_;
 }
