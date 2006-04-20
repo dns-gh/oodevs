@@ -25,6 +25,7 @@ VisionCones::VisionCones( const Agent& agent, SurfaceFactory& factory, Workers& 
     , workers_( workers )
     , map_( factory_.CreateVisionMap() )
     , needUpdating_( true )
+    , updating_( false )
 {
     // NOTHING
 }
@@ -87,12 +88,19 @@ VisionCones::Updater::Updater( const VisionCones& cones )
 // -----------------------------------------------------------------------------
 void VisionCones::Updater::operator()()
 {
-    cones_->updating_ = true;
-    cones_->map_->Clear();
-    for( CIT_Surfaces it = cones_->surfaces_.begin(); it != cones_->surfaces_.end(); ++it )
-        (*it)->Update( *cones_->map_ );
-    cones_->needUpdating_ = false;
-    cones_->updating_ = false;
+    try
+    {
+        cones_->updating_ = true;
+        cones_->map_->Clear();
+        for( CIT_Surfaces it = cones_->surfaces_.begin(); it != cones_->surfaces_.end(); ++it )
+            (*it)->Update( *cones_->map_ );
+        cones_->needUpdating_ = false;
+        cones_->updating_ = false;
+    }
+    catch( ... )
+    {
+        // $$$$ AGE 2006-04-20: 
+    }
     // $$$$ AGE 2006-04-20: add a ninja kung fu grip ?
 }
 
@@ -114,11 +122,9 @@ void VisionCones::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) co
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( tools );
-    if( tools.ShouldDisplay( "VisionSurfaces" ) )
-    {
+    if( tools.ShouldDisplay( "VisionSurfaces" ) && ! updating_ )
         if( needUpdating_ )
             Update();
-        else if( ! updating_ )
+        else
             map_->Draw( tools );
-    }
 }

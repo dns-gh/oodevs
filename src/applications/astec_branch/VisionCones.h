@@ -86,7 +86,7 @@ private:
     T_Surfaces surfaces_;
     double elongationFactor_;
     mutable volatile bool updating_;
-    mutable bool needUpdating_;
+    mutable volatile bool needUpdating_;
     //@}
 };
 
