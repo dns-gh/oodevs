@@ -33,24 +33,6 @@ public:
     virtual ~EntitySearchBox();
     //@}
 
-     //! @name Types
-    //@{
-    class SearchableItem_ABC
-    {
-    public:
-        virtual ~SearchableItem_ABC() {};
-        virtual bool Matches( const QString& input ) const = 0;
-        virtual void Activate() = 0;
-    };
-    //@}
-
-private:
-    //! @name Slots
-    //@{
-    virtual void Search( const QString& input );
-    virtual void FindNext();
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -58,39 +40,23 @@ private:
     EntitySearchBox& operator=( const EntitySearchBox& ); //!< Assignement operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< SearchableItem_ABC* > T_Items;
-    typedef typename T_Items::iterator                 IT_Items;
-    typedef typename T_Items::const_iterator          CIT_Items;
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Entity& );
     virtual void NotifyDeleted( const Entity& );
-
-    void AddItem( SearchableItem_ABC& item );
-    void RemoveItem( unsigned long id );
-
-    void Find();
-    bool Find( CIT_Items begin, CIT_Items end );
     //@}
 
 private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    T_Items items_;
-    QString currentSearch_;
-    CIT_Items lastItem_;
     //@}
 };
 
 namespace
 {
     template< typename Entity >
-    class Searchable : public EntitySearchBox< Entity >::SearchableItem_ABC
+    class Searchable : public EntitySearchBox_ABC::SearchableItem_ABC
     {
     public:
         Searchable( Controllers& controllers, const Entity& entity )
@@ -127,19 +93,7 @@ template< typename Entity >
 EntitySearchBox< Entity >::EntitySearchBox( QWidget* pParent, Controllers& controllers )
     : EntitySearchBox_ABC( pParent )
     , controllers_( controllers )
-   
 {
-    setMargin( 2 );
-    setSpacing( 10 );
-
-    QLineEdit* edit = new QLineEdit( this );
-    QPushButton* next = new QPushButton( QIconSet( MAKE_ICON( search ) ), "", this ); 
-    next->setAccel( Qt::Key_F3 );
-    next->setMaximumWidth( 30 );
-
-    connect( edit, SIGNAL( textChanged( const QString& ) ), this, SLOT( Search( const QString& ) ) );
-    connect( next, SIGNAL( pressed() ), this, SLOT( FindNext() ) );
-
     controllers_.Register( *this );
 }
 
@@ -151,8 +105,6 @@ template< typename Entity >
 EntitySearchBox< Entity >::~EntitySearchBox()
 {
     controllers_.Remove( *this );
-    for( CIT_Items it = items_.begin(); it != items_.end(); ++it )
-        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,91 +127,5 @@ void EntitySearchBox< Entity >::NotifyDeleted( const Entity& entity )
     RemoveItem( entity.GetId() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: EntitySearchBox::AddItem
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename Entity >
-void EntitySearchBox< Entity >::AddItem( SearchableItem_ABC& item )
-{
-    items_.push_back( &item );
-    lastItem_ = items_.begin();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntitySearchBox::RemoveItem
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename Entity >
-void EntitySearchBox< Entity >::RemoveItem( unsigned long id )
-{
-    // $$$$ AGE 2006-04-20: may be dangerous
-    const QString input = QString::number( id );
-    for( IT_Items it = items_.begin(); it != items_.end(); ++it )
-    {
-        if( (*it)->Matches( input ) )
-        {
-            std::swap( *it, items_.back() );
-            delete items_.back();
-            items_.pop_back();
-            lastItem_ = items_.begin();
-            return;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntitySearchBox::Search
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename Entity >
-void EntitySearchBox< Entity >::Search( const QString& input )
-{
-    currentSearch_ = input.lower();
-    Find();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntitySearchBox::Find
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename Entity >
-bool EntitySearchBox< Entity >::Find( CIT_Items begin, CIT_Items end )
-{
-    for( CIT_Items it = begin; it < end; ++it )
-    {
-        if( (*it)->Matches( currentSearch_ ) )
-        {
-            (*it)->Activate();
-            lastItem_ = it;
-            return true;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntitySearchBox::Find
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename Entity >
-void EntitySearchBox< Entity >::Find()
-{
-    if( ! Find( lastItem_, items_.end() ) )
-        Find( items_.begin(), lastItem_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntitySearchBox::FindNext
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename Entity >
-void EntitySearchBox< Entity >::FindNext()
-{
-    ++lastItem_;
-    if( lastItem_ >= items_.end() )
-        lastItem_ = items_.begin();
-    Find();
-}
 
 #endif // __EntitySearchBox_h_

@@ -20,7 +20,7 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent )
     , attr_( 0 )
 {
     new QLabel( tr( "Largeur:" ), this );
-    width_ = new QSpinBox( 1, 10000, 10, this );
+    width_ = new QSpinBox( 0, 10000, 10, this );
 
     new QLabel( tr( "Profondeur:" ), this );
     depth_ = new QSpinBox( 0, 1000, 10, this );
@@ -38,7 +38,7 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent )
 // -----------------------------------------------------------------------------
 CrossingSitePrototype::~CrossingSitePrototype()
 {
-    // NOTHING
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,5 +76,5 @@ void CrossingSitePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Clean()
 {
-    delete attr_;
+    delete attr_; attr_ = 0;
 }

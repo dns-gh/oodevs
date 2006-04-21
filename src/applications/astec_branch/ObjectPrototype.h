@@ -82,7 +82,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Team& team );
-    virtual void NotifyUpdated( const Team& team );
     virtual void NotifyDeleted( const Team& team );
     //@}
 

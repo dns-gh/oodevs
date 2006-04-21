@@ -19,15 +19,3 @@ MsgRecorder& AgentServerMsgMgr::GetMsgRecorder()
 {
     return msgRecorder_;
 }
-
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::BuildMessage
-// Created: NLD 2002-08-06
-//-----------------------------------------------------------------------------
-inline
-DIN::DIN_BufferedMessage AgentServerMsgMgr::BuildMessage()
-{
-    assert( pMessageService_ );
-    return DIN::DIN_BufferedMessage( *pMessageService_ );
-}

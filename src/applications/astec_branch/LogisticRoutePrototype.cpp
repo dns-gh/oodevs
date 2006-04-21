@@ -39,7 +39,7 @@ LogisticRoutePrototype::LogisticRoutePrototype( QWidget* parent )
 // -----------------------------------------------------------------------------
 LogisticRoutePrototype::~LogisticRoutePrototype()
 {
-    // NOTHING
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,5 +77,5 @@ void LogisticRoutePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 // -----------------------------------------------------------------------------
 void LogisticRoutePrototype::Clean()
 {
-    delete attr_;
+    delete attr_; attr_ = 0;
 }

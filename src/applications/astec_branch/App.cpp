@@ -211,8 +211,6 @@ void App::InitializeHumanFactors( xistream& xis, const std::string& conffile )
 void App::UpdateData()
 {
     network_->Update();
-    network_->Update();
-    network_->Update();
 }
 
 // -----------------------------------------------------------------------------

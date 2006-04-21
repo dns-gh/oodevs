@@ -28,9 +28,5 @@ int main( int argc, char** argv )
         QApplication a( argc, argv );
         QMessageBox::critical( 0, APP_NAME, e.what() );
     }
-    catch( ... )
-    {
-        // NOTHING
-    }
     return 0;
 }

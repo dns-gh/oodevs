@@ -39,7 +39,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolve
 // -----------------------------------------------------------------------------
 NBCPrototype::~NBCPrototype()
 {
-    // NOTHING
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,6 +81,6 @@ void NBCPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 // -----------------------------------------------------------------------------
 void NBCPrototype::Clean()
 {
-    delete nbcArea_;
-    delete nbcCloud_;
+    delete nbcArea_; nbcArea_ = 0;
+    delete nbcCloud_; nbcCloud_ = 0;
 }

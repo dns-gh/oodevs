@@ -45,7 +45,7 @@ RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resol
 // -----------------------------------------------------------------------------
 RotaPrototype::~RotaPrototype()
 {
-    // NOTHING
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void RotaPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 // -----------------------------------------------------------------------------
 void RotaPrototype::Clean()
 {
-    delete attr_;
+    delete attr_; attr_ = 0;
 }
 
 // -----------------------------------------------------------------------------

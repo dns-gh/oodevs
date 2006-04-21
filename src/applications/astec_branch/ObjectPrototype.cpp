@@ -73,13 +73,13 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     locationCreator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
     locationCreator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
     locationCreator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
-    controllers.actions_.Register( *locationCreator_ );
+    controllers_.Register( *locationCreator_ );
 
-    campAttributes_          = new CampPrototype( parent, controllers, model_.agents_ ); campAttributes_->hide();
-    crossingSiteAttributes_  = new CrossingSitePrototype( parent );                      crossingSiteAttributes_->hide();
-    logisticRouteAttributes_ = new LogisticRoutePrototype( parent );                     logisticRouteAttributes_->hide();
-    nbcAttributes_           = new NBCPrototype( parent, model_.objectTypes_ );          nbcAttributes_->hide();
-    rotaAttributes_          = new RotaPrototype( parent, model_.objectTypes_ );         rotaAttributes_->hide();
+    campAttributes_          = new CampPrototype( parent, controllers );         campAttributes_->hide();
+    crossingSiteAttributes_  = new CrossingSitePrototype( parent );              crossingSiteAttributes_->hide();
+    logisticRouteAttributes_ = new LogisticRoutePrototype( parent );             logisticRouteAttributes_->hide();
+    nbcAttributes_           = new NBCPrototype( parent, model_.objectTypes_ );  nbcAttributes_->hide();
+    rotaAttributes_          = new RotaPrototype( parent, model_.objectTypes_ ); rotaAttributes_->hide();
 
     
     controllers.Register( *this );
@@ -93,6 +93,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
 // -----------------------------------------------------------------------------
 ObjectPrototype::~ObjectPrototype()
 {
+    controllers_.Remove( *locationCreator_ );
     delete campAttributes_;
     delete crossingSiteAttributes_;
     delete logisticRouteAttributes_;
@@ -181,15 +182,6 @@ void ObjectPrototype::NotifyCreated( const Team& team )
 }
     
 // -----------------------------------------------------------------------------
-// Name: ObjectPrototype::NotifyUpdated
-// Created: SBO 2006-04-19
-// -----------------------------------------------------------------------------
-void ObjectPrototype::NotifyUpdated( const Team& /*team*/ )
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
 // Name: ObjectPrototype::NotifyDeleted
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
@@ -265,7 +257,8 @@ void ObjectPrototype::Handle( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Draw( const GlTools_ABC& tools ) const
 {
-    locationCreator_->Draw( locationPoints_, locationType_, tools );
+    if( isVisible() )
+        locationCreator_->Draw( locationPoints_, locationType_, tools );
 }
 
 // -----------------------------------------------------------------------------

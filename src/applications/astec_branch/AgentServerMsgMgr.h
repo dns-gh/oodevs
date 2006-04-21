@@ -23,11 +23,14 @@
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 
+#include "boost/thread/mutex.hpp"
+
 class AgentServerController;
 class Agent;
 class MsgRecorder;
 class Model;
 class Simulation;
+class DIN_InputDeepCopy;
 
 namespace DIN
 {
@@ -79,7 +82,7 @@ public:
     //@}
     
 public:
-             AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Simulation& simu ); 
+             AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex ); 
     virtual ~AgentServerMsgMgr();
 
     //-------------------------------------------------------------------------
@@ -97,6 +100,8 @@ public:
     //@{
     void Enable( DIN::DIN_Link& session );
     //@}
+
+    void DoUpdate();
 
     //-------------------------------------------------------------------------
     /** @name Messages */
@@ -146,6 +151,21 @@ private:
     // ASN
     void OnReceiveMsgSimMos           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgSimMosWithContext( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+
+    void _OnReceiveMsgProfilingValues                       ( DIN::DIN_Input& input );
+    void _OnReceiveMsgInit                                  ( DIN::DIN_Input& input );
+    void _OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Input& input );
+    void _OnReceiveMsgTrace                                 ( DIN::DIN_Input& input );
+    void _OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
+    void _OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Input& input );
+    void _OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
+    void _OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
+    void _OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Input& input );
+    void _OnReceiveMsgArmy                                  ( DIN::DIN_Input& input );
+    void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
+    void _OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
+    void _OnReceiveMsgSimMos                                ( DIN::DIN_Input& input );
+    void _OnReceiveMsgSimMosWithContext                     ( DIN::DIN_Input& input );
 
     // Control
     void OnReceiveMsgCtrlPauseAck             ( const ASN1T_MsgCtrlPauseAck&  asnMsg );
@@ -283,17 +303,29 @@ private:
     void Send( unsigned int id );
     template< typename T >
     bool CheckAcknowledge( const char* type, const T& message );
+    typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
+    void Enqueue( DIN::DIN_Input& input, T_Callback function );
     //@}
 
+    //! @name Copy / Assignment
+    //@{
     AgentServerMsgMgr( const AgentServerMsgMgr& );
     AgentServerMsgMgr& operator=( const AgentServerMsgMgr& );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< DIN_InputDeepCopy* > T_Inputs;
+    typedef T_Inputs::const_iterator        CIT_Inputs;
+    //@}
     
 private:
     Model&       model_;
     Simulation& simulation_;
+    boost::mutex& mutex_;
     MsgRecorder& msgRecorder_;
-    DIN::DIN_Link* session_;
 
+    DIN::DIN_Link* session_;
     DIN::DIN_MessageServiceUserCbk<AgentServerMsgMgr>*  pMessageService_;
 
     // ASN
@@ -303,6 +335,7 @@ private:
     bool bReceivingState_;
     bool bUseMosLimits_;
 
+    T_Inputs inputs_;
 };
 
 #   include "AgentServerMsgMgr.inl"

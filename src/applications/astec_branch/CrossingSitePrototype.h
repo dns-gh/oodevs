@@ -47,10 +47,6 @@ private:
     CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

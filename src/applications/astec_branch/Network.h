@@ -10,6 +10,10 @@
 #ifndef __Network_h_
 #define __Network_h_
 
+#undef Yield
+#include "tools/thread/Thread.h"
+#include <boost/thread/mutex.hpp>
+
 class AgentServerMsgMgr;
 class Model;
 class Simulation;
@@ -28,7 +32,7 @@ namespace DIN
 */
 // Created: AGE 2006-02-08
 // =============================================================================
-class Network
+class Network : public tools::thread::Thread
 {
 
 public:
@@ -58,20 +62,37 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Run();
     void OnConnected     ( DIN::DIN_Link& link );
     void OnNotConnected  ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
     void OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
     //@}
 
+    //! @name Types
+    //@{
+    struct T_Message
+    {
+        DIN::DIN_Link* link_;
+        std::string address_;
+        std::string error_;
+        bool lost_;
+    };
+    typedef std::vector< T_Message >     T_Messages;
+    typedef T_Messages::const_iterator CIT_Messages;
+    //@}
+
 private:
     //! @name Member data
     //@{
+    boost::mutex mutex_;
+    T_Messages messages_;
     Simulation& simu_;
     DIN::DIN_Engine* engine_;
     DIN::DIN_ConnectionServiceClientUserCbk< Network >* pConnService_;
 
     DIN::DIN_Link* session_;
     AgentServerMsgMgr* manager_;
+    bool terminated_;
     //@}
 };
 

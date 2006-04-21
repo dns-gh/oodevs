@@ -9,31 +9,27 @@
 
 #include "astec_pch.h"
 #include "CampPrototype.h"
+#include "moc_CampPrototype.cpp"
+
 #include "Agent.h"
 #include "Controllers.h"
 #include "ASN_Messages.h"
+#include "AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: CampPrototype::CampPrototype
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, const Resolver< Agent >& agents )
+CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers )
     : ObjectPrototypeAttributes_ABC( parent, tr( "Camp" ) )
+    , controllers_( controllers )
     , attrPrisonners_( 0 )
     , attrRefugees_( 0 )
+    , selected_( controllers )
 {
     new QLabel( qApp->tr( "TC2:" ), this );
     tc2s_ = new ValuedComboBox< const Agent* >( this );
-
-    Iterator< const Agent& > it( agents.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const Agent& element = it.NextElement();
-//        if( element.IsTC2() ) // $$$$ SBO 2006-04-19: 
-            tc2s_->AddItem( element.GetName().c_str(), &element );
-    }
-
-    controllers.Register( *this );
+    controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -42,7 +38,8 @@ CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, const R
 // -----------------------------------------------------------------------------
 CampPrototype::~CampPrototype()
 {
-    // NOTHING
+    Clean();
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,8 +81,8 @@ void CampPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 // -----------------------------------------------------------------------------
 void CampPrototype::Clean()
 {
-    delete attrPrisonners_;
-    delete attrRefugees_;
+    delete attrPrisonners_; attrPrisonners_ = 0;
+    delete attrRefugees_; attrRefugees_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,17 +93,8 @@ void CampPrototype::NotifyCreated( const Agent& agent )
 {
     if( tc2s_->GetItemIndex( &agent ) != -1 )
         return;
-    // $$$$ SBO 2006-04-19: condition: must be a tc2?
-    tc2s_->AddItem( agent.GetName().c_str(), &agent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CampPrototype::NotifyUpdated
-// Created: SBO 2006-04-19
-// -----------------------------------------------------------------------------
-void CampPrototype::NotifyUpdated( const Agent& agent )
-{
-    // NOTHING
+    if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
+        tc2s_->AddItem( agent.GetName().c_str(), &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,4 +104,30 @@ void CampPrototype::NotifyUpdated( const Agent& agent )
 void CampPrototype::NotifyDeleted( const Agent& agent )
 {
     tc2s_->RemoveItem( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CampPrototype::NotifyContextMenu
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void CampPrototype::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+{
+    if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
+    {
+        selected_ = &agent;
+        if( menu.count() )
+            menu.insertSeparator();
+
+        menu.insertItem( tr( "TC2 du camp" ), this, SLOT( SetSelected() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CampPrototype::SetSelected
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void CampPrototype::SetSelected()
+{
+    if( selected_ )
+        tc2s_->SetCurrentItem( selected_ );
 }

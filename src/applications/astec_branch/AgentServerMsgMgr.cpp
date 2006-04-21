@@ -39,6 +39,7 @@
 #include "App.h"
 #include "DIN_Types.h"
 #include "WeatherModel.h"
+#include "DIN_InputDeepCopy.h"
 
 using namespace DIN;
 
@@ -46,11 +47,12 @@ using namespace DIN;
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Simulation& simu )
+AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex )
     : model_           ( model ) 
     , simulation_      ( simu )
     , session_         ( 0 )
     , bReceivingState_ ( true )
+    , mutex_           ( mutex )
     , msgRecorder_     ( * new MsgRecorder( *this ) )
 {
     const DIN_ConnectorGuest theConnector( (DIN::DIN_Connector_ABC::DIN_ConnectionID)( eConnector_SIM_MOS ) );
@@ -75,7 +77,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Sim
     pMessageService_->SetCbkOnError( AgentServerMsgMgr::OnError );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr destructor
 // Created: NLD 2002-07-12
@@ -84,6 +85,43 @@ AgentServerMsgMgr::~AgentServerMsgMgr()
 {
     delete pMessageService_;
     delete &msgRecorder_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::BuildMessage
+// Created: NLD 2002-08-06
+//-----------------------------------------------------------------------------
+DIN::DIN_BufferedMessage AgentServerMsgMgr::BuildMessage()
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    return DIN::DIN_BufferedMessage( *pMessageService_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::* function )
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Enqueue( DIN::DIN_Input& input, T_Callback function )
+{
+    inputs_.push_back( new DIN_InputDeepCopy( input, function ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::DoUpdate
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::DoUpdate()
+{
+    T_Inputs inputs;
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        std::swap( inputs_, inputs );
+    }
+    for( CIT_Inputs it = inputs.begin(); it != inputs.end(); ++it )
+    {
+        (*it)->Apply( *this );
+        delete *it;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +143,7 @@ bool AgentServerMsgMgr::IsPaused() const
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Enable( DIN::DIN_Link& session )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
     pMessageService_->Enable( session );
     session_ = &session;
 }
@@ -119,6 +158,7 @@ void AgentServerMsgMgr::Enable( DIN::DIN_Link& session )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
     if( ! session_ )
         throw std::runtime_error( "Not connected" );
     pMessageService_->Send( *session_, id, message );
@@ -130,6 +170,7 @@ void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( unsigned int id )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
     if( ! session_ )
         throw std::runtime_error( "Not connected" );
     pMessageService_->Send( *session_, id );
@@ -181,7 +222,15 @@ void AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const Agent& ag
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    // NOTHING
+    Enqueue( input, _OnReceiveMsgInit );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgInit
+// Created: NLD 2002-07-16
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& )
+{
     SendMsgEnableUnitVisionCones(); // $$$$ AGE 2006-04-04: a la demande
 }
 
@@ -209,6 +258,15 @@ void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& m
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
+    Enqueue( input, _OnReceiveMsgKnowledgeGroup );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup
+// Created: NLD 2004-09-09
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgKnowledgeGroup( DIN::DIN_Input& input )
+{
     unsigned long id, team;
     input >> id >> team; // $$$$ AGE 2006-02-15: Pkoi dans cet ordre la ndd ?
     model_.teams_.Get( team ).CreateKnowledgeGroup( id );
@@ -220,6 +278,15 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/,
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input )
 {
+    Enqueue( input, _OnReceiveMsgArmy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgArmy
+// Created: NLD 2005-02-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgArmy( DIN::DIN_Input& input )
+{
     model_.teams_.CreateTeam( input );
 }
 
@@ -227,7 +294,16 @@ void AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input
 // Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
 // Created: NLD 2002-10-14
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN_Input& )
+void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgProfilingValues );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
+// Created: NLD 2002-10-14
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& )
 {
     // $$$$ AGE 2006-02-10: NOTHING
 }
@@ -237,6 +313,15 @@ void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgTrace );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgTrace
+// Created: NLD 2003-01-29
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgTrace( DIN_Input& input )
 {
     unsigned long nAgentID;
     input >> nAgentID;
@@ -249,6 +334,15 @@ void AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& in
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
+    Enqueue( input, _OnReceiveMsgDebugDrawPoints );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints
+// Created: NLD 2005-03-22
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgDebugDrawPoints( DIN::DIN_Input& input )
+{
     MIL_AgentID nAgentID;
     input >> nAgentID;
     model_.agents_.FindAllAgent( nAgentID )->Update( DebugPointsMessage( input ) );
@@ -259,6 +353,15 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/
 // Created: NLD 2003-02-12
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgUnitVisionCones );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitVisionCones
+// Created: NLD 2003-02-12
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgUnitVisionCones( DIN_Input& input )
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
@@ -271,6 +374,15 @@ void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( DIN_Link& /*linkFrom*/, DIN
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
+    Enqueue( input, _OnReceiveMsgUnitInterVisibility );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input )
+{
     MIL_AgentID nAgentID;
     input >> nAgentID;
     model_.agents_.GetAgent( nAgentID ).Update( DetectionMessage( input ) );
@@ -281,6 +393,15 @@ void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*linkFr
 // Created: NLD 2003-03-17
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgPopulationConcentrationInterVisibility );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input )
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
@@ -293,6 +414,15 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN:
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
+    Enqueue( input, _OnReceiveMsgPopulationFlowInterVisibility );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Input& input )
+{
     MIL_AgentID nAgentID;
     input >> nAgentID;
     model_.agents_.GetAgent( nAgentID ).Update( FlowDetectionMessage( input ) );
@@ -304,6 +434,15 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::DIN_Input& input )
 {
+    Enqueue( input, _OnReceiveMsgPopulationCollision );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationCollision
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgPopulationCollision( DIN::DIN_Input& input )
+{
     MIL_AgentID nAgentID;
     input >> nAgentID;
     model_.agents_.GetAgent( nAgentID ).Update( PopulationCollisionMessage( input ) );
@@ -314,6 +453,15 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::D
 // Created: NLD 2003-03-17
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgObjectInterVisibility );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input )
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
@@ -1520,11 +1668,21 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 // ASN
 //=============================================================================
 
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgSimMos );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr constructor
+// Created: NLD 2003-02-26
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgSimMos( DIN_Input& input )
 {
     uint nAsnMsgSize = input.GetAvailable();
 
@@ -1668,6 +1826,15 @@ void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& i
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    Enqueue( input, _OnReceiveMsgSimMosWithContext );
+}
+
+//-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgSimMosWithContext
+// Created: NLD 2003-02-26
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::_OnReceiveMsgSimMosWithContext( DIN_Input& input )
 {
     MIL_MOSContextID nCtx;
     input >> nCtx;

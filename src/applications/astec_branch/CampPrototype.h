@@ -15,6 +15,8 @@
 #include "ValuedComboBox.h"
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
+#include "ContextMenuObserver_ABC.h"
+#include "SafePointer.h"
 
 class Agent;
 class Controllers;
@@ -32,11 +34,14 @@ struct ASN1T_AttrObjectCampRefugies;
 class CampPrototype : public ObjectPrototypeAttributes_ABC
                     , public Observer_ABC
                     , public ElementObserver_ABC< Agent >
+                    , public ContextMenuObserver_ABC< Agent >
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructor/Destructor
     //@{
-             CampPrototype( QWidget* parent, Controllers& controllers, const Resolver< Agent >& agents );
+             CampPrototype( QWidget* parent, Controllers& controllers );
     virtual ~CampPrototype();
     //@}
 
@@ -54,19 +59,28 @@ private:
     CampPrototype& operator=( const CampPrototype& );
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void SetSelected();
+    //@}
+
+private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Agent& agent );
-    virtual void NotifyUpdated( const Agent& agent );
     virtual void NotifyDeleted( const Agent& agent );
+    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
     //@}
 
 private:
     //! @name Member Data
     //@{
+    Controllers& controllers_;
     ValuedComboBox< const Agent* >* tc2s_;
     ASN1T_AttrObjectCampPrisonniers* attrPrisonners_;
     ASN1T_AttrObjectCampRefugies* attrRefugees_;
+    SafePointer< Agent > selected_;
     //@}
 };
 

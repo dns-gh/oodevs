@@ -56,7 +56,7 @@ private:
         };
     };
     typedef std::map< T_Cell, E_PerceptionResult, CellLess > T_VisionMap;
-    typedef T_VisionMap::const_iterator                     CIT_VisionMap;
+    typedef T_VisionMap::const_iterator                     CIT_VisionMap; // $$$$ AGE 2006-04-21: mettre un allocateur
     //@}
 
 private:
