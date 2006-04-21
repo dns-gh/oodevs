@@ -28,14 +28,23 @@ class DEC_Knowledge_RapForGlobal : public DEC_Knowledge_RapFor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             DEC_Knowledge_RapForGlobal( const MIL_Automate& automate );
              DEC_Knowledge_RapForGlobal();
     virtual ~DEC_Knowledge_RapForGlobal();
     //@}
 
+    //! @name CheckPoints
+    //@{
+    template < typename Archive > void serialize( Archive&, const uint );
+    //@}
+
     //! @name Operations
     //@{
-    void Update( const MIL_Automate& automate, const T_KnowledgeAgentVector& enemies, const T_KnowledgeAgentVector& friends );
+    virtual void Update();
     //@}
+
+private:
+    const MIL_Automate* pAutomate_;
 };
 
 #include "DEC_Knowledge_RapForGlobal.inl"

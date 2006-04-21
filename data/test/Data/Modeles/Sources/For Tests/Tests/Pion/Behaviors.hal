@@ -476,8 +476,9 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
         
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDangereusesPourPion   ( DEC_Pion_PionPC() ) ) ) + " unites ennemies dangereuse pour PC" );
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( DEC_Pion_PionPC() ) ) ) + " unites ennemies vivantes percues par PC" );                   
-   
-    
+        
+        DEC_Debug( "Rapfor Local: " + FloatToString( DEC_RapportDeForceLocal() ) );
+           
         //T_Point cock = DEC_ListePoints_GetAt( mission.itineraire_, 0 );
         //DEC_Debug( DEC_PointToString( cock ) );
                   

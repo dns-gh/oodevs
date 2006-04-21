@@ -28,22 +28,29 @@ class DEC_Knowledge_RapForLocal : public DEC_Knowledge_RapFor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion );
              DEC_Knowledge_RapForLocal();
     virtual ~DEC_Knowledge_RapForLocal();
     //@}
 
+    //! @name CheckPoints
+    //@{
+    template < typename Archive > void serialize( Archive&, const uint );
+    //@}
+
     //! @name Operations
     //@{
-    void Update( const MIL_AgentPion& pion, const T_KnowledgeAgentVector& enemies, const T_KnowledgeAgentVector& friends );
+    virtual void Update();
     //@}
 
     //! @name Accessors
     //@{
-    const T_KnowledgeAgentDiaIDVector& GetDangerousEnemies() const;
+    const T_KnowledgeAgentDiaIDVector& GetDangerousEnemies();
     //@}
 
 private:
-    T_KnowledgeAgentDiaIDVector dangerousEnemies_;
+    const MIL_AgentPion*              pPion_;
+          T_KnowledgeAgentDiaIDVector dangerousEnemies_;
 };
 
 #include "DEC_Knowledge_RapForLocal.inl"

@@ -13,16 +13,30 @@
 #include "DEC_Knowledge_RapForLocal.h"
 
 #include "DEC_Knowledge_Agent.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForLocal, "DEC_Knowledge_RapForLocal" )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapForLocal constructor
-// Created: NLD 2004-03-11
+// Created: NLD 2006-04-21
+// -----------------------------------------------------------------------------
+DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion )
+    : DEC_Knowledge_RapFor_ABC()
+    , pPion_                  ( &pion )
+{
+
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapForLocal constructor
+// Created: NLD 2006-04-21
 // -----------------------------------------------------------------------------
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal()
     : DEC_Knowledge_RapFor_ABC()
+    , pPion_                  ( 0 )
 {
 
 }
@@ -37,6 +51,23 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 }
 
 // =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void DEC_Knowledge_RapForLocal::serialize
+// Created: NLD 2006-04-12
+// -----------------------------------------------------------------------------
+template< typename Archive > 
+void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const uint )
+{
+    archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
+            & const_cast< MIL_AgentPion*& >( pPion_ );
+
+    assert( pPion_ );
+}
+
+// =============================================================================
 // OPERATIONS
 // =============================================================================
 
@@ -44,8 +75,17 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 // Name: DEC_Knowledge_RapForLocal::Update
 // Created: NLD 2004-04-07
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_KnowledgeAgentVector& enemies, const T_KnowledgeAgentVector& friends )
+void DEC_Knowledge_RapForLocal::Update()
 {
+    if( nLastCacheUpdateTick_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+        return;
+    nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+
+
+    assert( pPion_ );
+    const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
+    const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
+
     dangerousEnemies_.clear();
 
     T_KnowledgeAgentVector agentLocalEnemies;
@@ -57,7 +97,7 @@ void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_Knowl
     for( CIT_KnowledgeAgentVector itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
     {
         DEC_Knowledge_Agent& knowledgeEnemy = **itEnemy;
-        MT_Float rDangerosity = knowledgeEnemy.GetDangerosity( pion ) * knowledgeEnemy.GetOperationalState();
+        MT_Float rDangerosity = knowledgeEnemy.GetDangerosity( *pPion_ ) * knowledgeEnemy.GetOperationalState();
         if( rDangerosity != 0. )
         {
             rTotalFightScoreEnemy += rDangerosity;
@@ -80,5 +120,5 @@ void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_Knowl
         }
     }
     
-    ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy, pion.GetType().GetRapForIncreasePerTimeStepValue() );
+    ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy, pPion_->GetType().GetRapForIncreasePerTimeStepValue() );
 }

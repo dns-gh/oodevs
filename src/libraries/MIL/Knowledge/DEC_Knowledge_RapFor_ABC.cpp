@@ -14,46 +14,12 @@
 
 #include "Tools/MIL_Tools.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapFor_ABC, "DEC_Knowledge_RapFor_ABC" )
-
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
       MT_Float DEC_Knowledge_RapFor_ABC::rRapForIncreasePerTimeStepDefaultValue_ = 0.;
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_RapFor_ABC constructor
-// Created: NLD 2004-03-11
-// -----------------------------------------------------------------------------
-DEC_Knowledge_RapFor_ABC::DEC_Knowledge_RapFor_ABC()
-    : DEC_Knowledge_ABC()
-    , rRapForValue_    ( rRapForBoundMax_ )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_RapFor_ABC destructor
-// Created: NLD 2004-04-07
-// -----------------------------------------------------------------------------
-DEC_Knowledge_RapFor_ABC::~DEC_Knowledge_RapFor_ABC()
-{   
-}
-
 // =============================================================================
-// CHECKPOINTS
-// =============================================================================
-// -----------------------------------------------------------------------------
-// Name: template < typename Archive > void DEC_Knowledge_RapFor_ABC::serialize
-// Created: JVT 2005-03-25
-// -----------------------------------------------------------------------------
-template < typename Archive > 
-void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const uint )
-{
-    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-    file & rRapForValue_;
-}
-
-// =============================================================================
-// TOOLS
+// STATIC
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -71,16 +37,27 @@ void DEC_Knowledge_RapFor_ABC::Initialize( MIL_InputArchive& archive )
     archive.EndSection();
 }
 
+// =============================================================================
+// INSTANCE
+// =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue
-// Created: NLD 2004-11-25
+// Name: DEC_Knowledge_RapFor_ABC constructor
+// Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( MT_Float rBaseTimeValue )
+DEC_Knowledge_RapFor_ABC::DEC_Knowledge_RapFor_ABC()
+    : DEC_Knowledge_ABC    ()
+    , nLastCacheUpdateTick_( 0 )
+    , rRapForValue_        ( rRapForBoundMax_ )
 {
-    if( rBaseTimeValue <= 0. )
-        return rRapForBoundMax_ - rRapForBoundMin_;
-    else
-        return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapFor_ABC destructor
+// Created: NLD 2004-04-07
+// -----------------------------------------------------------------------------
+DEC_Knowledge_RapFor_ABC::~DEC_Knowledge_RapFor_ABC()
+{   
 }
 
 // =============================================================================

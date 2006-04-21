@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Classes>
     <Classe nom="Unite"                                 id="1"   />
-    <Classe nom="TirPion"                               id="127" />
-    <Classe nom="TirPopulation"                         id="128" />
+    <Classe nom="TirPion"                               id="2" />
+    <Classe nom="TirPopulation"                         id="227" />
     <Classe nom="Lima"                                  id="137" />
     <Classe nom="Limite"                                id="138" />
     <Classe nom="Ordre"                                 id="145" />
@@ -49,11 +49,11 @@
     <Classe nom="zone interdite tir"                    id="215" />
     <Classe nom="zone interdite mouvement"              id="215" />
     <Classe nom="zone implantation mortier"             id="167" />
-    <Classe nom="installation"                          id="215" />
-    <Classe nom="Population"                            id="2" />
-    <Classe nom="PopulationConcentration"               id="2" />
-    <Classe nom="PopulationFlux"                        id="2" />
-    <Classe nom="ConnaissancePopulation"                id="3" />
-    <Classe nom="ConnaissancePopulationConcentration"   id="3" />
-    <Classe nom="ConnaissancePopulationFlux"            id="3" />
+    <Classe nom="installation"                          id="210" />
+    <Classe nom="Population"                            id="139" />
+    <Classe nom="PopulationConcentration"               id="218" />
+    <Classe nom="PopulationFlux"                        id="220" />
+    <Classe nom="ConnaissancePopulation"                id="223" />
+    <Classe nom="ConnaissancePopulationConcentration"   id="222" />
+    <Classe nom="ConnaissancePopulationFlux"            id="221" />
 </Classes>

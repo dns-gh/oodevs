@@ -130,24 +130,6 @@ DEC_KS_PopulationInteraction& DEC_KnowledgeBlackBoard_AgentPion::GetKsPopulation
     return *pKsPopulationInteraction_;
 }
 
-//------------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::GetKnowledgeRapForLocal
-// Created: NLD 2004-04-07
-// -----------------------------------------------------------------------------
-inline
-DEC_Knowledge_RapForLocal& DEC_KnowledgeBlackBoard_AgentPion::GetKnowledgeRapForLocal()
-{
-    return knowledgeRapForLocal_;
-}
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue
-// Created: NLD 2004-04-08
-// -----------------------------------------------------------------------------
-inline
-MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
-{
-    return knowledgeRapForLocal_.GetValue();
-}
 
 

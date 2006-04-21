@@ -14,8 +14,10 @@
 
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "DEC_Knowledge_RapForGlobal.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Automates/MIL_Automate.h"
+
 
 BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_Automate, "DEC_KnowledgeBlackBoard_Automate" )
 
@@ -24,8 +26,8 @@ BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_Automate, "DEC_KnowledgeBlackBo
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate( MIL_Automate& automate )
-    : pAutomate_            ( &automate )
-    , knowledgeRapForGlobal_()
+    : pAutomate_             ( &automate )
+    , pKnowledgeRapForGlobal_( new DEC_Knowledge_RapForGlobal( automate ) )
 {
 }
 
@@ -34,8 +36,8 @@ DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate( MIL_Automate
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_Automate::DEC_KnowledgeBlackBoard_Automate()
-    : pAutomate_            ( 0 )
-    , knowledgeRapForGlobal_()
+    : pAutomate_             ( 0 )
+    , pKnowledgeRapForGlobal_()
 {
 }
 
@@ -62,8 +64,23 @@ void DEC_KnowledgeBlackBoard_Automate::serialize( Archive& archive, const uint )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
             & pAutomate_
-            & knowledgeRapForGlobal_;
+            & pKnowledgeRapForGlobal_;
 }
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::GetRapForGlobalValue
+// Created: NLD 2004-04-08
+// -----------------------------------------------------------------------------
+MT_Float DEC_KnowledgeBlackBoard_Automate::GetRapForGlobalValue() const
+{
+    assert( pKnowledgeRapForGlobal_ );
+    return pKnowledgeRapForGlobal_->GetValue();
+}
+
 
 // =============================================================================
 // NETWORK

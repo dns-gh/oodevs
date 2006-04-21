@@ -4,6 +4,9 @@ max_activations     =   10;
 
 behavior BEH_Defaut( id nDummy )
 {
+
+    DEC_Debug( "Rapfor global: " + FloatToString( DEC_RapportDeForceGlobal() ) );
+
     /*T_ListePions selFusse = DEC_Geometrie_PionEstCoordonne( DEC_Automate_PionPC(), DEC_Automate_PionsSansPC(), 2000 );
     DEC_Debug( "DEC_Geometrie_PionEstCoordonne : " + FloatToString( DIA_Size( selFusse ) ) );*/
     

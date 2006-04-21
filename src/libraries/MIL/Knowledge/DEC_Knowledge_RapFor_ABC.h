@@ -37,7 +37,7 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float GetValue() const;
+    MT_Float GetValue();
     //@}
 
     //! @name Tools
@@ -50,11 +50,14 @@ public:
 protected:
     //! @name Tools
     //@{
-    void ApplyValue( MT_Float rTotalFightScoreFriend, MT_Float rTotalFightScoreEnemy, const MT_Float rRapForIncreasePerTimeStepValue );
+            void ApplyValue( MT_Float rTotalFightScoreFriend, MT_Float rTotalFightScoreEnemy, const MT_Float rRapForIncreasePerTimeStepValue );
+            bool NeedUpdate() const;
+    virtual void Update    () = 0;
     //@}
 
-private:
+protected:
     MT_Float rRapForValue_;
+    uint     nLastCacheUpdateTick_;
 
 private:
     static const MT_Float rRapForBoundMin_;

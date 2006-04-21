@@ -16,8 +16,6 @@
 
 #include "DEC_KnowledgeBlackBoard_ABC.h"
 
-#include "DEC_Knowledge_RapForLocal.h"
-
 class MIL_AgentPion;
 class DEC_BlackBoard_CanContainKnowledgeAgentPerception;
 class DEC_BlackBoard_CanContainKnowledgeObjectCollision;
@@ -26,6 +24,7 @@ class DEC_BlackBoard_CanContainKnowledgePopulationPerception;
 class DEC_BlackBoard_CanContainKnowledgePopulationCollision;
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_KnowledgeBlackBoard_Army;         
+class DEC_Knowledge_RapForLocal;
 class DEC_KS_ObjectInteraction; 
 class DEC_KS_PopulationInteraction;
 class DEC_KS_Fire;            
@@ -72,7 +71,6 @@ public:
     DEC_BlackBoard_CanContainKnowledgeObjectPerception&     GetKnowledgeObjectPerceptionContainer    () const;
     DEC_BlackBoard_CanContainKnowledgePopulationPerception& GetKnowledgePopulationPerceptionContainer() const;
     DEC_BlackBoard_CanContainKnowledgePopulationCollision&  GetKnowledgePopulationCollisionContainer () const;
-    DEC_Knowledge_RapForLocal&                              GetKnowledgeRapForLocal                  ();
     //@}
 
     //! @name Network
@@ -117,7 +115,7 @@ private:
     DEC_BlackBoard_CanContainKnowledgeObjectPerception*     pKnowledgeObjectPerceptionContainer_;
     DEC_BlackBoard_CanContainKnowledgePopulationPerception* pKnowledgePopulationPerceptionContainer_;
     DEC_BlackBoard_CanContainKnowledgePopulationCollision*  pKnowledgePopulationCollisionContainer_;
-    DEC_Knowledge_RapForLocal                               knowledgeRapForLocal_;
+    DEC_Knowledge_RapForLocal*                              pKnowledgeRapForLocal_;
 
     // Knowledge sources
     DEC_KS_ObjectInteraction*     pKsObjectInteraction_;

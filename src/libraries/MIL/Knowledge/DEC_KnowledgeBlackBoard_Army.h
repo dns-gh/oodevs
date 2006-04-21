@@ -72,6 +72,8 @@ public:
     void                  GetObjects            ( T_KnowledgeObjectVector&      container ) const;
     DEC_Knowledge_Object* GetClosestObject      ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
     DEC_Knowledge_Object* GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
+
+//    bool                  HasNewKnowledgeObject () const;
     //@}
 
 private:

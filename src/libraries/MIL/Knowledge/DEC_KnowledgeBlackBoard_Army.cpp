@@ -337,3 +337,13 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( const DE
 {
     return GetKnowledgeObject( collision.GetObject() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::HasNewKnowledgeObject
+// Created: NLD 2006-04-20
+// -----------------------------------------------------------------------------
+//bool DEC_KnowledgeBlackBoard_Army::HasNewKnowledgeObject() const
+//{
+//    assert( pKnowledgeObjectContainer_ );
+//    return pKnowledgeObjectContainer_->HasNewKnowledgeObject();
+//}

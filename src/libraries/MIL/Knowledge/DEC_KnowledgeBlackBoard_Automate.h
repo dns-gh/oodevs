@@ -15,10 +15,10 @@
 #include "MIL.h"
 
 #include "DEC_KnowledgeBlackBoard_ABC.h"
-#include "DEC_Knowledge_RapForGlobal.h"
 
 class MIL_Automate;
 class MIL_RealObjectTypeFilter;
+class DEC_Knowledge_RapForGlobal;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Automate
@@ -51,15 +51,14 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_RapForGlobal& GetKnowledgeRapForGlobal();
-    MT_Float                    GetRapForGlobalValue    () const;
+    MT_Float GetRapForGlobalValue() const;
     //@}
 
 private:
     MIL_Automate* pAutomate_;
 
     // Containers
-    DEC_Knowledge_RapForGlobal knowledgeRapForGlobal_;
+    DEC_Knowledge_RapForGlobal* pKnowledgeRapForGlobal_;
 };
 
 #include "DEC_KnowledgeBlackBoard_Automate.inl"

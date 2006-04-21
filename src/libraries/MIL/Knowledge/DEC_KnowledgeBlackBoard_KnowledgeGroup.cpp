@@ -23,7 +23,6 @@
 #include "DEC_KS_AgentKnowledgeSynthetizer.h"
 #include "DEC_KS_PopulationKnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
-#include "DEC_KS_RapFor.h"
 #include "MIL_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_KnowledgeGroup, "DEC_KnowledgeBlackBoard_KnowledgeGroup" )
@@ -39,7 +38,6 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
     , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )      
     , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
     , pKsSharing_                       ( new DEC_KS_Sharing                              ( *this ) )
-    , pKsRapFor_                        ( new DEC_KS_RapFor                               ( *this ) )
 {
 }
 
@@ -54,7 +52,6 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     , pKsAgentKnowledgeSynthetizer_     ( 0 )      
     , pKsPopulationKnowledgeSynthetizer_( 0 )
     , pKsSharing_                       ( 0 )
-    , pKsRapFor_                        ( 0 )
 {
 }
 
@@ -69,7 +66,6 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup(
     delete pKsAgentKnowledgeSynthetizer_;     
     delete pKsPopulationKnowledgeSynthetizer_;
     delete pKsSharing_;                       
-    delete pKsRapFor_;                            
 }
 
 // =============================================================================
@@ -89,8 +85,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKnowledgePopulationContainer_    
             & pKsAgentKnowledgeSynthetizer_     
             & pKsPopulationKnowledgeSynthetizer_
-            & pKsSharing_                       
-            & pKsRapFor_;
+            & pKsSharing_;
 }
 
 // =============================================================================

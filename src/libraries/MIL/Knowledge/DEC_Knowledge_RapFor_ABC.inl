@@ -9,14 +9,30 @@
 //
 // *****************************************************************************
 
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: template < typename Archive > void DEC_Knowledge_RapFor_ABC::serialize
+// Created: JVT 2005-03-25
+// -----------------------------------------------------------------------------
+template < typename Archive > 
+void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const uint )
+{
+    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         & nLastCacheUpdateTick_
+         & rRapForValue_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC::GetValue
 // Created: NLD 2004-04-07
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Knowledge_RapFor_ABC::GetValue() const
+MT_Float DEC_Knowledge_RapFor_ABC::GetValue()
 {
+    Update();
     return rRapForValue_;    
 }
 
@@ -28,4 +44,17 @@ inline
 MT_Float DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue()
 {
     return rRapForIncreasePerTimeStepDefaultValue_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue
+// Created: NLD 2004-11-25
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( MT_Float rBaseTimeValue )
+{
+    if( rBaseTimeValue <= 0. )
+        return rRapForBoundMax_ - rRapForBoundMin_;
+    else
+        return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
 }

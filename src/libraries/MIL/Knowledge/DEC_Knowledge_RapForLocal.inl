@@ -14,7 +14,8 @@
 // Created: NLD 2006-01-24
 // -----------------------------------------------------------------------------
 inline
-const T_KnowledgeAgentDiaIDVector& DEC_Knowledge_RapForLocal::GetDangerousEnemies() const
+const T_KnowledgeAgentDiaIDVector& DEC_Knowledge_RapForLocal::GetDangerousEnemies()
 {
+    Update();
     return dangerousEnemies_;
 }

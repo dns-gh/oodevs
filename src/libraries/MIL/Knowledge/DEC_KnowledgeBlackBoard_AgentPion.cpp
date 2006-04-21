@@ -23,6 +23,7 @@
 #include "DEC_KS_PopulationInteraction.h"
 #include "DEC_KS_Fire.h"
 #include "DEC_KS_Perception.h"
+#include "DEC_Knowledge_RapForLocal.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_ObjectPerception.h"
@@ -48,7 +49,7 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentP
     , pKnowledgeObjectPerceptionContainer_      ( new DEC_BlackBoard_CanContainKnowledgeObjectPerception    () )
     , pKnowledgePopulationPerceptionContainer_  ( new DEC_BlackBoard_CanContainKnowledgePopulationPerception() )
     , pKnowledgePopulationCollisionContainer_   ( new DEC_BlackBoard_CanContainKnowledgePopulationCollision () )
-    , knowledgeRapForLocal_                     ()
+    , pKnowledgeRapForLocal_                    ( new DEC_Knowledge_RapForLocal( pion ) )
     , pKsObjectInteraction_                     ( new DEC_KS_ObjectInteraction    ( *this ) )
     , pKsPopulationInteraction_                 ( new DEC_KS_PopulationInteraction( *this ) )
     , pKsFire_                                  ( new DEC_KS_Fire                 ( *this ) )
@@ -67,7 +68,7 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
     , pKnowledgeObjectPerceptionContainer_      ( 0 )
     , pKnowledgePopulationPerceptionContainer_  ( 0 )
     , pKnowledgePopulationCollisionContainer_   ( 0 )
-    , knowledgeRapForLocal_                     ()
+    , pKnowledgeRapForLocal_                    ( 0 )
     , pKsObjectInteraction_                     ( 0 )
     , pKsPopulationInteraction_                 ( 0 )
     , pKsFire_                                  ( 0 )
@@ -115,7 +116,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const uint 
             & pKsPopulationInteraction_                
             & pKsFire_                                 
             & pKsPerception_
-            & knowledgeRapForLocal_;
+            & pKnowledgeRapForLocal_;
 }
 
 // =============================================================================
@@ -287,16 +288,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetLivingEnemiesPerceivedInZone( T_Knowl
     pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );           
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies
-// Created: NLD 2006-04-13
-// -----------------------------------------------------------------------------
-const T_KnowledgeAgentDiaIDVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies() const
-{
-    return knowledgeRapForLocal_.GetDangerousEnemies();
-}
-
-
 namespace {
     class sAgentsAttackingInsertor
     {
@@ -335,6 +326,26 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking( T_KnowledgeAgentDiaI
     container.clear();
     sAgentsAttackingInsertor functor( *pPion_, container );
     pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functor );              
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue
+// Created: NLD 2004-04-08
+// -----------------------------------------------------------------------------
+MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
+{
+    assert( pKnowledgeRapForLocal_ );
+    return pKnowledgeRapForLocal_->GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+const T_KnowledgeAgentDiaIDVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies() const
+{
+    assert( pKnowledgeRapForLocal_ );
+    return pKnowledgeRapForLocal_->GetDangerousEnemies();
 }
 
 // -----------------------------------------------------------------------------

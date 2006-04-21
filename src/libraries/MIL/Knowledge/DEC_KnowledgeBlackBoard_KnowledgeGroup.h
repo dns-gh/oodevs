@@ -24,7 +24,6 @@ class DEC_BlackBoard_CanContainKnowledgePopulation;
 class DEC_KS_AgentKnowledgeSynthetizer;
 class DEC_KS_PopulationKnowledgeSynthetizer;
 class DEC_KS_Sharing;
-class DEC_KS_RapFor;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
 class MIL_RealObject_ABC;
@@ -106,7 +105,6 @@ private:
     DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;
     DEC_KS_PopulationKnowledgeSynthetizer*  pKsPopulationKnowledgeSynthetizer_;
     DEC_KS_Sharing*                         pKsSharing_;
-    DEC_KS_RapFor*                          pKsRapFor_;    
 
     //! @name Queries caches
     //@{
