@@ -43,7 +43,7 @@ public:
     virtual void RegisterIn( ActionController& controller );
     virtual void SetOptional( bool );
 
-    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit() = 0;
     //@}

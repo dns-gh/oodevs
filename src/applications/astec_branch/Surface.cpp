@@ -58,9 +58,10 @@ Surface::~Surface()
 // Name: Surface::Draw
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void Surface::Draw( const GlTools_ABC& tools ) const
+void Surface::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    float rRadius = pSensorType_->GetMaxDistance( agent_ );
+    if( viewport.Intersect( Extent() ).IsEmpty() )
+        return;
 
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
     {
@@ -71,14 +72,14 @@ void Surface::Draw( const GlTools_ABC& tools ) const
         const Point2f&  pos   = sector.GetOrigin();
 
         if( pos.IsZero() )
-            tools.DrawCircle( pos, rRadius );
+            tools.DrawCircle( pos, maxRadius_ );
         else
         {
             Vector2f dir1 = dir;
             Vector2f dir2 = dir;
 
-            dir1.Normalize() *= rRadius;
-            dir2.Normalize() *= rRadius;
+            dir1.Normalize() *= maxRadius_;
+            dir2.Normalize() *= maxRadius_;
             const float rSin = std::sin( angle );
             const float rCos = std::cos( angle );
             dir1 = Vector2f( dir1.X() * rCos + dir1.Y() * rSin
@@ -92,7 +93,7 @@ void Surface::Draw( const GlTools_ABC& tools ) const
             if( std::asin( dir.Y() ) < 0 )
                 A0 = -A0;
             // $$$$ AGE 2006-04-04: 
-//            GLTool::DrawArc( pos, rRadius, A0 + angle, A0 - angle );
+//            GLTool::DrawArc( pos, maxRadius_, A0 + angle, A0 - angle );
         }
     }
 }

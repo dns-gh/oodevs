@@ -117,14 +117,14 @@ void VisionCones::Update() const
 // Name: VisionCones::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionCones::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) const
+void VisionCones::Draw( const geometry::Point2f& , const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
-            (*it)->Draw( tools );
+            (*it)->Draw( viewport, tools );
     if( tools.ShouldDisplay( "VisionSurfaces" ) && ! updating_ )
         if( needUpdating_ )
             Update();
         else
-            map_->Draw( tools );
+            map_->Draw( viewport, tools );
 }

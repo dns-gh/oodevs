@@ -47,7 +47,7 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( ActionController& controller );
-    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();
     virtual void Handle( const T_PointVector& points );

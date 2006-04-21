@@ -235,14 +235,14 @@ const Agent* Agent::GetSuperior() const
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( automatType_ && ! aggregated_ )
-        automatType_->Draw( where, tools );
-    else if( type_ && ! aggregated_ )
-        type_->Draw( where, tools );
+        automatType_->Draw( where, viewport, tools );
+    if( type_ && ! aggregated_ )
+        type_->Draw( where, viewport, tools );
     else if( type_ && aggregated_ )
-        type_->DrawAggregated( where, tools );
+        type_->DrawAggregated( where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

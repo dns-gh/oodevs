@@ -72,8 +72,8 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 // Name: Contaminations::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Contaminations::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Contaminations::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( ! contaminatingNbcAgents_.empty() )
+    if( ! contaminatingNbcAgents_.empty() && viewport.IsInside( where ) )
         tools.DrawIcon( xpm_nbc, where, 150.f );
 }

@@ -136,7 +136,7 @@ void ParamLocation::Handle( const T_PointVector& points )
 // Name: ParamLocation::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLocation::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) const
+void ParamLocation::Draw( const geometry::Point2f& , const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
     creator_->Draw( points_, nType_, tools );
 }

@@ -237,17 +237,17 @@ const Team& Population::GetTeam() const
 // Name: Population::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void Population::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Population::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     {
         Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
         while( it.HasMoreElements() )
-            it.NextElement().Draw( where, tools );
+            it.NextElement().Draw( where, viewport, tools );
     }
     {
         Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
         while( it.HasMoreElements() )
-            it.NextElement().Draw( where, tools );
+            it.NextElement().Draw( where, viewport, tools );
     }
 }
 

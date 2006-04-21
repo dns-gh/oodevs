@@ -58,8 +58,9 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
 // Name: AgentDetections::Draw
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-04-21: viewport
     if( ! tools.ShouldDisplay( "VisionLines" ) )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );

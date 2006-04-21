@@ -60,9 +60,9 @@ bool ParamPoint::CheckValidity()
 // Name: ParamPoint::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::Draw( const geometry::Point2f& /*point*/, const GlTools_ABC& tools ) const
+void ParamPoint::Draw( const geometry::Point2f& /*point*/, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
-    if( pPosLabel_->text() != "---" )
+    if( pPosLabel_->text() != "---" && extent.IsInside( popupPoint_ ) )
         tools.DrawCross( popupPoint_, GL_CROSSSIZE );
 }
 

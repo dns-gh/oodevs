@@ -137,10 +137,10 @@ void MissionInterface_ABC::Commit()
 // Name: MissionInterface_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Draw( const GlTools_ABC& tools ) const
+void MissionInterface_ABC::Draw( const GlTools_ABC& tools, const geometry::Rectangle2f& extent ) const
 {
     for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
-        (*it)->Draw( agent_.Get< Positions >().GetPosition(), tools );
+        (*it)->Draw( agent_.Get< Positions >().GetPosition(), extent, tools );
 }
 
 // -----------------------------------------------------------------------------

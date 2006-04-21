@@ -74,7 +74,7 @@ void Reports::DoUpdate( const TraceMessage& msg )
 // Name: Reports::Draw
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
-void Reports::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Reports::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-04-06: 
 }

@@ -27,6 +27,8 @@
 #include "GlTools_ABC.h"
 #include "Positions.h"
 
+using namespace geometry;
+
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
@@ -135,9 +137,14 @@ void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
 // Name: LogSupplyConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void LogSupplyConsign::Draw( const Point2f& where, const Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( ! pAutomateLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+        return;
+
+    const Point2f from = pAutomateLogHandling_->Get< Positions >().GetPosition();
+    const Point2f to   = pion_.Get< Positions >().GetPosition();
+    if( viewport.Intersect( Rectangle2f( from, to ) ).IsEmpty() )
         return;
 
     glColor4d( COLOR_ORANGE );
@@ -153,5 +160,5 @@ void LogSupplyConsign::Draw( const geometry::Point2f& where, const GlTools_ABC& 
     default:
         glLineStipple( 1, tools.StipplePattern(0) );
     }
-    tools.DrawCurvedArrow( pAutomateLogHandling_->Get< Positions >().GetPosition(), pion_.Get< Positions >().GetPosition(), 0.6f );
+    tools.DrawCurvedArrow( from, to, 0.6f );
 }

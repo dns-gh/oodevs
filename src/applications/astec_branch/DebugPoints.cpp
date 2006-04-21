@@ -53,9 +53,10 @@ void DebugPoints::DoUpdate( const DebugPointsMessage& message )
 // Name: DebugPoints::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DebugPoints::Draw( const geometry::Point2f& , const GlTools_ABC& tools ) const
+void DebugPoints::Draw( const geometry::Point2f& , const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "DebugPoints" ) )
         for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
-            tools.DrawCross( *it, GL_CROSSSIZE );
+            if( viewport.IsInside( *it ) )
+                tools.DrawCross( *it, GL_CROSSSIZE );
 }

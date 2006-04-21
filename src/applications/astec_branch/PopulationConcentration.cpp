@@ -98,8 +98,9 @@ unsigned int PopulationConcentration::GetDensity() const
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools ) const
+void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-04-21: viewport
     tools.DrawDisc( position_, radius_ );
     glPushAttrib( GL_CURRENT_BIT );
     glColor4d( COLOR_BLACK );

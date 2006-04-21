@@ -138,6 +138,12 @@
     void CreateMission_SeRecompleter();
     void CreateMission_SeRendre();
     void CreateMission_FaireMouvementVersCampRefugies();
+    void CreateMission_InterdireFranchissementPopulations();
+    void CreateMission_FiltrerPopulations();
+    void CreateMission_CanaliserPopulations();
+    void CreateMission_ControlerPopulationsDansZone();
+    void CreateMission_SecuriserZoneContrePopulations();
+    void CreateMission_ASY_CommettreExactionsSurPopulationDansZone();
     void CreateMission_Generique();
     void CreateMission_NBC_ReconnaitreUnAxe();
     void CreateMission_NBC_ReconnaitreUneZone();

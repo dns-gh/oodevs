@@ -30,6 +30,7 @@ class Controller;
 class Displayer_ABC;
 class DotationType ;
 
+// $$$$ AGE 2006-04-21: factorisations entre types de consignes
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
@@ -46,7 +47,7 @@ public:
     //! @name Accessors
     //@{
     void Display( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network events

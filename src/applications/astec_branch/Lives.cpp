@@ -57,8 +57,10 @@ float Lives::GetLife() const
 // Name: Lives::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Lives::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Lives::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    if( ! viewport.IsInside( where ) )
+        return;
     glPushAttrib( GL_CURRENT_BIT );
     if( agent_.GetAutomatDecisionalModel() && bEmbraye_ )
         glColor4f( 1, 1, 0, 0.4f );

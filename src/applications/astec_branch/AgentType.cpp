@@ -95,17 +95,21 @@ const DecisionalModel& AgentType::GetDecisionalModel() const
 // Name: AgentType::Draw
 // Created: SBO 2006-03-21
 // -----------------------------------------------------------------------------
-void AgentType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    tools.DrawApp6Symbol( symbol_, where );
-    tools.DrawApp6Symbol( levelSymbol_, where );
+    if( viewport.IsInside( where ) )
+    {
+        tools.DrawApp6Symbol( symbol_, where );
+        tools.DrawApp6Symbol( levelSymbol_, where );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentType::DrawAggregated
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentType::DrawAggregated( const geometry::Point2f& where, const GlTools_ABC& tools )
+void AgentType::DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools )
 {
-    tools.DrawApp6Symbol( symbol_, where, 2.f );
+    if( viewport.IsInside( where ) )
+        tools.DrawApp6Symbol( symbol_, where, 2.f );
 }

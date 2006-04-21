@@ -59,7 +59,7 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2
     {
         SelectColor( entity );
         const geometry::Point2f position = positions.GetPosition();
-        entity.Draw( position, tools_ );
+        entity.Draw( position, viewport, tools_ );
     }
 }
 

@@ -64,8 +64,8 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
 // Name: Dotations::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Dotations::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Dotations::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( bEmptyGasTank_ )
+    if( bEmptyGasTank_ && viewport.IsInside( where ) )
         tools.DrawIcon( xpm_gas, where, 150.f );
 }

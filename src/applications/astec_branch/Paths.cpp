@@ -97,8 +97,9 @@ void Paths::UpdatePathfind()
 // Name: Paths::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Paths::Draw( const geometry::Point2f& /*where*/, const GlTools_ABC& tools ) const
+void Paths::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-04-21: deal with viewport
     const bool displayPath    = tools.ShouldDisplay( "Paths" );
     const bool displayOldPath = tools.ShouldDisplay( "OldPaths" );
     if( displayPath || displayOldPath )

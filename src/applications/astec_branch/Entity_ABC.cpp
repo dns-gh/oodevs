@@ -43,8 +43,8 @@ void Entity_ABC::AddExtension( Extension_ABC*& where, Extension_ABC* ext )
 // Name: Entity_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void Entity_ABC::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Entity_ABC::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     Entity_ABC* that = const_cast< Entity_ABC* >( this );
-    that->Apply( Drawable_ABC::Draw, where, tools );
+    that->Apply( Drawable_ABC::Draw, where, viewport, tools );
 }

@@ -60,8 +60,9 @@ void Limits::DoUpdate( const ASN1T_MsgPionOrderAck& message )
 // Name: Limits::Draw
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
-void Limits::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Limits::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-04-21: viewport
     if( ! tools.ShouldDisplay( "TacticalLines", false ) 
        && tools.ShouldDisplay( "TacticalLines" ) )
     {

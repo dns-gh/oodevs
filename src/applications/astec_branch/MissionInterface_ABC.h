@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     bool CheckValidity();
-    void Draw( const GlTools_ABC& tools ) const;
+    void Draw( const GlTools_ABC& tools, const geometry::Rectangle2f& extent ) const;
     bool IsEmpty() const;
     //@}
 

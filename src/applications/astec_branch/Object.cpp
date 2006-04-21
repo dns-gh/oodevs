@@ -161,7 +161,7 @@ void Object::Display( Displayer_ABC& displayer ) const
 // Name: Object::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Object::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    type_.Draw( where, tools );
+    type_.Draw( where, viewport, tools );
 }

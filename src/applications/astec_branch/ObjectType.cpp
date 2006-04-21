@@ -45,9 +45,10 @@ const std::string& ObjectType::GetName() const
 // Name: ObjectType::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void ObjectType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void ObjectType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    tools.DrawIcon( xpm_, where, 900.f );
+    if( viewport.IsInside( where ) )
+        tools.DrawIcon( xpm_, where, 900.f );
 }
 
 // -----------------------------------------------------------------------------

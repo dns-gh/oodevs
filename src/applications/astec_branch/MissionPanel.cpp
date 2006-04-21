@@ -264,14 +264,14 @@ void MissionPanel::hideEvent( QHideEvent* pEvent )
 // Name: MissionPanel::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionPanel::Draw( const geometry::Rectangle2f& )
+void MissionPanel::Draw( const geometry::Rectangle2f& viewport )
 {
     if( isVisible() && pMissionInterface_ )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 2.f );
         glColor4d( COLOR_PARAM );
-        pMissionInterface_->Draw( tools_ );
+        pMissionInterface_->Draw( tools_, viewport );
         glPopAttrib();
     }
 }

@@ -39,7 +39,8 @@ IndirectFire::~IndirectFire()
 // Name: IndirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void IndirectFire::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void IndirectFire::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-04-21: viewport
     tools.DrawCurvedArrow( where, target_ );
 }

@@ -46,9 +46,9 @@ DirectFire::~DirectFire()
 // Name: DirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DirectFire::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void DirectFire::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     const Positions* p = target_->Retrieve< Positions >();
-    if( p )
+    if( p && ! viewport.Intersect( geometry::Rectangle2f( where, p->GetPosition() ) ).IsEmpty() )
         tools.DrawArrow( where, p->GetPosition() );
 }

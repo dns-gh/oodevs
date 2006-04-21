@@ -35,7 +35,7 @@ VisionMap::~VisionMap()
 // Name: VisionMap::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionMap::Draw( const GlTools_ABC& tools ) const
+void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     static const double colors[3][4] =
     {
@@ -44,7 +44,7 @@ void VisionMap::Draw( const GlTools_ABC& tools ) const
         { COLOR_VISION_IDENTIED  }
     };
 
-    if( vision_.empty() )
+    if( vision_.empty() || viewport.Intersect( boundingBox_ ).IsEmpty() )
         return;
     const float translation = map_.GetCellSize() * 0.5;
     glPushMatrix();
@@ -71,6 +71,7 @@ void VisionMap::Draw( const GlTools_ABC& tools ) const
 void VisionMap::Clear()
 {
     vision_.clear();
+    boundingBox_ = geometry::Rectangle2f();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,5 +91,8 @@ bool VisionMap::ShouldUpdate( const std::pair< unsigned, unsigned >& cell )
 void VisionMap::Update( const std::pair< unsigned, unsigned >& cell, E_PerceptionResult perception )
 {
     if( perception )
+    {
+        boundingBox_.Incorporate( map_.Map( cell.first, cell.second ) );
         vision_[ cell ] = perception;
+    }
 }

@@ -42,6 +42,9 @@ public:
 
     template< typename Method, typename T1, typename T2 >
     unsigned Apply( Method method, T1& arg1, T2& arg2 );
+
+    template< typename Method, typename T1, typename T2, typename T3>
+    unsigned Apply( Method method, T1& arg1, T2& arg2, T3& arg3 );
     //@}
 
 private:
@@ -67,6 +70,8 @@ private:
     template< typename M, typename A > struct Extract< void (M::*)( A& ) const > { typedef M Member; };
     template< typename M, typename A1, typename A2 > struct Extract< void (M::*)( A1&, A2& )       > { typedef M Member; };
     template< typename M, typename A1, typename A2 > struct Extract< void (M::*)( A1&, A2& ) const > { typedef M Member; };
+    template< typename M, typename A1, typename A2, typename A3 > struct Extract< void (M::*)( A1&, A2&, A3& )       > { typedef M Member; };
+    template< typename M, typename A1, typename A2, typename A3 > struct Extract< void (M::*)( A1&, A2&, A3& ) const > { typedef M Member; };
     //@}
 
     //! @name Helpers

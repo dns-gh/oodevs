@@ -94,8 +94,11 @@ void ObjectPositions::Update( const ASN1T_Localisation& localisation )
 // Name: ObjectPositions::Draw
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f&, const GlTools_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f&, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    if( viewport.Intersect( boundingBox_ ).IsEmpty() )
+        return;
+
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 2.f );
     if( points_.size() >= 2 )

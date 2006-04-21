@@ -3,13 +3,48 @@
 #include "App.h"
 
 #include "MT_Tools/MT_Version.h"
+#include "tools/Win32/StackWalkerProxy.h"
 
 #include <qapplication.h>
 #include <qmessagebox.h>
+#include <fstream>
 
-static void PureHandler()
+namespace
 {
-    throw std::exception( "Pure virtual call" );
+    void PureHandler()
+    {
+        throw std::exception( "Pure virtual call" );
+    }
+
+    void Run( QApplication& app )
+    {
+        try
+        {
+            app.exec();
+        }
+        catch( std::exception& e )
+        {
+            QMessageBox::critical( 0, APP_NAME, e.what() );
+        };
+    }
+
+    QApplication& InstanciateApp( int argc, char** argv )
+    {
+        try
+        {
+            return *new App( argc, argv );
+        }
+        catch( ... )
+        {
+            std::exit( EXIT_FAILURE );
+        }
+    }
+
+    std::ostream& GetLog()
+    {
+        static std::ofstream log( "crash.log" );
+        return log;
+    }
 }
 
 int main( int argc, char** argv )
@@ -17,16 +52,12 @@ int main( int argc, char** argv )
     _set_purecall_handler( PureHandler );
     SetConsoleTitle( "ASTEC - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
 
-    try
+    __try
     {
-        App a( argc, argv );
-        a.processEvents();
-        a.exec();
+        Run( InstanciateApp( argc, argv ) );
     }
-    catch ( std::exception& e )
+    __except( StackWalkerProxy::ContinueSearch( GetExceptionInformation(), GetLog() ) )
     {
-        QApplication a( argc, argv );
-        QMessageBox::critical( 0, APP_NAME, e.what() );
     }
     return 0;
 }

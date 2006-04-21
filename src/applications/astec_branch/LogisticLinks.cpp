@@ -157,10 +157,10 @@ void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, cons
 // Name: LogisticLinks::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLinks::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void LogisticLinks::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
-    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" );
+    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsInside( where );
     if( ! displayLinks && ! displayMissing )
         return;
 

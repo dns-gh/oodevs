@@ -110,9 +110,10 @@ bool AgentPositions::IsIn( const Rectangle2f& rectangle ) const
 // Name: AgentPositions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void AgentPositions::Draw( const Point2f& where, const GlTools_ABC& tools ) const
+void AgentPositions::Draw( const Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    tools.DrawCross( where, GL_CROSSSIZE );    
+    if( viewport.IsInside( where ) )
+        tools.DrawCross( where, GL_CROSSSIZE );    
 }
 
 // -----------------------------------------------------------------------------

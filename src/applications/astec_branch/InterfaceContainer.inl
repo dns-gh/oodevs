@@ -195,3 +195,25 @@ unsigned InterfaceContainer< BaseType >::Apply( Method method, T1& arg1, T2& arg
     }
     return implementations->second.size();
 }
+
+// -----------------------------------------------------------------------------
+// Name: InterfaceContainer::Apply
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+template< typename Method, typename T1, typename T2, typename T3 >
+unsigned InterfaceContainer< BaseType >::Apply( Method method, T1& arg1, T2& arg2, T3& arg3 )
+{
+    typedef typename Extract< Method >::Member Member;
+    T_Implementations*& implementations = FindImplementations< Member >();
+    if( ! implementations )
+        implementations = InitializeImplementations< Member >();
+
+    for( unsigned int index = 0; index < implementations->second.size(); ++index )
+    {
+        void* ext = implementations->second.at( index );
+        Member* imp = reinterpret_cast< Member* >( ext );
+        (*imp.*method)( arg1, arg2, arg3 );
+    }
+    return implementations->second.size();
+}

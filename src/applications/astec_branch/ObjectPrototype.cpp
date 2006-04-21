@@ -42,6 +42,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     : QGroupBox( 2, Qt::Horizontal, tr( "Informations" ), parent )
     , controllers_( controllers )
     , model_( model )
+    , layer_( layer )
     , umtCoords_( 0 )
     , activeAttributes_( 0 )
 {
@@ -62,29 +63,46 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
         objectTypes_->AddItem( element.GetName().c_str(), &element );
     }
 
+    locationCreator_ = new LocationCreator( this, "Nouvel objet", layer_, *this );
+    locationCreator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
+    locationCreator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
+    locationCreator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
+    locationCreator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
+
     location_ = new RichLabel( tr( "Position:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new LocationCreator( this, "Nouvel objet", layer, *this );
-    locationCreator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
-    locationCreator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
-    locationCreator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
-    locationCreator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
-    controllers_.Register( *locationCreator_ );
-
     campAttributes_          = new CampPrototype( parent, controllers );         campAttributes_->hide();
     crossingSiteAttributes_  = new CrossingSitePrototype( parent );              crossingSiteAttributes_->hide();
     logisticRouteAttributes_ = new LogisticRoutePrototype( parent );             logisticRouteAttributes_->hide();
     nbcAttributes_           = new NBCPrototype( parent, model_.objectTypes_ );  nbcAttributes_->hide();
     rotaAttributes_          = new RotaPrototype( parent, model_.objectTypes_ ); rotaAttributes_->hide();
-
     
     controllers.Register( *this );
 
     connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype::showEvent
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void ObjectPrototype::showEvent( QShowEvent* )
+{
+    controllers_.Register( *locationCreator_ );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype::hideEvent
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void ObjectPrototype::hideEvent( QShowEvent* )
+{
+    if( locationCreator_ )
+        controllers_.Remove( *locationCreator_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -93,7 +111,6 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
 // -----------------------------------------------------------------------------
 ObjectPrototype::~ObjectPrototype()
 {
-    controllers_.Remove( *locationCreator_ );
     delete campAttributes_;
     delete crossingSiteAttributes_;
     delete logisticRouteAttributes_;

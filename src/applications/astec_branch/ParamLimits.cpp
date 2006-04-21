@@ -46,10 +46,10 @@ void ParamLimits::RemoveFromController()
 // Name: ParamLimits::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLimits::Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const
+void ParamLimits::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
-    limit1_->Draw( point, tools );
-    limit2_->Draw( point, tools );
+    limit1_->Draw( point, extent, tools );
+    limit2_->Draw( point, extent, tools );
 }
 
 // -----------------------------------------------------------------------------

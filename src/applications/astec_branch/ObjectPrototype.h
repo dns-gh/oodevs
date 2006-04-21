@@ -83,6 +83,8 @@ private:
     //@{
     virtual void NotifyCreated( const Team& team );
     virtual void NotifyDeleted( const Team& team );
+    virtual void showEvent( QShowEvent* );
+    virtual void hideEvent( QShowEvent* );
     //@}
 
 private:
@@ -90,6 +92,8 @@ private:
     //@{
     Controllers& controllers_;
     const Model& model_;
+    ParametersLayer& layer_;
+
     ValuedComboBox< const Team* >* teams_;
     ValuedComboBox< const ObjectType* >* objectTypes_;
     QLineEdit* name_;

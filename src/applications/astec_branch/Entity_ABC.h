@@ -43,7 +43,7 @@ public:
             throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() ) + " could be updated with message type " + typeid( T ).name() );
     }
 
-    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:

@@ -122,9 +122,9 @@ const Mission* Decisions::GetCurrentMission() const
 // Name: Decisions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Decisions::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( bEmbraye_ )
+    if( bEmbraye_ && viewport.IsInside( where ) )
         tools.DrawIcon( xpm_cadenas, where, 150.f );
 }
 

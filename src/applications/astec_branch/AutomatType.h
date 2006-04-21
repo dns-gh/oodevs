@@ -42,7 +42,7 @@ public:
     unsigned long GetId();
     AgentType* GetTypePC();
     const DecisionalModel& GetDecisionalModel() const;
-    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
     bool IsTC2() const;
     bool IsLogisticSupply() const;

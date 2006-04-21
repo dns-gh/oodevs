@@ -80,9 +80,10 @@ const DecisionalModel& AutomatType::GetDecisionalModel() const
 // Name: AutomatType::Draw
 // Created: SBO 2006-03-21
 // -----------------------------------------------------------------------------
-void AutomatType::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    tools.DrawApp6Symbol( symbol_, where );
+    if( viewport.IsInside( where ) ) // $$$$ AGE 2006-04-21: maybe add a tools.WhereIsInside or something ?
+        tools.DrawApp6Symbol( symbol_, where );
 }
 
 // -----------------------------------------------------------------------------

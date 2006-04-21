@@ -94,7 +94,7 @@ private:
     void RemoveChild( Agent& child );
     virtual void Aggregate( const bool& );
 
-    void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:

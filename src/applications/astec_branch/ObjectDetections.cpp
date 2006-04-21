@@ -58,8 +58,9 @@ void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
 // Name: ObjectDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void ObjectDetections::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void ObjectDetections::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-04-21: viewport
     if( ! tools.ShouldDisplay( "VisionLines" ) )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );

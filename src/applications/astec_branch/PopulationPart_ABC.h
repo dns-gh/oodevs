@@ -43,7 +43,7 @@ public:
     virtual unsigned int GetDeadHumans() const = 0;
     virtual unsigned int GetLivingHumans() const = 0;
     virtual unsigned int GetDensity() const = 0;
-    virtual void Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const = 0;
 
     virtual std::string  GetAttitude() const;
 

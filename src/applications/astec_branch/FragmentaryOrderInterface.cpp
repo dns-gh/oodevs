@@ -26,7 +26,7 @@ FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent& ag
 {
     pASNMsgOrder_ = new ASN_MsgOrderConduite();
     pASNMsgOrder_->GetAsnMsg().unit_id = agent.GetId();
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = nMissionId_;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = nMissionId_ + 1; // $$$$ AGE 2006-04-21: 
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromFragOrder( ( E_FragOrder )nMissionId_ ).c_str(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );

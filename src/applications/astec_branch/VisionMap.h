@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
     void Clear();
     bool ShouldUpdate( const std::pair< unsigned, unsigned >& cell );
@@ -63,6 +63,7 @@ private:
     //! @name Member data
     //@{
     const DetectionMap& map_;
+    geometry::Rectangle2f boundingBox_;
     T_VisionMap vision_;
     //@}
 };

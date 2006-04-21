@@ -158,7 +158,7 @@ void LogisticConsigns::TerminateConsign( LogMedicalConsign& consign )
 // Name: LogisticConsigns::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogisticConsigns::Draw( const geometry::Point2f& where, const GlTools_ABC& tools ) const
+void LogisticConsigns::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
@@ -171,24 +171,24 @@ void LogisticConsigns::Draw( const geometry::Point2f& where, const GlTools_ABC& 
     glEnable( GL_LINE_STIPPLE );
     glColor4d( COLOR_MAROON );
     for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
-            (*it)->Draw( where, tools );
+            (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )
         for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
-            (*it)->Draw( where, tools );
+            (*it)->Draw( where, viewport, tools );
 
     
     for( T_MedicalConsigns::const_iterator it = handledMedical_.begin(); it != handledMedical_.end(); ++it )
-            (*it)->Draw( where, tools );
+            (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )
         for( T_MedicalConsigns::const_iterator it = requestedMedical_.begin(); it != requestedMedical_.end(); ++it )
-            (*it)->Draw( where, tools );
+            (*it)->Draw( where, viewport, tools );
 
     
     for( T_SupplyConsigns::const_iterator it = handledSupplies_.begin(); it != handledSupplies_.end(); ++it )
-            (*it)->Draw( where, tools );
+            (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )
         for( T_SupplyConsigns::const_iterator it = requestedSupplies_.begin(); it != requestedSupplies_.end(); ++it )
-            (*it)->Draw( where, tools );
+            (*it)->Draw( where, viewport, tools );
     glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
 }

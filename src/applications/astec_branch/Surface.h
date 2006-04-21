@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     void Update( VisionMap& map );
     //@}
 
