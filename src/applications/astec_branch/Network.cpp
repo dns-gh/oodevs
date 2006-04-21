@@ -12,7 +12,6 @@
 #include "Net_Def.h"
 #include "Types.h"
 #include "AgentServerMsgMgr.h"
-#include "App.h"
 #include "ASN_Messages.h"
 #include "Simulation.h"
 

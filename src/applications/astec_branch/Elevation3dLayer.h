@@ -16,6 +16,7 @@
 
 class ElevationMap;
 class ElevationTextureTree;
+class Controller;
 
 // =============================================================================
 /** @class  Elevation3dLayer
@@ -29,7 +30,7 @@ class Elevation3dLayer : public Layer3d_ABC, private ElevationColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Elevation3dLayer( const ElevationMap& elevation );
+             Elevation3dLayer( Controller& controller, const ElevationMap& elevation );
     virtual ~Elevation3dLayer();
     //@}
 
@@ -55,8 +56,9 @@ private:
 private:
     //! @name Member data
     //@{
-    ViewFrustum lastFrustum_;
+    Controller& controller_;
     const ElevationMap& elevation_;
+    ViewFrustum lastFrustum_;
     ElevationTextureTree* tree_;
     float zRatio_;
     //@}

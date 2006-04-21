@@ -15,8 +15,10 @@
 #include "graphics/GraphicShape.h"
 #include "OptionVariant.h"
 #include "Controllers.h"
+#include "Controller.h"
 #include "graphics/GraphicData.h"
 #include "GlTools_ABC.h"
+#include "InitializationMessage.h"
 
 using namespace pathfind;
 
@@ -58,22 +60,12 @@ void TerrainLayer::Initialize( const geometry::Rectangle2f& world )
 {
     if( shapes_.empty() )
     {
+        controllers_.controller_.Update( InitializationMessage( "Chargement de la planimétrie..." ) );
         world_ = world;
         DataFactory dataFactory;
         GraphicFactory factory( *this, dataFactory );
         factory.LoadGraphicDirectory( dataDirectory_ );
     }
-//    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-//    {
-//        const std::string name = it->first.ToString();
-//        const T_ShapeContainer& container = *it->second;
-//        std::cout << name << " :\n"
-//            << "\tsize = " << container.Size() << ",\n"
-//            << "\tmax depth = " << container.MaxDepth() << ",\n"
-//            << "\taverage depth = " << container.AverageDepth() << ",\n"
-//            << "\tnode number = " << container.NodeNumber() << ",\n"
-//            << "\troot size = " << container.RootSize() << std::endl;
-//    }
 }
 
 // -----------------------------------------------------------------------------

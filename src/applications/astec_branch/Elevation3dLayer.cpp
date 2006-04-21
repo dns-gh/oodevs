@@ -12,13 +12,16 @@
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Visitor3d.h"
 #include "GLTools_ABC.h"
+#include "Controller.h"
+#include "InitializationMessage.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( const ElevationMap& elevation )
-    : elevation_( elevation )
+Elevation3dLayer::Elevation3dLayer( Controller& controller, const ElevationMap& elevation )
+    : controller_( controller )
+    , elevation_( elevation )
     , tree_( 0 )
     , zRatio_( 5.f )
 {
@@ -41,7 +44,10 @@ Elevation3dLayer::~Elevation3dLayer()
 void Elevation3dLayer::Initialize( const geometry::Rectangle2f& )
 {
     if( ! tree_ )
+    {
+        controller_.Update( InitializationMessage( "Génération de la texture 3D..." ) );
         tree_ = new ElevationTextureTree( elevation_, *this );
+    }
 }
 
 // -----------------------------------------------------------------------------

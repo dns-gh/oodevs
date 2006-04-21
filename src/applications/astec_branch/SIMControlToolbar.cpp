@@ -126,7 +126,7 @@ void SIMControlToolbar::SlotPlayPause()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::SlotSpeedChange()
 {
-    if( App::GetApp().GetNetwork().IsConnected() )
+    if( App::GetApp().GetNetwork().IsConnected() ) // $$$$ AGE 2006-04-21: regarder la simulation
     {
         ASN_MsgCtrlChangeTimeFactor asnMsg;
         asnMsg.GetAsnMsg() = pSpeedSpinBox_->value();

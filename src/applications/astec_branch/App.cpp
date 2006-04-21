@@ -23,6 +23,7 @@
 #include "Simulation.h"
 #include "Controllers.h"
 #include "Workers.h"
+#include "InitializationMessage.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -153,6 +154,7 @@ void App::Initialize( const std::string& scipioXml )
     InitializeHumanFactors ( xis, scipioXml ); 
 
     controllers_ = new Controllers();
+    controllers_->Register( *this );
     simulation_  = new Simulation( *controllers_ );
     workers_     = new Workers();
     SetSplashText( tr( "Chargement du modèle..." ) );
@@ -230,4 +232,13 @@ void App::SetSplashText( const QString& strText )
 {
     if( splashScreen_ )
         splashScreen_->message( strText, Qt::AlignLeft | Qt::AlignBottom, Qt::black );
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::NotifyUpdated
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void App::NotifyUpdated( const InitializationMessage& message )
+{   
+    SetSplashText( tr( message.message_.c_str() ) );
 }

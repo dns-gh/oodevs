@@ -11,13 +11,16 @@
 #include "Elevation2dLayer.h"
 #include "ColoredElevationLayer.h"
 #include "GLTools_ABC.h"
+#include "Controller.h"
+#include "InitializationMessage.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation2dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation2dLayer::Elevation2dLayer( const ElevationMap& elevation )
-    : elevation_( elevation )
+Elevation2dLayer::Elevation2dLayer( Controller& controller, const ElevationMap& elevation )
+    : controller_( controller )
+    , elevation_( elevation )
     , layer_( 0 )
 {
     // NOTHING
@@ -40,6 +43,7 @@ void Elevation2dLayer::Initialize( const geometry::Rectangle2f& extent )
 {
     if( !layer_ )
     {
+        controller_.Update( InitializationMessage( "Génération de la texture 2D..." ) );
         layer_ = new ColoredElevationLayer( elevation_ );
         layer_->Initialize( extent );
     };

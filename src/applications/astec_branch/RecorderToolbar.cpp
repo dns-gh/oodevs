@@ -22,7 +22,6 @@
 #include "Network.h"
 #include "AgentServerMsgMgr.h"
 #include "MsgRecorder.h"
-#include "App.h"
 #include "resources.h"
 #include <fstream>
 

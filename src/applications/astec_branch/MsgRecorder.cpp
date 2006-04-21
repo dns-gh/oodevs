@@ -19,7 +19,6 @@
 #include "astec_pch.h"
 #include "MsgRecorder.h"
 #include "AgentServerMsgMgr.h"
-#include "App.h"
 #include <fstream>
 
 namespace internal

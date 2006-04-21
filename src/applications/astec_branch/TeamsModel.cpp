@@ -11,7 +11,6 @@
 #include "TeamsModel.h"
 #include "DIN/DIN_Input.h"
 #include "Team.h"
-#include "App.h"
 #include "TeamFactory_ABC.h"
 
 // -----------------------------------------------------------------------------

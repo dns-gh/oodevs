@@ -9,7 +9,6 @@
 
 #include "astec_pch.h"
 #include "Simulation.h"
-#include "App.h"
 #include "Controllers.h"
 #include "Controller.h"
 #include "Network.h"

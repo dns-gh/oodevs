@@ -14,6 +14,7 @@
 
 class ElevationMap;
 class ElevationLayer;
+class Controller;
 
 // =============================================================================
 /** @class  Elevation2dLayer
@@ -27,7 +28,7 @@ class Elevation2dLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Elevation2dLayer( const ElevationMap& elevation );
+             Elevation2dLayer( Controller& controller, const ElevationMap& elevation );
     virtual ~Elevation2dLayer();
     //@}
 
@@ -47,6 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
     const ElevationMap& elevation_;
     ElevationLayer* layer_;
     //@}

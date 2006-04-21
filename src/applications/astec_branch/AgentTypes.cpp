@@ -99,7 +99,7 @@ void AgentTypes::ReadDecisional( const std::string& decisional )
     xis >> start( "Decisionnel" )
             >> start( "DirectIA" )
                 >> content( "Modeles", models );
-    ReadModels( App::BuildChildPath( decisional, models ) );
+    ReadModels( App::BuildChildPath( decisional, models ) ); // $$$$ AGE 2006-04-21: move out App::
 }
 
 // -----------------------------------------------------------------------------

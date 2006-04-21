@@ -36,8 +36,8 @@ GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Mode
 {
     parameters_ = new ParametersLayer( *this );
 
-    Register( *new Elevation2dLayer( model.detection_ ) );
-    Register( *new Elevation3dLayer( model.detection_ ) );
+    Register( *new Elevation2dLayer( controllers.controller_, model.detection_ ) );
+    Register( *new Elevation3dLayer( controllers.controller_, model.detection_ ) );
     Register( *new TerrainLayer( controllers, *this, setup, graphicsDirectory_ ) );
     Register( *new MetricsLayer( controllers, *this ) );
     Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters_, model.limits_ ) );

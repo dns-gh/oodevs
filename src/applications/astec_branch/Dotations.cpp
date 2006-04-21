@@ -9,7 +9,6 @@
 
 #include "astec_pch.h"
 #include "Dotations.h"
-#include "App.h"
 #include "Controller.h"
 #include "Dotation.h"
 #include "DotationType.h"

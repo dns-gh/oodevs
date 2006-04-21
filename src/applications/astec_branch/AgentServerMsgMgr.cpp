@@ -36,7 +36,6 @@
 #include "LogisticsModel.h"
 #include "LimitsModel.h"
 #include "FiresModel.h"
-#include "App.h"
 #include "DIN_Types.h"
 #include "WeatherModel.h"
 #include "DIN_InputDeepCopy.h"
@@ -1094,8 +1093,6 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
     std::stringstream strOutputMsg;
     strOutputMsg << "AutomateOrderAck - Code: " << Tools::ToString( message.error_code );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-//APE    App::GetApp().GetMainWindow().GetAgentEditor().NotifyAgentMissionAck( message.error_code );
 }
 
 //-----------------------------------------------------------------------------
