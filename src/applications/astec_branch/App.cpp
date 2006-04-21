@@ -29,6 +29,8 @@
 #include <qsplashscreen.h>
 #include <qfileinfo.h>
 
+#include "splashscreen.cpp"
+
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/program_options.hpp>
@@ -93,19 +95,19 @@ void App::Initialize( int nArgc, char** ppArgv )
     po::notify( vm );
     
     // Prepare the splash screen displayed during the initialization.
-    QPixmap splashImage( "Mos2.jpg" );
+    QImage splashImage( qembed_findData( "astec.jpg" ) );
     if( !splashImage.isNull() )
     {
         splashScreen_ = new QSplashScreen( splashImage );
         splashScreen_->show();
     }
 
-//    SetSplashText( tr("Démarrage...") );
+    SetSplashText( tr("Démarrage...") );
 
     conffile = RetrieveValidConfigFile( conffile );
     Initialize( conffile );
 
-//    SetSplashText( tr("Initialisation de l'interface...") );
+    SetSplashText( tr("Initialisation de l'interface...") );
     mainWindow_ = new MainWindow( *controllers_, *model_, conffile );
     mainWindow_->show();
 
@@ -153,7 +155,9 @@ void App::Initialize( const std::string& scipioXml )
     controllers_ = new Controllers();
     simulation_  = new Simulation( *controllers_ );
     workers_     = new Workers();
+    SetSplashText( tr( "Chargement du modèle..." ) );
     model_       = new Model( *controllers_, *simulation_, *workers_, scipioXml );
+    SetSplashText( tr( "Initialisation du réseau..." ) );
     network_     = new Network( *model_, *simulation_ );
 }
 
@@ -218,4 +222,14 @@ void App::UpdateData()
 App& App::GetApp()
 {
     return *pInstance_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::SetSplashText
+// Created: SBO 2006-04-21
+// -----------------------------------------------------------------------------
+void App::SetSplashText( const QString& strText )
+{
+    if( splashScreen_ )
+        splashScreen_->message( strText, Qt::AlignLeft | Qt::AlignBottom, Qt::black );
 }
