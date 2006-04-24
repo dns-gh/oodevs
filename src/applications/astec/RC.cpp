@@ -55,7 +55,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_reconnaissance_point : strMsg << "reconnaissance point"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_direction_dangereuse : strMsg << "en poste face a direction dangereuse"; break;
         case T_MsgCR_cr_cr_en_jalonnement : strMsg << "en jalonnement"; break;
-        case T_MsgCR_cr_cr_preparation_mission : strMsg << "preparation mission" << " - delai : " << asnMsg.cr.u.cr_preparation_mission->delai; break;
+//        case T_MsgCR_cr_cr_preparation_mission : strMsg << "preparation mission" << " - delai : " << asnMsg.cr.u.cr_preparation_mission->delai; break;
         case T_MsgCR_cr_cr_debut_mission : strMsg << "debut mission"; break;
         case T_MsgCR_cr_cr_fin_mission : strMsg << "fin mission"; break;
         case T_MsgCR_cr_cr_dispositif_installe : strMsg << "dispositif installe"; break;
@@ -297,14 +297,14 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_en_stationnement : strMsg << "en stationnement"; break;
         case T_MsgCR_cr_cr_execution_attentat : strMsg << "execution attentat"; break;
 
-/*    case T_MsgCR_cr_cr_preparation_mission                           : 
+    case T_MsgCR_cr_cr_preparation_mission                           : 
         {
             if( asnMsg.cr.u.cr_preparation_mission->m.delaiPresent )
                 strMsg << "Preparation mission - Délai " << asnMsg.cr.u.cr_preparation_mission->delai << " minutes";
             else
                 strMsg << "Preparation mission - Pas de délai";
             break;
-        }  */
+        }  
     default:
         assert( false );
     }

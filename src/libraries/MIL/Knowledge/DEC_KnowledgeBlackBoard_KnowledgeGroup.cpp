@@ -390,3 +390,30 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
 }
 
+// =============================================================================
+// TOOLS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges
+// Created: NLD 2006-04-24
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges( const T_KnowledgeAgentDiaIDVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_KnowledgeAgentDiaIDVector& translatedKnowledges ) const
+{
+    assert( pKnowledgeGroup_ );
+    if( *pKnowledgeGroup_ == sourceKnowledgeGroup )
+        translatedKnowledges = sourceKnowledges;
+    else
+    {
+        translatedKnowledges.clear();
+        for( CIT_KnowledgeAgentDiaIDVector it = sourceKnowledges.begin(); it != sourceKnowledges.end(); ++it )
+        {
+            const DEC_Knowledge_Agent* pSourceKnowledge = sourceKnowledgeGroup.GetKnowledge().GetKnowledgeAgentFromID( (uint)*it );
+            assert( pSourceKnowledge );
+
+            const DEC_Knowledge_Agent* pTranslatedKnowledge = pKnowledgeAgentContainer_->GetKnowledgeAgent( pSourceKnowledge->GetAgentKnown() );
+            if( pTranslatedKnowledge )
+                translatedKnowledges.push_back( (void*)pTranslatedKnowledge->GetID() );
+        }
+    }
+}

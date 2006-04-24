@@ -94,6 +94,11 @@ public:
     void                         GetPopulations              ( T_KnowledgePopulationVector&      container ) const;
      //@}
 
+    //! @name Tools
+    //@{
+    void TranslateKnowledges( const T_KnowledgeAgentDiaIDVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_KnowledgeAgentDiaIDVector& translatedKnowledges ) const;
+    //@}
+
 private:
     MIL_KnowledgeGroup* pKnowledgeGroup_;
     

@@ -760,6 +760,17 @@ behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDum
     {
         persistent float toto=0;
         
+       
+        if( DIA_ModuleBegins() )
+        {
+            T_ListeConnaissancesAgent knowledges = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( mission.unite_ );
+            with( x in knowledges )
+            {
+                DEC_Debug( BoolToString( DEC_ConnaissanceAgent_EstValide( x ) ) );
+            }
+        }
+                
+        
         if( DIA_ModuleBegins() )
             DEC_Debug( "MIS_Pion_Test_Reinforce DIA_ModuleBegins" );
         DEC_Debug( "MIS_Pion_Test_Reinforce when updated" );    
