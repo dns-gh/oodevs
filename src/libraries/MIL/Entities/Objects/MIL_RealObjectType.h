@@ -122,10 +122,13 @@ public:
           MT_Float              GetDefaultSpeedWhenBypassed       () const;
           MT_Float              GetDefaultSpeedWhenNotBypassed    () const;
     const PHY_ConsumptionType&  GetDefaultConsumptionMode         () const;
-    const PHY_AttritionData&    GetAttritionData                  ( const PHY_Protection& protection ) const;
           uint                  GetNbrMaxAnimators                () const;
           E_Behavior            GetBehavior                       () const;
           MT_Float              GetExitingPopulationDensity       () const;
+    // Attrition
+    const PHY_AttritionData&    GetPionAttritionData              ( const PHY_Protection& protection ) const;
+          MT_Float              GetPopulationAttritionPH          () const;
+          MT_Float              GetPopulationAttritionSurface     () const;
     //@}
 
     //! @name Operations
@@ -215,12 +218,13 @@ private:
 private:
     //! @name Init tools
     //@{
-    bool IsInitialized            () const;
-    void InitializeSpeedData      ( MIL_InputArchive& archive );
-    void InitializePlacementScores( MIL_InputArchive& archive );
-    void InitializeAttritions     ( MIL_InputArchive& archive );
-    void InitializeDotations      ( MIL_InputArchive& archive );
-    void InitializeDotation       ( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory ) const;
+    bool IsInitialized                    () const;
+    void InitializeSpeedData              ( MIL_InputArchive& archive );
+    void InitializePlacementScores        ( MIL_InputArchive& archive );
+    void InitializePionAttritionData      ( MIL_InputArchive& archive );
+    void InitializePopulationAttritionData( MIL_InputArchive& archive );
+    void InitializeDotations              ( MIL_InputArchive& archive );
+    void InitializeDotation               ( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory ) const;
     //@}
 
 private:
@@ -239,7 +243,6 @@ private:
     E_SpeedPolicy               nSpeedPolicy_;
     MT_Float                    rSpeedPolicyMaxSpeedAgentFactor_;
     bool                        bInitialized_;
-    T_AttritionVector           attritions_;
     const PHY_DotationCategory* pDotationCategoryForConstruction_;
     const PHY_DotationCategory* pDotationCategoryForMining_;
     const PHY_ConsumptionType*  pDefaultConsumptionMode_;
@@ -247,6 +250,11 @@ private:
     MIL_MOSIDManager*           pIDManager_;
     E_Behavior                  nBehavior_; //$$$ a renommer 
     MT_Float                    rExitingPopulationDensity_;
+
+    // Attrition
+    T_AttritionVector           pionAttritions_;
+    MT_Float                    rPopulationAttritionPH_;
+    MT_Float                    rPopulationAttritionSurface_;
 
 private:
     static T_ObjectTypeMap           objectTypes_;

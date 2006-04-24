@@ -23,6 +23,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_MOSIDManager.h"
@@ -754,6 +755,27 @@ void MIL_RealObject_ABC::ApplyAttrition( MIL_Agent_ABC& target )
         ChangeConstructionPercentage( (MT_Float)( nCurrentNbrDotationForConstruction_ - 1 ) / (MT_Float)nFullNbrDotationForConstruction_ );
     else
         ChangeConstructionPercentage( 0. );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::ApplyAttrition
+// Created: NLD 2006-04-24
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::ApplyAttrition( MIL_PopulationElement_ABC& target )
+{
+    assert( pType_ );
+
+    if( pType_->GetPopulationAttritionSurface() > 0. ) //$$$
+    {   
+        PHY_ObjectExplosionFireResult fireResult( *this );
+        target.ApplyExplosion( *pType_, fireResult );
+
+        // Modifie l'état de construction de l'objets
+//        if( nFullNbrDotationForConstruction_ && nCurrentNbrDotationForConstruction_ > 0 )
+//            ChangeConstructionPercentage( (MT_Float)( nCurrentNbrDotationForConstruction_ - 1 ) / (MT_Float)nFullNbrDotationForConstruction_ );
+//        else
+//            ChangeConstructionPercentage( 0. );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -430,7 +430,7 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
 void PHY_ComposantePion::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( objectType.GetAttritionData( pType_->GetProtection() ), fireDamages );
+    ApplyFire( objectType.GetPionAttritionData( pType_->GetProtection() ), fireDamages );
 }
 
 // -----------------------------------------------------------------------------

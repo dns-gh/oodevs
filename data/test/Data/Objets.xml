@@ -26,45 +26,10 @@
         <Construction categorie="mine classique" type="mine"/>
         <Valorisation categorie="mine classique" type="mine"/>
       </Dotations>
-      <!--<Attritions>
-        <ProtectionTypeCharLourd>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-        </ProtectionTypeCharLourd>
-        <ProtectionTypeCharMoyen>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-        </ProtectionTypeCharMoyen>
-        <ProtectionTypeBlindeLeger>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-        </ProtectionTypeBlindeLeger>
-        <ProtectionTypeTransportBlinde>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-        </ProtectionTypeTransportBlinde>
-        <ProtectionTypeAeronef>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-        </ProtectionTypeAeronef>
-        <ProtectionTypeVehiculeNonProtege>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
-        </ProtectionTypeVehiculeNonProtege>
-        <ProtectionTypeCombattant>
-          <Destruction>0.3</Destruction>
-          <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-          <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
-        </ProtectionTypeCombattant>
-      </Attritions>-->
-      <DensitePopulationSortante>0</DensitePopulationSortante>
-      <DensitePopulationSortante>0</DensitePopulationSortante>
+      <AttritionPopulation>
+        <SurfaceAttrition>3</SurfaceAttrition>
+        <PH>0.2</PH>        
+      </AttritionPopulation>      
     </Objet>
     <Objet type="zone minee lineaire">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -75,12 +40,12 @@
       <VitesseParDefaut>0</VitesseParDefaut>
       <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <DensitePopulationSortante>1</DensitePopulationSortante>
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
         <Construction categorie="mine classique" type="mine"/>
       </Dotations>
-      <DensitePopulationSortante>1</DensitePopulationSortante>
     </Objet>
     <Objet type="zone minee par dispersion">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -96,6 +61,10 @@
       <Dotations>
         <Construction categorie="mine classique" type="mine"/>
       </Dotations>
+      <AttritionPopulation>
+        <SurfaceAttrition>0.1</SurfaceAttrition>
+        <PH>0.2</PH>        
+      </AttritionPopulation>           
       <Attritions>
         <ProtectionTypeCharLourd>
           <Destruction>0.3</Destruction>
@@ -496,9 +465,9 @@
       <VitesseParDefaut>666</VitesseParDefaut>
       <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <DensitePopulationSortante>1.2</DensitePopulationSortante>
       <NombreAnimateursMax>1</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
-      <DensitePopulationSortante>1.2</DensitePopulationSortante>
     </Objet>
     <Objet type="terrain largage">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -558,7 +527,6 @@
         <Construction categorie="pont flottant de la mort" type="mine"/>
       </Dotations>
     </Objet>
-    
     <Objet type="installation">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
       <PeutEtrePrepare>false</PeutEtrePrepare>
@@ -569,7 +537,7 @@
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
-    </Objet>    
+    </Objet>
   </ObjetsReels>
 
   <ObjetsVirtuels>

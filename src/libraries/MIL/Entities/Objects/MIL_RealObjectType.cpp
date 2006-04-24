@@ -219,7 +219,7 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , rSpeedPolicyMaxSpeedAgentFactor_ ( 1. )
     , rMaxInteractionHeight_           ( 0. )
     , bInitialized_                    ( false )
-    , attritions_                      (  )
+    , pionAttritions_                  (  )
     , pDotationCategoryForConstruction_( 0 )
     , pDotationCategoryForMining_      ( 0 )
     , pDefaultConsumptionMode_         ( 0 )
@@ -227,16 +227,18 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , rExitingPopulationDensity_       ( std::numeric_limits< MT_Float >::max() )
     , pIDManager_                      ()
     , nBehavior_                       ( nBehavior )
-{
+    , rPopulationAttritionPH_          ( 0. )
+    , rPopulationAttritionSurface_     ( 0. )
+{   
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::InitializeAttritions
+// Name: MIL_RealObjectType::InitializePionAttritionData
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializeAttritions( MIL_InputArchive& archive )
+void MIL_RealObjectType::InitializePionAttritionData( MIL_InputArchive& archive )
 {
-    attritions_.resize( PHY_Protection::GetProtections().size() );
+    pionAttritions_.resize( PHY_Protection::GetProtections().size() );
     
     if ( !archive.Section( "Attritions", MIL_InputArchive::eNothing ) )
         return;
@@ -251,12 +253,30 @@ void MIL_RealObjectType::InitializeAttritions( MIL_InputArchive& archive )
 
         archive.Section( strSectionName.str() );
 
-        assert( attritions_.size() > protection.GetID() );
-        attritions_[ protection.GetID() ] = PHY_AttritionData( archive );
+        assert( pionAttritions_.size() > protection.GetID() );
+        pionAttritions_[ protection.GetID() ] = PHY_AttritionData( archive );
 
         archive.EndSection(); // ProtectionTypeXXX
     }
     archive.EndSection(); // Attritions
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::InitializePopulationAttritionData
+// Created: NLD 2006-04-24
+// -----------------------------------------------------------------------------
+void MIL_RealObjectType::InitializePopulationAttritionData( MIL_InputArchive& archive )
+{
+    rPopulationAttritionPH_      = 0.;
+    rPopulationAttritionSurface_ = 0.;
+
+    if ( !archive.Section( "AttritionPopulation", MIL_InputArchive::eNothing ) )
+        return;
+
+    archive.ReadField( "SurfaceAttrition", rPopulationAttritionSurface_, CheckValueGreater( 0. ) );
+    archive.ReadField( "PH"              , rPopulationAttritionPH_     , CheckValueGreater( 0. ) );
+   
+    archive.EndSection(); // AttritionPopulation
 }
 
 // -----------------------------------------------------------------------------
@@ -400,10 +420,11 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
     archive.ReadField( "NombreAnimateursMax"      , nNbrMaxAnimators_         , CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
     archive.ReadField( "DensitePopulationSortante", rExitingPopulationDensity_, CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
-    InitializeSpeedData      ( archive );
-    InitializePlacementScores( archive );
-    InitializeAttritions     ( archive );
-    InitializeDotations      ( archive );
+    InitializeSpeedData              ( archive );
+    InitializePlacementScores        ( archive );
+    InitializePopulationAttritionData( archive );
+    InitializePionAttritionData      ( archive );
+    InitializeDotations              ( archive );
 
     bInitialized_ = true;
 }
@@ -422,13 +443,13 @@ MIL_RealObjectType::~MIL_RealObjectType()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::GetAttritionData
+// Name: MIL_RealObjectType::GetPionAttritionData
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-const PHY_AttritionData& MIL_RealObjectType::GetAttritionData( const PHY_Protection& protection ) const
+const PHY_AttritionData& MIL_RealObjectType::GetPionAttritionData( const PHY_Protection& protection ) const
 {
-    assert( attritions_.size() > protection.GetID() );
-    return attritions_[ protection.GetID() ];
+    assert( pionAttritions_.size() > protection.GetID() );
+    return pionAttritions_[ protection.GetID() ];
 }
 
 // -----------------------------------------------------------------------------

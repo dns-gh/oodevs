@@ -386,14 +386,17 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
     if( !object.IsReal() )
         return;
 
-    const MIL_RealObject_ABC& realObject = static_cast< const MIL_RealObject_ABC& >( object );
+    MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
+    // $$$ POURRI
+    realObject.ApplyAttrition( *this );
+
+
     if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
         return;
 
     if( !pSplittingObject_ || realObject.GetExitingPopulationDensity() < pSplittingObject_->GetExitingPopulationDensity() )
         pSplittingObject_ = &realObject;
 }
-
     
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetSpeedWithReinforcement

@@ -19,6 +19,7 @@
 #include "MT_Tools/MT_Random.h"
 #include "TER/TER_Localisation.h"
 
+class MIL_PopulationElement_ABC;
 class MIL_RealObjectType;
 class MIL_Army;
 class MIL_Agent_ABC;
@@ -113,8 +114,9 @@ public:
     bool CanBeAnimatedBy( const MIL_AgentPion& agent ) const;
     //@}
 
-    //! @name Population split
+    //! @name Population
     //@{
+    void     ApplyAttrition               ( MIL_PopulationElement_ABC& target );
     MT_Float GetExitingPopulationDensity  () const;
     void     SetExitingPopulationDensity  ( MT_Float rDensity );
     void     ResetExitingPopulationDensity();
@@ -189,7 +191,7 @@ protected:
   
     //! @name Tools
     //@{
-            void              ApplyAttrition     ( MIL_Agent_ABC& agent );    
+            void              ApplyAttrition     ( MIL_Agent_ABC&             target );    
     virtual void              UpdateLocalisation ( const TER_Localisation& newLocalisation );
             const T_AgentSet& GetAnimators       () const;
     //@}

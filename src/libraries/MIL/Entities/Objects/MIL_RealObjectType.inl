@@ -262,6 +262,26 @@ const PHY_ConsumptionType& MIL_RealObjectType::GetDefaultConsumptionMode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetPopulationAttritionPH
+// Created: NLD 2006-04-24
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_RealObjectType::GetPopulationAttritionPH() const
+{
+    return rPopulationAttritionPH_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetPopulationAttritionSurface
+// Created: NLD 2006-04-24
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_RealObjectType::GetPopulationAttritionSurface() const
+{
+    return rPopulationAttritionSurface_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::operator==
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
