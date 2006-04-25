@@ -26,6 +26,8 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_RapForLocal, "DEC_Knowledge_RapForLocal" 
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion )
     : DEC_Knowledge_RapFor_ABC()
     , pPion_                  ( &pion )
+    , dangerousEnemiesIDs_    ()
+    , dangerousEnemies_       ()
 {
 
 }
@@ -37,6 +39,8 @@ DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion 
 DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal()
     : DEC_Knowledge_RapFor_ABC()
     , pPion_                  ( 0 )
+    , dangerousEnemiesIDs_    ()
+    , dangerousEnemies_       ()
 {
 
 }
@@ -86,7 +90,8 @@ void DEC_Knowledge_RapForLocal::Update()
     const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
     const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
 
-    dangerousEnemies_.clear();
+    dangerousEnemiesIDs_.clear();
+    dangerousEnemies_   .clear();
 
     T_KnowledgeAgentVector agentLocalEnemies;
     
@@ -103,7 +108,8 @@ void DEC_Knowledge_RapForLocal::Update()
             rTotalFightScoreEnemy += rDangerosity;
             agentLocalEnemies.push_back( &knowledgeEnemy );
 
-            dangerousEnemies_.push_back( (void*)knowledgeEnemy.GetID() );
+            dangerousEnemiesIDs_.push_back( (void*)knowledgeEnemy.GetID() );
+            dangerousEnemies_   .push_back( &knowledgeEnemy );
         }
     }
 

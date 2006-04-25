@@ -595,9 +595,10 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesDetecteesDansZone              ( mission.forme_ ) ) ) + " unites detectees dans zone" ); 
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesDansZone       ( mission.forme_ ) ) ) + " unites ennemies vivantes dans zone" );
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansZone( mission.forme_ ) ) ) + " unites ennemies vivantes percues dans zone" );        
-        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesAmiesDansZone                  ( mission.forme_ ) ) ) + " unites amies dans zone" );
-        DEC_Debug( BoolToString( DEC_Connaissances_PresenceEnnemieDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) + " unites ennemies dans cercle" );
-        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) ) + " unites ennemies vivantes dans cercle" );
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesAmiesDansZone                  ( mission.forme_ ) ) ) + " unites amies dans zone" );        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) ) + " unites ennemies vivantes dans cercle" );        
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion( DEC_Pion_PionPC(), mission.forme_ ) ) ) + " unites ennemies dangereuses pour PC dans zone" );       
+        DEC_Debug( BoolToString( DEC_Connaissances_PresenceEnnemieDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) + " unites ennemies dans cercle" );        
                 
         // connaissance popu / securisation
         E_ValiditeRequete              nFusse;

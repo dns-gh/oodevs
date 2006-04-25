@@ -345,7 +345,25 @@ MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
 const T_KnowledgeAgentDiaIDVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies() const
 {
     assert( pKnowledgeRapForLocal_ );
-    return pKnowledgeRapForLocal_->GetDangerousEnemies();
+    return pKnowledgeRapForLocal_->GetDangerousEnemiesIDs();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies
+// Created: NLD 2006-04-13
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const
+{    
+    container.clear();
+
+    assert( pKnowledgeRapForLocal_ );
+    const T_KnowledgeAgentVector& knowledges = pKnowledgeRapForLocal_->GetDangerousEnemies();
+    for( CIT_KnowledgeAgentVector it = knowledges.begin(); it != knowledges.end(); ++it )
+    {
+        const DEC_Knowledge_Agent& knowledge = **it;
+        if( zone.IsInside( knowledge.GetPosition() ) )
+            container.push_back( (void*)knowledge.GetID() );
+    }
 }
 
 // -----------------------------------------------------------------------------

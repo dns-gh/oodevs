@@ -42,6 +42,7 @@ public:
     static void GetLivingEnemiesInCircle         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
     template< typename T> static void GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call, const T& caller );
+    template< typename T> static void GetDangerousEnemiesInZoneOfPion( DIA_Call_ABC& call, const T& caller );   
 
     static void GetNearbyRefugees                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNearbySurrenderedAgents       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

@@ -265,6 +265,7 @@ signatures
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesDetecteesDansZone                ( U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesPrenantAPartie                   ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereuses              ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion( A /*T_Pion*/, U /*T_Localisation*/ );          
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercues          ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion   ( A /*T_Pion*/ );        
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau();
