@@ -102,6 +102,54 @@ void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( MT_OutputArchive_ABC& o
     output.EndSection(); // Terrain
 }
 
+// =============================================================================
+// PopulationAttritionInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::PopulationAttritionInfos::PopulationAttritionInfos
+// Created: SBO 2006-04-25
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::PopulationAttritionInfos::PopulationAttritionInfos()
+    : rSurface_( 0. )
+    , rPh_ ( 0. )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos
+// Created: SBO 2006-04-25
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::PopulationAttritionInfos::ReadArchive
+// Created: SBO 2006-04-25
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::PopulationAttritionInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.ReadField( "SurfaceAttrition", rSurface_ );
+    input.ReadField( "PH", rPh_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::PopulationAttritionInfos::WriteArchive
+// Created: SBO 2006-04-25
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.WriteField( "SurfaceAttrition", rSurface_.GetData() );
+    output.WriteField( "PH", rPh_.GetData() );
+}
+
+
+// =============================================================================
+// ObjectInfos
+// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: ObjectInfos::ObjectInfos
@@ -126,6 +174,8 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
 , rMaxAgentSpeedPercentage_( 0 )
 , rOutgoingPopulationDensity_( 0 )
 , bHasOutgoingPopulationDensity_( false )
+, populationAttrition_()
+, bPopulationAttrition_( false )
 {
     rAvoidDistance_.SetDataName( "la distance d'évitement" );
     rAvoidDistance_.SetParentNode( *this );
@@ -313,6 +363,14 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
         input.EndSection(); // Attritions
     }
+
+    // Population Attritions
+    if( input.Section( "AttritionPopulation", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bPopulationAttrition_ = true;
+        populationAttrition_.ReadArchive( input );
+        input.EndSection(); // AttritionPopulation
+    }
 }
 
 
@@ -404,6 +462,13 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
         }
 
         output.EndSection(); // Attritions
+    }
+
+    if( bPopulationAttrition_.GetData() == true )
+    {
+        output.Section( "AttritionPopulation" );
+        populationAttrition_.WriteArchive( output );
+        output.EndSection(); // AttritionPopulation
     }
 
     output.EndSection(); // Objet

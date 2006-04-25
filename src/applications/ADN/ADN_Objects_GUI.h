@@ -52,6 +52,9 @@ public:
         eHasToBuild,
         eHasToReinforce,
         eHasAttritions,
+        eHasPopulationAttritions,
+        ePopulationAttritionSurface,
+        ePopulationAttritionPh,
         eCanBePrepared,
         eCanBeValorized,
         eNbrGuiElements

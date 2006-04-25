@@ -76,6 +76,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eLocationScores]->Connect(&pInfos->vScoreLocation_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eAttritions]->Connect(&pInfos->attritions_, bConnect );
 
+    vItemConnectors_[ADN_Objects_GUI::eHasPopulationAttritions]->Connect(&pInfos->bPopulationAttrition_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::ePopulationAttritionSurface]->Connect(&pInfos->populationAttrition_.rSurface_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::ePopulationAttritionPh]->Connect(&pInfos->populationAttrition_.rPh_, bConnect );
+
     vItemConnectors_[ADN_Objects_GUI::eSpeedImpact]->Connect(&pInfos->nSpeedImpact_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasToBuild]->Connect( &pInfos->bToBuild_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eHasToReinforce]->Connect( &pInfos->bToReinforce_, bConnect );

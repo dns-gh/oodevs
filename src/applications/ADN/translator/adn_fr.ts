@@ -3823,6 +3823,18 @@ du tireur</translation>
         <source>people/m&#xb2;</source>
         <translation>hommes/m²</translation>
     </message>
+    <message>
+        <source>Population attrition</source>
+        <translation>Attrition population</translation>
+    </message>
+    <message>
+        <source>Attrition surface</source>
+        <translation>Surface d&apos;attrition</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation>PH</translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

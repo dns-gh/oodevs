@@ -76,6 +76,21 @@ public:
 
 
 //*****************************************************************************
+    class PopulationAttritionInfos
+    {
+    public:
+        PopulationAttritionInfos();
+        ~PopulationAttritionInfos();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_Double rSurface_;
+        ADN_Type_Double rPh_;
+    };
+
+//*****************************************************************************
     class ObjectInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -121,6 +136,9 @@ public:
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>   ptrToBuild_;
         ADN_Type_Bool                                                   bToReinforce_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>   ptrToReinforce_;
+
+        PopulationAttritionInfos                     populationAttrition_;
+        ADN_Type_Bool                                bPopulationAttrition_;
 
     public:
         class Cmp : public std::unary_function< ObjectInfos* , bool >

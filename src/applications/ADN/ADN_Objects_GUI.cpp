@@ -145,6 +145,16 @@ void ADN_Objects_GUI::Build()
     ADN_Equipement_AttritionTable* pAttritionTable = new ADN_Equipement_AttritionTable( pGroupAttrition );
     vInfosConnectors[eAttritions] = &pAttritionTable->GetConnector();
 
+    //-------------
+    // Population attrition
+    ADN_GroupBox* pGroupPopulationAttrition = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Population attrition" ), pGroup );
+    vInfosConnectors[eHasPopulationAttritions] = &pGroupPopulationAttrition->GetConnector();
+
+    QWidget* pPopulationAttritionParamGroup = builder.AddFieldHolder( pGroupPopulationAttrition );
+
+    builder.AddField< ADN_EditLine_Double >( pPopulationAttritionParamGroup, tr( "Attrition surface" ), vInfosConnectors[ePopulationAttritionSurface], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pPopulationAttritionParamGroup, tr( "PH" ), vInfosConnectors[ePopulationAttritionPh], 0, eGreaterEqualZero );
+
     // Connect the list to the interface.
     pList->SetItemConnectors(vInfosConnectors);
 
@@ -164,6 +174,7 @@ void ADN_Objects_GUI::Build()
 
     pGroupLayout->addWidget( pGroupScoreLocation, 3, 0, Qt::AlignTop );
     pGroupLayout->addWidget( pGroupAttrition, 3, 1, Qt::AlignTop );
+    pGroupLayout->addWidget( pGroupPopulationAttrition, 4, 1, Qt::AlignTop );
 //    pGroupLayout->setRowStretch( 4, 10000 );
 }
 
