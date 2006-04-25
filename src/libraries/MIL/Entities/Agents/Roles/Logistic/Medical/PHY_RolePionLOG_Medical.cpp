@@ -544,7 +544,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_AgentPion& pion, PHY_Human& human )
 {
-   if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance() )
+    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance() )
         return 0;
 
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human );

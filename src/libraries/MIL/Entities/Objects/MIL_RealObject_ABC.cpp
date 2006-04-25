@@ -248,8 +248,6 @@ void MIL_RealObject_ABC::InitializeCommon( MIL_Army& army, const TER_Localisatio
         strName_ = pType_->GetName();
 
     InitializeAvoidanceLocalisation();
-
-    GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
 // -----------------------------------------------------------------------------

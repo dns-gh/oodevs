@@ -17,6 +17,10 @@
 #include "MIL_VirtualObject_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
+#include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
 
@@ -166,6 +170,7 @@ void MIL_ObjectManager::RegisterObject( MIL_RealObject_ABC& object )
     bool bOut = realObjects_.insert( std::make_pair( object.GetID(), &object ) ).second;
     assert( bOut );
     object.SendMsgConstruction();
+    object.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
 // -----------------------------------------------------------------------------
