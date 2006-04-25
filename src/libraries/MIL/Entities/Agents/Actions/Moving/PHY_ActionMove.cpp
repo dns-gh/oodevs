@@ -104,6 +104,9 @@ void PHY_ActionMove::DestroyJoiningPath()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::AvoidObstacles()
 {
+//    if( !pion_.GetKnowledge().HasNewKnowledgeObject() )
+//        return;
+
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
 

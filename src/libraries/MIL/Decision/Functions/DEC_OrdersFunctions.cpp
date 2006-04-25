@@ -103,59 +103,6 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::CDT_IsPionWaitingForOrderConduite
-// Created: NLD 2003-07-15
-//-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_IsPionWaitingForOrderConduite( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
-    for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        if( (**itPion).GetOrderManager().IsWaitingForOrderConduite() )
-        {
-            call.GetResult().SetValue( true );
-            return;
-        }
-    }
-    call.GetResult().SetValue( false );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::CDT_GetPionsWaitingForOrderConduite
-// Created: NLD 2003-07-15
-//-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GetPionsWaitingForOrderConduite( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
-{
-    T_ObjectVector pionVector;
-    const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
-    for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        MIL_AgentPion& pion = **itPion;
-        if( pion.GetOrderManager().IsWaitingForOrderConduite() )
-            pionVector.push_back( &pion.GetDecision() );
-    }
-    call.GetResult().SetValue( pionVector );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::CDT_GetListOrderConduiteWaitedByPion
-// Created: NLD 2003-07-15
-//-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GetListOrderConduiteWaitedByPion( DIA_Call_ABC& call, MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DIA_Parameters& params = call.GetParameters();
-
-    DEC_RolePion_Decision* pPion      = params[0].ToUserObject( pPion );
-    DIA_Variable_ABC*      pOrderList = &params[1];
-    DIA_Variable_ABC*      pHint      = &params[2];
-
-    assert( pPion );
-    pPion->GetPion().GetOrderManager().SendOrderConduiteRequestsToDIA( *pOrderList, *pHint );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::CDT_SendOrderConduiteToPion
 // Created: NLD 2003-04-15
 //-----------------------------------------------------------------------------

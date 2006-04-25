@@ -21,7 +21,6 @@
 #include "Entities/Orders/Pion/MIL_PionMissionType.h"
 #include "Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "Entities/Orders/Conduite/MIL_OrderConduiteRequest_ABC.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "Decision/DEC_ModelAutomate.h"
@@ -440,7 +439,7 @@ void MIL_AutomateOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrderCo
     }
 
     // Create the order conduite
-    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( asnMsg.order_conduite );
+    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::Find( asnMsg.order_conduite );
     if( !pOrderConduiteType )
     {
         asnReplyMsg.GetAsnMsg().error_code = EnumOrderErrorCode::error_invalid_order_conduite;
@@ -470,76 +469,6 @@ void MIL_AutomateOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrderCo
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::WaitForOrder
-// Created: NLD 2003-01-09
-//-----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::WaitForOrder( DIA_Parameters& diaParams )
-{
-    orderConduiteRequestVector_.clear();
-    strWaitForSubOrderHint_ = "";
-
-    // Parse the order query
-    uint nCurParam = 0;
-    while( nCurParam < diaParams.GetParameters().size() )
-    {
-        DIA_Variable_ABC& diaParam = diaParams[ nCurParam ++ ];
-        E_VariableType nDIAType = diaParam.Type();
-        if( nDIAType == eId )
-        {
-            const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( diaParam.ToId() );
-            assert( pOrderConduiteType );
-            assert( pOrderConduiteType->CanBeRequested() );
-            MIL_OrderConduiteRequest_ABC& orderConduiteReq = pOrderConduiteType->InstanciateOrderConduiteRequest();
-            orderConduiteReq.Initialize( diaParams, nCurParam );
-            orderConduiteRequestVector_.push_back( &orderConduiteReq );
-        }
-        else if( nDIAType == eString )
-            strWaitForSubOrderHint_ = diaParam.ToString();
-        else
-            assert( false );
-    }
-
-    // Send to mos
-    ASN1T_MsgAttenteOrdreConduite_ordres_conduite_element* pOrders = new ASN1T_MsgAttenteOrdreConduite_ordres_conduite_element[ orderConduiteRequestVector_.size() ]; //$$$ RAM
-
-    uint i = 0; 
-    for( CIT_ObjectVector itOrder = orderConduiteRequestVector_.begin(); itOrder != orderConduiteRequestVector_.end(); ++itOrder )
-        ((MIL_OrderConduiteRequest_ABC&)(**itOrder)).Serialize( pOrders[i++] );
-
-    NET_ASN_MsgAttenteOrdreConduite asnMsg;
-    asnMsg.GetAsnMsg().unit_id              = automate_.GetID();
-    asnMsg.GetAsnMsg().order_id             = GetCurrentOrderID();
-    asnMsg.GetAsnMsg().ordres_conduite.n    = orderConduiteRequestVector_.size();  
-    asnMsg.GetAsnMsg().ordres_conduite.elem = pOrders;
-    asnMsg.Send();
-
-    delete[] pOrders;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::StopWaitingForOrder
-// Created: NLD 2003-01-10
-//-----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::StopWaitingForOrder()
-{
-    if( !orderConduiteRequestVector_.empty() )
-    {
-        NET_ASN_MsgAnnuleAttenteOrdreConduite asnMsg;
-        asnMsg.GetAsnMsg().unit_id  = automate_.GetID();
-        asnMsg.GetAsnMsg().order_id = GetCurrentOrderID();
-        asnMsg.Send();
-    }
-    for( IT_ObjectVector itOrder = orderConduiteRequestVector_.begin(); itOrder != orderConduiteRequestVector_.end() ; ++itOrder )
-    {
-        MIL_OrderConduiteRequest_ABC& order = static_cast< MIL_OrderConduiteRequest_ABC& >( **itOrder );
-        order.Terminate();
-        delete &order;
-    }       
-    orderConduiteRequestVector_.clear();
-    strWaitForSubOrderHint_ = "";
-}
-
-//-----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::LaunchOrderConduite
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
@@ -547,24 +476,12 @@ bool MIL_AutomateOrderManager::LaunchOrderConduite( MIL_OrderConduite_ABC& order
 {
     DEC_AutomateDecision& roleDecision = automate_.GetDecision();
 
-    // Ordres de conduite spécifiés
-    for( IT_ObjectVector itOrderConduiteReq = orderConduiteRequestVector_.begin(); itOrderConduiteReq != orderConduiteRequestVector_.end(); ++itOrderConduiteReq )
-    {   
-        if( orderConduite.IsAnAnswerToRequest( (MIL_OrderConduiteRequest_ABC&)**itOrderConduiteReq ) )
-        {
-            orderConduite.Launch( roleDecision, strWaitForSubOrderHint_ );
-            StopWaitingForOrder();
-            return true;
-        }
-    }
-
     // Ordres de conduite par défaut
     const DEC_ModelAutomate& model = automate_.GetType().GetModel();
     if(     orderConduite.GetType().IsAvailableWithoutMission() || ( pMission_ && orderConduite.GetType().IsAvailableForAllMissions() ) 
         ||  ( pMission_ && model.IsOrderConduiteAvailableForMission( pMission_->GetType(), orderConduite.GetType() ) ) )
     {
         orderConduite.Launch( roleDecision, "" );
-        StopWaitingForOrder();
         return true;
     }
     return false;

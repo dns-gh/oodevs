@@ -279,8 +279,6 @@ signatures
     R                                       A::DEC_RapportDeForceLocal                                  (); // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
                                             
     // Ordres                               
-    V                                       A::DEC_AttenteOrdre      ( * /* Paramètres de type E_TypeOrdreConduite + 1 paramètre optionnel de type string (= hint)*/ );
-    V                                       A::DEC_AnnuleAttenteOrdre();
     B                                       A::DEC_ReleverPion       ( A /*T_Pion*/ );        
     B                                       A::DEC_PeutReleverPion   ( A /*T_Pion*/ );        
     

@@ -183,7 +183,6 @@ void AGR_MilProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& work
                                   + ", \"" + order.DIATypeName() + "\""
                                   + ", " + ( order.IsAvailableForAllMissions () ? "true" : "false" )
                                   + ", " + ( order.IsAvailableWithoutMissions() ? "true" : "false" )
-                                  + ( order.CanBeDemanded() ? ", " + order.ASNDemandName() : "" )
                                   + " );\n";
     }
 

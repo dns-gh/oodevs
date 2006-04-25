@@ -42,8 +42,7 @@ public:
 
     //! @name Main
     //@{
-    void Launch             ( DIA_Engine& engine, const std::string& strHint );
-    bool IsAnAnswerToRequest( const MIL_OrderConduiteRequest_ABC& request ) const;
+    void Launch( DIA_Engine& engine, const std::string& strHint );
     //@}
 
     //! @name Accessors

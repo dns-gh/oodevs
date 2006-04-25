@@ -129,7 +129,6 @@ private:
     T_RCVector  rcs_;
 
     T_StringMap lowNameMap_;
-    T_StringMap demandLowNameMap_;
 
     bool bMsgCRParsed_; //$$$ N'importe quoi
     //@}

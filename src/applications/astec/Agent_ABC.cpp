@@ -178,19 +178,6 @@ void Agent_ABC::DeleteAllFireResults()
     fireResults_.clear();
 }
 
-//-----------------------------------------------------------------------------
-// Name: Agent_ABC::OnReceiveMsgWaitForOrderConduite
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-void Agent_ABC::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
-{
-    RC& rc = *new RC( *this );
-    rc.Initialize( asnMsg );
-    reportVector_.push_back( &rc );
-
-    App::GetApp().NotifyReportCreated( *this, rc );
-}
-
 // -----------------------------------------------------------------------------
 // Name: Agent_ABC::OnSendMissionOrder
 // Created: HME 2006-01-30

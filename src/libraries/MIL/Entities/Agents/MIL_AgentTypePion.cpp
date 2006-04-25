@@ -508,9 +508,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulations                         < MIL_AgentPion >, "DEC_Connaissances_Populations"                              );
 
     // Ordres de conduite
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::WaitForOrder       < MIL_AgentPion >, "DEC_AttenteOrdre"       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::StopWaitingForOrder< MIL_AgentPion >, "DEC_AnnuleAttenteOrdre" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions ::RelievePion                         , "DEC_ReleverUnite"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions ::RelievePion, "DEC_ReleverUnite"       );
 
     // Limas / Mission
     

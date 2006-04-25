@@ -33,7 +33,6 @@
 // -----------------------------------------------------------------------------
 AGR_FragOrder::AGR_FragOrder( const std::string& strAsnName, const std::string& strModuleName )
     : AGR_Class                 ( strAsnName, strModuleName )
-    , strDemandLowName_         ( "" )
     , bAvailableForAllMissions_ ( false )
     , bAvailableWithoutMissions_( false )
 {
@@ -385,27 +384,6 @@ std::string AGR_FragOrder::GenerateDiaDefinition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_FragOrder::CanBeDemanded
-// Created: AGE 2004-09-23
-// -----------------------------------------------------------------------------
-bool AGR_FragOrder::CanBeDemanded() const
-{
-    return ! strDemandLowName_.empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_FragOrder::ASNDemandName
-// Created: AGE 2004-09-23
-// -----------------------------------------------------------------------------
-std::string AGR_FragOrder::ASNDemandName() const
-{
-    if( CanBeDemanded() )
-        return "T_MsgAttenteOrdreConduite_ordres_conduite_element_" + strDemandLowName_;
-    else
-        return "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_FragOrder::DIATypeName
 // Created: AGE 2004-09-23
 // -----------------------------------------------------------------------------
@@ -534,15 +512,6 @@ std::string AGR_FragOrder::BaseName() const
 std::string AGR_FragOrder::EnumName() const
 {
     return "eOrdreConduite_" + BaseName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_FragOrder::SetDemandLowName
-// Created: AGE 2004-09-23
-// -----------------------------------------------------------------------------
-void AGR_FragOrder::SetDemandLowName( const std::string& str )
-{
-    strDemandLowName_ = str;
 }
 
 // -----------------------------------------------------------------------------

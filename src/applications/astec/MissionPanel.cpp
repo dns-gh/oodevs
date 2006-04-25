@@ -105,8 +105,8 @@ void MissionPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionConte
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulationConcentration_ );
     else if( context.selectedElement_.pPopulationFlow_ )
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulationFlow_ );
-    else if( context.selectedElement_.pRC_ != 0 )
-        FillFragmentaryOrderPopup( popupMenu, *context.selectedElement_.pRC_ );
+/*    else if( context.selectedElement_.pRC_ != 0 )
+        FillFragmentaryOrderPopup( popupMenu, *context.selectedElement_.pRC_ );*/
 }
 
 // -----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ void MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, Agent& agent )
 // Name: MissionPanel::FillFragmentaryOrderPopup
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-void MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, RC& rc )
+/*void MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, RC& rc )
 {
     pPopupAgent_ = dynamic_cast< Agent* >( &rc.GetAgent() );
     
@@ -365,7 +365,7 @@ void MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, RC& rc )
         int nId = popupMenu.insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *it ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         popupMenu.setItemParameter( nId, (int)(*it) );
     }
-}
+}*/
 
 
 // -----------------------------------------------------------------------------

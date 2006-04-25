@@ -15,7 +15,6 @@
 
 #include "MIL_PionMission_ABC.h"
 #include "MIL_PionMissionType.h"
-#include "Entities/Orders/Conduite/MIL_OrderConduiteRequest_ABC.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "Entities/Orders/Automate/MIL_AutomateMRT.h"
@@ -103,7 +102,6 @@ void MIL_PionOrderManager::Update( bool bIsDead )
 //-----------------------------------------------------------------------------
 void MIL_PionOrderManager::CancelAllOrders()
 {
-    StopWaitingForOrder();
     if( pMission_ )
     {
         pMission_->Stop();
@@ -128,7 +126,6 @@ void MIL_PionOrderManager::CancelAllOrders()
 //-----------------------------------------------------------------------------
 void MIL_PionOrderManager::StopAllOrders()
 {
-    StopWaitingForOrder();
     if( pMission_ )
     {
         pMission_->Stop();
@@ -268,16 +265,6 @@ bool MIL_PionOrderManager::RelievePion( const MIL_AgentPion& pion )
 // =============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderManager_ABC::SendOrderConduiteRequestsToDIA
-// Created: NLD 2003-07-15
-//-----------------------------------------------------------------------------
-void MIL_PionOrderManager::SendOrderConduiteRequestsToDIA( DIA_Variable_ABC& diaOrderList, DIA_Variable_ABC& diaStrHint )
-{
-    diaOrderList.SetValue( orderConduiteRequestVector_ );
-    diaStrHint  .SetValue( strWaitForSubOrderHint_     );
-}
-
-//-----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::OnReceiveMsgOrderConduite
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
@@ -295,7 +282,7 @@ void MIL_PionOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrderCondui
     }
 
     // Create the order conduite
-    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( asnMsg.order_conduite );
+    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::Find( asnMsg.order_conduite );
     if( !pOrderConduiteType )
     {
         asnReplyMsg.GetAsnMsg().error_code = EnumOrderErrorCode::error_invalid_order_conduite;
@@ -336,7 +323,7 @@ void MIL_PionOrderManager::OnReceiveOrderConduite( DIA_Parameters& diaParams )
         return;
     }
     
-    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( diaParams[1].ToId() ); // param 0 is the current pion
+    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::Find( diaParams[1].ToId() ); // param 0 is the current pion
     assert( pOrderConduiteType );
     MIL_OrderConduite_ABC& orderConduite = pOrderConduiteType->InstanciateOrderConduite( pion_.GetKnowledgeGroup() );
     orderConduite.Initialize( diaParams, 2 );
@@ -349,80 +336,6 @@ void MIL_PionOrderManager::OnReceiveOrderConduite( DIA_Parameters& diaParams )
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionOrderManager::WaitForOrder
-// Created: NLD 2003-01-09
-//-----------------------------------------------------------------------------
-void MIL_PionOrderManager::WaitForOrder( DIA_Parameters& diaParams )
-{
-    orderConduiteRequestVector_.clear();
-    strWaitForSubOrderHint_ = "";
-
-    // Parse the order query
-    uint nCurParam = 0;
-    while( nCurParam < diaParams.GetParameters().size() )
-    {
-        DIA_Variable_ABC& diaParam = diaParams[ nCurParam ++ ];
-        E_VariableType nDIAType = diaParam.Type();
-        if( nDIAType == eId )
-        {
-            const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( diaParam.ToId() );
-            assert( pOrderConduiteType );
-            assert( pOrderConduiteType->CanBeRequested() );
-            MIL_OrderConduiteRequest_ABC& orderConduiteReq = pOrderConduiteType->InstanciateOrderConduiteRequest();
-            orderConduiteReq.Initialize( diaParams, nCurParam );
-            orderConduiteRequestVector_.push_back( &orderConduiteReq );
-        }
-        else if( nDIAType == eString )
-            strWaitForSubOrderHint_ = diaParam.ToString();
-        else
-            assert( false );
-    }
-
-    // If the automate is disabled, send an ASN message to the Anibas
-    if( !pion_.GetAutomate().IsEmbraye() )
-    {
-        // Send to mos
-        ASN1T_MsgAttenteOrdreConduite_ordres_conduite_element* pOrders = new ASN1T_MsgAttenteOrdreConduite_ordres_conduite_element[ orderConduiteRequestVector_.size() ]; //$$$ RAM
-    
-        uint i = 0; 
-        for( CIT_ObjectVector itOrder = orderConduiteRequestVector_.begin(); itOrder != orderConduiteRequestVector_.end(); ++itOrder )
-            ((MIL_OrderConduiteRequest_ABC&)(**itOrder)).Serialize( pOrders[i++] );
-    
-        NET_ASN_MsgAttenteOrdreConduite asnMsg;
-        asnMsg.GetAsnMsg().unit_id              = pion_.GetID();
-        asnMsg.GetAsnMsg().order_id             = GetCurrentOrderID();
-        asnMsg.GetAsnMsg().ordres_conduite.n    = orderConduiteRequestVector_.size();  
-        asnMsg.GetAsnMsg().ordres_conduite.elem = pOrders;
-        asnMsg.Send();
-
-        delete[] pOrders;
-    }
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_PionOrderManager::StopWaitingForOrder
-// Created: NLD 2003-01-10
-//-----------------------------------------------------------------------------
-void MIL_PionOrderManager::StopWaitingForOrder()
-{
-    if( !orderConduiteRequestVector_.empty() )
-    {
-        NET_ASN_MsgAnnuleAttenteOrdreConduite asnMsg;
-        asnMsg.GetAsnMsg().unit_id  = pion_.GetID();
-        asnMsg.GetAsnMsg().order_id = GetCurrentOrderID();
-        asnMsg.Send();
-    }
-    for( IT_ObjectVector itOrder = orderConduiteRequestVector_.begin(); itOrder != orderConduiteRequestVector_.end() ; ++itOrder )
-    {
-        MIL_OrderConduiteRequest_ABC& order = static_cast< MIL_OrderConduiteRequest_ABC& >( **itOrder );
-        order.Terminate();
-        delete &order;
-    }       
-    orderConduiteRequestVector_.clear();
-    strWaitForSubOrderHint_ = "";
-}
-
-//-----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::LaunchOrderConduite
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
@@ -430,24 +343,12 @@ bool MIL_PionOrderManager::LaunchOrderConduite( MIL_OrderConduite_ABC& orderCond
 {
     DEC_RolePion_Decision& roleDecision = pion_.GetRole< DEC_RolePion_Decision >();
 
-    // Ordres de conduite spécifiés
-    for( IT_ObjectVector itOrderConduiteReq = orderConduiteRequestVector_.begin(); itOrderConduiteReq != orderConduiteRequestVector_.end(); ++itOrderConduiteReq )
-    {   
-        if( orderConduite.IsAnAnswerToRequest( (MIL_OrderConduiteRequest_ABC&)**itOrderConduiteReq ) )
-        {
-            orderConduite.Launch( roleDecision, strWaitForSubOrderHint_ );
-            StopWaitingForOrder();
-            return true;
-        }
-    }
-
     // Ordres de conduite par défaut
     const DEC_ModelPion& model = pion_.GetType().GetModel();
     if(     orderConduite.GetType().IsAvailableWithoutMission() || ( pMission_ && orderConduite.GetType().IsAvailableForAllMissions() ) 
         ||  ( pMission_ && model.IsOrderConduiteAvailableForMission( pMission_->GetType(), orderConduite.GetType() ) ) )
     {
         orderConduite.Launch( roleDecision, "" );
-        StopWaitingForOrder();
         return true;
     }
     return false;

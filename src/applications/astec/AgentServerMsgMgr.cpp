@@ -1253,19 +1253,6 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnMsg 
 
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
-{
-    Agent* pAgent = App::GetApp().GetAgentManager().FindAgent( asnMsg.unit_id );
-    assert( pAgent );
-    pAgent->OnReceiveMsgWaitForOrderConduite( asnMsg );
-    //$$$ CRADE
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
@@ -2084,8 +2071,6 @@ void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& i
         case T_MsgsSimMos_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( asnMsg.u.msg_stop_fire_effect ); break;
 
         case T_MsgsSimMos_msg_order_management:                     OnReceiveMsgOrderManagement           ( *asnMsg.u.msg_order_management                    ); break;
-        case T_MsgsSimMos_msg_attente_ordre_conduite:               OnReceiveMsgWaitForOrderConduite      ( *asnMsg.u.msg_attente_ordre_conduite              ); break;
-        case T_MsgsSimMos_msg_annule_attente_ordre_conduite:        break; //$$$ TODO
         case T_MsgsSimMos_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *asnMsg.u.msg_automate_mrt                        ); break;
         case T_MsgsSimMos_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *asnMsg.u.msg_pion_order ); break;
 

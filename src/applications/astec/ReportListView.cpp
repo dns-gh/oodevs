@@ -157,9 +157,9 @@ void ReportListView::OnReportCreated( Agent_ABC& agent, Report_ABC& report )
         pItem->SetBold( report.IsNew() );
 
         RC& rc = (RC&)report;
-        if( ! rc.GetFragOrders().empty() )
+/*        if( ! rc.GetFragOrders().empty() )
             pItem->SetFontColor( QColor( 200, 0, 0 ) );
-        else if( rc.GetType() == Report_ABC::eMessage ) // blue
+        else */if( rc.GetType() == Report_ABC::eMessage ) // blue
             pItem->SetFontColor( QColor( 0, 0, 200 ) );
         else if( rc.GetType() == Report_ABC::eWarning ) // orange
             pItem->SetFontColor( QColor( 255, 128, 64 ) );
@@ -286,12 +286,12 @@ void ReportListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos, in
         {
             RC& rc = (RC&)report;
             
-            if( !rc.GetFragOrders().empty() )
-            {
-                SelectedElement selectedElement( rc );
-                ActionContext context( selectedElement );
-                emit NewPopupMenu( *pPopupMenu_, context );
-            }
+//            if( !rc.GetFragOrders().empty() )
+//            {
+//                SelectedElement selectedElement( rc );
+//                ActionContext context( selectedElement );
+//                emit NewPopupMenu( *pPopupMenu_, context );
+//            }
         }
     }
 

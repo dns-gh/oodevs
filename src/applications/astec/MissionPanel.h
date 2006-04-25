@@ -53,7 +53,7 @@ private:
     void FillStandardPopupMenu( QPopupMenu& popupMenu, Population& population );
     void FillStandardPopupMenu( QPopupMenu& popupMenu, PopulationConcentration& concentration );
     void FillStandardPopupMenu( QPopupMenu& popupMenu, PopulationFlow& flow );
-    void FillFragmentaryOrderPopup( QPopupMenu& popupMenu, RC& rc );
+    //void FillFragmentaryOrderPopup( QPopupMenu& popupMenu, RC& rc );
 
     void hideEvent( QHideEvent* pEvent );
 

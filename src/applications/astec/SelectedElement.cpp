@@ -187,11 +187,11 @@ SelectedElement::SelectedElement( TacticalLine_ABC& line, int nLinePoint )
 // Name: SelectedElement constructor
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-SelectedElement::SelectedElement( RC& rc )
+/*SelectedElement::SelectedElement( RC& rc )
 {
     Init();
     pRC_ = &rc;
-}
+}*/
 
 
 // -----------------------------------------------------------------------------
@@ -215,7 +215,7 @@ void SelectedElement::Init()
     pObject_                           = 0;
     pAgentKnowledge_                   = 0;
     pObjectKnowledge_                  = 0;
-    pRC_                               = 0;
+//    pRC_                               = 0;
     pLine_                             = 0;
     nLinePoint_                        = -1;
 	pPopulation_                       = 0;
@@ -244,7 +244,7 @@ bool SelectedElement::operator==( const SelectedElement& rhs ) const
         && pPopulationKnowledge_              == rhs.pPopulationKnowledge_
         && pPopulationConcentrationKnowledge_ == rhs.pPopulationConcentrationKnowledge_
         && pPopulationFlowKnowledge_          == rhs.pPopulationFlowKnowledge_
-        && pRC_                               == rhs.pRC_
+        //&& pRC_                               == rhs.pRC_
         && pLine_                             == rhs.pLine_
         && nLinePoint_                        == rhs.nLinePoint_;
 }

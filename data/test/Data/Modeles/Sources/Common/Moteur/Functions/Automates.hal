@@ -18,11 +18,7 @@ signatures
     S /*T_ListePions*/               A::DEC_Automate_PionsDeAutomateAvecPC( A /*T_Automate*/ );
     S /*T_ListePions*/               A::DEC_Automate_PionsDeAutomateSansPC( A /*T_Automate*/ );
     A /*T_Pion*/                     A::DEC_Automate_PionPCDeAutomate     ( A /*T_Automate*/ );    
-                                      
-    // Ordres                         
-    V                                A::DEC_AttenteOrdre      ( * /* Paramètres de type E_TypeOrdreConduite + 1 paramètre optionnel de type string (= hint)*/ );
-    V                                A::DEC_AnnuleAttenteOrdre();
-                                      
+                                                                           
     // MRT                            
     A                                A::DEC_MRT_CreerMissionPion( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
     V                                A::DEC_MRT_Valide          ();
@@ -32,9 +28,6 @@ signatures
     V                                A::DEC_CDT_DonneOrdreConduiteAPion      ( A /*T_Pion*/, I /*E_TypeOrdreConduite*/, * /*parametres*/ );
     A /*T_Mission_Pion*/             A::DEC_CDT_CreerMissionPion             ( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
     V                                A::DEC_CDT_DonnerMissionPion            ( A /*T_Mission_Pion*/ );
-    B                                A::DEC_CDT_PionEnAttenteOC              ();
-    S /*T_ListePions*/               A::DEC_CDT_ObtenirListePionsEnAttenteOC ();
-    V                                A::DEC_CDT_ObtenirListeOCAttendusParPion( A /*T_Pion*/, S /*&T_OrdreConduiteDemandeCont*/, X /*&strHint*/ );    
                                      
     // Limas / Missions
     B                                A::DEC_NouvelleMission   ();

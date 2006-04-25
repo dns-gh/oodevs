@@ -52,7 +52,7 @@ void DEC_ModelPopulation::InitializeMissionOrdresConduite( MIL_InputArchive& arc
         std::string strOrdreConduite;
         archive.ReadAttribute( "nom", strOrdreConduite );
 
-        const MIL_OrderConduiteType* pType = MIL_OrderConduiteType::FindOrderConduiteType( strOrdreConduite );
+        const MIL_OrderConduiteType* pType = MIL_OrderConduiteType::Find( strOrdreConduite );
         if( !pType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknow orderConduite type", archive.GetContext() );
 

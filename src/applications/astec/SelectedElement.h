@@ -104,7 +104,7 @@ public:
     PopulationKnowledge*              pPopulationKnowledge_;
     PopulationConcentrationKnowledge* pPopulationConcentrationKnowledge_;
     PopulationFlowKnowledge*          pPopulationFlowKnowledge_;
-    RC*                               pRC_;
+    //RC*                               pRC_;
     TacticalLine_ABC*                 pLine_;
     int                                   nLinePoint_;
     //@}

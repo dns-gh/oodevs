@@ -47,11 +47,8 @@ public:
 
     //! @name Conduite
     //@{
-    void OnReceiveMsgOrderConduite     ( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveOrderConduite        ( DIA_Parameters& diaParams );
-    void WaitForOrder                  ( DIA_Parameters& diaParams );
-    void StopWaitingForOrder           ();
-    void SendOrderConduiteRequestsToDIA( DIA_Variable_ABC& diaOrderList, DIA_Variable_ABC& diaStrHint );
+    void OnReceiveMsgOrderConduite( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveOrderConduite   ( DIA_Parameters& diaParams );
     //@}
 
     //! @name Limas
@@ -74,7 +71,6 @@ public:
     const MT_Vector2D&         GetDirDanger             () const;
     const MIL_Fuseau&          GetFuseau                () const;
           uint                 GetCurrentOrderID        () const;
-          bool                 IsWaitingForOrderConduite() const;
     const MIL_PionMission_ABC* GetMission               () const;
           bool                 IsNewMissionStarted      () const;
     //@}
@@ -93,10 +89,6 @@ private:
     MIL_PionMission_ABC* pReplacementMission_;
     bool                 bRCMissionFinishedReceived_;
     bool                 bNewMissionStarted_;
-
-    // Conduite
-    T_ObjectVector orderConduiteRequestVector_; //$$$ merci dia pour le type ....
-    std::string    strWaitForSubOrderHint_;
 };
 
 #include "MIL_PionOrderManager.inl"

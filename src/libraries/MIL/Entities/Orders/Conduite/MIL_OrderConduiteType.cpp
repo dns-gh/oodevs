@@ -14,7 +14,6 @@
 #include "MIL_OrderConduiteType.h"
 
 #include "MIL_OrderConduite_ABC.h"
-#include "MIL_OrderConduiteRequest_ABC.h"
 
 MIL_OrderConduiteType::T_OrderConduiteFromIDVector MIL_OrderConduiteType::orderConduitesFromID_;
 MIL_OrderConduiteType::T_OrderConduiteFromAsnIDMap MIL_OrderConduiteType::orderConduitesFromAsnID_;
@@ -31,7 +30,6 @@ MIL_OrderConduiteType::T_OrderConduiteFromNameMap  MIL_OrderConduiteType::orderC
 // -----------------------------------------------------------------------------
 void MIL_OrderConduiteType::InitializeDIA()
 {
-    MIL_OrderConduiteRequest_ABC::InitializeDIA();
     MIL_OrderConduite_ABC       ::InitializeDIA();
     for( CIT_OrderConduiteFromIDVector it = orderConduitesFromID_.begin(); it != orderConduitesFromID_.end(); ++it )
     {
@@ -66,7 +64,7 @@ void MIL_OrderConduiteType::Terminate()
 // Name: MIL_OrderConduiteType constructor
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-MIL_OrderConduiteType::MIL_OrderConduiteType( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, T_OrderConduiteAllocator allocator, T_DiaInitializer diaInitializer, bool bAvailableForAllMissions, bool bAvailableWithoutMission, uint nAsnRequestID )
+MIL_OrderConduiteType::MIL_OrderConduiteType( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, T_OrderConduiteAllocator allocator, T_DiaInitializer diaInitializer, bool bAvailableForAllMissions, bool bAvailableWithoutMission )
     : strName_                    ( strName )
     , nConduiteID_                ( nConduiteID )
     , nAsnConduiteID_             ( nAsnConduiteID )
@@ -75,7 +73,6 @@ MIL_OrderConduiteType::MIL_OrderConduiteType( const std::string& strName, uint n
     , orderConduiteDiaInitializer_( diaInitializer )
     , bAvailableForAllMissions_   ( bAvailableForAllMissions )
     , bAvailableWithoutMission_   ( bAvailableWithoutMission )
-    , nAsnRequestID_              ( nAsnRequestID )
 {
 
 }
@@ -87,17 +84,4 @@ MIL_OrderConduiteType::MIL_OrderConduiteType( const std::string& strName, uint n
 MIL_OrderConduiteType::~MIL_OrderConduiteType()
 {
 
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================q
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderConduiteType::InstanciateOrderConduiteRequest
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-MIL_OrderConduiteRequest_ABC& MIL_OrderConduiteType::InstanciateOrderConduiteRequest() const
-{
-    return *new MIL_OrderConduiteRequest_ABC( *this );
 }

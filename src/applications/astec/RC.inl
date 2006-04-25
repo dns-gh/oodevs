@@ -11,17 +11,6 @@
 
 // $$$$ HME 2005-10-05: ETRANGE: LE COMPILO PRETEND QUE CES FONCTIONS ONT DEJA ETE DEFINIES
 
-//-----------------------------------------------------------------------------
-// Name: RC::GetFragOrders
-// Created: NLD 2003-06-05
-//-----------------------------------------------------------------------------
-inline
-const RC::T_FragOrderVector& RC::GetFragOrders() const
-{
-    return fragOrderVector_;
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: RC::GetAgent
 // Created: APE 2004-08-04

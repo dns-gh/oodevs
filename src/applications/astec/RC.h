@@ -45,13 +45,11 @@ public:
     //! @name
     //@{
     void Initialize( const ASN1T_MsgCR& asnMsg );
-    void Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
     //@}
     
     //! @name Accessors
     //@{
-    Agent_ABC&           GetAgent     ();
-    const T_FragOrderVector& GetFragOrders() const;
+    Agent_ABC& GetAgent();
     //@}
 
 private:
@@ -62,7 +60,6 @@ private:
 
 private:
     Agent_ABC&      agent_;
-    T_FragOrderVector   fragOrderVector_;
 };
 
 #   include "RC.inl"

@@ -13,26 +13,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_ABC::WaitForOrder
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-template< typename T >
-void DEC_OrdersFunctions::WaitForOrder( DIA_Call_ABC& call, T& caller )
-{
-    caller.GetOrderManager().WaitForOrder( call.GetParameters() );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Agent_ABC::StopWaitingForOrder
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-template< typename T >
-void DEC_OrdersFunctions::StopWaitingForOrder( DIA_Call_ABC& /*call*/, T& caller )
-{
-    caller.GetOrderManager().StopWaitingForOrder();
-}
-
 // =============================================================================
 // LIMAS
 // =============================================================================

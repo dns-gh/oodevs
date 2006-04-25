@@ -24,10 +24,6 @@ class MIL_Automate;
 class DEC_OrdersFunctions
 {
 public:
-    // Conduite
-    template< typename T > static void WaitForOrder       ( DIA_Call_ABC& call, T& caller );            
-    template< typename T > static void StopWaitingForOrder( DIA_Call_ABC& call, T& caller );            
-
     // Mission
     template< typename T > static void FinishMission      ( DIA_Call_ABC& call, T& caller );
     template< typename T > static void IsNewMissionStarted( DIA_Call_ABC& call, T& caller );
@@ -48,9 +44,6 @@ public:
     static void CDT_SendOrderConduiteToPion         ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_CreatePionMission               ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_GivePionMission                 ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void CDT_IsPionWaitingForOrderConduite   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void CDT_GetPionsWaitingForOrderConduite ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-    static void CDT_GetListOrderConduiteWaitedByPion( DIA_Call_ABC& call, MIL_Automate& callerAutomate );                               
 
 private:
     static MT_Random randomGenerator_; //$$$ Pourri TMP

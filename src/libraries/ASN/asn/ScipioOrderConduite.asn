@@ -169,23 +169,7 @@ OrderConduite-Automate-TransfererRenforts ::= SEQUENCE
     pion-a-transferer    Agent,
     automate-a-renforcer Automate   
 }
-
-----------------------------------------------------------------------------
--- Demandes pions/automates
-----------------------------------------------------------------------------
-DemandeOrderConduite-AttendreSePoster ::= NULL
-DemandeOrderConduite-Poursuivre       ::= NULL
-DemandeOrderConduite-Decrocher        ::= NULL
-DemandeOrderConduite-Deboucher        ::= NULL
-
----------------------------------------                                                                    
--- Demandes pions                      
----------------------------------------                             
-DemandeOrderConduite-Pion-Contourner                ::= NULL
-DemandeOrderConduite-Pion-ActiverObstacle           ::= NULL
-DemandeOrderConduite-Pion-ExecuterTir               ::= NULL
-DemandeOrderConduite-Pion-AppliquerFeux             ::= NULL
-                   
+                  
 ----------------------------------------------------------------------------
 -- Msg MOS -> SIM
 ----------------------------------------------------------------------------
@@ -249,29 +233,6 @@ MsgOrderConduiteAck ::= SEQUENCE
     unit-id         OID,
     order-id        OID,
     error-code      EnumOrderErrorCode
-}
-
-MsgAttenteOrdreConduite ::= SEQUENCE
-{
-    unit-id  OID,
-    order-id OID, -- Ordre courant
-
-    ordres-conduite SEQUENCE OF CHOICE
-    {
-        demande-order-conduite-attendre-se-poster     DemandeOrderConduite-AttendreSePoster,
-        demande-order-conduite-poursuivre             DemandeOrderConduite-Poursuivre,
-        demande-order-conduite-decrocher              DemandeOrderConduite-Decrocher,
-        demande-order-conduite-deboucher              DemandeOrderConduite-Deboucher,                                                               
-        demande-order-conduite-pion-executer-tir	  DemandeOrderConduite-Pion-ExecuterTir,
-        demande-order-conduite-pion-contourner        DemandeOrderConduite-Pion-Contourner,
-        demande-order-conduite-pion-activer-obstacle  DemandeOrderConduite-Pion-ActiverObstacle
-    }
-}
-
-MsgAnnuleAttenteOrdreConduite ::= SEQUENCE
-{
-    unit-id  OID,
-    order-id OID -- Ordre courant
 }
 
 END -- ScipioOrderConduite

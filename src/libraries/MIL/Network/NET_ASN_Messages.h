@@ -220,8 +220,6 @@ NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( OrderManagement, order_management )
 
 // Orders conduite
 NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( OrderConduiteAck           , order_conduite_ack            )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( AttenteOrdreConduite       , attente_ordre_conduite        )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( AnnuleAttenteOrdreConduite , annule_attente_ordre_conduite )
 
 // Orders pion
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PionOrder              , pion_order                         )

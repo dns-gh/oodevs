@@ -14,7 +14,6 @@
 #include "MIL_OrderConduite_ABC.h"
 
 #include "MIL_OrderConduiteType.h"
-#include "MIL_OrderConduiteRequest_ABC.h"
 #include "Decision/DEC_Tools.h"
 
 int MIL_OrderConduite_ABC::nDIATypeIdx_ = 0;
@@ -101,11 +100,3 @@ void MIL_OrderConduite_ABC::Launch( DIA_Engine& engine, const std::string& strHi
         delete pResult;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_ABC::IsAnAnswerToRequest
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-bool MIL_OrderConduite_ABC::IsAnAnswerToRequest( const MIL_OrderConduiteRequest_ABC& request ) const
-{
-    return type_ == request.GetType();    
-}

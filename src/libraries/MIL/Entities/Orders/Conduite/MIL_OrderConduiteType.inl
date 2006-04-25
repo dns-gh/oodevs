@@ -27,9 +27,9 @@ struct sOrderConduiteCreator
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 template< typename OrderConduite > static 
-void MIL_OrderConduiteType::RegisterOrderConduite( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, bool bAvailableForAllMissions, bool bAvailableWithoutMission, uint nAsnRequestID )
+void MIL_OrderConduiteType::RegisterOrderConduite( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, bool bAvailableForAllMissions, bool bAvailableWithoutMission )
 {
-    MIL_OrderConduiteType* pNewType = new MIL_OrderConduiteType( strName, nConduiteID, nAsnConduiteID, strConduiteDIATypeName, &sOrderConduiteCreator< OrderConduite >::Create, OrderConduite::InitializeDIA, bAvailableForAllMissions, bAvailableWithoutMission, nAsnRequestID );
+    MIL_OrderConduiteType* pNewType = new MIL_OrderConduiteType( strName, nConduiteID, nAsnConduiteID, strConduiteDIATypeName, &sOrderConduiteCreator< OrderConduite >::Create, OrderConduite::InitializeDIA, bAvailableForAllMissions, bAvailableWithoutMission );
 
     if( orderConduitesFromID_.size() < nConduiteID + 1 )
         orderConduitesFromID_.resize( nConduiteID + 1, 0 );
@@ -51,11 +51,11 @@ void MIL_OrderConduiteType::RegisterOrderConduite( const std::string& strName, u
 
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduiteType::FindOrderConduiteType
+// Name: MIL_OrderConduiteType::Find
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 inline
-const MIL_OrderConduiteType* MIL_OrderConduiteType::FindOrderConduiteType( const std::string& strName )
+const MIL_OrderConduiteType* MIL_OrderConduiteType::Find( const std::string& strName )
 {
     CIT_OrderConduiteFromNameMap it = orderConduitesFromName_.find( strName );
     if( it == orderConduitesFromName_.end() )
@@ -64,11 +64,11 @@ const MIL_OrderConduiteType* MIL_OrderConduiteType::FindOrderConduiteType( const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduiteType::FindOrderConduiteType
+// Name: MIL_OrderConduiteType::Find
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 inline
-const MIL_OrderConduiteType* MIL_OrderConduiteType::FindOrderConduiteType( const ASN1T_MsgOrderConduite_order_conduite& asn )
+const MIL_OrderConduiteType* MIL_OrderConduiteType::Find( const ASN1T_MsgOrderConduite_order_conduite& asn )
 {
     CIT_OrderConduiteFromAsnIDMap it = orderConduitesFromAsnID_.find( asn.t );
     if( it == orderConduitesFromAsnID_.end() )
@@ -77,11 +77,11 @@ const MIL_OrderConduiteType* MIL_OrderConduiteType::FindOrderConduiteType( const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduiteType::FindOrderConduiteType
+// Name: MIL_OrderConduiteType::Find
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 inline
-const MIL_OrderConduiteType* MIL_OrderConduiteType::FindOrderConduiteType( uint nID )
+const MIL_OrderConduiteType* MIL_OrderConduiteType::Find( uint nID )
 {
     if( nID >= orderConduitesFromID_.size() )
         return 0;
@@ -133,16 +133,6 @@ MIL_OrderConduite_ABC& MIL_OrderConduiteType::InstanciateOrderConduite() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduiteType::CanBeRequested
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-inline
-bool MIL_OrderConduiteType::CanBeRequested() const
-{
-    return nAsnRequestID_ != (uint)-1;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_OrderConduiteType::operator==
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -176,12 +166,3 @@ const std::string& MIL_OrderConduiteType::GetConduiteDIATypeName() const
     return strConduiteDIATypeName_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderConduiteType::GetAsnRequestID
-// Created: NLD 2004-09-03
-// -----------------------------------------------------------------------------
-inline
-uint MIL_OrderConduiteType::GetAsnRequestID() const
-{
-    return nAsnRequestID_;
-}

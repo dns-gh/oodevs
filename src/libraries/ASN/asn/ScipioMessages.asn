@@ -82,9 +82,7 @@ IMPORTS MsgPopulationOrder,
 
 IMPORTS MsgOrderManagement FROM ScipioOrder
 
-IMPORTS MsgAttenteOrdreConduite,
-        MsgAnnuleAttenteOrdreConduite,
-        MsgOrderConduite,
+IMPORTS MsgOrderConduite,
         MsgOrderConduiteAck FROM ScipioOrderConduite
 
 IMPORTS MsgMosLau-RequestListMission,
@@ -216,8 +214,6 @@ MsgsSimMos ::= CHOICE
     msg-cr                                                  MsgCR,
 
     msg-order-management                                    MsgOrderManagement,
-    msg-attente-ordre-conduite                              MsgAttenteOrdreConduite,
-    msg-annule-attente-ordre-conduite                       MsgAnnuleAttenteOrdreConduite,
     msg-automate-mrt                                        MsgAutomateMRT,
     msg-pion-order                                          MsgPionOrder,
     msg-automate-order                                      MsgAutomateOrder,

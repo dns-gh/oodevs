@@ -69,7 +69,6 @@ public:
     void            OnReceiveMsgCR                      ( const ASN1T_MsgCR& msg );
     void            OnReceiveTraceMsg                   ( DIN::DIN_Input&    msg );
 
-    void            OnReceiveMsgWaitForOrderConduite    ( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
 	int             GetCurrentMission                   () const;
 	void            OnReceiveMission                    ( const ASN1T_MsgPionOrder& asnMsg );
     void            OnReceiveMission                    ( const ASN1T_MsgPionOrderAck& asnMsg );

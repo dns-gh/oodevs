@@ -68,8 +68,6 @@ public:
     std::string MosLight2DeletionCode() const;
     std::string MosLight2ImplementationCode() const;
 
-    bool CanBeDemanded() const;
-    std::string ASNDemandName() const;
     std::string DIATypeName() const;
 
     virtual std::string MilFilePathName() const;
@@ -90,7 +88,6 @@ public:
     //! @name Modifiers
     //@{
     virtual void SetLowName( const std::string& str );
-            void SetDemandLowName( const std::string& str );
     //@}
 
 private:
@@ -121,7 +118,6 @@ private:
     bool              bAvailableForAllMissions_;
     bool              bAvailableWithoutMissions_;
     E_FragOrderTarget eFragOrderTarget_;
-    std::string       strDemandLowName_;
     E_OrderType       nFragOrderType_;
     //@}
 };

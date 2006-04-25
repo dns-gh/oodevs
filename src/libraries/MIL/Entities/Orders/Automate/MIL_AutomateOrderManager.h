@@ -66,8 +66,6 @@ public:
     //! @name Conduite
     //@{
     void OnReceiveMsgOrderConduite( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx );
-    void WaitForOrder             ( DIA_Parameters& diaParams );
-    void StopWaitingForOrder      ();
     //@}
 
     //! @name Misc
@@ -108,10 +106,6 @@ private:
     bool                     bRCMissionFinishedReceived_;
     T_PionMissionSet         cdtPionMissionSet_; // Mission données par l'automate aux pions pendant la conduite
     bool                     bNewMissionStarted_;
-
-    // Conduite
-    T_ObjectVector orderConduiteRequestVector_; //$$$ merci dia pour le type ....
-    std::string    strWaitForSubOrderHint_;
 };
 
 #include "MIL_AutomateOrderManager.inl"

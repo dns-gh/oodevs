@@ -16,7 +16,6 @@
 #include "Network/NET_ASN_Types.h"
 
 class MIL_OrderConduite_ABC;
-class MIL_OrderConduiteRequest_ABC;
 class MIL_KnowledgeGroup;
 
 // =============================================================================
@@ -31,34 +30,32 @@ public:
     //! @name Manager
     //@{
     template< typename OrderConduite > static 
-    void RegisterOrderConduite( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, bool bAvailableForAllMissions, bool bAvailableWithoutMission, uint nRequestAsnID = (uint)-1 );
+    void RegisterOrderConduite( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, bool bAvailableForAllMissions, bool bAvailableWithoutMission );
     static void InitializeDIA();
     static void Terminate ();
 
-    static const MIL_OrderConduiteType* FindOrderConduiteType( const std::string& strName );
-    static const MIL_OrderConduiteType* FindOrderConduiteType( uint nConduiteID );
-    static const MIL_OrderConduiteType* FindOrderConduiteType( const ASN1T_MsgOrderConduite_order_conduite& asn );
+    static const MIL_OrderConduiteType* Find( const std::string& strName );
+    static const MIL_OrderConduiteType* Find( uint nConduiteID );
+    static const MIL_OrderConduiteType* Find( const ASN1T_MsgOrderConduite_order_conduite& asn );
     //@}
 
     //! @name Operations
     //@{
     bool IsAvailableForAllMissions() const;
     bool IsAvailableWithoutMission() const;
-    bool CanBeRequested           () const;
     //@}
 
     //! @name Accessors
     //@{
     uint               GetConduiteID         () const;
     const std::string& GetConduiteDIATypeName() const;
-    uint               GetAsnRequestID       () const;
     //@}
 
     //! @name Operations
     //@{
-    MIL_OrderConduite_ABC&        InstanciateOrderConduite       ( const MIL_KnowledgeGroup& knowledgeGroup ) const;
-    MIL_OrderConduite_ABC&        InstanciateOrderConduite       () const;
-    MIL_OrderConduiteRequest_ABC& InstanciateOrderConduiteRequest() const;
+    MIL_OrderConduite_ABC& InstanciateOrderConduite( const MIL_KnowledgeGroup& knowledgeGroup ) const;
+    MIL_OrderConduite_ABC& InstanciateOrderConduite() const;
+
     bool operator==( const MIL_OrderConduiteType& rhs ) const;
     //@}
 
@@ -79,7 +76,7 @@ private:
     //@}
 
 private:
-     MIL_OrderConduiteType( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, T_OrderConduiteAllocator allocator, T_DiaInitializer diaInitializer, bool bAvailableForAllMissions, bool bAvailableWithoutMission, uint nRequestAsnID  = (uint)-1 );
+     MIL_OrderConduiteType( const std::string& strName, uint nConduiteID, uint nAsnConduiteID, const std::string& strConduiteDIATypeName, T_OrderConduiteAllocator allocator, T_DiaInitializer diaInitializer, bool bAvailableForAllMissions, bool bAvailableWithoutMission );
     ~MIL_OrderConduiteType();
 
 private:
@@ -91,8 +88,6 @@ private:
     const T_DiaInitializer         orderConduiteDiaInitializer_;
     const bool                     bAvailableForAllMissions_;
     const bool                     bAvailableWithoutMission_;
-
-    const uint                     nAsnRequestID_;
 
 private:
     static T_OrderConduiteFromIDVector        orderConduitesFromID_;

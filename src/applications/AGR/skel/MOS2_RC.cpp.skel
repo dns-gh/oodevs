@@ -81,38 +81,6 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 }
 
 
-
-//-----------------------------------------------------------------------------
-// Name: RC::Initialize
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-void RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
-{
-    strTitle_ = "Attente d'ordre";
-
-    for( uint i = 0; i < asnMsg.ordres_conduite.n; ++i )
-    {
-        uint nOrderConduiteID;
-        switch( asnMsg.ordres_conduite.elem[i].t  )
-        {
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_attendre_se_poster     : nOrderConduiteID = eOrdreConduite_AttendreSePoster                            ; break;
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_poursuivre             : nOrderConduiteID = eOrdreConduite_Poursuivre                                  ; break;
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_decrocher              : nOrderConduiteID = eOrdreConduite_Decrocher                              ; break;
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_deboucher              : nOrderConduiteID = eOrdreConduite_Deboucher                              ; break;
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_executer_tir      : nOrderConduiteID = eOrdreConduite_Pion_ExecuterTir                            ; break;
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_contourner        : nOrderConduiteID = eOrdreConduite_Pion_Contourner                             ; break;
-            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_activer_obstacle  : nOrderConduiteID = eOrdreConduite_Pion_ActiverObstacle                        ; break;
-            default:
-                assert( false );
-        }
-        fragOrderVector_.push_back( nOrderConduiteID );
-    }
-    eType_ = Report_ABC::eRC;
-}
-
-
-
-
 // -----------------------------------------------------------------------------
 // Name: RC::ObjectKnowledgeLink
 // Created: APE 2004-09-09

@@ -18,7 +18,6 @@
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
 #include "Entities/Orders/Population/MIL_PopulationMissionType.h"
-#include "Entities/Orders/Conduite/MIL_OrderConduiteRequest_ABC.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "Decision/DEC_ModelPopulation.h"
@@ -159,7 +158,7 @@ void MIL_PopulationOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrder
     asnReplyMsg.GetAsnMsg().order_id = asnMsg.order_id;
 
     // Create the order conduite
-    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( asnMsg.order_conduite );
+    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::Find( asnMsg.order_conduite );
     if( !pOrderConduiteType )
     {
         asnReplyMsg.GetAsnMsg().error_code = EnumOrderErrorCode::error_invalid_order_conduite;

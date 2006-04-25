@@ -163,14 +163,6 @@ void AGR_Workspace::Read( MT_XXmlInputArchive& input, const std::string& strModu
         if( pClass )
             pClass->SetLowName( it->second );
     }
-
-    // 2nd pass on demand names. This is necessary
-    for( CIT_StringMap it = demandLowNameMap_.begin(); it != demandLowNameMap_.end(); ++it )
-    {
-        AGR_FragOrder* pOrder = FindFragOrder( it->first );
-        if( pOrder )
-            pOrder->SetDemandLowName( it->second );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +297,7 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
     }
 
     // MsgAttenteOrderConduite
-    else if( strTypeName == "MsgAttenteOrdreConduite" )
+  /* else if( strTypeName == "MsgAttenteOrdreConduite" )
     {
         input.Section( "xsd:sequence" );
         while( input.NextListElement() )
@@ -347,7 +339,7 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
         input.EndSection(); // "xsd:sequence"
         input.EndList(); // "xsd:complexType"
         return;
-    }
+    }*/
 
     // A FRAGMETARY ORDER ENUMERATION
     else if( strTypeName == "MsgOrderConduite" )
