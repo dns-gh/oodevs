@@ -39,6 +39,8 @@ Scheduler::Scheduler( const Config& config )
     , nSameMissionInterval_ ( config.GetIterationInterval() )
     , nRecoveryTick_        ( config.MustRecover() ? config.GetRecoveryTick() : 0 )
     , nLastExecutionTick_   ( 0 )
+    , nMissionLimitCounter_ ( 0 )
+    , nMissionInPeriod_     ( 0 )
     , nMaxMissionInPeriod_  ( config.GetMaxMissionPerTick() )
 {
     // NOTHING
@@ -86,11 +88,15 @@ bool Scheduler::Run( uint nCurrentTick )
         nCurrentTick_    = ( -1 ) * ( int )nExecutionPeriod_;
     }
     ++nCurrentTick_;
-    uint nMissionInTick = 0;
+    if( nMissionLimitCounter_ )
+    {
+        --nMissionLimitCounter_;
+        return true;
+    }
+
     while( itCurrentAction_ != actions_.end()           && 
            (int)itCurrentAction_->first < nCurrentTick_ &&
-           itCurrentAction_->second->IsReady()          &&
-           nMissionInTick < nMaxMissionInPeriod_ )
+           nMissionInPeriod_ < nMaxMissionInPeriod_ )
     {
         MT_LOG_INFO_MSG( "[" << nTestRun_ / nTestTotal_ << "][" << nTestRun_ % nTestTotal_ << "/" << nTestTotal_ 
                              << "] Starting action: " << itCurrentAction_->second->GetName() );
@@ -98,7 +104,12 @@ bool Scheduler::Run( uint nCurrentTick )
         ++itCurrentAction_;
         ++nTestRun_;
         nLastExecutionTick_ = nCurrentTick;
-        ++nMissionInTick;
+        ++nMissionInPeriod_;
+    }
+    if( nMissionInPeriod_ == nMaxMissionInPeriod_ )
+    {
+        nMissionLimitCounter_ = nExecutionPeriod_ - 1;
+        nMissionInPeriod_ = 0;
     }
     return true;
 }
@@ -107,12 +118,12 @@ bool Scheduler::Run( uint nCurrentTick )
 // Name: Scheduler::AddAction
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-void Scheduler::AddAction( Action_ABC& action, uint nExecutionTick )
-{
-    actions_.insert( std::make_pair( nExecutionTick, &action ) );
-    itCurrentAction_ = actions_.begin();
-    ++nTestTotal_;
-}
+//void Scheduler::AddAction( Action_ABC& action, uint nExecutionTick )
+//{
+//    actions_.insert( std::make_pair( nExecutionTick, &action ) );
+//    itCurrentAction_ = actions_.begin();
+//    ++nTestTotal_;
+//}
 
 // -----------------------------------------------------------------------------
 // Name: Scheduler::AddAction

@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-05 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Action_h_
 #define __Action_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "Action_ABC.h"
 #include "Tools/IDManager.h"
@@ -33,10 +20,6 @@ namespace TEST {
 // =============================================================================
 /** @class  Action
     @brief  Action
-    @par    Using example
-    @code
-    Action;
-    @endcode
 */
 // Created: SBO 2005-08-05
 // =============================================================================

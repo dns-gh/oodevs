@@ -53,7 +53,7 @@ public:
     void     RecoverIfNeeded   ( uint nCurrentTick );
     bool     Run               ( uint nCurrentTick );
     void     AddAction         ( Action_ABC& action );
-    void     AddAction         ( Action_ABC& action, uint nExecutionTick );
+//    void     AddAction         ( Action_ABC& action, uint nExecutionTick );
     void     AddActions        ( Action_ABC& action, uint nIteration );
     void     ResetExecutionTick();
     //@}
@@ -93,6 +93,8 @@ private:
     uint         nRecoveryTick_;
 
     // mission per period limiters
+    uint         nMissionLimitCounter_;
+    uint         nMissionInPeriod_;
     uint         nMaxMissionInPeriod_;
 
     // test statistics

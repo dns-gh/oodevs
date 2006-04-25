@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Action_ABC_h_
 #define __Action_ABC_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 namespace TEST {
 
@@ -54,7 +41,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       bool         IsReady() const;
     virtual const std::string& GetName() const;
     //@}
 
