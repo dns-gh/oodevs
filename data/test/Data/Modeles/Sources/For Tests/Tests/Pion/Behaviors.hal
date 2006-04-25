@@ -474,7 +474,6 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_RefugiesAProximite( 2000 ) ) ) + " refugies à moins de 2000 metres" );        
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesRenduesAProximite( 2000 ) ) ) + " unites rendues à moins de 2000 metres" );
         
-        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDangereusesPourPion   ( DEC_Pion_PionPC() ) ) ) + " unites ennemies dangereuse pour PC" );
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( DEC_Pion_PionPC() ) ) ) + " unites ennemies vivantes percues par PC" );                   
         
         DEC_Debug( "Rapfor Local: " + FloatToString( DEC_RapportDeForceLocal() ) );
@@ -597,9 +596,9 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesDansZone       ( mission.forme_ ) ) ) + " unites ennemies vivantes dans zone" );
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansZone( mission.forme_ ) ) ) + " unites ennemies vivantes percues dans zone" );        
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesAmiesDansZone                  ( mission.forme_ ) ) ) + " unites amies dans zone" );
-        DEC_Debug( BoolToString( DEC_Connaissances_PresenceEnnemieDansZone( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) + " unites ennemies dans zone" );
-    
-        
+        DEC_Debug( BoolToString( DEC_Connaissances_PresenceEnnemieDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) + " unites ennemies dans cercle" );
+        DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( DEC_Geometrie_CalculerBarycentreLocalisation( mission.forme_ ), 2000 ) ) ) + " unites ennemies vivantes dans cercle" );
+                
         // connaissance popu / securisation
         E_ValiditeRequete              nFusse;
         T_ListeConnaissancesPopulation popus = DEC_Connaissances_Populations();

@@ -80,6 +80,7 @@ public:
     const T_KnowledgeAgentVector&      GetEnemies                  () const;
           void                         GetLivingEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Polygon&      zone ) const;    
           void                         GetLivingEnemiesInZone      ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;    
+          void                         GetLivingEnemiesInCircle    ( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
           bool                         EnemyPresenceInCircle       ( const MT_Vector2D& center, MT_Float rRadius ) const;
 
           void                         GetRefugeesInCircle         ( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;

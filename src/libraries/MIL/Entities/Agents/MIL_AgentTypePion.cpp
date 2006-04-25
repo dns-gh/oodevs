@@ -486,16 +486,16 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDetectedAgentsInZone                                 , "DEC_Connaissances_UnitesDetecteesDansZone"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetAgentsAttacking                                      , "DEC_Connaissances_UnitesPrenantAPartie"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDangerousEnemies                                     , "DEC_Connaissances_UnitesEnnemiesDangereuses"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetDangerousEnemiesForPion            < MIL_AgentPion > , "DEC_Connaissances_UnitesEnnemiesDangereusesPourPion"        );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived                               , "DEC_Connaissances_UnitesEnnemiesVivantesPercues"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion       < MIL_AgentPion > , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau                       , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInZone                         , "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansZone"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau                                , "DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesInZone                                  , "DEC_Connaissances_UnitesEnnemiesVivantesDansZone"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetLivingEnemiesInCircle                                , "DEC_Connaissances_UnitesEnnemiesVivantesDansCercle"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetNearbyRefugees                                       , "DEC_Connaissances_RefugiesAProximite"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetNearbySurrenderedAgents                              , "DEC_Connaissances_UnitesRenduesAProximite"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::EnemyPresenceInCircle                                   , "DEC_Connaissances_PresenceEnnemieDansZone"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::EnemyPresenceInCircle                                   , "DEC_Connaissances_PresenceEnnemieDansCercle"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetFriendsInZone                       < MIL_AgentPion >, "DEC_Connaissances_UnitesAmiesDansZone"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesWith                    < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesAvec"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith              < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"         );    

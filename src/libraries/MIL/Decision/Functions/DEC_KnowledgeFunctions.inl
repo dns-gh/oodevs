@@ -46,28 +46,6 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( DIA_Call_ABC& call
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetDangerousEnemiesForPion
-// Created: NLD 2006-04-20
-// -----------------------------------------------------------------------------
-template< typename T > 
-void DEC_KnowledgeFunctions::GetDangerousEnemiesForPion( DIA_Call_ABC& call, const T& caller )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    const DEC_RolePion_Decision* pSourcePionTmp = call.GetParameter( 0 ).ToUserObject( pSourcePionTmp );
-    assert( pSourcePionTmp );
-    const MIL_AgentPion& sourcePion = pSourcePionTmp->GetPion();
-    
-    const T_KnowledgeAgentDiaIDVector& sourceKnowledges = sourcePion.GetKnowledge().GetDangerousEnemies();
-
-    T_KnowledgeAgentDiaIDVector translatedKnowledges;
-    caller.GetKnowledgeGroup().GetKnowledge().TranslateKnowledges( sourceKnowledges, sourcePion.GetKnowledgeGroup(), translatedKnowledges );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( translatedKnowledges, DEC_Tools::GetTypeConnaissanceAgent() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::ShareKnowledgesWith
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------

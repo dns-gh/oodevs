@@ -251,6 +251,22 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_Knowledge
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_KnowledgeAgentDiaIDVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+{
+    container.clear();
+    const T_KnowledgeAgentVector& enemies = GetEnemies();
+    for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
+    {
+        const DEC_Knowledge_Agent& knowledge = **it;
+        if( !knowledge.IsDead() && center.Distance( knowledge.GetPosition() ) <= rRadius )
+            container.push_back( (void*)knowledge.GetID() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------

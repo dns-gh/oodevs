@@ -61,7 +61,6 @@ signatures
     V                                A::DEC_Connaissances_PartageConnaissancesDansZoneAvec     ( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
     S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_Objets                               ( * /*E_TypeObjects*/ );   
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion ( A /*T_Pion*/ );    
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesDangereusesPourPion    ( A /*T_Pion*/ );    
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesAmiesDansZone                  ( U /*T_Localisation*/ );
     I /*E_NiveauPerception*/         A::DEC_ConnaissanceAgent_NiveauPerceptionMax              ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)    
     R                                A::DEC_ConnaissanceAgent_EtatOps                          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1

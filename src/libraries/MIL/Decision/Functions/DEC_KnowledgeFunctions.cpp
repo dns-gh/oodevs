@@ -149,6 +149,24 @@ void DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( DIA_Call_ABC& call, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau
+// Created: NLD 2006-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
+
+    const MT_Vector2D* pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
+    assert( pCenter );
+
+    T_KnowledgeAgentDiaIDVector knowledges;
+    callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInCircle( knowledges, *pCenter, call.GetParameter( 1 ).ToFloat() );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetNearbyRefugees
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
