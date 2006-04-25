@@ -258,7 +258,6 @@ private:
     void OnReceiveMsgAutomateOrderAck    ( const ASN1T_MsgAutomateOrderAck& asnMsg    , MIL_MOSContextID nCtx ); 
     void OnReceiveMsgPionOrderAck        ( const ASN1T_MsgPionOrderAck& asnMsg        , MIL_MOSContextID nCtx ); 
     void OnReceiveMsgOrderConduiteAck    ( const ASN1T_MsgOrderConduiteAck& asnMsg, MIL_MOSContextID nCtx ); 
-    void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
     void OnReceiveMsgOrderManagement     ( const ASN1T_MsgOrderManagement& asnMsg );
     void OnReceiveMsgAutomateMRT         ( const ASN1T_MsgAutomateMRT& asnMsg );
     void OnReceiveMsgPionOrder           ( const ASN1T_MsgPionOrder& asnMsg ); 

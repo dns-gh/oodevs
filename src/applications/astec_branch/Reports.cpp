@@ -12,7 +12,6 @@
 #include "RC.h"
 #include "Trace.h"
 #include "Controller.h"
-#include "WaitingForFragOrder.h"
 #include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -44,17 +43,6 @@ Reports::~Reports()
 void Reports::DoUpdate( const ASN1T_MsgCR& message )
 {   
     Report_ABC& rc = *new RC( agent_, simulation_, message );
-    reports_.push_back( &rc );
-    controller_.Create( rc );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Reports::DoUpdate
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-void Reports::DoUpdate( const ASN1T_MsgAttenteOrdreConduite& message )
-{
-    Report_ABC& rc = *new WaitingForFragOrder( agent_, simulation_, message );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }

@@ -1175,15 +1175,6 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite
-// Created: NLD 2003-04-04
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& message )
-{
-    model_.agents_.FindAllAgent( message.unit_id )->Update( message );
-}
-
-//-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
@@ -1751,8 +1742,6 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMos( DIN_Input& input )
         case T_MsgsSimMos_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.u.msg_stop_fire_effect ); break;
 
         case T_MsgsSimMos_msg_order_management:                     OnReceiveMsgOrderManagement           ( *message.u.msg_order_management                    ); break;
-        case T_MsgsSimMos_msg_attente_ordre_conduite:               OnReceiveMsgWaitForOrderConduite      ( *message.u.msg_attente_ordre_conduite              ); break;
-        case T_MsgsSimMos_msg_annule_attente_ordre_conduite:        break; //$$$ TODO
         case T_MsgsSimMos_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *message.u.msg_automate_mrt                        ); break;
         case T_MsgsSimMos_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.u.msg_pion_order ); break;
 

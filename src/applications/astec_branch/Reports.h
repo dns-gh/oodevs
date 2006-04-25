@@ -29,7 +29,6 @@ class Simulation;
 // =============================================================================
 class Reports : public Extension_ABC
               , public Updatable_ABC< ASN1T_MsgCR >
-              , public Updatable_ABC< ASN1T_MsgAttenteOrdreConduite >
               , public Updatable_ABC< TraceMessage >
               , public Drawable_ABC
 {
@@ -63,7 +62,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgCR& message );
-    virtual void DoUpdate( const ASN1T_MsgAttenteOrdreConduite& message );
     virtual void DoUpdate( const TraceMessage& msg );
     //@}
 
