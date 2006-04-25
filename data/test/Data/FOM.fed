@@ -77,14 +77,10 @@
   (Federation MyFederation)
   (FEDversion v1.3)
   (spaces
-    (space a
-       (dimension x)
-       (dimension y)
-    )
   )
   (objects
     (class ObjectRoot
-      (attribute privilegeToDelete reliable timestamp A)
+      (attribute privilegeToDelete reliable timestamp)
       (class RTIprivate)
       (class Manager
         (class Federate
@@ -125,7 +121,7 @@
       (class Positionnable
      	(attribute hauteur reliable timestamp)
      	(attribute position reliable timestamp)
- 	(class Deplacable
+ 	    (class Deplacable
      	  (attribute vitesse reliable timestamp)
           (attribute direction reliable timestamp)
           (class Unite
