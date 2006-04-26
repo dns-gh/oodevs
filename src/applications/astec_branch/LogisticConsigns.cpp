@@ -165,12 +165,16 @@ void LogisticConsigns::Draw( const geometry::Point2f& where, const geometry::Rec
 
     const bool handledOnly = tools.ShouldDisplay( "RealTimeLogistic", false );
 
+    if( handledMaintenances_.empty() && handledMedical_.empty() && handledSupplies_.empty() 
+    && ( handledOnly ||
+       ( requestedMaintenances_.empty() && requestedMedical_.empty() && requestedSupplies_.empty() ) ) )
+        return;
 
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.0 );
     glEnable( GL_LINE_STIPPLE );
     glColor4d( COLOR_MAROON );
-    for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
+    for( T_MaintenanceConsigns::const_iterator it = handledMaintenances_.begin(); it != handledMaintenances_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )
         for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )

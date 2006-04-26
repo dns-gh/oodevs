@@ -96,7 +96,7 @@ void LocationCreator::Draw( const T_PointVector& points, ASN1T_EnumTypeLocalisat
             tools.DrawCross( *it );
     else if( type == EnumTypeLocalisation::line )
         tools.DrawLines( points );
-    else if( type == EnumTypeLocalisation::polygon && ! points.empty() )
+    else if( type == EnumTypeLocalisation::polygon )
     {
         tools.DrawLines( points );
         tools.DrawLine( points.back(), points.front() );

@@ -61,7 +61,7 @@ void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
 void ObjectDetections::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-04-21: viewport
-    if( ! tools.ShouldDisplay( "VisionLines" ) )
+    if( ! tools.ShouldDisplay( "VisionLines" ) || perceivedObjects_.empty() )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glColor4d( COLOR_DETECTED );

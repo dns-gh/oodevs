@@ -64,38 +64,7 @@ void Surface::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& to
         return;
 
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-    {
-        const Sector& sector = *itSector;
-
-        const float     angle = sector.GetAngle() * 0.5f;
-        const Vector2f& dir   = sector.GetDirection();
-        const Point2f&  pos   = sector.GetOrigin();
-
-        if( pos.IsZero() )
-            tools.DrawCircle( pos, maxRadius_ );
-        else
-        {
-            Vector2f dir1 = dir;
-            Vector2f dir2 = dir;
-
-            dir1.Normalize() *= maxRadius_;
-            dir2.Normalize() *= maxRadius_;
-            const float rSin = std::sin( angle );
-            const float rCos = std::cos( angle );
-            dir1 = Vector2f( dir1.X() * rCos + dir1.Y() * rSin
-                           , dir1.Y() * rCos - dir1.X() * rSin );
-            dir2 = Vector2f( dir2.X() * rCos - dir2.Y() * rSin
-                           , dir2.Y() * rCos + dir2.X() * rSin );
-            tools.DrawLine( pos, pos + dir1 );
-            tools.DrawLine( pos, pos + dir2 );
-
-            float A0 = std::acos( dir.X() );
-            if( std::asin( dir.Y() ) < 0 )
-                A0 = -A0;
-            // $$$$ AGE 2006-04-04: 
-//            GLTool::DrawArc( pos, maxRadius_, A0 + angle, A0 - angle );
-        }
-    }
+        itSector->Draw( viewport, tools, maxRadius_ );
 }
 
 // -----------------------------------------------------------------------------

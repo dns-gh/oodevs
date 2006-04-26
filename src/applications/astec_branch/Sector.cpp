@@ -11,6 +11,7 @@
 
 #include "astec_pch.h"
 #include "Sector.h"
+#include "GlTools_ABC.h"
 
 const float Sector::pi_ = std::acos( -1.f );
 
@@ -44,6 +45,21 @@ Sector::Sector( const Point2f& vOrigin, const Vector2f& vDirection, float rAngle
         rB2_ = -vDirection.Y() * SIN - vDirection.X() * COS;
         rC2_ = -( rA2_ * vOrigin_.X() + rB2_ * vOrigin_.Y() );    
     }
+
+    direction1_ = direction2_ = vDirection_;
+    direction1_.Normalize(); direction2_.Normalize();
+    const float rSin = std::sin( rSemiAngle_ );
+    const float rCos = std::cos( rSemiAngle_ );
+    direction1_ = Vector2f( direction1_.X() * rCos + direction1_.Y() * rSin
+                          , direction1_.Y() * rCos - direction1_.X() * rSin );
+    direction2_ = Vector2f( direction2_.X() * rCos - direction2_.Y() * rSin
+                          , direction2_.Y() * rCos + direction2_.X() * rSin );
+
+    float A0 = std::acos( vDirection_.X() );
+    if( std::asin( vDirection_.Y() ) < 0 )
+        A0 = -A0;
+    minAngle_ = A0 - rSemiAngle_;
+    maxAngle_ = A0 + rSemiAngle_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,4 +87,24 @@ Sector::Sector()
 Sector::~Sector()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sector::Draw
+// Created: AGE 2006-04-26
+// -----------------------------------------------------------------------------
+void Sector::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, float radius ) const
+{
+    if( vOrigin_.IsZero() )
+        tools.DrawCircle( vOrigin_, radius );
+    else
+    {
+        const Vector2f dir1 = direction1_ * radius;
+        const Vector2f dir2 = direction2_ * radius;
+
+        tools.DrawLine( vOrigin_, vOrigin_ + dir1 );
+        tools.DrawLine( vOrigin_, vOrigin_ + dir2 );
+        // $$$$ AGE 2006-04-04: 
+//            GLTool::DrawArc( vOrigin_, radius, minAngle_, maxAngle_ );
+    }
 }

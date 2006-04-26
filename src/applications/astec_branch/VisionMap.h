@@ -64,7 +64,7 @@ private:
     //@{
     const DetectionMap& map_;
     geometry::Rectangle2f boundingBox_;
-    T_VisionMap vision_;
+    T_VisionMap vision_; // $$$$ AGE 2006-04-26: use a matrix
     //@}
 };
 

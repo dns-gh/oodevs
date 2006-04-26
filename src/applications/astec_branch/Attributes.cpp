@@ -175,7 +175,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 void Attributes::Draw( const Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( aggregated_ 
-    || ( ! bDead_ && ! bRadioSilence_ && ! bRadarEnabled_ && ! bCommJammed_ )
+    || ! ( bDead_ || bRadioSilence_ || bRadarEnabled_ || bCommJammed_ )
     || ! viewport.IsInside( where ) )
         return;
 

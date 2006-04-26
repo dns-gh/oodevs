@@ -43,9 +43,9 @@ void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 {
     for( unsigned i = 0; i < entities_.size(); ++i )
         if( i != selected_ )
-            Draw( *entities_.at( i ), viewport );
+            Draw( *entities_[ i ], viewport );
     if( selected_ < entities_.size() )
-        Draw( *entities_.at( selected_ ), viewport );
+        Draw( *entities_[ selected_ ], viewport );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,10 +54,10 @@ void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2f& viewport )
 {
-    const Positions& positions = entity.Get< Positions >();
     if( IsInTeam( entity ) ) // && positions.IsIn( viewport ) )
     {
         SelectColor( entity );
+        const Positions& positions = entity.Get< Positions >();
         const geometry::Point2f position = positions.GetPosition();
         entity.Draw( position, viewport, tools_ );
     }

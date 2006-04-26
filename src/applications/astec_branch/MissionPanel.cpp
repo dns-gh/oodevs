@@ -266,7 +266,7 @@ void MissionPanel::hideEvent( QHideEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MissionPanel::Draw( const geometry::Rectangle2f& viewport )
 {
-    if( isVisible() && pMissionInterface_ )
+    if( pMissionInterface_  && isVisible() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 2.f );

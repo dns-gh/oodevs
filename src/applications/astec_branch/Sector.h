@@ -12,6 +12,8 @@
 #ifndef __Sector_h_
 #define __Sector_h_
 
+class GlTools_ABC;
+
 // =============================================================================
 // @class  Sector
 // Created: JVT 2004-08-03
@@ -28,6 +30,7 @@ public:
     //@{
     bool IsInCone  ( const geometry::Point2f& vPos, float rRadius ) const;
     bool IsInSector( const geometry::Point2f& vPos ) const;
+    void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, float radius ) const;
     //@}
 
     //! @name Accessors
@@ -52,6 +55,12 @@ private:
     float rA2_;
     float rB2_;
     float rC2_;
+
+    // draw
+    float minAngle_;
+    float maxAngle_;
+    geometry::Vector2f direction1_;
+    geometry::Vector2f direction2_;
 };
 
 #include "Sector.inl"

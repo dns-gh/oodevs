@@ -131,7 +131,7 @@ void GlProxy::CheckTools() const
 // -----------------------------------------------------------------------------
 void GlProxy::CenterOn( const geometry::Point2f& point )
 {
-    CheckView();
+//    CheckView();
     view_->CenterOn( point );
 }
 
@@ -141,7 +141,7 @@ void GlProxy::CenterOn( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void GlProxy::Select( bool b )
 {
-    CheckTools();
+//    CheckTools();
     tools_->Select( b );
 }
 
@@ -151,7 +151,7 @@ void GlProxy::Select( bool b )
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( const std::string& name ) const
 {
-    CheckTools();
+//    CheckTools();
     return tools_->ShouldDisplay( name );
 }
     
@@ -161,7 +161,7 @@ bool GlProxy::ShouldDisplay( const std::string& name ) const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
-    CheckTools();
+//    CheckTools();
     return tools_->ShouldDisplay( name, autoCondition );
 }
 
@@ -171,7 +171,7 @@ bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 // -----------------------------------------------------------------------------
 float GlProxy::Pixels() const
 {
-    CheckTools();
+//    CheckTools();
     return tools_->Pixels();
 }
 
@@ -181,7 +181,7 @@ float GlProxy::Pixels() const
 // -----------------------------------------------------------------------------
 unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     return tools_->StipplePattern( factor );
 }
 
@@ -191,7 +191,7 @@ unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawCross( at, size );
 }
 
@@ -201,7 +201,7 @@ void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/ ) co
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawLine( from, to );
 }
 
@@ -211,7 +211,7 @@ void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLines( const T_PointVector& points ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawLines( points );
 }
 
@@ -221,7 +221,7 @@ void GlProxy::DrawLines( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /*= -1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawArrow( from, to, size );
 }
 
@@ -231,7 +231,7 @@ void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawCurvedArrow( from, to, curveRatio, size );
 }
 
@@ -241,7 +241,7 @@ void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Po
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawCircle( center, radius );
 }
 
@@ -251,7 +251,7 @@ void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f
 // -----------------------------------------------------------------------------
 void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawDisc( center, radius );
 }
 
@@ -261,7 +261,7 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/
 // -----------------------------------------------------------------------------
 void GlProxy::DrawRectangle( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawRectangle( center, height, factor );
 }
 
@@ -271,7 +271,7 @@ void GlProxy::DrawRectangle( const geometry::Point2f& center, float height, floa
 // -----------------------------------------------------------------------------
 void GlProxy::Print( const std::string& message, const geometry::Point2f& where ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->Print( message, where );
 }
 
@@ -281,7 +281,7 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /*= 1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawApp6Symbol( symbol, where, factor );
 }
 
@@ -291,6 +291,6 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 // -----------------------------------------------------------------------------
 void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
 {
-    CheckTools();
+//    CheckTools();
     tools_->DrawIcon( xpm, where, size );
 }

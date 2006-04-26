@@ -61,7 +61,7 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
 void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-04-21: viewport
-    if( ! tools.ShouldDisplay( "VisionLines" ) )
+    if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 1.f );
