@@ -89,7 +89,6 @@ protected:
         eCollectionGoingTo,
         eCollectionUnloading,
 //        eCollectionGoingFrom,           Juste pour les ambulances
-        eGoingBackToWar,
         eFinished
    };
     //@}

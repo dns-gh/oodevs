@@ -456,6 +456,17 @@ void AgentManager::RemovePopulation( Population& popu )
 //-----------------------------------------------------------------------------
 void AgentManager::DeleteAllAgents()
 {
+    /// $$$ TEST
+    for( CIT_MaintenanceConsigns it = maintenanceConsigns_.begin(); it != maintenanceConsigns_.end(); ++ it )
+        delete it->second;
+    maintenanceConsigns_.clear();
+    for( CIT_SupplyConsigns it = supplyConsigns_.begin(); it != supplyConsigns_.end(); ++it )
+        delete it->second;
+    supplyConsigns_.clear();
+    for( CIT_MedicalConsigns it = medicalConsigns_.begin(); it != medicalConsigns_.end(); ++it )
+        delete it->second;
+    medicalConsigns_.clear();
+
     for( IT_AgentMap it = agentMap_.begin(); it != agentMap_.end(); ++it )
         delete it->second;
     agentMap_.clear();

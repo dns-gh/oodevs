@@ -54,6 +54,7 @@ PHY_MedicalHealingConsign::~PHY_MedicalHealingConsign()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHealingConsign::serialize
 // Created: JVT 2005-04-11
@@ -129,10 +130,9 @@ void PHY_MedicalHealingConsign::ChooseStateAfterHealing()
         pDoctor_ = 0;
         nTimer_  = 0;
         
-        if ( pHumanState_->ShouldGoBackToWar() )
-            SetState( eGoingBackToWar );
-        else
-            EnterStateFinished();
+        if( pHumanState_->ShouldGoBackToWar() )
+            DoReturnHuman();
+        EnterStateFinished();
     }        
 }
 
@@ -203,8 +203,8 @@ bool PHY_MedicalHealingConsign::DoWaitingForCollection()
 // -----------------------------------------------------------------------------
 void PHY_MedicalHealingConsign::DoReturnHuman()
 {
-    pHumanState_->GoBackToWar();
-    pHumanState_ = 0;
+    if( pHumanState_->GoBackToWar() )
+        pHumanState_ = 0;
 }
 
 // =============================================================================
@@ -226,7 +226,6 @@ bool PHY_MedicalHealingConsign::Update()
         case eHealing                :                                ChooseStateAfterHealing (); break;
         case eSearchingForHealingArea: DoSearchForHealingArea();                                  break;
         case eWaitingForCollection   : if( DoWaitingForCollection() ) EnterStateFinished      (); break;
-        case eGoingBackToWar         : DoReturnHuman();               EnterStateFinished      (); break;
         case eFinished               :                                                            break;
         default:
             assert( false );

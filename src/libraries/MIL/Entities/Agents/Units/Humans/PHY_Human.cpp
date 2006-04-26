@@ -333,17 +333,18 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
 // Name: PHY_Human::NotifyBackToWar
 // Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
-void PHY_Human::NotifyBackToWar()
+bool PHY_Human::NotifyBackToWar()
 {
     assert( pComposante_ );
     assert( pMedicalState_ );
 
-    //$$$ BOF
-    if( pComposante_->GetComposante().GetState() != PHY_ComposanteState::dead_ )
-        return;
+    //$$$ BOF - PB gestion interrogation état composante quand modif état humain (doit être fait par composante, ou par humain ?) (fait par composante tout le temps, sauf dans ce cas ...)
+    if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::dead_ )
+        return false;
 
     CancelLogisticRequest();
     MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeOperational );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

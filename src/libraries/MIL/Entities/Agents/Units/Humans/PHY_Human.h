@@ -92,7 +92,7 @@ public:
     bool NeedMedical   () const;
     
     void NotifyHandledByMedical ();
-    void NotifyBackToWar        ();
+    bool NotifyBackToWar        ();
     void HealMentalDisease      ();
     void HealWound              ();
     void HealContamination      ();

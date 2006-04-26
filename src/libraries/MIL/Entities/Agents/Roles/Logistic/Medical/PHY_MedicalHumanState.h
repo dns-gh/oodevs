@@ -62,7 +62,7 @@ public:
     //@{
     void NotifyHumanChanged    (); // Called when the human state changed by PHY_Human
     void NotifyHandledByMedical();
-    void GoBackToWar           ();
+    bool GoBackToWar           ();
     void Cancel                ();
     void Heal                  ( const PHY_ComposantePion& doctor );
     //@}

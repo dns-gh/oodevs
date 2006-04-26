@@ -163,10 +163,12 @@ void PHY_MedicalHumanState::NotifyHandledByMedical()
 // Name: PHY_MedicalHumanState::GoBackToWar
 // Created: JVT 2005-04-27
 // -----------------------------------------------------------------------------
-void PHY_MedicalHumanState::GoBackToWar()
+bool PHY_MedicalHumanState::GoBackToWar()
 {
-    if( bShouldGoBackToWar_ )
-        pHuman_->NotifyBackToWar();
+    if( !bShouldGoBackToWar_ )
+        return false;
+        
+    return pHuman_->NotifyBackToWar();
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +177,7 @@ void PHY_MedicalHumanState::GoBackToWar()
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::Cancel()
 {
-    if ( pConsign_ )
+    if( pConsign_ )
     {
         pConsign_->Cancel();
         pConsign_ = 0;

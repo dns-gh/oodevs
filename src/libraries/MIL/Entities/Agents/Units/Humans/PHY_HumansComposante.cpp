@@ -259,7 +259,10 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RolePion_Composantes&
 void PHY_HumansComposante::NotifyHumanAdded( PHY_Human& human )
 {
     if( human.IsUsable() )
-        ++ nNbrUsableHumans_;
+    {
+        assert( pComposante_->GetState() != PHY_ComposanteState::dead_ );
+        ++ nNbrUsableHumans_;        
+    }
     assert( pComposante_ );
     pComposante_->NotifyHumanAdded( human );
 }
@@ -294,7 +297,10 @@ void PHY_HumansComposante::NotifyHumanChanged( PHY_Human& human, const PHY_Human
         -- nNbrUsableHumans_;
     }
     if( human.IsUsable() )
+    {
+        assert( pComposante_->GetState() != PHY_ComposanteState::dead_ );
         ++ nNbrUsableHumans_;
+    }
   
     assert( pComposante_ );
     pComposante_->NotifyHumanChanged( human, copyOfOldHumanState );
