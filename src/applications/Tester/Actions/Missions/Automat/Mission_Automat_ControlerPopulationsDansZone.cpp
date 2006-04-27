@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "Tester_pch.h"
 #include "Mission_Automat_ControlerPopulationsDansZone.h"
@@ -33,9 +20,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Automat_ControlerPopulationsDansZone::Mission_Automat_ControlerPopulationsDansZone( Automat& Automat )
-    : Mission_Automat_ABC ( Automat )
+    : Mission_Automat_ABC ( "Automat_ControlerPopulationsDansZone", Automat )
 {
-    strName_ = "Automat_ControlerPopulationsDansZone";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

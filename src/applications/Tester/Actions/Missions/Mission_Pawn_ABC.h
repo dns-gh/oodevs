@@ -6,39 +6,22 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-08 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Mission_Pawn_ABC_h_
 #define __Mission_Pawn_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
+#include "Entities/Pawn.h"
 #include "Actions/Action.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/IDManager.h"
 
 namespace TEST {
 
-    class Pawn;
     class Scheduler;
 
 // =============================================================================
 /** @class  Mission_Pawn_ABC
-    @brief  Mission_Pawn_ABC
-    @par    Using example
-    @code
-    Mission_Pawn_ABC;
-    @endcode
+    @brief  Mission Pawn base class
 */
 // Created: SBO 2005-08-08
 // =============================================================================
@@ -54,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_ABC( Pawn& target );
+             Mission_Pawn_ABC( const std::string& name, Pawn& target );
     virtual ~Mission_Pawn_ABC();
     //@}
 

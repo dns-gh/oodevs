@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "Tester_pch.h"
 #include "Mission_Automat_ASS_AcquerirObjectifs.h"
@@ -33,9 +20,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Automat_ASS_AcquerirObjectifs::Mission_Automat_ASS_AcquerirObjectifs( Automat& Automat )
-    : Mission_Automat_ABC ( Automat )
+    : Mission_Automat_ABC ( "Automat_ASS_AcquerirObjectifs", Automat )
 {
-    strName_ = "Automat_ASS_AcquerirObjectifs";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

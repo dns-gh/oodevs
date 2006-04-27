@@ -16,9 +16,10 @@ namespace TEST {
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 template< typename T >
-Action< T >::Action()
+Action< T >::Action( const std::string& name )
     : Action_ABC ()
     , pTarget_   ( 0 )
+    , name_      ( name )
 {
     // NOTHING
 }
@@ -28,9 +29,10 @@ Action< T >::Action()
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 template< typename T >
-Action< T >::Action( T& target)
+Action< T >::Action( const std::string& name, T& target)
     : Action_ABC ()
     , pTarget_   ( &target )
+    , name_      ( name )
 {
     // NOTHING
 }
@@ -73,6 +75,19 @@ inline
 void Action< T >::SetTarget( T& target )
 {
     pTarget_ = &target;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action::ToString
+// Created: SBO 2006-04-27
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+std::string Action< T >::ToString() const
+{
+    std::stringstream ss;
+    ss << name_ << " on [" << pTarget_->GetId() << "]";
+    return ss.str();
 }
 
 }

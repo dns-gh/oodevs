@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Mission_Automat_INF_EscorterUnite_h_
 #define __Mission_Automat_INF_EscorterUnite_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "Actions/Missions/Mission_Automat_ABC.h"
 
@@ -32,10 +19,6 @@ namespace TEST {
 // =============================================================================
 /** @class  Mission_Automat_INF_EscorterUnite
     @brief  Mission_Automat_INF_EscorterUnite
-    @par    Using example
-    @code
-    Mission_Automat_INF_EscorterUnite;
-    @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 

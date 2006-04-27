@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "Tester_pch.h"
 #include "Mission_Pawn_GEN_AmeliorerMobilite.h"
@@ -33,9 +20,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Pawn_GEN_AmeliorerMobilite::Mission_Pawn_GEN_AmeliorerMobilite( Pawn& pawn )
-    : Mission_Pawn_ABC ( pawn )
+    : Mission_Pawn_ABC ( "Pawn_GEN_AmeliorerMobilite", pawn )
 {
-    strName_ = "Pawn_GEN_AmeliorerMobilite";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

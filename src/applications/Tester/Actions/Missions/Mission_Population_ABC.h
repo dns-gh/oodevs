@@ -6,30 +6,17 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-08 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Mission_Population_ABC_h_
 #define __Mission_Population_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
+#include "Entities/Population.h"
 #include "Actions/Action.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/IDManager.h"
 
 namespace TEST {
 
-    class Population;
     class Scheduler;
 
 // =============================================================================
@@ -47,7 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Population_ABC( Population& target );
+             Mission_Population_ABC( const std::string& name, Population& target );
     virtual ~Mission_Population_ABC();
     //@}
 

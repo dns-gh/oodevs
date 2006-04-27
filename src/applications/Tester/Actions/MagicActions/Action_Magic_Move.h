@@ -6,38 +6,21 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Action_Magic_Move_h_
 #define __Action_Magic_Move_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
+#include "Entities/Pawn.h"
 #include "Actions/Action.h"
 #include "Messages/ASN_Messages.h"
 
 namespace TEST {
 
-    class Pawn;
     class Scheduler;
 
 // =============================================================================
 /** @class  Action_Magic_Move
-    @brief  Action_Magic_Move
-    @par    Using example
-    @code
-    Action_Magic_Move;
-    @endcode
+    @brief  Action Magic Move
 */
 // Created: SBO 2005-08-04
 // =============================================================================

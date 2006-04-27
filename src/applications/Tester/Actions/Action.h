@@ -33,8 +33,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Action();
-             Action( T& target );
+    explicit Action( const std::string& name );
+             Action( const std::string& name, T& target );
     virtual ~Action();
     //@}
 
@@ -46,6 +46,7 @@ public:
     //! @name Modifiers
     //@{
     virtual void SetTarget( T& target );
+    virtual std::string ToString() const;
     //@}
 
 protected:
@@ -67,6 +68,12 @@ private:
     //@{
     Action( const Action& );            //!< Copy constructor
     Action& operator=( const Action& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string name_;
     //@}
 };
 

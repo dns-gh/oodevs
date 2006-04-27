@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "Tester_pch.h"
 #include "Action_Magic_Move.h"
@@ -30,9 +21,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Action_Magic_Move::Action_Magic_Move( Pawn& pawn )
-    : Action< Pawn > ( pawn )
+    : Action< Pawn > ( "Magic Move", pawn )
 {
-    strName_ = "Magic Move";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -26,7 +26,6 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC()
-    : strName_        ()
 {
     // NOTHING
 }

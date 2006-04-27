@@ -70,7 +70,7 @@ void Scheduler::RecoverIfNeeded( uint nCurrentTick )
     // pass all the actions already executed
     for( ; itCurrentAction_ != actions_.end() && itCurrentAction_->first < nCurrentTick_; ++itCurrentAction_ )
     {
-        MT_LOG_INFO_MSG( "test already passed: " << itCurrentAction_->second->GetName() );
+        MT_LOG_INFO_MSG( "test already passed: " << itCurrentAction_->second->ToString() );
         ++nTestRun_;
     }
     nLastExecutionTick_ = nCurrentTick;
@@ -99,7 +99,7 @@ bool Scheduler::Run( uint nCurrentTick )
            nMissionInPeriod_ < nMaxMissionInPeriod_ )
     {
         MT_LOG_INFO_MSG( "[" << nTestRun_ / nTestTotal_ << "][" << nTestRun_ % nTestTotal_ << "/" << nTestTotal_ 
-                             << "] Starting action: " << itCurrentAction_->second->GetName() );
+                             << "] Starting action: " << itCurrentAction_->second->ToString() );
         itCurrentAction_->second->Run( *this );
         ++itCurrentAction_;
         ++nTestRun_;

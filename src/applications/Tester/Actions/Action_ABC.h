@@ -16,11 +16,7 @@ namespace TEST {
 
 // =============================================================================
 /** @class  Action_ABC
-    @brief  Action_ABC
-    @par    Using example
-    @code
-    Action_ABC;
-    @endcode
+    @brief  Action base class
 */
 // Created: SBO 2005-08-04
 // =============================================================================
@@ -41,7 +37,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const std::string& GetName() const;
+    virtual std::string ToString() const = 0;
     //@}
 
 private:
@@ -59,16 +55,8 @@ protected:
     virtual void Send           ( const Scheduler& scheduler ) = 0;
     virtual void Clean          () = 0;
     //@}
-
-protected:
-    //! @name Member data
-    //@{
-    std::string strName_;
-    //@}
 };
 
 } // end namespace TEST
-
-#include "Action_ABC.inl"
 
 #endif // __Action_ABC_h_

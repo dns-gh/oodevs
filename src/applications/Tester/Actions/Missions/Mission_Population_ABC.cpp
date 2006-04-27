@@ -32,8 +32,8 @@ IDManager Mission_Population_ABC::idManager_( 145 );
 // Name: Mission_Population_ABC constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-Mission_Population_ABC::Mission_Population_ABC( Population& population )
-    : Action< Population > ( population )
+Mission_Population_ABC::Mission_Population_ABC( const std::string& name, Population& population )
+    : Action< Population > ( name, population )
 {
     // NOTHING
 }

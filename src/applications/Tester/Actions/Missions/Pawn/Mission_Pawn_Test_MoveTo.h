@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Mission_Pawn_Test_MoveTo_h_
 #define __Mission_Pawn_Test_MoveTo_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "Actions/Missions/Mission_Pawn_ABC.h"
 
@@ -32,10 +19,6 @@ namespace TEST {
 // =============================================================================
 /** @class  Mission_Pawn_Test_MoveTo
     @brief  Mission_Pawn_Test_MoveTo
-    @par    Using example
-    @code
-    Mission_Pawn_Test_MoveTo;
-    @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 

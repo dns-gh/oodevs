@@ -6,39 +6,22 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-11 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Mission_Automat_ABC_h_
 #define __Mission_Automat_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
+#include "Entities/Automat.h"
 #include "Actions/Action.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/IDManager.h"
 
 namespace TEST {
 
-    class Automat;
     class Scheduler;
 
 // =============================================================================
 /** @class  Mission_Automat_ABC
-    @brief  Mission_Automat_ABC
-    @par    Using example
-    @code
-    Mission_Automat_ABC;
-    @endcode
+    @brief  Mission Automat base class
 */
 // Created: SBO 2005-08-08
 // =============================================================================
@@ -54,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Automat_ABC( Automat& target );
+             Mission_Automat_ABC( const std::string& name, Automat& target );
     virtual ~Mission_Automat_ABC();
     //@}
 

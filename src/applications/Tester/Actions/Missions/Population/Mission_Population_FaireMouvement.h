@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Mission_Population_FaireMouvement_h_
 #define __Mission_Population_FaireMouvement_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "Actions/Missions/Mission_Population_ABC.h"
 
@@ -32,10 +19,6 @@ namespace TEST {
 // =============================================================================
 /** @class  Mission_Population_FaireMouvement
     @brief  Mission_Population_FaireMouvement
-    @par    Using example
-    @code
-    Mission_Population_FaireMouvement;
-    @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 

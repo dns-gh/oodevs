@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "Tester_pch.h"
 #include "Mission_Pawn_TRANS_EtablirGererLiaison.h"
@@ -33,9 +20,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Pawn_TRANS_EtablirGererLiaison::Mission_Pawn_TRANS_EtablirGererLiaison( Pawn& pawn )
-    : Mission_Pawn_ABC ( pawn )
+    : Mission_Pawn_ABC ( "Pawn_TRANS_EtablirGererLiaison", pawn )
 {
-    strName_ = "Pawn_TRANS_EtablirGererLiaison";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "Tester_pch.h"
 #include "Mission_Population_$MissionName$.h"
@@ -33,9 +20,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Population_$MissionName$::Mission_Population_$MissionName$( Population& Population )
-    : Mission_Population_ABC ( Population )
+    : Mission_Population_ABC ( "Population_$MissionName$", Population )
 {
-    strName_ = "Population_$MissionName$";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

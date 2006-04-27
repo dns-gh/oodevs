@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-09-21 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "Tester_pch.h"
 #include "Mission_Population_Manifester.h"
@@ -33,9 +20,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Population_Manifester::Mission_Population_Manifester( Population& Population )
-    : Mission_Population_ABC ( Population )
+    : Mission_Population_ABC ( "Population_Manifester", Population )
 {
-    strName_ = "Population_Manifester";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

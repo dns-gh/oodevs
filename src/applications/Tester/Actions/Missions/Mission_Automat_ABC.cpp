@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-11 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "Tester_pch.h"
 #include "Mission_Automat_ABC.h"
@@ -31,8 +22,8 @@ IDManager Mission_Automat_ABC::idManager_( 145 );
 // Name: Mission_Automat_ABC constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-Mission_Automat_ABC::Mission_Automat_ABC( Automat& automat )
-    : Action< Automat > ( automat )
+Mission_Automat_ABC::Mission_Automat_ABC( const std::string& name, Automat& automat )
+    : Action< Automat > ( name, automat )
 {
     // NOTHING
 }
