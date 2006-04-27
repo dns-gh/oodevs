@@ -17,9 +17,9 @@
     <Reseau>Data/Reseau.xml</Reseau>
     <Volumes>Data/Volumes.xml</Volumes>
     <Protections>Data/Protections.xml</Protections>
+    <DotationNatures>Data/DotationNatures.xml</DotationNatures>
     <Objets>Data/Objets.xml</Objets>
     <Dotations>Data/Dotations.xml</Dotations>
-    <DotationNatures>Data/DotationNatures.xml</DotationNatures>
     <Lanceurs>Data/Lanceurs.xml</Lanceurs>
     <Armements>Data/Armements.xml</Armements>
     <Capteurs>Data/Capteurs.xml</Capteurs>
@@ -28,11 +28,11 @@
     <Automates>Data/Automates.xml</Automates>
     <NBC>Data/NBC.xml</NBC>
     <Meteo>Data/Meteo.xml</Meteo>
+    <Sante>Data/Sante.xml</Sante>
     <ClasseIDs>Data/IDClasses.xml</ClasseIDs>
     <FacteursHumains>Data/FacteursHumains.xml</FacteursHumains>
     <Pannes>Data/Pannes.xml</Pannes>
     <GroupesConnaissance>Data/GroupesConnaissance.xml</GroupesConnaissance>
-    <Sante>Data/Sante.xml</Sante>    
     <Maintenance>Data/Maintenance.xml</Maintenance>
     <Ravitaillement>Data/Ravitaillement.xml</Ravitaillement>
     <Communications>Data/Communications.xml</Communications>

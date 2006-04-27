@@ -7139,14 +7139,14 @@ void ASN1C_CR_SituationDifficilementTenableFaceAPopulation::Print (ASN1ConstChar
    asn1Print_CR_SituationDifficilementTenableFaceAPopulation (name);
 }
 
-void asn1Print_CR_UtilisationArmesLetalesFaceAPopulation (ASN1ConstCharPtr name)
+void asn1Print_CR_UtilisationArmesNonLetalesFaceAPopulation (ASN1ConstCharPtr name)
 {
 }
 
-void ASN1C_CR_UtilisationArmesLetalesFaceAPopulation::Print (ASN1ConstCharPtr name)
+void ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation::Print (ASN1ConstCharPtr name)
 
 {
-   asn1Print_CR_UtilisationArmesLetalesFaceAPopulation (name);
+   asn1Print_CR_UtilisationArmesNonLetalesFaceAPopulation (name);
 }
 
 void asn1Print_CR_UtilisationMoyensDefenseActifsFaceAPopulation (ASN1ConstCharPtr name)
@@ -8389,7 +8389,7 @@ void asn1Print_MsgCR_cr (ASN1ConstCharPtr name, ASN1T_MsgCR_cr* pvalue)
          break;
 
       case 239:
-         sprintf (namebuf, "%s.u.cr_utilisation_armes_letales_face_a_population", name);
+         sprintf (namebuf, "%s.u.cr_utilisation_armes_non_letales_face_a_population", name);
          break;
 
       case 240:

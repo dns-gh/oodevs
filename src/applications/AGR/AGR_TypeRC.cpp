@@ -586,7 +586,7 @@ void AGR_TypeRC::Initialize()
     rcTypes_[ "eRC_PopulationReconnue" ] = "eReportMission";    
     rcTypes_[ "eRC_PretPourEngagementSurEnnemi" ] = "eReportMission";
     rcTypes_[ "eRC_SituationDifficilementTenableFaceAPopulation" ] = "eReportMission";
-	rcTypes_[ "eRC_UtilisationArmesLetalesFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_UtilisationArmesNonLetalesFaceAPopulation" ] = "eReportMission";
 	rcTypes_[ "eRC_UtilisationMoyensDefenseActifsFaceAPopulation" ] = "eReportMission";
 	rcTypes_[ "eRC_UtilisationArmementsFaceAPopulation" ] = "eReportMission";
 	rcTypes_[ "eRC_DebutInterventionFaceAPopulation" ] = "eReportMission";

@@ -398,7 +398,7 @@ protected:
         eRC_CollecteRenseignementsSurPopulations,
         eRC_PopulationReconnue,
         eRC_SituationDifficilementTenableFaceAPopulation,
-        eRC_UtilisationArmesLetalesFaceAPopulation,
+        eRC_UtilisationArmesNonLetalesFaceAPopulation,
         eRC_UtilisationMoyensDefenseActifsFaceAPopulation,
         eRC_UtilisationArmementsFaceAPopulation,
         eRC_DebutInterventionFaceAPopulation, // Parametre : id

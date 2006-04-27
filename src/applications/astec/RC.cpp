@@ -283,7 +283,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_collecte_renseignements_sur_populations : strMsg << "collecte renseignements sur populations"; break;
         case T_MsgCR_cr_cr_population_reconnue : strMsg << "population reconnue"; break;
         case T_MsgCR_cr_cr_situation_difficilement_tenable_face_a_population : strMsg << "situation difficilement tenable face a population"; break;
-        case T_MsgCR_cr_cr_utilisation_armes_letales_face_a_population : strMsg << "utilisation armes letales face a population"; break;
+        case T_MsgCR_cr_cr_utilisation_armes_non_letales_face_a_population : strMsg << "utilisation armes non letales face a population"; break;
         case T_MsgCR_cr_cr_utilisation_moyens_defense_actifs_face_a_population : strMsg << "utilisation moyens defense actifs face a population"; break;
         case T_MsgCR_cr_cr_utilisation_armements_face_a_population : strMsg << "utilisation armements face a population"; break;
         case T_MsgCR_cr_cr_debut_intervention_face_a_population : strMsg << "debut intervention face a population" << " - id : " << " " << asnMsg.cr.u.cr_debut_intervention_face_a_population; break;

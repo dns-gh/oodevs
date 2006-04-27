@@ -380,7 +380,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_CollecteRenseignementsSurPopulations ] = new MIL_RC( eRC_CollecteRenseignementsSurPopulations, T_MsgCR_cr_cr_collecte_renseignements_sur_populations );
 	rcs_[ eRC_PopulationReconnue ] = new MIL_RC( eRC_PopulationReconnue, T_MsgCR_cr_cr_population_reconnue );
 	rcs_[ eRC_SituationDifficilementTenableFaceAPopulation ] = new MIL_RC( eRC_SituationDifficilementTenableFaceAPopulation, T_MsgCR_cr_cr_situation_difficilement_tenable_face_a_population );
-	rcs_[ eRC_UtilisationArmesLetalesFaceAPopulation ] = new MIL_RC( eRC_UtilisationArmesLetalesFaceAPopulation, T_MsgCR_cr_cr_utilisation_armes_letales_face_a_population );
+	rcs_[ eRC_UtilisationArmesNonLetalesFaceAPopulation ] = new MIL_RC( eRC_UtilisationArmesNonLetalesFaceAPopulation, T_MsgCR_cr_cr_utilisation_armes_non_letales_face_a_population );
 	rcs_[ eRC_UtilisationMoyensDefenseActifsFaceAPopulation ] = new MIL_RC( eRC_UtilisationMoyensDefenseActifsFaceAPopulation, T_MsgCR_cr_cr_utilisation_moyens_defense_actifs_face_a_population );
 	rcs_[ eRC_UtilisationArmementsFaceAPopulation ] = new MIL_RC( eRC_UtilisationArmementsFaceAPopulation, T_MsgCR_cr_cr_utilisation_armements_face_a_population );
 	rcs_[ eRC_DebutInterventionFaceAPopulation ] = new MIL_RC_DebutInterventionFaceAPopulation( eRC_DebutInterventionFaceAPopulation, T_MsgCR_cr_cr_debut_intervention_face_a_population );

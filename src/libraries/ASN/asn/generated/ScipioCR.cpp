@@ -11611,50 +11611,50 @@ int ASN1C_CR_SituationDifficilementTenableFaceAPopulation::Decode ()
 
 /**************************************************************/
 /*                                                            */
-/*  CR_UtilisationArmesLetalesFaceAPopulation                 */
+/*  CR_UtilisationArmesNonLetalesFaceAPopulation              */
 /*                                                            */
 /**************************************************************/
 
-ASN1C_CR_UtilisationArmesLetalesFaceAPopulation::ASN1C_CR_UtilisationArmesLetalesFaceAPopulation (
+ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation::ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation (
    ASN1MessageBuffer& msgBuf) :
    ASN1CType(msgBuf)
 {}
 
-EXTERN int asn1PE_CR_UtilisationArmesLetalesFaceAPopulation (ASN1CTXT* ctxt_p)
+EXTERN int asn1PE_CR_UtilisationArmesNonLetalesFaceAPopulation (ASN1CTXT* ctxt_p)
 {
    int stat = ASN_OK;
 
-   rtdiag ("asn1PE_CR_UtilisationArmesLetalesFaceAPopulation: start\n");
+   rtdiag ("asn1PE_CR_UtilisationArmesNonLetalesFaceAPopulation: start\n");
 
    /* NULL */
 
-   rtdiag ("asn1PE_CR_UtilisationArmesLetalesFaceAPopulation: end\n");
+   rtdiag ("asn1PE_CR_UtilisationArmesNonLetalesFaceAPopulation: end\n");
    return (stat);
 }
 
-int ASN1C_CR_UtilisationArmesLetalesFaceAPopulation::Encode ()
+int ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation::Encode ()
 {
    mMsgBuf.Init ();
-   int stat = asn1PE_CR_UtilisationArmesLetalesFaceAPopulation (mpContext->GetPtr());
+   int stat = asn1PE_CR_UtilisationArmesNonLetalesFaceAPopulation (mpContext->GetPtr());
    return stat;
 }
 
-EXTERN int asn1PD_CR_UtilisationArmesLetalesFaceAPopulation (ASN1CTXT* ctxt_p)
+EXTERN int asn1PD_CR_UtilisationArmesNonLetalesFaceAPopulation (ASN1CTXT* ctxt_p)
 {
    int stat = ASN_OK;
 
-   rtdiag ("asn1PD_CR_UtilisationArmesLetalesFaceAPopulation: start\n");
+   rtdiag ("asn1PD_CR_UtilisationArmesNonLetalesFaceAPopulation: start\n");
 
    /* NULL */
 
-   rtdiag ("asn1PD_CR_UtilisationArmesLetalesFaceAPopulation: end\n");
+   rtdiag ("asn1PD_CR_UtilisationArmesNonLetalesFaceAPopulation: end\n");
 
    return (stat);
 }
 
-int ASN1C_CR_UtilisationArmesLetalesFaceAPopulation::Decode ()
+int ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation::Decode ()
 {
-   return asn1PD_CR_UtilisationArmesLetalesFaceAPopulation (mpContext->GetPtr());
+   return asn1PD_CR_UtilisationArmesNonLetalesFaceAPopulation (mpContext->GetPtr());
 }
 
 /**************************************************************/
@@ -15169,11 +15169,11 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
 
          break;
 
-      /* cr_utilisation_armes_letales_face_a_population */
+      /* cr_utilisation_armes_non_letales_face_a_population */
       case 239:
-         PU_PUSHNAME (ctxt_p, "u.cr_utilisation_armes_letales_face_a_population");
+         PU_PUSHNAME (ctxt_p, "u.cr_utilisation_armes_non_letales_face_a_population");
 
-         stat = asn1PE_CR_UtilisationArmesLetalesFaceAPopulation (ctxt_p);
+         stat = asn1PE_CR_UtilisationArmesNonLetalesFaceAPopulation (ctxt_p);
          if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
          PU_POPNAME (ctxt_p);
 
@@ -18040,11 +18040,11 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
 
          break;
 
-      /* cr_utilisation_armes_letales_face_a_population */
+      /* cr_utilisation_armes_non_letales_face_a_population */
       case 238:
-         PU_PUSHNAME (ctxt_p, "u.cr_utilisation_armes_letales_face_a_population");
+         PU_PUSHNAME (ctxt_p, "u.cr_utilisation_armes_non_letales_face_a_population");
 
-         stat = asn1PD_CR_UtilisationArmesLetalesFaceAPopulation (ctxt_p);
+         stat = asn1PD_CR_UtilisationArmesNonLetalesFaceAPopulation (ctxt_p);
          if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
          PU_POPNAME (ctxt_p);

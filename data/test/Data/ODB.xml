@@ -193,9 +193,23 @@
                 <Armee>bleu</Armee>
                 <GroupeConnaissance>1</GroupeConnaissance>
                 <TC2 automate="5000000"/>
+                <Logistique>
+                    <Maintenance automate="5000025"/>
+                </Logistique>                 
             </LiensHierarchiques>            
             <Position>31TBN9996078882</Position>           
         </Automate>
+        
+        <Automate id="5000025" type="BLT Maintenance">
+            <Nom>BLIAT Maintenance</Nom>
+            <Embraye>false</Embraye>
+            <LiensHierarchiques>
+                <Armee>bleu</Armee>
+                <GroupeConnaissance>1</GroupeConnaissance>
+                <TC2 automate="5000000"/>
+            </LiensHierarchiques>            
+            <Position>31TBN9996078882</Position>           
+        </Automate>        
         
         <Automate id="5000003" type="BLD Sante">
             <Embraye>false</Embraye>
@@ -236,7 +250,7 @@
             <LiensHierarchiques>
                 <Armee>rouge</Armee>
                 <GroupeConnaissance>4</GroupeConnaissance>
-                <TC2 automate="5000000"/>
+                <TC2 automate="5000001"/>
             </LiensHierarchiques>
             <Position>31TCN0007879536</Position>  
 <!--            <Dotations>
@@ -305,6 +319,35 @@
             </LiensHierarchiques>
             <Position>31TBN9996078882</Position>
         </Pion>                
+        
+        <Pion id="6001000" type="Groupe evacuation maintenance BLT" >
+            <LiensHierarchiques>
+                <Automate>5000025</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>
+        
+        <Pion id="6001001" type="Cie Reparation BLT - EA" >
+            <LiensHierarchiques>
+                <Automate>5000025</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>
+        
+        <Pion id="6001002" type="Cie Reparation BLT - M" >
+            <LiensHierarchiques>
+                <Automate>5000025</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>                
+        
+        <Pion id="6001003" type="Cie Reparation BLT - M" >
+            <LiensHierarchiques>
+                <Automate>5000025</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>  
+                
         
         <Pion id="6000004" type="Secteur tri BLD" >
             <LiensHierarchiques>
@@ -533,9 +576,9 @@
                 <Experience>Experimente</Experience>
             </FacteursHumains>
             <Personnels>
-                <Personnel etat="ue" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
-                <Personnel etat="u1" nbOfficier="5" nbSousOfficier="5" nbMilitaireDuRang="20"/>
-                <Personnel etat="u2" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="20"/>
+                <Personnel etat="u1" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="1"/>
+                <!--<Personnel etat="u1" nbOfficier="5" nbSousOfficier="5" nbMilitaireDuRang="20"/>
+                <Personnel etat="u2" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="20"/>-->
             </Personnels>
         </Pion>
         
@@ -551,11 +594,11 @@
                 <Equipement type="CompTest2" disponible="0" indisponible="0" reparable="1" />
             </Equipements>                  
             
-            <Personnels>
+<!--XXX            <Personnels>
                 <Personnel etat="ue" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
                 <Personnel etat="u1" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
                 <Personnel etat="u2" nbOfficier="0" nbSousOfficier="0" nbMilitaireDuRang="2"/>
-            </Personnels>
+            </Personnels>-->
             
             <!--<Dotations>
                 <Dotation nom="munition">

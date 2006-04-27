@@ -4916,23 +4916,23 @@ EXTERN void asn1Print_CR_SituationDifficilementTenableFaceAPopulation (ASN1Const
 
 /**************************************************************/
 /*                                                            */
-/*  CR_UtilisationArmesLetalesFaceAPopulation                 */
+/*  CR_UtilisationArmesNonLetalesFaceAPopulation              */
 /*                                                            */
 /**************************************************************/
 
-class EXTERN ASN1C_CR_UtilisationArmesLetalesFaceAPopulation : public ASN1CType {
+class EXTERN ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation : public ASN1CType {
 public:
-   ASN1C_CR_UtilisationArmesLetalesFaceAPopulation (
+   ASN1C_CR_UtilisationArmesNonLetalesFaceAPopulation (
       ASN1MessageBuffer& msgBuf);
    int Encode ();
    int Decode ();
    void Print (ASN1ConstCharPtr name);
 } ;
 
-EXTERN int asn1PE_CR_UtilisationArmesLetalesFaceAPopulation (ASN1CTXT* ctxt_p);
-EXTERN int asn1PD_CR_UtilisationArmesLetalesFaceAPopulation (ASN1CTXT* ctxt_p);
+EXTERN int asn1PE_CR_UtilisationArmesNonLetalesFaceAPopulation (ASN1CTXT* ctxt_p);
+EXTERN int asn1PD_CR_UtilisationArmesNonLetalesFaceAPopulation (ASN1CTXT* ctxt_p);
 
-EXTERN void asn1Print_CR_UtilisationArmesLetalesFaceAPopulation (ASN1ConstCharPtr name);
+EXTERN void asn1Print_CR_UtilisationArmesNonLetalesFaceAPopulation (ASN1ConstCharPtr name);
 
 /**************************************************************/
 /*                                                            */
@@ -5639,7 +5639,7 @@ EXTERN void asn1Print_EnumTypeCR (ASN1ConstCharPtr name, ASN1T_EnumTypeCR* pvalu
 #define T_MsgCR_cr_cr_collecte_renseignements_sur_populations 236
 #define T_MsgCR_cr_cr_population_reconnue 237
 #define T_MsgCR_cr_cr_situation_difficilement_tenable_face_a_population 238
-#define T_MsgCR_cr_cr_utilisation_armes_letales_face_a_population 239
+#define T_MsgCR_cr_cr_utilisation_armes_non_letales_face_a_population 239
 #define T_MsgCR_cr_cr_utilisation_moyens_defense_actifs_face_a_population 240
 #define T_MsgCR_cr_cr_utilisation_armements_face_a_population 241
 #define T_MsgCR_cr_cr_debut_intervention_face_a_population 242
