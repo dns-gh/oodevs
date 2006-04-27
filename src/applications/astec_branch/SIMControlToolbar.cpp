@@ -14,7 +14,6 @@
 #include "SIMControlToolbar.h"
 #include "moc_SIMControlToolbar.cpp"
 
-#include "App.h"
 #include "ASN_Messages.h"
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
@@ -29,6 +28,8 @@
 SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers )
     : QToolBar( pParent, "sim control toolbar" )
     , controllers_( controllers )
+    , connected_( false )
+    , paused_( false )
 {
     setLabel( tr( "Contrôle SIM" ) );
 
@@ -85,7 +86,7 @@ SIMControlToolbar::~SIMControlToolbar()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotConnectDisconnect()
 {
-    if ( App::GetApp().GetNetwork().IsConnected() )
+    if ( connected_ )
     {
         pDisconnectDlg_->show();
     }
@@ -108,7 +109,7 @@ void SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotPlayPause()
 {
-    if ( App::GetApp().GetNetwork().GetMessageMgr().IsPaused() )
+    if ( paused_ )
     {
         ASN_MsgCtrlResume asnMsg;
         asnMsg.Send();
@@ -126,7 +127,7 @@ void SIMControlToolbar::SlotPlayPause()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::SlotSpeedChange()
 {
-    if( App::GetApp().GetNetwork().IsConnected() ) // $$$$ AGE 2006-04-21: regarder la simulation
+    if( connected_ )
     {
         ASN_MsgCtrlChangeTimeFactor asnMsg;
         asnMsg.GetAsnMsg() = pSpeedSpinBox_->value();
@@ -159,7 +160,8 @@ void SIMControlToolbar::SlotOnSpinBoxEnterPressed()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if( simulation.IsConnected() )
+    connected_ = simulation.IsConnected();
+    if( connected_ )
     {
         pConnectButton_->setIconSet( MAKE_ICON( connexiongreen ) );
         pPlayButton_->setEnabled( true );
@@ -173,7 +175,8 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         pSpeedButton_->setEnabled( false );
     }
 
-    if( simulation.IsPaused() )
+    paused_ = simulation.IsPaused();
+    if( paused_ )
     {
         pPlayButton_->setIconSet( MAKE_ICON( play ) );
         pPlayButton_->setTextLabel( tr( "Reprise (P)" ) );

@@ -185,9 +185,9 @@ float SensorType::GetDistanceModificator( const Agent& agent ) const
 // Name: SensorType::GetMaxDistance
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-float SensorType::GetMaxDistance( const Agent& agent ) const
+float SensorType::GetMaxDistance( float distanceModificator ) const
 {
-    return rDetectionDist_ * GetDistanceModificator( agent );
+    return rDetectionDist_ * distanceModificator;
 }
 
 //-----------------------------------------------------------------------------
@@ -212,12 +212,11 @@ float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool in
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( const Agent& srcAgent, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance  ) const
+float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance  ) const
 {
     assert( rCurrentNRJ <= rDetectionDist_ );
     assert( rCurrentNRJ > 0 );
 
-    float rDistanceModificator = GetDistanceModificator( srcAgent );
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
     rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );

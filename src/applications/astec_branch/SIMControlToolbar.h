@@ -71,6 +71,7 @@ private:
     MT_SpinBox*         pSpeedSpinBox_; // $$$$ AGE 2006-03-24: MT_Caca
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
+    bool connected_, paused_;
     //@}
 };
 

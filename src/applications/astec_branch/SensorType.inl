@@ -27,9 +27,9 @@ float SensorType::GetAngle() const
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
 inline
-float SensorType::ComputeExtinction( const Agent& srcAgent, bool inForest, bool inTown, bool inGround, float distance ) const
+float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance ) const
 {
-    return ComputeExtinction( srcAgent, rDetectionDist_, inForest, inTown, inGround, distance );
+    return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance );
 }
 
 // -----------------------------------------------------------------------------

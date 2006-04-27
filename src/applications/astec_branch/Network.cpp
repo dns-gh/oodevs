@@ -108,16 +108,12 @@ void Network::Run()
 {
     while( ! terminated_ )
     {
-        bool connected = false;
         {
             boost::mutex::scoped_lock locker( mutex_ );
-            connected = IsConnected();
             engine_->Update();
+            manager_->Flush();
         }
-        if( connected )
-            Thread::Sleep( 10 );
-        else
-            Thread::Sleep( 100 );
+        Thread::Sleep( 10 );
     }
 }
 

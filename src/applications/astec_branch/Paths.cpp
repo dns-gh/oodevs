@@ -12,6 +12,8 @@
 #include "CoordinateConverter.h"
 #include "GlTools_ABC.h"
 
+using namespace geometry;
+
 // -----------------------------------------------------------------------------
 // Name: Paths constructor
 // Created: AGE 2006-02-13
@@ -37,13 +39,18 @@ Paths::~Paths()
 // -----------------------------------------------------------------------------
 void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
-    // $$$$ AGE 2006-02-13: Jamais vidé ??
+    static const float threshold = 30.f * 30.f;
     if( message.m.positionPresent )
     {
-        previousPath_.push_back( converter_.ConvertToXY( message.position ) );
+        const Point2f position = converter_.ConvertToXY( message.position );
+        if( previousPath_.empty() || previousPath_.back().SquareDistance( position ) > threshold )
+        {
+            previousPath_.push_back( position );
+            previousBox_.Incorporate( position );
+        }
         UpdatePathfind();
     }
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: Paths::DoUpdate
@@ -52,8 +59,12 @@ void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 {
     plannedPath_.clear(); plannedPath_.reserve( message.itineraire.vecteur_point.n );
+    plannedBox_ = Rectangle2f();
     for( uint i = 0; i < message.itineraire.vecteur_point.n; ++i )
+    {
         plannedPath_.push_back( converter_.ConvertToXY( message.itineraire.vecteur_point.elem[i] ) );
+        plannedBox_.Incorporate( plannedPath_.back() );
+    }
     UpdatePathfind();
 }
 
@@ -66,7 +77,7 @@ void Paths::UpdatePathfind()
     if( plannedPath_.size() <= 1 || previousPath_.empty() )
         return;
 
-    const geometry::Point2f position = previousPath_.back();
+    const Point2f position = previousPath_.back();
     float closestDistance = std::numeric_limits< float >::max();
     IT_PointVector closest = plannedPath_.begin();
     IT_PointVector previous = plannedPath_.begin();
@@ -76,7 +87,7 @@ void Paths::UpdatePathfind()
          current != plannedPath_.end() && closestDistance > 0.1;
          ++current )
     {
-        const geometry::Segment2f segment( *previous, *current );
+        const Segment2f segment( *previous, *current );
         const float squareDist = segment.SquareDistance( position );
 
         if( squareDist < closestDistance )
@@ -97,11 +108,11 @@ void Paths::UpdatePathfind()
 // Name: Paths::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Paths::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Paths::Draw( const Point2f& /*where*/, const Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-21: deal with viewport
-    const bool displayPath    = tools.ShouldDisplay( "Paths" );
-    const bool displayOldPath = tools.ShouldDisplay( "OldPaths" );
+    const bool displayPath    = ! viewport.Intersect( plannedBox_ ).IsEmpty()  && tools.ShouldDisplay( "Paths" );
+    const bool displayOldPath = ! viewport.Intersect( previousBox_ ).IsEmpty() && tools.ShouldDisplay( "OldPaths" );
+
     if( displayPath || displayOldPath )
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
     if( displayPath )

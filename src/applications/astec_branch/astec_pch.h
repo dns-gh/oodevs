@@ -16,6 +16,13 @@
 #pragma warning( disable : 4702 )
 
 #define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#undef min
+#undef max
+#undef Yield
+#undef GetObject
+#undef GetMessage
+
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -82,16 +89,8 @@
 #include <map>
 #include <set>
 
-#ifdef min
-#   undef min
-#endif
-
-#ifdef max
-#   undef max
-#endif
-
 #include "geometry/Types.h"
-typedef std::vector< geometry::Point2f > T_PointVector; // $$$$ AGE 2006-03-16: 
+typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
@@ -99,10 +98,7 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 #include "ENT/ENT_Tr.h"
 
-#define RUNTIME_ERROR { std::stringstream str; str << "Runtime error in function " __FUNCTION__ ", file : " __FILE__ ", line : " << __LINE__ << "."; throw std::runtime_error( str.str().c_str() ); }
-
 #define APP_NAME    "ASTEC - EM"
-#define APP_VERSION "beta-1"
-
+#define APP_VERSION "beta-2"
 
 #endif // __Pch_h_

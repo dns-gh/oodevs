@@ -36,7 +36,7 @@ SpinBoxDisplayer::~SpinBoxDisplayer()
 // -----------------------------------------------------------------------------
 Displayer_ABC& SpinBoxDisplayer::SubItem( const char* )
 {
-    throw std::runtime_error( __FUNCTION__ ); // $$$$ AGE 2006-02-23: 
+    return NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void SpinBoxDisplayer::StartDisplay()
 // -----------------------------------------------------------------------------
 void SpinBoxDisplayer::DisplayFormatted( const QString& )
 {
-    throw std::runtime_error( __FUNCTION__ ); // $$$$ AGE 2006-02-23: 
+    DisplayNotImplemented< QString >();
 }
 
 // -----------------------------------------------------------------------------

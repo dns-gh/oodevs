@@ -32,9 +32,13 @@ public:
     class SearchableItem_ABC
     {
     public:
+        explicit SearchableItem_ABC( unsigned id ) : id_( id ) {};
         virtual ~SearchableItem_ABC() {};
         virtual bool Matches( const QString& input ) const = 0;
         virtual void Activate() = 0;
+        const unsigned id_;
+    private:
+        SearchableItem_ABC& operator=( const SearchableItem_ABC& );
     };
     //@}
 

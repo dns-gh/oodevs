@@ -49,7 +49,7 @@ public:
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
     virtual void DrawLines      ( const T_PointVector& points ) const;
     virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const;
-    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const; // $$$$ AGE 2006-03-23: 0 <= curveRatio <= 1
+    virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const;
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
     virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const;
     virtual void DrawRectangle  ( const geometry::Point2f& center, float height, float factor = 1.f ) const;

@@ -99,7 +99,7 @@ void ListItemDisplayer::EndDisplay()
 // -----------------------------------------------------------------------------
 int ListItemDisplayer::FindColumn( const char* name ) const
 {
-    for( int i = 0; i < columns_.size(); ++i )
+    for( unsigned i = 0; i < columns_.size(); ++i )
         if( columns_[i] == name )
             return i;
     throw std::runtime_error( std::string( "Column '" ) + name + "' does not exist" );

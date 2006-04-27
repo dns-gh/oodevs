@@ -28,7 +28,7 @@ RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resol
     nbcAgentsLabel_ = new RichLabel( tr( "Agent(s) NBC:" ), this );
     nbcAgents_ = new QListView( this );
     nbcAgents_->setSelectionMode( QListView::Multi );
-    nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // $$$$ SBO 2006-04-20: 3 lines visible
+    nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tr( "Type" ) );
 
     Iterator< const NBCAgent& > it( resolver.CreateIterator() );

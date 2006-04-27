@@ -65,7 +65,6 @@ private:
     unsigned int timeFactor_;
     int time_;
     bool paused_;
-    bool tickStart_;
     bool connected_;
     sStartTick startTick_;
     sEndTick endTick_;

@@ -87,7 +87,7 @@ const std::string& DecisionalModel::GetName() const
 // -----------------------------------------------------------------------------
 void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory )
 {
-    // $$$$ AGE 2006-04-05: 
+    // $$$$ AGE 2006-04-05: hard coded common frag orders
     RegisterFragOrder( factory, "MettreTenueNBC" );
     RegisterFragOrder( factory, "EnleverTenueNBC" );
     RegisterFragOrder( factory, "PasserEnSilenceRadio" );
@@ -97,7 +97,6 @@ void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory )
     RegisterFragOrder( factory, "ChangerReglesEngagement" );
     RegisterFragOrder( factory, "RecupererTransporteurs" );
     RegisterFragOrder( factory, "ChangerReglesEngagementPopulation" );
-
 }
 
 // -----------------------------------------------------------------------------

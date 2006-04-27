@@ -12,6 +12,7 @@
 #include "Entity_ABC.h"
 #include "OptionVariant.h"
 #include "View_ABC.h"
+#include "Profiler.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
@@ -41,6 +42,7 @@ EntityLayerBase::~EntityLayerBase()
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 {
+    PROFILE();
     for( unsigned i = 0; i < entities_.size(); ++i )
         if( i != selected_ )
             Draw( *entities_[ i ], viewport );

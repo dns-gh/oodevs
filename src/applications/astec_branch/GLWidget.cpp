@@ -314,6 +314,7 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
 // Name: GLWidget::DrawApp6Symbol
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
+// $$$$ AGE 2006-04-27: faire un lod
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
     const Vector2f fontSize = Base().GetSize( symbol );

@@ -16,7 +16,7 @@ class ShapeHandler_ABC;
 
 // =============================================================================
 /** @class  ParametersLayer
-    @brief  ParametersLayer // $$$$ AGE 2006-03-24: points, lines, polygons
+    @brief  ParametersLayer
 */
 // Created: AGE 2006-03-23
 // =============================================================================

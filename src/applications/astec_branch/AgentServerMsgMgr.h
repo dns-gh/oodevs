@@ -102,6 +102,7 @@ public:
     //@}
 
     void DoUpdate();
+    void Flush();
 
     //-------------------------------------------------------------------------
     /** @name Messages */
@@ -334,7 +335,10 @@ private:
     bool bReceivingState_;
     bool bUseMosLimits_;
 
-    T_Inputs inputs_;
+    boost::mutex inputMutex_;
+    T_Inputs workingInputs_; // network thread only
+    T_Inputs buffer_;        // shared
+    T_Inputs pendingInputs_; // main thread only
 };
 
 #   include "AgentServerMsgMgr.inl"

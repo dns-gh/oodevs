@@ -31,9 +31,9 @@ public:
 
     //! @name Operations
     //@{
-    float GetMaxDistance   ( const Agent& agent ) const;
-    float ComputeExtinction( const Agent& srcAgent, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance ) const;
-    float ComputeExtinction( const Agent& srcAgent, bool inForest, bool inTown, bool inGround, float distance ) const;
+    float GetMaxDistance   ( float distanceModificator ) const;
+    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance ) const;
+    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
 

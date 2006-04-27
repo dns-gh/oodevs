@@ -19,6 +19,7 @@
 #include "graphics/GraphicData.h"
 #include "GlTools_ABC.h"
 #include "InitializationMessage.h"
+#include "Profiler.h"
 
 using namespace pathfind;
 
@@ -110,6 +111,7 @@ bool TerrainLayer::ShouldLoad( const std::string& filename )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    PROFILE();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
         DrawInnerShapes( viewport );
         DrawShapesBorders( viewport );

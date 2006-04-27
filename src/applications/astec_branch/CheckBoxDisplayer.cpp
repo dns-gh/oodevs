@@ -35,7 +35,7 @@ CheckBoxDisplayer::~CheckBoxDisplayer()
 // -----------------------------------------------------------------------------
 Displayer_ABC& CheckBoxDisplayer::SubItem( const char* )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    return NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void CheckBoxDisplayer::StartDisplay()
 // -----------------------------------------------------------------------------
 void CheckBoxDisplayer::DisplayFormatted( const QString& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    DisplayNotImplemented< QString >();
 }
 
 // -----------------------------------------------------------------------------

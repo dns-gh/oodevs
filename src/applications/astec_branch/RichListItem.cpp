@@ -358,5 +358,5 @@ const QPixmap * RichListItem::pixmap( int column ) const
 {
     if( column < 0 || column >= (int)columns_.size() )
         return 0;
-    return & columns_[ column ].pixMap; // $$$$ AGE 2006-03-15: maybe use a list to allow reentrance?
+    return & columns_[ column ].pixMap;
 }

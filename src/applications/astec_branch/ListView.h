@@ -56,7 +56,7 @@ public:
     ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent, ValuedListItem* currentItem = 0 )
     {
         if( ! parent )
-            throw std::runtime_error( "Missing parent !" ); // $$$$ AGE 2006-02-22: 
+            throw std::runtime_error( "Missing parent !" );
         ValuedListItem* previousItem = currentItem;
         while( from != to )
         {

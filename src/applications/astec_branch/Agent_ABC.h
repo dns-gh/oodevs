@@ -14,7 +14,7 @@
 
 // =============================================================================
 /** @class  Agent_ABC
-    @brief  Agent base class.  // $$$$ AGE 2006-04-10: Add stuff !
+    @brief  Agent base class.  // $$$$ AGE 2006-04-10: Add stuff ! Inutilisé pour l'instant par rapport à Entity
 */
 // Created: AGE 2006-02-13
 // =============================================================================

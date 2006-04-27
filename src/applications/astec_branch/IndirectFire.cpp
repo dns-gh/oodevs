@@ -41,6 +41,6 @@ IndirectFire::~IndirectFire()
 // -----------------------------------------------------------------------------
 void IndirectFire::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-21: viewport
-    tools.DrawCurvedArrow( where, target_ );
+    if( ! viewport.Intersect( geometry::Rectangle2f( where, target_ ) ).IsEmpty() )
+        tools.DrawCurvedArrow( where, target_ );
 }

@@ -100,12 +100,16 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-21: viewport
-    tools.DrawDisc( position_, radius_ );
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4d( COLOR_BLACK );
-    tools.DrawDisc( position_, deadRadius_ );
-    glPopAttrib();
+    const geometry::Vector2f extension( radius_, radius_ );
+    geometry::Rectangle2f extended( viewport.BottomLeft() - extension, viewport.TopRight() + extension );
+    if( extended.IsInside( position_ ) )
+    {
+        tools.DrawDisc( position_, radius_ );
+        glPushAttrib( GL_CURRENT_BIT );
+        glColor4d( COLOR_BLACK );
+        tools.DrawDisc( position_, deadRadius_ );
+        glPopAttrib();
+    }
 }
     
 // -----------------------------------------------------------------------------

@@ -39,6 +39,7 @@
 #include "DIN_Types.h"
 #include "WeatherModel.h"
 #include "DIN_InputDeepCopy.h"
+#include <ctime>
 
 using namespace DIN;
 
@@ -102,7 +103,16 @@ DIN::DIN_BufferedMessage AgentServerMsgMgr::BuildMessage()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Enqueue( DIN::DIN_Input& input, T_Callback function )
 {
-    inputs_.push_back( new DIN_InputDeepCopy( input, function ) );
+    workingInputs_.push_back( new DIN_InputDeepCopy( input, function ) );
+}
+
+namespace
+{
+    bool TimedOut( clock_t start )
+    {
+        const unsigned maxTime = CLOCKS_PER_SEC / 20;
+        return clock() - start > maxTime;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -111,16 +121,30 @@ void AgentServerMsgMgr::Enqueue( DIN::DIN_Input& input, T_Callback function )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::DoUpdate()
 {
-    T_Inputs inputs;
+    if( pendingInputs_.empty() )
     {
-        boost::mutex::scoped_lock locker( mutex_ );
-        std::swap( inputs_, inputs );
+        boost::mutex::scoped_lock locker( inputMutex_ );
+        std::swap( buffer_, pendingInputs_ );
     }
-    for( CIT_Inputs it = inputs.begin(); it != inputs.end(); ++it )
+    clock_t start = clock();
+    T_Inputs::iterator it = pendingInputs_.begin();
+    for( ; it != pendingInputs_.end() && ! TimedOut( start ); ++it )
     {
         (*it)->Apply( *this );
         delete *it;
     }
+    pendingInputs_.erase( pendingInputs_.begin(), it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Flush
+// Created: AGE 2006-04-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Flush()
+{
+    boost::mutex::scoped_lock locker( inputMutex_ );
+    std::copy( workingInputs_.begin(), workingInputs_.end(), std::back_inserter( buffer_ ) );
+    workingInputs_.clear();
 }
 
 // -----------------------------------------------------------------------------

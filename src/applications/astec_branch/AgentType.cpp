@@ -58,10 +58,6 @@ void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< Component
     std::string name;
     xis >> attribute( "nom", name );
     equipments_.push_back( & resolver.Get( name ) );
-    // $$$$ AGE 2006-02-14: 
-//            bHasMaintenance_ |= pTypeComposante->HasMaintenance();
-//            bHasMedical_     |= pTypeComposante->HasMedical();
-//            bHasSupply_      |= pTypeComposante->HasSupply();
 }
 
 // -----------------------------------------------------------------------------

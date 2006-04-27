@@ -59,7 +59,9 @@ private:
     //! @name Member data
     //@{
     const CoordinateConverter& converter_;
+    geometry::Rectangle2f plannedBox_;
     T_PointVector plannedPath_;
+    geometry::Rectangle2f previousBox_;
     T_PointVector previousPath_;
     //@}
 };

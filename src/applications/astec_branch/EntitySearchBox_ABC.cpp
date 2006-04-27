@@ -58,11 +58,9 @@ void EntitySearchBox_ABC::AddItem( SearchableItem_ABC& item )
 // -----------------------------------------------------------------------------
 void EntitySearchBox_ABC::RemoveItem( unsigned long id )
 {
-    // $$$$ AGE 2006-04-20: may be dangerous
-    const QString input = QString::number( id );
     for( IT_Items it = items_.begin(); it != items_.end(); ++it )
     {
-        if( (*it)->Matches( input ) )
+        if( (*it)->id_ == id )
         {
             std::swap( *it, items_.back() );
             delete items_.back();

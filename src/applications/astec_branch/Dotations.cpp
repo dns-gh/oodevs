@@ -54,7 +54,7 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
             dotation->quantity_ = value.quantite_disponible;
         else
             Register( value.ressource_id, *new Dotation( type, value.quantite_disponible ) );
-        if( type.IsGas() ) // $$$$ AGE 2006-04-10: 
+        if( type.IsGas() )
             bEmptyGasTank_ = ( value.quantite_disponible == 0 );
     }
     controller_.Update( *this );

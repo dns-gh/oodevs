@@ -23,6 +23,8 @@ using namespace geometry;
 Surface::Surface( const Agent& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
     : agent_( agent )
     , map_( map )
+    , elongation_( 1 )
+    , distanceModificator_( 1 )
 {
     double oX, oY, rHeight;
     input >> oX >> oY; origin_ = Point2f( float( oX ), float( oY ) );
@@ -42,7 +44,19 @@ Surface::Surface( const Agent& agent, const VisionConesMessage& input, const Det
         input >> x >> y;
         sectors_.push_back( Sector( origin_, Vector2f( float(x), float(y) ), pSensorType_->GetAngle() ) );
     }
-    maxRadius_ = pSensorType_->GetMaxDistance( agent_ );
+    distanceModificator_ = elongation_ * pSensorType_->GetDistanceModificator( agent_ );
+    maxRadius_ = pSensorType_->GetMaxDistance( distanceModificator_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Surface::SetElongation
+// Created: AGE 2006-04-27
+// -----------------------------------------------------------------------------
+void Surface::SetElongation( float elongation )
+{
+    elongation_ = elongation;
+    distanceModificator_ = elongation_ * pSensorType_->GetDistanceModificator( agent_ );
+    maxRadius_ = pSensorType_->GetMaxDistance( distanceModificator_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,16 +141,19 @@ bool Surface::IsInSector( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
 {
+    distanceModificator_ = elongation_ * pSensorType_->GetDistanceModificator( agent_ );
+    maxRadius_ = pSensorType_->GetMaxDistance( distanceModificator_ );
+
     VisionLine line( map_, origin_, point, height_ + agent_.Get< Positions >().GetHeight() );
     float skyrock = std::numeric_limits< float >::infinity();
     while( ! line.IsDone() && skyrock > 0 )
     {
         line.Increment();
         if( skyrock == std::numeric_limits< float >::infinity() )
-            skyrock = pSensorType_->ComputeExtinction( agent_,
+            skyrock = pSensorType_->ComputeExtinction( distanceModificator_,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
         else
-            skyrock = pSensorType_->ComputeExtinction( agent_, skyrock,
+            skyrock = pSensorType_->ComputeExtinction( distanceModificator_, skyrock,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
     }
     return pSensorType_->InterpreteNRJ( skyrock );

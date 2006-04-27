@@ -28,9 +28,6 @@
 #include "CoordinateConverter.h"
 #include "Positions.h"
 
-// $$$$ AGE 2006-02-16: possession des objets par la team ?
-// $$$$ AGE 2006-02-16: ou au moins les enregistrer ?
-
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02

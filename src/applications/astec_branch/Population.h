@@ -33,7 +33,6 @@ class CoordinateConverter;
 // Created: HME 2005-09-29
 // =============================================================================
 class Population : public Agent_ABC
-//                 , public Resolver< PopulationPart_ABC >
                  , public Resolver< PopulationFlow >
                  , public Resolver< PopulationConcentration >
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?

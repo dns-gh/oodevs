@@ -16,7 +16,6 @@
 // =============================================================================
 /** @class  DisplayBuilder
     @brief  DisplayBuilder
-    // $$$$ AGE 2006-02-22: dégager ce bordel, faire une seule classe et un builder 
 */
 // Created: AGE 2006-02-09
 // =============================================================================

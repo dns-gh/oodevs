@@ -57,7 +57,8 @@ float ObjectPositions::GetHeight() const
 // -----------------------------------------------------------------------------
 void ObjectPositions::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    Update( message.localisation );
+    if( message.m.localisationPresent )
+        Update( message.localisation );
 }
 
 // -----------------------------------------------------------------------------

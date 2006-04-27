@@ -102,7 +102,7 @@ void ObjectListView::NotifyCreated( const Object& object )
         teamItem = new ValuedListItem( &team, this, team.GetName().c_str() );
 
     const ObjectType& type = object.GetType();
-    ValuedListItem* typeItem = FindSibling( &type, teamItem );
+    ValuedListItem* typeItem = FindChild( &type, teamItem );
     if( ! typeItem )
         typeItem = new ValuedListItem( &type, teamItem, type.GetName().c_str() );
 

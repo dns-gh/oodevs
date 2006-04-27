@@ -60,7 +60,6 @@ public:
 
     bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
 
-    // $$$$ AGE 2006-03-24: trouver autre chose
     virtual void Select( ActionController& actions ) const = 0;
     virtual void ContextMenu( ActionController& actions, const QPoint& point ) const = 0;
     //@}

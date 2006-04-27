@@ -73,9 +73,13 @@ void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 	}
 	if ( asnMsg.m.fluxPresent )
 	{
-        flow_.clear();
+        flow_.clear(); flow_.reserve( asnMsg.flux.vecteur_point.n );
+        boundingBox_ = Rectangle2f();
 		for( uint i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
+        {
 			flow_.push_back( converter_.ConvertToXY( asnMsg.flux.vecteur_point.elem[i] ) );
+            boundingBox_.Incorporate( flow_.back() );
+        }
 
         // Density
         float rLength = 0.;
@@ -127,11 +131,13 @@ unsigned int PopulationFlow::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-21: viewport
-    glPushAttrib( GL_LINE_BIT );
-    glLineWidth( 10.f );
-    tools.DrawLines( flow_ );
-    glPopAttrib();
+    if( ! boundingBox_.Intersect( viewport ).IsEmpty() )
+    {
+        glPushAttrib( GL_LINE_BIT );
+        glLineWidth( 10.f );
+        tools.DrawLines( flow_ );
+        glPopAttrib();
+    }
 }
 
 // -----------------------------------------------------------------------------

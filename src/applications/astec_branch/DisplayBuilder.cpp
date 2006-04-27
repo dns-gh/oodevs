@@ -70,7 +70,7 @@ GroupDisplayer& DisplayBuilder::Group( const char* name )
 // -----------------------------------------------------------------------------
 void DisplayBuilder::StartDisplay()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void DisplayBuilder::StartDisplay()
 // -----------------------------------------------------------------------------
 void DisplayBuilder::DisplayFormatted( const QString& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    DisplayNotImplemented< QString >();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void DisplayBuilder::DisplayFormatted( const QString& )
 // -----------------------------------------------------------------------------
 void DisplayBuilder::EndDisplay()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

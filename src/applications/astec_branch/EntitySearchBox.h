@@ -60,17 +60,17 @@ namespace
     {
     public:
         Searchable( Controllers& controllers, const Entity& entity )
-            : controllers_( &controllers )
+            : SearchableItem_ABC( entity.GetId() )
+            , controllers_( &controllers )
             , entity_( &entity )
-            , id_( QString::number( entity.GetId() ) )
-            , name_( entity.GetName().c_str() )
+            , name_( entity.GetName().c_str() + QString::number( entity.GetId() ) )
         {
             name_ = name_.lower();
         };
         virtual ~Searchable()
         {};
         virtual bool Matches( const QString& input ) const {
-            return id_.find( input ) != -1 || name_.find( input ) != -1;
+            return name_.find( input ) != -1;
         };
         virtual void Activate() 
         {
@@ -80,7 +80,6 @@ namespace
     private:
         Controllers* controllers_;
         const Entity* entity_;
-        QString id_;
         QString name_;
     };
 }

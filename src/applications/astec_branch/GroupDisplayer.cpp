@@ -92,7 +92,7 @@ Displayer_ABC& GroupDisplayer::SubItem( const char* name )
 // -----------------------------------------------------------------------------
 void GroupDisplayer::StartDisplay()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ void GroupDisplayer::StartDisplay()
 // -----------------------------------------------------------------------------
 void GroupDisplayer::DisplayFormatted( const QString& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    DisplayNotImplemented< QString >();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void GroupDisplayer::DisplayFormatted( const QString& )
 // -----------------------------------------------------------------------------
 void GroupDisplayer::EndDisplay()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

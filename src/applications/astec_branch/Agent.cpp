@@ -99,7 +99,7 @@ unsigned long Agent::GetId() const
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
 {
-    if( message.error_code == EnumObjectErrorCode::no_error ) 
+    if( message.error_code == EnumObjectErrorCode::no_error )
         ChangeSuperior( message.oid_automate );
 }
 
@@ -119,7 +119,10 @@ void Agent::DoUpdate( const ASN1T_MsgChangeAutomate& message )
 void Agent::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error ) 
+    {
         ChangeKnowledgeGroup( message.oid_groupe_connaissance );
+        controller_.Update( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +148,6 @@ void Agent::ChangeKnowledgeGroup( KnowledgeGroup& gtia )
     gtia_->AddAutomat( id_, *this );
     for( Resolver< Agent >::IT_Elements it = Resolver< Agent >::elements_.begin(); it != Resolver< Agent >::elements_.end(); ++it )
         it->second->gtia_ = gtia_;
-//    controller_.Update( *this ); // $$$$ AGE 2006-02-16: 
 }
 
 // -----------------------------------------------------------------------------

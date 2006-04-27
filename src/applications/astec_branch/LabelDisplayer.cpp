@@ -44,7 +44,7 @@ LabelDisplayer::~LabelDisplayer()
 // -----------------------------------------------------------------------------
 Displayer_ABC& LabelDisplayer::SubItem( const char* )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    return NotToBeCalled( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------

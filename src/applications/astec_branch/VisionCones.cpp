@@ -55,8 +55,9 @@ void VisionCones::DoUpdate( const VisionConesMessage& message )
     surfaces_.reserve( nNbrSurfaces );
     for( uint i = 0; i < nNbrSurfaces; ++i )
         surfaces_.push_back( factory_.CreateSurface( agent_, message ) );
-
-    message >> elongationFactor_; // $$$$ AGE 2006-04-04: wtf ?
+    message >> elongationFactor_;
+    for( uint i = 0; i < nNbrSurfaces; ++i )
+        surfaces_[ i ]->SetElongation( elongationFactor_ );
     needUpdating_ = true;
 }
 

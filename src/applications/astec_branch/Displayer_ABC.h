@@ -52,6 +52,17 @@ public:
     virtual Displayer_ABC& Item( const char* name ) { return SubItem( name ); };
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void DisplayNotImplemented()
+    {
+        FormatterNotImplemented().Error( *this, typeid( T ) );
+    }
+    Displayer_ABC& NotToBeCalled( const char* ) const;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

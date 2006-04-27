@@ -79,6 +79,7 @@ private:
     void InitializeHumanFactors ( xml::xistream& xis, const std::string& conffile );
     void SetSplashText( const QString& strText );
     virtual void NotifyUpdated( const InitializationMessage& message );
+    Workers* CreateWorkers();
     //@}
 
 private:

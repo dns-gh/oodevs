@@ -23,7 +23,7 @@
 // =============================================================================
 class FormatterNotImplemented
 {
-protected:
+public:
     void Error( Displayer_ABC& displayer, const type_info& type ) const;
 };
 

@@ -96,7 +96,6 @@ void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
 void Simulation::BeginTick( int tick )
 {
     time_ = tick * tickDuration_;
-    tickStart_ = true; // $$$$ AGE 2006-02-14: 
     controllers_.controller_.Update( startTick_ );
     controllers_.controller_.Update( *this );
 }
@@ -107,7 +106,6 @@ void Simulation::BeginTick( int tick )
 // -----------------------------------------------------------------------------
 void Simulation::EndTick()
 {
-    tickStart_ = false;
     controllers_.controller_.Update( endTick_ );
     controllers_.controller_.Update( *this );
 }

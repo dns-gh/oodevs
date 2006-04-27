@@ -10,13 +10,26 @@
 #include "astec_pch.h"
 #include "Workers.h"
 
+namespace
+{
+    struct PrioritySetter
+    {
+        void operator()()
+        {
+            SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_LOWEST );
+            tools::thread::Thread::Sleep( 1000 );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Workers constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 Workers::Workers()
 {
-    // NOTHING
+    for( unsigned i = 0; i < pool_.GetCpuNumber(); ++i )
+        pool_.Enqueue( PrioritySetter() );
 }
 
 // -----------------------------------------------------------------------------

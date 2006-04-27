@@ -32,9 +32,11 @@ public:
 
     //! @name Operations
     //@{
+    void SetElongation( float elongation );
     void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     void Update( VisionMap& map );
     //@}
+
 
 private:
     //! @name Copy/Assignment
@@ -67,7 +69,9 @@ private:
     float height_;
     T_SectorVector sectors_;
     const SensorType* pSensorType_;
-    float maxRadius_;
+    float elongation_;
+    mutable float maxRadius_;
+    mutable float distanceModificator_;
     //@}
 };
 

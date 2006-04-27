@@ -49,7 +49,8 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
     message >> id >> nVisType >> nMaxVisType >> bRecordMode;
     Agent* agent = & resolver_.Get( id );
 
-    detections_[ agent ] = bRecordMode ? E_UnitVisType( 4 ) : E_UnitVisType( nVisType ); // $$$$ AGE 2006-02-14: 4 = eRecorded
+    // 4 = eRecorded
+    detections_[ agent ] = bRecordMode ? E_UnitVisType( 4 ) : E_UnitVisType( nVisType );
 
     controller_.Update( *this );
 }

@@ -42,8 +42,6 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers )
     connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controllers_.Register( *this );
-
-    // $$$$ AGE 2006-04-05: drag and drop pour changer le superieur
 }
 
 // -----------------------------------------------------------------------------

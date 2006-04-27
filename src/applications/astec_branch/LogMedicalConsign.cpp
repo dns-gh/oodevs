@@ -97,7 +97,7 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
     if( diagnosed_ )
         displayer.Display( "Blessure :", wound_ );
     else
-        displayer.Display( "Blessure :", "?" ); // $$$$ AGE 2006-04-04: 
+        displayer.Display( "Blessure :", "Non diagnostiquée" );
 }
 
 // -----------------------------------------------------------------------------
