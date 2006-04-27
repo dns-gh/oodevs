@@ -111,7 +111,6 @@ void MIL_PopulationFlow::Clean()
     bSpeedUpdated_      = false;
     bHeadMoveFinished_  = false;
     pSplittingObject_   = 0;
-    objectsCollisionBeforeMove_.clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -184,13 +184,62 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         ComputePath( primaryDestination_ );
     }
 
-    objectsCollisionBeforeMove_.clear();
-    TER_World::GetWorld().GetObjectManager().GetListAt( GetHeadPosition(), objectsCollisionBeforeMove_ );
-
     assert( pCurrentPath_ );
     int nOut = PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
     if( nOut == DEC_PathWalker::eFinished )
         bHeadMoveFinished_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyMovingInsideObject
+// Created: NLD 2005-12-10
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
+{
+    if( !object.IsReal() )
+        return;
+
+    MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
+    // $$$ POURRI
+    realObject.ApplyAttrition( *this );
+
+
+    //$$$ DEUGUEU Cf. refactor gestion objets<->population
+    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &realObject )
+        return;
+
+    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
+        return;
+
+    if( !pSplittingObject_ || realObject.GetExitingPopulationDensity() < pSplittingObject_->GetExitingPopulationDensity() )
+        pSplittingObject_ = &realObject;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetSpeedWithReinforcement
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
+{
+    if( !object.IsReal() )
+        return GetMaxSpeed();
+
+    const MIL_RealObject_ABC& realObject = static_cast< const MIL_RealObject_ABC& >( object );
+    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
+        return GetMaxSpeed();
+
+    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &realObject )
+        return GetMaxSpeed();
+    return 0.; // First collision with 'splitting' object => stop the move (concentration will be created on collision point ...)
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanObjectInteractWith
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) const
+{
+    return object.CanInteractWith( GetPopulation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -286,27 +335,18 @@ void MIL_PopulationFlow::ManageSplit()
 
 /*
     //$$$$$$$$$$$$$$$$$$$$$
-
     // $$$ TEST
     TER_ObjectManager::T_ObjectVector objects; 
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
-
     printf( "%d objects colliding\n", objects.size() );
-
 
     if( new object collision && object has effect on population flow )
     {
         ptCollision = GetCollisionPoint()
-
         pNewConcentration = GetConcentration( ptCollision );
-
         pNewFlow = CopyFlow( *this );
-
         pNewFlow->ChangeTail( ptCollision ); // reduction nombre humains
-
         ChangeHead( pNewConcentration ); /// reduction nombre humains
-
-
     }
 */
 }
@@ -404,57 +444,6 @@ void MIL_PopulationFlow::UpdateLocation()
 void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 {
     agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::NotifyMovingInsideObject
-// Created: NLD 2005-12-10
-// -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
-{
-    if( std::find( objectsCollisionBeforeMove_.begin(), objectsCollisionBeforeMove_.end(), &object ) != objectsCollisionBeforeMove_.end() )
-        return;
-
-    if( !object.IsReal() )
-        return;
-
-    MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
-    // $$$ POURRI
-    realObject.ApplyAttrition( *this );
-
-
-    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
-        return;
-
-    if( !pSplittingObject_ || realObject.GetExitingPopulationDensity() < pSplittingObject_->GetExitingPopulationDensity() )
-        pSplittingObject_ = &realObject;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetSpeedWithReinforcement
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
-{
-    if( !object.IsReal() )
-        return GetMaxSpeed();
-
-    const MIL_RealObject_ABC& realObject = static_cast< const MIL_RealObject_ABC& >( object );
-    if( realObject.GetExitingPopulationDensity() == std::numeric_limits< MT_Float >::max() )
-        return GetMaxSpeed();
-
-    if( std::find( objectsCollisionBeforeMove_.begin(), objectsCollisionBeforeMove_.end(), &object ) != objectsCollisionBeforeMove_.end() )
-        return GetMaxSpeed();
-    return 0.; // First collision with 'splitting' object => stop the move (concentration will be created on collision point ...)
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::CanObjectInteractWith
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) const
-{
-    return object.CanInteractWith( GetPopulation() );
 }
 
 // =============================================================================

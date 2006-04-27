@@ -68,7 +68,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
         persistent T_Action                actionMove;
         persistent T_Action                actionFire;
         persistent E_EtatActionDeplacement nEtatDeplacement;
-        persistent float  rDummy = 0;
+        //persistent float  rDummy = 0;
         
         if( DIA_ModuleBegins() )
         {
@@ -77,11 +77,11 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
             actionFire = DEC_StartTirSurPions( 1 );
         }
         
-        if( rDummy == 53 )
+/*        if( rDummy == 53 )
             DEC_PauseAction( actionMove );
         else if( rDummy == 90 )
             DEC_ReprendAction( actionMove );
-        ++ rDummy;
+        ++ rDummy;*/
     }
 
     on spontaneous end:

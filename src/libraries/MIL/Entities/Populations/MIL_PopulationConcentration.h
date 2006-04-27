@@ -70,8 +70,9 @@ public:
 
     //! @name Accessors
     //@{
-    const MT_Vector2D& GetPosition           () const;
-          bool         IsNearPosition        ( const MT_Vector2D& position ) const;
+    const MIL_RealObject_ABC* GetSplittingObject() const;
+    const MT_Vector2D&        GetPosition       () const;
+          bool                IsNearPosition    ( const MT_Vector2D& position ) const;
 
     virtual const TER_Localisation& GetLocation      () const;
     virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;

@@ -17,6 +17,16 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetSplittingObject
+// Created: NLD 2006-04-27
+// -----------------------------------------------------------------------------
+inline
+const MIL_RealObject_ABC* MIL_PopulationConcentration::GetSplittingObject() const
+{
+    return pSplittingObject_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::GetPosition
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
