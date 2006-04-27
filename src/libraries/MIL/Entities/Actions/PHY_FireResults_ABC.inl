@@ -51,3 +51,15 @@ void PHY_FireResults_ABC::DecRef()
     if( nNbrRefs_ == 0 )
         delete this;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireResults_ABC::GetPopulationDamages
+// Created: NLD 2006-04-26
+// -----------------------------------------------------------------------------
+inline
+const PHY_FireResults_ABC::T_PopulationDamagesMap& PHY_FireResults_ABC::GetPopulationDamages() const
+{
+    return populationsDamages_;
+}
+
+

@@ -23,6 +23,7 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -261,6 +262,20 @@ MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
     return rPullingFlowsDensity_;  
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::SetPullingFlowsDensity
+// Created: NLD 2005-12-11
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_RealObject_ABC& splittingObject )
+{
+    pSplittingObject_ = &splittingObject;
+
+    //$$$ RC TMP
+    if( pSplittingObject_->GetExitingPopulationDensity() == 0. )
+        MIL_RC::pRcBloquee_->Send( GetPopulation(), MIL_RC::eRcTypeOperational );
+    else
+        MIL_RC::pRcFiltree_->Send( GetPopulation(), MIL_RC::eRcTypeOperational );
+}
 
 // =============================================================================
 // NETWORK

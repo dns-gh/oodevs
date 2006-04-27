@@ -583,7 +583,19 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_ExecutionAttentat" ] = "eReportMission";
     rcTypes_[ "eRC_RiposteContrePopulation" ] = "eReportMission";
     rcTypes_[ "eRC_EsquiveFaceAPopulation" ] = "eReportMission";
-    rcTypes_[ "eRC_PopulationReconnue" ] = "eReportMission";
+    rcTypes_[ "eRC_PopulationReconnue" ] = "eReportMission";    
+    rcTypes_[ "eRC_PretPourEngagementSurEnnemi" ] = "eReportMission";
+    rcTypes_[ "eRC_SituationDifficilementTenableFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_UtilisationArmesLetalesFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_UtilisationMoyensDefenseActifsFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_UtilisationArmementsFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_DebutInterventionFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationVictimeAffrontements" ] = "eReportMission";
+	rcTypes_[ "eRC_AttitudePopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_Bloquee" ] = "eReportMission";
+	rcTypes_[ "eRC_Filtree" ] = "eReportMission";
+	rcTypes_[ "eRC_AttentatTerroristeDansPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationVictimeExplosionMines" ] = "eReportMission";
     rcTypes_[ "eRC_TirIndirectFratricide" ] =  "eReportArtillery";
     rcTypes_[ "eRC_TirIndirectSurPopulation" ] = "eReportArtillery";
 }

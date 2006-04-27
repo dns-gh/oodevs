@@ -30,6 +30,7 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
@@ -215,6 +216,8 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rS
         rSurface -= pElement->Exterminate( rSurface );
     }
     NotifyAttackedBy( exterminator );
+
+    MIL_RC::pRcAttentatTerroristeDansPopulation_->Send( *this, MIL_RC::eRcTypeOperational );
 }
 
 // -----------------------------------------------------------------------------

@@ -41,7 +41,8 @@ public:
     //@}
 
 private:
-    const uint nID_;
+    const uint           nID_;
+    const MIL_AgentPion& firer_;
 };
 
 #include "PHY_FireResults_Pion.inl"

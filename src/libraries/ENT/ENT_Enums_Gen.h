@@ -614,6 +614,25 @@ enum E_InfoContextErrorCode
 };
 
 
+enum E_PopulationAttitude
+{
+    ePopulationAttitude_Calme,
+    ePopulationAttitude_Agitee,
+    ePopulationAttitude_Excitee,
+    ePopulationAttitude_Agressive,
+    eNbrPopulationAttitude
+};
+
+
+enum E_PopulationAttrErrorCode
+{
+    ePopulationAttrErrorCode_NoError,
+    ePopulationAttrErrorCode_ErrorInvalidUnit,
+    ePopulationAttrErrorCode_ErrorInvalidAttribute,
+    eNbrPopulationAttrErrorCode
+};
+
+
 enum E_TypeCR
 {
     eTypeCR_Message,
@@ -893,25 +912,6 @@ enum E_UnitAttrErrorCode
     eUnitAttrErrorCode_ErrorInvalidAttribute,
     eUnitAttrErrorCode_ErrorUnitSurrendered,
     eNbrUnitAttrErrorCode
-};
-
-
-enum E_PopulationAttitude
-{
-    ePopulationAttitude_Calme,
-    ePopulationAttitude_Agitee,
-    ePopulationAttitude_Excitee,
-    ePopulationAttitude_Agressive,
-    eNbrPopulationAttitude
-};
-
-
-enum E_PopulationAttrErrorCode
-{
-    ePopulationAttrErrorCode_NoError,
-    ePopulationAttrErrorCode_ErrorInvalidUnit,
-    ePopulationAttrErrorCode_ErrorInvalidAttribute,
-    eNbrPopulationAttrErrorCode
 };
 
 

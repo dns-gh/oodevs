@@ -33,6 +33,11 @@ public:
     void NotifyHumansKilled( uint nNbrHumans );
     //@}
 
+    //! @name Accessors
+    //@{
+    uint GetNbrKilledHumans() const;
+    //@}
+
     //! @name Network
     //@{
            void Serialize              ( const MIL_Population& target, ASN1T_FireDamagesPopulation& asn ) const;

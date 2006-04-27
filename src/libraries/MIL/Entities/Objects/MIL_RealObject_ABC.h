@@ -42,7 +42,14 @@ class TER_DynamicData;
 class MIL_RealObject_ABC : public MIL_Object_ABC
 {
     MT_COPYNOTALLOWED( MIL_RealObject_ABC );
-   
+
+public:
+    //! @name Types
+    //@{
+    typedef std::set< const MIL_AgentPion* > T_AgentSet;
+    typedef T_AgentSet::const_iterator       CIT_AgentSet;
+    //@}
+
 public:
     explicit MIL_RealObject_ABC( const MIL_RealObjectType& type );
              MIL_RealObject_ABC();
@@ -109,9 +116,10 @@ public:
 
     //! @name Animation
     //@{
-    bool AddAnimator    ( const MIL_AgentPion& agent );
-    void RemoveAnimator ( const MIL_AgentPion& agent );
-    bool CanBeAnimatedBy( const MIL_AgentPion& agent ) const;
+          bool        AddAnimator    ( const MIL_AgentPion& agent );
+          void        RemoveAnimator ( const MIL_AgentPion& agent );
+          bool        CanBeAnimatedBy( const MIL_AgentPion& agent ) const;
+    const T_AgentSet& GetAnimators   () const;
     //@}
 
     //! @name Population
@@ -170,13 +178,6 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef std::set< const MIL_AgentPion* > T_AgentSet;
-    typedef T_AgentSet::const_iterator       CIT_AgentSet;
-    //@}
-
-protected:
-    //! @name Types
-    //@{
     enum E_AttributeUpdate
     {
         eAttrUpdate_ConstructionPercentage  = 0x01,
@@ -191,9 +192,8 @@ protected:
   
     //! @name Tools
     //@{
-            void              ApplyAttrition     ( MIL_Agent_ABC&             target );    
-    virtual void              UpdateLocalisation ( const TER_Localisation& newLocalisation );
-            const T_AgentSet& GetAnimators       () const;
+            void ApplyAttrition     ( MIL_Agent_ABC&             target );    
+    virtual void UpdateLocalisation ( const TER_Localisation& newLocalisation );
     //@}
 
     //! @name Network

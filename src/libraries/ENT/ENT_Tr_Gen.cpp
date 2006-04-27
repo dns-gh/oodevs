@@ -577,6 +577,23 @@ ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[]
     T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
 };
 
+ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
+{
+    T_ConverterPopulationAttitude( "calme", QT_TRANSLATE_NOOP( "ENT_Tr", "calme" ), ePopulationAttitude_Calme ),
+    T_ConverterPopulationAttitude( "agitee", QT_TRANSLATE_NOOP( "ENT_Tr", "agitee" ), ePopulationAttitude_Agitee ),
+    T_ConverterPopulationAttitude( "excitee", QT_TRANSLATE_NOOP( "ENT_Tr", "excitee" ), ePopulationAttitude_Excitee ),
+    T_ConverterPopulationAttitude( "agressive", QT_TRANSLATE_NOOP( "ENT_Tr", "agressive" ), ePopulationAttitude_Agressive ),
+    T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
+};
+
+ENT_Tr::T_ConverterPopulationAttrErrorCode ENT_Tr::PopulationAttrErrorCodeConverter_[] =
+{
+    T_ConverterPopulationAttrErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), ePopulationAttrErrorCode_NoError ),
+    T_ConverterPopulationAttrErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), ePopulationAttrErrorCode_ErrorInvalidUnit ),
+    T_ConverterPopulationAttrErrorCode( "error invalid attribute", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid attribute" ), ePopulationAttrErrorCode_ErrorInvalidAttribute ),
+    T_ConverterPopulationAttrErrorCode( "", "", (E_PopulationAttrErrorCode)-1 )
+};
+
 ENT_Tr::T_ConverterTypeCR ENT_Tr::TypeCRConverter_[] =
 {
     T_ConverterTypeCR( "message", QT_TRANSLATE_NOOP( "ENT_Tr", "message" ), eTypeCR_Message ),
@@ -831,23 +848,6 @@ ENT_Tr::T_ConverterUnitAttrErrorCode ENT_Tr::UnitAttrErrorCodeConverter_[] =
     T_ConverterUnitAttrErrorCode( "error invalid attribute", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid attribute" ), eUnitAttrErrorCode_ErrorInvalidAttribute ),
     T_ConverterUnitAttrErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eUnitAttrErrorCode_ErrorUnitSurrendered ),
     T_ConverterUnitAttrErrorCode( "", "", (E_UnitAttrErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
-{
-    T_ConverterPopulationAttitude( "calme", QT_TRANSLATE_NOOP( "ENT_Tr", "calme" ), ePopulationAttitude_Calme ),
-    T_ConverterPopulationAttitude( "agitee", QT_TRANSLATE_NOOP( "ENT_Tr", "agitee" ), ePopulationAttitude_Agitee ),
-    T_ConverterPopulationAttitude( "excitee", QT_TRANSLATE_NOOP( "ENT_Tr", "excitee" ), ePopulationAttitude_Excitee ),
-    T_ConverterPopulationAttitude( "agressive", QT_TRANSLATE_NOOP( "ENT_Tr", "agressive" ), ePopulationAttitude_Agressive ),
-    T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
-};
-
-ENT_Tr::T_ConverterPopulationAttrErrorCode ENT_Tr::PopulationAttrErrorCodeConverter_[] =
-{
-    T_ConverterPopulationAttrErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), ePopulationAttrErrorCode_NoError ),
-    T_ConverterPopulationAttrErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), ePopulationAttrErrorCode_ErrorInvalidUnit ),
-    T_ConverterPopulationAttrErrorCode( "error invalid attribute", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid attribute" ), ePopulationAttrErrorCode_ErrorInvalidAttribute ),
-    T_ConverterPopulationAttrErrorCode( "", "", (E_PopulationAttrErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterAmbianceMission ENT_Tr::AmbianceMissionConverter_[] =
@@ -1371,6 +1371,8 @@ void ENT_Tr::InitTranslations()
     InitTr( PrecipitationTypeConverter_, "ENT_Tr" );
     InitTr( TypeLimaConverter_, "ENT_Tr" );
     InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
+    InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
+    InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( TypeCRConverter_, "ENT_Tr" );
     InitTr( FireEffectTypeConverter_, "ENT_Tr" );
     InitTr( DiplomatieConverter_, "ENT_Tr" );
@@ -1397,8 +1399,6 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
     InitTr( SetAutomateModeErrorCodeConverter_, "ENT_Tr" );
     InitTr( UnitAttrErrorCodeConverter_, "ENT_Tr" );
-    InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
-    InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( AmbianceMissionConverter_, "ENT_Tr" );
     InitTr( TypeMunitionTirIndirectConverter_, "ENT_Tr" );
     InitTr( ActionReagirFaceAEniConverter_, "ENT_Tr" );
@@ -1736,6 +1736,24 @@ const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCo
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPopulationAttitude
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPopulationAttrErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( PopulationAttrErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromTypeCR
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1967,24 +1985,6 @@ const std::string& ENT_Tr::ConvertFromSetAutomateModeErrorCode( E_SetAutomateMod
 const std::string& ENT_Tr::ConvertFromUnitAttrErrorCode( E_UnitAttrErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( UnitAttrErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPopulationAttitude
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPopulationAttrErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( PopulationAttrErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2389,6 +2389,24 @@ E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string&
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPopulationAttitude
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPopulationAttrErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_PopulationAttrErrorCode ENT_Tr::ConvertToPopulationAttrErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( PopulationAttrErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToTypeCR
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2620,24 +2638,6 @@ E_SetAutomateModeErrorCode ENT_Tr::ConvertToSetAutomateModeErrorCode( const std:
 E_UnitAttrErrorCode ENT_Tr::ConvertToUnitAttrErrorCode( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( UnitAttrErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPopulationAttitude
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPopulationAttrErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_PopulationAttrErrorCode ENT_Tr::ConvertToPopulationAttrErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( PopulationAttrErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

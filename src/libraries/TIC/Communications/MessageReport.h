@@ -98,6 +98,7 @@ private:
         eRC_Decroche,
         eRC_EniSurObjectif, // Parametre : T_ConnaissanceAgent
         eRC_Riposte,
+        eRC_PretPourEngagementSurEnnemi,
         eRC_DebutControleZone,
         eRC_FinControleZone,
         eRC_DebutSurveillance,
@@ -291,10 +292,13 @@ private:
         eRC_AnimationCanalisation,
         eRC_CollecteRenseignementsSurPopulations,
         eRC_PopulationReconnue,
-        eRC_AttitudeCalme,
-        eRC_AttitudeAgitee,
-        eRC_AttitudeExcitee,
-        eRC_AttitudeAgressive,
+        eRC_SituationDifficilementTenableFaceAPopulation,
+        eRC_UtilisationArmesLetalesFaceAPopulation,
+        eRC_UtilisationMoyensDefenseActifsFaceAPopulation,
+        eRC_UtilisationArmementsFaceAPopulation,
+        eRC_DebutInterventionFaceAPopulation, // Parametre : id
+        eRC_PopulationVictimeAffrontements, // Parametres : victimes (float), dont_blesses (float), 
+        eRC_AttitudePopulation, // Parametre : id
         eRC_AggravationAttitude,
         eRC_AffrontementAvecForcesEnnemies,
         eRC_PopulationTemporairementControlee,
@@ -305,6 +309,10 @@ private:
         eRC_RiposteContreAgressionParPopulation, // Parametre : T_ConnaissancePopulation
         eRC_AttaqueInstallation,
         eRC_EnStationnement,
+        eRC_Bloquee,
+        eRC_Filtree,
+        eRC_AttentatTerroristeDansPopulation,
+        eRC_PopulationVictimeExplosionMines, // Parametres : victimes (float), dont_blesses (float), 
         eRC_ExecutionAttentat,
 
         eNone

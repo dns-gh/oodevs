@@ -55,9 +55,13 @@
 #include "MIL_RC_PopulationDetectee.h"
 #include "MIL_RC_PriseAPartieParPopulation.h"
 #include "MIL_RC_RiposteContrePopulation.h"
+#include "MIL_RC_DebutInterventionFaceAPopulation.h"
+#include "MIL_RC_PopulationVictimeAffrontements.h"
+#include "MIL_RC_AttitudePopulation.h"
 #include "MIL_RC_AgressionDePopulation.h"
 #include "MIL_RC_AgressionParPopulation.h"
 #include "MIL_RC_RiposteContreAgressionParPopulation.h"
+#include "MIL_RC_PopulationVictimeExplosionMines.h"
 
 
 #include "Entities/Automates/MIL_Automate.h"
@@ -123,6 +127,12 @@ const MIL_RC*                                   MIL_RC::pRcRecuperationMaterielP
 const MIL_RC*                                   MIL_RC::pRcRecuperationMaterielPreteImpossible_             = 0;
 const MIL_RC*                                   MIL_RC::pRcMaterielPrete_                                   = 0;
 const MIL_RC*                                   MIL_RC::pRcMaterielRendu_                                   = 0;
+const MIL_RC_DebutInterventionFaceAPopulation*  MIL_RC::pRcDebutInterventionFaceAPopulation_   = 0;
+const MIL_RC_PopulationVictimeExplosionMines*   MIL_RC::pRcPopulationVictimeExplosionMines_    = 0;
+const MIL_RC_PopulationVictimeAffrontements*    MIL_RC::pRcPopulationVictimeAffrontements_     = 0;
+const MIL_RC*                                   MIL_RC::pRcBloquee_                            = 0;
+const MIL_RC*                                   MIL_RC::pRcFiltree_                            = 0;
+const MIL_RC*                                   MIL_RC::pRcAttentatTerroristeDansPopulation_   = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -175,6 +185,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_Decroche ] = new MIL_RC( eRC_Decroche, T_MsgCR_cr_cr_decroche );
 	rcs_[ eRC_EniSurObjectif ] = new MIL_RC_EniSurObjectif( eRC_EniSurObjectif, T_MsgCR_cr_cr_eni_sur_objectif );
 	rcs_[ eRC_Riposte ] = new MIL_RC( eRC_Riposte, T_MsgCR_cr_cr_riposte );
+	rcs_[ eRC_PretPourEngagementSurEnnemi ] = new MIL_RC( eRC_PretPourEngagementSurEnnemi, T_MsgCR_cr_cr_pret_pour_engagement_sur_ennemi );
 	rcs_[ eRC_DebutControleZone ] = new MIL_RC( eRC_DebutControleZone, T_MsgCR_cr_cr_debut_controle_zone );
 	rcs_[ eRC_FinControleZone ] = new MIL_RC( eRC_FinControleZone, T_MsgCR_cr_cr_fin_controle_zone );
 	rcs_[ eRC_DebutSurveillance ] = new MIL_RC( eRC_DebutSurveillance, T_MsgCR_cr_cr_debut_surveillance );
@@ -368,10 +379,13 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_AnimationCanalisation ] = new MIL_RC( eRC_AnimationCanalisation, T_MsgCR_cr_cr_animation_canalisation );
 	rcs_[ eRC_CollecteRenseignementsSurPopulations ] = new MIL_RC( eRC_CollecteRenseignementsSurPopulations, T_MsgCR_cr_cr_collecte_renseignements_sur_populations );
 	rcs_[ eRC_PopulationReconnue ] = new MIL_RC( eRC_PopulationReconnue, T_MsgCR_cr_cr_population_reconnue );
-	rcs_[ eRC_AttitudeCalme ] = new MIL_RC( eRC_AttitudeCalme, T_MsgCR_cr_cr_attitude_calme );
-	rcs_[ eRC_AttitudeAgitee ] = new MIL_RC( eRC_AttitudeAgitee, T_MsgCR_cr_cr_attitude_agitee );
-	rcs_[ eRC_AttitudeExcitee ] = new MIL_RC( eRC_AttitudeExcitee, T_MsgCR_cr_cr_attitude_excitee );
-	rcs_[ eRC_AttitudeAgressive ] = new MIL_RC( eRC_AttitudeAgressive, T_MsgCR_cr_cr_attitude_agressive );
+	rcs_[ eRC_SituationDifficilementTenableFaceAPopulation ] = new MIL_RC( eRC_SituationDifficilementTenableFaceAPopulation, T_MsgCR_cr_cr_situation_difficilement_tenable_face_a_population );
+	rcs_[ eRC_UtilisationArmesLetalesFaceAPopulation ] = new MIL_RC( eRC_UtilisationArmesLetalesFaceAPopulation, T_MsgCR_cr_cr_utilisation_armes_letales_face_a_population );
+	rcs_[ eRC_UtilisationMoyensDefenseActifsFaceAPopulation ] = new MIL_RC( eRC_UtilisationMoyensDefenseActifsFaceAPopulation, T_MsgCR_cr_cr_utilisation_moyens_defense_actifs_face_a_population );
+	rcs_[ eRC_UtilisationArmementsFaceAPopulation ] = new MIL_RC( eRC_UtilisationArmementsFaceAPopulation, T_MsgCR_cr_cr_utilisation_armements_face_a_population );
+	rcs_[ eRC_DebutInterventionFaceAPopulation ] = new MIL_RC_DebutInterventionFaceAPopulation( eRC_DebutInterventionFaceAPopulation, T_MsgCR_cr_cr_debut_intervention_face_a_population );
+	rcs_[ eRC_PopulationVictimeAffrontements ] = new MIL_RC_PopulationVictimeAffrontements( eRC_PopulationVictimeAffrontements, T_MsgCR_cr_cr_population_victime_affrontements );
+	rcs_[ eRC_AttitudePopulation ] = new MIL_RC_AttitudePopulation( eRC_AttitudePopulation, T_MsgCR_cr_cr_attitude_population );
 	rcs_[ eRC_AggravationAttitude ] = new MIL_RC( eRC_AggravationAttitude, T_MsgCR_cr_cr_aggravation_attitude );
 	rcs_[ eRC_AffrontementAvecForcesEnnemies ] = new MIL_RC( eRC_AffrontementAvecForcesEnnemies, T_MsgCR_cr_cr_affrontement_avec_forces_ennemies );
 	rcs_[ eRC_PopulationTemporairementControlee ] = new MIL_RC( eRC_PopulationTemporairementControlee, T_MsgCR_cr_cr_population_temporairement_controlee );
@@ -382,6 +396,10 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_RiposteContreAgressionParPopulation ] = new MIL_RC_RiposteContreAgressionParPopulation( eRC_RiposteContreAgressionParPopulation, T_MsgCR_cr_cr_riposte_contre_agression_par_population );
 	rcs_[ eRC_AttaqueInstallation ] = new MIL_RC( eRC_AttaqueInstallation, T_MsgCR_cr_cr_attaque_installation );
 	rcs_[ eRC_EnStationnement ] = new MIL_RC( eRC_EnStationnement, T_MsgCR_cr_cr_en_stationnement );
+	rcs_[ eRC_Bloquee ] = new MIL_RC( eRC_Bloquee, T_MsgCR_cr_cr_bloquee );
+	rcs_[ eRC_Filtree ] = new MIL_RC( eRC_Filtree, T_MsgCR_cr_cr_filtree );
+	rcs_[ eRC_AttentatTerroristeDansPopulation ] = new MIL_RC( eRC_AttentatTerroristeDansPopulation, T_MsgCR_cr_cr_attentat_terroriste_dans_population );
+	rcs_[ eRC_PopulationVictimeExplosionMines ] = new MIL_RC_PopulationVictimeExplosionMines( eRC_PopulationVictimeExplosionMines, T_MsgCR_cr_cr_population_victime_explosion_mines );
 	rcs_[ eRC_ExecutionAttentat ] = new MIL_RC( eRC_ExecutionAttentat, T_MsgCR_cr_cr_execution_attentat );
 	
 
@@ -440,6 +458,12 @@ void MIL_RC::Initialize()
     pRcRecuperationMaterielPreteImpossible_             =                                            rcs_[ eRC_RecuperationMaterielPreteImpossible              ];
     pRcMaterielPrete_                                   =                                            rcs_[ eRC_MaterielPrete                                    ];
     pRcMaterielRendu_                                   =                                            rcs_[ eRC_MaterielRendu                                    ];
+    pRcDebutInterventionFaceAPopulation_  = (MIL_RC_DebutInterventionFaceAPopulation*) rcs_[ eRC_DebutInterventionFaceAPopulation  ];
+    pRcPopulationVictimeExplosionMines_   = (MIL_RC_PopulationVictimeExplosionMines*)  rcs_[ eRC_PopulationVictimeExplosionMines   ];
+    pRcPopulationVictimeAffrontements_    = (MIL_RC_PopulationVictimeAffrontements*)   rcs_[ eRC_PopulationVictimeAffrontements    ];
+    pRcBloquee_                           =                                            rcs_[ eRC_Bloquee                           ];
+    pRcFiltree_                           =                                            rcs_[ eRC_Filtree                           ];
+    pRcAttentatTerroristeDansPopulation_  =                                            rcs_[ eRC_AttentatTerroristeDansPopulation  ];
 }
 
 // -----------------------------------------------------------------------------

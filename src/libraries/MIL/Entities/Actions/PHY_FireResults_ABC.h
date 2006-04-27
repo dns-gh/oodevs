@@ -45,15 +45,6 @@ public:
     //@}
 
 protected:
-    //! @name Network tools
-    //@{
-           void Serialize              ( ASN1T_FireDamagesPions&       asn ) const;
-           void Serialize              ( ASN1T_FireDamagesPopulations& asn ) const;
-    static void CleanAfterSerialization( ASN1T_FireDamagesPions&       asn );
-    static void CleanAfterSerialization( ASN1T_FireDamagesPopulations& asn );
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::map< const MIL_Agent_ABC*, PHY_FireDamages_Agent > T_AgentDamagesMap;
@@ -61,6 +52,20 @@ private:
 
     typedef std::map< const MIL_Population*, PHY_FireDamages_Population > T_PopulationDamagesMap;
     typedef T_PopulationDamagesMap::const_iterator                        CIT_PopulationDamagesMap;
+    //@}
+
+protected:
+    //! @name Accessors $$$ A VIRER
+    //@{
+    const T_PopulationDamagesMap& GetPopulationDamages() const;
+    //@}
+
+    //! @name Network tools
+    //@{
+           void Serialize              ( ASN1T_FireDamagesPions&       asn ) const;
+           void Serialize              ( ASN1T_FireDamagesPopulations& asn ) const;
+    static void CleanAfterSerialization( ASN1T_FireDamagesPions&       asn );
+    static void CleanAfterSerialization( ASN1T_FireDamagesPopulations& asn );
     //@}
 
 private:

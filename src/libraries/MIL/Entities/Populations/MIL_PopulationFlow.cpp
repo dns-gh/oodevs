@@ -29,6 +29,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/RC/MIL_RC_DebutInterventionFaceAPopulation.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -277,6 +278,37 @@ void MIL_PopulationFlow::ManageSplit()
     pDestConcentration_->SetPullingFlowsDensity( *pSplittingObject_ );
     pDestConcentration_->RegisterPushingFlow( *this );
     //pDestConcentration_->Move( destination_ ); $$ Auto next tick
+
+    //$$$ TMP CRs - a changer apres refactor objets
+    const MIL_RealObject_ABC::T_AgentSet& animators = pSplittingObject_->GetAnimators();
+    for( MIL_RealObject_ABC::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
+        MIL_RC::pRcDebutInterventionFaceAPopulation_->Send( **it, MIL_RC::eRcTypeOperational, GetAttitude() );
+
+/*
+    //$$$$$$$$$$$$$$$$$$$$$
+
+    // $$$ TEST
+    TER_ObjectManager::T_ObjectVector objects; 
+    TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
+
+    printf( "%d objects colliding\n", objects.size() );
+
+
+    if( new object collision && object has effect on population flow )
+    {
+        ptCollision = GetCollisionPoint()
+
+        pNewConcentration = GetConcentration( ptCollision );
+
+        pNewFlow = CopyFlow( *this );
+
+        pNewFlow->ChangeTail( ptCollision ); // reduction nombre humains
+
+        ChangeHead( pNewConcentration ); /// reduction nombre humains
+
+
+    }
+*/
 }
 
 // -----------------------------------------------------------------------------

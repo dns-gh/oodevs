@@ -78,6 +78,12 @@ const MIL_RC*                                   MIL_RC::pRcRecuperationMaterielP
 const MIL_RC*                                   MIL_RC::pRcRecuperationMaterielPreteImpossible_             = 0;
 const MIL_RC*                                   MIL_RC::pRcMaterielPrete_                                   = 0;
 const MIL_RC*                                   MIL_RC::pRcMaterielRendu_                                   = 0;
+const MIL_RC_DebutInterventionFaceAPopulation*  MIL_RC::pRcDebutInterventionFaceAPopulation_   = 0;
+const MIL_RC_PopulationVictimeExplosionMines*   MIL_RC::pRcPopulationVictimeExplosionMines_    = 0;
+const MIL_RC_PopulationVictimeAffrontements*    MIL_RC::pRcPopulationVictimeAffrontements_     = 0;
+const MIL_RC*                                   MIL_RC::pRcBloquee_                            = 0;
+const MIL_RC*                                   MIL_RC::pRcFiltree_                            = 0;
+const MIL_RC*                                   MIL_RC::pRcAttentatTerroristeDansPopulation_   = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -144,6 +150,12 @@ void MIL_RC::Initialize()
     pRcRecuperationMaterielPreteImpossible_             =                                            rcs_[ eRC_RecuperationMaterielPreteImpossible              ];
     pRcMaterielPrete_                                   =                                            rcs_[ eRC_MaterielPrete                                    ];
     pRcMaterielRendu_                                   =                                            rcs_[ eRC_MaterielRendu                                    ];
+    pRcDebutInterventionFaceAPopulation_  = (MIL_RC_DebutInterventionFaceAPopulation*) rcs_[ eRC_DebutInterventionFaceAPopulation  ];
+    pRcPopulationVictimeExplosionMines_   = (MIL_RC_PopulationVictimeExplosionMines*)  rcs_[ eRC_PopulationVictimeExplosionMines   ];
+    pRcPopulationVictimeAffrontements_    = (MIL_RC_PopulationVictimeAffrontements*)   rcs_[ eRC_PopulationVictimeAffrontements    ];
+    pRcBloquee_                           =                                            rcs_[ eRC_Bloquee                           ];
+    pRcFiltree_                           =                                            rcs_[ eRC_Filtree                           ];
+    pRcAttentatTerroristeDansPopulation_  =                                            rcs_[ eRC_AttentatTerroristeDansPopulation  ];
 }
 
 // -----------------------------------------------------------------------------

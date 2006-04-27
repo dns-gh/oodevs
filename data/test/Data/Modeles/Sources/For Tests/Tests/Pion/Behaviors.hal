@@ -761,14 +761,19 @@ behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDum
         persistent float toto=0;
         
        
-        if( DIA_ModuleBegins() )
+       /* if( DIA_ModuleBegins() )
         {
             T_ListeConnaissancesAgent knowledges = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( mission.unite_ );
             with( x in knowledges )
             {
                 DEC_Debug( BoolToString( DEC_ConnaissanceAgent_EstValide( x ) ) );
             }
-        }
+        }*/
+        
+        if( mission.unite_.mission_ == 0 )
+            DEC_Debug( "Unite a renforcer n'a pas de mission" );
+        else
+            DEC_Debug( "Unite a renforcer a une mission" );
                 
         
         if( DIA_ModuleBegins() )
@@ -1114,6 +1119,21 @@ behavior TestOnSpontaneousEndNotCalled()
         DEC_Debug( "TestOnSpontaneousEndNotCalled::on spontaneous end " + FloatToString( gTest ) );
     }            
 }
+/*
+behavior TestOnSpontaneousEndNotCalled2( float bite )
+{
+    when updated:
+    {
+        persistent float cock = gTest;
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "TestOnSpontaneousEndNotCalled::begin " + FloatToString( gTest ) );
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::updated " + FloatToString( gTest ) );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "TestOnSpontaneousEndNotCalled::on spontaneous end " + FloatToString( gTest ) );
+    }            
+}*/
 
 
 behavior MIS_Pion_LOG_DistribuerMoyens( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
@@ -1127,7 +1147,7 @@ behavior MIS_Pion_LOG_DistribuerMoyens( T_Mission_Pion_ALAT_Freiner mission, id 
         }
         
         DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::updated" );            
-        behavior TestOnSpontaneousEndNotCalled();  
+        behavior TestOnSpontaneousEndNotCalled(  );  
     }
     on spontaneous end:
     {
@@ -1198,3 +1218,4 @@ behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations miss
         DEC_Debug( "MIS_Canaliser : on spontaneous end" );
     }
 }
+

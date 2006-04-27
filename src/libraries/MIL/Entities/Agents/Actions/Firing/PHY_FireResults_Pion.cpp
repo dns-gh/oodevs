@@ -16,6 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/RC/MIL_RC_PopulationVictimeAffrontements.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -26,6 +27,7 @@
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target )
     : PHY_FireResults_ABC()
+    , firer_             ( firer )
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPionFire asnMsg;
@@ -45,6 +47,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target )
     : PHY_FireResults_ABC()
+    , firer_             ( firer )
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPionFire asnMsg;
@@ -64,6 +67,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
+    , firer_             ( firer )
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPionFire asnMsg;
@@ -97,5 +101,19 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
 
     CleanAfterSerialization( asnMsg.GetAsnMsg().degats_pions       );
     CleanAfterSerialization( asnMsg.GetAsnMsg().degats_populations );
+
+    // $$$ Merde pour VABF Popu
+    static MT_Random randomGenerator;
+    const T_PopulationDamagesMap& populationDamages = GetPopulationDamages();
+    for( CIT_PopulationDamagesMap it = populationDamages.begin(); it != populationDamages.end(); ++it )
+    {
+        const MIL_Population&               population = *it->first;
+        const PHY_FireDamages_Population&   damages    =  it->second;
+
+        uint rNbrWounded = damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 );
+
+        MIL_RC::pRcPopulationVictimeAffrontements_->Send( population, MIL_RC::eRcTypeMessage, damages.GetNbrKilledHumans(), rNbrWounded );
+        MIL_RC::pRcPopulationVictimeAffrontements_->Send( firer_    , MIL_RC::eRcTypeMessage, damages.GetNbrKilledHumans(), rNbrWounded );
+    }
 }
 

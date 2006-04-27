@@ -72,6 +72,8 @@ public:
     static const std::string& ConvertFromPrecipitationType( E_PrecipitationType, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeLima( E_TypeLima, E_Conversion = eToSim );
     static const std::string& ConvertFromInfoContextErrorCode( E_InfoContextErrorCode, E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeCR( E_TypeCR, E_Conversion = eToSim );
     static const std::string& ConvertFromFireEffectType( E_FireEffectType, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
@@ -98,8 +100,6 @@ public:
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
     static const std::string& ConvertFromSetAutomateModeErrorCode( E_SetAutomateModeErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitAttrErrorCode( E_UnitAttrErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
-    static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromAmbianceMission( E_AmbianceMission, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromActionReagirFaceAEni( E_ActionReagirFaceAEni, E_Conversion = eToSim );
@@ -147,6 +147,8 @@ public:
     static E_PrecipitationType ConvertToPrecipitationType( const std::string& );
     static E_TypeLima ConvertToTypeLima( const std::string& );
     static E_InfoContextErrorCode ConvertToInfoContextErrorCode( const std::string& );
+    static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
+    static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
     static E_TypeCR ConvertToTypeCR( const std::string& );
     static E_FireEffectType ConvertToFireEffectType( const std::string& );
     static E_Diplomatie ConvertToDiplomatie( const std::string& );
@@ -173,8 +175,6 @@ public:
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
     static E_SetAutomateModeErrorCode ConvertToSetAutomateModeErrorCode( const std::string& );
     static E_UnitAttrErrorCode ConvertToUnitAttrErrorCode( const std::string& );
-    static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
-    static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
     static E_AmbianceMission ConvertToAmbianceMission( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_ActionReagirFaceAEni ConvertToActionReagirFaceAEni( const std::string& );
@@ -223,6 +223,8 @@ private:
     typedef ENT_Tr::converter<E_PrecipitationType> T_ConverterPrecipitationType;
     typedef ENT_Tr::converter<E_TypeLima> T_ConverterTypeLima;
     typedef ENT_Tr::converter<E_InfoContextErrorCode> T_ConverterInfoContextErrorCode;
+    typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
+    typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
     typedef ENT_Tr::converter<E_TypeCR> T_ConverterTypeCR;
     typedef ENT_Tr::converter<E_FireEffectType> T_ConverterFireEffectType;
     typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
@@ -249,8 +251,6 @@ private:
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
     typedef ENT_Tr::converter<E_SetAutomateModeErrorCode> T_ConverterSetAutomateModeErrorCode;
     typedef ENT_Tr::converter<E_UnitAttrErrorCode> T_ConverterUnitAttrErrorCode;
-    typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
-    typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
     typedef ENT_Tr::converter<E_AmbianceMission> T_ConverterAmbianceMission;
     typedef ENT_Tr::converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
     typedef ENT_Tr::converter<E_ActionReagirFaceAEni> T_ConverterActionReagirFaceAEni;
@@ -298,6 +298,8 @@ private:
     static T_ConverterPrecipitationType PrecipitationTypeConverter_ [];
     static T_ConverterTypeLima TypeLimaConverter_ [];
     static T_ConverterInfoContextErrorCode InfoContextErrorCodeConverter_ [];
+    static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
+    static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
     static T_ConverterTypeCR TypeCRConverter_ [];
     static T_ConverterFireEffectType FireEffectTypeConverter_ [];
     static T_ConverterDiplomatie DiplomatieConverter_ [];
@@ -324,8 +326,6 @@ private:
     static T_ConverterUnitExperience UnitExperienceConverter_ [];
     static T_ConverterSetAutomateModeErrorCode SetAutomateModeErrorCodeConverter_ [];
     static T_ConverterUnitAttrErrorCode UnitAttrErrorCodeConverter_ [];
-    static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
-    static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
     static T_ConverterAmbianceMission AmbianceMissionConverter_ [];
     static T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_ [];
     static T_ConverterActionReagirFaceAEni ActionReagirFaceAEniConverter_ [];

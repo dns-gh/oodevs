@@ -8,8 +8,8 @@ ScipioCR DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS Objet, EnumUnitIdentificationLevel, KnowledgeAgent, KnowledgeObject, KnowledgePopulation, Agent, OID, CoordUTM, Line, max-uint64, 
         max-uint32, max-uint16, max-uint8 FROM ScipioBase
+IMPORTS EnumPopulationAttitude From ScipioPopulation
 IMPORTS EnumTypeLima FROM ScipioLimaLimite;
-
 
 CR-RAS                                      ::= NULL
                                             
@@ -91,6 +91,7 @@ CR-ProgressionVersEni                       ::= KnowledgeAgent
 CR-Decroche                                 ::= NULL
 CR-EniSurObjectif                           ::= KnowledgeAgent
 CR-Riposte                                  ::= NULL
+CR-PretPourEngagementSurEnnemi              ::= NULL
                                             
 -- Ami          
 CR-Releve                                   ::= Agent                            
@@ -233,7 +234,6 @@ CR-OrientationEnnemiRenduVersCampPrisonniers ::= NULL
 CR-PasDeCampPrisonniersDisponible            ::= NULL
 CR-Rendu                                     ::= NULL
 
-
 -- Adaptation
 CR-Trace    ::= VisibleString
 CR-TraceID  ::= INTEGER
@@ -296,12 +296,19 @@ CR-AnimationBarrage                                      ::= NULL
 CR-AnimationCanalisation                                 ::= NULL
 CR-CollecteRenseignementsSurPopulations                  ::= NULL
 CR-PopulationReconnue                                    ::= NULL
+CR-SituationDifficilementTenableFaceAPopulation          ::= NULL
+CR-UtilisationArmesNonLetalesFaceAPopulation              ::= NULL
+CR-UtilisationMoyensDefenseActifsFaceAPopulation         ::= NULL
+CR-UtilisationArmementsFaceAPopulation                   ::= NULL
+CR-DebutInterventionFaceAPopulation                      ::= EnumPopulationAttitude
+CR-PopulationVictimeAffrontements                        ::= SEQUENCE
+{
+    victimes      INTEGER,
+    dont-blesses  INTEGER
+}
 
 -- Populations provisions
-CR-AttitudeCalme                                         ::= NULL
-CR-AttitudeAgitee                                        ::= NULL
-CR-AttitudeExcitee                                       ::= NULL
-CR-AttitudeAgressive                                     ::= NULL
+CR-AttitudePopulation                                    ::= EnumPopulationAttitude
 CR-AggravationAttitude                                   ::= NULL
 CR-AffrontementAvecForcesEnnemies                        ::= NULL
 CR-PopulationTemporairementControlee                     ::= NULL
@@ -312,6 +319,17 @@ CR-AgressionParPopulation                                ::= KnowledgePopulation
 CR-RiposteContreAgressionParPopulation                   ::= KnowledgePopulation
 CR-AttaqueInstallation                                   ::= NULL
 CR-EnStationnement                                       ::= NULL
+CR-Bloquee                                               ::= NULL
+CR-Filtree                                               ::= NULL
+CR-AttentatTerroristeDansPopulation                      ::= NULL
+CR-PopulationVictimeExplosionMines                       ::= SEQUENCE
+{
+    victimes      INTEGER,
+    dont-blesses  INTEGER
+}
+
+
+
 
 -- Menaces Asymetriques
 CR-ExecutionAttentat                                     ::= NULL
@@ -380,6 +398,7 @@ MsgCR ::= SEQUENCE
         cr-decroche                                                     CR-Decroche,                                 
         cr-eni-sur-objectif                                             CR-EniSurObjectif,                           
         cr-riposte                                                      CR-Riposte,            
+        cr-pret-pour-engagement-sur-ennemi                              CR-PretPourEngagementSurEnnemi,
                                                                                                 
         -- rens                                          
         cr-debut-controle-zone                                          CR-DebutControleZone,                           
@@ -601,12 +620,15 @@ MsgCR ::= SEQUENCE
         cr-animation-canalisation                                       CR-AnimationCanalisation,
         cr-collecte-renseignements-sur-populations                      CR-CollecteRenseignementsSurPopulations,
         cr-population-reconnue                                          CR-PopulationReconnue,
-
+        cr-situation-difficilement-tenable-face-a-population            CR-SituationDifficilementTenableFaceAPopulation,
+        cr-utilisation-armes-non-letales-face-a-population              CR-UtilisationArmesNonLetalesFaceAPopulation,
+        cr-utilisation-moyens-defense-actifs-face-a-population          CR-UtilisationMoyensDefenseActifsFaceAPopulation,
+        cr-utilisation-armements-face-a-population                      CR-UtilisationArmementsFaceAPopulation,
+        cr-debut-intervention-face-a-population                         CR-DebutInterventionFaceAPopulation,
+        cr-population-victime-affrontements                             CR-PopulationVictimeAffrontements,
+        
         -- Populations provisions
-        cr-attitude-calme                                               CR-AttitudeCalme,
-        cr-attitude-agitee                                              CR-AttitudeAgitee,
-        cr-attitude-excitee                                             CR-AttitudeExcitee,
-        cr-attitude-agressive                                           CR-AttitudeAgressive,
+        cr-attitude-population                                          CR-AttitudePopulation,
         cr-aggravation-attitude                                         CR-AggravationAttitude,
         cr-affrontement-avec-forces-ennemies                            CR-AffrontementAvecForcesEnnemies,
         cr-population-temporairement-controlee                          CR-PopulationTemporairementControlee,
@@ -617,6 +639,10 @@ MsgCR ::= SEQUENCE
         cr-riposte-contre-agression-par-population                      CR-RiposteContreAgressionParPopulation,
         cr-attaque-installation                                         CR-AttaqueInstallation,
         cr-en-stationnement                                             CR-EnStationnement,
+        cr-bloquee                                                      CR-Bloquee,
+        cr-filtree                                                      CR-Filtree,
+        cr-attentat-terroriste-dans-population                          CR-AttentatTerroristeDansPopulation,
+        cr-population-victime-explosion-mines                           CR-PopulationVictimeExplosionMines,
 
         -- Menaces Asymetriques
         cr-execution-attentat                                           CR-ExecutionAttentat

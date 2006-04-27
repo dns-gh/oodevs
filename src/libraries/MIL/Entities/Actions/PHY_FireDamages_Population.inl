@@ -18,3 +18,13 @@ void PHY_FireDamages_Population::NotifyHumansKilled( uint nNbrHumans )
 {
     nNbrKilledHumans_ += nNbrHumans;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::GetNbrKilledHumans
+// Created: NLD 2006-04-26
+// -----------------------------------------------------------------------------
+inline
+uint PHY_FireDamages_Population::GetNbrKilledHumans() const
+{
+    return nNbrKilledHumans_;
+}

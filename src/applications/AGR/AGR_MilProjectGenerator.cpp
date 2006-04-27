@@ -122,15 +122,15 @@ void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& 
     }
 
 
-    std::string strBaseContent;
-    workspace.ReadStringFile( AGR_SKEL_DIR "Missions.vcproj", strBaseContent );
-
+//    std::string strBaseContent;
+//    workspace.ReadStringFile( AGR_SKEL_DIR "Missions.vcproj", strBaseContent );
+//
 //    workspace.ReplaceInString( strBaseContent, "$AutomateFileList$", strAutomateFileList );
 //    workspace.ReplaceInString( strBaseContent, "$PopulationFileList$", strPopulationFileList );
 //    workspace.ReplaceInString( strBaseContent, "$PionFileList$", strPionFileList );
 //    workspace.ReplaceInString( strBaseContent, "$ConduiteFileList$", strConduiteFileList );
 //
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/build/vc71/Missions.vcproj" );
+//    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/build/vc71/Missions.vcproj" );
 }
 
 // -----------------------------------------------------------------------------

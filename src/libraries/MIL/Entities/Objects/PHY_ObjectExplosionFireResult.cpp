@@ -14,6 +14,7 @@
 #include "PHY_ObjectExplosionFireResult.h"
 
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/RC/MIL_RC_PopulationVictimeExplosionMines.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -42,6 +43,17 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
     asnMsg.Send();
 
     CleanAfterSerialization( asnMsg.GetAsnMsg().degats_pions       );
-    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_populations );    
+    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_populations );
+
+    // $$$ Merde pour VABF Popu
+    static MT_Random randomGenerator;
+    const T_PopulationDamagesMap& populationDamages = GetPopulationDamages();
+    for( CIT_PopulationDamagesMap it = populationDamages.begin(); it != populationDamages.end(); ++it )
+    {
+        const MIL_Population&               population = *it->first;
+        const PHY_FireDamages_Population&   damages    =  it->second;
+
+        MIL_RC::pRcPopulationVictimeExplosionMines_->Send( population, MIL_RC::eRcTypeMessage, damages.GetNbrKilledHumans(), damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 ) );
+    }
 }
 

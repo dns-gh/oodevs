@@ -97,12 +97,4 @@ bool MIL_PopulationConcentration::CanBePerceived() const
     return IsValid();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::SetPullingFlowsDensity
-// Created: NLD 2005-12-11
-// -----------------------------------------------------------------------------
-inline
-void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_RealObject_ABC& splittingObject )
-{
-    pSplittingObject_ = &splittingObject;
-}
+

@@ -71,6 +71,7 @@ void MessageReport::Initialize()
 	messages_[ "Decroche" ] = new MessageReport( "Decroche", eRC_Decroche, T_MsgCR_cr_cr_decroche, CommunicationType::eReportEnemy );
 	messages_[ "EniSurObjectif" ] = new MessageReport( "EniSurObjectif", eRC_EniSurObjectif, T_MsgCR_cr_cr_eni_sur_objectif, CommunicationType::eReportEnemy );
 	messages_[ "Riposte" ] = new MessageReport( "Riposte", eRC_Riposte, T_MsgCR_cr_cr_riposte, CommunicationType::eReportEnemy );
+	messages_[ "PretPourEngagementSurEnnemi" ] = new MessageReport( "PretPourEngagementSurEnnemi", eRC_PretPourEngagementSurEnnemi, T_MsgCR_cr_cr_pret_pour_engagement_sur_ennemi, CommunicationType::eReportMission );
 	messages_[ "DebutControleZone" ] = new MessageReport( "DebutControleZone", eRC_DebutControleZone, T_MsgCR_cr_cr_debut_controle_zone, CommunicationType::eReportMission );
 	messages_[ "FinControleZone" ] = new MessageReport( "FinControleZone", eRC_FinControleZone, T_MsgCR_cr_cr_fin_controle_zone, CommunicationType::eReportMission );
 	messages_[ "DebutSurveillance" ] = new MessageReport( "DebutSurveillance", eRC_DebutSurveillance, T_MsgCR_cr_cr_debut_surveillance, CommunicationType::eReportMission );
@@ -264,10 +265,13 @@ void MessageReport::Initialize()
 	messages_[ "AnimationCanalisation" ] = new MessageReport( "AnimationCanalisation", eRC_AnimationCanalisation, T_MsgCR_cr_cr_animation_canalisation, CommunicationType::eReportMission );
 	messages_[ "CollecteRenseignementsSurPopulations" ] = new MessageReport( "CollecteRenseignementsSurPopulations", eRC_CollecteRenseignementsSurPopulations, T_MsgCR_cr_cr_collecte_renseignements_sur_populations, CommunicationType::eReportMission );
 	messages_[ "PopulationReconnue" ] = new MessageReport( "PopulationReconnue", eRC_PopulationReconnue, T_MsgCR_cr_cr_population_reconnue, CommunicationType::eReportMission );
-	messages_[ "AttitudeCalme" ] = new MessageReport( "AttitudeCalme", eRC_AttitudeCalme, T_MsgCR_cr_cr_attitude_calme, CommunicationType::eReportMission );
-	messages_[ "AttitudeAgitee" ] = new MessageReport( "AttitudeAgitee", eRC_AttitudeAgitee, T_MsgCR_cr_cr_attitude_agitee, CommunicationType::eReportMission );
-	messages_[ "AttitudeExcitee" ] = new MessageReport( "AttitudeExcitee", eRC_AttitudeExcitee, T_MsgCR_cr_cr_attitude_excitee, CommunicationType::eReportMission );
-	messages_[ "AttitudeAgressive" ] = new MessageReport( "AttitudeAgressive", eRC_AttitudeAgressive, T_MsgCR_cr_cr_attitude_agressive, CommunicationType::eReportMission );
+	messages_[ "SituationDifficilementTenableFaceAPopulation" ] = new MessageReport( "SituationDifficilementTenableFaceAPopulation", eRC_SituationDifficilementTenableFaceAPopulation, T_MsgCR_cr_cr_situation_difficilement_tenable_face_a_population, CommunicationType::eReportMission );
+	messages_[ "UtilisationArmesLetalesFaceAPopulation" ] = new MessageReport( "UtilisationArmesLetalesFaceAPopulation", eRC_UtilisationArmesLetalesFaceAPopulation, T_MsgCR_cr_cr_utilisation_armes_letales_face_a_population, CommunicationType::eReportMission );
+	messages_[ "UtilisationMoyensDefenseActifsFaceAPopulation" ] = new MessageReport( "UtilisationMoyensDefenseActifsFaceAPopulation", eRC_UtilisationMoyensDefenseActifsFaceAPopulation, T_MsgCR_cr_cr_utilisation_moyens_defense_actifs_face_a_population, CommunicationType::eReportMission );
+	messages_[ "UtilisationArmementsFaceAPopulation" ] = new MessageReport( "UtilisationArmementsFaceAPopulation", eRC_UtilisationArmementsFaceAPopulation, T_MsgCR_cr_cr_utilisation_armements_face_a_population, CommunicationType::eReportMission );
+	messages_[ "DebutInterventionFaceAPopulation" ] = new MessageReport( "DebutInterventionFaceAPopulation", eRC_DebutInterventionFaceAPopulation, T_MsgCR_cr_cr_debut_intervention_face_a_population, CommunicationType::eReportMission );
+	messages_[ "PopulationVictimeAffrontements" ] = new MessageReport( "PopulationVictimeAffrontements", eRC_PopulationVictimeAffrontements, T_MsgCR_cr_cr_population_victime_affrontements, CommunicationType::eReportMission );
+	messages_[ "AttitudePopulation" ] = new MessageReport( "AttitudePopulation", eRC_AttitudePopulation, T_MsgCR_cr_cr_attitude_population, CommunicationType::eReportMission );
 	messages_[ "AggravationAttitude" ] = new MessageReport( "AggravationAttitude", eRC_AggravationAttitude, T_MsgCR_cr_cr_aggravation_attitude, CommunicationType::eReportMission );
 	messages_[ "AffrontementAvecForcesEnnemies" ] = new MessageReport( "AffrontementAvecForcesEnnemies", eRC_AffrontementAvecForcesEnnemies, T_MsgCR_cr_cr_affrontement_avec_forces_ennemies, CommunicationType::eReportMission );
 	messages_[ "PopulationTemporairementControlee" ] = new MessageReport( "PopulationTemporairementControlee", eRC_PopulationTemporairementControlee, T_MsgCR_cr_cr_population_temporairement_controlee, CommunicationType::eReportMission );
@@ -278,6 +282,10 @@ void MessageReport::Initialize()
 	messages_[ "RiposteContreAgressionParPopulation" ] = new MessageReport( "RiposteContreAgressionParPopulation", eRC_RiposteContreAgressionParPopulation, T_MsgCR_cr_cr_riposte_contre_agression_par_population, CommunicationType::eReportMission );
 	messages_[ "AttaqueInstallation" ] = new MessageReport( "AttaqueInstallation", eRC_AttaqueInstallation, T_MsgCR_cr_cr_attaque_installation, CommunicationType::eReportMission );
 	messages_[ "EnStationnement" ] = new MessageReport( "EnStationnement", eRC_EnStationnement, T_MsgCR_cr_cr_en_stationnement, CommunicationType::eReportMission );
+	messages_[ "Bloquee" ] = new MessageReport( "Bloquee", eRC_Bloquee, T_MsgCR_cr_cr_bloquee, CommunicationType::eReportMission );
+	messages_[ "Filtree" ] = new MessageReport( "Filtree", eRC_Filtree, T_MsgCR_cr_cr_filtree, CommunicationType::eReportMission );
+	messages_[ "AttentatTerroristeDansPopulation" ] = new MessageReport( "AttentatTerroristeDansPopulation", eRC_AttentatTerroristeDansPopulation, T_MsgCR_cr_cr_attentat_terroriste_dans_population, CommunicationType::eReportMission );
+	messages_[ "PopulationVictimeExplosionMines" ] = new MessageReport( "PopulationVictimeExplosionMines", eRC_PopulationVictimeExplosionMines, T_MsgCR_cr_cr_population_victime_explosion_mines, CommunicationType::eReportMission );
 	messages_[ "ExecutionAttentat" ] = new MessageReport( "ExecutionAttentat", eRC_ExecutionAttentat, T_MsgCR_cr_cr_execution_attentat, CommunicationType::eReportMission );
 	
 }
