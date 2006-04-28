@@ -85,6 +85,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_decroche : strMsg << "decroche"; break;
         case T_MsgCR_cr_cr_eni_sur_objectif : strMsg << "eni sur objectif" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_eni_sur_objectif ); break;
         case T_MsgCR_cr_cr_riposte : strMsg << "riposte"; break;
+        case T_MsgCR_cr_cr_pret_pour_engagement_sur_ennemi : strMsg << "pret pour engagement sur ennemi"; break;
         case T_MsgCR_cr_cr_debut_controle_zone : strMsg << "debut controle zone"; break;
         case T_MsgCR_cr_cr_fin_controle_zone : strMsg << "fin controle zone"; break;
         case T_MsgCR_cr_cr_debut_surveillance : strMsg << "debut surveillance"; break;
@@ -230,6 +231,8 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_tire_par_camp_neutre : strMsg << "tire par camp neutre" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_neutre ); break;
         case T_MsgCR_cr_cr_tir_sur_civil : strMsg << "tir sur civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_civil ); break;
         case T_MsgCR_cr_cr_tire_par_civil : strMsg << "tire par civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_civil ); break;
+        case T_MsgCR_cr_cr_tir_indirect_fratricide : strMsg << "tir indirect fratricide"; break;
+        case T_MsgCR_cr_cr_tir_indirect_sur_population : strMsg << "tir indirect sur population"; break;
         case T_MsgCR_cr_cr_destruction_pc : strMsg << "destruction pc"; break;
         case T_MsgCR_cr_cr_deces_blesse : strMsg << "deces blesse"; break;
         case T_MsgCR_cr_cr_deces_blesse_pendant_transport : strMsg << "deces blesse pendant transport"; break;
@@ -276,10 +279,13 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_animation_canalisation : strMsg << "animation canalisation"; break;
         case T_MsgCR_cr_cr_collecte_renseignements_sur_populations : strMsg << "collecte renseignements sur populations"; break;
         case T_MsgCR_cr_cr_population_reconnue : strMsg << "population reconnue"; break;
-        case T_MsgCR_cr_cr_attitude_calme : strMsg << "attitude calme"; break;
-        case T_MsgCR_cr_cr_attitude_agitee : strMsg << "attitude agitee"; break;
-        case T_MsgCR_cr_cr_attitude_excitee : strMsg << "attitude excitee"; break;
-        case T_MsgCR_cr_cr_attitude_agressive : strMsg << "attitude agressive"; break;
+        case T_MsgCR_cr_cr_situation_difficilement_tenable_face_a_population : strMsg << "situation difficilement tenable face a population"; break;
+        case T_MsgCR_cr_cr_utilisation_armes_non_letales_face_a_population : strMsg << "utilisation armes non letales face a population"; break;
+        case T_MsgCR_cr_cr_utilisation_moyens_defense_actifs_face_a_population : strMsg << "utilisation moyens defense actifs face a population"; break;
+        case T_MsgCR_cr_cr_utilisation_armements_face_a_population : strMsg << "utilisation armements face a population"; break;
+        case T_MsgCR_cr_cr_debut_intervention_face_a_population : strMsg << "debut intervention face a population" << " - id : " << " " << asnMsg.cr.u.cr_debut_intervention_face_a_population; break;
+        case T_MsgCR_cr_cr_population_victime_affrontements : strMsg << "population victime affrontements" << " - victimes : " << asnMsg.cr.u.cr_population_victime_affrontements->victimes << " - dont_blesses : " << asnMsg.cr.u.cr_population_victime_affrontements->dont_blesses; break;
+        case T_MsgCR_cr_cr_attitude_population : strMsg << "attitude population" << " - id : " << " " << asnMsg.cr.u.cr_attitude_population; break;
         case T_MsgCR_cr_cr_aggravation_attitude : strMsg << "aggravation attitude"; break;
         case T_MsgCR_cr_cr_affrontement_avec_forces_ennemies : strMsg << "affrontement avec forces ennemies"; break;
         case T_MsgCR_cr_cr_population_temporairement_controlee : strMsg << "population temporairement controlee"; break;
@@ -290,6 +296,10 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_riposte_contre_agression_par_population : strMsg << "riposte contre agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_agression_par_population ); break;
         case T_MsgCR_cr_cr_attaque_installation : strMsg << "attaque installation"; break;
         case T_MsgCR_cr_cr_en_stationnement : strMsg << "en stationnement"; break;
+        case T_MsgCR_cr_cr_bloquee : strMsg << "bloquee"; break;
+        case T_MsgCR_cr_cr_filtree : strMsg << "filtree"; break;
+        case T_MsgCR_cr_cr_attentat_terroriste_dans_population : strMsg << "attentat terroriste dans population"; break;
+        case T_MsgCR_cr_cr_population_victime_explosion_mines : strMsg << "population victime explosion mines" << " - victimes : " << asnMsg.cr.u.cr_population_victime_explosion_mines->victimes << " - dont_blesses : " << asnMsg.cr.u.cr_population_victime_explosion_mines->dont_blesses; break;
         case T_MsgCR_cr_cr_execution_attentat : strMsg << "execution attentat"; break;
 
 /*    case T_MsgCR_cr_cr_preparation_mission                           : 
