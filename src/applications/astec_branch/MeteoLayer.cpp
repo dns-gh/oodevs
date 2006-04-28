@@ -39,8 +39,10 @@ MeteoLayer::~MeteoLayer()
 // -----------------------------------------------------------------------------
 void MeteoLayer::Paint( const geometry::Rectangle2f& )
 {
+    glPushAttrib( GL_CURRENT_BIT );
     for( IT_Effects it = effects_.begin(); it != effects_.end(); ++it )
         (*it)->Draw( tools_ );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

@@ -20,6 +20,7 @@
 #include "NBCAgent.h"
 #include "ComponentType.h"
 #include "BreakdownType.h"
+#include "ObjectType.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -134,6 +135,15 @@ void BaseDisplayer::Call( const ComponentType& value )
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const BreakdownType& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const ObjectType& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

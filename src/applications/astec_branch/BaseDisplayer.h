@@ -22,6 +22,7 @@ class CoordinateConverter;
 class NBCAgent;
 class ComponentType;
 class BreakdownType;
+class ObjectType;
 
 // =============================================================================
 /** @class  BaseDisplayer
@@ -41,6 +42,7 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< NBCAgent >
                   , public Caller< ComponentType >
                   , public Caller< BreakdownType >
+                  , public Caller< ObjectType >
 {
 
 public:
@@ -70,6 +72,7 @@ private:
     virtual void Call( const NBCAgent& value );
     virtual void Call( const ComponentType& value );
     virtual void Call( const BreakdownType& value );
+    virtual void Call( const ObjectType& value );
     //@}
 };
 

@@ -246,5 +246,5 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( "Agent", perception.detected_ );
-    displayer.Display( "Niveau perception", perception.detected_ );
+    displayer.Display( "Niveau perception", perception.level_ );
 }

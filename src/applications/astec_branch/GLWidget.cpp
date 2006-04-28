@@ -314,12 +314,19 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
 // Name: GLWidget::DrawApp6Symbol
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-// $$$$ AGE 2006-04-27: faire un lod
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
     const Vector2f fontSize = Base().GetSize( symbol );
     const float size = 600.f * factor;
     const Point2f center = Point2f( where.X() - fontSize.X() * size * 0.5f, where.Y() );
+
+    const float pixelSize = size / Pixels();
+    if( pixelSize <= 10 )
+    {
+        DrawRectangle( where, 1, factor );
+        // $$$$ AGE 2006-04-28: Dessiner les contours en shadowedColor
+        return;
+    }
 
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.0f );
