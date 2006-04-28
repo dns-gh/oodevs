@@ -12,16 +12,11 @@
 #ifndef __LogisticSupplyRecompletionDialog_h_
 #define __LogisticSupplyRecompletionDialog_h_
 
-#include "Types.h"
+#include "SafePointer.h"
 
-class QListView;
-class QPopupMenu;
-class QCheckBox;
-class QSpinBox;
-class QGroupBox;
-class QTable;
-class QListViewItem;
 class Agent;
+class Controllers;
+class Model;
 
 //=============================================================================
 // Created:  SBO 2005-07-27 
@@ -29,22 +24,21 @@ class Agent;
 class LogisticSupplyRecompletionDialog : public QDialog
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( LogisticSupplyRecompletionDialog );
 
 public:
     //! @name Constructor/Destructor
     //@{
-     LogisticSupplyRecompletionDialog( QWidget* pParent = 0 );
-    ~LogisticSupplyRecompletionDialog();
+             LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, const Model& model );
+    virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
     //! @name Modifiers
     //@{
-    void SetAgent( const Agent& agent );
+    void Show( const Agent& agent );
     //@}
 
 private slots:
-    //! @name Operations
+    //! @name Slots
     //@{
     void Validate               ();
     void Reject                 ();
@@ -57,19 +51,37 @@ private slots:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    LogisticSupplyRecompletionDialog( const LogisticSupplyRecompletionDialog& );
+    LogisticSupplyRecompletionDialog& operator=( const LogisticSupplyRecompletionDialog& );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void InitializeEquipments ( const Agent& agent );
+    void InitializePersonal   ( const Agent& agent );
+    void InitializeDotations  ( const Agent& agent );
+    void InitializeAmmunitions( const Agent& agent );
+    void InitializeSupplies   ( const Agent& agent );
+    //@}
+
     //! @name Types
     //@{
-    typedef std::map< uint, const Agent* > T_AgentIDMap;
-    typedef T_AgentIDMap::const_iterator       CIT_AgentIDMap;
+    typedef std::vector< unsigned > T_Ints;
     //@}
    
 private:
-    const Agent* pAgent_;
+    //! @name Member data
+    //@{
+    const Model& model_;
+    SafePointer< Agent > agent_;
 
     QGroupBox*       pEquiPersoGroupBox_;
     QTable*          pEquipmentsTable_;
-    QStringList*     pEquipmentsStringList_;
-    T_IntVector      equipmentsMax_;
+    QStringList      equipmentsList_;
+    T_Ints           equipmentsMax_;
     QTable*          pPersonalsTable_;
 
     QGroupBox*       pDotationsGroupBox_;
@@ -78,6 +90,7 @@ private:
 
     QGroupBox*       pStockGroupBox_;
     QTable*          pStockTable_;
+    //@}
 };
 
 #endif // __LogisticSupplyRecompletionDialog_h_

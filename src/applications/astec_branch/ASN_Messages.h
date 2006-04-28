@@ -75,6 +75,7 @@ private:                                                                    \
 class ASN_Msg##ASNMSG                                                           \
 {                                                                                   \
 public:                                                                             \
+    void Send() { Send( 4212 ); };                                                  \
     void Send( MIL_MOSContextID nCtx )                                              \
     {                                                                               \
         ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
@@ -98,6 +99,7 @@ private:                                                                        
 class ASN_Msg##ASNMSG                                                           \
 {                                                                                   \
 public:                                                                             \
+    void Send() { Send( 4212 ); };                                                  \
     void Send( MIL_MOSContextID nCtx )                                              \
     {                                                                               \
         ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
@@ -121,6 +123,7 @@ private:                                                                        
 class ASN_Msg##ASNMSG                                                           \
 {                                                                                   \
 public:                                                                             \
+    void Send() { Send( 4212 ); };                                                  \
     void Send( MIL_MOSContextID nCtx )                                              \
     {                                                                               \
         ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \

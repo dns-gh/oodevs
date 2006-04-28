@@ -31,10 +31,13 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string GetName() const;
+    unsigned long GetFamily() const;
+
+    std::string GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
     std::string GetCategory() const;
 
     bool IsGas() const;
+    bool IsAmmunition() const;
     //@}
 
 private:
@@ -51,10 +54,11 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned long id_;
     std::string name_;
+    unsigned long id_;
+    unsigned long nameId_; // $$$$ AGE 2006-04-28: name == category
     std::string category_;
-    bool gaz_;
+    bool gaz_, ammunition_;
     //@}
 };
 

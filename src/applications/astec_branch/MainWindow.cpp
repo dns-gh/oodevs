@@ -44,6 +44,7 @@
 #include "StatusBar.h"
 #include "Dialogs.h"
 #include "Simulation.h"
+#include "MagicOrdersInterface.h"
 
 #include "Agent.h"
 #include "Object.h"
@@ -162,7 +163,10 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) );
 
+    // 
+    new MagicOrdersInterface( this, controllers_ );
 
+    //
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );

@@ -275,7 +275,7 @@ void ChangeLogisticLinksDialog::Validate()
 				asnMsg.GetAsnMsg().oid_ravitaillement = it->second->GetID();
 
 		}
-		asnMsg.Send( 57 );
+		asnMsg.Send();
 	}
     pAgent_ = 0;
     hide();

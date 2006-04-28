@@ -53,7 +53,7 @@ void ObjectCreationPanel::Commit()
     msg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_create_object;
     msg.GetAsnMsg().action.u.create_object   = &action;
     created_->Serialize( msg );
-    msg.Send( 912 );
+    msg.Send();
     created_->Clean();
 }
 

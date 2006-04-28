@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Equipment.h"
+#include "EquipmentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: Equipment constructor
@@ -34,6 +35,15 @@ Equipment::~Equipment()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Equipment::GetName
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+std::string Equipment::GetName() const
+{
+    return type_.GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Equipment::Update
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
@@ -43,4 +53,13 @@ void Equipment::Update( const ASN1T_DotationEquipement& message )
     unavailable_   = message.nb_indisponibles;
     repairable_    = message.nb_reparables;
     inMaintenance_ = message.nb_dans_chaine_maintenance;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipment::Total
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+unsigned Equipment::Total() const
+{
+    return available_ + unavailable_ + repairable_ + inMaintenance_;
 }

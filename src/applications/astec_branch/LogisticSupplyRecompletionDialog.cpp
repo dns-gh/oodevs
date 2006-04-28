@@ -18,22 +18,26 @@
 #include "ASN_Messages.h"
 #include "Attr_Def.h"
 #include "Agent.h"
-#include "AgentManager.h"
-#include <qtable.h>
-#include "MT_SpinTableItem.h"
+#include "MT_SpinTableItem.h" // $$$$ AGE 2006-04-28: 
+#include "Equipments.h"
+#include "Troops.h"
+#include "Dotations.h"
+#include "Model.h"
+#include "ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* pParent  )
-    : QDialog                ( pParent, "Recompletement" )
-    , pAgent_                ( 0 )
-    , pEquipmentsTable_      ( 0 )
-    , pEquipmentsStringList_ ( 0 )
-    , pDotationsTable_       ( 0 )
-    , pPersonalsTable_       ( 0 )
-    , pStockTable_           ( 0 )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, const Model& model )
+    : QDialog               ( pParent, "Recompletement" )
+    , model_                ( model )
+    , agent_                ( controllers )
+    , pEquipmentsTable_     ( 0 )
+    , pEquipmentsStringList_( 0 )
+    , pDotationsTable_      ( 0 )
+    , pPersonalsTable_      ( 0 )
+    , pStockTable_          ( 0 )
 {
     resize( 280, 430 );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -147,71 +151,94 @@ LogisticSupplyRecompletionDialog::~LogisticSupplyRecompletionDialog()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyRecompletionDialog::SetAgent
-// Created: SBO 2005-07-27
+// Name: LogisticSupplyRecompletionDialog::InitializeEquipments
+// Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::SetAgent( const Agent& agent )
+void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent& agent )
 {
-    assert( !pAgent_ );
-    pAgent_ = &agent;
-
-    // intialize equipments table
-    // use empty element to determine if an equipment type is specified
-    pEquipmentsStringList_ = new QStringList();
-    pEquipmentsStringList_->append( "" );
+    equipmentsList_.clear();
+    equipmentsList_->append( "" );
     equipmentsMax_.clear();
-
-    const T_EquipmentQty_Map& equipments = agent.GetComposition().equipment_;
-    for( CIT_EquipmentQty_Map it = equipments.begin(); it != equipments.end(); ++it )
+    const Equipments& equipments = agent.Get< Equipments >();
+    Iterator< Equipment > it = equipments.CreateIterator();
+    while( it.HasMoreElements() )
     {
-        const std::string strEquipmentName = App::GetApp().GetEquipmentName( it->first );
-        pEquipmentsStringList_->append( strEquipmentName.c_str() );
-        equipmentsMax_.push_back( it->second.nNbrAvailable_     + 
-                                  it->second.nNbrInMaintenance_ + 
-                                  it->second.nNbrReparable_     + 
-                                  it->second.nNbrUnavailable_ );
+        const Equipment& equipment = it.NextElement();
+        equipmentsList_->append( equipment.GetName().c_str() );
+        equipmentsMax_.push_back( equipment.Total() );
     }
     pEquipmentsTable_->setNumRows( 0 );
     pEquipmentsTable_->insertRows( 0, 1 );
-    pEquipmentsTable_->setItem( 0, 0, new QComboTableItem( pEquipmentsTable_, *pEquipmentsStringList_ ) );
+    pEquipmentsTable_->setItem( 0, 0, new QComboTableItem( pEquipmentsTable_, equipmentsList_ ) );
     pEquipmentsTable_->setText( 0, 1, "0" );
     pEquipmentsTable_->setMinimumHeight( pEquipmentsTable_->rowHeight( 0 ) * 4 );
+}
 
-    // initialize personal table
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyRecompletionDialog::InitializePersonal
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void LogisticSupplyRecompletionDialog::InitializePersonal( const Agent& agent )
+{
+    const Troops& troops = agent.Get< Troops >();
     pPersonalsTable_->setNumRows( 0 );
-    for( uint eType = 0; eType < ( uint )eNbrHumanRank; ++eType )
     {
-        uint nPos = pPersonalsTable_->numRows();
+        const nPos = 0;
         pPersonalsTable_->insertRows( nPos, 1 );
         pPersonalsTable_->setItem( nPos, 0, new QCheckTableItem( pPersonalsTable_, 0 ) );
-        pPersonalsTable_->setText( nPos, 1, ENT_Tr::ConvertFromHumanRank( ( E_HumanRank )eType ).c_str() );
-
-        uint nMax = 0;
-        if( eType == eHumanRank_Officier )
-            nMax = agent.GetComposition().officiers_[ eTroopHealthStateTotal ];
-        else if( eType == eHumanRank_SousOfficer )
-            nMax = agent.GetComposition().sousOfficiers_[ eTroopHealthStateTotal ];
-        else
-            nMax = agent.GetComposition().mdr_[ eTroopHealthStateTotal ];
-        pPersonalsTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pPersonalsTable_, 0, nMax, 1 ) );
+        pPersonalsTable_->setText( nPos, 1, tr( "officier" ) );
+        const unsigned nMax = troops.humans_[ eTroopHealthStateTotal ].officers_;
+        pPersonalsTable_->setItem( nPos, 2, new MT_SpinTableItem( pPersonalsTable_, 0, nMax, 1 ) );
+    }
+    {
+        const nPos = 1;
+        pPersonalsTable_->insertRows( nPos, 1 );
+        pPersonalsTable_->setItem( nPos, 0, new QCheckTableItem( pPersonalsTable_, 0 ) );
+        pPersonalsTable_->setText( nPos, 1, tr( "sous-officier" ) );
+        const unsigned nMax = troops.humans_[ eTroopHealthStateTotal ].subOfficers_;
+        pPersonalsTable_->setItem( nPos, 2, new MT_SpinTableItem( pPersonalsTable_, 0, nMax, 1 ) );
+    }
+    {
+        const nPos = 2;
+        pPersonalsTable_->insertRows( nPos, 1 );
+        pPersonalsTable_->setItem( nPos, 0, new QCheckTableItem( pPersonalsTable_, 0 ) );
+        pPersonalsTable_->setText( nPos, 1, tr( "mdr" ) );
+        const unsigned nMax = troops.humans_[ eTroopHealthStateTotal ].troopers_;
+        pPersonalsTable_->setItem( nPos, 2, new MT_SpinTableItem( pPersonalsTable_, 0, nMax, 1 ) );
     }
     pPersonalsTable_->setMinimumHeight( pPersonalsTable_->rowHeight( 0 ) * 5 );
+}
 
-    // initialize dotation table
-    pDotationsTable_->setNumRows( 0 );
-    for( uint eType = 0; eType < ( uint )eNbrFamilleDotation; ++eType )
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyRecompletionDialog::InitializeDotations
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent& agent )
+{
+    const Resolver< DotationType >& dotations = model_.objectTypes_;
+    Iterator< const DotationType& > it = dotations.CreateIterator();
+    std::set< unsigned long > inserted;
+    while( it.HasMoreElements() )
     {
-        if( ( E_FamilleDotation )eType == eFamilleDotation_Munition )
+        const DotationType& type = it.NextElement();
+        if( type.IsAmmunition() || !inserted.insert( type.GetFamily() ) )
             continue;
-        uint nPos = pDotationsTable_->numRows();
+        const unsigned nPos = pDotationsTable_->numRows();
         pDotationsTable_->insertRows( nPos, 1 );
         pDotationsTable_->setItem( nPos, 0, new QCheckTableItem( pDotationsTable_, 0 ) );
-        pDotationsTable_->setText( nPos, 1, ENT_Tr::ConvertFromFamilleDotation( ( E_FamilleDotation )eType ).c_str() );
+        pDotationsTable_->setText( nPos, 1, type.GetName().c_str() );
         pDotationsTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pDotationsTable_, 0, 100, 1 ) );
     }
     pDotationsTable_->setMinimumHeight( pDotationsTable_->rowHeight( 0 ) * 5 );
+}
 
-    // initialize munitions family table
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyRecompletionDialog::InitializeAmmunitions
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void LogisticSupplyRecompletionDialog::InitializeAmmunitions( const Agent& agent )
+{
+    // $$$$ AGE 2006-04-28: 
     pMunitionsFamilyTable_->setNumRows( 0 );
     for( uint eType = 0; eType < ( uint )eNbrFamilleMunition; ++eType )
     {
@@ -222,7 +249,14 @@ void LogisticSupplyRecompletionDialog::SetAgent( const Agent& agent )
         pMunitionsFamilyTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pMunitionsFamilyTable_, 0, 100, 1 ) );
     }
     pMunitionsFamilyTable_->setMinimumHeight( pMunitionsFamilyTable_->rowHeight( 0 ) * 5 );
+}
 
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyRecompletionDialog::InitializeSupplies
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void LogisticSupplyRecompletionDialog::InitializeSupplies( const Agent& agent )
+{
     if( agent.pSupplyData_ )
     {
         T_ResourceQty_Map& supplyMap = agent.pSupplyData_->stocks_;
@@ -243,6 +277,21 @@ void LogisticSupplyRecompletionDialog::SetAgent( const Agent& agent )
     }
     else
         pStockGroupBox_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyRecompletionDialog::Show
+// Created: SBO 2005-07-27
+// -----------------------------------------------------------------------------
+void LogisticSupplyRecompletionDialog::Show( const Agent& agent )
+{
+    agent_ = &agent;
+    InitializeEquipments ( agent );
+    InitializePersonal   ( agent );
+    InitializeDotations  ( agent );
+    InitializeAmmunitions( agent );
+    InitializeSupplies   ( agent );
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -436,7 +485,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     } 
     }
 
-    asnMsg.Send( 687 );
+    asnMsg.Send();
 
     if( asnMagicAction.m.dotationsPresent && asnMagicAction.dotations.n > 0 )
         delete [] asnMagicAction.dotations.elem;

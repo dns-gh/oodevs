@@ -184,7 +184,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
         asnMsg.GetAsnMsg().quotas.elem = pAsnQuota;
     }
 
-    asnMsg.Send( 6 );
+    asnMsg.Send();
     if( asnMsg.GetAsnMsg().quotas.n > 0 )
         delete [] asnMsg.GetAsnMsg().quotas.elem;
 

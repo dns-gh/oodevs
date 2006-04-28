@@ -7,55 +7,58 @@
 //
 // *****************************************************************************
 
-#ifndef __Troops_h_
-#define __Troops_h_
+#ifndef __MagicOrders_h_
+#define __MagicOrders_h_
 
-#include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
-#include "Humans.h"
+#include "ASN_Types.h"
 
-class Controller;
+class Agent;
 
 // =============================================================================
-/** @class  Troops
-    @brief  Troops
+/** @class  MagicOrders
+    @brief  MagicOrders
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-04-28
 // =============================================================================
-class Troops : public Extension_ABC
-             , public Updatable_ABC< ASN1T_MsgUnitDotations >
+class MagicOrders : public Extension_ABC
+                  , public Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Troops( Controller& controller );
-    virtual ~Troops();
+    explicit MagicOrders( const Agent& agent );
+    virtual ~MagicOrders();
     //@}
 
     //! @name Operations
     //@{
+    bool CanSurrender() const;
+    bool CanMagicMove() const;
+    bool CanRetrieveTransporters() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Troops( const Troops& );            //!< Copy constructor
-    Troops& operator=( const Troops& ); //!< Assignement operator
+    MagicOrders( const MagicOrders& );            //!< Copy constructor
+    MagicOrders& operator=( const MagicOrders& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
-public: // $$$$ AGE 2006-04-28: 
+private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    Humans humans_[eTroopHealthStateNbrStates];
+    bool automat_;
+    bool embraye_;
+    bool transportersReady_;
     //@}
 };
 
-#endif // __Troops_h_
+#endif // __MagicOrders_h_

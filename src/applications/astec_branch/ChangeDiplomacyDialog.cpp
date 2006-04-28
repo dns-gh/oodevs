@@ -86,7 +86,7 @@ void ChangeDiplomacyDialog::Validate()
     asn.GetAsnMsg().oid_camp1  = pArmy1ComboBox_->GetValue();
     asn.GetAsnMsg().oid_camp2  = pArmy2ComboBox_->GetValue();
     asn.GetAsnMsg().diplomatie = pDiplomacyComboBox_->GetValue();
-    asn.Send( 6897 );
+    asn.Send();
     hide();
 }
 

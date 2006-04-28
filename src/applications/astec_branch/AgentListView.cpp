@@ -336,7 +336,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
         ASN_MsgChangeAutomate asnMsg;
         asnMsg.GetAsnMsg().oid_pion     = agent.GetId();
         asnMsg.GetAsnMsg().oid_automate = superior.GetId();
-        asnMsg.Send( 351 );
+        asnMsg.Send();
 
         pEvent->accept();
     }
@@ -354,7 +354,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
         asnMsg.GetAsnMsg().oid_automate            = agent.GetId();
         asnMsg.GetAsnMsg().oid_camp                = kg.GetTeam().GetId();
         asnMsg.GetAsnMsg().oid_groupe_connaissance = kg.GetId();
-        asnMsg.Send( 351 );
+        asnMsg.Send();
 
         pEvent->accept();
     }

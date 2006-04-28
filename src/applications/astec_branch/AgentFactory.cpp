@@ -57,6 +57,7 @@
 #include "Controllers.h"
 #include "Lives.h"
 #include "PopulationDecisions.h"
+#include "MagicOrders.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -100,6 +101,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
+    result->Attach( *new MagicOrders( *result ) );
     result->Update( asnMsg );
     return result;
 }
@@ -119,6 +121,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
+    result->Attach( *new MagicOrders( *result ) );
     return result;
 }
 

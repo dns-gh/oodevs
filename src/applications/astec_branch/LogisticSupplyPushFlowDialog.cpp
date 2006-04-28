@@ -151,7 +151,7 @@ void LogisticSupplyPushFlowDialog::Validate()
         asnMsg.GetAsnMsg().stocks.elem = pAsnStock;
     }
 
-    asnMsg.Send( 6 );
+    asnMsg.Send();
     if( asnMsg.GetAsnMsg().stocks.n > 0 )
         delete [] asnMsg.GetAsnMsg().stocks.elem;
 

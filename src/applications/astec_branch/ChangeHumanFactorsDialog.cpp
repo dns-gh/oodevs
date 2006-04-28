@@ -132,5 +132,5 @@ void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue fatig
     asnMagicAction.fatigue    = fatigue;
     asnMagicAction.moral      = moral;
     asnMagicAction.experience = experience;
-    asnMsg.Send( 42 );
+    asnMsg.Send();
 };
