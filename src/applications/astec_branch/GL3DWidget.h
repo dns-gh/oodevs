@@ -17,7 +17,7 @@
 #include "SetGlOptions.h"
 
 class Layer_ABC;
-class ElevationMap;
+class DetectionMap;
 class Controllers;
 class GlFont;
 
@@ -33,7 +33,7 @@ class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, ElevationMap& elevation );
+             Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation );
     virtual ~Gl3dWidget();
     //@}
 
@@ -91,7 +91,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    ElevationMap& elevation_;
+    DetectionMap& elevation_;
     T_Layers layers_;
     IT_Layers last_;
     Layer_ABC* default_;

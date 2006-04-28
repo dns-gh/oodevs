@@ -41,7 +41,7 @@ void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.transporteurs_disponiblesPresent )
         transportersReady_ = message.transporteurs_disponibles;
     if( message.m.etat_automatePresent )
-        transportersReady_ = ( message.etat_automate == EnumAutomateState::embraye );
+        embraye_ = ( message.etat_automate == EnumAutomateState::embraye );
 }
 
 // -----------------------------------------------------------------------------

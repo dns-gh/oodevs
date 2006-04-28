@@ -18,7 +18,8 @@
 #include "ColorStrategy.h"
 #include "Model.h"
 #include "ParametersLayer.h"
-#include "graphics/ElevationMap.h"
+#include "DetectionMap.h"
+
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Compass.h"
 #include "graphics/Visitor3d.h"
@@ -30,7 +31,7 @@ using namespace geometry;
 // Name: Gl3dWidget constructor
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, ElevationMap& elevation )
+Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , Widget3D( context_, pParent )

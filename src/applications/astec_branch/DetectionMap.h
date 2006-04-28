@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class DetectionMap : private WorldParameters, public ElevationMap
+class DetectionMap : private WorldParameters
 {
 
 public:
@@ -42,15 +42,54 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DetectionMap( const std::string& scipioXml );
+             DetectionMap();
     virtual ~DetectionMap();
     //@}
 
     //! @name Operations
     //@{
+    void Load( const std::string& scipioXml );
+
     const Environment* EnvironmentData( unsigned x, unsigned y ) const;
     Environment        EnvironmentAt( const geometry::Point2f& point ) const;
     float              GetCellSize() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    geometry::Rectangle2f           SubExtent( unsigned x, unsigned y, unsigned width, unsigned height ) const
+    { return map_ ? map_->SubExtent( x, y, width, height ) : geometry::Rectangle2f(); };
+    geometry::Point2f               Map( unsigned x, unsigned y ) const
+    { return map_ ? map_->Map( x, y ) : geometry::Point2f(); };
+    std::pair< unsigned, unsigned > Unmap( const geometry::Point2f& point ) const 
+    { return map_ ? map_->Unmap( point ) : std::pair< unsigned, unsigned >(); };
+    const short*                    Data( unsigned x, unsigned y ) const
+    { return map_ ? map_->Data( x, y ) : 0; };
+    unsigned                        Unmap( float distance ) const
+    { return map_ ? map_->Unmap( distance ) : 0; };
+    short                           ElevationAt( const geometry::Point2f& point ) const
+    { return map_ ? map_->ElevationAt( point ) : 0; };
+    //@}
+
+    //! @name Accessors
+    //@{
+    short MaximumElevation() const
+    { return map_ ? map_->MaximumElevation() : 0; };
+    const short* Data() const
+    { return map_ ? map_->Data() : 0; };
+    unsigned Width() const
+    { return map_ ? map_->Width() : 0; };
+    unsigned Height() const
+    { return map_ ? map_->Height() : 0; };
+    geometry::Rectangle2f Extent() const
+    { return map_ ? map_->Extent() : geometry::Rectangle2f(); };
+
+    const ElevationMap& GetMap() const// $$$$ AGE 2006-04-28: prolly tmp
+    {
+        if( ! map_ )
+            throw std::runtime_error( "Map not initialized" );
+        return *map_;
+    }
     //@}
 
 private:
@@ -63,6 +102,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ElevationMap* map_;
     Environment* environment_;
     float cellsize_;
     //@}

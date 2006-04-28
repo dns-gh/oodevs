@@ -47,12 +47,13 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controllers& controllers, const Simulation& simulation, Workers& workers, const std::string& scipioXml );
+             Model( Controllers& controllers, const Simulation& simulation, Workers& workers );
     virtual ~Model();
     //@}
 
     //! @name Operations
     //@{
+    void Load( const std::string& scipioXml );
     void Purge();
     //@}
 

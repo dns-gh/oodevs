@@ -19,7 +19,7 @@
 // Name: Elevation2dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation2dLayer::Elevation2dLayer( Controller& controller, const ElevationMap& elevation )
+Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
     : controller_( controller )
     , elevation_( elevation )
     , layer_( 0 )

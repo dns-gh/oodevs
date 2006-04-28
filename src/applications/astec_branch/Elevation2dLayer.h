@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 
-class ElevationMap;
+class DetectionMap;
 class ElevationLayer;
 class Controller;
 
@@ -28,7 +28,7 @@ class Elevation2dLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation2dLayer( Controller& controller, const ElevationMap& elevation );
+             Elevation2dLayer( Controller& controller, const DetectionMap& elevation );
     virtual ~Elevation2dLayer();
     //@}
 
@@ -49,7 +49,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const ElevationMap& elevation_;
+    const DetectionMap& elevation_;
     ElevationLayer* layer_;
     //@}
 };

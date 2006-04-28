@@ -12,6 +12,8 @@
 
 #include "graphics/ElevationLayer.h"
 namespace xml { class xistream; }
+class DetectionMap;
+
 // =============================================================================
 /** @class  ColoredElevationLayer
     @brief  Colored elevation layer
@@ -24,7 +26,7 @@ class ColoredElevationLayer : public ElevationLayer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ColoredElevationLayer( const ElevationMap& elevation );
+    explicit ColoredElevationLayer( const DetectionMap& elevation );
     virtual ~ColoredElevationLayer();
     //@}
 

@@ -10,14 +10,15 @@
 #include "astec_pch.h"
 #include "ColoredElevationLayer.h"
 #include "xeumeuleu/xml.h"
+#include "DetectionMap.h"
 using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ColoredElevationLayer constructor
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-ColoredElevationLayer::ColoredElevationLayer( const ElevationMap& elevation )
-    : ElevationLayer( elevation )
+ColoredElevationLayer::ColoredElevationLayer( const DetectionMap& elevation )
+    : ElevationLayer( elevation.GetMap() )
 {
     xifstream xis(  "preferences.xml" ); // $$$$ AGE 2006-04-19: 
     xis >> start( "preferences" )

@@ -23,7 +23,16 @@ using namespace xml;
 // Name: ObjectTypes constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectTypes::ObjectTypes( const std::string& scipioXml )
+ObjectTypes::ObjectTypes()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void ObjectTypes::Load( const std::string& scipioXml )
 {
     xml::xifstream scipio( scipioXml );
     std::string idFile, dotations, equipments, nbc, pannes;

@@ -35,11 +35,11 @@
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers, const std::string& scipioXml )
-    : coordinateConverter_( *new CoordinateConverter( scipioXml ) )
-    , detection_( *new DetectionMap( scipioXml ) )
-    , types_( *new AgentTypes( scipioXml ) )
-    , objectTypes_( *new ObjectTypes( scipioXml ) )
+Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers )
+    : coordinateConverter_( *new CoordinateConverter() )
+    , detection_( *new DetectionMap() )
+    , types_( *new AgentTypes() )
+    , objectTypes_( *new ObjectTypes() )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this ) )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
@@ -104,6 +104,19 @@ void Model::Purge()
 //    limits_.Purge();
     fires_.Purge();
     weather_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void Model::Load( const std::string& scipioXml )
+{
+    Purge();
+    coordinateConverter_.Load( scipioXml );
+    detection_.Load( scipioXml );
+    types_.Load( scipioXml );
+    objectTypes_.Load( scipioXml );
 }
     
 

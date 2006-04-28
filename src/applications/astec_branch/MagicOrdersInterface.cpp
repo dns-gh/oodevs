@@ -27,7 +27,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     : QObject( parent )
     , controllers_( controllers )
     , selectedAgent_( controllers )
-    , controller_( false )
+    , controller_( true )
 {
 //    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent );
 //    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent );
@@ -62,8 +62,8 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent& agent, QPopupMenu& me
     AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
     AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
     AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
-    AddMagic( tr( "Recompletement partiel" ),    SLOT( Recompletion ),      magicMenu );
-    AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent ),  magicMenu );
+    AddMagic( tr( "Recompletement partiel" ),    SLOT( Recompletion() ),      magicMenu );
+    AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
     AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
 
     if( orders.CanSurrender() )

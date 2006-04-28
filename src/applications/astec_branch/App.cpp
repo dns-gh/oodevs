@@ -158,7 +158,8 @@ void App::Initialize( const std::string& scipioXml )
     simulation_  = new Simulation( *controllers_ );
     workers_     = new Workers();
     SetSplashText( tr( "Chargement du modèle..." ) );
-    model_       = new Model( *controllers_, *simulation_, *workers_, scipioXml );
+    model_       = new Model( *controllers_, *simulation_, *workers_ );
+    model_->Load( scipioXml );
     SetSplashText( tr( "Initialisation du réseau..." ) );
     network_     = new Network( *model_, *simulation_ );
 }

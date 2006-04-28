@@ -30,11 +30,36 @@ namespace
 // Name: DetectionMap constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-DetectionMap::DetectionMap( const std::string& scipioXml )
-    : WorldParameters( scipioXml )
-    , ElevationMap( detection_ )
+DetectionMap::DetectionMap()
+    : map_( 0 )
     , environment_( 0 )
+    , cellsize_( 0 )
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectionMap destructor
+// Created: AGE 2006-04-04
+// -----------------------------------------------------------------------------
+DetectionMap::~DetectionMap()
+{
+    delete map_;
+    delete[] environment_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectionMap::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void DetectionMap::Load( const std::string& scipioXml )
+{
+    delete map_;
+    delete[] environment_;
+
+    WorldParameters::Load( scipioXml );
+    map_ = new ElevationMap( detection_ );
+
     InputBinaryStream archive( detection_ );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
@@ -57,20 +82,13 @@ DetectionMap::DetectionMap( const std::string& scipioXml )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectionMap destructor
-// Created: AGE 2006-04-04
-// -----------------------------------------------------------------------------
-DetectionMap::~DetectionMap()
-{
-    delete[] environment_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DetectionMap::EnvironmentData
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
 const DetectionMap::Environment* DetectionMap::EnvironmentData( unsigned x, unsigned y ) const
 {
+    if( ! environment_ )
+        return 0;
     return environment_ + y * Width() + x;
 }
 

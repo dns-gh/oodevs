@@ -39,8 +39,13 @@ class ObjectTypes
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectTypes( const std::string& scipioXml );
+             ObjectTypes();
     virtual ~ObjectTypes();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Load( const std::string& scipioXml );
     //@}
 
 private:

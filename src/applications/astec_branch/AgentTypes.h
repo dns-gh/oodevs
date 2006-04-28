@@ -45,12 +45,13 @@ class AgentTypes : public Resolver< AgentType >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentTypes( const std::string& scipioXml );
+             AgentTypes();
     virtual ~AgentTypes();
     //@}
 
     //! @name Operations
     //@{
+    void Load(  const std::string& scipioXml );
     //@}
 
 private:

@@ -12,7 +12,8 @@
 
 // =============================================================================
 /** @class  WorldParameters
-    @brief  WorldParameters
+    @brief  WorldParameters  
+    // $$$$ AGE 2006-04-28: useless now because of Load. Make public, remove heritage
 */
 // Created: AGE 2006-03-15
 // =============================================================================
@@ -22,8 +23,14 @@ class WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WorldParameters( const std::string& scipioXml );
+             WorldParameters();
+             WorldParameters( const std::string& scipioXml ); 
     virtual ~WorldParameters();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Load( const std::string& scipioXml );
     //@}
 
 private:

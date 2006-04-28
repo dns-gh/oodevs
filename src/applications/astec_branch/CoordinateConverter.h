@@ -20,26 +20,26 @@
 // =============================================================================
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-03-15: make an iface
+// $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
 class CoordinateConverter : private WorldParameters
 {
 public:
     //! @name Constructor / Destructor
     //@{
-    explicit CoordinateConverter( const std::string& scipioXml );
+             CoordinateConverter();
     virtual ~CoordinateConverter();
-    //@}
-
-    //! @name Coordinate conversions
-    //@{
-    std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
-    geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
-    geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
     //@}
 
     //! @name Operations
     //@{
+    void Load( const std::string& scipioXml );
+
     bool IsInBoundaries( const geometry::Point2f& point ) const;
+
+    std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
+    geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
+    geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
     //@}
 
 private:
@@ -56,6 +56,8 @@ private:
     //@}
     
 private:
+    //! @name Member data
+    //@{
     geometry::Rectangle2f extent_;
     geometry::Vector2f    translation_;
 
@@ -63,6 +65,7 @@ private:
     mutable geocoord::PlanarCartesian             planar_;
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
+    //@}
 };
 
 #endif // __CoordinateConverter_h_

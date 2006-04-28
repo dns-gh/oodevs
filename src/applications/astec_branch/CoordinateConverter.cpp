@@ -15,10 +15,19 @@
 // Name: CoordinateConverter constructor
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
-CoordinateConverter::CoordinateConverter( const std::string& scipioXml )
-    : WorldParameters( scipioXml )
-    , planar_( parameters_ )
+CoordinateConverter::CoordinateConverter()
+    : planar_( parameters_ )
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void CoordinateConverter::Load( const std::string& scipioXml )
+{
+    WorldParameters::Load( scipioXml );
     geocoord::Geoid::Instance().Initialize( geoid_ );
 
     extent_ = geometry::Rectangle2f( 0, 0, width_, height_ );

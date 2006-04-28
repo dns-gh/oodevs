@@ -27,7 +27,16 @@ using namespace xml;
 // Name: AgentTypes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentTypes::AgentTypes( const std::string& scipioXml )
+AgentTypes::AgentTypes()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void AgentTypes::Load(  const std::string& scipioXml )
 {
     xml::xifstream xisSymbols( "symbols.xml" ); // $$$$ SBO 2006-03-20: !!!
     symbolFactory_ = new SymbolFactory( xisSymbols );

@@ -18,14 +18,22 @@ using namespace xml;
 // Name: WorldParameters constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
+WorldParameters::WorldParameters()
+    : latitude_( 0 )
+    , longitude_( 0 )
+    , width_( 0 )
+    , height_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters constructor
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
 WorldParameters::WorldParameters( const std::string& scipioXml )
 {
-    xml::xifstream scipio( scipioXml );
-    std::string terrain;
-    scipio >> start( "Scipio" )
-                >> start( "Donnees" )
-                    >> content( "Terrain", terrain );
-    ReadTerrain( App::BuildChildPath( scipioXml, terrain ) );
+    Load( scipioXml );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +43,20 @@ WorldParameters::WorldParameters( const std::string& scipioXml )
 WorldParameters::~WorldParameters()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void WorldParameters::Load( const std::string& scipioXml )
+{
+    xml::xifstream scipio( scipioXml );
+    std::string terrain;
+    scipio >> start( "Scipio" )
+                >> start( "Donnees" )
+                    >> content( "Terrain", terrain );
+    ReadTerrain( App::BuildChildPath( scipioXml, terrain ) );
 }
 
 // -----------------------------------------------------------------------------

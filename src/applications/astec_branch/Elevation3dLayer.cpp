@@ -14,12 +14,13 @@
 #include "GLTools_ABC.h"
 #include "Controller.h"
 #include "InitializationMessage.h"
+#include "DetectionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( Controller& controller, const ElevationMap& elevation )
+Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation )
     : controller_( controller )
     , elevation_( elevation )
     , tree_( 0 )
@@ -46,7 +47,7 @@ void Elevation3dLayer::Initialize( const geometry::Rectangle2f& )
     if( ! tree_ )
     {
         controller_.Update( InitializationMessage( "Génération de la texture 3D..." ) );
-        tree_ = new ElevationTextureTree( elevation_, *this );
+        tree_ = new ElevationTextureTree( elevation_.GetMap(), *this );
     }
 }
 
@@ -79,7 +80,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     glPushMatrix(); 
         glScalef( 1.f, 1.f, zRatio_ );
         glColor3f( 1, 1, 1 );
-        Visitor3d visitor( elevation_, frustum, frustum != lastFrustum_ );
+        Visitor3d visitor( elevation_.GetMap(), frustum, frustum != lastFrustum_ );
         tree_->Accept( visitor );
     glPopMatrix();
     glPopAttrib();

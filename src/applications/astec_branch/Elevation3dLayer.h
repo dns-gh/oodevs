@@ -14,7 +14,7 @@
 #include "graphics/ElevationColor_ABC.h"
 #include "graphics/ViewFrustum.h"
 
-class ElevationMap;
+class DetectionMap;
 class ElevationTextureTree;
 class Controller;
 
@@ -30,7 +30,7 @@ class Elevation3dLayer : public Layer3d_ABC, private ElevationColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation3dLayer( Controller& controller, const ElevationMap& elevation );
+             Elevation3dLayer( Controller& controller, const DetectionMap& elevation );
     virtual ~Elevation3dLayer();
     //@}
 
@@ -57,7 +57,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const ElevationMap& elevation_;
+    const DetectionMap& elevation_;
     ViewFrustum lastFrustum_;
     ElevationTextureTree* tree_;
     float zRatio_;

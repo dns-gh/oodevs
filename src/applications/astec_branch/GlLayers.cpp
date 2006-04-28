@@ -22,7 +22,7 @@
 #include "DefaultLayer.h"
 #include "Elevation2dLayer.h"
 #include "Elevation3dLayer.h"
-#include "graphics/ElevationMap.h"
+#include "DetectionMap.h"
 #include "MeteoLayer.h"
 #include "DetectionMap.h"
 
