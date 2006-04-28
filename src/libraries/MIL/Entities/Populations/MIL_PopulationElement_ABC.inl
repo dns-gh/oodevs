@@ -204,7 +204,7 @@ inline
 MT_Float MIL_PopulationElement_ABC::Exterminate( MT_Float rSurface )
 {
     assert( rDensity_ != 0 );
-    MT_Float rKills = rSurface / rDensity_;
+    MT_Float rKills = rSurface * rDensity_;
 
     if( rKills > rNbrAliveHumans_ )
         rKills = rNbrAliveHumans_;
