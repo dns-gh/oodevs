@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 
+#include "Knowledge/DEC_Knowledge_Def.h"
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class MIL_AgentPion;
@@ -44,9 +45,10 @@ public:
 private:
     //! @name Tools
     //@{
-    void CreateJoiningPath ();
-    void DestroyJoiningPath();
-    void AvoidObstacles    ();
+    void CreateJoiningPath   ();
+    void DestroyJoiningPath  ();
+    void AvoidObstacles      ();
+    bool UpdateObjectsToAvoid();
     //@}
 
 private:
@@ -56,12 +58,13 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&         pion_;   
-    PHY_RoleAction_Moving& role_;
-    DIA_Variable_ABC&      diaReturnCode_;
-    DEC_Agent_Path*        pMainPath_;
-    DEC_Agent_Path*        pJoiningPath_;
-    T_ObjectKnowledgeSet   objectAvoidAttempts_;
+    MIL_AgentPion&          pion_;   
+    PHY_RoleAction_Moving&  role_;
+    DIA_Variable_ABC&       diaReturnCode_;
+    DEC_Agent_Path*         pMainPath_;
+    DEC_Agent_Path*         pJoiningPath_;
+    T_ObjectKnowledgeSet    objectAvoidAttempts_;
+    T_KnowledgeObjectVector objectsToAvoid_;
 };
 
 #include "PHY_ActionMove.inl"

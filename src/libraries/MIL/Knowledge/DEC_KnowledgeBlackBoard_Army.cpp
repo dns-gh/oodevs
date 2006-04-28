@@ -146,7 +146,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() )
+        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() ) //$$ ??
             pContainer_->push_back( &knowledge );
     }
 
@@ -158,6 +158,40 @@ private:
 void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectVector& container, const MIL_RealObjectTypeFilter& filter ) const
 {
     sObjectKnowledgesFilteredInserter functor( container, filter );
+    
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::sObjectKnowledgesFilteredHeightInserter
+// Created: NLD 2005-05-09
+// -----------------------------------------------------------------------------
+class sObjectKnowledgesFilteredHeightInserter
+{
+public:
+    sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, MT_Float rHeight, const MIL_RealObjectTypeFilter& filter )
+        : pContainer_( &container )
+        , rHeight_   ( rHeight    )
+        , pFilter_   ( &filter    )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_Object& knowledge )
+    {
+        if( pFilter_->Test( knowledge.GetType() ) && rHeight_ <= knowledge.GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
+            pContainer_->push_back( &knowledge );
+    }
+
+private:
+          T_KnowledgeObjectVector*  pContainer_;
+    const MT_Float                  rHeight_;
+    const MIL_RealObjectTypeFilter* pFilter_;
+};
+
+void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, MT_Float rHeight, const MIL_RealObjectTypeFilter& filter ) const
+{
+    sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter );
     
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
@@ -177,7 +211,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( !knowledge.IsPrepared() )
+        if( !knowledge.IsPrepared() ) //$$ ??
             pContainer_->push_back( &knowledge );
     }
 
@@ -337,13 +371,3 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( const DE
 {
     return GetKnowledgeObject( collision.GetObject() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_Army::HasNewKnowledgeObject
-// Created: NLD 2006-04-20
-// -----------------------------------------------------------------------------
-//bool DEC_KnowledgeBlackBoard_Army::HasNewKnowledgeObject() const
-//{
-//    assert( pKnowledgeObjectContainer_ );
-//    return pKnowledgeObjectContainer_->HasNewKnowledgeObject();
-//}

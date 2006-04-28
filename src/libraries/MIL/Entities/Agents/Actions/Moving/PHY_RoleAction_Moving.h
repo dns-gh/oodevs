@@ -72,8 +72,7 @@ public:
 
     //! @name Tools
     //@{
-    MT_Vector2D ExtrapolatePosition          ( const MT_Float rTime, const bool bBoundOnPath ) const;
-    bool        ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsToAvoid_, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
+    MT_Vector2D ExtrapolatePosition( const MT_Float rTime, const bool bBoundOnPath ) const;
     //@}
                 
 private:

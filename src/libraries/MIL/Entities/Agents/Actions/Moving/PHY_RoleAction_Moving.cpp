@@ -339,27 +339,6 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const MT_Float rTime, co
     return PHY_MovingEntity_ABC::ExtrapolatePosition( roleLocation.GetPosition(), roleLocation.GetCurrentSpeed(), rTime, bBoundOnPath );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::ComputeFutureObjectCollisions
-// Created: NLD 2004-10-18
-// -----------------------------------------------------------------------------
-bool PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsToAvoid_, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const
-{
-    assert( pPion_ );
-    T_KnowledgeObjectVector knowledges;
-    pPion_->GetArmy().GetKnowledge().GetObjects( knowledges, objectsToAvoid_ );
-    const PHY_RolePion_Location& roleLocation = pPion_->GetRole< PHY_RolePion_Location >();
-    const MT_Float               rHeight      = roleLocation.GetHeight();
-    for( IT_KnowledgeObjectVector it = knowledges.begin(); it != knowledges.end(); )
-    {          
-        if( rHeight > (**it).GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
-            it = knowledges.erase( it );
-        else 
-            ++it;
-    }
-    return PHY_MovingEntity_ABC::ComputeFutureObjectCollision( roleLocation.GetPosition(), knowledges, rDistance, pObject );
-}   
-
 // =============================================================================
 // NETWORK
 // =============================================================================

@@ -17,11 +17,13 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathWalker.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -35,6 +37,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     , pMainPath_          ( diaCall.GetParameter( 1 ).ToUserPtr( pMainPath_ ) )
     , pJoiningPath_       ( 0 )
     , objectAvoidAttempts_()
+    , objectsToAvoid_     ()
 {    
     assert( DEC_Tools::CheckTypeItineraire( diaCall.GetParameter( 1 ) ) );
 
@@ -99,18 +102,37 @@ void PHY_ActionMove::DestroyJoiningPath()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::UpdateObjectsToAvoid
+// Created: NLD 2006-04-28
+// -----------------------------------------------------------------------------
+bool PHY_ActionMove::UpdateObjectsToAvoid()
+{
+    T_KnowledgeObjectVector knowledges;
+
+    const MT_Float rHeight = pion_.GetRole< PHY_RolePion_Location >().GetHeight();
+
+    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, MIL_RealObjectType::GetHatedObjectTypes() );
+    if( knowledges != objectsToAvoid_ )
+    {
+        objectsToAvoid_ = knowledges;
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ActionMove::AvoidObstacles
 // Created: NLD 2005-06-30
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::AvoidObstacles()
 {
-//    if( !pion_.GetKnowledge().HasNewKnowledgeObject() )
-//        return;
+    if( !UpdateObjectsToAvoid() )
+        return;
 
     const DEC_Knowledge_Object* pObjectColliding   = 0;
           MT_Float              rDistanceCollision = 0.;
 
-    if( !role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetHatedObjectTypes(), rDistanceCollision, &pObjectColliding ) )
+    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RolePion_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, &pObjectColliding ) )
         return;
 
     assert( pObjectColliding );
