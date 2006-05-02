@@ -43,7 +43,7 @@ private:
     OptionMenuBase& operator=( const OptionMenuBase& ); //!< Assignement operator
     //@}
 
-protected:
+public:
     //! @name Helpers
     //@{
     void AddItem( const QString& label, int i );
@@ -51,7 +51,7 @@ protected:
     virtual void OnSelected( int selected ) = 0;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     int selected_;
@@ -76,7 +76,6 @@ public:
         , option_( option )
     {
         options_.Register( *this );
-        T::Populate( *this );
     }
     
     virtual ~OptionMenu()
@@ -94,13 +93,7 @@ public:
     };
     //@}
 
-private:
-    //! @name Copy/Assignement
-    //@{
-    OptionMenu( const OptionMenu& );            //!< Copy constructor
-    OptionMenu& operator=( const OptionMenu& ); //!< Assignement operator
-    //@}
-
+public:
     //! @name Operations
     //@{
     virtual void OnSelected( int selected )
@@ -122,6 +115,13 @@ private:
             Select( values_.size() - 1 );
         }
     };
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    OptionMenu( const OptionMenu& );            //!< Copy constructor
+    OptionMenu& operator=( const OptionMenu& ); //!< Assignement operator
     //@}
 
 private:
