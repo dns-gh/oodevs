@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver )
     : ObjectPrototypeAttributes_ABC( parent, tr( "ROTA" ) )
+    , attr_( 0 )
 {
     new QLabel( tr( "Danger:" ), this );
     danger_ = new QSpinBox( 0, 100, 1, this );

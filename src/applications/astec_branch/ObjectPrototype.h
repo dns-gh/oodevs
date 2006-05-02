@@ -84,7 +84,7 @@ private:
     virtual void NotifyCreated( const Team& team );
     virtual void NotifyDeleted( const Team& team );
     virtual void showEvent( QShowEvent* );
-    virtual void hideEvent( QShowEvent* );
+    virtual void hideEvent( QHideEvent* );
     //@}
 
 private:

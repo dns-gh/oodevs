@@ -7,46 +7,40 @@
 //
 // *****************************************************************************
 
-#ifndef __ToolListButton_h_
-#define __ToolListButton_h_
+#ifndef __OptionMenu_h_
+#define __OptionMenu_h_
 
-#include <qtoolbutton.h>
 #include "Options.h"
 #include "Observer_ABC.h"
 #include "OptionsObserver_ABC.h"
 
 // =============================================================================
-/** @class  ToolListButtonBase
-    @brief  ToolListButtonBase
+/** @class  OptionMenuBase
+    @brief  OptionMenuBase
 */
-// Created: AGE 2006-03-27
+// Created: SBO 2006-04-28
 // =============================================================================
-class ToolListButtonBase : public QToolButton
+class OptionMenuBase : public QPopupMenu
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             ToolListButtonBase( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent );
-    explicit ToolListButtonBase( QToolBar* parent );
-    virtual ~ToolListButtonBase();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    ToolListButtonBase( const ToolListButtonBase& );            //!< Copy constructor
-    ToolListButtonBase& operator=( const ToolListButtonBase& ); //!< Assignement operator
+    explicit OptionMenuBase( QWidget* parent );
+    virtual ~OptionMenuBase();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnItemSelected( int );
+    void OnItemSelected( int id );
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    OptionMenuBase( const OptionMenuBase& );            //!< Copy constructor
+    OptionMenuBase& operator=( const OptionMenuBase& ); //!< Assignement operator
     //@}
 
 protected:
@@ -60,40 +54,32 @@ protected:
 private:
     //! @name Member data
     //@{
-    QString toolTip_;
-    QPopupMenu* menu_;
     int selected_;
     //@}
 };
 
 // =============================================================================
-/** @class  ToolListButton
-    @brief  ToolListButton
+/** @class  OptionMenu
+    @brief  OptionMenu
 */
-// Created: AGE 2006-03-27
+// Created: SBO 2006-04-28
 // =============================================================================
 template< typename T >
-class ToolListButton : public ToolListButtonBase, private Observer_ABC, public OptionsObserver_ABC
+class OptionMenu : public OptionMenuBase, private Observer_ABC, public OptionsObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    ToolListButton( QToolBar* parent, Options& options, const std::string& option )
-        : ToolListButtonBase( parent )
+    OptionMenu( QWidget* parent, Options& options, const std::string& option )
+        : OptionMenuBase( parent )
         , options_( options )
         , option_( option )
     {
         options_.Register( *this );
+        T::Populate( *this );
     }
-    ToolListButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, Options& options, const std::string& option )
-        : ToolListButtonBase( iconSet, toolTip, parent )
-        , options_( options )
-        , option_( option )
-    {
-        options_.Register( *this );
-    }
-    virtual ~ToolListButton()
+    
+    virtual ~OptionMenu()
     {
         options_.Remove( *this );
     };
@@ -104,15 +90,15 @@ public:
     void AddItem( const QString& label, const T& value )
     {
         values_.push_back( value );
-        ToolListButtonBase::AddItem( label, values_.size() - 1 );
+        OptionMenuBase::AddItem( label, values_.size() - 1 );
     };
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ToolListButton( const ToolListButton& );            //!< Copy constructor
-    ToolListButton& operator=( const ToolListButton& ); //!< Assignement operator
+    OptionMenu( const OptionMenu& );            //!< Copy constructor
+    OptionMenu& operator=( const OptionMenu& ); //!< Assignement operator
     //@}
 
     //! @name Operations
@@ -147,5 +133,4 @@ private:
     //@}
 };
 
-
-#endif // __ToolListButton_h_
+#endif // __OptionMenu_h_

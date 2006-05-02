@@ -17,6 +17,7 @@
 // -----------------------------------------------------------------------------
 LogisticRoutePrototype::LogisticRoutePrototype( QWidget* parent )
     : ObjectPrototypeAttributes_ABC( parent, tr( "Itinéraire logistique" ) )
+    , attr_( 0 )
 {
     new QLabel( tr( "Débit:" ), this );
     flow_ = new QSpinBox( 0, 10000, 1, this );

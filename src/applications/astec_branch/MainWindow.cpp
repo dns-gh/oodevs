@@ -50,6 +50,7 @@
 #include "Object.h"
 #include "Population.h"
 #include "EntitySearchBox.h"
+#include "Menu.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -163,10 +164,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) );
 
-    // 
+    new Menu( this, controllers );
     new MagicOrdersInterface( this, controllers_ );
 
-    //
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );

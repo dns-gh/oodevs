@@ -63,17 +63,17 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
         objectTypes_->AddItem( element.GetName().c_str(), &element );
     }
 
-    locationCreator_ = new LocationCreator( this, "Nouvel objet", layer_, *this );
-    locationCreator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
-    locationCreator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
-    locationCreator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
-    locationCreator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
-
     location_ = new RichLabel( tr( "Position:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+
+    locationCreator_ = new LocationCreator( location_, "Nouvel objet", layer_, *this );
+    locationCreator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
+    locationCreator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
+    locationCreator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
+    locationCreator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
 
     campAttributes_          = new CampPrototype( parent, controllers );         campAttributes_->hide();
     crossingSiteAttributes_  = new CrossingSitePrototype( parent );              crossingSiteAttributes_->hide();
@@ -99,7 +99,7 @@ void ObjectPrototype::showEvent( QShowEvent* )
 // Name: ObjectPrototype::hideEvent
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void ObjectPrototype::hideEvent( QShowEvent* )
+void ObjectPrototype::hideEvent( QHideEvent* )
 {
     if( locationCreator_ )
         controllers_.Remove( *locationCreator_ );

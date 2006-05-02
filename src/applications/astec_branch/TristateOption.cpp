@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "TristateOption.h"
 #include "ToolListButton.h"
+#include "OptionMenu.h"
 
 const TristateOption TristateOption::off_( "Off" );
 const TristateOption TristateOption::on_( "On" );
@@ -52,10 +53,21 @@ TristateOption::operator const char*() const
 // -----------------------------------------------------------------------------
 void TristateOption::Populate( ToolListButton< TristateOption >& button )
 {
-    button.AddItem( qApp->tr( auto_ ), auto_, true );
-    button.AddItem( qApp->tr( on_ ),   on_,   false );
-    button.AddItem( qApp->tr( off_ ),  off_,  false );
+    button.AddItem( qApp->tr( auto_ ), auto_ );
+    button.AddItem( qApp->tr( on_ ),   on_ );
+    button.AddItem( qApp->tr( off_ ),  off_ );
     button.setMinimumWidth( 55 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TristateOption::Populate
+// Created: SBO 2006-04-28
+// -----------------------------------------------------------------------------
+void TristateOption::Populate( OptionMenu< TristateOption >& menu )
+{
+    menu.AddItem( qApp->tr( auto_ ), auto_ );
+    menu.AddItem( qApp->tr( on_ ),   on_ );
+    menu.AddItem( qApp->tr( off_ ),  off_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ ToolListButtonBase::ToolListButtonBase( const QIconSet& iconSet, const QString& 
     : QToolButton( iconSet, "", "", 0, "", parent, "" )
     , toolTip_   ( toolTip )
     , menu_      ( 0 )
-    , selected_  ( 0 )
+    , selected_  ( -1 )
 {
     QToolTip::add( this, toolTip_ );
     setUsesTextLabel( true );                  
@@ -33,7 +33,7 @@ ToolListButtonBase::ToolListButtonBase( const QIconSet& iconSet, const QString& 
 ToolListButtonBase::ToolListButtonBase( QToolBar* parent )
     : QToolButton( parent )
     , menu_      ( 0 )
-    , selected_  ( 0 )
+    , selected_  ( -1 )
 {
     setUsesTextLabel( true );                  
     setTextPosition( QToolButton::BesideIcon );
@@ -52,7 +52,7 @@ ToolListButtonBase::~ToolListButtonBase()
 // Name: ToolListButtonBase::AddItem
 // Created: AGE 2006-03-27
 // -----------------------------------------------------------------------------
-void ToolListButtonBase::AddItem( const QString& label, int i, bool selected /*= false*/ )
+void ToolListButtonBase::AddItem( const QString& label, int i )
 {
     if( ! menu_  )
     {
@@ -60,17 +60,9 @@ void ToolListButtonBase::AddItem( const QString& label, int i, bool selected /*=
         setPopup( menu_ );
         setPopupDelay( 1 );
         connect( menu_, SIGNAL( activated( int ) ), this, SLOT( OnItemSelected( int ) ) );
-        selected_ = 0;
+        selected_ = -1;
     }
-    int n = menu_->insertItem( label, i );
-    if( selected )
-    {
-        menu_->setItemChecked( selected_, false );
-        selected_ = n;
-        menu_->setItemChecked( selected_, true );
-        setTextLabel( label );
-        OnSelected( i );
-    }
+    menu_->insertItem( label, i );
     QToolTip::add( this, toolTip_ );
 }
 

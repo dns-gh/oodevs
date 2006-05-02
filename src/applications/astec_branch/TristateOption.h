@@ -11,6 +11,7 @@
 #define __TristateOption_h_
 
 template< typename T > class ToolListButton;
+template< typename T > class OptionMenu;
 
 // =============================================================================
 /** @class  TristateOption
@@ -31,6 +32,7 @@ public:
     //! @name Helpers
     //@{
     static void Populate( ToolListButton< TristateOption >& button );
+    static void Populate( OptionMenu< TristateOption >& menu );
     //@}
 
 public:
