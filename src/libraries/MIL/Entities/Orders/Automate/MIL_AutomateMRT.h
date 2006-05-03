@@ -42,8 +42,8 @@ public:
     /** @name Preparation */
     //-------------------------------------------------------------------------
     //@{
-    bool              SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission_ABC& mission );
-    bool              SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
+    void              SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission_ABC& mission );
+    void              SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
     const MIL_Fuseau& GetFuseauForPion ( const MIL_AgentPion& pion ) const;
 
     void Validate();

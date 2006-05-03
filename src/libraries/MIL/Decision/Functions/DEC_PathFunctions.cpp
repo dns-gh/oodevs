@@ -77,11 +77,12 @@ void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion
 //-----------------------------------------------------------------------------
 void DEC_PathFunctions::DeletePath( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
 {
-    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
-    assert( pPath );
-    pPath->Cancel();
-    pPath->DecDIARef();
+//    $$$ A VIRER
+//    assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
+//    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
+//    assert( pPath );
+//    pPath->Cancel();
+//    pPath->DecDIARef();
 }
 
 // -----------------------------------------------------------------------------

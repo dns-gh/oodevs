@@ -328,15 +328,12 @@ MIL_PionMission_ABC* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentP
     if( !pionMission.Initialize( *pMission_ ) )
     {
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' initialisation failed for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        pionMission.Terminate();
+        delete &pionMission;
         return 0;
     }
 
-    if( !pMission_->GetMRT().SetMissionForPion( pion, pionMission ) )
-    {
-        MT_LOG_ERROR( "Pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "') has already a mission when giving mission '" << missionType.GetName() << "')", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
-        return 0;
-    }
-
+    pMission_->GetMRT().SetMissionForPion( pion, pionMission );
     return &pionMission;
 }
 
@@ -393,6 +390,8 @@ MIL_PionMission_ABC* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentP
     if( !pionMission.Initialize( *pMission_ ) )
     {
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' initialisation failed for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
+        pionMission.Terminate();
+        delete &pionMission;
         return 0;
     }
 

@@ -439,16 +439,21 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdat
 {
     asnMsg.m.perception_par_compagniePresent = 1;
 
-    ASN1T_AutomatePerception* pPerceptions = new ASN1T_AutomatePerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
-    uint i = 0;
-    for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
-    {
-        pPerceptions[i].oid_compagnie        = it->first->GetID();
-        pPerceptions[i].identification_level = it->second->GetAsnID();
-        ++i;
-    }
     asnMsg.perception_par_compagnie.n    = perceptionLevelPerAutomateMap_.size();
-    asnMsg.perception_par_compagnie.elem = pPerceptions;
+    asnMsg.perception_par_compagnie.elem = 0;
+
+    if( !perceptionLevelPerAutomateMap_.empty() )
+    {
+        ASN1T_AutomatePerception* pPerceptions = new ASN1T_AutomatePerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
+        uint i = 0;
+        for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
+        {
+            pPerceptions[i].oid_compagnie        = it->first->GetID();
+            pPerceptions[i].identification_level = it->second->GetAsnID();
+            ++i;
+        }
+        asnMsg.perception_par_compagnie.elem = pPerceptions;
+    }
 }
 
 // -----------------------------------------------------------------------------

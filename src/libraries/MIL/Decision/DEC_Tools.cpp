@@ -12,6 +12,7 @@
 #include "MIL_pch.h"
 #include "DEC_Tools.h"
 #include "Functions/DEC_FrontAndBackLinesComputer.h"
+#include "Decision/Path/Agent/DEC_Agent_Path.h"
 
 const DIA_TypeDef* DEC_Tools::pTypePoint_                         = 0;
 const DIA_TypeDef* DEC_Tools::pTypeDirection_                     = 0;
@@ -292,7 +293,14 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypeDirection_ )
         delete static_cast< MT_Vector2D* >( pPtr );
     else if( *pType == *pTypeItineraire_ )
-        ;// NOTHING
+    {
+        if( pPtr )
+        {
+            DEC_Agent_Path* pPath = static_cast< DEC_Agent_Path* >( pPtr );
+            pPath->Cancel();
+            pPath->DecDIARef();
+        }
+    }
     else if( *pType == *pTypeListePoints_ )
         delete static_cast< T_PointVector* >( pPtr );
     else if( *pType == *pTypeLocalisation_ )

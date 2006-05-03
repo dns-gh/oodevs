@@ -100,6 +100,34 @@ const MIL_Fuseau& MIL_AutomateMRT::GetFuseauForPion( const MIL_AgentPion& pion )
         return pAutomateMission_->GetAutomate().GetFuseau();
 }
 
+//-----------------------------------------------------------------------------
+// Name: MIL_AutomateMRT::SetMissionForPion
+// Created: NLD 2003-04-14
+//-----------------------------------------------------------------------------
+void MIL_AutomateMRT::SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission_ABC& mission )
+{
+    MIL_PionMission_ABC*& pMission = missionPionMap_[ &pion ];
+    if( pMission )
+    {
+        pMission->Terminate();
+        delete pMission;
+    }
+
+    pMission = &mission;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AutomateMRT::SetFuseauForPion
+// Created: NLD 2003-04-23
+//-----------------------------------------------------------------------------
+void MIL_AutomateMRT::SetFuseauForPion( MIL_AgentPion& pion, MIL_Fuseau& fuseau )
+{
+    MIL_Fuseau*& pFuseau = fuseauPionMap_[ &pion ];
+    if( pFuseau )
+        delete pFuseau;
+    pFuseau = &fuseau;
+}
+
 
 //=============================================================================
 // ACTIONS
