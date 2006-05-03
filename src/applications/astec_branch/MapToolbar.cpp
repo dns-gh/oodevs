@@ -6,15 +6,6 @@ xxxxxxxx// *********************************************************************
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-16 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MapToolbar.cpp $
-// $Author: Age $
-// $Modtime: 13/05/05 17:48 $
-// $Revision: 2 $
-// $Workfile: MapToolbar.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "MapToolbar.h"
@@ -29,8 +20,6 @@ xxxxxxxx// *********************************************************************
 
 // -----------------------------------------------------------------------------
 // Name: MapToolbar constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
 MapToolbar::MapToolbar( QMainWindow* pParent, Controllers& controllers )

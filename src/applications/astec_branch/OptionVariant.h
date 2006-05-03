@@ -34,7 +34,7 @@ public:
                  template< typename T >
     /*implicit*/ OptionVariant( const T& value );
                  template< typename T >
-                 OptionVariant( Settings& settings, const std::string& name, T defaultValue );
+                 OptionVariant( Settings& settings, const std::string& name, const T& defaultValue );
                  OptionVariant( const OptionVariant& rhs );
                 ~OptionVariant();
     //@}
@@ -145,7 +145,7 @@ T OptionVariant::To() const
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-OptionVariant::OptionVariant( Settings& settings, const std::string& name, T defaultValue )
+OptionVariant::OptionVariant( Settings& settings, const std::string& name, const T& defaultValue )
     : holder_( new detail::ValueHolder< T >( defaultValue ) )
 {
     holder_->Load( settings, name );

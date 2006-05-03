@@ -98,7 +98,8 @@ public:
     //@{
     virtual void OnSelected( int selected )
     {
-        options_.Change( option_, values_.at( selected ) );
+        const T& value = values_.at( selected );
+        options_.Change( option_, value );
     };
 
     virtual void OptionChanged( const std::string& name, const OptionVariant& value )

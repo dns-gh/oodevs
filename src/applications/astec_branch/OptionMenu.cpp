@@ -38,6 +38,8 @@ OptionMenuBase::~OptionMenuBase()
 void OptionMenuBase::AddItem( const QString& label, int i )
 {
     insertItem( label, i );
+    if( selected_ == -1 ) // $$$$ SBO 2006-05-03: bof bof...
+        Select( i );
 }
 
 // -----------------------------------------------------------------------------
