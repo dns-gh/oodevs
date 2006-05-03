@@ -1359,8 +1359,11 @@ bool ADN_Composantes_Data::DotationInfos::ReadArchive( const std::string& strLis
 void ADN_Composantes_Data::DotationInfos::WriteArchive( const std::string& strListName, MT_OutputArchive_ABC& output )
 {
     if( categories_.empty() )
+    {
+        output.Section( strListName );
+        output.EndSection();
         return;
-
+    }
     output.BeginList( strListName, eNbrFamilleDotation );
     for( uint n = 0; n < eNbrFamilleDotation; ++n )
     {
@@ -2102,6 +2105,14 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& 
 
     output.Section( "Transport" );
     output.Section( "Personnel" );
+    if(  ptrArmor_.GetData()->nType_ == eProtectionType_Human && nTroopTransportCapacity_.GetData() == 0 )
+    {
+        throw ADN_DataException( "Incohérence de donnée dans les composantes", 
+            "La composante \"" + strName_.GetData() + "\" est de type \"" +
+            ptrArmor_.GetData()->strName_.GetData() + "\" mais ne contient aucun homme.\n",
+            "Veuillez spécifier un nombre d'homme dans le champ \"Equipage\"." );
+    }
+
     output.WriteField( "Equipage", nTroopTransportCapacity_.GetData() );
     if( bTroopEmbarkingTimes_.GetData() )
     {
