@@ -87,6 +87,8 @@ void EntitySearchBox_ABC::Search( const QString& input )
 // -----------------------------------------------------------------------------
 bool EntitySearchBox_ABC::Find( CIT_Items begin, CIT_Items end )
 {
+    if( currentSearch_.isEmpty() )
+        return false;
     for( CIT_Items it = begin; it < end; ++it )
     {
         if( (*it)->Matches( currentSearch_ ) )

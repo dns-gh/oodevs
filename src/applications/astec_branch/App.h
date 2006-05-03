@@ -14,7 +14,6 @@
 
 #include "Types.h"
 #include "Resource.h"
-#include "ElementObserver_ABC.h"
 
 #include <qapplication.h>
 
@@ -25,7 +24,6 @@ class Model;
 class Simulation;
 class Controllers;
 class Workers;
-class InitializationMessage;
 
 namespace xml { class xistream; }
 
@@ -36,8 +34,6 @@ namespace xml { class xistream; }
 // Created: AGE 2006-03-15
 // =============================================================================
 class App : public QApplication
-          , public Observer_ABC
-          , public ElementObserver_ABC< InitializationMessage >
 {
     Q_OBJECT
 
@@ -53,9 +49,8 @@ public:
 
     //! @name Accessors
     //@{
-    Network&    GetNetwork   () const { return *network_; };
-    MainWindow& GetMainWindow() const { return *mainWindow_; };
-    Model&      GetModel     () const { return *model_; };
+    void Load( const std::string& scipioXml );
+    Network&    GetNetwork   () const; // $$$$ AGE 2006-05-03: 
     //@}
 
 private slots:
@@ -73,12 +68,8 @@ private:
 
     //! @name Helpers
     //@{
-    std::string RetrieveValidConfigFile( const std::string& conffile );
     void Initialize( int nArgc, char** ppArgv );
-    void Initialize( const std::string& scipioXml );
     void InitializeHumanFactors ( xml::xistream& xis, const std::string& conffile );
-    void SetSplashText( const QString& strText );
-    virtual void NotifyUpdated( const InitializationMessage& message );
     Workers* CreateWorkers();
     //@}
 
@@ -93,8 +84,6 @@ private:
     Network*        network_;
     
     MainWindow*     mainWindow_;
-    QSplashScreen*  splashScreen_;
-
     QTimer*         networkTimer_;
     //@}
 

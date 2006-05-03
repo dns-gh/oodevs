@@ -30,24 +30,37 @@
 // Name: GlLayers constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlLayers::GlLayers( const std::string& scipioXml, Controllers& controllers, Model& model, GraphicSetup_ABC& setup )
-    : WorldParameters( scipioXml )
-    , strategy_( new ColorStrategy( controllers, *this ) )
+GlLayers::GlLayers( Controllers& controllers, Model& model, GraphicSetup_ABC& setup )
+    : controllers_( controllers )
+    , model_      ( model )
+    , setup_      ( setup )
+    , strategy_( new ColorStrategy( controllers_, *this ) )
 {
     parameters_ = new ParametersLayer( *this );
+    agents_ = new AgentsLayer( controllers_, *this, *strategy_, *this );
+}
 
-    Register( *new Elevation2dLayer( controllers.controller_, model.detection_ ) );
-    Register( *new Elevation3dLayer( controllers.controller_, model.detection_ ) );
-    Register( *new TerrainLayer( controllers, *this, setup, graphicsDirectory_ ) );
-    Register( *new MetricsLayer( controllers, *this ) );
-    Register( *new LimitsLayer( controllers, *this, *strategy_, *parameters_, model.limits_ ) );
-    Register( *new ObjectsLayer( controllers, *this, *strategy_, *this ) );
-    Register( *new PopulationsLayer( controllers, *this, *strategy_, *this ) );
-    Register( *new AgentsLayer( controllers, *this, *strategy_, *this ) );
-    Register( *new MeteoLayer( controllers, *this ) );
+// -----------------------------------------------------------------------------
+// Name: GlLayers::Load
+// Created: AGE 2006-05-03
+// -----------------------------------------------------------------------------
+void GlLayers::Load( const std::string& scipioXml )
+{
+    // $$$$ AGE 2006-05-03: old layers !
+    WorldParameters::Load( scipioXml );
+
+    Register( *new Elevation2dLayer( controllers_.controller_, model_.detection_ ) );
+    Register( *new Elevation3dLayer( controllers_.controller_, model_.detection_ ) );
+    Register( *new TerrainLayer( controllers_, *this, setup_, graphicsDirectory_ ) );
+    Register( *new MetricsLayer( controllers_, *this ) );
+    Register( *new LimitsLayer( controllers_, *this, *strategy_, *parameters_, model_.limits_ ) );
+    Register( *new ObjectsLayer( controllers_, *this, *strategy_, *this ) );
+    Register( *new PopulationsLayer( controllers_, *this, *strategy_, *this ) );
+    Register( *agents_ );
+    Register( *new MeteoLayer( controllers_, *this ) );
     Register( *parameters_ );
     
-    AddDefaultLayer( *new DefaultLayer( controllers ) );
+    AddDefaultLayer( *new DefaultLayer( controllers_ ) );
 }
 
 // -----------------------------------------------------------------------------

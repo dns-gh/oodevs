@@ -40,6 +40,9 @@
 #include "WeatherModel.h"
 #include "DIN_InputDeepCopy.h"
 #include <ctime>
+#include "TristateOption.h"
+#include "Controllers.h"
+#include "OptionVariant.h"
 
 using namespace DIN;
 
@@ -47,13 +50,16 @@ using namespace DIN;
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex )
-    : model_           ( model ) 
+AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex )
+    : controllers_     ( controllers )
+    , model_           ( model )
     , simulation_      ( simu )
     , session_         ( 0 )
     , bReceivingState_ ( true )
     , mutex_           ( mutex )
     , msgRecorder_     ( * new MsgRecorder( *this ) )
+    , needsVisionCones_( false )
+    , needsVisionSurfaces_( false )
 {
     const DIN_ConnectorGuest theConnector( (DIN::DIN_Connector_ABC::DIN_ConnectionID)( eConnector_SIM_MOS ) );
     pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>( *this, engine, theConnector, "Msgs MOS Server -> Agent Server" );
@@ -73,8 +79,10 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Sim
     pMessageService_->RegisterReceivedMessage( eMsgPopulationCollision                   , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationCollision );
     pMessageService_->RegisterReceivedMessage( eMsgSimMos           , *this, & AgentServerMsgMgr::OnReceiveMsgSimMos            );
     pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext, *this, & AgentServerMsgMgr::OnReceiveMsgSimMosWithContext );
-
+//eMsgEnvironmentType // $$$$ AGE 2006-05-03:
     pMessageService_->SetCbkOnError( AgentServerMsgMgr::OnError );
+
+    controllers_.Register( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -83,6 +91,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Sim
 //-----------------------------------------------------------------------------
 AgentServerMsgMgr::~AgentServerMsgMgr()
 {
+    controllers_.Remove( *this );
     delete pMessageService_;
     delete &msgRecorder_;
 }
@@ -126,14 +135,25 @@ void AgentServerMsgMgr::DoUpdate()
         boost::mutex::scoped_lock locker( inputMutex_ );
         std::swap( buffer_, pendingInputs_ );
     }
-    clock_t start = clock();
     T_Inputs::iterator it = pendingInputs_.begin();
-    for( ; it != pendingInputs_.end() && ! TimedOut( start ); ++it )
+    try
     {
-        (*it)->Apply( *this );
-        delete *it;
+        clock_t start = clock();
+        for( ; it != pendingInputs_.end() && ! TimedOut( start ); ++it )
+        {
+            (*it)->Apply( *this );
+            delete *it;
+        }
+        pendingInputs_.erase( pendingInputs_.begin(), it );
     }
-    pendingInputs_.erase( pendingInputs_.begin(), it );
+    catch( ... )
+    {
+        pendingInputs_.erase( pendingInputs_.begin(), it );
+        for( CIT_Inputs it = pendingInputs_.begin(); it != pendingInputs_.end(); ++it )
+            delete *it;
+        pendingInputs_.clear();
+        throw;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -197,24 +217,6 @@ void AgentServerMsgMgr::Send( unsigned int id )
     if( ! session_ )
         throw std::runtime_error( "Not connected" );
     pMessageService_->Send( *session_, id );
-}   
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendMsgEnableUnitVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgEnableUnitVisionCones()
-{
-    Send( eMsgEnableUnitVisionCones );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendMsgDisableUnitVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgDisableUnitVisionCones()
-{
-    Send( eMsgDisableUnitVisionCones );
 }
 
 enum E_UnitMagicAction
@@ -254,7 +256,36 @@ void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& inp
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& )
 {
-    SendMsgEnableUnitVisionCones(); // $$$$ AGE 2006-04-04: a la demande
+    ToggleVisionCones();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::ToggleVisionCones
+// Created: AGE 2006-05-02
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::ToggleVisionCones()
+{
+    if( session_ )
+    {
+        if( needsVisionSurfaces_ || needsVisionCones_ )
+            Send( eMsgEnableUnitVisionCones );
+        else
+            Send( eMsgDisableUnitVisionCones );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OptionChanged
+// Created: AGE 2006-05-02
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OptionChanged( const std::string& name, const OptionVariant& value )
+{
+    bool* pDummy = ( name == "VisionCones" ? &needsVisionCones_ : ( name == "VisionSurfaces" ? &needsVisionSurfaces_ : 0 ) );
+    if( pDummy )
+    {
+        *pDummy = value.To< TristateOption >().IsSet( true );
+        ToggleVisionCones();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1143,7 +1174,7 @@ void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderCondui
 // Created: NLD 2002-09-02
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& message )
-{    
+{
     model_.agents_.FindAllAgent( message.unit_id )->Update( message );
 }
 
@@ -1402,7 +1433,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_Msg
 {
     model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate
 // Created: SBO 2005-10-17
@@ -1411,7 +1442,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPo
 {
     model_.knowledgeGroups_.Get( message.oid_groupe_possesseur ).Update( message );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction
 // Created: SBO 2005-10-17
@@ -1570,7 +1601,7 @@ void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPop
     src.Update( message );
     model_.fires_.AddFire( message );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgStopPopulationFire
 // Created: SBO 2005-12-05
@@ -1599,7 +1630,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreation& message )
 {
-	model_.agents_.CreatePopulation( message );
+    model_.agents_.CreatePopulation( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1608,7 +1639,7 @@ void AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreati
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& message )
 {
-	model_.agents_.GetPopulation( message.oid_population ).Update( message );
+    model_.agents_.GetPopulation( message.oid_population ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1618,7 +1649,7 @@ void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& 
 void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& message )
 {
     model_.agents_.GetPopulation( message.oid_population ).Update( message );
-	}
+    }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
@@ -1712,15 +1743,8 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMos( DIN_Input& input )
     if( asnMsgCtrl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
+        throw std::runtime_error( "ASN fussé" );
     }
-
-#ifdef _DEBUG
-//    std::cout << "BEGIN MSG DUMP =>" << std::endl;
-//    asnPERDecodeBuffer.SetTrace( true );
-//    asnMsgCtrl.Print( "MsgsSimMos" );
-//    std::cout << "END MSG DUMP =>" << std::endl;
-#endif
 
     switch( message.t )
     {
@@ -1817,17 +1841,6 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMos( DIN_Input& input )
         case T_MsgsSimMos_msg_population_flux_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *message.u.msg_population_flux_knowledge_creation             ); break;
         case T_MsgsSimMos_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.u.msg_population_flux_knowledge_update               ); break;
         case T_MsgsSimMos_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.u.msg_population_flux_knowledge_destruction          ); break;
-
-        default:
-            {
-#ifdef _DEBUG
-                std::cout << "BEGIN MSG DUMP =>" << std::endl;
-                asnPERDecodeBuffer.SetTrace( true );
-                asnMsgCtrl.Print( "MsgsSimMos" );
-                std::cout << "END MSG DUMP =>" << std::endl;
-#endif
-            }
-//            assert( false );
     }
 }
 
@@ -1865,19 +1878,8 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMosWithContext( DIN_Input& input )
     if( asnMsgCtrl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
+        throw std::runtime_error( "ASN fussé" );
     }
-
-
-
-
-
-#ifdef _DEBUG
-//    std::cout << "BEGIN MSG DUMP =>" << std::endl;
-//    asnPERDecodeBuffer.SetTrace( true );
-//    asnMsgCtrl.Print( "MsgsSimMos" );
-//    std::cout << "END MSG DUMP =>" << std::endl;
-#endif
 
     switch( message.t )
     {
@@ -1900,19 +1902,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMosWithContext( DIN_Input& input )
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  message.u.msg_log_ravitaillement_pousser_flux_ack , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  message.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
         case T_MsgsSimMosWithContext_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *message.u.msg_population_magic_action_ack         , nCtx ); break;
-
-//        case T_MsgsSimMosWithContext_msg_population_order_ack  : break; //$$$ TODO        
-
-        default:
-            {
-#ifdef _DEBUG
-                std::cout << "BEGIN MSG DUMP =>" << std::endl;
-                asnPERDecodeBuffer.SetTrace( true );
-                asnMsgCtrl.Print( "MsgsSimMos" );
-                std::cout << "END MSG DUMP =>" << std::endl;
-#endif
-//                assert( false );
-            }
+//        case T_MsgsSimMosWithContext_msg_population_order_ack  : break; //$$$ TODO
     }
 }
 
@@ -1927,4 +1917,3 @@ bool AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDe
     //MT_LOG_INFO_MSG( "MOS -> AS - Message service error : " << info.GetInfo().c_str() );
     return false;
 }
-

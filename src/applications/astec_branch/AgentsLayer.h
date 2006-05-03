@@ -33,7 +33,13 @@ public:
     virtual ~AgentsLayer();
     //@}
 
-public slots:
+    //! @name Operations
+    //@{
+    void Aggregate   ( const Agent& agent );
+    void Disaggregate( const Agent& agent );
+    //@}
+
+private slots:
     //! @name Slots
     //@{
     void Aggregate   ();
@@ -50,20 +56,11 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
-    void Aggregate   ( const Agent& automat );
-    void Disaggregate( const Agent& automat );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< const Agent* > T_Agents;
-    typedef T_Agents::iterator         IT_Agents;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Agents aggregatedAutomats_;
     const Agent* selected_;
     //@}
 };

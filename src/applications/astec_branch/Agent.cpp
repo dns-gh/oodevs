@@ -264,3 +264,12 @@ const AutomatType* Agent::GetAutomatType() const
 {
     return automatType_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::IsAggregated
+// Created: AGE 2006-05-02
+// -----------------------------------------------------------------------------
+bool Agent::IsAggregated() const
+{
+    return aggregated_;
+}

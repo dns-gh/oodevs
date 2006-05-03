@@ -251,7 +251,7 @@ void GLTool::Draw( World& world )
     DrawDetection( world );
 
     unsigned int nMaxLod = 3;
-    if( extent.Width() > 400000.f ) // $$$$ AGE 2005-02-28:
+    if( extent.Width() > 400000.f ) 
         nMaxLod = 0; // draw nothing
     else if( extent.Width() > 200000.f )
         nMaxLod = 1;
@@ -434,7 +434,6 @@ void GLTool::Draw( AgentManager& manager )
         Draw( *(itPop->second), eNormal );
     }
 
-    // $$$$ AGE 2006-02-13: 
 //    // Draw  the conflicts.
 //    glLineWidth( 4 );
 //    glColor4d( COLOR_CONFLICT );
@@ -442,7 +441,7 @@ void GLTool::Draw( AgentManager& manager )
 //        if( itC->second.pOrigin_ && (! App::GetApp().GetModel().FindPopulation( itC->second.pOrigin_->GetID() ) ) )
 //        {
 //            if( (*itC).second.pDirectFireTarget_  )
-//                DrawLine( (*itC).second.pOrigin_->GetAggregatedPos(), (*itC).second.pDirectFireTarget_->GetConflictPos( (*itC).second.pOrigin_->GetAggregatedPos() ), 300.0 ); // $$$$ AGE 2005-03-22:
+//                DrawLine( (*itC).second.pOrigin_->GetAggregatedPos(), (*itC).second.pDirectFireTarget_->GetConflictPos( (*itC).second.pOrigin_->GetAggregatedPos() ), 300.0 ); 
 //            else
 //                DrawArc( (*itC).second.pOrigin_->GetAggregatedPos(), (*itC).second.vIndirectFireTarget_, 300.0 , true );
 //        }
@@ -1019,7 +1018,7 @@ void GLTool::DrawPath( Agent& agent )
 // -----------------------------------------------------------------------------
 void GLTool::DrawPath( PopulationFlow& flow )
 {
-//    Options& options = MainWindow::GetMainWindow().GetOptions(); // $$$$ SBO 2005-10-20: not used
+//    Options& options = MainWindow::GetMainWindow().GetOptions();
     // Update the path data.
     flow.UpdatePathFind();
 
@@ -1416,7 +1415,6 @@ void GLTool::Draw( TacticalLine_ABC& line, E_State nState, int nSelectedPoint )
     float rSize = 300 * (options.nFontSize_ / 10.0);
 
     QGLWidget* pWidget = MainWindow::GetMainWindow().GetQGLWidget( App::GetApp().Is3D() );
-    // $$$$ AGE 2005-05-19: 3D !
     glColor4d( 0.0, 0.0, 0.0, 1.0 );
     if( ! App::GetApp().Is3D() )
         pWidget->renderText( pointList.front().rX_, pointList.front().rY_, 0, line.GetName().c_str() );

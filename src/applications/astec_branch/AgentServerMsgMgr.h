@@ -22,6 +22,7 @@
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
+#include "OptionsObserver_ABC.h"
 
 #include "boost/thread/mutex.hpp"
 
@@ -31,6 +32,7 @@ class MsgRecorder;
 class Model;
 class Simulation;
 class DIN_InputDeepCopy;
+class Controllers;
 
 namespace DIN
 {
@@ -40,7 +42,7 @@ namespace DIN
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class AgentServerMsgMgr
+class AgentServerMsgMgr : public Observer_ABC, public OptionsObserver_ABC
 {
 
 public:
@@ -82,7 +84,7 @@ public:
     //@}
     
 public:
-             AgentServerMsgMgr( DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex ); 
+             AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex ); 
     virtual ~AgentServerMsgMgr();
 
     //-------------------------------------------------------------------------
@@ -116,8 +118,6 @@ public:
     void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx );
 
     // Debug
-    void SendMsgEnableUnitVisionCones ();
-    void SendMsgDisableUnitVisionCones();
     void SendMsgUnitMagicActionDestroyComposante( const Agent& agent );
     //@}
 
@@ -305,6 +305,9 @@ private:
     bool CheckAcknowledge( const char* type, const T& message );
     typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
     void Enqueue( DIN::DIN_Input& input, T_Callback function );
+
+    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    void ToggleVisionCones();
     //@}
 
     //! @name Copy / Assignment
@@ -320,6 +323,7 @@ private:
     //@}
     
 private:
+    Controllers& controllers_;
     Model&       model_;
     Simulation& simulation_;
     boost::mutex& mutex_;
@@ -339,6 +343,8 @@ private:
     T_Inputs workingInputs_; // network thread only
     T_Inputs buffer_;        // shared
     T_Inputs pendingInputs_; // main thread only
+
+    bool needsVisionCones_, needsVisionSurfaces_;
 };
 
 #   include "AgentServerMsgMgr.inl"

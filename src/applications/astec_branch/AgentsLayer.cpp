@@ -42,13 +42,11 @@ void AgentsLayer::Aggregate( const Agent& automat )
     if( automat.GetSuperior() )
         return;
     
-    aggregatedAutomats_.push_back( &automat );
     Iterator< const Agent& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
         RemoveEntity( children.NextElement() );
-    Entity_ABC& entity = const_cast< Agent& >( automat );  // $$$$ AGE 2006-04-11: 
     bool aggregate = true;
-    entity.Apply( Aggregatable_ABC::Aggregate, aggregate );
+    automat.Interface().Apply( Aggregatable_ABC::Aggregate, aggregate );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,19 +55,14 @@ void AgentsLayer::Aggregate( const Agent& automat )
 // -----------------------------------------------------------------------------
 void AgentsLayer::Disaggregate( const Agent& automat )
 {
-    IT_Agents it = std::find( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), &automat );
-    if( it == aggregatedAutomats_.end() )
+    if( automat.GetSuperior() )
         return;
-
-    std::swap( *it, aggregatedAutomats_.back() );
-    aggregatedAutomats_.pop_back();
 
     Iterator< const Agent& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
         AddEntity( children.NextElement() );
-    Entity_ABC& entity = const_cast< Agent& >( automat );  // $$$$ AGE 2006-04-11: 
     bool aggregate = false;
-    entity.Apply( Aggregatable_ABC::Aggregate, aggregate );
+    automat.Interface().Apply( Aggregatable_ABC::Aggregate, aggregate );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +77,7 @@ void AgentsLayer::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
         menu.insertSeparator();
 
     selected_ = &agent;
-    if( std::find( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), selected_ ) == aggregatedAutomats_.end() )
+    if( ! agent.IsAggregated() )
         menu.insertItem( tr( "Aggreger" ), this, SLOT( Aggregate() ) );
     else
         menu.insertItem( tr( "Désaggreger" ), this, SLOT( Disaggregate() ) );

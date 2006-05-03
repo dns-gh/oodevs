@@ -51,16 +51,24 @@
 #include "Population.h"
 #include "EntitySearchBox.h"
 #include "Menu.h"
+#include "ParametersLayer.h"
+#include "GlPlaceHolder.h"
+
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml )
+MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& recorder )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_( controllers )
     , model_      ( model )
-    , scipioXml_  ( scipioXml )
     , layers_     ( 0 )
     , widget2d_   ( 0 )
     , widget3d_   ( 0 )
@@ -80,9 +88,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     pGraphicPrefDockWnd->setCaption( tr( "Graphic preferences" ) );
     setDockEnabled( pGraphicPrefDockWnd, Qt::DockTop, false );
 
-    widget2d_ = new GlWidget( this, controllers, scipioXml );
-    setCentralWidget( widget2d_ );
-    layers_ = new GlLayers( scipioXml, controllers, model, pGraphicPrefPanel_->GetPreferences() );
+    layers_ = new GlLayers( controllers, model, pGraphicPrefPanel_->GetPreferences() );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -171,28 +177,62 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, const std::strin
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
-    new LogisticToolbar( this, controllers );
-    new RecorderToolbar( this, App::GetApp().GetNetwork().GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-04-04: 
+    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
+    new RecorderToolbar( this, recorder );
 
+    glPlaceHolder_ = new GlPlaceHolder( this );
+    setCentralWidget( glPlaceHolder_ );
+    
+    pStatus_ = new StatusBar( statusBar(), model_.detection_, model_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
 
-    layers_->ChangeTo( widget2d_ );
-    layers_->RegisterTo( widget2d_ );
-
-    pStatus_ = new StatusBar( statusBar(), model_.detection_, model_.coordinateConverter_, controllers_ );
-    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-
-    pDialogs_ = new Dialogs( this, controllers );
-
-    // This one refreshes the map display, and is called only a few time per second.
     displayTimer_ = new QTimer( this );
-    connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
-    displayTimer_->start( 50 );
 
     ReadSettings();
     ReadOptions();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MainWindow::Open
+// Created: AGE 2006-05-03
+// -----------------------------------------------------------------------------
+void MainWindow::Open()
+{
+    std::string current;
+    while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
+    {
+        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Open scipio.xml" );
+        if( filename.isEmpty() )
+            return;
+        current = filename;
+        if( current.substr( 0, 2 ) == "//" )
+            std::replace( current.begin(), current.end(), '/', '\\' );
+    }
+    App::GetApp().Load( current ); // $$$$ AGE 2006-05-03: ....
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::Load
+// Created: AGE 2006-05-03
+// -----------------------------------------------------------------------------
+void MainWindow::Load( const std::string& scipioXml )
+{
+    scipioXml_ = scipioXml;
+    delete widget2d_; widget2d_ = 0;
+    delete widget3d_; widget3d_ = 0;
+    widget2d_ = new GlWidget( this, controllers_, scipioXml );
+    delete glPlaceHolder_; glPlaceHolder_ = 0;
+    setCentralWidget( widget2d_ );
+    layers_->Load( scipioXml_ );
+    layers_->ChangeTo( widget2d_ );
+    layers_->RegisterTo( widget2d_ );
+    
+    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
+    displayTimer_->start( 50 );
+    widget2d_->show();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow destructor

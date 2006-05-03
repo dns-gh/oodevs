@@ -52,9 +52,8 @@ ParamPath::~ParamPath()
 // Name: ParamPath::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
+void ParamPath::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& , const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-21: extent
     if( ! points_.empty() )
     {
         tools.DrawLine( point, points_.front() );

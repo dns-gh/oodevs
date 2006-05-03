@@ -31,7 +31,8 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tr( "Ouvrir..." ) );
+    int openId = menu->insertItem( tr( "&Ouvrir..." ), parent(), SLOT( Open() ) );
+    menu->setAccel( CTRL + Key_O, openId );
     menu->insertItem( tr( "Fermer" ) );
     menu->insertSeparator();
     menu->insertItem( tr( "Recharger" ) );

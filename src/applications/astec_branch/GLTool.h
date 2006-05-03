@@ -71,7 +71,6 @@ class PopulationConcentrationKnowledge;
 // =============================================================================
 /** @class  GLTool
     @brief  
-    //$$$$$ Apparament, séparer l'affichage des données comme ca n'etait pas la
     //chose a faire... http://www.javaworld.com/javaworld/jw-07-1999/jw-07-toolbox-p5.html
 */ 
 // Created: APE 2004-03-04

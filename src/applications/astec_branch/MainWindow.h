@@ -34,8 +34,11 @@ class GlLayers;
 class GlWidget;
 class Gl3dWidget;
 class StatusBar;
-class Dialogs;
 class Simulation;
+class ParametersLayer;
+class AgentsLayer;
+class MsgRecorder;
+class GlPlaceHolder;
 
 // =============================================================================
 /** @class  MainWindow
@@ -59,13 +62,20 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controllers& controllers, Model& model, const std::string& scipioXml );
+             MainWindow( Controllers& controllers, Model& model, MsgRecorder& recorder );
     virtual ~MainWindow();
     //@}
 
     //! @name Operations
     //@{
+    void Load( const std::string& scipioXml );
     Options& GetOptions() const;
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void Open();
     //@}
 
 private:
@@ -98,13 +108,16 @@ private:
     GlLayers* layers_;
     GlWidget*   widget2d_;
     Gl3dWidget* widget3d_;
+    GlPlaceHolder* glPlaceHolder_;
+
     bool b3d_;
 
     QTimer* displayTimer_;
 
     OptionsPanel*  pOptionsPanel_;
     StatusBar*     pStatus_;
-    Dialogs*       pDialogs_;
+    ParametersLayer* parameters_;
+    AgentsLayer*     agents_;
     //@}
 };
 

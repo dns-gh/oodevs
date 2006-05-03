@@ -72,6 +72,8 @@ public:
     const Agent* GetSuperior() const;
 
     const AutomatType* GetAutomatType() const;
+
+    bool IsAggregated() const;
     //@}
 
 private:

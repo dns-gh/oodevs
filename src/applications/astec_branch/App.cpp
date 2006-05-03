@@ -24,13 +24,12 @@
 #include "Controllers.h"
 #include "Workers.h"
 #include "InitializationMessage.h"
+#include "AgentServerMsgMgr.h"
 
 #include "xeumeuleu/xml.h"
 
 #include <qsplashscreen.h>
 #include <qfileinfo.h>
-
-#include "splashscreen.cpp"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -57,7 +56,6 @@ namespace
 //-----------------------------------------------------------------------------
 App::App( int nArgc, char** ppArgv )
     : QApplication  ( nArgc, ppArgv )
-    , splashScreen_( 0 )
     , mainWindow_( 0 )
 {
     try
@@ -94,30 +92,18 @@ void App::Initialize( int nArgc, char** ppArgv )
     po::variables_map vm;
     po::store( po::parse_command_line( nArgc, ppArgv, desc ), vm );
     po::notify( vm );
-    
-    // Prepare the splash screen displayed during the initialization.
-    QImage splashImage( qembed_findData( "astec.jpg" ) );
-    if( !splashImage.isNull() )
-    {
-        splashScreen_ = new QSplashScreen( splashImage );
-        splashScreen_->show();
-    }
 
-    SetSplashText( tr("Démarrage...") );
+    controllers_ = new Controllers();
+    simulation_  = new Simulation( *controllers_ );
+    workers_     = new Workers();
+    model_       = new Model( *controllers_, *simulation_, *workers_ );
+    network_     = new Network( *controllers_, *model_, *simulation_ );
+    mainWindow_  = new MainWindow( *controllers_, *model_, network_->GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-05-03: 
 
-    conffile = RetrieveValidConfigFile( conffile );
-    Initialize( conffile );
+    if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
+        Load( conffile );
 
-    SetSplashText( tr("Initialisation de l'interface...") );
-    mainWindow_ = new MainWindow( *controllers_, *model_, conffile );
     mainWindow_->show();
-
-    if( splashScreen_ )
-    {
-        splashScreen_->finish( mainWindow_ );
-        delete splashScreen_;
-        splashScreen_ = 0;
-    }
 
     // Make sure the application exits when the main window is closed.
     connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
@@ -139,29 +125,21 @@ std::string App::BuildChildPath( const std::string& parent, const std::string& c
     bfs::path childPath( child.c_str(), bfs::native );
 
     return ( parentPath.branch_path() / childPath ).native_file_string();
-
 }
 
 // -----------------------------------------------------------------------------
-// Name: App::Initialize
-// Created: AGE 2006-02-14
+// Name: App::Load
+// Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void App::Initialize( const std::string& scipioXml )
+void App::Load( const std::string& scipioXml )
 {
+    // $$$$ AGE 2006-05-03: dégager dans la MainWindow::Load
     xifstream xis( scipioXml );
     xis >> start( "Scipio" )
             >> start( "Donnees" );
     InitializeHumanFactors ( xis, scipioXml ); 
-
-    controllers_ = new Controllers();
-    controllers_->Register( *this );
-    simulation_  = new Simulation( *controllers_ );
-    workers_     = new Workers();
-    SetSplashText( tr( "Chargement du modèle..." ) );
-    model_       = new Model( *controllers_, *simulation_, *workers_ );
     model_->Load( scipioXml );
-    SetSplashText( tr( "Initialisation du réseau..." ) );
-    network_     = new Network( *model_, *simulation_ );
+    mainWindow_->Load( scipioXml );
 }
 
 //-----------------------------------------------------------------------------
@@ -171,25 +149,6 @@ void App::Initialize( const std::string& scipioXml )
 App::~App()
 {
     // bof
-}
-
-// -----------------------------------------------------------------------------
-// Name: App::RetrieveValidConfigFile
-// Created: SBO 2006-03-16
-// -----------------------------------------------------------------------------
-std::string App::RetrieveValidConfigFile( const std::string& conffile )
-{
-    std::string current = conffile;
-    while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
-    {
-        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Open scipio.xml" );
-        if( filename.isEmpty() )
-            throw std::exception( "No scipio.xml file specified." );
-        current = filename;
-        if( current.substr( 0, 2 ) == "//" )
-            std::replace( current.begin(), current.end(), '/', '\\' );
-    }
-    return current;
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +172,19 @@ void App::InitializeHumanFactors( xistream& xis, const std::string& conffile )
 //-----------------------------------------------------------------------------
 void App::UpdateData()
 {
-    network_->Update();
+    static bool bDoMe = true;
+    try
+    {
+        if( bDoMe )
+            network_->Update();
+    } catch( std::exception& e )
+    {
+        bDoMe = false;
+        const int result = QMessageBox::critical( 0, APP_NAME, e.what(), QMessageBox::Ignore, QMessageBox::Abort );
+        if( result == QMessageBox::Abort )
+            quit();
+        bDoMe = true; // $$$$ AGE 2006-05-03: déconnecter 
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -226,20 +197,11 @@ App& App::GetApp()
 }
 
 // -----------------------------------------------------------------------------
-// Name: App::SetSplashText
-// Created: SBO 2006-04-21
+// Name: App::GetNetwork
+// Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void App::SetSplashText( const QString& strText )
+Network& App::GetNetwork() const
 {
-    if( splashScreen_ )
-        splashScreen_->message( strText, Qt::AlignLeft | Qt::AlignBottom, Qt::black );
+    return *network_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: App::NotifyUpdated
-// Created: AGE 2006-04-21
-// -----------------------------------------------------------------------------
-void App::NotifyUpdated( const InitializationMessage& message )
-{   
-    SetSplashText( tr( message.message_.c_str() ) );
-}

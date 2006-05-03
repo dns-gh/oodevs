@@ -45,6 +45,14 @@ void Entity_ABC::AddExtension( Extension_ABC*& where, Extension_ABC* ext )
 // -----------------------------------------------------------------------------
 void Entity_ABC::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    Entity_ABC* that = const_cast< Entity_ABC* >( this );
-    that->Apply( Drawable_ABC::Draw, where, viewport, tools );
+    Interface().Apply( Drawable_ABC::Draw, where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InterfaceContainer< Extension_ABC >& Entity_ABC::Interface
+// Created: AGE 2006-05-02
+// -----------------------------------------------------------------------------
+InterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
+{
+    return *const_cast< Entity_ABC* >( this );
 }

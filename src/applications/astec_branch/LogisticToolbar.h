@@ -10,7 +10,11 @@
 #ifndef __LogisticToolbar_h_
 #define __LogisticToolbar_h_
 
+#include "ElementObserver_ABC.h"
+
 class Controllers;
+class Agent;
+class AgentsLayer;
 
 // =============================================================================
 /** @class  LogisticToolbar
@@ -19,13 +23,23 @@ class Controllers;
 // Created: AGE 2006-03-30
 // =============================================================================
 class LogisticToolbar : public QToolBar
+                      , public Observer_ABC
+                      , public ElementObserver_ABC< Agent >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticToolbar( QMainWindow* pParent, Controllers& controllers );
+             LogisticToolbar( QMainWindow* pParent, Controllers& controllers, AgentsLayer& agents ); // $$$$ AGE 2006-05-02: for aggregation...
     virtual ~LogisticToolbar();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void AggregateAll();
+    void DisaggregateAll();
     //@}
 
 private:
@@ -33,6 +47,26 @@ private:
     //@{
     LogisticToolbar( const LogisticToolbar& );            //!< Copy constructor
     LogisticToolbar& operator=( const LogisticToolbar& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const Agent& );
+    virtual void NotifyDeleted( const Agent& );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< const Agent* > T_Agents;
+    typedef T_Agents::iterator         IT_Agents;
+    typedef T_Agents::const_iterator  CIT_Agents;
+    //@}
+
+    //! @name Member data
+    //@{
+    Controllers& controllers_;
+    AgentsLayer& agents_;
+    T_Agents automats_;
     //@}
 };
 

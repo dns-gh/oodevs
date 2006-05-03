@@ -65,11 +65,25 @@ private:
     void InitializeDotations  ( const Agent& agent );
     void InitializeAmmunitions( const Agent& agent );
     void InitializeSupplies   ( const Agent& agent );
+
+    void AddPersonal( unsigned pos, const QString& label, unsigned max );
+    void AddAmmunition( unsigned pos, const QString& label );
+
+    void FillPersonal   ( ASN1T_MagicActionRecompletementPartiel& action );
+    void FillEquipments ( ASN1T_MagicActionRecompletementPartiel& action );
+    void FillDotations  ( ASN1T_MagicActionRecompletementPartiel& action );
+    void FillAmmunitions( ASN1T_MagicActionRecompletementPartiel& action );
+    void FillSupplies   ( ASN1T_MagicActionRecompletementPartiel& action );
     //@}
 
     //! @name Types
     //@{
     typedef std::vector< unsigned > T_Ints;
+    struct Item {
+        QString  name_;
+        unsigned long id_;
+        unsigned quantity_;
+    };
     //@}
    
 private:
@@ -82,6 +96,7 @@ private:
     QTable*          pEquipmentsTable_;
     QStringList      equipmentsList_;
     T_Ints           equipmentsMax_;
+
     QTable*          pPersonalsTable_;
 
     QGroupBox*       pDotationsGroupBox_;

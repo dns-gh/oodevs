@@ -55,14 +55,6 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
-    Resolver< ObjectType >& resolver = model_.objectTypes_;
-    Iterator< const ObjectType& > it( resolver.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const ObjectType& element = it.NextElement();
-        objectTypes_->AddItem( element.GetName().c_str(), &element );
-    }
-
     location_ = new RichLabel( tr( "Position:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
@@ -92,6 +84,14 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
 // -----------------------------------------------------------------------------
 void ObjectPrototype::showEvent( QShowEvent* )
 {
+    objectTypes_->Clear();
+    Resolver< ObjectType >& resolver = model_.objectTypes_; // $$$$ AGE 2006-05-03: evenement de chargement des données statiques
+    Iterator< const ObjectType& > it( resolver.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const ObjectType& element = it.NextElement();
+        objectTypes_->AddItem( element.GetName().c_str(), &element );
+    }
     controllers_.Register( *locationCreator_ );
 }
     
