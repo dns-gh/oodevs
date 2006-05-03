@@ -982,7 +982,7 @@ void ADN_Composantes_Data::SensorInfos::ReadArchive( ADN_XmlInput_Helper& input 
     std::string strName;
     input.Read( strName );
     ADN_Sensors_Data::SensorInfos* pSensor = ADN_Workspace::GetWorkspace().GetSensors().GetData().FindSensor( strName );
-    assert( pSensor != 0 );
+    
     ptrSensor_ = pSensor;
     input.EndSection(); // Senseur
 }
@@ -1153,7 +1153,8 @@ void ADN_Composantes_Data::WeaponInfos::ReadArchive( ADN_XmlInput_Helper& input 
     input.ReadAttribute( "lanceur", strLauncher );
     input.ReadAttribute( "munition", strAmmunition );
     ADN_Weapons_Data::WeaponInfos* pWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmunition );
-    assert( pWeapon != 0 );
+    if( !pWeapon )
+        throw ADN_Xml_Exception( input.GetContext(), "Aucun armement correspondant au lanceur \"" + strLauncher + "\" et aux munitions \"" + strAmmunition + "\" n'existe." );
     ptrWeapon_ = pWeapon;
     strName_ = pWeapon->strName_.GetData();
 
@@ -1241,7 +1242,8 @@ void ADN_Composantes_Data::CategoryInfos::ReadArchive( ADN_XmlInput_Helper& inpu
     std::string strCategory;
     input.ReadAttribute( "nom", strCategory );
     ADN_Equipement_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
-    assert( pCat != 0 );
+    if( !pCat )
+        throw ADN_Xml_Exception( input.GetContext(), "La catégorie \"" + strCategory + "\" n'existe pas." );
     ptrCategory_ = pCat;
 
     input.ReadAttribute( "contenance", rNbr_ );
