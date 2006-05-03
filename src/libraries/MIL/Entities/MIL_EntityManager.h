@@ -90,11 +90,14 @@ public:
 
     //! @name Stats
     //@{
-    MT_Float GetKnowledgesTime() const;
-    MT_Float GetDecisionsTime () const;
-    MT_Float GetActionsTime   () const;
-    MT_Float GetEffectsTime   () const;
-    MT_Float GetStatesTime    () const;
+    MT_Float GetKnowledgesTime         () const;
+    MT_Float GetDecisionsTime          () const;
+    MT_Float GetAutomatesDecisionTime  () const;
+    MT_Float GetPionsDecisionTime      () const;
+    MT_Float GetPopulationsDecisionTime() const;
+    MT_Float GetActionsTime            () const;
+    MT_Float GetEffectsTime            () const;
+    MT_Float GetStatesTime             () const;
     //@}
 
     //! @name Operations
@@ -208,7 +211,9 @@ private:
     // Profiling
     MT_Profiler   profiler_;
     MT_Float      rKnowledgesTime_;
-    MT_Float      rDecisionsTime_;
+    MT_Float      rAutomatesDecisionTime_;
+    MT_Float      rPionsDecisionTime_;    
+    MT_Float      rPopulationsDecisionTime_;
     MT_Float      rActionsTime_;
     MT_Float      rEffectsTime_;
     MT_Float      rStatesTime_;

@@ -88,12 +88,42 @@ MT_Float MIL_EntityManager::GetKnowledgesTime() const
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::GetDecisionsTime
-// Created: NLD 2004-10-08
+// Created: NLD 2006-05-03
 // -----------------------------------------------------------------------------
 inline
 MT_Float MIL_EntityManager::GetDecisionsTime() const
 {
-    return rDecisionsTime_;
+    return rAutomatesDecisionTime_ + rPionsDecisionTime_ + rPopulationsDecisionTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetAutomatesDecisionTime
+// Created: NLD 2006-05-03
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_EntityManager::GetAutomatesDecisionTime() const
+{
+    return rAutomatesDecisionTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetPionsDecisionTime
+// Created: NLD 2006-05-03
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_EntityManager::GetPionsDecisionTime() const
+{
+    return rPionsDecisionTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetPopulationsDecisionTime
+// Created: NLD 2006-05-03
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_EntityManager::GetPopulationsDecisionTime() const
+{
+    return rPopulationsDecisionTime_;
 }
 
 // -----------------------------------------------------------------------------

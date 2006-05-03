@@ -138,7 +138,9 @@ MIL_EntityManager::MIL_EntityManager( MIL_InputArchive& )
     , pObjectManager_               (  new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
-    , rDecisionsTime_               ( 0. )
+    , rAutomatesDecisionTime_       ( 0. )
+    , rPionsDecisionTime_           ( 0. )
+    , rPopulationsDecisionTime_     ( 0. )
     , rActionsTime_                 ( 0. )
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
@@ -154,7 +156,9 @@ MIL_EntityManager::MIL_EntityManager()
     , pObjectManager_               ( 0  )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
-    , rDecisionsTime_               ( 0. )
+    , rAutomatesDecisionTime_       ( 0. )
+    , rPionsDecisionTime_           ( 0. )
+    , rPopulationsDecisionTime_     ( 0. )
     , rActionsTime_                 ( 0. )
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
@@ -627,41 +631,54 @@ void MIL_EntityManager::UpdateKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
-    profiler_.Start();
-
     if( MIL_AgentServer::GetWorkspace().GetProfilerManager().IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
+
+        profiler_.Start();
         for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         {
             decisionUpdateProfiler.Start();
             itAutomate->second->UpdateDecision();
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itAutomate->second, decisionUpdateProfiler.Stop() );
         }
+        rAutomatesDecisionTime_ = profiler_.Stop();
+
+        profiler_.Start();
         for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         {
             decisionUpdateProfiler.Start();
             itPion->second->UpdateDecision();
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itPion->second, decisionUpdateProfiler.Stop() );
         }
+        rPionsDecisionTime_ = profiler_.Stop();
+
+        profiler_.Start();
         for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         {
             decisionUpdateProfiler.Start();
             itPopulation->second->UpdateDecision();
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itPopulation->second, decisionUpdateProfiler.Stop() );
         }
+        rPopulationsDecisionTime_ = profiler_.Stop();
     }
     else
     {
+        profiler_.Start();
         for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
             itAutomate->second->UpdateDecision();
+        rAutomatesDecisionTime_ = profiler_.Stop();
+
+        profiler_.Start();
         for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             itPion->second->UpdateDecision();
+        rPionsDecisionTime_ = profiler_.Stop();
+
+        profiler_.Start();
         for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
             itPopulation->second->UpdateDecision();
+        rPopulationsDecisionTime_ = profiler_.Stop();
     }
-
-    rDecisionsTime_ = profiler_.Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -1161,7 +1178,9 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> populations_
          >> pObjectManager_
          >> rKnowledgesTime_
-         >> rDecisionsTime_
+         >> rAutomatesDecisionTime_
+         >> rPionsDecisionTime_ 
+         >> rPopulationsDecisionTime_
          >> rActionsTime_
          >> rEffectsTime_
          >> rStatesTime_
@@ -1181,7 +1200,9 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          << populations_
          << pObjectManager_
          << rKnowledgesTime_
-         << rDecisionsTime_
+         << rAutomatesDecisionTime_
+         << rPionsDecisionTime_ 
+         << rPopulationsDecisionTime_
          << rActionsTime_
          << rEffectsTime_
          << rStatesTime_
