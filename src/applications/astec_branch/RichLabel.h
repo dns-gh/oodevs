@@ -10,6 +10,8 @@
 #ifndef __RichLabel_h_
 #define __RichLabel_h_
 
+class QSimpleRichText;
+
 // =============================================================================
 /** @class  RichLabel
     @brief  Rich label
@@ -33,6 +35,14 @@ public:
     void Warn( int msec );
     //@}
 
+protected:
+    //! @name Events
+    //@{
+    virtual void mouseReleaseEvent( QMouseEvent* e );
+    virtual void mousePressEvent( QMouseEvent* e );
+    virtual void drawContents( QPainter* p );
+    //@}
+
 private slots:
     //! @name slots
     //@{
@@ -44,6 +54,12 @@ private:
     //@{
     RichLabel( const RichLabel& );            //!< Copy constructor
     RichLabel& operator=( const RichLabel& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QSimpleRichText* richText_;
     //@}
 };
 

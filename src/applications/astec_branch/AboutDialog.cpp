@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "AboutDialog.h"
 #include "splashscreen.cpp"
+#include "RichLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: AboutDialog constructor
@@ -22,6 +23,8 @@ AboutDialog::AboutDialog( QWidget* parent )
     QPixmap pixmap( qembed_findData( "astec.jpg" ) );
     sizeHint_.setWidth ( pixmap.width() );
     sizeHint_.setHeight( pixmap.height() + 50 );
+    setMaximumSize( sizeHint_ );
+    setMinimumSize( sizeHint_ );
 
     QVBox* box = new QVBox( this );
     box->setBackgroundPixmap( pixmap );
@@ -31,7 +34,7 @@ AboutDialog::AboutDialog( QWidget* parent )
     QString message;
     message += QString( APP_NAME ) + QString( " " ) + QString( APP_VERSION )
             + tr( " © 2006 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
-    QLabel* label = new QLabel( message, hbox );
+    RichLabel* label = new RichLabel( message, hbox );
     label->setAlignment( Qt::SingleLine );
     label->setBackgroundPixmap( pixmap );
     label->setBackgroundOrigin( QWidget::BackgroundOrigin::AncestorOrigin );
