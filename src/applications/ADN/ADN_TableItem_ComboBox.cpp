@@ -75,7 +75,8 @@ void ADN_TableItem_ComboBox::insertItem ( const QString & t, int index )
     else
     {
         int i=0;
-        for ( QStringList::iterator it=entries.begin();it!=entries.end();++it ,++i)
+        QStringList::iterator it=entries.begin();
+        for ( ;it!=entries.end();++it ,++i)
             if ( i == index )
                 break;
         if ( it == entries.end() )
@@ -119,7 +120,8 @@ void ADN_TableItem_ComboBox::changeItem ( const QString & t, int index )
     if ( index == -1)
         return;
     int i=0;
-    for ( QStringList::iterator it=entries.begin();it!=entries.end();++it ,++i)
+    QStringList::iterator it=entries.begin();
+    for ( ;it!=entries.end();++it ,++i)
         if ( i == index )
             break;
     if ( it == entries.end() )
@@ -142,7 +144,8 @@ void ADN_TableItem_ComboBox::removeItem ( int index )
     
     // remove entrie
     int i=0;
-    for ( QStringList::iterator it=entries.begin();it!=entries.end();++it ,++i)
+    QStringList::iterator it=entries.begin();
+    for ( ;it!=entries.end();++it ,++i)
         if ( i == index )
             break;
     if ( it == entries.end() )

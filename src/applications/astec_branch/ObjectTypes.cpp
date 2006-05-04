@@ -46,7 +46,7 @@ void ObjectTypes::Load( const std::string& scipioXml )
 
     xml::xifstream xis( App::BuildChildPath( scipioXml, idFile ) );
     xis >> start( "Classes" )
-        >> list( "Classe", *this, ReadObjectTypes );
+		>> list( "Classe", *this, &ObjectTypes::ReadObjectTypes );
 
     ReadDotations( App::BuildChildPath( scipioXml, dotations ) );
     ReadEquipments( App::BuildChildPath( scipioXml, equipments ) );
@@ -98,7 +98,7 @@ void ObjectTypes::ReadDotations( const std::string& dotations )
 {
     xifstream xis( dotations );
     xis >> start( "Dotations" )
-        >> list( "Dotation", *this, ReadDotation );
+        >> list( "Dotation", *this, &ObjectTypes::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void ObjectTypes::ReadDotation( xml::xistream& xis )
     std::string dotationName;
     xis >> attribute( "nom", dotationName )
         >> start( "Categories" )
-            >> list( "Categorie", *this, ReadCategory, dotationName )
+            >> list( "Categorie", *this, &ObjectTypes::ReadCategory, dotationName )
         >> end();
 }
 
@@ -132,7 +132,7 @@ void ObjectTypes::ReadEquipments( const std::string& equipments )
 {
     xifstream xis( equipments );
     xis >> start( "Composantes" )
-        >> list( "Composante", *this, ReadEquipment );
+        >> list( "Composante", *this, &ObjectTypes::ReadEquipment );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void ObjectTypes::ReadNBC( const std::string& nbc )
     xifstream xis( nbc );
     xis >> start( "NBC" )
             >> start( "AgentsNBC" )
-                >> list( "AgentNBC", *this, ReadNBCAgent );
+                >> list( "AgentNBC", *this, &ObjectTypes::ReadNBCAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,13 +177,13 @@ void ObjectTypes::ReadBreakdowns( const std::string& breakdowns )
     xis >> start( "Pannes" )
             >> start( "Types" )
                 >> start( "NTI1" )
-                    >> list( "Panne", *this, ReadBreakdown )
+                    >> list( "Panne", *this, &ObjectTypes::ReadBreakdown )
                 >> end()
                 >> start( "NTI2" )
-                    >> list( "Panne", *this, ReadBreakdown )
+                    >> list( "Panne", *this, &ObjectTypes::ReadBreakdown )
                 >> end()
                 >> start( "NTI3" )
-                    >> list( "Panne", *this, ReadBreakdown )
+                    >> list( "Panne", *this, &ObjectTypes::ReadBreakdown )
                 >> end();
 
 }

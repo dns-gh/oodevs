@@ -43,12 +43,12 @@ LAU_MsgMgr::LAU_MsgMgr( LAU_NetMgr& netMgr )
     DIN_ConnectorHost connectorMos( eConnector_MOS_LAU );
     pMessageServiceMos_ = new DIN_MessageServiceUserCbk<LAU_MsgMgr>( *this, netMgr.GetDIN_Engine(), connectorMos, "LAU -> MOS" );
     pMessageServiceMos_->RegisterReceivedMessage( LAU_MsgMgr::eMsg_MosLau, *this, & LAU_MsgMgr::OnReceiveMsg_MosLau );
-    pMessageServiceMos_->SetCbkOnError( LAU_MsgMgr::OnError );
+    pMessageServiceMos_->SetCbkOnError( & LAU_MsgMgr::OnError );
 
     DIN_ConnectorHost connectorSim( eConnector_SIM_LAU );
     pMessageServiceSim_ = new DIN_MessageServiceUserCbk<LAU_MsgMgr>( *this, netMgr.GetDIN_Engine(), connectorSim, "LAU -> SIM" );
     pMessageServiceSim_->RegisterReceivedMessage( LAU_MsgMgr::eMsg_SimLau, *this, & LAU_MsgMgr::OnReceiveMsg_SimLau );
-    pMessageServiceSim_->SetCbkOnError( LAU_MsgMgr::OnError );
+    pMessageServiceSim_->SetCbkOnError( & LAU_MsgMgr::OnError );
 }
 
 

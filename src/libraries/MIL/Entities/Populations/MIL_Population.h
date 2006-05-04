@@ -25,7 +25,6 @@
 #include "Entities/Orders/Population/MIL_PopulationOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
 
-class MIL_EntityVisitor_ABC;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;

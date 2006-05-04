@@ -186,13 +186,13 @@ void DEC_KS_Perception::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception > methodAgent( DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception > methodAgent( & DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
     pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( methodAgent );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception > methodObject( DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception > methodObject( & DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
     pBlackBoard_->GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( methodObject );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_PopulationPerception > methodPopulation( DEC_KS_Perception::CleanKnowledgePopulationPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_PopulationPerception > methodPopulation( & DEC_KS_Perception::CleanKnowledgePopulationPerception, *this );
     pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPopulation );
 }
 

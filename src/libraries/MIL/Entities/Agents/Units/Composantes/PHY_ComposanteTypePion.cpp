@@ -77,7 +77,7 @@ void PHY_ComposanteTypePion::Initialize( MIL_InputArchive& archive )
         std::string strComposanteType;
         archive.ReadAttribute( "nom", strComposanteType );
 
-        const PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
+        PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
         if( pComposanteType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Composante type '%s' already registered", strComposanteType.c_str() ), archive.GetContext() );
 

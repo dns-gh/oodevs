@@ -112,7 +112,7 @@ bool PHY_PerceptionRadar::IsUsingActiveRadar() const
             continue;
 
         const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ itRadarClass->second->GetID() ];
-        const bRadarEnabledOnPerceiverPos               = radarOnUnitPosition_[ itRadarClass->second->GetID() ];
+        const bool bRadarEnabledOnPerceiverPos          = radarOnUnitPosition_[ itRadarClass->second->GetID() ];
 
         if( bRadarEnabledOnPerceiverPos || !zones.empty() )
             return true;

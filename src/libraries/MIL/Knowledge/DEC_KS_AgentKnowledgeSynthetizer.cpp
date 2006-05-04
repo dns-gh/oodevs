@@ -100,7 +100,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_AgentPerception> method( DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, *this );
+    class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_AgentPerception> method( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, *this );
 
     // Synthèse de la perception des subordonnés
     // Ajout automatique de la connaissance de chaque subordonné    
@@ -147,6 +147,6 @@ void DEC_KS_AgentKnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent, *this );
+    class_mem_fun_void_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( & DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent, *this );
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( methodAgent );
 }

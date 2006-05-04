@@ -22,7 +22,7 @@ template< typename BaseType >
 template< typename Interface >
 unsigned int InterfaceContainer< BaseType >::GetInterfaceId()
 {
-    static id = id_++;
+    static unsigned id = id_++;
     return id;
 }
 

@@ -46,7 +46,7 @@ void AgentsLayer::Aggregate( const Agent& automat )
     while( children.HasMoreElements() )
         RemoveEntity( children.NextElement() );
     bool aggregate = true;
-    automat.Interface().Apply( Aggregatable_ABC::Aggregate, aggregate );
+    automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void AgentsLayer::Disaggregate( const Agent& automat )
     while( children.HasMoreElements() )
         AddEntity( children.NextElement() );
     bool aggregate = false;
-    automat.Interface().Apply( Aggregatable_ABC::Aggregate, aggregate );
+    automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
 }
 
 // -----------------------------------------------------------------------------

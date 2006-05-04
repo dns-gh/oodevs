@@ -80,7 +80,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     pMessageService_->RegisterReceivedMessage( eMsgSimMos           , *this, & AgentServerMsgMgr::OnReceiveMsgSimMos            );
     pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext, *this, & AgentServerMsgMgr::OnReceiveMsgSimMosWithContext );
 //eMsgEnvironmentType // $$$$ AGE 2006-05-03:
-    pMessageService_->SetCbkOnError( AgentServerMsgMgr::OnError );
+    pMessageService_->SetCbkOnError( & AgentServerMsgMgr::OnError );
 
     controllers_.Register( *this );
 }
@@ -247,7 +247,7 @@ void AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const Agent& ag
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgInit );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgInit );
 }
 
 //-----------------------------------------------------------------------------
@@ -312,7 +312,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& m
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgKnowledgeGroup );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgKnowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------
@@ -332,7 +332,7 @@ void AgentServerMsgMgr::_OnReceiveMsgKnowledgeGroup( DIN::DIN_Input& input )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgArmy );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgArmy );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +350,7 @@ void AgentServerMsgMgr::_OnReceiveMsgArmy( DIN::DIN_Input& input )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgProfilingValues );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgProfilingValues );
 }
 
 //-----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgTrace );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgTrace );
 }
 
 //-----------------------------------------------------------------------------
@@ -388,7 +388,7 @@ void AgentServerMsgMgr::_OnReceiveMsgTrace( DIN_Input& input )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgDebugDrawPoints );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgDebugDrawPoints );
 }
 
 // -----------------------------------------------------------------------------
@@ -408,7 +408,7 @@ void AgentServerMsgMgr::_OnReceiveMsgDebugDrawPoints( DIN::DIN_Input& input )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgUnitVisionCones );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgUnitVisionCones );
 }
 
 //-----------------------------------------------------------------------------
@@ -428,7 +428,7 @@ void AgentServerMsgMgr::_OnReceiveMsgUnitVisionCones( DIN_Input& input )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgUnitInterVisibility );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgUnitInterVisibility );
 }
 
 //-----------------------------------------------------------------------------
@@ -448,7 +448,7 @@ void AgentServerMsgMgr::_OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input 
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgPopulationConcentrationInterVisibility );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgPopulationConcentrationInterVisibility );
 }
 
 //-----------------------------------------------------------------------------
@@ -468,7 +468,7 @@ void AgentServerMsgMgr::_OnReceiveMsgPopulationConcentrationInterVisibility( DIN
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgPopulationFlowInterVisibility );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility );
 }
 
 //-----------------------------------------------------------------------------
@@ -488,7 +488,7 @@ void AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Inp
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgPopulationCollision );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgPopulationCollision );
 }
 
 // -----------------------------------------------------------------------------
@@ -508,7 +508,7 @@ void AgentServerMsgMgr::_OnReceiveMsgPopulationCollision( DIN::DIN_Input& input 
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgObjectInterVisibility );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgObjectInterVisibility );
 }
 
 //-----------------------------------------------------------------------------
@@ -1718,7 +1718,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgSimMos );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgSimMos );
 }
 
 //-----------------------------------------------------------------------------
@@ -1850,7 +1850,7 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMos( DIN_Input& input )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    Enqueue( input, _OnReceiveMsgSimMosWithContext );
+    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgSimMosWithContext );
 }
 
 //-----------------------------------------------------------------------------

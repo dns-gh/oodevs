@@ -84,7 +84,7 @@ void AgentTypes::ReadComponents( const std::string& components )
 {
     xifstream xis( components );
     xis >> start( "Composantes" )
-            >> list( "Composante", *this, ReadComponent );
+            >> list( "Composante", *this, &AgentTypes::ReadComponent );
 }
     
 // -----------------------------------------------------------------------------
@@ -125,13 +125,13 @@ void AgentTypes::ReadModels( const std::string& models )
 
     xis >> start( "Modeles" )
             >> start( "Pions" )
-                >> list( "Modele", *this, ReadModel, unitResolver )
+                >> list( "Modele", *this, &AgentTypes::ReadModel, unitResolver )
             >> end()
             >> start( "Automates" )
-                >> list( "Modele", *this, ReadModel, automatResolver )
+                >> list( "Modele", *this, &AgentTypes::ReadModel, automatResolver )
             >> end()
             >> start( "Populations" )
-                >> list( "Modele", *this, ReadModel, populationResolver )
+                >> list( "Modele", *this, &AgentTypes::ReadModel, populationResolver )
             >> end();
 }
     
@@ -155,7 +155,7 @@ void AgentTypes::ReadSensors( const std::string& sensors )
     xifstream xis( sensors );
     xis >> start( "Capteurs" )
             >> start( "Senseurs" )
-                >> list( "Senseur", *this, ReadSensor );
+                >> list( "Senseur", *this, &AgentTypes::ReadSensor );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void AgentTypes::ReadSensor( xml::xistream& xis )
 {
     std::string name;
     xis >> attribute( "nom", name )
-        >> list( "DetectionAgents", *this, ReallyReadSensor, name );
+        >> list( "DetectionAgents", *this, &AgentTypes::ReallyReadSensor, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void AgentTypes::ReadAgents( const std::string& agents )
 {
     xifstream xis( agents );
     xis >> start( "Pions" )
-            >> list( "Unite", *this, ReadAgentType );
+            >> list( "Unite", *this, &AgentTypes::ReadAgentType );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ void AgentTypes::ReadAutomats( const std::string& automats )
 {
     xifstream xis( automats );
     xis >> start( "Automates" )
-            >> list( "Unite", *this, ReadAutomatType );
+            >> list( "Unite", *this, &AgentTypes::ReadAutomatType );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void AgentTypes::ReadPopulations( const std::string& populations )
 {
     xifstream xis( populations );
     xis >> start( "Populations" )
-            >> list( "Population", *this, ReadPopulationType );
+            >> list( "Population", *this, &AgentTypes::ReadPopulationType );
 }
 
 // -----------------------------------------------------------------------------

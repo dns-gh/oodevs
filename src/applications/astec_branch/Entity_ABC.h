@@ -38,7 +38,7 @@ public:
     template< typename T >
     void Update( const T& updateMessage ) 
     {
-        const unsigned int applied = Apply( Updatable_ABC< T >::DoUpdate, updateMessage );
+        const unsigned int applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
         if( ! applied )
             throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() ) + " could be updated with message type " + typeid( T ).name() );
     }

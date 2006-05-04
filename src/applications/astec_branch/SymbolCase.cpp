@@ -22,7 +22,7 @@ using namespace xml;
 SymbolCase::SymbolCase( xml::xistream& xis )
 {
     xis >> attribute( "value", value_ )
-            >> list( "rule", *this, ReadRule );
+        >> list( "rule", *this, &SymbolCase::ReadRule );
 }
     
 // -----------------------------------------------------------------------------

@@ -54,6 +54,7 @@ public:
     {
     public:
         AgentType() {};
+        ~AgentType();
     public:
         std::string strName_;
         T_AgentTypeVector composition_;

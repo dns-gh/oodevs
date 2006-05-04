@@ -41,9 +41,9 @@ Network::Network()
                                     , eConnMagicMOSServerAgentServer
                                     , "MOS Server to agent server"); 
 
-    pConnService_->SetCbkOnConnectionSuccessful( OnConnected      );
-    pConnService_->SetCbkOnConnectionFailed    ( OnNotConnected   );
-    pConnService_->SetCbkOnConnectionLost      ( OnConnectionLost );
+	pConnService_->SetCbkOnConnectionSuccessful( &Network::OnConnected      );
+    pConnService_->SetCbkOnConnectionFailed    ( &Network::OnNotConnected   );
+    pConnService_->SetCbkOnConnectionLost      ( &Network::OnConnectionLost );
 }
     
 // -----------------------------------------------------------------------------

@@ -39,17 +39,17 @@ public:
 
     template< typename T >
     void Create( const T& extension ) {
-        Apply( ElementObserver_ABC< T >::NotifyCreated, extension );
+        Apply( & ElementObserver_ABC< T >::NotifyCreated, extension );
     };
 
     template< typename T >
     void Update( const T& extension ) {
-        Apply( ElementObserver_ABC< T >::NotifyUpdated, extension );
+        Apply( & ElementObserver_ABC< T >::NotifyUpdated, extension );
     };
 
     template< typename T >
     void Delete( const T& extension ) {
-        Apply( ElementObserver_ABC< T >::NotifyDeleted, extension );
+        Apply( & ElementObserver_ABC< T >::NotifyDeleted, extension );
     };
     //@}
 

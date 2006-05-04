@@ -67,7 +67,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine )
     pMessageService_->RegisterReceivedMessage( eMsgSimMos           , *this, & AgentServerMsgMgr::OnReceiveMsgSimMos            );
     pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext, *this, & AgentServerMsgMgr::OnReceiveMsgSimMosWithContext );
 
-    pMessageService_->SetCbkOnError( AgentServerMsgMgr::OnError );
+    pMessageService_->SetCbkOnError( &AgentServerMsgMgr::OnError );
 }
 
 

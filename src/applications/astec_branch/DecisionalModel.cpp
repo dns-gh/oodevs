@@ -25,7 +25,7 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
     xis >> attribute( "nom", name_ )
         >> optional() 
             >> start( "Missions" )
-                >> list( "Mission", *this, ReadMission, factory, missionResolver )
+			>> list( "Mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
             >> end();
     RegisterDefaultFragOrders( factory );
 }
@@ -53,7 +53,7 @@ void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, 
 
     xis >> optional() 
         >> start( "OrdresConduite" )
-            >> list( "OrdreConduite", *this, ReadFragOrder, *mission, factory )
+            >> list( "OrdreConduite", *this, &DecisionalModel::ReadFragOrder, *mission, factory )
         >> end();
 }
 

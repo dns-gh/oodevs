@@ -145,6 +145,6 @@ void DEC_KS_PopulationInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );        
+    class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( & DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );        
     pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );    
 }

@@ -21,7 +21,7 @@ template< typename BaseType >
 template< typename Extension >
 unsigned int Extendable< BaseType >::GetExtensionId()
 {
-    static id = id_++;
+    static unsigned id = id_++;
     return id;
 }
 

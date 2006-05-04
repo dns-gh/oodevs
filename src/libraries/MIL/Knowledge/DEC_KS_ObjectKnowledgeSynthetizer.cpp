@@ -111,8 +111,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( con
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 {
-    class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectPerception> methodUpdateKnowledgesFromObjectPerception( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, *this );
-    class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectCollision > methodUpdateKnowledgesFromObjectCollision ( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , *this );
+    class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectPerception> methodUpdateKnowledgesFromObjectPerception( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, *this );
+    class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectCollision > methodUpdateKnowledgesFromObjectCollision ( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , *this );
     
     const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
     for( MIL_Army::CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
@@ -211,7 +211,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
     ProcessKnowledgesObjectToForget();
 
     // Relevance
-    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodRelevance( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, *this );
+    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodRelevance( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, *this );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodRelevance );
 }
 
@@ -240,6 +240,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodObject( DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodObject( & DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodObject );
 }

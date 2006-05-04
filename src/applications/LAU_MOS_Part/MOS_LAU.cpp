@@ -64,7 +64,7 @@ MOS_LAU::MOS_LAU( const std::string& strHostName, uint16 nPort, DIN::DIN_Engine*
     pMessageService_->RegisterReceivedMessage( eMsg_LauMos, *this, & MOS_LAU::OnReceiveMsg_LauMos );
     
 
-    pMessageService_->SetCbkOnError( MOS_LAU::OnError );
+    pMessageService_->SetCbkOnError( & MOS_LAU::OnError );
 
     ConnectToLauncher();
 

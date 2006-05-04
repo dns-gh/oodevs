@@ -442,7 +442,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Composante speeds" ), new ADN_Callback<ADN_Table*,ADN_Composantes_GUI>( this, CreateComposanteSpeedsTable ) );
+    mainWindow.AddTable( tr( "Composante speeds" ), new ADN_Callback<ADN_Table*,ADN_Composantes_GUI>( this, & ADN_Composantes_GUI::CreateComposanteSpeedsTable ) );
 }
 
 

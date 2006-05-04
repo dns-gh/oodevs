@@ -23,13 +23,13 @@ SymbolFactory::SymbolFactory( xml::xistream& xis )
 {
     xis >> start( "rulesets" )
             >> start( "automats" )
-                >> list( "rule", *this, ReadAutomatRule )
+				>> list( "rule", *this, &SymbolFactory::ReadAutomatRule )
             >> end()
             >> start( "symbols" )
-                >> list( "rule", *this, ReadRule, symbolRules_ )
+                >> list( "rule", *this, &SymbolFactory::ReadRule, symbolRules_ )
             >> end()
             >> start( "levels" )
-                >> list( "rule", *this, ReadRule, levelRules_ )
+                >> list( "rule", *this, &SymbolFactory::ReadRule, levelRules_ )
             >> end();
 }
 

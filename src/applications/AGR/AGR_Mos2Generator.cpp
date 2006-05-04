@@ -55,6 +55,7 @@ void AGR_Mos2Generator::Generate( const AGR_Workspace& workspace, const std::str
     MT_MakeDir( strOutputPath + "/src" );
     MT_MakeDir( strOutputPath + "/src/applications" );
     MT_MakeDir( strOutputPath + "/src/applications/astec" );
+    MT_MakeDir( strOutputPath + "/src/applications/astec_branch" );
     GenerateMos2MissionInterfaceHeaderFiles( workspace, strOutputPath );
     GenerateMos2MissionInterfaceCppFiles   ( workspace, strOutputPath );
     GenerateMos2Rcs                        ( workspace, strOutputPath );
@@ -89,6 +90,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/UnitMissionInterface_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/UnitMissionInterface_Gen.h" );
 
     // Pour les automates:
     strBaseContent = "";
@@ -98,6 +100,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/AutomateMissionInterface_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/AutomateMissionInterface_Gen.h" );
 
     // Pour les populations:
     strBaseContent = "";
@@ -107,6 +110,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/PopulationMissionInterface_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/PopulationMissionInterface_Gen.h" );
 
     // For fragmentary orders
     std::string strFragOrderDeclaration;
@@ -125,6 +129,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/FragmentaryOrderInterface_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/FragmentaryOrderInterface_Gen.h" );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +187,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/UnitMissionInterface_Gen.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/UnitMissionInterface_Gen.cpp" );
 
     // Pour les automates:
     strBaseContent = "";
@@ -193,6 +199,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/AutomateMissionInterface_Gen.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/AutomateMissionInterface_Gen.cpp" );
 
     // Pour les populations:
     strBaseContent = "";
@@ -204,6 +211,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/PopulationMissionInterface_Gen.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/PopulationMissionInterface_Gen.cpp" );
 
     // Fragmentary orders
     std::string strFODeletion;
@@ -227,6 +235,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/FragmentaryOrderInterface_Gen.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/FragmentaryOrderInterface_Gen.cpp" );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,4 +260,5 @@ void AGR_Mos2Generator::GenerateMos2Rcs( const AGR_Workspace& workspace, const s
 
     workspace.ReplaceInString( strBaseContent, "$AGR_MOS2_RC$", strTmp.str() );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec/RC.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/astec_branch/RC.cpp" );
 }

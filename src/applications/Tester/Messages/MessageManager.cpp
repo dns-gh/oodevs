@@ -73,7 +73,7 @@ MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkMan
 	pMessageService_->RegisterReceivedMessage( eMsgSimMos               , *this, & MessageManager::OnReceiveMsgSimMos                );
     pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext    , *this, & MessageManager::OnReceiveMsgSimMosWithContext     );
 	
-    pMessageService_->SetCbkOnError( MessageManager::OnError );
+    pMessageService_->SetCbkOnError( & MessageManager::OnError );
 }
 
 

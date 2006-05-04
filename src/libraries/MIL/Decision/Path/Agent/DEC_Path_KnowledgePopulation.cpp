@@ -75,7 +75,7 @@ void DEC_Path_KnowledgePopulation::AddElement( const MIL_PopulationElement_ABC& 
 MT_Float DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
 {
     const MT_Float rMaxRange = pPathClass_->GetPopulationSecurityRange();
-    sPopulationElement* pClosestElement = 0;
+    const sPopulationElement* pClosestElement = 0;
     const MT_Float rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
 
     if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)

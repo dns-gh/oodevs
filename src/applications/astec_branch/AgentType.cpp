@@ -33,7 +33,7 @@ AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> start( "Equipements" )
-            >> list( "Equipement", *this, ReadEquipment, componentResolver )
+        >> list( "Equipement", *this, &AgentType::ReadEquipment, componentResolver )
         >> end();
     nature_ = nature.release();
     symbol_      = symbolFactory.CreateSymbol( *nature_ );

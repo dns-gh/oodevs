@@ -14,7 +14,7 @@
 
 //#include "Meteo_ABC.h"
 //#include "RawVisionData.h"
-#include "MT_Tools/MT_Tools_Types.h"
+//#include "MT_Tools/MT_Tools_Types.h"
 
 // -----------------------------------------------------------------------------
 // Name: Tools::ToString

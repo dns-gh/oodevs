@@ -111,8 +111,8 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationPerception > methodPerception( DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, *this );
-    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationCollision  > methodCollision ( DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision , *this );
+    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationPerception > methodPerception( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, *this );
+    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationCollision  > methodCollision ( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision , *this );
 
     // Synthèse de la perception des subordonnés
     // Ajout automatique de la connaissance de chaque subordonné    
@@ -157,6 +157,6 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( DEC_KS_PopulationKnowledgeSynthetizer::CleanKnowledgePopulation, *this );
+    class_mem_fun_void_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( & DEC_KS_PopulationKnowledgeSynthetizer::CleanKnowledgePopulation, *this );
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
 }

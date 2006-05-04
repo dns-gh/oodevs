@@ -43,7 +43,7 @@ void GraphicPreferences::InitializeTerrainPreferences()
     xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05: 
     xis >> start( "preferences" )
             >> start( "terrains" )
-                >> list( "terrain", *this, ReadTerrainPreference );
+				>> list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );
 }
 
 // -----------------------------------------------------------------------------

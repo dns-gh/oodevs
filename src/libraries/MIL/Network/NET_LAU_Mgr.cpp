@@ -80,7 +80,7 @@ bool32 NET_LAU_Mgr::Connect( DIN::DIN_Engine& dinEngine )
     pMessageService_->RegisterReceivedMessage( eMsg_LauSim, *this, & NET_LAU_Mgr::OnReceiveMsg_LauSim );
     
 
-    pMessageService_->SetCbkOnError( NET_LAU_Mgr::OnError );
+    pMessageService_->SetCbkOnError( & NET_LAU_Mgr::OnError );
 
     NEK_AddressINET addr( strHostName_.c_str(), nPort_ );
     pConnService_->JoinHost( addr );

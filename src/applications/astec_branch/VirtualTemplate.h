@@ -45,7 +45,7 @@ public:
     template< typename T >
     void Call( const T& argument )
     {
-        if( Apply( Caller< T >::Call, argument ) == 0 && forward_ )
+        if( Apply( & Caller< T >::Call, argument ) == 0 && forward_ )
             forward_->Call( argument );
     };
     //@}

@@ -422,12 +422,9 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Weapons" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, CreateWeaponsTable ) );
-    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, CreatePHTable ) );
+    mainWindow.AddTable( tr( "Weapons" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
+    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, &ADN_Weapons_GUI::CreatePHTable ) );
 }
-
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::ExportHtml

@@ -273,7 +273,7 @@ ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*   ,ADN_Automata_GUI>( this, CreateAutomataCompositionsTable ) );
-    mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, CreateAutomataLogTable ) );
-    mainWindow.AddListView( tr( "Logistic per dotation" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, CreateAutomataLogTablePerDotation ) );
+    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*   ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
+    mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTable ) );
+    mainWindow.AddListView( tr( "Logistic per dotation" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTablePerDotation ) );
 }

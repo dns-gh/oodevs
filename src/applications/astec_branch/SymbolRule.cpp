@@ -27,7 +27,7 @@ SymbolRule::SymbolRule( xml::xistream& xis )
     if( !name_.empty() && !default_.empty() )
         throw std::runtime_error( "Symbol rule cannot specify both 'name' and 'default'" );
 
-    xis >> optional() >> list( "case", *this, ReadCase );
+    xis >> optional() >> list( "case", *this, & SymbolRule::ReadCase );
 }
     
 // -----------------------------------------------------------------------------

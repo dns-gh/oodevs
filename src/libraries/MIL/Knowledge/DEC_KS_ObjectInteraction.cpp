@@ -168,6 +168,6 @@ void DEC_KS_ObjectInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );        
+    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( & DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );        
     pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );    
 }

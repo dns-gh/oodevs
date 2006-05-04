@@ -76,6 +76,7 @@
 #include <qlayout.h>
 
 #include <windows.h>
+#include <errno.h>
 
 ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 

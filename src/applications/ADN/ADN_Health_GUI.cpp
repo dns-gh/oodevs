@@ -87,7 +87,8 @@ void ADN_Health_GUI::Build()
     pWoundTable->setLeftMargin( 5 );
     pWoundTable->setSorting( false );
 
-    for( int n = 0; n < eNbrDoctorSkills; ++n )
+    int n = 0;
+    for( ; n < eNbrDoctorSkills; ++n )
     {
         pWoundTable->horizontalHeader()->setLabel( n, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str() );
         pWoundTable->setColumnStretchable( n, true );

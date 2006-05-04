@@ -316,9 +316,8 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback<ADN_Table*,ADN_Equipement_GUI>( this, CreatePKTable ) );
+    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback<ADN_Table*,ADN_Equipement_GUI>( this, &ADN_Equipement_GUI::CreatePKTable ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::ExportPKs

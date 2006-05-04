@@ -49,7 +49,7 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
     pMessageService_->RegisterReceivedMessage( eMsgUnitMagicAction       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction        );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints        );
 
-    pMessageService_->SetCbkOnError( NET_AS_MOSServerMsgMgr::OnError );
+    pMessageService_->SetCbkOnError( & NET_AS_MOSServerMsgMgr::OnError );
 }
 
 //-----------------------------------------------------------------------------

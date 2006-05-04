@@ -48,9 +48,9 @@ public:
         if( ! selecting_ )
         {
             selecting_ = true;
-            Apply( SelectionObserver_ABC::BeforeSelection );
-            Apply( SelectionObserver_Base< T >::Select, element );
-            Apply( SelectionObserver_ABC::AfterSelection );
+            Apply( & SelectionObserver_ABC::BeforeSelection );
+            Apply( & SelectionObserver_Base< T >::Select, element );
+            Apply( & SelectionObserver_ABC::AfterSelection );
         }
         selecting_ = false;
     }
@@ -59,14 +59,14 @@ public:
     void ContextMenu( const T& element,const QPoint& where )
     {
         popupMenu_->clear();
-        Apply( ContextMenuObserver_ABC< T >::NotifyContextMenu, element, *popupMenu_ );
+        Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, *popupMenu_ );
         ShowMenu( where );
     }
 
     template< typename T >
     void Activate( const T& element )
     {
-        Apply( ActivationObserver_ABC< T >::NotifyActivated, element );
+        Apply( & ActivationObserver_ABC< T >::NotifyActivated, element );
     }
     //@}
 

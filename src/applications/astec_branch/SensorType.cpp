@@ -220,6 +220,6 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
     rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );
-    return rDistanceModificator <= MT_Epsilon ? -1. : rCurrentNRJ - distance / rDistanceModificator;
+    return rDistanceModificator <= 1e-8 ? -1. : rCurrentNRJ - distance / rDistanceModificator;
 }
 

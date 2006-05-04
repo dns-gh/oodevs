@@ -109,7 +109,7 @@ void Message::Send( AgentServerMsgMgr& msgManager )
         msgManager.SendMsgMosSimWithContext( pMsg_, nMsgLength_, nContext_ );
     else
         msgManager.SendMsgMosSim( pMsg_, nMsgLength_ );
-    MT_LOG_INFO( "Envoi ordre enregistré", eSent, 0 );
+    // MT_LOG_INFO( "Envoi ordre enregistré", eSent, 0 );
 }
 
 // -----------------------------------------------------------------------------
