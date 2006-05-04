@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddPanels( QTabWidget* parent ) const;
+    void Display( QWidget* parent ) const;
 
     virtual void SetupLineGraphics  ( const Data_ABC* pData );
     virtual void SetupBorderGraphics( const Data_ABC* pData );
@@ -60,7 +60,6 @@ private:
     //! @name Helpers
     //@{
     void InitializeTerrainPreferences();
-    void AddTerrainPanel( QTabWidget* parent ) const;
     void ReadTerrainPreference( xml::xistream& xis );
     void Save() const;
     void Save( xml::xostream& xos, const TerrainPreference& preference ) const;

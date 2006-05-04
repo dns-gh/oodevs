@@ -45,6 +45,7 @@
 #include "Dialogs.h"
 #include "Simulation.h"
 #include "MagicOrdersInterface.h"
+#include "PreferencesDialog.h"
 
 #include "Agent.h"
 #include "Object.h"
@@ -77,18 +78,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-    // Graphic preference window
-    QDockWindow* pGraphicPrefDockWnd = new QDockWindow( this );
-    moveDockWindow( pGraphicPrefDockWnd, Qt::DockRight );
-    pGraphicPrefDockWnd->hide();
-    GraphicsPanel* pGraphicPrefPanel_ = new GraphicsPanel( pGraphicPrefDockWnd );
-    pGraphicPrefDockWnd->setWidget( pGraphicPrefPanel_ );
-    pGraphicPrefDockWnd->setResizeEnabled( true );
-    pGraphicPrefDockWnd->setCloseMode( QDockWindow::Always );
-    pGraphicPrefDockWnd->setCaption( tr( "Graphic preferences" ) );
-    setDockEnabled( pGraphicPrefDockWnd, Qt::DockTop, false );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
 
-    layers_ = new GlLayers( controllers, model, pGraphicPrefPanel_->GetPreferences() );
+    layers_ = new GlLayers( controllers, model, prefDialog->GetPreferences() );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -138,7 +130,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     layers_->Register( *new MiscLayer< MissionPanel >( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31: 
 
     // Logger
-    QDockWindow*pLogDockWnd_ = new QDockWindow( this );
+    QDockWindow* pLogDockWnd_ = new QDockWindow( this );
     moveDockWindow( pLogDockWnd_, Qt::DockBottom );
     Logger* pLogPanel_ = new Logger( pLogDockWnd_ );
     pLogDockWnd_->setWidget( pLogPanel_ );
@@ -146,17 +138,6 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
-
-    // Options window
-    QDockWindow* pOptionsDockWnd_ = new QDockWindow( this );
-    moveDockWindow( pOptionsDockWnd_, Qt::DockRight );
-    pOptionsDockWnd_->hide();
-    pOptionsPanel_ = new OptionsPanel( pOptionsDockWnd_, controllers );
-    pOptionsDockWnd_->setWidget( pOptionsPanel_ );
-    pOptionsDockWnd_->setResizeEnabled( true );
-    pOptionsDockWnd_->setCloseMode( QDockWindow::Always );
-    pOptionsDockWnd_->setCaption( tr( "Options" ) );
-    setDockEnabled( pOptionsDockWnd_, Qt::DockTop, false );
 
     // object creation window
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
@@ -170,7 +151,6 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) );
 
-    new Menu( this, controllers );
     new MagicOrdersInterface( this, controllers_ );
 
     new SIMControlToolbar( this, controllers );
@@ -178,7 +158,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
-    new RecorderToolbar( this, recorder );
+    RecorderToolbar* recorderToolbar = new RecorderToolbar( this, recorder );
+
+    new Menu( this, controllers, *prefDialog, *recorderToolbar );
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );

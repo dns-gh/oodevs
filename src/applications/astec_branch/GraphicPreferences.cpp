@@ -59,23 +59,13 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GraphicPreferences::AddPanels
+// Name: GraphicPreferences::AddToPanel
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-void GraphicPreferences::AddPanels( QTabWidget* parent ) const
-{
-    AddTerrainPanel( parent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicPreferences::AddTerrainPanel
-// Created: SBO 2006-04-04
-// -----------------------------------------------------------------------------
-void GraphicPreferences::AddTerrainPanel( QTabWidget* parent ) const
+void GraphicPreferences::Display( QWidget* parent ) const
 {
     QVBox* pPanel = new QVBox( parent );
     pPanel->setMargin( 5 );
-    parent->addTab( pPanel, "Terrain" );
     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
         (*it)->Display( pPanel );
 }

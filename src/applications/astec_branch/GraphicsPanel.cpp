@@ -20,8 +20,7 @@ GraphicsPanel::GraphicsPanel( QWidget* parent )
     : QVBox     ( parent )
     , preferences_( *new GraphicPreferences() )
 {
-    QTabWidget* pTabWidget = new QTabWidget( this );
-    preferences_.AddPanels( pTabWidget );
+    preferences_.Display( this );
 
     QHBox* buttons = new QHBox( this );
     QPushButton* ok     = new QPushButton( tr( "Okay" ), buttons );

@@ -7,51 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __Menu_h_
-#define __Menu_h_
+#ifndef __AboutDialog_h_
+#define __AboutDialog_h_
 
-#include <qmenubar.h>
-
-class QMainWindow;
-class QDialog;
-class Controllers;
-class RecorderToolbar;
+#include <qdialog.h>
 
 // =============================================================================
-/** @class  Menu
-    @brief  Menu
+/** @class  AboutDialog
+    @brief  AboutDialog
 */
-// Created: SBO 2006-04-28
+// Created: SBO 2006-05-04
 // =============================================================================
-class Menu : public QMenuBar
+class AboutDialog : public QDialog
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar );
-    virtual ~Menu();
+    explicit AboutDialog( QWidget* parent );
+    virtual ~AboutDialog();
     //@}
 
     //! @name Operations
     //@{
+    virtual QSize sizeHint () const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Menu( const Menu& );            //!< Copy constructor
-    Menu& operator=( const Menu& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    AboutDialog( const AboutDialog& );            //!< Copy constructor
+    AboutDialog& operator=( const AboutDialog& ); //!< Assignement operator
     //@}
 
 private:
-    //! @name Member data
+    //! @name Member Data
     //@{
+    QSize sizeHint_;
     //@}
 };
 
-#endif // __Menu_h_
+#endif // __AboutDialog_h_

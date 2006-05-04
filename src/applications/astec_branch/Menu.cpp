@@ -12,6 +12,9 @@
 #include "OptionMenu.h"
 #include "Controllers.h"
 #include "TristateOption.h"
+#include "RecorderToolbar.h"
+#include "AboutDialog.h"
+#include "App.h"
 
 namespace
 {
@@ -27,20 +30,18 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    int openId = menu->insertItem( tr( "&Ouvrir..." ), parent(), SLOT( Open() ) );
+    int openId = menu->insertItem( tr( "&Ouvrir scipio.xml..." ), parent(), SLOT( Open() ) );
     menu->setAccel( CTRL + Key_O, openId );
     menu->insertItem( tr( "Fermer" ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "Recharger" ) );
+    menu->insertItem( tr( "Ouvrir fichier d'ordres..." ), &recorderToolBar, SLOT( Play() ) );
+    menu->insertItem( tr( "Enregistrer fichier d'ordre..." ), &recorderToolBar, SLOT( Stop() ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "Ouvrir fichier d'ordres..." ) );
-    menu->insertItem( tr( "Enregistrer fichier d'ordre..." ) );
-    menu->insertSeparator();
-    menu->insertItem( tr( "Quitter" ) );
+    menu->insertItem( tr( "&Quitter" ), &App::GetApp(), SLOT( quit() ), CTRL + Key_Q );
     insertItem( tr( "Fichier" ), menu );
 
     menu = new QPopupMenu( this );
@@ -92,11 +93,11 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers )
     menu->insertItem( MAKE_ICON( threed ), tr( "Mode d'affichage" ), boolMenu );
 
     menu->insertSeparator();
-    menu->insertItem( tr( "Préférences..." ) );
+    menu->insertItem( tr( "&Préférences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
     insertItem( tr( "Affichage" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "A propos" ) );
+    menu->insertItem( tr( "A propos" ), new AboutDialog( this ), SLOT( exec() ) );
     insertItem( tr( "Aide" ), menu );
 }
     

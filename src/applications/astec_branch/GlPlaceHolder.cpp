@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "GlPlaceHolder.h"
-#include "splashscreen.cpp"
+//#include "splashscreen.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: GlPlaceHolder constructor
@@ -18,11 +18,13 @@
 GlPlaceHolder::GlPlaceHolder( QWidget* parent )
     : QVBox( parent )
 {
-    QHBox* box = new QHBox( this );
-    QLabel* label = new QLabel( box );
-    box->setStretchFactor( label, 4212 );
-    box->setSpacing( 4212 );
-    label->setPixmap( QPixmap( qembed_findData( "astec.jpg" ) ) );
+    setBackgroundColor( Qt::black );
+//    QHBox* box = new QHBox( this );
+//    box->setBackgroundColor( QColor::Black );
+//    QLabel* label = new QLabel( box );
+//    box->setStretchFactor( label, 4212 );
+//    box->setSpacing( 4212 );
+//    label->setPixmap( QPixmap( qembed_findData( "astec.jpg" ) ) );
 }
 
 // -----------------------------------------------------------------------------

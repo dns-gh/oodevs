@@ -29,20 +29,15 @@
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
 OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
-    : QWidget     ( pParent )
+    : QVBox       ( pParent )
     , controllers_( controllers )
     , options_    ( controllers_.options_ )
 {
-    QVBoxLayout* pLayout = new QVBoxLayout( this );
-    pLayout->setMargin( 5 );
-    pLayout->setSpacing( 5 );
-
-    QTabWidget* pTabWidget = new QTabWidget( this );
-    pLayout->addWidget( pTabWidget );
+    setMargin( 5 );
+    setSpacing( 5 );
 
     // Display panel
-    QWidget* pDisplayPanel = new QWidget( pTabWidget );
-    pTabWidget->addTab( pDisplayPanel, tr( "Affichage" ) );
+    QWidget* pDisplayPanel = new QWidget( this );
     QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 9, 2, 5 );
     pSubLayout2->setMargin( 5 );
 

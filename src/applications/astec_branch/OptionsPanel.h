@@ -19,6 +19,7 @@
 #ifndef __OptionsPanel_h_
 #define __OptionsPanel_h_
 
+#include <qvbox.h>
 #include "OptionsObserver_ABC.h"
 
 class QCheckBox;
@@ -29,7 +30,7 @@ class Settings;
 // =============================================================================
 // Created: APE 2004-07-09
 // =============================================================================
-class OptionsPanel : public QWidget
+class OptionsPanel : public QVBox
                    , private Observer_ABC
                    , public OptionsObserver_ABC
 {

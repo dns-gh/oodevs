@@ -7,41 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef __Menu_h_
-#define __Menu_h_
+#ifndef __PreferencesDialog_h_
+#define __PreferencesDialog_h_
 
-#include <qmenubar.h>
+#include <qdialog.h>
 
-class QMainWindow;
-class QDialog;
 class Controllers;
-class RecorderToolbar;
+class GraphicPreferences;
+class GraphicsPanel;
 
 // =============================================================================
-/** @class  Menu
-    @brief  Menu
+/** @class  PreferencesDialog
+    @brief  PreferencesDialog
 */
-// Created: SBO 2006-04-28
+// Created: SBO 2006-05-03
 // =============================================================================
-class Menu : public QMenuBar
+class PreferencesDialog : public QDialog
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar );
-    virtual ~Menu();
+             PreferencesDialog( QWidget* parent, Controllers& controllers );
+    virtual ~PreferencesDialog();
     //@}
 
     //! @name Operations
     //@{
+    virtual QSize sizeHint () const;
+    GraphicPreferences& GetPreferences() const; // $$$$ SBO 2006-05-04: 
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Menu( const Menu& );            //!< Copy constructor
-    Menu& operator=( const Menu& ); //!< Assignement operator
+    PreferencesDialog( const PreferencesDialog& );            //!< Copy constructor
+    PreferencesDialog& operator=( const PreferencesDialog& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -51,7 +52,8 @@ private:
 private:
     //! @name Member data
     //@{
+    GraphicsPanel* pGraphicPrefPanel_;
     //@}
 };
 
-#endif // __Menu_h_
+#endif // __PreferencesDialog_h_
