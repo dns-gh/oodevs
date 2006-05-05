@@ -27,6 +27,15 @@ class DEC_BlackBoard_CanContainKnowledgeAgent
 {
     MT_COPYNOTALLOWED( DEC_BlackBoard_CanContainKnowledgeAgent )
 
+
+public:
+    //! @name Types
+    //@{
+    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_Agent* > T_KnowledgeAgentMap;
+    typedef T_KnowledgeAgentMap::iterator                          IT_KnowledgeAgentMap;
+    typedef T_KnowledgeAgentMap::const_iterator                    CIT_KnowledgeAgentMap;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -65,13 +74,6 @@ public:
             fct( knowledge );
         }
     }
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_Agent* > T_KnowledgeAgentMap;
-    typedef T_KnowledgeAgentMap::iterator                          IT_KnowledgeAgentMap;
-    typedef T_KnowledgeAgentMap::const_iterator                    CIT_KnowledgeAgentMap;
     //@}
 
     //! @name Queries

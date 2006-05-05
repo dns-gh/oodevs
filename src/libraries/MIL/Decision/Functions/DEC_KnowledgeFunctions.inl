@@ -146,6 +146,43 @@ void DEC_KnowledgeFunctions::GetObjectsInCircle( DIA_Call_ABC& call, const T& ca
 }
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeFunctions::GetObjectsInZone
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::GetObjectsInZone( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+
+    const TER_Localisation* pLoc = call.GetParameter( 0 ).ToUserPtr( pLoc );
+    assert( pLoc );
+
+    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 1 );
+    
+    T_KnowledgeObjectDiaIDVector knowledges;
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, objectsFilter, *pLoc );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeFunctions::GetObjectsInFuseau
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::GetObjectsInFuseau( DIA_Call_ABC& call, const T& caller )
+{
+    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
+    
+    T_KnowledgeObjectDiaIDVector knowledges;
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, objectsFilter, caller.GetFuseau() );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetFriendsInZone
 // Created: NLD 2005-05-11
 // -----------------------------------------------------------------------------

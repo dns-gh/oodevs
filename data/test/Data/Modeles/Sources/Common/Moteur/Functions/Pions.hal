@@ -255,6 +255,8 @@ signatures
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_CollisionsObjets                ();
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansCercle                ( U /*T_Point centre du cercle*/, R /*rayon*/, * /*E_TypeObjects*/ );    
+    S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansZone                  ( U /*T_Localisation zone*/, * /*E_TypeObjects*/ );    
+    S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansFuseau                ( * /*E_TypeObjects*/ );        
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetAmiLePlusProche            ( * /*E_TypeObjects*/ );        
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_CollisionsPopulations           ();

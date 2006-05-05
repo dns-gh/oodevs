@@ -400,6 +400,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::ShareKnowledgesInZoneWith             < MIL_Automate >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                            < MIL_Automate >, "DEC_Connaissances_Objets"                                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInCircle                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansCercle"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInZone                      < MIL_Automate >, "DEC_Connaissances_ObjetsDansZone"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjectsInFuseau                    < MIL_Automate >, "DEC_Connaissances_ObjetsDansFuseau"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetFriendsInZone                      < MIL_Automate >, "DEC_Connaissances_UnitesAmiesDansZone"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetLivingEnemiesPerceivedByPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetDangerousEnemiesInZoneOfPion       < MIL_Automate >, "DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion" );

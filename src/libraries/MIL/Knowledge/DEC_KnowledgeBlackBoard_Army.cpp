@@ -180,7 +180,7 @@ public:
 
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
-        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() && knowledge.GetLocalisation().Intersect2DWithCircle( *pCenter_, rRadius_ ) )            
+        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() && knowledge.GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
             pContainer_->push_back( (void*)knowledge.GetID()  );
     }
 
@@ -195,6 +195,49 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVec
 {
     sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius );
     
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetObjectsInZone
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+template< typename T >
+class sObjectKnowledgesInZoneFilteredInserter
+{
+public:
+    sObjectKnowledgesInZoneFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const T& zone )
+        : pContainer_( &container )
+        , pFilter_   ( &filter    )
+        , pZone_     ( &zone      )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_Object& knowledge )
+    {
+        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() && pZone_->IsInside( knowledge.GetLocalisation().ComputeBarycenter() ) )
+            pContainer_->push_back( (void*)knowledge.GetID()  );
+    }
+
+private:
+          T_KnowledgeObjectDiaIDVector* pContainer_;
+    const MIL_RealObjectTypeFilter*     pFilter_;
+    const T*                            pZone_;
+};
+
+void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const TER_Localisation& zone )
+{
+    sObjectKnowledgesInZoneFilteredInserter< TER_Localisation > functor( container, filter, zone );
+   
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+}
+
+void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const TER_Polygon& zone )
+{
+    sObjectKnowledgesInZoneFilteredInserter< TER_Polygon > functor( container, filter, zone );
+   
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
 }

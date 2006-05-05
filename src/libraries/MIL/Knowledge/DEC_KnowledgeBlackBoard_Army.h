@@ -71,6 +71,8 @@ public:
     void                  GetObjects                   ( T_KnowledgeObjectVector&      container, const MIL_RealObjectTypeFilter& filter ) const;
     void                  GetObjects                   ( T_KnowledgeObjectVector&      container ) const;
     void                  GetObjectsInCircle           ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const MT_Vector2D& center, MT_Float rRadius );
+    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const TER_Localisation& zone );
+    void                  GetObjectsInZone             ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const TER_Polygon& zone );
     void                  GetObjectsAtInteractionHeight( T_KnowledgeObjectVector&      container, MT_Float rHeight, const MIL_RealObjectTypeFilter& filter ) const;
     DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
     DEC_Knowledge_Object* GetClosestFriendObject       ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
