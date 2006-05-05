@@ -30,7 +30,7 @@ class Controllers;
 // Created: APE 2004-03-10
 // =============================================================================
 class ReportListView : public ListDisplayer< ReportListView >
-                     , private Observer_ABC
+                     , public Observer_ABC
                      , public AgentSelectionObserver
                      , public ElementObserver_ABC< Reports > 
                      , public ElementObserver_ABC< Report_ABC >

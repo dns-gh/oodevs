@@ -38,7 +38,7 @@ class CoordinateConverter;
 // Created: SBO 2005-09-02
 // =============================================================================
 class Object : public Entity_ABC
-             , private Extension_ABC
+             , public Extension_ABC
              , public Updatable_ABC< ASN1T_MsgObjectUpdate >
              , public Drawable_ABC
 {

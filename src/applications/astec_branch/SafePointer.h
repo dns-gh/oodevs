@@ -21,7 +21,7 @@ class Controllers;
 // Created: AGE 2006-04-20
 // =============================================================================
 template< typename T >
-class SafePointer : private Observer_ABC
+class SafePointer : public Observer_ABC
                   , public ElementObserver_ABC< T >
 {
 

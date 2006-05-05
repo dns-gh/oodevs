@@ -32,7 +32,7 @@ class ObjectType;
 // Created: AGE 2006-02-14
 // =============================================================================
 class ObjectKnowledge : public Entity_ABC
-                      , private Extension_ABC
+                      , public Extension_ABC
                       , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
 {
 

@@ -80,7 +80,7 @@ private:
 // Created: AGE 2006-03-27
 // =============================================================================
 template< typename T >
-class ToolListButton : public ToolListButtonBase, private Observer_ABC, public OptionsObserver_ABC
+class ToolListButton : public ToolListButtonBase, public Observer_ABC, public OptionsObserver_ABC
 {
 
 public:

@@ -33,7 +33,7 @@ class Team;
 // Created: SBO 2005-10-19
 // =============================================================================
 class PopulationKnowledgePanel : public InfoPanel_ABC
-                               , private Observer_ABC
+                               , public Observer_ABC
                                , public KnowledgeGroupSelectionObserver
                                , public ElementObserver_ABC< PopulationKnowledges > // $$$$ AGE 2006-03-07: watch for PopulationKnowledge creation / deletion instead
                                , public ElementObserver_ABC< PopulationKnowledge >

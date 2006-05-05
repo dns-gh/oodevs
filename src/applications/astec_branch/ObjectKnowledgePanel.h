@@ -47,7 +47,7 @@ class ValuedListItem;
 // Created: APE 2004-05-04
 // =============================================================================
 class ObjectKnowledgePanel : public InfoPanel_ABC
-                           , private Observer_ABC
+                           , public Observer_ABC
                            , public ElementObserver_ABC< ObjectKnowledges > // $$$$ AGE 2006-03-07: watch for ObjectKnowledge creation / deletion instead
                            , public ElementObserver_ABC< ObjectKnowledge >
                            , public ElementObserver_ABC< CampAttributes >

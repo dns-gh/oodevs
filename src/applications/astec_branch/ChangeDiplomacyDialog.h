@@ -24,7 +24,7 @@ class Controllers;
 // Created:  NLD 2002-01-03 
 //=============================================================================
 class ChangeDiplomacyDialog : public QDialog
-                            , private Observer_ABC
+                            , public Observer_ABC
                             , public ElementObserver_ABC< Team >
                             , public ContextMenuObserver_ABC< Team >
 {

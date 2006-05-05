@@ -37,7 +37,7 @@ AboutDialog::AboutDialog( QWidget* parent )
     RichLabel* label = new RichLabel( message, hbox );
     label->setAlignment( Qt::SingleLine );
     label->setBackgroundPixmap( pixmap );
-    label->setBackgroundOrigin( QWidget::BackgroundOrigin::AncestorOrigin );
+    label->setBackgroundOrigin( QWidget::AncestorOrigin );
     QPushButton* button = new QPushButton( tr( "Fermer" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
 }

@@ -23,7 +23,7 @@
 #include "Controllers.h"
 #include "Options.h"
 
-#include <shellapi.h>
+#include <qprocess.h>
 
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar constructor
@@ -79,7 +79,10 @@ void ControllerToolbar::OnTeamChanged( int nValue )
 // -----------------------------------------------------------------------------
 void ControllerToolbar::LaunchScipio()
 {
-    ShellExecute( 0, "open", "sim.exe", "-nodisplay -forceodbcomposition", NULL, SW_SHOW );
+    QProcess sim(0);
+	sim.addArgument( "sim.exe" );
+	sim.addArgument( "-forceodbcomposition" );
+	sim.start();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +91,10 @@ void ControllerToolbar::LaunchScipio()
 // -----------------------------------------------------------------------------
 void ControllerToolbar::LaunchScipioDbg()
 {
-    ShellExecute( 0, "open", "sim_dbg.exe", "-nodisplay -forceodbcomposition", NULL, SW_SHOW );
+    QProcess sim(0);
+	sim.addArgument( "sim_d.exe" );
+	sim.addArgument( "-forceodbcomposition" );
+	sim.start();
 }
 
 // -----------------------------------------------------------------------------

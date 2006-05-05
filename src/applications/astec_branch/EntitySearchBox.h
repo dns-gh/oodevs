@@ -23,7 +23,7 @@
 // =============================================================================
 template< typename Entity >
 class EntitySearchBox : public EntitySearchBox_ABC
-                      , private Observer_ABC
+                      , public Observer_ABC
                       , public ElementObserver_ABC< Entity >
 {
 public:

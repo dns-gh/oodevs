@@ -28,7 +28,7 @@ class GlTools_ABC;
 // =============================================================================
 // Created: APE 2004-03-18
 // =============================================================================
-class Param_ABC : private Observer_ABC, public Drawable_ABC
+class Param_ABC : public Observer_ABC, public Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

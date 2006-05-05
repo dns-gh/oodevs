@@ -25,7 +25,7 @@ class Controllers;
 // Created: SBO 2006-04-14
 // =============================================================================
 class StatusBar : public QObject
-                , private Observer_ABC
+                , public Observer_ABC
                 , public ElementObserver_ABC< Simulation >
                 , public ElementObserver_ABC< Simulation::sStartTick >
                 , public ElementObserver_ABC< Simulation::sEndTick >

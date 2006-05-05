@@ -31,7 +31,7 @@ class Settings;
 // Created: APE 2004-07-09
 // =============================================================================
 class OptionsPanel : public QVBox
-                   , private Observer_ABC
+                   , public Observer_ABC
                    , public OptionsObserver_ABC
 {
     Q_OBJECT;

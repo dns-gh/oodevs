@@ -40,7 +40,7 @@ class GlTools_ABC;
 // Created: APE 2004-03-19
 // =============================================================================
 class MissionPanel : public QDockWindow
-                   , private Observer_ABC
+                   , public Observer_ABC
                    , public ContextMenuObserver_ABC< Agent >
                    , public ContextMenuObserver_ABC< Population >
         

@@ -23,7 +23,7 @@ class Controllers;
 // Created: AGE 2006-03-17
 // =============================================================================
 class MetricsLayer : public Layer2d_ABC
-                   , private Observer_ABC
+                   , public Observer_ABC
                    , public OptionsObserver_ABC
 {
 

@@ -44,7 +44,7 @@ class Availability;
 // Created: AGE 2005-04-01
 // =============================================================================
 class AgentMaintenancePanel : public InfoPanel_ABC
-                            , private Observer_ABC
+                            , public Observer_ABC
                             , public SelectionObserver< Agent >
                             , public ElementObserver_ABC< LogisticConsigns >
                             , public ElementObserver_ABC< MaintenanceStates >

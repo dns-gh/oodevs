@@ -32,7 +32,7 @@ class CoordinateConverter;
 // Created: APE 2004-03-10
 // =============================================================================
 class AgentKnowledge : public Entity_ABC
-                     , private Extension_ABC
+                     , public Extension_ABC
                      , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
 {
 

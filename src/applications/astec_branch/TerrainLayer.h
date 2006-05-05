@@ -31,7 +31,7 @@ class GraphicSetup_ABC;
 // =============================================================================
 class TerrainLayer : public Layer2d_ABC
                    , private GraphicManager_ABC
-                   , private Observer_ABC
+                   , public Observer_ABC
                    , public OptionsObserver_ABC
 {
 

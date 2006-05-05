@@ -65,7 +65,7 @@ public:
 // Created: SBO 2006-04-28
 // =============================================================================
 template< typename T >
-class OptionMenu : public OptionMenuBase, private Observer_ABC, public OptionsObserver_ABC
+class OptionMenu : public OptionMenuBase, public Observer_ABC, public OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor

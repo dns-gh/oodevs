@@ -24,7 +24,7 @@ class GlTools_ABC;
 // Created: AGE 2006-04-04
 // =============================================================================
 class MeteoLayer : public Layer_ABC
-                 , private Observer_ABC
+                 , public Observer_ABC
                  , public ElementObserver_ABC< AmmoEffect >
 {
 

@@ -32,7 +32,7 @@ class GlTools_ABC;
 // Created: AGE 2006-03-17
 // =============================================================================
 class ColorStrategy : public ColorStrategy_ABC
-                    , private Observer_ABC
+                    , public Observer_ABC
                     , public ElementObserver_ABC< Team >
                     , public SelectionObserver_ABC
                     , public SelectionObserver_Base< Agent >

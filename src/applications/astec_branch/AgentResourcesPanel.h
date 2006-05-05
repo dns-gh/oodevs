@@ -46,7 +46,7 @@ class Troops;
 // Created: APE 2004-03-10
 // =============================================================================
 class AgentResourcesPanel : public InfoPanel_ABC
-                          , private Observer_ABC
+                          , public Observer_ABC
                           , public ElementObserver_ABC< Dotations >
                           , public ElementObserver_ABC< Equipments >
                           , public ElementObserver_ABC< Lends >

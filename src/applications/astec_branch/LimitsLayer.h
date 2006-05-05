@@ -35,7 +35,7 @@ class LimitsModel;
 // =============================================================================
 class LimitsLayer : public QObject
                   , public Layer_ABC
-                  , private Observer_ABC
+                  , public Observer_ABC
                   , public ElementObserver_ABC< Lima >
                   , public ElementObserver_ABC< Limit >
                   , public ContextMenuObserver_ABC< geometry::Point2f >

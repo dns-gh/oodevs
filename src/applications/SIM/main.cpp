@@ -1,5 +1,6 @@
 
 #include "SIM_pch.h"
+#include "tools/masalloc/masalloc.h"
 
 #include "SIM_App.h"
 

@@ -35,7 +35,7 @@ class Controllers;
 // Created: AGE 2005-04-21
 // =============================================================================
 class ReportPanel : public InfoPanel_ABC
-                  , private Observer_ABC
+                  , public Observer_ABC
                   , public AgentSelectionObserver
 {
 public:

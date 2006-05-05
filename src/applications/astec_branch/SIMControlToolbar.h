@@ -27,7 +27,7 @@ class Controllers;
 // Created: FBD 03-01-14
 //*****************************************************************************
 class SIMControlToolbar : public QToolBar
-                        , private Observer_ABC
+                        , public Observer_ABC
                         , public ElementObserver_ABC< Simulation >
 {
     Q_OBJECT
