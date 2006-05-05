@@ -115,8 +115,8 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, M
 
     const MIL_PopulationMission_ABC* pMission = population.GetOrderManager().GetMission();
     if( pMission )
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << population.GetID() << " \"" << pMission->GetType().GetName() << "\" " << rTime << std::endl;
+        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"" << pMission->GetType().GetName() << "\" " << rTime << std::endl;
     else
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << population.GetID() << " \"None\" " << rTime << std::endl;
+        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"None\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }
