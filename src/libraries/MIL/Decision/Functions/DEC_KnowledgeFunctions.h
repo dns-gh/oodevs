@@ -54,7 +54,8 @@ public:
     static void GetClosestObject       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetClosestFriendObject ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetObjectsColliding    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    template< typename T > static void GetObjects               ( DIA_Call_ABC& call, const T& caller );   
+    template< typename T > static void GetObjects        ( DIA_Call_ABC& call, const T& caller );   
+    template< typename T > static void GetObjectsInCircle( DIA_Call_ABC& call, const T& caller );   
 
     static void GetPopulationsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPopulationsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

@@ -211,6 +211,8 @@ void DEC_AutomateDecision::CleanStateAfterCrash()
     assert( pAutomate_ );   
     _clearfp();
 
+    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
+    
     GetBehaviorPart().ResetPart();
     Reset();
     while( GetContext().GetLocation() != 0 )
@@ -248,10 +250,9 @@ void DEC_AutomateDecision::UpdateDecision()
     {
         assert( pAutomate_ );
         LogCrash( pAutomate_ );
-        
-        MIL_RC::pRcMissionImpossible_->Send( *pAutomate_, MIL_RC::eRcTypeMessage );
-        pAutomate_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();
+        MIL_RC::pRcMissionImpossible_->Send( *pAutomate_, MIL_RC::eRcTypeMessage );
+        pAutomate_->GetOrderManager().CancelAllOrders();               
     }
 }
 

@@ -235,10 +235,14 @@ void DEC_RolePion_Decision::CleanStateAfterCrash()
     assert( pPion_ );    
     _clearfp();
 
-    GetBehaviorPart().ResetPart();
-    Reset();
+    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
+
     while( GetContext().GetLocation() != 0 )
         GetContext().ExitContext();
+
+    GetBehaviorPart().ResetPart();
+    Reset();
+
     pPion_->CancelAllActions();
     GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
 }
@@ -378,9 +382,9 @@ void DEC_RolePion_Decision::UpdateDecision()
     {
         assert( pPion_ );
         LogCrash( *pPion_ );
+        CleanStateAfterCrash();
         MIL_RC::pRcMissionImpossible_->Send( *pPion_, MIL_RC::eRcTypeMessage );
         pPion_->GetOrderManager().CancelAllOrders();       
-        CleanStateAfterCrash();
     }
 }
 

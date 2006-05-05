@@ -182,6 +182,8 @@ void DEC_PopulationDecision::CleanStateAfterCrash()
     assert( pPopulation_ );   
     _clearfp();
 
+    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() );
+
     GetBehaviorPart().ResetPart();
     Reset();
     while( GetContext().GetLocation() != 0 )
@@ -219,9 +221,9 @@ void DEC_PopulationDecision::UpdateDecision()
     {
         assert( pPopulation_ );
         LogCrash( pPopulation_ );
-        MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
-        pPopulation_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();
+        MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
+        pPopulation_->GetOrderManager().CancelAllOrders();               
     }
 }
 

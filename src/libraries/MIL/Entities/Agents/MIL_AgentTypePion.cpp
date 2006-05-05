@@ -503,6 +503,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesWith                    < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesAvec"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith              < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec"         );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjects                             < MIL_AgentPion >, "DEC_Connaissances_Objets"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjectsInCircle                     < MIL_AgentPion >, "DEC_Connaissances_ObjetsDansCercle"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetObjectsColliding                                     , "DEC_Connaissances_CollisionsObjets"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetClosestObject                                        , "DEC_Connaissances_ObjetLePlusProche"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetClosestFriendObject                                  , "DEC_Connaissances_ObjetAmiLePlusProche"                     );

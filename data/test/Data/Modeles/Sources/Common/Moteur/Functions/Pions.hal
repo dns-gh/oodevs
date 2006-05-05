@@ -254,6 +254,7 @@ signatures
     V                                       A::DEC_Connaissances_PartageConnaissancesDansZoneAvec( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_CollisionsObjets                ();
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
+    S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_ObjetsDansCercle                ( U /*T_Point centre du cercle*/, R /*rayon*/, * /*E_TypeObjects*/ );    
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetAmiLePlusProche            ( * /*E_TypeObjects*/ );        
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_CollisionsPopulations           ();

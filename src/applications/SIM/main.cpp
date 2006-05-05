@@ -201,9 +201,11 @@ int Run( uint nArgc, char* pArgv[] )
 {
     _mkdir( "./Debug" );
     MT_ConsoleLogger        consoleLogger;
-    MT_FileLogger           fileLogger( "./Debug/SIM " VERSION ".log", MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ); // 'true' is for 'clear previous log'
+    MT_FileLogger           fileLogger     ( "./Debug/SIM " VERSION ".log", MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ); // 'true' is for 'clear previous log'
+    MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError, MT_Logger_ABC::eLogLayer_All ); 
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     MT_LOG_REGISTER_LOGGER( fileLogger );
+    MT_LOG_REGISTER_LOGGER( crashFileLogger );
 
     SetLowFragmentationHeapAlgorithm();
 
@@ -224,6 +226,7 @@ int Run( uint nArgc, char* pArgv[] )
     SIM_App app( nArgc, pArgv );
     int nResult = app.Execute();
 
+    MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
 

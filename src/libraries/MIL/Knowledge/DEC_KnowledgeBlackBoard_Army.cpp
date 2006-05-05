@@ -164,6 +164,42 @@ void DEC_KnowledgeBlackBoard_Army::GetObjects( T_KnowledgeObjectVector& containe
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+class sObjectKnowledgesInCircleFilteredInserter
+{
+public:
+    sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const MT_Vector2D& center, MT_Float rRadius )
+        : pContainer_( &container )
+        , pFilter_   ( &filter    )
+        , pCenter_   ( &center    )
+        , rRadius_   ( rRadius    )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_Object& knowledge )
+    {
+        if( pFilter_->Test( knowledge.GetType() ) && !knowledge.IsPrepared() && knowledge.GetLocalisation().Intersect2DWithCircle( *pCenter_, rRadius_ ) )            
+            pContainer_->push_back( (void*)knowledge.GetID()  );
+    }
+
+private:
+          T_KnowledgeObjectDiaIDVector* pContainer_;
+    const MIL_RealObjectTypeFilter*     pFilter_;
+    const MT_Vector2D*                  pCenter_;
+          MT_Float                      rRadius_;
+};
+
+void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter, const MT_Vector2D& center, MT_Float rRadius )
+{
+    sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius );
+    
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );           
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::sObjectKnowledgesFilteredHeightInserter
 // Created: NLD 2005-05-09
 // -----------------------------------------------------------------------------

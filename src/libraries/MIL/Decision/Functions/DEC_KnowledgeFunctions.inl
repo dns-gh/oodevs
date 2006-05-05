@@ -99,7 +99,7 @@ template< typename T >
 void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller )
 {
     assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 0 ) ) );
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
+    assert( DEC_Tools::CheckTypePoint   ( call.GetParameter( 1 ) ) );
 
           DEC_AutomateDecision* pAutomate           = call.GetParameter( 0 ).ToUserObject( pAutomate );
     const MT_Vector2D*          pSharedCircleCenter = call.GetParameter( 1 ).ToUserPtr   ( pSharedCircleCenter );
@@ -120,6 +120,26 @@ void DEC_KnowledgeFunctions::GetObjects( DIA_Call_ABC& call, const T& caller )
     
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjects( knowledges, objectsFilter );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeFunctions::GetObjectsInCircle
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::GetObjectsInCircle( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
+    const MT_Vector2D* pCenter = call.GetParameter( 0 ).ToUserPtr( pCenter );
+    assert( pCenter );
+
+    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 2 );
+    
+    T_KnowledgeObjectDiaIDVector knowledges;
+    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, objectsFilter, *pCenter, call.GetParameter( 1 ).ToFloat() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceObjet() );

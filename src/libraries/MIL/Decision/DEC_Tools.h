@@ -17,6 +17,9 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_ProfilerMgr.h"
 
+class DIA_Instance;
+class DIA_Instruction_ABC;
+
 // =============================================================================
 // @class  DEC_Tools
 // Created: NLD 2004-03-11
@@ -30,6 +33,7 @@ public:
     static const DIA_TypeDef& GetDIAType        ( const std::string& strTypeName );
     static int                InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaType );
     static void               ManageDeletion    ( void* pPtr, const DIA_Type* pType );
+    static void               DisplayDiaStack   ( const DIA_Instance* pInstance, const DIA_Instruction_ABC* pInstruction );
     //@}
 
     //! @name Checkers
@@ -166,9 +170,9 @@ struct DEC_DIACallFunctorWithProfiling
 template< class FunctionCall, class CallerType >
 static void DEC_RegisterDIACallFunctor( DIA_FunctionTable< CallerType >& funcTable, FunctionCall function, const std::string& strFunctionName )
 {
-    if( MIL_AgentServer::GetWorkspace().GetConfig().IsProfilingEnabled() )
-        funcTable.RegisterFunction( DEC_DIACallFunctorWithProfiling< FunctionCall, CallerType >( function ), strFunctionName );
-    else
+//    if( MIL_AgentServer::GetWorkspace().GetConfig().IsProfilingEnabled() )
+//        funcTable.RegisterFunction( DEC_DIACallFunctorWithProfiling< FunctionCall, CallerType >( function ), strFunctionName );
+//    else
         funcTable.RegisterFunction( DEC_DIACallFunctor< FunctionCall, CallerType >( function ), strFunctionName );
 }
 //@}

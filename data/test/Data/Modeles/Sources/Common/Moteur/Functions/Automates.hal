@@ -53,6 +53,7 @@ signatures
     V                                A::DEC_Connaissances_PartageConnaissancesAvec               ( A /*T_Automate*/, R /*delai en minutes*/ );    
     V                                A::DEC_Connaissances_PartageConnaissancesDansZoneAvec       ( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
     S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_Objets                                 ( * /*E_TypeObjects*/ );   
+    S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_ObjetsDansCercle                       ( U /*T_Point centre du cercle*/, R /*rayon*/, * /*E_TypeObjects*/ );    
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion   ( A /*T_Pion*/ );    
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesEnnemiesDangereusesDansZoneDePion( A /*T_Pion*/, U /*T_Localisation*/ );
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_UnitesAmiesDansZone                    ( U /*T_Localisation*/ );            

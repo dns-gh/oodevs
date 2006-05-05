@@ -14,6 +14,11 @@
 #include "Functions/DEC_FrontAndBackLinesComputer.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 
+#include "DIA/DIA_Instance.h"
+#include "DIA/DIA_Tool_Script_Engine.h"
+#include "DIA/DIA_DebugInfo_Generator_ABC.h"
+#include "DIA/DIA_BasicBehavior_ABC.h"
+
 const DIA_TypeDef* DEC_Tools::pTypePoint_                         = 0;
 const DIA_TypeDef* DEC_Tools::pTypeDirection_                     = 0;
 const DIA_TypeDef* DEC_Tools::pTypeItineraire_                    = 0;
@@ -349,4 +354,90 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
         assert( false );
     else
         assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::DisplayDiaVariable
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+static
+void DisplayDiaVariable( const DIA_Variable_ABC& variable, std::stringstream& stream )
+{
+    switch( variable.Type() )
+    {
+        case eString    : stream << " [String : " << variable.ToString()<< "]"; break;
+        case eBool      : stream << " [Bool : " << variable.ToBool()<< "]"; break;
+        case eFloat     : stream << " [Float : " << variable.ToFloat()<< "]"; break;
+        case eId        : stream << " [" << variable.GetType().GetName() << " : " << variable.ToId() << "]"; break;
+        case eObject    : stream << " [Object(" << variable.GetType().GetName() << "): " << variable.ToObject() << "]"; break;
+        case eSelection : stream << " [" << variable.GetType().GetName() << " : size " << variable.ToSelection().size() << "]"; break;
+        case eVoid      : stream << " [" << variable.GetType().GetName() << " : " << variable.ToPtr() << "]"; break;
+        default:
+            stream << " [??]"; break;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayInstanceInformations
+// Created: NLD 2006-05-04
+// -----------------------------------------------------------------------------
+static
+void DisplayInstanceInformations( const DIA_Instance& instance, uint nLevel, std::stringstream& stream )
+{
+    for( uint i = 0; i < nLevel; ++i )
+        stream << ' ';
+//    stream.width( nLevel );
+    stream << "|- ";
+//    stream.width();
+
+    stream << const_cast< DIA_Instance& >( instance ).GetParent().GetName().c_str();
+    stream << " - Parameters: ";
+    const T_VariableCont& parameters = const_cast< DIA_Instance& >( instance ).GetParameters().GetParameters();
+    for( CIT_VariableCont it = parameters.begin(); it != parameters.end(); ++it )
+        DisplayDiaVariable( **it, stream );
+
+    stream << " - Persistent: ";
+    const T_VariableCont& persistentVariables = const_cast< DIA_Instance& >( instance ).GetPersistentVariables();
+    for( CIT_VariableCont it = persistentVariables.begin(); it != persistentVariables.end(); ++it )
+        DisplayDiaVariable( **it, stream );
+
+    stream << std::endl;
+
+    for( CIT_ActivationCont it = instance.GetActivators().begin(); it != instance.GetActivators().end(); ++it )
+    {
+        const DIA_Instance* pInstance = it->first;
+        if( pInstance )
+            DisplayInstanceInformations( *pInstance, nLevel + 1, stream );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::DisplayDiaStack
+// Created: NLD 2006-05-04
+// -----------------------------------------------------------------------------
+void DEC_Tools::DisplayDiaStack( const DIA_Instance* pInstance, const DIA_Instruction_ABC* pInstruction )
+{
+    try
+    {
+        std::stringstream strDiaStack;
+        strDiaStack << "DIA stack trace : ";
+
+        if( pInstruction && DIA_Workspace::Instance().GetDebugInfoGenerator() )
+        {
+            const uint nFuckID = const_cast< DIA_Instance*>( pInstance )->GetParent().GetParentTool().GetOwner().ConvertFileId( pInstruction->GetFileId() );
+            strDiaStack << "Current instruction: " << DIA_Workspace::Instance().GetDebugInfoGenerator()->GetFilePath( nFuckID ) << ":" << pInstruction->GetLine() << std::endl;
+        }
+        else
+            strDiaStack << std::endl;
+
+        if( pInstance )
+            DisplayInstanceInformations( *pInstance, 5, strDiaStack );
+        else
+            strDiaStack << "  No instance information" << std::endl;
+
+        MT_LOG_ERROR_MSG( strDiaStack.str() );
+    }
+    catch( ... ) // DirectIA is never to be trusted ...
+    {
+    }
 }
