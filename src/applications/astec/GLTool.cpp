@@ -258,6 +258,7 @@ void GLTool::Draw( World& world )
     else if( extent.Width() > 80000.f )
         nMaxLod = 2;
 
+    glEnableClientState( GL_VERTEX_ARRAY );
     DrawAreas( world, nMaxLod );
     if( nMaxLod > 2 )
         DrawBorders( world, nMaxLod );
