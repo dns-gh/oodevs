@@ -153,7 +153,7 @@ public:
     //@{
     static void Draw( MT_Rect& viewRect, float rClicksPerPix );
 
-    static void Draw( World& world );
+    static void Draw( MT_Rect& viewRect, World& world );
     static void DrawAreas( World& world, unsigned int nMaxLod );
     static void DrawBorders( World& world, unsigned int nMaxLod );
     static void DrawLines( World& world, unsigned int nMaxLod );

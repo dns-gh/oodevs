@@ -184,7 +184,7 @@ ObjectCreationPanel::ObjectCreationPanel( QTabWidget* pParent )
         pObjectTypeCombo_->AddItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n ).c_str(), (ASN1T_EnumObjectType)n );
     
 
-    App::GetApp().processEvents();
+//    App::GetApp().processEvents(); // $$$$ AGE 2006-05-10: WTF !!
     pTeamCombo_->setMinimumWidth( pObjectTypeCombo_->width() );
     pNBCTypeCombo_->setMinimumWidth( pObjectTypeCombo_->width() );
 

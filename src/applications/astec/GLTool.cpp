@@ -245,8 +245,9 @@ void GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
 // Name: GLTool::Draw
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
-void GLTool::Draw( World& world )
+void GLTool::Draw( MT_Rect& viewRect, World& world )
 {
+    viewRect_ = viewRect;
     geometry::Rectangle2f extent( viewRect_.GetLeft(), viewRect_.GetBottom(), viewRect_.GetRight(), viewRect_.GetTop() );
     DrawDetection( world );
 

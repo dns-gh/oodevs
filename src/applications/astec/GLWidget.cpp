@@ -159,7 +159,7 @@ void GLWidget::paintGL()
 	glClear( GL_DEPTH_BUFFER_BIT );
     glPushMatrix();
 
-    GLTool::Draw( App::GetApp().GetWorld() );
+    GLTool::Draw( viewport_, App::GetApp().GetWorld() );
     GLTool::DrawGrid( App::GetApp().GetWorld() );
     GLTool::Draw( viewport_, rMetersPerPixel_ );
 

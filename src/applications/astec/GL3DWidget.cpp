@@ -53,9 +53,9 @@ GL3DWidget::GL3DWidget( QWidget* pParent )
 {
     SetZRatio( rZFactor_ );
 
-    glInit();
+//    glInit();
     pGLDrawer_ = new MT_GLDrawer( *this, &(::ScreenToGL), MainWindow::GetMainWindow(), false ); // $$$$ AGE 2005-03-16: ??
-    update();
+//    update();
 
     pTimer_ = new QTimer( this );
     pTimer_->start( 50 );
@@ -154,7 +154,7 @@ void GL3DWidget::keyPressEvent( QKeyEvent* pEvent )
 // -----------------------------------------------------------------------------
 void GL3DWidget::initializeGL()
 {
-    Widget3D::initializeGL();
+    MapWidget3D::initializeGL();
 //    QFont scipioFont( "Scipio", 64 );
 //    renderText( 0, 0, "", scipioFont );
 //    MT_GLFont::Font( "Arial", 11.0, ANSI_CHARSET, true, FW_BOLD );
