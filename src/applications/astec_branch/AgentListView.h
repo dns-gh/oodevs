@@ -31,6 +31,7 @@ class ActionContext;
 class Controllers;
 class ValuedListItem;
 class AutomatDecisions;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentListView
@@ -55,7 +56,7 @@ class AgentListView : public ListView< AgentListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, Controllers& controllers );
+             AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentListView();
 
     QSize sizeHint() const;
@@ -116,6 +117,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    ItemFactory_ABC& factory_;
     const Team* currentTeam_;
     //@}
 };

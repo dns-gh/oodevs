@@ -10,13 +10,15 @@
 #include "astec_pch.h"
 #include "SubItemDisplayer.h"
 #include "ValuedListItem.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: SubItemDisplayer constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-SubItemDisplayer::SubItemDisplayer( const char* name )
+SubItemDisplayer::SubItemDisplayer( const char* name, ItemFactory_ABC& factory )
     : name_( name )
+    , factory_( factory )
     , parent_( 0 )
     , current_( 0 )
 {
@@ -114,7 +116,7 @@ QListViewItem* SubItemDisplayer::FindChild( const char* name ) const
     for( unsigned int i = 0; i < children_.size(); ++i )
     {
         if( ! child )
-            child = new EmptyListItem( parent_, previous );
+            child = factory_.CreateItem( parent_, previous );
         if( children_[i] == name )
             return child;
         previous = child;

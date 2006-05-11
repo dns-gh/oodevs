@@ -21,9 +21,9 @@ class Population;
 class Controllers;
 class ValuedListItem;
 class PopulationPart_ABC;
-template< typename T >
-class ListDisplayer;
+template< typename T > class ListDisplayer;
 class Displayer_ABC;
+class ItemFactory_ABC;
 
 // =============================================================================
 // Created: HME 2005-10-03
@@ -37,7 +37,7 @@ class PopulationPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPanel( InfoPanels* pParent, Controllers& controllers );
+             PopulationPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationPanel();
     //@}
 

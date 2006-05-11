@@ -28,6 +28,7 @@ class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
 class ValuedListItem;
 class Team;
+class ItemFactory_ABC;
 
 // =============================================================================
 // Created: SBO 2005-10-19
@@ -44,7 +45,7 @@ class PopulationKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers );
+             PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationKnowledgePanel();
     //@}
 

@@ -33,40 +33,40 @@
 // Name: AgentMaintenancePanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers )
+AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "Ch. maint." ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
-    pConsignListView_        = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    pConsignListView_        = new ListDisplayer< AgentMaintenancePanel >( this, *this, factory );
     pConsignListView_->AddColumn( "Demandes logistiques" );
     pConsignListView_->AddColumn( "" );
     
-    pConsignHandledListView_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    pConsignHandledListView_ = new ListDisplayer< AgentMaintenancePanel >( this, *this, factory );
     pConsignHandledListView_->AddColumn( "Consignes en traitement" );
     pConsignHandledListView_->AddColumn( "" );
 
-    logDisplay_ = new SubItemDisplayer( "Consigne :" );
+    logDisplay_ = new SubItemDisplayer( "Consigne :", factory );
     logDisplay_->AddChild( "Pion demandeur :" )
                 .AddChild( "Pion traitant :" )
                 .AddChild( "Type d'équipement :" )
                 .AddChild( "Type de panne :" )
                 .AddChild( "Etat :" );
 
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Etat chaine maintenance" )
                 .AddLabel( "Etat chaine" )
                 .AddLabel( "Régime de travail" )
                 .AddLabel( "Priorités" )
                 .AddLabel( "Priorités tactiques" );
 
-    dispoHaulers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    dispoHaulers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this, factory );
     dispoHaulers_->AddColumn( "Remorqueur" )
                   .AddColumn( "Total" )
                   .AddColumn( "Disponible" )
                   .AddColumn( "Au travail" )
                   .AddColumn( "Au repos" );
-    dispoRepairers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this );
+    dispoRepairers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this, factory );
     dispoRepairers_->AddColumn( "Réparateur" )
                     .AddColumn( "Total" )
                     .AddColumn( "Disponible" )

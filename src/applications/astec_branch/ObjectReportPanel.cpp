@@ -29,12 +29,12 @@
 // Name: ObjectReportPanel constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controllers& controllers )
+ObjectReportPanel::ObjectReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, "Rapports" )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
-    reports_ = new FireResultListView( this );
+    reports_ = new FireResultListView( this, factory );
 
     controllers_.Register( *this );
 }

@@ -32,6 +32,7 @@ class ObjectKnowledgePanel;
 class PopulationPanel;
 class PopulationKnowledgePanel;
 class Controllers;
+class ItemFactory_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -42,7 +43,7 @@ class InfoPanels : public QWidgetStack
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* pParent, Controllers& controllers );
+             InfoPanels( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~InfoPanels();
     //@}
 

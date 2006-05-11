@@ -39,7 +39,7 @@ class ReportListView : public ListDisplayer< ReportListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter );
+             ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter, ItemFactory_ABC& factory );
     virtual ~ReportListView();
     //@}
 
@@ -76,6 +76,7 @@ private:
     //! @name Member data
     //@{
     Controllers&               controllers_;
+    ItemFactory_ABC&           factory_;
     const ReportFilterOptions& filter_;
     const Agent_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
     //@}

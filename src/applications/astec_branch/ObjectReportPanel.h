@@ -35,6 +35,7 @@ class AgentFireResult;
 class Equipment;
 class SubItemDisplayer;
 class Casualties;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectReportPanel
@@ -50,7 +51,7 @@ class ObjectReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( InfoPanels* pParent, Controllers& controllers );
+             ObjectReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectReportPanel();
     //@}
 

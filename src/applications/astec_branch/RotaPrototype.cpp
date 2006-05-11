@@ -36,7 +36,8 @@ RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resol
     while( it.HasMoreElements() )
     {
         const NBCAgent& element = it.NextElement();
-        new ValuedListItem( &element, nbcAgents_, element.GetName().c_str() );
+        ValuedListItem* item = new ValuedListItem( nbcAgents_ );
+        item->Set( &element, element.GetName().c_str() );
     }
 }
 

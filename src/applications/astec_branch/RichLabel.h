@@ -25,7 +25,8 @@ class RichLabel : public QLabel
 public:
     //! @name Constructors/Destructor
     //@{
-             RichLabel( const QString& text, QWidget* parent = 0, const char* name = 0 );
+    explicit RichLabel( QWidget* parent = 0, const char* name = 0 );
+    explicit RichLabel( const QString& text, QWidget* parent = 0, const char* name = 0 );
              RichLabel( const QString& text, bool required, QWidget* parent = 0, const char* name = 0 );
     virtual ~RichLabel();
     //@}
@@ -33,13 +34,20 @@ public:
     //! @name Operations
     //@{
     void Warn( int msec );
+    virtual void setText( const QString& );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void LinkClicked( const QString& anchor );
     //@}
 
 protected:
     //! @name Events
     //@{
+    virtual void mouseMoveEvent( QMouseEvent* );
     virtual void mouseReleaseEvent( QMouseEvent* e );
-    virtual void mousePressEvent( QMouseEvent* e );
     virtual void drawContents( QPainter* p );
     //@}
 

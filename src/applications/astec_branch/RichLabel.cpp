@@ -15,13 +15,26 @@
 
 // -----------------------------------------------------------------------------
 // Name: RichLabel constructor
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+RichLabel::RichLabel( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
+    : QLabel( parent, name )
+    , richText_( new QSimpleRichText( "", font() ) )
+{
+    setAlignment( AlignVCenter | AlignLeft );
+    setMouseTracking( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichLabel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
     : QLabel( text, parent, name )
-    , richText_( new QSimpleRichText( text, this->font() ) )
+    , richText_( new QSimpleRichText( text, font() ) )
 {
     setAlignment( AlignVCenter | AlignLeft );
+    setMouseTracking( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +43,7 @@ RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& text, bool required, QWidget* parent, const char* name )
     : QLabel( text, parent, name )
-    , richText_( new QSimpleRichText( text, this->font() ) )
+    , richText_( new QSimpleRichText( text, font() ) )
 {
     if( required )
     {
@@ -40,6 +53,7 @@ RichLabel::RichLabel( const QString& text, bool required, QWidget* parent, const
         richText_->setDefaultFont( font );
     }
     setAlignment( AlignVCenter | AlignLeft );
+    setMouseTracking( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,40 +85,41 @@ void RichLabel::OnWarnStop()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RichLabel::setText
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+void RichLabel::setText( const QString& message )
+{
+    delete richText_;
+    richText_ = new QSimpleRichText( message , font() );
+    QLabel::setText( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RichLabel::mouseReleaseEvent
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
 void RichLabel::mouseReleaseEvent( QMouseEvent* e )
 {
-    const QPoint pos = mapToParent( e->pos() );
-    if( richText_->inText( pos ) )
+    const QString url = richText_->anchorAt( e->pos() );
+    if( ! url.isEmpty() )
     {
-        const QString url = richText_->anchorAt( pos );
-        if( url.isEmpty() )
-            return;
-        QProcess openPage(0);
-		openPage.addArgument( "cmd" );
-		openPage.addArgument( "/c" );
-		openPage.addArgument( "start" );
-		openPage.addArgument( url );
-		openPage.start();
+        emit LinkClicked( url );
         setCursor( QCursor::arrowCursor );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichLabel::mousePressEvent
-// Created: SBO 2006-05-04
+// Name: RichLabel::mouseMoveEvent
+// Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-void RichLabel::mousePressEvent( QMouseEvent* e )
+void RichLabel::mouseMoveEvent( QMouseEvent* e )
 {
-    const QPoint pos = mapToParent( e->pos() );
-    if( richText_->inText( pos ) )
-    {
-        const QString url = richText_->anchorAt( pos );
-        if( !url.isEmpty() )
-            setCursor( QCursor::pointingHandCursor );
-    }
+    const QString url = richText_->anchorAt( e->pos() );
+    if( url.isEmpty() )
+        setCursor( QCursor::arrowCursor );
+    else
+        setCursor( QCursor::pointingHandCursor );
 }
 
 // -----------------------------------------------------------------------------

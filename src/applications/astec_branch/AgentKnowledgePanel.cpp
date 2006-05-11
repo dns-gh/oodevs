@@ -39,7 +39,7 @@
 // Name: AgentKnowledgePanel constructor
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
+AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "C. agent" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )
@@ -47,13 +47,13 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& cont
     , subSelected_ ( controllers )
     , display_     ( 0 )
 {
-    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );
+    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( "Agents connus" );
     
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Détails" )
                 .AddLabel( "Id:" )
                 .AddLabel( "Agent associé:" )
@@ -77,7 +77,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& cont
                 .AddLabel( "PC:" )
                 .AddLabel( "Pertinence:"  );
 
-    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this );
+    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( "Agent" ).
                           AddColumn( "Niveau perception" );
 

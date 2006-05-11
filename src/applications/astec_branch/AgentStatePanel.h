@@ -26,6 +26,7 @@ class Reinforcements;
 class LogisticLinks;
 class Transports;
 class InfoPanels;
+class ItemFactory_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -44,7 +45,7 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( InfoPanels* pParent, Controllers& controllers );
+             AgentStatePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentStatePanel();
     //@}
 

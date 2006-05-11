@@ -287,6 +287,15 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
 // -----------------------------------------------------------------------------
 int RichListItem::width( const QFontMetrics& /*fm*/, const QListView* /*lv*/, int nColumn ) const
 {
+    return Width( nColumn);
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::Width
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+int RichListItem::Width( int nColumn ) const
+{
     if( nColumn >= (int)columns_.size() )
         return 0;
     return columns_[nColumn].rich->widthUsed() + columns_[nColumn].pixMap.width();
@@ -359,4 +368,34 @@ const QPixmap * RichListItem::pixmap( int column ) const
     if( column < 0 || column >= (int)columns_.size() )
         return 0;
     return & columns_[ column ].pixMap;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::rtti
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+int RichListItem::rtti() const
+{
+    return 999;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::GetAnchorAt
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+QString RichListItem::GetAnchorAt( const QPoint globalPos, int nColumn ) const
+{
+    if( nColumn >= (int)columns_.size() || ! columns_[nColumn].rich )
+        return QString::null;
+
+    QListView* pListView = listView();
+    QRect itemRect = pListView->itemRect( this );
+    QPoint topLeft = itemRect.topLeft();
+    QPoint topLeftWorld = pListView->viewport()->mapToGlobal( topLeft );
+    QPoint offset( globalPos.x() - topLeftWorld.x(), globalPos.y() - topLeftWorld.y() );
+
+    for( int n = 0; n < nColumn; ++n )
+        offset.setX( offset.x() - pListView->columnWidth( n ) );
+
+    return columns_[nColumn].rich->anchorAt( offset );
 }

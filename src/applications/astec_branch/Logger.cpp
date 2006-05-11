@@ -13,14 +13,16 @@
 
 #include "MT/MT_Logger/MT_logger_lib.h"
 #include "ValuedListItem.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent )
+Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
     : QListView( pParent )
     , MT_Logger_ABC ()
+    , factory_( factory )
 {
     layers_[ (E_DataFlow)-1 ] = new sLoggerLayer( (E_DataFlow)-1, Qt::black     );
     layers_[ eDefault       ] = new sLoggerLayer( eReceived     , Qt::black     );
@@ -67,12 +69,14 @@ void Logger::LogString( const char* /*szLayerName*/, E_LogLevel /*nLevel*/, cons
         throw std::runtime_error( "Unregistered logging layer" );
 
     // lastItem() ?  firstChild();
-    ValuedListItem* pItem = new ValuedListItem( layer, this, GetTimestampAsString(), szMsg );
+    ValuedListItem* pItem = factory_.CreateItem( this );
+    pItem->Set( layer, GetTimestampAsString(), szMsg );
     pItem->SetFontColor( layer->color_ );
 
     if( szContext != 0 )
     {
-        ValuedListItem* pSubItem = new ValuedListItem( layer, pItem, "", szContext );
+        ValuedListItem* pSubItem = factory_.CreateItem( pItem );
+        pSubItem->Set( layer, "", szContext );
         pSubItem->setMultiLinesEnabled( true );
         pSubItem->SetFontColor( layer->color_ );
     }

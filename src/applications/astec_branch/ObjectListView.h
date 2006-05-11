@@ -26,6 +26,7 @@
 class Object;
 class Controllers;
 class Team;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectListView
@@ -43,7 +44,7 @@ class ObjectListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListView( QWidget* pParent, Controllers& controllers );
+             ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectListView();
     //@}
 
@@ -78,6 +79,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    ItemFactory_ABC& factory_;
     QPopupMenu* pPopupMenu_;
     const Team* currentTeam_;
     //@}

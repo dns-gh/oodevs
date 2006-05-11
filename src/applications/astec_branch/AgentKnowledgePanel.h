@@ -36,6 +36,7 @@ class Perception;
 class Displayer_ABC;
 class ValuedListItem;
 class Team;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -54,7 +55,7 @@ class AgentKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers );
+             AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentKnowledgePanel();
     //@}
 

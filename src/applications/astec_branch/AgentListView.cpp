@@ -20,6 +20,7 @@
 #include "AutomatDecisions.h"
 #include "OptionVariant.h"
 #include "ASN_Messages.h"
+#include "ItemFactory_ABC.h"
 
 #include "moc_AgentListView.cpp"
 
@@ -27,9 +28,10 @@
 // Name: AgentListView constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers )
-    : ListView< AgentListView >( pParent, *this )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+    : ListView< AgentListView >( pParent, *this, factory )
     , controllers_( controllers )
+    , factory_( factory )
     , currentTeam_( 0 )
 {
     setMinimumSize( 1, 1 );
@@ -59,7 +61,7 @@ AgentListView::~AgentListView()
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyCreated( const Team& team )
 {
-    new ValuedListItem( &team, this, team.GetName().c_str() );
+    factory_.CreateItem( this )->Set( &team, team.GetName().c_str() );
     NotifyUpdated( team );
 }
 
@@ -128,8 +130,7 @@ void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* i
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const Team& team, ValuedListItem* item )
 {
-    item->SetValue( &team );
-    item->setText( 0, team.GetName().c_str() );
+    item->Set( &team, team.GetName().c_str() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     RecursiveDisplay< Team, KnowledgeGroup >( team, item );
@@ -141,8 +142,7 @@ void AgentListView::Display( const Team& team, ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const KnowledgeGroup& group, ValuedListItem* item )
 {
-    item->SetValue( &group );
-    item->setText( 0, group.GetName().c_str() );
+    item->Set( &group, group.GetName().c_str());
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     RecursiveDisplay< KnowledgeGroup, Agent >( group, item );
@@ -154,8 +154,7 @@ void AgentListView::Display( const KnowledgeGroup& group, ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const Agent& agent, ValuedListItem* item )
 {
-    item->SetValue( &agent );
-    item->setText( 0, agent.GetName().c_str() );
+    item->Set( &agent, agent.GetName().c_str() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     if( agent.Retrieve< AutomatDecisions >() )

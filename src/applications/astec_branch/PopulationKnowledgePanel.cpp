@@ -26,7 +26,7 @@
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
+PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, "C. popu" )
     , controllers_ ( controllers )
     , owner_       ( controllers )
@@ -34,13 +34,13 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Control
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
-    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this );
+    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
     knowledgeList_->AddColumn( "Populations connues" );
 
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Détails" )
                 .AddLabel( "Id:" )
                 .AddLabel( "Population associée:" )

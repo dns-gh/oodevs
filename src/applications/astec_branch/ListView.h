@@ -12,6 +12,7 @@
 
 #include "Iterator.h"
 #include "ValuedListItem.h"
+#include "ItemFactory_ABC.h"
 
 // =============================================================================
 /** @class  ListView
@@ -26,9 +27,11 @@ class ListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ListView( QWidget* parent, ConcreteList& list )
+             ListView( QWidget* parent, ConcreteList& list, ItemFactory_ABC& factory )
                  : QListView( parent )
-                 , list_( list ) {};
+                 , list_( list )
+                 , factory_( factory )
+             {};
     virtual ~ListView()
         {};
     //@}
@@ -45,12 +48,13 @@ public:
         {
             const Element& element = it.NextElement();
             if( ! currentItem  ) 
-                currentItem = new ValuedListItem( &element, parent, previousItem );
+                currentItem = factory_.CreateItem( parent, previousItem );
+            currentItem->SetValue( &element );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( element, previousItem );
         }
-        return currentItem ? currentItem : new EmptyListItem( parent, previousItem );
+        return currentItem ? currentItem : factory_.CreateItem( parent, previousItem );
     };
     template< typename Iterator, typename Parent >
     ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent, ValuedListItem* currentItem = 0 )
@@ -61,13 +65,13 @@ public:
         while( from != to )
         {
             if( ! currentItem  ) 
-                currentItem = new EmptyListItem( parent, previousItem );
+                currentItem = factory_.CreateItem( parent, previousItem );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( *from, previousItem );
             ++from;
         }
-        return currentItem ? currentItem : new EmptyListItem( parent, previousItem );
+        return currentItem ? currentItem : factory_.CreateItem( parent, previousItem );
     };
 
     void DeleteTail( ValuedListItem* item )
@@ -92,6 +96,7 @@ private:
     //! @name Member data
     //@{
     ConcreteList& list_;
+    ItemFactory_ABC& factory_;
     //@}
 };
 

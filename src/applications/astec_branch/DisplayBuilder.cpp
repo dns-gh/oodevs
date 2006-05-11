@@ -15,8 +15,9 @@
 // Name: DisplayBuilder constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-DisplayBuilder::DisplayBuilder( QWidget* parent )
-    : parent_( parent )
+DisplayBuilder::DisplayBuilder( QWidget* parent, ItemFactory_ABC& factory )
+    : factory_( factory )
+    , parent_( parent )
 {
     // NOTHING
 }
@@ -39,7 +40,7 @@ GroupDisplayer& DisplayBuilder::AddGroup( const char* name )
     GroupDisplayer*& group = groups_[ std::string( name ) ];
     if( group )
         throw std::runtime_error( "Group '" + std::string( name ) + "' already exists" );
-    group = new GroupDisplayer( parent_, name );
+    group = new GroupDisplayer( parent_, name, factory_ );
     return *group;
 }
 

@@ -22,6 +22,8 @@
 #include "Types.h"
 #include "MT/MT_logger/MT_Logger_ABC.h"
 
+class ItemFactory_ABC;
+
 struct sLoggerLayer
 {
     sLoggerLayer( E_DataFlow code, QColor color ) : code_ ( code ), color_ ( color ) {}
@@ -42,7 +44,7 @@ class Logger : public QListView, public MT_Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Logger( QWidget* pParent );
+             Logger( QWidget* pParent, ItemFactory_ABC& factory );
     virtual ~Logger();
     //@}
 
@@ -54,7 +56,10 @@ protected:
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
+    //@}
 
 private:
     //! @name Copy constructor/assignement
@@ -70,8 +75,12 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
+    ItemFactory_ABC& factory_;
     QPopupMenu popupMenu_;
     T_Layers layers_;
+    //@}
 };
 
 #endif // __Logger_h_

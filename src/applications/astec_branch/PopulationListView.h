@@ -17,6 +17,7 @@
 class Controllers;
 class Population;
 class Team;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  PopulationListView
@@ -35,7 +36,7 @@ class PopulationListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent, Controllers& controllers );
+             PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationListView();
     //@}
 
@@ -66,6 +67,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    ItemFactory_ABC& factory_;
     QPopupMenu* pPopupMenu_;
     const Team* currentTeam_;
     //@}

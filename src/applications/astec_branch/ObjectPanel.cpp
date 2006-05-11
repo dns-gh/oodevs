@@ -32,12 +32,12 @@
 // Name: ObjectPanel constructor
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers )
+ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC ( info, tr( "Objet" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Informations" )
                 .AddLabel( "Id:" )
                 .AddLabel( "Nom:" )

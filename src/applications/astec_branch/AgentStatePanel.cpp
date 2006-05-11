@@ -30,12 +30,12 @@
 // Name: AgentStatePanel constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers )
+AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( info, tr( "Etat" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Info" )
                 .AddLabel( "Nom:", true )
                 .AddLabel( "Etat Opérationnel:" )

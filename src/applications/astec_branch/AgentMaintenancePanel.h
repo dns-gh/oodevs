@@ -36,6 +36,7 @@ class MaintenanceStates;
 class LogMaintenanceConsign;
 class Agent;
 class Availability;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentMaintenancePanel
@@ -53,7 +54,7 @@ class AgentMaintenancePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers );
+             AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMaintenancePanel();
     //@}
 

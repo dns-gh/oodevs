@@ -14,18 +14,20 @@
 #include "Equipment.h"
 #include "Casualties.h"
 #include "SubItemDisplayer.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-FireResultListView::FireResultListView( QWidget* parent )
-    : ListDisplayer< FireResultListView >( parent, *this )
+FireResultListView::FireResultListView( QWidget* parent, ItemFactory_ABC& factory )
+    : ListDisplayer< FireResultListView >( parent, *this, factory )
+    , factory_( factory )
 {
     AddColumn( "Cible" );
     AddColumn( "Attrition" );
     
-    agentDisplay_ = new SubItemDisplayer( "Cible" );
+    agentDisplay_ = new SubItemDisplayer( "Cible", factory );
     agentDisplay_->AddChild( "Equipements" );
     agentDisplay_->AddChild( "Humains" ); // $$$$ AGE 2006-03-10: humains ??
 }
@@ -84,7 +86,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
         equipments = equipments->nextSibling();
     }
     if( ! equipments )
-        equipments = new EmptyListItem( item, last );
+        equipments = factory_.CreateItem( item, last );
     DeleteTail( 
         DisplayList( result->CreateIterator(), equipments )
     );
@@ -96,7 +98,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
         humans = humans->nextSibling();
     }
     if( ! humans )
-        humans = new EmptyListItem( item, last );
+        humans = factory_.CreateItem( item, last );
     DeleteTail( 
         DisplayList( &* result->casualties_, result->casualties_+eNbrHumanWound, humans )
     );

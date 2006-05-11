@@ -11,7 +11,8 @@
 #define __LabelDisplayer_h_
 
 #include "BaseDisplayer.h"
-class QLabel;
+class RichLabel;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  LabelDisplayer
@@ -25,7 +26,7 @@ class LabelDisplayer : public BaseDisplayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LabelDisplayer( QWidget* parent, const char* name, bool bold );
+             LabelDisplayer( QWidget* parent, const char* name, bool bold, ItemFactory_ABC& factory );
     virtual ~LabelDisplayer();
     //@}
 
@@ -52,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QLabel* valueLabel_;
+    RichLabel* valueLabel_;
     QString message_;
     //@}
 };

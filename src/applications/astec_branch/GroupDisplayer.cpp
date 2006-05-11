@@ -18,8 +18,9 @@
 // Name: GroupDisplayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-GroupDisplayer::GroupDisplayer( QWidget* parent, const char* name  )
+GroupDisplayer::GroupDisplayer( QWidget* parent, const char* name, ItemFactory_ABC& factory )
     : QGroupBox( 2, Qt::Horizontal, tr( name ), parent )
+    , factory_( factory )
 {
     // NOTHING
 }
@@ -42,7 +43,7 @@ GroupDisplayer& GroupDisplayer::AddLabel( const char* name, bool bold )
     Displayer_ABC*& item = items_[ std::string( name ) ];
     if( item )
         throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
-    item = new LabelDisplayer( this, name, bold );
+    item = new LabelDisplayer( this, name, bold, factory_ );
     return *this;
 }
 

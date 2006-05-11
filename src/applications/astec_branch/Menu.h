@@ -16,6 +16,7 @@ class QMainWindow;
 class QDialog;
 class Controllers;
 class RecorderToolbar;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  Menu
@@ -29,7 +30,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar );
+             Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar, ItemFactory_ABC& factory );
     virtual ~Menu();
     //@}
 

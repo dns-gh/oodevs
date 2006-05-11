@@ -24,18 +24,18 @@
 // Name: PopulationPanel constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationPanel::PopulationPanel( InfoPanels* pParent, Controllers& controllers )
+PopulationPanel::PopulationPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC ( pParent, tr( "Population" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )
 {
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Informations" )
                 .AddLabel( "Nom:", true )
                 .AddLabel( "Nombre de personnes vivantes:" )
                 .AddLabel( "Morts:" );
 
-    pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this );
+    pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
     pPartsListView_->AddColumn( "Morceau" )
                     .AddColumn( "Hommes vivants" )
                     .AddColumn( "Hommes morts" )

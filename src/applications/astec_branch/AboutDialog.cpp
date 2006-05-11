@@ -11,12 +11,13 @@
 #include "AboutDialog.h"
 #include "splashscreen.cpp"
 #include "RichLabel.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AboutDialog constructor
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
-AboutDialog::AboutDialog( QWidget* parent )
+AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
     : QDialog( parent, 0, FALSE, WStyle_Splash )
 {
     setCaption( tr( "A Propos" ) );
@@ -34,7 +35,7 @@ AboutDialog::AboutDialog( QWidget* parent )
     QString message;
     message += QString( APP_NAME ) + QString( " " ) + QString( APP_VERSION )
             + tr( " © 2006 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
-    RichLabel* label = new RichLabel( message, hbox );
+    RichLabel* label = factory.CreateLabel( message, hbox );
     label->setAlignment( Qt::SingleLine );
     label->setBackgroundPixmap( pixmap );
     label->setBackgroundOrigin( QWidget::AncestorOrigin );

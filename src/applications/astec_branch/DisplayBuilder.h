@@ -13,6 +13,8 @@
 #include "Displayer_ABC.h"
 #include "GroupDisplayer.h"
 
+class ItemFactory_ABC;
+
 // =============================================================================
 /** @class  DisplayBuilder
     @brief  DisplayBuilder
@@ -25,7 +27,7 @@ class DisplayBuilder : public Displayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisplayBuilder( QWidget* parent );
+             DisplayBuilder( QWidget* parent, ItemFactory_ABC& factory );
     virtual ~DisplayBuilder();
     //@}
 
@@ -60,6 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ItemFactory_ABC& factory_;
     QWidget* parent_;
     T_Groups groups_;
     //@}

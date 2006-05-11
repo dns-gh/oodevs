@@ -30,7 +30,7 @@ class FireResultListView : public ListDisplayer< FireResultListView >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireResultListView( QWidget* parent );
+             FireResultListView( QWidget* parent, ItemFactory_ABC& factory );
     virtual ~FireResultListView();
     //@}
 
@@ -52,6 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ItemFactory_ABC& factory_;
     SubItemDisplayer* agentDisplay_;
     //@}
 };

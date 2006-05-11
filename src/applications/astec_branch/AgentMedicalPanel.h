@@ -27,6 +27,7 @@ class Agent;
 class LogMedicalConsign;
 class Availability;
 class SubItemDisplayer;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentMedicalPanel
@@ -45,7 +46,7 @@ class AgentMedicalPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers );
+             AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMedicalPanel();
     //@}
 

@@ -28,45 +28,47 @@
 #include "SubItemDisplayer.h"
 #include "Units.h"
 #include "DotationRequest.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentSupplyPanel constructor
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers )
+AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "Ch. rav." ) )
     , controllers_( controllers )
+    , factory_( factory )
     , selected_( controllers )
 {
-    pConsignListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
+    pConsignListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
     pConsignListView_->AddColumn( "Demandes logistiques" );
     pConsignListView_->AddColumn( "" );
     
-    pConsignHandledListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
+    pConsignHandledListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
     pConsignHandledListView_->AddColumn( "Consignes en traitement" );
     pConsignHandledListView_->AddColumn( "" );
 
-    logDisplay_ = new SubItemDisplayer( "Consigne :" );
+    logDisplay_ = new SubItemDisplayer( "Consigne :", factory );
     logDisplay_->AddChild( "Pion demandeur :" )
                 .AddChild( "Pion traitant :" )
                 .AddChild( "Pion fournissant les moyens :" )
                 .AddChild( "Pion convoyant :" )
                 .AddChild( "Etat :" );
 
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Etat chaine rav." )
                 .AddLabel( "Etat chaine" );
 
-    pStocks_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
+    pStocks_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
     pStocks_->AddColumn( "Stock" )
              .AddColumn( "Quantité" );
 
-    pQuotas_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
+    pQuotas_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
     pQuotas_->AddColumn( "Type" )
              .AddColumn( "Quota" );
 
     
-    pDispoTransporters_ = new ListDisplayer< AgentSupplyPanel >( this, *this );
+    pDispoTransporters_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
     pDispoTransporters_->AddColumn( "Transporteurs pour convois" )
                         .AddColumn( "Total" )
                         .AddColumn( "Disponible" )
@@ -175,7 +177,7 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
         child = child->nextSibling();
     }
     if( ! child )
-        child = new EmptyListItem( item, last );
+        child = factory_.CreateItem( item, last );
     pConsignListView_->DisplayList( consign->CreateIterator(), child );
 }
 

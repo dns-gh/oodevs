@@ -11,16 +11,17 @@
 #include "LabelDisplayer.h"
 #include "Agent.h"
 #include "DotationType.h"
-#include <qlabel.h>
+#include "RichLabel.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LabelDisplayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-LabelDisplayer::LabelDisplayer( QWidget* parent, const char* name, bool bold )
+LabelDisplayer::LabelDisplayer( QWidget* parent, const char* name, bool bold, ItemFactory_ABC& factory )
 {
     new QLabel( qApp->tr( name ), parent );
-    valueLabel_ = new QLabel( parent );
+    valueLabel_ = factory.CreateLabel( parent );
     if( bold )
     {
         QFont boldFont = valueLabel_->font();

@@ -28,6 +28,7 @@
 #include "ActionController.h"
 #include "Controllers.h"
 #include "OptionVariant.h"
+#include "ItemFactory_ABC.h"
 
 #include "moc_ObjectListView.cpp"
 
@@ -37,9 +38,10 @@
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers )
+ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : QListView   ( pParent )
     , controllers_( controllers )
+    , factory_( factory )
     , pPopupMenu_ ( 0 )
     , currentTeam_( 0 )
 {
@@ -99,14 +101,20 @@ void ObjectListView::NotifyCreated( const Object& object )
     const Team& team = object.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
-        teamItem = new ValuedListItem( &team, this, team.GetName().c_str() );
+    {
+        teamItem = factory_.CreateItem( this );
+        teamItem->Set( &team, team.GetName().c_str() );
+    }
 
     const ObjectType& type = object.GetType();
     ValuedListItem* typeItem = FindChild( &type, teamItem );
     if( ! typeItem )
-        typeItem = new ValuedListItem( &type, teamItem, type.GetName().c_str() );
+    {
+        typeItem = factory_.CreateItem( teamItem );
+        typeItem->Set( &type, type.GetName().c_str() );
+    }
 
-    new ValuedListItem( &object, typeItem, object.GetName().c_str() );
+    factory_.CreateItem( typeItem )->Set( &object, object.GetName().c_str() );
 }
 
 namespace

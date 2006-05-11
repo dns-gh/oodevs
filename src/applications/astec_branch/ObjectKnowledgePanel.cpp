@@ -36,20 +36,20 @@
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers )
+ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "C. objet" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this );
+    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( "Objets connus" );
 
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
-    display_ = new DisplayBuilder( this );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Détails" )
                 .AddLabel( "Id:" )
                 .AddLabel( "Objet associé:" )
@@ -85,7 +85,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& co
                 .AddLabel( "Longueur:" )
                 .AddLabel( "Poids supporté:" );
 
-    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this );
+    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( "Agent" );
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) );

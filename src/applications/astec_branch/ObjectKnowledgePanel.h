@@ -39,6 +39,7 @@ class ObjectKnowledges;
 class Controllers;
 class Displayer_ABC;
 class ValuedListItem;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledgePanel
@@ -61,7 +62,7 @@ class ObjectKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers );
+             ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectKnowledgePanel();
     //@}
 

@@ -38,6 +38,7 @@ class Displayer_ABC;
 class ValuedListItem;
 class Humans;
 class Troops;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
@@ -56,7 +57,7 @@ class AgentResourcesPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers );
+             AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentResourcesPanel();
     //@}
 

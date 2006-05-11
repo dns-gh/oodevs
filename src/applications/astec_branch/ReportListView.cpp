@@ -25,15 +25,17 @@
 #include "Reports.h"
 #include "Agent_ABC.h"
 #include "Controllers.h"
+#include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter )
-    : ListDisplayer< ReportListView >( pParent, *this )
+ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter, ItemFactory_ABC& factory )
+    : ListDisplayer< ReportListView >( pParent, *this, factory )
     , controllers_( controllers )
     , filter_( filter )
+    , factory_( factory )
     , selected_( 0 )
 {
     AddColumn( "Reçu" );
@@ -154,7 +156,8 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
     if( ! filter_.ShouldDisplay( report ) )
         return;
 
-    new ValuedListItem( & report, this, QTime().addSecs( report.GetTime() ).toString( "hh:mm:ss" ), report.GetTitle().c_str() );
+    ValuedListItem* item = factory_.CreateItem( this );
+    item->Set( & report, QTime().addSecs( report.GetTime() ).toString( "hh:mm:ss" ), report.GetTitle().c_str() );
 //    if( report.IsRCType() )
 //    {
 //        T_RichReportItem* pItem = new T_RichReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );

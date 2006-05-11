@@ -30,7 +30,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar, ItemFactory_ABC& factory )
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
@@ -97,7 +97,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     insertItem( tr( "Affichage" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "A propos" ), new AboutDialog( this ), SLOT( exec() ) );
+    menu->insertItem( tr( "A propos" ), new AboutDialog( this, factory ), SLOT( exec() ) );
     insertItem( tr( "Aide" ), menu );
 }
     

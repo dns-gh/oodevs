@@ -28,33 +28,10 @@ class ValuedListItem : public RichListItem
 public:
     //! @name Constructors/Destructor
     //@{
-    ValuedListItem( QListView * parent );
-    ValuedListItem( QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    ValuedListItem( QListViewItem * parent );
-    ValuedListItem( QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-
-    template< typename T >
-    ValuedListItem( const T& value, QListView * parent );
-    template< typename T >
-    ValuedListItem( const T& value, QListView * parent, QListViewItem * after );
-    template< typename T >
-    ValuedListItem( const T& value, QListView * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    template< typename T >
-    ValuedListItem( const T& value, QListView * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-
-    template< typename T >
-    ValuedListItem( const T& value, QListViewItem * parent );
-    template< >
-    ValuedListItem( QListViewItem * const & parent, QListViewItem * after );
-    template< >
-    ValuedListItem( QListView* const & parent, QListViewItem * after );
-
-    template< typename T >
-    ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after );
-    template< typename T >
-    ValuedListItem( const T& value, QListViewItem * parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
-    template< typename T >
-    ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+    explicit ValuedListItem( QListView* parent );
+             ValuedListItem( QListView* parent, QListViewItem* after );
+    explicit ValuedListItem( QListViewItem* parent );
+             ValuedListItem( QListViewItem* parent, QListViewItem* after );
     virtual ~ValuedListItem();
     //@}
 
@@ -70,6 +47,8 @@ public:
     const T& GetValue() const;
     template< typename T >
     void SetValue( const T& value );
+    template< typename T >
+    void Set( const T& value, QString label1 = QString::null, QString label2 = QString::null );
 
     int rtti() const;
 
@@ -90,15 +69,6 @@ protected:
     //@{
     ValueContainer_ABC* container_;
     //@}
-};
-
-class EmptyListItem : public ValuedListItem
-{
-public:
-    EmptyListItem( QListView * parent );
-    EmptyListItem( QListViewItem * parent );
-    EmptyListItem( QListView* value, QListViewItem * parent );
-    EmptyListItem( QListViewItem* parent, QListViewItem * after );
 };
 
 // =============================================================================
@@ -242,99 +212,15 @@ void ValuedListItem::SetValue( const T& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
+// Name: ValuedListItem::Set
+// Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListView * parent )
-    : RichListItem( parent )
-    , container_( new ValueContainer< T >( value ) )
+void ValuedListItem::Set( const T& value, QString label1 /*= QString::null*/, QString label2 /*= QString::null*/ )
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewItem * after )
-    : RichListItem( parent, after )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : RichListItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : RichListItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent )
-    : RichListItem( parent )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after )
-    : RichListItem( parent, after )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : RichListItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValuedListItem constructor
-// Created: APE 2004-04-19
-// -----------------------------------------------------------------------------
-template< typename T >
-ValuedListItem::ValuedListItem( const T& value, QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
-    : RichListItem( parent, after, label1, label2, label3, label4, label5, label6, label7, label8 )
-    , container_( new ValueContainer< T >( value ) )
-{
-    // NOTHING
+    SetValue( value );
+    setText( 0, label1 );
+    setText( 1, label2 );
 }
 
 #endif // __ValuedListItem_h_

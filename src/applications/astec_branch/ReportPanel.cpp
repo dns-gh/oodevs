@@ -27,14 +27,14 @@
 // Name: ReportPanel constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportPanel::ReportPanel( InfoPanels* pParent, Controllers& controllers )
+ReportPanel::ReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC     ( pParent, tr( "Rapports" ) )
     , controllers_      ( controllers )
     , selected_         ( 0 )
 {
     pFilterOptions_      = new ReportFilterOptions( this );
-    pReportListView_     = new ReportListView( this, controllers_, *pFilterOptions_ );
-    pFireResultListView_ = new FireResultListView( this );
+    pReportListView_     = new ReportListView( this, controllers_, *pFilterOptions_, factory );
+    pFireResultListView_ = new FireResultListView( this, factory );
     connect( pFilterOptions_, SIGNAL( OptionsChanged() ), pReportListView_, SLOT( OnOptionsChanged() ) );
 
     controllers_.Register( *this );

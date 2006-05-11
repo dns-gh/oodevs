@@ -36,8 +36,7 @@ ValuedListItem::ValuedListItem( QListViewItem * parent )
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-template< >
-ValuedListItem::ValuedListItem( QListViewItem * const & parent, QListViewItem * after )
+ValuedListItem::ValuedListItem( QListViewItem * parent, QListViewItem* after )
     : RichListItem( parent, after )
     , container_( 0 )
 {
@@ -48,8 +47,7 @@ ValuedListItem::ValuedListItem( QListViewItem * const & parent, QListViewItem * 
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-template< >
-ValuedListItem::ValuedListItem( QListView* const & parent, QListViewItem * after )
+ValuedListItem::ValuedListItem( QListView* parent, QListViewItem* after )
     : RichListItem( parent, after )
     , container_( 0 )
 {
@@ -63,46 +61,6 @@ ValuedListItem::ValuedListItem( QListView* const & parent, QListViewItem * after
 ValuedListItem::~ValuedListItem()
 {
     delete container_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EmptyListItem::EmptyListItem
-// Created: AGE 2006-02-23
-// -----------------------------------------------------------------------------
-EmptyListItem::EmptyListItem( QListView * parent )
-    : ValuedListItem( parent )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EmptyListItem::EmptyListItem
-// Created: AGE 2006-02-23
-// -----------------------------------------------------------------------------
-EmptyListItem::EmptyListItem( QListViewItem * parent )
-    : ValuedListItem( parent )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EmptyListItem::EmptyListItem
-// Created: AGE 2006-02-23
-// -----------------------------------------------------------------------------
-EmptyListItem::EmptyListItem( QListView* value, QListViewItem * parent )
-    : ValuedListItem( value, parent )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EmptyListItem::EmptyListItem
-// Created: AGE 2006-02-23
-// -----------------------------------------------------------------------------
-EmptyListItem::EmptyListItem( QListViewItem* parent, QListViewItem * after )
-    : ValuedListItem( parent, after )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

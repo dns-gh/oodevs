@@ -11,6 +11,7 @@
 #define __AboutDialog_h_
 
 #include <qdialog.h>
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AboutDialog
@@ -24,7 +25,7 @@ class AboutDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AboutDialog( QWidget* parent );
+             AboutDialog( QWidget* parent, ItemFactory_ABC& factory );
     virtual ~AboutDialog();
     //@}
 

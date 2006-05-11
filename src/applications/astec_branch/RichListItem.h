@@ -51,6 +51,8 @@ public:
     void SetFont( const QFont& font );
     void SetFontColor( const QColor& color );
     void SetBold( bool b );
+
+    QString GetAnchorAt( const QPoint globalPos, int nColumn ) const;
     //@}
 
     //! @name Operations
@@ -61,6 +63,7 @@ public:
     virtual QString text( int column ) const;
     virtual void setPixmap( int column, const QPixmap & pm );
     virtual const QPixmap * pixmap( int column ) const;
+    int rtti() const;
     //@}
 
 private:
@@ -71,6 +74,7 @@ private:
                      const QString& label5, const QString& label6, const QString& label7, const QString& label8 );
     const QColor& GetBackgroundColor();
     QSimpleRichText* CreateRichText( const QString& label );
+    int Width( int nColumn ) const;
     //@}
 
     //! @name Types

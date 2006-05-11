@@ -17,6 +17,7 @@
 #include <map>
 
 class LabelDisplayer;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  GroupDisplayer
@@ -30,7 +31,7 @@ class GroupDisplayer : public Displayer_ABC, public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             GroupDisplayer( QWidget* parent, const char* name  );
+             GroupDisplayer( QWidget* parent, const char* name, ItemFactory_ABC& factory );
     virtual ~GroupDisplayer();
     //@}
 
@@ -66,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ItemFactory_ABC& factory_;
     T_Items items_;
     //@}
 };

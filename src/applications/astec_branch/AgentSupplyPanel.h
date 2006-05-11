@@ -38,6 +38,7 @@ class Availability;
 class SubItemDisplayer;
 class Dotation;
 class DotationRequest;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentSupplyPanel
@@ -56,7 +57,7 @@ class AgentSupplyPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers );
+             AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentSupplyPanel();
     //@}
 
@@ -84,6 +85,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    ItemFactory_ABC& factory_;
     SafePointer< Agent > selected_;
     ListDisplayer< AgentSupplyPanel >* pConsignListView_;
     ListDisplayer< AgentSupplyPanel >* pConsignHandledListView_;

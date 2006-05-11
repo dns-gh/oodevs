@@ -16,6 +16,7 @@
 #include "ActionController.h"
 #include "Controllers.h"
 #include "OptionVariant.h"
+#include "ItemFactory_ABC.h"
 
 #include "moc_PopulationListView.cpp"
 
@@ -23,9 +24,10 @@
 // Name: PopulationListView constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers )
+PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : QListView   ( pParent )
     , controllers_( controllers )
+    , factory_( factory )
     , pPopupMenu_ ( 0 )
     , currentTeam_( 0 )
 {
@@ -60,8 +62,11 @@ void PopulationListView::NotifyCreated( const Population& popu )
     const Team& team = popu.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
-        teamItem = new ValuedListItem( &team, this, team.GetName().c_str() );
-    new ValuedListItem( &popu, teamItem, popu.GetName().c_str() );
+    {
+        teamItem = factory_.CreateItem( this );
+        teamItem->Set( &team, team.GetName().c_str() );
+    }
+    factory_.CreateItem( teamItem )->Set( &popu, popu.GetName().c_str() );
 }
 
 // -----------------------------------------------------------------------------

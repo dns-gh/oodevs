@@ -12,6 +12,7 @@
 
 #include "BaseDisplayer.h"
 class QListViewItem;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  SubItemDisplayer
@@ -25,7 +26,7 @@ class SubItemDisplayer : public BaseDisplayer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SubItemDisplayer( const char* name );
+             SubItemDisplayer( const char* name, ItemFactory_ABC& factory );
     virtual ~SubItemDisplayer();
     //@}
 
@@ -61,6 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ItemFactory_ABC& factory_;
     const char* name_;
     QListViewItem* parent_;
     QListViewItem* current_;

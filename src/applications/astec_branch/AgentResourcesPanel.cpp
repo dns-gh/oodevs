@@ -38,29 +38,29 @@
 // Name: AgentResourcesPanel constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers )
+AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "Res." ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    pEquipment_ = new T_ListView( this, *this );
+    pEquipment_ = new T_ListView( this, *this, factory );
     pEquipment_->AddColumn( "Equipement" )
                 .AddColumn( "Disponible" )
                 .AddColumn( "Indisponible" )
                 .AddColumn( "Réparable" )
                 .AddColumn( "En maintenance" );
 
-    pResources_ = new T_ListView( this, *this );
+    pResources_ = new T_ListView( this, *this, factory );
     pResources_->AddColumn( "Resource" )
                 .AddColumn( "Quantité" );
 
-    pTroops_ = new T_ListView( this, *this );
+    pTroops_ = new T_ListView( this, *this, factory );
     pTroops_->AddColumn( "Catégorie" )
              .AddColumn( "Officiers" )
              .AddColumn( "Sous officiers" )
              .AddColumn( "Mdr" );
 
-    pLends_ = new T_ListView( this, *this );
+    pLends_ = new T_ListView( this, *this, factory );
     pLends_->AddColumn( "Emprunteur" )
             .AddColumn( "Equipement prêté" )
             .AddColumn( "Quantité" );

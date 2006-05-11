@@ -27,6 +27,7 @@ class ReportListView;
 class FireResultListView;
 class ReportFilterOptions;
 class Controllers;
+class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ReportPanel
@@ -41,7 +42,7 @@ class ReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportPanel( InfoPanels* pParent, Controllers& controllers );
+             ReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory);
     virtual ~ReportPanel();
     //@}
 

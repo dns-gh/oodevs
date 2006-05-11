@@ -54,6 +54,8 @@
 #include "Menu.h"
 #include "ParametersLayer.h"
 #include "GlPlaceHolder.h"
+#include "RichItemFactory.h"
+#include "LinkInterpreter.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -82,6 +84,10 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
 
     layers_ = new GlLayers( controllers, model, prefDialog->GetPreferences() );
 
+    RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
+    LinkInterpreter* interpreter = new LinkInterpreter( this );
+    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
+
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
@@ -89,19 +95,19 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
 
     QVBox* agentPanel = new QVBox();
     new EntitySearchBox< Agent >( agentPanel, controllers );
-    AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers );
+    AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers, *factory );
     pListsTabWidget->addTab( agentPanel, tr( "Agents" ) );
     pAgentList_->header()->hide();
 
     QVBox* objectPanel = new QVBox();
     new EntitySearchBox< Object >( objectPanel, controllers );
-    ObjectListView* pObjectList_ = new ObjectListView( objectPanel, controllers );
+    ObjectListView* pObjectList_ = new ObjectListView( objectPanel, controllers, *factory );
     pListsTabWidget->addTab( objectPanel, tr( "Objets" ) );
     pObjectList_->header()->hide();
 
     QVBox* populationPanel = new QVBox();
     new EntitySearchBox< Population >( populationPanel, controllers );
-    PopulationListView* pPopulationList_ = new PopulationListView( populationPanel, controllers );
+    PopulationListView* pPopulationList_ = new PopulationListView( populationPanel, controllers, *factory );
 	pListsTabWidget->addTab( populationPanel, tr( "Populations" ) );
 	pPopulationList_->header()->hide();
 
@@ -114,7 +120,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
@@ -132,7 +138,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     // Logger
     QDockWindow* pLogDockWnd_ = new QDockWindow( this );
     moveDockWindow( pLogDockWnd_, Qt::DockBottom );
-    Logger* pLogPanel_ = new Logger( pLogDockWnd_ );
+    Logger* pLogPanel_ = new Logger( pLogDockWnd_, *factory );
     pLogDockWnd_->setWidget( pLogPanel_ );
     pLogDockWnd_->setResizeEnabled( true );
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
@@ -160,7 +166,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, recorder );
 
-    new Menu( this, controllers, *prefDialog, *recorderToolbar );
+    new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );

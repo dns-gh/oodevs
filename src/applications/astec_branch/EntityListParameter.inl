@@ -63,7 +63,10 @@ template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 {
     if( potential_ )
-        new ValuedListItem( potential_, this, potential_->GetName().c_str() );
+    {
+        ValuedListItem* item = new ValuedListItem( this );
+        item->Set( potential_, potential_->GetName().c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
