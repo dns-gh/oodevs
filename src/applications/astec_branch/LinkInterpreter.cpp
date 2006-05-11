@@ -110,32 +110,5 @@ bool LinkInterpreter::InterpreteId( const QString& classId, const QString& id )
     return false; // $$$$ AGE 2006-05-11: 
 }
 
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::Cleanup
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-QString LinkInterpreter::Cleanup( const QString& className )
-{
-    return QString( className ).remove( "class " );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::GetAddress
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-QString LinkInterpreter::GetAddress( void* add )
-{
-    return QString::number( reinterpret_cast< int >( add ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::Embed
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-QString LinkInterpreter::Embed( const QString& message, const QString& classId, const QString& id )
-{
-    return "<a href=\"id://" + classId + "/" + id + "\">" + message + "</a>";
-}
-
 
  

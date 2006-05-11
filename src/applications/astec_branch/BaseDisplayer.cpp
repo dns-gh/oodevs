@@ -21,6 +21,7 @@
 #include "ComponentType.h"
 #include "BreakdownType.h"
 #include "ObjectType.h"
+#include "InternalLinks.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -55,7 +56,7 @@ void BaseDisplayer::Call( const bool& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Agent& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +92,7 @@ void BaseDisplayer::Call( const EquipmentType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Object& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +101,7 @@ void BaseDisplayer::Call( const Object& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Population& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------

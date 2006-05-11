@@ -141,7 +141,7 @@ void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displ
     if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.IsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
-        displayer.Display( "Agents connus", k.GetRealAgent() );
+        displayer.Display( "Agents connus", k.GetRealAgent() ); // $$$$ AGE 2006-05-11: .GetName() to prevent link ?
     }
     else
         delete item;

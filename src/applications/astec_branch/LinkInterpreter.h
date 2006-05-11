@@ -35,16 +35,6 @@ public slots:
     virtual bool Interprete( const QString& link );
     //@}
 
-public:
-    //! @name Operations
-    //@{
-    template< typename T >
-    QString CreateLink( const T& entity, const QString& message )
-    {
-        return Embed( message, GetClass( entity ), GetIdentifier( entity ) );
-    }
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -55,20 +45,6 @@ private:
     //! @name Helpers
     //@{
     virtual bool Interprete( const QString& protocole, const QString& address );
-    template< typename T >
-    QString GetClass( const T& entity )
-    {
-        return Cleanup( typeid( T ).name() );
-    }
-    template< typename T >
-    QString GetIdentifier( const T& entity )
-    {
-        return GetAddress( &entity );// $$$$ AGE 2006-05-11: => "Portable link" ? qui prendrait l'ID ?
-    }
-
-    QString Cleanup( const QString& className );
-    QString GetAddress( void* add );
-    QString Embed( const QString& message, const QString& classId, const QString& id );
     bool ExecuteCommand( const QString& address );
     bool FollowLink( const QString& address );
     bool InterpreteId( const QString& address );
