@@ -174,6 +174,24 @@ namespace
     };
     template< typename T >
     AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
+
+    struct { struct {
+            static const unsigned maximumShortRequest = 5;
+    } cpp; } Config;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::GetRequests
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+DEC_PathFind_Manager::T_Requests& DEC_PathFind_Manager::GetRequests()
+{
+    const bool shortHavePriority = 
+           ( ! shortRequests_.empty() )
+           && ( pathFindThreads_.size() == 1 || shortRequests_.size() > Config.cpp.maximumShortRequest );
+    if( shortHavePriority || longRequests_.empty() )
+        return shortRequests_;
+    return longRequests_;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,16 +211,9 @@ TER_PathFindRequest_ABC* DEC_PathFind_Manager::GetMessage( unsigned int nThread 
     else
     {
         condition_.wait( locker, AreNotEmpty( shortRequests_, longRequests_ ) );
-        if( ! shortRequests_.empty() )
-        {
-            pRequest = shortRequests_.front();
-            shortRequests_.pop_front();
-        }
-        else
-        {
-            pRequest = longRequests_.front();
-            longRequests_.pop_front();
-        }
+        T_Requests& requests = GetRequests();
+        pRequest = requests.front();
+        requests.pop_front();
     }
     ++treatedRequests_;
     return pRequest;

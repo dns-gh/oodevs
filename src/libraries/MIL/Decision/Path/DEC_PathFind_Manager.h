@@ -66,6 +66,7 @@ private:
     void                             AddPendingJob( DEC_Path_ABC& path );
     virtual TER_PathFindRequest_ABC* GetMessage   ();
             TER_PathFindRequest_ABC* GetMessage   ( unsigned int nThread );
+    T_Requests& GetRequests();
     //@}
 
 private:
