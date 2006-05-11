@@ -402,6 +402,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
         DIN_BufferedMessage msg = BuildMessage(); // $$$$ AGE 2005-03-07: The critical section is probably locked twice here. And in many other places
         msg << (uint8)workspace.GetAgentServer    ().MustSendUnitVisionCones();
         msg << (uint8)workspace.GetProfilerManager().IsProfilingEnabled     ();
+        // $$$$ AGE 2006-05-11: un peu crado
+        const std::string conffile = MT_GetCurrentDir() + '\\' + MIL_AgentServer::GetWorkspace().GetConfig().GetConfigFileName();
+        msg << conffile;
         SendMsgInit( connection, msg );
     }
 

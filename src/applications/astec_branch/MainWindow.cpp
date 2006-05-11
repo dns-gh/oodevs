@@ -56,6 +56,8 @@
 #include "GlPlaceHolder.h"
 #include "RichItemFactory.h"
 #include "LinkInterpreter.h"
+#include "Tiredness.h"
+#include "Experience.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -63,6 +65,9 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 namespace bfs = boost::filesystem;
+
+#include "xeumeuleu/xml.h"
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -196,7 +201,7 @@ void MainWindow::Open()
         if( current.substr( 0, 2 ) == "//" )
             std::replace( current.begin(), current.end(), '/', '\\' );
     }
-    App::GetApp().Load( current ); // $$$$ AGE 2006-05-03: ....
+    Load( current );
 }
 
 
@@ -206,6 +211,8 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 void MainWindow::Load( const std::string& scipioXml )
 {
+    InitializeHumanFactors( scipioXml );
+    model_.Load( scipioXml );
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
@@ -220,6 +227,24 @@ void MainWindow::Load( const std::string& scipioXml )
     connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
     displayTimer_->start( 50 );
     widget2d_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::InitializeHumanFactors
+// Created: AGE 2006-05-11
+// -----------------------------------------------------------------------------
+void MainWindow::InitializeHumanFactors( const std::string& conffile )
+{
+    xifstream xis( conffile );
+    xis >> start( "Scipio" )
+            >> start( "Donnees" );
+    std::string strHumanFactorsFile;
+    xis >> content( "FacteursHumains", strHumanFactorsFile );
+    const std::string factorsName = App::BuildChildPath( conffile, strHumanFactorsFile );
+    xifstream factors( factorsName );
+
+    Tiredness ::Initialize( factors );
+    Experience::Initialize( factors );
 }
 
 // -----------------------------------------------------------------------------

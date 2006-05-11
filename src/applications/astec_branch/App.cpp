@@ -101,7 +101,7 @@ void App::Initialize( int nArgc, char** ppArgv )
     mainWindow_  = new MainWindow( *controllers_, *model_, network_->GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-05-03: 
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
-        Load( conffile );
+        mainWindow_->Load( conffile );
 
     mainWindow_->show();
 
@@ -127,20 +127,6 @@ std::string App::BuildChildPath( const std::string& parent, const std::string& c
     return ( parentPath.branch_path() / childPath ).native_file_string();
 }
 
-// -----------------------------------------------------------------------------
-// Name: App::Load
-// Created: AGE 2006-05-03
-// -----------------------------------------------------------------------------
-void App::Load( const std::string& scipioXml )
-{
-    // $$$$ AGE 2006-05-03: dégager dans la MainWindow::Load
-    xifstream xis( scipioXml );
-    xis >> start( "Scipio" )
-            >> start( "Donnees" );
-    InitializeHumanFactors ( xis, scipioXml ); 
-    model_->Load( scipioXml );
-    mainWindow_->Load( scipioXml );
-}
 
 //-----------------------------------------------------------------------------
 // Name: App destructor
@@ -149,21 +135,6 @@ void App::Load( const std::string& scipioXml )
 App::~App()
 {
     // bof
-}
-
-// -----------------------------------------------------------------------------
-// Name: App::InitializeHumanFactors
-// Created: NLD 2004-11-30
-// -----------------------------------------------------------------------------
-void App::InitializeHumanFactors( xistream& xis, const std::string& conffile )
-{
-    std::string strHumanFactorsFile;
-    xis >> content( "FacteursHumains", strHumanFactorsFile );
-    const std::string factorsName = BuildChildPath( conffile, strHumanFactorsFile );
-    xifstream factors( factorsName );
-
-    Tiredness ::Initialize( factors );
-    Experience::Initialize( factors );
 }
 
 //-----------------------------------------------------------------------------
@@ -179,11 +150,9 @@ void App::UpdateData()
             network_->Update();
     } catch( std::exception& e )
     {
-        bDoMe = false;
-        const int result = QMessageBox::critical( 0, APP_NAME, e.what(), QMessageBox::Ignore, QMessageBox::Abort );
-        if( result == QMessageBox::Abort )
-            quit();
-        bDoMe = true; // $$$$ AGE 2006-05-03: déconnecter 
+        network_->Disconnect();
+        // $$$$ AGE 2006-05-11: Huhu
+        QMessageBox::critical( 0, APP_NAME, e.what(), QMessageBox::Abort, QMessageBox::Abort );
     }
 }
 

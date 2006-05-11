@@ -49,7 +49,6 @@ public:
 
     //! @name Accessors
     //@{
-    void Load( const std::string& scipioXml );
     Network&    GetNetwork   () const; // $$$$ AGE 2006-05-03: 
     //@}
 
@@ -69,7 +68,6 @@ private:
     //! @name Helpers
     //@{
     void Initialize( int nArgc, char** ppArgv );
-    void InitializeHumanFactors ( xml::xistream& xis, const std::string& conffile );
     Workers* CreateWorkers();
     //@}
 

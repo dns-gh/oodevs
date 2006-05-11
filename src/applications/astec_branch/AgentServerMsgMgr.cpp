@@ -254,8 +254,13 @@ void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& inp
 // Name: AgentServerMsgMgr::OnReceiveMsgInit
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& )
+void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& input )
 {
+    unsigned char visionCones, profiling;
+    std::string configPath;
+    input >> visionCones >> profiling; // whatever
+    input >> configPath;
+    // $$$$ AGE 2006-05-11: Deal with it !
     ToggleVisionCones();
 }
 
@@ -920,7 +925,6 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
         model_.limits_.UpdateToSim(); // $$$$ AGE 2006-02-15: WTF
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin
 // Created: NLD 2003-08-05
@@ -998,7 +1002,6 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
             Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck

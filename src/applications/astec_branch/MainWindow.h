@@ -90,6 +90,8 @@ private:
 
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     virtual void NotifyUpdated( const Simulation& simulation );
+
+    void InitializeHumanFactors( const std::string& scipioXml );
     //@}
 
     //! @name Copy/Assignment
