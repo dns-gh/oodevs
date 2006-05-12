@@ -11,6 +11,7 @@
 #include "ColoredElevationLayer.h"
 #include "xeumeuleu/xml.h"
 #include "DetectionMap.h"
+#include "boost/static_assert.hpp"
 using namespace xml;
 
 // -----------------------------------------------------------------------------
@@ -48,12 +49,22 @@ void ColoredElevationLayer::ReadElevation( xml::xistream& xis )
     colors_.push_back( T_Color( percentage * 0.01f, QColor( color.c_str() ) ) );
 }
 
+namespace
+{
+    union color_t {
+        unsigned int rgba;
+        unsigned char c[4];
+    };
+    BOOST_STATIC_ASSERT( sizeof( color_t ) == 4 );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ColoredElevationLayer::SelectColor
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
 void ColoredElevationLayer::SelectColor( short e, float /*slope*/, short maxElevation, unsigned char* color )
 {
+    // $$$$ AGE 2006-05-12: ce truc rame. Trouver mieux
     const float elevation = float( e ) / float( maxElevation );
     if( elevation <= colors_.front().first )
         WriteColor( colors_.front().second, color );
@@ -69,11 +80,12 @@ void ColoredElevationLayer::SelectColor( short e, float /*slope*/, short maxElev
                 const float in2 = it->first;
                 const float ratio2 = ( elevation - in1 ) / ( in2 - in1 );
                 const float ratio1 = 1.f - ratio2;
-                const QColor& color1 = (it-1)->second;
-                const QColor& color2 = it->second;
-                *color     = (unsigned char)( color1.red()   * ratio1 + color2.red()   * ratio2 );
-                *(color+1) = (unsigned char)( color1.green() * ratio1 + color2.green() * ratio2 );
-                *(color+2) = (unsigned char)( color1.blue()  * ratio1 + color2.blue()  * ratio2 );
+                color_t color1, color2;
+                color1.rgba = (it-1)->second.rgb();
+                color2.rgba = it->second.rgb();
+                *color     = (unsigned char)( color1.c[0] * ratio1 + color2.c[0] * ratio2 );
+                *(color+1) = (unsigned char)( color1.c[1] * ratio1 + color2.c[1] * ratio2 );
+                *(color+2) = (unsigned char)( color1.c[2] * ratio1 + color2.c[2] * ratio2 );
                 return;
             };
         }
@@ -87,7 +99,9 @@ void ColoredElevationLayer::SelectColor( short e, float /*slope*/, short maxElev
 inline
 void ColoredElevationLayer::WriteColor( const QColor& color, unsigned char* where )
 {
-    *where     = (unsigned char)( color.red() );
-    *(where+1) = (unsigned char)( color.green() );
-    *(where+2) = (unsigned char)( color.blue() );
+    color_t c;
+    c.rgba = color.rgb();
+    *where     = c.c[0];
+    *(where+1) = c.c[1];
+    *(where+2) = c.c[2];
 }
