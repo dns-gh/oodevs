@@ -10,6 +10,10 @@
 #ifndef __InternalLinks_h_
 #define __InternalLinks_h_
 
+class Agent;
+class Object;
+class Population;
+
 // =============================================================================
 /** @class  InternalLinks
     @brief  InternalLinks
@@ -19,32 +23,27 @@
 class InternalLinks
 {
 public:
+    //! @name Constants
+    //@{
+    const static QString agent_;
+    const static QString object_;
+    const static QString population_;
+    //@}
+
+public:
     //! @name Operations
     //@{
-    template< typename T >
-    static QString CreateLink( const T& entity, const QString& message )
-    {
-        return Embed( message, GetClass( entity ), GetIdentifier( entity ) );
-    }
+    static QString CreateLink( const Agent& entity, const QString& message );
+    static QString CreateLink( const Object& entity, const QString& message );
+    static QString CreateLink( const Population& entity, const QString& message );
+
+    static QString CreateLink( const QString& type, unsigned long id, const QString& message );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    template< typename T >
-    static QString GetClass( const T& )
-    {
-        return Cleanup( typeid( T ).name() );
-    }
-
-    template< typename T >
-    static QString GetIdentifier( const T& entity )
-    {
-        return GetAddress( &entity );// $$$$ AGE 2006-05-11: => "Portable link" ? qui prendrait l'ID ?
-    }
-    static QString Cleanup( const QString& className );
-    static QString GetAddress( const void* add );
-    static QString Embed( const QString& message, const QString& classId, const QString& id );
+    static QString Embed( const QString& message, const QString& classId, unsigned long id );
     //@}
 };
 

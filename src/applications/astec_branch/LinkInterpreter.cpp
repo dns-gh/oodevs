@@ -9,15 +9,24 @@
 
 #include "astec_pch.h"
 #include "LinkInterpreter.h"
+#include "InternalLinks.h"
 #include "moc_LinkInterpreter.cpp"
+#include "Model.h"
+#include "AgentsModel.h"
+#include "ObjectsModel.h"
+#include "Controllers.h"
+#include "ActionController.h"
+
 #include <qprocess.h>
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter constructor
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-LinkInterpreter::LinkInterpreter( QObject* parent )
+LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, Model& model )
     : QObject( parent )
+    , controllers_( controllers )
+    , model_( model )
 {
     // NOTHING
 }
@@ -102,13 +111,30 @@ bool LinkInterpreter::InterpreteId( const QString& address )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LinkInterpreter::Activate
+// Created: AGE 2006-05-12
+// -----------------------------------------------------------------------------
+template< typename T >
+bool LinkInterpreter::Activate( const Resolver_ABC< T >& resolver, unsigned long id )
+{
+    const T* activated = resolver.Find( id );
+    if( activated )
+        controllers_.actions_.Activate( *activated );
+    return activated;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LinkInterpreter::InterpreteId
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::InterpreteId( const QString& classId, const QString& id )
+bool LinkInterpreter::InterpreteId( const QString& classId, const QString& strId )
 {
-    return false; // $$$$ AGE 2006-05-11: 
+    bool ok = false;
+    unsigned long id = strId.toULong( &ok );
+    return ok && ( 
+        ( classId == InternalLinks::agent_      && Activate< Agent >( model_.agents_, id ) )
+     || ( classId == InternalLinks::object_     && Activate< Object >( model_.objects_, id ) )
+     || ( classId == InternalLinks::population_ && Activate< Population >( model_.agents_, id ) ) );
 }
-
 
  

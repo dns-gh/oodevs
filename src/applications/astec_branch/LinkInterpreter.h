@@ -10,6 +10,11 @@
 #ifndef __LinkInterpreter_h_
 #define __LinkInterpreter_h_
 
+#include "Resolver_ABC.h"
+
+class Model;
+class Controllers;
+
 // =============================================================================
 /** @class  LinkInterpreter
     @brief  LinkInterpreter
@@ -25,7 +30,7 @@ class LinkInterpreter : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LinkInterpreter( QObject* parent = 0 );
+             LinkInterpreter( QObject* parent, Controllers& controllers, Model& model );
     virtual ~LinkInterpreter();
     //@}
 
@@ -49,6 +54,15 @@ private:
     bool FollowLink( const QString& address );
     bool InterpreteId( const QString& address );
     bool InterpreteId( const QString& classId, const QString& id );
+    template< typename T >
+    bool Activate( const Resolver_ABC< T >& resolver, unsigned long id );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Controllers& controllers_;
+    Model& model_;
     //@}
 };
 

@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "LogisticRoutePrototype.h"
 #include "ASN_Messages.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype constructor
@@ -21,15 +22,19 @@ LogisticRoutePrototype::LogisticRoutePrototype( QWidget* parent )
 {
     new QLabel( tr( "Débit:" ), this );
     flow_ = new QSpinBox( 0, 10000, 1, this );
+    flow_->setSuffix( Units::vehiclesPerHour );
 
     new QLabel( tr( "Largeur:" ), this );
     width_ = new QSpinBox( 0, 10000, 1, this );
+    width_->setSuffix( Units::meters );
 
     new QLabel( tr( "Longueur:" ), this );
     length_ = new QSpinBox( 0, 10000, 1, this );
+    length_->setSuffix( Units::meters );
 
     new QLabel( tr( "Poids maximum:" ), this );
     maxWeight_ = new QSpinBox( 0, 10000, 1, this );
+    maxWeight_->setSuffix( Units::tons );
 
     equipped_ = new QCheckBox( tr( "Equipé:" ), this );
 }

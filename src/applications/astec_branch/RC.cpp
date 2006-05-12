@@ -11,8 +11,8 @@
 
 #include "astec_pch.h"
 #include "RC.h"
-
 #include "Agent.h"
+#include "InternalLinks.h"
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor
@@ -343,11 +343,11 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // -----------------------------------------------------------------------------
 std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
+    // $$$$ AGE 2006-05-12: 
     std::stringstream str;
     str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
     return str.str();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RC::AgentKnowledgeLink
@@ -377,13 +377,6 @@ std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentLink( ASN1T_OID nId )
 {
-    // $$$$ AGE 2006-02-15: 
-    Agent_ABC* pAgent = 0; //App::GetApp().GetModel().agents_.FindAllAgent( nId );
-    if( pAgent == 0 )
-        return std::string( " !Agent non trouvé! " );
-
-    std::stringstream str;
-    str << "<a href=\"Agent:" << nId << "\">" << pAgent->GetName() << "</a>";
-    return str.str();
-
+    // $$$$ AGE 2006-05-12: resolve and get a name ?
+    return InternalLinks::CreateLink( InternalLinks::agent_, nId, QString::number( nId ) ).ascii();
 }

@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "CrossingSitePrototype.h"
 #include "ASN_Messages.h"
+#include "Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype constructor
@@ -21,12 +22,15 @@ CrossingSitePrototype::CrossingSitePrototype( QWidget* parent )
 {
     new QLabel( tr( "Largeur:" ), this );
     width_ = new QSpinBox( 0, 10000, 10, this );
+    width_->setSuffix( Units::meters );
 
     new QLabel( tr( "Profondeur:" ), this );
     depth_ = new QSpinBox( 0, 1000, 10, this );
+    depth_->setSuffix( Units::meters );
 
     new QLabel( tr( "Vitesse courant:" ), this );
     speed_ = new QSpinBox( 0, 100, 1, this );
+    speed_->setSuffix( Units::metersPerSecond );
 
     new QLabel( tr( "Berges à aménager:" ), this );
     needsConstruction_ = new QCheckBox( this );
