@@ -236,6 +236,15 @@ void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Po
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawArc
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const
+{
+    tools_->DrawArc( center, p1, p2 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawCircle
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

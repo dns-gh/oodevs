@@ -13,7 +13,6 @@
 #include "GLTools_ABC.h"
 #include "Controller.h"
 #include "InitializationMessage.h"
-#include "Profiler.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation2dLayer constructor
@@ -56,6 +55,5 @@ void Elevation2dLayer::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    PROFILE();
     layer_->Paint( viewport );
 }

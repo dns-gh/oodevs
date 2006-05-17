@@ -104,7 +104,6 @@ void Sector::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& too
 
         tools.DrawLine( vOrigin_, vOrigin_ + dir1 );
         tools.DrawLine( vOrigin_, vOrigin_ + dir2 );
-        // $$$$ AGE 2006-04-04: 
-//            GLTool::DrawArc( vOrigin_, radius, minAngle_, maxAngle_ );
+        tools.DrawArc( vOrigin_, vOrigin_ + dir1, vOrigin_ + dir2 );
     }
 }

@@ -213,6 +213,15 @@ void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawArc
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const
+{
+    // $$$$ AGE 2006-05-17: 
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawCurvedArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

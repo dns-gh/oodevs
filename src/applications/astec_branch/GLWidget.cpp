@@ -194,6 +194,40 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /*=
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawArc
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const
+{
+    const float radius = center.Distance( from );
+    if( radius == 0 )
+        return;
+
+    Vector2f v1( center, from ); v1.Normalize();
+    float minAngle = std::acos( v1.X() ) * ( v1.Y() > 0 ? 1.f : -1.f );
+    Vector2f v2( center, to ); v2.Normalize();
+    float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
+    if( minAngle > maxAngle )
+    {
+        static const float twoPi = 2.0 * std::acos( -1.0 );
+        maxAngle = maxAngle + twoPi;
+    }
+
+    
+    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
+    glMatrixMode(GL_MODELVIEW);	
+    glPushMatrix();
+        glTranslatef( center.X(), center.Y(), 0.f );
+        glScalef    ( radius, radius, 1.f );
+        glBegin( GL_LINE_STRIP );
+            for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
+                glVertex2f( std::cos( angle ), std::sin( angle ) );
+            glVertex2f( std::cos( maxAngle ), std::sin( maxAngle ) );
+        glEnd();
+    glPopMatrix();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawCurvedArrow
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
@@ -208,37 +242,11 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
     const Vector2f v( u.Normal() );
     const Point2f middle = from + 0.5f * u;
     const Point2f center = middle + v * ( 1.f / curveRatio - 1.f );
-    const float radius = center.Distance( from );
-    if( radius == 0.f )
-        return;
-
-    Vector2f v1( center, from ); v1.Normalize();
-    float minAngle = std::acos( v1.X() ) * ( v1.Y() > 0 ? 1.f : -1.f );
-    Vector2f v2( center, to ); v2.Normalize();
-    float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
-    if( minAngle > maxAngle )
-    {
-        static const float twoPi = 2.0 * std::acos( -1.0 );
-        maxAngle = maxAngle + twoPi;
-    }
-
-    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
-    glMatrixMode(GL_MODELVIEW);	
-    glPushMatrix();
-        glTranslatef( center.X(), center.Y(), 0.f );
-        glScalef    ( radius, radius, 1.f );
-        float x, y, lastX, lastY;
-        glBegin( GL_LINE_STRIP );
-            for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
-            {
-                x = std::cos( angle ); y = std::sin( angle );
-                glVertex2f( x, y );
-            }
-            lastX = std::cos( maxAngle ); lastY = std::sin( maxAngle );
-            glVertex2f( lastX, lastY );
-        glEnd();
-        DrawArrow( Point2f( x, y ), Point2f( lastX, lastY ), 10.f * Pixels() / radius );
-    glPopMatrix();
+    
+    DrawArc( center, from, to );
+    Vector2f endSegment = Vector2f( center, to ).Normal();
+    endSegment.Normalize();
+    DrawArrow( to - endSegment * 10.f * Pixels(), to, 10.f * Pixels() );
 }
 
 // -----------------------------------------------------------------------------

@@ -45,6 +45,7 @@ public:
     virtual void DrawLines      ( const T_PointVector& points ) const = 0;
     virtual void DrawArrow      ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f ) const = 0;
     virtual void DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f ) const = 0;
+    virtual void DrawArc        ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const = 0;
     virtual void DrawRectangle  ( const geometry::Point2f& center, float height, float factor = 1.f ) const = 0;
