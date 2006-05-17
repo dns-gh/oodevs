@@ -11,6 +11,6 @@
     <Magic>3232</Magic>
   </AgentServer-Launcher>
 
-  <ThreadReseauActif>false</ThreadReseauActif>
+  <ThreadReseauActif>true</ThreadReseauActif>
 
 </Reseau>
