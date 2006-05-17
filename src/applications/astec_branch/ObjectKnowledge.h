@@ -22,7 +22,7 @@ class Object;
 class Controller;
 class Agent;
 class Team;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class ObjectType;
 
 // =============================================================================
@@ -39,8 +39,8 @@ class ObjectKnowledge : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message,
-                              Controller& controller, const CoordinateConverter& converter,
+             ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
+                              Controller& controller, const CoordinateConverter_ABC& converter,
                               const Resolver_ABC< Object >& objectResolver,
                               const Resolver_ABC< Agent >& agentResolver, 
                               const Resolver_ABC< ObjectType >& typeResolver );
@@ -56,6 +56,7 @@ public:
     void DisplayInList( Displayer_ABC& displayer ) const;
     Object* GetRealObject() const;
     bool IsInTeam( const Team& team ) const;
+    bool KnowledgeIsInTeam( const Team& team ) const;
     //@}
 
 private:
@@ -78,10 +79,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     const Resolver_ABC< Object >& objectResolver_;
     const Resolver_ABC< Agent >& agentResolver_;
     Controller& controller_;
+    const Team& owner_;
 
     unsigned long id_;
     const ObjectType* type_;

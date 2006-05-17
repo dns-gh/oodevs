@@ -20,7 +20,7 @@
 // Name: FragmentaryOrderInterface constructor
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : MissionInterface_ABC( parent, agent, controller, layer, converter )
     , nMissionId_         ( nMissionId )
 {

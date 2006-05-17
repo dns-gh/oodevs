@@ -18,7 +18,7 @@
 
 class Controller;
 class Displayer_ABC;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  Attributes
@@ -35,7 +35,7 @@ class Attributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Attributes( Controller& controller, const CoordinateConverter& converter );
+             Attributes( Controller& controller, const CoordinateConverter_ABC& converter );
     virtual ~Attributes();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 
     geometry::Point2f vPos_;
     unsigned int nSpeed_;

@@ -18,6 +18,7 @@
 class PopulationKnowledge;
 class Controller;
 class PopulationKnowledgeFactory_ABC;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  PopulationKnowledges
@@ -41,7 +42,7 @@ class PopulationKnowledges : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledges( Controller& controller, PopulationKnowledgeFactory_ABC& factory );
+             PopulationKnowledges( Controller& controller, const KnowledgeGroup& owner, PopulationKnowledgeFactory_ABC& factory );
     virtual ~PopulationKnowledges();
     //@}
 
@@ -76,6 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const KnowledgeGroup& owner_;
     PopulationKnowledgeFactory_ABC& factory_;
     Controller& controller_;
     //@}

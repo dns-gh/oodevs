@@ -16,15 +16,17 @@
 #include "Units.h"
 #include "Object.h"
 #include "ObjectType.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
+#include "Team.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, 
+ObjectKnowledge::ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
                                   const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
-    : converter_     ( converter )
+    : owner_         ( owner )
+    , converter_     ( converter )
     , objectResolver_( objectResolver )
     , agentResolver_ ( agentResolver )
     , controller_    ( controller )
@@ -140,7 +142,16 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool ObjectKnowledge::IsInTeam( const Team& team ) const
 {
-    return pRealObject_ && & pRealObject_->GetTeam() == &team;
+    return owner_ == team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::KnowledgeIsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool ObjectKnowledge::KnowledgeIsInTeam( const Team& team ) const
+{
+    return pRealObject_ && pRealObject_->GetTeam() == team;
 }
 
 // -----------------------------------------------------------------------------

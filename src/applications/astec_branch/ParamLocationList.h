@@ -17,7 +17,7 @@
 
 class LocationCreator;
 class ParametersLayer;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  ParamLocationList
@@ -30,9 +30,9 @@ class ParamLocationList : public ParamListView, public Param_ABC, private ShapeH
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
-             ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn,      const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
-             ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn,        const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn,      const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn,        const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
     virtual ~ParamLocationList();
 
     //! @name Operations
@@ -69,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     ASN1T_ListLocalisation& asn_;
     ASN1T_Localisation* pAsnLocalisationList_;
     T_CoordVector asnUMTCoordPtrList_;

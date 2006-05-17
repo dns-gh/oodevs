@@ -18,12 +18,14 @@
 #include "Perception_Def.h"
 #include "OptionalValue.h"
 #include "Resolver_ABC.h"
+#include "Drawable_ABC.h"
 
 class Agent;
 class Controller;
 class Displayer_ABC;
 class Team;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -34,21 +36,23 @@ class CoordinateConverter;
 class AgentKnowledge : public Entity_ABC
                      , public Extension_ABC
                      , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                     , public Drawable_ABC
 {
 
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter,
-                             const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver );
+             AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
+                             const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
 
     //! @name operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
-
     bool IsInTeam( const Team& team ) const;
+    bool KnowledgeIsInTeam( const Team& team ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors
@@ -56,13 +60,10 @@ public:
     unsigned long            GetId       () const;
     std::string              GetName     () const;
     Agent&                   GetRealAgent() const;
-    const geometry::Point2f& GetPosition () const; // $$$$ AGE 2006-03-16: attach a positions !
-    // $$$$ AGE 2006-02-21: Kg ?
+    const Team*              GetKnowledgeTeam() const;
     //@}
 
 private:
-   
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
@@ -70,13 +71,14 @@ private:
 
 public:
     Controller& controller_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     const Resolver_ABC< Agent >& resolver_;
     const Resolver_ABC< Team >& teamResolver_;
+    const KnowledgeGroup& group_;
+
     unsigned long nID_;
     Agent&      realAgent_;
     const Team* team_;
-    geometry::Point2f vPosition_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
     OptionalValue< std::string >                strPosition_;

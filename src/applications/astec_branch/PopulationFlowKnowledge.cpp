@@ -11,7 +11,7 @@
 
 #include "astec_pch.h"
 #include "PopulationFlowKnowledge.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationKnowledge.h"
@@ -27,7 +27,7 @@
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter& converter )
+PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter_ABC& converter )
      : rRelevance_ ( asn.pertinence )
 {
     for( uint i = 0; i < asn.forme.vecteur_point.n; ++i )
@@ -42,7 +42,7 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const Coord
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter& converter, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )

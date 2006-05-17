@@ -22,6 +22,7 @@
 #include "ObjectTypes.h"
 #include "Controllers.h"
 #include "ObjectPositions.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectFactory constructor

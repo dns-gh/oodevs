@@ -7,67 +7,58 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectPositions_h_
-#define __ObjectPositions_h_
+#ifndef __AgentKnowledgePositions_h_
+#define __AgentKnowledgePositions_h_
 
 #include "ASN_Types.h"
 #include "Positions.h"
 #include "Updatable_ABC.h"
-#include "Drawable_ABC.h"
 
 class CoordinateConverter_ABC;
 
 // =============================================================================
-/** @class  ObjectPositions
-    @brief  ObjectPositions
+/** @class  AgentKnowledgePositions
+    @brief  AgentKnowledgePositions
 */
-// Created: AGE 2006-03-22
+// Created: AGE 2006-05-17
 // =============================================================================
-class ObjectPositions : public Positions
-                      , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-                      , public Updatable_ABC< ASN1T_MsgObjectCreation >
-                      , public Drawable_ABC
+class AgentKnowledgePositions : public Positions
+                              , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectPositions( const CoordinateConverter_ABC& converter );
-    virtual ~ObjectPositions();
+    explicit AgentKnowledgePositions( const CoordinateConverter_ABC& converter );
+    virtual ~AgentKnowledgePositions();
     //@}
 
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition() const;
-    virtual float GetHeight() const;
+    virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
-
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    ObjectPositions( const ObjectPositions& );            //!< Copy constructor
-    ObjectPositions& operator=( const ObjectPositions& ); //!< Assignement operator
+    AgentKnowledgePositions( const AgentKnowledgePositions& );            //!< Copy constructor
+    AgentKnowledgePositions& operator=( const AgentKnowledgePositions& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
-    void Update( const ASN1T_Localisation& localisation );
+    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
     const CoordinateConverter_ABC& converter_;
-    T_PointVector points_;
-    geometry::Rectangle2f boundingBox_;
-    geometry::Point2f center_;
+    geometry::Point2f position_;
     //@}
 };
 
-#endif // __ObjectPositions_h_
+#endif // __AgentKnowledgePositions_h_

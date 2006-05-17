@@ -26,7 +26,7 @@
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : MissionInterface_ABC( parent, agent, controller, layer, converter )
     , agent_( agent )
     , nMissionId_( nMissionId )

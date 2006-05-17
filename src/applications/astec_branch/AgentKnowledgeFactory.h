@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentKnowledge*      CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message );
-    virtual PopulationKnowledge* CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message );
+    virtual AgentKnowledge*      CreateAgentKnowledge     ( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message );
+    virtual PopulationKnowledge* CreatePopulationKnowledge( const KnowledgeGroup& group, const ASN1T_MsgPopulationKnowledgeCreation& message );
     //@}
 
 private:

@@ -9,14 +9,14 @@
 
 #include "astec_pch.h"
 #include "ObjectPositions.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions constructor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( const CoordinateConverter& converter )
+ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter )
     : converter_( converter )
 {
     // NOTHING

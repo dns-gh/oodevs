@@ -19,6 +19,7 @@
 #include "ObjectsModel.h"
 #include "Controllers.h"
 #include "ObjectTypes.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
@@ -44,9 +45,9 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // Name: ObjectKnowledgeFactory::Create
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledge* ObjectKnowledgeFactory::Create( const ASN1T_MsgObjectKnowledgeCreation& message )
+ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    ObjectKnowledge* knowledge = new ObjectKnowledge( message, controllers_.controller_, model_.coordinateConverter_, model_.objects_, model_.agents_, model_.objectTypes_ );
+    ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, model_.coordinateConverter_, model_.objects_, model_.agents_, model_.objectTypes_ );
     
     switch( message.type )
     {

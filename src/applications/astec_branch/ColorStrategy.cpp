@@ -166,6 +166,22 @@ void ColorStrategy::SelectColor( const Population& population )
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const AgentKnowledge& k )
+{
+    const Team* team = k.GetKnowledgeTeam();
+    if( team )
+    {
+        QColor color = teamColors_[ team ].second;
+        glColor3f( color.red()/200.f, color.green()/200.f, color.blue()/200.f ); // $$$$ AGE 2006-05-17: plus clair ?
+    } else
+        glColor3f( 200.f, 200.f, 200.f );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
@@ -471,3 +487,4 @@ void ColorStrategy::InitializeColors()
     available_.insert( std::make_pair( "cobalt",  QColor( 50, 50, 128 ) ) );
     available_.insert( std::make_pair( "",        QColor( 255, 100, 255 ) ) );
 }
+

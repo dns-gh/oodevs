@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "ParamPoint.h"
 #include "moc_ParamPoint.cpp"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "RichLabel.h"
 #include "GlTools_ABC.h"
 
@@ -18,7 +18,7 @@
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter& converter )
+ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter_ABC& converter )
     : QHBox     ( pParent )
     , asn_      ( asn )
     , converter_( converter )

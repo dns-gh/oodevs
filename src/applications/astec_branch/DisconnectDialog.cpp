@@ -62,7 +62,6 @@ void DisconnectDialog::Validate()
     App::GetApp().GetNetwork().Disconnect(); // $$$$ AGE 2006-03-24: 
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog::Validate
 // Created:  NLD 2002-01-03 

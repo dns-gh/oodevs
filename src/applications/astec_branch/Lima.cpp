@@ -23,7 +23,7 @@ IDManager Lima::idManager_( 137 );
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, const CoordinateConverter& converter )
+Lima::Lima( Controller& controller, const CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( Tools::ToString( eLimaFuncLCA ).ascii(), idManager_.GetFreeIdentifier(), converter )
     , controller_     ( controller )
     , nFuncType_      ( eLimaFuncLCA )
@@ -36,7 +36,7 @@ Lima::Lima( Controller& controller, const CoordinateConverter& converter )
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter )
+Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( Tools::ToString( nFuncType ).ascii(), idManager_.GetFreeIdentifier(), pointList, converter )
     , controller_     ( controller )
     , nFuncType_      ( nFuncType )
@@ -49,7 +49,7 @@ Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaTy
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter )
+Lima::Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( Tools::ToString( (E_FuncLimaType)asnMsg.fonction ).ascii(), asnMsg.oid, asnMsg.geometrie, converter )
     , controller_     ( controller )
     , nFuncType_      ( (E_FuncLimaType)asnMsg.fonction )

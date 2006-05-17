@@ -16,13 +16,14 @@
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
 #include "geocoord/Geodetic.h"
+#include "CoordinateConverter_ABC.h"
 
 // =============================================================================
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-03-15: make an iface
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
-class CoordinateConverter : private WorldParameters
+class CoordinateConverter : private WorldParameters, public CoordinateConverter_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -35,11 +36,11 @@ public:
     //@{
     void Load( const std::string& scipioXml );
 
-    bool IsInBoundaries( const geometry::Point2f& point ) const;
+    virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
 
-    std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
-    geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
-    geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
+    virtual std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
+    virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
     //@}
 
 private:

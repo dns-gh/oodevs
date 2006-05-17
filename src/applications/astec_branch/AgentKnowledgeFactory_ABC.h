@@ -13,6 +13,7 @@
 #include "ASN_Types.h"
 
 class AgentKnowledge;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  AgentKnowledgeFactory_ABC
@@ -32,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentKnowledge* CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message ) = 0;
+    virtual AgentKnowledge* CreateAgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message ) = 0;
     //@}
 };
 

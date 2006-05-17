@@ -51,6 +51,7 @@ public:
     //! @name Operations
     //@{
     void CreateKnowledgeGroup( unsigned int id );
+    bool operator==( const Team& ) const;
     //@}
 
     //! @name Accessors
@@ -64,11 +65,6 @@ private:
     //@{
     Team( const Team& );
     Team& operator=( const Team& );
-    //@}
-
-    //! @name Helpers
-    //@{
-    
     //@}
 
 private:

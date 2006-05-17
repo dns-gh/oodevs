@@ -55,7 +55,7 @@
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QVBox      ( parent )
     , controller_( controller )
     , agent_     ( agent )

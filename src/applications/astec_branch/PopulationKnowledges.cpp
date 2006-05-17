@@ -17,8 +17,9 @@
 // Name: PopulationKnowledges constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-PopulationKnowledges::PopulationKnowledges( Controller& controller, PopulationKnowledgeFactory_ABC& factory )
-    : controller_( controller )
+PopulationKnowledges::PopulationKnowledges( Controller& controller, const KnowledgeGroup& owner, PopulationKnowledgeFactory_ABC& factory )
+    : owner_( owner )
+    , controller_( controller )
     , factory_( factory )
 {
     controller_.Create( *this );
@@ -53,7 +54,7 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationKnowledgeCreation&
 {
     if( ! Find( message.oid_connaissance ) )
     {
-        PopulationKnowledge* knowledge = factory_.CreatePopulationKnowledge( message );
+        PopulationKnowledge* knowledge = factory_.CreatePopulationKnowledge( owner_, message );
         Register( message.oid_connaissance, *knowledge );
         controller_.Update( *this );
     }

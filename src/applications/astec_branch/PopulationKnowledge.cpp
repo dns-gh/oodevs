@@ -18,13 +18,15 @@
 #include "PopulationFlowKnowledge.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
-    : controller_( controller )
+PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
+    : group_     ( group )
+    , controller_( controller )
     , converter_ ( converter )
     , nID_       ( message.oid_connaissance )
     , popu_      ( resolver.Get( message.oid_population_reelle ) )
@@ -171,6 +173,15 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
 bool PopulationKnowledge::IsInTeam( const Team& team ) const
+{
+     return group_.IsInTeam( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::KnowledgeIsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool PopulationKnowledge::KnowledgeIsInTeam( const Team& team ) const
 {
     return & popu_.GetTeam() == &team;
 }

@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "AgentsModel.h"
 #include "PopulationFire.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireFactory constructor

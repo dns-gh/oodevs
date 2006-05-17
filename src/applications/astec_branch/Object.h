@@ -32,7 +32,7 @@ class Team;
 class ObjectType;
 class DotationType;
 class Displayer_ABC;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 // Created: SBO 2005-09-02
@@ -46,7 +46,7 @@ class Object : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter& converter,
+             Object( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter_ABC& converter,
                      const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
                      const Resolver_ABC< DotationType >& dotationResolver );
     virtual ~Object();
@@ -54,6 +54,7 @@ public:
 
     //! @name Operations
     //@{
+    bool IsInTeam( const Team& team ) const;
     void Display( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
@@ -83,7 +84,7 @@ public:
     //! @name Member data
     //@{
     Controller&   controller_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     ObjectType&   type_;
     unsigned long nId_;
     std::string   strName_;

@@ -15,7 +15,7 @@
 #include "Simulation.h"
 
 class DetectionMap;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Controllers;
 
 // =============================================================================
@@ -35,7 +35,7 @@ class StatusBar : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, const DetectionMap& detection, const CoordinateConverter& converter, Controllers& controllers );
+             StatusBar( QStatusBar* bar, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers );
     virtual ~StatusBar();
     //@}
 
@@ -70,7 +70,7 @@ private:
     //! @name Member data
     //@{
     const DetectionMap& detection_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     bool lastSimulationStatus_;
 
     QLabel* pPositionXYZ_;

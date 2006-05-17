@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 #include "PopulationPart_ABC.h"
 #include "Updatable_ABC.h"
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -24,7 +24,7 @@ class PopulationConcentration : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter& converter, float density );
+             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter_ABC& converter, float density );
     virtual ~PopulationConcentration();
     //@}
 

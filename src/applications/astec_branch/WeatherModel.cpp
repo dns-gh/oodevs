@@ -12,6 +12,7 @@
 #include "AmmoEffect.h"
 #include "Controllers.h"
 #include "Model.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: WeatherModel constructor

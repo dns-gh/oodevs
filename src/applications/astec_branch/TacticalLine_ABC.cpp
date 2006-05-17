@@ -19,14 +19,14 @@
 #include "astec_pch.h"
 #include "TacticalLine_ABC.h"
 #include "ASN_Messages.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter& converter )
+TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter_ABC& converter )
     : converter_    ( converter )
     , id_           ( id )
     , nState_       ( eStateCreated )
@@ -40,7 +40,7 @@ TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long i
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter& converter )
+TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter )
     : converter_    ( converter )
     , id_           ( id )
     , nState_       ( eStateCreated )
@@ -55,7 +55,7 @@ TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long i
 // Name: TacticalLine_ABC constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter& converter )
+TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter )
     : converter_    ( converter )
     , id_           ( id )
     , nState_       ( eStateOk )

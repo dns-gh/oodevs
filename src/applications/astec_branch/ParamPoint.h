@@ -23,7 +23,7 @@
 #include "Param_ABC.h"
 #include "ContextMenuObserver_ABC.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class RichLabel;
 
 // =============================================================================
@@ -40,7 +40,7 @@ class ParamPoint : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter& converter );
+             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter_ABC& converter );
     virtual ~ParamPoint();
     //@}
 
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_Point&       asn_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 
     std::string        menu_;
     RichLabel*         pLabel_;

@@ -24,7 +24,7 @@
 #include "ShapeHandler_ABC.h"
 
 class ParametersLayer;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class RichLabel;
 class LocationCreator;
 
@@ -39,7 +39,7 @@ class ParamLocation : public QHBox, public Param_ABC, private ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter );
+             ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
     virtual ~ParamLocation();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     ASN1T_Localisation& asn_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 
     LocationCreator* creator_;
     RichLabel* pLabel_;

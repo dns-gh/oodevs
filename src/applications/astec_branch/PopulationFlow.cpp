@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "PopulationFlow.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 using namespace geometry;
@@ -18,7 +18,7 @@ using namespace geometry;
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter& converter )
+PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
     , nID_       ( asnMsg.oid_flux )
     , itineraire_( )

@@ -71,7 +71,7 @@ public:
         return current_ != end_;
     };
     virtual Item NextElement() {
-        return *current_++;
+        return **current_++;
     }
 private:
     SimpleIterator( const SimpleIterator& );

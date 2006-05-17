@@ -18,7 +18,7 @@ class DotationType;
 class EquipmentType;
 class Population;
 class PopulationConcentration;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class NBCAgent;
 class ComponentType;
 class BreakdownType;

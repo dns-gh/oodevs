@@ -15,7 +15,7 @@
 #include "Controllers.h"
 #include "ActionController.h"
 #include "Model.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "AgentsModel.h"
 #include "Team.h"
 #include "ObjectType.h"
@@ -33,6 +33,7 @@
 #include "ParametersLayer.h"
 #include "Tools.h"
 #include "RichLabel.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype constructor

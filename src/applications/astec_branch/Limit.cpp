@@ -22,7 +22,7 @@ IDManager Limit::idManager_( 138 );
 // Name: Limit constructor
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, const CoordinateConverter& converter )
+Limit::Limit( Controller& controller, const CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( "Limit", idManager_.GetFreeIdentifier(), converter )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
@@ -35,7 +35,7 @@ Limit::Limit( Controller& controller, const CoordinateConverter& converter )
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter& converter )
+Limit::Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter_ABC& converter )
     : TacticalLine_ABC(  "Limit", idManager_.GetFreeIdentifier(), pointList, converter )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
@@ -48,7 +48,7 @@ Limit::Limit( Controller& controller, const T_PointVector& pointList, const Coor
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter )
+Limit::Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( "Limit", asnMsg.oid, asnMsg.geometrie, converter )
     , controller_( controller )
     , nLevel_( (E_NatureLevel) asnMsg.level )

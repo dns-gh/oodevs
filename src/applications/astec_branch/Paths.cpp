@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "Paths.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 using namespace geometry;
@@ -18,7 +18,7 @@ using namespace geometry;
 // Name: Paths constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Paths::Paths( const CoordinateConverter& converter )
+Paths::Paths( const CoordinateConverter_ABC& converter )
     : converter_( converter ) 
 {
     // NOTHING

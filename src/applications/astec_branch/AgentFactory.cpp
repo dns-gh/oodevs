@@ -58,6 +58,7 @@
 #include "Lives.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor

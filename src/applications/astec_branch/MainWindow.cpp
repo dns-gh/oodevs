@@ -46,6 +46,7 @@
 #include "Simulation.h"
 #include "MagicOrdersInterface.h"
 #include "PreferencesDialog.h"
+#include "CoordinateConverter.h"
 
 #include "Agent.h"
 #include "Object.h"
@@ -343,7 +344,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
     if( name == "3D" )
     {
         bool new3d = value.To< bool >();
-        if( new3d != b3d_ )
+        if( new3d != b3d_ && ( widget3d_ || ! scipioXml_.empty() ) )
         {
             centralWidget()->hide();
             disconnect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );

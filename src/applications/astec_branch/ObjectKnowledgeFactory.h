@@ -15,6 +15,7 @@
 class ObjectKnowledge;
 class Controllers;
 class Model;
+class Team;
 
 // =============================================================================
 /** @class  ObjectKnowledgeFactory
@@ -34,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ObjectKnowledge* Create( const ASN1T_MsgObjectKnowledgeCreation& message );
+    virtual ObjectKnowledge* Create( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
     //@}
 
 private:
@@ -42,10 +43,6 @@ private:
     //@{
     ObjectKnowledgeFactory( const ObjectKnowledgeFactory& );            //!< Copy constructor
     ObjectKnowledgeFactory& operator=( const ObjectKnowledgeFactory& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

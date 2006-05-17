@@ -14,6 +14,7 @@
 #include "Lima.h"
 #include "Model.h"
 #include "Controllers.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor

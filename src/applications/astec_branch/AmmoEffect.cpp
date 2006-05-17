@@ -16,7 +16,7 @@
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-AmmoEffect::AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter& converter )
+AmmoEffect::AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
     , id_( message.oid_effet )
     , type_( message.type )

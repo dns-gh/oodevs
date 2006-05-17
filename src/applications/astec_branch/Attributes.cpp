@@ -12,7 +12,7 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 using namespace geometry;
@@ -21,7 +21,7 @@ using namespace geometry;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter& converter )
+Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
     , converter_ ( converter )
     , aggregated_( false ) 

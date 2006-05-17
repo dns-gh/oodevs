@@ -15,7 +15,7 @@
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  Paths
@@ -32,7 +32,7 @@ class Paths : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Paths( const CoordinateConverter& converter );
+    explicit Paths( const CoordinateConverter_ABC& converter );
     virtual ~Paths();
     //@}
 
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f plannedBox_;
     T_PointVector plannedPath_;
     geometry::Rectangle2f previousBox_;

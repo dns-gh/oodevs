@@ -17,8 +17,9 @@
 // Name: AgentKnowledges constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledges::AgentKnowledges( Controller& controller, AgentKnowledgeFactory_ABC& factory )
+AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup& group, AgentKnowledgeFactory_ABC& factory )
     : controller_( controller )
+    , group_( group )
     , factory_( factory )
 {
     controller_.Create( *this );
@@ -42,7 +43,7 @@ void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
     if( ! Find( message.oid_connaissance ) )
     {
-        AgentKnowledge* pAgentKnowledge = factory_.CreateAgentKnowledge( message );
+        AgentKnowledge* pAgentKnowledge = factory_.CreateAgentKnowledge( group_, message );
         Register( message.oid_connaissance, *pAgentKnowledge );
         controller_.Update( *this );
     }

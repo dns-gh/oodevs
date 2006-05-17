@@ -47,7 +47,7 @@ TeamFactory::~TeamFactory()
 Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 {
     Team* result = new Team( id, input, controllers_.controller_, *this );
-    result->Attach( *new ObjectKnowledges( controllers_.controller_, model_.objectKnowledgeFactory_ ) );
+    result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     return result;
 }
@@ -59,7 +59,7 @@ Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team& team  )
 {
     KnowledgeGroup* result = new KnowledgeGroup( id, controllers_.controller_, team );
-    result->Attach( *new AgentKnowledges( controllers_.controller_, model_.agentsKnowledgeFactory_ ) );
-    result->Attach( *new PopulationKnowledges( controllers_.controller_, model_.agentsKnowledgeFactory_ ) );
+    result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
+    result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     return result;
 }

@@ -16,7 +16,7 @@
 #include "Drawable_ABC.h"
 #include "Aggregatable_ABC.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Agent;
 
 // =============================================================================
@@ -34,7 +34,7 @@ class AgentPositions : public Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentPositions( const Agent& agent, const CoordinateConverter& converter );
+             AgentPositions( const Agent& agent, const CoordinateConverter_ABC& converter );
     virtual ~AgentPositions();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     const Agent& agent_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     geometry::Point2f position_;
     float height_;
     bool aggregated_;

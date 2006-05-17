@@ -30,9 +30,9 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( Controller& controller, const CoordinateConverter& converter );
-             Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter& converter );
-             Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter& converter );
+             Lima( Controller& controller, const CoordinateConverter_ABC& converter );
+             Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter );
+             Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter );
     virtual ~Lima();
     //@}
 

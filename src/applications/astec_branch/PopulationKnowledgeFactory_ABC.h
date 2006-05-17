@@ -12,6 +12,7 @@
 
 #include "ASN_Types.h"
 class PopulationKnowledge;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  PopulationKnowledgeFactory_ABC
@@ -31,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual PopulationKnowledge* CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
+    virtual PopulationKnowledge* CreatePopulationKnowledge( const KnowledgeGroup& group, const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
     //@}
 };
 

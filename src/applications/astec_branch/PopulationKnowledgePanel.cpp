@@ -174,7 +174,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 // -----------------------------------------------------------------------------
 void PopulationKnowledgePanel::Display( const PopulationKnowledge& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.IsInTeam( *owner_ ) )
+    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &knowledge );
         knowledge.DisplayInList( displayer );

@@ -28,7 +28,7 @@ class Agent_ABC;
 class Agent;
 class Param_ABC;
 class ParametersLayer;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class GlTools_ABC;
 
 // =============================================================================
@@ -43,7 +43,7 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+             MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
     virtual ~MissionInterface_ABC();
     //@}
 
@@ -137,7 +137,7 @@ private:
     ActionController& controller_;
     Agent_ABC& agent_;
     ParametersLayer& layer_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     T_Parameters  parameters_;
     //@}
 };

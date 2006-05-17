@@ -50,6 +50,7 @@ public:
 
     //! @name Accessors & Modifiers
     //@{
+    bool IsInTeam( const Team& team ) const;
     const Team& GetTeam() const;
     unsigned long GetId() const;
     std::string GetName() const;
@@ -63,7 +64,6 @@ private:
     KnowledgeGroup( const KnowledgeGroup& );
     KnowledgeGroup& operator=( const KnowledgeGroup& );
     //@}
-
 
 private:
     //! @name Member data

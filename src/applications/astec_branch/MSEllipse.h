@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 
 class GlTools_ABC;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  MSEllipse
@@ -27,7 +27,7 @@ class MSEllipse
 public:
     //! @name Constructors/Destructor
     //@{
-             MSEllipse( const ASN1T_Localisation& localisation, const CoordinateConverter& converter );
+             MSEllipse( const ASN1T_Localisation& localisation, const CoordinateConverter_ABC& converter );
     virtual ~MSEllipse();
     //@}
 

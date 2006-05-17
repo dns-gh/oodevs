@@ -15,7 +15,7 @@
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -25,7 +25,7 @@ class PopulationFlow : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter& converter );
+    explicit PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter_ABC& converter );
     virtual ~PopulationFlow();
     //@}
 
@@ -63,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 
     uint          nID_;
 	T_PointVector itineraire_; // $$$$ AGE 2006-03-23: extension

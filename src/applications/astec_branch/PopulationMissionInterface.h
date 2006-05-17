@@ -25,7 +25,7 @@ class PopulationMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+             PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
     virtual ~PopulationMissionInterface();
     //@}
    

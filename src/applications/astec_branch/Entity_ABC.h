@@ -59,11 +59,6 @@ private:
     //@{
     virtual void AddExtension( Extension_ABC*& where, Extension_ABC* ext );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __Entity_ABC_h_

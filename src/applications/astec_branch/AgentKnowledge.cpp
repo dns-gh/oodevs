@@ -16,8 +16,10 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "Agent.h"
+#include "KnowledgeGroup.h"
+#include "Team.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 
@@ -25,14 +27,15 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver )
-    : controller_( controller )
-    , converter_( converter )
-    , resolver_ ( resolver )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver )
+    : controller_  ( controller )
+    , converter_   ( converter )
+    , resolver_    ( resolver )
     , teamResolver_( teamResolver )
-    , nID_      ( message.oid_connaissance )
-    , realAgent_( resolver_.Get( message.oid_unite_reelle ) )
-    , team_( 0 )
+    , group_       ( group )
+    , nID_         ( message.oid_connaissance )
+    , realAgent_   ( resolver_.Get( message.oid_unite_reelle ) )
+    , team_        ( 0 )
 {
     InterfaceContainer< Extension_ABC >::Register( *this );
     controller_.Create( *this );
@@ -64,10 +67,7 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
         nEtatOps_ = message.etat_op;
 
     if( message.m.positionPresent )
-    {
         strPosition_ = std::string( (const char*)message.position.data, 15 );
-        vPosition_ = converter_.ConvertToXY( message.position );
-    }
 
     if( message.m.directionPresent )
         nDirection_ = message.direction;
@@ -179,5 +179,35 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool AgentKnowledge::IsInTeam( const Team& team ) const
 {
-    return team_ == &team;
+    return group_.GetTeam() == team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::KnowledgeIsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool AgentKnowledge::KnowledgeIsInTeam( const Team& team ) const
+{
+    return team_ && *team_ == team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Draw
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    if( nCurrentPerceptionLevel_.IsSet() && E_PerceptionResult( nCurrentPerceptionLevel_ ) > eDetection )
+        realAgent_.Entity_ABC::Draw( where, viewport, tools );
+    else
+        ; // $$$$ AGE 2006-05-17: afficher genre un ?
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetKnowledgeTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+const Team* AgentKnowledge::GetKnowledgeTeam() const
+{
+    return team_;
 }

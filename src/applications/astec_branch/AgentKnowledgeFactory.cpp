@@ -16,6 +16,8 @@
 #include "TeamsModel.h"
 #include "PopulationKnowledge.h"
 #include "Controllers.h"
+#include "CoordinateConverter.h"
+#include "AgentKnowledgePositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeFactory constructor
@@ -41,10 +43,11 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // Name: AgentKnowledgeFactory::CreateAgentKnowledge
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& message )
+AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    AgentKnowledge* result = new AgentKnowledge( message, controllers_.controller_, model_.coordinateConverter_, model_.agents_, model_.teams_ );
+    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, model_.coordinateConverter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
+    result->Attach< Positions >( *new AgentKnowledgePositions( model_.coordinateConverter_ ) );
     return result;
 }
 
@@ -52,7 +55,7 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const ASN1T_MsgUnit
 // Name: AgentKnowledgeFactory::CreatePopulationKnowledge
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup& group, const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
-    return new PopulationKnowledge( controllers_.controller_, model_.coordinateConverter_, model_.agents_, message );
+    return new PopulationKnowledge( group, controllers_.controller_, model_.coordinateConverter_, model_.agents_, message );
 }

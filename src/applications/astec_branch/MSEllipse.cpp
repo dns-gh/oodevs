@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "MSEllipse.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 using namespace geometry;
@@ -18,7 +18,7 @@ using namespace geometry;
 // Name: MSEllipse constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-MSEllipse::MSEllipse( const ASN1T_Localisation& localisation, const CoordinateConverter& converter )
+MSEllipse::MSEllipse( const ASN1T_Localisation& localisation, const CoordinateConverter_ABC& converter )
 {
     if( localisation.type != EnumTypeLocalisation::ellipse || localisation.vecteur_point.n != 3 )
         throw std::runtime_error( "MSEllipse is not an ellipse" );

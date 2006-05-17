@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "ParamLocation.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "ParametersLayer.h"
 #include "RichLabel.h"
 #include "Tools.h"
@@ -21,7 +21,7 @@
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter )
+ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QHBox      ( pParent )
     , asn_       ( asn )
     , converter_ ( converter )

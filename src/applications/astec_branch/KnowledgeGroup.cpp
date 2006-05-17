@@ -19,6 +19,7 @@
 #include "astec_pch.h"
 #include "KnowledgeGroup.h"
 #include "Controller.h"
+#include "Team.h"
 
 IDManager KnowledgeGroup::idManager_( 0 );
 
@@ -92,4 +93,13 @@ std::string KnowledgeGroup::GetName() const
 const Team& KnowledgeGroup::GetTeam() const
 {
     return team_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsInTeam( const Team& team ) const
+{
+    return team_ == team;
 }

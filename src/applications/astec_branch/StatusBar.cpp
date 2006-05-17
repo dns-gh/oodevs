@@ -11,7 +11,7 @@
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
 #include "DetectionMap.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "Controllers.h"
 #include "Simulation.h"
 
@@ -21,7 +21,7 @@
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const CoordinateConverter& converter, Controllers& controllers )
+StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers )
     : detection_( detection )
     , converter_( converter )
     , lastSimulationStatus_( false )

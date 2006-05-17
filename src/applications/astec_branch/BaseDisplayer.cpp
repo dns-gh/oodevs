@@ -16,7 +16,7 @@
 #include "Object.h"
 #include "Population.h"
 #include "PopulationConcentration.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "NBCAgent.h"
 #include "ComponentType.h"
 #include "BreakdownType.h"

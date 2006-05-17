@@ -25,7 +25,7 @@
 #include "ShapeHandler_ABC.h"
 
 class ParametersLayer;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class RichLabel;
 class Agent_ABC;
 
@@ -44,7 +44,7 @@ class ParamPath : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter& converter, const Agent_ABC& agent );
+             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent );
     virtual ~ParamPath();
     //@}
 
@@ -74,7 +74,7 @@ private:
     //! @name Member data
     //@{
     ParametersLayer& layer_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     ASN1T_Itineraire& asn_;
 
     std::string menu_;

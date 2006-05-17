@@ -17,13 +17,13 @@
 #include "PopulationKnowledge.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter& converter, const Population& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
     : controller_( controller )
     , resolver_  ( resolver )
     , nID_           ( asnMsg.oid_connaissance_concentration )

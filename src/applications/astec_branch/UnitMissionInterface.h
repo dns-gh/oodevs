@@ -24,7 +24,7 @@ class UnitMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter& converter );
+             UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
     virtual ~UnitMissionInterface();
     //@}
 

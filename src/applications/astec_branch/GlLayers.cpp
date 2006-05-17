@@ -25,6 +25,7 @@
 #include "DetectionMap.h"
 #include "MeteoLayer.h"
 #include "DetectionMap.h"
+#include "AgentKnowledgesLayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor
@@ -49,6 +50,10 @@ void GlLayers::Load( const std::string& scipioXml )
     // $$$$ AGE 2006-05-03: old layers !
     WorldParameters::Load( scipioXml );
 
+    // $$$$ AGE 2006-05-17: L'ordre défini à la fois l'ordre de dessin et celui des signaux,
+    // $$$$ AGE 2006-05-17: qui ne sont clairement pas compatibles. 
+    // $$$$ AGE 2006-05-17: Trouver un truc pas dégueu qui fonctionne. 
+    // $$$$ AGE 2006-05-17: Par exemple, filer une stratégie qui dispatcherait les bidules.
     Register( *new Elevation2dLayer( controllers_.controller_, model_.detection_ ) );
     Register( *new Elevation3dLayer( controllers_.controller_, model_.detection_ ) );
     Register( *new TerrainLayer( controllers_, *this, setup_, graphicsDirectory_ ) );
@@ -56,6 +61,7 @@ void GlLayers::Load( const std::string& scipioXml )
     Register( *new LimitsLayer( controllers_, *this, *strategy_, *parameters_, model_.limits_ ) );
     Register( *new ObjectsLayer( controllers_, *this, *strategy_, *this ) );
     Register( *new PopulationsLayer( controllers_, *this, *strategy_, *this ) );
+    Register( *new AgentKnowledgesLayer( controllers_, *this, *strategy_, *this ) );
     Register( *agents_ );
     Register( *new MeteoLayer( controllers_, *this ) );
     Register( *parameters_ );

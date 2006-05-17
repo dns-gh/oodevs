@@ -342,7 +342,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
 {
-
+    // $$$$ AGE 2006-05-16: 
 }
 
 // -----------------------------------------------------------------------------

@@ -32,7 +32,7 @@ class MissionInterface_ABC;
 class Mission;
 class Controllers;
 class ParametersLayer;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Model;
 class GlTools_ABC;
 
@@ -92,7 +92,7 @@ private:
     //@{
     Controllers& controllers_;
     ParametersLayer& layer_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
     const GlTools_ABC& tools_;
 
     MissionInterface_ABC* pMissionInterface_;

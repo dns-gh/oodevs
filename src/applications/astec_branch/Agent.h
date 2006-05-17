@@ -60,6 +60,7 @@ public:
 
     //! @name Operations
     //@{
+    bool IsInTeam( const Team& team ) const;
     // $$$$ AGE 2006-03-14: Gets de merde 
     const Team& GetTeam() const;
     virtual std::string GetName() const;

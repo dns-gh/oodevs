@@ -132,7 +132,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.IsInTeam( *owner_ ) )
+    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
         k.DisplayInList( displayer );

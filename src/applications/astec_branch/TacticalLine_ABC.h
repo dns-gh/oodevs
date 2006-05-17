@@ -23,7 +23,7 @@
 #include "Types.h"
 #include "ASN_Types.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class GlTools_ABC;
 class ActionController;
 
@@ -39,9 +39,9 @@ class TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter& converter );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter& converter );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter& converter );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -115,7 +115,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 
     unsigned long  id_;
     T_PointVector  pointList_;

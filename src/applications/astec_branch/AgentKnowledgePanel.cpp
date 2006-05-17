@@ -138,7 +138,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.IsInTeam( *owner_ ) )
+    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
         displayer.Display( "Agents connus", k.GetRealAgent() ); // $$$$ AGE 2006-05-11: .GetName() to prevent link ?

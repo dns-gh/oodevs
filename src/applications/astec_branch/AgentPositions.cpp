@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "AgentPositions.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 #include "Agent.h"
 
@@ -19,7 +19,7 @@ using namespace geometry;
 // Name: AgentPositions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( const Agent& agent, const CoordinateConverter& converter )
+AgentPositions::AgentPositions( const Agent& agent, const CoordinateConverter_ABC& converter )
     : agent_( agent )
     , converter_( converter )
     , aggregated_( false )

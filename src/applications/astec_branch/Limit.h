@@ -15,7 +15,7 @@
 #include "TacticalLine_ABC.h"
 #include "IDManager.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Controller;
 
 // =============================================================================
@@ -30,9 +30,9 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Limit( Controller& controller, const CoordinateConverter& converter);
-             Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter& converter );
-             Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter& converter );
+             Limit( Controller& controller, const CoordinateConverter_ABC& converter);
+             Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter_ABC& converter );
+             Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter );
     virtual ~Limit();
     //@}
 

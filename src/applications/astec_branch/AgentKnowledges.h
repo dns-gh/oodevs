@@ -18,6 +18,7 @@
 class AgentKnowledge;
 class AgentKnowledgeFactory_ABC;
 class Controller;
+class KnowledgeGroup;
 
 // =============================================================================
 /** @class  AgentKnowledges
@@ -35,7 +36,7 @@ class AgentKnowledges : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledges( Controller& controller, AgentKnowledgeFactory_ABC& factory );
+             AgentKnowledges( Controller& controller, const KnowledgeGroup& group, AgentKnowledgeFactory_ABC& factory );
     virtual ~AgentKnowledges();
     //@}
 
@@ -61,6 +62,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
+    const KnowledgeGroup& group_;
     AgentKnowledgeFactory_ABC& factory_;
     //@}
 };

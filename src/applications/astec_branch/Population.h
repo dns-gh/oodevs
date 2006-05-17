@@ -27,7 +27,7 @@ class PopulationFlow;
 class Team;
 class Controller;
 class PopulationType;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -48,7 +48,7 @@ class Population : public Agent_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, const CoordinateConverter& converter,
+             Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, const CoordinateConverter_ABC& converter,
                          const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< PopulationType >& typeResolver );
     virtual ~Population();
     //@}
@@ -68,6 +68,7 @@ public:
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
 
+    bool IsInTeam( const Team& team ) const;
     virtual geometry::Point2f GetPosition() const;
     virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
@@ -109,7 +110,7 @@ private:
     //! @name Member data
     //@{
     Controller&                controller_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 	MIL_AgentID                nPopulationID_;
 	std::string                strName_;
     const PopulationType&      type_;

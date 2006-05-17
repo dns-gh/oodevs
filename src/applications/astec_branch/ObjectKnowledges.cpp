@@ -17,8 +17,9 @@
 // Name: ObjectKnowledges constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledges::ObjectKnowledges( Controller& controller, ObjectKnowledgeFactory& factory )
-    : controller_( controller )
+ObjectKnowledges::ObjectKnowledges( const Team& team, Controller& controller, ObjectKnowledgeFactory& factory )
+    : team_( team )
+    , controller_( controller )
     , factory_( factory )
 {
     controller_.Create( *this );
@@ -41,7 +42,7 @@ ObjectKnowledges::~ObjectKnowledges()
 void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     if( ! Find( message.oid_connaissance ) )
-        Register( message.oid_connaissance, * factory_.Create( message ) );
+        Register( message.oid_connaissance, * factory_.Create( team_, message ) );
     controller_.Update( *this );
 }
 

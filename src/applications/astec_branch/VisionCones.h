@@ -19,7 +19,7 @@
 #include "Perception_Def.h"
 
 class Surface;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class SensorType;
 class Agent;
 class SurfaceFactory;

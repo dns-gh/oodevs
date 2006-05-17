@@ -25,14 +25,15 @@
 #include "Units.h"
 #include "Displayer_ABC.h"
 #include "ObjectType.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "Positions.h"
+#include "Team.h"
 
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
+Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
     : controller_                    ( controller )
     , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
@@ -161,4 +162,13 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     type_.Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::IsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool Object::IsInTeam( const Team& team ) const
+{
+    return team_ == team;
 }

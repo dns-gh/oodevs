@@ -17,7 +17,7 @@
 #include "OptionalValue.h"
 #include "PopulationPartKnowledge_ABC.h"
 
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Population;
 class PopulationConcentration;
 class PopulationKnowledge;
@@ -33,7 +33,7 @@ class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter& converter, const Population& popu,
+             PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& popu,
                  const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
     virtual ~PopulationConcentrationKnowledge();
     //@}

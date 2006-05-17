@@ -77,3 +77,12 @@ std::string Team::GetName() const
 {
     return strName_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Team::operator==
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool Team::operator==( const Team& team ) const
+{
+    return this == &team;
+}

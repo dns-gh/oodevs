@@ -12,17 +12,16 @@
 #include "Entity_ABC.h"
 #include "OptionVariant.h"
 #include "View_ABC.h"
-#include "Profiler.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( const GlTools_ABC& tools, View_ABC& view )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view )
     : tools_      ( tools )
     , view_       ( view )
     , selected_   ( 0 )
-    , currentTeam_( 0 )
+    , currentTeam_( controllers )
 {
     // NOTHING
 }
@@ -42,7 +41,6 @@ EntityLayerBase::~EntityLayerBase()
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 {
-    PROFILE();
     for( unsigned i = 0; i < entities_.size(); ++i )
         if( i != selected_ )
             Draw( *entities_[ i ], viewport );
@@ -56,7 +54,7 @@ void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2f& viewport )
 {
-    if( IsInTeam( entity ) ) // && positions.IsIn( viewport ) )
+    if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
     {
         SelectColor( entity );
         const Positions& positions = entity.Get< Positions >();
@@ -66,10 +64,10 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayerBase::IsInTeam
+// Name: EntityLayerBase::ShouldDisplay
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::IsInTeam( const Entity_ABC& entity )
+bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 {
     return ! currentTeam_ || IsInTeam( entity, *currentTeam_ );
 }
@@ -95,14 +93,14 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     
     if( selected_ >= entities_.size() 
      || ! IsInSelection( *entities_[ selected_ ], point ) 
-     || ! IsInTeam( *entities_[ selected_ ] )
+     || ! ShouldDisplay( *entities_[ selected_ ] )
      || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
         selected_ = 0;
 
     for( ; selected_ < entities_.size(); ++selected_ )
     {
         const Entity_ABC& entity = *entities_[ selected_ ];
-        if( IsInSelection( entity, point ) && IsInTeam( entity ) )
+        if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
         {
             if( button == Qt::LeftButton )
                 Select( entity );

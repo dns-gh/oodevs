@@ -273,3 +273,12 @@ bool Agent::IsAggregated() const
 {
     return aggregated_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::IsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool Agent::IsInTeam( const Team& team ) const
+{
+    return GetKnowledgeGroup().IsInTeam( team );
+}

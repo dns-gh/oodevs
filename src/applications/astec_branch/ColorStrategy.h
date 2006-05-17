@@ -54,6 +54,7 @@ public:
     virtual void SelectColor( const Agent& agent );
     virtual void SelectColor( const Object& object );
     virtual void SelectColor( const Population& population );
+    virtual void SelectColor( const AgentKnowledge& k );
     virtual void SelectColor( const TacticalLine_ABC& line );
     //@}
 

@@ -17,7 +17,7 @@
 #include "Resolver.h"
 
 class Controller;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Team;
 class Population;
 class TypePopulation;
@@ -25,6 +25,7 @@ class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
 class PopulationConcentrationKnowledge;
 class PopulationFlowKnowledge;
+class KnowledgeGroup;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -35,7 +36,7 @@ class PopulationKnowledge : public Resolver< PopulationConcentrationKnowledge >
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -47,6 +48,7 @@ public:
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
     bool IsInTeam( const Team& team ) const;
+    bool KnowledgeIsInTeam( const Team& team ) const;
     //@}
 
     //! @name Network
@@ -69,11 +71,15 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
+    const KnowledgeGroup& group_;
     Controller& controller_;
-    const CoordinateConverter& converter_;
+    const CoordinateConverter_ABC& converter_;
 
     const Population& popu_;
     unsigned long nID_;
+    //@}
 };
 
 #endif // __PopulationKnowledge_h_

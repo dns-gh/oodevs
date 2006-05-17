@@ -26,7 +26,7 @@ MIL_AgentID Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter& converter, const Resolver_ABC< Team >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
     : controller_   ( controller )
     , converter_    ( converter )
     , nPopulationID_( message.oid_population )
@@ -350,4 +350,13 @@ bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
 const PopulationType& Population::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::IsInTeam
+// Created: AGE 2006-05-17
+// -----------------------------------------------------------------------------
+bool Population::IsInTeam( const Team& team ) const
+{
+    return team_ == team;
 }

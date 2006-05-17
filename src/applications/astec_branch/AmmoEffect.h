@@ -14,7 +14,7 @@
 #include "MSEllipse.h"
 
 class GlTools_ABC;
-class CoordinateConverter;
+class CoordinateConverter_ABC;
 class Controller;
 
 // =============================================================================
@@ -29,7 +29,7 @@ class AmmoEffect
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter& converter );
+             AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter );
     virtual ~AmmoEffect();
     //@}
 

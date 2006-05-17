@@ -177,8 +177,13 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
         child = child->nextSibling();
     }
     if( ! child )
+    {
         child = factory_.CreateItem( item, last );
-    pConsignListView_->DisplayList( consign->CreateIterator(), child );
+        child->setText( 0, tr( "Dotations demandées/accordées/convoyées" ) );
+    }
+    pConsignListView_->DeleteTail( 
+        pConsignListView_->DisplayList( consign->CreateIterator(), child )
+        );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,10 +192,10 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
 // -----------------------------------------------------------------------------
 void AgentSupplyPanel::Display( const DotationRequest& request, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Item( 0 ).Start( request.type_ ).Add( "/" )
-                       .Add( request.requested_ ).Add( "/" )
-                       .Add( request.granted_ ).Add( "/" )
-                       .Add( request.convoyed_ ).End();
+    displayer.Display( 0, request.type_ )
+             .Item( 0 ).Start( request.requested_ ).Add( "/" )
+                         .Add( request.granted_ ).Add( "/" )
+                         .Add( request.convoyed_ ).End();
 }
 
 // -----------------------------------------------------------------------------

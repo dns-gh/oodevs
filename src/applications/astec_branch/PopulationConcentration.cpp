@@ -9,14 +9,14 @@
 
 #include "astec_pch.h"
 #include "PopulationConcentration.h"
-#include "CoordinateConverter.h"
+#include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter& converter, float density )
+PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter_ABC& converter, float density )
     : position_( converter.ConvertToXY( asnMsg.position ) )
     , density_ ( density )
     , nLivingHumans_( 0 )

@@ -257,10 +257,13 @@ void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& inp
 void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& input )
 {
     unsigned char visionCones, profiling;
-    std::string configPath;
     input >> visionCones >> profiling; // whatever
-    input >> configPath;
-    // $$$$ AGE 2006-05-11: Deal with it !
+    if( input.GetAvailable() )
+    {
+        std::string configPath;
+        input >> configPath;
+        // $$$$ AGE 2006-05-16: Deal with it
+    }
     ToggleVisionCones();
 }
 

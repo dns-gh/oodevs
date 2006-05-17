@@ -35,6 +35,7 @@
 #include "AutomateMissionInterface.h"
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor

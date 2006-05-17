@@ -15,6 +15,7 @@
 #include "ActivationObserver_ABC.h"
 #include "OptionsObserver_ABC.h"
 #include "Layer_ABC.h"
+#include "SafePointer.h"
 
 class Controllers;
 class GlTools_ABC;
@@ -36,7 +37,7 @@ class EntityLayerBase : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-             EntityLayerBase( const GlTools_ABC& tools, View_ABC& view );
+             EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view );
     virtual ~EntityLayerBase();
     //@}    
 
@@ -64,8 +65,8 @@ protected:
     virtual void SelectColor( const Entity_ABC& );
     virtual void Select     ( const Entity_ABC& );
     virtual void ContextMenu( const Entity_ABC&, const QPoint& );
-    virtual bool IsInTeam   ( const Entity_ABC& );
-    virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
+    virtual bool ShouldDisplay( const Entity_ABC& );
+    virtual bool IsInTeam     ( const Entity_ABC&, const Team& team );
     //@}
     
 private:
@@ -87,10 +88,11 @@ private:
     //@{
     const GlTools_ABC& tools_;
     View_ABC& view_;
-
     T_Entities entities_;
+
+protected: // $$$$ AGE 2006-05-17: 
     unsigned selected_;
-    const Team* currentTeam_;
+    SafePointer< Team > currentTeam_;
     //@}
 };
 

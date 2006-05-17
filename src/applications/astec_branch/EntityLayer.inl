@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
 EntityLayer< ConcreteEntity >::EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : EntityLayerBase( tools, view )
+    : EntityLayerBase( controllers, tools, view )
     , controllers_( controllers )
     , strategy_( strategy )
 {
@@ -106,5 +106,5 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const Entity_ABC& entity, const
 template< typename ConcreteEntity >
 bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Team& team )
 {
-    return  & static_cast< const ConcreteEntity& >( entity ).GetTeam() == & team;
+    return  static_cast< const ConcreteEntity& >( entity ).IsInTeam( team );
 }

@@ -8,39 +8,36 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Profiler.h"
+#include "AgentKnowledgesLayer.h"
 
 // -----------------------------------------------------------------------------
-// Name: Profiler constructor
-// Created: AGE 2006-04-26
+// Name: AgentKnowledgesLayer constructor
+// Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-Profiler::Profiler( const std::string& name /*= ""*/, std::ostream& out /*= std::cout*/ )
-    : bDenis_( InitializeProfiler() )
-    , name_( name )
-    , out_( &out )
+AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+    : EntityLayer< AgentKnowledge >( controllers, tools, strategy, view )
 {
-    profiler_.Start();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profiler destructor
-// Created: AGE 2006-04-26
+// Name: AgentKnowledgesLayer destructor
+// Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-Profiler::~Profiler()
+AgentKnowledgesLayer::~AgentKnowledgesLayer()
 {
-    profiler_.Stop();
-    *out_ << "Profiled " << name_ << " : " << profiler_.GetLastTime() << " ms" << std::endl;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profiler::InitializeProfiler
-// Created: AGE 2006-04-26
+// Name: AgentKnowledgesLayer::ShouldDisplay
+// Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool Profiler::InitializeProfiler()
+bool AgentKnowledgesLayer::ShouldDisplay( const Entity_ABC& entity )
 {
-    static bool initialized = false;
-    if( ! initialized )
-        MT_Profiler::Initialize();
-    return initialized = true;;
+    const AgentKnowledge& k = static_cast< const AgentKnowledge& >( entity );
+    return currentTeam_
+        && k.IsInTeam( *currentTeam_ )
+        && ! k.KnowledgeIsInTeam( *currentTeam_ );
 }
 
