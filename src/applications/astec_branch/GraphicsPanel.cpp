@@ -19,6 +19,7 @@
 GraphicsPanel::GraphicsPanel( QWidget* parent )
     : QVBox     ( parent )
     , preferences_( *new GraphicPreferences() )
+    , parent_( parent )
 {
     preferences_.Display( this );
 
@@ -58,7 +59,7 @@ GraphicPreferences& GraphicsPanel::GetPreferences()
 void GraphicsPanel::OnOk()
 {
     preferences_.Commit();
-    parentWidget()->hide();
+    parent_->hide(); // for some obscure reason, parentWidget() does not work
 }
 
 // -----------------------------------------------------------------------------
@@ -77,5 +78,5 @@ void GraphicsPanel::OnApply()
 void GraphicsPanel::OnCancel()
 {
     preferences_.Revert();
-    parentWidget()->hide();
+    parent_->hide();
 }

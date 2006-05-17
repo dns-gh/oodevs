@@ -20,7 +20,6 @@
 #include "Settings.h"
 #include "OptionsPanel.h"
 #include "MissionPanel.h"
-#include "GraphicsPanel.h"
 #include "ObjectCreationPanel.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
