@@ -18,6 +18,8 @@
 #include "Lima.h"
 #include "Limit.h"
 #include "GlTools_ABC.h"
+#include "ObjectKnowledge.h"
+#include "PopulationKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
@@ -133,7 +135,7 @@ void ColorStrategy::SelectColor( const Agent& agent )
     else
         tools_.Select( false );
         
-    glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+    ApplyColor( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +149,7 @@ void ColorStrategy::SelectColor( const Object& object )
     if( selectedObject_ == &object )
         color = SelectedColor( color );
     tools_.Select( selectedObject_ == &object );
-    glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+    ApplyColor( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +163,7 @@ void ColorStrategy::SelectColor( const Population& population )
     if( selectedPopulation_ == &population )
         color = SelectedColor( color );
     tools_.Select( selectedPopulation_ == &population );
-    glColor3f( color.red()/255.f, color.green()/255.f, color.blue()/255.f );
+    ApplyColor( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,14 +172,40 @@ void ColorStrategy::SelectColor( const Population& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const AgentKnowledge& k )
 {
+    QColor color( 255, 255, 255 );
     const Team* team = k.GetKnowledgeTeam();
     if( team )
-    {
-        QColor color = teamColors_[ team ].second;
-        glColor3f( color.red()/200.f, color.green()/200.f, color.blue()/200.f ); // $$$$ AGE 2006-05-17: plus clair ?
-    } else
-        glColor3f( 200.f, 200.f, 200.f );
+        color = teamColors_[ team ].second;
+    color = KnowledgeColor( color );
+    ApplyColor( color );
+}
 
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const ObjectKnowledge& k )
+{
+    QColor color( 255, 255, 255 );
+    const Team* team = k.GetKnowledgeTeam();
+    if( team )
+        color = teamColors_[ team ].second;
+    color = KnowledgeColor( color );
+    ApplyColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const PopulationKnowledge& k )
+{
+    QColor color( 255, 255, 255 );
+    const Team* team = k.GetKnowledgeTeam();
+    if( team )
+        color = teamColors_[ team ].second;
+    color = KnowledgeColor( color );
+    ApplyColor( color );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,6 +237,26 @@ QColor ColorStrategy::SelectedColor( const QColor& base ) const
 QColor ColorStrategy::SuperiorSelectedColor( const QColor& base ) const
 {
     return base.light( 120 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::KnowledgeColor
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::KnowledgeColor( const QColor& base ) const
+{
+    return base.dark( 120 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::ApplyColor
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+void ColorStrategy::ApplyColor( const QColor& color ) const
+{
+    glColor3f( color.red()   / 255.f,
+               color.green() / 255.f,
+               color.blue()  / 255.f );
 }
 
 // -----------------------------------------------------------------------------

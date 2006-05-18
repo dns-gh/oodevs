@@ -14,6 +14,8 @@ class Agent;
 class Object;
 class Population;
 class AgentKnowledge;
+class ObjectKnowledge;
+class PopulationKnowledge;
 class TacticalLine_ABC;
 
 // =============================================================================
@@ -38,6 +40,8 @@ public:
     virtual void SelectColor( const Object& object ) = 0;
     virtual void SelectColor( const Population& population ) = 0;
     virtual void SelectColor( const AgentKnowledge& k ) = 0;
+    virtual void SelectColor( const ObjectKnowledge& k ) = 0;
+    virtual void SelectColor( const PopulationKnowledge& k ) = 0;
     virtual void SelectColor( const TacticalLine_ABC& line ) = 0;
     //@}
 };

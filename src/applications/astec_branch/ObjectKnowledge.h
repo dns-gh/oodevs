@@ -57,6 +57,7 @@ public:
     Object* GetRealObject() const;
     bool IsInTeam( const Team& team ) const;
     bool KnowledgeIsInTeam( const Team& team ) const;
+    const Team* GetKnowledgeTeam() const;
     //@}
 
 private:
@@ -88,7 +89,7 @@ private:
     unsigned long id_;
     const ObjectType* type_;
 
-    T_PointVector points_;
+    std::string position_;
     Object* pRealObject_;
 
     OptionalValue< unsigned int >  nPourcentageConstruction_;

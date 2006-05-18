@@ -7,34 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentKnowledgesLayer_h_
-#define __AgentKnowledgesLayer_h_
+#ifndef __ObjectKnowledgesLayer_h_
+#define __ObjectKnowledgesLayer_h_
 
 #include "KnowledgeLayer.h"
-#include "AgentKnowledge.h"
+#include "ObjectKnowledge.h"
 
 // =============================================================================
-/** @class  AgentKnowledgesLayer
-    @brief  AgentKnowledgesLayer
+/** @class  ObjectKnowledgesLayer
+    @brief  ObjectKnowledgesLayer
 */
-// Created: AGE 2006-05-17
+// Created: AGE 2006-05-18
 // =============================================================================
-class AgentKnowledgesLayer : public KnowledgeLayer< AgentKnowledge >
+class ObjectKnowledgesLayer : public KnowledgeLayer< ObjectKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
-    virtual ~AgentKnowledgesLayer();
+             ObjectKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+    virtual ~ObjectKnowledgesLayer();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    AgentKnowledgesLayer( const AgentKnowledgesLayer& );            //!< Copy constructor
-    AgentKnowledgesLayer& operator=( const AgentKnowledgesLayer& ); //!< Assignement operator
+    ObjectKnowledgesLayer( const ObjectKnowledgesLayer& );            //!< Copy constructor
+    ObjectKnowledgesLayer& operator=( const ObjectKnowledgesLayer& ); //!< Assignement operator
     //@}
 };
 
-#endif // __AgentKnowledgesLayer_h_
+#endif // __ObjectKnowledgesLayer_h_

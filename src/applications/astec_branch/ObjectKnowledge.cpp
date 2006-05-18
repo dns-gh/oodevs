@@ -61,13 +61,8 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
     if( message.m.pertinencePresent )
         nRelevance_ = message.pertinence;
 
-    if( message.m.localisationPresent )
-    {
-        points_.clear();
-        points_.reserve( message.localisation.vecteur_point.n );
-        for( uint i = 0; i < message.localisation.vecteur_point.n; ++i )
-            points_.push_back( converter_.ConvertToXY( message.localisation.vecteur_point.elem[i] ) );
-    }
+    if( message.m.localisationPresent && message.localisation.vecteur_point.n )
+        position_ = std::string( (const char*)( message.localisation.vecteur_point.elem[0].data ), 15 );
 
     if( message.m.pourcentage_constructionPresent )
         nPourcentageConstruction_ = message.pourcentage_construction;
@@ -119,8 +114,8 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( "En préparation:", bEnPreparation_ )
                 .Display( "Perçu:", bIsPerceived_ )
                 .Display( "Pertinence:", nRelevance_ );
-    if( ! points_.empty() )
-        displayer.Group( "Détails" ).Display( "Position:", converter_.ConvertToMgrs( points_.front() ) );
+    if( ! position_.empty() )
+        displayer.Group( "Détails" ).Display( "Position:", position_ );
 
 }
 
@@ -170,4 +165,13 @@ unsigned long ObjectKnowledge::GetId() const
 std::string ObjectKnowledge::GetName() const
 {
     return pRealObject_ ? pRealObject_->GetName() : "Unknown Object";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetKnowledgeTeam
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+const Team* ObjectKnowledge::GetKnowledgeTeam() const
+{
+    return pRealObject_ ? & pRealObject_->GetTeam() : 0;
 }

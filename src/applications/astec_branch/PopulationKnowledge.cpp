@@ -19,6 +19,7 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "KnowledgeGroup.h"
+#include "Team.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
@@ -183,7 +184,7 @@ bool PopulationKnowledge::IsInTeam( const Team& team ) const
 // -----------------------------------------------------------------------------
 bool PopulationKnowledge::KnowledgeIsInTeam( const Team& team ) const
 {
-    return & popu_.GetTeam() == &team;
+    return popu_.GetTeam() == team;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,4 +203,22 @@ const KnowledgeGroup& PopulationKnowledge::GetKnowledgeGroup() const
 const Population& PopulationKnowledge::GetRealPopulation() const
 {
     return popu_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetKnowledgeTeam
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+const Team* PopulationKnowledge::GetKnowledgeTeam() const
+{
+    return & popu_.GetTeam();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::Draw
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    // $$$$ AGE 2006-05-18: 
 }

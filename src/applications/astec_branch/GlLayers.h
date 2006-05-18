@@ -45,7 +45,7 @@ public:
     //@{
     // $$$$ AGE 2006-03-31: 
     ParametersLayer& GetParametersLayer() { return *parameters_; };
-    AgentsLayer&     GetAgentLayer() { return *agents_; };
+    AgentsLayer&     GetAgentLayer() { return *agents_; }; // $$$$ AGE 2006-05-18: used for aggregation.
     //@}
 
 private:

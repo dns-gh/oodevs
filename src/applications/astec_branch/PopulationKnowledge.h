@@ -15,6 +15,9 @@
 #include "ASN_Types.h"
 #include "IDManager.h"
 #include "Resolver.h"
+#include "Entity_ABC.h"
+#include "Extension_ABC.h"
+#include "Drawable_ABC.h"
 
 class Controller;
 class CoordinateConverter_ABC;
@@ -30,8 +33,11 @@ class KnowledgeGroup;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public Resolver< PopulationConcentrationKnowledge >
+class PopulationKnowledge : public Entity_ABC
+                          , public Resolver< PopulationConcentrationKnowledge >
                           , public Resolver< PopulationFlowKnowledge >
+                          , public Extension_ABC
+                          , public Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -49,9 +55,12 @@ public:
     void DisplayInList( Displayer_ABC& displayer ) const;
     bool IsInTeam( const Team& team ) const;
     bool KnowledgeIsInTeam( const Team& team ) const;
+    const Team* GetKnowledgeTeam() const;
 
     const KnowledgeGroup& GetKnowledgeGroup() const;
     const Population& GetRealPopulation() const;
+
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network

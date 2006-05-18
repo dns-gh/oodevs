@@ -26,6 +26,8 @@
 #include "MeteoLayer.h"
 #include "DetectionMap.h"
 #include "AgentKnowledgesLayer.h"
+#include "PopulationKnowledgesLayer.h"
+#include "ObjectKnowledgesLayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor
@@ -62,6 +64,8 @@ void GlLayers::Load( const std::string& scipioXml )
     Register( *new ObjectsLayer( controllers_, *this, *strategy_, *this ) );
     Register( *new PopulationsLayer( controllers_, *this, *strategy_, *this ) );
     Register( *new AgentKnowledgesLayer( controllers_, *this, *strategy_, *this ) );
+    Register( *new PopulationKnowledgesLayer( controllers_, *this, *strategy_, *this ) );
+    Register( *new ObjectKnowledgesLayer( controllers_, *this, *strategy_, *this ) );
     Register( *agents_ );
     Register( *new MeteoLayer( controllers_, *this ) );
     Register( *parameters_ );

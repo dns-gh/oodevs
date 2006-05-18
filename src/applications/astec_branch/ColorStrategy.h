@@ -55,6 +55,8 @@ public:
     virtual void SelectColor( const Object& object );
     virtual void SelectColor( const Population& population );
     virtual void SelectColor( const AgentKnowledge& k );
+    virtual void SelectColor( const ObjectKnowledge& k );
+    virtual void SelectColor( const PopulationKnowledge& k );
     virtual void SelectColor( const TacticalLine_ABC& line );
     //@}
 
@@ -86,6 +88,8 @@ private:
     void CreateNewColor( const std::string& name );
     QColor SelectedColor( const QColor& base ) const;
     QColor SuperiorSelectedColor( const QColor& base ) const;
+    QColor KnowledgeColor( const QColor& base ) const;
+    void ApplyColor( const QColor& color ) const;
     //@}
 
     //! @name Types 

@@ -18,6 +18,7 @@
 #include "Controllers.h"
 #include "CoordinateConverter.h"
 #include "AgentKnowledgePositions.h"
+#include "PopulationKnowledgePositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeFactory constructor
@@ -57,5 +58,7 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGrou
 // -----------------------------------------------------------------------------
 PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup& group, const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
-    return new PopulationKnowledge( group, controllers_.controller_, model_.coordinateConverter_, model_.agents_, message );
+    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, model_.coordinateConverter_, model_.agents_, message );
+    result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );
+    return result;
 }

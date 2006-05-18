@@ -10,12 +10,8 @@
 #ifndef __ObjectPositions_h_
 #define __ObjectPositions_h_
 
-#include "ASN_Types.h"
-#include "Positions.h"
+#include "LocationPositions.h"
 #include "Updatable_ABC.h"
-#include "Drawable_ABC.h"
-
-class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  ObjectPositions
@@ -23,10 +19,9 @@ class CoordinateConverter_ABC;
 */
 // Created: AGE 2006-03-22
 // =============================================================================
-class ObjectPositions : public Positions
+class ObjectPositions : public LocationPositions
                       , public Updatable_ABC< ASN1T_MsgObjectUpdate >
                       , public Updatable_ABC< ASN1T_MsgObjectCreation >
-                      , public Drawable_ABC
 {
 
 public:
@@ -34,16 +29,6 @@ public:
     //@{
     explicit ObjectPositions( const CoordinateConverter_ABC& converter );
     virtual ~ObjectPositions();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual geometry::Point2f GetPosition() const;
-    virtual float GetHeight() const;
-    virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
-    virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
-
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -57,16 +42,6 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
     virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
-    void Update( const ASN1T_Localisation& localisation );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const CoordinateConverter_ABC& converter_;
-    T_PointVector points_;
-    geometry::Rectangle2f boundingBox_;
-    geometry::Point2f center_;
     //@}
 };
 

@@ -8,42 +8,33 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "ObjectPositions.h"
+#include "ObjectKnowledgePositions.h"
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions constructor
-// Created: AGE 2006-03-22
+// Name: ObjectKnowledgePositions constructor
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter )
+ObjectKnowledgePositions::ObjectKnowledgePositions( const CoordinateConverter_ABC& converter )
     : LocationPositions( converter )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions destructor
-// Created: AGE 2006-03-22
+// Name: ObjectKnowledgePositions destructor
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-ObjectPositions::~ObjectPositions()
+ObjectKnowledgePositions::~ObjectKnowledgePositions()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions::DoUpdate
-// Created: AGE 2006-03-22
+// Name: ObjectKnowledgePositions::DoUpdate
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
     if( message.m.localisationPresent )
         Update( message.localisation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPositions::DoUpdate
-// Created: AGE 2006-03-22
-// -----------------------------------------------------------------------------
-void ObjectPositions::DoUpdate( const ASN1T_MsgObjectCreation& message )
-{
-    Update( message.localisation );
 }

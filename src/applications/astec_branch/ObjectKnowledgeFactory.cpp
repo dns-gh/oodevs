@@ -20,6 +20,7 @@
 #include "Controllers.h"
 #include "ObjectTypes.h"
 #include "CoordinateConverter.h"
+#include "ObjectKnowledgePositions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
@@ -48,7 +49,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, model_.coordinateConverter_, model_.objects_, model_.agents_, model_.objectTypes_ );
-    
+    knowledge->Attach< Positions >( *new ObjectKnowledgePositions( model_.coordinateConverter_ ) );
     switch( message.type )
     {
     case EnumObjectType::itineraire_logistique:

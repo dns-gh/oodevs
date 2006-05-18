@@ -8,23 +8,23 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "AgentKnowledgesLayer.h"
+#include "ObjectKnowledgesLayer.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgesLayer constructor
-// Created: AGE 2006-05-17
+// Name: ObjectKnowledgesLayer constructor
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : KnowledgeLayer< AgentKnowledge >( controllers, tools, strategy, view )
+ObjectKnowledgesLayer::ObjectKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+    : KnowledgeLayer< ObjectKnowledge >( controllers, tools, strategy, view )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgesLayer destructor
-// Created: AGE 2006-05-17
+// Name: ObjectKnowledgesLayer destructor
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::~AgentKnowledgesLayer()
+ObjectKnowledgesLayer::~ObjectKnowledgesLayer()
 {
     // NOTHING
 }
