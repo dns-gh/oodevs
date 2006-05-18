@@ -185,3 +185,21 @@ bool PopulationKnowledge::KnowledgeIsInTeam( const Team& team ) const
 {
     return & popu_.GetTeam() == &team;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetKnowledgeGroup
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+const KnowledgeGroup& PopulationKnowledge::GetKnowledgeGroup() const
+{
+    return group_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetRealPopulation
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+const Population& PopulationKnowledge::GetRealPopulation() const
+{
+    return popu_;
+}

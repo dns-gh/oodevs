@@ -35,6 +35,7 @@ class ParametersLayer;
 class CoordinateConverter_ABC;
 class Model;
 class GlTools_ABC;
+class AgentKnowledgeConverter_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -95,6 +96,7 @@ private:
     const CoordinateConverter_ABC& converter_;
     const GlTools_ABC& tools_;
 
+    AgentKnowledgeConverter_ABC* knowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
     const Agent* selected_;
     const Population* selectedPopulation_;

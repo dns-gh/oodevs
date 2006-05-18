@@ -57,10 +57,11 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned long            GetId       () const;
-    std::string              GetName     () const;
-    Agent&                   GetRealAgent() const;
-    const Team*              GetKnowledgeTeam() const;
+    unsigned long         GetId       () const;
+    std::string           GetName     () const;
+    Agent&                GetRealAgent() const;
+    const Team*           GetKnowledgeTeam() const;
+    const KnowledgeGroup& GetKnowledgeGroup() const;
     //@}
 
 private:

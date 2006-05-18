@@ -93,6 +93,7 @@ private:
     EntityListParameter& operator=( const EntityListParameter& ); //!< Assignement operator
     //@}
 
+protected:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const ConcreteEntity& entity, QPopupMenu& menu );

@@ -11,13 +11,17 @@
 #include "ParamPopulationKnowledge.h"
 #include "PopulationKnowledge.h"
 #include "Population.h"
+#include "Agent.h"
+#include "AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPopulationKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamPopulationKnowledge::ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
+ParamPopulationKnowledge::ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Agent_ABC& agent )
     : EntityParameter< PopulationKnowledge >( pParent, id, label, menu )
+    , converter_( converter )
+    , agent_( static_cast< const Agent& >( agent ) )
 {
     // NOTHING
 }
@@ -37,11 +41,8 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::NotifyContextMenu( const Population& entity, QPopupMenu& menu )
 {
-    // Disallow using knowledges on Populations from our own team.
-//    if( context.selectedElement_.pPopulation_->GetTeam().GetID() == dynamic_cast<Agent*>(&agent_)->GetTeam().GetID() )
-//        return;
-//
-//    pPopupKnowledge_ = dynamic_cast<Agent*>(&agent_)->GetGtia().FindKnowledgeOnPopulation( *(context.selectedElement_.pPopulation_) );
-//    if( pPopupKnowledge_ == 0 )
-//        return;
+    const PopulationKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
+    if( knowledge )
+        EntityParameter< PopulationKnowledge >::NotifyContextMenu( *knowledge, menu );
+
 }

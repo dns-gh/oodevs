@@ -36,6 +36,7 @@
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
 #include "CoordinateConverter.h"
+#include "AgentKnowledgeConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor
@@ -51,6 +52,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, Model& m
     , selected_         ( 0 )
     , selectedPopulation_( 0 )
 {
+    knowledgeConverter_ = new AgentKnowledgeConverter( controllers );
     setResizeEnabled( true );
     setCaption( tr( "Mission" ) );
     setCloseMode( QDockWindow::Always );
@@ -65,6 +67,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, Model& m
 MissionPanel::~MissionPanel()
 {
     controllers_.Remove( *this );
+    delete knowledgeConverter_;
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +171,7 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_ );
+    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -186,7 +189,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -201,7 +204,7 @@ void MissionPanel::ActivateFragOrder( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_ );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else
@@ -242,7 +245,7 @@ void MissionPanel::ActivatePopulationMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_ );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();

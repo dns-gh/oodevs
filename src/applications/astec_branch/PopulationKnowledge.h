@@ -49,6 +49,9 @@ public:
     void DisplayInList( Displayer_ABC& displayer ) const;
     bool IsInTeam( const Team& team ) const;
     bool KnowledgeIsInTeam( const Team& team ) const;
+
+    const KnowledgeGroup& GetKnowledgeGroup() const;
+    const Population& GetRealPopulation() const;
     //@}
 
     //! @name Network

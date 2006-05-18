@@ -11,13 +11,16 @@
 #include "ParamAgentKnowledgeList.h"
 #include "AgentKnowledge.h"
 #include "Agent.h"
+#include "AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu )
+ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Agent_ABC& agent )
     : EntityListParameter< AgentKnowledge >( pParent, asn.n, asn.elem, label, menu )
+    , converter_( converter )
+    , agent_    ( static_cast< const Agent& >( agent ) )
 {
     // NOTHING
 }
@@ -37,5 +40,7 @@ ParamAgentKnowledgeList::~ParamAgentKnowledgeList()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledgeList::NotifyContextMenu( const Agent& entity, QPopupMenu& menu )
 {
-    // $$$$ AGE 2006-03-14: TODO !
+    const AgentKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
+    if( knowledge )
+        EntityListParameter< AgentKnowledge >::NotifyContextMenu( *knowledge, menu );
 }

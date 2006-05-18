@@ -33,7 +33,7 @@ class AutomateMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
+             AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter );
     virtual ~AutomateMissionInterface();
     //@}
 

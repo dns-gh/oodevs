@@ -10,13 +10,17 @@
 #include "astec_pch.h"
 #include "ParamAgentKnowledge.h"
 #include "AgentKnowledge.h"
+#include "AgentKnowledgeConverter_ABC.h"
+#include "Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
+ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Agent_ABC& agent )
     : EntityParameter< AgentKnowledge >( pParent, id, label, menu )
+    , converter_( converter )
+    , agent_    ( static_cast< const Agent& >( agent ) )
 {
     // NOTHING
 }
@@ -36,12 +40,7 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::NotifyContextMenu( const Agent& entity, QPopupMenu& menu )
 {
-//    agent_.GetKnowledgeGroup()->Get< AgentKnowledges >()....
-    // $$$$ AGE 2006-03-14: 
-//    if( context.selectedElement_.pAgent_->GetTeam().GetID() == dynamic_cast<Agent*>(&agent_)->GetTeam().GetID() )
-//        return;
-//
-//    pPopupKnowledge_ = dynamic_cast<Agent*>(&agent_)->GetGtia().FindKnowledgeOnAgent( *(context.selectedElement_.pAgent_) );
-//    if( pPopupKnowledge_ == 0 )
-//        return;
+    const AgentKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
+    if( knowledge )
+        EntityParameter< AgentKnowledge >::NotifyContextMenu( *knowledge, menu );
 }

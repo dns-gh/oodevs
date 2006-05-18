@@ -211,3 +211,12 @@ const Team* AgentKnowledge::GetKnowledgeTeam() const
 {
     return team_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetKnowledgeGroup
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+const KnowledgeGroup& AgentKnowledge::GetKnowledgeGroup() const
+{
+    return group_;
+}

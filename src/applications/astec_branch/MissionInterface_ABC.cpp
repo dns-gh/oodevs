@@ -55,12 +55,13 @@
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter )
     : QVBox      ( parent )
     , controller_( controller )
     , agent_     ( agent )
     , layer_     ( layer )
     , converter_ ( converter )
+    , knowledgeConverter_( knowledgeConverter )
 {
     setMargin( 5 );
     setSpacing( 4 );
@@ -276,7 +277,7 @@ void MissionInterface_ABC::CreatePointList( ASN1T_ListPoint& asn, const std::str
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAgentKnowledge( ASN1T_KnowledgeAgent& asn, const std::string& strName, bool bOptional )
 {
-    AddParameter( *new ParamAgentKnowledge( this, asn, strName, strName ), bOptional );
+    AddParameter( *new ParamAgentKnowledge( this, asn, strName, strName, knowledgeConverter_, agent_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +286,7 @@ void MissionInterface_ABC::CreateAgentKnowledge( ASN1T_KnowledgeAgent& asn, cons
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asn, const std::string& strName, bool /*bOptional*/ )
 {
-    AddParameter( *new ParamAgentKnowledgeList( this, asn, strName, strName ), true );
+    AddParameter( *new ParamAgentKnowledgeList( this, asn, strName, strName, knowledgeConverter_, agent_ ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,7 +377,7 @@ void MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, c
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn, const std::string& strName, bool bOptional )
 {
-    AddParameter( *new ParamPopulationKnowledge( this, asn, strName, strName ), bOptional );
+    AddParameter( *new ParamPopulationKnowledge( this, asn, strName, strName, knowledgeConverter_, agent_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------

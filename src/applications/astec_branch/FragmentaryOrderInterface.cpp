@@ -20,8 +20,8 @@
 // Name: FragmentaryOrderInterface constructor
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : MissionInterface_ABC( parent, agent, controller, layer, converter )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter )
+    : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter )
     , nMissionId_         ( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgOrderConduite();
