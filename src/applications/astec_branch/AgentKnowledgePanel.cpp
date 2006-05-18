@@ -84,8 +84,15 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& cont
     // $$$$ AGE 2006-05-03: slots select, center, right click
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
+
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( QListViewItem* ) ) );
+    connect( pKnowledgeListView_, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter( QListViewItem* ) ) );
+
+    connect( pPerceptionListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
+    connect( pPerceptionListView_, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( QListViewItem* ) ) );
+    connect( pPerceptionListView_, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter( QListViewItem* ) ) );
     controllers_.Register( *this );
 }
 
@@ -141,7 +148,7 @@ void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displ
     if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
-        displayer.Display( "Agents connus", k.GetRealAgent() ); // $$$$ AGE 2006-05-11: .GetName() to prevent link ?
+        displayer.Display( "Agents connus", k.GetRealAgent().GetName() ); // .GetName() to prevent link
     }
     else
         delete item;
@@ -203,6 +210,19 @@ void AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const QPoint
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::OnRequestCenter
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::OnRequestCenter( QListViewItem* i )
+{
+    if( i )
+    {
+        ValuedListItem* item = (ValuedListItem*)( i );
+        item->Activate( controllers_.actions_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::ToggleDisplayOwnTeam
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
@@ -241,8 +261,9 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* )
+void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    displayer.Display( "Agent", perception.detected_ );
+    item->SetValue( perception.detected_ );
+    displayer.Display( "Agent", perception.detected_->GetName() ); // to prevent link
     displayer.Display( "Niveau perception", perception.level_ );
 }

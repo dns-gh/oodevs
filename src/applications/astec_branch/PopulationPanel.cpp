@@ -117,7 +117,7 @@ void PopulationPanel::NotifyUpdated( const Population& p )
     if( ! IsVisible() || selected_ != &p )
         return;
     display_->Group( "Informations" )
-                .Display( "Nom:", p.GetName() )
+                .Display( "Nom:", p )
                 .Display( "Nombre de personnes vivantes:", p.GetLivingHumans() )
                 .Display( "Morts:",  p.GetDeadHumans() );
     DisplayParts( p );

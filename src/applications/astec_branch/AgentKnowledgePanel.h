@@ -89,6 +89,7 @@ private slots:
     void OnSelectionChanged( QListViewItem* );
     void OnContextMenuRequested( QListViewItem*, const QPoint& );
     void ToggleDisplayOwnTeam();
+    void OnRequestCenter( QListViewItem* );
     //@}
 
 private:
