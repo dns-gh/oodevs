@@ -16,6 +16,7 @@
 #include "OptionalValue.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Drawable_ABC.h"
 
 class Displayer_ABC;
 class Object;
@@ -34,6 +35,7 @@ class ObjectType;
 class ObjectKnowledge : public Entity_ABC
                       , public Extension_ABC
                       , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                      , public Drawable_ABC
 {
 
 public:
@@ -54,7 +56,8 @@ public:
 
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
-    Object* GetRealObject() const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
     bool IsInTeam( const Team& team ) const;
     bool KnowledgeIsInTeam( const Team& team ) const;
     const Team* GetKnowledgeTeam() const;

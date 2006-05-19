@@ -52,6 +52,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
+    // $$$$ AGE 2006-05-19: LogisticConsigns peut etre en cours de destruction ! => CRASH
     pion_.Get< LogisticConsigns >().RemoveConsign( *this );
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );

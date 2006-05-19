@@ -90,15 +90,6 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetRealObject
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-Object* ObjectKnowledge::GetRealObject() const
-{
-    return pRealObject_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::Display
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
@@ -174,4 +165,14 @@ std::string ObjectKnowledge::GetName() const
 const Team* ObjectKnowledge::GetKnowledgeTeam() const
 {
     return pRealObject_ ? & pRealObject_->GetTeam() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Draw
+// Created: AGE 2006-05-19
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    if( bIsPerceived_ && pRealObject_ )
+        pRealObject_->Entity_ABC::Draw( where, viewport, tools );
 }

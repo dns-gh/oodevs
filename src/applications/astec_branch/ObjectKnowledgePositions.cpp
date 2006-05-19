@@ -16,6 +16,8 @@
 // -----------------------------------------------------------------------------
 ObjectKnowledgePositions::ObjectKnowledgePositions( const CoordinateConverter_ABC& converter )
     : LocationPositions( converter )
+    , realObjectKnown_( false )
+    , perceived_      ( false )
 {
     // NOTHING
 }
@@ -37,4 +39,18 @@ void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& m
 {
     if( message.m.localisationPresent )
         Update( message.localisation );
+    if( message.m.est_percuPresent )
+        perceived_ = message.est_percu;
+    if( message.m.oid_objet_reelPresent )
+        realObjectKnown_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePositions::Draw
+// Created: AGE 2006-05-19
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    if( ! perceived_ || ! realObjectKnown_ )
+        LocationPositions::Draw( where, viewport, tools );
 }

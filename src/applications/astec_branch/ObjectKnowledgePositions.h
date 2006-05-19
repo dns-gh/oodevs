@@ -30,6 +30,11 @@ public:
     virtual ~ObjectKnowledgePositions();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -40,6 +45,13 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool realObjectKnown_;
+    bool perceived_;
     //@}
 };
 
