@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Select( bool );
+    virtual bool Select( bool ) const;
     virtual bool ShouldDisplay( const std::string& name ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
 
@@ -65,7 +65,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    bool selected_;
+    mutable bool selected_;
 
     T_Icons         icons_;
     T_IconLocations iconLocations_;

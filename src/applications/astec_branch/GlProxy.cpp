@@ -139,10 +139,10 @@ void GlProxy::CenterOn( const geometry::Point2f& point )
 // Name: GlProxy::Select
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void GlProxy::Select( bool b )
+bool GlProxy::Select( bool b ) const
 {
 //    CheckTools();
-    tools_->Select( b );
+    return tools_->Select( b );
 }
 
 // -----------------------------------------------------------------------------

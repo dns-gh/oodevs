@@ -20,6 +20,7 @@
 #include "Agent.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
+#include "GlTools_ABC.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 
@@ -197,9 +198,12 @@ bool AgentKnowledge::KnowledgeIsInTeam( const Team& team ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-     // $$$$ AGE 2006-05-19: problème : le isSelected peut etre a true ! foireux !
     if( nCurrentPerceptionLevel_.IsSet() && E_PerceptionResult( nCurrentPerceptionLevel_ ) > eDetection )
+    {
+        const bool backupState = tools.Select( false );
         realAgent_.Entity_ABC::Draw( where, viewport, tools );
+        tools.Select( backupState );
+    }
     else
         ; // $$$$ AGE 2006-05-17: afficher genre un ?
 }

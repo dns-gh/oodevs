@@ -45,9 +45,11 @@ GlToolsBase::~GlToolsBase()
 // Name: GlToolsBase::Select
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlToolsBase::Select( bool bDenis )
+bool GlToolsBase::Select( bool bDenis ) const
 {
+    bool result = selected_;
     selected_ = bDenis;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

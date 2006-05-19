@@ -18,6 +18,7 @@
 #include "ObjectType.h"
 #include "CoordinateConverter_ABC.h"
 #include "Team.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
@@ -174,5 +175,9 @@ const Team* ObjectKnowledge::GetKnowledgeTeam() const
 void ObjectKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( bIsPerceived_ && pRealObject_ )
+    {
+        const bool backupState = tools.Select( false );
         pRealObject_->Entity_ABC::Draw( where, viewport, tools );
+        tools.Select( backupState );
+    }
 }

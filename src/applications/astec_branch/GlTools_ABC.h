@@ -29,17 +29,23 @@ public:
     virtual ~GlTools_ABC() {};
     //@}
 
-    //! @name Operations
+    //! @name Options  
+    // $$$$ AGE 2006-05-19: Sortir de GlTools_ABC ?
+    // $$$$ AGE 2006-05-19: et trouver mieux
     //@{
-    // $$$$ AGE 2006-03-30: pas terrible
-    virtual void Select( bool ) = 0;
+    virtual bool Select( bool ) const = 0;  //!< Returns the previous selection state
     virtual bool ShouldDisplay( const std::string& name ) const = 0;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;
-    // $$$$ AGE 2006-03-30: /pas terrible
+    //@}
 
+    //! @name Accessors
+    //@{
     virtual float Pixels() const = 0;
     virtual unsigned short StipplePattern( int factor = 1 ) const = 0;
+    //@}
 
+    //! @name Operations
+    //@{
     virtual void DrawCross      ( const geometry::Point2f& at, float size = -1.f ) const = 0;
     virtual void DrawLine       ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawLines      ( const T_PointVector& points ) const = 0;
