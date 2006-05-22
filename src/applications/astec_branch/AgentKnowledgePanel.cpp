@@ -81,8 +81,6 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& cont
     pPerceptionListView_->AddColumn( "Agent" ).
                           AddColumn( "Niveau perception" );
 
-    // $$$$ AGE 2006-05-03: slots select, center, right click
-
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );

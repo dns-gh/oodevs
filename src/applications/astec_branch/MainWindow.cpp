@@ -135,10 +135,10 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
      // Mission panel
     MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, layers_->GetParametersLayer(), *layers_ );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
-    pMissionPanel_->hide();
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
     layers_->Register( *new MiscLayer< MissionPanel >( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31: 
+    pMissionPanel_->hide();
 
     // Logger
     QDockWindow* pLogDockWnd_ = new QDockWindow( this );
@@ -183,6 +183,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
 
     ReadSettings();
     ReadOptions();
+    pMissionPanel_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -303,9 +304,6 @@ void MainWindow::ReadSettings()
 
     // Main window configuration
     settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
-
-    // Always keep the mission panel hidden hidden at launch.
-//    pMissionPanel_->hide(); // $$$$ AGE 2006-04-19: 
 }
 
 // -----------------------------------------------------------------------------

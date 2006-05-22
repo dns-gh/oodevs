@@ -39,6 +39,7 @@ class ItemFactory_ABC;
 // =============================================================================
 class InfoPanels : public QWidgetStack
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -51,9 +52,9 @@ public:
     //@{
     void Add   ( QWidget* widget, const QString& name );
     void Remove( QWidget* widget );
+    void Show  ( QWidget* widget );
     //@}
-    
-    
+
 private:
     //! @name Copy / Assignment
     //@{
@@ -66,7 +67,30 @@ private:
     QSize sizeHint() const;
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void CurrentPageChanged( QWidget* widget );
+    //@}
+
 private:
+    //! @name Types
+    //@{
+    typedef std::set< QWidget* >             T_Widgets;
+    typedef std::pair< T_Widgets, QWidget* > T_SelectedWidget;
+    typedef std::vector< T_SelectedWidget >  T_SelectedWidgets;
+    typedef T_SelectedWidgets::iterator     IT_SelectedWidgets;
+    //@}
+
+    //! @name Helpers
+    //@{
+    IT_SelectedWidgets FindSelectedSet();
+    void ShowPreferedWidget();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     QTabWidget*               pTabWidget_;
     AgentStatePanel*          pStatePanel_;
     ReportPanel*              pReportPanel_;
@@ -80,8 +104,11 @@ private:
     ObjectReportPanel*        pObjectReportPanel_;
     ObjectKnowledgePanel*     pObjectKnowledgePanel_;
 
-	PopulationPanel*          pPopulationPanel_;
+    PopulationPanel*          pPopulationPanel_;
     PopulationKnowledgePanel* pPopulationKnowledgePanel_;
+
+    T_SelectedWidgets         widgets_;
+    //@}
 };
 
 #endif // __InfoPanels_h_

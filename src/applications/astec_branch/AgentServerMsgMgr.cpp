@@ -367,7 +367,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& )
 {
-    // $$$$ AGE 2006-02-10: NOTHING
+    // $$$$ AGE 2006-02-10: Faire une courbe, whatever
 }
 
 //-----------------------------------------------------------------------------

@@ -7,11 +7,11 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
-    
+
 #include "MT/MT_Logger/MT_ConsoleLogger.h"
 #include "MT/MT_Logger/MT_FileLogger.h"
+#include "paranoia/ParanoiaFacade.h"
 
-#include <windows.h>
 #include <commctrl.h>
 #include <new.h>
 #include <dbghelp.h>
@@ -19,36 +19,17 @@
 
 #include "tools/Win32/Win32Exception.h"
 
-
-///$$$$ TEST A GICLER
-/*#include <qdatetime.h>
-#include "Network/NET_ASN_Tools.h"
-
-void Test()
-{
-    ASN1T_GDH asnGDH;
-    NET_ASN_Tools::BuildAsnGDH( asnGDH );
-
-    QDateTime initDateTime ( QDate( 1901, 1, 1 ) );
-    QDateTime currentTmp = QDateTime::currentDateTime();
-
-    uint nQTSec = initDateTime.secsTo( currentTmp );
-    assert( nQTSec == asnGDH.datation );
-} */
-///$$$$ TEST A GICLER
-
 int __cdecl NoMoreMemoryHandler( unsigned int nSize )
 {
     int nResult = MessageBox( 0, MT_FormatString( "No more memory (%d bytes requested) - Retry ?", nSize ).c_str(), "Scipio - Memory error", MB_ICONERROR | MB_RETRYCANCEL | MB_TOPMOST );
-    
+
     switch( nResult )
     {
-        case IDRETRY: 
-            return 1;             
+        case IDRETRY:
+            return 1;
         case IDCANCEL:
         default:
-            throw std::bad_alloc( );
-            return 0;
+            throw std::bad_alloc();
     }
 }
 
@@ -76,7 +57,7 @@ LONG WriteMiniDump( EXCEPTION_POINTERS* pExp )
         eInfo.ClientPointers    = FALSE;
 
         MiniDumpWriteDump( GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpWithFullMemory, &eInfo, NULL, 0 );
- 
+
         CloseHandle( hDumpFile );
 
         MT_LOG_INFO_MSG( "Core dump written" );
@@ -87,8 +68,8 @@ LONG WriteMiniDump( EXCEPTION_POINTERS* pExp )
     }
 
     return EXCEPTION_CONTINUE_SEARCH;
-}                          
-        
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: GetConsoleHwnd()
@@ -129,9 +110,9 @@ HWND GetConsoleHwnd()
 // Created: NLD 2003-10-13
 //-----------------------------------------------------------------------------
 void InitConsole()
-{   
+{
     HANDLE hStdHandle = GetStdHandle( STD_OUTPUT_HANDLE );;
-    CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo; 
+    CONSOLE_SCREEN_BUFFER_INFO screenBufferInfo;
     GetConsoleScreenBufferInfo( hStdHandle, &screenBufferInfo );
 
     COORD coord = GetLargestConsoleWindowSize( hStdHandle );
@@ -142,45 +123,11 @@ void InitConsole()
     SetConsoleScreenBufferSize( hStdHandle, coord );
 
     HWND hCurWin = GetConsoleHwnd();
-    
+
     SetConsoleTitle( "SIM - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
 
     ShowWindow( hCurWin, SW_MAXIMIZE );
 }
-
-
-/*
-bool IsExecutionAllowed()
-{
-#define MAX_SIZE 1000
-
-    HANDLE tokenHandle;
-    if( !OpenProcessToken( GetCurrentProcess(), TOKEN_ALL_ACCESS, &tokenHandle ) )
-        return false;
-
-    DWORD        nReturnLength;
-	TOKEN_OWNER* pTokenOwner = (TOKEN_OWNER *)malloc( MAX_SIZE );
-	if( !GetTokenInformation( tokenHandle, TokenOwner, pTokenOwner, MAX_SIZE, &nReturnLength ) )
-    {
-        free( pTokenOwner );    
-        return false;
-    }
-
-    SID_NAME_USE sidNameUse;
-    char    pSzName      [MAX_SIZE];
-    char    pSzDomainName[MAX_SIZE];
-    DWORD   nNameLength   = MAX_SIZE; 
-    DWORD   nDomainLength = MAX_SIZE;
-    
-    if( !LookupAccountSid( 0, pTokenOwner->Owner, pSzName, &nNameLength, pSzDomainName, &nDomainLength, &sidNameUse ) )
-    {
-        free( pTokenOwner );
-        return false;
-    }
-    free( pTokenOwner );
-    return !::stricmp( pSzDomainName, "MASA" );
-}
-*/
 
 //-----------------------------------------------------------------------------
 // Name: SetLowFragmentationHeapAlgorithm
@@ -199,10 +146,13 @@ void SetLowFragmentationHeapAlgorithm()
 //-----------------------------------------------------------------------------
 int Run( uint nArgc, char* pArgv[] )
 {
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    ParanoiaFacade::CheckLicense( "scipio" );
+#endif
     _mkdir( "./Debug" );
     MT_ConsoleLogger        consoleLogger;
     MT_FileLogger           fileLogger     ( "./Debug/SIM " VERSION ".log", MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ); // 'true' is for 'clear previous log'
-    MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError, MT_Logger_ABC::eLogLayer_All ); 
+    MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError, MT_Logger_ABC::eLogLayer_All );
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
@@ -219,9 +169,9 @@ int Run( uint nArgc, char* pArgv[] )
     // Memory handlers
     _set_new_mode   ( 1 );
     _set_new_handler( NoMoreMemoryHandler );
-  
+
     // Init the console window size and appearance
-    InitConsole();   
+    InitConsole();
 
     SIM_App app( nArgc, pArgv );
     int nResult = app.Execute();
@@ -248,4 +198,3 @@ int main( uint nArgc, char* pArgv[] )
     {
     }
 }
-
