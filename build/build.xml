@@ -119,7 +119,7 @@
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          MT_Tools_SCIPIO,ENT,
-                         qtmain,qt-mt333,xerces-c_2"
+                         qtmain,qt-mt336,xerces-c_2"
                    pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
@@ -134,7 +134,7 @@
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools_SCIPIO,ASN,GFX,ENT,
                          geocoord,graphics,pathfind,terrain,
-                         asn1per,qtmain,qt-mt333,xerces-c_2,
+                         asn1per,qtmain,qt-mt336,xerces-c_2,
                          libboost_filesystem-vc71-mt-1_32">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32"/>
@@ -160,7 +160,7 @@
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
                          HLA,libfedtime,
                          MIL,
-                         qtmain,qt-mt333,xerces-c_2">
+                         qtmain,qt-mt336,xerces-c_2">
             <syslibset libs="wsock32"/>
         </build-app>
     </target>
@@ -194,7 +194,7 @@
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,MT_Thread,MT_Time,
                          ASN,
-                         asn1per,qtmain,qt-mt333"
+                         asn1per,qtmain,qt-mt336"
                    pch="LMP_pch">
             <syslibset libs="user32,wsock32,winmm"/>
             <includepath path="${include.dir}/ASN"/>
