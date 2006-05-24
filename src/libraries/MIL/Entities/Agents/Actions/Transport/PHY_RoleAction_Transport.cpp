@@ -376,20 +376,6 @@ void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_NbcAgentT
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Transport::Cancel
-// Created: NLD 2005-04-19
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::Cancel()
-{
-    for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it)
-    {
-        it->first->GetRole< PHY_RolePion_Transported >().CancelTransport();
-        it->second.rTransportedWeight_ = 0;
-    }
-    transportedPions_.clear();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::CheckConsistency
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
@@ -468,6 +454,22 @@ bool PHY_RoleAction_Transport::MagicUnloadPion( MIL_AgentPion& transported )
     transportedPions_.erase( it );
     bHasChanged_ = true;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::Cancel
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::Cancel()
+{
+    for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it)
+    {
+        it->first->GetRole< PHY_RolePion_Transported >().CancelTransport();
+        it->second.rTransportedWeight_ = 0;
+    }
+    transportedPions_.clear();
+    rWeightTransported_ = 0.;
+    bHasChanged_        = true;
 }
 
 // -----------------------------------------------------------------------------
