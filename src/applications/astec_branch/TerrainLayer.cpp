@@ -19,6 +19,7 @@
 #include "graphics/GraphicData.h"
 #include "GlTools_ABC.h"
 #include "InitializationMessage.h"
+#include "ModelLoaded.h"
 
 using namespace pathfind;
 
@@ -26,9 +27,8 @@ using namespace pathfind;
 // Name: TerrainLayer constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup, const std::string& dataDirectory )
+TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup )
     : controllers_  ( controllers )
-    , dataDirectory_( dataDirectory )
     , tools_        ( tools )
     , setup_        ( setup )
 {
@@ -42,6 +42,15 @@ TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, 
 TerrainLayer::~TerrainLayer()
 {
     controllers_.Remove( *this );
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::Purge
+// Created: SBO 2006-05-24
+// -----------------------------------------------------------------------------
+void TerrainLayer::Purge()
+{
     for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
     {
         const T_ShapeContainer* container = it->second;
@@ -50,22 +59,17 @@ TerrainLayer::~TerrainLayer()
             delete whole.NextElement();
         delete container;
     }
+    shapes_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainLayer::Initialize
+// Name: TerrainLayer::NotifyUpdated
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TerrainLayer::Initialize( const geometry::Rectangle2f& world )
+void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    if( shapes_.empty() )
-    {
-        controllers_.controller_.Update( InitializationMessage( "Chargement de la planimétrie..." ) );
-        world_ = world;
-        DataFactory dataFactory;
-        GraphicFactory factory( *this, dataFactory );
-        factory.LoadGraphicDirectory( dataDirectory_ );
-    }
+    WorldParameters::Load( modelLoaded.scipioXml_ );
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +104,7 @@ void TerrainLayer::AddShape( TesselatedShape& shape )
 // -----------------------------------------------------------------------------
 bool TerrainLayer::ShouldLoad( const std::string& filename )
 {
-    return filename.find( ".bin" )    != std::string::npos
+    return filename.find( ".bin" )   != std::string::npos
         && filename.find( "review" ) == std::string::npos;
 }
 
@@ -110,6 +114,15 @@ bool TerrainLayer::ShouldLoad( const std::string& filename )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( shapes_.empty() && !graphicsDirectory_.empty() )
+    {
+        controllers_.controller_.Update( InitializationMessage( "Chargement de la planimétrie..." ) );
+        world_.Set( 0, 0, width_, height_ );
+        DataFactory dataFactory;
+        GraphicFactory factory( *this, dataFactory );
+        factory.LoadGraphicDirectory( graphicsDirectory_ );
+    }
+
     glEnableClientState( GL_VERTEX_ARRAY );
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
         DrawInnerShapes( viewport );

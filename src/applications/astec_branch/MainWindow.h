@@ -76,6 +76,7 @@ public slots:
     //! @name Slots
     //@{
     void Open();
+    void Close();
     //@}
 
 private:

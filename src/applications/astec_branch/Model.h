@@ -60,6 +60,7 @@ public:
 public:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     CoordinateConverter& coordinateConverter_;
     DetectionMap& detection_;
 

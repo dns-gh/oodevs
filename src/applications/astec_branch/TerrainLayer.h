@@ -17,11 +17,14 @@
 #include "pathfind/TerrainData.h"
 #include "pathfind/SpatialContainer.h"
 #include "terrain/TesselatedShape.h"
+#include "WorldParameters.h"
+#include "ElementObserver_ABC.h"
 
 class GraphicShape;
 class Controllers;
 class GlTools_ABC;
 class GraphicSetup_ABC;
+class ModelLoaded;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -33,18 +36,21 @@ class TerrainLayer : public Layer2d_ABC
                    , private GraphicManager_ABC
                    , public Observer_ABC
                    , public OptionsObserver_ABC
+                   , public WorldParameters
+                   , public ElementObserver_ABC< ModelLoaded >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup, const std::string& dataDirectory );
+             TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup );
     virtual ~TerrainLayer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void NotifyUpdated( const ModelLoaded& modelLoaded );
     //@}
 
 private:
@@ -67,10 +73,10 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void AddShape( GraphicShape& shape );
     virtual void AddShape( TesselatedShape& shape );
     virtual bool ShouldLoad( const std::string& filename );
+    void Purge();
 
     void DrawInnerShapes  ( const geometry::Rectangle2f& viewport ) const;
     void DrawShapesBorders( const geometry::Rectangle2f& viewport ) const;

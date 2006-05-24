@@ -34,15 +34,16 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    int openId = menu->insertItem( tr( "&Ouvrir scipio.xml..." ), parent(), SLOT( Open() ) );
-    menu->setAccel( CTRL + Key_O, openId );
-    menu->insertItem( tr( "Fermer" ) );
+    int itemId = menu->insertItem( MAKE_ICON( open ), tr( "&Ouvrir scipio.xml..." ), parent(), SLOT( Open() ) );
+    menu->setAccel( CTRL + Key_O, itemId );
+    menu->insertItem( tr( "Fermer" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "Ouvrir fichier d'ordres..." ), &recorderToolBar, SLOT( Play() ) );
-    menu->insertItem( tr( "Enregistrer fichier d'ordre..." ), &recorderToolBar, SLOT( Stop() ) );
+    menu->insertItem( MAKE_ICON( open ), tr( "Ouvrir fichier d'ordres..." ), &recorderToolBar, SLOT( Play() ) );
+    menu->insertItem( MAKE_ICON( save ), tr( "Enregistrer fichier d'ordre..." ), &recorderToolBar, SLOT( Stop() ) );
     menu->insertSeparator();
     menu->insertItem( tr( "&Quitter" ), &App::GetApp(), SLOT( quit() ), CTRL + Key_Q );
-    insertItem( tr( "Fichier" ), menu );
+    itemId = insertItem( tr( "&Fichier" ), menu );
+    setAccel( ALT + Key_F, itemId );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
@@ -94,11 +95,13 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 
     menu->insertSeparator();
     menu->insertItem( tr( "&Préférences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
-    insertItem( tr( "Affichage" ), menu );
+    itemId = insertItem( tr( "Affi&chage" ), menu );
+    setAccel( ALT + Key_C, itemId );
 
     menu = new QPopupMenu( this );
     menu->insertItem( tr( "A propos" ), new AboutDialog( this, factory ), SLOT( exec() ) );
-    insertItem( tr( "Aide" ), menu );
+    itemId = insertItem( tr( "Ai&de" ), menu );
+    setAccel( ALT + Key_D, itemId );
 }
     
 // -----------------------------------------------------------------------------

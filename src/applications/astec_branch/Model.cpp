@@ -30,13 +30,17 @@
 #include "WeatherModel.h"
 #include "DetectionMap.h"
 #include "SurfaceFactory.h"
+#include "ModelLoaded.h"
+#include "Controllers.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers )
-    : coordinateConverter_( *new CoordinateConverter() )
+    : controllers_( controllers )
+    , coordinateConverter_( *new CoordinateConverter() )
     , detection_( *new DetectionMap() )
     , types_( *new AgentTypes() )
     , objectTypes_( *new ObjectTypes() )
@@ -104,6 +108,8 @@ void Model::Purge()
 //    limits_.Purge();
     fires_.Purge();
     weather_.Purge();
+    types_.Purge();
+    objectTypes_.Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +123,7 @@ void Model::Load( const std::string& scipioXml )
     detection_.Load( scipioXml );
     types_.Load( scipioXml );
     objectTypes_.Load( scipioXml );
+    controllers_.controller_.Update( ModelLoaded( scipioXml ) );
 }
     
 

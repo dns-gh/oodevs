@@ -175,7 +175,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
-    
+
+    layers_->RegisterBaseLayers();
+
     pStatus_ = new StatusBar( statusBar(), model_.detection_, model_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
 
@@ -213,14 +215,14 @@ void MainWindow::Open()
 void MainWindow::Load( const std::string& scipioXml )
 {
     InitializeHumanFactors( scipioXml );
-    model_.Load( scipioXml );
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
     widget2d_ = new GlWidget( this, controllers_, scipioXml );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
-    layers_->Load( scipioXml_ );
+    model_.Load( scipioXml );
+    //    layers_->Load( scipioXml_ );
     layers_->ChangeTo( widget2d_ );
     layers_->RegisterTo( widget2d_ );
     
@@ -246,6 +248,22 @@ void MainWindow::InitializeHumanFactors( const std::string& conffile )
 
     Tiredness ::Initialize( factors );
     Experience::Initialize( factors );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::Close
+// Created: SBO 2006-05-24
+// -----------------------------------------------------------------------------
+void MainWindow::Close()
+{
+    App::GetApp().GetNetwork().Disconnect();
+    model_.Purge();
+    glPlaceHolder_ = new GlPlaceHolder( this );
+    setCentralWidget( glPlaceHolder_ );
+    glPlaceHolder_->show();
+
+    delete widget2d_; widget2d_ = 0;
+    delete widget3d_; widget3d_ = 0;
 }
 
 // -----------------------------------------------------------------------------

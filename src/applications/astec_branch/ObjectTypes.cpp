@@ -55,16 +55,25 @@ void ObjectTypes::Load( const std::string& scipioXml )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTypes destructor
-// Created: AGE 2006-02-16
+// Name: ObjectTypes::Purge
+// Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-ObjectTypes::~ObjectTypes()
+void ObjectTypes::Purge()
 {
     Resolver< ObjectType >::DeleteAll();
     Resolver< DotationType >::DeleteAll();
     Resolver< EquipmentType >::DeleteAll();
     Resolver< NBCAgent >::DeleteAll();
     Resolver< BreakdownType >::DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes destructor
+// Created: AGE 2006-02-16
+// -----------------------------------------------------------------------------
+ObjectTypes::~ObjectTypes()
+{
+    Purge();
 }
 
 // -----------------------------------------------------------------------------

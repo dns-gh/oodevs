@@ -51,7 +51,6 @@ protected:
     //@{
     float latitude_, longitude_;
     float width_, height_;
-    std::string dataDirectory_;
     std::string terrainDirectory_;
     std::string graphicsDirectory_;
     std::string detection_;

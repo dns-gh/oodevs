@@ -13,10 +13,13 @@
 #include "Layer_ABC.h"
 #include "graphics/ElevationColor_ABC.h"
 #include "graphics/ViewFrustum.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
 class DetectionMap;
 class ElevationTextureTree;
 class Controller;
+class ModelLoaded;
 
 // =============================================================================
 /** @class  Elevation3dLayer
@@ -24,7 +27,10 @@ class Controller;
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Elevation3dLayer : public Layer3d_ABC, private ElevationColor_ABC
+class Elevation3dLayer : public Layer3d_ABC
+                       , private ElevationColor_ABC
+                       , public Observer_ABC
+                       , public ElementObserver_ABC< ModelLoaded >
 {
 
 public:
@@ -36,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const ViewFrustum& frustum );
+    virtual void NotifyUpdated( const ModelLoaded& modelLoaded );
     //@}
 
 private:
@@ -61,6 +67,7 @@ private:
     ViewFrustum lastFrustum_;
     ElevationTextureTree* tree_;
     float zRatio_;
+    bool modelLoaded_;
     //@}
 };
 

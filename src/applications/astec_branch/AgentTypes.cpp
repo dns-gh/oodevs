@@ -38,7 +38,7 @@ AgentTypes::AgentTypes()
 // -----------------------------------------------------------------------------
 void AgentTypes::Load(  const std::string& scipioXml )
 {
-    xml::xifstream xisSymbols( "symbols.xml" ); // $$$$ SBO 2006-03-20: !!!
+    xml::xifstream xisSymbols( App::BuildWorkingDirectoryPath( "symbols.xml" ) );
     symbolFactory_ = new SymbolFactory( xisSymbols );
 
     // $$$$ AGE 2006-05-03: clean all
@@ -63,17 +63,29 @@ void AgentTypes::Load(  const std::string& scipioXml )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentTypes::Purge
+// Created: SBO 2006-05-24
+// -----------------------------------------------------------------------------
+void AgentTypes::Purge()
+{
+    Resolver< PopulationType >::DeleteAll();
+    Resolver< PopulationType, std::string >::Clear();
+    Resolver< AgentType >::DeleteAll();
+    Resolver< AgentType, std::string >::Clear();
+    Resolver< AutomatType >::DeleteAll();
+    Resolver< ComponentType >::DeleteAll();
+    Resolver< ComponentType, std::string >::Clear();
+    Resolver< DecisionalModel, std::string >::DeleteAll();
+    Resolver< SensorType, std::string >::DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentTypes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 AgentTypes::~AgentTypes()
 {
-    Resolver< PopulationType >::DeleteAll();
-    Resolver< AgentType >::DeleteAll();
-    Resolver< AutomatType >::DeleteAll();
-    Resolver< ComponentType >::DeleteAll();
-    Resolver< DecisionalModel, std::string >::DeleteAll();
-    Resolver< SensorType, std::string >::DeleteAll();
+    Purge();
 }
 
 // -----------------------------------------------------------------------------

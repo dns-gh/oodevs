@@ -127,6 +127,15 @@ std::string App::BuildChildPath( const std::string& parent, const std::string& c
     return ( parentPath.branch_path() / childPath ).native_file_string();
 }
 
+// -----------------------------------------------------------------------------
+// Name: App::BuildWorkingDirectoryPath
+// Created: SBO 2006-05-24
+// -----------------------------------------------------------------------------
+std::string App::BuildWorkingDirectoryPath( const std::string& file )
+{
+    bfs::path cwd( ".", bfs::native );
+    return ( cwd.branch_path() / file ).native_file_string();
+}
 
 //-----------------------------------------------------------------------------
 // Name: App destructor

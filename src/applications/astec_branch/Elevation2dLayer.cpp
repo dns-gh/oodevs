@@ -22,8 +22,9 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
     : controller_( controller )
     , elevation_( elevation )
     , layer_( 0 )
+    , modelLoaded_( false )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,28 +33,32 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
 // -----------------------------------------------------------------------------
 Elevation2dLayer::~Elevation2dLayer()
 {
+    controller_.Remove( *this );
     delete layer_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::Initialize
-// Created: AGE 2006-03-29
+// Name: Elevation2dLayer::NotifyUpdated
+// Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::Initialize( const geometry::Rectangle2f& extent )
+void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
-    if( !layer_ )
-    {
-        controller_.Update( InitializationMessage( "Génération de la texture 2D..." ) );
-        layer_ = new ColoredElevationLayer( elevation_ );
-        layer_->Initialize( extent );
-    };
+    delete layer_; layer_ = 0;
+    modelLoaded_ = true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::Paint
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    layer_->Paint( viewport );
+    if( !layer_ && modelLoaded_ )
+    {
+        controller_.Update( InitializationMessage( "Génération de la texture 2D..." ) );
+        layer_ = new ColoredElevationLayer( elevation_ );
+        layer_->Initialize( geometry::Rectangle2f() );
+    }
+    if( layer_ )
+        layer_->Paint( viewport );
 }

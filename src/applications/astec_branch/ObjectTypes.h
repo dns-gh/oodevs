@@ -46,6 +46,7 @@ public:
     //! @name Operations
     //@{
     void Load( const std::string& scipioXml );
+    void Purge();
     //@}
 
 private:

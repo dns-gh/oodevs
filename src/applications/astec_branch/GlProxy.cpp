@@ -55,6 +55,17 @@ void GlProxy::AddDefaultLayer( Layer_ABC& layer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::RemoveAll
+// Created: SBO 2006-05-24
+// -----------------------------------------------------------------------------
+void GlProxy::RemoveAll()
+{
+    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        delete *it;
+    layers_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::ReallyRegisterTo
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

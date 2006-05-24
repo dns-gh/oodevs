@@ -42,6 +42,7 @@ public:
 
     void Register       ( Layer_ABC& layer );
     void AddDefaultLayer( Layer_ABC& layer );
+    void RemoveAll();
 
     virtual void CenterOn( const geometry::Point2f& point );
 

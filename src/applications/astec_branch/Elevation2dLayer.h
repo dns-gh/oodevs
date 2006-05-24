@@ -11,10 +11,13 @@
 #define __Elevation2dLayer_h_
 
 #include "Layer_ABC.h"
+#include "Observer_ABC.h"
+#include "ElementObserver_ABC.h"
 
 class DetectionMap;
 class ElevationLayer;
 class Controller;
+class ModelLoaded;
 
 // =============================================================================
 /** @class  Elevation2dLayer
@@ -23,6 +26,8 @@ class Controller;
 // Created: AGE 2006-03-29
 // =============================================================================
 class Elevation2dLayer : public Layer2d_ABC
+                       , public Observer_ABC
+                       , public ElementObserver_ABC< ModelLoaded >
 {
 
 public:
@@ -34,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void NotifyUpdated( const ModelLoaded& modelLoaded );
     //@}
 
 private:
@@ -51,6 +56,7 @@ private:
     Controller& controller_;
     const DetectionMap& elevation_;
     ElevationLayer* layer_;
+    bool modelLoaded_;
     //@}
 };
 

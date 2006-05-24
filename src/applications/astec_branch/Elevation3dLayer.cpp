@@ -25,8 +25,9 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
     , elevation_( elevation )
     , tree_( 0 )
     , zRatio_( 5.f )
+    , modelLoaded_( false )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,20 +36,18 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
 // -----------------------------------------------------------------------------
 Elevation3dLayer::~Elevation3dLayer()
 {
+    controller_.Remove( *this );
     delete tree_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation3dLayer::Initialize
-// Created: AGE 2006-03-29
+// Name: Elevation3dLayer::NotifyUpdated
+// Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-void Elevation3dLayer::Initialize( const geometry::Rectangle2f& )
+void Elevation3dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
-    if( ! tree_ )
-    {
-        controller_.Update( InitializationMessage( "Génération de la texture 3D..." ) );
-        tree_ = new ElevationTextureTree( elevation_.GetMap(), *this );
-    }
+    delete tree_; tree_ = 0;
+    modelLoaded_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +75,14 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
+    if( ! tree_ && modelLoaded_ )
+    {
+        controller_.Update( InitializationMessage( "Génération de la texture 3D..." ) );
+        tree_ = new ElevationTextureTree( elevation_.GetMap(), *this );
+    }
+
+    if( !tree_ )
+        return;
     glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
     glPushMatrix(); 
         glScalef( 1.f, 1.f, zRatio_ );

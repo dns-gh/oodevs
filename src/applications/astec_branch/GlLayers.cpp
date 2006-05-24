@@ -44,21 +44,27 @@ GlLayers::GlLayers( Controllers& controllers, Model& model, GraphicSetup_ABC& se
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlLayers::Load
-// Created: AGE 2006-05-03
+// Name: GlLayers destructor
+// Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlLayers::Load( const std::string& scipioXml )
+GlLayers::~GlLayers()
 {
-    // $$$$ AGE 2006-05-03: old layers !
-    WorldParameters::Load( scipioXml );
+    delete strategy_;
+}
 
+// -----------------------------------------------------------------------------
+// Name: GlLayers::RegisterBaseLayers
+// Created: SBO 2006-05-24
+// -----------------------------------------------------------------------------
+void GlLayers::RegisterBaseLayers()
+{
     // $$$$ AGE 2006-05-17: L'ordre défini à la fois l'ordre de dessin et celui des signaux,
     // $$$$ AGE 2006-05-17: qui ne sont clairement pas compatibles. 
     // $$$$ AGE 2006-05-17: Trouver un truc pas dégueu qui fonctionne. 
     // $$$$ AGE 2006-05-17: Par exemple, filer une stratégie qui dispatcherait les bidules.
     Register( *new Elevation2dLayer( controllers_.controller_, model_.detection_ ) );
     Register( *new Elevation3dLayer( controllers_.controller_, model_.detection_ ) );
-    Register( *new TerrainLayer( controllers_, *this, setup_, graphicsDirectory_ ) );
+    Register( *new TerrainLayer( controllers_, *this, setup_ ) );
     Register( *new MetricsLayer( controllers_, *this ) );
     Register( *new LimitsLayer( controllers_, *this, *strategy_, *parameters_, model_.limits_ ) );
     Register( *new ObjectsLayer( controllers_, *this, *strategy_, *this ) );
@@ -73,11 +79,3 @@ void GlLayers::Load( const std::string& scipioXml )
     AddDefaultLayer( *new DefaultLayer( controllers_ ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: GlLayers destructor
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-GlLayers::~GlLayers()
-{
-    delete strategy_;
-}

@@ -63,8 +63,12 @@ public:
         for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
             delete it->second;
         elements_.clear();
-    };
+    }
 
+    void Clear()
+    {
+        elements_.clear();
+    }
 
     T* Find( const Identifier& identifier ) const
     {

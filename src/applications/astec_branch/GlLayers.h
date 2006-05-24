@@ -11,7 +11,6 @@
 #define __GlLayers_h_
 
 #include "GlProxy.h"
-#include "WorldParameters.h"
 
 class Controllers;
 class Model;
@@ -26,7 +25,7 @@ class AgentsLayer;
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class GlLayers : private WorldParameters, public GlProxy
+class GlLayers : public GlProxy
 {
 
 public:
@@ -38,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void RegisterBaseLayers();
     //@}
 
     //! @name Accessors
