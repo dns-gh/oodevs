@@ -69,6 +69,8 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
+
+    void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Operations
@@ -198,6 +200,7 @@ protected:
 
     //! @name Network
     //@{
+    virtual void WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const;
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&   asnMsg );
             void NotifyAttributeUpdated ( E_AttributeUpdate nAttrToUpdate );

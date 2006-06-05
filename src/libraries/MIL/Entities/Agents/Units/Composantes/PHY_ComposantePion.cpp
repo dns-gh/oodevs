@@ -130,7 +130,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
          
     uint nID;
     file >> nID;
-    pState_ = &PHY_ComposanteState::FindComposanteState( nID );
+    pState_ = &PHY_ComposanteState::Find( nID );
 
     ASN1T_TypeEquipement nEqID;
     file >> nEqID;
@@ -152,7 +152,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
     if( nRandomBreakdownNextTimeStep_ )
     {
         file >> nID;
-        pRandomBreakdownState_ = &PHY_ComposanteState::FindComposanteState( nID );
+        pRandomBreakdownState_ = &PHY_ComposanteState::Find( nID );
     }
     else
         pRandomBreakdownState_ = 0;

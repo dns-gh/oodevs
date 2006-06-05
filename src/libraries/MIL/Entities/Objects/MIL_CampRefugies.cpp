@@ -47,6 +47,7 @@ MIL_CampRefugies::~MIL_CampRefugies()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CampRefugies::serialize
 // Created: JVT 2005-04-14
@@ -59,6 +60,19 @@ void MIL_CampRefugies::serialize( Archive& file, const uint )
 
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_CampRefugies::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_CampRefugies::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pTC2_ );
+    archive.WriteField( "TC2", pTC2_->GetID() );
+}
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CampRefugies::Initialize

@@ -65,6 +65,7 @@ PHY_RolePionLOG_Supply::~PHY_RolePionLOG_Supply()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::serialize
 // Created: JVT 2005-03-30
@@ -75,6 +76,18 @@ void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_RolePion_Supply >( *this )
          & pPion_
          & pStocks_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    PHY_RolePion_Supply::WriteODB( archive );
+
+    assert( pStocks_ );
+    pStocks_->WriteODB( archive );
 }
 
 // =============================================================================

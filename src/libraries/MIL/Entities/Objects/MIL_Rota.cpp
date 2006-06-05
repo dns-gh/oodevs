@@ -54,6 +54,7 @@ MIL_Rota::~MIL_Rota()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Rota::load
 // Created: JVT 2005-03-23
@@ -87,6 +88,22 @@ void MIL_Rota::save( MIL_CheckPointOutArchive& file, const uint ) const
         file << (*it)->GetID();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Rota::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_Rota::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    archive.WriteField( "Danger", nDanger_  );
+    archive.Section( "AgentsNBC" );
+    for( CIT_NbcAgentSet it = nbcAgents_.begin(); it != nbcAgents_.end(); ++it )
+    {
+        archive.Section( "AgentNBC" );
+        archive.WriteAttribute( "type", (**it).GetName() );
+        archive.EndSection(); // AgentNBC
+    }
+    archive.EndSection(); // AgentsNBC
+}
 
 //=============================================================================
 // INIT

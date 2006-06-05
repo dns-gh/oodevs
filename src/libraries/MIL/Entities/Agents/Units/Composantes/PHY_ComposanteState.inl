@@ -80,11 +80,11 @@ uint PHY_ComposanteState::GetNbrStates()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteState::FindComposanteState
+// Name: PHY_ComposanteState::Find
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 inline
-const PHY_ComposanteState& PHY_ComposanteState::FindComposanteState( uint nID )
+const PHY_ComposanteState& PHY_ComposanteState::Find( uint nID )
 {
     assert( composanteStates_.size() > nID );
     return *composanteStates_[ nID ];

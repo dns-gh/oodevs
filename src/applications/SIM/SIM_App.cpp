@@ -338,6 +338,15 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
             }
             startupConfig.SetCheckPointFileName( ppArgv[ nArgNbr ] );
         }
+        else if ( stricmp( ppArgv[nArgNbr], "-checkpointodb" ) == 0 )
+        {
+            if ( ++nArgNbr >= nArgc )
+            {
+                MT_LOG_ERROR_MSG( "Please specify the checkpoint name" );
+                return false;
+            }
+            startupConfig.SetCheckPointODBFileName( ppArgv[ nArgNbr ] );
+        }
         else if ( stricmp( ppArgv[nArgNbr], "-conffile" ) == 0 )
         {
             if ( ++nArgNbr >= nArgc )

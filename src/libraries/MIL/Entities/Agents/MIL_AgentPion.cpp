@@ -249,16 +249,52 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::WriteODB( MT_XXmlOutputArchive& archive, bool bPC ) const
+{
+    //$$ TMP séparation PC / Automate
+    if( IsPC() && !bPC )
+        return;
+
+    if( !IsPC() )
+    {
+        assert( pAutomate_ );
+        assert( pType_ );
+
+        archive.Section( "Pion" );
+
+        archive.WriteAttribute( "id"  , GetID() );
+        archive.WriteAttribute( "type", pType_->GetName());
+        
+        archive.Section( "LiensHierarchiques" );
+        archive.WriteField( "Automate", pAutomate_->GetID() );
+        archive.EndSection(); // LiensHierarchiques
+
+        archive.WriteField( "Nom", strName_ );
+    }
+
+    std::string strPos;
+    MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition(), strPos );
+    archive.WriteField( "Position", strPos );
+
+    GetRole< PHY_RolePion_Composantes >().WriteODB( archive ); // Equipements
+    GetRole< PHY_RolePion_Humans      >().WriteODB( archive ); // Personnels
+    GetRole< PHY_RolePion_Dotations   >().WriteODB( archive ); // Dotations
+    GetRole< PHY_RolePion_Supply      >().WriteODB( archive ); // Stocks
+       
+    if( !IsPC() )
+        archive.EndSection(); // Pion
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
 {
     assert( pKnowledgeBlackBoard_ );
-
-    std::stringstream strTmp;
-    strTmp << strName_ << " - [" << GetID() << "]";
-    strName_ = strTmp.str();
 
     RegisterRole< NET_RolePion_Dotations         >( *this );
     RegisterRole< PHY_RolePion_Reinforcement     >( *this );

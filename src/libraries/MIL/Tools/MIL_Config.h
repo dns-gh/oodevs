@@ -38,11 +38,13 @@ public:
           bool         UsePathDebug               () const;
           bool         IsProfilingEnabled         () const;
     const std::string& GetCheckPointFileName      () const;
+    const std::string& GetCheckPointODBFileName   () const;
     const std::string& GetConfigFileName          () const;
           bool         IsDataTestMode             () const;
     
-          bool         UseCheckPoint    () const;
+          bool         UseCheckPoint    () const;          
           bool         UseCheckPointCRC () const;
+          bool         UseCheckPointODB () const;
           bool         UseDiaDebugServer() const;
     //@}
 
@@ -60,6 +62,7 @@ public:
     void SetNbrPathFindThreads         ( uint nNbr );
     void SetForceODBAutomateComposition( bool bForce );
     void SetCheckPointFileName         ( const std::string& strName );
+    void SetCheckPointODBFileName      ( const std::string& strName );
     void SetConfigFileName             ( const std::string& strName );
     void SetUseDecDebug                ( bool bUse );
     void SetUsePathDebug               ( bool bUse );
@@ -80,6 +83,7 @@ private:
     const std::string   strRootDirectory_;
     std::string         strConfFile_;
     std::string         strCheckPointFileName_;
+    std::string         strCheckPointODBFileName_;
     uint                nExerciceID_;
     uint                nNbrPathFindThreads_;
     bool                bUseCheckPointCRC_;

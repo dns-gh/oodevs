@@ -533,22 +533,37 @@ void TER_Localisation::Read( MT_InputArchive_Logger< MT_XXmlInputArchive >& arch
 //-----------------------------------------------------------------------------
 void TER_Localisation::Write( MT_OutputArchive_ABC& archive ) const
 {
-    if ( !archive.Section( "Localisation" ) || !archive.WriteAttribute( "type", ConvertLocalisationType( nType_ ) ) )
-        throw MT_ScipioException( "TER_Localisation::Write", __FILE__, __LINE__, "Can't write section 'Localisation'", archive.RetrieveLastError()->GetInfo() );
+    archive.Section( "Localisation" );
 
-    // Points
-    if ( !archive.BeginList( "Points", pointVector_.size() ) )
-        throw MT_ScipioException( "TER_Localisation::Write", __FILE__, __LINE__, "Can't write section 'Localisation::Points'", archive.RetrieveLastError()->GetInfo() );
-
-    std::string strPoint;
-    for ( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
+    if( bWasCircle_ )
     {
-        TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
-        if ( !archive.WriteField( "Point", strPoint ) )
-            throw MT_ScipioException( "TER_Localisation::Write", __FILE__, __LINE__, "Can't write section 'Localisation::Points::Point'", archive.RetrieveLastError()->GetInfo() );
+        archive.WriteAttribute( "type", "cercle" );
+        archive.Section( "Points" );
+        std::string strPoint;
+        TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_, strPoint );
+        archive.WriteField( "Point", strPoint );
+
+        MT_Vector2D vDir( 0., 1. );
+        TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_ + vDir * rCircleRadius_, strPoint );
+        archive.WriteField( "Point", strPoint );
+
+        archive.EndSection(); // Points
     }
-    archive.EndList();
-    archive.EndSection();
+    else
+    {
+        archive.WriteAttribute( "type", ConvertLocalisationType( nType_ ) );
+
+        archive.Section( "Points" );
+        std::string strPoint;
+        for ( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
+        {
+            TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
+            archive.WriteField( "Point", strPoint );
+           
+        }
+        archive.EndSection(); // Points        
+    }
+    archive.EndSection(); // Localisation
 }
 
 

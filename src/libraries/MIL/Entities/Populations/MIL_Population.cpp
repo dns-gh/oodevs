@@ -177,6 +177,36 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pDecision_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::WriteODB
+// Created: NLD 2006-06-01
+// -----------------------------------------------------------------------------
+void MIL_Population::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pType_ );
+    assert( pArmy_ );
+    assert( pDefaultAttitude_ );
+    assert( !concentrations_.empty() || !flows_.empty() );
+
+    archive.Section( "Population" );
+    archive.WriteAttribute( "id"  , nID_ );
+    archive.WriteAttribute( "type", pType_->GetName() );    
+    archive.WriteField( "Nom", strName_ );
+    archive.WriteField( "Camp", pArmy_->GetName() );
+    archive.WriteField( "NombreHumains", GetNbrAliveHumans() + GetNbrDeadHumans() );
+    archive.WriteField( "Attitude", pDefaultAttitude_->GetName() );
+    
+    std::string strPosition;
+    if( !concentrations_.empty() )
+        MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition(), strPosition );
+    else
+        MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition(), strPosition );
+
+    archive.WriteField( "Position", strPosition );
+
+    archive.EndSection(); // Population
+}
+
 // =============================================================================
 // EFFECTS FROM PIONS
 // =============================================================================

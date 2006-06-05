@@ -46,6 +46,7 @@ public:
     //! @name Init
     //@{
     void ReadValues( MIL_InputArchive& archive );
+    void WriteODB  ( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Operations

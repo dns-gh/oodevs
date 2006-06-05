@@ -299,6 +299,59 @@ void MIL_AutomateLOG::ReadLogisticHierarchy( MIL_InputArchive& archive )
     archive.EndSection(); // LiensHierarchiques
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::WriteLogisticHierarchy
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const
+{
+    MIL_Automate::WriteLogisticHierarchy( archive );
+
+    if( !pMaintenanceSuperior_ && !pMedicalSuperior_ && !pSupplySuperior_ )
+        return;
+    
+    archive.Section( "Logistique" );
+    if( pMaintenanceSuperior_ )
+    {
+        archive.Section( "Maintenance" );
+        archive.WriteAttribute( "automate", pMaintenanceSuperior_->GetID() );
+        archive.EndSection(); // Maintenance
+    }
+    
+    if( pMedicalSuperior_ )
+    {
+        archive.Section( "Sante" );
+        archive.WriteAttribute( "automate", pMedicalSuperior_->GetID() );
+        archive.EndSection(); // Sante
+    }
+
+    if( pSupplySuperior_ )
+    {
+        archive.Section( "Ravitaillement" );
+        archive.WriteAttribute( "automate", pSupplySuperior_->GetID() );
+
+        archive.Section( "Quotas" );
+        for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it )
+        {
+            const PHY_DotationCategory& dotationCategory = *it->first;
+
+            archive.Section( "Dotation" );
+            archive.WriteAttribute( "nom", dotationCategory.GetType().GetName() );
+            archive.Section( "Categories" );
+            archive.Section( "Categorie" );
+            archive.WriteAttribute( "nom"  , dotationCategory.GetName() );
+            archive.WriteAttribute( "quota", it->second.rQuota_ );
+            archive.EndSection(); // Categorie
+            archive.EndSection(); // Categories
+            archive.EndSection(); // Dotation
+        }           
+        archive.EndSection(); // Quotas
+
+        archive.EndSection(); // Ravitaillement
+    }
+    archive.EndSection(); // Logistique
+}
+
 // =============================================================================
 // MAINTENANCE
 // =============================================================================

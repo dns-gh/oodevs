@@ -16,6 +16,7 @@
 template< typename KEY, typename VALUE, typename CMP >
 MT_Converter<KEY, VALUE, CMP>::MT_Converter( const VALUE& nullValue )
 : nullValue_( nullValue )
+, nullKey_  ()
 {
 }
 
@@ -49,4 +50,19 @@ const VALUE& MT_Converter<KEY, VALUE, CMP>::Convert( const KEY& key )
     if( it == map_.end() )
         return nullValue_;
     return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Converter::RevertConvert
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+template< typename KEY, typename VALUE, typename CMP >
+const KEY& MT_Converter<KEY, VALUE, CMP>::RevertConvert( const VALUE& value )
+{
+    for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
+    {
+        if( it->second == value )
+            return it->first;
+    }
+    return nullKey_;
 }

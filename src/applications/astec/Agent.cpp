@@ -53,8 +53,11 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& asnMsg )
 	, nLogSupplySuperior_ ( 0 )
 {
     Initialize();
-    sName_ = asnMsg.nom;
-
+ 
+    std::stringstream strTmp;
+    strTmp << asnMsg.nom << " - [" << nAgentID_ << "]";
+    sName_ = strTmp.str();
+    
     pTypeAutomate_ = App::GetApp().GetAgentManager().FindTypeAutomate( asnMsg.type_automate );
     assert( pTypeAutomate_ );
     pTypePion_ = &pTypeAutomate_->GetTypePC();
@@ -91,7 +94,10 @@ Agent::Agent( const ASN1T_MsgPionCreation& asnMsg )
 	, nLogSupplySuperior_ ( 0 )
 {
     Initialize();
-	sName_ = asnMsg.nom;
+    
+    std::stringstream strTmp;
+    strTmp << asnMsg.nom << " - [" << nAgentID_ << "]";
+    sName_ = strTmp.str();
 
     pTypeAutomate_ = 0;
     pTypePion_     = App::GetApp().GetAgentManager().FindTypePion( asnMsg.type_pion );

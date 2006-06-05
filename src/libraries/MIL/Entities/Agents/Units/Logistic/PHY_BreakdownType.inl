@@ -113,3 +113,13 @@ uint PHY_BreakdownType::ChooseARepairTime() const
 {
     return (uint)repairTime_.rand();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_BreakdownType::GetTheoricRepairTime
+// Created: NLD 2006-06-01
+// -----------------------------------------------------------------------------
+inline
+uint PHY_BreakdownType::GetTheoricRepairTime() const
+{
+    return nTheoricRepairTime_;
+}

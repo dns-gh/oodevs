@@ -156,9 +156,26 @@ void MIL_AgentServer::ReadODB( MIL_InputArchive& archive )
         ResumeSim();
     archive.EndSection(); // SIM
 
-    archive.Section( "Donnees" );
-    pEntityManager_->ReadODB( archive );
-    archive.EndSection(); // Donnees
+    // ODB
+    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+    MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
+    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+
+    std::string strODB;
+    if( MIL_AgentServer::GetWorkspace().GetConfig().UseCheckPointODB() )
+        strODB = pCheckPointManager_->GetCheckPointODBFileName( config_.GetCheckPointODBFileName() );
+    else
+    {
+        archive.Section( "Donnees" );
+        archive.ReadField( "ODB", strODB );
+        archive.EndSection(); // Donnees
+    }
+    MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strODB.c_str() ) );
+
+    MIL_InputArchive odbArchive;
+    odbArchive.AddWarningStream( std::cout );
+    odbArchive.Open( strODB );
+    pEntityManager_->ReadODB( odbArchive );
 }
 
 // -----------------------------------------------------------------------------
@@ -490,4 +507,18 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
     nSimState_ = eSimPaused;
     if( nSimState == eSimRunning )
         ResumeSim();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "ODB" );
+
+    assert( pEntityManager_ );
+    pEntityManager_->WriteODB( archive );
+
+    archive.EndSection(); // ODB
 }

@@ -67,12 +67,14 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
+
+    void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Initialize
     //@{
-            void ReadOverloading      ( MIL_InputArchive& archive );
-    virtual void ReadLogisticHierarchy( MIL_InputArchive& archive );
+            void ReadOverloading       ( MIL_InputArchive& archive );
+    virtual void ReadLogisticHierarchy ( MIL_InputArchive& archive );
     //@}
 
     //! @name Accessors
@@ -153,9 +155,7 @@ public:
 
     //! @name Misc
     //@{
-    MT_Float    Distance               ( const MIL_Automate&  automate ) const;
-    MT_Float    Distance               ( const MIL_AgentPion& pion     ) const;
-    MT_Vector2D GetAlivePionsBarycenter() const;
+    bool GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
     //@}
 
     //! @name Dynamic pions
@@ -180,8 +180,9 @@ public:
 protected:
     //! @name Tools
     //@{
-    virtual void WriteCreationMsg( NET_ASN_MsgAutomateCreation& asnMsg ) const;
-            void Surrender       ();
+    virtual void WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteCreationMsg      ( NET_ASN_MsgAutomateCreation& asnMsg ) const;
+            void Surrender             ();
     //@}
 
 protected:

@@ -143,6 +143,11 @@ private:
     //@}
 
 private:
+    //! @name Checkpoint
+    //@{
+    virtual void WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const;
+    //@}
+
     //! @name Tools
     //@{
     MIL_AutomateLOG* GetLogisticAutomate        ( uint nID );

@@ -91,6 +91,16 @@ const std::string& MIL_Config::GetCheckPointFileName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::GetCheckPointODBFileName
+// Created: NLD 2006-05-30
+// -----------------------------------------------------------------------------
+inline
+const std::string& MIL_Config::GetCheckPointODBFileName() const
+{
+    return strCheckPointODBFileName_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::SetExerciceID
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
@@ -131,6 +141,16 @@ void MIL_Config::SetCheckPointFileName( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::SetCheckPointODBFileName
+// Created: NLD 2006-05-30
+// -----------------------------------------------------------------------------
+inline
+void MIL_Config::SetCheckPointODBFileName( const std::string& strName )
+{
+    strCheckPointODBFileName_ = strName;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::SetForceODBAutomateComposition
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
@@ -148,6 +168,16 @@ inline
 bool MIL_Config::UseCheckPoint() const
 {
     return !strCheckPointFileName_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::UseCheckPointODB
+// Created: NLD 2006-05-30
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::UseCheckPointODB() const
+{
+    return !strCheckPointODBFileName_.empty();
 }
 
 // -----------------------------------------------------------------------------

@@ -198,6 +198,33 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << rExitingPopulationDensity_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pType_ );
+
+    //$$$ TMP
+    if( *pType_ == MIL_RealObjectType::nuageNBC_ )
+        return;
+
+    archive.Section( "Objet" );
+
+    archive.WriteAttribute( "id"   , nID_ );
+    archive.WriteAttribute( "type" , pType_  ->GetName() );
+    archive.WriteField    ( "Armee", GetArmy().GetName() );
+
+    archive.Section( "Forme" );
+    GetLocalisation().Write( archive );
+    archive.EndSection(); // Forme
+
+    WriteSpecificAttributes( archive );
+
+    archive.EndSection(); // Objet
+}
+
 
 //=============================================================================
 // INIT
@@ -303,11 +330,12 @@ bool MIL_RealObject_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaParamete
 void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
 {
     assert( pType_ );
-
-    nID = pType_->GetIDManager().ConvertSimIDToMosID( nID );
     
-    if ( !pType_->GetIDManager().IsMosIDValid( nID ) || !pType_->GetIDManager().LockMosID( nID ) )
-        throw MT_ScipioException( "MIL_RealObject_ABC::Initialize", __FILE__, __LINE__, "Invalid ID", archive.GetContext() );
+    if( pType_->GetIDManager().IsMosIDValid( nID_ ) )
+    {
+        bool bOut = pType_->GetIDManager().LockMosID( nID_ );
+        assert( bOut );
+    }
 
     // Armee
     std::string strArmy;

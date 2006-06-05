@@ -37,8 +37,9 @@ public:
 
     //! @name Main
     //@{
-    void Update        ();
-    void LoadCheckPoint( std::string strCheckPointPath );
+    void        Update                  ();
+    void        LoadCheckPoint          ( const std::string& strCheckPointPath );
+    std::string GetCheckPointODBFileName( const std::string& strCheckPointPath ) const;
     //@}
 
     //! @name Accessors
@@ -63,6 +64,7 @@ public:
 private:   
     //! @name Tools
     //@{
+    
     void ManageOldCheckPoints ( const std::string& newName );
     void SaveCheckPoint       ( const std::string& strCheckPointName );
     void SaveCheckPoint       ( const std::string& strName, const std::string& strPath );
@@ -71,6 +73,8 @@ private:
     
     //! @name Tools
     //@{
+    static std::string                    GetCheckPointFullPath    ( const std::string& strCheckPointPath );
+
     static void                           CreateMetaData           ( const std::string& strPath, const std::string& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
     static boost::crc_32_type::value_type CreateData               ( const std::string& strFileName );
     static const std::string              CreateCheckPointDirectory();

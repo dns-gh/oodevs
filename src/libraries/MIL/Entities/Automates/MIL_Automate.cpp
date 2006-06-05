@@ -76,10 +76,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
     if( !archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing ) )
         strName_ = pType_->GetName();
 
-    std::stringstream strTmp;
-    strTmp << strName_ << " - [" << (uint)GetID() << "]";
-    strName_ = strTmp.str();
-
     pDecision_ = new DEC_AutomateDecision( *this );
 
     // Liens hiérarchiques
@@ -268,6 +264,34 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_Automate::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pType_ );
+    assert( pKnowledgeGroup_ );
+    assert( pPionPC_ );
+
+    archive.Section( "Automate" );
+    archive.WriteAttribute( "id", nID_ );
+    archive.WriteAttribute( "type", pType_->GetName() );
+    
+    archive.WriteField( "Embraye", bEmbraye_ );
+    archive.WriteField( "Nom"    , strName_  );
+
+    archive.Section( "LiensHierarchiques" );
+    archive.WriteField( "Armee"             , pKnowledgeGroup_->GetArmy().GetName() );
+    archive.WriteField( "GroupeConnaissance", pKnowledgeGroup_->GetID() );
+    WriteLogisticHierarchy( archive );
+    archive.EndSection(); // LiensHierarchiques
+
+    pPionPC_->WriteODB( archive, true /*PC*/ );
+
+    archive.EndSection(); // Automate
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
@@ -302,6 +326,20 @@ void MIL_Automate::ReadLogisticHierarchy( MIL_InputArchive& archive )
         archive.EndSection(); // TC2
     }
     archive.EndSection(); // LiensHierarchiques
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::WriteLogisticHierarchy
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_Automate::WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const
+{
+    if( pTC2_ )
+    {
+        archive.Section( "TC2" );
+        archive.WriteAttribute( "automate", pTC2_->GetID() );
+        archive.EndSection(); // TC2
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -695,40 +733,23 @@ void MIL_Automate::NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& /*camp*
 // Name: MIL_Automate::GetAlivePionsBarycenter
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_Automate::GetAlivePionsBarycenter() const
+bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 {
-    MT_Vector2D vBarycenter;
-    uint        nTmp = 0;
+    barycenter.Reset();
+    uint nTmp = 0;
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
     {
         if( !(**itPion).IsDead() )
         {
-            vBarycenter += (**itPion).GetRole< PHY_RolePion_Location >().GetPosition();
+            barycenter += (**itPion).GetRole< PHY_RolePion_Location >().GetPosition();
             ++nTmp ;
         }
     }
-    if( nTmp )
-        vBarycenter /= nTmp;
-    return vBarycenter;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::Distance
-// Created: NLD 2004-11-08
-// -----------------------------------------------------------------------------
-MT_Float MIL_Automate::Distance( const MIL_Automate& automate ) const
-{
-    return GetAlivePionsBarycenter().Distance( automate.GetAlivePionsBarycenter() );
-
-}
+    if( nTmp == 0 )
+        return false;
     
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::Distance
-// Created: NLD 2004-11-08
-// -----------------------------------------------------------------------------
-MT_Float MIL_Automate::Distance( const MIL_AgentPion& pion ) const
-{
-    return GetAlivePionsBarycenter().Distance( pion.GetRole< PHY_RolePion_Location >().GetPosition() );
+    barycenter /= nTmp;
+    return true;
 }
 
 // =============================================================================

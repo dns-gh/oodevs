@@ -106,22 +106,23 @@ void PHY_BreakdownType::Terminate()
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
 PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_MaintenanceLevel& maintenanceLevel, E_Type nType, MIL_InputArchive& archive )
-    : strName_         ( strName )
-    , maintenanceLevel_( maintenanceLevel )
-    , nType_           ( nType )
+    : strName_           ( strName )
+    , maintenanceLevel_  ( maintenanceLevel )
+    , nType_             ( nType )
+    , nTheoricRepairTime_( 0 )
 {
     archive.ReadField( "MosID", nID_ );
 
     archive.Section( "Reparation" );
 
-    MT_Float rTimeVal;
-    archive.ReadTimeAttribute( "tempsMoyen", rTimeVal, CheckValueGreaterOrEqual( 0. ) );
-    rTimeVal = MIL_Tools::ConvertSecondsToSim( rTimeVal );
+    archive.ReadTimeAttribute( "tempsMoyen", nTheoricRepairTime_, CheckValueGreaterOrEqual( 0 ) );
+    nTheoricRepairTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nTheoricRepairTime_ );
+    
     MT_Float rVariance;   
     archive.ReadTimeAttribute( "variance", rVariance );
     rVariance = fabs( MIL_Tools::ConvertSecondsToSim( rVariance ) );
 
-    repairTime_ = MT_GaussianRandom( rTimeVal, rVariance );
+    repairTime_ = MT_GaussianRandom( nTheoricRepairTime_, rVariance );
     archive.EndSection(); // Reparation
 
     // Parts

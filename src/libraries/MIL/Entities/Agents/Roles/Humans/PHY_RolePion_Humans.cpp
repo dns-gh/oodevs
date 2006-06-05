@@ -128,6 +128,58 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
          & nTickRcMedicalQuerySent_;
 }
 
+namespace 
+{
+    struct sRankData
+    {
+        sRankData() : nNbrOfficiers_( 0 ), nNbrSousOfficiers_( 0 ), nNbrMdrs_( 0 ) {}
+        uint nNbrOfficiers_;
+        uint nNbrSousOfficiers_;
+        uint nNbrMdrs_;
+    };
+    typedef std::map< const PHY_HumanWound*, sRankData > T_HumanWoundData;
+    typedef T_HumanWoundData::const_iterator             CIT_HumanWoundData;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Humans::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Personnels" );
+
+    T_HumanWoundData humanWoundData;
+    for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); ++it )
+    {
+        const PHY_Human& human = **it;
+        if( !human.IsWounded() )
+            continue;
+        
+        if( human.GetRank() == PHY_HumanRank::militaireDuRang_ )
+            ++ humanWoundData[ &human.GetWound() ].nNbrMdrs_;
+
+        else if( human.GetRank() == PHY_HumanRank::officier_ )
+            ++ humanWoundData[ &human.GetWound() ].nNbrOfficiers_;
+
+        else if( human.GetRank() == PHY_HumanRank::sousOfficier_ )
+            ++ humanWoundData[ &human.GetWound() ].nNbrSousOfficiers_;
+    }
+
+    for( CIT_HumanWoundData it = humanWoundData.begin(); it != humanWoundData.end(); ++ it )
+    {
+        archive.Section( "Personnel" );
+        archive.WriteAttribute( "etat"             , it->first->GetName()           );
+        archive.WriteAttribute( "nbOfficier"       , it->second.nNbrOfficiers_      );
+        archive.WriteAttribute( "nbSousOfficier"   , it->second.nNbrSousOfficiers_  );
+        archive.WriteAttribute( "nbMilitaireDuRang", it->second.nNbrMdrs_           );
+                    
+        archive.EndSection(); // Personnel
+    }
+
+    archive.EndSection(); // Personnels
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

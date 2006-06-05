@@ -171,6 +171,38 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const uint ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Army::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Armee" );
+    archive.WriteAttribute( "id" , nID_ );
+    archive.WriteAttribute( "nom", strName_ );
+    
+    archive.Section( "GroupesConnaissance" );
+    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->WriteODB( archive );
+    archive.EndSection(); // GroupesConnaissance
+
+    archive.Section( "Diplomatie" );
+    for( CIT_ArmyRelationMap it = relations_.begin(); it != relations_.end(); ++it )
+    {
+        archive.Section( "Armee" );
+        archive.WriteAttribute( "nom", it->first->GetName() );
+        archive.WriteAttribute( "relation", relationConverter_.RevertConvert( it->second ) );
+        archive.EndSection(); // Armee
+    }
+    archive.EndSection(); // Diplomatie 
+    
+    archive.EndSection(); // Armee
+}
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Army::InitializeDiplomacy
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------

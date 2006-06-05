@@ -87,6 +87,18 @@ void MIL_NuageNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
          << rCurrentPropagationLenght_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_NuageNBC::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pNbcAgentType_ );
+    archive.Section( "AgentNBC" );
+    archive.WriteAttribute( "type", pNbcAgentType_->GetName() );
+    archive.EndSection(); // AgentNBC
+}
+
 //=============================================================================
 // INIT
 //=============================================================================

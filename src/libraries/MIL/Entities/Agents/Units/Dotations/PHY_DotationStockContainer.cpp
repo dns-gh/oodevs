@@ -144,6 +144,31 @@ void PHY_DotationStockContainer::serialize( Archive& file, const uint )
          & stocksChanged_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Stocks") ;
+
+    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    {
+        const PHY_DotationStock& dotationStock = *it->second;
+
+        archive.Section( "Dotation" );
+        archive.WriteAttribute( "nom", dotationStock.GetCategory().GetType().GetName() );
+        archive.Section( "Categories" );
+        archive.Section( "Categorie" );
+        archive.WriteAttribute( "nom", dotationStock.GetCategory().GetName() );
+        archive.Write( dotationStock.GetValue() );
+        archive.EndSection(); // Categories
+        archive.EndSection(); // Categorie
+        archive.EndSection(); // Dotation
+    }
+    archive.EndSection(); // Stocks
+}
+
 // =============================================================================
 // INIT
 // =============================================================================

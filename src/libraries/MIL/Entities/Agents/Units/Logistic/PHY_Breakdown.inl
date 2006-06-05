@@ -20,6 +20,17 @@ uint PHY_Breakdown::GetRepairTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Breakdown::GetTheoricRepairTime
+// Created: NLD 2006-06-01
+// -----------------------------------------------------------------------------
+inline
+uint PHY_Breakdown::GetTheoricRepairTime() const
+{
+    assert( pType_ );
+    return pType_->GetTheoricRepairTime();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Breakdown::AffectMobility
 // Created: JVT 2005-02-03
 // -----------------------------------------------------------------------------

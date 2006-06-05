@@ -342,30 +342,21 @@ void MIL_EntityManager::InitializeArmies( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ReadODB( MIL_InputArchive& archive )
 {
-    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
-    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
-    std::string strODB;
-    archive.ReadField( "ODB", strODB );
+    archive.Section( "ODB" );
 
-    MIL_InputArchive odbArchive;
-    odbArchive.AddWarningStream( std::cout );
-    odbArchive.Open( strODB );
-    odbArchive.Section( "ODB" );
-
-    InitializeArmies     ( odbArchive );
-    InitializeDiplomacy  ( odbArchive );
-    InitializeAutomates  ( odbArchive );
-    InitializePions      ( odbArchive );
-    InitializePopulations( odbArchive );
-    pObjectManager_->ReadODB( odbArchive );    
+    InitializeArmies     ( archive );
+    InitializeDiplomacy  ( archive );
+    InitializeAutomates  ( archive );
+    InitializePions      ( archive );
+    InitializePopulations( archive );
+    pObjectManager_->ReadODB( archive );    
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 
-    odbArchive.EndSection(); // ODB
-    odbArchive.Close();
+    archive.EndSection(); // ODB
+    archive.Close();
 
     // Check automate composition
     if( !MIL_AgentServer::GetWorkspace().GetConfig().ForceODBAutomateComposition() )
@@ -1207,4 +1198,34 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          << rEffectsTime_
          << rStatesTime_
          << nRandomBreakdownsNextTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Armees" );
+    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
+        it->second->WriteODB( archive );
+    archive.EndSection(); // Armees
+
+    archive.Section( "Automates" );
+    for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
+        it->second->WriteODB( archive );
+    archive.EndSection();
+
+    archive.Section( "Pions" );
+    for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
+        it->second->WriteODB( archive );
+    archive.EndSection();
+
+    assert( pObjectManager_ );
+    pObjectManager_->WriteODB( archive );
+
+    archive.Section( "Populations" );
+    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+        it->second->WriteODB( archive );
+    archive.EndSection();
 }

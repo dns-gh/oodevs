@@ -70,31 +70,53 @@ MIL_CheckPointManager::~MIL_CheckPointManager()
 // MAIN
 // =============================================================================
 
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::GetCheckPointFullPath
+// Created: NLD 2006-05-30
+// -----------------------------------------------------------------------------
+// static
+std::string MIL_CheckPointManager::GetCheckPointFullPath( const std::string& strCheckPointPath )
+{
+    std::string strPath( strCheckPointPath );
+
+    strPath.insert( strPath.begin(), strCheckPointsDirectory.begin(), strCheckPointsDirectory.end() );
+    strPath += "/";
+    return strPath;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::GetCheckPointODBFileName
+// Created: NLD 2006-05-30
+// -----------------------------------------------------------------------------
+std::string MIL_CheckPointManager::GetCheckPointODBFileName( const std::string& strCheckPointPath ) const
+{
+    return GetCheckPointFullPath( strCheckPointPath ) + "ODB.xml";
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::LoadCheckPoint
 // Created: JVT 03-07-23
 //-----------------------------------------------------------------------------
-void MIL_CheckPointManager::LoadCheckPoint( std::string strCheckPointPath )
+void MIL_CheckPointManager::LoadCheckPoint( const std::string& strCheckPointPath )
 {
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
 
-    strCheckPointPath.insert( strCheckPointPath.begin(), strCheckPointsDirectory.begin(), strCheckPointsDirectory.end() );
-    strCheckPointPath += "/";
+    std::string strCheckPointFullPath = GetCheckPointFullPath( strCheckPointPath );
 
-    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", strCheckPointPath.c_str() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", strCheckPointFullPath.c_str() ) );
 
     NET_ASN_MsgCtrlCheckPointLoadBegin asnLoadBeginMsg;
     asnLoadBeginMsg.Send();
     
     if ( MIL_AgentServer::GetWorkspace().GetConfig().UseCheckPointCRC() )
-        CheckCRC( strCheckPointPath );
+        CheckCRC( strCheckPointFullPath );
 
-    std::ifstream file( ( strCheckPointPath + "data" ).c_str(), std::ios::in | std::ios::binary );
+    std::ifstream file( ( strCheckPointFullPath + "data" ).c_str(), std::ios::in | std::ios::binary );
 
     if ( !file || !file.is_open() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't open file '%s'", ( strCheckPointPath + "data" ).c_str() ) );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't open file '%s'", ( strCheckPointFullPath + "data" ).c_str() ) );
 
 
     MIL_CheckPointInArchive archive( file );
@@ -305,6 +327,23 @@ void MIL_CheckPointManager::SaveCheckPoint( const std::string& strName, const st
     NET_ASN_MsgCtrlCheckPointSaveBegin asnSaveBeginMsg;
     asnSaveBeginMsg.Send();
 
+    // Backup checkpoint (ODB)
+    try
+    {
+        MT_XXmlOutputArchive backupArchive;
+        MIL_AgentServer::GetWorkspace().WriteODB( backupArchive );
+        backupArchive.WriteToFile( strPath + "ODB.xml" );
+
+//    if ( !metaDataArchive.WriteToFile( strFileName ) )
+//        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create file '%s'", strFileName.c_str() ) );*/
+    }
+    catch( ... )
+    {
+        _clearfp();
+        MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( Unknown error )" );
+    }
+
+    // Full checkpoint
     try
     {        
         const boost::crc_32_type::value_type nDataFileCRC = CreateData( strPath + "data" );
@@ -325,6 +364,8 @@ void MIL_CheckPointManager::SaveCheckPoint( const std::string& strName, const st
         _clearfp();
         MT_LOG_ERROR_MSG( "Can't save checkpoint ( Unknown error )" );
     }
+
+
 
     MT_LOG_INFO_MSG( "End save checkpoint" );
     NET_ASN_MsgCtrlCheckPointSaveEnd asnSaveEndMsg;

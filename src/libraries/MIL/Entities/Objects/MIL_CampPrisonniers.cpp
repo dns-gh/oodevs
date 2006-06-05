@@ -61,6 +61,20 @@ void MIL_CampPrisonniers::serialize( Archive& file, const uint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_CampPrisonniers::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_CampPrisonniers::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pTC2_ );
+    archive.WriteField( "TC2", pTC2_->GetID() );
+}
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
 // Name: MIL_CampPrisonniers::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------

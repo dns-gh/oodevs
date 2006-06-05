@@ -49,6 +49,7 @@ MIL_SiteFranchissement::~MIL_SiteFranchissement()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_SiteFranchissement::serialize
 // Created: JVT 2005-04-14
@@ -63,9 +64,22 @@ void MIL_SiteFranchissement::serialize( Archive& file, const uint )
          & bBanksToFitOut_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_SiteFranchissement::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_SiteFranchissement::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    archive.WriteField( "Largeur"        , rWidth_ );
+    archive.WriteField( "Profondeur"     , rDepth_ );
+    archive.WriteField( "VitesseCourant" , rCurrentSpeed_ );
+    archive.WriteField( "BergesAAmenager", bBanksToFitOut_ );   
+}
+
 //=============================================================================
 // INIT
 //=============================================================================
+
 //-----------------------------------------------------------------------------
 // Name: MIL_SiteFranchissement::Initialize
 // Created: JVT 02-10-22

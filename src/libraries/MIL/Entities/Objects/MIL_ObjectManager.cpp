@@ -21,6 +21,7 @@
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
 
@@ -66,6 +67,20 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << realObjects_;
          // << virtualObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Objets" );
+    
+    for( CIT_RealObjectMap it = realObjects_.begin(); it != realObjects_.end(); ++it )
+        it->second->WriteODB( archive );
+
+    archive.EndSection();
 }
 
 // -----------------------------------------------------------------------------
@@ -240,6 +255,10 @@ void MIL_ObjectManager::CreateObject( MIL_InputArchive& archive )
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( strType );
     if( !pObjectType )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
+
+    nID = pObjectType->GetIDManager().ConvertSimIDToMosID( nID );
+    if( realObjects_.find( nID ) != realObjects_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already exists", archive.GetContext() );
 
     MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
     object.Initialize( nID, archive );

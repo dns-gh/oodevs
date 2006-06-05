@@ -54,7 +54,7 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
     if( breakdown.AffectMobility() && !bMobility_ )
         return false;
 
-    if ( breakdown.GetRepairTime() > nMaxTime_ )
+    if ( breakdown.GetTheoricRepairTime() > nMaxTime_ )
         return false;
 
     return true;

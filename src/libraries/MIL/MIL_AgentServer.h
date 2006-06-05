@@ -17,19 +17,14 @@ class MIL_LimitManager;
 class MIL_Agent_ABC;
 class MIL_CheckPointManager;
 class MIL_EntityManager;
-
 class DEC_Workspace;
 class DEC_PathFind_Manager;
-
 class NET_AgentServer;
-
 class PHY_MeteoDataManager;
-
 class MIL_ProfilerMgr;
-
 class HLA_Federate;
-
 class ProcessMonitor;
+class MT_XXmlOutputArchive;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -59,6 +54,8 @@ public:
     //@{
     void save( MIL_CheckPointOutArchive& ) const;
     void load( MIL_CheckPointInArchive& );    
+
+    void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Simulation management
@@ -77,21 +74,20 @@ public:
 
     //! @name Accessors
     //@{ 
-    MIL_EntityManager&          GetEntityManager    () const;
-	DEC_Workspace&	            GetWorkspaceDIA     () const;
-	NET_AgentServer&            GetAgentServer      () const;
-    MIL_LimaManager&            GetLimaManager      () const;
-    MIL_LimitManager&           GetLimitManager     () const;
-    DEC_PathFind_Manager&       GetPathFindManager  () const;
-    PHY_MeteoDataManager&       GetMeteoDataManager () const;
-    MIL_ProfilerMgr&            GetProfilerManager  () const;
-    MIL_CheckPointManager&      GetCheckPointManager() const;
-    MT_TimerManager&            GetTimerManager     ();
-    HLA_Federate*               GetHLAFederate      () const;               
-
-    uint                        GetExerciceID       () const;
-    E_SimState                  GetSimState         () const;
-    MIL_Config&                 GetConfig           ();
+    MIL_EntityManager&     GetEntityManager    () const;
+	DEC_Workspace&	       GetWorkspaceDIA     () const;
+	NET_AgentServer&       GetAgentServer      () const;
+    MIL_LimaManager&       GetLimaManager      () const;
+    MIL_LimitManager&      GetLimitManager     () const;
+    DEC_PathFind_Manager&  GetPathFindManager  () const;
+    PHY_MeteoDataManager&  GetMeteoDataManager () const;
+    MIL_ProfilerMgr&       GetProfilerManager  () const;
+    MIL_CheckPointManager& GetCheckPointManager() const;
+    MT_TimerManager&       GetTimerManager     ();
+    HLA_Federate*          GetHLAFederate      () const;               
+    uint                   GetExerciceID       () const;
+    E_SimState             GetSimState         () const;
+    MIL_Config&            GetConfig           ();
     //@}
 
     //! @name Workspace management

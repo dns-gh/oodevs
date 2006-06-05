@@ -84,6 +84,7 @@ private:
                 
     //! @name Network
     //@{
+    virtual void WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const;
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
     //@}
 

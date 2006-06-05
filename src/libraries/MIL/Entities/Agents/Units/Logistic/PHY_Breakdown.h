@@ -39,15 +39,15 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
-    
     //! @name accessors
     //@{
-          uint                          GetRepairTime      () const;
-          uint                          GetID              () const;
-          bool                          AffectMobility     () const;
-          bool                          AffectElectronic   () const;
-    const PHY_MaintenanceLevel&         GetMaintenanceLevel() const;
-    const PHY_BreakdownType::T_PartMap& GetNeededParts     () const;
+          uint                          GetTheoricRepairTime() const;
+          uint                          GetRepairTime       () const;
+          uint                          GetID               () const;
+          bool                          AffectMobility      () const;
+          bool                          AffectElectronic    () const;
+    const PHY_MaintenanceLevel&         GetMaintenanceLevel () const;
+    const PHY_BreakdownType::T_PartMap& GetNeededParts      () const;
     //@}
 
 

@@ -34,7 +34,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( PHY_RolePionLO
         EnterStateWaitingForCarrier();
     else
         EnterStateGoingFrom();
-}
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign constructor

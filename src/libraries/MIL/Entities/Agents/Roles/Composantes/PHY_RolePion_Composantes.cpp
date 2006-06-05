@@ -66,7 +66,7 @@ bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes(
     uint i  = 0;
     for( std::vector< uint >::const_iterator it = nbrsPerState_.begin(); it != nbrsPerState_.end(); ++it, ++i )
     {
-        if( PHY_ComposanteState::FindComposanteState( i ).IsUsable() && *it > 0 )
+        if( PHY_ComposanteState::Find( i ).IsUsable() && *it > 0 )
             return true;
     }
     return false;
@@ -265,6 +265,36 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
          & nTickRcMaintenanceQuerySent_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Equipements" );
+
+    for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    {
+        const PHY_ComposanteTypePion&     compType       = *it->first;
+        const T_ComposanteTypeProperties& compProperties =  it->second;
+
+        const uint nNbrRepairable  =   compProperties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_   .GetID() ] 
+                                     + compProperties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ]
+                                     + compProperties.nbrsPerState_[ PHY_ComposanteState::maintenance_                .GetID() ];
+        const uint nNbrDead        =   compProperties.nbrsPerState_[ PHY_ComposanteState::dead_    .GetID() ]
+                                     + compProperties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ];
+    
+        archive.Section( "Equipement" );
+        archive.WriteAttribute( "type"        , compType.GetName() );
+        archive.WriteAttribute( "indisponible", nNbrDead           );
+        archive.WriteAttribute( "reparable"   , nNbrRepairable     );
+        archive.EndSection(); // Equipement
+    }
+
+    archive.EndSection(); // Equipements
+}
+
+
 // =============================================================================
 // INIT
 // =============================================================================
@@ -347,11 +377,9 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& arc
         if( !pType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon composante type", archive.GetContext() );
 
-        uint nNbrUndamaged;
         uint nNbrRepairable;
         uint nNbrDead;
 
-        archive.ReadAttribute( "disponible"  , nNbrUndamaged  );
         archive.ReadAttribute( "reparable"   , nNbrRepairable );
         archive.ReadAttribute( "indisponible", nNbrDead       );
 
@@ -557,7 +585,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         {
             ++ nNonMajorOpStateNbr;
             rNonMajorOpStateValue += rCompOpState;
-        }        
+        }
     }
 
     MT_Float rNewOpState = 0.;
@@ -660,7 +688,7 @@ void PHY_RolePion_Composantes::Clean()
 void PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded( const PHY_ComposanteState& compState, T_ComposanteTypeProperties& properties )
 {
     if( compState.IsUsable() )
-        ++nNbrUsableComposantes_;   
+        ++nNbrUsableComposantes_;
 
     ++properties.nbrsPerState_[ compState.GetID() ];
     if( !properties.bHasChanged_ )
@@ -761,7 +789,9 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
     assert( pPion_ );
     if( !IsUsable() )
     {
-        pPion_->MagicMove( pPion_->GetAutomate().GetAlivePionsBarycenter() );
+        MT_Vector2D newPosition;
+        if( pPion_->GetAutomate().GetAlivePionsBarycenter( newPosition ) )
+            pPion_->MagicMove( newPosition );
         MIL_RC::pRcANouveauDisponibleApresReparation_->Send( *pPion_, MIL_RC::eRcTypeOperational );
     }
 }
@@ -804,7 +834,7 @@ void PHY_RolePion_Composantes::NotifyHumanChanged( PHY_Human& human, const PHY_H
 const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
-    MT_Float rSignificantVolumeFactor     = 0.;
+    MT_Float rSignificantVolumeFactor    = 0.;
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
         const PHY_Volume&                  compTypeVolume = it->first->GetVolume();
@@ -1284,6 +1314,10 @@ void PHY_RolePion_Composantes::Serialize( HLA_UpdateFunctor& functor ) const
     }
     functor.Serialize( "composantes", HasChanged(), composantes );
 }
+
+// =============================================================================
+// FIRE
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetMaxRangeToFireOn
@@ -1777,7 +1811,7 @@ void PHY_RolePion_Composantes::GetCollectionAmbulancesUse( T_ComposanteUseMap& c
             ++ data.nNbrTotal_;
 
             if( (**itComposante).GetState().IsUsable() )
-            {   
+            {
                 ++ data.nNbrAvailable_;
                 if( !(**itComposante).CanCollectCasualties() )
                     ++ data.nNbrUsed_;

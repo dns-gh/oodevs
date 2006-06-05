@@ -49,6 +49,7 @@ MIL_ItineraireLogistique::~MIL_ItineraireLogistique()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ItineraireLogistique::serialize
 // Created: JVT 2005-04-14
@@ -64,6 +65,17 @@ void MIL_ItineraireLogistique::serialize( Archive& file, const uint )
          & rFlow_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_ItineraireLogistique::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_ItineraireLogistique::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    archive.WriteField( "PoidsSupporte", rWeightSupported_ );
+    archive.WriteField( "Largeur"      , rWidth_           );
+    archive.WriteField( "Longueur"     , rLength_          );
+    archive.WriteField( "Debit"        , rFlow_            );
+}
 
 // =============================================================================
 // INIT
@@ -110,8 +122,7 @@ void MIL_ItineraireLogistique::Initialize( uint nID, MIL_InputArchive& archive )
     archive.ReadField( "Longueur"     , rLength_         , CheckValueGreater( 0. ) );
     archive.ReadField( "Debit"        , rFlow_           , CheckValueGreater( 0. ) );
 
-    if( !TransformLocalisation() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid localisation for 'itineraire logistique' (Must be a line)", archive.GetContext() );
+    TransformLocalisation();
 }
 
 // -----------------------------------------------------------------------------

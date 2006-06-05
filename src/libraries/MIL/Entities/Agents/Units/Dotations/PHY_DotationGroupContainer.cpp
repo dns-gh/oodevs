@@ -167,6 +167,25 @@ void PHY_DotationGroupContainer::ReadValues( MIL_InputArchive& archive )
     archive.EndList(); // Dotations
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "Dotations" );
+    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    {
+        archive.Section( "Dotation" );
+        archive.WriteAttribute( "nom", it->first->GetName() );
+
+        it->second->WriteODB( archive );
+
+        archive.EndSection(); // Dotation
+    }
+    archive.EndSection(); // Dotations
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

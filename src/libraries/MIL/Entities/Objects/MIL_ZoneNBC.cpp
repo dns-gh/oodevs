@@ -80,6 +80,18 @@ void MIL_ZoneNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
          << decontaminatedZones_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneNBC::WriteSpecificAttributes
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pNbcAgentType_ );
+    archive.Section( "AgentNBC" );
+    archive.WriteAttribute( "type", pNbcAgentType_->GetName() );
+    archive.EndSection();    
+}
+
 //=============================================================================
 // INIT
 //=============================================================================

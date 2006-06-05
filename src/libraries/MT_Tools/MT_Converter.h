@@ -29,8 +29,9 @@ public:
 
     //! @name Operations
     //@{
-    bool         Register( const KEY& key, const VALUE& value );
-    const VALUE& Convert ( const KEY& key );
+    bool         Register     ( const KEY& key, const VALUE& value );
+    const VALUE& Convert      ( const KEY& key );
+    const KEY&   RevertConvert( const VALUE& value );
     //@}
 
 private:
@@ -42,6 +43,7 @@ private:
 
 private:
     const VALUE nullValue_;
+    const KEY   nullKey_;
     T_Map       map_;
 };
 

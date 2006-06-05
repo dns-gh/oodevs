@@ -103,6 +103,18 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << automates_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    assert( pType_ );
+    archive.Section( "GroupeConnaissance" );
+    archive.WriteAttribute( "id", nID_ );
+    archive.WriteAttribute( "type", pType_->GetName() );
+    archive.EndSection(); // GroupeConnaissance
+}
 
 // =============================================================================
 // OPERATIONS

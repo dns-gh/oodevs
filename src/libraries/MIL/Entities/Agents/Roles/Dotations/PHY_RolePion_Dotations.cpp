@@ -143,6 +143,15 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) 
          << reservedConsumptions_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::WriteODB
+// Created: NLD 2006-05-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::WriteODB( MT_XXmlOutputArchive& archive ) const
+{
+    pDotations_->WriteODB( archive );
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

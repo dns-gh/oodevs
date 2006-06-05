@@ -39,11 +39,11 @@ public:
 public:
     //! @name Manager
     //@{
-    static void                       Initialize           ();
-    static void                       Terminate            ();
-    static const PHY_ComposanteState& FindComposanteState  ( uint nID );
-    static uint                       GetNbrStates         ();
-    static T_ComposanteStateVector&   GetStates            ();
+    static void                       Initialize  ();
+    static void                       Terminate   ();
+    static const PHY_ComposanteState& Find        ( uint nID );
+    static uint                       GetNbrStates();
+    static T_ComposanteStateVector&   GetStates   ();
     //@}
 
     //! @name Accessors

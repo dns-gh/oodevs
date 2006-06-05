@@ -66,6 +66,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
+    void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Init

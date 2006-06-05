@@ -46,13 +46,14 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&          GetName            () const;
-          uint                  GetID              () const;
-          bool                  AffectMobility     () const;
-          bool                  AffectElectronic   () const;
-    const PHY_MaintenanceLevel& GetMaintenanceLevel() const;
-    const T_PartMap&            GetParts           () const;
-          uint                  ChooseARepairTime  () const;
+    const std::string&          GetName             () const;
+          uint                  GetID               () const;
+          bool                  AffectMobility      () const;
+          bool                  AffectElectronic    () const;
+    const PHY_MaintenanceLevel& GetMaintenanceLevel () const;
+    const T_PartMap&            GetParts            () const;
+          uint                  GetTheoricRepairTime() const;
+          uint                  ChooseARepairTime   () const;
     //@}
 
 private:
@@ -84,6 +85,7 @@ private:
     const E_Type                nType_;
           uint                  nID_;
           T_PartMap             parts_;
+          uint                  nTheoricRepairTime_;
 
     mutable MT_GaussianRandom repairTime_;
 

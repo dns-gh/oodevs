@@ -95,10 +95,10 @@ void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
          << agentMovingInsideSet_;
 }
 
-
 //=============================================================================
 // TOOLS
 //=============================================================================
+
 // ----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::CanCollideWithEntity
 // Created: NLD 2003-09-02

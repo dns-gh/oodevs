@@ -145,6 +145,7 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Visitor
