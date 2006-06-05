@@ -37,6 +37,8 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
+
+    virtual void WriteODB( MT_XXmlOutputArchive& archive, bool bPC = false ) const;
     //@}
 };
 

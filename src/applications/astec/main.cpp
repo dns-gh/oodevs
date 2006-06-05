@@ -1,8 +1,9 @@
-
+ri
 #include "astec_pch.h"
 #include "App.h"
 
 #include "MT_Tools/MT_Version.h"
+#include "paranoia/ParanoiaFacade.h"
 
 #include <qapplication.h>
 #include <qmessagebox.h>
@@ -17,6 +18,10 @@ int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
     SetConsoleTitle( "ASTEC - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
+
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    ParanoiaFacade::CheckLicense( "astec" );
+#endif
 
     try
     {

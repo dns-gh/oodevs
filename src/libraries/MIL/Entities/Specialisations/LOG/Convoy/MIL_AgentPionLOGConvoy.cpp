@@ -88,3 +88,12 @@ void MIL_AgentPionLOGConvoy::save( MIL_CheckPointOutArchive& file, const uint ) 
     file << boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
     file << &GetRole< PHY_RolePionLOGConvoy_Supply >();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOGConvoy::WriteODB
+// Created: NLD 2006-06-05
+// -----------------------------------------------------------------------------
+void MIL_AgentPionLOGConvoy::WriteODB( MT_XXmlOutputArchive& /*archive*/, bool /*bPC = false*/ ) const
+{
+    // NOTHING : don't serialize Convoys
+}
