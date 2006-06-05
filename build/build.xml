@@ -133,7 +133,7 @@
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools_SCIPIO,ASN,GFX,ENT,
-                         geocoord,graphics,pathfind,terrain,
+                         geocoord,graphics,pathfind,terrain,paranoia,
                          asn1per,qtmain,qt-mt336,xerces-c_2,
                          libboost_filesystem-vc71-mt-1_32">
             <includepath path="${include.dir}/ASN"/>
