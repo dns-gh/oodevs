@@ -16,6 +16,7 @@
 #include "ASN_Messages.h"
 
 #include "DIN/DIN_Engine.h"
+#include "DIN/DIN_Statistics.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 
 using namespace DIN; using namespace NEK;
@@ -157,4 +158,16 @@ void Network::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescrip
     session_ = 0;
 
     App::GetApp().NotifyConnexionLost();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::ComputeTransferedAmount
+// Created: SBO 2006-06-05
+// -----------------------------------------------------------------------------
+uint Network::ComputeTransferedAmount() const
+{
+    if( !engine_ )
+        return 0;
+    const DIN::DIN_Statistics& stats = engine_->GetStatistics();
+    return stats.GetSentBytes() + stats.GetReceivedBytes();
 }

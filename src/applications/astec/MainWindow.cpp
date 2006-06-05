@@ -51,6 +51,7 @@
 #include "PopulationCreationPanel.h"
 #include "OptionsPanel.h"
 #include "DefaultMapEventHandler.h"
+#include "Network.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
 
@@ -199,6 +200,7 @@ MainWindow::MainWindow()
     pTickLabel_->setAlignment( Qt::AlignCenter );
     pTickLabel_->setPixmap( MAKE_PIXMAP( tickoff ) );
     pTimeLabel_->setMinimumWidth( 50 );
+    pNetworkStats_   = new QLabel( "per tick/total", this );
     pLocationLabel_->setMinimumWidth( 195 );
 	pLocationLabel2_->setMinimumWidth( 105 );
 	pLocationLabel3_->setMinimumWidth( 125 );
@@ -207,11 +209,12 @@ MainWindow::MainWindow()
     pLocationLabel3_->setAlignment( Qt::AlignCenter );
     pTimeLabel_->setAlignment( Qt::AlignCenter );
 
-    this->statusBar()->addWidget( pLocationLabel_,  0, true );
-	this->statusBar()->addWidget( pLocationLabel2_, 0, true );
-	this->statusBar()->addWidget( pLocationLabel3_, 0, true );
-    this->statusBar()->addWidget( pTimeLabel_,      0, true );
-	this->statusBar()->addWidget( pTickLabel_,      0, true );
+    statusBar()->addWidget( pLocationLabel_,  0, true );
+	statusBar()->addWidget( pLocationLabel2_, 0, true );
+	statusBar()->addWidget( pLocationLabel3_, 0, true );
+    statusBar()->addWidget( pTimeLabel_,      0, true );
+	statusBar()->addWidget( pTickLabel_,      0, true );
+    statusBar()->addWidget( pNetworkStats_,   0, true );
 
     pLagTimer_ = new QTimer( this );
 
@@ -225,7 +228,6 @@ MainWindow::MainWindow()
     connect( &App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ),  this, SLOT( OnConnexionStatusChanged( bool ) ) );
     connect( &App::GetApp(), SIGNAL( TimeChanged( uint ) ),             this, SLOT( DisplayTime( uint ) ) );
     connect( &App::GetApp(), SIGNAL( TickStartEnd( bool ) ),            this, SLOT( OnTickStartEnd( bool ) ) );
-    connect( pLagTimer_,         SIGNAL( timeout() ),                       this, SLOT( OnLag() ) );
 }
 
 
@@ -300,10 +302,25 @@ void MainWindow::DisplayMouseLocation( QMouseEvent* pEvent, const MT_Vector2D& v
 }
 
 
+namespace
+{
+    std::string ToUSI( uint bytes )
+    {
+        static const char* units[] = { "B", "KB", "MB", "GB" };
+        unsigned int i = 0;
+        while( bytes >> 10 > 0 && i < 4 )
+        {
+            bytes /= 1024;
+            ++i;
+        }
+        std::stringstream ss;
+        ss << bytes << units[i];
+        return ss.str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow::OnTickStartEnd
-/** @param  bTickStart 
-*/
 // Created: APE 2004-06-17
 // -----------------------------------------------------------------------------
 void MainWindow::OnTickStartEnd( bool bTickStart )
@@ -317,6 +334,9 @@ void MainWindow::OnTickStartEnd( bool bTickStart )
     {
         pTickLabel_->setPixmap( MAKE_PIXMAP( tickoff ) );
         pLagTimer_->start( 10000, true );
+        std::stringstream ss;
+        ss << ToUSI( App::GetApp().GetNetwork().ComputeTransferedAmount() / App::GetApp().GetTime() ) << "/s - " << ToUSI( App::GetApp().GetNetwork().ComputeTransferedAmount() );
+        pNetworkStats_->setText( ss.str().c_str() );
     }
 }
 

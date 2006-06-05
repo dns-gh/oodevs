@@ -124,6 +124,7 @@ private:
     QLabel* pLocationLabel2_;
 	QLabel* pLocationLabel3_;
     QLabel* pTickLabel_;
+    QLabel* pNetworkStats_;
 
     QTimer* pLagTimer_;
     //@}

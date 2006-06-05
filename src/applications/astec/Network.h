@@ -45,6 +45,7 @@ public:
     void Update();
 
     AgentServerMsgMgr& GetMessageMgr();
+    uint ComputeTransferedAmount() const;
     //@}
 
 private:
