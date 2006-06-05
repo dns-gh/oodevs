@@ -45,8 +45,8 @@ protected:
     //! @name Action validation and commit
     //@{
     virtual void Serialize();
-    virtual void Send     ( const Scheduler& scheduler );
     virtual void Clean    ();
+    void Send( const Scheduler& scheduler );
     //@}
 
 protected:

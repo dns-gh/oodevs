@@ -102,18 +102,10 @@ Workspace::~Workspace()
 //-----------------------------------------------------------------------------
 // Name: Workspace::Update
 // Created: SBO 2005-05-13
-// @return true if something a new export must be done (something updated or new tick)
 //-----------------------------------------------------------------------------
 void Workspace::Update()
 {
-    try
-    {
-        pNetworkManager_->Update();    
-    }
-    catch( std::exception& exception )
-    {
-        throw;
-    }
+    pNetworkManager_->Update();    
 }
 
 //-----------------------------------------------------------------------------

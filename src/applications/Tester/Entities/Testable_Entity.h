@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-16 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Testable_Entity_h_
 #define __Testable_Entity_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "Types.h"
 #include "GenObject.h"
@@ -32,14 +19,11 @@
 namespace TEST {
 
     class Automat;
+    class Scheduler;
 
 // =============================================================================
 /** @class  Testable_Entity
-    @brief  Testable_Entity
-    @par    Using example
-    @code
-    Testable_Entity;
-    @endcode
+    @brief  Testable Entity
 */
 // Created: SBO 2005-08-16
 // =============================================================================
@@ -93,8 +77,11 @@ public:
     virtual T_IdVector&        GetTestParam_Limas              () const;
     virtual T_EntityId         GetTestParam_LeftLimit          ();
     virtual T_EntityId         GetTestParam_RightLimit         ();
-    
+    //@}
 
+    //! @name Operations
+    //@{
+    bool MustRecomplete( const Scheduler& scheduler );
     //@}
 
 private:
@@ -110,12 +97,11 @@ protected:
     const Workspace& workspace_;
     T_EntityId       nLeftLimit_;
     T_EntityId       nRightLimit_;
+    unsigned int     nLastRecompletion_;
     //@}
 
 };
 
 } // end namespace TEST
-
-#include "Testable_Entity.inl"
 
 #endif // __Testable_Entity_h_

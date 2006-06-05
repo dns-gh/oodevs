@@ -34,14 +34,15 @@ Scheduler::Scheduler( const Config& config )
     , nCurrentTick_         ( 0 )
     , nExecutionPeriod_     ( config.GetPeriod() )
     , nRecompletionPeriod_  ( config.GetRecompletionPeriod() )
-    , nTestRun_             ( 0 )
-    , nTestTotal_           ( 0 )
     , nSameMissionInterval_ ( config.GetIterationInterval() )
     , nRecoveryTick_        ( config.MustRecover() ? config.GetRecoveryTick() : 0 )
     , nLastExecutionTick_   ( 0 )
     , nMissionLimitCounter_ ( 0 )
     , nMissionInPeriod_     ( 0 )
     , nMaxMissionInPeriod_  ( config.GetMaxMissionPerTick() )
+    , nTestRun_             ( 0 )
+    , nTestTotal_           ( 0 )
+    , nSimTicks_            ( 0 )
 {
     // NOTHING
 }
@@ -68,7 +69,7 @@ void Scheduler::RecoverIfNeeded( uint nCurrentTick )
     MT_LOG_INFO_MSG( "Restarting at " << nRecoveryTick_ );
     nCurrentTick_ = ( nRecoveryTick_ / nExecutionPeriod_ ) * nExecutionPeriod_ - 1;
     // pass all the actions already executed
-    for( ; itCurrentAction_ != actions_.end() && itCurrentAction_->first < nCurrentTick_; ++itCurrentAction_ )
+    for( ; itCurrentAction_ != actions_.end() && (int)itCurrentAction_->first < nCurrentTick_; ++itCurrentAction_ )
     {
         MT_LOG_INFO_MSG( "test already passed: " << itCurrentAction_->second->ToString() );
         ++nTestRun_;
@@ -82,6 +83,7 @@ void Scheduler::RecoverIfNeeded( uint nCurrentTick )
 // -----------------------------------------------------------------------------
 bool Scheduler::Run( uint nCurrentTick )
 {
+    nSimTicks_ = nCurrentTick;
     if( itCurrentAction_ == actions_.end() )
     {
         itCurrentAction_ = actions_.begin();
@@ -113,17 +115,6 @@ bool Scheduler::Run( uint nCurrentTick )
     }
     return true;
 }
-
-// -----------------------------------------------------------------------------
-// Name: Scheduler::AddAction
-// Created: SBO 2005-08-04
-// -----------------------------------------------------------------------------
-//void Scheduler::AddAction( Action_ABC& action, uint nExecutionTick )
-//{
-//    actions_.insert( std::make_pair( nExecutionTick, &action ) );
-//    itCurrentAction_ = actions_.begin();
-//    ++nTestTotal_;
-//}
 
 // -----------------------------------------------------------------------------
 // Name: Scheduler::AddAction
@@ -183,9 +174,14 @@ uint Scheduler::GetCurrentTick() const
 // Name: Scheduler::MustRecomplete
 // Created: SBO 2005-09-01
 // -----------------------------------------------------------------------------
-bool Scheduler::MustRecomplete() const
+bool Scheduler::MustRecomplete( unsigned int& lastRecompletion ) const
 {
     if( nRecompletionPeriod_ <= 0 )
         return false;
-    return nCurrentTick_ % nRecompletionPeriod_ == 0;
+    if( nSimTicks_ > lastRecompletion + nRecompletionPeriod_ )
+    {
+        lastRecompletion = nSimTicks_;
+        return true;
+    }
+    return false;
 }

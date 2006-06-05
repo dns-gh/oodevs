@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Scheduler_h_
 #define __Scheduler_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 namespace TEST {
 
@@ -31,10 +18,6 @@ namespace TEST {
 // =============================================================================
 /** @class  Scheduler
     @brief  Scheduler
-    @par    Using example
-    @code
-    Scheduler;
-    @endcode
 */
 // Created: SBO 2005-08-04
 // =============================================================================
@@ -44,25 +27,24 @@ class Scheduler
 public:
     //! @name Constructors/Destructor
     //@{
-             Scheduler( const Config& config );
+    explicit Scheduler( const Config& config );
     virtual ~Scheduler();
     //@}
 
     //! @name Operations
     //@{
-    void     RecoverIfNeeded   ( uint nCurrentTick );
-    bool     Run               ( uint nCurrentTick );
-    void     AddAction         ( Action_ABC& action );
-//    void     AddAction         ( Action_ABC& action, uint nExecutionTick );
-    void     AddActions        ( Action_ABC& action, uint nIteration );
-    void     ResetExecutionTick();
+    void RecoverIfNeeded( uint nCurrentTick );
+    bool Run( uint nCurrentTick );
+    void AddAction( Action_ABC& action );
+    void AddActions( Action_ABC& action, uint nIteration );
+    void ResetExecutionTick();
     //@}
 
     //! @name Accessors
     //@{
-    uint     GetNextExecutionTick() const;
-    uint     GetCurrentTick      () const;
-    bool     MustRecomplete      () const;
+    uint GetNextExecutionTick() const;
+    uint GetCurrentTick() const;
+    bool MustRecomplete( unsigned int& lastRecompletion ) const;
     //@}
 
 private:
@@ -100,6 +82,7 @@ private:
     // test statistics
     uint         nTestRun_;
     uint         nTestTotal_;
+    uint         nSimTicks_;
     //@}
 };
 

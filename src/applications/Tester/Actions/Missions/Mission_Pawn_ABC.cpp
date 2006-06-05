@@ -88,7 +88,7 @@ void Mission_Pawn_ABC::Send( const Scheduler& scheduler )
     msg.Send( 56 );
 
     // recomplete pawn if needed
-    if( scheduler.MustRecomplete() )
+    if( pTarget_->MustRecomplete( scheduler ) )
     {
         pTarget_->SendMagicAction( T_MsgUnitMagicAction_action_recompletement_total );
         MT_LOG_INFO_MSG( "Pawn #" << pTarget_->GetId() << " - Magic recompletion" );

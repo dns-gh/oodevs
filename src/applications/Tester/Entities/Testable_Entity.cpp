@@ -6,21 +6,13 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-16 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "Tester_pch.h"
 #include "Testable_Entity.h"
 #include "Automat.h"
 #include "Pawn.h"
 #include "GenObject.h"
+#include "Actions/Scheduler.h"
 #include "Types/TacticalLineManager.h"
 #include "Tools/Position.h"
 #include "Tools/Path.h"
@@ -33,9 +25,10 @@ using namespace TEST;
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
 Testable_Entity::Testable_Entity( const Workspace& workspace )
-    : nLeftLimit_  ( 0 )
-    , nRightLimit_ ( 0 )
-    , workspace_   ( workspace )
+    : workspace_( workspace )
+    , nLeftLimit_( 0 )
+    , nRightLimit_( 0 )
+    , nLastRecompletion_( 0 )
 {
     // NOTHING
 }
@@ -388,3 +381,11 @@ T_EntityId Testable_Entity::GetTestParam_RightLimit()
     return nRightLimit_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Testable_Entity::MustRecomplete
+// Created: SBO 2006-06-05
+// -----------------------------------------------------------------------------
+bool Testable_Entity::MustRecomplete( const Scheduler& scheduler )
+{
+    return scheduler.MustRecomplete( nLastRecompletion_ );
+}
