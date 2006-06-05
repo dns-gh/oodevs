@@ -333,8 +333,8 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
     
     if( pType_->GetIDManager().IsMosIDValid( nID_ ) )
     {
-        bool bOut = pType_->GetIDManager().LockMosID( nID_ );
-        assert( bOut );
+        if( !pType_->GetIDManager().LockMosID( nID_ ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already used", archive.GetContext() );
     }
 
     // Armee
@@ -342,7 +342,7 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
     archive.ReadField( "Armee", strArmy );
     MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
     if ( pArmy == 0 )
-        throw MT_ScipioException( "MIL_RealObject_ABC::Initialize", __FILE__, __LINE__, "Unknown army", archive.GetContext() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
 
     // Localisation
     archive.Section( "Forme" );
