@@ -40,8 +40,21 @@ std::string Wrap( const std::string& content, const std::string& prefix )
     return result;
 }
 
+void DisplayHelp()
+{
+    std::cout << "Usage:" << std::endl
+              << " -s : silent mode" << std::endl
+              << " -outputpreprocessresult : output preprocess result" << std::endl
+              << " -h --help : display this help" << std::endl;
+}
+
 int main( int argc, char** argv )
 {
+    if( argc > 1 && ( strcmp( argv[1], "--help" ) || strcmp( argv[1], "-h" ) ) )
+    {
+        DisplayHelp();
+        return 0;
+    }
     bool bIsInteractive = IsInteractive( argc, argv );
     if( bIsInteractive )
         SetConsoleTitle( "Script Compiler - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
