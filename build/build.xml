@@ -9,7 +9,6 @@
     ============================================================================
     -->
 
-    <!-- SCIPIO -->
     <target name="libraries.SCIPIO" description="build static library"
             depends="library.MT_Tools_Scipio,library.TER,library.ASN,library.MIL,library.Missions,library.GFX,library.ENT"/>
 
@@ -49,7 +48,6 @@
         <build-lib name="ENT"/>
     </target>
 
-    <!-- TIC -->
     <target name="libraries.TIC" description="build static library"
             depends="library.TIC, library.TIC_Export"/>
 
@@ -74,14 +72,12 @@
         </build-lib>
     </target>
 
-
     <!--
     ============================================================================
      applications
     ============================================================================
     -->
 
-    <!-- SCIPIO -->
     <target name="applications.SCIPIO" description="build SCIPIO executables"
             depends="application.SIM,application.ADN,application.astec,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
 
@@ -101,10 +97,10 @@
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,
                          DIA_Motivation,DIA_Representation,DIA_SDK_Manager,DIA_Tool_Archive,DIA_Tool_Debugger,DIA_Tool_DebugInfoGen,DIA_Tool_Scripts,DIA_ToolManager,DIA_Behavior,DIA_Kernel,
-                         tools,HLA,libFedTime,pathfind,geocoord,masalloc
+                         tools,HLA,libFedTime,pathfind,geocoord,masalloc,paranoia
                          MT_Tools_Scipio,TER,ASN,MIL,Missions,
                          boost_thread-vc71-mt-1_32,libboost_serialization-vc71-mt-1_32,libboost_filesystem-vc71-mt-1_32,
-                         asn1per,xerces-c_2,paranoia">
+                         asn1per,xerces-c_2">
 			      <syslibset libs="advapi32,user32,wsock32,winmm,dbghelp,psapi,iphlpapi"/>
             <includepath path="${libraries.dir}/MIL"/>
             <includepath path="${include.dir}/ASN"/>
@@ -137,7 +133,7 @@
                          asn1per,qtmain,qt-mt336,xerces-c_2,
                          libboost_filesystem-vc71-mt-1_32">
             <includepath path="${include.dir}/ASN"/>
-            <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32"/>
+            <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32,iphlpapi"/>
         </build-app>
     </target>
 
@@ -212,8 +208,6 @@
         </build-app>
     </target>
 
-
-    <!-- TIC -->
     <target name="applications.TIC" description="build TIC executables"
             depends="application.TIC_Sample,application.TIC_XmlExporter"/>
 
@@ -262,7 +256,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="" description="run all tests">
+    <target name="test" description="run all tests">
         <exec executable="${out.dir}/release/applications/SIM/SIM.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
             <arg value="${data.dir}/test/scipio.xml"/>
@@ -314,7 +308,7 @@
     -->
     <target name="build.SCIPIO" depends="libraries.SCIPIO,applications.SCIPIO"/>
 
-    <target name="build.TIC"    depends="libraries.TIC,applications.TIC"/>
+    <target name="build.TIC" depends="libraries.TIC,applications.TIC"/>
 
     <target name="build" depends="build.SCIPIO,build.TIC"/>
 
