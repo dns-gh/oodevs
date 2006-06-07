@@ -639,7 +639,7 @@ uint PHY_ComposantePion::ApproximateTravelTime( const MT_Vector2D& vSourcePos, c
 {
     assert( pType_ );
     assert( pType_->GetMaxSpeed() != 0. );
-    return (uint)( 3. * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() );
+    return (uint)( 1.439 * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
