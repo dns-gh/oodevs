@@ -34,6 +34,7 @@
 #include "LogSupplyConsign.h"
 #include "Population.h"
 #include "PopulationKnowledge.h"
+#include "GLTool.h"
 
 using namespace DIN;
 
@@ -46,6 +47,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( DIN::DIN_Engine& engine )
     , bPaused_         ( false )
     , bReceivingState_ ( true )
     , msgRecorder_     ( * new MsgRecorder( *this ) )
+    , nFirstTick_      ( 0 )
 {
     DIN_ConnectorGuest connector( eConnector_SIM_MOS );
     pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>(
@@ -514,6 +516,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
                  << " - Checkpoint Frequency: " << asnMsg.checkpoint_frequence;
 
     nTickDuration_ = asnMsg.tick_duration;
+    nFirstTick_ = asnMsg.current_tick;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
     App::GetApp().NotifySpeedChanged( asnMsg.time_factor );
@@ -528,7 +531,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick&
 {
     //$$$ C'est du caca que de calculer le temps comme ca!
     App::GetApp().NotifyTimeChanged( asnMsg * nTickDuration_ );
-    App::GetApp().NotifyTickStartEnd( true );
+    App::GetApp().NotifyTickStartEnd( true, asnMsg );
     msgRecorder_.OnTimeTick( App::GetApp().GetTime() );
 }
 
@@ -537,9 +540,9 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick&
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlEndTick
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnMsg*/ )
+void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& asnMsg )
 {
-    App::GetApp().NotifyTickStartEnd( false );
+    App::GetApp().NotifyTickStartEnd( false, asnMsg.current_tick );
 }
 
 

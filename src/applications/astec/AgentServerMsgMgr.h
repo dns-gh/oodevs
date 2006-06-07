@@ -73,25 +73,20 @@ public:
     explicit AgentServerMsgMgr( DIN::DIN_Engine& engine ); 
     virtual ~AgentServerMsgMgr();
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors*/
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     bool IsPaused() const;
     MsgRecorder& GetMsgRecorder();
+    uint GetFirstTick() const { return nFirstTick_; }
     //@}
 
     
-    //-------------------------------------------------------------------------
-    /** @name Service activation */
-    //-------------------------------------------------------------------------
+    //! @name Service activation
     //@{
     void Enable( DIN::DIN_Link& session );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Messages */
-    //-------------------------------------------------------------------------
+    //! @name Messages
     //@{
     DIN::DIN_BufferedMessage BuildMessage();
 
@@ -133,6 +128,7 @@ private:
     void OnReceiveMsgArmy                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgPathfindLinkCosts                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // ASN
     void OnReceiveMsgSimMos           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -278,8 +274,9 @@ private:
     DIN::DIN_Link* session_;
 
     DIN::DIN_MessageServiceUserCbk<AgentServerMsgMgr>*  pMessageService_;
-    bool                                                    bPaused_;
-    uint                                                    nTickDuration_;
+    bool bPaused_;
+    uint nTickDuration_;
+    uint nFirstTick_;
 
     // ASN
     ASN1OCTET           aASNEncodeBuffer_[100000];

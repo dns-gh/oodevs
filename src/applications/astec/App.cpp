@@ -614,9 +614,9 @@ void App::NotifyTimeChanged( uint nTimeInSeconds )
 */
 // Created: APE 2004-06-17
 // -----------------------------------------------------------------------------
-void App::NotifyTickStartEnd( bool bTickStart )
+void App::NotifyTickStartEnd( bool bTickStart, uint tick )
 {
-    emit TickStartEnd( bTickStart );
+    emit TickStartEnd( bTickStart, tick );
 }
 
 // -----------------------------------------------------------------------------

@@ -6,19 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MainWindow.cpp $
-// $Author: Age $
-// $Modtime: 17/05/05 14:05 $
-// $Revision: 20 $
-// $Workfile: MainWindow.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "MainWindow.h"
@@ -52,6 +39,7 @@
 #include "OptionsPanel.h"
 #include "DefaultMapEventHandler.h"
 #include "Network.h"
+#include "AgentServerMsgMgr.h"
 
 MainWindow* MainWindow::pInstance_ = 0;
 
@@ -63,6 +51,7 @@ MainWindow::MainWindow()
     : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
     , pGL3DWidget_ ( 0 )
     , pGLWidget_   ( 0 )
+    , lastTransfered_( 0 )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
@@ -200,7 +189,7 @@ MainWindow::MainWindow()
     pTickLabel_->setAlignment( Qt::AlignCenter );
     pTickLabel_->setPixmap( MAKE_PIXMAP( tickoff ) );
     pTimeLabel_->setMinimumWidth( 50 );
-    pNetworkStats_   = new QLabel( "per tick/total", this );
+    pNetworkStats_   = new QLabel( "Network statistics", this );
     pLocationLabel_->setMinimumWidth( 195 );
 	pLocationLabel2_->setMinimumWidth( 105 );
 	pLocationLabel3_->setMinimumWidth( 125 );
@@ -227,7 +216,7 @@ MainWindow::MainWindow()
         connect( pGL3DWidget_, SIGNAL( MouseMove( QMouseEvent*, const MT_Vector2D& ) ), this, SLOT( DisplayMouseLocation( QMouseEvent*, const MT_Vector2D& ) ) );
     connect( &App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ),  this, SLOT( OnConnexionStatusChanged( bool ) ) );
     connect( &App::GetApp(), SIGNAL( TimeChanged( uint ) ),             this, SLOT( DisplayTime( uint ) ) );
-    connect( &App::GetApp(), SIGNAL( TickStartEnd( bool ) ),            this, SLOT( OnTickStartEnd( bool ) ) );
+    connect( &App::GetApp(), SIGNAL( TickStartEnd( bool, uint ) ),            this, SLOT( OnTickStartEnd( bool, uint ) ) );
 }
 
 
@@ -306,7 +295,7 @@ namespace
 {
     std::string ToUSI( uint bytes )
     {
-        static const char* units[] = { "B", "KB", "MB", "GB" };
+        static const char* units[] = { "B", "KiB", "MiB", "GiB" };
         unsigned int i = 0;
         while( bytes >> 10 > 0 && i < 4 )
         {
@@ -323,7 +312,7 @@ namespace
 // Name: MainWindow::OnTickStartEnd
 // Created: APE 2004-06-17
 // -----------------------------------------------------------------------------
-void MainWindow::OnTickStartEnd( bool bTickStart )
+void MainWindow::OnTickStartEnd( bool bTickStart, uint tick )
 {
     if( bTickStart )
     {
@@ -334,9 +323,21 @@ void MainWindow::OnTickStartEnd( bool bTickStart )
     {
         pTickLabel_->setPixmap( MAKE_PIXMAP( tickoff ) );
         pLagTimer_->start( 10000, true );
+
         std::stringstream ss;
-        ss << ToUSI( App::GetApp().GetNetwork().ComputeTransferedAmount() / App::GetApp().GetTime() ) << "/s - " << ToUSI( App::GetApp().GetNetwork().ComputeTransferedAmount() );
+        const uint firstTick  = App::GetApp().GetNetwork().GetMessageMgr().GetFirstTick();
+        const uint transfered = App::GetApp().GetNetwork().ComputeTransferedAmount();
+        
+        if( lastTransfered_ <= transfered )
+            ss << "Last: " << ToUSI( transfered - lastTransfered_ ) << " - Total: " << ToUSI( transfered );
+        if( tick > firstTick )
+        {
+            ss  << " : " << ToUSI( transfered / ( tick - firstTick ) ) << "/tick - "
+                << ToUSI( transfered / App::GetApp().GetTime() ) << "/s";
+        }
+        ss << " ";
         pNetworkStats_->setText( ss.str().c_str() );
+        lastTransfered_ = transfered;
     }
 }
 
@@ -353,8 +354,6 @@ void MainWindow::OnLag()
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::OnConnexionStatusChanged
-/** @param  b 
-*/
 // Created: APE 2004-07-30
 // -----------------------------------------------------------------------------
 void MainWindow::OnConnexionStatusChanged( bool b )
@@ -368,9 +367,7 @@ void MainWindow::OnConnexionStatusChanged( bool b )
 //        pOptions_
     }
     else
-    {
         pLagTimer_->start( 10000, true );
-    }
 }
 
 

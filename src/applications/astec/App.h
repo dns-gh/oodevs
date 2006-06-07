@@ -94,7 +94,7 @@ public:
     void NotifyPauseStatusChanged( bool bPaused );
     void NotifySpeedChanged( int nSpeed );
     void NotifyTimeChanged( uint nTimeInSeconds );
-    void NotifyTickStartEnd( bool bTickStart );
+    void NotifyTickStartEnd( bool bTickStart, uint tick );
 
     void NotifyAgentCreated( Agent& agent );
     void NotifyAgentUpdated( Agent& agent );
@@ -201,7 +201,7 @@ signals:
     void PauseStatusChanged( bool bPaused );
     void SpeedChanged( int nSpeed );
     void TimeChanged( uint nTimeInSeconds );
-    void TickStartEnd( bool bTickStart );
+    void TickStartEnd( bool bTickStart, uint tick );
 
     void AgentCreated( Agent& agent );
     void AgentUpdated( Agent& agent );

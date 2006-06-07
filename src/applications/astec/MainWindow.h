@@ -75,7 +75,7 @@ public:
 public slots:
     void DisplayTime( uint nTimeInSeconds );
     void DisplayMouseLocation( QMouseEvent* pEvent, const MT_Vector2D& vGLPos );
-    void OnTickStartEnd( bool bTickStart );
+    void OnTickStartEnd( bool bTickStart, uint tick );
     void OnLag();
     void OnConnexionStatusChanged( bool b );
     void DimensionsChanged();
@@ -125,6 +125,7 @@ private:
 	QLabel* pLocationLabel3_;
     QLabel* pTickLabel_;
     QLabel* pNetworkStats_;
+    uint    lastTransfered_;
 
     QTimer* pLagTimer_;
     //@}
