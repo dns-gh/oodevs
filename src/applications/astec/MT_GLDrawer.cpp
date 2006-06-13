@@ -50,7 +50,7 @@ MT_GLDrawer::MT_GLDrawer( QGLWidget& glWidget, T_ScreenToGLFunc pFunc, QMainWind
     , pToolBar_         ( 0 )
     , pCombo_           ( 0 )
     , rMinFontSize_     ( 0.5f )
-    , rMaxFontSize_     ( 10.0f )
+    , rMaxFontSize_     ( 4000.0f )
     , pPopupMenu_       ( new QPopupMenu() )
     , pLayerDialog_     ( new MT_GLDLayerDialog( &glWidget ) )
     , pShapeDialog_     ( 0 )

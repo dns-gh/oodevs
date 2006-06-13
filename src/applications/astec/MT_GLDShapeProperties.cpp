@@ -30,7 +30,7 @@
 MT_GLDShapeProperties::MT_GLDShapeProperties()
     : nProperties_ ( eAll )
     , strText_     ( "" )
-    , rFontSize_   ( 1 )
+    , rFontSize_   ( 1000.f )
     , lineColor_   ( qRgba( 255, 255, 255, 255 ) )
     , nLineWidth_  ( 2 )
     , nLinePattern_( eFull )

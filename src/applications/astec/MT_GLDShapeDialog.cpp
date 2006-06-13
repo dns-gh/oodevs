@@ -106,7 +106,7 @@ MT_GLDShapeDialog::MT_GLDShapeDialog( QWidget* pParent, MT_GLDrawer& glDrawer )
     pSizeGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Taille" ), this );
     pSizeGroup_->setFlat( true );
     new QLabel( tr("Taille:    "), pSizeGroup_ );
-    pSizeSlider_ = new QSlider( glDrawer.GetMinFontSize() * 1024, glDrawer.GetMaxFontSize() * 1024, (glDrawer.GetMaxFontSize() - glDrawer.GetMinFontSize()) / 20.0  * 1024, glDrawer.GetMinFontSize() * 1024, Qt::Horizontal, pSizeGroup_ );
+    pSizeSlider_ = new QSlider( glDrawer.GetMinFontSize() * 1024, glDrawer.GetMaxFontSize() * 1024, (glDrawer.GetMaxFontSize() - glDrawer.GetMinFontSize()) / (glDrawer.GetMaxFontSize() * 2.f)  * 1024, glDrawer.GetMinFontSize() * 1024, Qt::Horizontal, pSizeGroup_ );
 
     pFillGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Remplissage" ), this );
     pFillGroup_->setFlat( true );

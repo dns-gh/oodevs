@@ -59,7 +59,6 @@ GLWidget::GLWidget( QWidget* pParent, QGLWidget* pShare /*= 0*/ )
     this->setAcceptDrops( true );
 
     pGLDrawer_ = new MT_GLDrawer( *this, &(::ScreenToGL), MainWindow::GetMainWindow() ); // $$$$ AGE 2005-03-16: ??
-    pGLDrawer_->SetDefaults( 1.5f, 20.0f );
 
     App::GetApp().GetWorld().Initialize();
     vCenter_ = App::GetApp().GetWorld().GetRect().GetCenter();
