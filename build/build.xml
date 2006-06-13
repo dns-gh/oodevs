@@ -131,7 +131,7 @@
                          MT_Tools_SCIPIO,ASN,GFX,ENT,
                          geocoord,graphics,pathfind,terrain,paranoia,
                          asn1per,qtmain,qt-mt336,xerces-c_2,
-                         libboost_filesystem-vc71-mt-1_32">
+                         libboost_filesystem-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32,iphlpapi"/>
         </build-app>
@@ -287,7 +287,7 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind"/>
         <update name="asn"/>
-        <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
+        <update name="MT" modules="MT_Tools,MT_Memory,MT_IO,MT_Archive,MT_Patterns,MT_Profiler,MT_Time,MT_Thread,MT_Logger,MT_XmlTools,MT_Qt"/>
         <update name="qt"/>
         <update name="DIN"/>
         <update name="boost"/>
