@@ -1,17 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LineManager.cpp $
-// $Author: Ape $
-// $Modtime: 30/07/04 11:23 $
-// $Revision: 7 $
-// $Workfile: LineManager.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-
-#ifdef __GNUG__
-#    pragma implementation
-#endif
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
 #include "LineManager.h"

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-08 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Limit.cpp $
-// $Author: Ape $
-// $Modtime: 26/01/05 16:03 $
-// $Revision: 8 $
-// $Workfile: Limit.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
 #include "Limit.h"
@@ -27,22 +25,18 @@ IDManager Limit::idManager_( 138 );
 Limit::Limit()
     : TacticalLine_ABC()
 {
-    nID_ = idManager_.GetFreeIdentifier();
     strName_ = QString( "Limit %1" ).arg(  App::GetApp().GetLineManager().GetLineList().size() );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
-/** @param  pointList 
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 Limit::Limit( T_PointVector pointList )
     : TacticalLine_ABC()
 {
     pointList_ = pointList;
-    nID_ = idManager_.GetFreeIdentifier();
     strName_ = QString( "Limit %1" ).arg(  App::GetApp().GetLineManager().GetLineList().size() );
 }
 
@@ -55,7 +49,7 @@ Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg )
     : TacticalLine_ABC()
 {
     nID_ = asnMsg.oid;
-    idManager_.LockIdentifier( nID_ );
+    //idManager_.LockIdentifier( nID_ ); // $$$$ SBO 2006-06-13: 
     nState_ = eStateOk;
     nNetworkState_ = eNetworkStateRegistered;
     bCreatedBy = false;
@@ -79,8 +73,8 @@ Limit::Limit( const ASN1T_MsgLimitCreation& asnMsg )
 //-----------------------------------------------------------------------------
 Limit::~Limit()
 {
-//    if( bCreatedBy )
-    idManager_.ReleaseIdentifier( nID_ );
+//    if( !bCreatedBy )
+//        idManager_.ReleaseIdentifier( nID_ );
 }
 
 
@@ -93,8 +87,6 @@ bool Limit::UpdateToSim()
     if ( !App::GetApp().GetNetwork().IsConnected() )
         return false;
 
-    uint i;
-
     switch( nState_ )
     {
         case eStateCreated:
@@ -103,14 +95,15 @@ bool Limit::UpdateToSim()
         
             ASN_MsgLimitCreation asnMsg;
 
+            nID_ = idManager_.GetFreeIdentifier(); // $$$$ SBO 2006-06-13: Generate ID at the last moment
             asnMsg.GetAsnMsg().oid                          = nID_;
             asnMsg.GetAsnMsg().level                        = (ASN1T_EnumNatureLevel) nLevel_;
             asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
             asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
             asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
 
-            i = 0;
-            for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
+            uint i = 0;
+            for( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
             {
                 std::string strMGRS;
                 const MT_Vector2D& vPos = *itPoint;
@@ -139,8 +132,8 @@ bool Limit::UpdateToSim()
             asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
             asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
 
-            i = 0;
-            for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
+            uint i = 0;
+            for( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
             {
                 std::string strMGRS;
                 const MT_Vector2D& vPos = *itPoint;
@@ -182,8 +175,6 @@ bool Limit::UpdateToSim()
 
 // -----------------------------------------------------------------------------
 // Name: Limit::Read
-/** @param  archive 
-*/
 // Created: APE 2004-07-26
 // -----------------------------------------------------------------------------
 void Limit::Read( MT_InputArchive_ABC& archive )
@@ -196,8 +187,6 @@ void Limit::Read( MT_InputArchive_ABC& archive )
 
 // -----------------------------------------------------------------------------
 // Name: Limit::Write
-/** @param  archive 
-*/
 // Created: APE 2004-07-26
 // -----------------------------------------------------------------------------
 void Limit::Write( MT_OutputArchive_ABC& archive ) const

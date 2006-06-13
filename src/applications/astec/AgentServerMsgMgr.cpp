@@ -928,7 +928,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimitCreationAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimitCreationAck - Code: " << Tools::ToString( asnMsg.error_code ) << " (id: " << asnMsg.oid << ")";
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
@@ -941,6 +941,10 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
         }
         else
             Limit::idManager_.LockIdentifier( asnMsg.oid );
+    }
+    else
+    {
+
     }
 }
 
@@ -986,8 +990,8 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDes
             App::GetApp().NotifyTacticalLineDeleted( *pLimit );
             App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
         }
-        else
-            Limit::idManager_.ReleaseIdentifier( asnMsg.oid );
+//        else
+//            Limit::idManager_.ReleaseIdentifier( asnMsg.oid );
     }
 }
 
@@ -998,7 +1002,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDes
 void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "LimaCreationAck - Code: " << Tools::ToString( asnMsg.error_code );
+    strOutputMsg << "LimaCreationAck - Code: " << Tools::ToString( asnMsg.error_code ) << " (id: " << asnMsg.oid << ")";
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
     if( asnMsg.error_code == EnumInfoContextErrorCode::no_error )
@@ -1057,8 +1061,8 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestr
             App::GetApp().NotifyTacticalLineDeleted( *pLima );
             App::GetApp().GetLineManager().DeleteLine( asnMsg.oid );
         }
-        else
-            Lima::idManager_.ReleaseIdentifier( asnMsg.oid );
+//        else
+//            Lima::idManager_.ReleaseIdentifier( asnMsg.oid );
     }
 }
 

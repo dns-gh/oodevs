@@ -27,32 +27,22 @@ IDManager Lima::idManager_( 137 );
 //-----------------------------------------------------------------------------
 Lima::Lima()
     : TacticalLine_ABC ()
-    , nFuncType_        ( eLimaFuncLCA )
+    , nFuncType_( eLimaFuncLCA )
 {
-    nID_ = idManager_.GetFreeIdentifier();
-
-    strName_ = Tools::ToString( eLimaFuncLCA );
-    strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ = Tools::ToString( eLimaFuncLCA ) + " " + QString::number( App::GetApp().GetLineManager().GetLineList().size() );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
-/** @param  pointList 
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 Lima::Lima( T_PointVector pointList, E_FuncLimaType nFuncType )
     : TacticalLine_ABC ()
-    , nFuncType_           ( nFuncType )
+    , nFuncType_( nFuncType )
 {
     pointList_ = pointList;
-    nID_ = idManager_.GetFreeIdentifier();
-
-    strName_ = Tools::ToString( nFuncType );
-    strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ = Tools::ToString( nFuncType ) + " " + QString::number( App::GetApp().GetLineManager().GetLineList().size() );
 }
 
 
@@ -64,14 +54,12 @@ Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg )
 : TacticalLine_ABC ()
 {
     nID_ = asnMsg.oid;
-    idManager_.LockIdentifier( nID_ );
+    //idManager_.LockIdentifier( nID_ ); // $$$$ SBO 2006-06-13: 
     nState_ = eStateOk;
     nNetworkState_ = eNetworkStateRegistered;
     bCreatedBy = false;
 
-    strName_ = Tools::ToString( eLimaFuncLCA );
-    strName_ += " ";
-    strName_ += QString::number( App::GetApp().GetLineManager().GetLineList().size() );
+    strName_ = Tools::ToString( eLimaFuncLCA ) + " " + QString::number( App::GetApp().GetLineManager().GetLineList().size() );
 
     assert( asnMsg.geometrie.type == EnumTypeLocalisation::line );
     for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
@@ -91,8 +79,8 @@ Lima::Lima( const ASN1T_MsgLimaCreation& asnMsg )
 //-----------------------------------------------------------------------------
 Lima::~Lima()
 {
-//    if( bCreatedBy )
-    idManager_.ReleaseIdentifier( nID_ );
+//    if( !bCreatedBy )
+//        idManager_.ReleaseIdentifier( nID_ );
 }
 
 
@@ -107,7 +95,6 @@ bool Lima::UpdateToSim()
 
     assert( nNetworkState_ != eNetworkStateRegistering );
 
-    uint i;
     switch( nState_ )
     {
         case eStateCreated:
@@ -115,13 +102,14 @@ bool Lima::UpdateToSim()
             assert( !pointList_.empty() );
             ASN_MsgLimaCreation asnMsg;
 
+            nID_ = idManager_.GetFreeIdentifier(); // $$$$ SBO 2006-06-13: 
             asnMsg.GetAsnMsg().oid                             = nID_;
             asnMsg.GetAsnMsg().fonction                        = (ASN1T_EnumTypeLima)nFuncType_;
             asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
             asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
             asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
 
-            i = 0;
+            uint i = 0;
             for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
             {
                 std::string strMGRS;
@@ -149,7 +137,7 @@ bool Lima::UpdateToSim()
             asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
             asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
 
-            i = 0;
+            uint i = 0;
             for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
             {
                 std::string strMGRS;

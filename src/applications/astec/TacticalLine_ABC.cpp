@@ -6,19 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-14 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/TacticalLine_ABC.cpp $
-// $Author: Ape $
-// $Modtime: 26/07/04 16:29 $
-// $Revision: 4 $
-// $Workfile: TacticalLine_ABC.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "TacticalLine_ABC.h"
@@ -29,12 +16,13 @@
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC()
-    : nID_              ( MIL_NULL_LINE_ID )
-    , nState_           ( eStateCreated )
-    , nNetworkState_    ( eNetworkStateNotRegistered )
-    , bCreatedBy    ( true )
-    , nLevel_           ( eNatureLevel_None )
+    : nID_           ( MIL_NULL_LINE_ID )
+    , nState_        ( eStateCreated )
+    , nNetworkState_ ( eNetworkStateNotRegistered )
+    , bCreatedBy     ( true )
+    , nLevel_        ( eNatureLevel_None )
 {
+    // NOTHING
 }
 
 
@@ -44,6 +32,7 @@ TacticalLine_ABC::TacticalLine_ABC()
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::~TacticalLine_ABC()
 {
+    // NOTHING
 }
 
 

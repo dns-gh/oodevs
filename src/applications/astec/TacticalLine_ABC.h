@@ -6,22 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-14 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/TacticalLine_ABC.h $
-// $Author: Ape $
-// $Modtime: 28/07/04 14:48 $
-// $Revision: 5 $
-// $Workfile: TacticalLine_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
-
-#ifdef __GNUG__
-#   pragma interface
-#endif
 
 #include "Order_Def.h"
 #include "Types.h"
