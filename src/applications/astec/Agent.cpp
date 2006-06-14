@@ -169,6 +169,10 @@ void Agent::Initialize()
     pSupplyData_                  = ( new Agent::T_SupplyData() );
     pTypeAutomate_				  = 0;
     bAggregated_                  = false;
+
+    nOldPosture_     = eUnitPosture_PostureArret;
+    nCurrentPosture_ = eUnitPosture_PostureArret;
+    nPostureCompletionPourcentage_ = 0;
 }
 
 
