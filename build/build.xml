@@ -99,7 +99,7 @@
                          DIA_Motivation,DIA_Representation,DIA_SDK_Manager,DIA_Tool_Archive,DIA_Tool_Debugger,DIA_Tool_DebugInfoGen,DIA_Tool_Scripts,DIA_ToolManager,DIA_Behavior,DIA_Kernel,
                          tools,HLA,libFedTime,pathfind,geocoord,masalloc,paranoia
                          MT_Tools_Scipio,TER,ASN,MIL,Missions,
-                         boost_thread-vc71-mt-1_32,libboost_serialization-vc71-mt-1_32,libboost_filesystem-vc71-mt-1_32,
+                         boost_thread-vc71-mt-1_32,libboost_serialization-vc71-mt-1_32,libboost_filesystem-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32,
                          asn1per,xerces-c_2">
 			      <syslibset libs="advapi32,user32,wsock32,winmm,dbghelp,psapi,iphlpapi"/>
             <includepath path="${libraries.dir}/MIL"/>
