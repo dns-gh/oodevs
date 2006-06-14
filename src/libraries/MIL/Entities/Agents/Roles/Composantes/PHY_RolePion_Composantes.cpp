@@ -306,12 +306,9 @@ void PHY_RolePion_Composantes::WriteODB( MT_XXmlOutputArchive& archive ) const
 void PHY_RolePion_Composantes::DistributeCommanders()
 {
     // Répartition des officiers
-    CIT_ComposantePionVector itCurrentComp = composantes_.begin();
-    if( itCurrentComp == composantes_.end() )
-    {
-        MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Not enough composantes to distribute commanders" );
-        return;
-    }
+
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
 
     assert( pPion_ );
     const PHY_UnitType::T_CommanderRepartitionMap& commanderRepartition = pPion_->GetType().GetUnitType().GetCommanderRepartition();
@@ -320,16 +317,21 @@ void PHY_RolePion_Composantes::DistributeCommanders()
         const PHY_HumanRank& rank = *it->first;
               uint           nNbr =  it->second;
 
-        while( nNbr-- )
+        bool bStopRepartition = false;
+        while( nNbr && !bStopRepartition )
         {
-            if( (*itCurrentComp)->ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
+            bStopRepartition = true;
+            for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && nNbr; ++it )
             {
-                if( ++itCurrentComp == composantes_.end() )
-                    itCurrentComp = composantes_.begin();
+                if( (**it).ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
+                {
+                    bStopRepartition = false;
+                    --nNbr;
+                }
             }
-            else
-                MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Not enough humans in crew to distribute commanders" );
         }
+        if( nNbr )
+            MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );        
     }
 }
 
