@@ -70,6 +70,17 @@ void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entit
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayer::NotifySelected
+// Created: AGE 2006-06-19
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityLayer< ConcreteEntity >::NotifySelected( const ConcreteEntity* entity )
+{
+    if( entity )
+        SelectEntity( *entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayer::SelectColor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------

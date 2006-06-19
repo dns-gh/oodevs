@@ -90,6 +90,8 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( entities_.empty() || !event || event->state() == Qt::NoButton )
         return false;
     const int button = event->button();
+    if( button != Qt::LeftButton && button != Qt::RightButton )
+        return false;
     
     if( selected_ >= entities_.size() 
      || ! IsInSelection( *entities_[ selected_ ], point ) 
@@ -166,6 +168,17 @@ bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
 void EntityLayerBase::ActivateEntity( const Entity_ABC& entity )
 {
     view_.CenterOn( entity.Get< Positions >().GetPosition() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::SelectEntity
+// Created: AGE 2006-06-19
+// -----------------------------------------------------------------------------
+void EntityLayerBase::SelectEntity( const Entity_ABC& entity )
+{
+    IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
+    if( it != entities_.end() )
+        selected_ = it - entities_.begin();
 }
 
 // -----------------------------------------------------------------------------

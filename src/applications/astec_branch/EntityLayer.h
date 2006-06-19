@@ -13,6 +13,7 @@
 #include "Observer_ABC.h"
 #include "ElementObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
+#include "SelectionObserver_ABC.h"
 #include "OptionsObserver_ABC.h"
 #include "Layer_ABC.h"
 #include "SafePointer.h"
@@ -61,6 +62,7 @@ protected:
     virtual void AddEntity( const Entity_ABC& );
     virtual bool RemoveEntity( const Entity_ABC& );
     virtual void ActivateEntity( const Entity_ABC& );
+    virtual void SelectEntity( const Entity_ABC& );
 
     virtual void SelectColor( const Entity_ABC& );
     virtual void Select     ( const Entity_ABC& );
@@ -105,6 +107,7 @@ protected: // $$$$ AGE 2006-05-17:
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityLayer : public EntityLayerBase
+                  , public SelectionObserver< ConcreteEntity >
                   , public ElementObserver_ABC< ConcreteEntity >
                   , public ActivationObserver_ABC< ConcreteEntity >
 {
@@ -129,6 +132,7 @@ protected:
     virtual void NotifyCreated( const ConcreteEntity& );
     virtual void NotifyDeleted( const ConcreteEntity& );
     virtual void NotifyActivated( const ConcreteEntity& );
+    virtual void NotifySelected( const ConcreteEntity* );
     virtual void SelectColor( const Entity_ABC& );
     virtual void Select     ( const Entity_ABC& );
     virtual void ContextMenu( const Entity_ABC&, const QPoint&  );

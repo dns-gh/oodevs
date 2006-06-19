@@ -46,6 +46,7 @@
 #include "MagicOrdersInterface.h"
 #include "PreferencesDialog.h"
 #include "CoordinateConverter.h"
+#include "ActionLogger.h"
 
 #include "Agent.h"
 #include "Object.h"
