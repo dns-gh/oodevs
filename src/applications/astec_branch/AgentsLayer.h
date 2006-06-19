@@ -37,6 +37,8 @@ public:
     //@{
     void Aggregate   ( const Agent& agent );
     void Disaggregate( const Agent& agent );
+    void Engage      ( const Agent& agent );
+    void Disengage   ( const Agent& agent );
     //@}
 
 private slots:
@@ -44,6 +46,8 @@ private slots:
     //@{
     void Aggregate   ();
     void Disaggregate();
+    void Engage      ();
+    void Disengage   ();
     //@}
 
 private:

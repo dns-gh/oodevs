@@ -1256,9 +1256,6 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutoma
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck
-/** @param  message
-    @param  nCtx
-    */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& message, MIL_MOSContextID )
@@ -1274,9 +1271,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAuto
     }
 
     if( message.error_code == EnumOrderErrorCode::no_error )
-    {
         model_.agents_.GetAgent( message.oid_pion ).Update( message );
-    }
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }

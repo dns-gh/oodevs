@@ -227,8 +227,8 @@ QSize AgentListView::sizeHint() const
 // -----------------------------------------------------------------------------
 void AgentListView::Select( const Team& element )
 {
-   setSelected( FindItem( &element, firstChild() ), true );
-   ensureItemVisible( selectedItem() );
+    setSelected( FindItem( &element, firstChild() ), true );
+    ensureItemVisible( selectedItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,8 +237,8 @@ void AgentListView::Select( const Team& element )
 // -----------------------------------------------------------------------------
 void AgentListView::Select( const KnowledgeGroup& element )
 {
-   setSelected( FindItem( &element, firstChild() ), true );
-   ensureItemVisible( selectedItem() );
+    setSelected( FindItem( &element, firstChild() ), true );
+    ensureItemVisible( selectedItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,8 +247,8 @@ void AgentListView::Select( const KnowledgeGroup& element )
 // -----------------------------------------------------------------------------
 void AgentListView::Select( const Agent& element )
 {
-   setSelected( FindItem( &element, firstChild() ), true );
-   ensureItemVisible( selectedItem() );
+    setSelected( FindItem( &element, firstChild() ), true );
+    ensureItemVisible( selectedItem() );
 }
 
 // -----------------------------------------------------------------------------

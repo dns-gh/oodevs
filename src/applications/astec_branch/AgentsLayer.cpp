@@ -12,6 +12,7 @@
 #include "moc_AgentsLayer.cpp"
 #include "Agent.h"
 #include "Aggregatable_ABC.h"
+#include "AutomatDecisions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -66,6 +67,28 @@ void AgentsLayer::Disaggregate( const Agent& automat )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::Engage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void AgentsLayer::Engage( const Agent& automat )
+{
+    if( automat.GetSuperior() )
+        return;
+    automat.Retrieve< AutomatDecisions >()->Engage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Disengage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void AgentsLayer::Disengage( const Agent& automat )
+{
+    if( automat.GetSuperior() )
+        return;
+    automat.Retrieve< AutomatDecisions >()->Disengage();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::NotifyContextMenu
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
@@ -77,6 +100,14 @@ void AgentsLayer::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
         menu.insertSeparator();
 
     selected_ = &agent;
+    if( agent.Retrieve< AutomatDecisions >() )
+    {
+        if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
+            menu.insertItem( tr( "Embrayer" ), this, SLOT( Engage() ) );
+        else
+            menu.insertItem( tr( "Debrayer" ), this, SLOT( Disengage() ) );
+    }
+
     if( ! agent.IsAggregated() )
         menu.insertItem( tr( "Aggreger" ), this, SLOT( Aggregate() ) );
     else
@@ -101,4 +132,24 @@ void AgentsLayer::Disaggregate()
 {
     if( selected_ )
         Disaggregate( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Engage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void AgentsLayer::Engage()
+{
+    if( selected_ )
+        Engage( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Disengage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void AgentsLayer::Disengage()
+{
+    if( selected_ )
+        Disengage( *selected_ );
 }

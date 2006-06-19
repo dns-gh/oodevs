@@ -12,6 +12,7 @@
 #include "Agent.h"
 #include "DecisionalModel.h"
 #include "Controller.h"
+#include "ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor
@@ -117,4 +118,28 @@ const Agent& AutomatDecisions::GetAgent() const
 bool AutomatDecisions::IsEmbraye() const
 {
     return bEmbraye_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::Engage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void AutomatDecisions::Engage() const
+{
+    ASN_MsgSetAutomateMode asnMsg;
+    asnMsg.GetAsnMsg().unit_id = agent_.GetId();
+    asnMsg.GetAsnMsg().mode    = EnumAutomateState::embraye;
+    asnMsg.Send( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::Disengage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void AutomatDecisions::Disengage() const
+{
+    ASN_MsgSetAutomateMode asnMsg;
+    asnMsg.GetAsnMsg().unit_id = agent_.GetId();
+    asnMsg.GetAsnMsg().mode    = EnumAutomateState::debraye;
+    asnMsg.Send( 0 );     
 }

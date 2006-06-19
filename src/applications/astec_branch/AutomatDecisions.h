@@ -46,6 +46,8 @@ public:
     virtual Iterator< const Mission& > GetMissions() const;
     virtual Iterator< const FragOrder& > GetFragOrders() const;
     const Mission* GetCurrentMission() const;
+    void Engage() const;
+    void Disengage() const;
     //@}
 
 private:

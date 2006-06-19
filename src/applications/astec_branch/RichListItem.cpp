@@ -316,6 +316,7 @@ void RichListItem::setText( int column, const QString& text )
     richText = RichText( text, CreateRichText( text ) );
     delete old; 
     widthChanged();
+    listView()->triggerUpdate();
 }
 
 // -----------------------------------------------------------------------------
@@ -332,6 +333,7 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
     richText.pixMap = pm;
     setHeight( std::max( height(), pm.height() ) );
     widthChanged();
+    listView()->triggerUpdate();
 }
 
 
