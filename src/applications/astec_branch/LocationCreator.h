@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LocationCreator.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:36 $
-// $Revision: 8 $
-// $Workfile: LocationCreator.h $
-//
-// *****************************************************************************
 
 #ifndef __LocationCreator_h_
 #define __LocationCreator_h_
@@ -41,7 +32,8 @@ class LocationCreator : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationCreator( QWidget* parent, const std::string menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
+             LocationCreator( QWidget* parent, const std::string& menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
+             LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler );
     virtual ~LocationCreator();
     //@}
 
@@ -50,6 +42,7 @@ public:
     void AddLocationType( const QString& message, ASN1T_EnumTypeLocalisation type );
     void Draw( const T_PointVector& points, ASN1T_EnumTypeLocalisation type, const GlTools_ABC& tools );
     virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
+    void StartPoint();
     //@}
 
     //! @name Accessors

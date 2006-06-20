@@ -163,7 +163,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) );
 
-    new MagicOrdersInterface( this, controllers_ );
+    new MagicOrdersInterface( this, controllers_, model_, layers_->GetParametersLayer() );
 
     new SIMControlToolbar( this, controllers );
     new MapToolbar( this, controllers );

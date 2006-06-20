@@ -12,9 +12,11 @@
 
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
+#include "Observer_ABC.h"
 #include "ASN_Types.h"
 
 class Agent;
+class Controller;
 
 // =============================================================================
 /** @class  MagicOrders
@@ -23,13 +25,14 @@ class Agent;
 // Created: AGE 2006-04-28
 // =============================================================================
 class MagicOrders : public Extension_ABC
+                  , public Observer_ABC
                   , public Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MagicOrders( const Agent& agent );
+             MagicOrders( Controller& controller, const Agent& agent );
     virtual ~MagicOrders();
     //@}
 
@@ -55,8 +58,8 @@ private:
 private:
     //! @name Member data
     //@{
-    bool automat_;
-    bool embraye_;
+    Controller& controller_;
+    const Agent& agent_;
     bool transportersReady_;
     //@}
 };

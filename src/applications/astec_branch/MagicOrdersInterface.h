@@ -13,11 +13,15 @@
 #include "ContextMenuObserver_ABC.h"
 #include "SafePointer.h"
 #include "OptionsObserver_ABC.h"
+#include "ShapeHandler_ABC.h"
 
 class Agent;
 class Controllers;
+class Model;
 class LogisticSupplyRecompletionDialog;
 class ChangeHumanFactorsDialog;
+class LocationCreator;
+class ParametersLayer;
 
 // =============================================================================
 /** @class  MagicOrdersInterface
@@ -29,13 +33,14 @@ class MagicOrdersInterface : public QObject
                            , public Observer_ABC
                            , public ContextMenuObserver_ABC< Agent >
                            , public OptionsObserver_ABC
+                           , public ShapeHandler_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, Controllers& controllers );
+             MagicOrdersInterface( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer );
     virtual ~MagicOrdersInterface();
     //@}
 
@@ -43,6 +48,7 @@ public:
     //@{
     virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void Handle( const T_PointVector& points );
     //@}
 
 private slots:
@@ -75,10 +81,13 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    const Model& model_;
     bool controller_;
     SafePointer< Agent > selectedAgent_;
     LogisticSupplyRecompletionDialog* supplyRecompletion_;
     ChangeHumanFactorsDialog*         changeHumanFactors_;
+    bool magicMove_;
+    LocationCreator* magicMoveLocation_;
     //@}
 };
 

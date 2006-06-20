@@ -19,13 +19,26 @@
 // Name: LocationCreator constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-LocationCreator::LocationCreator( QWidget* parent, const std::string menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
+LocationCreator::LocationCreator( QWidget* parent, const std::string& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
     : QObject   ( parent )
     , layer_    ( layer )
     , handler_  ( handler )
     , menu_     ( menu )
 {
     pPopupMenu_ = new QPopupMenu( parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator constructor
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+LocationCreator::LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
+    : QObject   ( parent )
+    , layer_    ( layer )
+    , handler_  ( handler )
+    , pPopupMenu_( 0 )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +56,8 @@ LocationCreator::~LocationCreator()
 // -----------------------------------------------------------------------------
 void LocationCreator::AddLocationType( const QString& message, ASN1T_EnumTypeLocalisation type )
 {
+    if( !pPopupMenu_ )
+        return;
     int n = pPopupMenu_->insertItem( message, this, SLOT( Start( int ) ) );
     pPopupMenu_->setItemParameter( n, (int)type );
 }
@@ -53,6 +68,8 @@ void LocationCreator::AddLocationType( const QString& message, ASN1T_EnumTypeLoc
 // -----------------------------------------------------------------------------
 void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, QPopupMenu& menu )
 {
+    if( !pPopupMenu_ )
+        return;
     popupPoint_ = point;
     menu.insertItem( menu_.c_str(), pPopupMenu_ );
 }
@@ -67,9 +84,14 @@ void LocationCreator::Start( int type )
     // Special case for point parameter.
     if( type == EnumTypeLocalisation::point )
     {
-        T_PointVector points;
-        points.push_back( popupPoint_ );
-        handler_.Handle( points );
+        if( !pPopupMenu_ )
+            layer_.StartPoints( handler_, 1 );
+        else
+        {
+            T_PointVector points;
+            points.push_back( popupPoint_ );
+            handler_.Handle( points );
+        }
     }
     else
     {
@@ -80,6 +102,15 @@ void LocationCreator::Start( int type )
         else if( type == EnumTypeLocalisation::polygon )
             layer_.StartPolygon( handler_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::StartPoint
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void LocationCreator::StartPoint()
+{
+    Start( EnumTypeLocalisation::point ); // $$$$ SBO 2006-06-19: for magic move
 }
 
 // -----------------------------------------------------------------------------

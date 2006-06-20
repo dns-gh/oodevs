@@ -10,17 +10,19 @@
 #include "astec_pch.h"
 #include "MagicOrders.h"
 #include "Agent.h"
+#include "AutomatDecisions.h"
+#include "Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrders constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrders::MagicOrders( const Agent& agent )
-    : automat_( agent.GetAutomatType() )
-    , embraye_( false )
+MagicOrders::MagicOrders( Controller& controller, const Agent& agent )
+    : controller_( controller )
+    , agent_( agent )
     , transportersReady_( false )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +31,7 @@ MagicOrders::MagicOrders( const Agent& agent )
 // -----------------------------------------------------------------------------
 MagicOrders::~MagicOrders()
 {
-    // NOTHING
+    controller_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,8 +42,6 @@ void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.transporteurs_disponiblesPresent )
         transportersReady_ = message.transporteurs_disponibles;
-    if( message.m.etat_automatePresent )
-        embraye_ = ( message.etat_automate == EnumAutomateState::embraye );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 bool MagicOrders::CanSurrender() const
 {
-    return automat_;
+    return agent_.GetAutomatType();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,11 @@ bool MagicOrders::CanSurrender() const
 // -----------------------------------------------------------------------------
 bool MagicOrders::CanMagicMove() const
 {
-    return (   automat_ &&   embraye_ ) 
-        || ( ! automat_ && ! embraye_ );
+    if( agent_.GetAutomatType() )
+        return agent_.Retrieve< AutomatDecisions >()->IsEmbraye();
+    if( agent_.GetSuperior() && agent_.GetSuperior()->GetAutomatType() )
+        return !agent_.GetSuperior()->Retrieve< AutomatDecisions >()->IsEmbraye();
+    return false;
 }
 
 // -----------------------------------------------------------------------------

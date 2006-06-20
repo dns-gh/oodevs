@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-07 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/RichListItem.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:29 $
-// $Revision: 2 $
-// $Workfile: RichListItem.h $
-//
-// *****************************************************************************
 
 #ifndef __RichListItem_h_
 #define __RichListItem_h_

@@ -11,10 +11,14 @@
 #include "MagicOrdersInterface.h"
 #include "moc_MagicOrdersInterface.cpp"
 #include "Controllers.h"
+#include "Model.h"
 #include "Agent.h"
 #include "MagicOrders.h"
 #include "OptionVariant.h"
 #include "ASN_Messages.h"
+#include "CoordinateConverter.h"
+#include "LocationCreator.h"
+#include "ParametersLayer.h"
 
 //#include "LogisticSupplyRecompletionDialog.h"
 //#include "ChangeHumanFactorsDialog.h"
@@ -23,14 +27,19 @@
 // Name: MagicOrdersInterface constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers )
+MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer )
     : QObject( parent )
     , controllers_( controllers )
+    , model_( model )
     , selectedAgent_( controllers )
     , controller_( true )
+    , magicMove_( false )
 {
 //    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent );
 //    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent );
+    
+    magicMoveLocation_ = new LocationCreator( 0, layer, *this );
+    magicMoveLocation_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
     controllers_.Register( *this );
 }
 
@@ -164,7 +173,32 @@ void MagicOrdersInterface::ChangeHumanFactors()
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::Move()
 {
+    if( magicMove_ )
+        return;
+    controllers_.Register( *magicMoveLocation_ );
+    magicMove_ = true;
+    magicMoveLocation_->StartPoint();
+}
 
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::Handle
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::Handle( const T_PointVector& points )
+{
+    if( magicMove_ && points.size() == 1 )
+    {
+        ASN_MsgUnitMagicAction message;
+        message.GetAsnMsg().oid = selectedAgent_->GetId();
+        message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
+
+        ASN1T_CoordUTM utm;
+        utm = model_.coordinateConverter_.ConvertToMgrs( points[0] ).c_str();
+        message.GetAsnMsg().action.u.move_to = &utm;
+        message.Send( 56 );
+    }
+    controllers_.Remove( *magicMoveLocation_ );
+    magicMove_ = false;
 }
 
 // -----------------------------------------------------------------------------
