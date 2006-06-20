@@ -315,7 +315,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 
     ValuedListItem* pItemToDrop = *reinterpret_cast< ValuedListItem** >( tmp.data() );
 
-    QPoint position = mapFromParent( pEvent->pos() );
+    QPoint position = viewport()->mapFromParent( pEvent->pos() );
     ValuedListItem* pItemWhereToDrop = (ValuedListItem*)itemAt( position );
     if( !pItemToDrop || !pItemWhereToDrop || !pItemToDrop->IsA< const Agent* >() )
     {
@@ -327,14 +327,18 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
     {
         const Agent& agent    = *pItemToDrop->GetValue< const Agent* >();
         const Agent& superior = *pItemWhereToDrop->GetValue< const Agent* >();
-        if( agent.GetSuperior() == 0 || superior.GetSuperior() != 0 )
+        if( agent.GetSuperior() == 0 || agent.GetSuperior() == &superior )
         {
             pEvent->ignore();
             return;
         }
+        unsigned int superiorId = superior.GetId();
+        if( superior.GetSuperior() != 0 )
+            superiorId = superior.GetSuperior()->GetId();
+
         ASN_MsgChangeAutomate asnMsg;
         asnMsg.GetAsnMsg().oid_pion     = agent.GetId();
-        asnMsg.GetAsnMsg().oid_automate = superior.GetId();
+        asnMsg.GetAsnMsg().oid_automate = superiorId;
         asnMsg.Send();
 
         pEvent->accept();
