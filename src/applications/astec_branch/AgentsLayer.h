@@ -60,6 +60,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    virtual void Select( const Entity_ABC&, bool );
     //@}
 
 private:

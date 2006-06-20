@@ -92,9 +92,9 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     const int button = event->button();
     if( button != Qt::LeftButton && button != Qt::RightButton )
         return false;
-    
-    if( selected_ >= entities_.size() 
-     || ! IsInSelection( *entities_[ selected_ ], point ) 
+
+    if( selected_ >= entities_.size()
+     || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
      || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
         selected_ = 0;
@@ -105,7 +105,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
         if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
         {
             if( button == Qt::LeftButton )
-                Select( entity );
+                Select( entity, event->state() & Qt::ShiftButton );
             else if( button == Qt::RightButton )
                 ContextMenu( entity, event->globalPos() );
             return true;
@@ -132,7 +132,7 @@ bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::P
 {
     return entity.Get< Positions >().IsAt( point, 10.f * tools_.Pixels() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::AddEntity
 // Created: AGE 2006-03-23
@@ -189,16 +189,16 @@ void EntityLayerBase::SelectColor( const Entity_ABC& )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const Entity_ABC& )
+void EntityLayerBase::Select( const Entity_ABC&, bool )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ContextMenu
 // Created: AGE 2006-03-23

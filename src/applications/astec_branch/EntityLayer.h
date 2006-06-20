@@ -65,7 +65,7 @@ protected:
     virtual void SelectEntity( const Entity_ABC& );
 
     virtual void SelectColor( const Entity_ABC& );
-    virtual void Select     ( const Entity_ABC& );
+    virtual void Select     ( const Entity_ABC&, bool );
     virtual void ContextMenu( const Entity_ABC&, const QPoint& );
     virtual bool ShouldDisplay( const Entity_ABC& );
     virtual bool IsInTeam     ( const Entity_ABC&, const Team& team );
@@ -134,12 +134,12 @@ protected:
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelected( const ConcreteEntity* );
     virtual void SelectColor( const Entity_ABC& );
-    virtual void Select     ( const Entity_ABC& );
+    virtual void Select     ( const Entity_ABC&, bool );
     virtual void ContextMenu( const Entity_ABC&, const QPoint&  );
     virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     Controllers& controllers_;

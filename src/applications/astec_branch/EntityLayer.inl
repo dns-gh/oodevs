@@ -95,7 +95,7 @@ void EntityLayer< ConcreteEntity >::SelectColor( const Entity_ABC& entity )
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::Select( const Entity_ABC& entity )
+void EntityLayer< ConcreteEntity >::Select( const Entity_ABC& entity, bool /*shift*/ )
 {
     controllers_.actions_.Select( static_cast< const ConcreteEntity& >( entity ) );
 }

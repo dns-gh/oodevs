@@ -153,3 +153,20 @@ void AgentsLayer::Disengage()
     if( selected_ )
         Disengage( *selected_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Select
+// Created: SBO 2006-06-20
+// -----------------------------------------------------------------------------
+void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
+{
+    const Agent& agent = static_cast< const Agent& >( entity );
+    const Agent* superior = agent.GetSuperior();
+    if( shift && superior )
+    {
+        controllers_.actions_.Select( *superior );
+        controllers_.actions_.Activate( *superior );
+    }
+    else
+        controllers_.actions_.Select( agent );
+}
