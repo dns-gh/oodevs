@@ -112,6 +112,8 @@ private:
     StatusBar*     pStatus_;
     ParametersLayer* parameters_;
     AgentsLayer*     agents_;
+
+    QLabel* portrait_;
     //@}
 };
 

@@ -11,6 +11,7 @@
 #include "GlWidget.h"
 #include "Model.h"
 #include "graphics/MapLayer_ABC.h"
+#include "graphics/Scale.h"
 
 using namespace geometry;
 
@@ -36,14 +37,16 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, QLabel& buddy )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , MapWidget( context_, pParent, width_, height_ )
     , GlToolsBase( controllers )
+    , buddy_( buddy )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_( 0 )
+    , viewport_( 0, 0, width_, height_ )
     , frame_( 0 )
 {
     SetReverse( true );
@@ -86,6 +89,51 @@ void GlWidget::resizeGL( int w, int h )
     windowHeight_ = h;
     windowWidth_ = w;
     MapWidget::resizeGL( w, h );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::paintGL
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void GlWidget::paintGL()
+{
+    static Point2f myCenter( 10000, 10000 );
+    static float direction( 1 );
+
+    direction += 0.05 - ( float( rand() ) / RAND_MAX ) * 0.1;
+    myCenter += 10 * Vector2f( cos( direction ), sin( direction ) );
+
+    geometry::Rectangle2f viewport = viewport_;
+    int windowHeight = windowHeight_;
+    int windowWidth = windowWidth_;
+
+    viewport_ = geometry::Rectangle2f( myCenter.X() - 500, myCenter.Y() - 500, myCenter.X() + 500, myCenter.Y() + 500 );
+    windowHeight_ = 128;
+    windowWidth_ = 128;
+    Point2f oldCenter = Center( myCenter );
+    float oldZoom = Zoom( 1000 );
+    glViewport( 0, 0, 128, 128 );
+
+    QImage image( 128, 128, 32 );
+
+    MapWidget::paintGL();
+    glFlush();
+    glReadPixels( 0, 0, 128, 128, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+    glFlush();
+//    buddy_.setPixmap( image.mirror() );
+    *buddy_.pixmap() = image.mirror();
+    buddy_.repaint( false );
+
+    Center( oldCenter );
+    Zoom( oldZoom );
+    viewport_ = viewport;
+    windowHeight_ = windowHeight;
+    windowWidth_ = windowWidth;
+
+    MapWidget::resizeGL( windowWidth_, windowHeight_ );
+    MapWidget::paintGL();
+    Scale scale;
+    scale.Draw( 20, 20, *this );
 }
 
 // -----------------------------------------------------------------------------

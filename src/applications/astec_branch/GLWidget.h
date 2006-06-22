@@ -31,7 +31,7 @@ class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml );
+             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, QLabel& buddy );
     virtual ~GlWidget();
     //@}
 
@@ -65,6 +65,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void paintGL();
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
     unsigned int GenerateCircle();
@@ -73,6 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QLabel& buddy_;
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;

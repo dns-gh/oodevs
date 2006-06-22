@@ -96,6 +96,14 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, model );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
+    QDockWindow* portraitDock = new QDockWindow( this );
+    moveDockWindow( portraitDock, Qt::DockBottom );
+    portrait_ = new QLabel( portraitDock );
+    portrait_->setPixmap( QPixmap( 128, 128, 32 ) );
+    portraitDock->setWidget( portrait_ );
+    portraitDock->setCaption( tr( "Mini me" ) );
+    setDockEnabled( portraitDock, Qt::DockTop, false );
+
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
@@ -231,7 +239,7 @@ void MainWindow::Load( const std::string& scipioXml )
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
-    widget2d_ = new GlWidget( this, controllers_, scipioXml );
+    widget2d_ = new GlWidget( this, controllers_, scipioXml, *portrait_ );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Load( scipioXml );
