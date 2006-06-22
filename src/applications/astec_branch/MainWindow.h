@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MainWindow.h $
-// $Author: Age $
-// $Modtime: 17/05/05 14:05 $
-// $Revision: 14 $
-// $Workfile: MainWindow.h $
-//
-// *****************************************************************************
 
 #ifndef __MainWindow_h_
 #define __MainWindow_h_

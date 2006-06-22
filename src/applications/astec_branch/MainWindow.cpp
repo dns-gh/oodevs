@@ -32,6 +32,7 @@
 #include "UnitToolbar.h"
 #include "LogisticToolbar.h"
 #include "RecorderToolbar.h"
+//#include "EventToolbar.h"
 #include "MissionLayer.h"
 #include "DetectionMap.h"
 #include "Model.h"
@@ -47,6 +48,7 @@
 #include "PreferencesDialog.h"
 #include "CoordinateConverter.h"
 #include "ActionLogger.h"
+#include "Bookmarks.h"
 
 #include "Agent.h"
 #include "Object.h"
@@ -123,6 +125,15 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     pListDockWnd_->setCaption( tr( "Unités" ) );
     this->setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
+    // Bookmarks
+    QDockWindow* pBookmarksWnd = new QDockWindow( this );
+    moveDockWindow( pBookmarksWnd, Qt::DockLeft );
+    pBookmarksWnd->setWidget( new Bookmarks( pBookmarksWnd, controllers ) );
+    pBookmarksWnd->setResizeEnabled( true );
+    pBookmarksWnd->setCloseMode( QDockWindow::Always );
+    pBookmarksWnd->setCaption( tr( "Bookmarks" ) );
+    setDockEnabled( pBookmarksWnd, Qt::DockTop, false );
+
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
@@ -170,6 +181,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
+//    new EventToolbar( this, controllers );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, recorder );
 
     new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
