@@ -34,9 +34,7 @@ public:
     static bool CrashWithCoreDump();
 
 private:
-    //-------------------------------------------------------------------------
-    /** @name Tools */
-    //-------------------------------------------------------------------------
+    //! @name Tools
     //@{
     void Initialize();
     void Run       (); 
@@ -47,7 +45,7 @@ private:
     std::string Wrap                ( const std::string& content, const std::string& prefix ) const;
     bool        IsAlreadyWrapped    ( const std::string& content ) const;
 
-    static void UserInterruptHandler( int nContext );
+    static bool ConsoleEventHandler( int nEvent );
     //@}
     
 private:

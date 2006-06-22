@@ -127,6 +127,10 @@ void InitConsole()
     SetConsoleTitle( "SIM - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
 
     ShowWindow( hCurWin, SW_MAXIMIZE );
+
+    // Remove the close button
+    HMENU hmenu = GetSystemMenu( hCurWin, FALSE );
+    DeleteMenu( hmenu, SC_CLOSE, MF_BYCOMMAND );
 }
 
 //-----------------------------------------------------------------------------

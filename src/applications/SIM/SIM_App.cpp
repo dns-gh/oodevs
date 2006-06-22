@@ -70,12 +70,20 @@ SIM_App::~SIM_App()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_App::UserInterruptHandler
-// Created: SBO 2005-11-25
+// Name: SIM_App::ConsoleEventHandler
+// Created: NLD 2006-06-22
 // -----------------------------------------------------------------------------
-void SIM_App::UserInterruptHandler( int /*nContext*/ )
+bool SIM_App::ConsoleEventHandler( int nEvent )
 {
-    bUserInterrupt_ = true;
+    switch( nEvent )
+    {
+        case CTRL_C_EVENT       : MT_LOG_INFO_MSG( "Ctrl+C event ignored" );     return true;
+        case CTRL_BREAK_EVENT   : MT_LOG_INFO_MSG( "Ctrl+Break event ignored" ); return true;
+        case CTRL_CLOSE_EVENT   : MT_LOG_INFO_MSG( "Close event" );              bUserInterrupt_ = true; return false;
+        case CTRL_LOGOFF_EVENT  : MT_LOG_INFO_MSG( "Logoff event" );             bUserInterrupt_ = true; return false;
+        case CTRL_SHUTDOWN_EVENT: MT_LOG_INFO_MSG( "Shutdown event" );           bUserInterrupt_ = true; return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,20 +92,20 @@ void SIM_App::UserInterruptHandler( int /*nContext*/ )
 // -----------------------------------------------------------------------------
 void SIM_App::Initialize()
 {
+    SetConsoleCtrlHandler( (PHANDLER_ROUTINE)ConsoleEventHandler, TRUE );
+
     MT_Profiler::Initialize();
     MT_MakeDir( "CheckPoints" );
 
     missions::RegisterMissions();
 
     MIL_AgentServer::CreateWorkspace( startupConfig_ );
-    
-    signal( SIGINT, &UserInterruptHandler );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SIM_App::Cleanup
 // Created: NLD 2004-01-27
-// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------s
 void SIM_App::Cleanup()
 {
     MIL_AgentServer::DestroyWorkspace();
