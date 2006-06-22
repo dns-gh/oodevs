@@ -14,6 +14,7 @@
 #include "Units.h"
 #include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
+#include "DataDictionary.h"
 
 using namespace geometry;
 
@@ -21,12 +22,24 @@ using namespace geometry;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter )
+Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, DataDictionary& dictionary )
     : controller_( controller )
     , converter_ ( converter )
     , aggregated_( false ) 
 {
-    // NOTHING
+    // $$$$ AGE 2006-06-22: unité !
+    dictionary.Register( "Attributs/Info/Etat opérationnel",               nRawOpState_ );
+    dictionary.Register( "Attributs/Info/Vitesse",                         nSpeed_ );
+    dictionary.Register( "Attributs/Info/Direction",                       nDirection_ );
+    dictionary.Register( "Attributs/Postures/Posture courante",            nCurrentPosture_ );
+    dictionary.Register( "Attributs/Communications/Brouillé",              bCommJammed_ );
+    dictionary.Register( "Attributs/Communications/Silence radio",         bRadioSilence_ );
+    dictionary.Register( "Attributs/Etat décisionnel/Etat opérationnel",   nOpState_ );
+    dictionary.Register( "Attributs/Etat décisionnel/RoE",                 nRulesOfEngagementState_ );
+    dictionary.Register( "Attributs/Etat décisionnel/Contact combat",      nCloseCombatState_ );
+    dictionary.Register( "Attributs/Etat martial/Fait prisonnier",         bPrisoner_ );
+    dictionary.Register( "Attributs/Etat martial/Rendu",                   bSurrendered_ );
+    dictionary.Register( "Attributs/Etat martial/Réfugiés pris en compte", bRefugeesManaged_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +146,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 {
     // $$$$ AGE 2006-03-17: Split attributes ?
     displayer.Group( "Info" )
-                .Display( "Etat Opérationnel:",                  nRawOpState_ * Units::percentage )
+                .Display( "Etat opérationnel:",                  nRawOpState_ * Units::percentage )
                 .Display( "Mort:",                               bDead_ )
                 .Display( "Neutralisé:",                         bNeutralized_ )
                 .Display( "Vitesse:",                            nSpeed_ * Units::metersPerSecond )

@@ -13,17 +13,19 @@
 #include "Dotation.h"
 #include "DotationType.h"
 #include "GlTools_ABC.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver )
+Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, DataDictionary& dictionary )
     : controller_( controller )
     , resolver_( resolver )
+    , dictionary_( dictionary )
     , bEmptyGasTank_( false )
 {
-    // NOTHING
+    dictionary_.Register( "Dotations/Plus de carburant", bEmptyGasTank_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +55,11 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
         if( dotation )
             dotation->quantity_ = value.quantite_disponible;
         else
-            Register( value.ressource_id, *new Dotation( type, value.quantite_disponible ) );
+        {
+            Dotation& newDotation = *new Dotation( type, value.quantite_disponible );
+            Register( value.ressource_id, newDotation );
+            dictionary_.Register( QString( "Dotations/" ) + type.GetCategory().c_str(), newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
+        }
         if( type.IsGas() )
             bEmptyGasTank_ = ( value.quantite_disponible == 0 );
     }

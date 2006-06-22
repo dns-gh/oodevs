@@ -18,6 +18,7 @@
 #include "Resolver.h"
 #include "Drawable_ABC.h"
 #include "Aggregatable_ABC.h"
+#include "DataDictionary.h"
 
 class Controller;
 class AgentType;

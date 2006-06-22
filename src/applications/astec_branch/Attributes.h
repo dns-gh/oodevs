@@ -19,6 +19,7 @@
 class Controller;
 class Displayer_ABC;
 class CoordinateConverter_ABC;
+class DataDictionary;
 
 // =============================================================================
 /** @class  Attributes
@@ -35,7 +36,7 @@ class Attributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Attributes( Controller& controller, const CoordinateConverter_ABC& converter );
+             Attributes( Controller& controller, const CoordinateConverter_ABC& converter, DataDictionary& dictionary );
     virtual ~Attributes();
     //@}
 
@@ -71,7 +72,7 @@ private:
     int	nAltitude_;
     int	nDirection_;
 
-    unsigned           nRawOpState_;
+    unsigned              nRawOpState_;
     E_EtatOperationnel    nOpState_;
     E_EtatRapFor          nFightRateState_;
     E_Roe                 nRulesOfEngagementState_;

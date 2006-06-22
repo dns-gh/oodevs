@@ -12,6 +12,7 @@
 
 #include "ContextMenuObserver_ABC.h"
 #include "Observer_ABC.h"
+#include "SafePointer.h"
 
 class Controllers;
 class Agent;
@@ -61,12 +62,17 @@ private:
     typedef T_Agents::const_iterator    CIT_Agents;
     //@}
 
+    //! @name Helpers
+    //@{
+    QWidget* CreateView( const Agent& agent );
+    //@}
+
 private:
     //! @name Member data
     //@{
     Controllers& controllers_;
     T_Agents bookmarks_;
-    const Agent* selected_;
+    SafePointer< Agent > selected_;
     QToolBox* toolBox_;
     //@}
 };

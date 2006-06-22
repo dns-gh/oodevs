@@ -12,6 +12,7 @@
 #include "moc_Bookmarks.cpp"
 #include "Controllers.h"
 #include "Agent.h"
+#include "AttributeView.h"
 
 #include <qtoolbox.h>
 #include <qsizepolicy.h>
@@ -23,6 +24,7 @@
 Bookmarks::Bookmarks( QWidget* parent, Controllers& controllers )
     : QVBox( parent, "bookmarks" )
     , controllers_( controllers )
+    , selected_( controllers )
 {
     QVBox* box = new QVBox( this );
     QPushButton* button = new QPushButton( MAKE_ICON( cross ), "Vider", box );
@@ -49,11 +51,13 @@ Bookmarks::~Bookmarks()
 void Bookmarks::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 {
     CIT_Agents it = std::find( bookmarks_.begin(), bookmarks_.end(), &agent );
-    if( menu.count() > 0 )
-        menu.insertSeparator();
-    selected_ = &agent;
     if( it == bookmarks_.end() )
+    {
+        if( menu.count() > 0 )
+            menu.insertSeparator();
+        selected_ = &agent;
         menu.insertItem( "Bookmark", this, SLOT( Bookmark() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +72,7 @@ void Bookmarks::Bookmark()
     if( it != bookmarks_.end() )
         return;
     bookmarks_.push_back( selected_ );
-    toolBox_->addItem( new QVBox( toolBox_ ), selected_->GetName().c_str() );
+    toolBox_->addItem( CreateView( *selected_ ), selected_->GetName().c_str() );
     selected_ = 0;
 }
 
@@ -85,4 +89,13 @@ void Bookmarks::RemoveAll()
         delete item;
     }
     bookmarks_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Bookmarks::CreateView
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+QWidget* Bookmarks::CreateView( const Agent& agent )
+{
+    return new AttributeView( this, controllers_, agent );
 }

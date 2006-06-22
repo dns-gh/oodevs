@@ -38,7 +38,7 @@ AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers, It
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Info" )
                 .AddLabel( "Nom:", true )
-                .AddLabel( "Etat Opérationnel:" )
+                .AddLabel( "Etat opérationnel:" )
                 .AddLabel( "Mort:" )
                 .AddLabel( "Neutralisé:" )
                 .AddLabel( "Vitesse:" )

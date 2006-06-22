@@ -59,6 +59,7 @@
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
 #include "CoordinateConverter.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -92,9 +93,10 @@ AgentFactory::~AgentFactory()
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
+    result->Attach( *new DataDictionary() );
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
-    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
+    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_, result->Get< DataDictionary >() ) );
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType() ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
@@ -114,9 +116,10 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
+    result->Attach( *new DataDictionary() );
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
-    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_ ) );
+    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_, result->Get< DataDictionary >() ) );
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
@@ -133,6 +136,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.types_ );
+    result->Attach( *new DataDictionary() );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
@@ -147,7 +151,7 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
 {
     agent.Attach( *new Contaminations( controllers_.controller_, model_.objectTypes_ ) );
     agent.Attach( *new DebugPoints() );
-    agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_ ) );
+    agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_, agent.Get< DataDictionary >() ) );
     agent.Attach( *new Equipments( controllers_.controller_, model_.objectTypes_ ) );
     agent.Attach( *new HumanFactors( controllers_.controller_ ) );
     agent.Attach( *new Lends( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );

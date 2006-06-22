@@ -19,6 +19,7 @@
 class Controller;
 class DotationType;
 class Dotation;
+class DataDictionary;
 
 // =============================================================================
 /** @class  Dotations
@@ -34,7 +35,7 @@ class Dotations : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver );
+             Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, DataDictionary& dictionary );
     virtual ~Dotations();
     //@}
 
@@ -59,6 +60,7 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
+    DataDictionary& dictionary_;
     const Resolver_ABC< DotationType >& resolver_;
     bool bEmptyGasTank_;
     //@}

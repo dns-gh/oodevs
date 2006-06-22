@@ -1,0 +1,131 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "astec_pch.h"
+#include "AttributeView.h"
+#include "moc_AttributeView.cpp"
+#include "DataDictionary.h"
+#include "Agent.h"
+#include "AttributeViewCell.h"
+#include "Controllers.h"
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView constructor
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const Agent& agent )
+    : QTable( 1, 2, parent )
+    , controllers_( controllers )
+    , dictionary_( agent.Get< DataDictionary >() )
+    , currentRow_( 0 )
+{
+    setSelectionMode( QTable::Single );
+    verticalHeader()->hide();
+    setLeftMargin( 0 );
+    horizontalHeader()->setLabel( 0, tr( "Attribut" ) );
+    horizontalHeader()->setLabel( 1, tr( "Valeur" ) );
+    horizontalHeader()->setClickEnabled( false );
+    setColumnReadOnly( 0, false );
+    setColumnReadOnly( 1, true );
+    setItem( 0, 0, new AttributeViewCell( this, dictionary_ ) );
+
+    connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
+
+    controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView destructor
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+AttributeView::~AttributeView()
+{
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::OnValueChanged
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void AttributeView::OnValueChanged( int row, int )
+{
+    const QString attribut = text( row, 0 );
+    if( attribut.isEmpty() && row != numRows() - 1 )
+        removeRow( row );
+    else if( ! attribut.isEmpty() )
+    {
+        currentRow_ = row;
+        dictionary_.Display( attribut, *this );
+        adjustColumn( 0 );
+        adjustColumn( 1 );
+        if( row == numRows() - 1 )
+        {
+            setNumRows( numRows() + 1 );
+            setItem( numRows() - 1, 0, new AttributeViewCell( this, dictionary_ ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::StartDisplay
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void AttributeView::StartDisplay()
+{
+    message_ = "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::DisplayFormatted
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void AttributeView::DisplayFormatted( const QString& formatted )
+{
+    message_ += formatted;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::EndDisplay
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void AttributeView::EndDisplay()
+{
+    setText( currentRow_, 1, message_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::Hide
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void AttributeView::Hide()
+{
+    // NOTHING 
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::SubItem
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+Displayer_ABC& AttributeView::SubItem( const char*  )
+{
+    return NotToBeCalled( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::NotifyUpdated
+// Created: AGE 2006-06-22
+// -----------------------------------------------------------------------------
+void AttributeView::NotifyUpdated( const Simulation::sEndTick& )
+{
+    for( int row = 0; row < numRows(); ++row )
+    {
+        currentRow_ = row;
+        dictionary_.Display( text( row, 0 ), *this );
+    }
+}
