@@ -61,6 +61,7 @@
 #include "LinkInterpreter.h"
 #include "Tiredness.h"
 #include "Experience.h"
+#include "Bookmarks.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -98,10 +99,8 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
 
     QDockWindow* portraitDock = new QDockWindow( this );
     moveDockWindow( portraitDock, Qt::DockBottom );
-    portrait_ = new QLabel( portraitDock );
-    portrait_->setPixmap( QPixmap( 128, 128, 32 ) );
-    portraitDock->setWidget( portrait_ );
     portraitDock->setCaption( tr( "Mini me" ) );
+    portraitDock->setWidget( new QLabel( portraitDock ) );
     setDockEnabled( portraitDock, Qt::DockTop, false );
 
     // Agent list panel
@@ -136,7 +135,8 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     // Bookmarks
     QDockWindow* pBookmarksWnd = new QDockWindow( this );
     moveDockWindow( pBookmarksWnd, Qt::DockLeft );
-    pBookmarksWnd->setWidget( new Bookmarks( pBookmarksWnd, controllers ) );
+    bookmarks_ = new Bookmarks( pBookmarksWnd, controllers );
+    pBookmarksWnd->setWidget( bookmarks_ );
     pBookmarksWnd->setResizeEnabled( true );
     pBookmarksWnd->setCloseMode( QDockWindow::Always );
     pBookmarksWnd->setCaption( tr( "Bookmarks" ) );
@@ -239,7 +239,7 @@ void MainWindow::Load( const std::string& scipioXml )
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
-    widget2d_ = new GlWidget( this, controllers_, scipioXml, *portrait_ );
+    widget2d_ = new GlWidget( this, controllers_, scipioXml );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Load( scipioXml );

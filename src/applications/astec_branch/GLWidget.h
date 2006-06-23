@@ -18,6 +18,7 @@
 #include "GlToolsBase.h"
 
 class Controllers;
+class MiniView;
 
 // =============================================================================
 /** @class  GlWidget
@@ -31,8 +32,14 @@ class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, QLabel& buddy );
+             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml );
     virtual ~GlWidget();
+    //@}
+
+    //! @name Operations
+    //@{
+    void AddMiniView   ( MiniView* view );
+    void RemoveMiniView( MiniView* view );
     //@}
 
     //! @name Operations
@@ -69,12 +76,21 @@ private:
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
     unsigned int GenerateCircle();
+
+    void RenderMiniViews();
+    void RenderMiniView( MiniView& view );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< MiniView* >   T_Views;
+    typedef T_Views::iterator         IT_Views;
+    typedef T_Views::const_iterator  CIT_Views;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QLabel& buddy_;
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
@@ -83,6 +99,8 @@ private:
     unsigned int frame_;
 
     GlFont* font_;
+
+    T_Views views_;
     //@}
 };
 

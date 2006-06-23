@@ -21,28 +21,14 @@ class QListBox;
 */
 // Created: AGE 2006-06-22
 // =============================================================================
-class AttributeViewCell : public QObject, public QTableItem
+class AttributeViewCell : public QTableItem
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
              AttributeViewCell( QTable* parent, const DataDictionary& dictionary );
     virtual ~AttributeViewCell();
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void SetText( const QString& );
-    //@}
-
-private slots:
-    //! @name slots
-    //@{
-    void OnTextChanged( const QString& );
-    void OnListClicked( QListBoxItem* );
     //@}
 
 private:
@@ -61,9 +47,6 @@ private:
     //! @name Member data
     //@{
     const DataDictionary& dictionary_;
-    QPopupMenu* menu_;
-    QListBox* list_;
-    bool bDummy_;
     //@}
 };
 

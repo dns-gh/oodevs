@@ -13,6 +13,9 @@
 #include "Controllers.h"
 #include "Agent.h"
 #include "AttributeView.h"
+#include "GlWidget.h"
+#include "Positions.h"
+#include "MiniView.h"
 
 #include <qtoolbox.h>
 #include <qsizepolicy.h>
@@ -73,6 +76,7 @@ void Bookmarks::Bookmark()
         return;
     bookmarks_.push_back( selected_ );
     toolBox_->addItem( CreateView( *selected_ ), selected_->GetName().c_str() );
+    
     selected_ = 0;
 }
 

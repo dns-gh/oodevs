@@ -30,6 +30,7 @@ class ParametersLayer;
 class AgentsLayer;
 class MsgRecorder;
 class GlPlaceHolder;
+class Bookmarks;
 
 // =============================================================================
 /** @class  MainWindow
@@ -112,8 +113,7 @@ private:
     StatusBar*     pStatus_;
     ParametersLayer* parameters_;
     AgentsLayer*     agents_;
-
-    QLabel* portrait_;
+    Bookmarks*      bookmarks_;
     //@}
 };
 
