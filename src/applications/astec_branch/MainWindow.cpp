@@ -62,6 +62,7 @@
 #include "Tiredness.h"
 #include "Experience.h"
 #include "Bookmarks.h"
+#include "MiniViews.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -96,12 +97,6 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, model );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
-
-    QDockWindow* portraitDock = new QDockWindow( this );
-    moveDockWindow( portraitDock, Qt::DockBottom );
-    portraitDock->setCaption( tr( "Mini me" ) );
-    portraitDock->setWidget( new QLabel( portraitDock ) );
-    setDockEnabled( portraitDock, Qt::DockTop, false );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -141,6 +136,8 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     pBookmarksWnd->setCloseMode( QDockWindow::Always );
     pBookmarksWnd->setCaption( tr( "Bookmarks" ) );
     setDockEnabled( pBookmarksWnd, Qt::DockTop, false );
+
+    new MiniViews( this, controllers_, widget2d_ );
 
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );

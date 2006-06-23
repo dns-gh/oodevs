@@ -12,6 +12,9 @@
 
 class Agent;
 class Positions;
+class GlWidget;
+class Controllers;
+class ActionController;
 
 // =============================================================================
 /** @class  MiniView
@@ -19,13 +22,13 @@ class Positions;
 */
 // Created: AGE 2006-06-23
 // =============================================================================
-class MiniView : public QLabel
+class MiniView : public QFrame
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniView( QWidget* parent, const Agent& agent );
+             MiniView( QWidget* parent, Controllers& controllers, const Agent& agent, GlWidget* widget );
     virtual ~MiniView();
     //@}
 
@@ -42,10 +45,24 @@ private:
     MiniView& operator=( const MiniView& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void mouseReleaseEvent( QMouseEvent * e );
+    virtual void contextMenuEvent( QContextMenuEvent * e );
+    virtual void mouseDoubleClickEvent( QMouseEvent * e );
+    virtual void drawContents( QPainter * p );
+    virtual QSize sizeHint() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
+    ActionController& actions_;
+    const Agent& agent_;
     const Positions& position_;
+    QPixmap pixmap_;
+    GlWidget* widget_;
+
     //@}
 };
 

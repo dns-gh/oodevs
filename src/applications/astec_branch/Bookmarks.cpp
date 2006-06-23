@@ -15,7 +15,6 @@
 #include "AttributeView.h"
 #include "GlWidget.h"
 #include "Positions.h"
-#include "MiniView.h"
 
 #include <qtoolbox.h>
 #include <qsizepolicy.h>
