@@ -30,6 +30,11 @@ public:
     virtual ~AttributeViewCellEditor();
     //@}
 
+    //! @name Operations
+    //@{
+    void FlecheDuBas();
+    //@}
+
 private slots:
     //! @name Slots
     //@{

@@ -28,10 +28,12 @@ AttributeViewCellEditor::AttributeViewCellEditor( QWidget* parent, const DataDic
     list_ = new QListBox( menu_ );
     list_->setColumnMode( QListBox::Variable );
     list_->setRowMode( QListBox::Variable );
+    list_->setFrameStyle( QFrame::NoFrame );
     menu_->insertItem( list_ );
     menu_->hide();
 
     connect( list_, SIGNAL( clicked( QListBoxItem* ) ), this, SLOT( OnListClicked( QListBoxItem* ) ) );
+    connect( list_, SIGNAL( returnPressed( QListBoxItem* ) ), this, SLOT( OnListClicked( QListBoxItem* ) ) );
     connect( this, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
 }
 
@@ -72,13 +74,21 @@ void AttributeViewCellEditor::OnTextChanged( const QString& text )
 // -----------------------------------------------------------------------------
 void AttributeViewCellEditor::OnListClicked( QListBoxItem* item )
 {
-    menu_->hide();
-    disconnect( this, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
-    setText( item->text() );
-    connect( this, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
+    if( item )
+    {
+        menu_->hide();
+        disconnect( this, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
+        setText( item->text() );
+        connect( this, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged( const QString& ) ) );
+    }
 }
 
-    
-
-    
-    
+// -----------------------------------------------------------------------------
+// Name: AttributeViewCellEditor::FlecheDuBas
+// Created: AGE 2006-06-23
+// -----------------------------------------------------------------------------
+void AttributeViewCellEditor::FlecheDuBas()
+{
+    list_->setFocus();
+    list_->setSelected( int( 0 ), true );
+}

@@ -45,7 +45,7 @@ protected slots:
     void SlotConnectDisconnect();
     void SlotPlayPause();
     void SlotSpeedChange();
-    void SlotOnSpinBoxChange();
+    void SlotOnSpinBoxChange( int );
     void SlotOnSpinBoxEnterPressed();
     //@}
 
@@ -71,6 +71,7 @@ private:
     MT_SpinBox*         pSpeedSpinBox_; // $$$$ AGE 2006-03-24: MT_Caca
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
+    int speed_;
     bool connected_, paused_;
     //@}
 };

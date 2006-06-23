@@ -27,6 +27,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers, GlWidget* c
 {
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
     setResizeEnabled( false );
+    setCloseMode( Always );
     parent->setDockEnabled( this, Qt::DockTop, false );
     setCaption( tr( "Mini vues" ) );
     grid_ = new SmartGridWidget( this, 2, Qt::Vertical );

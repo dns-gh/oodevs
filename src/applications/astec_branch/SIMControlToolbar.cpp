@@ -28,6 +28,7 @@
 SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers )
     : QToolBar( pParent, "sim control toolbar" )
     , controllers_( controllers )
+    , speed_( 4212 )
     , connected_( false )
     , paused_( false )
 {
@@ -65,7 +66,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     connect( pConnectButton_, SIGNAL( clicked() ), this, SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), this, SLOT( SlotPlayPause() ) );
     connect( pSpeedButton_,   SIGNAL( clicked() ), this, SLOT( SlotSpeedChange() ) );
-    connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange() ) );
+    connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange( int ) ) );
     connect( pSpeedSpinBox_ , SIGNAL( enterPressed() ), this, SLOT( SlotOnSpinBoxEnterPressed() ) );
 
     controllers_.Register( *this );
@@ -135,14 +136,13 @@ void SIMControlToolbar::SlotSpeedChange()
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SIMControlToolbar::SlotOnSpinBoxChange
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------
-void SIMControlToolbar::SlotOnSpinBoxChange()
+void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 {
-    pSpeedButton_->setEnabled( true );
+    pSpeedButton_->setEnabled( value != speed_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,6 +187,11 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
     }
 
-    pSpeedSpinBox_->setValue( simulation.GetSpeed() );
-    pSpeedButton_->setEnabled( false );
+    const int speed = simulation.GetSpeed();
+    if( speed_ != speed )
+    {
+        speed_ = speed;
+        pSpeedSpinBox_->setValue( speed );
+        pSpeedButton_->setEnabled( false );
+    }
 }

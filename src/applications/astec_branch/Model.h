@@ -55,6 +55,7 @@ public:
     //@{
     void Load( const std::string& scipioXml );
     void Purge();
+    void PurgeDynamic();
     //@}
 
 public:

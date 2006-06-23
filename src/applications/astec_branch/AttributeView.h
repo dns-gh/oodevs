@@ -64,6 +64,7 @@ private:
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
     virtual void NotifyUpdated( const Simulation::sEndTick& );
+    virtual void keyPressEvent( QKeyEvent* );
     //@}
 
 private:

@@ -59,9 +59,14 @@ void MiniView::SetImage( const QImage& image )
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f MiniView::GetViewport() const
 {
-    const geometry::Point2f center = position_.GetPosition();
-    const geometry::Vector2f diag( 1000, 1000 );
-    return geometry::Rectangle2f( center - diag, center + diag );
+    if( isVisible() )
+    {
+        const geometry::Point2f center = position_.GetPosition();
+        const geometry::Vector2f diag( 1000, 1000 );
+        return geometry::Rectangle2f( center - diag, center + diag );
+    }
+    else
+        return geometry::Rectangle2f();
 }
 
 // -----------------------------------------------------------------------------

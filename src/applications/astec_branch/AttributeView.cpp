@@ -13,6 +13,7 @@
 #include "DataDictionary.h"
 #include "Agent.h"
 #include "AttributeViewCell.h"
+#include "AttributeViewCellEditor.h"
 #include "Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -31,9 +32,11 @@ AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const A
     horizontalHeader()->setLabel( 0, tr( "Attribut" ) );
     horizontalHeader()->setLabel( 1, tr( "Valeur" ) );
     horizontalHeader()->setClickEnabled( false );
+    setTopMargin( 16 );
     setColumnReadOnly( 0, false );
     setColumnReadOnly( 1, true );
     setItem( 0, 0, new AttributeViewCell( this, dictionary_ ) );
+    setRowHeight( 0, 16 );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 
@@ -68,6 +71,7 @@ void AttributeView::OnValueChanged( int row, int )
         {
             setNumRows( numRows() + 1 );
             setItem( numRows() - 1, 0, new AttributeViewCell( this, dictionary_ ) );
+            setRowHeight( numRows() - 1, 16 );
         }
     }
 }
@@ -128,4 +132,20 @@ void AttributeView::NotifyUpdated( const Simulation::sEndTick& )
         currentRow_ = row;
         dictionary_.Display( text( row, 0 ), *this );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeView::keyPressEvent
+// Created: AGE 2006-06-23
+// -----------------------------------------------------------------------------
+void AttributeView::keyPressEvent( QKeyEvent* e )
+{
+    if( e && e->key() == Key_Down && isEditing() )
+    {
+        QWidget* maybeEditor = cellWidget( currEditRow(), currEditCol() );
+        if( maybeEditor && maybeEditor->inherits( "AttributeViewCellEditor" ) )
+            (::qt_cast< AttributeViewCellEditor* >( maybeEditor ))->FlecheDuBas();
+    }
+    else
+        QTable::keyPressEvent( e );
 }

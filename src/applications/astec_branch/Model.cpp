@@ -95,10 +95,10 @@ Model::~Model()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::Purge
-// Created: AGE 2006-04-20
+// Name: Model::PurgeDynamic
+// Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-void Model::Purge()
+void Model::PurgeDynamic()
 {
     agents_.Purge();
     objects_.Purge();
@@ -108,6 +108,16 @@ void Model::Purge()
 //    limits_.Purge();
     fires_.Purge();
     weather_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Purge
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void Model::Purge()
+{
+    PurgeDynamic();
+    
     types_.Purge();
     objectTypes_.Purge();
 }

@@ -140,17 +140,20 @@ void GlWidget::RenderMiniViews()
 void GlWidget::RenderMiniView( MiniView& view )
 {
     viewport_ = view.GetViewport() ;
-    Center( viewport_.Center() );
-    Zoom( viewport_.Height() );
-    MapWidget::resizeGL( 128, 128 );
+    if( ! viewport_.IsEmpty() )
+    {
+        Center( viewport_.Center() );
+        Zoom( viewport_.Height() );
+        MapWidget::resizeGL( 128, 128 );
 
-    QImage image( 128, 128, 32 );
-    MapWidget::paintGL();
-    glFlush();
-    glReadPixels( 0, 0, 128, 128, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-    glFlush();
+        QImage image( 128, 128, 32 );
+        MapWidget::paintGL();
+        glFlush();
+        glReadPixels( 0, 0, 128, 128, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+        glFlush();
 
-    view.SetImage( image.mirror() );
+        view.SetImage( image.mirror() );
+    }
 }
 
 // -----------------------------------------------------------------------------

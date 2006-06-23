@@ -418,7 +418,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     if( ! simulation.IsConnected() )
     {
         controllers_.actions_.Select( Nothing() );
-        model_.Purge();
+        model_.PurgeDynamic();
     }
 }
 
