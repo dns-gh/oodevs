@@ -13,10 +13,12 @@
 #include "ContextMenuObserver_ABC.h"
 #include "Observer_ABC.h"
 #include "SafePointer.h"
+#include "ElementObserver_ABC.h"
 
 class Controllers;
 class Agent;
 class QToolBox;
+class Report_ABC;
 
 // =============================================================================
 /** @class  BigBrother
@@ -27,6 +29,7 @@ class QToolBox;
 class BigBrother : public QVBox
                  , public Observer_ABC
                  , public ContextMenuObserver_ABC< Agent >
+                 , public ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
 
@@ -47,6 +50,7 @@ private slots:
     //@{
     void Bookmark();
     void RemoveAll();
+    void OnSelect( int index );
     //@}
 
 private:
@@ -58,13 +62,14 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent* >   T_Agents;
-    typedef T_Agents::const_iterator    CIT_Agents;
+    typedef std::map< const Agent*, int >   T_Agents;
+    typedef T_Agents::const_iterator      CIT_Agents;
     //@}
 
     //! @name Helpers
     //@{
     QWidget* CreateView( const Agent& agent );
+    virtual void NotifyCreated( const Report_ABC& report );
     //@}
 
 private:

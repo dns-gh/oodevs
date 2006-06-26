@@ -10,21 +10,24 @@
 #ifndef __EventToolbar_h_
 #define __EventToolbar_h_
 
-#include "ContextMenuObserver_ABC.h"
+#include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
+#include <list>
+
 class Controllers;
-class Agent;
+class Report_ABC;
+class Agent_ABC;
 
 // =============================================================================
-/** @class  ControllerToolbar
-    @brief  Toolbar event subscribing/unsubscribing
+/** @class  EventToolbar
+    @brief  Toolbar event
 */
 // Created: SBO 2006-06-20
 // =============================================================================
 class EventToolbar : public QToolBar
                    , public Observer_ABC
-                   , public ContextMenuObserver_ABC< Agent >
+                   , public ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
 
@@ -35,16 +38,12 @@ public:
     virtual ~EventToolbar();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
-    void Subscribe();
-    void UnSubscribe();
+    void GasClicked();
+    void ConflictClicked();
+    void MessageClicked();
     //@}
 
 private:
@@ -56,16 +55,24 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent* >   T_Agents;
+    typedef std::list< const Agent_ABC* > T_Agents;
     typedef T_Agents::const_iterator    CIT_Agents;
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const Report_ABC& report );
     //@}
 
 private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    T_Agents subscribed_;
-    const Agent* selected_;
+    T_Agents messageAgents_;
+
+    QToolButton* gasButton_;
+    QToolButton* conflictButton_;
+    QToolButton* messageButton_;
     //@}
 };
 

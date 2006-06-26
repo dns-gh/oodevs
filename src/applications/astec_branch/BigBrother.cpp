@@ -11,10 +11,12 @@
 #include "BigBrother.h"
 #include "moc_BigBrother.cpp"
 #include "Controllers.h"
+#include "ActionController.h"
 #include "Agent.h"
 #include "AttributeView.h"
 #include "GlWidget.h"
 #include "Positions.h"
+#include "Report_ABC.h"
 
 #include <qtoolbox.h>
 #include <qsizepolicy.h>
@@ -34,6 +36,7 @@ BigBrother::BigBrother( QWidget* parent, Controllers& controllers )
     toolBox_ = new QToolBox( box );
     box->setStretchFactor( toolBox_, 100 );
     connect( button, SIGNAL( clicked() ), this, SLOT( RemoveAll() ) );
+    connect( toolBox_, SIGNAL( currentChanged( int ) ), this, SLOT( OnSelect( int ) ) );
     controllers_.Register( *this );
 }
 
@@ -52,7 +55,7 @@ BigBrother::~BigBrother()
 // -----------------------------------------------------------------------------
 void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 {
-    CIT_Agents it = std::find( spied_.begin(), spied_.end(), &agent );
+    CIT_Agents it = spied_.find( &agent );
     if( it == spied_.end() )
     {
         if( menu.count() > 0 )
@@ -70,11 +73,11 @@ void BigBrother::Bookmark()
 {
     if( !selected_ )
         return;
-    CIT_Agents it = std::find( spied_.begin(), spied_.end(), selected_ );
+    CIT_Agents it = spied_.find( selected_ );
     if( it != spied_.end() )
         return;
-    spied_.push_back( selected_ );
-    toolBox_->addItem( CreateView( *selected_ ), selected_->GetName().c_str() );
+    int id = toolBox_->addItem( CreateView( *selected_ ), selected_->GetName().c_str() );
+    spied_[ selected_ ] = id;
     
     selected_ = 0;
 }
@@ -101,4 +104,34 @@ void BigBrother::RemoveAll()
 QWidget* BigBrother::CreateView( const Agent& agent )
 {
     return new AttributeView( this, controllers_, agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::NotifyCreated
+// Created: SBO 2006-06-26
+// -----------------------------------------------------------------------------
+void BigBrother::NotifyCreated( const Report_ABC& report )
+{
+    const Agent* agent = dynamic_cast< const Agent* >( &report.GetAgent() ); // $$$$ SBO 2006-06-26: todo: handle population reports too
+    if( !agent )
+        return;
+    CIT_Agents it = spied_.find( agent );
+    if( it == spied_.end() )
+        return;
+    toolBox_->setItemIconSet( it->second, MAKE_PIXMAP( msg ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::OnSelect
+// Created: SBO 2006-06-26
+// -----------------------------------------------------------------------------
+void BigBrother::OnSelect( int index )
+{
+    for( CIT_Agents it = spied_.begin(); it != spied_.end(); ++it )
+        if( it->second == index )
+        {
+            controllers_.actions_.Select( *it->first );
+            toolBox_->setItemIconSet( index, QPixmap() );
+            return;
+        }
 }

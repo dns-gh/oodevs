@@ -32,7 +32,7 @@
 #include "UnitToolbar.h"
 #include "LogisticToolbar.h"
 #include "RecorderToolbar.h"
-//#include "EventToolbar.h"
+#include "EventToolbar.h"
 #include "MissionLayer.h"
 #include "DetectionMap.h"
 #include "Model.h"
@@ -186,7 +186,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
-//    new EventToolbar( this, controllers );
+    new EventToolbar( this, controllers );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, recorder );
 
     new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
