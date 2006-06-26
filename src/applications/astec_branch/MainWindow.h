@@ -13,12 +13,9 @@
 #include "OptionsObserver_ABC.h"
 #include "ElementObserver_ABC.h"
 
-class MapEventHandler_ABC;
 class Options;
-class MapEventFilter_ABC;
 class OptionsPanel;
 
-class QProgressBar;
 class Controllers;
 class Model;
 class GlLayers;
@@ -30,7 +27,7 @@ class ParametersLayer;
 class AgentsLayer;
 class MsgRecorder;
 class GlPlaceHolder;
-class Bookmarks;
+class BigBrother;
 
 // =============================================================================
 /** @class  MainWindow
@@ -109,11 +106,11 @@ private:
 
     QTimer* displayTimer_;
 
-    OptionsPanel*  pOptionsPanel_;
-    StatusBar*     pStatus_;
+    OptionsPanel*    pOptionsPanel_;
+    StatusBar*       pStatus_;
     ParametersLayer* parameters_;
     AgentsLayer*     agents_;
-    Bookmarks*      bookmarks_;
+    BigBrother*      spy_;
     //@}
 };
 

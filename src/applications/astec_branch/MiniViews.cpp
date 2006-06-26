@@ -54,7 +54,7 @@ void MiniViews::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
     selected_ = &agent;
     if( menu.count() ) 
         menu.insertSeparator();
-    bool remove = miniViews_[ &agent ];
+    bool remove = miniViews_.find( &agent ) != miniViews_.end();
     menu.insertItem( remove ? "Supprimer la minivue" : "Ajouter une minivue" , this, SLOT( OnMiniView() ) );
 }
 
@@ -70,10 +70,15 @@ void MiniViews::OnMiniView()
         if( view )
         {
             delete view;
-            view = 0;
+            miniViews_.erase( selected_ );
+            if( miniViews_.empty() )
+                hide();
         }
         else
+        {
             view = new MiniView( grid_, controllers_, *selected_, widget_ );
+            show();
+        }
         selected_ = 0;
     }
 }

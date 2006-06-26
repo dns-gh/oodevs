@@ -48,7 +48,6 @@
 #include "PreferencesDialog.h"
 #include "CoordinateConverter.h"
 #include "ActionLogger.h"
-#include "Bookmarks.h"
 
 #include "Agent.h"
 #include "Object.h"
@@ -61,7 +60,7 @@
 #include "LinkInterpreter.h"
 #include "Tiredness.h"
 #include "Experience.h"
-#include "Bookmarks.h"
+#include "BigBrother.h"
 #include "MiniViews.h"
 
 #pragma warning( push )
@@ -125,29 +124,30 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
     pListDockWnd_->setCaption( tr( "Unités" ) );
-    this->setDockEnabled( pListDockWnd_, Qt::DockTop, false );
+    setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
-    // Bookmarks
-    QDockWindow* pBookmarksWnd = new QDockWindow( this );
-    moveDockWindow( pBookmarksWnd, Qt::DockLeft );
-    bookmarks_ = new Bookmarks( pBookmarksWnd, controllers );
-    pBookmarksWnd->setWidget( bookmarks_ );
-    pBookmarksWnd->setResizeEnabled( true );
-    pBookmarksWnd->setCloseMode( QDockWindow::Always );
-    pBookmarksWnd->setCaption( tr( "Bookmarks" ) );
-    setDockEnabled( pBookmarksWnd, Qt::DockTop, false );
+    // BigBrother
+    QDockWindow* pBigBrotherWnd = new QDockWindow( this );
+    moveDockWindow( pBigBrotherWnd, Qt::DockLeft );
+    spy_ = new BigBrother( pBigBrotherWnd, controllers );
+    pBigBrotherWnd->setWidget( spy_ );
+    pBigBrotherWnd->setResizeEnabled( true );
+    pBigBrotherWnd->setCloseMode( QDockWindow::Always );
+    pBigBrotherWnd->setCaption( tr( "Espion" ) );
+    setDockEnabled( pBigBrotherWnd, Qt::DockTop, false );
 
-    new MiniViews( this, controllers_, widget2d_ );
+    MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ );
+    miniviews->hide();
 
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
-    this->moveDockWindow( pInfoDockWnd_, Qt::DockRight );
+    moveDockWindow( pInfoDockWnd_, Qt::DockRight );
     InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
     pInfoDockWnd_->setCaption( tr( "Informations" ) );
-    this->setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
+    setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
     MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, layers_->GetParametersLayer(), *layers_ );

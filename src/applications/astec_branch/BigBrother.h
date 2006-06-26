@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Bookmarks_h_
-#define __Bookmarks_h_
+#ifndef __BigBrother_h_
+#define __BigBrother_h_
 
 #include "ContextMenuObserver_ABC.h"
 #include "Observer_ABC.h"
@@ -19,22 +19,22 @@ class Agent;
 class QToolBox;
 
 // =============================================================================
-/** @class  Bookmarks
-    @brief  Bookmarks
+/** @class  BigBrother
+    @brief  BigBrother
 */
 // Created: SBO 2006-06-21
 // =============================================================================
-class Bookmarks : public QVBox
-                , public Observer_ABC
-                , public ContextMenuObserver_ABC< Agent >
+class BigBrother : public QVBox
+                 , public Observer_ABC
+                 , public ContextMenuObserver_ABC< Agent >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Bookmarks( QWidget* parent, Controllers& controllers );
-    virtual ~Bookmarks();
+             BigBrother( QWidget* parent, Controllers& controllers );
+    virtual ~BigBrother();
     //@}
 
     //! @name Operations
@@ -52,8 +52,8 @@ private slots:
 private:
     //! @name Copy/Assignement
     //@{
-    Bookmarks( const Bookmarks& );            //!< Copy constructor
-    Bookmarks& operator=( const Bookmarks& ); //!< Assignement operator
+    BigBrother( const BigBrother& );            //!< Copy constructor
+    BigBrother& operator=( const BigBrother& ); //!< Assignement operator
     //@}
 
     //! @name Types
@@ -71,10 +71,10 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    T_Agents bookmarks_;
+    T_Agents spied_;
     SafePointer< Agent > selected_;
     QToolBox* toolBox_;
     //@}
 };
 
-#endif // __Bookmarks_h_
+#endif // __BigBrother_h_

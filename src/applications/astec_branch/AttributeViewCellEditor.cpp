@@ -18,13 +18,12 @@
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
 AttributeViewCellEditor::AttributeViewCellEditor( QWidget* parent, const DataDictionary& dictionary, QTableItem* myItem )
-    : QLineEdit( parent )
+    : QLineEdit( myItem->text(), parent )
     , dictionary_( dictionary )
     , myItem_( myItem )
 {
     setFrame( false );
     menu_ = new QPopupMenu();
-    menu_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     list_ = new QListBox( menu_ );
     list_->setColumnMode( QListBox::Variable );
     list_->setRowMode( QListBox::Variable );
@@ -60,7 +59,8 @@ void AttributeViewCellEditor::OnTextChanged( const QString& text )
         list_->setMinimumSize( geometry.width(), 42 );
         if( list_->count() )
         {
-            menu_->popup( mapToGlobal( QPoint( 0, height() ) ) );
+            const QPoint topLeft = mapToGlobal( QPoint( 0, 0 ) );
+            menu_->popup( QPoint( topLeft.x(), topLeft.y() + height() ) );
             parentWidget()->setFocus();
         }
     }

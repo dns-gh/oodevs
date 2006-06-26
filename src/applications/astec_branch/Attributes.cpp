@@ -28,18 +28,19 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , aggregated_( false ) 
 {
     // $$$$ AGE 2006-06-22: unité !
-    dictionary.Register( "Attributs/Info/Etat opérationnel",               nRawOpState_ );
-    dictionary.Register( "Attributs/Info/Vitesse",                         nSpeed_ );
-    dictionary.Register( "Attributs/Info/Direction",                       nDirection_ );
-    dictionary.Register( "Attributs/Postures/Posture courante",            nCurrentPosture_ );
-    dictionary.Register( "Attributs/Communications/Brouillé",              bCommJammed_ );
-    dictionary.Register( "Attributs/Communications/Silence radio",         bRadioSilence_ );
-    dictionary.Register( "Attributs/Etat décisionnel/Etat opérationnel",   nOpState_ );
-    dictionary.Register( "Attributs/Etat décisionnel/RoE",                 nRulesOfEngagementState_ );
-    dictionary.Register( "Attributs/Etat décisionnel/Contact combat",      nCloseCombatState_ );
-    dictionary.Register( "Attributs/Etat martial/Fait prisonnier",         bPrisoner_ );
-    dictionary.Register( "Attributs/Etat martial/Rendu",                   bSurrendered_ );
-    dictionary.Register( "Attributs/Etat martial/Réfugiés pris en compte", bRefugeesManaged_ );
+    dictionary.Register( "Info/Etat opérationnel",               nRawOpState_ );
+    dictionary.Register( "Info/Vitesse",                         nSpeed_ );
+    dictionary.Register( "Info/Direction",                       nDirection_ );
+    dictionary.Register( "Postures/Posture courante",            nCurrentPosture_ );
+    dictionary.Register( "Communications/Brouillé",              bCommJammed_ );
+    dictionary.Register( "Communications/Silence radio",         bRadioSilence_ );
+    dictionary.Register( "Etat décisionnel/Etat opérationnel",   nOpState_ );
+    dictionary.Register( "Etat décisionnel/RoE",                 nRulesOfEngagementState_ );
+    dictionary.Register( "Etat décisionnel/Contact combat",      nCloseCombatState_ );
+    dictionary.Register( "Etat décisionnel/Rapport de force",    nFightRateState_ );
+    dictionary.Register( "Etat martial/Fait prisonnier",         bPrisoner_ );
+    dictionary.Register( "Etat martial/Rendu",                   bSurrendered_ );
+    dictionary.Register( "Etat martial/Réfugiés pris en compte", bRefugeesManaged_ );
 }
 
 // -----------------------------------------------------------------------------

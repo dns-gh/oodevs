@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Bookmarks.h"
-#include "moc_Bookmarks.cpp"
+#include "BigBrother.h"
+#include "moc_BigBrother.cpp"
 #include "Controllers.h"
 #include "Agent.h"
 #include "AttributeView.h"
@@ -20,11 +20,11 @@
 #include <qsizepolicy.h>
 
 // -----------------------------------------------------------------------------
-// Name: Bookmarks constructor
+// Name: BigBrother constructor
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-Bookmarks::Bookmarks( QWidget* parent, Controllers& controllers )
-    : QVBox( parent, "bookmarks" )
+BigBrother::BigBrother( QWidget* parent, Controllers& controllers )
+    : QVBox( parent, "Espion" )
     , controllers_( controllers )
     , selected_( controllers )
 {
@@ -38,22 +38,22 @@ Bookmarks::Bookmarks( QWidget* parent, Controllers& controllers )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Bookmarks destructor
+// Name: BigBrother destructor
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-Bookmarks::~Bookmarks()
+BigBrother::~BigBrother()
 {
     controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Bookmarks::NotifyContextMenu
+// Name: BigBrother::NotifyContextMenu
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void Bookmarks::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 {
-    CIT_Agents it = std::find( bookmarks_.begin(), bookmarks_.end(), &agent );
-    if( it == bookmarks_.end() )
+    CIT_Agents it = std::find( spied_.begin(), spied_.end(), &agent );
+    if( it == spied_.end() )
     {
         if( menu.count() > 0 )
             menu.insertSeparator();
@@ -63,27 +63,27 @@ void Bookmarks::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Bookmarks::Bookmark
+// Name: BigBrother::Bookmark
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void Bookmarks::Bookmark()
+void BigBrother::Bookmark()
 {
     if( !selected_ )
         return;
-    CIT_Agents it = std::find( bookmarks_.begin(), bookmarks_.end(), selected_ );
-    if( it != bookmarks_.end() )
+    CIT_Agents it = std::find( spied_.begin(), spied_.end(), selected_ );
+    if( it != spied_.end() )
         return;
-    bookmarks_.push_back( selected_ );
+    spied_.push_back( selected_ );
     toolBox_->addItem( CreateView( *selected_ ), selected_->GetName().c_str() );
     
     selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Bookmarks::RemoveAll
+// Name: BigBrother::RemoveAll
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void Bookmarks::RemoveAll()
+void BigBrother::RemoveAll()
 {
     while( toolBox_->currentIndex() != -1 )
     {
@@ -91,14 +91,14 @@ void Bookmarks::RemoveAll()
         toolBox_->removeItem( item );
         delete item;
     }
-    bookmarks_.clear();
+    spied_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Bookmarks::CreateView
+// Name: BigBrother::CreateView
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-QWidget* Bookmarks::CreateView( const Agent& agent )
+QWidget* BigBrother::CreateView( const Agent& agent )
 {
     return new AttributeView( this, controllers_, agent );
 }
