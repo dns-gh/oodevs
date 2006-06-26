@@ -128,7 +128,11 @@ void AgentSupplyPanel::NotifySelected( const Agent* agent )
             pQuotas_->hide();
             pDispoTransporters_->hide();
 
-            Show();
+            if( ! selected_->Get< LogisticConsigns >().requestedSupplies_.empty() || selected_->Retrieve< SupplyStates >() )
+                Show();
+            else
+                Hide();
+
             NotifyUpdated( selected_->Get< LogisticConsigns >() );
             if( selected_->Retrieve< SupplyStates >() )
                 NotifyUpdated( selected_->Get< SupplyStates >() );

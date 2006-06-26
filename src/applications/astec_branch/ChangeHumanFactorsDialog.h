@@ -25,7 +25,7 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent );
+    explicit ChangeHumanFactorsDialog( QWidget* pParent );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
