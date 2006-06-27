@@ -15,6 +15,7 @@
 class Mission;
 class ASN_MsgPionOrder;
 class Agent;
+class ObjectTypes;
 
 // =============================================================================
 // Created: APE 2004-04-20
@@ -24,7 +25,7 @@ class UnitMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter );
+             UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes );
     virtual ~UnitMissionInterface();
     //@}
 

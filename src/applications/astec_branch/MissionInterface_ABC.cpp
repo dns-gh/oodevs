@@ -39,7 +39,7 @@
 //#include "ParamObstacleList.h"
 #include "ParamDirection.h"
 #include "ParamNumericField.h"
-//#include "ParamEquipmentList.h"
+#include "ParamEquipmentList.h"
 //#include "ParamHumanWoundList.h"
 #include "Agent.h"
 #include "Object.h"
@@ -50,18 +50,20 @@
 #include "ParamLimaList.h"
 #include "Lima.h"
 #include "Positions.h"
+#include "ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
     : QVBox      ( parent )
     , controller_( controller )
     , agent_     ( agent )
     , layer_     ( layer )
     , converter_ ( converter )
     , knowledgeConverter_( knowledgeConverter )
+    , objectTypes_( objectTypes )
 {
     setMargin( 5 );
     setSpacing( 4 );
@@ -359,7 +361,7 @@ void MissionInterface_ABC::CreateNumeric( ASN1REAL& asn, const std::string& strN
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamEquipmentList( asn, strName, this, bOptional ) );
+    AddParameter( *new ParamEquipmentList( this, asn, strName, objectTypes_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AutomateMissionInterface.h $
-// $Author: Ape $
-// $Modtime: 25/10/04 10:45 $
-// $Revision: 2 $
-// $Workfile: AutomateMissionInterface.h $
-//
-// *****************************************************************************
 
 #ifndef __AutomateMissionInterface_h_
 #define __AutomateMissionInterface_h_
@@ -24,6 +15,7 @@
 class Mission;
 class ASN_MsgAutomateOrder;
 class Agent;
+class ObjectTypes;
 
 // =============================================================================
 // Created: APE 2004-04-20
@@ -33,7 +25,7 @@ class AutomateMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter );
+             AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes );
     virtual ~AutomateMissionInterface();
     //@}
 

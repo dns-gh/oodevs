@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPoint.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:35 $
-// $Revision: 8 $
-// $Workfile: ParamPoint.h $
-//
-// *****************************************************************************
 
 #ifndef __ParamPoint_h_
 #define __ParamPoint_h_

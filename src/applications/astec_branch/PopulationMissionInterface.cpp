@@ -17,8 +17,8 @@
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter )
-    : MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
+    : MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectTypes )
     , nMissionId_         ( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPopulationOrder();

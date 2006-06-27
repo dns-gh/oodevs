@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AutomateMissionInterface.cpp $
-// $Author: Age $
-// $Modtime: 31/03/05 16:49 $
-// $Revision: 11 $
-// $Workfile: AutomateMissionInterface.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "AutomateMissionInterface.h"
@@ -26,8 +17,8 @@
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter )
-    : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
+    : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
     , agent_( agent )
     , nMissionId_( nMissionId )
 {

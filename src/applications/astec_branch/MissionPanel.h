@@ -92,6 +92,7 @@ private:
     //! @name Member Data
     //@{
     Controllers& controllers_;
+    const Model& model_;
     ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;
     const GlTools_ABC& tools_;

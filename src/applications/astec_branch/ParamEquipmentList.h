@@ -10,54 +10,55 @@
 #ifndef __ParamEquipmentList_h_
 #define __ParamEquipmentList_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
+#include "Resolver.h"
 
 #include <qtable.h>
+
+class EquipmentType;
 
 // =============================================================================
 /** @class  ParamEquipmentList
     @brief  ParamEquipmentList
-    @par    Using example
-    @code
-    ParamEquipmentList;
-    @endcode
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamEquipmentList : public QTable, public Param_ABC
+class ParamEquipmentList : public QTable
+                         , public Param_ABC
 {
-    Q_OBJECT
-    MT_COPYNOTALLOWED( ParamEquipmentList );
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, QWidget* pParent, bool bOptional );
+             ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, const Resolver< EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void WriteMsg     ( std::stringstream& strMsg );
-    virtual bool CheckValidity();
+    virtual void Commit();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnEquipmentChanged( int nRow, int nCol );
+    void OnEquipmentChanged( int row, int col );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< QString, const EquipmentType* > T_EquipmentTypes;
     //@}
 
 private:
     //! @name Member data
     //@{
     ASN1T_MaintenancePriorites* pAsnEquipmentList_;
-    QStringList*                pEquipmentsStringList_;
+    QStringList                 equipmentList_;
+    T_EquipmentTypes            equipmentTypes_;
     //@}
 };
 

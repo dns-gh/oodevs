@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MissionInterface_ABC.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 18:36 $
-// $Revision: 9 $
-// $Workfile: MissionInterface_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
@@ -31,6 +22,7 @@ class ParametersLayer;
 class CoordinateConverter_ABC;
 class GlTools_ABC;
 class AgentKnowledgeConverter_ABC;
+class ObjectTypes;
 
 // =============================================================================
 /** @class  MissionInterface_ABC
@@ -45,7 +37,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, 
-                                   const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter );
+                                   const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter,
+                                   const ObjectTypes& objectTypes );
     virtual ~MissionInterface_ABC();
     //@}
 
@@ -141,6 +134,7 @@ private:
     ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;
     AgentKnowledgeConverter_ABC& knowledgeConverter_;
+    const ObjectTypes& objectTypes_;
 
     T_Parameters  parameters_;
     //@}

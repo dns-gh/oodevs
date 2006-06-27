@@ -37,7 +37,6 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     , agent_( controllers )
 {
     setCaption( "Facteurs humains" );
-//    resize( 260, 100 );
     QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
     pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
