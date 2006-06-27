@@ -46,51 +46,34 @@ LinkInterpreter::~LinkInterpreter()
 // -----------------------------------------------------------------------------
 bool LinkInterpreter::Interprete( const QString& link )
 {
-    int pos = link.find( "://" );
-    if( pos > 0 )
-    {
-        const QString protocole = link.left( pos );
-        const QString address   = link.mid( pos + 3 );
-        return Interprete( protocole, address );
-    }
-    return false;
+    return Interprete( QUrl( link ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter::Interprete
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::Interprete( const QString& protocole, const QString& address )
+bool LinkInterpreter::Interprete( const QUrl& url )
 {
-    if( protocole == "cmd" )
-        return ExecuteCommand( address );
-    if( protocole == "http" )
-        return FollowLink( address );
-    if( protocole == "id" )
-        return InterpreteId( address );
+    const QString protocol = url.protocol();
+    if( protocol == "cmd" || protocol == "http" )
+        return ExecuteCommand( url );
+    if( protocol == "id" )
+        return InterpreteId( url );
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::FollowLink
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-bool LinkInterpreter::FollowLink( const QString& address )
-{
-    return ExecuteCommand( "http://" + address );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter::ExecuteCommand
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::ExecuteCommand( const QString& address )
+bool LinkInterpreter::ExecuteCommand( const QUrl& url )
 {
     QProcess openPage(0);
     openPage.addArgument( "cmd" );
     openPage.addArgument( "/c" );
     openPage.addArgument( "start" );
-    openPage.addArgument( address );
+    openPage.addArgument( url );
     return openPage.start();
 }
 
@@ -98,16 +81,18 @@ bool LinkInterpreter::ExecuteCommand( const QString& address )
 // Name: LinkInterpreter::InterpreteId
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::InterpreteId( const QString& address )
+bool LinkInterpreter::InterpreteId( const QUrl& url )
 {
-    int pos = address.find( '/' );
-    if( pos > 0 )
-    {
-        const QString classId = address.left( pos );
-        const QString id      = address.mid( pos + 1 );
-        return InterpreteId( classId, id );
-    }
-    return false;
+    const QString classId = url.host();
+    const QString strId = url.path();
+
+    bool ok = false;
+    const unsigned long id = strId.toULong( &ok );
+    return ok && ( 
+        ( classId == InternalLinks::agent_      && Activate< Agent >( model_.agents_, id ) )
+     || ( classId == InternalLinks::object_     && Activate< Object >( model_.objects_, id ) )
+     || ( classId == InternalLinks::population_ && Activate< Population >( model_.agents_, id ) ) );
+    // $$$$ AGE 2006-06-27: manque les connaissances. Observer les KnowledgeGroups ?
 }
 
 // -----------------------------------------------------------------------------
@@ -123,19 +108,5 @@ bool LinkInterpreter::Activate( const Resolver_ABC< T >& resolver, unsigned long
     return activated;
 }
 
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::InterpreteId
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-bool LinkInterpreter::InterpreteId( const QString& classId, const QString& strId )
-{
-    bool ok = false;
-    unsigned long id = strId.toULong( &ok );
-    return ok && ( 
-        ( classId == InternalLinks::agent_      && Activate< Agent >( model_.agents_, id ) )
-     || ( classId == InternalLinks::object_     && Activate< Object >( model_.objects_, id ) )
-     || ( classId == InternalLinks::population_ && Activate< Population >( model_.agents_, id ) ) );
-    // $$$$ AGE 2006-06-27: manque les connaissances. Observer les KnowledgeGroups ?
-}
 
  

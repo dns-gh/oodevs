@@ -49,11 +49,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual bool Interprete( const QString& protocole, const QString& address );
-    bool ExecuteCommand( const QString& address );
-    bool FollowLink( const QString& address );
-    bool InterpreteId( const QString& address );
-    bool InterpreteId( const QString& classId, const QString& id );
+    virtual bool Interprete( const QUrl& url );
+    bool ExecuteCommand( const QUrl& url );
+    bool InterpreteId( const QUrl& url );
     template< typename T >
     bool Activate( const Resolver_ABC< T >& resolver, unsigned long id );
     //@}
