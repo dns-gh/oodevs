@@ -26,7 +26,7 @@
 #include "Equipments.h"
 #include "Equipment.h"
 #include "EquipmentType.h"
-
+#include "ExclusiveComboTableItem.h"
 
 #include <qtable.h>
 #include <qspinbox.h>
@@ -77,39 +77,14 @@ private:
     //@}
 };
 
-class ComboTableItem : public QComboTableItem
-{
-public:
-    ComboTableItem( QTable* table, const QStringList& list )
-        : QComboTableItem( table, list )
-        , list_( list ) {}
-    virtual ~ComboTableItem() {}
-
-    QWidget* createEditor() const
-    {
-        QStringList list( list_ );
-        for( int r = 0; r < table()->numRows(); ++r )
-        {
-            const QString text = table()->text( r, col() );
-            if( r != row() && !text.isEmpty() )
-                list.remove( text );
-        }
-        const_cast< ComboTableItem* >( this )->setStringList( list );
-        return QComboTableItem::createEditor();
-    }
-
-private:
-    QStringList list_;
-};
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
 LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const Model& model )
-    : QDialog              ( parent, "Recompletement" )
-    , model_               ( model )
-    , agent_               ( controllers )
+    : QDialog( parent, "Recompletement" )
+    , model_( model )
+    , agent_( controllers )
 {
     setCaption( tr( "Recompletement" ) );
     resize( 280, 430 );
@@ -247,7 +222,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent& agent 
     }
     equipmentsTable_->setNumRows( 0 );
     equipmentsTable_->insertRows( 0, 1 );
-    equipmentsTable_->setItem( 0, 0, new ComboTableItem( equipmentsTable_, equipmentsList_ ) );
+    equipmentsTable_->setItem( 0, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
     equipmentsTable_->setText( 0, 1, "0" );
     equipmentsTable_->setMinimumHeight( equipmentsTable_->rowHeight( 0 ) * 4 );
 }
@@ -710,7 +685,7 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
             int nCurrentItem = pComboTableItem->currentItem();
             uint nPos = nRow + 1;
             equipmentsTable_->insertRows( nPos, 1 );
-            equipmentsTable_->setItem( nPos, 0, new ComboTableItem( equipmentsTable_, equipmentsList_ ) );
+            equipmentsTable_->setItem( nPos, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
             equipmentsTable_->setText( nPos, 1, "0" );
             // need to set again the combo box selected element
             pComboTableItem->setCurrentItem( nCurrentItem );

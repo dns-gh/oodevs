@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MissionInterface_ABC.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 18:36 $
-// $Revision: 11 $
-// $Workfile: MissionInterface_ABC.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "MissionInterface_ABC.h"
@@ -40,7 +31,7 @@
 #include "ParamDirection.h"
 #include "ParamNumericField.h"
 #include "ParamEquipmentList.h"
-//#include "ParamHumanWoundList.h"
+#include "ParamHumanWoundList.h"
 #include "Agent.h"
 #include "Object.h"
 #include "ObjectKnowledge.h"
@@ -370,7 +361,7 @@ void MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePriorit
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamHumanWoundList( asn, strName, this, bOptional ) );
+    AddParameter( *new ParamHumanWoundList( this, asn, strName ), bOptional );
 }
 
 // -----------------------------------------------------------------------------

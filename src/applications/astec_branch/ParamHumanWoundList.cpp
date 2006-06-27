@@ -7,42 +7,32 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "astec_pch.h"
 #include "ParamHumanWoundList.h"
 #include "moc_ParamHumanWoundList.cpp"
-#include "App.h"
+#include "ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/, QWidget* pParent, bool bOptional )
-    : QTable                  ( 0, 1, pParent )
-    , Param_ABC           ( bOptional )
-    , pAsnHumanWoundList_     ( &asnListHumanWound )
-    , pHumanWoundsStringList_ ( 0 )
+ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/ )
+    : QTable( 0, 1, parent )
+    , pAsnHumanWoundList_( &asnListHumanWound )
 {
-    horizontalHeader()->setLabel( 0, tr( "Wounds" ) );
+    horizontalHeader()->setLabel( 0, tr( "Blessures" ) );
     setColumnWidth( 0, 200 );
     setLeftMargin( 0 );
     setShowGrid( false );
     setSorting( false );
 
-    // intialize HumanWounds table
-    // use empty element to determine if an HumanWound type is specified
-    pHumanWoundsStringList_ = new QStringList();
-    pHumanWoundsStringList_->append( "" );
-
-    for( uint i = eHumanWound_BlesseUrgence1; i < eNbrHumanWound; ++i )
-        pHumanWoundsStringList_->append( ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i ).c_str() );
+    humanWoundsList_.append( "" );
+    for( unsigned int i = eHumanWound_BlesseUrgence1; i < eNbrHumanWound; ++i )
+        humanWoundsList_.append( ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i ).c_str() );
 
     setNumRows( 0 );
     insertRows( 0, 1 );
-    setItem( 0, 0, new QComboTableItem( this, *pHumanWoundsStringList_ ) );
+    setItem( 0, 0, new ExclusiveComboTableItem( this, humanWoundsList_ ) );
     setMinimumHeight( rowHeight( 0 ) * 8 );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnHumanWoundChanged( int, int ) ) );
@@ -54,78 +44,46 @@ ParamHumanWoundList::ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWoun
 // -----------------------------------------------------------------------------
 ParamHumanWoundList::~ParamHumanWoundList()
 {
-    delete pHumanWoundsStringList_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::WriteMsg
-// Created: SBO 2005-09-27
+// Name: ParamHumanWoundList::Commit
+// Created: SBO 2006-06-27
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::WriteMsg( std::stringstream& /*strMsg*/ )
+void ParamHumanWoundList::Commit()
 {
-    assert( pAsnHumanWoundList_ );
-
-    pAsnHumanWoundList_->n = numRows() - 1;
-    if( !pAsnHumanWoundList_->n )
+    if( !pAsnHumanWoundList_ || numRows() <= 1 )
         return;
+    pAsnHumanWoundList_->n = numRows() - 1;
 
     ASN1T_EnumHumanWound* pAsnHumanWound = new ASN1T_EnumHumanWound[ pAsnHumanWoundList_->n ]; //$$$ RAM
-    for( uint nRow = 0; nRow < pAsnHumanWoundList_->n; ++nRow )
+    for( unsigned int i = 0; i < pAsnHumanWoundList_->n; ++i )
     {
-        QComboTableItem* pHumanWoundItem  = static_cast< QComboTableItem* >( item( nRow, 0 ) );
-        assert( pHumanWoundItem );
-        pAsnHumanWound[ nRow ] = ( ASN1T_EnumHumanWound )ENT_Tr::ConvertToHumanWound( pHumanWoundItem->currentText().ascii() );
+        QComboTableItem* comboItem  = static_cast< QComboTableItem* >( item( i, 0 ) );
+        if( comboItem )
+            pAsnHumanWound[i] = ( ASN1T_EnumHumanWound )ENT_Tr::ConvertToHumanWound( comboItem->currentText().ascii() );
     }
 
     pAsnHumanWoundList_->elem = pAsnHumanWound;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamHumanWoundList::CheckValidity
-// Created: SBO 2005-09-27
-// -----------------------------------------------------------------------------
-bool ParamHumanWoundList::CheckValidity()
-{
-    // check for duplicate
-    int nNbRows = numRows() - 1;
-    for( int i = 0; i < nNbRows; ++i )
-    {
-        QComboTableItem* pItem1  = static_cast< QComboTableItem* >( item( i, 0 ) );
-        assert( pItem1 );
-        for( int j = i + 1; j < nNbRows; ++j )
-        {
-            QComboTableItem* pItem2  = static_cast< QComboTableItem* >( item( j, 0 ) );
-            assert( pItem2 );
-            if( pItem1->currentText() == pItem2->currentText() )
-            {
-                std::stringstream ss;
-                ss << tr( "Human Wound" ) << " '" 
-                   << pItem1->currentText()  << "' "
-                   << tr( "appears more than once." );
-
-                QMessageBox::critical( 0, "Light 2", ss.str().c_str() );
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList::OnHumanWoundChanged
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::OnHumanWoundChanged( int nRow, int /*nCol*/ )
+void ParamHumanWoundList::OnHumanWoundChanged( int row, int /*col*/ )
 {
-    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( item( nRow, 0 ) );
-    assert( pComboTableItem );
+    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( item( row, 0 ) );
+    if( !pComboTableItem )
+        return;
 
     if( pComboTableItem->currentItem() == 0 )
     {
         // if not last row, delete empty row
-        if( nRow != numRows() - 1 )
+        if( row != numRows() - 1 )
         {
-            removeRow( nRow );
+            removeRow( row );
             // select last row quantity field
             setCurrentCell( numRows() - 1, 0 );
         }
@@ -133,15 +91,14 @@ void ParamHumanWoundList::OnHumanWoundChanged( int nRow, int /*nCol*/ )
     else
     {
         // if last row is set, add a new row to table
-        if( nRow == numRows() - 1 )
+        if( row == numRows() - 1 )
         {
             // need to save combo box selected element before to insert a line
-            int nCurrentItem = pComboTableItem->currentItem();
-            uint nPos = nRow + 1;
-            insertRows( nPos, 1 );
-            setItem( nPos, 0, new QComboTableItem( this, *pHumanWoundsStringList_ ) );
-            pComboTableItem->setCurrentItem( nCurrentItem );
+            const int current = pComboTableItem->currentItem();
+            insertRows( row + 1, 1 );
+            setItem( row + 1, 0, new ExclusiveComboTableItem( this, humanWoundsList_ ) );
+            pComboTableItem->setCurrentItem( current );
         }
-        setCurrentCell( nRow, 0 );
+        setCurrentCell( row, 0 );
     }
 }

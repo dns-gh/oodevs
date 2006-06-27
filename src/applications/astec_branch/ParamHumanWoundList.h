@@ -10,56 +10,44 @@
 #ifndef __ParamHumanWoundList_h_
 #define __ParamHumanWoundList_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
 
 #include <qtable.h>
 
-class QComboTableItem;
-
 // =============================================================================
 /** @class  ParamHumanWoundList
     @brief  ParamHumanWoundList
-    @par    Using example
-    @code
-    ParamHumanWoundList;
-    @endcode
 */
 // Created: SBO 2005-09-27
 // =============================================================================
 class ParamHumanWoundList : public QTable, public Param_ABC
 {
-    Q_OBJECT
-    MT_COPYNOTALLOWED( ParamHumanWoundList );
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& strLabel, QWidget* pParent, bool bOptional );
+             ParamHumanWoundList( QWidget* pParent, ASN1T_SantePriorites& asnListHumanWound, const std::string& strLabel );
     virtual ~ParamHumanWoundList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void WriteMsg     ( std::stringstream& strMsg );
-    virtual bool CheckValidity();
+    virtual void Commit();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnHumanWoundChanged( int nRow, int nCol );
+    void OnHumanWoundChanged( int row, int col );
     //@}
 
 private:
     //! @name Member data
     //@{
     ASN1T_SantePriorites* pAsnHumanWoundList_;
-    QStringList*          pHumanWoundsStringList_;
+    QStringList           humanWoundsList_;
     //@}
 };
 

@@ -11,31 +11,7 @@
 #include "ParamEquipmentList.h"
 #include "moc_ParamEquipmentList.cpp"
 #include "EquipmentType.h"
-
-class ComboTableItem : public QComboTableItem // $$$$ SBO 2006-06-27: move it in a separate file?
-{
-public:
-    ComboTableItem( QTable* table, const QStringList& list )
-        : QComboTableItem( table, list )
-        , list_( list ) {}
-    virtual ~ComboTableItem() {}
-
-    QWidget* createEditor() const
-    {
-        QStringList list( list_ );
-        for( int r = 0; r < table()->numRows(); ++r )
-        {
-            const QString text = table()->text( r, col() );
-            if( r != row() && !text.isEmpty() )
-                list.remove( text );
-        }
-        const_cast< ComboTableItem* >( this )->setStringList( list );
-        return QComboTableItem::createEditor();
-    }
-
-private:
-    QStringList list_;
-};
+#include "ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList constructor
@@ -62,7 +38,7 @@ ParamEquipmentList::ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePrior
     
     setNumRows( 0 );
     insertRows( 0, 1 );
-    setItem( 0, 0, new ComboTableItem( this, equipmentList_ ) );
+    setItem( 0, 0, new ExclusiveComboTableItem( this, equipmentList_ ) );
     setMinimumHeight( rowHeight( 0 ) * 8 );
 
     connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged( int, int ) ) );
@@ -83,14 +59,14 @@ ParamEquipmentList::~ParamEquipmentList()
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::Commit()
 {
-    if( !pAsnEquipmentList_ || numRows() - 1 == 0 )
+    if( !pAsnEquipmentList_ || numRows() <= 1 )
         return;
     pAsnEquipmentList_->n = numRows() - 1;
 
     ASN1T_TypeEquipement* pAsnEquipement = new ASN1T_TypeEquipement[ pAsnEquipmentList_->n ]; //$$$ RAM
     for( uint i = 0; i < pAsnEquipmentList_->n; ++i )
     {
-        ComboTableItem* comboItem  = static_cast< ComboTableItem* >( item( i, 0 ) );
+        ExclusiveComboTableItem* comboItem  = static_cast< ExclusiveComboTableItem* >( item( i, 0 ) );
         if( comboItem && !comboItem->currentText().isEmpty() )
             pAsnEquipement[i] = equipmentTypes_[ comboItem->currentText() ]->GetId();
     }
@@ -103,7 +79,7 @@ void ParamEquipmentList::Commit()
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::OnEquipmentChanged( int row, int /*col*/ )
 {
-    ComboTableItem* pComboTableItem = static_cast< ComboTableItem* >( item( row, 0 ) );
+    ExclusiveComboTableItem* pComboTableItem = static_cast< ExclusiveComboTableItem* >( item( row, 0 ) );
     if( !pComboTableItem )
         return;
 
@@ -125,7 +101,7 @@ void ParamEquipmentList::OnEquipmentChanged( int row, int /*col*/ )
             // need to save combo box selected element before to insert a line
             const int current = pComboTableItem->currentItem();
             insertRows( row + 1, 1 );
-            setItem( row + 1, 0, new ComboTableItem( this, equipmentList_ ) );
+            setItem( row + 1, 0, new ExclusiveComboTableItem( this, equipmentList_ ) );
             pComboTableItem->setCurrentItem( current );
         }
         setCurrentCell( row, 0 );
