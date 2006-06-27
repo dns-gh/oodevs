@@ -19,8 +19,7 @@
 #include "CoordinateConverter.h"
 #include "LocationCreator.h"
 #include "ParametersLayer.h"
-
-//#include "LogisticSupplyRecompletionDialog.h"
+#include "LogisticSupplyRecompletionDialog.h"
 //#include "ChangeHumanFactorsDialog.h"
 
 // -----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     , controller_( true )
     , magicMove_( false )
 {
-//    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent );
+    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, model_ );
 //    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent );
     
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
@@ -135,10 +134,7 @@ void MagicOrdersInterface::Magic( int type )
 void MagicOrdersInterface::Recompletion()
 {
     if( selectedAgent_ )
-    {
-//        supplyRecompletion_->SetAgent( *selectedAgent_ );
-//        supplyRecompletion_->show();
-    }
+        supplyRecompletion_->Show( *selectedAgent_ );
 }
 
 // -----------------------------------------------------------------------------

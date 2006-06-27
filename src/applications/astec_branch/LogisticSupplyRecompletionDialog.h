@@ -1,13 +1,11 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogisticSupplyRecompletionDialog.h $
-// $Author: Sbo $
-// $Modtime: 29/07/05 11:24 $
-// $Revision: 2 $
-// $Workfile: LogisticSupplyRecompletionDialog.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __LogisticSupplyRecompletionDialog_h_
 #define __LogisticSupplyRecompletionDialog_h_
@@ -17,13 +15,16 @@
 class Agent;
 class Controllers;
 class Model;
+class Equipment;
+class Dotation;
+struct ASN1T_MagicActionRecompletementPartiel;
 
 //=============================================================================
 // Created:  SBO 2005-07-27 
 //=============================================================================
 class LogisticSupplyRecompletionDialog : public QDialog
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
     //! @name Constructor/Destructor
@@ -74,6 +75,8 @@ private:
     void FillDotations  ( ASN1T_MagicActionRecompletementPartiel& action );
     void FillAmmunitions( ASN1T_MagicActionRecompletementPartiel& action );
     void FillSupplies   ( ASN1T_MagicActionRecompletementPartiel& action );
+
+    QStringList FilterEquipmentList() const;
     //@}
 
     //! @name Types
@@ -84,6 +87,9 @@ private:
         unsigned long id_;
         unsigned quantity_;
     };
+
+    typedef std::map< QString, const Equipment* > T_Equipments;
+    typedef std::map< QString, const Dotation* >  T_Dotations;
     //@}
    
 private:
@@ -92,19 +98,16 @@ private:
     const Model& model_;
     SafePointer< Agent > agent_;
 
-    QGroupBox*       pEquiPersoGroupBox_;
-    QTable*          pEquipmentsTable_;
+    QTable*          equipmentsTable_;
     QStringList      equipmentsList_;
+    T_Equipments     equipments_;
     T_Ints           equipmentsMax_;
 
-    QTable*          pPersonalsTable_;
-
-    QGroupBox*       pDotationsGroupBox_;
-    QTable*          pDotationsTable_;
-    QTable*          pMunitionsFamilyTable_;
-
-    QGroupBox*       pStockGroupBox_;
-    QTable*          pStockTable_;
+    QTable*          personalsTable_;
+    QTable*          dotationsTable_;
+    QTable*          munitionsFamilyTable_;
+    QTable*          stockTable_;
+    T_Dotations      stocks_;
     //@}
 };
 
