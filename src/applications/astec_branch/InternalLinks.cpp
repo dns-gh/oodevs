@@ -12,10 +12,17 @@
 #include "Agent.h"
 #include "Object.h"
 #include "Population.h"
+#include "AgentKnowledge.h"
+#include "ObjectKnowledge.h"
+#include "PopulationKnowledge.h"
 
 const QString InternalLinks::agent_( "agent" );
 const QString InternalLinks::object_( "object" );
 const QString InternalLinks::population_( "population" );
+
+const QString InternalLinks::agentKnowledge_( "agentKnowledge" );
+const QString InternalLinks::objectKnowledge_( "objectKnowledge" );
+const QString InternalLinks::populationKnowledge_( "populationKnowledge" );
 
 // -----------------------------------------------------------------------------
 // Name: InternalLinks::CreateLink
@@ -42,6 +49,33 @@ QString InternalLinks::CreateLink( const Object& entity, const QString& message 
 QString InternalLinks::CreateLink( const Population& entity, const QString& message )
 {
     return Embed( message, population_, entity.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InternalLinks::CreateLink
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+QString InternalLinks::CreateLink( const AgentKnowledge& entity, const QString& message )
+{
+    return Embed( message, agentKnowledge_, entity.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InternalLinks::CreateLink
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+QString InternalLinks::CreateLink( const ObjectKnowledge& entity, const QString& message )
+{
+    return Embed( message, objectKnowledge_, entity.GetId() );
+}   
+
+// -----------------------------------------------------------------------------
+// Name: InternalLinks::CreateLink
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+QString InternalLinks::CreateLink( const PopulationKnowledge& entity, const QString& message )
+{
+    return Embed( message, populationKnowledge_, entity.GetId() );
 }
 
 // -----------------------------------------------------------------------------

@@ -336,6 +336,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
     }
 }
 
+// $$$$ AGE 2006-05-12: resoudre tous ces trucs pour afficher un nom
 
 // -----------------------------------------------------------------------------
 // Name: RC::ObjectKnowledgeLink
@@ -343,10 +344,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // -----------------------------------------------------------------------------
 std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
-    // $$$$ AGE 2006-05-12: 
-    std::stringstream str;
-    str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
-    return str.str();
+    return InternalLinks::CreateLink( InternalLinks::objectKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -355,9 +353,7 @@ std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
-    std::stringstream str;
-    str << "<a href=\"AgentKnowledge:" << nId << "\">" << nId << "</a>";
-    return str.str();
+    return InternalLinks::CreateLink( InternalLinks::agentKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -366,9 +362,7 @@ std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 {
-    std::stringstream str;
-    str << "<a href=\"PopulationKnowledge:" << nId << "\">" << nId << "</a>";
-    return str.str();
+    return InternalLinks::CreateLink( InternalLinks::populationKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -377,6 +371,5 @@ std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentLink( ASN1T_OID nId )
 {
-    // $$$$ AGE 2006-05-12: resolve and get a name ?
     return InternalLinks::CreateLink( InternalLinks::agent_, nId, QString::number( nId ) ).ascii();
 }

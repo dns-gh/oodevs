@@ -13,6 +13,9 @@
 class Agent;
 class Object;
 class Population;
+class AgentKnowledge;
+class ObjectKnowledge;
+class PopulationKnowledge;
 
 // =============================================================================
 /** @class  InternalLinks
@@ -28,6 +31,10 @@ public:
     const static QString agent_;
     const static QString object_;
     const static QString population_;
+
+    const static QString agentKnowledge_;
+    const static QString objectKnowledge_;
+    const static QString populationKnowledge_;
     //@}
 
 public:
@@ -36,6 +43,10 @@ public:
     static QString CreateLink( const Agent& entity, const QString& message );
     static QString CreateLink( const Object& entity, const QString& message );
     static QString CreateLink( const Population& entity, const QString& message );
+
+    static QString CreateLink( const AgentKnowledge& entity, const QString& message );
+    static QString CreateLink( const ObjectKnowledge& entity, const QString& message );
+    static QString CreateLink( const PopulationKnowledge& entity, const QString& message );
 
     static QString CreateLink( const QString& type, unsigned long id, const QString& message );
     //@}
