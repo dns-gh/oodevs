@@ -18,6 +18,7 @@
 class Controller;
 class Equipment;
 class EquipmentType;
+class DataDictionary;
 
 // =============================================================================
 /** @class  Equipments
@@ -33,12 +34,8 @@ class Equipments : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver );
+             Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, DataDictionary& dico );
     virtual ~Equipments();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -51,6 +48,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
+    void AddToDictionary( const Equipment& equipment );
     //@}
 
 private:
@@ -58,6 +56,7 @@ private:
     //@{
     Controller& controller_;
     const Resolver_ABC< EquipmentType >& resolver_;
+    DataDictionary& dico_;
     //@}
 };
 

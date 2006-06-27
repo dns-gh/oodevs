@@ -11,17 +11,19 @@
 #include "Reinforcements.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Reinforcements constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent >& resolver )
+Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , reinforced_( 0 )
 {
-    // NOTHING
+    dico.Register( "Renforts/Renforce", reinforced_ );
+    dico.Register( "Renforts/Est renforcé par", reinforcements_ );
 }
 
 // -----------------------------------------------------------------------------

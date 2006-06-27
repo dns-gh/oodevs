@@ -18,6 +18,7 @@ class Tiredness;
 class Morale;
 class Controller;
 class Displayer_ABC;
+class DataDictionary;
 
 // =============================================================================
 /** @class  HumanFactors
@@ -32,7 +33,7 @@ class HumanFactors : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit HumanFactors( Controller& controller );
+             HumanFactors( Controller& controller, DataDictionary& dictionary );
     virtual ~HumanFactors();
     //@}
 

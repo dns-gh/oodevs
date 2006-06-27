@@ -19,6 +19,7 @@
 class Controller;
 class Displayer_ABC;
 class NBCAgent;
+class DataDictionary;
 
 // =============================================================================
 /** @class  Contaminations
@@ -34,7 +35,7 @@ class Contaminations : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver );
+             Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, DataDictionary& dico );
     virtual ~Contaminations();
     //@}
 

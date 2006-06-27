@@ -20,6 +20,7 @@ class Controller;
 class Agent;
 class Displayer_ABC;
 class AutomatType;
+class DataDictionary;
 
 // =============================================================================
 /** @class  LogisticLinks
@@ -36,7 +37,7 @@ class LogisticLinks : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type );
+             LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type, DataDictionary& dictionary );
     virtual ~LogisticLinks();
     //@}
 

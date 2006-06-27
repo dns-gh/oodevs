@@ -13,17 +13,21 @@
 #include "Displayer_ABC.h"
 #include "Equipment.h"
 #include "Units.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver )
+MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , agentResolver_( agentResolver )
 {
-    // NOTHING
+    dico.Register( "Chaine maintenance/Chaine activée", bChainEnabled_ );
+    dico.Register( "Chaine maintenance/Priorités", priorities_ );
+    dico.Register( "Chaine maintenance/Priorités tactiques", tacticalPriorities_ );
+    dico.Register( "Chaine maintenance/Régime de travail", nWorkRate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +48,7 @@ void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
     if( message.m.chaine_activeePresent )
         bChainEnabled_ = message.chaine_activee;
     if( message.m.regime_travailPresent )
-        nWorkRate_ = message.regime_travail;
+        nWorkRate_ = message.regime_travail + 1; // $$$$ AGE 2006-06-27: 
 
     if( message.m.prioritesPresent )
     {
@@ -82,7 +86,7 @@ void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Etat chaine maintenance" )
                 .Display( "Etat chaine", bChainEnabled_ ? "Activée" : "Désactivée" )
-                .Display( "Régime de travail", QString( "R%1" ).arg( nWorkRate_ + 1 ) ) // $$$$ AGE 2006-04-03: 
+                .Display( "Régime de travail", QString( "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
                 .Display( "Priorités", priorities_ )
                 .Display( "Priorités tactiques", tacticalPriorities_ );
 }

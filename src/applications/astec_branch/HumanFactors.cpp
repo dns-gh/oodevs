@@ -14,15 +14,21 @@
 #include "Morale.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: HumanFactors constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-HumanFactors::HumanFactors( Controller& controller )
-     : controller_( controller )
+HumanFactors::HumanFactors( Controller& controller, DataDictionary& dictionary )
+    : controller_( controller )
+    , pExperience_( 0 )
+    , pTiredness_( 0 )
+    , pMorale_( 0 )
 {
-
+    dictionary.Register( "Facteurs Humains/Experience", pExperience_ );
+    dictionary.Register( "Facteurs Humains/Fatigue", pTiredness_ );
+    dictionary.Register( "Facteurs Humains/Moral", pMorale_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +37,7 @@ HumanFactors::HumanFactors( Controller& controller )
 // -----------------------------------------------------------------------------
 HumanFactors::~HumanFactors()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,9 +65,9 @@ void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void HumanFactors::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Facteurs humains" )
-                .Display( "Experience:", pExperience_->GetName().c_str() )
-                .Display( "Moral:", pMorale_->GetName().c_str() )
-                .Display( "Fatigue:", pTiredness_->GetName().c_str() );
+                .Display( "Experience:", pExperience_ )
+                .Display( "Moral:", pMorale_ )
+                .Display( "Fatigue:", pTiredness_ );
 }
    
 // -----------------------------------------------------------------------------

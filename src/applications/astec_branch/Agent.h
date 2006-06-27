@@ -99,6 +99,8 @@ private:
     virtual void Aggregate( const bool& );
 
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
+    void CreateDictionary();
     //@}
 
 private:

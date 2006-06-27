@@ -21,10 +21,11 @@
 // Name: Logistics constructor
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-Logistics::Logistics( Entity_ABC& holder, Controller& controller, Model& model )
+Logistics::Logistics( Entity_ABC& holder, Controller& controller, Model& model, DataDictionary& dico )
     : holder_    ( holder )
     , controller_( controller )
     , model_     ( model )
+    , dico_      ( dico )
 {
     // NOTHING
 }
@@ -46,7 +47,7 @@ void Logistics::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
 {
     if( ! holder_.Retrieve< MaintenanceStates >() )
     {
-        MaintenanceStates* ext = new MaintenanceStates( controller_, model_.objectTypes_, model_.agents_ );
+        MaintenanceStates* ext = new MaintenanceStates( controller_, model_.objectTypes_, model_.agents_, dico_ );
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }
@@ -60,7 +61,7 @@ void Logistics::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
 {
     if( ! holder_.Retrieve< MedicalStates >() )
     {
-        MedicalStates* ext = new MedicalStates( controller_, model_.objectTypes_, model_.agents_ );
+        MedicalStates* ext = new MedicalStates( controller_, model_.objectTypes_, model_.agents_, dico_);
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }
@@ -72,7 +73,7 @@ void Logistics::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
 // -----------------------------------------------------------------------------
 SupplyStates& Logistics::InstanciateSupplyState()
 {
-    SupplyStates* ext = new SupplyStates( controller_, model_.objectTypes_, model_.objectTypes_ );
+    SupplyStates* ext = new SupplyStates( controller_, model_.objectTypes_, model_.objectTypes_, dico_);
     holder_.Attach( *ext );
     return *ext;
 }

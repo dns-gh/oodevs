@@ -21,6 +21,7 @@ class Controller;
 class EquipmentType;
 class DotationType;
 class Displayer_ABC;
+class DataDictionary;
 
 // =============================================================================
 /** @class  SupplyStates
@@ -36,7 +37,7 @@ class SupplyStates : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver );
+             SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver, DataDictionary& dico );
     virtual ~SupplyStates();
     //@}
 

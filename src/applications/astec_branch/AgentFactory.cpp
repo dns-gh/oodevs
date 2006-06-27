@@ -93,12 +93,12 @@ AgentFactory::~AgentFactory()
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new DataDictionary() );
+    DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_, result->Get< DataDictionary >() ) );
     AttachExtensions( *result );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType() ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
@@ -116,7 +116,6 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new DataDictionary() );
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_, result->Get< DataDictionary >() ) );
@@ -136,7 +135,6 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.types_ );
-    result->Attach( *new DataDictionary() );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
@@ -149,19 +147,20 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentFactory::AttachExtensions( Agent_ABC& agent )
 {
-    agent.Attach( *new Contaminations( controllers_.controller_, model_.objectTypes_ ) );
+    DataDictionary& dico = agent.Get< DataDictionary >();
+    agent.Attach( *new Contaminations( controllers_.controller_, model_.objectTypes_, dico ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_, agent.Get< DataDictionary >() ) );
-    agent.Attach( *new Equipments( controllers_.controller_, model_.objectTypes_ ) );
-    agent.Attach( *new HumanFactors( controllers_.controller_ ) );
+    agent.Attach( *new Equipments( controllers_.controller_, model_.objectTypes_, dico ) );
+    agent.Attach( *new HumanFactors( controllers_.controller_, dico ) );
     agent.Attach( *new Lends( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );
     agent.Attach( *new Paths( model_.coordinateConverter_ ) );
-    agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_ ) );
+    agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_ ) );
-    agent.Attach( *new Transports( controllers_.controller_, model_.agents_ ) );
+    agent.Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Troops( controllers_.controller_ ) );
-    agent.Attach( *new Logistics( agent, controllers_.controller_, model_ ) );
+    agent.Attach( *new Logistics( agent, controllers_.controller_, model_, dico ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );

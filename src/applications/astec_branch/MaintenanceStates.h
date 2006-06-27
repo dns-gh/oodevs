@@ -20,6 +20,7 @@ class Controller;
 class Displayer_ABC;
 class EquipmentType;
 class Agent;
+class DataDictionary;
 
 // =============================================================================
 /** @class  MaintenanceStates
@@ -33,7 +34,7 @@ class MaintenanceStates : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver );
+             MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver, DataDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 

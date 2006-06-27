@@ -12,16 +12,19 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "GlTools_ABC.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver )
+Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
 {
-    // NOTHING
+    dico.Register( "NBC/Tenue NBC mise", bNbcProtectionSuitWorn_ );
+    dico.Register( "NBC/Agents contaminants", contaminatingNbcAgents_ );
+    dico.Register( "NBC/Niveau de contamination", nContamination_ );
 }
 
 // -----------------------------------------------------------------------------

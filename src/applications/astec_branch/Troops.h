@@ -30,7 +30,7 @@ class Troops : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Troops( Controller& controller );
+    explicit Troops( Controller& controller );
     virtual ~Troops();
     //@}
 

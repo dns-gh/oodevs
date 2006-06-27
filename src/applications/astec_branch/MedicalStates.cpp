@@ -12,17 +12,20 @@
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver,  const Resolver_ABC< Agent >& agentResolver )
+MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , agentResolver_( agentResolver )
 {
-    // NOTHING
+    dico.Register( "Chaine médicale/Chaine activée", bChainEnabled_ );
+    dico.Register( "Chaine médicale/Priorités", priorities_ );
+    dico.Register( "Chaine médicale/Priorités tactiques", tacticalPriorities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +34,7 @@ MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< Equipm
 // -----------------------------------------------------------------------------
 MedicalStates::~MedicalStates()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

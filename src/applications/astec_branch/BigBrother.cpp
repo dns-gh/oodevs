@@ -61,7 +61,7 @@ void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
         if( menu.count() > 0 )
             menu.insertSeparator();
         selected_ = &agent;
-        menu.insertItem( "Bookmark", this, SLOT( Bookmark() ) );
+        menu.insertItem( "Espionner", this, SLOT( Bookmark() ) );
     }
 }
 

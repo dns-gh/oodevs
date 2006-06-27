@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "KnowledgeGroup.h"
 #include "Attributes.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
@@ -34,6 +35,8 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     , gtia_( 0 )
     , aggregated_( false )
 {
+    CreateDictionary();
+
     // $$$$ AGE 2006-02-16: message.oid_camp
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
     controller_.Create( *this );
@@ -58,6 +61,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     , gtia_( 0 )
     , aggregated_( false )
 {
+    CreateDictionary();
     ChangeSuperior( message.oid_automate );
     controller_.Create( *this );
 }
@@ -281,4 +285,17 @@ bool Agent::IsAggregated() const
 bool Agent::IsInTeam( const Team& team ) const
 {
     return GetKnowledgeGroup().IsInTeam( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CreateDictionary
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+void Agent::CreateDictionary()
+{
+    DataDictionary& dictionary = *new DataDictionary();
+    Attach( dictionary );
+    dictionary.Register( "Info/Identifiant", id_ );
+    dictionary.Register( "Info/Nom", name_ );
+    dictionary.Register( "Hiérarchie/Supérieur", superior_ );
 }

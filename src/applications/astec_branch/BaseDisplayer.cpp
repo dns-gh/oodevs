@@ -22,6 +22,9 @@
 #include "BreakdownType.h"
 #include "ObjectType.h"
 #include "InternalLinks.h"
+#include "Experience.h"
+#include "Morale.h"
+#include "Tiredness.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -145,6 +148,33 @@ void BaseDisplayer::Call( const BreakdownType& value )
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const ObjectType& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Experience& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Morale& value )
+{   
+    AddToDisplay( QString( value.GetName().c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-06-27
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Tiredness& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

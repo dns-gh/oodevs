@@ -11,17 +11,19 @@
 #include "Transports.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Transports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Transports::Transports( Controller& controller, const Resolver_ABC< Agent >& resolver )
+Transports::Transports( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , transporter_( 0 )
 {
-    // NOTHING
+    dico.Register( "Transport/Transporteur", transporter_ );
+    dico.Register( "Transport/Pions Transportés", transported_ );
 }
 
 // -----------------------------------------------------------------------------

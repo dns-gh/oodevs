@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "Population.h"
+#include "DataDictionary.h"
 
 #include "Team.h"
 #include "PopulationType.h"
@@ -34,6 +35,8 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     , type_         ( typeResolver.Get( message.type_population ) )
     , team_         ( resolver.Get( message.oid_camp ) )
 {
+    DataDictionary& dictionary = *new DataDictionary();
+    Attach( dictionary );
     InterfaceContainer< Extension_ABC >::Register( *this );
     controller_.Create( *this );
 }

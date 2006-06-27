@@ -15,12 +15,13 @@
 #include "Positions.h"
 #include "Agent.h"
 #include "AutomatType.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type )
+LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type, DataDictionary& dictionary )
     : controller_( controller )
     , resolver_( resolver )
     , type_( type )
@@ -29,9 +30,12 @@ LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent 
     , medicalSuperior_( 0 )
     , supplySuperior_( 0 )
 {
-    // NOTHING
+    dictionary.Register( "Liens logistiques/TC2", tc2_ );
+    dictionary.Register( "Liens logistiques/Superieur maintenance", maintenanceSuperior_ );
+    dictionary.Register( "Liens logistiques/Superieur médical", medicalSuperior_ );
+    dictionary.Register( "Liens logistiques/Superieur ravitaillement", supplySuperior_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks destructor
 // Created: AGE 2006-02-13
@@ -49,7 +53,7 @@ Agent* LogisticLinks::GetTC2() const
 {
     return Resolve( tc2_, idTc2_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks::GetMaintenance
 // Created: AGE 2006-02-16
@@ -67,7 +71,7 @@ Agent* LogisticLinks::GetMedical() const
 {
     return Resolve( medicalSuperior_, idMedical_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks::GetSupply
 // Created: AGE 2006-02-16
@@ -96,7 +100,7 @@ template< typename T >
 void LogisticLinks::UpdateData( const T& message )
 {
     if( message.m.oid_tc2Present ) {
-		idTc2_ = message.oid_tc2; tc2_ = 0;
+        idTc2_ = message.oid_tc2; tc2_ = 0;
     }
     if( message.m.oid_maintenancePresent ) {
         idMaintenance_ = message.oid_maintenance; maintenanceSuperior_ = 0;
@@ -125,7 +129,7 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message )
 {
-    UpdateData( message );        
+    UpdateData( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +139,7 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Liens logistiques" )
-                .Display( "TC2:",                     GetTC2() ) 
+                .Display( "TC2:",                     GetTC2() )
                 .Display( "Supérieur maintenance:",   GetMaintenance() )
                 .Display( "Supérieur santé:",         GetMedical() )
                 .Display( "Supérieur ravitaillement:", GetSupply() );
@@ -166,7 +170,7 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const geometry::Rectan
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
-    
+
     glColor4d( COLOR_YELLOW );
     DrawLink( where, GetTC2(), tools, 0.3f, displayLinks, displayMissing );
 
@@ -177,7 +181,7 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const geometry::Rectan
     DrawLink( where, GetMaintenance(), tools, 0.5f, displayLinks, displayMissing && type_.IsLogisticMaintenance() );
 
     glColor4d( COLOR_ORANGE );
-    DrawLink( where, GetSupply(), tools, 0.6f, displayLinks, displayMissing && type_.IsLogisticSupply() );    
+    DrawLink( where, GetSupply(), tools, 0.6f, displayLinks, displayMissing && type_.IsLogisticSupply() );
 
     glPopAttrib();
 }

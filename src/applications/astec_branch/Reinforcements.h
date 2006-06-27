@@ -18,6 +18,7 @@
 class Agent;
 class Controller;
 class Displayer_ABC;
+class DataDictionary;
 
 // =============================================================================
 /** @class  Reinforcements
@@ -32,7 +33,7 @@ class Reinforcements : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reinforcements( Controller& controller, const Resolver_ABC< Agent >& resolver );
+             Reinforcements( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico );
     virtual ~Reinforcements();
     //@}
 

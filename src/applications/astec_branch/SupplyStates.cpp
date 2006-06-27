@@ -11,17 +11,18 @@
 #include "SupplyStates.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver )
+SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , dotationResolver_( dotationResolver )
 {
-
+    dico.Register( "Chaine ravitaillement/Chaine activée", bChainEnabled_ );
 }
 
 // -----------------------------------------------------------------------------

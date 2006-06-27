@@ -18,6 +18,7 @@
 class Agent;
 class Controller;
 class Displayer_ABC;
+class DataDictionary;
 
 // =============================================================================
 /** @class  Transports
@@ -32,7 +33,7 @@ class Transports : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Transports( Controller& controller, const Resolver_ABC< Agent >& resolver );
+             Transports( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico );
     virtual ~Transports();
     //@}
 
