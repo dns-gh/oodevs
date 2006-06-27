@@ -38,6 +38,5 @@ AttributeViewCell::~AttributeViewCell()
 // -----------------------------------------------------------------------------
 QWidget* AttributeViewCell::createEditor() const
 {
-    AttributeViewCellEditor* edit = new AttributeViewCellEditor( table()->viewport(), dictionary_, const_cast< AttributeViewCell* >( this ) );
-    return edit;
+    return new AttributeViewCellEditor( table()->viewport(), dictionary_, const_cast< AttributeViewCell* >( this ) );
 }

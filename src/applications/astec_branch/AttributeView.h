@@ -65,6 +65,9 @@ private:
     virtual void EndDisplay();
     virtual void NotifyUpdated( const Simulation::sEndTick& );
     virtual void keyPressEvent( QKeyEvent* );
+    virtual void Call( const Agent& value );
+    virtual void Call( const Population& value );
+    virtual void Call( const Object& value );
     //@}
 
 private:
