@@ -11,7 +11,11 @@
 #define __ChangeHumanFactorsDialog_h_
 
 #include "ASN_Types.h"
+#include "SafePointer.h"
+#include "ValuedComboBox.h"
+
 class Agent;
+class Controllers;
 
 // =============================================================================
 /** @class  ChangeHumanFactorsDialog
@@ -25,13 +29,13 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ChangeHumanFactorsDialog( QWidget* pParent );
+             ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
     //! @name Operations
     //@{
-    void SetAgent( const Agent& agent );
+    void Show( const Agent& agent );
     //@}
 
 private slots:
@@ -55,11 +59,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent* pAgent_;
-    MT_ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
-    MT_ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;
-    MT_ValuedComboBox< ASN1T_EnumUnitExperience >*  pExperienceCombo_;
-    QCheckBox*                                      pAllUnitsCheckBox_;
+    SafePointer< Agent > agent_;
+    ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
+    ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;
+    ValuedComboBox< ASN1T_EnumUnitExperience >*  pExperienceCombo_;
+    QCheckBox*                                   pAllUnitsCheckBox_;
     //@}
 };
 

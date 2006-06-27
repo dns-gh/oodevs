@@ -20,7 +20,7 @@
 #include "LocationCreator.h"
 #include "ParametersLayer.h"
 #include "LogisticSupplyRecompletionDialog.h"
-//#include "ChangeHumanFactorsDialog.h"
+#include "ChangeHumanFactorsDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor
@@ -35,7 +35,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     , magicMove_( false )
 {
     supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, model_ );
-//    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent );
+    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent, controllers_ );
     
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
@@ -73,6 +73,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent& agent, QPopupMenu& me
     AddMagic( tr( "Recompletement partiel" ),    SLOT( Recompletion() ),      magicMenu );
     AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
     AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+    AddMagic( tr( "Facteurs humains" ),          SLOT( ChangeHumanFactors() ), magicMenu );
 
     if( orders.CanSurrender() )
         AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
@@ -157,10 +158,7 @@ void MagicOrdersInterface::DestroyComponent()
 void MagicOrdersInterface::ChangeHumanFactors()
 {
     if( selectedAgent_ )
-    {
-//        changeHumanFactors_->SetAgent( *selectedAgent_ );
-//        changeHumanFactors_->show();
-    }
+        changeHumanFactors_->Show( *selectedAgent_ );
 }
     
 // -----------------------------------------------------------------------------

@@ -9,18 +9,21 @@
 
 #include "astec_pch.h"
 #include "ChangeHumanFactorsDialog.h"
-#include "Tiredness.h"
-#include "Morale.h"
-#include "Experience.h"
-#include "Agent.h"
-#include "ASN_Messages.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
+#include "ASN_Messages.h"
+#include "Controllers.h"
+#include "HumanFactors.h"
+#include "Tiredness.h"
+#include "Experience.h"
+#include "Morale.h"
+#include "Agent.h"
 
 namespace 
 {
     template< typename Container, typename Combo >
     void Populate( const Container& cont, Combo& combo )
     {
+        combo.Clear();
         for( typename Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
             combo.AddItem( it->second->GetName().c_str(), it->second->GetAsnID() );
     }
@@ -29,39 +32,37 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers )
     : QDialog( pParent, "Facteurs Humains" )
+    , agent_( controllers )
 {
+    setCaption( "Facteurs humains" );
 //    resize( 260, 100 );
     QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
     pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
     
-    pLayout->addWidget( new QLabel( tr( "Fatigue:" ), this ), 1, 0, Qt::AlignLeft );
-    pTirednessCombo_ = new MT_ValuedComboBox< ASN1T_EnumUnitFatigue >( this );
-    pLayout->addWidget( pTirednessCombo_, 1, 1, Qt::AlignRight );
+    pLayout->addWidget( new QLabel( tr( "Fatigue:" ), this ), 1, 0 );
+    pTirednessCombo_ = new ValuedComboBox< ASN1T_EnumUnitFatigue >( this );
+    pLayout->addWidget( pTirednessCombo_, 1, 1 );
 
-    pLayout->addWidget( new QLabel( tr( "Moral:" ), this ), 2, 0, Qt::AlignLeft );
-    pMoralCombo_ = new MT_ValuedComboBox< ASN1T_EnumUnitMoral >( this );
-    pLayout->addWidget( pMoralCombo_, 2, 1, Qt::AlignRight );
+    pLayout->addWidget( new QLabel( tr( "Moral:" ), this ), 2, 0 );
+    pMoralCombo_ = new ValuedComboBox< ASN1T_EnumUnitMoral >( this );
+    pLayout->addWidget( pMoralCombo_, 2, 1 );
 
-    pLayout->addWidget( new QLabel( tr( "Experience:" ), this ), 3, 0, Qt::AlignLeft );
-    pExperienceCombo_ = new MT_ValuedComboBox< ASN1T_EnumUnitExperience >( this );
-    pLayout->addWidget( pExperienceCombo_, 3, 1, Qt::AlignRight );
+    pLayout->addWidget( new QLabel( tr( "Experience:" ), this ), 3, 0 );
+    pExperienceCombo_ = new ValuedComboBox< ASN1T_EnumUnitExperience >( this );
+    pLayout->addWidget( pExperienceCombo_, 3, 1 );
 
-    pAllUnitsCheckBox_ = new QCheckBox( tr( "Toute les unitées" ), this );
-    pLayout->addWidget( pAllUnitsCheckBox_, 4, 0, Qt::AlignLeft );
-
-    Populate( Tiredness::GetTirednesses(), *pTirednessCombo_ );
-    Populate( Morale::GetMorales(), *pMoralCombo_ );
-    Populate( Experience::GetExperiences(), *pExperienceCombo_ );
+    pAllUnitsCheckBox_ = new QCheckBox( tr( "Toutes les unités" ), this );
+    pLayout->addMultiCellWidget( pAllUnitsCheckBox_, 4, 4, 0, 1 );
 
     QHBoxLayout* pButtonLayout = new QHBoxLayout( this );
     QPushButton* pOKButton     = new QPushButton( tr("OK")    , this );
     QPushButton* pCancelButton = new QPushButton( tr("Annuler"), this );
     pButtonLayout->addWidget( pOKButton     );
     pButtonLayout->addWidget( pCancelButton );
-    pOKButton->setDefault( TRUE );
+    pOKButton->setDefault( true );
     pLayout->addMultiCellLayout( pButtonLayout, 5, 5, 0, 1, Qt::AlignCenter );
 
     connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
@@ -78,19 +79,25 @@ ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ChangeHumanFactorsDialog::SetAgent
+// Name: ChangeHumanFactorsDialog::Show
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SetAgent( const Agent& agent )
+void ChangeHumanFactorsDialog::Show( const Agent& agent )
 {
-    pAgent_ = &agent;
-    pTirednessCombo_->SetCurrentItem( agent.GetTiredness().GetAsnID() );
-    pMoralCombo_->SetCurrentItem( agent.GetMorale().GetAsnID() );
-    pExperienceCombo_->SetCurrentItem( agent.GetExperience().GetAsnID() );
-    if ( pAgent_->IsAutomate() )
+    Populate( Tiredness::GetTirednesses(), *pTirednessCombo_ );
+    Populate( Morale::GetMorales(), *pMoralCombo_ );
+    Populate( Experience::GetExperiences(), *pExperienceCombo_ );
+
+    agent_ = &agent;
+    const HumanFactors& humanFactors = agent_->Get< HumanFactors >();
+    pTirednessCombo_->SetCurrentItem( humanFactors.GetTiredness().GetAsnID() );
+    pMoralCombo_->SetCurrentItem( humanFactors.GetMorale().GetAsnID() );
+    pExperienceCombo_->SetCurrentItem( humanFactors.GetExperience().GetAsnID() );
+    if ( agent_->GetAutomatType() )
         pAllUnitsCheckBox_->show();
     else
         pAllUnitsCheckBox_->hide();
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,18 +106,18 @@ void ChangeHumanFactorsDialog::SetAgent( const Agent& agent )
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::Validate()
 {
-    const ASN1T_EnumUnitFatigue    fatigue    = (ASN1T_EnumUnitFatigue)   pTirednessCombo_ ->GetValue();
-    const ASN1T_EnumUnitMoral      moral      = (ASN1T_EnumUnitMoral)     pMoralCombo_     ->GetValue();
+    if( ! agent_ )
+        return;
+    const ASN1T_EnumUnitFatigue tiredness = (ASN1T_EnumUnitFatigue)pTirednessCombo_->GetValue();
+    const ASN1T_EnumUnitMoral moral = (ASN1T_EnumUnitMoral)pMoralCombo_->GetValue();
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
-    if( ! pAgent_ )
-        RUNTIME_ERROR;
-    if ( pAgent_->IsAutomate() && pAllUnitsCheckBox_->isChecked() )
+    if ( pAllUnitsCheckBox_->isChecked() )
     {
-        const Agent::T_AgentVector& children = const_cast< Agent* >(pAgent_)->GetChildren();       
-        for( Agent::CIT_AgentVector it = children.begin(); it != children.end(); ++it )
-            SendMessage( (*it)->GetID(), fatigue, moral, experience );
+        Iterator< const Agent& > it = agent_->CreateIterator();
+        while( it.HasMoreElements() )
+            SendMessage( it.NextElement().GetId(), tiredness, moral, experience );
     }
-    SendMessage( pAgent_->GetID(), fatigue, moral, experience );
+    SendMessage( agent_->GetId(), tiredness, moral, experience );
     hide();
 }
 
@@ -118,7 +125,7 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue fatigue, ASN1T_EnumUnitMoral moral, ASN1T_EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue tiredness, ASN1T_EnumUnitMoral moral, ASN1T_EnumUnitExperience experience )
 {
     ASN_MsgUnitMagicAction asnMsg;
     asnMsg.GetAsnMsg().oid = id;
@@ -129,7 +136,7 @@ void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue fatig
     asnMsg.GetAsnMsg().action.u.change_facteurs_humains = &asnMagicAction;
 
     asnMagicAction.m.fatiguePresent = asnMagicAction.m.moralPresent = asnMagicAction.m.experiencePresent = 1;
-    asnMagicAction.fatigue    = fatigue;
+    asnMagicAction.fatigue    = tiredness;
     asnMagicAction.moral      = moral;
     asnMagicAction.experience = experience;
     asnMsg.Send();

@@ -32,13 +32,20 @@ class HumanFactors : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HumanFactors( Controller& controller );
+    explicit HumanFactors( Controller& controller );
     virtual ~HumanFactors();
     //@}
 
     //! @name Operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const Experience& GetExperience() const;
+    const Tiredness& GetTiredness() const;
+    const Morale& GetMorale() const;
     //@}
 
 private:

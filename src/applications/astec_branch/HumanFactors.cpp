@@ -64,3 +64,29 @@ void HumanFactors::Display( Displayer_ABC& displayer ) const
                 .Display( "Fatigue:", pTiredness_->GetName().c_str() );
 }
    
+// -----------------------------------------------------------------------------
+// Name: HumanFactors::GetExperience
+// Created: SBO 2006-06-27
+// -----------------------------------------------------------------------------
+const Experience& HumanFactors::GetExperience() const
+{
+    return *pExperience_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HumanFactors::GetTiredness
+// Created: SBO 2006-06-27
+// -----------------------------------------------------------------------------
+const Tiredness& HumanFactors::GetTiredness() const
+{
+    return *pTiredness_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HumanFactors::GetMorale
+// Created: SBO 2006-06-27
+// -----------------------------------------------------------------------------
+const Morale& HumanFactors::GetMorale() const
+{
+    return *pMorale_;
+}
