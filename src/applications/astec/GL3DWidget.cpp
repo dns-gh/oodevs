@@ -141,7 +141,7 @@ void GL3DWidget::keyPressEvent( QKeyEvent* pEvent )
     }
     else if( pEvent->key() == Qt::Key_Home )
     {
-        CenterOn( geometry::Point3f( App::GetApp().GetWorld().GetRect().GetWidth () / 2, 
+        LookFrom( geometry::Point3f( App::GetApp().GetWorld().GetRect().GetWidth () / 2, 
                                      App::GetApp().GetWorld().GetRect().GetHeight() / 2,
                                      App::GetApp().GetWorld().GetRect().GetWidth () / 2 ) );
     }
