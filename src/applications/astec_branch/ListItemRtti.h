@@ -184,6 +184,12 @@ struct ListItemRtti< const NBCAgent* > {
     enum { rtti = 1027 };
 };
 
+class ParamObstacle;
+template< >
+struct ListItemRtti< ParamObstacle* > {
+    enum { rtti = 1028 };
+};
+
 template< typename T > class SafePointer;
 template< typename T >
 struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 

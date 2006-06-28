@@ -26,8 +26,8 @@
 #include "ParamPopulationKnowledge.h"
 #include "ParamObjectKnowledge.h"
 #include "ParamObjectKnowledgeList.h"
-//#include "ParamObstacle.h"
-//#include "ParamObstacleList.h"
+#include "ParamObstacle.h"
+#include "ParamObstacleList.h"
 #include "ParamDirection.h"
 #include "ParamNumericField.h"
 #include "ParamEquipmentList.h"
@@ -233,7 +233,7 @@ void MissionInterface_ABC::CreateAutomate( ASN1T_Agent& asn, const std::string& 
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const std::string& strName, bool bOptional )
 {
-    AddParameter( *new ParamLocation( this, asn, strName, strName, layer_, converter_ ), bOptional );
+    AddParameter( *new ParamLocation( this, asn, strName, layer_, converter_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject&
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateGenObject( ASN1T_MissionGenObject& asn, const std::string& strName, bool bOptional )
 {
-//    AddParameter( *new ParamObstacle( this, asn, strName, strName ), bOptional ) ;
+    AddParameter( *new ParamObstacle( this, asn, strName, objectTypes_, layer_, converter_ ), bOptional ) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -315,7 +315,7 @@ void MissionInterface_ABC::CreateGenObject( ASN1T_MissionGenObject& asn, const s
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateGenObjectList( ASN1T_ListMissionGenObject& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamObstacleList( asn, strName, strName, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamObstacleList( this, asn, strName, objectTypes_, layer_, converter_, controller_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------

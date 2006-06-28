@@ -39,7 +39,7 @@ class ParamLocation : public QHBox, public Param_ABC, private ShapeHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
+             ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
     virtual ~ParamLocation();
     //@}
 
@@ -51,6 +51,7 @@ public:
     virtual bool CheckValidity();
     virtual void Commit();
     virtual void Handle( const T_PointVector& points );
+    void CommitTo( ASN1T_Localisation& destination );
     //@}
 
 private:

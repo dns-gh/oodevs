@@ -6,27 +6,19 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamObstacle.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:35 $
-// $Revision: 4 $
-// $Workfile: ParamObstacle.h $
-//
-// *****************************************************************************
 
 #ifndef __ParamObstacle_h_
 #define __ParamObstacle_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
+#include "ValuedComboBox.h"
 
 class ParamLocation;
+class ObjectTypes;
+class ObjectType;
+class ParametersLayer;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -34,26 +26,27 @@ class ParamLocation;
 */
 // Created: APE 2004-05-18
 // =============================================================================
-class ParamObstacle : public QGroupBox, public Param_ABC
+class ParamObstacle : public QGroupBox
+                    , public Param_ABC
 {
-    friend class GLTool;
-
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData = false );
-    ~ParamObstacle();
+             ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
+    virtual ~ParamObstacle();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& point, const GlTools_ABC& tools ) const;
+    virtual void RemoveFromController();
+    virtual void RegisterIn( ActionController& controller );
     virtual bool CheckValidity();
     virtual void Commit();
+    void CommitTo( ASN1T_MissionGenObject& destination );
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Copy
     //@{
     ParamObstacle( const ParamObstacle& );
     ParamObstacle& operator=( const ParamObstacle& );
@@ -62,14 +55,13 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string             strMenuText_;
     ASN1T_MissionGenObject& asnObject_;
+    ParamLocation* location_;
 
-    ValuedComboBox< ASN1T_EnumObjectType >*  pTypeCombo_;
-    QComboBox*                                  pUrgencyCombo_;
-    QComboBox*                                  pPreliminaryCombo_;
-    QComboBox*                                  pPriorityCombo_;
-    ParamLocation*      pLocation_;
+    ValuedComboBox< const ObjectType* >* typeCombo_;
+    QComboBox* urgencyCombo_; // $$$$ SBO 2006-06-28: ValuedComboBox< EmergencyType > ?
+    QComboBox* preliminaryCombo_;
+    QComboBox* priorityCombo_;
     //@}
 };
 

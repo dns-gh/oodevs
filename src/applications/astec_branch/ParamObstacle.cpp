@@ -6,84 +6,50 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamObstacle.cpp $
-// $Author: Ape $
-// $Modtime: 29/11/04 10:55 $
-// $Revision: 6 $
-// $Workfile: ParamObstacle.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ParamObstacle.h"
-
-#include "App.h"
-#include "World.h"
-#include "ActionContext.h"
-#include "Tools.h"
 #include "ParamLocation.h"
+#include "ObjectTypes.h"
+#include "ObjectType.h"
+#include "Resolver.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData )
-    : QGroupBox     ( 2, Qt::Horizontal, strLabel.c_str(), pParent )
-    , Param_ABC ( bOptional )
-    , asnObject_    ( asnObject )
-    , strMenuText_  ( strMenuText )
+ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : QGroupBox( 2, Qt::Horizontal, label.c_str(), parent )
+    , asnObject_( asnObject )
 {
     new QLabel( tr( "Type:" ), this );
-    /*
-    pTypeCombo_ = new QComboBox( this );
-    for( int n1 = 0; n1 < eNbrObjectType; ++n1 )
-        pTypeCombo_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n1 ).c_str(), n1 );
-    */
 
-    pTypeCombo_ = new ValuedComboBox< ASN1T_EnumObjectType >( this );
-    // sorted obstacle type list
-    pTypeCombo_->setSorting( true );
-    for( uint n = 0; n < eNbrObjectType; ++n )
-        pTypeCombo_->AddItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n ).c_str(), (ASN1T_EnumObjectType)n );
-
-
-    new QLabel( tr( "Urgence:" ), this );
-    pUrgencyCombo_ = new QComboBox( this );
-    for( int n2 = 0; n2 < eNbrMissionGenUrgence; ++n2 )
-        pUrgencyCombo_->insertItem( ENT_Tr::ConvertFromMissionGenUrgence( ( E_MissionGenUrgence )n2 ).c_str(), n2 );
+    typeCombo_ = new ValuedComboBox< const ObjectType* >( this );
+    typeCombo_->setSorting( true );
+    Iterator< const ObjectType& > it = objectTypes.Resolver< ObjectType >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const ObjectType& type = it.NextElement();
+        typeCombo_->AddItem( type.GetName().c_str(), &type );
+    }
 
     new QLabel( tr( "Sous type:" ), this );
-    pPreliminaryCombo_ = new QComboBox( this );
-    for( int n3 = 0; n3 < eNbrMissionGenSousTypeObstacle; ++n3 )
-        pPreliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )n3 ).c_str(), n3 );
+    preliminaryCombo_ = new QComboBox( this );
+    for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
+        preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
+
+    new QLabel( tr( "Urgence:" ), this );
+    urgencyCombo_ = new QComboBox( this );
+    for( int i = 0; i < eNbrMissionGenUrgence; ++i )
+        urgencyCombo_->insertItem( ENT_Tr::ConvertFromMissionGenUrgence( ( E_MissionGenUrgence )i ).c_str(), i );
 
     new QLabel( tr( "Priorité:" ), this );
-    pPriorityCombo_ = new QComboBox( this );
-    for( int n4 = 0; n4 < eNbrMissionGenPriorite; ++n4 )
-        pPriorityCombo_->insertItem( ENT_Tr::ConvertFromMissionGenPriorite( ( E_MissionGenPriorite )n4 ).c_str(), n4 );
-
-    bool bOutsideDataLocalisation = false;
-    if( bOutsideData )
-    {
-        pTypeCombo_       ->SetCurrentItem( asnObject_.type_obstacle );
-        pUrgencyCombo_    ->setCurrentItem( asnObject_.urgence       );
-        pPreliminaryCombo_->setCurrentItem( asnObject_.preliminaire  );
-        pPriorityCombo_   ->setCurrentItem( asnObject_.priorite      );
-        bOutsideDataLocalisation = true;
-    }
-    else // Make sure the localization type is initialized.
-        asnObject.pos_obstacle.type = EnumTypeLocalisation::point;
+    priorityCombo_ = new QComboBox( this );
+    for( int i = 0; i < eNbrMissionGenPriorite; ++i )
+        priorityCombo_->insertItem( ENT_Tr::ConvertFromMissionGenPriorite( ( E_MissionGenPriorite )i ).c_str(), i );
 
     new QLabel( tr( "Localisation:" ), this );
-    if ( asnObject_.pos_obstacle.vecteur_point.n != 0 )
-        bOutsideDataLocalisation = true;
-    pLocation_ = new ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, bOptional, bOutsideDataLocalisation );
+    location_ = new ParamLocation( this, asnObject.pos_obstacle, label, layer, converter );
 }
 
 
@@ -93,18 +59,26 @@ ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::stri
 // -----------------------------------------------------------------------------
 ParamObstacle::~ParamObstacle()
 {
+    // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamObstacle::FillRemotePopupMenu
-// Created: APE 2004-05-18
+// Name: ParamObstacle::RemoveFromController
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacle::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context )
+void ParamObstacle::RemoveFromController()
 {
-    pLocation_->FillRemotePopupMenu( popupMenu, context );
+    location_->RemoveFromController();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::RegisterIn
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamObstacle::RegisterIn( ActionController& controller )
+{
+    location_->RegisterIn( controller );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::CheckValidity
@@ -112,25 +86,33 @@ void ParamObstacle::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionCont
 // -----------------------------------------------------------------------------
 bool ParamObstacle::CheckValidity()
 {
-    return pLocation_->CheckValidity();
+    return location_->CheckValidity();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ParamObstacle::WriteMsg
-// Created: APE 2004-05-18
+// Name: ParamObstacle::Commit
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacle::WriteMsg( std::stringstream& strMsg )
+void ParamObstacle::Commit()
 {
-    //asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->currentItem();
-    asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->GetValue();
-    asnObject_.urgence =        (ASN1T_EnumMissionGenUrgence)pUrgencyCombo_->currentItem();
-    asnObject_.preliminaire =   (ASN1T_EnumMissionGenSousTypeObstacle)pPreliminaryCombo_->currentItem();
-    asnObject_.priorite =       (ASN1T_EnumMissionGenPriorite)pPriorityCombo_->currentItem();
+    asnObject_.type_obstacle = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
+    asnObject_.urgence = (ASN1T_EnumMissionGenUrgence)urgencyCombo_->currentItem();
+    asnObject_.preliminaire = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
+    asnObject_.priorite = (ASN1T_EnumMissionGenPriorite)priorityCombo_->currentItem();
+    location_->Commit();
+}
 
-    strMsg << this->title().latin1() << ": localisation [";
-
-    pLocation_->WriteMsg( strMsg );
-
-    strMsg << "]";
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::CommitTo
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamObstacle::CommitTo( ASN1T_MissionGenObject& destination )
+{
+    destination.oid_obstacle_planifie = asnObject_.oid_obstacle_planifie;
+    destination.preliminaire = asnObject_.preliminaire;
+    destination.type_obstacle = asnObject_.type_obstacle;
+    destination.urgence = asnObject_.urgence;
+    destination.priorite = asnObject_.priorite;
+    location_->CommitTo( destination.pos_obstacle );
 }

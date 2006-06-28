@@ -21,7 +21,7 @@
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QHBox      ( pParent )
     , asn_       ( asn )
     , converter_ ( converter )
@@ -36,7 +36,7 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const s
     pShapeLabel_->setAlignment( Qt::AlignCenter );
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    creator_ = new LocationCreator( this, menu, layer, *this );
+    creator_ = new LocationCreator( this, label, layer, *this );
     creator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
     creator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
     creator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
@@ -139,4 +139,17 @@ void ParamLocation::Handle( const T_PointVector& points )
 void ParamLocation::Draw( const geometry::Point2f& , const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
     creator_->Draw( points_, nType_, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::CommitTo
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamLocation::CommitTo( ASN1T_Localisation& destination )
+{
+    destination.type = asn_.type;
+    destination.vecteur_point.n    = asn_.vecteur_point.n;
+    destination.vecteur_point.elem = new ASN1T_CoordUTM[ asn_.vecteur_point.n ];
+    for( unsigned int i = 0; i < asn_.vecteur_point.n; ++i )
+        destination.vecteur_point.elem[i] = asn_.vecteur_point.elem[i];
 }

@@ -2,22 +2,9 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamObstacleList.cpp $
-// $Author: Ape $
-// $Modtime: 30/09/04 14:29 $
-// $Revision: 6 $
-// $Workfile: ParamObstacleList.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ParamObstacleList.h"
@@ -25,224 +12,193 @@
 
 #include "ParamListView.h"
 #include "ParamObstacle.h"
+#include "ValuedListItem.h"
+#include "ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList constructor
-// Created: APE 2004-05-18
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
-    : QVBox         ( pParent )
-    , Param_ABC ( bOptional )
-    , asnObjectList_( asnObjectList )
-    , pObstacles_   ( 0 )
-    , pSelectedItem_( 0 )
-    , pObstacleEditor_( 0 )
-    , pPopupMenu_   ( new QPopupMenu( this ) )
+ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+    : QVBox( parent )
+    , controller_( controller )
+    , objectTypes_( objectTypes )
+    , layer_( layer )
+    , converter_( converter )
+    , asn_( asnObjectList )
+    , objects_( 0 )
+    , selected_( 0 )
+    , popup_( new QPopupMenu( this ) )
 {
-    pListView_ = new ParamListView( strLabel, false, this );
-
-    connect( pListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
-    connect( pListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    listView_ = new ParamListView( this, label.c_str() );
+    connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList destructor
-// Created: APE 2004-05-18
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamObstacleList::~ParamObstacleList()
 {
-    delete[] pObstacles_;
-    while( ! asnUMTCoordPtrList_.empty() )
-    {
-        delete[] asnUMTCoordPtrList_.back();
-        asnUMTCoordPtrList_.pop_back();
-    }
+    delete objects_;
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacleList::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
-// Created: APE 2004-05-18
-// -----------------------------------------------------------------------------
-void ParamObstacleList::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context )
-{
-    if( pListView_->selectedItem() != 0 )
-        pObstacleEditor_->FillRemotePopupMenu( popupMenu, context );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList::CheckValidity
-/** @return 
-*/
-// Created: APE 2004-05-18
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 bool ParamObstacleList::CheckValidity()
 {
-    if( pListView_->childCount() == 0 )
-    {
-        pListView_->TurnHeaderRed( 3000 );
-        return false;
-    }
+    if( listView_->childCount() == 0 )
+        return listView_->Invalid();
 
-    if( pListView_->selectedItem() != 0 )
+    if( selected_  )
     {
-        std::stringstream strDummy;
-        pObstacleEditor_->WriteMsg( strDummy );
+        ParamObstacle* obstacle = selected_->GetValue< ParamObstacle* >();
+        obstacle->Commit();
+        return obstacle->CheckValidity();
     }
-
-    QListViewItem* pItem = pListView_->firstChild();
-    while( pItem != 0)
-    {
-        ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
-        if( pAsnObject->pos_obstacle.vecteur_point.n == 0 )
-        {
-            pListView_->TurnHeaderRed( 3000 );
-            return false;
-        }
-        pItem = pItem->nextSibling();
-    }
-
     return true;
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ParamObstacleList::WriteMsg
-/** @param  strMsg 
-*/
-// Created: APE 2004-05-18
+// Name: ParamObstacleList::Commit
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacleList::WriteMsg( std::stringstream& strMsg )
+void ParamObstacleList::Commit()
 {
-    if( pSelectedItem_ != 0 && pObstacleEditor_ != 0 )
-    {
-        std::stringstream strDummy;
-        pObstacleEditor_->WriteMsg( strDummy );
-    }
-    uint nNbrChilds = pListView_->childCount();
-    strMsg << pListView_->header()->label( 0 ).latin1() << ": " << nNbrChilds << " obstacles.";
-    asnObjectList_.n    = nNbrChilds;
+    if( ! ChangeSelection() )
+        return;
+    
+    const unsigned int childs = listView_->childCount();
+    asn_.n = childs;
 
-    assert( !( nNbrChilds == 0 && !IsOptional() ) );
-    if( nNbrChilds == 0 && IsOptional() )
+    if( !childs && IsOptional() )
         return;
 
-    delete[] pObstacles_;
-    pObstacles_ = new ASN1T_MissionGenObject[ nNbrChilds ];
-    asnObjectList_.elem = pObstacles_;
+    objects_ = new ASN1T_MissionGenObject[ childs ];
+    asn_.elem = objects_;
 
-    uint i = 0;
-    QListViewItem* pItem = pListView_->firstChild();
-    while( pItem )
+    QListViewItemIterator it( listView_ );
+    for( unsigned int i = 0; it.current(); ++it, ++i )
     {
-        ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
-        this->Copy( *pAsnObject, pObstacles_[i] );
-
-        pItem = pItem->nextSibling();
-        ++i;
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
+        item->GetValue< ParamObstacle* >()->CommitTo( asn_.elem[i] );
     }
 }
 
-    
+// -----------------------------------------------------------------------------
+// Name: ParamObstacleList::ChangeSelection
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+bool ParamObstacleList::ChangeSelection()
+{
+    if( !selected_ )
+        return true;
+
+    ParamObstacle* obstacle = selected_->GetValue< ParamObstacle* >();
+    obstacle->Commit();
+    if( !obstacle->CheckValidity() )
+    {
+        listView_->setSelected( selected_, true );
+        return false;
+    }
+    obstacle->RemoveFromController();
+    obstacle->hide();
+    selected_ = 0;
+    return true;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList::OnSelectionChanged
-// Created: APE 2004-05-18
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacleList::OnSelectionChanged( QListViewItem* pItem )
+void ParamObstacleList::OnSelectionChanged( QListViewItem* item )
 {
-    if( pSelectedItem_ != 0 )
-    {
-        assert( pObstacleEditor_ != 0 );
-        std::stringstream strDummy;
-        pObstacleEditor_->WriteMsg( strDummy );
-        T_ListItem* pListItem = ( T_ListItem* )pSelectedItem_;
-        pListItem->GetValue().second = pObstacleEditor_->GetPointList();
-
-        delete pObstacleEditor_;
-        pObstacleEditor_ = 0;
-    }
-
-    pSelectedItem_ = pItem;
-    if( pItem == 0 )
+    if( item == selected_ || ! ChangeSelection() || !item )
         return;
-
-    ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
-    pObstacleEditor_ = new ParamObstacle( *pAsnObject, "Obstacle", "Obstacle", this, true, true );
-    pObstacleEditor_->show();
-    //$$$$ pas de tr.
+    ValuedListItem* current = static_cast< ValuedListItem* >( item );
+    ParamObstacle* obstacle = current->GetValue< ParamObstacle* >();
+    obstacle->show();
+    obstacle->RegisterIn( controller_ );
+    selected_ = current;
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList::OnRequestPopup
-/** @param  pItem 
-    @param  pos 
-*/
-// Created: APE 2004-05-24
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacleList::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
+void ParamObstacleList::OnRequestPopup( QListViewItem* item, const QPoint& pos, int )
 {
-    pPopupMenu_->clear();
-    pPopupMenu_->insertItem( tr( "Nouvel obstacle" ), this, SLOT( OnNewObstacle() ) );
-    if( pItem != 0 )
-        pPopupMenu_->insertItem( tr( "Effacer" ), this, SLOT( OnDeleteSelectedItem() ) );
-    pPopupMenu_->insertItem( tr( "Effacer la liste" ), this, SLOT( OnClearList() ) );
-    pPopupMenu_->popup( pos );
+    popup_->clear();
+    popup_->insertItem( tr( "Nouvel obstacle" ), this, SLOT( NewObstacle() ) );
+    if( item )
+        popup_->insertItem( tr( "Effacer" ), this, SLOT( DeleteSelected() ) );
+    popup_->insertItem( tr( "Effacer la liste" ), this, SLOT( ClearList() ) );
+    popup_->popup( pos );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ParamObstacleList::OnNewObstacle
-// Created: APE 2004-05-24
+// Name: ParamObstacleList::NewObstacle
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacleList::OnNewObstacle()
+void ParamObstacleList::NewObstacle()
 {
-    ASN1T_MissionGenObject* pObject = new ASN1T_MissionGenObject();
-    pObject->pos_obstacle.type = EnumTypeLocalisation::point;
-    pObject->pos_obstacle.vecteur_point.n = 0;
-    pObject->pos_obstacle.vecteur_point.elem = 0;
-    T_Item item( pObject, T_PointVector() );
-    QListViewItem* pItem = new T_ListItem( item, pListView_, tr( "Obstacle" ) );
-    pListView_->setSelected( pItem, true );
+    static int i = 0;
+
+    if( ! ChangeSelection() )
+        return;
+
+    ASN1T_MissionGenObject* object = new ASN1T_MissionGenObject();
+    ValuedListItem* item = new ValuedListItem( listView_ );
+    item->setText( 0, tr( "Obstacle" ) + QString::number( i++ ) );
+    ParamObstacle* param = new ParamObstacle( this, *object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
+    item->SetValue( param );
+    param->show();
+    listView_->setSelected( item, true );
+    selected_ = item;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamObstacleList::OnDeleteSelectedItem
-// Created: APE 2004-05-24
+// Name: ParamObstacleList::DeleteSelected
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacleList::OnDeleteSelectedItem()
+void ParamObstacleList::DeleteSelected()
 {
-    assert( pObstacleEditor_ != 0 && pListView_->selectedItem() != 0 );
-
-    T_ListItem* pItem = (T_ListItem*)pListView_->selectedItem();
-    ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
-    pListView_->setSelected( pItem, false );
-    delete pAsnObject;
-    delete pItem;
-    pSelectedItem_ = 0;
+    DeleteItem( *listView_->selectedItem() );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ParamObstacleList::OnClearList
-// Created: APE 2004-05-24
+// Name: ParamObstacleList::DeleteItem
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamObstacleList::OnClearList()
+void ParamObstacleList::DeleteItem( QListViewItem& item )
 {
-    if( pListView_->selectedItem() != 0 )
-        pListView_->setSelected( pListView_->selectedItem(), false );
-
-    while( pListView_->childCount() != 0 )
+    if( &item == selected_ )
     {
-        ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pListView_->firstChild())->GetValue().first;
-        delete pAsnObject;
-        delete pListView_->firstChild();
+        selected_->GetValue< ParamObstacle* >()->RemoveFromController();
+        selected_ = 0;
     }
-    pSelectedItem_ = 0;
+    item.setSelected( false );
+    ValuedListItem* valuedItem = static_cast< ValuedListItem* >( &item );
+    ParamObstacle* obstacle = valuedItem->GetValue< ParamObstacle* >();
+    delete obstacle;
+    delete &item;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacleList::ClearList
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamObstacleList::ClearList()
+{
+    while( listView_->childCount() )
+        DeleteItem( *listView_->firstChild() );
 }

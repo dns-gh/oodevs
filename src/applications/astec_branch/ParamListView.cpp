@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-19 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamListView.cpp $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:43 $
-// $Revision: 4 $
-// $Workfile: ParamListView.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ParamListView.h"
