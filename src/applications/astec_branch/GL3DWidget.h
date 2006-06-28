@@ -80,6 +80,7 @@ protected:
     virtual void Paint( const ViewFrustum& view );
     virtual void initializeGL();
     float ElevationAt( const geometry::Point2f& point ) const;
+    void UndoRotations() const;
     //@}
 
     //! @name Types

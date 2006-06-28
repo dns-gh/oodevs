@@ -292,9 +292,23 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 // Name: Gl3dWidget::DrawRectangle
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
+void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float h, float factor /*= 1.f*/ ) const
 {
-    // $$$$ AGE 2006-04-10: 
+    const Vector2f fontSize = Base().GetSize( "a" );
+    const float halfWidth   = fontSize.X() * factor * 600.f * 0.5f * 0.92f;
+    const float deltaHeight = fontSize.Y() * factor * 600.f * 0.062f;
+    const float height      = fontSize.Y() * factor * 600.f * h * 0.876f + deltaHeight;
+
+    glPushMatrix();
+        glTranslatef( center.X(), center.Y(), ElevationAt( center ) + 100.f );
+        UndoRotations();
+        glBegin( GL_QUADS );
+            glVertex2f( - halfWidth, deltaHeight );
+            glVertex2f(   halfWidth, deltaHeight);
+            glVertex2f(   halfWidth, height );
+            glVertex2f( - halfWidth, height);
+        glEnd();
+    glPopMatrix();
 }
 
 // -----------------------------------------------------------------------------
@@ -317,14 +331,9 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
     const float size = 600.f * factor;
     glPushMatrix();
         glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
-        float modelview[ 16 ];
-	    glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
-	    for( uint i = 0; i < 3; i++ ) 
-	        for( uint j = 0; j < 3; j++ )
-                modelview[ i * 4 + j ] = ( i == j ) ? 1.0 : 0.0;
-	    glLoadMatrixf( modelview );
+        UndoRotations();
+        
         glTranslatef( - fontSize.X() * size * 0.5f, 0, 0 );
-
         glScalef( size, size, size );
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
 
@@ -502,4 +511,18 @@ void Gl3dWidget::CenterView()
     Widget3D::CenterOn( eye );
     const Vector3f target = Vector3f( eye, Point3f( extent.Width() / 2, extent.Height() / 2, 0 ) ).Normalize();
     LookTowards( target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::UndoRotations
+// Created: AGE 2006-06-28
+// -----------------------------------------------------------------------------
+void Gl3dWidget::UndoRotations() const
+{
+    float modelview[ 16 ];
+	glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
+	for( uint i = 0; i < 3; i++ ) 
+	    for( uint j = 0; j < 3; j++ )
+            modelview[ i * 4 + j ] = ( i == j ) ? 1.0 : 0.0;
+	glLoadMatrixf( modelview );
 }
