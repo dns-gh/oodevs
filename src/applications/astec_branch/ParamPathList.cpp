@@ -6,163 +6,199 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-11 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPathList.cpp $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:35 $
-// $Revision: 7 $
-// $Workfile: ParamPathList.cpp $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "astec_pch.h"
 #include "ParamPathList.h"
 #include "moc_ParamPathList.cpp"
-
-#include "App.h"
-#include "World.h"
-#include "ActionContext.h"
+#include "ParametersLayer.h"
+#include "CoordinateConverter_ABC.h"
+#include "Agent_ABC.h"
+#include "ParamPath.h"
+#include "ValuedListItem.h"
+#include "ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPathList constructor
-// Created: APE 2004-05-11
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( ASN1T_ListItineraire& asnPathList, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional )
-    : ParamListView( strLabel, true, pParent )
-    , Param_ABC     ( bOptional )
-    , strMenuText_      ( strMenuText )
-    , asnPathList_      ( asnPathList )
-    , pLocalisations_   ( 0 )
-    , nMinItems_        ( nMinItems )
-    , nMaxItems_        ( nMaxItems )
-    , pLineEditor_      ( new ShapeEditorMapEventFilter( this ) )
+ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent, ActionController& controller )
+    : QVBox( parent )
+    , layer_( layer )
+    , converter_( converter )
+    , controller_( controller )
+    , agent_( agent )
+    , asn_( asnPathList )
+    , paths_( 0 )
+    , listView_( new ParamListView( this, label.c_str() ) )
+    , selected_( 0 )
+    , popup_( new QPopupMenu( this ) )
 {
-    connect( pLineEditor_, SIGNAL( Done() ), this, SLOT( PathDone() ) );
+    connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
+    disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
+    connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+    NewPath();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamPathList destructor
-// Created: APE 2004-05-11
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 ParamPathList::~ParamPathList()
 {
-    delete[] pLocalisations_;
-    while( ! asnUMTCoordPtrList_.empty() )
-    {
-        delete[] asnUMTCoordPtrList_.back();
-        asnUMTCoordPtrList_.pop_back();
-    }
+    delete[] paths_;
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: ParamPathList::FillRemotePopupMenu
-// Created: APE 2004-05-11
-// -----------------------------------------------------------------------------
-void ParamPathList::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context )
-{
-    if( context.pPoint_ != 0 && ! context.selectedElement_.IsAMapElementSelected() )
-        popupMenu.insertItem( strMenuText_.c_str(), this, SLOT( StartPath() ) );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamPathList::CheckValidity
-// Created: APE 2004-05-11
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
 bool ParamPathList::CheckValidity()
 {
-    if( this->childCount() >= nMinItems_ && this->childCount() <= nMaxItems_ )
+    if( listView_->childCount() == 0 )
+        return listView_->Invalid();
+
+    if( selected_  )
+    {
+        ParamPath* path = selected_->GetValue< ParamPath* >();
+        path->Commit();
+        return path->CheckValidity();
+    }
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::Commit
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamPathList::Commit()
+{
+    if( ! ChangeSelection() )
+        return;
+    
+    const unsigned int childs = listView_->childCount();
+    asn_.n = childs;
+
+    if( !childs && IsOptional() )
+        return;
+
+    paths_ = new ASN1T_Itineraire[ childs ];
+    asn_.elem = paths_;
+
+    QListViewItemIterator it( listView_ );
+    for( unsigned int i = 0; it.current(); ++it, ++i )
+    {
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
+        item->GetValue< ParamPath* >()->CommitTo( asn_.elem[i] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::ChangeSelection
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+bool ParamPathList::ChangeSelection()
+{
+    if( !selected_ )
         return true;
 
-    this->TurnHeaderRed( 3000 );
-    return false;
+    ParamPath* path = selected_->GetValue< ParamPath* >();
+    path->Commit();
+    if( !path->CheckValidity() )
+    {
+        listView_->setSelected( selected_, true );
+        return false;
+    }
+    path->RemoveFromController();
+    path->hide();
+    selected_ = 0;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::OnSelectionChanged
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamPathList::OnSelectionChanged( QListViewItem* item )
+{
+    if( item == selected_ || ! ChangeSelection() || ! item )
+        return;
+    ValuedListItem* current = static_cast< ValuedListItem* >( item );
+    ParamPath* path = current->GetValue< ParamPath* >();
+    path->show();
+    path->RegisterIn( controller_ );
+    selected_ = current;
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ParamPathList::WriteMsg
-// Created: APE 2004-05-11
+// Name: ParamPathList::OnRequestPopup
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamPathList::WriteMsg( std::stringstream& strMsg )
+void ParamPathList::OnRequestPopup( QListViewItem* item, const QPoint& pos, int )
 {
-    strMsg << this->header()->label(0).latin1() << ": " << this->childCount() << " chemins.";
-    
-    uint nNbrChildren = this->childCount();
-    asnPathList_.n    = nNbrChildren;
-    if( nNbrChildren == 0 )
+    popup_->clear();
+    popup_->insertItem( tr( "Nouvel itinéraire" ), this, SLOT( NewPath() ) );
+    if( item )
+        popup_->insertItem( tr( "Effacer" ), this, SLOT( DeleteSelected() ) );
+    popup_->insertItem( tr( "Effacer la liste" ), this, SLOT( ClearList() ) );
+    popup_->popup( pos );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::NewPath
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamPathList::NewPath()
+{
+    if( ! ChangeSelection() )
         return;
 
-    delete[] pLocalisations_;
-    pLocalisations_ = new ASN1T_Itineraire[ nNbrChildren ];
-    asnPathList_.elem = pLocalisations_;
+    ASN1T_Itineraire* asn = new ASN1T_Itineraire();
+    ValuedListItem* item = new ValuedListItem( listView_ );
+    item->setText( 0, tr( "Itinéraire" ) );
+    ParamPath* param = new ParamPath( this, *asn, tr( "Itinéraire" ).ascii(), tr( "Itinéraire" ).ascii(), layer_, converter_, agent_ );
+    item->SetValue( param );
+    param->show();
+    listView_->setSelected( item, true );
+    selected_ = item;
+}
 
-    while( ! asnUMTCoordPtrList_.empty() )
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::DeleteSelected
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamPathList::DeleteSelected()
+{
+    DeleteItem( *listView_->selectedItem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPathList::DeleteItem
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamPathList::DeleteItem( QListViewItem& item )
+{
+    if( &item == selected_ )
     {
-        delete[] asnUMTCoordPtrList_.back();
-        asnUMTCoordPtrList_.pop_back();
+        selected_->GetValue< ParamPath* >()->RemoveFromController();
+        selected_ = 0;
     }
-
-    QListViewItem* pItem = this->firstChild();
-    uint i = 0;
-    while( pItem != 0 )
-    {
-        MT_ValuedListViewItem< T_PointVector >* pCastItem = (MT_ValuedListViewItem< T_PointVector >*)pItem;
-
-        const T_PointVector& locPoints = pCastItem->GetValue();
-        assert( !locPoints.empty() );
-
-        pLocalisations_[i].type = EnumTypeLocalisation::line;
-        pLocalisations_[i].vecteur_point.n    = locPoints.size();
-        pLocalisations_[i].vecteur_point.elem = new ASN1T_CoordUTM[ locPoints.size() ];
-        asnUMTCoordPtrList_.push_back( pLocalisations_[i].vecteur_point.elem );
-        for( uint j = 0; j < locPoints.size(); ++j )
-        {
-            std::string strMGRS;
-            App::GetApp().GetWorld().SimToMosMgrsCoord( locPoints[j], strMGRS );
-            pLocalisations_[i].vecteur_point.elem[j] = strMGRS.c_str();
-        }
-
-        pItem = pItem->nextSibling();
-        ++i;
-    }
+    item.setSelected( false );
+    ValuedListItem* valuedItem = static_cast< ValuedListItem* >( &item );
+    ParamPath* path = valuedItem->GetValue< ParamPath* >();
+    delete path;
+    delete &item;
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: ParamPathList::StartPath
-// Created: APE 2004-05-11
+// Name: ParamPathList::ClearList
+// Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-void ParamPathList::StartPath()
+void ParamPathList::ClearList()
 {
-    // Push map event handler.
-    pLineEditor_->PrepareNewLine( ShapeEditorMapEventFilter::ePath );
-    pLineEditor_->Push();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ParamPathList::PathDone
-// Created: APE 2004-05-11
-// -----------------------------------------------------------------------------
-void ParamPathList::PathDone()
-{
-    T_PointVector& pointList = pLineEditor_->GetPointList();
-    if( pointList.empty() )
-        return;
-
-    MT_ValuedListViewItem< T_PointVector >* pItem = new MT_ValuedListViewItem< T_PointVector >( pointList, this, tr( "Itinéraire" ) );
-
-    for( IT_PointVector it = pointList.begin(); it != pointList.end(); ++it )
-    {
-        std::string strPos;
-        App::GetApp().GetWorld().SimToMosMgrsCoord( *it, strPos );
-        new QListViewItem( pItem, strPos.c_str() );
-    }
+    while( listView_->childCount() )
+        DeleteItem( *listView_->firstChild() );
 }

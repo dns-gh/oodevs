@@ -3,86 +3,77 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-05-11 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPathList.h $
-// $Author: Ape $
-// $Modtime: 1/09/04 15:36 $
-// $Revision: 5 $
-// $Workfile: ParamPathList.h $
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __ParamPathList_h_
 #define __ParamPathList_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ASN_Types.h"
 #include "Param_ABC.h"
 #include "ParamListView.h"
 
-class ShapeEditorMapEventFilter;
-
+class ParametersLayer;
+class CoordinateConverter_ABC;
+class Agent_ABC;
+class ValuedListItem;
+class ActionController;
 
 // =============================================================================
 /** @class  ParamPathList
     @brief  ParamPathList
-    @par    Using example
-    @code
-    ParamPathList;
-    @endcode
 */
-// Created: APE 2004-05-11
+// Created: SBO 2006-06-28
 // =============================================================================
-class ParamPathList : public ParamListView, public Param_ABC
+class ParamPathList : public QVBox, public Param_ABC
 {
     Q_OBJECT;
-    MT_COPYNOTALLOWED( ParamPathList );
-    friend class GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamPathList( ASN1T_ListItineraire& asnPathList, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional );
-    ~ParamPathList();
+             ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent, ActionController& controller );
+    virtual ~ParamPathList();
     //@}
 
     //! @name Operations
     //@{
-    void Draw();
-    void FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
+    virtual bool CheckValidity();
+    virtual void Commit();
     //@}
 
 private slots:
-    void StartPath();
-    void PathDone();
+    //! @name Slots
+    //@{
+    void OnSelectionChanged( QListViewItem* pItem );
+    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int col );
+    void NewPath();
+    void DeleteSelected();
+    void ClearList();
+    //@}
 
 private:
-    typedef std::vector< ASN1T_CoordUTM* > T_ASNUMTCoordPrtVector;
-    typedef T_ASNUMTCoordPrtVector::iterator IT_ASNUMTCoordPrtVector;
+    //! @name Helpers
+    //@{
+    void DeleteItem( QListViewItem& item );
+    bool ChangeSelection();
+    //@}
 
 private:
     //! @name Member data
     //@{
-    std::string strMenuText_;
-    ASN1T_ListItineraire& asnPathList_;
-    ASN1T_Itineraire* pLocalisations_;
-    T_ASNUMTCoordPrtVector asnUMTCoordPtrList_;
-    int nMinItems_;
-    int nMaxItems_;
+    ParametersLayer& layer_;
+    const CoordinateConverter_ABC& converter_;
+    ActionController& controller_;
+    const Agent_ABC& agent_;
+    ASN1T_ListItineraire& asn_;
+    ASN1T_Itineraire* paths_;
 
-    ShapeEditorMapEventFilter* pLineEditor_;
+    ParamListView* listView_;
+    ValuedListItem* selected_;
+    QPopupMenu* popup_;
     //@}
 };
-
-#   include "ParamPathList.inl"
 
 #endif // __ParamPathList_h_

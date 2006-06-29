@@ -190,6 +190,12 @@ struct ListItemRtti< ParamObstacle* > {
     enum { rtti = 1028 };
 };
 
+class ParamPath;
+template< >
+struct ListItemRtti< ParamPath* > {
+    enum { rtti = 1029 };
+};
+
 template< typename T > class SafePointer;
 template< typename T >
 struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 

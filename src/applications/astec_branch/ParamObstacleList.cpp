@@ -150,14 +150,12 @@ void ParamObstacleList::OnRequestPopup( QListViewItem* item, const QPoint& pos, 
 // -----------------------------------------------------------------------------
 void ParamObstacleList::NewObstacle()
 {
-    static int i = 0;
-
     if( ! ChangeSelection() )
         return;
 
     ASN1T_MissionGenObject* object = new ASN1T_MissionGenObject();
     ValuedListItem* item = new ValuedListItem( listView_ );
-    item->setText( 0, tr( "Obstacle" ) + QString::number( i++ ) );
+    item->setText( 0, tr( "Obstacle" ) );
     ParamObstacle* param = new ParamObstacle( this, *object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
     item->SetValue( param );
     param->show();

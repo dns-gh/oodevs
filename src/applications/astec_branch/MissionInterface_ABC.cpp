@@ -15,7 +15,7 @@
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
 #include "ParamPath.h"
-//#include "ParamPathList.h"
+#include "ParamPathList.h"
 #include "ParamGDH.h"
 #include "ParamBool.h"
 #include "ParamLocation.h"
@@ -188,7 +188,7 @@ void MissionInterface_ABC::CreatePath( ASN1T_Itineraire& asn, const std::string&
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePathList( ASN1T_ListItineraire& asn, const std::string& strName, bool bOptional )
 {
-//    parameters_.push_back( new ParamPathList( asn, strName, strName, 1, 999, this, true /*bOptional*/ ) );
+    AddParameter( *new ParamPathList( this, asn, strName, layer_, converter_, agent_, controller_ ), bOptional );
 }
 
 // -----------------------------------------------------------------------------

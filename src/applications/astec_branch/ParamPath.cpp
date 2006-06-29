@@ -97,6 +97,23 @@ void ParamPath::Commit()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamPath::CommitTo
+// Created: SBO 2006-06-28
+// -----------------------------------------------------------------------------
+void ParamPath::CommitTo( ASN1T_Itineraire& destination )
+{
+    destination.type = EnumTypeLocalisation::line;
+    const unsigned int points = points_.size() - 1;
+    destination.vecteur_point.n = points;
+    destination.vecteur_point.elem = new ASN1T_CoordUTM[ points ];
+    for( unsigned int i = 0; i < points; ++i )
+    {
+        const std::string coord = converter_.ConvertToMgrs( points_[ i + 1 ] );
+        destination.vecteur_point.elem[i] = coord.c_str();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamPath::NotifyContextMenu
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------

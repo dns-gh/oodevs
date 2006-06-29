@@ -55,6 +55,7 @@ public:
     virtual void Commit();
     virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
     virtual void Handle( const T_PointVector& points );
+    void CommitTo( ASN1T_Itineraire& destination );
     //@}
 
 private slots:
