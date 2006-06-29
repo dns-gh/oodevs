@@ -508,7 +508,7 @@ void Gl3dWidget::CenterView()
 {
     const geometry::Rectangle2f& extent = elevation_.Extent();
     const Point3f eye( extent.Width() / 2, -extent.Height() / 2, std::min( extent.Width(), extent.Height() ) );
-    Widget3D::CenterOn( eye );
+    Widget3D::LookFrom( eye );
     const Vector3f target = Vector3f( eye, Point3f( extent.Width() / 2, extent.Height() / 2, 0 ) ).Normalize();
     LookTowards( target );
 }

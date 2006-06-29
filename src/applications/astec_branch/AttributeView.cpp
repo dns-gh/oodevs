@@ -12,8 +12,6 @@
 #include "moc_AttributeView.cpp"
 #include "DataDictionary.h"
 #include "Agent.h"
-#include "Population.h"
-#include "Object.h"
 #include "AttributeViewCell.h"
 #include "AttributeViewCellEditor.h"
 #include "Controllers.h"
@@ -150,31 +148,4 @@ void AttributeView::keyPressEvent( QKeyEvent* e )
     }
     else
         QTable::keyPressEvent( e );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttributeView::Call
-// Created: AGE 2006-06-27
-// -----------------------------------------------------------------------------
-void AttributeView::Call( const Agent& value )
-{
-    AddToDisplay( QString( value.GetName().c_str() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttributeView::Call
-// Created: AGE 2006-06-27
-// -----------------------------------------------------------------------------
-void AttributeView::Call( const Population& value )
-{
-    AddToDisplay( QString( value.GetName().c_str() ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AttributeView::Call
-// Created: AGE 2006-06-27
-// -----------------------------------------------------------------------------
-void AttributeView::Call( const Object& value )
-{
-    AddToDisplay( QString( value.GetName().c_str() ) );
 }

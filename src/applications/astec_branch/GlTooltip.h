@@ -7,74 +7,67 @@
 //
 // *****************************************************************************
 
-#ifndef __AttributeView_h_
-#define __AttributeView_h_
+#ifndef __GlTooltip_h_
+#define __GlTooltip_h_
 
 #include "NoLinkDisplayer.h"
-#include "Simulation.h"
-#include "ElementObserver_ABC.h"
-
-#include <qtable.h>
-
-class Agent;
-class DataDictionary;
-class Controllers;
 
 // =============================================================================
-/** @class  AttributeView
-    @brief  AttributeView
+/** @class  GlTooltip
+    @brief  GlTooltip
+    // $$$$ AGE 2006-06-29: Ajouter des couleurs, ...
 */
-// Created: AGE 2006-06-22
+// Created: AGE 2006-06-29
 // =============================================================================
-class AttributeView : public QTable, public NoLinkDisplayer, public Observer_ABC
-                    , public ElementObserver_ABC< Simulation::sEndTick >
+class GlTooltip : public NoLinkDisplayer
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeView( QWidget* parent, Controllers& controllers, const Agent& agent );
-    virtual ~AttributeView();
+             GlTooltip();
+    virtual ~GlTooltip();
     //@}
 
     //! @name Operations
     //@{
+    void Draw( const geometry::Point2f& position );
     virtual void Hide();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    AttributeView( const AttributeView& );            //!< Copy constructor
-    AttributeView& operator=( const AttributeView& ); //!< Assignement operator
+    GlTooltip( const GlTooltip& );            //!< Copy constructor
+    GlTooltip& operator=( const GlTooltip& ); //!< Assignement operator
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    void OnValueChanged( int, int );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     virtual Displayer_ABC& SubItem( const char* name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    virtual void NotifyUpdated( const Simulation::sEndTick& );
-    virtual void keyPressEvent( QKeyEvent* );
+
+    void GenerateImage();
+    QPixmap CreatePixmap( QPainter& p );
+    void RestoreAlpha();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< std::string >   T_Messages;
+    typedef T_Messages::const_iterator CIT_Messages;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const DataDictionary& dictionary_;
-    int currentRow_;
+    std::string currentItem_;
     QString message_;
+    T_Messages messages_;
+    QImage image_;
     //@}
 };
 
-#endif // __AttributeView_h_
+#endif // __GlTooltip_h_
