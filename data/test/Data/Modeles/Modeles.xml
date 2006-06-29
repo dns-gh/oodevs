@@ -132,6 +132,8 @@
         <Mission nom="Automate Test MoveTo"/>
         <Mission nom="Automate FaireMouvementVersCampRefugies"/>
         <Mission nom="Automate GEN RealiserSystemeObstacles"/>
+        <Mission nom="Automate GEN RetablirItineraires"/>
+        <Mission nom="Automate GEN AmenagerTerrainPoserSommaire"/>
       </Missions>
     </Modele>
   </Automates>
