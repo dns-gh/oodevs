@@ -47,7 +47,6 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, ui
 {
     UpdateTargetPositionFromKnowledge(); /// Update vTargetPosition_
     IncRef();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().RegisterFlyingShell( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +56,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, ui
 MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_IndirectFireDotationClass& indirectWeaponClass, MT_Float rInterventionTypeToFire )
     : nNbrRefs_               ( 0 )
     , firer_                  ( firer )
-    , indirectWeaponClass_ ( indirectWeaponClass )
+    , indirectWeaponClass_    ( indirectWeaponClass )
     , rInterventionTypeToFire_( rInterventionTypeToFire )
     , pWeaponDotationCategory_( )
     , vSourcePosition_        ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
@@ -69,7 +68,6 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, co
     , pFireResult_            ( 0 )
 {
     IncRef();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().RegisterFlyingShell( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +76,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, co
 // -----------------------------------------------------------------------------
 MIL_Effect_IndirectFire::~MIL_Effect_IndirectFire()
 {
-    delete pFireResult_;
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().UnregisterFlyingShell( *this );
+    StopFlying();
 }
 
 // =============================================================================
@@ -128,10 +125,6 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, uint nNbrAmmoReserved )
 {
     assert( pWeaponDotationCategory_ && pWeaponDotationCategory_->GetIndirectFireData() );
-
-    if( !pFireResult_ )
-        pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, *pWeaponDotationCategory_ );
-
     assert( !bIsFlying_ );
 
     UpdateTargetPositionFromKnowledge();
@@ -141,7 +134,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
     
     nNbrAmmoFired_ += nNbrAmmoReserved;
     if( pWeaponDotationCategory_->GetIndirectFireData()->ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
-        bIsFlying_ = true;        
+        StartFlying();
 }
 
 // =============================================================================
@@ -156,11 +149,7 @@ bool MIL_Effect_IndirectFire::Execute()
 {
     if( !IsTargetValid() || rInterventionTypeToFire_ == 0. )
     {
-        if( pFireResult_ )
-        {
-            delete pFireResult_;
-            pFireResult_ = 0;
-        }
+        StopFlying();
         DecRef();
         return false;
     }
@@ -178,10 +167,44 @@ bool MIL_Effect_IndirectFire::Execute()
         assert( pFireResult_ );
         pWeaponDotationCategory_->IndirectFire( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
     }
-    delete pFireResult_;
-    pFireResult_ = 0;
+    StopFlying();
     DecRef();
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::StartFlying
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+void MIL_Effect_IndirectFire::StartFlying()
+{
+    if( !pFireResult_ )
+        pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, *pWeaponDotationCategory_ );
+
+    if( bIsFlying_ )
+    {
+        bIsFlying_ = true;
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().RegisterFlyingShell( *this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_IndirectFire::StopFlying
+// Created: NLD 2004-10-12
+// -----------------------------------------------------------------------------
+void MIL_Effect_IndirectFire::StopFlying() 
+{
+    if( bIsFlying_ )
+    {
+        bIsFlying_ = false;
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().UnregisterFlyingShell( *this );
+    }
+
+    if( pFireResult_ )
+    {
+        delete pFireResult_;
+        pFireResult_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

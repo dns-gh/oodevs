@@ -79,7 +79,7 @@ void MIL_Effect_IndirectFire::DecRef()
 inline
 void MIL_Effect_IndirectFire::ForceFlying()
 {
-    bIsFlying_ = true;
+    StartFlying();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,8 +94,6 @@ uint MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_IndirectFire::GetFlyingDistance
-/** @return 
-*/
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
 inline

@@ -67,6 +67,8 @@ private:
     //! @name Tools
     //@{
     void UpdateTargetPositionFromKnowledge();
+    void StartFlying                      ();
+    void StopFlying                       (); 
     //@}
 
 private:
