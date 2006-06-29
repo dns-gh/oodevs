@@ -170,3 +170,13 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
     else
         controllers_.actions_.Select( agent );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void AgentsLayer::DisplayTooltip( const Agent& agent, Displayer_ABC& displayer )
+{
+    displayer.Display( "Agent", agent );
+    // $$$$ AGE 2006-06-29: Faire des displayInTooltip sur les extensions.
+}

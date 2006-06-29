@@ -117,5 +117,26 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const Entity_ABC& entity, const
 template< typename ConcreteEntity >
 bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Team& team )
 {
-    return  static_cast< const ConcreteEntity& >( entity ).IsInTeam( team );
+    return static_cast< const ConcreteEntity& >( entity ).IsInTeam( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+bool EntityLayer< ConcreteEntity >::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
+{
+    DisplayTooltip( static_cast< const ConcreteEntity& >( entity ), displayer );
+    return EntityLayerBase::DisplayTooltip( entity, displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityLayer< ConcreteEntity >::DisplayTooltip( const ConcreteEntity& , Displayer_ABC& )
+{
+    // NOTHING
 }

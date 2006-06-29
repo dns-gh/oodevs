@@ -78,6 +78,7 @@ void GlTooltip::Draw( const geometry::Point2f& position )
     if( image_.bits() )
     {
         glRasterPos2fv( (float*)( &position ) );
+        glBitmap(0, 0, 0, 0, 0, - image_.height(), 0 );
         glDrawPixels( image_.width(), image_.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image_.bits() );
     }
 }
@@ -88,6 +89,8 @@ void GlTooltip::Draw( const geometry::Point2f& position )
 // -----------------------------------------------------------------------------
 void GlTooltip::GenerateImage()
 {
+    if( messages_.empty() )
+        return;
     QPainter p;
     const QFontMetrics metrics( p.font() );
     const int fontHeight = metrics.height();
@@ -151,5 +154,6 @@ QPixmap GlTooltip::CreatePixmap( QPainter& p )
 // -----------------------------------------------------------------------------
 void GlTooltip::Hide()
 {
-    // NOTHING
+    messages_.clear();
+    image_ = QImage();
 }

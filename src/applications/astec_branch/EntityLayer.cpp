@@ -12,6 +12,7 @@
 #include "Entity_ABC.h"
 #include "OptionVariant.h"
 #include "View_ABC.h"
+#include "GlTooltip.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
@@ -20,6 +21,8 @@
 EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view )
     : tools_      ( tools )
     , view_       ( view )
+    , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
+    , tooltip_    ( new GlTooltip() )
     , selected_   ( 0 )
     , currentTeam_( controllers )
 {
@@ -32,7 +35,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
 // -----------------------------------------------------------------------------
 EntityLayerBase::~EntityLayerBase()
 {
-    // NOTHING
+    delete tooltip_;
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +49,12 @@ void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
             Draw( *entities_[ i ], viewport );
     if( selected_ < entities_.size() )
         Draw( *entities_[ selected_ ], viewport );
+    if( tooltiped_ < entities_.size() )
+    {
+        const Positions& positions = entities_[ tooltiped_ ]->Get< Positions >();
+        const geometry::Point2f position = positions.GetPosition();
+        tooltip_->Draw( position );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +121,57 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
         }
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::HandleMouseMove
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
+{
+    if( ! ShouldDisplayTooltip( tooltiped_, point ) )
+    {
+        tooltiped_ = std::numeric_limits< unsigned >::max();
+        tooltip_->Hide();
+        if( ! DisplayTooltip( selected_, point ) )
+        {
+            bool found = false;
+            for( unsigned i = 0; i < entities_.size() && !found ; ++i )
+                found = i != selected_ && DisplayTooltip( i, point );
+        }
+    }
+    return false;
+}   
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::ShouldDisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point )
+{
+    return i < entities_.size()
+        && ShouldDisplay( *entities_[ i ] )
+        && IsInSelection( *entities_[ i ], point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::DisplayTooltip( unsigned i, const geometry::Point2f& point )
+{
+    return ShouldDisplayTooltip( i, point )
+        && DisplayTooltip( *entities_[ i ], *tooltip_ )
+        && ( tooltiped_ = i, 1 );  // $$$$ AGE 2006-06-29: duh
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::DisplayTooltip( const Entity_ABC&, Displayer_ABC& )
+{
+    return true;
 }
 
 // -----------------------------------------------------------------------------

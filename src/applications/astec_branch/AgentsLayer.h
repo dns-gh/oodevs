@@ -37,7 +37,7 @@ public:
     //@{
     void Aggregate   ( const Agent& agent );
     void Disaggregate( const Agent& agent );
-    void Engage      ( const Agent& agent );
+    void Engage      ( const Agent& agent ); // $$$$ AGE 2006-06-29: ca a pas spécialement besoin d'etre dans le layer opengl...
     void Disengage   ( const Agent& agent );
     //@}
 
@@ -61,6 +61,7 @@ private:
     //@{
     virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
     virtual void Select( const Entity_ABC&, bool );
+    virtual void DisplayTooltip( const Agent& entity, Displayer_ABC& displayer );
     //@}
 
 private:

@@ -24,6 +24,8 @@ class ColorStrategy_ABC;
 class View_ABC;
 class Entity_ABC;
 class Team;
+class GlTooltip;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  EntityLayerBase
@@ -51,6 +53,7 @@ protected:
     //! @name Events
     //@{    
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 
@@ -69,6 +72,10 @@ protected:
     virtual void ContextMenu( const Entity_ABC&, const QPoint& );
     virtual bool ShouldDisplay( const Entity_ABC& );
     virtual bool IsInTeam     ( const Entity_ABC&, const Team& team );
+
+    virtual bool ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point );
+    virtual bool DisplayTooltip( unsigned i, const geometry::Point2f& point );
+    virtual bool DisplayTooltip( const Entity_ABC&, Displayer_ABC& displayer );
     //@}
     
 private:
@@ -91,6 +98,8 @@ private:
     const GlTools_ABC& tools_;
     View_ABC& view_;
     T_Entities entities_;
+    unsigned tooltiped_;
+    GlTooltip* tooltip_;
 
 protected: // $$$$ AGE 2006-05-17: 
     unsigned selected_;
@@ -137,6 +146,8 @@ protected:
     virtual void Select     ( const Entity_ABC&, bool );
     virtual void ContextMenu( const Entity_ABC&, const QPoint&  );
     virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
+    virtual bool DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const ConcreteEntity& entity, Displayer_ABC& displayer );
     //@}
 
 protected:
