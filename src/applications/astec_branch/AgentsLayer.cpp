@@ -15,6 +15,8 @@
 #include "AutomatDecisions.h"
 #include "Attributes.h"
 #include "Reports.h"
+#include "AutomatDecisions.h"
+#include "Decisions.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -181,5 +183,16 @@ void AgentsLayer::DisplayTooltip( const Agent& agent, Displayer_ABC& displayer )
 {
     displayer.Display( "", agent );
     agent.Get< Attributes >().DisplayInTooltip( displayer );
+    {
+        const Decisions* decisions = agent.Retrieve< Decisions >();
+        if( decisions )
+            decisions->DisplayInTooltip( displayer );
+    }
+    {
+        const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
+        if( decisions )
+            decisions->DisplayInTooltip( displayer );
+
+    }
     agent.Get< Reports >().DisplayInTooltip( displayer );
 }

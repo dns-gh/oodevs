@@ -20,6 +20,7 @@ class Agent;
 class Controller;
 class Mission;
 class FragOrder;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  Decisions
@@ -43,6 +44,8 @@ public:
 
     //! @name Operations
     //@{
+    void DisplayInTooltip( Displayer_ABC& displayer ) const;
+
     const Agent& GetAgent() const;
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     virtual Iterator< const Mission& > GetMissions() const;

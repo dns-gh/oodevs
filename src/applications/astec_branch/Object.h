@@ -56,6 +56,7 @@ public:
     //@{
     bool IsInTeam( const Team& team ) const;
     void Display( Displayer_ABC& displayer ) const;
+    void DisplayInTooltip( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 

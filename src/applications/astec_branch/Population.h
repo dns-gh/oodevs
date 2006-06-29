@@ -20,6 +20,7 @@
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
 #include "Positions.h"
+#include "OptionalValue.h"
 
 class PopulationPart_ABC;
 class PopulationConcentration;
@@ -28,6 +29,7 @@ class Team;
 class Controller;
 class PopulationType;
 class CoordinateConverter_ABC;
+class Displayer_ABC;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -64,6 +66,7 @@ public:
 
     //! @name Operations
     //@{
+    void DisplayInTooltip( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
@@ -117,6 +120,7 @@ private:
 	Team&                      team_;
 
     geometry::Point2f          center_;
+    OptionalValue< int >       nDomination_;
     //@}
 
 private:

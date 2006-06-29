@@ -1927,6 +1927,7 @@ void GLTool::Draw( const DefaultMapEventHandler& eventHandler )
             if( pAgent->GetCurrentMission() != 0 )
             {
                 //ok, not proud of this...
+                 // $$$$ AGE 2006-06-29: ho maybe you're proud of the rest ??
                 QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)( pAgent->GetCurrentMission() - 1 ) ).c_str() );
                 color.SetRGB( 255.0, 255.0, 255.0 );
                 toolTip.AddLine( strMission, color );

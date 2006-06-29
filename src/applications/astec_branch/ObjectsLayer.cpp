@@ -28,3 +28,12 @@ ObjectsLayer::~ObjectsLayer()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsLayer::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void ObjectsLayer::DisplayTooltip( const Object& entity, Displayer_ABC& displayer )
+{
+    entity.DisplayInTooltip( displayer );
+}

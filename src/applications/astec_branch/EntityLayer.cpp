@@ -111,6 +111,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     for( ; selected_ < entities_.size(); ++selected_ )
     {
         const Entity_ABC& entity = *entities_[ selected_ ];
+        tooltiped_ = selected_;
         if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
         {
             if( button == Qt::LeftButton )

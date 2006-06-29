@@ -26,6 +26,7 @@ class ObjectType;
 class Experience;
 class Morale;
 class Tiredness;
+class Mission;
 
 // =============================================================================
 /** @class  BaseDisplayer
@@ -50,6 +51,7 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< Morale >
                   , public Caller< Tiredness >
                   , public Caller< QTime >
+                  , public Caller< Mission >
 {
 
 public:
@@ -84,6 +86,7 @@ private:
     virtual void Call( const Morale& value );
     virtual void Call( const Tiredness& value );
     virtual void Call( const QTime& value );
+    virtual void Call( const Mission& value );
     //@}
 };
 

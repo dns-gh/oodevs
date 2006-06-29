@@ -13,6 +13,7 @@
 #include "DecisionalModel.h"
 #include "Controller.h"
 #include "ASN_Messages.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor
@@ -142,4 +143,13 @@ void AutomatDecisions::Disengage() const
     asnMsg.GetAsnMsg().unit_id = agent_.GetId();
     asnMsg.GetAsnMsg().mode    = EnumAutomateState::debraye;
     asnMsg.Send( 0 );     
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::DisplayInTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Mission automate", current_ );
 }

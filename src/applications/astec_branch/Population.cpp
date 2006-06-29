@@ -18,6 +18,7 @@
 #include "PopulationConcentration.h"
 #include "Model.h"
 #include "Controller.h"
+#include "Displayer_ABC.h"
 
 using namespace geometry;
 
@@ -168,9 +169,10 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& as
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
+void Population::DoUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
-    // NOTHING
+    if( asnMsg.m.etat_dominationPresent ) 
+        nDomination_ = asnMsg.etat_domination;
 }
 
 // -----------------------------------------------------------------------------
@@ -362,4 +364,15 @@ const PopulationType& Population::GetType() const
 bool Population::IsInTeam( const Team& team ) const
 {
     return team_ == team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::DisplayInTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", this )
+             .Display( "Vivants", GetLivingHumans() )
+             .Display( "Domination", nDomination_ );
 }

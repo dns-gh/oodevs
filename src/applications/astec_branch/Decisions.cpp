@@ -13,6 +13,7 @@
 #include "Controller.h"
 #include "DecisionalModel.h"
 #include "GlTools_ABC.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Decisions constructor
@@ -126,5 +127,14 @@ void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2
 {
     if( bEmbraye_ && viewport.IsInside( where ) )
         tools.DrawIcon( xpm_cadenas, where, 150.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::DisplayInTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void Decisions::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "Mission", current_ );
 }
 

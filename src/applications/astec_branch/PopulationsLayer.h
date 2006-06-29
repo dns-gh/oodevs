@@ -30,6 +30,12 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual void DisplayTooltip( const Population& entity, Displayer_ABC& displayer );
+    //@}
+
+private:
     //! @name Copy/Assignement
     //@{
     PopulationsLayer( const PopulationsLayer& );            //!< Copy constructor

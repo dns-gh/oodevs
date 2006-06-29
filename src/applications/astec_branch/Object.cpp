@@ -156,6 +156,18 @@ void Object::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Object::DisplayInTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", *this )
+             .Display( "Niveau de construction", rConstructionPercentage_ * Units::percentage )
+             .Display( "Valorisation",           rValorizationPercentage_ * Units::percentage )
+             .Display( "Contournement",          rBypassConstructionPercentage_ * Units::percentage );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------

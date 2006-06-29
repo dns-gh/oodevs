@@ -25,6 +25,7 @@
 #include "Experience.h"
 #include "Morale.h"
 #include "Tiredness.h"
+#include "Mission.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
@@ -186,4 +187,13 @@ void BaseDisplayer::Call( const Tiredness& value )
 void BaseDisplayer::Call( const QTime& value )
 {
     AddToDisplay( value.toString( "hh:mm:ss" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Mission& value )
+{
+    AddToDisplay( QString( value.GetName().c_str() ) );
 }

@@ -193,9 +193,9 @@ QPixmap GlTooltip::CreatePixmap( QPainter& p )
     {
         const QRect bounds = metrics.boundingRect( it->first );
         w = std::max( w, bounds.width() );
-        h += bounds.height();
+        h += bounds.height() + 2;
     }
-    return QPixmap( w + 8, h + 8, 32 );
+    return QPixmap( w + 8, h, 32 );
 }
 
 // -----------------------------------------------------------------------------

@@ -74,7 +74,7 @@ void Reports::Draw( const geometry::Point2f& where, const geometry::Rectangle2f&
 void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     unsigned int displayed = 0;
-    for( T_Reports::const_reverse_iterator it = reports_.rbegin(); it != reports_.rend() && displayed < 5; ++it )
+    for( T_Reports::const_reverse_iterator it = reports_.rbegin(); it != reports_.rend() && displayed++ < 5; ++it )
     {
         const Report_ABC& report = **it;
         report.DisplayInTooltip( displayer );

@@ -9,6 +9,8 @@
 
 #include "astec_pch.h"
 #include "PopulationsLayer.h"
+#include "Reports.h"
+#include "PopulationDecisions.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationsLayer constructor
@@ -28,3 +30,13 @@ PopulationsLayer::~PopulationsLayer()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationsLayer::DisplayTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void PopulationsLayer::DisplayTooltip( const Population& entity, Displayer_ABC& displayer )
+{
+    entity.DisplayInTooltip( displayer );
+    entity.Get< Reports >().DisplayInTooltip( displayer );
+}            
