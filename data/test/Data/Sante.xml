@@ -6,14 +6,14 @@
   <TempsTri>600s</TempsTri>
 
   <CategoriesBlesse>
-    <UE esperanceVie="3600s" pourcentage="5" tempsSoin="18000s"/>
-    <U1 esperanceVie="28800s" pourcentage="25" tempsSoin="1800s"/>
-    <U2 esperanceVie="14400s" pourcentage="30" tempsSoin="3600s"/>
-    <U3 esperanceVie="7200s" pourcentage="40" tempsSoin="18000s"/>
+    <UE esperanceVie="3600s" pourcentage="5" tempsRepos="12m" tempsSoin="18000s"/>
+    <U1 esperanceVie="28800s" pourcentage="25" tempsRepos="12m" tempsSoin="1800s"/>
+    <U2 esperanceVie="14400s" pourcentage="30" tempsRepos="2m" tempsSoin="3600s"/>
+    <U3 esperanceVie="7200s" pourcentage="40" tempsRepos="12m" tempsSoin="18000s"/>
   </CategoriesBlesse>
 
-  <ReacMental pourcentage="50" tempsSoin="1080s"/>
+  <ReacMental pourcentage="50" tempsRepos="2m" tempsSoin="1080s"/>
 
-  <Contamines tempsSoin="720s"/>
+  <Contamines tempsRepos="13m" tempsSoin="720s"/>
 
 </Sante>

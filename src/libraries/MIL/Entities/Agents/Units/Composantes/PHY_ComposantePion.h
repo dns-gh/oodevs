@@ -102,7 +102,7 @@ public:
     bool                   CanSortHumans                   () const;
     bool                   CanHealHuman                    ( const PHY_Human& human ) const;
     uint                   GetHealingTime                  ( const PHY_Human& human ) const;
-    void                   Heal                            (       PHY_Human& human ) const;
+    uint                   Heal                            (       PHY_Human& human ) const;
     //@}
 
     //! @name Logistic - Supply

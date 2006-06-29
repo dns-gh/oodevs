@@ -3052,6 +3052,10 @@
         <source>Life expectency (s)</source>
         <translation type="obsolete">Espérance de vie (s)</translation>
     </message>
+    <message>
+        <source>Resting time</source>
+        <translation type="unfinished">Temps de repos</translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>

@@ -150,12 +150,12 @@ bool PHY_ComposantePion::CanHealHuman( const PHY_Human& human ) const
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
 inline
-void PHY_ComposantePion::Heal( PHY_Human& human ) const
+uint PHY_ComposantePion::Heal( PHY_Human& human ) const
 {
     assert( pType_ );
     assert( bUsedForLogistic_ );
     
-    pType_->Heal( human );
+    return pType_->Heal( human );
 }
 
 // -----------------------------------------------------------------------------

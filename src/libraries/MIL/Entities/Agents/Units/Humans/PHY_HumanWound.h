@@ -56,7 +56,9 @@ public:
     static uint GetDiagnosticTime           ();
     static uint GetSortingTime              ();
     static uint GetContaminatedHealingTime  ();
+    static uint GetContaminatedRestingTime  ();
     static uint GetMentalDiseaseHealingTime ();
+    static uint GetMentalDiseaseRestingTime ();
     static bool ChooseMentalDisease         ();
 
     //@}
@@ -69,6 +71,7 @@ public:
     MT_Float             GetWoundedFactor () const;
     uint                 GetLifeExpectancy() const;
     uint                 GetHealingTime   () const;
+    uint                 GetRestingTime   () const;
     //@}
 
     //! @name Operators
@@ -124,6 +127,7 @@ private:
           MT_Float              rWoundedFactor_;
           uint                  nLifeExpectancy_;
           uint                  nHealingTime_;
+          uint                  nRestingTime_;
 
 private:
     static T_HumanWoundMap humanWounds_;
@@ -132,7 +136,9 @@ private:
     static uint            nSortingTime_;
 
     static uint            nContaminatedHealingTime_;
+    static uint            nContaminatedRestingTime_;
     static uint            nMentalDiseaseHealingTime_;
+	static uint	           nMentalDiseaseRestingTime_;
     static MT_Float        rMentalDiseaseFactor_;
 };
 

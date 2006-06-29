@@ -118,22 +118,28 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
 void PHY_MedicalHealingConsign::ChooseStateAfterHealing()
 {
     assert( pHumanState_ );
-    assert( pDoctor_ );
     
-    pHumanState_->Heal( *pDoctor_ );
-
-    if ( pHumanState_->GetHuman().NeedMedical() )
-        EnterStateSearchingForHealingArea();
-    else
+    // Healing time elapsed
+    if( pDoctor_ )
     {
+        nTimer_ = pHumanState_->Heal( *pDoctor_ ); // Returns resting time
         GetPionMedical().StopUsingForLogistic( *pDoctor_ );
         pDoctor_ = 0;
-        nTimer_  = 0;
-        
-        if( pHumanState_->ShouldGoBackToWar() )
-            DoReturnHuman();
-        EnterStateFinished();
-    }        
+        SetState( eHealing );
+    }
+
+    // Resting time elapsed
+    else
+    {
+        if( pHumanState_->GetHuman().NeedMedical() )
+            EnterStateSearchingForHealingArea();
+        else
+        {
+            if( pHumanState_->ShouldGoBackToWar() )
+                DoReturnHuman();
+            EnterStateFinished();
+        }   
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -143,11 +149,9 @@ void PHY_MedicalHealingConsign::ChooseStateAfterHealing()
 void PHY_MedicalHealingConsign::EnterStateSearchingForHealingArea()
 {
     assert( pHumanState_ );
-    assert( pDoctor_ );
+    assert( !pDoctor_ );
     SetState( eSearchingForHealingArea );
     nTimer_ = 0;
-    GetPionMedical().StopUsingForLogistic( *pDoctor_ );
-    pDoctor_ = 0;
 }
 
 // -----------------------------------------------------------------------------

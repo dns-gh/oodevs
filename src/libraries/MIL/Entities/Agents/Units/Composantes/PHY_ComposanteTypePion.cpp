@@ -1054,29 +1054,31 @@ uint PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) const
 // Name: PHY_ComposanteTypePion::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
+uint PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
 {
     if( human.IsContaminated() )
     {
         assert( bCanHealContaminated_  );
         human.HealContamination();
-        return;
+        return PHY_HumanWound::GetContaminatedRestingTime();
     }
 
     if( human.IsWounded() )
     {
         assert( woundHealingCapabilities_[ human.GetWound().GetID() ] );
+        const uint nRestingTime = human.GetWound().GetRestingTime();
         human.HealWound();
-        return;
+        return nRestingTime;
     }
 
     if( human.IsMentalDiseased() )
     {
         assert( bCanHealMentalDiseases_ );
         human.HealMentalDisease();
-        return;
+        return PHY_HumanWound::GetMentalDiseaseRestingTime();
     }
     assert( false );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

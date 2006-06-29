@@ -21,7 +21,9 @@ MT_Random                       PHY_HumanWound::randomGenerator_;
       uint           PHY_HumanWound::nDiagnosticTime_           = 0;
       uint           PHY_HumanWound::nSortingTime_              = 0;      
       uint           PHY_HumanWound::nContaminatedHealingTime_  = 0;
+      uint           PHY_HumanWound::nContaminatedRestingTime_  = 0;
       uint           PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
+      uint           PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
       MT_Float       PHY_HumanWound::rMentalDiseaseFactor_      = 0;
                                                                             
 //                                                                          pPrevious_  , pNext_                                                                
@@ -86,8 +88,11 @@ void PHY_HumanWound::InitializeMedicalData( MIL_InputArchive& archive )
         if( archive.ReadTimeAttribute( "esperanceVie", rValue, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
             const_cast< PHY_HumanWound& >( wound ).nLifeExpectancy_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
 
-        archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreater( 0. ) );
+        archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreaterOrEqual( 0. ) );
         const_cast< PHY_HumanWound& >( wound ).nHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
+
+        archive.ReadTimeAttribute( "tempsRepos", rValue, CheckValueGreaterOrEqual( 0. ) );
+        const_cast< PHY_HumanWound& >( wound ).nRestingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
     
         archive.EndSection(); // 
     }
@@ -98,15 +103,19 @@ void PHY_HumanWound::InitializeMedicalData( MIL_InputArchive& archive )
     
     MT_Float rValue = 0.;
     archive.Section( "ReacMental" );
-    archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreater( 0. ) );
+    archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreaterOrEqual( 0. ) );
     nMentalDiseaseHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
+    archive.ReadTimeAttribute( "tempsRepos", rValue, CheckValueGreaterOrEqual( 0. ) );
+    nMentalDiseaseRestingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
     archive.ReadAttribute( "pourcentage", rValue, CheckValueBound( 0., 100. ) );
     rMentalDiseaseFactor_      = rValue / 100.;
     archive.EndSection(); // ReacMental
 
     archive.Section( "Contamines" );
-    archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreater( 0. ) );
+    archive.ReadTimeAttribute( "tempsSoin", rValue, CheckValueGreaterOrEqual( 0. ) );
     nContaminatedHealingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
+    archive.ReadTimeAttribute( "tempsRepos", rValue, CheckValueGreaterOrEqual( 0. ) );
+    nContaminatedRestingTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rValue );
     archive.EndSection(); // Contamines
 
     const_cast< PHY_HumanWound& >( notWounded_ ).nLifeExpectancy_ = std::numeric_limits< uint >::max();
@@ -138,6 +147,7 @@ PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, cons
     , rWoundedFactor_ ( 0. )
     , nLifeExpectancy_( 0 )
     , nHealingTime_   ( 0 )
+    , nRestingTime_   ( 0 )
 {
 }
 

@@ -548,9 +548,11 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
     {
         persistent bool                           bState;
         
-        //persistent T_PerceptionLocalisationObjet perception = 0; 
+        persistent T_PerceptionTirIndirect perception = 0; 
         if ( DIA_ModuleBegins() )
         {
+            perception = DEC_Perception_ActiverPerceptionTirsIndirect( mission.forme_ );
+            
             //perception = DEC_Perception_ActiverDetectionObjetLocalisation( mission.forme_, DEC_Agent_Position(), bState, 20 );
             
             DEC_Debug( "Aire forme: " + FloatToString( DEC_Geometrie_AireLocalisation( mission.forme_ ) ) );
@@ -618,8 +620,9 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         DEC_Debug( "MIS_Pion_Test_CreateObject : on spontaneous end" );
         if( currentAction != 0 )
           DEC_StopAction( currentAction );
-        //DEC_Perception_DesactiverDetectionObjetLocalisation( perception );
-        //perception = 0;
+          
+        DEC_Perception_DesactiverPerceptionTirsIndirect( perception );
+        perception = 0;
 
     }
 }

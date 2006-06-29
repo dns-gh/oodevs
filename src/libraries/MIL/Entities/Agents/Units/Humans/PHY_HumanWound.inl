@@ -38,6 +38,16 @@ uint PHY_HumanWound::GetContaminatedHealingTime()
 {
     return nContaminatedHealingTime_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::GetContaminatedRestingTime
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+inline
+uint PHY_HumanWound::GetContaminatedRestingTime()
+{
+    return nContaminatedRestingTime_;
+}
     
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::GetMentalDiseasedHealingTime
@@ -47,6 +57,16 @@ inline
 uint PHY_HumanWound::GetMentalDiseaseHealingTime()
 {
     return nMentalDiseaseHealingTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::GetMentalDiseasedRestingTime
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+inline
+uint PHY_HumanWound::GetMentalDiseaseRestingTime()
+{
+    return nMentalDiseaseRestingTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +202,16 @@ inline
 uint PHY_HumanWound::GetHealingTime() const
 {
     return nHealingTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::GetHealingTime
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+inline
+uint PHY_HumanWound::GetRestingTime() const
+{
+    return nRestingTime_;
 }
 
 // -----------------------------------------------------------------------------

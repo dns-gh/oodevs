@@ -188,11 +188,11 @@ void PHY_MedicalHumanState::Cancel()
 // Name: PHY_MedicalHumanState::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_MedicalHumanState::Heal( const PHY_ComposantePion& doctor )
+uint PHY_MedicalHumanState::Heal( const PHY_ComposantePion& doctor )
 {
     assert( pHuman_ );
-    doctor.Heal( *pHuman_ );
     bHumanStateHasChanged_ = true;
+    return doctor.Heal( *pHuman_ );
 }
 
 // -----------------------------------------------------------------------------
