@@ -49,6 +49,7 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< Experience >
                   , public Caller< Morale >
                   , public Caller< Tiredness >
+                  , public Caller< QTime >
 {
 
 public:
@@ -82,6 +83,7 @@ private:
     virtual void Call( const Experience& value );
     virtual void Call( const Morale& value );
     virtual void Call( const Tiredness& value );
+    virtual void Call( const QTime& value );
     //@}
 };
 

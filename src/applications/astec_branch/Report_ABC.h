@@ -21,10 +21,12 @@
 
 class Agent_ABC;
 class Simulation;
+class Displayer_ABC;
 
 // =============================================================================
 /** @class  Report_ABC
     @brief  Report_ABC
+    // $$$$ AGE 2006-06-29: Refactor !
 */
 // Created: APE 2004-08-04
 // =============================================================================
@@ -45,6 +47,11 @@ public:
     //@{
              Report_ABC( const Agent_ABC& agent, const Simulation& simulation );
     virtual ~Report_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    void DisplayInTooltip( Displayer_ABC& displayer ) const;
     //@}
 
     //-------------------------------------------------------------------------

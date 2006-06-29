@@ -178,3 +178,12 @@ void BaseDisplayer::Call( const Tiredness& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const QTime& value )
+{
+    AddToDisplay( value.toString( "hh:mm:ss" ) );
+}

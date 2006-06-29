@@ -20,6 +20,7 @@
 #include "Agent_ABC.h"
 #include "Attributes.h"
 #include "Simulation.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Report_ABC constructor
@@ -131,4 +132,18 @@ bool Report_ABC::IsRCType() const
 const Agent_ABC& Report_ABC::GetAgent() const
 {
     return agent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Report_ABC::DisplayInTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void Report_ABC::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Item( "" )
+             .Start( QColor( 220, 220, 220 ) )
+                .Add( QTime().addSecs( nTime_ ) )
+                .Add( " " )
+                .Add( GetStrippedTitle() )
+             .End();
 }

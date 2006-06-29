@@ -157,6 +157,7 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
         return;
 
     ValuedListItem* item = factory_.CreateItem( this );
+     // $$$$ AGE 2006-06-29: Display !
     item->Set( & report, QTime().addSecs( report.GetTime() ).toString( "hh:mm:ss" ), report.GetTitle().c_str() );
 //    if( report.IsRCType() )
 //    {
