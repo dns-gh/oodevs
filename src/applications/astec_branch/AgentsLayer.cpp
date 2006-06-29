@@ -13,6 +13,7 @@
 #include "Agent.h"
 #include "Aggregatable_ABC.h"
 #include "AutomatDecisions.h"
+#include "Attributes.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
@@ -177,6 +178,6 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 // -----------------------------------------------------------------------------
 void AgentsLayer::DisplayTooltip( const Agent& agent, Displayer_ABC& displayer )
 {
-    displayer.Display( "Agent", agent );
-    // $$$$ AGE 2006-06-29: Faire des displayInTooltip sur les extensions.
+    displayer.Display( "", agent );
+    agent.Get< Attributes >().DisplayInTooltip( displayer );
 }

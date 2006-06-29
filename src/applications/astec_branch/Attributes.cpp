@@ -183,6 +183,19 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Attributes::DisplayInTooltip
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", nOpState_ );
+    displayer.Display( "Rapport de force", nFightRateState_ );
+    displayer.Display( "", nCloseCombatState_ );
+    displayer.Display( "", nCurrentPosture_ );
+    displayer.Display( "ROE", nRulesOfEngagementState_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------

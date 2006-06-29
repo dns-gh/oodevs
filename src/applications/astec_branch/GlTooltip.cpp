@@ -30,6 +30,51 @@ GlTooltip::~GlTooltip()
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlTooltip::Call
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void GlTooltip::Call( const QColor& value )
+{
+    color_ = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::Call
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void GlTooltip::Call( const E_EtatOperationnel& value )
+{
+    if ( value == eEtatOperationnel_DetruitTactiquement )
+        color_.setRgb( 255, 128, 0 );
+    else if( value == eEtatOperationnel_DetruitTotalement )
+        color_.setRgb( 255, 0, 0 );
+    Formatter< E_EtatOperationnel >()( value, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::Call
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void GlTooltip::Call( const E_EtatRapFor& value )
+{
+    if ( value == eEtatRapFor_Defavorable )
+        color_.setRgb( 255, 154, 154 );
+    else
+        color_.setRgb( 204, 255, 204 );
+    Formatter< E_EtatRapFor >()( value, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlTooltip::Call
+// Created: AGE 2006-06-29
+// -----------------------------------------------------------------------------
+void GlTooltip::Call( const E_EtatCombatRencontre& value )
+{
+    if( value != eEtatCombatRencontre_None )
+        Formatter< E_EtatCombatRencontre >()( value, *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlTooltip::SubItem
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
@@ -45,6 +90,7 @@ Displayer_ABC& GlTooltip::SubItem( const char* name )
 // -----------------------------------------------------------------------------
 void GlTooltip::StartDisplay()
 {
+    color_ = Qt::white;
     message_ = "";
 }
 
@@ -63,7 +109,10 @@ void GlTooltip::DisplayFormatted( const QString& formatted )
 // -----------------------------------------------------------------------------
 void GlTooltip::EndDisplay()
 {
-    messages_.push_back( currentItem_ + " : " + message_.ascii() );
+    if( ! currentItem_.isEmpty() )
+        messages_.push_back( T_Message( currentItem_ + " : " + message_, color_ ) );
+    else if( ! message_.isEmpty() )
+        messages_.push_back( T_Message( message_, color_ ) );
     image_ = QImage();
 }
 
@@ -101,7 +150,8 @@ void GlTooltip::GenerateImage()
         int y = fontHeight;
         for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
         {
-            p.drawText( 4, y, it->c_str() );
+            p.setPen( it->second );
+            p.drawText( 4, y, it->first );
             y += fontHeight;
         }
     p.end();
@@ -122,8 +172,8 @@ void GlTooltip::RestoreAlpha()
     unsigned int* data = (unsigned int*)image_.bits();
     for( int i = image_.width() * image_.height(); i > 0; --i )
     {
-        if( *data == 0x00FF00FF )
-            *data = 0x80808080;
+        if( *data == 0x00FF00FF ) 
+            *data = 0x80000000;
         else
             *data |= 0xFF000000;
         ++data;
@@ -141,7 +191,7 @@ QPixmap GlTooltip::CreatePixmap( QPainter& p )
     int h = 0;
     for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
     {
-        const QRect bounds = metrics.boundingRect( it->c_str() );
+        const QRect bounds = metrics.boundingRect( it->first );
         w = std::max( w, bounds.width() );
         h += bounds.height();
     }
@@ -157,3 +207,4 @@ void GlTooltip::Hide()
     messages_.clear();
     image_ = QImage();
 }
+

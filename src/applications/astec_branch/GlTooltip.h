@@ -15,11 +15,14 @@
 // =============================================================================
 /** @class  GlTooltip
     @brief  GlTooltip
-    // $$$$ AGE 2006-06-29: Ajouter des couleurs, ...
 */
 // Created: AGE 2006-06-29
 // =============================================================================
 class GlTooltip : public NoLinkDisplayer
+                , public Caller< QColor >
+                , public Caller< E_EtatOperationnel >
+                , public Caller< E_EtatRapFor >
+                , public Caller< E_EtatCombatRencontre >
 {
 
 public:
@@ -44,6 +47,11 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Call( const QColor& value );
+    virtual void Call( const E_EtatOperationnel& value );
+    virtual void Call( const E_EtatRapFor& value );
+    virtual void Call( const E_EtatCombatRencontre& value );
+
     virtual Displayer_ABC& SubItem( const char* name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
@@ -56,14 +64,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::string >   T_Messages;
+    typedef std::pair< QString, QColor > T_Message;
+    typedef std::vector< T_Message >     T_Messages;
     typedef T_Messages::const_iterator CIT_Messages;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string currentItem_;
+    QString currentItem_;
+    QColor color_;
     QString message_;
     T_Messages messages_;
     QImage image_;
