@@ -39,14 +39,14 @@ public:
     
     //! @name Operations
     //@{
-    virtual bool Update             (); 
+    virtual bool Update(); 
 
     // Scripts events
-    bool IsLoadingDone      () const;
-    bool IsUnloadingDone    () const;
-    bool ConvoyLoad         ();
-    bool ConvoyUnload       ();
-    void ConvoyEndMission   ();
+    bool IsLoadingDone   () const;
+    bool IsUnloadingDone () const;
+    bool ConvoyLoad      ();
+    bool ConvoyUnload    ();
+    void ConvoyEndMission();
 
     virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
     virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );

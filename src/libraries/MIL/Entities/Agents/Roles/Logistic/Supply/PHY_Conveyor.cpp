@@ -204,6 +204,15 @@ void PHY_Conveyor::NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign )
     dotationsConvoyed_.clear();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Conveyor::NotifySupplyDone
+// Created: NLD 2005-07-19
+// -----------------------------------------------------------------------------
+void PHY_Conveyor::NotifySupplyDone()
+{
+    dotationsConvoyed_.clear();
+}
+
 // =============================================================================
 // ACCESSORS
 // =============================================================================

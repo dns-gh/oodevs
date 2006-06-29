@@ -566,7 +566,8 @@ void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory
     assert( it != stockQuotas_.end() );
     
     sDotationQuota& quota = it->second;
-    assert( rQuotaConsumed <= quota.rQuota_ );
+    
+    rQuotaConsumed = std::min( rQuotaConsumed, quota.rQuota_ );
 
     quota.rQuota_ -= rQuotaConsumed;
     if( quota.rQuota_ <= quota.rQuotaThreshold_ )

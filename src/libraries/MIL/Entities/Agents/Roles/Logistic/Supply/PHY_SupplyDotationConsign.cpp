@@ -85,6 +85,7 @@ void PHY_SupplyDotationConsign::DoSupply()
     pSupplyState_->Supply();
     delete pSupplyState_;
     pSupplyState_ = 0;
+    pConvoy_->NotifySupplyDone();
 }
 
 // -----------------------------------------------------------------------------

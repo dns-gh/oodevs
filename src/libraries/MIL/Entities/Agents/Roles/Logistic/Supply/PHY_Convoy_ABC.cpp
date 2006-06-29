@@ -324,6 +324,16 @@ bool PHY_Convoy_ABC::ReserveTransporters()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::NotifySupplyDone
+// Created: NLD 2005-02-10
+// -----------------------------------------------------------------------------
+void PHY_Convoy_ABC::NotifySupplyDone()
+{
+    for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        it->second->NotifySupplyDone();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::NotifyConveyorDestroyed
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------

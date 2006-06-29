@@ -37,6 +37,7 @@ public:
     MT_Float Convoy                 ( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy ); // Return the nb convoyed
     bool     IsFull                 () const;
     void     NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign );
+    void     NotifySupplyDone       ();
     //@}
 
     //! @name Lend

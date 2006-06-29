@@ -68,7 +68,8 @@ public:
     //! @name Events
     //@{
     void NotifyConveyorDestroyed( PHY_ComposantePion& composante );
-   //@}
+    void NotifySupplyDone       ();
+    //@}
  
 public:
     //! @name Types
