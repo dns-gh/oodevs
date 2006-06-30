@@ -35,24 +35,30 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     grid->setSpacing( 5 );
     grid->setMargin( 5 );
 
-    QLabel* color = new QLabel( "  ", grid );
-    color->setPaletteBackgroundColor( QColor( "yellow" ) );
+    QLabel* color = new QLabel( grid );
+    color->setPixmap( QPixmap( 10, 10 ) );
+    color->pixmap()->fill( QColor( "yellow" ) );
+    color->setMaximumWidth( 10 );
     QLabel* label = new QLabel( tr( "TC2" ), grid );
+    label->setMaximumWidth( 150 );
     tc2Combo_ = new ValuedComboBox< const Agent* >( grid );
     tc2Combo_->setMinimumWidth( 200 );
 
-    color = new QLabel( "  ", grid );
-    color->setPaletteBackgroundColor( QColor( 128, 0, 0 ) );
+    color = new QLabel( grid );
+    color->setPixmap( QPixmap( 10, 10 ) );
+    color->pixmap()->fill( QColor( 128, 0, 0 ) );
     label = new QLabel( tr( "Superieur maintenance" ), grid );
     maintenanceCombo_ = new ValuedComboBox< const Agent* >( grid );
 
-    color = new QLabel( "  ", grid );
-    color->setPaletteBackgroundColor( QColor( 255, 164, 200 ) );
+    color = new QLabel( "", grid );
+    color->setPixmap( QPixmap( 10, 10 ) );
+    color->pixmap()->fill( QColor( 255, 164, 200 ) );
     label = new QLabel( tr( "Superieur santé" ), grid );
     medicalCombo_ = new ValuedComboBox< const Agent* >( grid );
 
     color = new QLabel( "  ", grid );
-    color->setPaletteBackgroundColor( QColor( 255, 150, 10 ) );
+    color->setPixmap( QPixmap( 10, 10 ) );
+    color->pixmap()->fill( QColor( 255, 150, 10 ) );
     label = new QLabel( tr( "Superieur ravitaillement" ), grid );
     supplyCombo_ = new ValuedComboBox< const Agent* >( grid );
    
