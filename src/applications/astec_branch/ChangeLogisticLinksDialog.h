@@ -1,65 +1,81 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ChangeLogisticLinksDialog.h $
-// $Author: Age $
-// $Modtime: 6/04/05 15:42 $
-// $Revision: 1 $
-// $Workfile: ChangeLogisticLinksDialog.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ChangeLogisticLinksDialog_h_
 #define __ChangeLogisticLinksDialog_h_
 
-#include "Types.h"
-#include <QDialog.h>
+#include "ValuedComboBox.h"
+#include "SafePointer.h"
+#include "ElementObserver_ABC.h"
+#include "ContextMenuObserver_ABC.h"
+#include <qdialog.h>
 
-class QComboBox;
+class Controllers;
 class Agent;
 
-//=============================================================================
-// Created:  NLD 2002-01-03 
-//=============================================================================
+// =============================================================================
+/** @class  ChangeLogisticLinksDialog
+    @brief  ChangeLogisticLinksDialog
+*/
+// $$$$ SBO 2006-06-30: gérer les teams
+// Created: SBO 2006-06-30
+// =============================================================================
 class ChangeLogisticLinksDialog : public QDialog
+                                , public Observer_ABC
+                                , public ElementObserver_ABC< Agent >
+                                , public ContextMenuObserver_ABC< Agent >
 {
-    Q_OBJECT
-    MT_COPYNOTALLOWED( ChangeLogisticLinksDialog );
+    Q_OBJECT;
 
 public:
-     ChangeLogisticLinksDialog( QWidget* pParent = 0 );
-    ~ChangeLogisticLinksDialog();
+    //! @name Constructors/Destructor
+    //@{
+             ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers );
+    virtual ~ChangeLogisticLinksDialog();
+    //@}
 
-    void SetAgent( Agent& agent );
+    //! @name Operations
+    //@{
+    virtual void NotifyCreated( const Agent& agent );
+    virtual void NotifyDeleted( const Agent& agent );
+    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    //@}
 
 private slots:
-    //-------------------------------------------------------------------------
-    /** @name Main methods */
-    //-------------------------------------------------------------------------
+    //! @name Slots
     //@{
+    void Show();
     void Validate();
-    void Reject  ();
+    void Reject();
     //@}
 
 private:
-    //! @name Types
+    //! @name Copy/Assignement
     //@{
-    typedef std::map< uint, const Agent* > T_AgentIDMap;
-    typedef T_AgentIDMap::const_iterator       CIT_AgentIDMap;
+    ChangeLogisticLinksDialog( const ChangeLogisticLinksDialog& );            //!< Copy constructor
+    ChangeLogisticLinksDialog& operator=( const ChangeLogisticLinksDialog& ); //!< Assignement operator
     //@}
-   
+
+    //! @name Helpers
+    //@{
+    //@}
+
 private:
-    Agent* pAgent_;
-
-    QComboBox* pTC2ComboBox_;
-    QComboBox* pMaintenanceComboBox_;
-    QComboBox* pMedicalComboBox_;
-    QComboBox* pSupplyComboBox_;
-
-    T_AgentIDMap maintenanceComboBoxIDs_;
-    T_AgentIDMap medicalComboBoxIDs_;
-    T_AgentIDMap supplyComboBoxIDs_;
-    T_AgentIDMap tc2ComboBoxIDs_;
+    //! @name Member data
+    //@{
+    Controllers& controllers_;
+    ValuedComboBox< const Agent* >* tc2Combo_;
+    ValuedComboBox< const Agent* >* maintenanceCombo_;
+    ValuedComboBox< const Agent* >* medicalCombo_;
+    ValuedComboBox< const Agent* >* supplyCombo_;
+    SafePointer< Agent > selected_;
+    //@}
 };
 
 #endif // __ChangeLogisticLinksDialog_h_

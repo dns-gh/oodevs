@@ -92,6 +92,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     setCaption( APP_NAME );
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
+    new Dialogs( this, controllers ); // $$$$ SBO 2006-06-30: 
 
     layers_ = new GlLayers( controllers, model, prefDialog->GetPreferences() );
 

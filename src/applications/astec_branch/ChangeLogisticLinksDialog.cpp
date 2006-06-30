@@ -1,185 +1,161 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ChangeLogisticLinksDialog.cpp $
-// $Author: Nld $
-// $Modtime: 8/07/05 15:55 $
-// $Revision: 3 $
-// $Workfile: ChangeLogisticLinksDialog.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
 
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
-
-#include "App.h"
 #include "ASN_Messages.h"
-#include "Attr_Def.h"
+#include "Controllers.h"
 #include "Agent.h"
-#include "AgentManager.h"
-#include "TypeAutomate.h"
+#include "LogisticLinks.h"
+#include "AutomatType.h"
+
+#include <qgrid.h>
 
 // -----------------------------------------------------------------------------
 // Name: ChangeLogisticLinksDialog constructor
-// Created: NLD 2004-10-25
+// Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* pParent  )
-    : QDialog( pParent, "Changer liens logistiques" )
-    , pAgent_( 0 )
-    , pTC2ComboBox_( 0 )
-    , pMaintenanceComboBox_( 0 )
-    , pMedicalComboBox_( 0 )
-    , pSupplyComboBox_( 0 )
-    , maintenanceComboBoxIDs_()
-    , medicalComboBoxIDs_()
-    , supplyComboBoxIDs_()
-    , tc2ComboBoxIDs_()
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers )
+    : QDialog( parent )
+    , controllers_( controllers )
+    , selected_( controllers )
 {
-    resize( 400, 150 );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
-    QGridLayout* pDataLayout = new QGridLayout( pMainLayout, 3, 2 );
-    pDataLayout->setMargin ( 10 );
-    pDataLayout->setSpacing( 10 );
+    setCaption( tr( "Changement des liens logisitiques" ) );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    QGrid* grid = new QGrid( 3, Qt::Horizontal, this );
+    layout->addWidget( grid );
+    grid->setSpacing( 5 );
+    grid->setMargin( 5 );
 
-    QLabel* lab_tc2 = new QLabel( "TC2"                     , this );
-    lab_tc2->setPaletteBackgroundColor( QColor( "yellow" ) );
-    pDataLayout->addWidget( lab_tc2 , 0, 0 );
-    QLabel* lab_main = new QLabel( "Superieur maintenance"   , this );
-    lab_main->setPaletteBackgroundColor( QColor( 128, 0, 0 ) );
-    lab_main->setPaletteForegroundColor( QColor( "white" ) );
-    pDataLayout->addWidget( lab_main, 1, 0 );
-    QLabel* lab_san = new QLabel( "Superieur santé"         , this );
-    lab_san->setPaletteBackgroundColor( QColor( 255, 164, 200 ) );
-    pDataLayout->addWidget( lab_san, 2, 0 );
-    QLabel* lab_rav = new QLabel( "Superieur ravitaillement", this );
-    lab_rav->setPaletteBackgroundColor( QColor( 255, 150, 10 ) );
-    pDataLayout->addWidget( lab_rav , 3, 0 );
-    pTC2ComboBox_           = new QComboBox( FALSE, this );
-    pMaintenanceComboBox_   = new QComboBox( FALSE, this );
-    pMedicalComboBox_       = new QComboBox( FALSE, this );  
-    pSupplyComboBox_        = new QComboBox( FALSE, this );
-    pDataLayout->addWidget( pTC2ComboBox_        , 0, 1 );
-    pDataLayout->addWidget( pMaintenanceComboBox_, 1, 1 );
-    pDataLayout->addWidget( pMedicalComboBox_    , 2, 1 );
-    pDataLayout->addWidget( pSupplyComboBox_     , 3, 1 );
+    QLabel* color = new QLabel( "  ", grid );
+    color->setPaletteBackgroundColor( QColor( "yellow" ) );
+    QLabel* label = new QLabel( tr( "TC2" ), grid );
+    tc2Combo_ = new ValuedComboBox< const Agent* >( grid );
+    tc2Combo_->setMinimumWidth( 200 );
 
-    pTC2ComboBox_        ->setEnabled( false );
-    pMaintenanceComboBox_->setEnabled( false );
-    pMedicalComboBox_    ->setEnabled( false );
-    pSupplyComboBox_     ->setEnabled( false );
+    color = new QLabel( "  ", grid );
+    color->setPaletteBackgroundColor( QColor( 128, 0, 0 ) );
+    label = new QLabel( tr( "Superieur maintenance" ), grid );
+    maintenanceCombo_ = new ValuedComboBox< const Agent* >( grid );
+
+    color = new QLabel( "  ", grid );
+    color->setPaletteBackgroundColor( QColor( 255, 164, 200 ) );
+    label = new QLabel( tr( "Superieur santé" ), grid );
+    medicalCombo_ = new ValuedComboBox< const Agent* >( grid );
+
+    color = new QLabel( "  ", grid );
+    color->setPaletteBackgroundColor( QColor( 255, 150, 10 ) );
+    label = new QLabel( tr( "Superieur ravitaillement" ), grid );
+    supplyCombo_ = new ValuedComboBox< const Agent* >( grid );
    
-    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
-    QPushButton* pCancelButton = new QPushButton( tr("Cancel"), this );
-    QPushButton* pOKButton     = new QPushButton( tr("OK")    , this );
-    pButtonLayout->addWidget( pCancelButton );
-    pButtonLayout->addWidget( pOKButton     );
-    pOKButton->setDefault( TRUE );
+    QHBox* box = new QHBox( this );
+    layout->addWidget( box );
+    QPushButton* okButton = new QPushButton( tr( "OK" ), box );
+    QPushButton* cancelButton = new QPushButton( tr( "Annuler" ), box );
+    okButton->setDefault( true );
 
-    connect( pCancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
-    connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );   
+    connect( okButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 
-    pTC2ComboBox_        ->insertItem( "Aucun" );
-    pMaintenanceComboBox_->insertItem( "Aucun" );
-    pMedicalComboBox_    ->insertItem( "Aucun" );
-    pSupplyComboBox_     ->insertItem( "Aucun" );
+    tc2Combo_->AddItem( tr( "Aucun" ), 0 );
+    maintenanceCombo_->AddItem( tr( "Aucun" ), 0 );
+    medicalCombo_->AddItem( tr( "Aucun" ), 0 );
+    supplyCombo_->AddItem( tr( "Aucun" ), 0 );
 
-//    AgentManager::CT_AgentMap& agents = App::GetApp().GetAgentManager().GetAgentList();
-//    for( AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
-//    {
-//        const Agent& agent = *itAgent->second;
-//        if( !agent.IsAutomate() )
-//            continue;
-//
-//        if( agent.IsLogisticTC2() || agent.IsLogisticBLD() || agent.IsLogisticBLT() )
-//        {
-//            tc2ComboBoxIDs_.insert( std::make_pair( pTC2ComboBox_->count(), &agent ) );
-//            pTC2ComboBox_->insertItem( agent.GetName().c_str() );
-//        }
-//        if( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() )
-//        {
-//            maintenanceComboBoxIDs_.insert( std::make_pair( pMaintenanceComboBox_->count(), &agent ) );
-//            pMaintenanceComboBox_->insertItem( agent.GetName().c_str() );
-//        }
-//        if( agent.IsLogisticTC2() || agent.IsLogisticSante() )  
-//        {
-//            medicalComboBoxIDs_.insert( std::make_pair( pMedicalComboBox_->count(), &agent ) );
-//            pMedicalComboBox_->insertItem( agent.GetName().c_str() );
-//        }
-//        if( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() )
-//        {
-//            supplyComboBoxIDs_.insert( std::make_pair( pSupplyComboBox_->count(), &agent ) );
-//            pSupplyComboBox_->insertItem( agent.GetName().c_str() );
-//        }
-//    }
+    controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ChangeLogisticLinksDialog destructor
-// Created: NLD 2004-10-25
+// Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
 ChangeLogisticLinksDialog::~ChangeLogisticLinksDialog()
 {
-
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ChangeLogisticLinksDialog::SetAgent
-// Created: NLD 2004-11-30
+// Name: ChangeLogisticLinksDialog::Show
+// Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::SetAgent( Agent& agent )
+void ChangeLogisticLinksDialog::Show()
 {
-    pAgent_ = &agent;
-
-    pTC2ComboBox_        ->setEnabled( false );
-    pMaintenanceComboBox_->setEnabled( false );
-    pMedicalComboBox_    ->setEnabled( false );
-    pSupplyComboBox_     ->setEnabled( false );
-
-    if( !pAgent_->IsAutomate() )
+    if( !selected_ )
         return;
-	
-	std::string strii = pAgent_->GetTypeAutomate()->GetType();	
+    const Agent& agent = *selected_;
 
-    //if( !agent.IsLogisticTC2() )  // $$$$ SBO 2005-10-28: TC2 parent can be something else than itself
-    pTC2ComboBox_->setEnabled( true );
-    if( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() )
-        pMaintenanceComboBox_->setEnabled( true );
-    if( agent.IsLogisticTC2() || agent.IsLogisticSante() )
-        pMedicalComboBox_->setEnabled( true );
-    if( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() )
-        pSupplyComboBox_->setEnabled( true );
+    const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
+    const AutomatType* type = agent.GetAutomatType();
+    if( !log || !type )
+        return;
+    tc2Combo_->SetCurrentItem( log->GetTC2() );
+    maintenanceCombo_->SetCurrentItem( log->GetMaintenance() );
+    medicalCombo_->SetCurrentItem( log->GetMedical() );
+    supplyCombo_->SetCurrentItem( log->GetSupply() );
 
-	pTC2ComboBox_        ->setCurrentItem( 0 );
-	pMaintenanceComboBox_->setCurrentItem( 0 );
-	pMedicalComboBox_    ->setCurrentItem( 0 );
-	pSupplyComboBox_     ->setCurrentItem( 0 );
+    maintenanceCombo_->setEnabled( type->IsTC2() || type->IsLogisticMaintenance() );
+    medicalCombo_->setEnabled( type->IsTC2() || type->IsLogisticMedical() );
+    supplyCombo_->setEnabled( type->IsTC2() || type->IsLogisticSupply() );
+    show();
+}
 
-    ///$$$ TMP DEGUEU
-    CIT_AgentIDMap it;
-    for( it = tc2ComboBoxIDs_.begin(); it != tc2ComboBoxIDs_.end(); ++it )
-    {    
-        if( agent.nTC2_ && agent.nTC2_ == it->second->nAgentID_ )
-            pTC2ComboBox_->setCurrentItem( it->first );
-    }
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyCreated
+// Created: SBO 2006-06-30
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyCreated( const Agent& agent )
+{
+    const AutomatType* type = agent.GetAutomatType();
+    if( !type )
+        return;
+    if( type->IsTC2() )
+        tc2Combo_->AddItem( agent.GetName().c_str(), &agent );
+    if( type->IsLogisticMaintenance() )
+        maintenanceCombo_->AddItem( agent.GetName().c_str(), &agent );
+    if( type->IsLogisticMedical() )
+        medicalCombo_->AddItem( agent.GetName().c_str(), &agent );
+    if( type->IsLogisticSupply() )
+        supplyCombo_->AddItem( agent.GetName().c_str(), &agent );
+}
 
-    for( it = maintenanceComboBoxIDs_.begin(); it != maintenanceComboBoxIDs_.end(); ++it )
-    {    
-        if( agent.nLogMaintenanceSuperior_ && agent.nLogMaintenanceSuperior_ == it->second->nAgentID_ )
-            pMaintenanceComboBox_->setCurrentItem( it->first );
-    }
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyDeleted
+// Created: SBO 2006-06-30
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyDeleted( const Agent& agent )
+{
+    const AutomatType* type = agent.GetAutomatType();
+    if( !type )
+        return;
+    if( type->IsTC2() )
+        tc2Combo_->RemoveItem( &agent );
+    if( type->IsLogisticMaintenance() )
+        maintenanceCombo_->RemoveItem( &agent );
+    if( type->IsLogisticMedical() )
+        medicalCombo_->RemoveItem( &agent );
+    if( type->IsLogisticSupply() )
+        supplyCombo_->RemoveItem( &agent );    
+}
 
-    for( it = medicalComboBoxIDs_.begin(); it != medicalComboBoxIDs_.end(); ++it )
-    {    
-        if( agent.nLogMedicalSuperior_ && agent.nLogMedicalSuperior_ == it->second->nAgentID_ )
-            pMedicalComboBox_->setCurrentItem( it->first );
-    }
-
-    for( it = supplyComboBoxIDs_.begin(); it != supplyComboBoxIDs_.end(); ++it )
-    {    
-        if( agent.nLogSupplySuperior_ && agent.nLogSupplySuperior_ == it->second->nAgentID_ )
-            pSupplyComboBox_->setCurrentItem( it->first );
+namespace
+{
+    unsigned int SetId( ValuedComboBox< const Agent* >& combo, unsigned int& id )
+    {
+        if( combo.isEnabled() )
+        {
+            const Agent* agent = combo.GetValue();
+            id = agent ? agent->GetId() : 0;
+        }
+        return combo.isEnabled();
     }
 }
 
@@ -189,96 +165,18 @@ void ChangeLogisticLinksDialog::SetAgent( Agent& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::Validate()
 {
-    assert( pAgent_ );
-
-	std::string strii = pAgent_->GetTypeAutomate()->GetType();
-
-    if( App::GetApp().IsODBEdition() )
+    if( selected_ )
     {
-        if( pTC2ComboBox_->isEnabled() )
-        {
-            CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
-            if( it != tc2ComboBoxIDs_.end() )
-                pAgent_->nTC2_ = it->second->GetID();
-            else
-                pAgent_->nTC2_ = (uint)0;
-        }
-        if( pMaintenanceComboBox_->isEnabled() )
-        {
-            CIT_AgentIDMap it = maintenanceComboBoxIDs_.find( pMaintenanceComboBox_->currentItem() );
-            if( it != maintenanceComboBoxIDs_.end() )
-                pAgent_->nLogMaintenanceSuperior_ =  it->second->GetID();
-            else
-                pAgent_->nLogMaintenanceSuperior_ = (uint)0;
-        }
-        if( pMedicalComboBox_->isEnabled() )
-        {
-            CIT_AgentIDMap it = medicalComboBoxIDs_.find( pMedicalComboBox_->currentItem() );
-            if( it != medicalComboBoxIDs_.end() )
-                pAgent_->nLogMedicalSuperior_ =  it->second->GetID();
-            else
-                pAgent_->nLogMedicalSuperior_ = (uint)0;
-        }
-        if( pSupplyComboBox_->isEnabled() )
-		{
-			CIT_AgentIDMap it = supplyComboBoxIDs_.find( pSupplyComboBox_->currentItem() );
-			if( it != supplyComboBoxIDs_.end() )
-				pAgent_->nLogSupplySuperior_ =  it->second->GetID();
-			else
-				pAgent_->nLogSupplySuperior_ = (uint)0;
-		}
-	}
-	else
-	{
-		ASN_MsgChangeLiensLogistiques asnMsg;
-		asnMsg.GetAsnMsg().oid_automate = pAgent_->GetID();
+        ASN_MsgChangeLiensLogistiques message;
+        message.GetAsnMsg().oid_automate = selected_->GetId();
 
-		if( pTC2ComboBox_->isEnabled() )
-		{
-			asnMsg.GetAsnMsg().m.oid_tc2Present = 1;
-			CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
-			if( it == tc2ComboBoxIDs_.end() )
-                asnMsg.GetAsnMsg().oid_tc2 = (uint)0;
-            else
-                asnMsg.GetAsnMsg().oid_tc2 = it->second->GetID();
-		}
-
-		if( pMaintenanceComboBox_->isEnabled() )
-		{
-			asnMsg.GetAsnMsg().m.oid_maintenancePresent = 1;
-			CIT_AgentIDMap it = maintenanceComboBoxIDs_.find( pMaintenanceComboBox_->currentItem() );
-			if( it == maintenanceComboBoxIDs_.end() )
-				asnMsg.GetAsnMsg().oid_maintenance = 0;
-			else
-				asnMsg.GetAsnMsg().oid_maintenance = it->second->GetID();
-
-		}
-
-		if( pMedicalComboBox_->isEnabled() )
-		{
-			asnMsg.GetAsnMsg().m.oid_santePresent = 1;
-			CIT_AgentIDMap it = medicalComboBoxIDs_.find( pMedicalComboBox_->currentItem() );
-			if( it == medicalComboBoxIDs_.end() )
-				asnMsg.GetAsnMsg().oid_sante = 0;
-			else
-				asnMsg.GetAsnMsg().oid_sante = it->second->GetID();
-
-		}
-
-		if( pSupplyComboBox_->isEnabled() )
-		{
-			asnMsg.GetAsnMsg().m.oid_ravitaillementPresent = 1;
-			CIT_AgentIDMap it = supplyComboBoxIDs_.find( pSupplyComboBox_->currentItem() );
-			if( it == supplyComboBoxIDs_.end() )
-				asnMsg.GetAsnMsg().oid_ravitaillement = 0;
-			else
-				asnMsg.GetAsnMsg().oid_ravitaillement = it->second->GetID();
-
-		}
-		asnMsg.Send();
-	}
-    pAgent_ = 0;
-    hide();
+        message.GetAsnMsg().m.oid_tc2Present = SetId( *tc2Combo_, message.GetAsnMsg().oid_tc2 );
+        message.GetAsnMsg().m.oid_maintenancePresent = SetId( *maintenanceCombo_, message.GetAsnMsg().oid_maintenance );
+        message.GetAsnMsg().m.oid_santePresent = SetId( *medicalCombo_, message.GetAsnMsg().oid_sante );
+        message.GetAsnMsg().m.oid_ravitaillementPresent = SetId( *supplyCombo_, message.GetAsnMsg().oid_ravitaillement );
+	    message.Send();
+    }
+    Reject();
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +185,21 @@ void ChangeLogisticLinksDialog::Validate()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::Reject()
 {
-    pAgent_ = 0;
+    selected_ = 0;
     hide();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyContextMenu
+// Created: SBO 2006-06-30
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+{
+    const AutomatType* type = agent.GetAutomatType();
+    if( !type || !agent.Retrieve< LogisticLinks >() )
+        return;
+    selected_ = &agent;
+    if( menu.count() )
+        menu.insertSeparator();
+    menu.insertItem( tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );
+}

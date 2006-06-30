@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "Dialogs.h"
 #include "ChangeDiplomacyDialog.h"
+#include "ChangeLogisticLinksDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dialogs constructor
@@ -18,6 +19,7 @@
 Dialogs::Dialogs( QWidget* parent, Controllers& controllers )
 {
     new ChangeDiplomacyDialog( parent, controllers );
+    new ChangeLogisticLinksDialog( parent, controllers );
 }
 
 // -----------------------------------------------------------------------------
