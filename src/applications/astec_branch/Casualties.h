@@ -23,7 +23,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Casualties();
-             Casualties( E_HumanWound wound );
+    explicit Casualties( E_HumanWound wound );
     virtual ~Casualties();
     //@}
 

@@ -19,7 +19,7 @@ Lend::Lend( const EquipmentType& type, const Agent& borrower, unsigned int quant
     , borrower_( & borrower )
     , quantity_( quantity ) 
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,5 +28,5 @@ Lend::Lend( const EquipmentType& type, const Agent& borrower, unsigned int quant
 // -----------------------------------------------------------------------------
 Lend::~Lend()
 {
-
+    // NOTHING
 }
