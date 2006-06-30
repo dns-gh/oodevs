@@ -2511,22 +2511,21 @@ void GLTool::DrawUnit( Agent& agent, E_State nState )
     if( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
         DrawCross( agent.vPos_, GL_CROSSSIZE, 4.0 );
 
-//    for( std::vector< MT_Vector2D >::const_iterator it = agent.reportPoints_.begin(); it != agent.reportPoints_.end(); ++it )
-//        DrawCross( *it, GL_CROSSSIZE, 4.0 );
-
     const std::vector< MT_Vector2D >& debugPoints = agent.GetDebugDrawPoints();
     if( !debugPoints.empty() )
     {
-        GFX_Color color( 0, 255, 0, 1 );
-        color.SetGLColor();
-
-        std::vector< MT_Vector2D >::const_iterator itCur  = debugPoints.begin();
-        std::vector< MT_Vector2D >::const_iterator itNext = itCur;
-        ++ itNext;
-        for( ; itNext != debugPoints.end(); ++itCur, ++itNext )
-            DrawLine( *itCur, *itNext );
-
-        DrawCross( *itCur, GL_CROSSSIZE, 4.0 );
+        for( std::vector< MT_Vector2D >::const_iterator it = debugPoints.begin(); it != debugPoints.end(); ++it )
+            DrawCross( *it, GL_CROSSSIZE, 4.0 );
+//        GFX_Color color( 0, 255, 0, 1 );
+//        color.SetGLColor();
+//
+//        std::vector< MT_Vector2D >::const_iterator itCur  = debugPoints.begin();
+//        std::vector< MT_Vector2D >::const_iterator itNext = itCur;
+//        ++ itNext;
+//        for( ; itNext != debugPoints.end(); ++itCur, ++itNext )
+//            DrawLine( *itCur, *itNext );
+//
+//        DrawCross( *itCur, GL_CROSSSIZE, 4.0 );
     }
 }
 
