@@ -13,6 +13,7 @@
 #include "EntityLayer.h"
 #include "Agent.h"
 #include "ContextMenuObserver_ABC.h"
+#include "SafePointer.h"
 
 // =============================================================================
 /** @class  AgentsLayer
@@ -62,12 +63,13 @@ private:
     virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
     virtual void Select( const Entity_ABC&, bool );
     virtual void DisplayTooltip( const Agent& entity, Displayer_ABC& displayer );
+    void Toggle( const Agent& automat, bool aggregate );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Agent* selected_;
+    SafePointer< Agent > selected_;
     //@}
 };
 

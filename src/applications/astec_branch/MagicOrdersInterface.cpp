@@ -147,7 +147,7 @@ void MagicOrdersInterface::DestroyComponent()
     if( selectedAgent_ )
     {
         // $$$$ AGE 2006-04-28: DIN_Message
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgUnitMagicActionDestroyComposante( *selectedAgent_ );
+        App::GetMessageManager().SendMsgUnitMagicActionDestroyComposante( *selectedAgent_ );
     }
 }
     

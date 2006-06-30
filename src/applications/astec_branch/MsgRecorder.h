@@ -21,6 +21,7 @@
 
 #include "ASN_Types.h"
 class AgentServerMsgMgr;
+class Network;
 namespace internal
 {
     class Message;
@@ -38,7 +39,7 @@ class MsgRecorder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MsgRecorder( AgentServerMsgMgr& msgManager );
+    explicit MsgRecorder( Network& network );
     virtual ~MsgRecorder();
     //@}
 

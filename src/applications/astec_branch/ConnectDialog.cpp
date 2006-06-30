@@ -13,7 +13,6 @@
 
 #include "ConnectDialog.h"
 #include "moc_ConnectDialog.cpp"
-#include "App.h"
 #include "Network.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
@@ -21,8 +20,9 @@
 // Name: ConnectDialog constructor
 // Created:  NLD 2002-01-03 
 //-----------------------------------------------------------------------------
-ConnectDialog::ConnectDialog( QWidget* pParent )
-    : QDialog           ( pParent, 0, true ) 
+ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
+    : QDialog ( pParent, 0, true ) 
+    , network_( network )
 {
     setCaption( tr("Paramètres de connection") );
 
@@ -91,7 +91,7 @@ void ConnectDialog::Validate()
 {
     try
     {
-        App::GetApp().GetNetwork().Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
+        network_.Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
     }
     catch ( std::exception& e )
     {

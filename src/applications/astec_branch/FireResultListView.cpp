@@ -29,7 +29,7 @@ FireResultListView::FireResultListView( QWidget* parent, ItemFactory_ABC& factor
     
     agentDisplay_ = new SubItemDisplayer( "Cible", factory );
     agentDisplay_->AddChild( "Equipements" );
-    agentDisplay_->AddChild( "Humains" ); // $$$$ AGE 2006-03-10: humains ??
+    agentDisplay_->AddChild( "Humains" );
 }
 
 // -----------------------------------------------------------------------------

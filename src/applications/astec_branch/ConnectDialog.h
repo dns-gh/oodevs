@@ -28,6 +28,7 @@ class QComboBox;
 class QSpinBox;
 class QCheckBox;
 class QLabel;
+class Network;
 
 //=============================================================================
 // Created:  NLD 2002-01-03 
@@ -39,7 +40,7 @@ class ConnectDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit ConnectDialog( QWidget* pParent = 0 );
+             ConnectDialog( QWidget* pParent, Network& network );
     virtual ~ConnectDialog();
     //@}
 
@@ -66,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Network&     network_;
     QComboBox*   pHostNameComboBox_;
     QSpinBox*    pPortSpinBox_;
     //@}

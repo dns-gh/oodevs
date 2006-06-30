@@ -17,6 +17,8 @@
 
 class Controllers;
 class Agent;
+class Population;
+class Agent_ABC;
 class QToolBox;
 class Report_ABC;
 
@@ -29,6 +31,9 @@ class Report_ABC;
 class BigBrother : public QVBox
                  , public Observer_ABC
                  , public ContextMenuObserver_ABC< Agent >
+                 , public ContextMenuObserver_ABC< Population >
+                 , public ElementObserver_ABC< Agent >
+                 , public ElementObserver_ABC< Population >
                  , public ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
@@ -43,6 +48,9 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    virtual void NotifyContextMenu( const Population&, QPopupMenu& );
+    virtual void NotifyDeleted( const Agent& agent );
+    virtual void NotifyDeleted( const Population& agent );
     //@}
 
 private slots:
@@ -62,14 +70,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Agent*, int >   T_Agents;
-    typedef T_Agents::const_iterator      CIT_Agents;
+    typedef std::map< const Agent_ABC*, int >   T_Agents;
+    typedef T_Agents::const_iterator          CIT_Agents;
     //@}
 
     //! @name Helpers
     //@{
-    QWidget* CreateView( const Agent& agent );
+    QWidget* CreateView( const Agent_ABC& agent );
     virtual void NotifyCreated( const Report_ABC& report );
+    void NotifyContextMenu( const Agent_ABC&, QPopupMenu& menu );
+    void RemoveAgent( const Agent_ABC& agent );
     //@}
 
 private:
@@ -77,7 +87,7 @@ private:
     //@{
     Controllers& controllers_;
     T_Agents spied_;
-    SafePointer< Agent > selected_;
+    const Agent_ABC* selected_; // $$$$ AGE 2006-06-30: watch deletions
     QToolBox* toolBox_;
     //@}
 };

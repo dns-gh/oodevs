@@ -35,7 +35,6 @@ ObjectKnowledge::ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowle
     , type_          ( & typeResolver.Get( message.type ) )
     , pRealObject_   ( 0 )
 {
-    // $$$$ AGE 2006-02-14: Team !
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
     InterfaceContainer< Extension_ABC >::Register( *this );
     controller_.Create( *this );

@@ -25,9 +25,9 @@ class StatusBar;
 class Simulation;
 class ParametersLayer;
 class AgentsLayer;
-class MsgRecorder;
 class GlPlaceHolder;
 class BigBrother;
+class Network;
 
 // =============================================================================
 /** @class  MainWindow
@@ -51,7 +51,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controllers& controllers, Model& model, MsgRecorder& recorder );
+             MainWindow( Controllers& controllers, Model& model, Network& network );
     virtual ~MainWindow();
     //@}
 
@@ -95,6 +95,7 @@ private:
     //@{
     Controllers& controllers_;
     Model& model_;
+    Network& network_;
     std::string scipioXml_;
 
     GlLayers* layers_;

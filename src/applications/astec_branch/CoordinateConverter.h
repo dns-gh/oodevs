@@ -20,7 +20,6 @@
 
 // =============================================================================
 // Created: APE 2004-07-19
-// $$$$ AGE 2006-03-15: make an iface
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
 class CoordinateConverter : private WorldParameters, public CoordinateConverter_ABC

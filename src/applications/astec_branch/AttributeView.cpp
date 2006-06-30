@@ -11,7 +11,7 @@
 #include "AttributeView.h"
 #include "moc_AttributeView.cpp"
 #include "DataDictionary.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AttributeViewCell.h"
 #include "AttributeViewCellEditor.h"
 #include "Controllers.h"
@@ -20,7 +20,7 @@
 // Name: AttributeView constructor
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const Agent& agent )
+AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const Agent_ABC& agent )
     : QTable( 1, 2, parent )
     , controllers_( controllers )
     , dictionary_( agent.Get< DataDictionary >() )

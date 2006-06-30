@@ -98,7 +98,7 @@ void App::Initialize( int nArgc, char** ppArgv )
     workers_     = new Workers();
     model_       = new Model( *controllers_, *simulation_, *workers_ );
     network_     = new Network( *controllers_, *model_, *simulation_ );
-    mainWindow_  = new MainWindow( *controllers_, *model_, network_->GetMessageMgr().GetMsgRecorder() ); // $$$$ AGE 2006-05-03: 
+    mainWindow_  = new MainWindow( *controllers_, *model_, *network_ );
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
         mainWindow_->Load( conffile );
@@ -152,34 +152,24 @@ App::~App()
 //-----------------------------------------------------------------------------
 void App::UpdateData()
 {
-    static bool bDoMe = true;
     try
     {
-        if( bDoMe )
-            network_->Update();
-    } catch( std::exception& e )
+        network_->Update();
+    } 
+    catch( std::exception& e )
     {
         network_->Disconnect();
-        // $$$$ AGE 2006-05-11: Huhu
         QMessageBox::critical( 0, APP_NAME, e.what(), QMessageBox::Abort, QMessageBox::Abort );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: App::GetApp
-// Created: AGE 2006-03-16
+// Name: App::GetMessageManager
+// Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-App& App::GetApp()
+AgentServerMsgMgr& App::GetMessageManager()
 {
-    return *pInstance_;
+    return pInstance_->network_->GetMessageMgr();
 }
 
-// -----------------------------------------------------------------------------
-// Name: App::GetNetwork
-// Created: AGE 2006-05-03
-// -----------------------------------------------------------------------------
-Network& App::GetNetwork() const
-{
-    return *network_;
-}
 

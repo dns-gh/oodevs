@@ -25,7 +25,7 @@
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
-SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers )
+SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network )
     : QToolBar( pParent, "sim control toolbar" )
     , controllers_( controllers )
     , speed_( 4212 )
@@ -57,10 +57,10 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pSpeedButton_->setText( tr( "Ok" ) );
     pSpeedButton_->setEnabled( false );
 
-    pConnectDlg_ = new ConnectDialog( this );
+    pConnectDlg_ = new ConnectDialog( this, network );
     pConnectDlg_->hide();
 
-    pDisconnectDlg_ = new DisconnectDialog( this );
+    pDisconnectDlg_ = new DisconnectDialog( this, network );
     pDisconnectDlg_->hide();
 
     connect( pConnectButton_, SIGNAL( clicked() ), this, SLOT( SlotConnectDisconnect() ) );

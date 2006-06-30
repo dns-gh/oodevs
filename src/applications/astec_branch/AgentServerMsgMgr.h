@@ -92,7 +92,8 @@ public:
     //-------------------------------------------------------------------------
     //@{
     bool IsPaused() const;
-    MsgRecorder& GetMsgRecorder();
+    void RegisterMessageRecorder( MsgRecorder& recorder );
+    void UnregisterMessageRecorder( MsgRecorder& recorder );
     //@}
 
     
@@ -327,7 +328,7 @@ private:
     Model&       model_;
     Simulation& simulation_;
     boost::mutex& mutex_;
-    MsgRecorder& msgRecorder_;
+    MsgRecorder* msgRecorder_;
 
     DIN::DIN_Link* session_;
     DIN::DIN_MessageServiceUserCbk<AgentServerMsgMgr>*  pMessageService_;
@@ -346,8 +347,6 @@ private:
 
     bool needsVisionCones_, needsVisionSurfaces_;
 };
-
-#   include "AgentServerMsgMgr.inl"
 
 #endif // __AgentServerMsgMgr_h_
 

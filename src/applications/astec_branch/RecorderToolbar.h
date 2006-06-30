@@ -20,6 +20,7 @@
 #define __RecorderToolbar_h_
 
 class MsgRecorder;
+class Network;
 
 // =============================================================================
 /** @class  RecorderToolbar
@@ -34,7 +35,7 @@ class RecorderToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             RecorderToolbar( QMainWindow* pParent, MsgRecorder& msgRecorder );
+             RecorderToolbar( QMainWindow* pParent, Network& network );
     virtual ~RecorderToolbar();
     //@}
 

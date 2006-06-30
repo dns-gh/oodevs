@@ -57,7 +57,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     , session_         ( 0 )
     , bReceivingState_ ( true )
     , mutex_           ( mutex )
-    , msgRecorder_     ( * new MsgRecorder( *this ) )
+    , msgRecorder_     ( 0 )
     , needsVisionCones_( false )
     , needsVisionSurfaces_( false )
 {
@@ -93,7 +93,25 @@ AgentServerMsgMgr::~AgentServerMsgMgr()
 {
     controllers_.Remove( *this );
     delete pMessageService_;
-    delete &msgRecorder_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::RegisterMessageRecorder
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::RegisterMessageRecorder( MsgRecorder& recorder )
+{
+    msgRecorder_ = & recorder;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::UnregisterMessageRecorder
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::UnregisterMessageRecorder( MsgRecorder& recorder )
+{
+    if( msgRecorder_ == & recorder )
+        msgRecorder_  = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -202,9 +220,8 @@ void AgentServerMsgMgr::Enable( DIN::DIN_Link& session )
 void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    if( ! session_ )
-        throw std::runtime_error( "Not connected" );
-    pMessageService_->Send( *session_, id, message );
+    if( session_ )
+        pMessageService_->Send( *session_, id, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,9 +231,8 @@ void AgentServerMsgMgr::Send( unsigned int id, DIN::DIN_BufferedMessage& message
 void AgentServerMsgMgr::Send( unsigned int id )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    if( ! session_ )
-        throw std::runtime_error( "Not connected" );
-    pMessageService_->Send( *session_, id );
+    if( session_ )
+        pMessageService_->Send( *session_, id );
 }
 
 enum E_UnitMagicAction
@@ -558,7 +574,8 @@ void AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& message )
 
     Send( eMsgMosSim, dinMsg );
 
-    msgRecorder_.OnNewMsg( message.t, asnPEREncodeBuffer );
+    if( msgRecorder_ )
+        msgRecorder_->OnNewMsg( message.t, asnPEREncodeBuffer );
 }
 
 
@@ -589,7 +606,8 @@ void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& m
 
     Send( eMsgMosSimWithContext, dinMsg );
 
-    msgRecorder_.OnNewMsgWithContext( message.t, nCtx, asnPEREncodeBuffer );
+    if( msgRecorder_ )
+        msgRecorder_->OnNewMsgWithContext( message.t, nCtx, asnPEREncodeBuffer );
 }
 
 // -----------------------------------------------------------------------------
@@ -1002,7 +1020,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
         if( limit )
             limit->Update( message );
         else
-            Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu
+            Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu. probablement buggué aussi
     }
 }
 

@@ -24,7 +24,7 @@
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
     : EntityLayer< Agent >( controllers, tools, strategy, view )
-    , selected_( 0 )
+    , selected_( controllers )
 {
     // NOTHING
 }
@@ -44,14 +44,7 @@ AgentsLayer::~AgentsLayer()
 // -----------------------------------------------------------------------------
 void AgentsLayer::Aggregate( const Agent& automat )
 {
-    if( automat.GetSuperior() )
-        return;
-    
-    Iterator< const Agent& > children = automat.CreateIterator();
-    while( children.HasMoreElements() )
-        RemoveEntity( children.NextElement() );
-    bool aggregate = true;
-    automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
+    Toggle( automat, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,15 +53,29 @@ void AgentsLayer::Aggregate( const Agent& automat )
 // -----------------------------------------------------------------------------
 void AgentsLayer::Disaggregate( const Agent& automat )
 {
+    Toggle( automat, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Toggle
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void AgentsLayer::Toggle( const Agent& automat, bool aggregate )
+{
     if( automat.GetSuperior() )
         return;
-
     Iterator< const Agent& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
-        AddEntity( children.NextElement() );
-    bool aggregate = false;
+    {
+        const Agent& child = children.NextElement();
+        child.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );    
+        if( aggregate )
+            RemoveEntity( child );
+        else
+            AddEntity( child );
+    }
     automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
-}
+}   
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::Engage

@@ -34,7 +34,7 @@ public:                                                                     \
                                                                             \
         globalAsnMsg.t              = T_MsgsMosSim_msg_##ASNVAR;            \
         globalAsnMsg.u.msg_##ASNVAR  = asnMsg_;                              \
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        App::GetMessageManager().SendMsgMosSim( globalAsnMsg );             \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -58,7 +58,7 @@ public:                                                                     \
                                                                             \
         globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;              \
         globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                              \
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        App::GetMessageManager().SendMsgMosSim( globalAsnMsg );              \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -82,7 +82,7 @@ public:                                                                         
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
         globalAsnMsg.u.msg_##ASNVAR = asnMsg_;                                       \
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        App::GetMessageManager().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
                                                                                     \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
@@ -106,7 +106,7 @@ public:                                                                         
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
         globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                                      \
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        App::GetMessageManager().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
                                                                                     \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
@@ -129,7 +129,7 @@ public:                                                                         
         ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        App::GetMessageManager().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
 };
 
@@ -143,7 +143,7 @@ public:                                                                         
         ASN1T_MsgsMosSim    globalAsnMsg;                                           \
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;                     \
-        App::GetApp().GetNetwork().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        App::GetMessageManager().SendMsgMosSim( globalAsnMsg ); \
     }                                                                               \
 };                                                      
 

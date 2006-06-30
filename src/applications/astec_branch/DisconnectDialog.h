@@ -24,6 +24,8 @@
 
 #include "Types.h"
 
+class Network;
+
 //=============================================================================
 /**
 *   @class  DisconnectDialog
@@ -38,7 +40,7 @@ class DisconnectDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit DisconnectDialog( QWidget* pParent = 0 );
+             DisconnectDialog( QWidget* pParent, Network& network );
     virtual ~DisconnectDialog();
     //@}
 
@@ -54,6 +56,12 @@ private:
     //@{
     DisconnectDialog( const DisconnectDialog& );
     DisconnectDialog& operator=( const DisconnectDialog& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Network& network_;
     //@}
 };
 

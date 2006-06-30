@@ -28,7 +28,7 @@ PerceptionMap::PerceptionMap( Controller& controller, const Resolver_ABC< Agent 
 // -----------------------------------------------------------------------------
 PerceptionMap::~PerceptionMap()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

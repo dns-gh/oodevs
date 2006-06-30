@@ -37,7 +37,6 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
 {
     CreateDictionary();
 
-    // $$$$ AGE 2006-02-16: message.oid_camp
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
     controller_.Create( *this );
 }

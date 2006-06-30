@@ -19,6 +19,7 @@
 #include "astec_pch.h"
 #include "MsgRecorder.h"
 #include "AgentServerMsgMgr.h"
+#include "Network.h"
 #include <fstream>
 
 namespace internal
@@ -128,11 +129,11 @@ void Message::Write( std::ofstream& output ) const
 // Name: MsgRecorder constructor
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-MsgRecorder::MsgRecorder( AgentServerMsgMgr& msgManager )
-    : msgManager_( msgManager )
+MsgRecorder::MsgRecorder( Network& network )
+    : msgManager_( network.GetMessageMgr() )
     , recording_ ( false )
 {
-    // NOTHING
+    msgManager_.RegisterMessageRecorder( *this );   
 }
 
 
@@ -142,6 +143,7 @@ MsgRecorder::MsgRecorder( AgentServerMsgMgr& msgManager )
 // -----------------------------------------------------------------------------
 MsgRecorder::~MsgRecorder()
 {
+    msgManager_.UnregisterMessageRecorder( *this );
     Clear();
 }
 

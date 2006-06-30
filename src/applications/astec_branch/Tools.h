@@ -29,7 +29,6 @@ class QListView;
 class Tools
 {
 public:
-    //$$$$ QString -> const char*
     static QString ToString( E_UnitPosture nPosture );
     static QString ToString( E_TroopHealthState nState );
     static QString ToString( E_FuncLimaType nType );

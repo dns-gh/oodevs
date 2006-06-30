@@ -62,6 +62,7 @@
 #include "Experience.h"
 #include "BigBrother.h"
 #include "MiniViews.h"
+#include "Network.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -77,10 +78,11 @@ using namespace xml;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& recorder )
+MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_( controllers )
     , model_      ( model )
+    , network_    ( network )
     , layers_     ( 0 )
     , widget2d_   ( 0 )
     , widget3d_   ( 0 )
@@ -154,7 +156,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
-    layers_->Register( *new MiscLayer< MissionPanel >( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31: 
+    layers_->Register( *new MiscLayer< MissionPanel >( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31:  // $$$$ AGE 2006-06-30: 
     pMissionPanel_->hide();
 
     // Logger
@@ -177,17 +179,17 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, MsgRecorder& rec
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
     pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
-    layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) );
+    layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) ); // $$$$ AGE 2006-06-30: 
 
     new MagicOrdersInterface( this, controllers_, model_, layers_->GetParametersLayer() );
 
-    new SIMControlToolbar( this, controllers );
+    new SIMControlToolbar( this, controllers, network );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
     new EventToolbar( this, controllers );
-    RecorderToolbar* recorderToolbar = new RecorderToolbar( this, recorder );
+    RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
     new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
 
@@ -274,7 +276,7 @@ void MainWindow::InitializeHumanFactors( const std::string& conffile )
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
-    App::GetApp().GetNetwork().Disconnect();
+    network_.Disconnect();
     model_.Purge();
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );

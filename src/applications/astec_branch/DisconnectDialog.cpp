@@ -13,17 +13,15 @@
 
 #include "DisconnectDialog.h"
 #include "moc_DisconnectDialog.cpp"
-
-#include "App.h"
-#include "MainWindow.h"
 #include "Network.h"
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog constructor
 // Created:  NLD 2002-01-03 
 //-----------------------------------------------------------------------------
-DisconnectDialog::DisconnectDialog( QWidget* pParent )
+DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
     : QDialog( pParent ) 
+    , network_( network )
 {
     setCaption( tr("Déconnexion") );
 
@@ -58,8 +56,8 @@ DisconnectDialog::~DisconnectDialog()
 //-----------------------------------------------------------------------------
 void DisconnectDialog::Validate()
 {
+    network_.Disconnect();
     accept();
-    App::GetApp().GetNetwork().Disconnect(); // $$$$ AGE 2006-03-24: 
 }
 
 //-----------------------------------------------------------------------------

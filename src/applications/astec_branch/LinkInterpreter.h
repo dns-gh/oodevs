@@ -18,8 +18,6 @@ class Controllers;
 // =============================================================================
 /** @class  LinkInterpreter
     @brief  LinkInterpreter
-    // $$$$ AGE 2006-05-11: A un moment il va y avoir des risques rigolos d'injection
-    // $$$$ AGE 2006-05-11: Quand un utilisateur avisé va appeler un objet cmd://format c:
 */
 // Created: AGE 2006-05-11
 // =============================================================================

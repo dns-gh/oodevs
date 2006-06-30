@@ -13,6 +13,7 @@
 #include "Controllers.h"
 #include "ActionController.h"
 #include "Agent.h"
+#include "Population.h"
 #include "AttributeView.h"
 #include "GlWidget.h"
 #include "Positions.h"
@@ -28,7 +29,7 @@
 BigBrother::BigBrother( QWidget* parent, Controllers& controllers )
     : QVBox( parent, "Espion" )
     , controllers_( controllers )
-    , selected_( controllers )
+    , selected_( 0 )
 {
     QVBox* box = new QVBox( this );
     QPushButton* button = new QPushButton( MAKE_ICON( cross ), "Vider", box );
@@ -54,6 +55,53 @@ BigBrother::~BigBrother()
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
 void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+{
+    NotifyContextMenu( (Agent_ABC&)agent, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::NotifyContextMenu
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void BigBrother::NotifyContextMenu( const Population& popu, QPopupMenu& menu )
+{
+    NotifyContextMenu( (Agent_ABC&)popu, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::NotifyDeleted
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void BigBrother::NotifyDeleted( const Agent& agent )
+{
+    RemoveAgent( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::NotifyDeleted
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void BigBrother::NotifyDeleted( const Population& agent )
+{
+    RemoveAgent( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::RemoveAgent
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void BigBrother::RemoveAgent( const Agent_ABC& agent )
+{
+    if( selected_ == &agent )
+        selected_ = 0;
+    spied_.erase( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BigBrother::NotifyContextMenu
+// Created: AGE 2006-06-30
+// -----------------------------------------------------------------------------
+void BigBrother::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     CIT_Agents it = spied_.find( &agent );
     if( it == spied_.end() )
@@ -101,7 +149,7 @@ void BigBrother::RemoveAll()
 // Name: BigBrother::CreateView
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-QWidget* BigBrother::CreateView( const Agent& agent )
+QWidget* BigBrother::CreateView( const Agent_ABC& agent )
 {
     return new AttributeView( this, controllers_, agent );
 }
@@ -112,9 +160,7 @@ QWidget* BigBrother::CreateView( const Agent& agent )
 // -----------------------------------------------------------------------------
 void BigBrother::NotifyCreated( const Report_ABC& report )
 {
-    const Agent* agent = dynamic_cast< const Agent* >( &report.GetAgent() ); // $$$$ SBO 2006-06-26: todo: handle population reports too
-    if( !agent )
-        return;
+    const Agent_ABC* agent = &report.GetAgent();
     CIT_Agents it = spied_.find( agent );
     if( it == spied_.end() )
         return;

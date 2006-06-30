@@ -176,8 +176,7 @@ void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::UpdateToSim()
 {
-    if ( App::GetApp().GetNetwork().IsConnected() )
-        UpdateToSim( nState_ );
+    UpdateToSim( nState_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -24,6 +24,7 @@ class Model;
 class Simulation;
 class Controllers;
 class Workers;
+class AgentServerMsgMgr;
 
 namespace xml { class xistream; }
 
@@ -38,7 +39,9 @@ class App : public QApplication
     Q_OBJECT
 
 public:
-    static App& GetApp(); // $$$$ SBO 2006-03-16: 
+    static AgentServerMsgMgr& GetMessageManager(); // $$$$ SBO 2006-03-16: 
+
+
     static std::string BuildChildPath( const std::string& parent, const std::string& child );
     static std::string BuildWorkingDirectoryPath( const std::string& file );
 
@@ -46,11 +49,6 @@ public:
     //@{
              App( int nArgc, char** ppArgv );
     virtual ~App();
-    //@}
-
-    //! @name Accessors
-    //@{
-    Network&    GetNetwork   () const; // $$$$ AGE 2006-05-03: 
     //@}
 
 private slots:
