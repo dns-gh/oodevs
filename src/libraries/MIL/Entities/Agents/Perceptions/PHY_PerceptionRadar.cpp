@@ -75,9 +75,8 @@ void PHY_PerceptionRadar::DisableRadar( const PHY_RadarClass& radarClass, void* 
 {
     assert( radarZones_.size() > radarClass.GetID() );
     const TER_Localisation* pLocalisation = (const TER_Localisation*)pID;
-    int nOut = radarZones_[ radarClass.GetID() ].erase( pLocalisation );
-    assert( nOut == 1 );
-    delete pLocalisation;
+    if( radarZones_[ radarClass.GetID() ].erase( pLocalisation ) == 1 )
+        delete pLocalisation;
 }
 
 // -----------------------------------------------------------------------------
