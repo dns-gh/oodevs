@@ -62,10 +62,6 @@ private:
     ChangeLogisticLinksDialog& operator=( const ChangeLogisticLinksDialog& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -11,6 +11,7 @@
 #define __Dialogs_h_
 
 class Controllers;
+class Model;
 
 // =============================================================================
 /** @class  Dialogs
@@ -24,7 +25,7 @@ class Dialogs
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, Controllers& controllers );
+             Dialogs( QWidget* parent, Controllers& controllers, const Model& model );
     virtual ~Dialogs();
     //@}
 };

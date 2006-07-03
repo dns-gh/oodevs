@@ -1,65 +1,87 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogisticSupplyChangeQuotasDialog.h $
-// $Author: Age $
-// $Modtime: 6/04/05 17:14 $
-// $Revision: 1 $
-// $Workfile: LogisticSupplyChangeQuotasDialog.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __LogisticSupplyChangeQuotasDialog_h_
 #define __LogisticSupplyChangeQuotasDialog_h_
 
-#include "Types.h"
+#include "ContextMenuObserver_ABC.h"
+#include "SafePointer.h"
+#include "ValuedComboBox.h"
+#include <qdialog.h>
 
-class QListView;
-class QPopupMenu;
-class QComboBox;
-class QComboBoxItem;
+class Controllers;
+class Model;
 class Agent;
+class Dotation;
 
-//=============================================================================
-// Created:  NLD 2002-01-03 
-//=============================================================================
+// =============================================================================
+/** @class  LogisticSupplyChangeQuotasDialog
+    @brief  LogisticSupplyChangeQuotasDialog
+*/
+// Created: SBO 2006-07-03
+// =============================================================================
 class LogisticSupplyChangeQuotasDialog : public QDialog
+                                       , public Observer_ABC
+                                       , public ContextMenuObserver_ABC< Agent >
 {
-    Q_OBJECT
-    MT_COPYNOTALLOWED( LogisticSupplyChangeQuotasDialog );
+    Q_OBJECT;
 
 public:
-     LogisticSupplyChangeQuotasDialog( QWidget* pParent = 0 );
-    ~LogisticSupplyChangeQuotasDialog();
+    //! @name Constructors/Destructor
+    //@{
+             LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, const Model& model );
+    virtual ~LogisticSupplyChangeQuotasDialog();
+    //@}
 
-    void SetAgent( const Agent& agent );
+    //! @name Operations
+    //@{
+    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    //@}
 
 private slots:
-    //-------------------------------------------------------------------------
-    /** @name Main methods */
-    //-------------------------------------------------------------------------
+    //! @name Slots
     //@{
-    void Validate     ();
-    void Reject       ();
-    void OnContextMenu( QListViewItem* pItem, const QPoint& pos, int );
-    void onItemRenamed( QListViewItem* item, int col, const QString& text );
-    void OnSuppliedChanged( int item );
+    void Show();
+    void Validate();
+    void Reject();
+    void OnSelectionChanged();
+    void OnValueChanged( int row, int col );
     //@}
 
 private:
+    //! @name Copy/Assignement
+    //@{
+    LogisticSupplyChangeQuotasDialog( const LogisticSupplyChangeQuotasDialog& );            //!< Copy constructor
+    LogisticSupplyChangeQuotasDialog& operator=( const LogisticSupplyChangeQuotasDialog& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void AddItem();
+    //@}
+
     //! @name Types
     //@{
-    typedef std::map< uint, const Agent* > T_AgentIDMap;
-    typedef T_AgentIDMap::const_iterator       CIT_AgentIDMap;
+    typedef std::map< QString, const Dotation* > T_Supplies;
     //@}
-   
-private:
-    const Agent* pAgent_;
 
-    QListView*    pQuotas_;
-    QComboBox*    pSuppliedComboBox_;
-    QPopupMenu*   pTypesMenu_;   
-    T_AgentIDMap  automateComboBoxIDs_;
+private:
+    //! @name Member data
+    //@{
+    Controllers& controllers_;
+    const Model& model_;
+    ValuedComboBox< const Agent* >* targetCombo_;
+    QTable* table_;
+    SafePointer< Agent > selected_;
+    QStringList dotationTypes_;
+    T_Supplies supplies_;
+    //@}
 };
 
 #endif // __LogisticSupplyChangeQuotasDialog_h_
