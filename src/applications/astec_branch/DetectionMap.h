@@ -10,7 +10,6 @@
 #ifndef __DetectionMap_h_
 #define __DetectionMap_h_
 
-#include "WorldParameters.h"
 #include "graphics/ElevationMap.h"
 
 // =============================================================================
@@ -19,7 +18,7 @@
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class DetectionMap : private WorldParameters
+class DetectionMap
 {
 
 public:

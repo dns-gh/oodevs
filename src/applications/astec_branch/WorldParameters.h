@@ -13,7 +13,6 @@
 // =============================================================================
 /** @class  WorldParameters
     @brief  WorldParameters  
-    // $$$$ AGE 2006-04-28: useless now because of Load. Make public, remove heritage
 */
 // Created: AGE 2006-03-15
 // =============================================================================
@@ -24,7 +23,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              WorldParameters();
-             WorldParameters( const std::string& scipioXml ); 
+    explicit WorldParameters( const std::string& scipioXml ); 
     virtual ~WorldParameters();
     //@}
 
@@ -34,19 +33,13 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
-    //@{
-    WorldParameters( const WorldParameters& );            //!< Copy constructor
-    WorldParameters& operator=( const WorldParameters& ); //!< Assignement operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadTerrain( const std::string& terrain );
     void ReadWorld( const std::string& world );
     //@}
 
-protected:
+public:
     //! @name Member data
     //@{
     float latitude_, longitude_;

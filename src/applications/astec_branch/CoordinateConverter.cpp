@@ -27,13 +27,13 @@ CoordinateConverter::CoordinateConverter()
 // -----------------------------------------------------------------------------
 void CoordinateConverter::Load( const std::string& scipioXml )
 {
-    WorldParameters::Load( scipioXml );
-    geocoord::Geoid::Instance().Initialize( geoid_ );
+    world_.Load( scipioXml );
+    geocoord::Geoid::Instance().Initialize( world_.geoid_ );
 
-    extent_ = geometry::Rectangle2f( 0, 0, width_, height_ );
-    translation_ = geometry::Vector2f( width_ * 0.5, height_ * 0.5 );
+    extent_ = geometry::Rectangle2f( 0, 0, world_.width_, world_.height_ );
+    translation_ = geometry::Vector2f( world_.width_ * 0.5, world_.height_ * 0.5 );
     const double rPiOver180 = std::acos( -1. ) / 180.;
-    parameters_.SetOrigin( latitude_ * rPiOver180, longitude_ * rPiOver180 );
+    parameters_.SetOrigin( world_.latitude_ * rPiOver180, world_.longitude_ * rPiOver180 );
 }
     
 // -----------------------------------------------------------------------------

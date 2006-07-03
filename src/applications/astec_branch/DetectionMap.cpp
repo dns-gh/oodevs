@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "DetectionMap.h"
 #include "pathfind/InputBinaryStream.h"
+#include "WorldParameters.h"
 
 #include "boost/static_assert.hpp"
 
@@ -57,10 +58,10 @@ void DetectionMap::Load( const std::string& scipioXml )
     delete map_;
     delete[] environment_;
 
-    WorldParameters::Load( scipioXml );
-    map_ = new ElevationMap( detection_ );
+    WorldParameters parameters( scipioXml );
+    map_ = new ElevationMap( parameters.detection_ );
 
-    InputBinaryStream archive( detection_ );
+    InputBinaryStream archive( parameters.detection_ );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
     cellsize_ = static_cast< float >( rcs );

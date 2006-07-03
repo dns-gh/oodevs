@@ -36,7 +36,6 @@ class TerrainLayer : public Layer2d_ABC
                    , private GraphicManager_ABC
                    , public Observer_ABC
                    , public OptionsObserver_ABC
-                   , public WorldParameters
                    , public ElementObserver_ABC< ModelLoaded >
 {
 
@@ -109,6 +108,8 @@ private:
     T_Shapes shapes_;
     TristateOption smallNames_;
     TristateOption bigNames_;
+
+    WorldParameters parameters_;
     //@}
 };
 

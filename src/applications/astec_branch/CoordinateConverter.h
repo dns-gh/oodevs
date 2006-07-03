@@ -22,7 +22,7 @@
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
-class CoordinateConverter : private WorldParameters, public CoordinateConverter_ABC
+class CoordinateConverter : public CoordinateConverter_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -58,6 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
+    WorldParameters world_;
     geometry::Rectangle2f extent_;
     geometry::Vector2f    translation_;
 

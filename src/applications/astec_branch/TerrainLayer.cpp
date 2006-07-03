@@ -68,7 +68,7 @@ void TerrainLayer::Purge()
 // -----------------------------------------------------------------------------
 void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    WorldParameters::Load( modelLoaded.scipioXml_ );
+    parameters_.Load( modelLoaded.scipioXml_ );
     Purge();
 }
 
@@ -114,13 +114,13 @@ bool TerrainLayer::ShouldLoad( const std::string& filename )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( shapes_.empty() && !graphicsDirectory_.empty() )
+    if( shapes_.empty() && !parameters_.graphicsDirectory_.empty() )
     {
         controllers_.controller_.Update( InitializationMessage( "Chargement de la planimétrie..." ) );
-        world_.Set( 0, 0, width_, height_ );
+        world_.Set( 0, 0, parameters_.width_, parameters_.height_ );
         DataFactory dataFactory;
         GraphicFactory factory( *this, dataFactory );
-        factory.LoadGraphicDirectory( graphicsDirectory_ );
+        factory.LoadGraphicDirectory( parameters_.graphicsDirectory_ );
     }
 
     glEnableClientState( GL_VERTEX_ARRAY );
