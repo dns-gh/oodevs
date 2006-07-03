@@ -40,9 +40,10 @@ Simulation::~Simulation()
 // Name: Simulation::Connect
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Simulation::Connect()
+void Simulation::Connect( const std::string& host )
 {
     connected_ = true;
+    simulationHost_ = host;
     controllers_.controller_.Update( *this );
 }
 
@@ -111,6 +112,16 @@ void Simulation::EndTick()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::SetConfigPath
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+void Simulation::SetConfigPath( const std::string& path )
+{
+    configPath_ = path;
+    controllers_.controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::GetTime
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
@@ -144,4 +155,22 @@ bool Simulation::IsConnected() const
 int Simulation::GetSpeed() const
 {
     return timeFactor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetConfigPath
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+const std::string& Simulation::GetConfigPath() const
+{
+    return configPath_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetSimulationHost
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+const std::string& Simulation::GetSimulationHost() const
+{
+    return simulationHost_;
 }

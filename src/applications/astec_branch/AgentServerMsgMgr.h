@@ -95,7 +95,6 @@ public:
     void RegisterMessageRecorder( MsgRecorder& recorder );
     void UnregisterMessageRecorder( MsgRecorder& recorder );
     //@}
-
     
     //-------------------------------------------------------------------------
     /** @name Service activation */

@@ -36,13 +36,16 @@ public:
 
     //! @name Operations
     //@{
-    void Connect();
+    void Connect( const std::string& host );
     void Disconnect();
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
     void Update( const ASN1T_MsgCtrlInfo& asnMsg );
     void BeginTick( int );
     void EndTick();
+    void SetConfigPath( const std::string& path );
+    const std::string& GetConfigPath() const;
+    const std::string& GetSimulationHost() const;
 
     int GetTime() const;
     bool IsPaused() const;
@@ -68,6 +71,8 @@ private:
     bool connected_;
     sStartTick startTick_;
     sEndTick endTick_;
+    std::string simulationHost_;
+    std::string configPath_;
     //@}
 };
 

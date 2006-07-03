@@ -87,6 +87,9 @@ private:
 
     template< typename Interface >
     T_Implementations* InitializeImplementations();
+
+    template< typename Interface >
+    T_Implementations* GetImplementations();
     //@}
 
 private:

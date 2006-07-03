@@ -278,7 +278,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& input )
     {
         std::string configPath;
         input >> configPath;
-        // $$$$ AGE 2006-05-16: Deal with it
+        simulation_.SetConfigPath( configPath );
     }
     ToggleVisionCones();
 }

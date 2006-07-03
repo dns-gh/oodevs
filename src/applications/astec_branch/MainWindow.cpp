@@ -243,9 +243,11 @@ void MainWindow::Load( const std::string& scipioXml )
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Load( scipioXml );
-    //    layers_->Load( scipioXml_ );
+
     layers_->ChangeTo( widget2d_ );
     layers_->RegisterTo( widget2d_ );
+    b3d_ = false;
+    controllers_.options_.Change( "3D", b3d_ );
     
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
@@ -423,5 +425,19 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         controllers_.actions_.Select( Nothing() );
         model_.PurgeDynamic();
     }
+    if( simulation.IsConnected() )
+        CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MainWindow::CompareConfigPath
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+void MainWindow::CompareConfigPath( const std::string& server, const std::string& serverPath )
+{
+    // $$$$ AGE 2006-07-03: Do something a bit more clever ?
+    if( scipioXml_.empty()
+     && server.find( "127.0.0.1" ) != std::string::npos
+     && ! serverPath.empty() )
+        Load( serverPath );
+}

@@ -147,7 +147,7 @@ void Network::Update()
                 asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
                 asnMsg.Send();
                 
-                simu_.Connect();
+                simu_.Connect( it->address_ );
             }
             else if( it->lost_ )
             {

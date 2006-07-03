@@ -82,6 +82,8 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
 
     void InitializeHumanFactors( const std::string& scipioXml );
+
+    void CompareConfigPath( const std::string& server, const std::string& serverPath );
     //@}
 
     //! @name Copy/Assignment

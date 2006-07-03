@@ -130,6 +130,20 @@ typename InterfaceContainer< BaseType >::T_Implementations* InterfaceContainer< 
 }
 
 // -----------------------------------------------------------------------------
+// Name: InterfaceContainer::GetImplementations
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+template< typename Interface >
+typename InterfaceContainer< BaseType >::T_Implementations* InterfaceContainer< BaseType >::GetImplementations()
+{
+    T_Implementations*& implementations = FindImplementations< Interface >();
+    if( ! implementations )
+        implementations = InitializeImplementations< Interface >();
+    return implementations;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InterfaceContainer< BaseType >::Apply
 // Created: AGE 2006-02-06
 // -----------------------------------------------------------------------------
@@ -138,9 +152,7 @@ template< typename Method >
 unsigned InterfaceContainer< BaseType >::Apply( Method method )
 {
     typedef typename Extract< Method >::Member Member;
-    T_Implementations*& implementations = FindImplementations< Member >();
-    if( ! implementations )
-        implementations = InitializeImplementations< Member >();
+    T_Implementations* implementations = GetImplementations< Member >();
 
     for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
@@ -160,9 +172,7 @@ template< typename Method, typename T >
 unsigned InterfaceContainer< BaseType >::Apply( Method method, T& argument )
 {
     typedef typename Extract< Method >::Member Member;
-    T_Implementations*& implementations = FindImplementations< Member >();
-    if( ! implementations )
-        implementations = InitializeImplementations< Member >();
+    T_Implementations* implementations = GetImplementations< Member >();
 
     for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
@@ -183,9 +193,7 @@ template< typename Method, typename T1, typename T2 >
 unsigned InterfaceContainer< BaseType >::Apply( Method method, T1& arg1, T2& arg2 )
 {
     typedef typename Extract< Method >::Member Member;
-    T_Implementations*& implementations = FindImplementations< Member >();
-    if( ! implementations )
-        implementations = InitializeImplementations< Member >();
+    T_Implementations* implementations = GetImplementations< Member >();
 
     for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
@@ -205,9 +213,7 @@ template< typename Method, typename T1, typename T2, typename T3 >
 unsigned InterfaceContainer< BaseType >::Apply( Method method, T1& arg1, T2& arg2, T3& arg3 )
 {
     typedef typename Extract< Method >::Member Member;
-    T_Implementations*& implementations = FindImplementations< Member >();
-    if( ! implementations )
-        implementations = InitializeImplementations< Member >();
+    T_Implementations* implementations = GetImplementations< Member >();
 
     for( unsigned int index = 0; index < implementations->second.size(); ++index )
     {
