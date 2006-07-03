@@ -435,9 +435,23 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void MainWindow::CompareConfigPath( const std::string& server, const std::string& serverPath )
 {
-    // $$$$ AGE 2006-07-03: Do something a bit more clever ?
-    if( scipioXml_.empty()
-     && server.find( "127.0.0.1" ) != std::string::npos
-     && ! serverPath.empty() )
+    if( serverPath.empty() || ! scipioXml_.empty() )
+        return;
+    
+    if( server.find( "127.0.0.1" ) != std::string::npos )
         Load( serverPath );
+    else
+        Load( BuildRemotePath( server, serverPath ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::BuildRemotePath
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+std::string MainWindow::BuildRemotePath( std::string server, std::string path )
+{
+    server = server.substr( 0, server.find( ':' ) );
+    const char drive = path.at( 0 );
+    path = path.substr( 2 );
+    return "\\\\" + server + "\\" + drive + '$' + path;
 }

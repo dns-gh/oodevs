@@ -84,6 +84,7 @@ private:
     void InitializeHumanFactors( const std::string& scipioXml );
 
     void CompareConfigPath( const std::string& server, const std::string& serverPath );
+    static std::string BuildRemotePath( std::string server, std::string path );
     //@}
 
     //! @name Copy/Assignment
