@@ -97,6 +97,12 @@ public:
     }
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    Displayer_ABC& GetItemDisplayer( ValuedListItem* item ) { return itemDisplayer_( item ); };
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

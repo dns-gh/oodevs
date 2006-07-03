@@ -27,6 +27,7 @@ class Displayer_ABC;
 /** @class  Report_ABC
     @brief  Report_ABC
     // $$$$ AGE 2006-06-29: Refactor !
+    // $$$$ AGE 2006-07-03: C'est _vraiment_ à chier
 */
 // Created: APE 2004-08-04
 // =============================================================================
@@ -52,6 +53,7 @@ public:
     //! @name Operations
     //@{
     void DisplayInTooltip( Displayer_ABC& displayer ) const;
+    virtual void Display( Displayer_ABC& displayer ) const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -59,15 +61,11 @@ public:
     //-------------------------------------------------------------------------
     //@{
     const Agent_ABC& GetAgent() const;
-    std::string GetTitle() const;
-    std::string GetStrippedTitle() const;
-    bool        IsInteresting() const;
-    int         GetTime () const;
+    
     E_Type      GetType () const;
     bool        IsRCType() const;
 
     bool IsNew() const;
-    void SetNew( bool bNew );
     //@}
 
 private:
@@ -75,6 +73,12 @@ private:
     //@{
     Report_ABC( const Report_ABC& );
     Report_ABC& operator=( const Report_ABC& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    std::string GetStrippedTitle() const;
+    static QColor GetColor( E_Type type );
     //@}
 
 protected:

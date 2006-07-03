@@ -53,8 +53,6 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
 //    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) )                  , &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
 //    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
 //    connect( this, SIGNAL( ReadingReports( Agent_ABC& ) )                     , &MainWindow::GetMainWindow(), SIGNAL( ReadingReports( Agent_ABC& ) ) );
-//
-//    connect( &App::GetApp(), SIGNAL( ReportCreated( Agent_ABC&, Report_ABC& ) ), this, SLOT( OnReportCreated( Agent_ABC&, Report_ABC& ) ) );
 
     controllers_.Register( *this );
 }
@@ -124,7 +122,7 @@ void ReportListView::NotifyUpdated( const Reports& reports )
     if( ! ShouldUpdate( reports ) )
         return;
 
-    DeleteTail( DisplayList( reports.reports_.begin(), reports.reports_.end() ) );
+    DeleteTail( DisplayList( reports.reports_.rbegin(), reports.reports_.rend() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,10 +134,7 @@ void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer
     if( report && & report->GetAgent() == selected_ )
     {
         if( filter_.ShouldDisplay( *report ) )
-        {
-            displayer.Display( "Reçu", QTime().addSecs( report->GetTime() ).toString( "hh:mm:ss" ) );
-            displayer.Display( "Compte-rendu", report->GetTitle() );
-        }
+            report->Display( displayer );
         else
             delete item;
     }
@@ -157,35 +152,7 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
         return;
 
     ValuedListItem* item = factory_.CreateItem( this );
-     // $$$$ AGE 2006-06-29: Display !
-    item->Set( & report, QTime().addSecs( report.GetTime() ).toString( "hh:mm:ss" ), report.GetTitle().c_str() );
-//    if( report.IsRCType() )
-//    {
-//        T_RichReportItem* pItem = new T_RichReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
-//        pItem->setRenameEnabled( 0, false );
-//        pItem->SetBold( report.IsNew() );
-//
-//        RC& rc = (RC&)report;
-//        if( ! rc.GetFragOrders().empty() )
-//            pItem->SetFontColor( QColor( 200, 0, 0 ) );
-//        else if( rc.GetType() == Report_ABC::eMessage ) // blue
-//            pItem->SetFontColor( QColor( 0, 0, 200 ) );
-//        else if( rc.GetType() == Report_ABC::eWarning ) // orange
-//            pItem->SetFontColor( QColor( 255, 128, 64 ) );
-//        else if( rc.GetType() == Report_ABC::eEvent ) // green
-//            pItem->SetFontColor( QColor( 32, 200, 64 ) );
-//
-//    }
-//    else
-//    {
-//        T_ReportItem* pItem = new T_ReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
-//        pItem->setRenameEnabled( 0, false );
-//        QFont font = this->font();
-//        font.setBold( report.IsNew() );
-//        pItem->SetFont( font );
-//        pItem->SetFontColor( QColor( 150, 150, 150 ) );
-//    }
-
+    report.Display( GetItemDisplayer( item ) );
 }
 
     // Before we change the displayed reports, mark the old ones as read.

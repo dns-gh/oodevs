@@ -61,6 +61,7 @@ geometry::Rectangle2f MiniView::GetViewport() const
 {
     if( isVisible() )
     {
+        // $$$$ AGE 2006-07-03: position.GetBoundingBox();
         const geometry::Point2f center = position_.GetPosition();
         const geometry::Vector2f diag( 1000, 1000 );
         return geometry::Rectangle2f( center - diag, center + diag );

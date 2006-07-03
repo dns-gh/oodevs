@@ -9,6 +9,7 @@
 
 #include "astec_pch.h"
 #include "ListItemDisplayer.h"
+#include "RichListItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: ListItemDisplayer constructor
@@ -44,10 +45,21 @@ ListItemDisplayer& ListItemDisplayer::AddColumn( const char* column )
 // Name: ListItemDisplayer::operator()
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& ListItemDisplayer::operator()( QListViewItem* item )
+Displayer_ABC& ListItemDisplayer::operator()( RichListItem* item )
 {
     item_ = item;
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListItemDisplayer::Call
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+void ListItemDisplayer::Call( const QColor& color )
+{
+    if( ! item_ )
+        throw std::runtime_error( "ListItemDisplayer : Item not set" );
+    item_->SetFontColor( color );
 }
 
 // -----------------------------------------------------------------------------

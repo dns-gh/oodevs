@@ -11,7 +11,7 @@
 #define __ListItemDisplayer_h_
 
 #include "BaseDisplayer.h"
-class QListViewItem;
+class RichListItem;
 
 // =============================================================================
 /** @class  ListItemDisplayer
@@ -20,6 +20,7 @@ class QListViewItem;
 // Created: AGE 2006-02-22
 // =============================================================================
 class ListItemDisplayer : public BaseDisplayer
+                        , public Caller< QColor >
 {
 
 public:
@@ -34,7 +35,7 @@ public:
     virtual void Hide();
     ListItemDisplayer& AddColumn( const char* column );
 
-    Displayer_ABC& operator()( QListViewItem* item );
+    Displayer_ABC& operator()( RichListItem* item );
     //@}
 
 private:
@@ -51,6 +52,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Call( const QColor& color );
     virtual Displayer_ABC& SubItem( const char* name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
@@ -61,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QListViewItem* item_;
+    RichListItem* item_;
     int column_;
     QString message_;
     T_Columns columns_;

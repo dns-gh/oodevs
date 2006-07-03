@@ -34,7 +34,6 @@ Report_ABC::Report_ABC( const Agent_ABC& agent, const Simulation& simulation )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Report_ABC destructor
 // Created: APE 2004-08-04
@@ -42,15 +41,6 @@ Report_ABC::Report_ABC( const Agent_ABC& agent, const Simulation& simulation )
 Report_ABC::~Report_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Report_ABC::GetTitle
-// Created: APE 2004-08-04
-// -----------------------------------------------------------------------------
-std::string Report_ABC::GetTitle() const
-{
-    return strTitle_;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,44 +57,12 @@ std::string Report_ABC::GetStrippedTitle() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Report_ABC::IsInteresting()
-// Created: HME 2006-01-13
-// -----------------------------------------------------------------------------
-bool Report_ABC::IsInteresting() const
-{
-    return strTitle_ != GetStrippedTitle()
-        || strTitle_ == "Ennemi détecté"
-        || strTitle_ == "Ennemi reconnu"
-        || strTitle_ == "Ennemi identifié";
-}
-
-// -----------------------------------------------------------------------------
-// Name: Report_ABC::GetTime
-// Created: APE 2004-08-04
-// -----------------------------------------------------------------------------
-int Report_ABC::GetTime() const
-{
-    return nTime_;
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: Report_ABC::IsNew
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
 bool Report_ABC::IsNew() const
 {
     return bNew_;
-}
-    
-
-// -----------------------------------------------------------------------------
-// Name: Report_ABC::SetNew
-// Created: APE 2004-08-04
-// -----------------------------------------------------------------------------
-void Report_ABC::SetNew( bool bNew )
-{
-    bNew_ = bNew;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,4 +104,30 @@ void Report_ABC::DisplayInTooltip( Displayer_ABC& displayer ) const
                 .Add( " " )
                 .Add( GetStrippedTitle() )
              .End();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Report_ABC::GetColor
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+QColor Report_ABC::GetColor( E_Type type )
+{
+    static QColor colors[] = { QColor( 200, 0, 0 ),     // eRC      = 1000,
+                               QColor( 150, 150, 150 ), // eTrace   = 1001,
+                               QColor( 32, 200, 64 ),   // eEvent   = 1002,
+                               QColor( 0, 0, 200 ),     // eMessage = 1003,
+                               QColor( 255, 128, 64 )}; // eWarning = 1004
+    return colors[ type - eRC ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Report_ABC::Display
+// Created: AGE 2006-07-03
+// -----------------------------------------------------------------------------
+void Report_ABC::Display( Displayer_ABC& displayer ) const
+{
+    displayer.Display( 0, GetColor( eType_ ) );
+    displayer.Display( "Reçu", QTime().addSecs( nTime_ ) );
+    displayer.Display( "Compte-rendu", strTitle_ );
+    // $$$$ AGE 2006-07-03: bold si isNew !
 }
