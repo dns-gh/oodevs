@@ -77,6 +77,7 @@ void PHY_MedicalEvacuationConsign::serialize( Archive& file, const uint )
 // =============================================================================
 // STATES
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation
 // Created: NLD 2005-01-10

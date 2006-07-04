@@ -507,7 +507,6 @@ void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& r
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableRadar
 // Created: NLD 2005-05-02
@@ -529,7 +528,7 @@ void PHY_RolePion_Perceiver::EnableRadar( const PHY_RadarClass& radarClass )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::DisableRadar( const PHY_RadarClass& radarClass )
 {
-   if( !pPerceptionRadar_ )
+    if( !pPerceptionRadar_ )
         return;
 
     pPerceptionRadar_->DisableRadar( radarClass );

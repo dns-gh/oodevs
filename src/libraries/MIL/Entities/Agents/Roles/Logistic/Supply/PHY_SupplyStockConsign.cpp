@@ -85,7 +85,7 @@ void PHY_SupplyStockConsign::DoSupply()
     pSupplyState_->Supply();
     delete pSupplyState_;
     pSupplyState_ = 0;
-    pConvoy_->NotifySupplyDone();
+    pConvoy_->EmptyOut();
 }
 
 // -----------------------------------------------------------------------------
@@ -196,8 +196,7 @@ bool PHY_SupplyStockConsign::ConvoyLoad()
 // -----------------------------------------------------------------------------
 void PHY_SupplyStockConsign::EnterStateConvoyLoading()
 {
-    assert( pConvoy_ );
-    
+    assert( pConvoy_ );    
     nTimer_ = pConvoy_->GetLoadingTime();
     SetState( eConvoyLoading );
 }
@@ -233,7 +232,6 @@ bool PHY_SupplyStockConsign::ConvoyUnload()
 void PHY_SupplyStockConsign::EnterStateConvoyUnloading()
 {
     assert( pConvoy_ );
-    
     nTimer_ = pConvoy_->GetUnloadingTime();
     SetState( eConvoyUnloading );
 }
@@ -276,6 +274,8 @@ void PHY_SupplyStockConsign::EnterStateFinished()
         delete pSupplyState_;
         pSupplyState_ = 0;
     }
+
+    pConvoy_->EmptyOut();
 }
 
 // =============================================================================
@@ -325,5 +325,3 @@ void PHY_SupplyStockConsign::SendFullState( NET_ASN_MsgLogRavitaillementTraiteme
     asn.GetAsnMsg().m.oid_pion_convoyantPresent = 1;
     asn.GetAsnMsg().oid_pion_convoyant          = pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0;
 }
-
-

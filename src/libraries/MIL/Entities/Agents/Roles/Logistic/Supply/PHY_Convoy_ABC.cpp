@@ -181,7 +181,6 @@ PHY_Convoy_ABC::~PHY_Convoy_ABC()
     UnlockConvoy();
 }
 
-
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
@@ -324,13 +323,13 @@ bool PHY_Convoy_ABC::ReserveTransporters()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::NotifySupplyDone
-// Created: NLD 2005-02-10
+// Name: PHY_Convoy_ABC::EmptyOut
+// Created: NLD 2006-07-04
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::NotifySupplyDone()
+void PHY_Convoy_ABC::EmptyOut()
 {
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
-        it->second->NotifySupplyDone();
+        it->second->EmptyOut();
 }
 
 // -----------------------------------------------------------------------------

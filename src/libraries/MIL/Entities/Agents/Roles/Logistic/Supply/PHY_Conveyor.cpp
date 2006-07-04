@@ -205,10 +205,10 @@ void PHY_Conveyor::NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Conveyor::NotifySupplyDone
+// Name: PHY_Conveyor::EmptyOut
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
-void PHY_Conveyor::NotifySupplyDone()
+void PHY_Conveyor::EmptyOut()
 {
     dotationsConvoyed_.clear();
 }

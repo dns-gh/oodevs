@@ -84,7 +84,6 @@ protected:
     //@{
     E_State GetState() const;
     void    SetState( E_State nNewState );    
-    void    DoSupply();
     //@} 
 
 private:

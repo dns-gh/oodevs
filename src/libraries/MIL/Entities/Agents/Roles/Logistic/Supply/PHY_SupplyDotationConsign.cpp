@@ -85,7 +85,7 @@ void PHY_SupplyDotationConsign::DoSupply()
     pSupplyState_->Supply();
     delete pSupplyState_;
     pSupplyState_ = 0;
-    pConvoy_->NotifySupplyDone();
+    pConvoy_->EmptyOut();
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,6 @@ void PHY_SupplyDotationConsign::EnterStateConvoyGoingBackToFormingPoint()
     assert( pConvoy_ );
     nTimer_ = pConvoy_->GetTravelTimeToFormingPoint();
     SetState( eConvoyGoingBackToFormingPoint );
-
     DoSupply();
 }
     
@@ -227,8 +226,10 @@ void PHY_SupplyDotationConsign::EnterStateConvoyGoingBackToFormingPoint()
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationConsign::EnterStateFinished()
 {
+    assert( pConvoy_ );
     nTimer_ = 0;
-    SetState( eFinished );
+    SetState( eFinished );    
+    pConvoy_->EmptyOut();
 }
 
 // =============================================================================
