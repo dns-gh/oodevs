@@ -311,7 +311,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
     if( !pEvent->provides( "pointer/pion" ) )
          return;
 
-    QByteArray tmp = pEvent->encodedData( "pointer/pion" );
+    QByteArray tmp = pEvent->encodedData( "pointer/pion" ); // $$$$ AGE 2006-07-04: pointer/pion : bouger dans une statique ailleurs. Renommer au passage ?
 
     ValuedListItem* pItemToDrop = *reinterpret_cast< ValuedListItem** >( tmp.data() );
 
@@ -370,4 +370,15 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
 {
     pEvent->accept( pEvent->provides( "pointer/pion" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyActivated
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyActivated( const Agent& element )
+{
+    ValuedListItem* item = FindItem( &element, firstChild() );    
+    if( item )
+        ensureItemVisible( item );
 }

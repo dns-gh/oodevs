@@ -565,7 +565,6 @@ void AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& message )
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
         asnPEREncodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
         return;
     }
 
@@ -595,7 +594,6 @@ void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& m
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
         asnPEREncodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
         return;
     }
 

@@ -23,6 +23,7 @@
 #include "ElementObserver_ABC.h"
 #include "SelectionObserver_ABC.h"
 #include "OptionsObserver_ABC.h"
+#include "ActivationObserver_ABC.h"
 
 class Team;
 class KnowledgeGroup;
@@ -36,7 +37,6 @@ class ItemFactory_ABC;
 // =============================================================================
 /** @class  AgentListView
     @brief  Displays the agent list sorted by team, gtia and group.
-    // $$$$ AGE 2006-04-20: watch for agent activations and ensure visibility ?
 */
 // Created: APE 2004-03-15
 // =============================================================================
@@ -50,6 +50,7 @@ class AgentListView : public ListView< AgentListView >
                     , public SelectionObserver_Base< KnowledgeGroup >
                     , public SelectionObserver_Base< Agent >
                     , public SelectionObserver_ABC
+                    , public ActivationObserver_ABC< Agent >
                     , public OptionsObserver_ABC
 {
    Q_OBJECT;
@@ -100,6 +101,7 @@ private:
     virtual void Select( const Agent& element );
     virtual void BeforeSelection();
     virtual void AfterSelection();
+    virtual void NotifyActivated( const Agent& element );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
 
     template< typename ParentType, typename ChildType >
