@@ -65,10 +65,10 @@ private:
     //! @name Tools
     //@{
     
-    void ManageOldCheckPoints ( const std::string& newName );
-    void SaveCheckPoint       ( const std::string& strCheckPointName );
-    void SaveCheckPoint       ( const std::string& strName, const std::string& strPath );
-    void SetNextCheckPointTick( uint nTick );
+    void ManageOldCheckPoints    ( const std::string& newName );
+    void SaveCheckPoint          ( const std::string& strCheckPointName );
+    void SaveCheckPoint          ( const std::string& strName, const std::string& strPath );
+    void UpdateNextCheckPointTick();
     //@}
     
     //! @name Tools

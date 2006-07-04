@@ -55,7 +55,7 @@ MIL_CheckPointManager::MIL_CheckPointManager( MIL_InputArchive& archive )
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %f minutes", rCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
     
-    SetNextCheckPointTick( nLastCheckPointTick_ + MIL_Tools::ConvertMinutesToSim( rCheckPointsFrequency_ ) );    
+    UpdateNextCheckPointTick();
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void MIL_CheckPointManager::Update()
     SaveCheckPoint( std::string(), strPath );
 
     nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    SetNextCheckPointTick( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + MIL_Tools::ConvertMinutesToSim( rCheckPointsFrequency_ ) );
+    UpdateNextCheckPointTick();
 }
 
 // =============================================================================
@@ -153,11 +153,13 @@ void MIL_CheckPointManager::Update()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::ConvertMinutesToSim
+// Name: MIL_CheckPointManager::UpdateNextCheckPointTick
 // Created: NLD 2005-12-27
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::SetNextCheckPointTick( uint nTick )
+void MIL_CheckPointManager::UpdateNextCheckPointTick()
 {
+    uint nTick = nLastCheckPointTick_ + MIL_Tools::ConvertMinutesToSim( rCheckPointsFrequency_ );
+
     if( nTick < MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
         nNextCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     else
@@ -414,7 +416,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgC
     NET_ASN_MsgCtrlCheckPointSetFrequencyAck asnReplyMsg;
     asnReplyMsg.Send();
 
-    SetNextCheckPointTick( nLastCheckPointTick_ + MIL_Tools::ConvertMinutesToSim( rCheckPointsFrequency_ ) );
+    UpdateNextCheckPointTick();
 }
 
 // -----------------------------------------------------------------------------
@@ -424,13 +426,13 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgC
 void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> rCheckPointsFrequency_
-         >> nMaxCheckPointNbr_
-         >> nLastCheckPointTick_
-         >> nNextCheckPointTick_;
+         >> nMaxCheckPointNbr_;
    
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %f minutes", rCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
-    SetNextCheckPointTick( nNextCheckPointTick_ );
+
+    nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    UpdateNextCheckPointTick();
 }
 
 // -----------------------------------------------------------------------------
@@ -440,7 +442,5 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << rCheckPointsFrequency_
-         << nMaxCheckPointNbr_
-         << nLastCheckPointTick_
-         << nNextCheckPointTick_;
+         << nMaxCheckPointNbr_;
 }

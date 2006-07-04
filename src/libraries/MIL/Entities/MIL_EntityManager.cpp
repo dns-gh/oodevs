@@ -1176,6 +1176,10 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> rEffectsTime_
          >> rStatesTime_
          >> nRandomBreakdownsNextTimeStep_;
+
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 }
 
 // -----------------------------------------------------------------------------

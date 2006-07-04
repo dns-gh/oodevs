@@ -99,7 +99,6 @@ void MIL_AgentServer::Initialize( MIL_InputArchive& archive )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer destructor
 // Created: DFT 02-02-28
