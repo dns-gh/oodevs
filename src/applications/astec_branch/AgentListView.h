@@ -54,6 +54,13 @@ class AgentListView : public ListView< AgentListView >
                     , public OptionsObserver_ABC
 {
    Q_OBJECT;
+
+public:
+    //! @name Constants
+    //@{
+    static const char* agentMimeType_;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{

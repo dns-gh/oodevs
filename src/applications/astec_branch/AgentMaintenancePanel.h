@@ -19,24 +19,16 @@
 #ifndef __AgentMaintenancePanel_h_
 #define __AgentMaintenancePanel_h_
 
-#include "InfoPanel_ABC.h"
+#include "LogisticPanel.h"
 #include "ElementObserver_ABC.h"
-#include "SelectionObserver_ABC.h"
-#include "SafePointer.h"
+#include "LogMaintenanceConsign.h"
+#include "Agent.h"
 
-class DisplayBuilder;
-class Controllers;
-template< typename T > class ListDisplayer;
+class MaintenanceStates;
+class Availability;
 class Displayer_ABC;
 class ValuedListItem;
-class SubItemDisplayer;
-
-class LogisticConsigns;
-class MaintenanceStates;
-class LogMaintenanceConsign;
-class Agent;
-class Availability;
-class ItemFactory_ABC;
+class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentMaintenancePanel
@@ -44,12 +36,8 @@ class ItemFactory_ABC;
 */
 // Created: AGE 2005-04-01
 // =============================================================================
-class AgentMaintenancePanel : public InfoPanel_ABC
-                            , public Observer_ABC
-                            , public SelectionObserver< Agent >
-                            , public ElementObserver_ABC< LogisticConsigns >
+class AgentMaintenancePanel : public LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >
                             , public ElementObserver_ABC< MaintenanceStates >
-                            , public ElementObserver_ABC< LogMaintenanceConsign >
 {
 public:
     //! @name Constructors/Destructor
@@ -67,13 +55,11 @@ public:
 private:
     //! @name Helpers
     //@{
-    void NotifySelected( const Agent* agent );
-    void NotifyUpdated( const LogisticConsigns& consigns );
-    void NotifyUpdated( const MaintenanceStates& consigns );
-    void NotifyUpdated( const LogMaintenanceConsign& consign );
-    template< typename Extension >
-    bool ShouldUpdate( const Extension& e );
-    void showEvent( QShowEvent* );
+    virtual void NotifySelected( const Agent& agent );
+    virtual void NotifyUpdated( const MaintenanceStates& consigns );
+
+    virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMaintenancePanel >* list );
+    virtual void DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< AgentMaintenancePanel >* list );
     //@}
 
 private:
@@ -81,11 +67,6 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    SafePointer< Agent > selected_;
-    ListDisplayer< AgentMaintenancePanel >* pConsignListView_;
-    ListDisplayer< AgentMaintenancePanel >* pConsignHandledListView_;
-    SubItemDisplayer* logDisplay_;
-
     DisplayBuilder* display_;
     ListDisplayer< AgentMaintenancePanel >* dispoHaulers_;
     ListDisplayer< AgentMaintenancePanel >* dispoRepairers_;

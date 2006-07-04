@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentSupplyPanel.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 10:41 $
-// $Revision: 2 $
-// $Workfile: AgentSupplyPanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "AgentSupplyPanel.h"
@@ -35,25 +26,13 @@
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
 AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "Ch. rav." ) )
+    : LogisticPanel< AgentSupplyPanel, LogSupplyConsign >( pParent, controllers, factory, tr( "Ch. rav." ) )
     , controllers_( controllers )
     , factory_( factory )
-    , selected_( controllers )
 {
-    pConsignListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
-    pConsignListView_->AddColumn( "Demandes logistiques" );
-    pConsignListView_->AddColumn( "" );
-    
-    pConsignHandledListView_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
-    pConsignHandledListView_->AddColumn( "Consignes en traitement" );
-    pConsignHandledListView_->AddColumn( "" );
-
-    logDisplay_ = new SubItemDisplayer( "Consigne :", factory );
-    logDisplay_->AddChild( "Pion demandeur :" )
-                .AddChild( "Pion traitant :" )
-                .AddChild( "Pion fournissant les moyens :" )
-                .AddChild( "Pion convoyant :" )
-                .AddChild( "Etat :" );
+    AddConsignColumn( "Pion fournissant les moyens :" );
+    AddConsignColumn( "Pion convoyant :" );
+    AddConsignColumn( "Etat :" );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Etat chaine rav." )
@@ -86,78 +65,52 @@ AgentSupplyPanel::~AgentSupplyPanel()
 {
     controllers_.Remove( *this );
     delete display_;
-    delete logDisplay_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentSupplyPanel::showEvent
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-void AgentSupplyPanel::showEvent( QShowEvent* )
-{
-    const Agent* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentSupplyPanel::ShouldUpdate
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-template< typename Extension >
-bool AgentSupplyPanel::ShouldUpdate( const Extension& e )
-{
-    return IsVisible() && selected_ && selected_->Retrieve< Extension >() == &e ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentSupplyPanel::NotifySelected
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentSupplyPanel::NotifySelected( const Agent* agent )
+void AgentSupplyPanel::NotifySelected( const Agent& agent )
 {
-    if( ! agent || agent != selected_ )
-    {
-        selected_ = agent;
-        if( selected_ )
-        {
-            pConsignListView_->hide();
-            pConsignHandledListView_->hide();
-            display_->Hide();
-            pStocks_->hide();
-            pQuotas_->hide();
-            pDispoTransporters_->hide();
+    display_->Hide();
+    pStocks_->hide();
+    pQuotas_->hide();
+    pDispoTransporters_->hide();
 
-            if( ! selected_->Get< LogisticConsigns >().requestedSupplies_.empty() || selected_->Retrieve< SupplyStates >() )
-                Show();
-            else
-                Hide();
+    const SupplyStates* states = agent.Retrieve< SupplyStates >();
+    const LogisticConsigns& consigns = agent.Get< LogisticConsigns >();
+    if( ! consigns.requestedSupplies_.empty() 
+       || states )
+        Show();
+    else
+        Hide();
 
-            NotifyUpdated( selected_->Get< LogisticConsigns >() );
-            if( selected_->Retrieve< SupplyStates >() )
-                NotifyUpdated( selected_->Get< SupplyStates >() );
-        }
-        else
-            Hide();
-    }
+    Parent::NotifyUpdated( consigns );
+    if( states )
+        NotifyUpdated( *states );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentSupplyPanel::NotifyUpdated
-// Created: AGE 2006-02-28
+// Name: AgentSupplyPanel::DisplayRequested
+// Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentSupplyPanel::NotifyUpdated( const LogisticConsigns& consigns )
+void AgentSupplyPanel::DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentSupplyPanel >* list )
 {
-    if( ! ShouldUpdate( consigns ) )
-        return;
+    list->DeleteTail( 
+        list->DisplayList( consigns.requestedSupplies_.begin(), consigns.requestedSupplies_.end() )
+    );
+}
 
-    pConsignListView_->DeleteTail( 
-        pConsignListView_->DisplayList( consigns.requestedSupplies_.begin(), consigns.requestedSupplies_.end() )
-        );
-        
-    pConsignHandledListView_->DeleteTail( 
-        pConsignHandledListView_->DisplayList( consigns.handledSupplies_.begin(), consigns.handledSupplies_.end() )
-        );
+// -----------------------------------------------------------------------------
+// Name: AgentSupplyPanel::DisplayHandled
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void AgentSupplyPanel::DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< AgentSupplyPanel >* list )
+{
+    list->DeleteTail( 
+        list->DisplayList( consigns.handledSupplies_.begin(), consigns.handledSupplies_.end() )
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +123,7 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
         return;
 
     item->SetValue( consign );
-    consign->Display( (*logDisplay_)( item ) );
+    consign->Display( GetDisplayer( item ) );
 
     // $$$$ AGE 2006-02-28: crado
     QListViewItem* last  = item->firstChild();
@@ -185,8 +138,12 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
         child = factory_.CreateItem( item, last );
         child->setText( 0, tr( "Dotations demandées/accordées/convoyées" ) );
     }
-    pConsignListView_->DeleteTail( 
-        pConsignListView_->DisplayList( consign->CreateIterator(), child )
+
+    // $$$$ AGE 2006-07-04: 
+    ListDisplayer< AgentSupplyPanel >* list = (ListDisplayer< AgentSupplyPanel >*)( child->listView() );
+
+    list->DeleteTail( 
+        list->DisplayList( consign->CreateIterator(), child )
         );
 }
 
@@ -245,15 +202,3 @@ void AgentSupplyPanel::Display( const Availability& availability, Displayer_ABC&
     availability.Display( displayer );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentSupplyPanel::NotifyUpdated
-// Created: AGE 2006-03-01
-// -----------------------------------------------------------------------------
-void AgentSupplyPanel::NotifyUpdated( const LogSupplyConsign& consign )
-{
-    ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
-    if( ! item )
-        item = FindItem( &consign, pConsignHandledListView_->firstChild() );
-    if( item )
-        consign.Display( (*logDisplay_)( item ) );
-}

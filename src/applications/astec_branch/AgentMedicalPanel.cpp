@@ -24,25 +24,13 @@
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "Ch. medicale" ) )
+    : LogisticPanel< AgentMedicalPanel, LogMedicalConsign >( pParent, controllers, factory, tr( "Ch. medicale" ) )
     , controllers_( controllers )
-    , selected_( controllers )
 {
-    pConsignListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this, factory );
-    pConsignListView_->AddColumn( "Demandes logistiques" );
-    pConsignListView_->AddColumn( "" );
-
-    pConsignHandledListView_ = new ListDisplayer< AgentMedicalPanel >( this, *this, factory );
-    pConsignHandledListView_->AddColumn( "Consignes en traitement" );
-    pConsignHandledListView_->AddColumn( "" );
-
-    logDisplay_ = new SubItemDisplayer( "Consigne :", factory );
-    logDisplay_->AddChild( "Pion demandeur :" )
-                .AddChild( "Pion traitant :" )
-                .AddChild( "Blessure :" )
-                .AddChild( "Reac. mental :" )
-                .AddChild( "Contaminé NBC :" )
-                .AddChild( "Etat :" );
+    AddConsignColumn( "Blessure :" );
+    AddConsignColumn( "Reac. mental :" );
+    AddConsignColumn( "Contaminé NBC :" );
+    AddConsignColumn( "Etat :" );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Etat chaine santé" )
@@ -79,74 +67,46 @@ AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controll
 AgentMedicalPanel::~AgentMedicalPanel()
 {
     controllers_.Remove( *this );
-    delete logDisplay_; 
     delete display_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::showEvent
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-void AgentMedicalPanel::showEvent( QShowEvent* )
-{
-    const Agent* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::ShouldUpdate
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-template< typename Extension >
-bool AgentMedicalPanel::ShouldUpdate( const Extension& e )
-{
-    return IsVisible() && selected_ && selected_->Retrieve< Extension >() == &e ;
-}
 
 // -----------------------------------------------------------------------------
 // Name: AgentMedicalPanel::NotifySelected
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentMedicalPanel::NotifySelected( const Agent* agent )
+void AgentMedicalPanel::NotifySelected( const Agent& agent )
 {
-    if( ! agent || agent != selected_ )
-    {
-        selected_ = agent;
-        if( selected_ )
-        {
-            pConsignListView_->hide();
-            pConsignHandledListView_->hide();
-            display_->Hide();
-            dispoReleveAmbulances_->hide();
-            dispoDispoRamassageAmbulances_->hide();
-            dispoDispoDoctors_->hide();
+    display_->Hide();
+    dispoReleveAmbulances_->hide();
+    dispoDispoRamassageAmbulances_->hide();
+    dispoDispoDoctors_->hide();
 
-            Show();
-            NotifyUpdated( selected_->Get< LogisticConsigns >() );
-            if( selected_->Retrieve< MedicalStates >() )
-                NotifyUpdated( selected_->Get< MedicalStates >() );
-        }
-        else
-            Hide();
-    }
+    Show();
+    Parent::NotifyUpdated( agent.Get< LogisticConsigns >() );
+    if( const MedicalStates* states = agent.Retrieve< MedicalStates >() )
+        NotifyUpdated( *states );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::NotifyUpdated
-// Created: AGE 2006-02-28
+// Name: AgentMedicalPanel::DisplayRequested
+// Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentMedicalPanel::NotifyUpdated( const LogisticConsigns& consigns )
+void AgentMedicalPanel::DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list )
 {
-    if( ! ShouldUpdate( consigns ) )
-        return;
-
-    pConsignListView_->DeleteTail( 
-        pConsignListView_->DisplayList( consigns.requestedMedical_.begin(), consigns.requestedMedical_.end() )
+    list->DeleteTail( 
+        list->DisplayList( consigns.requestedMedical_.begin(), consigns.requestedMedical_.end() )
         );
-        
-    pConsignHandledListView_->DeleteTail( 
-        pConsignHandledListView_->DisplayList( consigns.handledMedical_.begin(), consigns.handledMedical_.end() )
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentMedicalPanel::DisplayHandled
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void AgentMedicalPanel::DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list )
+{
+    list->DeleteTail( 
+        list->DisplayList( consigns.handledMedical_.begin(), consigns.handledMedical_.end() )
         );
 }
 
@@ -159,7 +119,7 @@ void AgentMedicalPanel::Display( const LogMedicalConsign* consign, Displayer_ABC
     if( consign )
     {
         item->SetValue( consign );
-        consign->Display( (*logDisplay_)( item ) );
+        consign->Display( GetDisplayer( item ) );
     }
 }
 
@@ -197,15 +157,3 @@ void AgentMedicalPanel::Display( const Availability& availability, Displayer_ABC
     availability.Display( displayer );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentMedicalPanel::NotifyUpdated
-// Created: AGE 2006-03-01
-// -----------------------------------------------------------------------------
-void AgentMedicalPanel::NotifyUpdated( const LogMedicalConsign& consign )
-{
-    ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
-    if( ! item )
-        item = FindItem( &consign, pConsignHandledListView_->firstChild() );
-    if( item )
-        consign.Display( (*logDisplay_)( item ) );
-}

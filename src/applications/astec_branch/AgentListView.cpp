@@ -24,6 +24,8 @@
 
 #include "moc_AgentListView.cpp"
 
+const char* AgentListView::agentMimeType_ = agentMimeType_;
+
 // -----------------------------------------------------------------------------
 // Name: AgentListView constructor
 // Created: APE 2004-03-18
@@ -297,7 +299,7 @@ QDragObject* AgentListView::dragObject()
 
     QByteArray* pBytes = new QByteArray();
     pBytes->setRawData( (const char*)&pItem, sizeof( QListViewItem* ) );
-    QStoredDrag* data = new QStoredDrag( "pointer/pion", this );
+    QStoredDrag* data = new QStoredDrag( agentMimeType_, this );
     data->setEncodedData( *pBytes );
     return data;
 }
@@ -308,10 +310,10 @@ QDragObject* AgentListView::dragObject()
 // -----------------------------------------------------------------------------
 void AgentListView::dropEvent( QDropEvent* pEvent )
 {
-    if( !pEvent->provides( "pointer/pion" ) )
+    if( !pEvent->provides( agentMimeType_ ) )
          return;
 
-    QByteArray tmp = pEvent->encodedData( "pointer/pion" ); // $$$$ AGE 2006-07-04: pointer/pion : bouger dans une statique ailleurs. Renommer au passage ?
+    QByteArray tmp = pEvent->encodedData( agentMimeType_ );
 
     ValuedListItem* pItemToDrop = *reinterpret_cast< ValuedListItem** >( tmp.data() );
 
@@ -369,7 +371,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 // -----------------------------------------------------------------------------
 void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
 {
-    pEvent->accept( pEvent->provides( "pointer/pion" ) );
+    pEvent->accept( pEvent->provides( agentMimeType_ ) );
 }
 
 // -----------------------------------------------------------------------------

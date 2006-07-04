@@ -10,38 +10,25 @@
 #ifndef __AgentMedicalPanel_h_
 #define __AgentMedicalPanel_h_
 
-#include "InfoPanel_ABC.h"
+#include "LogisticPanel.h"
 #include "ElementObserver_ABC.h"
-#include "SelectionObserver_ABC.h"
-#include "SafePointer.h"
+#include "LogMedicalConsign.h"
+#include "Agent.h"
 
-class DisplayBuilder;
-class Controllers;
-template< typename T > class ListDisplayer;
+class MedicalStates;
+class Availability;
 class Displayer_ABC;
 class ValuedListItem;
-
-class LogisticConsigns;
-class MedicalStates;
-class Agent;
-class LogMedicalConsign;
-class Availability;
-class SubItemDisplayer;
-class ItemFactory_ABC;
+class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentMedicalPanel
     @brief  Agent medical panel
-    // $$$$ AGE 2006-02-28: Factorisations entre panels logistiques !
 */
 // Created: AGE 2005-04-01
 // =============================================================================
-class AgentMedicalPanel : public InfoPanel_ABC
-                        , public Observer_ABC
-                        , public SelectionObserver< Agent >
-                        , public ElementObserver_ABC< LogisticConsigns >
+class AgentMedicalPanel : public LogisticPanel< AgentMedicalPanel, LogMedicalConsign >
                         , public ElementObserver_ABC< MedicalStates >
-                        , public ElementObserver_ABC< LogMedicalConsign >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,26 +46,18 @@ public:
 private:
     //! @name Helpers
     //@{
-    void NotifySelected( const Agent* agent );
-    void NotifyUpdated( const LogisticConsigns& consigns );
+    void NotifySelected( const Agent& agent );
     void NotifyUpdated( const MedicalStates& consigns );
-    void NotifyUpdated( const LogMedicalConsign& consign );
-    template< typename Extension >
-    bool ShouldUpdate( const Extension& e );
-    void showEvent( QShowEvent* );
+
+    virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list );
+    virtual void DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list );
     //@}
 
 private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    SafePointer< Agent > selected_;
-    ListDisplayer< AgentMedicalPanel >* pConsignListView_;
-    ListDisplayer< AgentMedicalPanel >* pConsignHandledListView_;
-    SubItemDisplayer* logDisplay_;
-
     DisplayBuilder* display_;
-
     ListDisplayer< AgentMedicalPanel >* dispoReleveAmbulances_;
     ListDisplayer< AgentMedicalPanel >* dispoDispoRamassageAmbulances_;
     ListDisplayer< AgentMedicalPanel >* dispoDispoDoctors_;
