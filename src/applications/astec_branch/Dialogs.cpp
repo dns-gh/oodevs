@@ -12,6 +12,7 @@
 #include "ChangeDiplomacyDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
+#include "LogisticSupplyPushFlowDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dialogs constructor
@@ -22,6 +23,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model 
     new ChangeDiplomacyDialog( parent, controllers );
     new ChangeLogisticLinksDialog( parent, controllers );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, model );
+    new LogisticSupplyPushFlowDialog( parent, controllers, model );
 }
 
 // -----------------------------------------------------------------------------

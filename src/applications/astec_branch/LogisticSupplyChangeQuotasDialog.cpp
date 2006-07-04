@@ -23,8 +23,6 @@
 #include "ASN_Messages.h"
 #include "ExclusiveComboTableItem.h"
 
-#include <qtable.h>
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
@@ -45,12 +43,14 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
 
-    table_ = new QTable( 0, 2, this );
+    table_ = new QTable( 0, 3, this );
     table_->setMargin( 5 );
     table_->horizontalHeader()->setLabel( 0, tr( "Dotation" ) );
     table_->horizontalHeader()->setLabel( 1, tr( "Quantité" ) );
+    table_->horizontalHeader()->setLabel( 2, tr( "Quota" ) );
     table_->setLeftMargin( 0 );
     table_->setMinimumSize( 220, 200 );
+    table_->setColumnReadOnly( 2, true );
     layout->addWidget( table_ );
 
     box = new QHBox( this );
@@ -176,16 +176,21 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
     if( !agent )
         return;
 
+    const SupplyStates& states = agent->Get< SupplyStates >();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    Iterator< const Dotation& > it = agent->Get< SupplyStates >().CreateIterator();
+    Iterator< const Dotation& > it = states.CreateIterator();
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
         const QString type = dotation.type_->GetCategory().c_str();
         dotationTypes_.append( type );
-        supplies_[ type ] = &dotation;
+        supplies_[ type ] = 0;
     }
+
+    for( std::vector< Dotation >::const_iterator it = states.quotas_.begin(); it != states.quotas_.end(); ++it )
+        supplies_[ it->type_->GetCategory().c_str() ] = &*it;
+
     table_->setNumRows( 0 );
     AddItem();
 }
@@ -212,15 +217,23 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
         if( item.currentItem() && row == table_->numRows() - 1 )
         {
             const int current = item.currentItem();
-            AddItem();
+            if( table_->numRows() < dotationTypes_.size() - 1 )
+                AddItem();
             item.setCurrentItem( current );
         }
         table_->setCurrentCell( row, 1 );
         if( ! table_->text( row, 0 ).isEmpty() )
         {
-            table_->setText( row, 1, QString::number( supplies_[ table_->text( row, 0 ) ]->quantity_ ) );
+            const Dotation* dotation = supplies_[ table_->text( row, 0 ) ];
+            table_->setText( row, 2, QString::number( dotation ? dotation->quantity_ : 0 ) );
             table_->adjustColumn( 0 );
             table_->adjustColumn( 1 );
+            table_->adjustColumn( 2 );
+        }
+        else
+        {
+            table_->setText( row, 1, "" );
+            table_->setText( row, 2, "" );
         }
     }
     else if( col == 1 )

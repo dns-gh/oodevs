@@ -1,239 +1,253 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogisticSupplyPushFlowDialog.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 17:35 $
-// $Revision: 2 $
-// $Workfile: LogisticSupplyPushFlowDialog.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
-
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-
-#include "App.h"
-#include "ASN_Messages.h"
-#include "Attr_Def.h"
-#include "Agent.h"
-#include "AgentManager.h"
+#include "Controllers.h"
 #include "Model.h"
+#include "Agent.h"
+#include "AgentsModel.h"
+#include "AutomatType.h"
+#include "Dotation.h"
+#include "DotationType.h"
+#include "LogisticLinks.h"
+#include "SupplyStates.h"
+#include "Iterator.h"
+#include "ASN_Messages.h"
+#include "ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor
-// Created: NLD 2004-10-25
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* pParent  )
-    : QDialog           ( pParent, "Pousser flux" )
-    , pAgent_           ( 0 )
-    , pStocks_          ( 0 )
-    , pTypesMenu_       ( 0 )
-    , pSuppliedComboBox_( 0 )
-    , bInitialized_     ( false )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, const Model& model )
+    : QDialog( parent, "Pousser flux log" )
+    , controllers_( controllers )
+    , model_( model )
+    , selected_( controllers )
 {
-//    resize( 400, 150 );
-    setCaption( tr( "Pousser flux" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    setCaption( tr( "Pousser des flux" ) );
+    QVBoxLayout* layout = new QVBoxLayout( this );
 
-    pSuppliedComboBox_ = new QComboBox( FALSE, this );
-    pMainLayout->addWidget( pSuppliedComboBox_ );
+    QHBox* box = new QHBox( this );
+    box->setMargin( 5 );
+    new QLabel( tr( "Cible:" ), box );
+    targetCombo_ = new ValuedComboBox< const Agent* >( box );
+    targetCombo_->setMinimumWidth( 150 );
+    layout->addWidget( box );
 
-    pStocks_ = new QListView( this, "" );
-    pStocks_->addColumn( tr( "Dotation" ) );
-    pStocks_->addColumn( tr( "Quantité" ) );
-    pStocks_->setSorting( -1 );
-    pStocks_->setDefaultRenameAction( QListView::Accept );
-    pMainLayout->addWidget( pStocks_ );
-   
-    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
-    QPushButton* pCancelButton = new QPushButton( tr("Annuler"), this );
-    QPushButton* pOKButton     = new QPushButton( tr("OK")    , this );
-    pButtonLayout->addWidget( pCancelButton );
-    pButtonLayout->addWidget( pOKButton     );
-    pOKButton->setDefault( TRUE );
+    table_ = new QTable( 0, 3, this );
+    table_->setMargin( 5 );
+    table_->horizontalHeader()->setLabel( 0, tr( "Dotation" ) );
+    table_->horizontalHeader()->setLabel( 1, tr( "Quantité" ) );
+    table_->horizontalHeader()->setLabel( 2, tr( "Disponible" ) );
+    table_->setLeftMargin( 0 );
+    table_->setMinimumSize( 300, 200 );
+    table_->setColumnReadOnly( 2, true );
+    layout->addWidget( table_ );
 
-    connect( pCancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
-    connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );    
+    box = new QHBox( this );
+    box->setMargin( 5 );
+    QPushButton* okButton = new QPushButton( tr( "OK" ), box );
+    QPushButton* cancelButton = new QPushButton( tr( "Annuler" ), box );
+    okButton->setDefault( true );
+    layout->addWidget( box );
 
-    pTypesMenu_ = new QPopupMenu( this );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
 
-    connect( pStocks_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ), SLOT(OnContextMenu( QListViewItem*, const QPoint&, int )) );
-    connect( pSuppliedComboBox_, SIGNAL( activated( int ) ), SLOT( OnSuppliedChanged( int ) ) );
+    connect( targetCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSelectionChanged() ) );
+    connect( table_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
+
+    controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog destructor
-// Created: NLD 2004-10-25
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 {
-
-}
-
-namespace
-{
-    template< typename Container, typename Combo >
-    struct SupplyFiller
-    {
-        SupplyFiller( const Agent& agent, Container& cont, Combo* combo ) 
-            : agent_( agent ), cont_( cont ), combo_( combo ) {};
-        void operator()( const Agent& o ) const
-        {
-            if( o.nLogSupplySuperior_ == agent_.GetID() )
-            {
-                cont_.insert( std::make_pair( combo_->count(), &o ) );
-                combo_->insertItem( o.GetName().c_str() );
-            }
-        };
-    private:
-        SupplyFiller& operator=( const SupplyFiller& );
-        mutable Container& cont_;
-        mutable Combo* combo_;
-        const Agent& agent_;
-    };
-    template< typename Container, typename Combo >
-    SupplyFiller< Container, Combo > SupplyFill( const Agent& agent, Container& cont, Combo* combo )
-    {
-        return SupplyFiller< Container, Combo >( agent, cont, combo );
-    }
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::SetAgent
-// Created: NLD 2004-11-30
+// Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::SetAgent( const Agent& agent )
+void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 {
-    pAgent_ = &agent;
+    const AutomatType* type = agent.GetAutomatType();
+    if( !type || !type->IsLogisticSupply() )
+        return;
+    selected_ = &agent;
+    if( menu.count() )
+        menu.insertSeparator();
+    menu.insertItem( tr( "Pousser des flux" ), this, SLOT( Show() ) );
+}
 
-    pStocks_->clear();
-    pTypesMenu_->clear();
-    if( ! agent.pSupplyData_ )
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::Show
+// Created: SBO 2006-07-03
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::Show()
+{
+    if( !selected_ )
         return;
 
-    automateComboBoxIDs_.clear();
-    pSuppliedComboBox_->clear();
-
-    App::GetApp().GetModel().ApplyOnAgents( SupplyFill( agent, automateComboBoxIDs_, pSuppliedComboBox_ ) );
-    if( pSuppliedComboBox_->count() > 0 )
-        OnSuppliedChanged( pSuppliedComboBox_->currentItem() );
+    targetCombo_->Clear();
+    Iterator< const Agent& > it = model_.agents_.Resolver< Agent >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent& agent = it.NextElement();
+        const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
+        if( log && log->GetSupply() == selected_ )
+            targetCombo_->AddItem( agent.GetName().c_str(), &agent );
+    }
+    OnSelectionChanged();
+    show();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::Validate
-// Created: NLD 2004-10-25
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    assert( pAgent_ );
+    const Agent* target = targetCombo_->GetValue();
+    if( !selected_ || !target )
+        return;
 
-    ASN_MsgLogRavitaillementPousserFlux asnMsg;
+    ASN_MsgLogRavitaillementPousserFlux message;
 
-    asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetID();
-    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pSuppliedComboBox_->currentItem() )->second->GetID();
+    message.GetAsnMsg().oid_donneur  = selected_->GetId();
+    message.GetAsnMsg().oid_receveur = target->GetId();
 
-    asnMsg.GetAsnMsg().stocks.n = pStocks_->childCount();
-    if( asnMsg.GetAsnMsg().stocks.n > 0 )
+    unsigned int rows = 0;
+    for( int i = 0; i < table_->numRows(); ++i )
+        if( !table_->item( i, 0 )->text().isEmpty() )
+            ++rows;
+
+    message.GetAsnMsg().stocks.n = rows;
+    if( rows > 0 )
     {
-        ASN1T_DotationStock* pAsnStock = new ASN1T_DotationStock[ asnMsg.GetAsnMsg().stocks.n ];
-        QListViewItem* pItem = pStocks_->firstChild();
-        uint i = 0;
-        while( pItem )
+        ASN1T_DotationStock* stock = new ASN1T_DotationStock[rows];
+        for( int i = 0; i < table_->numRows(); ++i )
         {
-            pAsnStock[i].ressource_id        = App::GetApp().GetRessourceID( pItem->text( 0 ).ascii() );
-            pAsnStock[i].quantite_disponible = pItem->text( 1 ).toInt();
-            ++i;
-            pItem = pItem->nextSibling();
+            const QString text = table_->text( i, 0 );
+            if( text.isEmpty() )
+                continue;
+            stock[i].ressource_id        = supplies_[ text ]->type_->GetId();
+            stock[i].quantite_disponible = table_->text( i, 1 ).toInt();
         }
-
-        asnMsg.GetAsnMsg().stocks.elem = pAsnStock;
+        message.GetAsnMsg().stocks.elem = stock;
     }
-
-    asnMsg.Send();
-    if( asnMsg.GetAsnMsg().stocks.n > 0 )
-        delete [] asnMsg.GetAsnMsg().stocks.elem;
-
+    message.Send();
+    if( message.GetAsnMsg().stocks.n > 0 )
+        delete [] message.GetAsnMsg().stocks.elem;
     hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::Reject
-// Created: NLD 2004-10-25
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Reject()
 {
-    pAgent_ = 0;
+    selected_ = 0;
     hide();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::OnContextMenu
-// Created: NLD 2005-02-03
+// Name: LogisticSupplyPushFlowDialog::OnSelectionChanged
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::OnContextMenu( QListViewItem* pItem, const QPoint& pos, int )
+void LogisticSupplyPushFlowDialog::OnSelectionChanged()
 {
-    static QPopupMenu* pMenu  = new QPopupMenu( this );
-
-    pMenu->clear();
-    pMenu->insertItem( tr( "Ajouter dotation" ), pTypesMenu_ );
-
-    if( pItem != 0 )
-        pMenu->insertItem( tr( "Effacer dotation" ), 0 );
-
-    int nResult =pMenu->exec( pos );
-    if( nResult == -1 )
+    const Agent* agent = targetCombo_->GetValue();
+    if( !agent )
         return;
 
-    if( nResult == 0 )
+    dotationTypes_.clear();
+    dotationTypes_.append( "" );
+    Iterator< const Dotation& > it = agent->Get< SupplyStates >().CreateIterator();
+    while( it.HasMoreElements() )
     {
-        assert( pItem != 0 );
-        delete pItem;
+        const Dotation& dotation = it.NextElement();
+        const QString type = dotation.type_->GetCategory().c_str();
+        dotationTypes_.append( type );
+        supplies_[ type ] = &dotation;
     }
-    else
+    table_->setNumRows( 0 );
+    AddItem();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::OnValueChanged
+// Created: SBO 2006-07-03
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::OnValueChanged( int row, int col )
+{
+    const Agent* agent = targetCombo_->GetValue();
+    if( !selected_ || !agent )
+        return;
+
+    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( table_->item( row, 0 ) );
+    if( col == 0 )
     {
-        QListViewItem* pItem = new QListViewItem( pStocks_, pStocks_->lastItem(), pTypesMenu_->text( nResult ), "1" );
-        pItem->setRenameEnabled( 1, true );
+        if( item.currentItem() == 0 && row != table_->numRows() - 1 )
+        {
+            table_->removeRow( row );
+            table_->setCurrentCell( table_->numRows() - 1, 1 );
+            return;
+        }
+        if( item.currentItem() && row == table_->numRows() - 1 )
+        {
+            const int current = item.currentItem();
+            if( table_->numRows() < dotationTypes_.size() - 1 )
+                AddItem();
+            item.setCurrentItem( current );
+        }
+        table_->setCurrentCell( row, 1 );
+        if( ! table_->text( row, 0 ).isEmpty() )
+        {
+            table_->setText( row, 1, "1" );
+            table_->setText( row, 2, QString::number( supplies_[ table_->text( row, 0 ) ]->quantity_ ) );
+            table_->adjustColumn( 0 );
+            table_->adjustColumn( 1 );
+            table_->adjustColumn( 2 );
+        }
+        else
+        {
+            table_->setText( row, 1, "" );
+            table_->setText( row, 2, "" );
+        }
+    }
+    else if( col == 1 )
+    {
+        // $$$$ SBO 2006-07-03: check value/stock 
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::OnSuppliedChanged
-// Created: SBO 2005-10-27
+// Name: LogisticSupplyPushFlowDialog::AddItem
+// Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::OnSuppliedChanged( int nItem )
+void LogisticSupplyPushFlowDialog::AddItem()
 {
-    CIT_AgentIDMap itSupplied = automateComboBoxIDs_.find( nItem );
-    assert( itSupplied != automateComboBoxIDs_.end() );
-
-    const Agent& supplied = *itSupplied->second;
-
-    std::set< std::string > menuRessources;
-
-    pTypesMenu_->clear();
-    const T_ResourceQty_Map& ressources = supplied.pSupplyData_->stocks_;
-    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
-    {
-        const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
-        pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
-        menuRessources.insert( strRessourceName );
-    }
-
-    const Agent::T_AgentVector& childs = supplied.children_;
-    for( Agent::CIT_AgentVector itChild = childs.begin(); itChild != childs.end(); ++itChild )
-    {
-        if( !( *itChild )->pSupplyData_ )
-            continue;
-        const T_ResourceQty_Map& ressources = ( *itChild )->pSupplyData_->stocks_;
-        for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
-        {
-            const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
-            if( menuRessources.find( strRessourceName ) == menuRessources.end() )
-            {
-                pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
-                menuRessources.insert( strRessourceName );
-            }
-        }
-    }
+    const Agent* agent = targetCombo_->GetValue();
+    if( !selected_ || !agent )
+        return;
+    const unsigned int rows = table_->numRows() + 1;
+    table_->setNumRows( rows );
+    table_->setItem( rows - 1, 0, new ExclusiveComboTableItem( table_, dotationTypes_ ) );
+    table_->setCurrentCell( rows - 1, 1 );
 }
