@@ -12,7 +12,6 @@
 
 #include "ASN_Types.h"
 #include "Agent_ABC.h"
-#include "Resolver_ABC.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver.h"

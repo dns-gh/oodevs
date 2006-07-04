@@ -41,6 +41,16 @@ public:
             functor( *it->second );
     };
 
+    template< typename Functor >
+    void Apply( const Functor& functor ) const
+    {
+        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        {
+            const T& element = *it->second;
+            functor( element );
+        }
+    };
+
     Iterator< const T& > CreateIterator() const
     {
         return new AssociativeIterator< const T&, T_Elements >( elements_ );

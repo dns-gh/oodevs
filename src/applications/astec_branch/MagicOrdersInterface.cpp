@@ -21,6 +21,8 @@
 #include "ParametersLayer.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "ChangeHumanFactorsDialog.h"
+#include "KnowledgeGroup.h"
+#include "Team.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor
@@ -31,6 +33,8 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     , controllers_( controllers )
     , model_( model )
     , selectedAgent_( controllers )
+    , selectedGroup_( controllers )
+    , selectedTeam_( controllers )
     , controller_( true )
     , magicMove_( false )
 {
@@ -61,6 +65,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent& agent, QPopupMenu& me
         return;
 
     selectedAgent_ = &agent;
+    selectedGroup_ = 0;
     const MagicOrders& orders = agent.Get< MagicOrders >();
     QPopupMenu* magicMenu = new QPopupMenu( &menu );
 
@@ -82,6 +87,51 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent& agent, QPopupMenu& me
         AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
 
     menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyContextMenu
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup& group, QPopupMenu& menu )
+{   
+    if( !controller_ )
+        return;
+    selectedAgent_ = 0;
+    selectedGroup_ = &group;
+    selectedTeam_ = 0;
+    QPopupMenu* magicMenu = new QPopupMenu( &menu );
+    FillCommonOrders( magicMenu );
+    menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+} 
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyContextMenu
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyContextMenu( const Team& team, QPopupMenu& menu )
+{
+    if( !controller_ )
+        return;
+    selectedAgent_ = 0;
+    selectedGroup_ = 0;
+    selectedTeam_ = &team;
+    QPopupMenu* magicMenu = new QPopupMenu( &menu );
+    FillCommonOrders( magicMenu );
+    menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::FillCommonOrders
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
+{
+    AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
+    AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
+    AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
+    AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
+    AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +163,37 @@ int MagicOrdersInterface::AddMagic( const QString& label, const char* slot, QPop
     return menu->insertItem( label, this, slot );
 }
 
+
+namespace
+{
+    struct MagicFunctor
+    {
+        MagicFunctor( int id ) : id_( id ) {};
+        void operator()( const Agent& agent ) const
+        {
+            ASN_MsgUnitMagicAction asnMsg;
+            asnMsg.GetAsnMsg().oid      = agent.GetId();
+            asnMsg.GetAsnMsg().action.t = id_;
+            asnMsg.Send();
+        }
+        int id_;
+    };
+
+    struct RecursiveMagicFunctor : public MagicFunctor
+    {
+        RecursiveMagicFunctor( int id ) : MagicFunctor( id ) {};
+        void operator()( const Agent& agent ) const
+        {
+            MagicFunctor::operator()( agent );
+            agent.Resolver< Agent >::Apply( *this );
+        }
+        void operator()( const KnowledgeGroup& group ) const
+        {
+            group.Resolver< Agent >::Apply( *this );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::Magic
 // Created: AGE 2006-04-28
@@ -121,11 +202,38 @@ void MagicOrdersInterface::Magic( int type )
 {
     if( selectedAgent_ )
     {
-        ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid      = selectedAgent_->GetId();
-        asnMsg.GetAsnMsg().action.t = type;
-        asnMsg.Send();
+        MagicFunctor functor( type );
+        functor( *selectedAgent_ );
+        selectedAgent_ = 0;
+    } 
+    else if( selectedGroup_ )
+    {
+        ApplyOnHierarchy( *selectedGroup_, type );
+        selectedGroup_ = 0;
     }
+    else if( selectedTeam_ )
+    {
+        ApplyOnHierarchy( *selectedTeam_, type );
+        selectedTeam_ = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::ApplyOnHierarchy
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id )
+{
+    group.Resolver< Agent >::Apply( RecursiveMagicFunctor( id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::ApplyOnHierarchy
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::ApplyOnHierarchy( const Team& team, int id )
+{
+    team.Resolver< KnowledgeGroup >::Apply( RecursiveMagicFunctor( id ) );
 }
 
 // -----------------------------------------------------------------------------
