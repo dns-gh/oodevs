@@ -44,7 +44,7 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFa
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     controllers_.Register( *this );
 }
 

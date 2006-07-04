@@ -37,9 +37,10 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
     setResizeMode( QListView::LastColumn );
     setAcceptDrops( true );
 
-    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-    connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( spacePressed    ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
 
     controllers_.Register( *this );
 }
@@ -106,6 +107,19 @@ void PopulationListView::OnRequestCenter()
     {
         ValuedListItem* item = (ValuedListItem*)( selectedItem() );
         item->Activate( controllers_.actions_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::OnContextMenuRequested
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void PopulationListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+{
+    if( i )
+    {
+        ValuedListItem* item = (ValuedListItem*)( i );
+        item->ContextMenu( controllers_.actions_, pos );
     }
 }
 
