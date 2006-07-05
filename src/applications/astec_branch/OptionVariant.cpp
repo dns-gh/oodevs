@@ -8,60 +8,58 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "OptionMenu.h"
-#include "moc_OptionMenu.cpp"
+#include "OptionVariant.h"
 
 // -----------------------------------------------------------------------------
-// Name: OptionMenuBase constructor
-// Created: SBO 2006-04-28
+// Name: OptionVariant constructor
+// Created: AGE 2006-07-05
 // -----------------------------------------------------------------------------
-OptionMenuBase::OptionMenuBase( QWidget* parent )
-    : QPopupMenu( parent )
-    , selected_( -1 )
-{
-    connect( this, SIGNAL( activated( int ) ), this, SLOT( OnItemSelected( int ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionMenuBase destructor
-// Created: SBO 2006-04-28
-// -----------------------------------------------------------------------------
-OptionMenuBase::~OptionMenuBase()
+OptionVariant::OptionVariant()
+    : holder_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionMenuBase::AddItem
-// Created: SBO 2006-04-28
+// Name: OptionVariant constructor
+// Created: AGE 2006-07-05
 // -----------------------------------------------------------------------------
-void OptionMenuBase::AddItem( const QString& label, int i )
+OptionVariant::OptionVariant( const OptionVariant& rhs )
+    : holder_( rhs.holder_ ? rhs.holder_->Clone() : 0 )
 {
-    insertItem( label, i );
-    if( selected_ == -1 )
-        Select( i );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionMenuBase::OnItemSelected
-// Created: AGE 2006-03-27
+// Name: OptionVariant destructor
+// Created: AGE 2006-07-05
 // -----------------------------------------------------------------------------
-void OptionMenuBase::OnItemSelected( int id )
+OptionVariant::~OptionVariant()
 {
-    Select( id );
-    OnSelected( id );
+    delete holder_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionMenuBase::Select
-// Created: AGE 2006-03-27
+// Name: OptionVariant::Save
+// Created: AGE 2006-07-05
 // -----------------------------------------------------------------------------
-void OptionMenuBase::Select( int id )
+void OptionVariant::Save( Settings& settings, const std::string& name ) const
 {
-    if( id == selected_ )
-        return;
+    if( holder_ )
+        holder_->Save( settings, name );
+}
 
-    setItemChecked( selected_, false );
-    selected_ = id;
-    setItemChecked( selected_, true );
+// -----------------------------------------------------------------------------
+// Name: OptionVariant::operator=
+// Created: AGE 2006-07-05
+// -----------------------------------------------------------------------------
+OptionVariant& OptionVariant::operator=( const OptionVariant& rhs )
+{
+    if( & rhs != this )
+    {
+        delete holder_; holder_ = 0;
+        if( rhs.holder_ )
+            holder_ = rhs.holder_->Clone();
+    }
+    return *this;
 }

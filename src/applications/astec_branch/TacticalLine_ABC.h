@@ -103,6 +103,8 @@ protected:
         nNetworkState_ = eNetworkStateRegistering;
     }
     void DrawName( const GlTools_ABC& tools ) const;
+    template< typename Ack >
+    void ValidateAcknowledge( const Ack& ack );
     //@}
 
 private:

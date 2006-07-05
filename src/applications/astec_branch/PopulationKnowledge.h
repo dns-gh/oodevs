@@ -91,6 +91,7 @@ private:
 
     const Population& popu_;
     unsigned long nID_;
+    unsigned int domination_;
     //@}
 };
 

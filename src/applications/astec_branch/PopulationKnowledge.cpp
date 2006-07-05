@@ -31,6 +31,7 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup& group, Controlle
     , converter_ ( converter )
     , nID_       ( message.oid_connaissance )
     , popu_      ( resolver.Get( message.oid_population_reelle ) )
+    , domination_( 0 )
 {
     controller_.Create( *this );
 }
@@ -68,10 +69,10 @@ std::string PopulationKnowledge::GetName() const
 // Name: PopulationKnowledge::Update
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& )
+void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& message )
 {
-    // message.etat_domination // $$$$ AGE 2006-03-13: 
-    // NOTHING
+    if( message.m.etat_dominationPresent )
+        domination_ = message.etat_domination;
 }
 
 // =============================================================================

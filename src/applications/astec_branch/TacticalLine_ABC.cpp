@@ -90,14 +90,28 @@ void TacticalLine_ABC::Delete()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::ValidateAcknowledge
+// Created: AGE 2006-07-05
+// -----------------------------------------------------------------------------
+template< typename Ack >
+void TacticalLine_ABC::ValidateAcknowledge( const Ack& ack )
+{
+    if( ack.error_code == EnumInfoContextErrorCode::no_error )
+    {
+        nState_ = eStateOk;
+        nNetworkState_ = eNetworkStateRegistered;
+    }
+    else
+        ; // $$$$ AGE 2006-07-05: else what ? log ?
+}   
+
+// -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::Update
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& ack )
 {
-    // $$$$ AGE 2006-03-24: test ack !
-    nState_ = eStateOk;
-    nNetworkState_ = eNetworkStateRegistered;
+    ValidateAcknowledge( ack );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,9 +120,7 @@ void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& ack )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& ack )
 {
-    // $$$$ AGE 2006-03-24: test ack !
-    nState_ = eStateOk;
-    nNetworkState_ = eNetworkStateRegistered;
+    ValidateAcknowledge( ack );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,9 +129,7 @@ void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& ack )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& ack )
 {
-    // $$$$ AGE 2006-03-24: test ack !
-    nState_ = eStateOk;
-    nNetworkState_ = eNetworkStateRegistered;
+    ValidateAcknowledge( ack );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,9 +138,7 @@ void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& ack )
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Update( const ASN1T_MsgLimaUpdateAck& ack )
 {
-    // $$$$ AGE 2006-03-24: test ack !
-    nState_ = eStateOk;
-    nNetworkState_ = eNetworkStateRegistered;
+    ValidateAcknowledge( ack );
 }
 
 // -----------------------------------------------------------------------------

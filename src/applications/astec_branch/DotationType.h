@@ -47,10 +47,6 @@ private:
     DotationType& operator=( const DotationType& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

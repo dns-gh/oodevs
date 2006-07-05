@@ -19,8 +19,7 @@ namespace detail
 
 // =============================================================================
 /** @class  OptionVariant
-    @brief  Option variant. Just a useless wrapper. No more !
-    // $$$$ AGE 2006-04-19: make a cpp though...
+    @brief  Option variant.
 */
 // Created: AGE 2006-02-13
 // =============================================================================
@@ -30,7 +29,7 @@ class OptionVariant
 public:
     //! @name Constructors/Destructor
     //@{
-                 OptionVariant() : holder_( 0 ) {};
+                 OptionVariant();
                  template< typename T >
     /*implicit*/ OptionVariant( const T& value );
                  template< typename T >
@@ -108,27 +107,6 @@ OptionVariant::OptionVariant( const T& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionVariant constructor
-// Created: AGE 2006-04-19
-// -----------------------------------------------------------------------------
-inline
-OptionVariant::OptionVariant( const OptionVariant& rhs )
-    : holder_( rhs.holder_ ? rhs.holder_->Clone() : 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionVariant destructor
-// Created: AGE 2006-04-19
-// -----------------------------------------------------------------------------
-inline
-OptionVariant::~OptionVariant()
-{
-    delete holder_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: OptionVariant::To
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
@@ -149,33 +127,6 @@ OptionVariant::OptionVariant( Settings& settings, const std::string& name, const
     : holder_( new detail::ValueHolder< T >( defaultValue ) )
 {
     holder_->Load( settings, name );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionVariant::Save
-// Created: AGE 2006-04-19
-// -----------------------------------------------------------------------------
-inline
-void OptionVariant::Save( Settings& settings, const std::string& name ) const
-{
-    if( holder_ )
-        holder_->Save( settings, name );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionVariant::operator=
-// Created: AGE 2006-04-19
-// -----------------------------------------------------------------------------
-inline
-OptionVariant& OptionVariant::operator=( const OptionVariant& rhs )
-{
-    if( & rhs != this )
-    {
-        delete holder_; holder_ = 0;
-        if( rhs.holder_ )
-            holder_ = rhs.holder_->Clone();
-    }
-    return *this;
 }
 
 #endif // __OptionVariant_h_
