@@ -79,6 +79,7 @@ private:
 
     void RenderMiniViews();
     void RenderMiniView( MiniView& view );
+    static void SetShadowedColor();
     //@}
 
     //! @name Types

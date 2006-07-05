@@ -410,6 +410,20 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::SetShadowedColor
+// Created: AGE 2006-07-05
+// -----------------------------------------------------------------------------
+void GlWidget::SetShadowedColor()
+{
+    float shadowedColor[4];
+    glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
+    for(unsigned i = 0;i < 3; ++i )
+        shadowedColor[i]*=0.2f;
+    shadowedColor[3] = 0.9f;
+    glColor4fv( shadowedColor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GLWidget::DrawApp6Symbol
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
@@ -422,31 +436,29 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
     const float pixelSize = size / Pixels();
     if( pixelSize <= 10 )
     {
+        glPushAttrib( GL_CURRENT_BIT );
+        SetShadowedColor();
         DrawRectangle( where, 1, factor );
-        // $$$$ AGE 2006-04-28: Dessiner les contours en shadowedColor
-        return;
-    }
-
-    glPushMatrix();
-        glTranslatef( center.X(), center.Y(), 0.0f );
-        glScalef( size, size, 1.f );
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-
-        float shadowedColor[4];
-        glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
-        for(unsigned i = 0;i < 3; ++i )
-            shadowedColor[i]/=5.f;
-        shadowedColor[3] = 0.9f;
-        glColor4fv( shadowedColor );
-
-        glLineWidth( 4.0f );
-        glPushMatrix();
-        Base().PrintApp6( symbol, true );
-        glPopMatrix();
         glPopAttrib();
+        DrawRectangle( where, 1, factor * 0.6 );
+    }
+    else
+    {
+        glPushMatrix();
+            glTranslatef( center.X(), center.Y(), 0.0f );
+            glScalef( size, size, 1.f );
+            glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
 
-        Base().PrintApp6( symbol, false );
-    glPopMatrix();
+            SetShadowedColor();
+            glLineWidth( 4.0f );
+            glPushMatrix();
+            Base().PrintApp6( symbol, true );
+            glPopMatrix();
+            glPopAttrib();
+
+            Base().PrintApp6( symbol, false );
+        glPopMatrix();
+    }
 }
 
 // -----------------------------------------------------------------------------
