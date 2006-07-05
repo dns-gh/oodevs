@@ -65,6 +65,8 @@ void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUp
         radius_     = std::sqrt( ( ( nLivingHumans_ + nDeadHumans_ ) / density_ ) * oneOnpi );
         deadRadius_ = std::sqrt( ( nDeadHumans_ / density_ ) * oneOnpi );
     }
+    const geometry::Vector2f diag( radius_, radius_ );
+    boundingBox_ = geometry::Rectangle2f( position_ - diag, position_ + diag );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,4 +140,13 @@ bool PopulationConcentration::IsAt( const geometry::Point2f& pos, float precisio
 bool PopulationConcentration::IsIn( const geometry::Rectangle2f& ) const
 {
     return true; // $$$$ AGE 2006-04-10: whatever
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
+{
+    return boundingBox_;
 }

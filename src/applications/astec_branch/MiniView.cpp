@@ -60,10 +60,13 @@ geometry::Rectangle2f MiniView::GetViewport() const
 {
     if( isVisible() )
     {
-        // $$$$ AGE 2006-07-03: position.GetBoundingBox();
-        const geometry::Point2f center = position_.GetPosition();
-        const geometry::Vector2f diag( 1000, 1000 );
-        return geometry::Rectangle2f( center - diag, center + diag );
+        geometry::Rectangle2f boundingBox = position_.GetBoundingBox();
+        const float maxDimension = std::max( boundingBox.Height(), boundingBox.Width() ) + 1000; // $$$$ SBO 2006-07-05: 
+        const geometry::Vector2f scale( maxDimension, maxDimension );
+        const geometry::Point2f center( boundingBox.Center() );
+        boundingBox.Incorporate( center + scale );
+        boundingBox.Incorporate( center - scale );
+        return boundingBox;
     }
     else
         return geometry::Rectangle2f();

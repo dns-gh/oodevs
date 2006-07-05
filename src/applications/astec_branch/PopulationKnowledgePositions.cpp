@@ -68,3 +68,12 @@ bool PopulationKnowledgePositions::IsIn( const geometry::Rectangle2f& rectangle 
 {
     return knowledge_.GetRealPopulation().IsIn( rectangle );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgePositions::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f PopulationKnowledgePositions::GetBoundingBox() const
+{
+    return knowledge_.GetRealPopulation().GetBoundingBox();
+}

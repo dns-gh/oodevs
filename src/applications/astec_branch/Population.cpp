@@ -349,6 +349,33 @@ bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
     return false;
 }
 
+namespace
+{
+    template< typename Entity >
+    void IncorporateBoundingBox( const Resolver< Entity >& resolver, geometry::Rectangle2f& boundingBox )
+    {
+        Iterator< const Entity& > it = resolver.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const geometry::Rectangle2f bbox = it.NextElement().GetBoundingBox();
+            boundingBox.Incorporate( bbox.TopRight() );
+            boundingBox.Incorporate( bbox.BottomLeft() );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f Population::GetBoundingBox() const
+{
+    geometry::Rectangle2f boundingBox;
+    IncorporateBoundingBox< PopulationConcentration >( *this, boundingBox );
+    IncorporateBoundingBox< PopulationFlow >( *this, boundingBox );
+    return boundingBox;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Population::GetType
 // Created: AGE 2006-04-10

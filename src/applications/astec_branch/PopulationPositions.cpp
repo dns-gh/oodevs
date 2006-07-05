@@ -65,3 +65,12 @@ float PopulationPositions::GetHeight() const
 {
     return population_.GetHeight();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f PopulationPositions::GetBoundingBox() const
+{
+    return population_.GetBoundingBox();
+}

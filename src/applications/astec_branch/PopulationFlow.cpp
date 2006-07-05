@@ -183,3 +183,12 @@ bool PopulationFlow::IsIn( const geometry::Rectangle2f& ) const
 {
     return true; // $$$$ AGE 2006-04-10: 
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
+{
+    return boundingBox_;
+}

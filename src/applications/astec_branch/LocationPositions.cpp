@@ -84,6 +84,15 @@ bool LocationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationPositions::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f LocationPositions::GetBoundingBox() const
+{
+    return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------

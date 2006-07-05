@@ -79,3 +79,13 @@ void AgentKnowledgePositions::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& mess
     if( message.m.positionPresent )
         position_ = converter_.ConvertToXY( message.position );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePositions::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f AgentKnowledgePositions::GetBoundingBox() const
+{
+    const geometry::Vector2f diag( 1000, 1000 ); // $$$$ SBO 2006-07-05: 
+    return geometry::Rectangle2f( position_ - diag, position_ + diag );
+}

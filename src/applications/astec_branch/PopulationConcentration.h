@@ -42,6 +42,7 @@ public:
     virtual geometry::Point2f GetPosition() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
+    virtual geometry::Rectangle2f GetBoundingBox() const;
     //@}
 
 private:
@@ -60,6 +61,7 @@ private:
     //! @name Member data
     //@{
     geometry::Point2f position_;
+    geometry::Rectangle2f boundingBox_;
 
     float density_;
     uint  nID_;

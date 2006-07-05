@@ -107,6 +107,16 @@ bool AgentPositions::IsIn( const Rectangle2f& rectangle ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentPositions::GetBoundingBox
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f AgentPositions::GetBoundingBox() const
+{
+    const geometry::Point2f center = GetPosition();
+    return geometry::Rectangle2f( center.X() - 250, center.Y(), center.X() + 250, center.Y() + 400 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentPositions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
