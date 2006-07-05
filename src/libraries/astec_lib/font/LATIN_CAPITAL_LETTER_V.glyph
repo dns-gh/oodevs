@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_CAPITAL_LETTER_V</title>
+<unicode>56</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="578.0" y="642.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="618.0" y="642.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="618.0" y="790.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="578.0" y="790.0"/>
+</contourPoint>
+</contour>
+<include href="LATIN_CAPITAL_LETTER_W.glyph">
+<invoke>
+<pos>
+<point2d x="-84.0" y="6.0"/>
+</pos>
+</invoke>
+</include>
+</body>
+</glyphElement>

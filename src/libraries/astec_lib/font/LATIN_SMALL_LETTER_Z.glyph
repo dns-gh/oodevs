@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_SMALL_LETTER_Z</title>
+<unicode>7a</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="480.0" y="10.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="520.0" y="10.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="520.0" y="630.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="480.0" y="630.0"/>
+</contourPoint>
+</contour>
+<contour type="cubic">
+<contourPoint type="on">
+<point2d x="4.0" y="290.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="992.0" y="290.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="990.0" y="330.0"/>
+</contourPoint>
+<contourPoint type="on">
+<point2d x="4.0" y="330.0"/>
+</contourPoint>
+</contour>
+<include href="LATIN_SMALL_LETTER_A.glyph">
+<invoke>
+<pos>
+<point2d x="0.0" y="0.0"/>
+</pos>
+</invoke>
+</include>
+</body>
+</glyphElement>

@@ -1,0 +1,23 @@
+/* XPM */
+static const char* xpm_objectTypeNuageNBC[]={
+"16 16 4 1",
+"# c #000000",
+"b c #b00000",
+"a c #f5f308",
+". c None",
+"................",
+"................",
+"......#####.....",
+"....##aaaaa##...",
+"...#bbaaaaabb#..",
+"...#bbbaaabbb#..",
+"..#bbbbaaabbbb#.",
+"..#bbbbbabbbbb#.",
+"..#bbbbbabbbbb#.",
+"..#aaaaabaaaaa#.",
+"..#aaaaabaaaaa#.",
+"...#aaabbbaaa#..",
+"...#aaabbbaaa#..",
+"....##bbbbb##...",
+"......#####.....",
+"................"};
