@@ -10,8 +10,8 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include "OptionsObserver_ABC.h"
-#include "ElementObserver_ABC.h"
+#include "astec_lib/OptionsObserver_ABC.h"
+#include "astec_lib/ElementObserver_ABC.h"
 
 class Options;
 class OptionsPanel;

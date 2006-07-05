@@ -1,10 +1,16 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
-#include "App.h"
+#include "Application.h"
 
-#include "MT_Tools/MT_Version.h"
 #include "tools/Win32/StackWalkerProxy.h"
-
 #include <qapplication.h>
 #include <qmessagebox.h>
 #include <fstream>
@@ -32,7 +38,7 @@ namespace
     {
         try
         {
-            return *new App( argc, argv );
+            return *new Application( argc, argv );
         }
         catch( ... )
         {
@@ -50,7 +56,7 @@ namespace
 int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
-    SetConsoleTitle( "ASTEC - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
+    SetConsoleTitle( APP_NAME " - " APP_VERSION " - " __TIMESTAMP__ );
 
     __try
     {
