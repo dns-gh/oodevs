@@ -9,18 +9,17 @@
 
 #include "astec_pch.h"
 #include "MiniView.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Positions.h"
 #include "GlWidget.h"
 #include "Controllers.h"
-#include "ActionController.h"
 #include <qpainter.h>
 
 // -----------------------------------------------------------------------------
 // Name: MiniView constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-MiniView::MiniView( QWidget* parent, Controllers& controllers, const Agent& agent, GlWidget* widget )
+MiniView::MiniView( QWidget* parent, Controllers& controllers, const Agent_ABC& agent, GlWidget* widget )
     : QFrame( parent, "MiniView", WRepaintNoErase )
     , actions_( controllers.actions_ )
     , agent_( agent )
@@ -76,7 +75,7 @@ geometry::Rectangle2f MiniView::GetViewport() const
 // -----------------------------------------------------------------------------
 void MiniView::contextMenuEvent( QContextMenuEvent * e )
 {
-    actions_.ContextMenu( agent_, e->globalPos() );
+    agent_.ContextMenu( actions_, e->globalPos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +85,7 @@ void MiniView::contextMenuEvent( QContextMenuEvent * e )
 void MiniView::mouseReleaseEvent( QMouseEvent * e )
 {
     if( e->button() == QMouseEvent::LeftButton )
-        actions_.Select( agent_ );
+        agent_.Select( actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +94,7 @@ void MiniView::mouseReleaseEvent( QMouseEvent * e )
 // -----------------------------------------------------------------------------
 void MiniView::mouseDoubleClickEvent( QMouseEvent * )
 {
-    actions_.Activate( agent_ );
+    agent_.Activate( actions_ );
 }
 
 // -----------------------------------------------------------------------------

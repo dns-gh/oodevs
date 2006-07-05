@@ -10,7 +10,7 @@
 #ifndef __MiniView_h_
 #define __MiniView_h_
 
-class Agent;
+class Agent_ABC;
 class Positions;
 class GlWidget;
 class Controllers;
@@ -28,7 +28,7 @@ class MiniView : public QFrame
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniView( QWidget* parent, Controllers& controllers, const Agent& agent, GlWidget* widget );
+             MiniView( QWidget* parent, Controllers& controllers, const Agent_ABC& agent, GlWidget* widget );
     virtual ~MiniView();
     //@}
 
@@ -58,7 +58,7 @@ private:
     //! @name Member data
     //@{
     ActionController& actions_;
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     const Positions& position_;
     QPixmap pixmap_;
     GlWidget* widget_;

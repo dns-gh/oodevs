@@ -14,6 +14,8 @@
 #include "MiniView.h"
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
+#include "Agent.h"
+#include "Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: MiniViews constructor
@@ -46,16 +48,34 @@ MiniViews::~MiniViews()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MiniViews::NotifyContextMenu
-// Created: AGE 2006-06-23
+// Name: MiniViews::BuildContextMenu
+// Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void MiniViews::BuildContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     selected_ = &agent;
     if( menu.count() ) 
         menu.insertSeparator();
     bool remove = miniViews_.find( &agent ) != miniViews_.end();
     menu.insertItem( remove ? "Supprimer la minivue" : "Ajouter une minivue" , this, SLOT( OnMiniView() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: AGE 2006-06-23
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+{
+    BuildContextMenu( agent, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const Population& popu, QPopupMenu& menu )
+{
+    BuildContextMenu( popu, menu );
 }
 
 // -----------------------------------------------------------------------------

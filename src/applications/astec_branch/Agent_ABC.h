@@ -12,6 +12,8 @@
 
 #include "Entity_ABC.h"
 
+class ActionController;
+
 // =============================================================================
 /** @class  Agent_ABC
     @brief  Agent base class.  // $$$$ AGE 2006-04-10: Add stuff ! Inutilisé pour l'instant par rapport à Entity
@@ -32,6 +34,10 @@ public:
     //@{
     virtual std::string GetName() const = 0;
     virtual unsigned long GetId() const = 0;
+
+    virtual void Select( ActionController& controller ) const = 0;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
+    virtual void Activate( ActionController& controller ) const = 0;
     //@}
 };
 

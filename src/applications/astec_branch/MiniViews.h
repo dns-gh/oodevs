@@ -13,7 +13,9 @@
 #include "ContextMenuObserver_ABC.h"
 #include "SafePointer.h"
 
+class Agent_ABC;
 class Agent;
+class Population;
 class Controllers;
 class SmartGridWidget;
 class GlWidget;
@@ -28,6 +30,7 @@ class MiniView;
 class MiniViews : public QDockWindow
                 , public Observer_ABC
                 , public ContextMenuObserver_ABC< Agent >
+                , public ContextMenuObserver_ABC< Population >
 {
     Q_OBJECT;
 
@@ -53,12 +56,14 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    void BuildContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Population& popup, QPopupMenu& menu );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const Agent*, MiniView* > T_MiniViews;
+    typedef std::map< const Agent_ABC*, MiniView* > T_MiniViews;
     //@}
 
 private:
@@ -67,7 +72,7 @@ private:
     Controllers& controllers_;
     GlWidget* const & widget_;
     SmartGridWidget* grid_;
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     T_MiniViews miniViews_;
     //@}
 };

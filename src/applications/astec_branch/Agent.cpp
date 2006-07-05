@@ -15,6 +15,7 @@
 #include "KnowledgeGroup.h"
 #include "Attributes.h"
 #include "DataDictionary.h"
+#include "ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
@@ -297,4 +298,31 @@ void Agent::CreateDictionary()
     dictionary.Register( "Info/Identifiant", id_ );
     dictionary.Register( "Info/Nom", name_ );
     dictionary.Register( "Hiérarchie/Supérieur", superior_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Select
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Agent::Select( ActionController& controller ) const
+{
+    controller.Select( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ContextMenu
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Agent::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    controller.ContextMenu( *this, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Activate
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Agent::Activate( ActionController& controller ) const
+{
+    controller.Activate( *this );
 }

@@ -19,6 +19,7 @@
 #include "Model.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
+#include "ActionController.h"
 
 using namespace geometry;
 
@@ -375,4 +376,31 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( "", this )
              .Display( "Vivants", GetLivingHumans() )
              .Display( "Domination", nDomination_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Select
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Population::Select( ActionController& controller ) const
+{
+    controller.Select( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::ContextMenu
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Population::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    controller.ContextMenu( *this, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Activate
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+void Population::Activate( ActionController& controller ) const
+{
+    controller.Activate( *this );
 }
