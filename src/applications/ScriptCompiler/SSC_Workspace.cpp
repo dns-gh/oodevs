@@ -235,7 +235,7 @@ void SSC_Workspace::Initialize( MT_InputArchive_ABC& initArchive )
     std::string errors;
     T_StringVector openedFiles;
 
-    if( !DIA_ReadScript_Types( strDIATypesFile, errors, openedFiles ) )
+    if( !DIA_ReadScript_Types( strDIATypesFile, strArchivePath + "/models/type.bin", errors, openedFiles ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strDIATypesFile, errors );
 
     // Updating opened files archive
@@ -267,7 +267,7 @@ void SSC_Workspace::Initialize( MT_InputArchive_ABC& initArchive )
 
     bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strArchiveWorkspaceName );
 
-    if( !DIA_ReadScript_Workspace( strDIAWorkspaceFile, errors, openedFiles ) )
+    if( !DIA_ReadScript_Workspace( strDIAWorkspaceFile, strArchivePath + "/models/workspace.bin", errors, openedFiles ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing workspace file " ) + strDIAWorkspaceFile, errors );
 
     // Updating opened files archive
