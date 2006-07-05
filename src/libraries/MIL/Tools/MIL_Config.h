@@ -29,9 +29,9 @@ public:
     ~MIL_Config();
 
     //! @name Accessors
-    //@{
+    //@{         
           uint         GetExerciceID              () const;
-          bool         UseDIAArchive              () const;
+          bool         UseOnlyDIAArchive          () const;
           uint         GetNbrPathFindThreads      () const;
           bool         ForceODBAutomateComposition() const;
           bool         UseDecDebug                () const;
@@ -58,7 +58,7 @@ public:
     //! @name Modifiers
     //@{
     void SetExerciceID                 ( uint nExercideID );
-    void SetUseDIAArchive              ( bool bUseDIAArchive );
+    void SetUseOnlyDIAArchive          ( bool bUseOnlyDIAArchive );
     void SetNbrPathFindThreads         ( uint nNbr );
     void SetForceODBAutomateComposition( bool bForce );
     void SetCheckPointFileName         ( const std::string& strName );
@@ -87,7 +87,7 @@ private:
     uint                nExerciceID_;
     uint                nNbrPathFindThreads_;
     bool                bUseCheckPointCRC_;
-    bool                bUseDIAArchive_;
+    bool                bUseOnlyDIAArchive_;
     bool                bForceODBAutomateComposition_;
     bool                bUseDecDebug_;
     bool                bUseDiaDebugServer_;

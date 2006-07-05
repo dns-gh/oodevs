@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 MIL_Config::MIL_Config()
     : nExerciceID_                 ( 0 )
-    , bUseDIAArchive_              ( true )
+    , bUseOnlyDIAArchive_          ( false )
     , nNbrPathFindThreads_         ( 1 )
     , bForceODBAutomateComposition_( false )
     , strCheckPointFileName_       ()

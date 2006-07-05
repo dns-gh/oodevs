@@ -51,13 +51,13 @@ bool MIL_Config::UseDecDebug() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::UseDIAArchive
+// Name: MIL_Config::UseOnlyDIAArchive
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 inline
-bool MIL_Config::UseDIAArchive() const
+bool MIL_Config::UseOnlyDIAArchive() const
 {
-    return bUseDIAArchive_;
+    return bUseOnlyDIAArchive_;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,13 +111,13 @@ void MIL_Config::SetExerciceID( uint nExercideID )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::SetUseDIAArchive
+// Name: MIL_Config::SetUseOnlyDIAArchive
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 inline
-void MIL_Config::SetUseDIAArchive( bool bUseDIAArchive )
+void MIL_Config::SetUseOnlyDIAArchive( bool bUseOnlyDIAArchive )
 {
-    bUseDIAArchive_ = bUseDIAArchive;
+    bUseOnlyDIAArchive_ = bUseOnlyDIAArchive;
 }
 
 // -----------------------------------------------------------------------------
