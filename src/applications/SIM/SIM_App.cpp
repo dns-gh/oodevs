@@ -294,7 +294,7 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
 
     MT_LOG_INFO_MSG( MT_FormatString( "%d arguments on command line", nArgc ).c_str() );
 
-    const char* szCommandLine = "Usage : %s [-nodiaarchive] [-forceodbcomposition] [-diadebugserver] [-nbpathfindthreads #] [-exerciceID #] [-checkpoint IDEX__YYYY_MM_DD__HHhMMmSEC] [-nocheckpointcrc] [-test]";
+    const char* szCommandLine = "Usage : %s [-noscripts] [-forceodbcomposition] [-diadebugserver] [-nbpathfindthreads #] [-exerciceID #] [-checkpoint IDEX__YYYY_MM_DD__HHhMMmSEC] [-nocheckpointcrc] [-test]";
     if( nArgc < 1 )
     {
         MT_LOG_INFO_MSG( MT_FormatString( szCommandLine, ppArgv[0] ).c_str() );
@@ -310,8 +310,8 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
     // Parse options
     for( nArgNbr = 1; nArgNbr < nArgc && *ppArgv[nArgNbr] == '-'; ++nArgNbr )
     {
-        if( stricmp( ppArgv[nArgNbr], "-nodiaarchive") == 0 )
-            startupConfig.SetUseDIAArchive( false );
+        if( stricmp( ppArgv[nArgNbr], "-noscripts") == 0 )
+            startupConfig.SetUseOnlyDIAArchive( true );
         else if( stricmp( ppArgv[nArgNbr], "-forceodbcomposition") == 0 )
             startupConfig.SetForceODBAutomateComposition( true );
         else if( stricmp( ppArgv[nArgNbr], "-diadebugserver") == 0 )

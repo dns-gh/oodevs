@@ -96,35 +96,35 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* pFuncTable )
 {
     // Geometry
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitListPoints               , "DEC_Geometrie_DecouperListePoints"           );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitPath                     , "DEC_Geometrie_DecouperItineraire"            );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeCoverPosition          , "DEC_Geometrie_CalculerPositionCouverture"    );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAgentsBarycenter       , "DEC_Geometrie_CalculerBarycentreAgents"      );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePosition             , "DEC_Geometrie_PositionTranslate"             );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePositionInDirection  , "DEC_Geometrie_PositionTranslateDir"          );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComparePositions              , "DEC_Geometrie_PositionsEgales"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareDirection              , "DEC_Geometrie_DirectionEgales"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                      , "DEC_Geometrie_Distance"                      );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation    , "DEC_Geometrie_ConvertirPointEnLocalisation"  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation     , "DEC_Geometrie_EstPointDansLocalisation"      );    
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareLocalisations          , "DEC_Geometrie_LocalisationsEgales"           );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation            , "DEC_Geometrie_CreerLocalisation"             );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint               , "DEC_Geometrie_CreerListePoints"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreatePoint                   , "DEC_Geometrie_CreerPoint"                    );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateDirection               , "DEC_Geometrie_CreerDirection"                );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateOrthoDirection          , "DEC_Geometrie_CreerDirectionPerpendiculaire" );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ReverseDirection              , "DEC_Geometrie_InverseDirection"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::RotateDirection               , "DEC_Geometrie_RotateDirection"               );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection       , "DEC_Geometrie_CopieEtInverseDirection"       );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection        , "DEC_Geometrie_CopieEtRotateDirection"        );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine , "DEC_Geometrie_CalculerDistanceLigneMoyenne"  );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter , "DEC_Geometrie_CalculerBarycentreLocalisation");
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeMeanDirection          , "DEC_Geometrie_DirectionMoyenne"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointOnCircle    , "DEC_Geometrie_PositionAleatoireSurCercle"    );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle    , "DEC_Geometrie_PositionAleatoireDansCercle"   );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation      , "DEC_Geometrie_CreerLocalisationCercle"       );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated             , "DEC_Geometrie_PionEstCoordonne"              );
-    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea       , "DEC_Geometrie_AireLocalisation"              );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitListPoints               , "DEC_Geometrie_DecouperListePoints"            );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::SplitPath                     , "DEC_Geometrie_DecouperItineraire"             );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeCoverPosition          , "DEC_Geometrie_CalculerPositionCouverture"     );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeAgentsBarycenter       , "DEC_Geometrie_CalculerBarycentreAgents"       );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePosition             , "DEC_Geometrie_PositionTranslate"              );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::TranslatePositionInDirection  , "DEC_Geometrie_PositionTranslateDir"           );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComparePositions              , "DEC_Geometrie_PositionsEgales"                );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareDirection              , "DEC_Geometrie_DirectionEgales"                );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::Distance                      , "DEC_Geometrie_Distance"                       );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ConvertPointToLocalisation    , "DEC_Geometrie_ConvertirPointEnLocalisation"   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPointInsideLocalisation     , "DEC_Geometrie_EstPointDansLocalisation"       );    
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CompareLocalisations          , "DEC_Geometrie_LocalisationsEgales"            );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateLocalisation            , "DEC_Geometrie_CreerLocalisation"              );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateListPoint               , "DEC_Geometrie_CreerListePoints"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreatePoint                   , "DEC_Geometrie_CreerPoint"                     );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateDirection               , "DEC_Geometrie_CreerDirection"                 );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateOrthoDirection          , "DEC_Geometrie_CreerDirectionPerpendiculaire"  );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ReverseDirection              , "DEC_Geometrie_InverseDirection"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::RotateDirection               , "DEC_Geometrie_RotateDirection"                );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndReverseDirection       , "DEC_Geometrie_CopieEtInverseDirection"        );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CopyAndRotateDirection        , "DEC_Geometrie_CopieEtRotateDirection"         );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeDistanceFromMiddleLine , "DEC_Geometrie_CalculerDistanceLigneMoyenne"   );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationBarycenter , "DEC_Geometrie_CalculerBarycentreLocalisation" );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeMeanDirection          , "DEC_Geometrie_DirectionMoyenne"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointOnCircle    , "DEC_Geometrie_PositionAleatoireSurCercle"     );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeRandomPointInCircle    , "DEC_Geometrie_PositionAleatoireDansCercle"    );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::CreateCircleLocalisation      , "DEC_Geometrie_CreerLocalisationCercle"        );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::IsPionCoordinated             , "DEC_Geometrie_PionEstCoordonne"               );
+    pFuncTable->RegisterFunction( DEC_GeometryFunctions::ComputeLocalisationArea       , "DEC_Geometrie_AireLocalisation"               );
     
     // Time management
     pFuncTable->RegisterFunction( DEC_DIAFunctions::GetSimTime         , "DEC_TempsSim"        );
@@ -220,24 +220,32 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
 {
     MT_LOG_INFO_MSG( "\tReading DIA types" );
 
-    std::string strScript;
-    initArchive.ReadField( "DIATypes", strScript );
-
-    // Check if the script files has been modified
-    std::string strOpenedFileArchiveName = strBinaryPath + "/files/type_file.bin";
-    bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
-
     std::string    strErrors;
     T_StringVector openedFiles;
-    if( !DIA_ReadScript_Types( strScript, strErrors, openedFiles ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strScript, strErrors );
+    if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
+    {
+        if( !DIA_ReadScript_TypesBin( strBinaryPath + "/models/file.bin", strErrors, openedFiles ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading type file", strErrors );
+    }
+    else
+    {
+        std::string strScript;
+        initArchive.ReadField( "DIATypes", strScript );
 
-    // Updating opened files archive
-    MT_FlatBinaryOutputArchive openedFilesArchive;
-    openedFilesArchive << openedFiles.size();
-    for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-        openedFilesArchive << (*it);
-    openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
+        // Check if the script files has been modified
+        std::string strOpenedFileArchiveName = strBinaryPath + "/files/type_file.bin";
+        bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
+
+        if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/models/file.bin", strErrors, openedFiles ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strScript, strErrors );
+        
+        // Updating opened files archive
+        MT_FlatBinaryOutputArchive openedFilesArchive;
+        openedFilesArchive << openedFiles.size();
+        for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
+            openedFilesArchive << (*it);
+        openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -248,29 +256,31 @@ void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool&
 { 
     MT_LOG_INFO_MSG( "\tReading DIA Workspace" );
 
-    std::string strScript;
-    initArchive.ReadField( "DIAWorkspace", strScript );
-
-    std::string strOpenedFileArchiveName = strBinaryPath + "/files/workspace_file.bin";
-    bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
-
     std::string    strErrors;
     T_StringVector openedFiles;
-    if( !DIA_ReadScript_Workspace( strScript, strErrors, openedFiles ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing workspace file " ) + strScript, strErrors );
+    if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
+    {
+        if( !DIA_ReadScript_WorkspaceBin( strBinaryPath + "/models/workspace.bin", strErrors, openedFiles ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading workspace file", strErrors );
+    }
+    else
+    {
+        std::string strScript;
+        initArchive.ReadField( "DIAWorkspace", strScript );
 
-    // Updating opened files archive
-    MT_FlatBinaryOutputArchive openedFilesArchive;
-    openedFilesArchive << openedFiles.size();
-    for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
-        openedFilesArchive << (*it);
-    openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
+        std::string strOpenedFileArchiveName = strBinaryPath + "/files/workspace_file.bin";
+        bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
 
-    // Write binary archive
-    MT_FlatBinaryOutputArchive archiveOut;
-    archiveOut.EnableIntEncoding( true );
-    DIA_Tool_Archive_Engine::WriteWorkspaceInArchive( archiveOut );
-    archiveOut.WriteToFile( strBinaryPath + "/models/workspace.bin", true );
+        if( !DIA_ReadScript_Workspace( strScript, strBinaryPath + "/models/workspace.bin", strErrors, openedFiles ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing workspace file " ) + strScript, strErrors );
+
+        // Updating opened files archive
+        MT_FlatBinaryOutputArchive openedFilesArchive;
+        openedFilesArchive << openedFiles.size();
+        for( CIT_StringVector it = openedFiles.begin(); it != openedFiles.end(); ++it )
+            openedFilesArchive << (*it);
+        openedFilesArchive.WriteToFile( strOpenedFileArchiveName, true );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -310,7 +320,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
 	}
     //$$$$$$$ NLD ??
 
-    bool bNeedScriptParsing = !MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
+    bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
 
     InitializeDIATypes    ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
     InitializeDIAWorkspace( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );

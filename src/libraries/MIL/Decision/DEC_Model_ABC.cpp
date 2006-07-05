@@ -56,7 +56,8 @@ DEC_Model_ABC::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::stri
     std::string strArchiveName           = strBinaryPath + "/models/" + strModel_ + ".bin";
     std::string strOpenedFileArchiveName = strBinaryPath + "/files/"  + strModel_ + ".bin";
 
-    if( NeedScriptParsing( bNeedParsing, strArchiveName, strSourcePath + "/" + strScript_ /*$$$ n'importe quoi */, strOpenedFileArchiveName ) )
+    if(    !MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() 
+        && NeedScriptParsing( bNeedParsing, strArchiveName, strSourcePath + "/" + strScript_ /*$$$ n'importe quoi */, strOpenedFileArchiveName ) )
     {
         std::string    strReport;
         T_StringVector openedFiles;
@@ -94,7 +95,14 @@ DEC_Model_ABC::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::stri
         {
             throw MT_ScipioException( "Error during model initialization.", strModel_, 0, e.GetErrorMessage() );
         }
-        DIA_Workspace::Instance().ReadModelDebugFile( *pDIAModel_, std::string( "/debug/" ) + strModel_ + ".ddi" );
+        try
+        {
+            DIA_Workspace::Instance().ReadModelDebugFile( *pDIAModel_, std::string( "/debug/" ) + strModel_ + ".ddi" );
+        }
+        catch ( MT_Exception& e )
+        {
+            // NOTHING
+        }
         MT_LOG_INFO_MSG( MT_FormatString( "\tReading model %s FROM ARCHIVE", strModel_.c_str() ).c_str() );
     }
 }
@@ -117,9 +125,6 @@ DEC_Model_ABC::~DEC_Model_ABC()
 bool DEC_Model_ABC::NeedScriptParsing( bool bNeedParsing, const std::string& strArchiveName, const std::string& strFileName, const std::string& strOpenedFileArchiveName ) const
 {
     if( bNeedParsing )
-        return true;
-
-    if( !MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive() )
         return true;
 
     struct _stat binInfo;
