@@ -639,7 +639,8 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     std::string strModel;
     input.ReadField( "ModeleDecisionnel", strModel );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
-    assert( pModel != 0 );
+    if( !pModel )
+        throw ADN_DataException( "Donnée invalide", MT_FormatString( "Modele '%s' inconnu - réferencé par le pion '%s'", strModel.c_str(), strName_.GetData().c_str() ), "" );
     ptrModel_ = pModel;
 
     input.Section( "Nature" );

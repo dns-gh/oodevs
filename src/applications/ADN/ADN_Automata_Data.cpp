@@ -198,8 +198,11 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( ADN_XmlInput_Helper& input 
 
     std::string strModel;
     input.ReadField( "ModeleDecisionnel", strModel );
+    
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindAutomataModel( strModel );
-    assert( pModel != 0 );
+    if( !pModel )
+        throw ADN_DataException( "Donnée invalide", MT_FormatString( "Modele '%s' inconnu - réferencé par l'automate '%s'", strModel.c_str(), strName_.GetData().c_str() ), "" );
+
     ptrModel_ = pModel;
 
     input.BeginList( "Constitution" );

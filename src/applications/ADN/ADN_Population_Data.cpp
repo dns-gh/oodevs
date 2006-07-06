@@ -539,7 +539,9 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
     std::string strModel;
     input.ReadField( "ModeleDecisionnel", strModel );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
-    assert( pModel != 0 );
+    if( !pModel )
+        throw ADN_DataException( "Donnée invalide", MT_FormatString( "Modele '%s' inconnu - réferencé par la population '%s'", strModel.c_str(), strName_.GetData().c_str() ), "" );
+
     ptrModel_ = pModel;
 
     input.ReadField( "DensiteConcentration"      , rConcentrationDensity_ );
