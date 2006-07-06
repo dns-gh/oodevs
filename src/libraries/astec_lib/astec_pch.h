@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Light2_Pch.h $
-// $Author: Age $
-// $Modtime: 31/03/05 16:18 $
-// $Revision: 5 $
-// $Workfile: Light2_Pch.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __Pch_h_
 #define __Pch_h_

@@ -17,11 +17,11 @@
 class TacticalLine_ABC;
 class Model;
 class Controllers;
+class Publisher_ABC;
 
 namespace DIN {
     class DIN_Input;
 };
-
 
 // =============================================================================
 /** @class  LimitsModel
@@ -35,7 +35,7 @@ class LimitsModel : public Resolver< TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsModel( Model& model, Controllers& controllers );
+             LimitsModel( Model& model, Controllers& controllers, Publisher_ABC& publisher );
     virtual ~LimitsModel();
     //@}
 
@@ -65,6 +65,7 @@ private:
     //@{
     Model& model_;
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     //@}
 };
 

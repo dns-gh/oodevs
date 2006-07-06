@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentListView.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:42 $
-// $Revision: 9 $
-// $Workfile: AgentListView.h $
-//
-// *****************************************************************************
 
 #ifndef __AgentListView_h_
 #define __AgentListView_h_
@@ -33,6 +24,7 @@ class Controllers;
 class ValuedListItem;
 class AutomatDecisions;
 class ItemFactory_ABC;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  AgentListView
@@ -64,7 +56,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory );
     virtual ~AgentListView();
 
     QSize sizeHint() const;
@@ -126,6 +118,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     ItemFactory_ABC& factory_;
     const Team* currentTeam_;
     //@}

@@ -17,8 +17,9 @@
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
+    , publisher_( publisher )
     , agent_( agent )
     , nMissionId_( nMissionId )
 {
@@ -65,7 +66,7 @@ void AutomateMissionInterface::OnOk()
         return;
 
     Commit();
-    pASNMsgOrder_->Send( 45 );
+    pASNMsgOrder_->Send( publisher_, 45 );
 
     agent_.Update( pASNMsgOrder_->GetAsnMsg() );
     parentWidget()->hide();

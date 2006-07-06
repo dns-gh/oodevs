@@ -17,9 +17,10 @@
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectTypes )
-    , nMissionId_         ( nMissionId )
+    , publisher_( publisher )
+    , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPopulationOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&population);
@@ -54,7 +55,7 @@ void PopulationMissionInterface::OnOk()
         return;
 
     Commit();
-    pASNMsgOrder_->Send( 45 );
+    pASNMsgOrder_->Send( publisher_, 45 );
     parentWidget()->hide();
 }
 

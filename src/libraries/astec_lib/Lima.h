@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-08 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Lima.h $
-// $Author: Ape $
-// $Modtime: 26/01/05 10:22 $
-// $Revision: 6 $
-// $Workfile: Lima.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __Lima_h_
 #define __Lima_h_
@@ -30,9 +28,9 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( Controller& controller, const CoordinateConverter_ABC& converter );
-             Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter );
-             Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter );
+             Lima( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter );
+             Lima( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter );
+             Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter );
     virtual ~Lima();
     //@}
 
@@ -61,6 +59,8 @@ public:
     //! @name Member data
     //@{
     static IDManager idManager_;
+
+private:
     Controller& controller_;
     E_FuncLimaType   nFuncType_;
     //@}

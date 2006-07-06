@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-19 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MissionPanel.h $
-// $Author: Age $
-// $Modtime: 6/04/05 17:33 $
-// $Revision: 13 $
-// $Workfile: MissionPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __MissionPanel_h_
 #define __MissionPanel_h_
@@ -36,6 +27,7 @@ class CoordinateConverter_ABC;
 class Model;
 class GlTools_ABC;
 class AgentKnowledgeConverter_ABC;
+class Publisher_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -51,7 +43,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, Controllers& controllers, Model& model, ParametersLayer& layer, const GlTools_ABC& tools );
+             MissionPanel( QWidget* pParent, Controllers& controllers, Model& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools );
     virtual ~MissionPanel();
     //@}
 
@@ -93,6 +85,7 @@ private:
     //@{
     Controllers& controllers_;
     const Model& model_;
+    Publisher_ABC& publisher_;
     ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;
     const GlTools_ABC& tools_;

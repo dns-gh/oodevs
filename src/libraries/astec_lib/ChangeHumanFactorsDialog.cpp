@@ -32,8 +32,9 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher )
     : QDialog( pParent, "Facteurs Humains" )
+    , publisher_( publisher )
     , agent_( controllers )
 {
     setCaption( "Facteurs humains" );
@@ -138,5 +139,5 @@ void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue tired
     asnMagicAction.fatigue    = tiredness;
     asnMagicAction.moral      = moral;
     asnMagicAction.experience = experience;
-    asnMsg.Send();
+    asnMsg.Send( publisher_ );
 };

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-19 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MissionPanel.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 17:33 $
-// $Revision: 16 $
-// $Workfile: MissionPanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "MissionPanel.h"
@@ -42,10 +33,11 @@
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, Model& model, ParametersLayer& layer, const GlTools_ABC& tools )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, Model& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools )
     : QDockWindow       ( pParent )
     , controllers_      ( controllers )
     , model_            ( model )
+    , publisher_        ( publisher )
     , layer_            ( layer )
     , converter_        ( model.coordinateConverter_ )
     , tools_            ( tools )
@@ -172,7 +164,7 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_ );
+    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -190,7 +182,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -205,7 +197,7 @@ void MissionPanel::ActivateFragOrder( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_ );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_, publisher_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else
@@ -246,7 +238,7 @@ void MissionPanel::ActivatePopulationMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_ );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, model_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();

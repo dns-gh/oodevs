@@ -19,6 +19,7 @@ class Controllers;
 class Model;
 class Agent;
 class Dotation;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  LogisticSupplyChangeQuotasDialog
@@ -35,7 +36,7 @@ class LogisticSupplyChangeQuotasDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, const Model& model );
+             LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model );
     virtual ~LogisticSupplyChangeQuotasDialog();
     //@}
 
@@ -75,6 +76,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     const Model& model_;
     ValuedComboBox< const Agent* >* targetCombo_;
     QTable* table_;

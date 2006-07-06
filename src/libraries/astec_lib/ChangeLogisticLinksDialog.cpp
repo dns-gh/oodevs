@@ -23,9 +23,10 @@
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher )
     : QDialog( parent )
     , controllers_( controllers )
+    , publisher_( publisher )
     , selected_( controllers )
 {
     setCaption( tr( "Changement des liens logisitiques" ) );
@@ -180,7 +181,7 @@ void ChangeLogisticLinksDialog::Validate()
         message.GetAsnMsg().m.oid_maintenancePresent = SetId( *maintenanceCombo_, message.GetAsnMsg().oid_maintenance );
         message.GetAsnMsg().m.oid_santePresent = SetId( *medicalCombo_, message.GetAsnMsg().oid_sante );
         message.GetAsnMsg().m.oid_ravitaillementPresent = SetId( *supplyCombo_, message.GetAsnMsg().oid_ravitaillement );
-	    message.Send();
+	    message.Send( publisher_ );
     }
     Reject();
 }

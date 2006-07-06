@@ -25,10 +25,10 @@ using namespace tools::thread;
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( Controllers& controllers, Model& model, Simulation& simu )
+Network::Network( Controllers& controllers, Simulation& simu )
     : simu_( simu )
     , engine_( new DIN::DIN_Engine() )
-    , manager_( new AgentServerMsgMgr( controllers, *engine_, model, simu, mutex_ ) )
+    , manager_( new AgentServerMsgMgr( controllers, *engine_, simu, mutex_ ) )
     , session_( 0 )
     , terminated_( false )
 {
@@ -145,7 +145,7 @@ void Network::Update()
                 manager_->Enable( *session_ );
                 ASN_MsgCtrlClientAnnouncement asnMsg;
                 asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
-                asnMsg.Send();
+                asnMsg.Send( *manager_ );
                 
                 simu_.Connect( it->address_ );
             }

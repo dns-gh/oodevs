@@ -22,9 +22,10 @@
 // Name: ChangeDiplomacyDialog constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers )
+ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher )
     : QDialog( parent )
     , controllers_( controllers )
+    , publisher_( publisher )
 {
     setCaption( tr( "Diplomatie" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -86,7 +87,7 @@ void ChangeDiplomacyDialog::Validate()
     asn.GetAsnMsg().oid_camp1  = pArmy1ComboBox_->GetValue();
     asn.GetAsnMsg().oid_camp2  = pArmy2ComboBox_->GetValue();
     asn.GetAsnMsg().diplomatie = pDiplomacyComboBox_->GetValue();
-    asn.Send();
+    asn.Send( publisher_ );
     hide();
 }
 

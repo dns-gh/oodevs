@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-12 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentServerMsgMgr.h $
-// $Author: Age $
-// $Modtime: 15/04/05 17:52 $
-// $Revision: 10 $
-// $Workfile: AgentServerMsgMgr.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __AgentServerMsgMgr_h_
 #define __AgentServerMsgMgr_h_
@@ -23,6 +21,7 @@
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 #include "OptionsObserver_ABC.h"
+#include "Publisher_ABC.h"
 
 #include "boost/thread/mutex.hpp"
 
@@ -42,7 +41,9 @@ namespace DIN
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class AgentServerMsgMgr : public Observer_ABC, public OptionsObserver_ABC
+class AgentServerMsgMgr : public Observer_ABC
+                        , public OptionsObserver_ABC
+                        , public Publisher_ABC
 {
 public:
     //! @name Singleton
@@ -51,9 +52,7 @@ public:
     //@}
 
 public:
-    //-------------------------------------------------------------------------
-    /** @name Messages */
-    //-------------------------------------------------------------------------
+    //! @name Messages
     //@{
     //! SIM <- MOS
     enum 
@@ -89,54 +88,39 @@ public:
     //@}
     
 public:
-             AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Model& model, Simulation& simu, boost::mutex& mutex ); 
+    //! @name Constructor/Destructor
+    //@{
+             AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, boost::mutex& mutex ); 
     virtual ~AgentServerMsgMgr();
+    //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors*/
-    //-------------------------------------------------------------------------
+    //! @name Operations
     //@{
     bool IsPaused() const;
     void RegisterMessageRecorder( MsgRecorder& recorder );
     void UnregisterMessageRecorder( MsgRecorder& recorder );
-    //@}
-    
-    //-------------------------------------------------------------------------
-    /** @name Service activation */
-    //-------------------------------------------------------------------------
-    //@{
-    void Enable( DIN::DIN_Link& session );
-    //@}
 
+    void Enable( DIN::DIN_Link& session );
     void DoUpdate();
     void Flush();
 
-    //-------------------------------------------------------------------------
-    /** @name Messages */
-    //-------------------------------------------------------------------------
-    //@{
     DIN::DIN_BufferedMessage BuildMessage();
-
-    void SendMsgMosSim           ( ASN1T_MsgsMosSim& asnMsg );
-    void SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, MIL_MOSContextID nCtx );
+    virtual void Send( ASN1T_MsgsMosSim& message );
+    virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 );
     void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
     void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx );
-
-    // Debug
     void SendMsgUnitMagicActionDestroyComposante( const Agent& agent );
+
+    void SetModel( Model& model );
     //@}
 
 private:
-    //-------------------------------------------------------------------------
-    /** @name Service callback */
-    //-------------------------------------------------------------------------
+    //! @name Service callback
     //@{
     bool OnError( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name */
-    //-------------------------------------------------------------------------
+    //! @name Message callbacks
     //@{
     // Tests
     void OnReceiveMsgProfilingValues( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -313,6 +297,8 @@ private:
 
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     void ToggleVisionCones();
+
+    Model& GetModel() const;
     //@}
 
     //! @name Copy / Assignment
@@ -329,7 +315,7 @@ private:
     
 private:
     Controllers& controllers_;
-    Model&       model_;
+    Model*       model_;
     Simulation& simulation_;
     boost::mutex& mutex_;
     MsgRecorder* msgRecorder_;

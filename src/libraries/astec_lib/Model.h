@@ -34,6 +34,7 @@ class WeatherModel;
 class DetectionMap;
 class SurfaceFactory;
 class Workers;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -47,7 +48,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controllers& controllers, const Simulation& simulation, Workers& workers );
+             Model( Controllers& controllers, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher );
     virtual ~Model();
     //@}
 

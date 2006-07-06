@@ -18,6 +18,7 @@
 
 class Controllers;
 class Agent;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  ChangeLogisticLinksDialog
@@ -36,7 +37,7 @@ class ChangeLogisticLinksDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers );
+             ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher );
     virtual ~ChangeLogisticLinksDialog();
     //@}
 
@@ -66,6 +67,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     ValuedComboBox< const Agent* >* tc2Combo_;
     ValuedComboBox< const Agent* >* maintenanceCombo_;
     ValuedComboBox< const Agent* >* medicalCombo_;

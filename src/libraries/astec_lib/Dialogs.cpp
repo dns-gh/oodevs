@@ -18,12 +18,12 @@
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model )
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, Publisher_ABC& publisher )
 {
-    new ChangeDiplomacyDialog( parent, controllers );
-    new ChangeLogisticLinksDialog( parent, controllers );
-    new LogisticSupplyChangeQuotasDialog( parent, controllers, model );
-    new LogisticSupplyPushFlowDialog( parent, controllers, model );
+    new ChangeDiplomacyDialog( parent, controllers, publisher );
+    new ChangeLogisticLinksDialog( parent, controllers, publisher );
+    new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, model );
+    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model );
 }
 
 // -----------------------------------------------------------------------------

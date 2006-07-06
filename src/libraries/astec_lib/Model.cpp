@@ -38,7 +38,7 @@
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers )
+Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher )
     : controllers_( controllers )
     , coordinateConverter_( *new CoordinateConverter() )
     , detection_( *new DetectionMap() )
@@ -47,7 +47,7 @@ Model::Model( Controllers& controllers, const Simulation& simulation, Workers& w
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this ) )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, simulation, workers ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, publisher, simulation, workers ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this ) )
     , fireFactory_( *new FireFactory( *this ) )
     , surfaceFactory_( *new SurfaceFactory( detection_, types_ ) )
@@ -57,7 +57,7 @@ Model::Model( Controllers& controllers, const Simulation& simulation, Workers& w
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
-    , limits_( *new LimitsModel( *this, controllers ) )
+    , limits_( *new LimitsModel( *this, controllers, publisher ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )

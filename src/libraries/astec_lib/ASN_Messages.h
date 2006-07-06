@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-02-24 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ASN_Messages.h $
-// $Author: Age $
-// $Modtime: 6/04/05 15:39 $
-// $Revision: 4 $
-// $Workfile: ASN_Messages.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ASN_Messages_h_
 #define __ASN_Messages_h_
@@ -23,127 +21,121 @@
 //=============================================================================
 
 // ASN Message which isn't a pointer and doesn't take any context
-#define GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( ASNMSG, ASNVAR )             \
-class ASN_Msg##ASNMSG                                                   \
-{                                                                           \
-public:                                                                     \
-    void Send()                                                             \
-    {                                                                       \
-        ASN1T_MsgsMosSim    globalAsnMsg;                                   \
-                                                                            \
-        globalAsnMsg.t              = T_MsgsMosSim_msg_##ASNVAR;            \
-        globalAsnMsg.u.msg_##ASNVAR  = asnMsg_;                              \
-        AgentServerMsgMgr::Instance().SendMsgMosSim( globalAsnMsg );             \
-    }                                                                       \
-                                                                            \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
-    {                                                                       \
-        return asnMsg_;                                                     \
-    }                                                                       \
-                                                                            \
-private:                                                                    \
-    ASN1T_Msg##ASNMSG asnMsg_;                                              \
+#define GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( ASNMSG, ASNVAR ) \
+class ASN_Msg##ASNMSG                                       \
+{                                                           \
+public:                                                     \
+    void Send( Publisher_ABC& publisher )                   \
+    {                                                       \
+        ASN1T_MsgsMosSim message;                           \
+        message.t = T_MsgsMosSim_msg_##ASNVAR;              \
+        message.u.msg_##ASNVAR = asnMsg_;                   \
+        publisher.Send( message );                          \
+    }                                                       \
+                                                            \
+    ASN1T_Msg##ASNMSG& GetAsnMsg()                          \
+    {                                                       \
+        return asnMsg_;                                     \
+    }                                                       \
+                                                            \
+private:                                                    \
+    ASN1T_Msg##ASNMSG asnMsg_;                              \
 }; 
 
 
 // ASN Message which is a pointer and doesn't take any context
 #define GENERATE_SEND_ASN_MSG_PTR_NOCTX( ASNMSG, ASNVAR )               \
 class ASN_Msg##ASNMSG                                                   \
-{                                                                           \
-public:                                                                     \
-    void Send()                                                             \
-    {                                                                       \
-        ASN1T_MsgsMosSim    globalAsnMsg;                                   \
-                                                                            \
-        globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;              \
-        globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                              \
-        AgentServerMsgMgr::Instance().SendMsgMosSim( globalAsnMsg );              \
-    }                                                                       \
-                                                                            \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
-    {                                                                       \
-        return asnMsg_;                                                     \
-    }                                                                       \
-                                                                            \
-private:                                                                    \
-    ASN1T_Msg##ASNMSG asnMsg_;                                              \
+{                                                                       \
+public:                                                                 \
+    void Send( Publisher_ABC& publisher )                               \
+    {                                                                   \
+        ASN1T_MsgsMosSim message;                                       \
+        message.t = T_MsgsMosSim_msg_##ASNVAR;                          \
+        message.u.msg_##ASNVAR = &asnMsg_;                              \
+        publisher.Send( message );                                      \
+    }                                                                   \
+                                                                        \
+    ASN1T_Msg##ASNMSG& GetAsnMsg()                                      \
+    {                                                                   \
+        return asnMsg_;                                                 \
+    }                                                                   \
+                                                                        \
+private:                                                                \
+    ASN1T_Msg##ASNMSG asnMsg_;                                          \
 };
 
 // ASN Message which isn't a pointer and take any context
 #define GENERATE_SEND_ASN_MSG_NOPTR_CTX( ASNMSG, ASNVAR )                       \
 class ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send() { Send( 4212 ); };                                                  \
-    void Send( MIL_MOSContextID nCtx )                                              \
-    {                                                                               \
-        ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
-        globalAsnMsg.u.msg_##ASNVAR = asnMsg_;                                       \
-        AgentServerMsgMgr::Instance().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
-    }                                                                               \
-                                                                                    \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
-    {                                                                               \
-        return asnMsg_;                                                             \
-    }                                                                               \
-                                                                                    \
-private:                                                                            \
-    ASN1T_Msg##ASNMSG asnMsg_;                                                      \
+{                                                                               \
+public:                                                                         \
+    void Send( Publisher_ABC& publisher ) { Send( publisher, 4212 ); };         \
+    void Send( Publisher_ABC& publisher, unsigned long context )                \
+    {                                                                           \
+        ASN1T_MsgsMosSimWithContext message;                                    \
+        message.t = T_MsgsMosSimWithContext_msg_##ASNVAR;                       \
+        message.u.msg_##ASNVAR = asnMsg_;                                       \
+        publisher.Send( message, context );                                     \
+    }                                                                           \
+                                                                                \
+    ASN1T_Msg##ASNMSG& GetAsnMsg()                                              \
+    {                                                                           \
+        return asnMsg_;                                                         \
+    }                                                                           \
+                                                                                \
+private:                                                                        \
+    ASN1T_Msg##ASNMSG asnMsg_;                                                  \
 };
 
 // ASN Message which is a pointer and take any context
 #define GENERATE_SEND_ASN_MSG_PTR_CTX( ASNMSG, ASNVAR )                         \
 class ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send() { Send( 4212 ); };                                                  \
-    void Send( MIL_MOSContextID nCtx )                                              \
-    {                                                                               \
-        ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
-        globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                                      \
-        AgentServerMsgMgr::Instance().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
-    }                                                                               \
-                                                                                    \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
-    {                                                                               \
-        return asnMsg_;                                                             \
-    }                                                                               \
-                                                                                    \
-private:                                                                            \
-    ASN1T_Msg##ASNMSG asnMsg_;                                                      \
+{                                                                               \
+public:                                                                         \
+    void Send( Publisher_ABC& publisher ) { Send( publisher, 4212 ); };         \
+    void Send( Publisher_ABC& publisher, unsigned long context )                \
+    {                                                                           \
+        ASN1T_MsgsMosSimWithContext message;                                    \
+        message.t = T_MsgsMosSimWithContext_msg_##ASNVAR;                       \
+        message.u.msg_##ASNVAR = &asnMsg_;                                      \
+        publisher.Send( message, context );                                     \
+    }                                                                           \
+                                                                                \
+    ASN1T_Msg##ASNMSG& GetAsnMsg()                                              \
+    {                                                                           \
+        return asnMsg_;                                                         \
+    }                                                                           \
+                                                                                \
+private:                                                                        \
+    ASN1T_Msg##ASNMSG asnMsg_;                                                  \
 };    
 
 // ASN Message which isn't a pointer and take any context
 #define GENERATE_SEND_ASN_MSG_NOMSG_CTX( ASNMSG, ASNVAR )                       \
 class ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send() { Send( 4212 ); };                                                  \
-    void Send( MIL_MOSContextID nCtx )                                              \
-    {                                                                               \
-        ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
-        AgentServerMsgMgr::Instance().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
-    }                                                                               \
+{                                                                               \
+public:                                                                         \
+    void Send( Publisher_ABC& publisher ) { Send( publisher, 4212 ); };         \
+    void Send( Publisher_ABC& publisher, unsigned long context )                \
+    {                                                                           \
+        ASN1T_MsgsMosSimWithContext message;                                    \
+        message.t = T_MsgsMosSimWithContext_msg_##ASNVAR;                       \
+        publisher.Send( message, context );                                     \
+    }                                                                           \
 };
 
 // ASN Message which is a pointer and take any context
-#define GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( ASNMSG, ASNVAR )                     \
-class ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send()                                                                     \
-    {                                                                               \
-        ASN1T_MsgsMosSim    globalAsnMsg;                                           \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;                     \
-        AgentServerMsgMgr::Instance().SendMsgMosSim( globalAsnMsg ); \
-    }                                                                               \
+#define GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( ASNMSG, ASNVAR ) \
+class ASN_Msg##ASNMSG                                       \
+{                                                           \
+public:                                                     \
+    void Send( Publisher_ABC& publisher )                   \
+    {                                                       \
+        ASN1T_MsgsMosSim message;                           \
+        message.t = T_MsgsMosSim_msg_##ASNVAR;              \
+        publisher.Send( message);                           \
+    }                                                       \
 };                                                      
 
 

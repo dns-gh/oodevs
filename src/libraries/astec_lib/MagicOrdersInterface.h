@@ -24,6 +24,7 @@ class LogisticSupplyRecompletionDialog;
 class ChangeHumanFactorsDialog;
 class LocationCreator;
 class ParametersLayer;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  MagicOrdersInterface
@@ -44,7 +45,7 @@ class MagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer );
+             MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, ParametersLayer& layer );
     virtual ~MagicOrdersInterface();
     //@}
 
@@ -90,6 +91,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     const Model& model_;
     bool controller_;
     SafePointer< Agent > selectedAgent_;

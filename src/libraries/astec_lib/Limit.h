@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-08 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Limit.h $
-// $Author: Ape $
-// $Modtime: 26/07/04 11:10 $
-// $Revision: 5 $
-// $Workfile: Limit.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __Limit_h_
 #define __Limit_h_
@@ -30,9 +28,9 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Limit( Controller& controller, const CoordinateConverter_ABC& converter);
-             Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter_ABC& converter );
-             Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter );
+             Limit( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter);
+             Limit( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, const CoordinateConverter_ABC& converter );
+             Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter );
     virtual ~Limit();
     //@}
 
@@ -61,6 +59,8 @@ public:
     //! @name Member data
     //@{
     static IDManager idManager_;
+
+private:
     Controller& controller_;
     E_NatureLevel  nLevel_;
     //@}

@@ -1,0 +1,45 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __Publisher_ABC_h_
+#define __Publisher_ABC_h_
+
+#include "ASN_Types.h"
+
+// =============================================================================
+/** @class  Publisher_ABC
+    @brief  Publisher abstract base class
+*/
+// Created: SBO 2006-07-06
+// =============================================================================
+class Publisher_ABC
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Publisher_ABC() {}
+    virtual ~Publisher_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Send( ASN1T_MsgsMosSim& message ) = 0;
+    virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 ) = 0;
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    Publisher_ABC( const Publisher_ABC& );            //!< Copy constructor
+    Publisher_ABC& operator=( const Publisher_ABC& ); //!< Assignement operator
+    //@}
+};
+
+#endif // __Publisher_ABC_h_

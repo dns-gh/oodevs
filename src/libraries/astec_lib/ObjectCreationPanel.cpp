@@ -19,8 +19,9 @@
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer, const GlTools_ABC& tools )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, ParametersLayer& layer, const GlTools_ABC& tools )
     : QVBox( parent )
+    , publisher_( publisher )
     , tools_( tools )
     , created_( new ObjectPrototype( this, controllers, model, layer ) )
 {
@@ -53,7 +54,7 @@ void ObjectCreationPanel::Commit()
     msg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_create_object;
     msg.GetAsnMsg().action.u.create_object   = &action;
     created_->Serialize( msg );
-    msg.Send();
+    msg.Send( publisher_ );
     created_->Clean();
 }
 

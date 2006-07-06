@@ -19,8 +19,9 @@
 // Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( Controller& controller, const Agent& agent )
+AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Agent& agent )
     : controller_( controller )
+    , publisher_( publisher )
     , agent_( agent )
     , lastOrderId_( unsigned( -1 ) )
     , current_( 0 )
@@ -130,7 +131,7 @@ void AutomatDecisions::Engage() const
     ASN_MsgSetAutomateMode asnMsg;
     asnMsg.GetAsnMsg().unit_id = agent_.GetId();
     asnMsg.GetAsnMsg().mode    = EnumAutomateState::embraye;
-    asnMsg.Send( 0 );
+    asnMsg.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +143,7 @@ void AutomatDecisions::Disengage() const
     ASN_MsgSetAutomateMode asnMsg;
     asnMsg.GetAsnMsg().unit_id = agent_.GetId();
     asnMsg.GetAsnMsg().mode    = EnumAutomateState::debraye;
-    asnMsg.Send( 0 );     
+    asnMsg.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------

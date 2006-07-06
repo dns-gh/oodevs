@@ -23,6 +23,7 @@ class MT_SpinBox;
 class Simulation;
 class Controllers;
 class Network;
+class Publisher_ABC;
 
 //*****************************************************************************
 // Created: FBD 03-01-14
@@ -36,7 +37,7 @@ class SIMControlToolbar : public QToolBar
 public:
     //! @name Constructor/Destructor
     //@{
-             SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network );
+             SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher );
     virtual ~SIMControlToolbar();
     //@}
 
@@ -66,6 +67,7 @@ private:
     //! @name Member data
     //@{
     Controllers&        controllers_;
+    Publisher_ABC&      publisher_;
     QToolButton*        pConnectButton_;
     QToolButton*        pPlayButton_;
     QToolButton*        pSpeedButton_;

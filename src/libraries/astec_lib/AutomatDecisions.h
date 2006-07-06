@@ -20,6 +20,7 @@ class Controller;
 class Mission;
 class FragOrder;
 class Displayer_ABC;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  AutomatDecisions
@@ -36,7 +37,7 @@ class AutomatDecisions : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatDecisions( Controller& controller, const Agent& agent );
+             AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Agent& agent );
     virtual ~AutomatDecisions();
     //@}
 
@@ -71,6 +72,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
+    Publisher_ABC& publisher_;
     const Agent& agent_;
     bool bEmbraye_;
 

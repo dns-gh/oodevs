@@ -30,9 +30,10 @@ const char* AgentListView::agentMimeType_ = agentMimeType_;
 // Name: AgentListView constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory )
     : ListView< AgentListView >( pParent, *this, factory )
     , controllers_( controllers )
+    , publisher_( publisher )
     , factory_( factory )
     , currentTeam_( 0 )
 {
@@ -341,7 +342,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
         ASN_MsgChangeAutomate asnMsg;
         asnMsg.GetAsnMsg().oid_pion     = agent.GetId();
         asnMsg.GetAsnMsg().oid_automate = superiorId;
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
 
         pEvent->accept();
     }
@@ -359,7 +360,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
         asnMsg.GetAsnMsg().oid_automate            = agent.GetId();
         asnMsg.GetAsnMsg().oid_camp                = kg.GetTeam().GetId();
         asnMsg.GetAsnMsg().oid_groupe_connaissance = kg.GetId();
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
 
         pEvent->accept();
     }

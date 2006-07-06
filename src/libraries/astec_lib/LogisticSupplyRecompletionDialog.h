@@ -17,6 +17,7 @@ class Controllers;
 class Model;
 class Equipment;
 class Dotation;
+class Publisher_ABC;
 struct ASN1T_MagicActionRecompletementPartiel;
 
 //=============================================================================
@@ -29,7 +30,7 @@ class LogisticSupplyRecompletionDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, const Model& model );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const Model& model );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
@@ -95,6 +96,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Publisher_ABC& publisher_;
     const Model& model_;
     SafePointer< Agent > agent_;
 

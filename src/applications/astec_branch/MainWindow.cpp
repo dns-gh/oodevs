@@ -92,8 +92,10 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
+    Publisher_ABC& publisher = network_.GetMessageMgr();
+
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
-    new Dialogs( this, controllers, model_ ); // $$$$ SBO 2006-06-30: leak
+    new Dialogs( this, controllers, model_, publisher ); // $$$$ SBO 2006-06-30: leak
 
     layers_ = new GlLayers( controllers, model, prefDialog->GetPreferences() );
 
@@ -108,7 +110,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
 
     QVBox* agentPanel = new QVBox();
     new EntitySearchBox< Agent >( agentPanel, controllers );
-    AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers, *factory );
+    AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers, publisher, *factory );
     pListsTabWidget->addTab( agentPanel, tr( "Agents" ) );
     pAgentList_->header()->hide();
 
@@ -154,7 +156,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, layers_->GetParametersLayer(), *layers_ );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, publisher, layers_->GetParametersLayer(), *layers_ );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
@@ -175,7 +177,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
     moveDockWindow( pObjectCreationWnd, Qt::DockRight );
     pObjectCreationWnd->hide();
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, model_, layers_->GetParametersLayer(), *layers_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, model_, layers_->GetParametersLayer(), *layers_ );
     pObjectCreationWnd->setWidget( objectCreationPanel );
     pObjectCreationWnd->setResizeEnabled( true );
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
@@ -183,9 +185,9 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) ); // $$$$ AGE 2006-06-30: 
 
-    new MagicOrdersInterface( this, controllers_, model_, layers_->GetParametersLayer() );
+    new MagicOrdersInterface( this, controllers_, publisher, model_, layers_->GetParametersLayer() );
 
-    new SIMControlToolbar( this, controllers, network );
+    new SIMControlToolbar( this, controllers, network, publisher );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );

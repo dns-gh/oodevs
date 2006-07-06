@@ -28,9 +28,10 @@
 // Name: MagicOrdersInterface constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer )
+MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, ParametersLayer& layer )
     : QObject( parent )
     , controllers_( controllers )
+    , publisher_( publisher )
     , model_( model )
     , selectedAgent_( controllers )
     , selectedGroup_( controllers )
@@ -38,8 +39,8 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     , controller_( true )
     , magicMove_( false )
 {
-    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, model_ );
-    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent, controllers_ );
+    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, publisher_, model_ );
+    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent, controllers_, publisher_ );
     
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
@@ -168,20 +169,23 @@ namespace
 {
     struct MagicFunctor
     {
-        MagicFunctor( int id ) : id_( id ) {};
+        MagicFunctor( Publisher_ABC& publisher, int id ) : publisher_( publisher ), id_( id ) {};
         void operator()( const Agent& agent ) const
         {
             ASN_MsgUnitMagicAction asnMsg;
             asnMsg.GetAsnMsg().oid      = agent.GetId();
             asnMsg.GetAsnMsg().action.t = id_;
-            asnMsg.Send();
+            asnMsg.Send( publisher_ );
         }
+    private:
+        MagicFunctor& operator=( const MagicFunctor& );
+        Publisher_ABC& publisher_;
         int id_;
     };
 
     struct RecursiveMagicFunctor : public MagicFunctor
     {
-        RecursiveMagicFunctor( int id ) : MagicFunctor( id ) {};
+        RecursiveMagicFunctor( Publisher_ABC& publisher, int id ) : MagicFunctor( publisher, id ) {};
         void operator()( const Agent& agent ) const
         {
             MagicFunctor::operator()( agent );
@@ -202,7 +206,7 @@ void MagicOrdersInterface::Magic( int type )
 {
     if( selectedAgent_ )
     {
-        MagicFunctor functor( type );
+        MagicFunctor functor( publisher_, type );
         functor( *selectedAgent_ );
         selectedAgent_ = 0;
     } 
@@ -224,7 +228,7 @@ void MagicOrdersInterface::Magic( int type )
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id )
 {
-    group.Resolver< Agent >::Apply( RecursiveMagicFunctor( id ) );
+    group.Resolver< Agent >::Apply( RecursiveMagicFunctor( publisher_, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +237,7 @@ void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::ApplyOnHierarchy( const Team& team, int id )
 {
-    team.Resolver< KnowledgeGroup >::Apply( RecursiveMagicFunctor( id ) );
+    team.Resolver< KnowledgeGroup >::Apply( RecursiveMagicFunctor( publisher_, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +301,7 @@ void MagicOrdersInterface::Handle( const T_PointVector& points )
         ASN1T_CoordUTM utm;
         utm = model_.coordinateConverter_.ConvertToMgrs( points[0] ).c_str();
         message.GetAsnMsg().action.u.move_to = &utm;
-        message.Send( 56 );
+        message.Send( publisher_, 56 );
     }
     controllers_.Remove( *magicMoveLocation_ );
     magicMove_ = false;
@@ -314,7 +318,7 @@ void MagicOrdersInterface::Surrender()
         ASN_MsgUnitMagicAction asnMsg;
         asnMsg.GetAsnMsg().oid      = selectedAgent_->GetId();
         asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
     }
 }
 
@@ -329,6 +333,6 @@ void MagicOrdersInterface::RecoverHumanTransporters()
         ASN_MsgUnitMagicAction asnMsg;
         asnMsg.GetAsnMsg().oid      = selectedAgent_ ->GetId();
         asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
     }
 }

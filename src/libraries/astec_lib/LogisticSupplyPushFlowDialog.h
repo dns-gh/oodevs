@@ -19,6 +19,7 @@ class Controllers;
 class Model;
 class Agent;
 class Dotation;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
@@ -36,7 +37,7 @@ class LogisticSupplyPushFlowDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, const Model& model );
+             LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -76,6 +77,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     const Model& model_;
     ValuedComboBox< const Agent* >* targetCombo_;
     QTable* table_;

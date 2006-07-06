@@ -25,9 +25,10 @@
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
-SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network )
+SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher )
     : QToolBar( pParent, "sim control toolbar" )
     , controllers_( controllers )
+    , publisher_( publisher )
     , speed_( 4212 )
     , connected_( false )
     , paused_( false )
@@ -113,12 +114,12 @@ void SIMControlToolbar::SlotPlayPause()
     if ( paused_ )
     {
         ASN_MsgCtrlResume asnMsg;
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
     }
     else
     {
         ASN_MsgCtrlPause asnMsg;
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
     }
 }
 
@@ -132,7 +133,7 @@ void SIMControlToolbar::SlotSpeedChange()
     {
         ASN_MsgCtrlChangeTimeFactor asnMsg;
         asnMsg.GetAsnMsg() = pSpeedSpinBox_->value();
-        asnMsg.Send();
+        asnMsg.Send( publisher_ );
     }
 }
 

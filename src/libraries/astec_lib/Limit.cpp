@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-08 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Limit.cpp $
-// $Author: Ape $
-// $Modtime: 26/01/05 16:03 $
-// $Revision: 8 $
-// $Workfile: Limit.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
 #include "Limit.h"
@@ -22,8 +20,8 @@ IDManager Limit::idManager_( 138 );
 // Name: Limit constructor
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( "Limit", idManager_.GetFreeIdentifier(), converter )
+Limit::Limit( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( "Limit", idManager_.GetFreeIdentifier(), converter, publisher )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
@@ -35,8 +33,8 @@ Limit::Limit( Controller& controller, const CoordinateConverter_ABC& converter )
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, const T_PointVector& pointList, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC(  "Limit", idManager_.GetFreeIdentifier(), pointList, converter )
+Limit::Limit( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, const CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC(  "Limit", idManager_.GetFreeIdentifier(), pointList, converter, publisher )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
@@ -48,8 +46,8 @@ Limit::Limit( Controller& controller, const T_PointVector& pointList, const Coor
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( "Limit", asnMsg.oid, asnMsg.geometrie, converter )
+Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( "Limit", asnMsg.oid, asnMsg.geometrie, converter, publisher )
     , controller_( controller )
     , nLevel_( (E_NatureLevel) asnMsg.level )
 {

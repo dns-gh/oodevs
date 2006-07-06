@@ -16,6 +16,7 @@
 
 class Agent;
 class Controllers;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  ChangeHumanFactorsDialog
@@ -29,7 +30,7 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers );
+             ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
@@ -59,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Publisher_ABC& publisher_;
     SafePointer< Agent > agent_;
     ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
     ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;

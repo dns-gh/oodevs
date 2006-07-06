@@ -65,9 +65,10 @@
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const Simulation& simulation, Workers& workers )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers )
     : controllers_( controllers )
     , model_( model )
+    , publisher_( publisher )
     , simulation_( simulation )
     , workers_( workers )
 {
@@ -100,7 +101,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
-    result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
+    result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );

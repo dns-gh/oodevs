@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-04-14 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/TacticalLine_ABC.h $
-// $Author: Ape $
-// $Modtime: 28/07/04 14:48 $
-// $Revision: 5 $
-// $Workfile: TacticalLine_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
@@ -26,6 +17,7 @@
 class CoordinateConverter_ABC;
 class GlTools_ABC;
 class ActionController;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  TacticalLine_ABC
@@ -39,9 +31,9 @@ class TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter_ABC& converter );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -99,7 +91,7 @@ protected:
     template< typename Message >
     void Send( Message& message )
     {
-        message.Send( (MIL_MOSContextID)this );
+        message.Send( publisher_, (MIL_MOSContextID)this );
         nNetworkState_ = eNetworkStateRegistering;
     }
     void DrawName( const GlTools_ABC& tools ) const;
@@ -118,6 +110,7 @@ private:
     //! @name Member data
     //@{
     const CoordinateConverter_ABC& converter_;
+    Publisher_ABC& publisher_;
 
     unsigned long  id_;
     T_PointVector  pointList_;

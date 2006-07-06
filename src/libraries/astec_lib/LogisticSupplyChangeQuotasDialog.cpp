@@ -27,9 +27,10 @@
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, const Model& model )
+LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model )
     : QDialog( parent, "Affecter quotas ravitaillement" )
     , controllers_( controllers )
+    , publisher_( publisher )
     , model_( model )
     , selected_( controllers )
 {
@@ -150,7 +151,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
         }
         message.GetAsnMsg().quotas.elem = quota;
     }
-    message.Send();
+    message.Send( publisher_ );
     if( message.GetAsnMsg().quotas.n > 0 )
         delete [] message.GetAsnMsg().quotas.elem;
     hide();

@@ -19,10 +19,11 @@
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
+UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
-    , agent_              ( agent )
-    , nMissionId_         ( nMissionId )
+    , publisher_( publisher )
+    , agent_( agent )
+    , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPionOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent);
@@ -64,7 +65,7 @@ void UnitMissionInterface::OnOk()
     ASN1T_MsgPionOrder& order = pASNMsgOrder_->GetAsnMsg();
     order.m.oid_limite_gauchePresent = (order.oid_limite_gauche != MIL_NULL_LINE_ID) ? 1 : 0;
     order.m.oid_limite_droitePresent = (order.oid_limite_droite != MIL_NULL_LINE_ID) ? 1 : 0;
-    pASNMsgOrder_->Send( 45 );
+    pASNMsgOrder_->Send( publisher_, 45 );
 
     agent_.Update( order );
     parentWidget()->hide();

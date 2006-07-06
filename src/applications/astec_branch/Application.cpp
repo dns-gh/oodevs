@@ -18,6 +18,7 @@
 #include "astec_lib/Simulation.h"
 #include "astec_lib/Controllers.h"
 #include "astec_lib/Workers.h"
+#include "astec_lib/AgentServerMsgMgr.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -86,8 +87,9 @@ void Application::Initialize( int argc, char** argv )
     controllers_ = new Controllers();
     simulation_  = new Simulation( *controllers_ );
     workers_     = new Workers();
-    model_       = new Model( *controllers_, *simulation_, *workers_ );
-    network_     = new Network( *controllers_, *model_, *simulation_ );
+    network_     = new Network( *controllers_, *simulation_ );
+    model_       = new Model( *controllers_, *simulation_, *workers_, network_->GetMessageMgr() );
+    network_->GetMessageMgr().SetModel( *model_ );
     mainWindow_  = new MainWindow( *controllers_, *model_, *network_ );
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )

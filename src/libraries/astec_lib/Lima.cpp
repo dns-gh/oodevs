@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-08 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Lima.cpp $
-// $Author: Ape $
-// $Modtime: 26/01/05 15:47 $
-// $Revision: 8 $
-// $Workfile: Lima.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
 #include "Lima.h"
@@ -23,8 +21,8 @@ IDManager Lima::idManager_( 137 );
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( Tools::ToString( eLimaFuncLCA ).ascii(), idManager_.GetFreeIdentifier(), converter )
+Lima::Lima( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( Tools::ToString( eLimaFuncLCA ).ascii(), idManager_.GetFreeIdentifier(), converter, publisher )
     , controller_     ( controller )
     , nFuncType_      ( eLimaFuncLCA )
 {
@@ -36,8 +34,8 @@ Lima::Lima( Controller& controller, const CoordinateConverter_ABC& converter )
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( Tools::ToString( nFuncType ).ascii(), idManager_.GetFreeIdentifier(), pointList, converter )
+Lima::Lima( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( Tools::ToString( nFuncType ).ascii(), idManager_.GetFreeIdentifier(), pointList, converter, publisher )
     , controller_     ( controller )
     , nFuncType_      ( nFuncType )
 {
@@ -49,8 +47,8 @@ Lima::Lima( Controller& controller, const T_PointVector& pointList, E_FuncLimaTy
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( Tools::ToString( (E_FuncLimaType)asnMsg.fonction ).ascii(), asnMsg.oid, asnMsg.geometrie, converter )
+Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( Tools::ToString( (E_FuncLimaType)asnMsg.fonction ).ascii(), asnMsg.oid, asnMsg.geometrie, converter, publisher )
     , controller_     ( controller )
     , nFuncType_      ( (E_FuncLimaType)asnMsg.fonction )
 {

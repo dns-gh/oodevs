@@ -80,8 +80,9 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const Model& model )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model )
     : QDialog( parent, "Recompletement" )
+    , publisher_( publisher )
     , model_( model )
     , agent_( controllers )
 {
@@ -553,7 +554,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillAmmunitions( asnMagicAction );
     FillSupplies( asnMagicAction );
 
-    asnMsg.Send();
+    asnMsg.Send( publisher_ );
     if( asnMagicAction.m.dotationsPresent && asnMagicAction.dotations.n > 0 )
         delete [] asnMagicAction.dotations.elem;
 

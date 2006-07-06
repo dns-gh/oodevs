@@ -17,6 +17,7 @@ class ASN_MsgPionOrder;
 class ASN_MsgPopulationOrder;
 class Population;
 class ObjectTypes;
+class Publisher_ABC;
 
 // =============================================================================
 // Created: APE 2004-04-20
@@ -26,7 +27,7 @@ class PopulationMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes );
+             PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~PopulationMissionInterface();
     //@}
    
@@ -57,6 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Publisher_ABC& publisher_;
     uint nMissionId_;
     ASN_MsgPopulationOrder* pASNMsgOrder_;
     //@}

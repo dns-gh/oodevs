@@ -1,13 +1,12 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ChangeDiplomacyDialog.h $
-// $Author: Age $
-// $Modtime: 6/04/05 15:17 $
-// $Revision: 1 $
-// $Workfile: ChangeDiplomacyDialog.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 
 #ifndef __ChangeDiplomacyDialog_h_
 #define __ChangeDiplomacyDialog_h_
@@ -19,6 +18,7 @@
 
 class Team;
 class Controllers;
+class Publisher_ABC;
 
 //=============================================================================
 // Created:  NLD 2002-01-03 
@@ -33,7 +33,7 @@ class ChangeDiplomacyDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers );
+             ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher );
     virtual ~ChangeDiplomacyDialog();
     //@}
 
@@ -63,6 +63,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    Publisher_ABC& publisher_;
     ValuedComboBox< unsigned long >*      pArmy1ComboBox_;
     ValuedComboBox< unsigned long >*      pArmy2ComboBox_;
     ValuedComboBox<ASN1T_EnumDiplomatie>* pDiplomacyComboBox_;

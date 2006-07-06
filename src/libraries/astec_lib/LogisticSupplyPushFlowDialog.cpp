@@ -27,9 +27,10 @@
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, const Model& model )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model )
     : QDialog( parent, "Pousser flux log" )
     , controllers_( controllers )
+    , publisher_( publisher )
     , model_( model )
     , selected_( controllers )
 {
@@ -150,7 +151,7 @@ void LogisticSupplyPushFlowDialog::Validate()
         }
         message.GetAsnMsg().stocks.elem = stock;
     }
-    message.Send();
+    message.Send( publisher_ );
     if( message.GetAsnMsg().stocks.n > 0 )
         delete [] message.GetAsnMsg().stocks.elem;
     hide();

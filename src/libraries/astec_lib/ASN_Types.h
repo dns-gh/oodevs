@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-02-24 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ASN_Types.h $
-// $Author: Ape $
-// $Modtime: 29/04/04 17:24 $
-// $Revision: 2 $
-// $Workfile: ASN_Types.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ASN_Types_h_
 #define __ASN_Types_h_

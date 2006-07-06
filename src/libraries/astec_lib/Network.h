@@ -39,7 +39,7 @@ class Network : public tools::thread::Thread
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( Controllers& controllers, Model& model, Simulation& simu );
+             Network( Controllers& controllers, Simulation& simu );
     virtual ~Network();
     //@}
 
