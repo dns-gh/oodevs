@@ -14,21 +14,10 @@
 #include "MainWindow.h"
 
 #include "astec_lib/Network.h"
-#include "astec_lib/Morale.h"
-#include "astec_lib/Experience.h"
-#include "astec_lib/Tiredness.h"
-#include "astec_lib/Options.h"
 #include "astec_lib/Model.h"
 #include "astec_lib/Simulation.h"
 #include "astec_lib/Controllers.h"
 #include "astec_lib/Workers.h"
-#include "astec_lib/InitializationMessage.h"
-#include "astec_lib/AgentServerMsgMgr.h"
-
-#include "xeumeuleu/xml.h"
-
-#include <qsplashscreen.h>
-#include <qfileinfo.h>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -37,17 +26,13 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 
-using namespace xml;
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
-
-Application* Application::pInstance_ = 0;
 
 namespace 
 {
     struct CatchMeIfYouCan {};
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Application::Application
@@ -88,9 +73,6 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    assert( pInstance_ == 0 );
-    pInstance_ = this;
-
     // Command line options
     std::string conffile;
     po::options_description desc( "Allowed options" );
@@ -139,14 +121,3 @@ void Application::UpdateData()
         QMessageBox::critical( 0, APP_NAME, e.what(), QMessageBox::Abort, QMessageBox::Abort );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: Application::GetMessageManager
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-AgentServerMsgMgr& Application::GetMessageManager()
-{
-    return pInstance_->network_->GetMessageMgr();
-}
-
-

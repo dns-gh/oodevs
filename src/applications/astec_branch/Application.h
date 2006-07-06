@@ -18,9 +18,6 @@ class Model;
 class Simulation;
 class Controllers;
 class Workers;
-class AgentServerMsgMgr;
-
-namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  Application
@@ -31,9 +28,6 @@ namespace xml { class xistream; }
 class Application : public QApplication
 {
     Q_OBJECT;
-
-public:
-    static AgentServerMsgMgr& GetMessageManager(); // $$$$ SBO 2006-03-16: 
 
 public:
     //! @name Constructors/Destructor
@@ -57,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Initialize( int nArgc, char** ppArgv );
+    void Initialize( int argc, char** argv );
     //@}
 
 private:
@@ -71,9 +65,6 @@ private:
     MainWindow* mainWindow_;
     QTimer* networkTimer_;
     //@}
-
-private:
-    static Application* pInstance_;
 };
 
 

@@ -10,6 +10,7 @@
 #include "astec_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
+
 #include "astec_lib/Logger.h"
 #include "astec_lib/Options.h"
 #include "astec_lib/AgentListView.h"
