@@ -115,12 +115,8 @@ void GlWidget::RenderMiniViews()
     const geometry::Rectangle2f viewport = viewport_;
     const int windowHeight = windowHeight_;
     const int windowWidth = windowWidth_;
-    MapWidget::resizeGL( 128, 128 );
     const Point2f oldCenter = Center( Point2f() );
     const float oldZoom = Zoom( 1000 );
-
-    windowHeight_ = 128;
-    windowWidth_ = 128;
 
     for( CIT_Views it = views_.begin(); it != views_.end(); ++it )
         RenderMiniView( **it );
@@ -145,6 +141,8 @@ void GlWidget::RenderMiniView( MiniView& view )
         Center( viewport_.Center() );
         Zoom( viewport_.Height() );
         MapWidget::resizeGL( 128, 128 );
+        windowHeight_ = 128;
+        windowWidth_ = 128;
 
         QImage image( 128, 128, 32 );
         MapWidget::paintGL();

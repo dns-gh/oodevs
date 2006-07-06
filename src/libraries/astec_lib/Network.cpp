@@ -72,10 +72,7 @@ bool Network::Connect( const std::string& strHostName, uint16 nPort )
 {
     boost::mutex::scoped_lock locker( mutex_ );
     if( IsConnected() )
-    {
-        // MT_LOG_ERROR_MSG( "Déjà connecté" );
         return false;
-    }
     
     NEK_AddressINET addr( strHostName.c_str(), nPort );
     pConnService_->JoinHost( addr );
@@ -91,10 +88,7 @@ bool Network::Disconnect()
 {
     boost::mutex::scoped_lock locker( mutex_ );
     if( ! IsConnected() )
-    {
-        // MT_LOG_ERROR_MSG( "Déconnexion impossible - non connecté à un serveur" );
         return false;
-    }
     session_->Close( false );
     simu_.Disconnect();
     return true;
@@ -141,7 +135,7 @@ void Network::Update()
             session_ = it->link_;
             if( it->error_.empty() )
             {
-                // MT_LOG_INFO_MSG( "Connecté à " << it->link_->GetRemoteAddress().GetAddressAsString() );
+                MT_LOG_INFO_MSG( "Connecté à " << it->link_->GetRemoteAddress().GetAddressAsString() );
                 manager_->Enable( *session_ );
                 ASN_MsgCtrlClientAnnouncement asnMsg;
                 asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
@@ -151,12 +145,12 @@ void Network::Update()
             }
             else if( it->lost_ )
             {
-                // MT_LOG_INFO_MSG( "Connexion à " << it->address_ << " perdue (raison :" << it->error_ << ")" );   
+                MT_LOG_INFO_MSG( "Connexion à " << it->address_ << " perdue (raison :" << it->error_ << ")" );   
                 simu_.Disconnect();
             }
             else
             {
-                // MT_LOG_INFO_MSG( "Non connecté à " << it->address_ << " (raison :" << it->error_ << ")" );   
+                MT_LOG_INFO_MSG( "Non connecté à " << it->address_ << " (raison :" << it->error_ << ")" );   
                 simu_.Disconnect();
             }
         }

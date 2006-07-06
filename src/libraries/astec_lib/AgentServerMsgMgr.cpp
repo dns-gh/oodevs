@@ -41,8 +41,10 @@
 #include "TristateOption.h"
 #include "Controllers.h"
 #include "OptionVariant.h"
+#include "LogTools.h"
 
 using namespace DIN;
+using namespace log_tools;
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr constructor
@@ -248,10 +250,6 @@ void AgentServerMsgMgr::SendMagicDestruction( const Agent& agent )
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     Send( eMsgUnitMagicAction, dinMsg );
-
-    std::stringstream strOutputMsg;
-    strOutputMsg << "Demande endommagement pion "  << agent.GetName();
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eSent, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -629,24 +627,13 @@ void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLengt
     Send( eMsgMosSimWithContext, dinMsg );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::CheckAcknowledge
-// Created: AGE 2006-02-13
-// -----------------------------------------------------------------------------
-template< typename T >
-bool AgentServerMsgMgr::CheckAcknowledge( const char* type, const T& message )
-{
-    MT_LOG_INFO( type << "- Code: " << Tools::ToString( message ), eReceived, 0 );
-    return message == EnumObjectErrorCode::no_error;
-}
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck( const ASN1T_MsgCtrlPauseAck& message )
 {
-    if( CheckAcknowledge( "CtrlPauseAck", message ) )
+    if( CheckAcknowledge( message, "CtrlPauseAck" ) )
         simulation_.Pause( true );
 }
 
@@ -656,7 +643,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlPauseAck( const ASN1T_MsgCtrlPauseAck& m
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck( const ASN1T_MsgCtrlResumeAck& message )
 {
-    if( CheckAcknowledge( "CtrlResumeAck", message ) )
+    if( CheckAcknowledge( message, "CtrlResumeAck" ) )
         simulation_.Pause( false );
 }
 
@@ -666,7 +653,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlResumeAck( const ASN1T_MsgCtrlResumeAck&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlChangeTimeFactorAck& message )
 {
-    if( CheckAcknowledge( "CtrlTimeFactorAck", message.error_code ) )
+    if( CheckAcknowledge( message, "CtrlTimeFactorAck" ) )
         simulation_.ChangeSpeed( (int)message.time_factor );
 }
 
@@ -839,17 +826,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogR
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& message, MIL_MOSContextID )
 {
-//    std::stringstream strOutputMsg;
-//    strOutputMsg << "MSG Received : MsgLogRavitaillementChangeQuotaAck - Code ";
-//    switch( message )
-//    {
-//        case MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur : strOutputMsg << "error_invalid_donneur"; break;
-//        case MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur: strOutputMsg << "error_invalid_receveur"; break;
-//        case MsgLogRavitaillementChangeQuotasAck::no_error:               strOutputMsg << "no_error"; break;
-//        default:
-//            assert( false );
-//    }
-//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+    CheckAcknowledge( message, "MsgLogRavitaillementChangeQuotasAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -858,18 +835,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& message, MIL_MOSContextID )
 {
-//    std::stringstream strOutputMsg;
-//    strOutputMsg << "MSG Received : MsgLogRavitaillementPousserFlux - Code ";
-//    switch( message )
-//    {
-//        case MsgLogRavitaillementPousserFluxAck::error_invalid_donneur        : strOutputMsg << "error_invalid_donneur"; break;
-//        case MsgLogRavitaillementPousserFluxAck::error_invalid_receveur       : strOutputMsg << "error_invalid_receveur"; break;
-//        case MsgLogRavitaillementPousserFluxAck::error_ravitaillement_en_cours: strOutputMsg << "error_ravitaillement_en_cours"; break;
-//        case MsgLogRavitaillementPousserFluxAck::no_error                     : strOutputMsg << "no_error"; break;
-//        default:
-//            assert( false );
-//    }
-//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+    CheckAcknowledge( message, "MsgLogRavitaillementPousserFluxAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -887,7 +853,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& m
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    CheckAcknowledge( "UnitMagicActionAck", message.error_code );
+    CheckAcknowledge( message, "UnitMagicActionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -896,7 +862,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagic
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    CheckAcknowledge( "ObjectMagicActionAck", message.error_code );
+    CheckAcknowledge( message, "ObjectMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -905,7 +871,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectM
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoGlobalAck()
 {
-    CheckAcknowledge( "CtrlMeteoGlobaleAck", EnumObjectErrorCode::no_error );
+    CheckAcknowledge( "CtrlMeteoGlobaleAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -914,7 +880,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoGlobalAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoLocalAck()
 {
-    CheckAcknowledge( "CtrlMeteoLocaleAck", EnumObjectErrorCode::no_error );
+    CheckAcknowledge( "CtrlMeteoLocaleAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -923,9 +889,10 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoLocalAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin()
 {
-    MT_LOG_INFO( "CtrlSendCurrentStateBegin", eReceived, 0 );
     bReceivingState_ = true;
     bUseMosLimits_ = true;
+    // $$$$ AGE 2006-07-06: refaire clignoter l'icone ?
+    // $$$$ AGE 2006-07-06: Afficher dans la barre d'etat un status ?
 }
 
 // -----------------------------------------------------------------------------
@@ -934,7 +901,6 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
-    MT_LOG_INFO( "CtrlSendCurrentStateEnd", eReceived, 0 );
     bReceivingState_ = false;
     if( bUseMosLimits_ )
         GetModel().limits_.UpdateToSim(); // $$$$ AGE 2006-02-15: WTF
@@ -946,7 +912,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 {
-    MT_LOG_INFO( "CtrlCheckPointSaveBegin", eReceived, 0 );
+    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
 }
 
 // -----------------------------------------------------------------------------
@@ -955,7 +921,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 {
-    MT_LOG_INFO( "CtrlCheckPointSaveEnd", eReceived, 0 );
+    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
 }
 
 // -----------------------------------------------------------------------------
@@ -964,7 +930,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadBegin()
 {
-    MT_LOG_INFO( "CtrlCheckPointBeginEnd", eReceived, 0 );
+    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
 }
 
 // -----------------------------------------------------------------------------
@@ -973,7 +939,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadEnd()
 {
-    MT_LOG_INFO( "CtrlCheckPointLoadEnd", eReceived, 0 );
+    // $$$$ AGE 2006-07-06: Status dans la barre d'etat ?
 }
 
 // -----------------------------------------------------------------------------
@@ -982,7 +948,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointLoadEnd()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 {
-    MT_LOG_INFO( "CtrlCheckPointSetFrequencyAck", eReceived, 0 );
+    CheckAcknowledge( "CtrlCheckPointSetFrequencyAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -991,7 +957,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 {
-    MT_LOG_INFO( "CtrlCheckPointSetSaveNowAck", eReceived, 0 );
+    CheckAcknowledge( "CtrlCheckPointSetSaveNowAck" );
 }
 
 //=============================================================================
@@ -1004,11 +970,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "LimitCreationAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    if( message.error_code == EnumInfoContextErrorCode::no_error )
+    if( CheckAcknowledge( message, "LimitCreationAck" ) )
     {
         TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
         if( limit )
@@ -1024,11 +986,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "LimitUpdateAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    if( message.error_code == EnumInfoContextErrorCode::no_error )
+    if( CheckAcknowledge( message, "LimitUpdateAck" ) )
     {
         TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
         if( limit )
@@ -1043,11 +1001,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "LimitDestructionAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    if( message.error_code == EnumInfoContextErrorCode::no_error )
+    if( CheckAcknowledge( message, "LimitDestructionAck" ) )
         GetModel().limits_.DeleteLimit( message.oid );
 }
 
@@ -1057,11 +1011,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDes
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "LimaCreationAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    if( message.error_code == EnumInfoContextErrorCode::no_error )
+    if( CheckAcknowledge( message, "LimaCreationAck" ) )
     {
         TacticalLine_ABC* lima = GetModel().limits_.Find( message.oid );
         if( lima )
@@ -1077,11 +1027,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreation
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "LimaUpdateAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    if( message.error_code == EnumInfoContextErrorCode::no_error )
+    if( CheckAcknowledge( message, "LimaUpdateAck" ) )
     {
         TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
         if( limit )
@@ -1095,11 +1041,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestructionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "LimaDestructionAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    if( message.error_code == EnumInfoContextErrorCode::no_error )
+    if( CheckAcknowledge( message, "LimaDestructionAck" ) )
         GetModel().limits_.DeleteLima( message.oid );
 }
 
@@ -1163,9 +1105,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "AutomateOrderAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+    CheckAcknowledge( message, "AutomateOrderAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1174,8 +1114,8 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    MT_LOG_INFO( "Agent[" << message.oid_unite_executante << "] PionOrderAck - Code: " << Tools::ToString( message.error_code ), eReceived, 0 );
-    GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
+    if( CheckAcknowledge( message, "PionOrderAck" ) )
+        GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1184,7 +1124,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& m
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderConduiteAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    MT_LOG_INFO( "OrderConduiteAck - Code: " << Tools::ToString( message.error_code ), eReceived, 0 );
+    CheckAcknowledge( message, "OrderConduiteAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1202,15 +1142,7 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& message )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagement& message )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "OrderManagement - Etat: ";
-    switch( message.etat )
-    {
-        case EnumOrderState::started  : strOutputMsg << "Démarré"; break;
-        case EnumOrderState::stopped  : strOutputMsg << "Arrêté"; break;
-        case EnumOrderState::cancelled: strOutputMsg << "Annulé"; break;
-    }
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
+    // $$$$ AGE 2006-07-06: ? 
 }
 
 
@@ -1220,20 +1152,11 @@ void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagem
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& message )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "AutomateMRT - Automate " << message.automate_id;
-
-    std::stringstream strOutputMsg2;
     for( uint i = 0; i < message.missions.n; ++i )
     {
         ASN1T_MsgPionOrder& asnPionOrder = message.missions.elem[i];
-
-        strOutputMsg2 << "Pion " << asnPionOrder.oid_unite_executante
-                     << " - Mission " << asnPionOrder.mission.t << endl;
-
         GetModel().agents_.FindAllAgent( asnPionOrder.oid_unite_executante )->Update( asnPionOrder );
     }
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, strOutputMsg2.str().c_str() );
 }
 
 
@@ -1243,7 +1166,6 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& mes
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message )
 {
-    MT_LOG_INFO( "PionOrder - Mission " << message.mission.t, eReceived, 0 );
     GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
 }
 
@@ -1253,17 +1175,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "SetAutomateModeAck - Etat: ";
-    switch( message.error_code )
-    {
-        case EnumSetAutomateModeErrorCode::no_error                : strOutputMsg << "No error"; break;
-        case EnumSetAutomateModeErrorCode::error_already_debraye   : strOutputMsg << "Déjà debrayé"; break;
-        case EnumSetAutomateModeErrorCode::error_already_embraye   : strOutputMsg << "Déjà embrayé"; break;
-        case EnumSetAutomateModeErrorCode::error_invalid_unit      : strOutputMsg << "Invalid unit"; break;
-        case EnumSetAutomateModeErrorCode::error_unit_not_automate : strOutputMsg << "Unit not automate"; break;
-    }
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
+    CheckAcknowledge( message, "SetAutomateModeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1272,20 +1184,8 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutoma
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "ChangeAutomateAck - Etat: ";
-    switch( message.error_code )
-    {
-    case EnumChangeAutomateErrorCode::no_error                 : strOutputMsg << "no_error"; break;
-    case EnumChangeAutomateErrorCode::error_camps_incompatibles: strOutputMsg << "error_camps_incompatibles"; break;
-    case EnumChangeAutomateErrorCode::error_invalid_automate   : strOutputMsg << "error_invalid_automate"; break;
-    case EnumChangeAutomateErrorCode::error_invalid_pion       : strOutputMsg << "error_invalid_pion"; break;
-    }
-
-    if( message.error_code == EnumOrderErrorCode::no_error )
+    if( CheckAcknowledge( message, "ChangeAutomateAck" ) )
         GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
-
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }
 
 
@@ -1309,46 +1209,22 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomat
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "ChangeDiplomacyAck( - Etat: ";
-    switch( message.error_code )
+    if( CheckAcknowledge( message, "ChangeDiplomacyAck" ) )
     {
-    case EnumChangeDiplomatieErrorCode::no_error           : strOutputMsg << "no_error"; break;
-    case EnumChangeDiplomatieErrorCode::error_invalid_camp : strOutputMsg << "error_invalid_camp"; break;
+        GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
+        GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
     }
-
-    GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
-    GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
-
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck
-/** @param  message
-    @param  nCtx
-    */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& message, MIL_MOSContextID )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "ChangeGroupeConnaissanceAck - Etat: ";
-    switch( message.error_code )
-    {
-    case EnumChangeGroupeConnaissanceErrorCode::no_error                          : strOutputMsg << "no_error"; break;
-    case EnumChangeGroupeConnaissanceErrorCode::error_invalid_automate            : strOutputMsg << "error_invalid_automate"; break;
-    case EnumChangeGroupeConnaissanceErrorCode::error_invalid_camp                : strOutputMsg << "error_invalid_camp"; break;
-    case EnumChangeGroupeConnaissanceErrorCode::error_invalid_groupe_connaissance : strOutputMsg << "error_invalid_groupe_connaissance"; break;
-    }
-
-    if( message.error_code == EnumChangeGroupeConnaissanceErrorCode::no_error )
-    {
+    if( CheckAcknowledge( message, "ChangeGroupeConnaissanceAck" ) )
         GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
-    }
-
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1357,21 +1233,8 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& message, MIL_MOSContextID )
 {
-//    std::stringstream strOutputMsg;
-//    strOutputMsg << "MSG Received : ChangeLiensLogistiquesAck - Etat: ";
-//    switch( message.error_code )
-//    {
-//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate               : strOutputMsg << "error_invalid_automate"; break;
-//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance   : strOutputMsg << "error_invalid_automate_maintenance"; break;
-//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement: strOutputMsg << "error_invalid_automate_ravitaillement"; break;
-//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante         : strOutputMsg << "error_invalid_automate_sante"; break;
-//        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2           : strOutputMsg << "error_invalid_automate_tc2"; break;
-//        case EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered               : strOutputMsg << "error_unit_surrendered"; break;
-//        case EnumChangeLiensLogistiquesErrorCode::no_error                             : strOutputMsg << "no_error"; break;
-//    }
-//    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
-
-    GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
+    if( CheckAcknowledge( message, "ChangeLiensLogistiquesAck" ) )
+        GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
 }
 
 // =============================================================================
@@ -1423,7 +1286,6 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObject
 {
     GetModel().teams_.Get( message.oid_camp_possesseur ).Update( message );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction
@@ -1715,9 +1577,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFlux
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "PopulationMagicActionAck - Code: " << Tools::ToString( message.error_code );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+    CheckAcknowledge( message, "PopulationMagicActionAck" );
 }
 
 //=============================================================================
@@ -1927,7 +1787,6 @@ void AgentServerMsgMgr::_OnReceiveMsgSimMosWithContext( DIN_Input& input )
 //-----------------------------------------------------------------------------
 bool AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& /*info*/ )
 {
-    //MT_LOG_INFO_MSG( "MOS -> AS - Message service error : " << info.GetInfo().c_str() );
     return false;
 }
 

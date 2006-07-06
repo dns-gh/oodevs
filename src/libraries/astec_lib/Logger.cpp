@@ -57,12 +57,11 @@ Logger::~Logger()
         delete it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Logger::LogString
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-void Logger::LogString( const char* /*szLayerName*/, E_LogLevel /*nLevel*/, const char* szMsg, const char* szContext, int code )
+void Logger::LogString( const char* /*szLayerName*/, E_LogLevel nLevel, const char* szMsg, const char* szContext, int code )
 {
     const sLoggerLayer* layer = layers_[ (E_DataFlow)code ];
     if( !layer )
@@ -71,7 +70,10 @@ void Logger::LogString( const char* /*szLayerName*/, E_LogLevel /*nLevel*/, cons
     // lastItem() ?  firstChild();
     ValuedListItem* pItem = factory_.CreateItem( this );
     pItem->Set( layer, GetTimestampAsString(), szMsg );
-    pItem->SetFontColor( layer->color_ );
+    if( nLevel == eLogLevel_Info )
+        pItem->SetFontColor( layer->color_ );
+    else
+        pItem->SetFontColor( Qt::darkRed );
 
     if( szContext != 0 )
     {
@@ -79,6 +81,7 @@ void Logger::LogString( const char* /*szLayerName*/, E_LogLevel /*nLevel*/, cons
         pSubItem->Set( layer, "", szContext );
         pSubItem->setMultiLinesEnabled( true );
         pSubItem->SetFontColor( layer->color_ );
+        
     }
 }
 

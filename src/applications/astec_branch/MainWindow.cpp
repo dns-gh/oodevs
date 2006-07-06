@@ -64,6 +64,7 @@
 #include "astec_lib/MiniViews.h"
 #include "astec_lib/Network.h"
 #include "astec_lib/PathTools.h"
+#include "astec_lib/resources.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )

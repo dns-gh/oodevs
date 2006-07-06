@@ -12,6 +12,7 @@
 
 #include "astec_lib/OptionsObserver_ABC.h"
 #include "astec_lib/ElementObserver_ABC.h"
+#include <qmainwindow.h>
 
 class Options;
 class OptionsPanel;

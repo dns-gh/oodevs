@@ -14,6 +14,7 @@
 #include "Displayer_ABC.h"
 #include "Perception_Def.h"
 #include "Types.h"
+#include "ENT/ENT_Tr.h"
 
 // =============================================================================
 /** @class  Formatter

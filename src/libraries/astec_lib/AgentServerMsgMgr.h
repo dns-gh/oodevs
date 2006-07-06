@@ -287,8 +287,6 @@ private:
     //@{
     void Send( unsigned int id, DIN::DIN_BufferedMessage& message );
     void Send( unsigned int id );
-    template< typename T >
-    bool CheckAcknowledge( const char* type, const T& message );
     typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
     void Enqueue( DIN::DIN_Input& input, T_Callback function );
 
