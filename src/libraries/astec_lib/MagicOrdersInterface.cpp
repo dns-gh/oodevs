@@ -257,10 +257,7 @@ void MagicOrdersInterface::Recompletion()
 void MagicOrdersInterface::DestroyComponent()
 {
     if( selectedAgent_ )
-    {
-        // $$$$ AGE 2006-04-28: DIN_Message
-        AgentServerMsgMgr::Instance().SendMsgUnitMagicActionDestroyComposante( *selectedAgent_ );
-    }
+        publisher_.SendMagicDestruction( *selectedAgent_ ); // $$$$ SBO 2006-07-06: 
 }
     
 // -----------------------------------------------------------------------------

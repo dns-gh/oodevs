@@ -44,19 +44,6 @@
 
 using namespace DIN;
 
-AgentServerMsgMgr* AgentServerMsgMgr::instance_ = 0;
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::Instance
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-AgentServerMsgMgr& AgentServerMsgMgr::Instance()
-{
-    if( !instance_ )
-        throw std::runtime_error( "AgentServerMsgMgr singleton not initialized!" );
-    return *instance_;
-}
-
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
@@ -71,9 +58,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     , needsVisionCones_( false )
     , needsVisionSurfaces_( false )
 {
-    if( !instance_ )
-        instance_ = this;
-
     const DIN_ConnectorGuest theConnector( (DIN::DIN_Connector_ABC::DIN_ConnectionID)( eConnector_SIM_MOS ) );
     pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>( *this, engine, theConnector, "Msgs MOS Server -> Agent Server" );
 
@@ -254,10 +238,10 @@ enum E_UnitMagicAction
 };
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante
-// Created: NLD 2004-03-01
+// Name: AgentServerMsgMgr::SendMagicDestruction
+// Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const Agent& agent )
+void AgentServerMsgMgr::SendMagicDestruction( const Agent& agent )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg << agent.GetId();

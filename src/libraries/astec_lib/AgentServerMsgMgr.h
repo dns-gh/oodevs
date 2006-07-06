@@ -45,11 +45,6 @@ class AgentServerMsgMgr : public Observer_ABC
                         , public OptionsObserver_ABC
                         , public Publisher_ABC
 {
-public:
-    //! @name Singleton
-    //@{
-    static AgentServerMsgMgr& Instance();
-    //@}
 
 public:
     //! @name Messages
@@ -104,9 +99,11 @@ public:
     void DoUpdate();
     void Flush();
 
-    DIN::DIN_BufferedMessage BuildMessage();
     virtual void Send( ASN1T_MsgsMosSim& message );
     virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 );
+    virtual void SendMagicDestruction( const Agent& agent );
+
+    DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
     void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx );
     void SendMsgUnitMagicActionDestroyComposante( const Agent& agent );
@@ -336,12 +333,6 @@ private:
     T_Inputs pendingInputs_; // main thread only
 
     bool needsVisionCones_, needsVisionSurfaces_;
-
-private:
-    //! @name Singleton
-    //@{
-    static AgentServerMsgMgr* instance_;
-    //@}
 };
 
 #endif // __AgentServerMsgMgr_h_

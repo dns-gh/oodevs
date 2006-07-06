@@ -12,6 +12,8 @@
 
 #include "ASN_Types.h"
 
+class Agent;
+
 // =============================================================================
 /** @class  Publisher_ABC
     @brief  Publisher abstract base class
@@ -32,13 +34,7 @@ public:
     //@{
     virtual void Send( ASN1T_MsgsMosSim& message ) = 0;
     virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    Publisher_ABC( const Publisher_ABC& );            //!< Copy constructor
-    Publisher_ABC& operator=( const Publisher_ABC& ); //!< Assignement operator
+    virtual void SendMagicDestruction( const Agent& agent ) = 0; // $$$$ SBO 2006-07-06: 
     //@}
 };
 
