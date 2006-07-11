@@ -190,17 +190,17 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                     strText = strText.arg( pUnitInfos->strNbrRegExp_.GetData().c_str() )
                                      .arg( (*it3)->nNb_.GetData() )
                                      .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
-                                     .arg( (*it3)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData() );
+                                     .arg( (*it3)->nNbrHumanInCrew_.GetData() );
                 }
                 else
                 {
                     strText = tr( "%1 x %2 [ %3 ]" );
                     strText = strText.arg( (*it3)->nNb_.GetData() )
                                      .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
-                                     .arg( (*it3)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData() );
+                                     .arg( (*it3)->nNbrHumanInCrew_.GetData() );
                 }
                 builder.AddTableCell( pTable, nRow + nSubRow + nSubSubRow, 2, strText );
-                nTroops += (*it3)->nNb_.GetData() * (*it3)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData();
+                nTroops += (*it3)->nNb_.GetData() * (*it3)->nNbrHumanInCrew_.GetData();
             }
             int nRowSpan = std::max( 1, (int)unit.vComposantes_.size() );
             QString strText;

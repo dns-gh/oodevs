@@ -211,7 +211,6 @@ void DEC_Workspace::InitializeConfig( MIL_InputArchive& archive )
     DEC_Knowledge_RapFor_ABC::Initialize( archive );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Workspace::InitializeDIATypes
 // Created: NLD 2005-04-11
@@ -224,7 +223,7 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
     T_StringVector openedFiles;
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
-        if( !DIA_ReadScript_TypesBin( strBinaryPath + "/models/file.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_TypesBin( strBinaryPath + "/models/type.bin", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading type file", strErrors );
     }
     else
@@ -236,7 +235,7 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
         std::string strOpenedFileArchiveName = strBinaryPath + "/files/type_file.bin";
         bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
 
-        if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/models/file.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/models/type.bin", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strScript, strErrors );
         
         // Updating opened files archive

@@ -49,27 +49,28 @@ BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
 // Name: PHY_ComposantePion constructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, bool bMajor, bool bLoadable )
+PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
     : PHY_Composante_ABC           ( )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
-    , pRole_                       ( &role      )
-    , pType_                       ( &type      )
-    , bMajor_                      ( bMajor     )
-    , bLoadable_                   ( bLoadable  )
-    , bUsedForLogistic_            ( false      )
+    , pRole_                       ( &role              )
+    , pType_                       ( &type              )
+    , bMajor_                      ( bMajor             )
+    , bLoadable_                   ( bLoadable          )
+    , bCanBePartOfConvoy_          ( bCanBePartOfConvoy )
+    , bUsedForLogistic_            ( false              )
     , nAutoRepairTimeStep_         ( 0 )
     , pBreakdown_                  ( 0 )             
     , pMaintenanceState_           ( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_       ( 0 )
-    , pHumans_                     ( new PHY_HumansComposante( *this, pType_->GetNbrHumanInCrew() ) )
+    , pHumans_                     ( new PHY_HumansComposante( *this, nNbrHumanInCrew ) )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
 
     pRole_->NotifyComposanteAdded( *this );
     if( !pHumans_->IsViable() )
-        ReinitializeState( PHY_ComposanteState::dead_ );
+        ReinitializeState( PHY_ComposanteState::dead_ ); //// xxxx crash ?
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +85,7 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bMajor_                      ( false )
     , bLoadable_                   ( false )
     , bUsedForLogistic_            ( false )
+    , bCanBePartOfConvoy_          ( false )
     , weapons_                     ()
     , sensors_                     () 
     , pHumans_                     ()
@@ -142,6 +144,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
 
     file >> const_cast< bool& >( bMajor_ )
          >> const_cast< bool& >( bLoadable_ )
+         >> const_cast< bool& >( bCanBePartOfConvoy_ )
          >> bUsedForLogistic_
          >> pHumans_
          >> nAutoRepairTimeStep_
@@ -170,6 +173,7 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << pType_->GetMosID()
          << bMajor_
          << bLoadable_
+         << bCanBePartOfConvoy_
          << bUsedForLogistic_
          << pHumans_
          << nAutoRepairTimeStep_

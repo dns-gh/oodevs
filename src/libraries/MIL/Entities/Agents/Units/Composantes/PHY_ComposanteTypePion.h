@@ -67,7 +67,7 @@ public:
 
     //! @name Instanciation
     //@{
-    PHY_ComposantePion& InstanciateComposante( PHY_RolePion_Composantes& role, bool bMajor, bool bLoadable ) const;
+    PHY_ComposantePion& InstanciateComposante( PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const;
     void                InstanciateWeapons   ( std::back_insert_iterator < std::vector< PHY_Weapon* > > inserter ) const;
     void                InstanciateSensors   ( std::back_insert_iterator < std::vector< PHY_Sensor* > > inserter ) const;
     //@}
@@ -81,7 +81,6 @@ public:
 
     //! @name Accessors
     //@{
-    uint     GetNbrHumanInCrew     () const;
     MT_Float GetMaxSpeed           () const;
     MT_Float GetMaxSpeed           ( const TerrainData& data ) const;
     MT_Float GetMaxSpeed           ( const MIL_RealObject_ABC& object ) const;
@@ -167,7 +166,6 @@ public:
 
     //! @name Logistic - supply
     //@{
-          bool                 CanBePartOfConvoy               () const;
           bool                 CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
           void                 GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
           uint                 GetStockTransporterLoadingTime  () const;
@@ -267,7 +265,6 @@ private:
           T_ConsumptionVector    consumptions_;
 
     // Humans
-    uint     nNbrHumanInCrew_;
     MT_Float rNbrHumansLoadedPerTimeStep_;
     MT_Float rNbrHumansUnloadedPerTimeStep_;
 
@@ -306,7 +303,6 @@ private:
     const PHY_DotationNature*       pStockTransporterNature_;
           MT_Float                  rStockTransporterWeightCapacity_;
           MT_Float                  rStockTransporterVolumeCapacity_;
-          bool                      bCanBePartOfConvoy_;
 
 private:
     static T_ComposanteTypeMap composantesTypes_;

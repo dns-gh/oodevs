@@ -75,7 +75,6 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eDeviceCategory]->Connect( &pInfos->eDeviceCategory_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eTroopCapacity]->Connect( &pInfos->nTroopTransportCapacity_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasEmbarkTimes]->Connect( &pInfos->bTroopEmbarkingTimes_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eEmbarkingTimePerPerson]->Connect( &pInfos->embarkingTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eDisembarkingTimePerPerson]->Connect( &pInfos->disembarkingTimePerPerson_, bConnect );
@@ -113,7 +112,6 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptrDotationNature_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eIsConveyor]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConveyor_, bConnect );
     
     vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eMaintenanceUnloadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTime_, bConnect );

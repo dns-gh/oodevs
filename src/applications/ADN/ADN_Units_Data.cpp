@@ -39,6 +39,8 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
 , ptrComposante_( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes(),0)
 , bLoadable_    ( false )
 , bMajor_       ( false )
+, bConveyor_    ( false )
+, nNbrHumanInCrew_( 0 )
 , nNb_          ( 1 )
 {
     BindExistenceTo( &ptrComposante_ );
@@ -47,6 +49,10 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
     bLoadable_.SetParentNode( *this );
     bMajor_.SetDataName( "la primauté" );
     bMajor_.SetParentNode( *this );
+    bConveyor_.SetDataName( "hein ?" ); //XXX
+    bConveyor_.SetParentNode( *this );    
+    nNbrHumanInCrew_.SetDataName( "Comprends pas ..." );
+    nNbrHumanInCrew_.SetParentNode( *this );    
 }
 
 
@@ -82,6 +88,8 @@ ADN_Units_Data::ComposanteInfos* ADN_Units_Data::ComposanteInfos::CreateCopy()
     pCopy->ptrComposante_ = ptrComposante_.GetData();
     pCopy->bMajor_ = bMajor_.GetData();
     pCopy->bLoadable_ = bLoadable_.GetData();
+    pCopy->bConveyor_ = bConveyor_.GetData();
+    pCopy->nNbrHumanInCrew_ = nNbrHumanInCrew_.GetData();
     pCopy->nNb_ = nNb_.GetData();
 
     return pCopy;
@@ -108,6 +116,8 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
     input.ReadAttribute( "majeur", bMajor_, ADN_XmlInput_Helper::eNothing );
     input.ReadAttribute( "embarquable", bLoadable_, ADN_XmlInput_Helper::eNothing );
+    input.ReadAttribute( "convoyeur", bConveyor_, ADN_XmlInput_Helper::eNothing );
+    input.ReadAttribute( "equipage", nNbrHumanInCrew_, ADN_XmlInput_Helper::eNothing );
 
     int nNbr;
     input.Read( nNbr );
@@ -130,6 +140,10 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output
         output.WriteAttribute( "majeur", "true" );
     if( bLoadable_.GetData() )
         output.WriteAttribute( "embarquable", "true" );
+    if( bConveyor_.GetData() )
+        output.WriteAttribute( "convoyeur", "true" );
+    
+    output.WriteAttribute( "equipage", nNbrHumanInCrew_.GetData() );
 
     output << nNb_.GetData();
 

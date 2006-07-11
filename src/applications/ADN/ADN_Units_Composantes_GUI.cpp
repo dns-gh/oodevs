@@ -47,18 +47,25 @@ public:
         ADN_TableItem_Int*       pItemNbr = new ADN_TableItem_Int( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemMajor = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemLoadable = new ADN_TableItem_CheckItem( &tab_, pObj );
+        ADN_TableItem_CheckItem* pItemConveyor = new ADN_TableItem_CheckItem( &tab_, pObj );
+        ADN_TableItem_Int*       pItemNbrHuman = new ADN_TableItem_Int( &tab_, pObj );
+
 
         // add a new row & set new values
         tab_.setItem( nRow, 0, pItemName );
         tab_.setItem( nRow, 1, pItemNbr );
         tab_.setItem( nRow, 2, pItemMajor );
         tab_.setItem( nRow, 3, pItemLoadable );
+        tab_.setItem( nRow, 4, pItemConveyor );
+        tab_.setItem( nRow, 5, pItemNbrHuman );
         
         // connect items & datas
         pItemName->GetConnector().Connect(&static_cast<ComposanteInfos*>(pObj)->ptrComposante_.GetData()->strName_);
         pItemNbr->GetConnector().Connect(&static_cast<ComposanteInfos*>(pObj)->nNb_);
 		pItemMajor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bMajor_ );
 		pItemLoadable->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bLoadable_ );
+        pItemConveyor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bConveyor_ );
+        pItemNbrHuman->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->nNbrHumanInCrew_ );
     }
     
 private:
@@ -85,17 +92,21 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI(QWidget * parent )
     verticalHeader()->hide();
     
     // tab with 4 columns
-    setNumCols(4);
+    setNumCols(6);
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setColumnStretchable(2,true);
     setColumnStretchable(3,true);
+    setColumnStretchable(4,true);
+    setColumnStretchable(5,true);
 
     horizontalHeader()->setLabel( 0, tr( "Composantes" ) );
     horizontalHeader()->setLabel( 1, tr( "Nbr" ) );
     horizontalHeader()->setLabel( 2, tr( "Major" ) );
     horizontalHeader()->setLabel( 3, tr( "Loadable" ) );
+    horizontalHeader()->setLabel( 4, tr( "Conveyor" ) );
+    horizontalHeader()->setLabel( 5, tr( "Nbr humans" ) );
 
     // connector creation
     pConnector_=new ADN_Units_Composantes_GUI_Connector(*this);

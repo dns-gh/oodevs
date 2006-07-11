@@ -50,6 +50,8 @@ public:
         ADN_TypePtr_InVector_ABC<ADN_Composantes_Data::ComposanteInfos> ptrComposante_;
         ADN_Type_Bool                                                   bMajor_;
         ADN_Type_Bool                                                   bLoadable_;
+        ADN_Type_Bool                                                   bConveyor_;
+        ADN_Type_Int                                                    nNbrHumanInCrew_;
         ADN_Type_Int                                                    nNb_;
 
     public:

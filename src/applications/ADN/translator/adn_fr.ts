@@ -818,7 +818,7 @@
     </message>
     <message>
         <source>Crew</source>
-        <translation>Equipage</translation>
+        <translation type="obsolete">Equipage</translation>
     </message>
     <message>
         <source>Troop transport</source>
@@ -1118,7 +1118,7 @@
     </message>
     <message>
         <source>Conveyor</source>
-        <translation>Convoyeur</translation>
+        <translation type="obsolete">Convoyeur</translation>
     </message>
     <message>
         <source>Carried nature</source>
@@ -3054,7 +3054,7 @@
     </message>
     <message>
         <source>Resting time</source>
-        <translation type="unfinished">Temps de repos</translation>
+        <translation>Temps de repos</translation>
     </message>
 </context>
 <context>
@@ -5922,6 +5922,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Major</source>
         <translation>Majeure</translation>
+    </message>
+    <message>
+        <source>Conveyor</source>
+        <translation>Convoyeur</translation>
+    </message>
+    <message>
+        <source>Nbr humans</source>
+        <translation>Nbr humains</translation>
     </message>
 </context>
 <context>

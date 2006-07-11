@@ -53,7 +53,7 @@ class PHY_ComposantePion : public PHY_Composante_ABC
     MT_COPYNOTALLOWED( PHY_ComposantePion )
 
 public:
-     PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, bool bMajor, bool bLoadable );
+     PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );
      PHY_ComposantePion();
     ~PHY_ComposantePion();
 
@@ -107,7 +107,8 @@ public:
 
     //! @name Logistic - Supply
     //@{
-    bool CanBePartOfConvoy          () const;
+    bool CouldBePartOfConvoy        () const; // Type : don't check the state $$$$ a renommer
+    bool CanBePartOfConvoy          () const; // $$$$ a renommer
     bool CanTransportStock          ( const PHY_DotationCategory& dotationCategory ) const; // Indépendamment du fait que la composante peut faire partie d'un convoi
     void GetStockTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
     //@}
@@ -239,6 +240,7 @@ private:
     const PHY_ComposanteTypePion*   pType_;
     const bool                      bMajor_;
     const bool                      bLoadable_;
+    const bool                      bCanBePartOfConvoy_;
           bool                      bUsedForLogistic_;
           T_WeaponVector            weapons_;
           T_SensorVector            sensors_;

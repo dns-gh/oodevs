@@ -68,6 +68,8 @@ private:
         uint nNbr_;
         bool bMajor_;
         bool bLoadable_;
+        bool bCanBePartOfConvoy_;
+        uint nNbrHumanInCrew_;
     };
     typedef std::map< const PHY_ComposanteTypePion*, sComposanteTypeData > T_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::const_iterator                            CIT_ComposanteTypeMap;

@@ -121,9 +121,6 @@ void ADN_Composantes_GUI::Build()
     // Troop/Crew groupbox
     QGroupBox* pTroopGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ), pDataPage );
 
-    QWidget* pHolder = builder.AddFieldHolder( pTroopGroupBox );
-    builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Crew" ), vInfosConnectors[eTroopCapacity], 0 );
-
     ADN_GroupBox* pEmbarkTimesGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Troop transport" ), pTroopGroupBox );
     vInfosConnectors[eHasEmbarkTimes] = &pEmbarkTimesGroupBox->GetConnector();
 
@@ -338,8 +335,6 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     QWidget* pHolder = new QWidget( pSupplyGroup );
     new QGridLayout( pHolder, 0, 3, 5, 5 );
 
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Conveyor" ), vInfosConnectors[eIsConveyor] );
-
     ADN_GroupBox* pCarrierGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Carrier" ), pSupplyGroup );
     vInfosConnectors[eIsLogCarrier] = & pCarrierGroup->GetConnector();
 
@@ -478,7 +473,6 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
         builder.ListItem( tr( "Armor-Plating" ), composante.ptrArmor_.GetData()->strName_.GetData().c_str() );
         builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData()->GetData().c_str() );
         builder.ListItem( tr( "Weight" ), composante.rWeight_.GetData(), tr( "T" ) );
-        builder.ListItem( tr( "Crew" ), composante.nTroopTransportCapacity_.GetData() );
         if( composante.bMaxSlope_.GetData() )
             builder.ListItem( tr( "Max slope" ), composante.rMaxSlope_.GetData() );
         if( composante.bTroopEmbarkingTimes_.GetData() )

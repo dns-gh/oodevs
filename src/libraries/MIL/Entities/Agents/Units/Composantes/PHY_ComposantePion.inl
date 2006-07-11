@@ -200,7 +200,17 @@ inline
 bool PHY_ComposantePion::CanBePartOfConvoy() const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && pType_->CanBePartOfConvoy();
+    return pState_->IsUsable() && CanBeUsed() && bCanBePartOfConvoy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CouldBePartOfConvoy
+// Created: NLD 2006-07-04
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposantePion::CouldBePartOfConvoy() const
+{
+    return bCanBePartOfConvoy_;
 }
 
 // -----------------------------------------------------------------------------

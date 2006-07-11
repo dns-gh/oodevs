@@ -106,18 +106,18 @@ void ADN_Health_GUI::Build()
     for( n = 0; n < eNbrDoctorSkills; ++n )
     {
         ADN_Health_Data::WoundInfo& wound = data_.wounds[n];
-        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 0, n, wound.treatTime_, eGreaterEqualZero );
-        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 1, n, wound.restingTime_, eGreaterEqualZero );
+        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 0, n, wound.treatTime_ );
+        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 1, n, wound.restingTime_ );
         builder.AddTableCell< ADN_TableItem_Double    >( pWoundTable, &wound, 2, n, wound.rPercentage_, ePercentage );
-        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 3, n, wound.lifeExpectancy_, eGreaterEqualZero );
+        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 3, n, wound.lifeExpectancy_ );
     }
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n, data_.shockTreatTime_, eGreaterEqualZero );
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n, data_.shockRestingTime_, eGreaterEqualZero );
+    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n, data_.shockTreatTime_ );
+    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n, data_.shockRestingTime_ );
     builder.AddTableCell< ADN_TableItem_Double    >( pWoundTable, &data_, 2, n, data_.rShockPercentage_, ePercentage );
     pWoundTable->setItem( 3, n, new QTableItem( pWoundTable, QTableItem::Never ) );
 
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n + 1, data_.contaminationTreatTime_, eGreaterEqualZero );
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n + 1, data_.contaminationRestingTime_, eGreaterEqualZero );
+    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n + 1, data_.contaminationTreatTime_ );
+    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n + 1, data_.contaminationRestingTime_ );
     pWoundTable->setItem( 2, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
     pWoundTable->setItem( 3, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
 

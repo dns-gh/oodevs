@@ -24,9 +24,11 @@
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
 PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
-    : nNbr_     ( 0 )
-    , bMajor_   ( false )
-    , bLoadable_( false )
+    : nNbr_              ( 0 )
+    , bMajor_            ( false )
+    , bLoadable_         ( false )
+    , bCanBePartOfConvoy_( false )
+    , nNbrHumanInCrew_   ( 0 )
 {
 }
 
@@ -147,6 +149,12 @@ void PHY_UnitType::InitializeComposantes( MIL_InputArchive& archive )
         
         compData.bLoadable_ = false;
         archive.ReadAttribute( "embarquable", compData.bLoadable_, MIL_InputArchive::eNothing );
+
+        compData.bCanBePartOfConvoy_ = false;
+        archive.ReadAttribute( "convoyeur", compData.bCanBePartOfConvoy_, MIL_InputArchive::eNothing );
+
+        compData.nNbrHumanInCrew_ = 0;
+        archive.ReadAttribute( "equipage", compData.nNbrHumanInCrew_, CheckValueGreaterOrEqual( 0 ) );
 
         archive.Read( compData.nNbr_ );
         archive.EndSection(); // Equipement
@@ -280,6 +288,6 @@ void PHY_UnitType::InstanciateComposantes( PHY_RolePion_Composantes& role ) cons
         const sComposanteTypeData&    compData =  itComposanteType->second;
 
         for( uint i = 0; i < compData.nNbr_; ++i )
-            compType.InstanciateComposante( role, compData.bMajor_, compData.bLoadable_ );
+            compType.InstanciateComposante( role, compData.nNbrHumanInCrew_, compData.bMajor_, compData.bLoadable_, compData.bCanBePartOfConvoy_ );
     }
 }

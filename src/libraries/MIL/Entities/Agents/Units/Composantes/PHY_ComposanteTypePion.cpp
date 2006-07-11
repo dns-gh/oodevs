@@ -143,7 +143,6 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , pStockTransporterNature_                   ( 0 )
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
-    , bCanBePartOfConvoy_                        ( false )
 {
     archive.ReadField( "DeniveleMaximum", rMaxSlope_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
@@ -391,7 +390,6 @@ void PHY_ComposanteTypePion::InitializeTransport( MIL_InputArchive& archive )
     archive.Section( "Transport" );
 
     archive.Section( "Personnel" );
-    archive.ReadField( "Equipage", nNbrHumanInCrew_, CheckValueGreaterOrEqual( 0 ) );
 
     if( archive.Section( "Temps", MIL_InputArchive::eNothing ) )
     {
@@ -635,12 +633,6 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
         archive.EndSection(); // Transporteur
     }
 
-    if( archive.Section( "Convoyeur", MIL_InputArchive::eNothing ) )
-    {
-        bCanBePartOfConvoy_ = true;
-        archive.EndSection(); // Convoyeur
-    }
-
     archive.EndSection(); // Ravitaillement
 }
 
@@ -669,9 +661,9 @@ void PHY_ComposanteTypePion::InitializeLogistic( MIL_InputArchive& archive )
 // Name: PHY_ComposanteTypePion::InstanciateComposante
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_Composantes& role, bool bMajor, bool bLoadable ) const
+PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const
 {
-    return *new PHY_ComposantePion( *this, role, bMajor, bLoadable );
+    return *new PHY_ComposantePion( *this, role, nNbrHumanInCrew, bMajor, bLoadable, bCanBePartOfConvoy );
 }
 
 // -----------------------------------------------------------------------------

@@ -266,7 +266,7 @@ void ADN_Units_GUI::OnNbrOfOfficersChanged()
     int nNbrHumans = 0;
     for( ADN_Units_Data::IT_ComposanteInfos_Vector it = pInfos->vComposantes_.begin(); it != pInfos->vComposantes_.end(); ++it )
     {
-        nNbrHumans += (*it)->nNb_.GetData() * (*it)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData();
+        nNbrHumans += (*it)->nNb_.GetData() * (*it)->nNbrHumanInCrew_.GetData();
     }
 
     if( pInfos->nNbOfficer_.GetData() + pInfos->nNbNCOfficer_.GetData() > nNbrHumans )
@@ -287,7 +287,7 @@ void ADN_Units_GUI::OnNbrOfNCOfficersChanged()
     int nNbrHumans = 0;
     for( ADN_Units_Data::IT_ComposanteInfos_Vector it = pInfos->vComposantes_.begin(); it != pInfos->vComposantes_.end(); ++it )
     {
-        nNbrHumans += (*it)->nNb_.GetData() * (*it)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData();
+        nNbrHumans += (*it)->nNb_.GetData() * (*it)->nNbrHumanInCrew_.GetData();
     }
 
     if( pInfos->nNbOfficer_.GetData() + pInfos->nNbNCOfficer_.GetData() > nNbrHumans )

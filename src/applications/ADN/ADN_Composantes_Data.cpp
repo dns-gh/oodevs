@@ -477,7 +477,6 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , rWeight_            ( 0 )
 , rVolume_            ( 0 )
 , ptrDotationNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-, bIsConveyor_        ( false )
 {
 }
 
@@ -511,7 +510,6 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
     rWeight_     = src.rWeight_.GetData();
     rVolume_     = src.rVolume_.GetData();
     ptrDotationNature_ = src.ptrDotationNature_.GetData();
-    bIsConveyor_  = src.bIsConveyor_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -538,12 +536,6 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& inp
 
         input.EndSection(); // Transporteur
     }
-
-    if( input.Section( "Convoyeur", ADN_XmlInput_Helper::eNothing ) )
-    {
-        bIsConveyor_ = true;
-        input.EndSection(); // Convoyeur
-    }
 }
 
 
@@ -562,12 +554,6 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& o
         output.EndSection();
         output.WriteField( "NatureTransportee", ptrDotationNature_.GetData()->GetData() );
         output.EndSection(); // Transporteur
-    }
-
-    if( bIsConveyor_.GetData() )
-    {
-        output.Section( "Convoyeur" );
-        output.EndSection(); // Convoyeur
     }
 }
 
@@ -1774,7 +1760,6 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , vSensors_()
 , vRadars_ ()
 , vObjects_()
-, nTroopTransportCapacity_(0)
 , bTroopEmbarkingTimes_( false )
 , embarkingTimePerPerson_( "0s" )
 , disembarkingTimePerPerson_( "0s" )
@@ -1908,7 +1893,6 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->consumptions_.CopyFrom( consumptions_ );
     pCopy->dotations_.CopyFrom( dotations_ );
 
-    pCopy->nTroopTransportCapacity_ = nTroopTransportCapacity_.GetData();
     pCopy->bTroopEmbarkingTimes_ = bTroopEmbarkingTimes_.GetData();
     pCopy->embarkingTimePerPerson_ = embarkingTimePerPerson_.GetData();
     pCopy->disembarkingTimePerPerson_ = disembarkingTimePerPerson_.GetData();
@@ -2009,7 +1993,6 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& in
 
     input.Section( "Transport" );
     input.Section( "Personnel" );
-    input.ReadField( "Equipage", nTroopTransportCapacity_ );
     if( input.Section( "Temps", ADN_XmlInput_Helper::eNothing ) )
     {
         bTroopEmbarkingTimes_ = true;
@@ -2107,15 +2090,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& 
 
     output.Section( "Transport" );
     output.Section( "Personnel" );
-    if(  ptrArmor_.GetData()->nType_ == eProtectionType_Human && nTroopTransportCapacity_.GetData() == 0 )
-    {
-        throw ADN_DataException( "Incohérence de donnée dans les composantes", 
-            "La composante \"" + strName_.GetData() + "\" est de type \"" +
-            ptrArmor_.GetData()->strName_.GetData() + "\" mais ne contient aucun homme.\n",
-            "Veuillez spécifier un nombre d'homme dans le champ \"Equipage\"." );
-    }
 
-    output.WriteField( "Equipage", nTroopTransportCapacity_.GetData() );
     if( bTroopEmbarkingTimes_.GetData() )
     {
         output.Section( "Temps" );

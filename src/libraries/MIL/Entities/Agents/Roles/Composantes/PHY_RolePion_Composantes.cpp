@@ -2044,7 +2044,7 @@ void PHY_RolePion_Composantes::GetConvoyTransporters( T_ComposanteUseMap& compos
     composanteUse.clear();
     for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
-        if( (**itComposante).GetType().CanBePartOfConvoy()  )
+        if( (**itComposante).CouldBePartOfConvoy() )
         {
             T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
             ++ data.nNbrTotal_;

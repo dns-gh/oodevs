@@ -49,16 +49,6 @@ const PHY_DotationCapacities& PHY_ComposanteTypePion::GetDotationCapacities() co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetNbrHumanInCrew
-// Created: NLD 2004-08-17
-// -----------------------------------------------------------------------------
-inline
-uint PHY_ComposanteTypePion::GetNbrHumanInCrew() const
-{
-    return nNbrHumanInCrew_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
@@ -398,17 +388,7 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() 
 {
     return rNbrHumansUnloadedForEvacuationPerTimeStep_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanBePartOfConvoy
-// Created: NLD 2006-03-23
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposanteTypePion::CanBePartOfConvoy() const
-{
-    return bCanBePartOfConvoy_;
-}
-    
+   
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetStockTransporterCapacity
 // Created: NLD 2005-07-18

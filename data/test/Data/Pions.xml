@@ -15,14 +15,14 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="NTI TC2">3</Equipement>
-      <Equipement nom="Remorqueur 5T">3</Equipement>
-      <Equipement nom="Remorqueur 3T">3</Equipement>
-      <Equipement nom="VSB (releve)">5</Equipement>
-      <Equipement nom="VSR (ramassage)">5</Equipement>
-      <Equipement nom="Medecin TC2">10</Equipement>
-      <Equipement nom="Camion transport solide">15</Equipement>
-      <Equipement nom="Camion transport liquide">15</Equipement>
+      <Equipement equipage="4" nom="NTI TC2">3</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 5T">3</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 3T">3</Equipement>
+      <Equipement equipage="4" nom="VSB (releve)">5</Equipement>
+      <Equipement equipage="4" nom="VSR (ramassage)">5</Equipement>
+      <Equipement equipage="4" nom="Medecin TC2">10</Equipement>
+      <Equipement equipage="1" convoyeur="true" nom="Camion transport solide">15</Equipement>
+      <Equipement equipage="1" convoyeur="true" nom="Camion transport liquide">15</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -246,7 +246,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="NTI BLT M">3</Equipement>
+      <Equipement equipage="4" nom="NTI BLT M">3</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -322,7 +322,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="NTI BLT EA">3</Equipement>
+      <Equipement equipage="4"  nom="NTI BLT EA">3</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -393,8 +393,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Remorqueur 5T">2</Equipement>
-      <Equipement nom="Remorqueur 3T">2</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 5T">2</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 3T">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -466,7 +466,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="NTI BLD M">3</Equipement>
+      <Equipement equipage="4"  nom="NTI BLD M">3</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -542,7 +542,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="NTI BLD EA">3</Equipement>
+      <Equipement equipage="4"  nom="NTI BLD EA">3</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -613,8 +613,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Remorqueur 5T">2</Equipement>
-      <Equipement nom="Remorqueur 3T">2</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 5T">2</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 3T">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -685,8 +685,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement majeur="true" nom="CompTest">3</Equipement>
-      <Equipement embarquable="true" nom="CompTest2">2</Equipement>
+      <Equipement majeur="true" equipage="4" nom="CompTest">3</Equipement>
+      <Equipement embarquable="true" equipage="4" nom="CompTest2">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -761,7 +761,7 @@
       <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements>
-      <Equipement embarquable="true" nom="CompTest2">5</Equipement>
+      <Equipement embarquable="true" equipage="4" nom="CompTest2">5</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -829,7 +829,7 @@
       <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements>
-      <Equipement majeur="true" nom="Truc Volant">1</Equipement>
+      <Equipement equipage="4"  majeur="true" nom="Truc Volant">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -898,7 +898,7 @@
       <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements>
-      <Equipement nom="CompNBC">1</Equipement>
+      <Equipement equipage="4" nom="CompNBC">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -966,9 +966,9 @@
       <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements>
-      <Equipement nom="CompNBC">1</Equipement>
-      <Equipement nom="CompTest">2</Equipement>
-      <Equipement nom="CompTest2">2</Equipement>
+      <Equipement equipage="4" nom="CompNBC">1</Equipement>
+      <Equipement equipage="4" nom="CompTest">2</Equipement>
+      <Equipement equipage="4" nom="CompTest2">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1037,7 +1037,7 @@
       <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Drone">2</Equipement>
+      <Equipement nom="Drone" equipage="0">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>0</Officier>
@@ -1176,7 +1176,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin tri">1</Equipement>
+      <Equipement equipage="1" nom="Medecin tri">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1318,8 +1318,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin soin mental">1</Equipement>
-      <Equipement nom="Medecin soin chirurgical">5</Equipement>
+      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin chirurgical">5</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1390,7 +1390,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin soin NBC">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin NBC">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1461,9 +1461,9 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin tri">1</Equipement>
+      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
       <!--<Equipement nom="Medecin soin chirurgical">1</Equipement>-->
-      <Equipement nom="Medecin soin mental">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1534,7 +1534,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="VSR (ramassage)">10</Equipement>
+      <Equipement equipage="4" nom="VSR (ramassage)">10</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1674,7 +1674,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin tri">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin tri">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1745,8 +1745,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin soin chirurgical">1</Equipement>
-      <Equipement nom="Medecin soin chirurgical U2/U3">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin soin chirurgical">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin soin chirurgical U2/U3">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1817,7 +1817,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin soin mental">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin soin mental">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1888,7 +1888,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin soin NBC">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin soin NBC">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1959,9 +1959,9 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Medecin tri">1</Equipement>
-      <Equipement nom="Medecin soin chirurgical">1</Equipement>
-      <Equipement nom="Medecin soin mental">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin tri">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin soin chirurgical">1</Equipement>
+      <Equipement equipage="4"  nom="Medecin soin mental">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -2032,7 +2032,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="VSR (ramassage)">1</Equipement>
+      <Equipement equipage="4"  nom="VSR (ramassage)">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -2172,7 +2172,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="CompTest">1</Equipement>
+      <Equipement equipage="4" nom="CompTest">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -2253,8 +2253,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Camion transport solide">25</Equipement>
-      <Equipement nom="Camion transport liquide">25</Equipement>
+      <Equipement equipage="1" convoyeur="true" nom="Camion transport solide">25</Equipement>
+      <Equipement equipage="1" convoyeur="true" nom="Camion transport liquide">25</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -2412,7 +2412,7 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement majeur="true" nom="CompTest">3</Equipement>
+      <Equipement majeur="true" equipage="4" nom="CompTest">3</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>

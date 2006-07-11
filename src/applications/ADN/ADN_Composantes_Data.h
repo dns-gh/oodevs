@@ -171,8 +171,6 @@ public:
         ADN_Type_Double rWeight_;
         ADN_Type_Double rVolume_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
-
-        ADN_Type_Bool bIsConveyor_;
     };
 
     //*****************************************************************************
@@ -613,7 +611,6 @@ public:
         BreakdownGroupInfos                                                       attritionBreakdowns_;
         BreakdownGroupInfos                                                       randomBreakdowns_;
 
-        ADN_Type_Int                                                              nTroopTransportCapacity_;
         ADN_Type_Bool                                                             bTroopEmbarkingTimes_;
         ADN_Type_Time                                                             embarkingTimePerPerson_;
         ADN_Type_Time                                                             disembarkingTimePerPerson_;
