@@ -19,13 +19,6 @@
       <Temps nbCamions="100">120s</Temps>
       <Temps nbCamions="5000">300s</Temps>
     </TempsDechargement>
-    <TempsConstitution>
-      <Temps nbCamions="1">60s</Temps>
-      <Temps nbCamions="30">120s</Temps>
-      <Temps nbCamions="100">3000s</Temps>
-      <Temps nbCamions="500">18000s</Temps>
-      <Temps nbCamions="5000">54000s</Temps>
-    </TempsConstitution>
     <TypeUnite nom="Pion Convoi"/>
     <Mission nom="Pion LOG Convoyer"/>
   </Convois>

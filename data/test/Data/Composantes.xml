@@ -85,7 +85,6 @@
     </Armements>
     <Transport>
       <Personnel>
-        <Equipage>0</Equipage>
         <Temps>
           <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
           <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
@@ -258,7 +257,6 @@
     </Armements>
     <Transport>
       <Personnel>
-        <Equipage>4</Equipage>
         <Temps>
           <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
           <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
@@ -419,9 +417,7 @@
       <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7"/>
     </Armements>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -561,9 +557,7 @@
       <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
     </Armements>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil NBC</Senseur>
@@ -687,9 +681,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>250</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -796,9 +788,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>250</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -905,9 +895,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1011,9 +999,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1119,9 +1105,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1227,9 +1211,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1338,9 +1320,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1449,9 +1429,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1556,9 +1534,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1664,9 +1640,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1767,9 +1741,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1872,9 +1844,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -1980,9 +1950,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -2088,9 +2056,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -2193,9 +2159,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>4</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -2298,9 +2262,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>1</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -2329,7 +2291,6 @@
           </Capacite>
           <NatureTransportee>Solide</NatureTransportee>
         </Transporteur>
-        <Convoyeur/>
       </Ravitaillement>
     </FonctionsLogistiques>
     <Pannes>
@@ -2408,9 +2369,7 @@
     </Contenance>
     <Armements/>
     <Transport>
-      <Personnel>
-        <Equipage>1</Equipage>
-      </Personnel>
+      <Personnel/>
     </Transport>
     <Senseurs>
       <Senseur hauteur="2">oeil</Senseur>
@@ -2439,7 +2398,6 @@
           </Capacite>
           <NatureTransportee>Liquide</NatureTransportee>
         </Transporteur>
-        <Convoyeur/>
       </Ravitaillement>
     </FonctionsLogistiques>
     <Pannes>
@@ -2538,7 +2496,6 @@
     </Armements>
     <Transport>
       <Personnel>
-        <Equipage>4</Equipage>
         <Temps>
           <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
           <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
