@@ -16,7 +16,7 @@
 inline
 bool PHY_SupplyStockConsign::IsLoadingDone() const
 {
-    return GetState() == eConvoyGoingToUnloadingPoint;
+    return GetState() > eConvoyLoading;
 }
 
 // -----------------------------------------------------------------------------
@@ -26,6 +26,6 @@ bool PHY_SupplyStockConsign::IsLoadingDone() const
 inline
 bool PHY_SupplyStockConsign::IsUnloadingDone() const
 {
-    return GetState() == eConvoyGoingBackToFormingPoint;
+    return GetState() > eConvoyUnloading;
 }
 

@@ -118,13 +118,16 @@ void MIL_CheckPointManager::LoadCheckPoint( const std::string& strCheckPointPath
     if ( !file || !file.is_open() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't open file '%s'", ( strCheckPointFullPath + "data" ).c_str() ) );
 
-
-    MIL_CheckPointInArchive archive( file );
+    MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
     
-    MIL_IDManager  ::serialize( archive );
-    MIL_AgentServer::GetWorkspace().load( archive );
-    
+    MIL_IDManager  ::serialize( *pArchive );
+    MIL_AgentServer::GetWorkspace().load( *pArchive );
+   
     file.close();
+
+#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+    delete pArchive;
+#endif
  
     NET_ASN_MsgCtrlCheckPointLoadEnd asnLoadEndMsg;
     asnLoadEndMsg.Send();
@@ -226,10 +229,15 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
     if ( !file || !file.is_open() )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Can't open file '%s'", strFileName.c_str() ) );
 
-    MIL_CheckPointOutArchive archive( file );
-    MIL_IDManager  ::serialize( archive );
-    MIL_AgentServer::GetWorkspace().save( archive );
+    MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
+    
+    MIL_IDManager  ::serialize( *pArchive );
+    MIL_AgentServer::GetWorkspace().save( *pArchive );
     file.close();
+
+#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+    delete pArchive;
+#endif
     
     return MIL_Tools::ComputeCRC( strFileName );
 }
