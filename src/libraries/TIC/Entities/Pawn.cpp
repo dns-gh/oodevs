@@ -298,7 +298,7 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 //-----------------------------------------------------------------------------
 void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
 {
-    if( asnMsg.m.prets_equipementPresent )
+    if( asnMsg.m.equipements_pretesPresent )
     {
         T_LendMap previousLends = lends_;
 
@@ -323,9 +323,9 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
         // manage new lends
         Pawn* pPawn = Pawn::Find( asnMsg.oid_pion );
         assert( pPawn );
-        for( uint i = 0; i < asnMsg.prets_equipement.n; ++i )
+        for( uint i = 0; i < asnMsg.equipements_pretes.n; ++i )
         {
-            const ASN1T_PretEquipement& lend = asnMsg.prets_equipement.elem[i];
+            const ASN1T_EquipementPrete& lend = asnMsg.equipements_pretes.elem[i];
             Pawn* pLender = Pawn::Find( lend.oid_pion_emprunteur );
             assert( pLender );
             const PlatformType* pType = PlatformType::Find( lend.type_equipement );
