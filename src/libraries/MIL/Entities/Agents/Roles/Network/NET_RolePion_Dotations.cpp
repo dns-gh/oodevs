@@ -159,8 +159,10 @@ void NET_RolePion_Dotations::SendMsgDotations( NET_ASN_MsgUnitDotations& msg )
         delete [] asnMsg.dotation_eff_materiel.elem;
     if( asnMsg.m.dotation_eff_personnelPresent && asnMsg.dotation_eff_personnel.n > 0 )
         delete [] asnMsg.dotation_eff_personnel.elem;
-    if( asnMsg.m.prets_equipementPresent && asnMsg.prets_equipement.n > 0 )
-        delete [] asnMsg.prets_equipement.elem;
+    if( asnMsg.m.equipements_pretesPresent && asnMsg.equipements_pretes.n > 0 )
+        delete [] asnMsg.equipements_pretes.elem;
+    if( asnMsg.m.equipements_recus_en_pretPresent && asnMsg.equipements_recus_en_pret.n > 0 )
+        delete [] asnMsg.equipements_recus_en_pret.elem;
 }
 // -----------------------------------------------------------------------------
 // Name: NET_RolePion_Dotations::SendMsgDotationsChangedState

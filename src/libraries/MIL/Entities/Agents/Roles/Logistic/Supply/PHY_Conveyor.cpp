@@ -188,8 +188,8 @@ void PHY_Conveyor::LendTo( MIL_AgentPion& pion )
 void PHY_Conveyor::UndoLend()
 {
     assert( pLentTo_ );
-    pConveyorPion_->GetRole< PHY_RolePion_Composantes >().UndoLendComposante( pLentTo_->GetRole< PHY_RolePion_Composantes >(), *pConveyorComp_ );
-    pConveyorPion_->GetRole< PHY_RolePion_Supply      >().StartUsingForLogistic( *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RolePion_Composantes >().RetrieveLentComposante( pLentTo_->GetRole< PHY_RolePion_Composantes >(), *pConveyorComp_ );
+    pConveyorPion_->GetRole< PHY_RolePion_Supply      >().StartUsingForLogistic ( *pConveyorComp_ );
     pLentTo_ = 0;
 }
 

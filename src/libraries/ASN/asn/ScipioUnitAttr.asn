@@ -9,21 +9,28 @@ ScipioUnitAttr DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory FROM ScipioBase;
 
--- Etat des pions logistiques de la maintenance
-PretEquipement ::= SEQUENCE
+EquipementPrete ::= SEQUENCE
 {
     oid-pion-emprunteur Agent,
     type-equipement     TypeEquipement,
     nombre              INTEGER
 }
 
+EquipementRecuEnPret ::= SEQUENCE
+{
+    oid-pion-preteur Agent,
+    type-equipement  TypeEquipement,
+    nombre           INTEGER
+}
+
 MsgUnitDotations ::= SEQUENCE 
 {
-    oid-pion               Agent,
-    dotation-eff-personnel SEQUENCE OF DotationPersonnel  OPTIONAL, -- Dotations effectives du pion
-    dotation-eff-materiel  SEQUENCE OF DotationEquipement OPTIONAL,
-    dotation-eff-ressource SEQUENCE OF DotationRessource  OPTIONAL,    
-    prets-equipement       SEQUENCE OF PretEquipement     OPTIONAL
+    oid-pion                    Agent,
+    dotation-eff-personnel      SEQUENCE OF DotationPersonnel    OPTIONAL, -- Dotations effectives du pion
+    dotation-eff-materiel       SEQUENCE OF DotationEquipement   OPTIONAL,
+    dotation-eff-ressource      SEQUENCE OF DotationRessource    OPTIONAL,    
+    equipements-pretes          SEQUENCE OF EquipementPrete      OPTIONAL,
+    equipements-recus-en-pret   SEQUENCE OF EquipementRecuEnPret OPTIONAL
 }
 
 -- Personnel

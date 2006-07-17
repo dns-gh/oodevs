@@ -68,7 +68,7 @@ public:
     //! @name Main
     //@{
     void Update();
-    void TransfertComposante( PHY_RolePion_Composantes& newRole );
+    void TransferComposante( PHY_RolePion_Composantes& newRole );
     //@}
 
     //! @name Logistic - Maintenance

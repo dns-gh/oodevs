@@ -39,7 +39,7 @@ bool PHY_RolePion_Composantes::HasChanged() const
 inline
 bool PHY_RolePion_Composantes::IsUsable() const
 {
-    return nNbrUsableComposantes_ > 0 || !lentComposantes_.empty();
+    return nNbrUsableComposantes_ > 0 || !lentComposantesGiven_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -151,13 +151,12 @@ bool PHY_RolePion_Composantes::IsNeutralized() const
 // LEND
 // =============================================================================
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::LendComposantes
 // Created: NLD 2006-04-03
 // -----------------------------------------------------------------------------
 template < typename T >
-uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate )
+uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& lendTo, uint nNbr, T funcPredicate )
 {
     uint nNbrDone = 0;
     for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
@@ -167,7 +166,7 @@ uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& newRol
         if( composante.CanBeLent() && funcPredicate( composante ) )
         {
             ++nNbrDone;
-            LendComposante( newRole, composante );
+            LendComposante( lendTo, composante );
             it = composantes_.rbegin(); // LendComposante->TransfertComposante modifie composantes_
         }
         else
@@ -177,24 +176,24 @@ uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& newRol
 }
 
 // -----------------------------------------------------------------------------
-// Name: template < typename T > uint PHY_RolePion_Composantes::UndoLendComposantes
+// Name: template < typename T > uint PHY_RolePion_Composantes::RetrieveLentComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 template < typename T > 
-uint PHY_RolePion_Composantes::UndoLendComposantes( PHY_RolePion_Composantes& role, uint nNbr, T funcPredicate )
+uint PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate )
 {
     uint nNbrDone = 0;
     while( nNbrDone < nNbr )
     {
-        IT_LentComposanteMap it = lentComposantes_.find( &role );
-        if( it == lentComposantes_.end() )
+        IT_LentComposanteMap it = lentComposantesGiven_.find( &lentTo );
+        if( it == lentComposantesGiven_.end() )
             return nNbrDone;
 
         PHY_ComposantePion* pComposante = 0;
         const T_ComposantePionVector& lentComps = it->second;
-        for( CIT_ComposantePionVector itLend = lentComps.begin(); itLend != lentComps.end(); ++itLend )
+        for( CIT_ComposantePionVector it = lentComps.begin(); it != lentComps.end(); ++it )
         {
-            PHY_ComposantePion& composante = **itLend;
+            PHY_ComposantePion& composante = **it;
             if( funcPredicate( composante ) )
                 pComposante = &composante;
         }
@@ -202,23 +201,23 @@ uint PHY_RolePion_Composantes::UndoLendComposantes( PHY_RolePion_Composantes& ro
             return nNbrDone;
 
         ++ nNbrDone;
-        UndoLendComposante( role, *pComposante );
+        RetrieveLentComposante( lentTo, *pComposante );
     }
     return nNbrDone;
 }
    
 // -----------------------------------------------------------------------------
-// Name: template < typename T > uint PHY_RolePion_Composantes::GetLendComposantesTime
+// Name: template < typename T > uint PHY_RolePion_Composantes::GetLentComposantesTravelTime
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 template < typename T > 
-uint PHY_RolePion_Composantes::GetLendComposantesTime( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate )
+uint PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Composantes& lendTo, uint nNbr, T funcPredicate )
 {
     uint nNbrDone = 0;
     uint nTime    = 0;
 
-    const MT_Vector2D& srcPos  =         GetRole< PHY_RolePion_Location >().GetPosition();
-    const MT_Vector2D& destPos = newRole.GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& srcPos  =        GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& destPos = lendTo.GetRole< PHY_RolePion_Location >().GetPosition();
 
     for( RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {

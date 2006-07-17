@@ -136,6 +136,7 @@ std::string LogMedicalConsign::GetStateString() const
         case eSearchingForHealingArea            : strState = std::string( "Recherche d'un secteur de soin" )                           ; break;
         case eWaitingForHealing                  : strState = std::string( "En attente de soins" )                                      ; break;
         case eHealing                            : strState = std::string( "Soins en cours" )                                           ; break;
+        case eResting                            : strState = std::string( "Hospitalisation : au repos" )                               ; break;
         case eWaitingForCollection               : strState = std::string( "Ramassage - En attente d'une ambulance" )                   ; break;
         case eCollectionLoading                  : strState = std::string( "Ramassage - Embarquement dans ambulance" )                  ; break;
         case eCollectionWaitingForFullLoading    : strState = std::string( "Ramassage - En attente chargement complet de l'ambulance" ) ; break;

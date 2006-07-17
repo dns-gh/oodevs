@@ -112,34 +112,39 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalHealingConsign::ChooseStateAfterHealing
-// Created: NLD 2005-01-12
+// Name: PHY_MedicalHealingConsign::EnterStateResting
+// Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_MedicalHealingConsign::ChooseStateAfterHealing()
+void PHY_MedicalHealingConsign::EnterStateResting()
 {
     assert( pHumanState_ );
+    assert( pDoctor_ );
     
-    // Healing time elapsed
-    if( pDoctor_ )
-    {
-        nTimer_ = pHumanState_->Heal( *pDoctor_ ); // Returns resting time
-        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
-        pDoctor_ = 0;
-        SetState( eHealing );
-    }
+    // Healing time elapsed   
+    nTimer_ = pHumanState_->Heal( *pDoctor_ ); // Returns resting time
+    GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+    pDoctor_ = 0;
+    SetState( eResting );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHealingConsign::ChooseStateAfterResting
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+void PHY_MedicalHealingConsign::ChooseStateAfterResting()
+{
+    assert( pHumanState_ );
+    assert( !pDoctor_ );
 
     // Resting time elapsed
+    if( pHumanState_->GetHuman().NeedMedical() )
+        EnterStateSearchingForHealingArea();
     else
     {
-        if( pHumanState_->GetHuman().NeedMedical() )
-            EnterStateSearchingForHealingArea();
-        else
-        {
-            if( pHumanState_->ShouldGoBackToWar() )
-                DoReturnHuman();
-            EnterStateFinished();
-        }   
-    }
+        if( pHumanState_->ShouldGoBackToWar() )
+            DoReturnHuman();
+        EnterStateFinished();
+    }   
 }
 
 // -----------------------------------------------------------------------------
@@ -226,11 +231,12 @@ bool PHY_MedicalHealingConsign::Update()
 
     switch( GetState() ) 
     {
-        case eWaitingForHealing      : if( DoWaitingForHealing() )    EnterStateHealing       (); break;
-        case eHealing                :                                ChooseStateAfterHealing (); break;
-        case eSearchingForHealingArea: DoSearchForHealingArea();                                  break;
-        case eWaitingForCollection   : if( DoWaitingForCollection() ) EnterStateFinished      (); break;
-        case eFinished               :                                                            break;
+        case eWaitingForHealing      : if( DoWaitingForHealing() )    EnterStateHealing      (); break;
+        case eHealing                :                                EnterStateResting      (); break;
+        case eResting                :                                ChooseStateAfterResting(); break;
+        case eSearchingForHealingArea: DoSearchForHealingArea();                                 break;
+        case eWaitingForCollection   : if( DoWaitingForCollection() ) EnterStateFinished     (); break;
+        case eFinished               :                                                           break;
         default:
             assert( false );
     }

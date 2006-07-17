@@ -104,8 +104,17 @@ public:
         uint nBorrowerId_;
         uint nEquipment_;
         int  nQuantity_;
-    } T_Lend;
-    std::vector< T_Lend > lends_;
+    } T_LendGiven;
+
+    typedef struct
+    {
+        uint nOwnerId_;
+        uint nEquipment_;
+        int  nQuantity_;
+    } T_LendReceived;
+
+    std::vector< T_LendGiven    > lendsGiven_;
+    std::vector< T_LendReceived > lendsReceived_;
 
     bool bEmptyGasTank_;
 };

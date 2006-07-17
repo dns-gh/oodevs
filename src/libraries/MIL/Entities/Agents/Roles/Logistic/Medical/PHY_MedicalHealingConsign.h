@@ -54,8 +54,9 @@ private:
     //@{
     void EnterStateWaitingForHealing      ();
     bool DoWaitingForHealing              ();
-    void EnterStateHealing                (); 
-    void ChooseStateAfterHealing          ();         
+    void EnterStateHealing                ();
+    void EnterStateResting                ();
+    void ChooseStateAfterResting          ();
     void EnterStateSearchingForHealingArea();
     void DoSearchForHealingArea           ();
     void EnterStateWaitingForCollection   ();

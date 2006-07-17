@@ -64,13 +64,21 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* pParent )
     pTroops_->setResizeMode( QListView::LastColumn );
     pTroops_->setAllColumnsShowFocus ( true );
 
-    pLends_ = new QListView( this );
-    pLends_->setSorting( -1 );
-    pLends_->addColumn( tr( "Emprunteur" ) );
-    pLends_->addColumn( tr( "Equipement prêté" ) );
-    pLends_->addColumn( tr( "Quantité" ) );
-    pLends_->setResizeMode( QListView::LastColumn );
-    pLends_->setAllColumnsShowFocus ( true );
+    pLendsGiven_ = new QListView( this );
+    pLendsGiven_->setSorting( -1 );
+    pLendsGiven_->addColumn( tr( "Emprunteur" ) );
+    pLendsGiven_->addColumn( tr( "Equipement prêté" ) );
+    pLendsGiven_->addColumn( tr( "Quantité" ) );
+    pLendsGiven_->setResizeMode( QListView::LastColumn );
+    pLendsGiven_->setAllColumnsShowFocus ( true );
+
+    pLendsReceived_ = new QListView( this );
+    pLendsReceived_->setSorting( -1 );
+    pLendsReceived_->addColumn( tr( "Possesseur" ) );
+    pLendsReceived_->addColumn( tr( "Equipement reçu en prêt" ) );
+    pLendsReceived_->addColumn( tr( "Quantité" ) );
+    pLendsReceived_->setResizeMode( QListView::LastColumn );
+    pLendsReceived_->setAllColumnsShowFocus ( true );
 }
 
 
@@ -109,7 +117,8 @@ void AgentResourcesPanel::OnAgentUpdated( Agent& agent )
     Suit( equipement_, composition.equipment_.size(), pEquipment_ );
     Suit( resources_, composition.resources_.size(), pResources_ );
     Suit( troops_, (int)eTroopHealthStateNbrStates, pTroops_ );
-    Suit( lends_, composition.lends_.size(), pLends_ );
+    Suit( lendsGiven_   , composition.lendsGiven_   .size(), pLendsGiven_    );
+    Suit( lendsReceived_, composition.lendsReceived_.size(), pLendsReceived_ );
 
     int n1 = 0;
     for( CIT_EquipmentQty_Map it1 = composition.equipment_.begin(); it1 != composition.equipment_.end(); ++it1 )
@@ -139,11 +148,20 @@ void AgentResourcesPanel::OnAgentUpdated( Agent& agent )
         pItem->setText( 3, QString::number( composition.mdr_[n3] ) );
     }
 
-    for( uint n4 = 0; n4 < composition.lends_.size(); ++n4 )
+    for( uint n4 = 0; n4 < composition.lendsGiven_.size(); ++n4 )
     {
-        QListViewItem* pItem = lends_[ n4 ];
-        const AgentComposition::T_Lend& lend = composition.lends_[ n4 ];
+        QListViewItem* pItem = lendsGiven_[ n4 ];
+        const AgentComposition::T_LendGiven& lend = composition.lendsGiven_[ n4 ];
         pItem->setText( 0, QString::number( lend.nBorrowerId_ ) );
+        pItem->setText( 1, App::GetApp().GetEquipmentName( lend.nEquipment_ ).c_str() );
+        pItem->setText( 2, QString::number( lend.nQuantity_ ) );
+    }
+
+    for( uint n5 = 0; n5 < composition.lendsReceived_.size(); ++n5 )
+    {
+        QListViewItem* pItem = lendsReceived_[ n5 ];
+        const AgentComposition::T_LendReceived& lend = composition.lendsReceived_[ n5 ];
+        pItem->setText( 0, QString::number( lend.nOwnerId_ ) );
         pItem->setText( 1, App::GetApp().GetEquipmentName( lend.nEquipment_ ).c_str() );
         pItem->setText( 2, QString::number( lend.nQuantity_ ) );
     }
@@ -155,8 +173,9 @@ void AgentResourcesPanel::OnAgentUpdated( Agent& agent )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::OnClearSelection()
 {
-    pEquipment_->hide();
-    pResources_->hide();
-    pTroops_   ->hide();
-    pLends_    ->hide();
+    pEquipment_    ->hide();
+    pResources_    ->hide();
+    pTroops_       ->hide();
+    pLendsGiven_   ->hide();
+    pLendsReceived_->hide();
 }

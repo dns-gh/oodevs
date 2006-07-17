@@ -446,7 +446,7 @@ static void UndoLendComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent,
     assert( pTarget );
     
     const uint nNbrToGetBack = (uint)call.GetParameter( 1 ).ToFloat();
-    const uint nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().UndoLendComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
+    const uint nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
 
     if( nNbrGotBack == 0 )
         MIL_RC::pRcRecuperationMaterielPreteImpossible_->Send( callerAgent, MIL_RC::eRcTypeOperational );

@@ -83,6 +83,7 @@ protected:
         eSearchingForHealingArea,
         eWaitingForHealing,
         eHealing,
+        eResting,
         eWaitingForCollection,
         eCollectionLoading,
         eCollectionWaitingForFullLoading,

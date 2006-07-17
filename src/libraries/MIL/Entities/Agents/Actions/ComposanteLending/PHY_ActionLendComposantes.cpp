@@ -26,6 +26,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_C
     : PHY_Action_ABC    ( pion, call )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
     , nNbrToLend_       ( (uint)call.GetParameter( 1 ).ToFloat() )
+    , bLendDone_        ( false )
     , pTarget_          ( 0 )
     , diaReturnVariable_( call.GetParameter( 2 ) )
     , predicate_        ( predicate )
@@ -37,7 +38,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_C
     
     pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();
    
-    nTimer_ = role_.GetLendComposantesTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+    nTimer_ = role_.GetLentComposantesTravelTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
     MIL_RC::pRcPretMaterielEnCours_->Send( pion, MIL_RC::eRcTypeOperational );
     
     diaReturnVariable_.SetValue( false );
@@ -59,7 +60,7 @@ PHY_ActionLendComposantes::~PHY_ActionLendComposantes()
 // -----------------------------------------------------------------------------
 void PHY_ActionLendComposantes::Execute()
 {
-    if ( !nTimer_-- )
+    if ( !bLendDone_ && !nTimer_-- )
     {
         assert( pTarget_ );
         const uint nNbrLent = role_.LendComposantes( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
@@ -75,6 +76,7 @@ void PHY_ActionLendComposantes::Execute()
                 MIL_RC::pRcPretMaterielEffectue_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
         }
 
+        bLendDone_ = true;
         diaReturnVariable_.SetValue( true );
     }
 }
@@ -85,6 +87,5 @@ void PHY_ActionLendComposantes::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionLendComposantes::ExecuteSuspended()
 {
-    assert( false );
     Execute();
 }

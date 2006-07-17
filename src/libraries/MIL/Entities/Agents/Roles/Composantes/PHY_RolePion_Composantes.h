@@ -99,12 +99,17 @@ public:
 
     //! @name Pret de composantes
     //@{
-    template < typename T > uint LendComposantes       ( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate );
-    template < typename T > uint GetLendComposantesTime( PHY_RolePion_Composantes& newRole, uint nNbr, T funcPredicate );
-    template < typename T > uint UndoLendComposantes   ( PHY_RolePion_Composantes& role,    uint nNbr, T funcPredicate );
+    template < typename T > uint LendComposantes             ( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate );
+    template < typename T > uint GetLentComposantesTravelTime( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate );
+    template < typename T > uint RetrieveLentComposantes     ( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate );
 
-    void LendComposante    ( PHY_RolePion_Composantes& newRole, PHY_ComposantePion& composante );
-    void UndoLendComposante( PHY_RolePion_Composantes& newRole, PHY_ComposantePion& composante );
+    // Actions on the composante owner
+    void LendComposante        ( PHY_RolePion_Composantes& lendTo, PHY_ComposantePion& composante );
+    void RetrieveLentComposante( PHY_RolePion_Composantes& lentTo, PHY_ComposantePion& composante );
+
+    // Notification for the beneficary
+    void NotifyLentComposanteReceived( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante ); 
+    void NotifyLentComposanteReturned( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante );
     //@}
 
     //! @name Logistic - maintenance
@@ -303,8 +308,6 @@ private:
 private:
     MIL_AgentPion*         pPion_;
     T_ComposantePionVector composantes_;
-    T_LentComposanteMap    lentComposantes_;
-    bool                   bLendsChanged_;
     T_ComposanteTypeMap    composanteTypes_;
     uint                   nNbrComposanteChanged_;
     MT_Float               rMajorOperationalState_;
@@ -312,8 +315,12 @@ private:
     bool                   bOperationalStateChanged_;    
     PHY_ComposantePion*    pMajorComposante_;
     uint                   nNeutralizationEndTimeStep_;
-
     uint                   nNbrUsableComposantes_;
+
+    T_LentComposanteMap    lentComposantesGiven_;
+    T_LentComposanteMap    lentComposantesReceived_;
+
+    bool                   bLendsChanged_;
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;

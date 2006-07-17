@@ -91,7 +91,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_
     : PHY_RoleInterface_Composantes( role )
     , pPion_                       ( &pion )
     , composantes_                 ()
-    , lentComposantes_             ()
+    , lentComposantesGiven_        ()
     , nNbrComposanteChanged_       ( 0 )
     , nNbrUsableComposantes_       ( 0 )
     , rOperationalState_           ( 0. )
@@ -115,7 +115,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     : PHY_RoleInterface_Composantes()
     , pPion_                       ()
     , composantes_                 ()
-    , lentComposantes_             ()
+    , lentComposantesGiven_        ()
     , bLendsChanged_               ( false )
     , composanteTypes_             ()
     , nNbrComposanteChanged_       ( 0 )
@@ -253,7 +253,8 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_RoleInterface_Composantes >( *this )
          & pPion_
          & composantes_
-         & lentComposantes_
+         & lentComposantesGiven_
+         & lentComposantesReceived_
          & composanteTypes_
          & nNbrComposanteChanged_
          & nNbrUsableComposantes_
@@ -1162,37 +1163,64 @@ void PHY_RolePion_Composantes::SendLogisticFullState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendFullLends( NET_ASN_MsgUnitDotations& asn ) const
 {
-    asn.GetAsnMsg().m.prets_equipementPresent = 1;
+    asn.GetAsnMsg().m.equipements_pretesPresent        = 1;
+    asn.GetAsnMsg().m.equipements_recus_en_pretPresent = 1;
 
     typedef std::pair< const MIL_AgentPion*, const PHY_ComposanteTypePion* > T_Key;
     typedef std::map < T_Key, uint >                                         T_LentMap;
     typedef T_LentMap::const_iterator                                        CIT_LentMap;
 
-    T_LentMap lentData;
-    for( CIT_LentComposanteMap it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
+    T_LentMap lentGivenData;    
+    for( CIT_LentComposanteMap it = lentComposantesGiven_.begin(); it != lentComposantesGiven_.end(); ++it )
     {
         const MIL_AgentPion&          pion        = it->first->GetPion();
         const T_ComposantePionVector& composantes = it->second;
         for( CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-            ++lentData[ T_Key( &pion, &(**itComp).GetType() ) ];
+            ++lentGivenData[ T_Key( &pion, &(**itComp).GetType() ) ];
     }
-
-    asn.GetAsnMsg().prets_equipement.n = lentData.size();
-    if( lentData.empty() )
-        return;
-
-    ASN1T_PretEquipement* pLent = new ASN1T_PretEquipement[ lentData.size() ];
-    uint i = 0;
-    for( CIT_LentMap itData = lentData.begin(); itData != lentData.end(); ++itData, ++i )
+    
+    T_LentMap lentReceivedData;
+    for( CIT_LentComposanteMap it = lentComposantesReceived_.begin(); it != lentComposantesReceived_.end(); ++it )
     {
-        ASN1T_PretEquipement& lent = pLent[ i ];
-
-        lent.oid_pion_emprunteur = itData->first.first ->GetID();
-        lent.type_equipement     = itData->first.second->GetMosID();
-        lent.nombre              = itData->second;
+        const MIL_AgentPion&          pion        = it->first->GetPion();
+        const T_ComposantePionVector& composantes = it->second;
+        for( CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
+            ++lentReceivedData[ T_Key( &pion, &(**itComp).GetType() ) ];
     }
 
-    asn.GetAsnMsg().prets_equipement.elem = pLent;
+    asn.GetAsnMsg().equipements_pretes.n        = lentGivenData   .size();
+    asn.GetAsnMsg().equipements_recus_en_pret.n = lentReceivedData.size();
+        
+
+    if( !lentGivenData.empty() )
+    {
+        ASN1T_EquipementPrete* pLent = new ASN1T_EquipementPrete[ lentGivenData.size() ];
+        uint i = 0;
+        for( CIT_LentMap it = lentGivenData.begin(); it != lentGivenData.end(); ++it, ++i )
+        {
+            ASN1T_EquipementPrete& lent = pLent[ i ];
+
+            lent.oid_pion_emprunteur = it->first.first ->GetID();
+            lent.type_equipement     = it->first.second->GetMosID();
+            lent.nombre              = it->second;
+        }
+        asn.GetAsnMsg().equipements_pretes.elem = pLent;
+    }
+
+    if( !lentReceivedData.empty() )
+    {
+        ASN1T_EquipementRecuEnPret* pLent = new ASN1T_EquipementRecuEnPret[ lentGivenData.size() ];
+        uint i = 0;
+        for( CIT_LentMap it = lentReceivedData.begin(); it != lentReceivedData.end(); ++it, ++i )
+        {
+            ASN1T_EquipementRecuEnPret& lent = pLent[ i ];
+
+            lent.oid_pion_preteur = it->first.first ->GetID();
+            lent.type_equipement  = it->first.second->GetMosID();
+            lent.nombre           = it->second;
+        }
+        asn.GetAsnMsg().equipements_recus_en_pret.elem = pLent;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1201,7 +1229,6 @@ void PHY_RolePion_Composantes::SendFullLends( NET_ASN_MsgUnitDotations& asn ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedLends( NET_ASN_MsgUnitDotations& asn ) const
 {
-    // Prets
     if( bLendsChanged_ )
         SendFullLends( asn );
 }
@@ -1983,36 +2010,70 @@ void PHY_RolePion_Composantes::GetDoctorsUseForHealing( T_ComposanteUseMap& comp
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::LendComposante
-// Created: NLD 2005-02-09
+// Name: PHY_RolePion_Composantes::NotifyLentComposanteReceived
+// Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::LendComposante( PHY_RolePion_Composantes& newRole, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante )
 {
-    assert( composante.CanBeLent() );
-    assert( std::find( composantes_.begin(), composantes_.end(), &composante ) != composantes_.end() );
+    assert( std::find ( lentComposantesReceived_[ &owner ].begin(), lentComposantesReceived_[ &owner ].end(), &composante ) == lentComposantesReceived_[ &owner ].end() );
 
-    lentComposantes_[ &newRole ].push_back( &composante );
-    composante.TransfertComposante( newRole );
+    lentComposantesReceived_[ &owner ].push_back( &composante );
     bLendsChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::UndoLendComposante
-// Created: NLD 2005-02-09
+// Name: PHY_RolePion_Composantes::NotifyLentComposanteReturned
+// Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::UndoLendComposante( PHY_RolePion_Composantes& role, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante )
 {
-    T_ComposantePionVector& lentComps = lentComposantes_[ &role ];
+    T_ComposantePionVector& lentComps = lentComposantesReceived_[ &owner ];
 
     IT_ComposantePionVector itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
     assert( itComp != lentComps.end() );
 
-    composante.TransfertComposante( *this );
+    lentComps.erase( itComp );
+    if( lentComps.empty() )
+        lentComposantesGiven_.erase( lentComposantesReceived_.find( &owner ) );
+
+    bLendsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::LendComposante
+// Created: NLD 2005-02-09
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::LendComposante( PHY_RolePion_Composantes& lendTo, PHY_ComposantePion& composante )
+{
+    assert( composante.CanBeLent() );
+    assert( std::find( composantes_.begin(), composantes_.end(), &composante ) != composantes_.end() );
+
+    lentComposantesGiven_[ &lendTo ].push_back( &composante );
+    composante.TransferComposante( lendTo );
+    bLendsChanged_ = true;
+
+    lendTo.NotifyLentComposanteReceived( *this, composante );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::RetrieveLentComposante
+// Created: NLD 2005-02-09
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes& lentTo, PHY_ComposantePion& composante )
+{
+    T_ComposantePionVector& lentComps = lentComposantesGiven_[ &lentTo ];
+
+    IT_ComposantePionVector itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
+    assert( itComp != lentComps.end() );
+
+    composante.TransferComposante( *this );
 
     lentComps.erase( itComp );
     if( lentComps.empty() )
-        lentComposantes_.erase( lentComposantes_.find( &role ) );
+        lentComposantesGiven_.erase( lentComposantesGiven_.find( &lentTo ) );
     bLendsChanged_ = true;
+
+    lentTo.NotifyLentComposanteReturned( *this, composante );
 }
 
 // =============================================================================

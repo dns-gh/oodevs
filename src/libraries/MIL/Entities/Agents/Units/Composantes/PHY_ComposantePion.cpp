@@ -193,10 +193,10 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) cons
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::TransfertComposante
+// Name: PHY_ComposantePion::TransferComposante
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::TransfertComposante( PHY_RolePion_Composantes& newRole )
+void PHY_ComposantePion::TransferComposante( PHY_RolePion_Composantes& newRole )
 {
     assert( pRole_ );
     assert( pHumans_ );

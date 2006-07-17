@@ -92,7 +92,9 @@ bool SIM_App::ConsoleEventHandler( int nEvent )
 // -----------------------------------------------------------------------------
 void SIM_App::Initialize()
 {
+#if !defined( _DEBUG ) 
     SetConsoleCtrlHandler( (PHANDLER_ROUTINE)ConsoleEventHandler, TRUE );
+#endif
 
     MT_Profiler::Initialize();
     MT_MakeDir( "CheckPoints" );

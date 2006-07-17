@@ -303,7 +303,7 @@ namespace
             ++i;
         }
         std::stringstream ss;
-        ss << bytes << units[i];
+        ss << bytes << ' ' << units[i];
         return ss.str();
     }
 }

@@ -26,12 +26,13 @@ EnumLogSanteTraitementEtat ::= ENUMERATED
     recherche-secteur-soin                          (11),
     attente-disponibilite-medecin-pour-soin         (12),
     soin                                            (13),
-    attente-disponibilite-ambulance-ramassage       (14),
-    ambulance-ramassage-chargement                  (15),
-    attente-chargement-complet-ambulance-ramassage  (16),
-    ambulance-ramassage-deplacement-aller           (17),
-    ambulance-ramassage-dechargement                (18),
-    termine                                         (19)
+    hospitalisation                                 (14),
+    attente-disponibilite-ambulance-ramassage       (15),
+    ambulance-ramassage-chargement                  (16),
+    attente-chargement-complet-ambulance-ramassage  (17),
+    ambulance-ramassage-deplacement-aller           (18),
+    ambulance-ramassage-dechargement                (19),
+    termine                                         (20)
 }
 
 MsgLogSanteTraitementHumainCreation ::= SEQUENCE

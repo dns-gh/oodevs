@@ -128,9 +128,11 @@ void InitConsole()
 
     ShowWindow( hCurWin, SW_MAXIMIZE );
 
+#if !defined( _DEBUG ) 
     // Remove the close button
     HMENU hmenu = GetSystemMenu( hCurWin, FALSE );
     DeleteMenu( hmenu, SC_CLOSE, MF_BYCOMMAND );
+#endif
 }
 
 //-----------------------------------------------------------------------------

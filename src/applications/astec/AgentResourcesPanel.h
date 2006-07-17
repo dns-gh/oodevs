@@ -68,12 +68,14 @@ private:
     QListView* pEquipment_;
     QListView* pResources_;
     QListView* pTroops_;
-    QListView* pLends_;
+    QListView* pLendsGiven_;
+    QListView* pLendsReceived_;
 
     T_ItemPtrVector equipement_;
     T_ItemPtrVector resources_;
     T_ItemPtrVector troops_;
-    T_ItemPtrVector lends_;
+    T_ItemPtrVector lendsGiven_;
+    T_ItemPtrVector lendsReceived_;
     //@}
 };
 
