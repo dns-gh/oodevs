@@ -39,14 +39,14 @@ Lends::~Lends()
 // -----------------------------------------------------------------------------
 void Lends::DoUpdate( const ASN1T_MsgUnitDotations& message )
 {
-    if( ! message.m.prets_equipementPresent )
+    if( ! message.m.equipements_pretesPresent )
         return;
 
     lends_.clear();
-    lends_.reserve( message.prets_equipement.n );
-    for( unsigned int i = 0; i < message.prets_equipement.n; ++i )
+    lends_.reserve( message.equipements_pretes.n );
+    for( unsigned int i = 0; i < message.equipements_pretes.n; ++i )
     {
-        const ASN1T_PretEquipement& pret = message.prets_equipement.elem[i];
+        const ASN1T_EquipementPrete& pret = message.equipements_pretes.elem[i];
         lends_.push_back( Lend( equipmentResolver_.Get( pret.type_equipement ),
                                 resolver_.Get( pret.oid_pion_emprunteur ),
                                 pret.nombre ) );
