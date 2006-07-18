@@ -47,6 +47,7 @@ ListItemDisplayer& ListItemDisplayer::AddColumn( const char* column )
 // -----------------------------------------------------------------------------
 Displayer_ABC& ListItemDisplayer::operator()( RichListItem* item )
 {
+    column_ = 0;
     item_ = item;
     return *this;
 }
