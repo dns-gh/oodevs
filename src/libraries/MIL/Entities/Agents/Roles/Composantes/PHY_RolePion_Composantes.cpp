@@ -91,7 +91,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_
     : PHY_RoleInterface_Composantes( role )
     , pPion_                       ( &pion )
     , composantes_                 ()
-    , lentComposantesGiven_        ()
+    , lentComposantes_        ()
     , nNbrComposanteChanged_       ( 0 )
     , nNbrUsableComposantes_       ( 0 )
     , rOperationalState_           ( 0. )
@@ -99,7 +99,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_
     , bOperationalStateChanged_    ( false )
     , pMajorComposante_            ( 0 )
     , nNeutralizationEndTimeStep_  ( 0 )
-    , bLendsChanged_               ( false )
+    , bLoansChanged_               ( false )
     , nTickRcMaintenanceQuerySent_ ( 0 )
 {
     assert( pPion_ );
@@ -115,8 +115,8 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     : PHY_RoleInterface_Composantes()
     , pPion_                       ()
     , composantes_                 ()
-    , lentComposantesGiven_        ()
-    , bLendsChanged_               ( false )
+    , lentComposantes_        ()
+    , bLoansChanged_               ( false )
     , composanteTypes_             ()
     , nNbrComposanteChanged_       ( 0 )
     , nNbrUsableComposantes_       ( 0 )
@@ -180,16 +180,16 @@ namespace boost
 
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_RolePion_Composantes::T_LentComposanteMap& map, const uint nVersion )
+        void serialize( Archive& file, PHY_RolePion_Composantes::T_LoanMap& map, const uint nVersion )
         {
             split_free( file, map, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Composantes::T_LentComposanteMap& map, const uint )
+        void save( Archive& file, const PHY_RolePion_Composantes::T_LoanMap& map, const uint )
         {
             file << map.size();
-            for(  PHY_RolePion_Composantes::CIT_LentComposanteMap it = map.begin(); it != map.end(); ++it )
+            for(  PHY_RolePion_Composantes::CIT_LoanMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 file << it->second;
@@ -197,7 +197,7 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Composantes::T_LentComposanteMap& map, const uint )
+        void load( Archive& file, PHY_RolePion_Composantes::T_LoanMap& map, const uint )
         {
             uint nNbr;
             file >> nNbr;
@@ -253,8 +253,8 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_RoleInterface_Composantes >( *this )
          & pPion_
          & composantes_
-         & lentComposantesGiven_
-         & lentComposantesReceived_
+         & lentComposantes_
+         & borrowedComposantes_
          & composanteTypes_
          & nNbrComposanteChanged_
          & nNbrUsableComposantes_
@@ -673,7 +673,7 @@ void PHY_RolePion_Composantes::Clean()
             it->second.bHasChanged_ = false;
         nNbrComposanteChanged_ = 0;
     }
-    bLendsChanged_            = false;
+    bLoansChanged_            = false;
     bOperationalStateChanged_ = false;
 
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
@@ -1158,79 +1158,84 @@ void PHY_RolePion_Composantes::SendLogisticFullState() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendFullLends
+// Name: PHY_RolePion_Composantes::SendFullLoans
 // Created: NLD 2005-01-18
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullLends( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Composantes::SendFullLoans( NET_ASN_MsgUnitDotations& asn ) const
 {
-    asn.GetAsnMsg().m.equipements_pretesPresent        = 1;
-    asn.GetAsnMsg().m.equipements_recus_en_pretPresent = 1;
-
     typedef std::pair< const MIL_AgentPion*, const PHY_ComposanteTypePion* > T_Key;
-    typedef std::map < T_Key, uint >                                         T_LentMap;
-    typedef T_LentMap::const_iterator                                        CIT_LentMap;
+    typedef std::map < T_Key, uint >                                         T_LoanCountMap;
+    typedef T_LoanCountMap::const_iterator                                   CIT_LoanCountMap;
 
-    T_LentMap lentGivenData;    
-    for( CIT_LentComposanteMap it = lentComposantesGiven_.begin(); it != lentComposantesGiven_.end(); ++it )
+    // Lent composantes
     {
-        const MIL_AgentPion&          pion        = it->first->GetPion();
-        const T_ComposantePionVector& composantes = it->second;
-        for( CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-            ++lentGivenData[ T_Key( &pion, &(**itComp).GetType() ) ];
-    }
-    
-    T_LentMap lentReceivedData;
-    for( CIT_LentComposanteMap it = lentComposantesReceived_.begin(); it != lentComposantesReceived_.end(); ++it )
-    {
-        const MIL_AgentPion&          pion        = it->first->GetPion();
-        const T_ComposantePionVector& composantes = it->second;
-        for( CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-            ++lentReceivedData[ T_Key( &pion, &(**itComp).GetType() ) ];
-    }
-
-    asn.GetAsnMsg().equipements_pretes.n        = lentGivenData   .size();
-    asn.GetAsnMsg().equipements_recus_en_pret.n = lentReceivedData.size();
-        
-
-    if( !lentGivenData.empty() )
-    {
-        ASN1T_EquipementPrete* pLent = new ASN1T_EquipementPrete[ lentGivenData.size() ];
-        uint i = 0;
-        for( CIT_LentMap it = lentGivenData.begin(); it != lentGivenData.end(); ++it, ++i )
+        T_LoanCountMap loanData;
+        for( CIT_LoanMap it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         {
-            ASN1T_EquipementPrete& lent = pLent[ i ];
-
-            lent.oid_pion_emprunteur = it->first.first ->GetID();
-            lent.type_equipement     = it->first.second->GetMosID();
-            lent.nombre              = it->second;
+            const MIL_AgentPion&          pion        = it->first->GetPion();
+            const T_ComposantePionVector& composantes = it->second;
+            for( CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
+                ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-        asn.GetAsnMsg().equipements_pretes.elem = pLent;
+
+        asn.GetAsnMsg().m.equipements_pretesPresent = 1;
+        asn.GetAsnMsg().equipements_pretes.n        = loanData.size();
+
+        if( !loanData.empty() )
+        {
+            ASN1T_EquipementPrete* pLoan = new ASN1T_EquipementPrete[ loanData.size() ];
+            uint i = 0;
+            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it, ++i )
+            {
+                ASN1T_EquipementPrete& loan = pLoan[ i ];
+
+                loan.oid_pion_emprunteur = it->first.first ->GetID();
+                loan.type_equipement     = it->first.second->GetMosID();
+                loan.nombre              = it->second;
+            }
+            asn.GetAsnMsg().equipements_pretes.elem = pLoan;
+        }
     }
 
-    if( !lentReceivedData.empty() )
+    // Borrowed composantes
     {
-        ASN1T_EquipementRecuEnPret* pLent = new ASN1T_EquipementRecuEnPret[ lentGivenData.size() ];
-        uint i = 0;
-        for( CIT_LentMap it = lentReceivedData.begin(); it != lentReceivedData.end(); ++it, ++i )
+        T_LoanCountMap loanData;
+        for( CIT_LoanMap it = borrowedComposantes_.begin(); it != borrowedComposantes_.end(); ++it )
         {
-            ASN1T_EquipementRecuEnPret& lent = pLent[ i ];
-
-            lent.oid_pion_preteur = it->first.first ->GetID();
-            lent.type_equipement  = it->first.second->GetMosID();
-            lent.nombre           = it->second;
+            const MIL_AgentPion&          pion        = it->first->GetPion();
+            const T_ComposantePionVector& composantes = it->second;
+            for( CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
+                ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-        asn.GetAsnMsg().equipements_recus_en_pret.elem = pLent;
+
+        asn.GetAsnMsg().m.equipements_empruntesPresent = 1;
+        asn.GetAsnMsg().equipements_empruntes.n        = loanData.size();       
+
+        if( !loanData.empty() )
+        {
+            ASN1T_EquipementEmprunte* pLoan = new ASN1T_EquipementEmprunte[ loanData.size() ];
+            uint i = 0;
+            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it, ++i )
+            {
+                ASN1T_EquipementEmprunte& loan = pLoan[ i ];
+
+                loan.oid_pion_preteur = it->first.first ->GetID();
+                loan.type_equipement  = it->first.second->GetMosID();
+                loan.nombre           = it->second;
+            }
+            asn.GetAsnMsg().equipements_empruntes.elem = pLoan;
+        }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendChangedLends
+// Name: PHY_RolePion_Composantes::SendChangedLoans
 // Created: NLD 2005-01-18
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendChangedLends( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Composantes::SendChangedLoans( NET_ASN_MsgUnitDotations& asn ) const
 {
-    if( bLendsChanged_ )
-        SendFullLends( asn );
+    if( bLoansChanged_ )
+        SendFullLoans( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -1265,7 +1270,7 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitDotations& asn )
     asn.GetAsnMsg().dotation_eff_materiel.elem     = pEquipments;
     asn.GetAsnMsg().m.dotation_eff_materielPresent = 1;
 
-    SendChangedLends( asn );
+    SendChangedLoans( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -1297,7 +1302,7 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitDotations& asn ) co
         asn.GetAsnMsg().dotation_eff_materiel.elem = pEquipments;
     }
 
-    SendFullLends( asn );
+    SendFullLoans( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -2013,55 +2018,55 @@ void PHY_RolePion_Composantes::GetDoctorsUseForHealing( T_ComposanteUseMap& comp
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReceived
 // Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante )
 {
-    assert( std::find ( lentComposantesReceived_[ &owner ].begin(), lentComposantesReceived_[ &owner ].end(), &composante ) == lentComposantesReceived_[ &owner ].end() );
+    assert( std::find ( borrowedComposantes_[ &lender ].begin(), borrowedComposantes_[ &lender ].end(), &composante ) == borrowedComposantes_[ &lender ].end() );
 
-    lentComposantesReceived_[ &owner ].push_back( &composante );
-    bLendsChanged_ = true;
+    borrowedComposantes_[ &lender ].push_back( &composante );
+    bLoansChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReturned
 // Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante )
 {
-    T_ComposantePionVector& lentComps = lentComposantesReceived_[ &owner ];
+    T_ComposantePionVector& lentComps = borrowedComposantes_[ &lender ];
 
     IT_ComposantePionVector itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
     assert( itComp != lentComps.end() );
 
     lentComps.erase( itComp );
     if( lentComps.empty() )
-        lentComposantesGiven_.erase( lentComposantesReceived_.find( &owner ) );
+        lentComposantes_.erase( borrowedComposantes_.find( &lender ) );
 
-    bLendsChanged_ = true;
+    bLoansChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::LendComposante
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::LendComposante( PHY_RolePion_Composantes& lendTo, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::LendComposante( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante )
 {
     assert( composante.CanBeLent() );
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) != composantes_.end() );
 
-    lentComposantesGiven_[ &lendTo ].push_back( &composante );
-    composante.TransferComposante( lendTo );
-    bLendsChanged_ = true;
+    lentComposantes_[ &borrower ].push_back( &composante );
+    composante.TransferComposante( borrower );
+    bLoansChanged_ = true;
 
-    lendTo.NotifyLentComposanteReceived( *this, composante );
+    borrower.NotifyLentComposanteReceived( *this, composante );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::RetrieveLentComposante
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes& lentTo, PHY_ComposantePion& composante )
+void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante )
 {
-    T_ComposantePionVector& lentComps = lentComposantesGiven_[ &lentTo ];
+    T_ComposantePionVector& lentComps = lentComposantes_[ &borrower ];
 
     IT_ComposantePionVector itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
     assert( itComp != lentComps.end() );
@@ -2070,10 +2075,10 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes&
 
     lentComps.erase( itComp );
     if( lentComps.empty() )
-        lentComposantesGiven_.erase( lentComposantesGiven_.find( &lentTo ) );
-    bLendsChanged_ = true;
+        lentComposantes_.erase( lentComposantes_.find( &borrower ) );
+    bLoansChanged_ = true;
 
-    lentTo.NotifyLentComposanteReturned( *this, composante );
+    borrower.NotifyLentComposanteReturned( *this, composante );
 }
 
 // =============================================================================

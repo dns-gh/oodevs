@@ -104,17 +104,17 @@ public:
         uint nBorrowerId_;
         uint nEquipment_;
         int  nQuantity_;
-    } T_LendGiven;
+    } T_Lending;
 
     typedef struct
     {
-        uint nOwnerId_;
+        uint nLenderId_;
         uint nEquipment_;
         int  nQuantity_;
-    } T_LendReceived;
+    } T_Borrowing;
 
-    std::vector< T_LendGiven    > lendsGiven_;
-    std::vector< T_LendReceived > lendsReceived_;
+    std::vector< T_Lending   > lendings_;
+    std::vector< T_Borrowing > borrowings_;
 
     bool bEmptyGasTank_;
 };

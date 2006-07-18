@@ -99,17 +99,17 @@ public:
 
     //! @name Pret de composantes
     //@{
-    template < typename T > uint LendComposantes             ( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate );
-    template < typename T > uint GetLentComposantesTravelTime( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate );
-    template < typename T > uint RetrieveLentComposantes     ( PHY_RolePion_Composantes& lentTo, uint nNbr, T funcPredicate );
+    template < typename T > uint LendComposantes             ( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
+    template < typename T > uint GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
+    template < typename T > uint RetrieveLentComposantes     ( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
 
     // Actions on the composante owner
-    void LendComposante        ( PHY_RolePion_Composantes& lendTo, PHY_ComposantePion& composante );
-    void RetrieveLentComposante( PHY_RolePion_Composantes& lentTo, PHY_ComposantePion& composante );
+    void LendComposante        ( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante );
+    void RetrieveLentComposante( PHY_RolePion_Composantes& borrower, PHY_ComposantePion& composante );
 
     // Notification for the beneficary
-    void NotifyLentComposanteReceived( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante ); 
-    void NotifyLentComposanteReturned( PHY_RolePion_Composantes& owner, PHY_ComposantePion& composante );
+    void NotifyLentComposanteReceived( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante ); 
+    void NotifyLentComposanteReturned( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante );
     //@}
 
     //! @name Logistic - maintenance
@@ -275,9 +275,9 @@ public:
     typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
     
-    typedef std::map< const PHY_RolePion_Composantes*, T_ComposantePionVector > T_LentComposanteMap;
-    typedef T_LentComposanteMap::iterator                                       IT_LentComposanteMap;
-    typedef T_LentComposanteMap::const_iterator                                 CIT_LentComposanteMap;
+    typedef std::map< const PHY_RolePion_Composantes*, T_ComposantePionVector > T_LoanMap;
+    typedef T_LoanMap::iterator                                                 IT_LoanMap;
+    typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::iterator                                         IT_ComposanteTypeMap;
@@ -301,8 +301,8 @@ private:
     void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
-    void SendChangedLends( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullLends   ( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendChangedLoans( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendFullLoans   ( NET_ASN_MsgUnitDotations& asn ) const;
     //@}
 
 private:
@@ -317,10 +317,10 @@ private:
     uint                   nNeutralizationEndTimeStep_;
     uint                   nNbrUsableComposantes_;
 
-    T_LentComposanteMap    lentComposantesGiven_;
-    T_LentComposanteMap    lentComposantesReceived_;
+    T_LoanMap              lentComposantes_;
+    T_LoanMap              borrowedComposantes_;
 
-    bool                   bLendsChanged_;
+    bool                   bLoansChanged_;
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;

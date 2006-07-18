@@ -348,6 +348,21 @@ void MIL_PopulationFlow::ManageSplit()
         pNewFlow->ChangeTail( ptCollision ); // reduction nombre humains
         ChangeHead( pNewConcentration ); /// reduction nombre humains
     }
+
+
+    $$ TEST 2
+
+    A chaque tick, check collisions objets<->flux
+        => pour toutes nouvelles collisions
+            => application effet (attrition ...)
+            => si effet split sur popu
+                => ptCollision = GetCollisionPoint()
+                => si ptCollision = tête
+                        
+                => sinon
+                    
+
+
 */
 }
 

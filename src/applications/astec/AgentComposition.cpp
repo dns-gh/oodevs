@@ -71,23 +71,23 @@ void AgentComposition::SetEquipmentLends( const ASN1T_MsgUnitDotations& asnMsg )
 {
     if( asnMsg.m.equipements_pretesPresent )
     {
-        lendsGiven_.resize( asnMsg.equipements_pretes.n );
+        lendings_.resize( asnMsg.equipements_pretes.n );
         for( unsigned int i = 0; i < asnMsg.equipements_pretes.n; ++i )
         {
-            lendsGiven_[i].nBorrowerId_ = asnMsg.equipements_pretes.elem[i].oid_pion_emprunteur;
-            lendsGiven_[i].nEquipment_  = asnMsg.equipements_pretes.elem[i].type_equipement;
-            lendsGiven_[i].nQuantity_   = asnMsg.equipements_pretes.elem[i].nombre;
+            lendings_[i].nBorrowerId_ = asnMsg.equipements_pretes.elem[i].oid_pion_emprunteur;
+            lendings_[i].nEquipment_  = asnMsg.equipements_pretes.elem[i].type_equipement;
+            lendings_[i].nQuantity_   = asnMsg.equipements_pretes.elem[i].nombre;
         }
     }
 
-    if( asnMsg.m.equipements_recus_en_pretPresent )
+    if( asnMsg.m.equipements_empruntesPresent )
     {
-        lendsReceived_.resize( asnMsg.equipements_recus_en_pret.n );
-        for( unsigned int i = 0; i < asnMsg.equipements_recus_en_pret.n; ++i )
+        borrowings_.resize( asnMsg.equipements_empruntes.n );
+        for( unsigned int i = 0; i < asnMsg.equipements_empruntes.n; ++i )
         {
-            lendsReceived_[i].nOwnerId_   = asnMsg.equipements_recus_en_pret.elem[i].oid_pion_preteur;
-            lendsReceived_[i].nEquipment_ = asnMsg.equipements_recus_en_pret.elem[i].type_equipement;
-            lendsReceived_[i].nQuantity_  = asnMsg.equipements_recus_en_pret.elem[i].nombre;
+            borrowings_[i].nLenderId_  = asnMsg.equipements_empruntes.elem[i].oid_pion_preteur;
+            borrowings_[i].nEquipment_ = asnMsg.equipements_empruntes.elem[i].type_equipement;
+            borrowings_[i].nQuantity_  = asnMsg.equipements_empruntes.elem[i].nombre;
         }
     }
 }

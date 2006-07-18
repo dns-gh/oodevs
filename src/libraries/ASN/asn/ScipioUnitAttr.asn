@@ -16,7 +16,7 @@ EquipementPrete ::= SEQUENCE
     nombre              INTEGER
 }
 
-EquipementRecuEnPret ::= SEQUENCE
+EquipementEmprunte ::= SEQUENCE
 {
     oid-pion-preteur Agent,
     type-equipement  TypeEquipement,
@@ -25,12 +25,12 @@ EquipementRecuEnPret ::= SEQUENCE
 
 MsgUnitDotations ::= SEQUENCE 
 {
-    oid-pion                    Agent,
-    dotation-eff-personnel      SEQUENCE OF DotationPersonnel    OPTIONAL, -- Dotations effectives du pion
-    dotation-eff-materiel       SEQUENCE OF DotationEquipement   OPTIONAL,
-    dotation-eff-ressource      SEQUENCE OF DotationRessource    OPTIONAL,    
-    equipements-pretes          SEQUENCE OF EquipementPrete      OPTIONAL,
-    equipements-recus-en-pret   SEQUENCE OF EquipementRecuEnPret OPTIONAL
+    oid-pion               Agent,
+    dotation-eff-personnel SEQUENCE OF DotationPersonnel    OPTIONAL, -- Dotations effectives du pion
+    dotation-eff-materiel  SEQUENCE OF DotationEquipement   OPTIONAL,
+    dotation-eff-ressource SEQUENCE OF DotationRessource    OPTIONAL,    
+    equipements-pretes     SEQUENCE OF EquipementPrete      OPTIONAL,
+    equipements-empruntes  SEQUENCE OF EquipementEmprunte   OPTIONAL
 }
 
 -- Personnel
