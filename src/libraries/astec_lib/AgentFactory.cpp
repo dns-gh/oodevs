@@ -21,7 +21,8 @@
 #include "Dotations.h"
 #include "Equipments.h"
 #include "HumanFactors.h"
-#include "Lends.h"
+#include "Borrowings.h"
+#include "Lendings.h"
 #include "Limits.h"
 #include "LogisticLinks.h"
 #include "Paths.h"
@@ -154,7 +155,8 @@ void AgentFactory::AttachExtensions( Agent_ABC& agent )
     agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_, agent.Get< DataDictionary >() ) );
     agent.Attach( *new Equipments( controllers_.controller_, model_.objectTypes_, dico ) );
     agent.Attach( *new HumanFactors( controllers_.controller_, dico ) );
-    agent.Attach( *new Lends( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );
+    agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );
+    agent.Attach( *new Borrowings( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );
     agent.Attach( *new Paths( model_.coordinateConverter_ ) );
     agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );

@@ -8,25 +8,25 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Lend.h"
+#include "Loan.h"
 
 // -----------------------------------------------------------------------------
-// Name: Lend constructor
+// Name: Loan constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-Lend::Lend( const EquipmentType& type, const Agent& borrower, unsigned int quantity )
+Loan::Loan( const EquipmentType& type, const Agent& agent, unsigned int quantity )
     : type_( & type )
-    , borrower_( & borrower )
+    , agent_( & agent )
     , quantity_( quantity ) 
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lend destructor
+// Name: Loan destructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-Lend::~Lend()
+Loan::~Loan()
 {
     // NOTHING
 }

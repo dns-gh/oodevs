@@ -7,39 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef __Lend_h_
-#define __Lend_h_
+#ifndef __Loan_h_
+#define __Loan_h_
 
 class EquipmentType;
 class Agent;
 
 // =============================================================================
-/** @class  Lend
-    @brief  Lend
+/** @class  Loan
+    @brief  Loan
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-class Lend
+class Loan
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Lend( const EquipmentType& type, const Agent& borrower, unsigned int quantity );
-    virtual ~Lend();
-    //@}
-
-    //! @name Operations
-    //@{
+             Loan( const EquipmentType& type, const Agent& agent, unsigned int quantity );
+    virtual ~Loan();
     //@}
 
 public:
     //! @name Member data
     //@{
     const EquipmentType* type_;
-    const Agent* borrower_;
+    const Agent* agent_;
     unsigned int quantity_;
     //@}
 };
 
-#endif // __Lend_h_
+#endif // __Loan_h_

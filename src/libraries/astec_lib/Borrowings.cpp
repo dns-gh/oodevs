@@ -8,15 +8,15 @@
 // *****************************************************************************
 
 #include "astec_pch.h"
-#include "Lends.h"
+#include "Borrowings.h"
 #include "Controller.h"
-#include "Lend.h"
+#include "Loan.h"
 
 // -----------------------------------------------------------------------------
-// Name: Lends constructor
+// Name: Borrowings constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Lends::Lends( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver )
+Borrowings::Borrowings( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver )
     : controller_( controller )
     , resolver_( resolver )
     , equipmentResolver_( equipmentResolver )
@@ -25,31 +25,31 @@ Lends::Lends( Controller& controller, const Resolver_ABC< Agent >& resolver, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lends destructor
+// Name: Borrowings destructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Lends::~Lends()
+Borrowings::~Borrowings()
 {
 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lends::DoUpdate
+// Name: Borrowings::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Lends::DoUpdate( const ASN1T_MsgUnitDotations& message )
+void Borrowings::DoUpdate( const ASN1T_MsgUnitDotations& message )
 {
     if( ! message.m.equipements_pretesPresent )
         return;
 
-    lends_.clear();
-    lends_.reserve( message.equipements_pretes.n );
-    for( unsigned int i = 0; i < message.equipements_pretes.n; ++i )
+    borrowings_.clear();
+    borrowings_.reserve( message.equipements_empruntes.n );
+    for( unsigned int i = 0; i < message.equipements_empruntes.n; ++i )
     {
-        const ASN1T_EquipementPrete& pret = message.equipements_pretes.elem[i];
-        lends_.push_back( Lend( equipmentResolver_.Get( pret.type_equipement ),
-                                resolver_.Get( pret.oid_pion_emprunteur ),
-                                pret.nombre ) );
+        const ASN1T_EquipementEmprunte& pret = message.equipements_empruntes.elem[i];
+        borrowings_.push_back( Loan( equipmentResolver_.Get( pret.type_equipement ),
+                                     resolver_.Get( pret.oid_pion_preteur ),
+                                     pret.nombre ) );
     }
     controller_.Update( *this );
 }

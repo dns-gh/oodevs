@@ -7,34 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __Lends_h_
-#define __Lends_h_
+#ifndef __Lendings_h_
+#define __Lendings_h_
 
 #include "ASN_Types.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
-#include "Lend.h"
+#include "Loan.h"
 
 class Agent;
 class Controller;
 class EquipmentType;
 
 // =============================================================================
-/** @class  Lends
-    @brief  Lends
+/** @class  Lendings
+    @brief  Lendings
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Lends : public Extension_ABC
-            , public Updatable_ABC< ASN1T_MsgUnitDotations >
+class Lendings : public Extension_ABC
+               , public Updatable_ABC< ASN1T_MsgUnitDotations >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Lends( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver );
-    virtual ~Lends();
+             Lendings( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver );
+    virtual ~Lendings();
     //@}
 
     //! @name Operations
@@ -44,11 +44,11 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Lends( const Lends& );            //!< Copy constructor
-    Lends& operator=( const Lends& ); //!< Assignement operator
+    Lendings( const Lendings& );            //!< Copy constructor
+    Lendings& operator=( const Lendings& ); //!< Assignement operator
     //@}
 
-    typedef std::vector< Lend > T_Lends;
+    typedef std::vector< Loan > T_Lendings;
     //@}
 
     //! @name Helpers
@@ -62,8 +62,8 @@ public:
     Controller& controller_;
     const Resolver_ABC< Agent >& resolver_;
     const Resolver_ABC< EquipmentType >& equipmentResolver_;
-    T_Lends lends_;
+    T_Lendings lendings_;
     //@}
 };
 
-#endif // __Lends_h_
+#endif // __Lendings_h_

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentResourcesPanel.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 11:59 $
-// $Revision: 9 $
-// $Workfile: AgentResourcesPanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "AgentResourcesPanel.h"
@@ -26,11 +17,12 @@
 #include "Dotation.h"
 #include "DotationType.h"
 #include "Equipments.h"
-#include "Lends.h"
 #include "Troops.h"
 #include "Equipment.h"
 #include "EquipmentType.h"
-#include "Lend.h"
+#include "Loan.h"
+#include "Lendings.h"
+#include "Borrowings.h"
 #include "ListDisplayer.h"
 #include "Humans.h"
 
@@ -60,10 +52,15 @@ AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controllers& cont
              .AddColumn( "Sous officiers" )
              .AddColumn( "Mdr" );
 
-    pLends_ = new T_ListView( this, *this, factory );
-    pLends_->AddColumn( "Emprunteur" )
-            .AddColumn( "Equipement prêté" )
-            .AddColumn( "Quantité" );
+    pLendings_ = new T_ListView( this, *this, factory );
+    pLendings_->AddColumn( "Emprunteur" )
+               .AddColumn( "Equipement" )
+               .AddColumn( "Quantité" );
+
+    pBorrowings_ = new T_ListView( this, *this, factory );
+    pBorrowings_->AddColumn( "Prêteur" )
+                 .AddColumn( "Equipement" )
+                 .AddColumn( "Quantité" );
 
     controllers_.Register( *this );
 }
@@ -153,24 +150,37 @@ void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& di
 // Name: AgentResourcesPanel::NotifyUpdated
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::NotifyUpdated( const Lends& a )
+void AgentResourcesPanel::NotifyUpdated( const Lendings& a )
 {
     if( ! ShouldUpdate( a ) )
         return;
-    pLends_->DeleteTail( 
-        pLends_->DisplayList( a.lends_.begin(), a.lends_.end() )
+    pLendings_->DeleteTail( 
+        pLendings_->DisplayList( a.lendings_.begin(), a.lendings_.end() )
     );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentResourcesPanel::NotifyUpdated
+// Created: SBO 2006-07-18
+// -----------------------------------------------------------------------------
+void AgentResourcesPanel::NotifyUpdated( const Borrowings& a )
+{
+    if( ! ShouldUpdate( a ) )
+        return;
+    pBorrowings_->DeleteTail( 
+        pBorrowings_->DisplayList( a.borrowings_.begin(), a.borrowings_.end() )
+    );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::Display( const Lend& lend, Displayer_ABC& displayer, ValuedListItem* )
+void AgentResourcesPanel::Display( const Loan& loan, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Emprunteur", lend.borrower_ )
-             .Display( "Equipement prêté", lend.type_ )
-             .Display( "Quantité", lend.quantity_ );
+    displayer.Display( 0, loan.agent_ )
+             .Display( "Equipement", loan.type_ )
+             .Display( "Quantité", loan.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +224,8 @@ void AgentResourcesPanel::NotifySelected( const Agent* agent )
             Show();
             NotifyUpdated( selected_->Get< Dotations >() );
             NotifyUpdated( selected_->Get< Equipments >() );
-            NotifyUpdated( selected_->Get< Lends >() );
+            NotifyUpdated( selected_->Get< Lendings >() );
+            NotifyUpdated( selected_->Get< Borrowings >() );
             NotifyUpdated( selected_->Get< Troops >() );
         }
         else

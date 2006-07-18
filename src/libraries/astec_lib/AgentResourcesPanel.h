@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentResourcesPanel.h $
-// $Author: Age $
-// $Modtime: 6/04/05 11:38 $
-// $Revision: 6 $
-// $Workfile: AgentResourcesPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __AgentResourcesPanel_h_
 #define __AgentResourcesPanel_h_
@@ -31,9 +22,10 @@ class Controllers;
 class Dotation;
 class Dotations;
 class Equipments;
-class Lends;
 class Equipment;
-class Lend;
+class Loan;
+class Borrowings;
+class Lendings;
 class Displayer_ABC;
 class ValuedListItem;
 class Humans;
@@ -50,7 +42,8 @@ class AgentResourcesPanel : public InfoPanel_ABC
                           , public Observer_ABC
                           , public ElementObserver_ABC< Dotations >
                           , public ElementObserver_ABC< Equipments >
-                          , public ElementObserver_ABC< Lends >
+                          , public ElementObserver_ABC< Lendings >
+                          , public ElementObserver_ABC< Borrowings >
                           , public ElementObserver_ABC< Troops >
                           , public SelectionObserver< Agent >
 {
@@ -65,7 +58,7 @@ public:
     //@{
     void Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* );
     void Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Lend& lend, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Loan& loan, Displayer_ABC& displayer, ValuedListItem* );
     void Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
@@ -82,7 +75,8 @@ private:
     void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Dotations& a );
     virtual void NotifyUpdated( const Equipments& a );
-    virtual void NotifyUpdated( const Lends& a );
+    virtual void NotifyUpdated( const Lendings& a );
+    virtual void NotifyUpdated( const Borrowings& a );
     virtual void NotifyUpdated( const Troops& a );
     virtual void NotifySelected( const Agent* agent );
 
@@ -102,7 +96,8 @@ private:
     T_ListView* pEquipment_;
     T_ListView* pResources_;
     T_ListView* pTroops_;
-    T_ListView* pLends_;
+    T_ListView* pLendings_;
+    T_ListView* pBorrowings_;
     SafePointer< Agent > selected_;
     //@}
 };
