@@ -18,13 +18,13 @@
 PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
 MT_Random                       PHY_HumanWound::randomGenerator_;
 
-      uint           PHY_HumanWound::nDiagnosticTime_           = 0;
-      uint           PHY_HumanWound::nSortingTime_              = 0;      
-      uint           PHY_HumanWound::nContaminatedHealingTime_  = 0;
-      uint           PHY_HumanWound::nContaminatedRestingTime_  = 0;
-      uint           PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
-      uint           PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
-      MT_Float       PHY_HumanWound::rMentalDiseaseFactor_      = 0;
+uint     PHY_HumanWound::nDiagnosticTime_           = 0;
+uint     PHY_HumanWound::nSortingTime_              = 0;      
+uint     PHY_HumanWound::nContaminatedHealingTime_  = 0;
+uint     PHY_HumanWound::nContaminatedRestingTime_  = 0;
+uint     PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
+uint     PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
+MT_Float PHY_HumanWound::rMentalDiseaseFactor_      = 0;
                                                                             
 //                                                                          pPrevious_  , pNext_                                                                
 const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, 0           , &woundedU3_, EnumHumanWound::non_blesse             );

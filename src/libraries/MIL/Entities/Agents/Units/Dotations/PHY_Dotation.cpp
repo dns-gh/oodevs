@@ -177,7 +177,7 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
 // -----------------------------------------------------------------------------
 void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
-    assert(        rCapacity_        >=        capacity.GetCapacity() );
+    assert( rCapacity_ >= capacity.GetCapacity() );
     //assert( (float)rSupplyThreshold_ >= (float)capacity.GetSupplyThreshold() ); // pb débile de précision
     rCapacity_        -= capacity.GetCapacity();
     rSupplyThreshold_ -= capacity.GetSupplyThreshold();

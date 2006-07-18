@@ -50,6 +50,7 @@ PHY_MaintenanceRepairConsign::~PHY_MaintenanceRepairConsign()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::serialize
 // Created: JVT 2005-04-11
@@ -59,7 +60,6 @@ void PHY_MaintenanceRepairConsign::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_MaintenanceConsign_ABC >( *this );
 }
-
 
 // =============================================================================
 // OPERATIONS
