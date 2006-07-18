@@ -61,7 +61,7 @@ private:
     
     const uint                nNbrToLend_;
           uint                nTimer_;
-          bool                bloanDone_;
+          bool                bLoanDone_;
     PHY_RolePion_Composantes* pTarget_;
     DIA_Variable_ABC&         diaReturnVariable_;
     T_ComposantePredicate     predicate_;
