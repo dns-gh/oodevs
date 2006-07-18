@@ -52,9 +52,9 @@ public:
     void KillAllUsableHumans();
     void KillAllUsableHumans( PHY_FireDamages_Agent& fireDamages );
 
-    uint WoundHumans      ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
-    uint HealHumans       ( const PHY_HumanRank& rank, uint nNbrToChange );
-    void HealAllHumans    ();    
+    uint WoundHumans  ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
+    uint HealHumans   ( const PHY_HumanRank& rank, uint nNbrToChange );
+    void HealAllHumans();    
 
     MT_Float GetOperationalState() const;
     bool     IsViable           () const;
