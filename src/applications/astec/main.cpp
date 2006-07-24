@@ -1,4 +1,3 @@
-ri
 #include "astec_pch.h"
 #include "App.h"
 
