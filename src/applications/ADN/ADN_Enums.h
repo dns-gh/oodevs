@@ -378,4 +378,12 @@ enum E_DeviceCategory
     eNbrDeviceCategory
 };
 
+enum E_EquipmentState
+{
+    eEquipmentState_FixableWithEvac,
+    eEquipmentState_FixableInPlace,
+    eEquipmentState_Destroyed,
+    eNbrEquipmentState
+};
+
 #endif // __ADN_Enums_h_

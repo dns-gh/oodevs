@@ -22,6 +22,58 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 
+// =============================================================================
+// AttritionEffectOnHuman
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+// Name: AttritionEffectOnHuman::AttritionEffectOnHuman
+// Created: SBO 2006-07-28
+// -----------------------------------------------------------------------------
+ADN_Categories_Data::AttritionEffectOnHuman::AttritionEffectOnHuman()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttritionEffectOnHuman::GetItemName
+// Created: SBO 2006-07-28
+// -----------------------------------------------------------------------------
+std::string ADN_Categories_Data::AttritionEffectOnHuman::GetItemName()
+{
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttritionEffectOnHuman::ReadArchive
+// Created: SBO 2006-07-28
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::AttritionEffectOnHuman::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "EffetAttritionSurHumains" );
+    input.ReadAttribute( "etatEquipement", nEquipmentState_, ADN_Tr::ConvertToEquipmentState, ADN_XmlInput_Helper::eThrow );
+    input.ReadAttribute( "pourcentageBlesses", nInjuredPercentage_ );
+    input.ReadAttribute( "pourcentageMorts", nDeadPercentage_ );
+    input.EndSection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttritionEffectOnHuman::WriteArchive
+// Created: SBO 2006-07-28
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( MT_OutputArchive_ABC& output, E_ProtectionType nType )
+{
+    output.Section( "EffetAttritionSurHumains" );
+    output.WriteAttribute( "etatEquipement", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) );
+    output.WriteAttribute( "pourcentageBlesses", nType == eProtectionType_Human ? 100 : nInjuredPercentage_.GetData() );
+    output.WriteAttribute( "pourcentageMorts", nType == eProtectionType_Human ? 100 : nDeadPercentage_.GetData() );
+    output.EndSection();
+}
+
+// =============================================================================
+// ArmorInfos
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ArmorInfos::ArmorInfos
@@ -33,8 +85,6 @@ ADN_Categories_Data::ArmorInfos::ArmorInfos()
 , neutralizationVariance_    ( "0s" )
 , rBreakdownEVA_  ( 0 )
 , rBreakdownNEVA_ ( 0 )
-, rPercentageWoundedHumansEvac_( 0 )
-, rPercentageWoundedHumansNoEvac_( 0 )
 {
     strName_.SetDataName( "le nom de la catégorie de blindage" );
 }
@@ -60,10 +110,14 @@ void ADN_Categories_Data::ArmorInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadAttribute( "NEVA", rBreakdownNEVA_ );
     input.EndSection(); // ProbabilitePanneAleatoire
 
-    input.Section( "BlessureHumainsDansMateriel" );
-    input.ReadField( "MaterielReparableAvecEvacuation", rPercentageWoundedHumansEvac_ );
-    input.ReadField( "MaterielReparableSansEvacuation", rPercentageWoundedHumansNoEvac_);
-    input.EndSection(); // BlessureHumainsDansMateriel
+    input.BeginList( "EffetsAttritionSurHumains" );
+    while( input.NextListElement() )
+    {
+        AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
+        pNewEffect->ReadArchive( input );
+        vAttritionEffects_.AddItem( pNewEffect );
+    }
+    input.EndList(); // EffetsAttritionSurHumains
 
     input.EndSection(); // Protection
 }
@@ -87,10 +141,8 @@ void ADN_Categories_Data::ArmorInfos::WriteArchive( MT_OutputArchive_ABC& output
     // override xml archive values if Human
     if( nType_ == eProtectionType_Human )
     {
-        rBreakdownEVA_                  = 0.;
-        rBreakdownNEVA_                 = 0.;
-        rPercentageWoundedHumansEvac_   = 100.;
-        rPercentageWoundedHumansNoEvac_ = 100.;
+        rBreakdownEVA_  = 0.;
+        rBreakdownNEVA_ = 0.;
     }
 
     output.Section( "Neutralisation" );
@@ -103,10 +155,10 @@ void ADN_Categories_Data::ArmorInfos::WriteArchive( MT_OutputArchive_ABC& output
     output.WriteAttribute( "NEVA", rBreakdownNEVA_.GetData() );
     output.EndSection(); // ProbabilitePanneAleatoire
 
-    output.Section( "BlessureHumainsDansMateriel" );
-    output.WriteField( "MaterielReparableAvecEvacuation", rPercentageWoundedHumansEvac_.GetData() );
-    output.WriteField( "MaterielReparableSansEvacuation", rPercentageWoundedHumansNoEvac_.GetData() );
-    output.EndSection(); // BlessureHumainsDansMateriel
+    output.BeginList( "EffetsAttritionSurHumains", vAttritionEffects_.size() );
+    for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
+        (*it)->WriteArchive( output, nType_.GetData() );
+    output.EndList(); // EffetsAttritionSurHumains
 
     output.EndSection(); // Protection
 }

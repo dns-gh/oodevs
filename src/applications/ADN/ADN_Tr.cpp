@@ -370,6 +370,14 @@ ADN_Tr::T_ConverterDeviceCategory ADN_Tr::deviceCategoryConverter_[] =
     T_ConverterDeviceCategory( "",  "",   (E_DeviceCategory)-1 )
 };
 
+ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
+{
+    T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP("ADN_Tr", "ReparableAvecEvacuation" ), eEquipmentState_FixableWithEvac ),
+    T_ConverterEquipmentState( "ReparableSurPlace"      , QT_TRANSLATE_NOOP("ADN_Tr", "ReparableSurPlace" )      , eEquipmentState_FixableInPlace ),
+    T_ConverterEquipmentState( "Detruit"                , QT_TRANSLATE_NOOP("ADN_Tr", "Detruit" )                , eEquipmentState_Destroyed ),
+    T_ConverterEquipmentState( "", "", (E_EquipmentState)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromSMission
 // Created: APE 2005-02-18
@@ -564,6 +572,15 @@ const std::string& ADN_Tr::ConvertFromDeviceCategory( E_DeviceCategory nValue, E
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromEquipmentState
+// Created: SBO 2006-07-28
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, E_Conversion nConversion )
+{
+    return ADN_Tr::InverseFindInConverter( equipmentStateConverter_, nValue, nConversion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToSMission
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -752,6 +769,15 @@ E_DeviceCategory ADN_Tr::ConvertToDeviceCategory( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToEquipmentState
+// Created: SBO 2006-07-28
+// -----------------------------------------------------------------------------
+E_EquipmentState ADN_Tr::ConvertToEquipmentState( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( equipmentStateConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -777,4 +803,5 @@ void ADN_Tr::InitTranslations()
     InitTr( radarTypeConverter_, "ADN_Tr" );
     InitTr( stockCategoryConverter_, "ADN_Tr" );
     InitTr( deviceCategoryConverter_, "ADN_Tr" );
+    InitTr( equipmentStateConverter_, "ADN_Tr" );
 }

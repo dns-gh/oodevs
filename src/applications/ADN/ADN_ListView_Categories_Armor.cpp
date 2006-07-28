@@ -29,7 +29,7 @@ typedef ADN_Categories_Data::ArmorInfos ArmorInfos;
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
 ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, const char * name, WFlags f)
-:   ADN_ListView(parent,name,f)
+    : ADN_ListView(parent,name,f)
 {
     
     // add one column && disable sort
@@ -72,8 +72,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Categories_GUI::eNeutralizationVariance]->Connect( &pInfos->neutralizationVariance_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eBreakdownEVA]->Connect( &pInfos->rBreakdownEVA_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eBreakdownNEVA]->Connect( &pInfos->rBreakdownNEVA_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eWoundedEvac]->Connect( &pInfos->rPercentageWoundedHumansEvac_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eWondedNoEvac]->Connect( &pInfos->rPercentageWoundedHumansNoEvac_, bConnect );
+    vItemConnectors_[ADN_Categories_GUI::eAttritionEffects]->Connect( &pInfos->vAttritionEffects_, bConnect );
 }
 
 
@@ -81,7 +80,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 // Name: ADN_ListView_Categories_Armor::OnContextMenu
 // Created: JDY 03-07-28
 //-----------------------------------------------------------------------------
-void  ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
+void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     QPopupMenu * pMenu=new QPopupMenu(this);
     pMenu->insertItem( tr( "New Armor-Plating" ),0);

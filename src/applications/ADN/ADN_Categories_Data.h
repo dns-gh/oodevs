@@ -31,6 +31,31 @@ class ADN_Categories_Data : public ADN_Data_ABC
 public:
 
 //*****************************************************************************
+    class AttritionEffectOnHuman
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( AttritionEffectOnHuman )
+
+    public:
+        AttritionEffectOnHuman();
+
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& );
+        void WriteArchive( MT_OutputArchive_ABC&, E_ProtectionType );
+
+    public:
+        ADN_Type_Enum< E_EquipmentState, eNbrEquipmentState > nEquipmentState_;
+        ADN_Type_Int nInjuredPercentage_;
+        ADN_Type_Int nDeadPercentage_;
+        ADN_Type_String strName_;
+    };
+
+    typedef ADN_Type_Vector_ABC<AttritionEffectOnHuman>   T_AttritionEffectOnHuman_Vector;
+    typedef T_AttritionEffectOnHuman_Vector::iterator    IT_AttritionEffectOnHuman_Vector;
+
+//*****************************************************************************
     class ArmorInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -52,8 +77,7 @@ public:
         ADN_Type_Time   neutralizationVariance_;
         ADN_Type_Double rBreakdownEVA_;
         ADN_Type_Double rBreakdownNEVA_;
-        ADN_Type_Double rPercentageWoundedHumansEvac_;
-        ADN_Type_Double rPercentageWoundedHumansNoEvac_;
+        T_AttritionEffectOnHuman_Vector vAttritionEffects_;
     };
 
     typedef ADN_Type_Vector_ABC<ArmorInfos>        T_ArmorInfos_Vector;

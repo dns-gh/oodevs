@@ -19,6 +19,7 @@ class ADN_Categories_Data;
 class ADN_ListView_Categories_Armor;
 class ADN_ListView_Categories_Size;
 class ADN_ListView_Categories_DotationNature;
+class ADN_Categories_AttritionEffect_Table;
 
 // =============================================================================
 /** @class  ADN_Categories_GUI
@@ -40,8 +41,7 @@ public:
         eNeutralizationVariance,
         eBreakdownEVA,
         eBreakdownNEVA,
-        eWoundedEvac,
-        eWondedNoEvac,
+        eAttritionEffects,
         eNbrArmorGuiElements
     };
 
@@ -72,11 +72,11 @@ private:
     ADN_ListView_Categories_Armor*          pListArmor_;
     ADN_ListView_Categories_Size*           pListSize_;
     ADN_ListView_Categories_DotationNature* pListDotationNature_;
+    ADN_Categories_AttritionEffect_Table* pAttritionEffects_;
 
     QComboBox*  pComboType_;
     QGroupBox*  pArmorBreakdownGroup_;
-    QGroupBox*  pWoundedGroup_;
-
+    QGroupBox*  pAttritionEffectGroup_;
 };
 
 

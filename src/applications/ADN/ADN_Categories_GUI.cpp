@@ -20,6 +20,7 @@
 #include "ADN_ListView_Categories_Armor.h"
 #include "ADN_ListView_Categories_Size.h"
 #include "ADN_ListView_Categories_DotationNature.h"
+#include "ADN_Categories_AttritionEffect_Table.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
@@ -45,6 +46,7 @@ ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
 , pListArmor_( 0 )
 , pListSize_ ( 0 )
 , pListDotationNature_( 0 )
+, pAttritionEffects_( 0 )
 {
 }
 
@@ -106,9 +108,9 @@ void ADN_Categories_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "EVA" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "NEVA" ), vArmorInfosConnectors[eBreakdownNEVA], tr( "%" ), ePercentage );
 
-    pWoundedGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Wounded humans" ), pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_Double>( pWoundedGroup_, tr( "Evac" ), vArmorInfosConnectors[eWoundedEvac], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pWoundedGroup_, tr( "No evac" ), vArmorInfosConnectors[eWondedNoEvac], tr( "%" ), ePercentage );
+    pAttritionEffectGroup_ = new QVGroupBox( tr( "Attrition effects on humans" ), pArmorGroup );
+    pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
+    vArmorInfosConnectors[eAttritionEffects] = &pAttritionEffects_->GetConnector();
 
     QVBox* pBox = new QVBox( pMainWidget_ );
 
@@ -149,9 +151,9 @@ void ADN_Categories_GUI::Build()
     vDotationNatureInfosConnectors[ eDotationNatureName ] = &pEdit->GetConnector();
 
     // set auto connectors
-    pListArmor_->SetItemConnectors(vArmorInfosConnectors);
-    pListSize_->SetItemConnectors(vSizeInfosConnectors);
-    pListDotationNature_->SetItemConnectors(vDotationNatureInfosConnectors);
+    pListArmor_->SetItemConnectors( vArmorInfosConnectors );
+    pListSize_->SetItemConnectors( vSizeInfosConnectors );
+    pListDotationNature_->SetItemConnectors( vDotationNatureInfosConnectors );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,11 +166,11 @@ void ADN_Categories_GUI::OnTypeChanged()
     if( ADN_Tr::ConvertToProtectionType( std::string( strItem ) ) == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();
-        pWoundedGroup_->hide();
+        pAttritionEffectGroup_->hide();
     }
     else
     {
         pArmorBreakdownGroup_->show();
-        pWoundedGroup_->show();
+        pAttritionEffectGroup_->show();
     }
 }

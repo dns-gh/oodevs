@@ -34,26 +34,27 @@ class ADN_Tr
 public:
     //! @name Convert From functions
     //@{
-    static const std::string&   ConvertFromSMission ( E_SMission, E_Conversion = eToSim );
-    static const std::string&   ConvertFromLocation ( E_Location , E_Conversion = eToSim );
-    static const std::string&   ConvertFromConsumptionType ( E_ConsumptionType, E_Conversion = eToSim );
-    static const std::string&   ConvertFromTimeCategory( E_TimeCategory, E_Conversion = eToSim );
-    static const std::string&   ConvertFromVisionObject( E_VisionObject, E_Conversion = eToSim );
-    static const std::string&   ConvertFromKeyPoint( E_KeyPoint, E_Conversion = eToSim );
-    static const std::string&   ConvertFromAgentTypePion( E_AgentTypePion, E_Conversion = eToSim );
-    static const std::string&   ConvertFromAgentTypeAutomate( E_AgentTypeAutomate, E_Conversion = eToSim );
-    static const std::string&   ConvertFromNatureAtlasType( E_NatureAtlasType, E_Conversion = eToSim );
-    static const std::string&   ConvertFromSpeedImpact( E_SpeedImpact, E_Conversion = eToSim );
-    static const std::string&   ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers, E_Conversion = eToSim );
-    static const std::string&   ConvertFromDoctorSkills( E_DoctorSkills, E_Conversion = eToSim );
-    static const std::string&   ConvertFromProtectionType( E_ProtectionType, E_Conversion = eToSim );
-    static const std::string&   ConvertFromBreakdownType( E_BreakdownType, E_Conversion = eToSim );
-    static const std::string&   ConvertFromBreakdownNTI( E_BreakdownNTI, E_Conversion = eToSim );
-    static const std::string&   ConvertFromMunitionType( E_MunitionType, E_Conversion = eToSim );
-    static const std::string&   ConvertFromCapacityMission( E_CapacityMission, E_Conversion = eToSim );
-    static const std::string&   ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
-    static const std::string&   ConvertFromStockCategory( E_StockCategory, E_Conversion = eToSim );
-    static const std::string&   ConvertFromDeviceCategory( E_DeviceCategory, E_Conversion = eToSim );
+    static const std::string& ConvertFromSMission ( E_SMission, E_Conversion = eToSim );
+    static const std::string& ConvertFromLocation ( E_Location , E_Conversion = eToSim );
+    static const std::string& ConvertFromConsumptionType ( E_ConsumptionType, E_Conversion = eToSim );
+    static const std::string& ConvertFromTimeCategory( E_TimeCategory, E_Conversion = eToSim );
+    static const std::string& ConvertFromVisionObject( E_VisionObject, E_Conversion = eToSim );
+    static const std::string& ConvertFromKeyPoint( E_KeyPoint, E_Conversion = eToSim );
+    static const std::string& ConvertFromAgentTypePion( E_AgentTypePion, E_Conversion = eToSim );
+    static const std::string& ConvertFromAgentTypeAutomate( E_AgentTypeAutomate, E_Conversion = eToSim );
+    static const std::string& ConvertFromNatureAtlasType( E_NatureAtlasType, E_Conversion = eToSim );
+    static const std::string& ConvertFromSpeedImpact( E_SpeedImpact, E_Conversion = eToSim );
+    static const std::string& ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers, E_Conversion = eToSim );
+    static const std::string& ConvertFromDoctorSkills( E_DoctorSkills, E_Conversion = eToSim );
+    static const std::string& ConvertFromProtectionType( E_ProtectionType, E_Conversion = eToSim );
+    static const std::string& ConvertFromBreakdownType( E_BreakdownType, E_Conversion = eToSim );
+    static const std::string& ConvertFromBreakdownNTI( E_BreakdownNTI, E_Conversion = eToSim );
+    static const std::string& ConvertFromMunitionType( E_MunitionType, E_Conversion = eToSim );
+    static const std::string& ConvertFromCapacityMission( E_CapacityMission, E_Conversion = eToSim );
+    static const std::string& ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
+    static const std::string& ConvertFromStockCategory( E_StockCategory, E_Conversion = eToSim );
+    static const std::string& ConvertFromDeviceCategory( E_DeviceCategory, E_Conversion = eToSim );
+    static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
@@ -78,6 +79,7 @@ public:
     static E_RadarType       ConvertToRadarType        ( const std::string& );
     static E_StockCategory   ConvertToStockCategory    ( const std::string& );
     static E_DeviceCategory  ConvertToDeviceCategory   ( const std::string& );
+    static E_EquipmentState  ConvertToEquipmentState   ( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -105,6 +107,7 @@ public:
     typedef converter<E_RadarType>           T_ConverterRadarType;
     typedef converter<E_StockCategory>       T_ConverterStockCategory;
     typedef converter<E_DeviceCategory>      T_ConverterDeviceCategory;
+    typedef converter<E_EquipmentState>      T_ConverterEquipmentState;
     //@}
 
     //! @name Convertors
@@ -129,6 +132,7 @@ public:
     static T_ConverterRadarType         radarTypeConverter_[];
     static T_ConverterStockCategory     stockCategoryConverter_[];
     static T_ConverterDeviceCategory    deviceCategoryConverter_[];
+    static T_ConverterEquipmentState    equipmentStateConverter_[];
     //@}
 };
 

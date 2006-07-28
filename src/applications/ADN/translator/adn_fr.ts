@@ -525,15 +525,15 @@
     </message>
     <message>
         <source>Wounded humans</source>
-        <translation>Impact sur le personnel</translation>
+        <translation type="obsolete">Impact sur le personnel</translation>
     </message>
     <message>
         <source>Evac</source>
-        <translation>Réparable avec évacuation</translation>
+        <translation type="obsolete">Réparable avec évacuation</translation>
     </message>
     <message>
         <source>No evac</source>
-        <translation>Réparable sans évacuation</translation>
+        <translation type="obsolete">Réparable sans évacuation</translation>
     </message>
     <message>
         <source>Sizes</source>
@@ -586,6 +586,10 @@
     <message>
         <source>Nature</source>
         <translation>Nature</translation>
+    </message>
+    <message>
+        <source>Attrition effects on humans</source>
+        <translation>Effets d&apos;attrition sur les humains</translation>
     </message>
 </context>
 <context>
@@ -5895,6 +5899,18 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>VCI</source>
         <translation>VCI</translation>
+    </message>
+    <message>
+        <source>ReparableAvecEvacuation</source>
+        <translation>Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>ReparableSurPlace</source>
+        <translation>Réparable sans évacuation</translation>
+    </message>
+    <message>
+        <source>Detruit</source>
+        <translation>Détruit</translation>
     </message>
 </context>
 <context>
