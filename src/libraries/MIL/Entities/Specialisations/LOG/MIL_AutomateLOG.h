@@ -78,7 +78,6 @@ public:
     //@{
     MIL_AutomateLOG* GetMaintenanceSuperior() const;
     MIL_AutomateLOG* GetMedicalSuperior    () const;
-    MIL_AutomateLOG* GetSupplySuperior     () const;
     //@}
 
     //! @name Maintenance

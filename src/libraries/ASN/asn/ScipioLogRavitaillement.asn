@@ -104,10 +104,9 @@ MsgLogRavitaillementPousserFlux ::= SEQUENCE
 }
 MsgLogRavitaillementPousserFluxAck ::= ENUMERATED
 {
-    no-error                     (0),
-    error-invalid-donneur        (1),
-    error-invalid-receveur       (2),
-    error_ravitaillement_en_cours(3)
+    no-error              (0),
+    error-invalid-donneur (1),
+    error-invalid-receveur(2)
 }
    
 MsgLogRavitaillementQuotas ::= SEQUENCE

@@ -30,16 +30,6 @@ MIL_AutomateLOG* MIL_AutomateLOG::GetMedicalSuperior() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::GetSupplySuperior
-// Created: NLD 2004-12-28
-// -----------------------------------------------------------------------------
-inline
-MIL_AutomateLOG* MIL_AutomateLOG::GetSupplySuperior() const
-{
-    return pSupplySuperior_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::GetQuota
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------

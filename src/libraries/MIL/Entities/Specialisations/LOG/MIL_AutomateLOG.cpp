@@ -1027,7 +1027,9 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
 {
     NET_ASN_MsgLogRavitaillementPousserFluxAck asnReplyMsg;
 
-    if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur ) != pSupplySuperior_ )
+    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur );
+
+    if( !pSupplier )
     {
         asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_donneur;
         asnReplyMsg.Send( nCtx );
@@ -1037,7 +1039,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
     PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks );
 
     PHY_SupplyStockState* pSupplyState = 0;
-    supplyRequests.Execute( *pSupplySuperior_, pSupplyState );
+    supplyRequests.Execute( *pSupplier, pSupplyState );
     if( pSupplyState )
         pushedFlowsSupplyStates_.insert( pSupplyState );
 

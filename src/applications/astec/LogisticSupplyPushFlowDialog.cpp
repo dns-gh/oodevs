@@ -90,10 +90,11 @@ void LogisticSupplyPushFlowDialog::SetAgent( const Agent& agent )
     AgentManager::CT_AgentMap& agents = App::GetApp().GetAgentManager().GetAgentList();
     for( AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
     {
-        if( itAgent->second && itAgent->second->nLogSupplySuperior_== agent.GetID() )
+        const Agent& agent = *itAgent->second;
+        if( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() )
         {
-            automateComboBoxIDs_.insert( std::make_pair( pSuppliedComboBox_->count(), itAgent->second ) );
-            pSuppliedComboBox_->insertItem( itAgent->second->GetName().c_str() );
+            automateComboBoxIDs_.insert( std::make_pair( pSuppliedComboBox_->count(), &agent ) );
+            pSuppliedComboBox_->insertItem( agent.GetName().c_str() );
         }
     }
 

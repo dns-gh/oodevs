@@ -2311,14 +2311,14 @@
     <MosID>33</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
-      <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
+      <Niveau type="oo"/>
+      <Arme type="transport"/>
+      <Specialisation type="terrestre"/>
       <Qualificatif type="none"/>
-      <Categorie type="combat"/>
+      <Categorie type="soutien logistique"/>
       <TypeMobilite type="none"/>
-      <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
+      <QualificatifAtlas type="Blinde"/>
+      <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements/>
     <RepartitionDuCommandement>
