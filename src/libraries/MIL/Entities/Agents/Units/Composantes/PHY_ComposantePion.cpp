@@ -70,7 +70,7 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
 
     pRole_->NotifyComposanteAdded( *this );
     if( !pHumans_->IsViable() )
-        ReinitializeState( PHY_ComposanteState::dead_ ); //// xxxx crash ?
+        ReinitializeState( PHY_ComposanteState::dead_ ); //// $$$ crash ?
 }
 
 // -----------------------------------------------------------------------------
@@ -280,8 +280,6 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
 
     if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
-    else if( *pState_ == PHY_ComposanteState::dead_ )
-        pHumans_->KillAllUsableHumans();    
     ManageEndMaintenance();
 
     assert( pRole_ );
@@ -417,8 +415,6 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
 
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
             pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
-        else if( *pState_ == PHY_ComposanteState::dead_ )
-            pHumans_->KillAllUsableHumans( fireDamages );        
         ManageEndMaintenance();
        
         pRole_->NotifyComposanteChanged( *this, oldState );

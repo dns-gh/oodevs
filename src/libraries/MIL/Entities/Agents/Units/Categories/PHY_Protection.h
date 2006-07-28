@@ -49,7 +49,10 @@ public:
     const std::string& GetName              () const;
           uint         GetID                () const;
           uint         GetNeutralizationTime() const;
-          MT_Float     GetHumanWoundFactor  ( const PHY_ComposanteState& composanteState ) const;
+          MT_Float     GetHumanDeadRatio    ( const PHY_ComposanteState& composanteState ) const;
+          MT_Float     GetHumanWoundedRatio ( const PHY_ComposanteState& composanteState ) const;
+
+//          MT_Float     GetHumanWoundFactor  ( 
           bool         IsHuman              () const;
     //@}
 
@@ -66,22 +69,30 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float > T_HumanWoundFactorVector;
-
     enum E_Type
     {
         eHuman,
         eMaterial
     };
+
+    struct T_HumanEffect
+    {
+        T_HumanEffect();
+
+        MT_Float rDeadRatio_;
+        MT_Float rWoundedRatio_;
+    };
+    typedef std::vector< T_HumanEffect >   T_HumanEffects;
+    typedef T_HumanEffects::const_iterator IT_HumanEffects;
     //@}
 
 private:
-    const std::string               strName_;
-          uint                      nID_;
-          E_Type                    nType_;
-          MT_Float                  rBreakdownProbabilityEva_;
-          MT_Float                  rBreakdownProbabilityNeva_;
-          T_HumanWoundFactorVector  humanWoundFactors_;          
+    const std::string    strName_;
+          uint           nID_;
+          E_Type         nType_;
+          T_HumanEffects attritionEffectsOnHumans_;
+          MT_Float       rBreakdownProbabilityEva_;
+          MT_Float       rBreakdownProbabilityNeva_;
 
     mutable MT_GaussianRandom neutralizationTime_;
 

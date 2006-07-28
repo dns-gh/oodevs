@@ -88,31 +88,6 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::KillAllUsableHumans
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::KillAllUsableHumans()
-{
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() ; ++it )
-        (**it).ApplyWound( PHY_HumanWound::killed_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::KillAllUsableHumans
-// Created: NLD 2004-10-07
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::KillAllUsableHumans( PHY_FireDamages_Agent& fireDamages )
-{
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() ; ++it )
-    {
-        PHY_Human& human = **it;
-        const PHY_HumanWound& oldWound = human.GetWound();
-        if( human.ApplyWound( PHY_HumanWound::killed_ ) )
-            fireDamages.NotifyHumanWoundChanged( human, oldWound );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::HealAllHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
@@ -172,6 +147,21 @@ uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToCh
     return nNbrChanged;
 }
 
+namespace {
+
+MT_Float round( MT_Float rValue )
+{
+    MT_Float rIntegralPart;
+    MT_Float rFractionalPart = modf( rValue, &rIntegralPart );
+
+    if( rFractionalPart >= 0.5 )
+        return rIntegralPart + 1.;
+    else
+        return rIntegralPart;
+}
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::ApplyWounds
 // Created: NLD 2004-10-06
@@ -182,21 +172,29 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 
     assert( pComposante_ );
 
-    uint nNbrToDo = (uint)( humans_.size() * pComposante_->GetType().GetProtection().GetHumanWoundFactor( newComposanteState ) );
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
-    {
-        PHY_Human& human = **it;
-        if( !human.IsUsable() )
-            continue;
+    const PHY_Protection& protection = pComposante_->GetType().GetProtection();
 
-        if( nNbrToDo )
-        {
-            -- nNbrToDo;
-            const PHY_HumanWound& oldWound = human.GetWound();
-            if( human.ApplyWound() )
-                fireDamages.NotifyHumanWoundChanged( human, oldWound );
-        }
+    uint nNbrDead    = (uint)round( humans_.size() * protection.GetHumanDeadRatio   ( newComposanteState ) );
+    uint nNbrWounded = (uint)round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) );
+
+    CIT_HumanVector itCur = humans_.begin();
+    while( itCur != humans_.end() && nNbrDead != 0 )
+    {
+        PHY_Human& human = **itCur;
+        const PHY_HumanWound& oldWound = human.GetWound();
+        if( human.ApplyWound( PHY_HumanWound::killed_ ) )
+            fireDamages.NotifyHumanWoundChanged( human, oldWound );
+        ++ itCur;
+    }
+
+    while( itCur != humans_.end() && nNbrWounded != 0 )
+    {
+        PHY_Human& human = **itCur;
+        const PHY_HumanWound& oldWound = human.GetWound();
+        if( human.ApplyWound( PHY_HumanWound::ChooseRandomWound() ) )
+            fireDamages.NotifyHumanWoundChanged( human, oldWound );
         human.ApplyMentalDisease();
+        ++ itCur;
     }
 }
 

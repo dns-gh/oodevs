@@ -59,8 +59,7 @@ public:
     //@{
     void Heal                 (); // 'Magic' Heal
     bool SetRank              ( const PHY_HumanRank&  newRank  ); // Force rank change
-    bool SetWound             ( const PHY_HumanWound& newWound ); // Don't test 'usability' => force wound change
-    bool ApplyWound           (); // Apply random wound (degrade)
+    bool SetWound             ( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
     bool ApplyWound           ( const PHY_HumanWound& newWound ); // Test 'usability'
     bool ApplyWound           ( const MIL_NbcAgentType& nbcAgentType ); // NBC effects
     void ApplyMentalDisease   ();

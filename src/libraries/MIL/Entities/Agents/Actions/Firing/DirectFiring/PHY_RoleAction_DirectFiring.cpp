@@ -186,7 +186,6 @@ int PHY_RoleAction_DirectFiring::FirePion( uint nTargetKnowledgeID, PHY_DirectFi
             return eNoAmmo;
         return eNoCapacity;
     }
-
     
     pPion_ ->NotifyAttacking ( *pTarget );
     pTarget->NotifyAttackedBy( *pPion_  );

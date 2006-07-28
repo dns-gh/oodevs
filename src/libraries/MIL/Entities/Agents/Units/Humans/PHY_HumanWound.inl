@@ -165,6 +165,26 @@ bool PHY_HumanWound::operator!=( const PHY_HumanWound& rhs ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::operator!=
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+inline
+bool PHY_HumanWound::operator<( const PHY_HumanWound& rhs ) const
+{
+    return nWound_ < rhs.nWound_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::operator!=
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+inline
+bool PHY_HumanWound::operator>( const PHY_HumanWound& rhs ) const
+{
+    return nWound_ > rhs.nWound_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::GetWoundedFactor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
@@ -172,16 +192,6 @@ inline
 MT_Float PHY_HumanWound::GetWoundedFactor() const
 {
     return rWoundedFactor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::Aggravate
-// Created: NLD 2004-10-06
-// -----------------------------------------------------------------------------
-inline
-const PHY_HumanWound& PHY_HumanWound::Aggravate() const
-{
-    return Aggravate( GetRandomWound() );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,14 +53,14 @@ public:
     static const PHY_HumanWound*  Find( ASN1T_EnumHumanWound nAsnID );
     static const PHY_HumanWound*  Find( uint nID );
 
-    static uint GetDiagnosticTime           ();
-    static uint GetSortingTime              ();
-    static uint GetContaminatedHealingTime  ();
-    static uint GetContaminatedRestingTime  ();
-    static uint GetMentalDiseaseHealingTime ();
-    static uint GetMentalDiseaseRestingTime ();
-    static bool ChooseMentalDisease         ();
-
+    static uint                  GetDiagnosticTime           ();
+    static uint                  GetSortingTime              ();
+    static uint                  GetContaminatedHealingTime  ();
+    static uint                  GetContaminatedRestingTime  ();
+    static uint                  GetMentalDiseaseHealingTime ();
+    static uint                  GetMentalDiseaseRestingTime ();
+    static bool                  ChooseMentalDisease         ();
+    static const PHY_HumanWound& ChooseRandomWound           ();
     //@}
 
     //! @name Accessors
@@ -78,12 +78,8 @@ public:
     //@{
     bool operator==( const PHY_HumanWound& rhs ) const;
     bool operator!=( const PHY_HumanWound& rhs ) const;
-    //@}
-
-    //! @name Operations
-    //@{
-    const PHY_HumanWound& Aggravate() const;
-    const PHY_HumanWound& Aggravate( const PHY_HumanWound& degradation ) const;
+    bool operator< ( const PHY_HumanWound& rhs ) const;
+    bool operator> ( const PHY_HumanWound& rhs ) const;
     //@}
 
 private:
@@ -92,11 +88,11 @@ private:
     enum E_Wound
     {
         eNotWounded, 
-        eKilled,
-        eWoundedU1,
-        eWoundedU2,
         eWoundedU3,
-        eWoundedUE
+        eWoundedU2,
+        eWoundedU1,
+        eWoundedUE,
+        eKilled
     };
 
     typedef std::vector< MT_Float >       T_FloatVector;
@@ -104,7 +100,7 @@ private:
     //@}
 
 private:
-     PHY_HumanWound( const std::string& strName, E_Wound nWound, const PHY_HumanWound* pPrevious, const PHY_HumanWound* pNext, const ASN1T_EnumHumanWound& nAsnID );
+     PHY_HumanWound( const std::string& strName, E_Wound nWound, const ASN1T_EnumHumanWound& nAsnID );
     ~PHY_HumanWound();
 
     //! @name Init
@@ -113,17 +109,10 @@ private:
     static void InitializeWoundedCoefs        ( MT_InputArchive_ABC& archive );
     //@}
 
-    //! @name Tools
-    //@{
-    static const PHY_HumanWound& GetRandomWound();
-    //@}
-
 private:
     const std::string           strName_;
     const E_Wound               nWound_;
     const ASN1T_EnumHumanWound  nAsnID_;
-    const PHY_HumanWound*       pPrevious_;
-    const PHY_HumanWound*       pNext_;
           MT_Float              rWoundedFactor_;
           uint                  nLifeExpectancy_;
           uint                  nHealingTime_;

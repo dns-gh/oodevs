@@ -115,9 +115,12 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_Human::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
+    assert( pRank_ );
+    assert( pWound_ );
+
     file << pComposante_
-         << ( pRank_  ? pRank_->GetID()  : (uint)-1 )
-         << ( pWound_ ? pWound_->GetID() : (uint)-1 )
+         << pRank_->GetID()
+         << pWound_->GetID()
          << bMentalDiseased_
          << bContamined_
          << nLocation_
@@ -225,26 +228,18 @@ void PHY_Human::HealContamination()
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::ApplyWound
-// Created: NLD 2004-12-21
-// -----------------------------------------------------------------------------
-bool PHY_Human::ApplyWound()
-{
-    if( !IsUsable() )
-        return false;
-
-    assert( pWound_ );
-    return SetWound( pWound_->Aggravate() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyWound
 // Created: NLD 2006-02-09
 // -----------------------------------------------------------------------------
 bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 {
     if( !IsUsable() )
         return false;
-    return SetWound( newWound );
+
+    assert( pWound_ );
+    if( newWound > *pWound_ )
+        return SetWound( newWound );
+
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +259,10 @@ bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
     }
 
     assert( pWound_ );
-    return SetWound( pWound_->Aggravate( nbcAgentType.GetRandomWound() ) );
+    const PHY_HumanWound& newWound = nbcAgentType.GetRandomWound();
+    if( newWound > *pWound_ )
+        return SetWound( newWound );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

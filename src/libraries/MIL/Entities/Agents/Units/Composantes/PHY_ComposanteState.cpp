@@ -17,11 +17,11 @@
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
-const PHY_ComposanteState PHY_ComposanteState::undamaged_                  ( "Undamaged"                   , eUndamaged                  , true  , false ); // bUsable, bDamaged
-const PHY_ComposanteState PHY_ComposanteState::repairableWithEvacuation_   ( "RepairableWithEvacuation"    , eRepairableWithEvacuation   , true  , true  );
-const PHY_ComposanteState PHY_ComposanteState::repairableWithoutEvacuation_( "RepairableWithoutEvacuation" , eRepairableWithoutEvacuation, true  , true  );
-const PHY_ComposanteState PHY_ComposanteState::dead_                       ( "Dead"                        , eDead                       , false , true  );
-const PHY_ComposanteState PHY_ComposanteState::maintenance_                ( "Maintenance"                 , eMaintenance                , false , false );
+const PHY_ComposanteState PHY_ComposanteState::undamaged_                  ( "Disponible"                  , eUndamaged                  , true  , false ); // bUsable, bDamaged
+const PHY_ComposanteState PHY_ComposanteState::repairableWithEvacuation_   ( "ReparableAvecEvacuation"     , eRepairableWithEvacuation   , true  , true  );
+const PHY_ComposanteState PHY_ComposanteState::repairableWithoutEvacuation_( "ReparableSurPlace"           , eRepairableWithoutEvacuation, true  , true  );
+const PHY_ComposanteState PHY_ComposanteState::dead_                       ( "Detruit"                     , eDead                       , false , true  );
+const PHY_ComposanteState PHY_ComposanteState::maintenance_                ( "EnMaintenance"               , eMaintenance                , false , false );
 const PHY_ComposanteState PHY_ComposanteState::prisoner_                   ( "Prisonnier"                  , ePrisoner                   , true  , false );
 
 PHY_ComposanteState::T_ComposanteStateVector PHY_ComposanteState::composanteStates_( eNbrStates, 0 );

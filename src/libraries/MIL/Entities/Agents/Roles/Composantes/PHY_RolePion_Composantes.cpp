@@ -356,7 +356,7 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
             itCurrentComp = composantes_.begin();
         if( itCurrentComp == itEndComp && nNbr > 0 )
         {
-            MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the human wounds overloading specified in ODB" );
+            MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << nNbr << " " << rank.GetName() << " " << newWound.GetName() << " remaining" );
             return;
         }
     }
@@ -408,7 +408,7 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& arc
         }
 
         if( nNbrDead || nNbrRepairable )
-            MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the composantes states overloading specified in ODB" );
+            MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the composantes states overloading specified in ODB : " << nNbrDead << " deads and " << nNbrRepairable << " repairables '" << pType->GetName() << "' remaining" );
 
         archive.EndSection(); // Equipement
     }

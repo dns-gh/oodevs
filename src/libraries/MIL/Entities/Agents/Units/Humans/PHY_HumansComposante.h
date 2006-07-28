@@ -47,11 +47,8 @@ public:
     //@{
     bool ChangeHumanRank  ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
-    void ApplyWounds        ( const MIL_NbcAgentType& nbcAgentType );
-    void ApplyWounds        ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
-    void KillAllUsableHumans();
-    void KillAllUsableHumans( PHY_FireDamages_Agent& fireDamages );
-
+    void ApplyWounds  ( const MIL_NbcAgentType& nbcAgentType );
+    void ApplyWounds  ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     uint WoundHumans  ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
     uint HealHumans   ( const PHY_HumanRank& rank, uint nNbrToChange );
     void HealAllHumans();    

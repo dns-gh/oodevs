@@ -26,13 +26,13 @@ uint     PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
 uint     PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
 MT_Float PHY_HumanWound::rMentalDiseaseFactor_      = 0;
                                                                             
-//                                                                          pPrevious_  , pNext_                                                                
-const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, 0           , &woundedU3_, EnumHumanWound::non_blesse             );
-const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , &notWounded_, &woundedU2_, EnumHumanWound::blesse_urgence_3       );
-const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "U2"       , eWoundedU2 , &woundedU3_ , &woundedU1_, EnumHumanWound::blesse_urgence_2       );
-const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "U1"       , eWoundedU1 , &woundedU2_ , &woundedUE_, EnumHumanWound::blesse_urgence_1       );
-const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "UE"       , eWoundedUE , &woundedU1_ , &killed_   , EnumHumanWound::blesse_urgence_extreme );
-const PHY_HumanWound PHY_HumanWound::killed_    ( "Mort"     , eKilled    , &woundedUE_ , 0          , EnumHumanWound::mort                   );
+//                                                                                                                                   
+const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, EnumHumanWound::non_blesse             );
+const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , EnumHumanWound::blesse_urgence_3       );
+const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "U2"       , eWoundedU2 , EnumHumanWound::blesse_urgence_2       );
+const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "U1"       , eWoundedU1 , EnumHumanWound::blesse_urgence_1       );
+const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "UE"       , eWoundedUE , EnumHumanWound::blesse_urgence_extreme );
+const PHY_HumanWound PHY_HumanWound::killed_    ( "Mort"     , eKilled    , EnumHumanWound::mort                   );
 
 // =============================================================================
 // MANAGER
@@ -138,12 +138,10 @@ void PHY_HumanWound::Terminate()
 // Name: PHY_HumanWound constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const PHY_HumanWound* pPrevious, const PHY_HumanWound* pNext, const ASN1T_EnumHumanWound& nAsnID )
+PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const ASN1T_EnumHumanWound& nAsnID )
     : strName_        ( strName )
     , nWound_         ( nWound  )
     , nAsnID_         ( nAsnID  )
-    , pPrevious_      ( pPrevious )
-    , pNext_          ( pNext )
     , rWoundedFactor_ ( 0. )
     , nLifeExpectancy_( 0 )
     , nHealingTime_   ( 0 )
@@ -165,21 +163,10 @@ PHY_HumanWound::~PHY_HumanWound()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::Aggravate
+// Name: PHY_HumanWound::ChooseRandomWound
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-const PHY_HumanWound& PHY_HumanWound::Aggravate( const PHY_HumanWound& degradation ) const
-{
-    if( !pNext_ || !degradation.pPrevious_ )
-        return *this;
-    return pNext_->Aggravate( *degradation.pPrevious_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::GetRandomWound
-// Created: NLD 2004-10-06
-// -----------------------------------------------------------------------------
-const PHY_HumanWound& PHY_HumanWound::GetRandomWound() 
+const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound() 
 {
     const MT_Float rRand = randomGenerator_.rand_oi( 0., 1. );
 

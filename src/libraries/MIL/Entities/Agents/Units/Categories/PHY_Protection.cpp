@@ -19,6 +19,17 @@ PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 uint                            PHY_Protection::nNextID_;
 MT_Random                       PHY_Protection::random_;
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::T_HumanEffect constructor
+// Created: NLD 2006-07-25
+// -----------------------------------------------------------------------------
+PHY_Protection::T_HumanEffect::T_HumanEffect()
+    : rDeadRatio_   ( 0. )
+    , rWoundedRatio_( 0. )
+{
+
+}
+
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
@@ -77,7 +88,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
     , neutralizationTime_       ( )
     , rBreakdownProbabilityEva_ ( 0. )
     , rBreakdownProbabilityNeva_( 0. )
-    , humanWoundFactors_        ( PHY_ComposanteState::GetNbrStates(), 0. )
+    , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
     std::string strType;
     archive.ReadAttribute( "type", strType );
@@ -104,19 +115,33 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
     rBreakdownProbabilityNeva_ /= 100.;
     archive.EndSection(); // ProbabilitePanneAleatoire
 
-    archive.Section( "BlessureHumainsDansMateriel" );
-    
-    humanWoundFactors_[ PHY_ComposanteState::undamaged_.GetID() ] = 0.;
-    humanWoundFactors_[ PHY_ComposanteState::dead_     .GetID() ] = 1.;
-    
-    MT_Float rTmp;
-    archive.ReadField( "MaterielReparableAvecEvacuation", rTmp, CheckValueBound( 0., 100. ) );
-    humanWoundFactors_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] = rTmp / 100.;
+    archive.BeginList( "EffetsAttritionSurHumains" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "EffetAttritionSurHumains" );
+        
+        std::string strState;
+        archive.ReadAttribute( "etatEquipement", strState );
 
-    archive.ReadField( "MaterielReparableSansEvacuation", rTmp, CheckValueBound( 0., 100. ) );
-    humanWoundFactors_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] = rTmp / 100.;
+        const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( strState );
+        if( !pComposanteState )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante state", archive.GetContext() );
 
-    archive.EndSection(); // BlessureHumainsDansMateriel
+        assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
+
+        T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
+
+        MT_Float rTmp;
+        archive.ReadAttribute( "pourcentageBlesses", rTmp, CheckValueBound( 0., 100. ) );
+        data.rWoundedRatio_ = rTmp / 100.;
+            
+        archive.ReadAttribute( "pourcentageMorts"  , rTmp, CheckValueBound( 0., 100. ) );
+        data.rDeadRatio_ = rTmp / 100.;
+   
+        archive.EndSection(); // EffetAttritionSurHumains
+    }
+
+    archive.EndList(); // EffetsAttritionSurHumains
 }
 
 // -----------------------------------------------------------------------------
@@ -151,11 +176,21 @@ bool PHY_Protection::CanRandomlyBreaksDownNeva() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Protection::GetHumanWoundFactor
-// Created: NLD 2005-03-11
+// Name: PHY_Protection::GetHumanDeadRatio
+// Created: NLD 2006-07-26
 // -----------------------------------------------------------------------------
-MT_Float PHY_Protection::GetHumanWoundFactor( const PHY_ComposanteState& composanteState ) const
+MT_Float PHY_Protection::GetHumanDeadRatio( const PHY_ComposanteState& composanteState ) const
 {
-    assert( humanWoundFactors_.size() > composanteState.GetID() );
-    return humanWoundFactors_[ composanteState.GetID() ];
+    assert( attritionEffectsOnHumans_.size() > composanteState.GetID() );
+    return attritionEffectsOnHumans_[ composanteState.GetID() ].rDeadRatio_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::GetHumanWoundedRatio
+// Created: NLD 2006-07-26
+// -----------------------------------------------------------------------------
+MT_Float PHY_Protection::GetHumanWoundedRatio( const PHY_ComposanteState& composanteState ) const
+{
+    assert( attritionEffectsOnHumans_.size() > composanteState.GetID() );
+    return attritionEffectsOnHumans_[ composanteState.GetID() ].rWoundedRatio_;
 }

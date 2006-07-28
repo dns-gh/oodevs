@@ -90,6 +90,21 @@ const PHY_ComposanteState& PHY_ComposanteState::Find( uint nID )
     return *composanteStates_[ nID ];
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteState::Find
+// Created: NLD 2006-07-25
+// -----------------------------------------------------------------------------
+inline
+const PHY_ComposanteState* PHY_ComposanteState::Find( const std::string& strName )
+{
+    for( CIT_ComposanteStateVector it = composanteStates_.begin(); it != composanteStates_.end(); ++it )
+    {
+        if( sCaseInsensitiveEqual()( (**it).GetName(), strName ) )
+            return *it;
+    }
+    return 0;
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

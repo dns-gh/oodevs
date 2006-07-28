@@ -42,6 +42,7 @@ public:
     static void                       Initialize  ();
     static void                       Terminate   ();
     static const PHY_ComposanteState& Find        ( uint nID );
+    static const PHY_ComposanteState* Find        ( const std::string& strName );
     static uint                       GetNbrStates();
     static T_ComposanteStateVector&   GetStates   ();
     //@}

@@ -63,8 +63,8 @@ private:
           uint                nTimer_;
           bool                bLoanDone_;
     PHY_RolePion_Composantes* pTarget_;
-    DIA_Variable_ABC&         diaReturnVariable_;
     T_ComposantePredicate     predicate_;
+    DIA_Variable_ABC&         diaReturnVariable_;
 };
 
 #endif // __PHY_ActionLendComposantes_h_
