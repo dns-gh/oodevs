@@ -20,8 +20,9 @@
 // Name: PHY_SupplyConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, MIL_AutomateLOG& convoyingAutomate )
+PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate )
     : pSupplyingAutomate_( &supplyingAutomate )
+    , pSuppliedAutomate_ ( &suppliedAutomate  )
     , pConvoyingAutomate_( &convoyingAutomate )
     , nTimer_            ( 0 )
     , bHasChanged_       ( true )
@@ -34,6 +35,7 @@ PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate
 // -----------------------------------------------------------------------------
 PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC()
     : pSupplyingAutomate_( 0 )
+    , pSuppliedAutomate_ ( 0 )
     , pConvoyingAutomate_( 0 )
     , nTimer_            ( 0 )
     , bHasChanged_       ( true )
@@ -60,6 +62,7 @@ void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogRavitaillementTraitemen
 {
     assert( pSupplyingAutomate_ );
     assert( pConvoyingAutomate_ );
+    assert( pSuppliedAutomate_ );
 
     asn.GetAsnMsg().m.etatPresent                                       = 1;
     asn.GetAsnMsg().m.oid_automate_log_traitantPresent                  = 1;    

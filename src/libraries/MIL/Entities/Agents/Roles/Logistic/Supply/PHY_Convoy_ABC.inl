@@ -38,33 +38,3 @@ uint PHY_Convoy_ABC::GetUnloadingTime() const
 {
     return (uint)( unloadingTime_( conveyors_.size() ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetLoadingPoint
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& PHY_Convoy_ABC::GetLoadingPoint() const
-{
-    return loadingPoint_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetUnloadingPoint
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& PHY_Convoy_ABC::GetUnloadingPoint() const
-{
-    return unloadingPoint_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetFormingPoint
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& PHY_Convoy_ABC::GetFormingPoint() const
-{
-    return formingPoint_;
-}

@@ -27,7 +27,7 @@ class PHY_SupplyConsign_ABC
     MT_COPYNOTALLOWED( PHY_SupplyConsign_ABC )
 
 public:
-             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, MIL_AutomateLOG& convoyingAutomate );
+             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate );
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
 
@@ -47,13 +47,14 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_AutomateLOG& GetSupplyingAutomate                () const;
-                  MIL_AutomateLOG& GetConvoyingAutomate                () const;
-    virtual const MIL_Automate*    GetSuppliedAutomate                 () const = 0;
-    virtual       void             GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const = 0;
-    virtual       void             RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
-    virtual       void             AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
-    virtual       void             CancelMerchandiseOverheadReservation() = 0;
+          MIL_AutomateLOG& GetSupplyingAutomate() const;
+          MIL_AutomateLOG& GetConvoyingAutomate() const;
+    const MIL_Automate&    GetSuppliedAutomate () const;
+
+    virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const = 0;
+    virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual void CancelMerchandiseOverheadReservation() = 0;
     //@}
 
     //! @name Network
@@ -87,10 +88,11 @@ protected:
     //@} 
 
 private:
-    MIL_AutomateLOG* pSupplyingAutomate_;
-    MIL_AutomateLOG* pConvoyingAutomate_;
-    E_State          nState_;
-    bool             bHasChanged_;
+          MIL_AutomateLOG* pSupplyingAutomate_;
+          MIL_AutomateLOG* pConvoyingAutomate_;
+    const MIL_Automate*    pSuppliedAutomate_;
+          E_State          nState_;
+          bool             bHasChanged_;
 
 protected:
     int              nTimer_;

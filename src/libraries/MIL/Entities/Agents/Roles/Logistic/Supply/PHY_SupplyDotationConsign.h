@@ -46,11 +46,6 @@ public:
     virtual void CancelMerchandiseOverheadReservation();
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual const MIL_Automate* GetSuppliedAutomate   () const;
-    //@}
-
 private:
     //! @name Operations
     //@{

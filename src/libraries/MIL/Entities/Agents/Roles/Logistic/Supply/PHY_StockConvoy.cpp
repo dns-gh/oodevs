@@ -14,7 +14,6 @@
 #include "PHY_StockConvoy.h"
 #include "PHY_SupplyStockConsign.h"
 #include "PHY_Conveyor.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -70,7 +69,6 @@ PHY_StockConvoy::~PHY_StockConvoy()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGConvoy::load

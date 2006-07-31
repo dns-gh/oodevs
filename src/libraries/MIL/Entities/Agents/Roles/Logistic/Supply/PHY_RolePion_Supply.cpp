@@ -60,7 +60,7 @@ void PHY_RolePion_Supply::serialize( Archive& file, const uint )
 // Name: PHY_RolePion_Supply::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Supply::WriteODB( MT_XXmlOutputArchive& archive ) const
+void PHY_RolePion_Supply::WriteODB( MT_XXmlOutputArchive& /*archive*/ ) const
 {
     // NOTHING
 }
@@ -275,28 +275,28 @@ bool PHY_RolePion_Supply::ConvoyIsUnloadingDone() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::ConvoyGetFormingPoint
-// Created: NLD 2005-12-16
+// Name: PHY_RolePion_Supply::ConvoyGetSupplyingAutomate
+// Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-const MT_Vector2D* PHY_RolePion_Supply::ConvoyGetFormingPoint() const
+const MIL_AutomateLOG* PHY_RolePion_Supply::ConvoyGetSupplyingAutomate() const
 {
     return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::ConvoyGetLoadingPoint
-// Created: NLD 2005-12-16
+// Name: PHY_RolePion_Supply::ConvoyGetConvoyingAutomate
+// Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-const MT_Vector2D* PHY_RolePion_Supply::ConvoyGetLoadingPoint() const
+const MIL_AutomateLOG* PHY_RolePion_Supply::ConvoyGetConvoyingAutomate() const
 {
     return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::ConvoyGetUnloadingPoint
-// Created: NLD 2005-12-16
+// Name: PHY_RolePion_Supply::ConvoyGetSuppliedAutomate
+// Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-const MT_Vector2D* PHY_RolePion_Supply::ConvoyGetUnloadingPoint() const
+const MIL_Automate* PHY_RolePion_Supply::ConvoyGetSuppliedAutomate() const
 {
     return 0;
 }

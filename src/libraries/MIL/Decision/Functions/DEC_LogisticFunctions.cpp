@@ -389,31 +389,33 @@ void DEC_LogisticFunctions::ConvoyIsUnloadingDone( DIA_Call_ABC& call, const MIL
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyGetFormingPoint
-// Created: NLD 2005-12-16
+// Name: DEC_LogisticFunctions::ConvoyGetSupplyingAutomate
+// Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyGetFormingPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetFormingPoint(), &DEC_Tools::GetTypePoint(), 1 );   
+    const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSupplyingAutomate();
+    call.GetResult().SetValue( pAutomate ? pAutomate->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );   
 }
-    
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyGetLoadingPoint
 
-// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyGetLoadingPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+// Name: DEC_LogisticFunctions::ConvoyGetConvoyingAutomate
+// Created: NLD 2006-07-31
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetLoadingPoint(), &DEC_Tools::GetTypePoint(), 1 );   
+    const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetConvoyingAutomate();
+    call.GetResult().SetValue( pAutomate ? pAutomate->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );   
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ConvoyGetUnloadingPoint
-// Created: NLD 2005-12-16
+// Name: DEC_LogisticFunctions::ConvoyGetSuppliedAutomate
+// Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyGetUnloadingPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetUnloadingPoint(), &DEC_Tools::GetTypePoint(), 1 );   
+    const MIL_Automate* pAutomate = callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetSuppliedAutomate();
+    call.GetResult().SetValue( pAutomate ? pAutomate->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );   
 }
 
 // -----------------------------------------------------------------------------

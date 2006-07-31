@@ -17,13 +17,14 @@ signatures
     V                A::DEC_Ravitaillement_ActiverChaine                ();
     V                A::DEC_Ravitaillement_DesactiverChaine             ();       
 
-    U /*T_Point*/    A::DEC_Ravitaillement_Convoi_PointRetour         ();
-    U /*T_Point*/    A::DEC_Ravitaillement_Convoi_PointChargement     ();
-    U /*T_Point*/    A::DEC_Ravitaillement_Convoi_PointDechargement   ();
+    A /*T_Automate*/ A::DEC_Ravitaillement_Convoi_AutomateRavitaille  ();
+    A /*T_Automate*/ A::DEC_Ravitaillement_Convoi_AutomateConvoyant   ();
+    A /*T_Automate*/ A::DEC_Ravitaillement_Convoi_AutomateRavitaillant();
     B                A::DEC_Ravitaillement_Convoi_ChargementEffectue  ();
     B                A::DEC_Ravitaillement_Convoi_DechargementEffectue();    
     U /*T_Action*/   A::DEC_Ravitaillement_Convoi_StartCharger        ( B /*action terminee ?*/ );
     U /*T_Action*/   A::DEC_Ravitaillement_Convoi_StartDecharger      ( B /*action terminee ?*/ );
     V                A::DEC_Ravitaillement_Convoi_FinMission          ();
 }
+
 

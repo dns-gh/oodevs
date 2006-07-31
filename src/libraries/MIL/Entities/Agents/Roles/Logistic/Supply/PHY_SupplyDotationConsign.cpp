@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationConsign, "PHY_SupplyDotationConsign" 
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState )
-    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyingAutomate )
+    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyingAutomate )
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
 {
@@ -126,17 +126,6 @@ void PHY_SupplyDotationConsign::CancelMerchandiseOverheadReservation()
 {
     assert( pSupplyState_ );
     pSupplyState_->CancelMerchandiseOverheadReservation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationConsign::GetSuppliedAutomate
-// Created: NLD 2005-02-01
-// -----------------------------------------------------------------------------
-const MIL_Automate* PHY_SupplyDotationConsign::GetSuppliedAutomate() const
-{
-    if( !pSupplyState_ )
-        return 0;
-    return &pSupplyState_->GetSuppliedAutomate();
 }
 
 // =============================================================================

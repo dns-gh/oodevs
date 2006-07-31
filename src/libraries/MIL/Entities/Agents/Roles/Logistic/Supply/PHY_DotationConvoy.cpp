@@ -14,7 +14,9 @@
 #include "PHY_DotationConvoy.h"
 #include "PHY_SupplyDotationConsign.h"
 #include "PHY_Conveyor.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationConvoy, "PHY_DotationConvoy" )
@@ -82,7 +84,11 @@ uint PHY_DotationConvoy::GetTravelTime( const MT_Vector2D& startPos, const MT_Ve
 // -----------------------------------------------------------------------------
 uint PHY_DotationConvoy::GetTravelTimeToLoadingPoint() const
 {
-    return GetTravelTime( GetFormingPoint(), GetLoadingPoint() );
+    assert( pConsign_ );
+    const MT_Vector2D& formingPoint = pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& loadingPoint = pConsign_->GetSupplyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition();
+
+    return GetTravelTime( formingPoint, loadingPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +97,11 @@ uint PHY_DotationConvoy::GetTravelTimeToLoadingPoint() const
 // -----------------------------------------------------------------------------
 uint PHY_DotationConvoy::GetTravelTimeToUnloadingPoint() const
 {
-    return GetTravelTime( GetLoadingPoint(), GetUnloadingPoint() );
+    assert( pConsign_ );
+    const MT_Vector2D& loadingPoint   = pConsign_->GetSupplyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& unloadingPoint = pConsign_->GetSuppliedAutomate ().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition();
+
+    return GetTravelTime( loadingPoint, unloadingPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +110,10 @@ uint PHY_DotationConvoy::GetTravelTimeToUnloadingPoint() const
 // -----------------------------------------------------------------------------
 uint PHY_DotationConvoy::GetTravelTimeToFormingPoint() const
 {
-    return GetTravelTime( GetUnloadingPoint(), GetFormingPoint() );
+    assert( pConsign_ );
+    const MT_Vector2D& formingPoint   = pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition();
+    const MT_Vector2D& unloadingPoint = pConsign_->GetSuppliedAutomate ().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition();
+
+    return GetTravelTime( unloadingPoint, formingPoint );
 }
 

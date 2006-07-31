@@ -44,9 +44,9 @@ MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, 
     
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsLoadingDone                    , "DEC_Ravitaillement_Convoi_ChargementEffectue"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsUnloadingDone                  , "DEC_Ravitaillement_Convoi_DechargementEffectue" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetFormingPoint                  , "DEC_Ravitaillement_Convoi_PointRetour"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetLoadingPoint                  , "DEC_Ravitaillement_Convoi_PointChargement"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetUnloadingPoint                , "DEC_Ravitaillement_Convoi_PointDechargement"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetSupplyingAutomate             , "DEC_Ravitaillement_Convoi_AutomateRavitaillant" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetConvoyingAutomate             , "DEC_Ravitaillement_Convoi_AutomateConvoyant"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetSuppliedAutomate              , "DEC_Ravitaillement_Convoi_AutomateRavitaille"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyEndMission                       , "DEC_Ravitaillement_Convoi_FinMission"           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoyLoad   >  , "DEC_Ravitaillement_Convoi_StartCharger"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoyUnload >  , "DEC_Ravitaillement_Convoi_StartDecharger"       );

@@ -54,11 +54,6 @@ public:
     virtual void CancelMerchandiseOverheadReservation();
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual const MIL_Automate* GetSuppliedAutomate() const;
-    //@}
-
     //! @name Network
     //@{
     virtual void SendFullState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const;

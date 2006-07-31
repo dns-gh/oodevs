@@ -22,6 +22,7 @@ class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_PionMissionType;
 class MIL_Automate;
+class MIL_AutomateLOG;
 class PHY_Conveyor;
 
 // =============================================================================
@@ -56,13 +57,12 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_Automate* GetSuppliedAutomate() const;
-          uint          GetFormingTime     () const;
-          uint          GetLoadingTime     () const;
-          uint          GetUnloadingTime   () const;
-    const MT_Vector2D&  GetLoadingPoint    () const;
-    const MT_Vector2D&  GetUnloadingPoint  () const;
-    const MT_Vector2D&  GetFormingPoint    () const;
+          MIL_AutomateLOG& GetSupplyingAutomate() const;
+          MIL_AutomateLOG& GetConvoyingAutomate() const;
+    const MIL_Automate&    GetSuppliedAutomate () const;
+          uint             GetFormingTime      () const;
+          uint             GetLoadingTime      () const;
+          uint             GetUnloadingTime    () const;
     //@}
 
     //! @name Events
@@ -81,10 +81,6 @@ public:
 protected:
     PHY_SupplyConsign_ABC* pConsign_;
     T_ConveyorMap          conveyors_;
-
-    MT_Vector2D            formingPoint_;
-    MT_Vector2D            loadingPoint_;
-    MT_Vector2D            unloadingPoint_;
 
 private:
     //! @name Tools

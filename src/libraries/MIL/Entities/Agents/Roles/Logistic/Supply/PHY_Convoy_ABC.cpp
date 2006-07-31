@@ -14,16 +14,10 @@
 #include "PHY_Convoy_ABC.h"
 #include "PHY_Conveyor.h"
 #include "PHY_SupplyConsign_ABC.h"
-#include "PHY_RolePionLOG_Supply.h"
-#include "PHY_SupplyDotationState.h"
-#include "PHY_SupplyDotationConsign.h"
 #include "Decision/DEC_ModelPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/Pion/MIL_PionMissionType.h"
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
@@ -148,14 +142,8 @@ void PHY_Convoy_ABC::Terminate()
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
-    : pConsign_          ( &consign )
-    , conveyors_         ()
-//    , formingPoint_      ( pConsign_->GetConvoyingAutomate() .GetAlivePionsBarycenter() )
-//    , loadingPoint_      ( pConsign_->GetSupplyingAutomate() .GetAlivePionsBarycenter() )
-//    , unloadingPoint_    ( pConsign_->GetSuppliedAutomate ()->GetAlivePionsBarycenter() )
-    , formingPoint_      ( pConsign_->GetConvoyingAutomate() .GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
-    , loadingPoint_      ( pConsign_->GetSupplyingAutomate() .GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
-    , unloadingPoint_    ( pConsign_->GetSuppliedAutomate ()->GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() )
+    : pConsign_ ( &consign )
+    , conveyors_()
 {
 }
     
@@ -164,11 +152,8 @@ PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC()
-    : pConsign_          ( 0 )
-    , conveyors_         ()
-    , formingPoint_      ()
-    , loadingPoint_      ()
-    , unloadingPoint_    ()
+    : pConsign_ ( 0 )
+    , conveyors_()
 {
 }
 
@@ -230,10 +215,7 @@ template< typename Archive >
 void PHY_Convoy_ABC::serialize( Archive& file, const uint )
 {
     file & const_cast< PHY_SupplyConsign_ABC*& >( pConsign_ )
-         & conveyors_
-         & formingPoint_
-         & loadingPoint_
-         & unloadingPoint_;
+         & conveyors_;
 }
 
 // =============================================================================
@@ -241,10 +223,30 @@ void PHY_Convoy_ABC::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetSupplyingAutomate
+// Created: NLD 2006-07-31
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& PHY_Convoy_ABC::GetSupplyingAutomate() const
+{
+    assert( pConsign_ );
+    return pConsign_->GetSupplyingAutomate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetConvoyingAutomate
+// Created: NLD 2006-07-31
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& PHY_Convoy_ABC::GetConvoyingAutomate() const
+{
+    assert( pConsign_ );
+    return pConsign_->GetConvoyingAutomate();
+}
+    
+// -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetSuppliedAutomate
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-const MIL_Automate* PHY_Convoy_ABC::GetSuppliedAutomate() const
+const MIL_Automate& PHY_Convoy_ABC::GetSuppliedAutomate() const
 {
     assert( pConsign_ );
     return pConsign_->GetSuppliedAutomate();

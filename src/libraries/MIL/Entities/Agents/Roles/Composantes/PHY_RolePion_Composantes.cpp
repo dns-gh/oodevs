@@ -2041,7 +2041,7 @@ void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RolePion_Compos
 
     lentComps.erase( itComp );
     if( lentComps.empty() )
-        lentComposantes_.erase( borrowedComposantes_.find( &lender ) );
+        borrowedComposantes_.erase( borrowedComposantes_.find( &lender ) );
 
     bLoansChanged_ = true;
 }

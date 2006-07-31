@@ -65,9 +65,9 @@ public:
     
     static void ConvoyIsLoadingDone        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void ConvoyIsUnloadingDone      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void ConvoyGetFormingPoint      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void ConvoyGetLoadingPoint      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );  
-    static void ConvoyGetUnloadingPoint    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ConvoyGetSupplyingAutomate ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ConvoyGetConvoyingAutomate ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );  
+    static void ConvoyGetSuppliedAutomate  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void ConvoyEndMission           ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
 
     static void AutomateRequestSupply      ( DIA_Call_ABC& call, MIL_Automate&  callerAutomate );
