@@ -352,7 +352,7 @@
     <CodeLFRIL>CompTest2</CodeLFRIL>
     <CodeNNO>CompTest2</CodeNNO>
     <CategorieMateriel>Autres</CategorieMateriel>
-    <Protection>BlindeLeger</Protection>
+    <Protection>Combattant</Protection>
     <Volume>Petit</Volume>
     <Vitesses maximum="10">
       <Terrain type="inconnu">3</Terrain>
@@ -466,16 +466,6 @@
         <VitesseContourne>5</VitesseContourne>
       </Objet>
     </Objets>
-    <Pannes>
-      <PannesAleatoires>
-        <Panne nom="Panne 1" pourcentage="100"/>
-      </PannesAleatoires>
-      <PannesAttritions>
-        <Panne nom="Panne 1" pourcentage="30"/>
-        <Panne nom="Panne 2" pourcentage="30"/>
-        <Panne nom="Panne 3" pourcentage="40"/>
-      </PannesAttritions>
-    </Pannes>
   </Composante>
 
   <Composante Commentaire="" nom="CompNBC">

@@ -62,12 +62,12 @@ void ADN_Categories_Data::AttritionEffectOnHuman::ReadArchive( ADN_XmlInput_Help
 // Name: AttritionEffectOnHuman::WriteArchive
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( MT_OutputArchive_ABC& output, E_ProtectionType nType )
+void ADN_Categories_Data::AttritionEffectOnHuman::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "EffetAttritionSurHumains" );
     output.WriteAttribute( "etatEquipement", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) );
-    output.WriteAttribute( "pourcentageBlesses", nType == eProtectionType_Human ? 100 : nInjuredPercentage_.GetData() );
-    output.WriteAttribute( "pourcentageMorts", nType == eProtectionType_Human ? 100 : nDeadPercentage_.GetData() );
+    output.WriteAttribute( "pourcentageBlesses", nInjuredPercentage_.GetData() );
+    output.WriteAttribute( "pourcentageMorts", nDeadPercentage_.GetData() );
     output.EndSection();
 }
 
@@ -105,19 +105,22 @@ void ADN_Categories_Data::ArmorInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadAttribute( "variance", neutralizationVariance_ );
     input.EndSection(); // Neutralisation
 
-    input.Section( "ProbabilitePanneAleatoire" );
-    input.ReadAttribute( "EVA", rBreakdownEVA_ );
-    input.ReadAttribute( "NEVA", rBreakdownNEVA_ );
-    input.EndSection(); // ProbabilitePanneAleatoire
-
-    input.BeginList( "EffetsAttritionSurHumains" );
-    while( input.NextListElement() )
+    if( nType_ != eProtectionType_Human )
     {
-        AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
-        pNewEffect->ReadArchive( input );
-        vAttritionEffects_.AddItem( pNewEffect );
+        input.Section( "ProbabilitePanneAleatoire" );
+        input.ReadAttribute( "EVA", rBreakdownEVA_ );
+        input.ReadAttribute( "NEVA", rBreakdownNEVA_ );
+        input.EndSection(); // ProbabilitePanneAleatoire
+
+        input.BeginList( "EffetsAttritionSurHumains" );
+        while( input.NextListElement() )
+        {
+            AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
+            pNewEffect->ReadArchive( input );
+            vAttritionEffects_.AddItem( pNewEffect );
+        }
+        input.EndList(); // EffetsAttritionSurHumains
     }
-    input.EndList(); // EffetsAttritionSurHumains
 
     input.EndSection(); // Protection
 }
@@ -150,15 +153,18 @@ void ADN_Categories_Data::ArmorInfos::WriteArchive( MT_OutputArchive_ABC& output
     output.WriteAttribute( "variance",   neutralizationVariance_.GetData() );
     output.EndSection(); // Neutralisation
 
-    output.Section( "ProbabilitePanneAleatoire" );
-    output.WriteAttribute( "EVA", rBreakdownEVA_.GetData() );
-    output.WriteAttribute( "NEVA", rBreakdownNEVA_.GetData() );
-    output.EndSection(); // ProbabilitePanneAleatoire
+    if( nType_.GetData() != eProtectionType_Human )
+    {
+        output.Section( "ProbabilitePanneAleatoire" );
+        output.WriteAttribute( "EVA", rBreakdownEVA_.GetData() );
+        output.WriteAttribute( "NEVA", rBreakdownNEVA_.GetData() );
+        output.EndSection(); // ProbabilitePanneAleatoire
 
-    output.BeginList( "EffetsAttritionSurHumains", vAttritionEffects_.size() );
-    for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
-        (*it)->WriteArchive( output, nType_.GetData() );
-    output.EndList(); // EffetsAttritionSurHumains
+        output.BeginList( "EffetsAttritionSurHumains", vAttritionEffects_.size() );
+        for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
+            (*it)->WriteArchive( output );
+        output.EndList(); // EffetsAttritionSurHumains
+    }
 
     output.EndSection(); // Protection
 }

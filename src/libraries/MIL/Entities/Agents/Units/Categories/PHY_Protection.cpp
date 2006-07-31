@@ -107,41 +107,54 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
     neutralizationTime_ = MT_GaussianRandom( rTimeVal, rVariance );
     archive.EndSection(); // Neutralisation
 
-    //$$$ Ne pas lire quand type == eHuman
-    archive.Section( "ProbabilitePanneAleatoire" );
-    archive.ReadAttribute( "EVA" , rBreakdownProbabilityEva_ , CheckValueBound( 0., 100. ) );
-    archive.ReadAttribute( "NEVA", rBreakdownProbabilityNeva_, CheckValueBound( 0., 100. ) );
-    rBreakdownProbabilityEva_  /= 100.;
-    rBreakdownProbabilityNeva_ /= 100.;
-    archive.EndSection(); // ProbabilitePanneAleatoire
-
-    archive.BeginList( "EffetsAttritionSurHumains" );
-    while( archive.NextListElement() )
+    if( nType_ == eHuman )
     {
-        archive.Section( "EffetAttritionSurHumains" );
-        
-        std::string strState;
-        archive.ReadAttribute( "etatEquipement", strState );
+        rBreakdownProbabilityEva_  = 0.;
+        rBreakdownProbabilityNeva_ = 0.;
 
-        const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( strState );
-        if( !pComposanteState )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante state", archive.GetContext() );
-
-        assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
-
-        T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
-
-        MT_Float rTmp;
-        archive.ReadAttribute( "pourcentageBlesses", rTmp, CheckValueBound( 0., 100. ) );
-        data.rWoundedRatio_ = rTmp / 100.;
-            
-        archive.ReadAttribute( "pourcentageMorts"  , rTmp, CheckValueBound( 0., 100. ) );
-        data.rDeadRatio_ = rTmp / 100.;
-   
-        archive.EndSection(); // EffetAttritionSurHumains
+        attritionEffectsOnHumans_[ PHY_ComposanteState::dead_                       .GetID() ].rWoundedRatio_ = 0.;
+        attritionEffectsOnHumans_[ PHY_ComposanteState::dead_                       .GetID() ].rDeadRatio_    = 1.;
+        attritionEffectsOnHumans_[ PHY_ComposanteState::repairableWithEvacuation_   .GetID() ].rWoundedRatio_ = 1.;
+        attritionEffectsOnHumans_[ PHY_ComposanteState::repairableWithEvacuation_   .GetID() ].rDeadRatio_    = 0.;
+        attritionEffectsOnHumans_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ].rWoundedRatio_ = 1.;
+        attritionEffectsOnHumans_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ].rDeadRatio_    = 0.;
     }
+    else
+    {
+        archive.Section( "ProbabilitePanneAleatoire" );
+        archive.ReadAttribute( "EVA" , rBreakdownProbabilityEva_ , CheckValueBound( 0., 100. ) );
+        archive.ReadAttribute( "NEVA", rBreakdownProbabilityNeva_, CheckValueBound( 0., 100. ) );
+        rBreakdownProbabilityEva_  /= 100.;
+        rBreakdownProbabilityNeva_ /= 100.;
+        archive.EndSection(); // ProbabilitePanneAleatoire
 
-    archive.EndList(); // EffetsAttritionSurHumains
+        archive.BeginList( "EffetsAttritionSurHumains" );
+        while( archive.NextListElement() )
+        {
+            archive.Section( "EffetAttritionSurHumains" );
+            
+            std::string strState;
+            archive.ReadAttribute( "etatEquipement", strState );
+
+            const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( strState );
+            if( !pComposanteState )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante state", archive.GetContext() );
+
+            assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
+
+            T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
+
+            MT_Float rTmp;
+            archive.ReadAttribute( "pourcentageBlesses", rTmp, CheckValueBound( 0., 100. ) );
+            data.rWoundedRatio_ = rTmp / 100.;
+                
+            archive.ReadAttribute( "pourcentageMorts"  , rTmp, CheckValueBound( 0., 100. ) );
+            data.rDeadRatio_ = rTmp / 100.;
+       
+            archive.EndSection(); // EffetAttritionSurHumains
+        }
+        archive.EndList(); // EffetsAttritionSurHumains
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -43,7 +43,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC&, E_ProtectionType );
+        void WriteArchive( MT_OutputArchive_ABC& );
 
     public:
         ADN_Type_Enum< E_EquipmentState, eNbrEquipmentState > nEquipmentState_;

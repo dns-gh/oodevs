@@ -403,8 +403,8 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
     const PHY_ComposanteState& oldState  = *pState_;
     const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState();
 
-    ApplyHumansWounds( *pNewState, fireDamages );    
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
+    ApplyHumansWounds( *pNewState, fireDamages );    
 
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
