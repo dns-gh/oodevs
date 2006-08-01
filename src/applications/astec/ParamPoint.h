@@ -46,7 +46,7 @@ class ParamPoint : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+    ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamPoint();
     //@}
 

@@ -28,9 +28,9 @@
 // Name: ParamSlider constructor
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-ParamSlider::ParamSlider( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamSlider::ParamSlider( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , pAsnInt_      ( &asnInt )
     , pAsnReal_     ( 0 )
 {
@@ -53,9 +53,9 @@ ParamSlider::ParamSlider( ASN1INT& asnInt, int nMin, int nMax, int nDefault, con
 // Name: ParamSlider constructor
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-ParamSlider::ParamSlider( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamSlider::ParamSlider( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , pAsnInt_      ( 0 )
     , pAsnReal_     ( &asnReal )
 {
@@ -92,6 +92,9 @@ ParamSlider::~ParamSlider()
 // -----------------------------------------------------------------------------
 void ParamSlider::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     strMsg << pLabel_->text().latin1() << ": ";
     if( pAsnInt_ != 0 )
     {

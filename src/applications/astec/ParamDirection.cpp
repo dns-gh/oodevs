@@ -27,9 +27,9 @@
 // Name: ParamDirection constructor
 // Created: APE 2004-08-03
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamDirection::ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , asnDirection_ ( asnDirection )
 {
     new QLabel( strLabel.c_str(), this );
@@ -55,6 +55,9 @@ ParamDirection::~ParamDirection()
 // -----------------------------------------------------------------------------
 void ParamDirection::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     int nWindDir = pDial_->value();
     nWindDir += (nWindDir > 180 ) ? -180 : 180;
 

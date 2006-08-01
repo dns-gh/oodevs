@@ -47,8 +47,8 @@ class ParamSlider : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamSlider( ASN1INT& asnInt,     int nMin,   int nMax,   int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional );
-    ParamSlider( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional );
+    ParamSlider( ASN1INT& asnInt,     int nMin,   int nMax,   int nDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
+    ParamSlider( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamSlider();
     //@}
 

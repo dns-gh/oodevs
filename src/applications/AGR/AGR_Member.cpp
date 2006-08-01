@@ -247,6 +247,15 @@ std::string AGR_Member::Mos2InitialisationCode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_Member::Mos2OptionalParamCode
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+std::string AGR_Member::Mos2OptionalParamCode() const
+{
+    return pType_->Mos2OptionalParamCode( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AGR_Member::ResetCode
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------

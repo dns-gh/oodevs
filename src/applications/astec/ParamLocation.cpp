@@ -34,9 +34,9 @@
 // Name: ParamLocation constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData )
+ParamLocation::ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional, bool bOutsideData )
     : QHBox             ( pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnListPoint_     ( asnListPoint )
     , pUMTCoords_       ( 0 )
@@ -122,7 +122,7 @@ void ParamLocation::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionCont
 // -----------------------------------------------------------------------------
 bool ParamLocation::CheckValidity()
 {
-    if( ! pointList_.empty() )
+    if( ! pointList_.empty() || IsOptional() )
         return true;
 
     pLabel_->TurnRed( 3000 );
@@ -144,6 +144,9 @@ void ParamLocation::WriteMsg( std::stringstream& strMsg )
     asnListPoint_.vecteur_point.n = nNbrPoints;
     if( nNbrPoints == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     delete[] pUMTCoords_;
     pUMTCoords_ = new ASN1T_CoordUTM[ nNbrPoints ];

@@ -51,7 +51,7 @@ class ParamPath : public ParamListView, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamPath( ASN1T_Itineraire& asnListPoint, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+    ParamPath( ASN1T_Itineraire& asnListPoint, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamPath();
     //@}
 

@@ -37,7 +37,7 @@ class ParamEquipmentList : public QTable, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, QWidget* pParent, bool bOptional );
+    explicit ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     virtual ~ParamEquipmentList();
     //@}
 

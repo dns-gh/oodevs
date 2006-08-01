@@ -20,9 +20,9 @@
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& /*strLabel*/, QWidget* pParent, bool bOptional )
+ParamEquipmentList::ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& /*strLabel*/, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QTable                 ( 0, 1, pParent )
-    , Param_ABC          ( bOptional )
+    , Param_ABC          ( pOptional )
     , pAsnEquipmentList_     ( &asnListEquipment )
     , pEquipmentsStringList_ ( 0 )
 {
@@ -69,6 +69,9 @@ void ParamEquipmentList::WriteMsg( std::stringstream& /*strMsg*/ )
     pAsnEquipmentList_->n = numRows() - 1;
     if( !pAsnEquipmentList_->n )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     ASN1T_TypeEquipement* pAsnEquipement = new ASN1T_TypeEquipement[ pAsnEquipmentList_->n ]; //$$$ RAM
     for( uint nRow = 0; nRow < pAsnEquipmentList_->n; ++nRow )

@@ -20,6 +20,7 @@
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
+int MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::nDIAPositionDeploiementIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -29,7 +30,8 @@
 // static
 void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::InitializeDIA( const MIL_PionMissionType& type )
 {
-    (void)DEC_Tools::GetDIAType( type.GetDIATypeName() );
+    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
+    nDIAPositionDeploiementIdx_ = DEC_Tools::InitializeDIAField( "positionDeploiement_", diaType );
 
 }
 
@@ -65,6 +67,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::I
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
+    const ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales& asnMission = *asnMsg.mission.u.mission_pion_log_prendre_en_compte_reactions_mentales;
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.m.position_deploiementPresent ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -79,7 +84,7 @@ bool MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Initialize( const MIL
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-
+    
     return true;    
 }
 
@@ -93,6 +98,7 @@ bool MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Initialize( MIL_PionM
         return false;
     MIL_PionMission_LOG_PrendreEnCompteReactionsMentales& mission = static_cast< MIL_PionMission_LOG_PrendreEnCompteReactionsMentales& >( missionTmp );
 
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), GetVariable( nDIAPositionDeploiementIdx_ ) );
 
     return true;
 }                                                                    
@@ -103,7 +109,7 @@ bool MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Initialize( MIL_PionM
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Terminate()
 {
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 
@@ -123,6 +129,7 @@ void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Serialize( ASN1T_MsgP
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales;
     asnMsg.mission.u.mission_pion_log_prendre_en_compte_reactions_mentales  = &asnMission;
 
+    NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement );
 
 }
 
@@ -135,6 +142,7 @@ void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::CleanAfterSerializati
     assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales );
     ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales& asnMission = *asnMsg.mission.u.mission_pion_log_prendre_en_compte_reactions_mentales;
 
+    NET_ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
 

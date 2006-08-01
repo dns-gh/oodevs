@@ -363,7 +363,7 @@ void FragmentaryOrderInterface::CreateOrder_AcquerirObjectif()
     ASN1T_OrderConduite_AcquerirObjectif& asnMission = *new ASN1T_OrderConduite_AcquerirObjectif();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_acquerir_objectif;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_acquerir_objectif = &asnMission;
-    CreateLocation( asnMission, "Order conduite acquerir objectif", false );
+    CreateLocation( asnMission, "Order conduite acquerir objectif");
 }
 
 // -----------------------------------------------------------------------------
@@ -383,7 +383,7 @@ void FragmentaryOrderInterface::CreateOrder_ChangerPositionDebarquement()
     ASN1T_OrderConduite_ChangerPositionDebarquement& asnMission = *new ASN1T_OrderConduite_ChangerPositionDebarquement();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_position_debarquement = &asnMission;
-    CreatePoint( asnMission, "Order conduite changer position debarquement", false );
+    CreatePoint( asnMission, "Order conduite changer position debarquement");
 }
 
 // -----------------------------------------------------------------------------
@@ -395,7 +395,7 @@ void FragmentaryOrderInterface::CreateOrder_Pion_ChangerDePosition()
     ASN1T_OrderConduite_Pion_ChangerDePosition& asnMission = *new ASN1T_OrderConduite_Pion_ChangerDePosition();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_changer_de_position;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_changer_de_position = &asnMission;
-    CreatePoint( asnMission, "Order conduite pion changer de position", false );
+    CreatePoint( asnMission, "Order conduite pion changer de position");
 }
 
 // -----------------------------------------------------------------------------
@@ -438,8 +438,8 @@ void FragmentaryOrderInterface::CreateOrder_Pion_AppliquerFeux()
     pSelector_munitions->AddItem( "Fumigene", EnumTypeMunitionTirIndirect::fumigene );
     pSelector_munitions->AddItem( "Eclairant", EnumTypeMunitionTirIndirect::eclairant );
     pSelector_munitions->AddItem( "Mine", EnumTypeMunitionTirIndirect::mine );
-    CreateNumeric( asnMission.nb_IT, "Nb IT", false );
-    CreatePoint( asnMission.cible, "Cible", false );
+    CreateNumeric( asnMission.nb_IT, "Nb IT");
+    CreatePoint( asnMission.cible, "Cible");
 }
 
 // -----------------------------------------------------------------------------
@@ -475,8 +475,8 @@ void FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnVSRAM()
     ASN1T_OrderConduite_Pion_RenforcerEnVSRAM& asnMission = *new ASN1T_OrderConduite_Pion_RenforcerEnVSRAM();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_vs_ram;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_vs_ram = &asnMission;
-    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
-    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer");
+    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances");
 }
 
 // -----------------------------------------------------------------------------
@@ -488,9 +488,9 @@ void FragmentaryOrderInterface::CreateOrder_Pion_TransfererVSRAM()
     ASN1T_OrderConduite_Pion_TransfererVSRAM& asnMission = *new ASN1T_OrderConduite_Pion_TransfererVSRAM();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_vs_ram;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_vs_ram = &asnMission;
-    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
-    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
-    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
+    CreateAgent( asnMission.pion_renforce, "Pion renforce");
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer");
+    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances");
 }
 
 // -----------------------------------------------------------------------------
@@ -502,8 +502,8 @@ void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresVSRAM()
     ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM& asnMission = *new ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_vs_ram = &asnMission;
-    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
-    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
+    CreateAgent( asnMission.pion_renforce, "Pion renforce");
+    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances");
 }
 
 // -----------------------------------------------------------------------------
@@ -515,8 +515,8 @@ void FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnRemorqueurs()
     ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_remorqueurs = &asnMission;
-    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
-    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer");
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs");
 }
 
 // -----------------------------------------------------------------------------
@@ -528,9 +528,9 @@ void FragmentaryOrderInterface::CreateOrder_Pion_TransfererRemorqueurs()
     ASN1T_OrderConduite_Pion_TransfererRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_TransfererRemorqueurs();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_remorqueurs = &asnMission;
-    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
-    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
-    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+    CreateAgent( asnMission.pion_renforce, "Pion renforce");
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer");
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs");
 }
 
 // -----------------------------------------------------------------------------
@@ -542,8 +542,8 @@ void FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresRemorqueurs()
     ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs& asnMission = *new ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_remorqueurs = &asnMission;
-    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
-    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs", false );
+    CreateAgent( asnMission.pion_renforce, "Pion renforce");
+    CreateNumeric( asnMission.nbr_remorqueurs, "Nbr remorqueurs");
 }
 
 // -----------------------------------------------------------------------------
@@ -571,7 +571,7 @@ void FragmentaryOrderInterface::CreateOrder_ModifierPrioritesReparations()
     ASN1T_OrderConduite_ModifierPrioritesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_reparations = &asnMission;
-    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations", false );
+    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations");
 }
 
 // -----------------------------------------------------------------------------
@@ -583,7 +583,7 @@ void FragmentaryOrderInterface::CreateOrder_ModifierPrioritesBlesses()
     ASN1T_OrderConduite_ModifierPrioritesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_blesses = &asnMission;
-    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses", false );
+    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses");
 }
 
 // -----------------------------------------------------------------------------
@@ -595,7 +595,7 @@ void FragmentaryOrderInterface::CreateOrder_ModifierPrioritesTactiquesReparation
     ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_tactiques_reparations = &asnMission;
-    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques reparations", false );
+    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques reparations");
 }
 
 // -----------------------------------------------------------------------------
@@ -607,7 +607,7 @@ void FragmentaryOrderInterface::CreateOrder_ModifierPrioritesTactiquesBlesses()
     ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_tactiques_blesses = &asnMission;
-    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques blesses", false );
+    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques blesses");
 }
 
 // -----------------------------------------------------------------------------
@@ -619,8 +619,8 @@ void FragmentaryOrderInterface::CreateOrder_Automate_RealiserVariantement()
     ASN1T_OrderConduite_Automate_RealiserVariantement& asnMission = *new ASN1T_OrderConduite_Automate_RealiserVariantement();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_realiser_variantement = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement_original, "Site franchissement original", false );
-    CreateObjectKnowledge( asnMission.site_franchissement_variante, "Site franchissement variante", false );
+    CreateObjectKnowledge( asnMission.site_franchissement_original, "Site franchissement original");
+    CreateObjectKnowledge( asnMission.site_franchissement_variante, "Site franchissement variante");
 }
 
 // -----------------------------------------------------------------------------
@@ -632,7 +632,7 @@ void FragmentaryOrderInterface::CreateOrder_Automate_DesequiperSiteFranchissemen
     ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement& asnMission = *new ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_desequiper_site_franchissement = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement", false );
+    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
 }
 
 // -----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ void FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni()
     ASN1T_OrderConduite_Automate_ReagirFaceAEni& asnMission = *new ASN1T_OrderConduite_Automate_ReagirFaceAEni();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement", false );
+    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
     ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action", false );
     pSelector_action->AddItem( "Detruire moyens", EnumActionReagirFaceAEni::detruire_moyens );
     pSelector_action->AddItem( "Defendre", EnumActionReagirFaceAEni::defendre );
@@ -660,8 +660,8 @@ void FragmentaryOrderInterface::CreateOrder_Automate_AffecterPionAObstacle()
     ASN1T_OrderConduite_Automate_AffecterPionAObstacle& asnMission = *new ASN1T_OrderConduite_Automate_AffecterPionAObstacle();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_affecter_pion_a_obstacle;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_affecter_pion_a_obstacle = &asnMission;
-    CreateAgent( asnMission.pion, "Pion", false );
-    CreateGenObject( asnMission.obstacle, "Obstacle", false );
+    CreateAgent( asnMission.pion, "Pion");
+    CreateGenObject( asnMission.obstacle, "Obstacle");
 }
 
 // -----------------------------------------------------------------------------
@@ -673,7 +673,7 @@ void FragmentaryOrderInterface::CreateOrder_Automate_ReconnaitreZoneImplantation
     ASN1T_OrderConduite_Automate_ReconnaitreZoneImplantation& asnMission = *new ASN1T_OrderConduite_Automate_ReconnaitreZoneImplantation();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reconnaitre_zone_implantation;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reconnaitre_zone_implantation = &asnMission;
-    CreatePoint( asnMission, "Order conduite automate reconnaitre zone implantation", false );
+    CreatePoint( asnMission, "Order conduite automate reconnaitre zone implantation");
 }
 
 // -----------------------------------------------------------------------------
@@ -699,7 +699,7 @@ void FragmentaryOrderInterface::CreateOrder_Automate_ActiverObstacle()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_activer_obstacle;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    CreateObjectKnowledge( pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_activer_obstacle, "Order conduite automate activer obstacle", false );
+    CreateObjectKnowledge( pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_activer_obstacle, "Order conduite automate activer obstacle");
 #undef asnMission
 }
 
@@ -712,8 +712,8 @@ void FragmentaryOrderInterface::CreateOrder_Automate_TransfererRenforts()
     ASN1T_OrderConduite_Automate_TransfererRenforts& asnMission = *new ASN1T_OrderConduite_Automate_TransfererRenforts();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_transferer_renforts;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_transferer_renforts = &asnMission;
-    CreateAgent( asnMission.pion_a_transferer, "Pion a transferer", false );
-    CreateAutomate( asnMission.automate_a_renforcer, "Automate a renforcer", false );
+    CreateAgent( asnMission.pion_a_transferer, "Pion a transferer");
+    CreateAutomate( asnMission.automate_a_renforcer, "Automate a renforcer");
 }
 
 // -----------------------------------------------------------------------------

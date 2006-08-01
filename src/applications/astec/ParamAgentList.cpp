@@ -31,9 +31,9 @@
 // Name: ParamAgentList constructor
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
-ParamAgentList::ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent, bool bOptional )
+ParamAgentList::ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView( strLabel, true, pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , strMenuText_  ( strMenuText )
     , asnListAgent_ ( asnListAgent )
     , pAsnOIDList_  ( 0 )
@@ -87,6 +87,9 @@ bool ParamAgentList::CheckValidity()
     if( this->childCount() >= nMinAgents_ && this->childCount() <= nMaxAgents_ )
         return true;
 
+    if( IsOptional() )
+        return true;
+
     this->TurnHeaderRed( 3000 );
     return false;
 }
@@ -102,9 +105,11 @@ void ParamAgentList::WriteMsg( std::stringstream& strMsg )
 
     asnListAgent_.n    = this->childCount();
 
-    assert( !( this->childCount() == 0 && !IsOptional() ) );
-    if( this->childCount() == 0 && IsOptional() )
+    if( this->childCount() == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     delete[] pAsnOIDList_;
     pAsnOIDList_ = new ASN1T_OID[ this->childCount() ];

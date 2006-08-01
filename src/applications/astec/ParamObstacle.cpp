@@ -33,9 +33,9 @@
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData )
+ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional, bool bOutsideData )
     : QGroupBox     ( 2, Qt::Horizontal, strLabel.c_str(), pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , asnObject_    ( asnObject )
     , strMenuText_  ( strMenuText )
 {
@@ -83,7 +83,7 @@ ParamObstacle::ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::stri
     new QLabel( tr( "Localisation:" ), this );
     if ( asnObject_.pos_obstacle.vecteur_point.n != 0 )
         bOutsideDataLocalisation = true;
-    pLocation_ = new ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, bOptional, bOutsideDataLocalisation );
+    pLocation_ = new ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, pOptional, bOutsideDataLocalisation );
     //$$$$ pas de tr sur "Localisation:";
 }
 
@@ -123,6 +123,9 @@ bool ParamObstacle::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObstacle::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     //asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->currentItem();
     asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->GetValue();
     asnObject_.urgence =        (ASN1T_EnumMissionGenUrgence)pUrgencyCombo_->currentItem();

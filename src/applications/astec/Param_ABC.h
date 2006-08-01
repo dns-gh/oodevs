@@ -24,12 +24,12 @@
 #endif
 
 #include "Types.h"
+#include "OptionalParamFunctor_ABC.h"
 
 class ActionContext;
 class QPopupMenu;
-
 class Param_ABC;
-typedef std::vector< Param_ABC* >   T_ParamVector;
+typedef std::vector< Param_ABC* >       T_ParamVector;
 typedef T_ParamVector::iterator         IT_ParamVector;
 typedef T_ParamVector::const_iterator   CIT_ParamVector;
 
@@ -43,7 +43,7 @@ class Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Param_ABC( bool bOptional );
+             Param_ABC( OptionalParamFunctor_ABC* pOptional );
     virtual ~Param_ABC();
     //@}
 
@@ -60,8 +60,8 @@ public:
     bool IsOptional() const;
     //@}
 
-private:
-    bool bIsOptional_;
+protected:
+    OptionalParamFunctor_ABC* pOptional_;
 };
 
 #   include "Param_ABC.inl"

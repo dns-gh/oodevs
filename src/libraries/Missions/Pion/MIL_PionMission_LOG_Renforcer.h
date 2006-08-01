@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_LOG_DistribuerMoyens_h_
-#define __MIL_PionMission_LOG_DistribuerMoyens_h_
+#ifndef __MIL_PionMission_LOG_Renforcer_h_
+#define __MIL_PionMission_LOG_Renforcer_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_LOG_DistribuerMoyens: public MIL_PionMission_ABC
+class MIL_PionMission_LOG_Renforcer: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_LOG_DistribuerMoyens )
+    MT_COPYNOTALLOWED( MIL_PionMission_LOG_Renforcer )
 
 public:
 
-             MIL_PionMission_LOG_DistribuerMoyens( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_LOG_DistribuerMoyens();
+             MIL_PionMission_LOG_Renforcer( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_LOG_Renforcer();
 
     //! @name Init
     //@{
@@ -43,8 +43,10 @@ public:
     //@}
 
 private:
+    static int nDIALieuRenforcementIdx_;
+    static int nDIAAutomateIdx_;
 
 };
 
 
-#endif // __MIL_PionMission_LOG_DistribuerMoyens_h_
+#endif // __MIL_PionMission_LOG_Renforcer_h_

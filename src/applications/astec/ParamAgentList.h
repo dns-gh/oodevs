@@ -49,7 +49,7 @@ class ParamAgentList : public ParamListView, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent, bool bOptional );
+    ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamAgentList();
     //@}
 

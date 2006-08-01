@@ -20,9 +20,9 @@
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/, QWidget* pParent, bool bOptional )
+ParamHumanWoundList::ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QTable                  ( 0, 1, pParent )
-    , Param_ABC           ( bOptional )
+    , Param_ABC           ( pOptional )
     , pAsnHumanWoundList_     ( &asnListHumanWound )
     , pHumanWoundsStringList_ ( 0 )
 {
@@ -68,6 +68,9 @@ void ParamHumanWoundList::WriteMsg( std::stringstream& /*strMsg*/ )
     pAsnHumanWoundList_->n = numRows() - 1;
     if( !pAsnHumanWoundList_->n )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     ASN1T_EnumHumanWound* pAsnHumanWound = new ASN1T_EnumHumanWound[ pAsnHumanWoundList_->n ]; //$$$ RAM
     for( uint nRow = 0; nRow < pAsnHumanWoundList_->n; ++nRow )

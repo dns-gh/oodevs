@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_LOG_Evacuer_h_
-#define __Mission_Pawn_LOG_Evacuer_h_
+#ifndef __Mission_Pawn_LOG_Renforcer_h_
+#define __Mission_Pawn_LOG_Renforcer_h_
 
 #include "Actions/Missions/Mission_Pawn_ABC.h"
 
@@ -17,20 +17,20 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_LOG_Evacuer
-    @brief  Mission_Pawn_LOG_Evacuer
+/** @class  Mission_Pawn_LOG_Renforcer
+    @brief  Mission_Pawn_LOG_Renforcer
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_LOG_Evacuer : public Mission_Pawn_ABC
+class Mission_Pawn_LOG_Renforcer : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_LOG_Evacuer( Pawn& target );
-    virtual ~Mission_Pawn_LOG_Evacuer();
+             Mission_Pawn_LOG_Renforcer( Pawn& target );
+    virtual ~Mission_Pawn_LOG_Renforcer();
     //@}
 
 protected:
@@ -43,11 +43,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_LOG_Evacuer( const Mission_Pawn_LOG_Evacuer& );            //!< Copy constructor
-    Mission_Pawn_LOG_Evacuer& operator=( const Mission_Pawn_LOG_Evacuer& ); //!< Assignment operator
+    Mission_Pawn_LOG_Renforcer( const Mission_Pawn_LOG_Renforcer& );            //!< Copy constructor
+    Mission_Pawn_LOG_Renforcer& operator=( const Mission_Pawn_LOG_Renforcer& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_LOG_Evacuer_h_
+#endif // __Mission_Pawn_LOG_Renforcer_h_

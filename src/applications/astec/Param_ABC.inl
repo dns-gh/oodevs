@@ -54,5 +54,5 @@ bool Param_ABC::CheckValidity()
 inline
 bool Param_ABC::IsOptional() const
 {
-    return bIsOptional_;
+    return pOptional_;
 }

@@ -4,72 +4,65 @@
   <Protection nom="CharLourd" type="materiel">
     <Neutralisation tempsMoyen="300s" variance="60s"/>
     <ProbabilitePanneAleatoire EVA="8" NEVA="0"/>
-    
     <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>        
+      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
+      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
+      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
+    </EffetsAttritionSurHumains>
   </Protection>
 
   <Protection nom="CharMoyen" type="materiel">
     <Neutralisation tempsMoyen="600s" variance="180s"/>
     <ProbabilitePanneAleatoire EVA="8" NEVA="0"/>
     <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>        
+      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
+      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
+      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
+    </EffetsAttritionSurHumains>
   </Protection>
 
   <Protection nom="BlindeLeger" type="materiel">
     <Neutralisation tempsMoyen="900s" variance="180s"/>
     <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
     <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>          
+      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
+      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
+      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
+    </EffetsAttritionSurHumains>
   </Protection>
 
   <Protection nom="TransportBlinde" type="materiel">
     <Neutralisation tempsMoyen="1200s" variance="600s"/>
     <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
     <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>          
+      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
+      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
+      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
+    </EffetsAttritionSurHumains>
   </Protection>
 
   <Protection nom="Aeronef" type="materiel">
     <Neutralisation tempsMoyen="900s" variance="180s"/>
     <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
     <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>          
+      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
+      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
+      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
+    </EffetsAttritionSurHumains>
   </Protection>
 
   <Protection nom="VehiculeNonProtege" type="materiel">
     <Neutralisation tempsMoyen="1200s" variance="600s"/>
     <ProbabilitePanneAleatoire EVA="4" NEVA="0"/>
     <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
-    </EffetsAttritionSurHumains>          
+      <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="60" pourcentageMorts="15"/>
+      <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="40" pourcentageMorts="10"/>
+      <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="75" pourcentageMorts="15"/>
+    </EffetsAttritionSurHumains>
   </Protection>
 
   <Protection nom="Combattant" type="humain">
     <Neutralisation tempsMoyen="300s" variance="420s"/>
-    <ProbabilitePanneAleatoire EVA="0" NEVA="0"/>
-    <EffetsAttritionSurHumains>
-        <EffetAttritionSurHumains etatEquipement="ReparableAvecEvacuation" pourcentageBlesses="100" pourcentageMorts="0"/>
-        <EffetAttritionSurHumains etatEquipement="ReparableSurPlace" pourcentageBlesses="100" pourcentageMorts="0"/>
-        <EffetAttritionSurHumains etatEquipement="Detruit" pourcentageBlesses="0" pourcentageMorts="100"/>
-    </EffetsAttritionSurHumains>        
   </Protection>
 
 </Protections>

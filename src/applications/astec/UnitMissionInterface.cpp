@@ -40,6 +40,7 @@
 #include "ParamDirection.h"
 #include "Agent.h"
 #include "Tools.h"
+#include "OptionalParamFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor

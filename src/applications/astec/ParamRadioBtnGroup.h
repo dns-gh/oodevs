@@ -37,7 +37,7 @@ class ParamRadioBtnGroup : public MT_ValuedRadioButtonGroup<T>, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, bool bOptional );
+    ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamRadioBtnGroup();
     //@}
 
@@ -59,9 +59,9 @@ private:
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 template< class T >
-ParamRadioBtnGroup<T>::ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, bool bOptional )
+ParamRadioBtnGroup<T>::ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : MT_ValuedRadioButtonGroup<T>( nStrips, orientation, strLabel.c_str(), pParent )
-    , Param_ABC            ( bOptional )
+    , Param_ABC            ( pOptional )
     , output_                  ( output )
 {
 }
@@ -83,6 +83,9 @@ ParamRadioBtnGroup<T>::~ParamRadioBtnGroup()
 template< class T >
 void ParamRadioBtnGroup<T>::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     output_ = this->GetValue();
     strMsg << this->title().latin1() << ": " << this->GetValue();
 }

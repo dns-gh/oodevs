@@ -36,9 +36,9 @@
 // Name: ParamObjectKnowledgeList constructor
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView( strLabel, true, pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnListKnowledge_ ( asnListKnowledge )
     , agent_            ( agent )
@@ -104,6 +104,9 @@ bool ParamObjectKnowledgeList::CheckValidity()
     if( this->childCount() >= nMinItems_ && this->childCount() <= nMaxItems_ )
         return true;
 
+    if( IsOptional() )
+        return true;
+
     this->TurnHeaderRed( 3000 );
     return false;
 }
@@ -119,9 +122,11 @@ void ParamObjectKnowledgeList::WriteMsg( std::stringstream& strMsg )
 
     asnListKnowledge_.n = this->childCount();
 
-    assert( !( this->childCount() == 0 && !IsOptional() ) );
-    if( this->childCount() == 0 && IsOptional() )
+    if( this->childCount() == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     delete[] pAsnOIDList_;
     pAsnOIDList_ = new ASN1T_OID[ this->childCount() ];

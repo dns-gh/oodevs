@@ -30,14 +30,15 @@
 #include "Team.h"
 #include "ActionContext.h"
 #include "ObjectKnowledge.h"
+#include "OptionalParamFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledge constructor
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamObjectKnowledge::ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox             ( pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnKnowledge_     ( asnKnowledge )
     , agent_            ( agent )
@@ -92,7 +93,7 @@ void ParamObjectKnowledge::FillRemotePopupMenu( QPopupMenu& popupMenu, const Act
 // -----------------------------------------------------------------------------
 bool ParamObjectKnowledge::CheckValidity()
 {
-    if( pKnowledge_ != 0 )
+    if( pKnowledge_ != 0 || pOptional_ )
         return true;
 
     pLabel_->TurnRed( 3000 );
@@ -106,9 +107,11 @@ bool ParamObjectKnowledge::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::WriteMsg( std::stringstream& strMsg )
 {
-    assert( pKnowledge_ != 0 && !IsOptional() );
-    if( pKnowledge_ == 0 && IsOptional() )
+    if( pKnowledge_ == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     strMsg << pLabel_->text().latin1() << ": object knowledge #" << pKnowledge_->GetID();
     asnKnowledge_ = pKnowledge_->GetID();

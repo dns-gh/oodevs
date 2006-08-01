@@ -28,9 +28,9 @@
 // Name: ParamGDH constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-ParamGDH::ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent, bool bOptional )
+ParamGDH::ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , strName_      ( strName )
     , asnGDH_       ( asnGDH )
 {
@@ -87,6 +87,9 @@ bool ParamGDH::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamGDH::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     strMsg << strName_ << ": ";
 
     if( pCheckbox_->isChecked() )

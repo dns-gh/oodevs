@@ -307,19 +307,15 @@
 #include "Pion\MIL_PionMission_INF_RepondreAAggression.cpp"
 #include "Pion\MIL_PionMission_INF_AppuyerSurPosition.cpp"
 #include "Pion\MIL_PionMission_LOG_SeDeployer.cpp"
-#include "Pion\MIL_PionMission_LOG_DistribuerMoyens.cpp"
+#include "Pion\MIL_PionMission_LOG_Renforcer.cpp"
+#include "Pion\MIL_PionMission_LOG_PreparerBascule.cpp"
+#include "Pion\MIL_PionMission_LOG_DecontaminerBlesses.cpp"
+#include "Pion\MIL_PionMission_LOG_TrierEtTraiterBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_TrierBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_TraiterBlesses.cpp"
-#include "Pion\MIL_PionMission_LOG_TrierEtTraiterBlesses.cpp"
 #include "Pion\MIL_PionMission_LOG_PrendreEnCompteReactionsMentales.cpp"
-#include "Pion\MIL_PionMission_LOG_DecontaminerBlesses.cpp"
-#include "Pion\MIL_PionMission_LOG_Reparer.cpp"
-#include "Pion\MIL_PionMission_LOG_Evacuer.cpp"
 #include "Pion\MIL_PionMission_LOG_Convoyer.cpp"
-#include "Pion\MIL_PionMission_LOG_DistribuerRessources.cpp"
-#include "Pion\MIL_PionMission_LOG_ConstituerConvoi.cpp"
-#include "Pion\MIL_PionMission_LOG_Livrer.cpp"
-#include "Pion\MIL_PionMission_LOG_PreparerBascule.cpp"
+#include "Pion\MIL_PionMission_LOG_Reparer.cpp"
 #include "Pion\MIL_PionMission_LOG_AppuyerMouvement.cpp"
 #include "Pion\MIL_PionMission_LOG_ReconnaitreItineraire.cpp"
 #include "Pion\MIL_PionMission_LOG_TransporterUnite.cpp"
@@ -766,19 +762,15 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_RepondreAAggression>( "Pion INF RepondreAAggression", eMission_Pion_INF_RepondreAAggression, T_Mission_Pion_mission_pion_inf_repondre_a_aggression, "T_Mission_Pion_INF_RepondreAAggression", "MIS_Pion_INF_RepondreAAggression");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_AppuyerSurPosition>( "Pion INF AppuyerSurPosition", eMission_Pion_INF_AppuyerSurPosition, T_Mission_Pion_mission_pion_inf_appuyer_sur_position, "T_Mission_Pion_INF_AppuyerSurPosition", "MIS_Pion_INF_AppuyerSurPosition");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_SeDeployer>( "Pion LOG SeDeployer", eMission_Pion_LOG_SeDeployer, T_Mission_Pion_mission_pion_log_se_deployer, "T_Mission_Pion_LOG_SeDeployer", "MIS_Pion_LOG_SeDeployer");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_DistribuerMoyens>( "Pion LOG DistribuerMoyens", eMission_Pion_LOG_DistribuerMoyens, T_Mission_Pion_mission_pion_log_distribuer_moyens, "T_Mission_Pion_LOG_DistribuerMoyens", "MIS_Pion_LOG_DistribuerMoyens");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Renforcer>( "Pion LOG Renforcer", eMission_Pion_LOG_Renforcer, T_Mission_Pion_mission_pion_log_renforcer, "T_Mission_Pion_LOG_Renforcer", "MIS_Pion_LOG_Renforcer");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_PreparerBascule>( "Pion LOG PreparerBascule", eMission_Pion_LOG_PreparerBascule, T_Mission_Pion_mission_pion_log_preparer_bascule, "T_Mission_Pion_LOG_PreparerBascule", "MIS_Pion_LOG_PreparerBascule");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_DecontaminerBlesses>( "Pion LOG DecontaminerBlesses", eMission_Pion_LOG_DecontaminerBlesses, T_Mission_Pion_mission_pion_log_decontaminer_blesses, "T_Mission_Pion_LOG_DecontaminerBlesses", "MIS_Pion_LOG_DecontaminerBlesses");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TrierEtTraiterBlesses>( "Pion LOG TrierEtTraiterBlesses", eMission_Pion_LOG_TrierEtTraiterBlesses, T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses, "T_Mission_Pion_LOG_TrierEtTraiterBlesses", "MIS_Pion_LOG_TrierEtTraiterBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TrierBlesses>( "Pion LOG TrierBlesses", eMission_Pion_LOG_TrierBlesses, T_Mission_Pion_mission_pion_log_trier_blesses, "T_Mission_Pion_LOG_TrierBlesses", "MIS_Pion_LOG_TrierBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TraiterBlesses>( "Pion LOG TraiterBlesses", eMission_Pion_LOG_TraiterBlesses, T_Mission_Pion_mission_pion_log_traiter_blesses, "T_Mission_Pion_LOG_TraiterBlesses", "MIS_Pion_LOG_TraiterBlesses");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TrierEtTraiterBlesses>( "Pion LOG TrierEtTraiterBlesses", eMission_Pion_LOG_TrierEtTraiterBlesses, T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses, "T_Mission_Pion_LOG_TrierEtTraiterBlesses", "MIS_Pion_LOG_TrierEtTraiterBlesses");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_PrendreEnCompteReactionsMentales>( "Pion LOG PrendreEnCompteReactionsMentales", eMission_Pion_LOG_PrendreEnCompteReactionsMentales, T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales, "T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales", "MIS_Pion_LOG_PrendreEnCompteReactionsMentales");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_DecontaminerBlesses>( "Pion LOG DecontaminerBlesses", eMission_Pion_LOG_DecontaminerBlesses, T_Mission_Pion_mission_pion_log_decontaminer_blesses, "T_Mission_Pion_LOG_DecontaminerBlesses", "MIS_Pion_LOG_DecontaminerBlesses");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Reparer>( "Pion LOG Reparer", eMission_Pion_LOG_Reparer, T_Mission_Pion_mission_pion_log_reparer, "T_Mission_Pion_LOG_Reparer", "MIS_Pion_LOG_Reparer");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Evacuer>( "Pion LOG Evacuer", eMission_Pion_LOG_Evacuer, T_Mission_Pion_mission_pion_log_evacuer, "T_Mission_Pion_LOG_Evacuer", "MIS_Pion_LOG_Evacuer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Convoyer>( "Pion LOG Convoyer", eMission_Pion_LOG_Convoyer, T_Mission_Pion_mission_pion_log_convoyer, "T_Mission_Pion_LOG_Convoyer", "MIS_Pion_LOG_Convoyer");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_DistribuerRessources>( "Pion LOG DistribuerRessources", eMission_Pion_LOG_DistribuerRessources, T_Mission_Pion_mission_pion_log_distribuer_ressources, "T_Mission_Pion_LOG_DistribuerRessources", "MIS_Pion_LOG_DistribuerRessources");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_ConstituerConvoi>( "Pion LOG ConstituerConvoi", eMission_Pion_LOG_ConstituerConvoi, T_Mission_Pion_mission_pion_log_constituer_convoi, "T_Mission_Pion_LOG_ConstituerConvoi", "MIS_Pion_LOG_ConstituerConvoi");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Livrer>( "Pion LOG Livrer", eMission_Pion_LOG_Livrer, T_Mission_Pion_mission_pion_log_livrer, "T_Mission_Pion_LOG_Livrer", "MIS_Pion_LOG_Livrer");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_PreparerBascule>( "Pion LOG PreparerBascule", eMission_Pion_LOG_PreparerBascule, T_Mission_Pion_mission_pion_log_preparer_bascule, "T_Mission_Pion_LOG_PreparerBascule", "MIS_Pion_LOG_PreparerBascule");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Reparer>( "Pion LOG Reparer", eMission_Pion_LOG_Reparer, T_Mission_Pion_mission_pion_log_reparer, "T_Mission_Pion_LOG_Reparer", "MIS_Pion_LOG_Reparer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_AppuyerMouvement>( "Pion LOG AppuyerMouvement", eMission_Pion_LOG_AppuyerMouvement, T_Mission_Pion_mission_pion_log_appuyer_mouvement, "T_Mission_Pion_LOG_AppuyerMouvement", "MIS_Pion_LOG_AppuyerMouvement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_ReconnaitreItineraire>( "Pion LOG ReconnaitreItineraire", eMission_Pion_LOG_ReconnaitreItineraire, T_Mission_Pion_mission_pion_log_reconnaitre_itineraire, "T_Mission_Pion_LOG_ReconnaitreItineraire", "MIS_Pion_LOG_ReconnaitreItineraire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TransporterUnite>( "Pion LOG TransporterUnite", eMission_Pion_LOG_TransporterUnite, T_Mission_Pion_mission_pion_log_transporter_unite, "T_Mission_Pion_LOG_TransporterUnite", "MIS_Pion_LOG_TransporterUnite");

@@ -48,10 +48,13 @@ void Mission_Pawn_LOG_TrierEtTraiterBlesses::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses = &asnMission;
 
     const T_IdVector& blessuresTraitees_ = pTarget_->GetTestParam_MedicalPriorities();
+    const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
     ASN_Tools::CopyMedicalPriorities( blessuresTraitees_, asnMission.blessures_traitees );
+    ASN_Tools::CopyPoint( positionDeploiement_, asnMission.position_deploiement );
 
     delete &blessuresTraitees_;
+    delete &positionDeploiement_;
 
 }
 
@@ -65,6 +68,7 @@ void Mission_Pawn_LOG_TrierEtTraiterBlesses::Clean()
     ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses;
 
     ASN_Tools::Delete( asnMission.blessures_traitees );
+    ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

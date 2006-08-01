@@ -49,9 +49,9 @@ class ParamLocationList : public ParamListView, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamLocationList( ASN1T_ListLocalisation& asnListLoc,   const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-     ParamLocationList( ASN1T_ListPolygon&      asnListPoly,  const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
-     ParamLocationList( ASN1T_ListPoint&        asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+     ParamLocationList( ASN1T_ListLocalisation& asnListLoc,   const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
+     ParamLocationList( ASN1T_ListPolygon&      asnListPoly,  const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
+     ParamLocationList( ASN1T_ListPoint&        asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamLocationList();
     //@}
 

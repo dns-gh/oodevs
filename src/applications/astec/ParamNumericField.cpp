@@ -24,9 +24,9 @@
 // Name: ParamNumericField constructor
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamNumericField::ParamNumericField( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
 : QHBox         ( pParent )
-, Param_ABC ( bOptional )
+, Param_ABC ( pOptional )
 , pAsnInt_      ( &asnInt )
 , pAsnReal_     ( 0 )
 {
@@ -45,9 +45,9 @@ ParamNumericField::ParamNumericField( ASN1INT& asnInt, int nMin, int nMax, int n
 // Name: ParamNumericField constructor
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamNumericField::ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
 : QHBox         ( pParent )
-, Param_ABC ( bOptional )
+, Param_ABC ( pOptional )
 , pAsnInt_      ( 0 )
 , pAsnReal_     ( &asnReal )
 {
@@ -77,6 +77,9 @@ ParamNumericField::~ParamNumericField()
 // -----------------------------------------------------------------------------
 void ParamNumericField::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     strMsg << pLabel_->text().latin1() << ": ";
     bool bOk = false;
     float rValue = pEdit_->text().toFloat( &bOk );

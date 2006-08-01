@@ -27,9 +27,9 @@
 // Name: ParamAgentType constructor
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-ParamAgentType::ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamAgentType::ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QButtonGroup    ( 2, Qt::Horizontal, strLabel.c_str(), pParent )
-    , Param_ABC   ( bOptional )
+    , Param_ABC   ( pOptional )
     , asnNatureAtlas_ ( asnNatureAtlas )
 {
     pArmoredCheckBox_        = new QCheckBox( tr( "Blindé" )         , this );
@@ -63,6 +63,9 @@ ParamAgentType::~ParamAgentType()
 // -----------------------------------------------------------------------------
 void ParamAgentType::WriteMsg( std::stringstream& /*strMsg*/ )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     asnNatureAtlas_.numbits = 11;
     asnNatureAtlas_.data[0] = 0;
     asnNatureAtlas_.data[1] = 0;

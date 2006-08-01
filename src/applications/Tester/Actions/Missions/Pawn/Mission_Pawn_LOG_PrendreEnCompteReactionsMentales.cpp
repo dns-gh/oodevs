@@ -47,8 +47,11 @@ void Mission_Pawn_LOG_PrendreEnCompteReactionsMentales::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_prendre_en_compte_reactions_mentales = &asnMission;
 
+    const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
+    ASN_Tools::CopyPoint( positionDeploiement_, asnMission.position_deploiement );
 
+    delete &positionDeploiement_;
 
 }
 
@@ -61,6 +64,7 @@ void Mission_Pawn_LOG_PrendreEnCompteReactionsMentales::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales );
     ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_prendre_en_compte_reactions_mentales;
 
+    ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

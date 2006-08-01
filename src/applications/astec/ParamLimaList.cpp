@@ -34,9 +34,9 @@
 // Name: ParamLimaList constructor
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamLimaList::ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView( strLabel, true, pParent )
-    , Param_ABC    ( bOptional )
+    , Param_ABC    ( pOptional )
     , asnListLima_     ( asnListLima )
     , pAsnOIDList_     ( 0 )
     , strMenuText_     ( strMenuText )
@@ -98,6 +98,9 @@ void ParamLimaList::WriteMsg( std::stringstream& strMsg )
     asnListLima_.n = this->childCount();
     if( asnListLima_.n == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     strMsg << " [";
 

@@ -33,9 +33,9 @@
 // Name: ParamLimits constructor
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-ParamLimits::ParamLimits( ASN1T_OID& asnLimit1ID, ASN1T_OID& asnLimit2ID, const std::string strLabel, const std::string strMenuText1, const std::string strMenuText2, QWidget* pParent, bool bOptional )
+ParamLimits::ParamLimits( ASN1T_OID& asnLimit1ID, ASN1T_OID& asnLimit2ID, const std::string strLabel, const std::string strMenuText1, const std::string strMenuText2, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox          ( pParent)
-    , Param_ABC  ( bOptional )
+    , Param_ABC  ( pOptional )
     , asnLimit1ID_   ( asnLimit1ID )
     , asnLimit2ID_   ( asnLimit2ID )
     , pLimit1_       ( 0 )
@@ -103,6 +103,8 @@ bool ParamLimits::CheckValidity()
     if(   ( pLimit1_ == 0 && pLimit2_ == 0 )
        || ( pLimit1_ != 0 && pLimit2_ != 0 ) )
        return true;
+
+    assert( !pOptional_ );
 
     pLabel_->TurnRed( 3000 );
     return false;

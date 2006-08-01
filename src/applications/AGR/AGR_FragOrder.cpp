@@ -145,6 +145,12 @@ void AGR_FragOrder::Read( MT_XXmlInputArchive& input, const AGR_Workspace& works
             if( !bOptional )
                 input.ClearLastError();
 
+            bool bCock;
+            if( input.ReadAttribute( "default", bCock ) )
+                bOptional = false;
+            else
+                input.ClearLastError();           
+
             AGR_Member* pMember = 0;
 
             std::string strMemberType;

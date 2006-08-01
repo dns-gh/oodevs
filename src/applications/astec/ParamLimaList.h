@@ -49,7 +49,7 @@ class ParamLimaList : public ParamListView, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+    ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamLimaList();
     //@}
 

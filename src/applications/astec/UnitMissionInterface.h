@@ -28,6 +28,7 @@
 class Mission;
 class ASN_MsgPionOrder;
 class Agent;
+class OptionalParamFunctor_ABC;
 
 // =============================================================================
 // Created: APE 2004-04-20
@@ -64,7 +65,7 @@ private:
     //! @name Member data
     //@{
     uint nMissionId_;
-    ASN_MsgPionOrder* pASNMsgOrder_;
+    ASN_MsgPionOrder*               pASNMsgOrder_;
     //@}
 };
 

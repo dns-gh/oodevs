@@ -37,7 +37,7 @@ class ParamAgentType : public QButtonGroup, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, bool bOptional );
+    ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamAgentType();
     //@}
 

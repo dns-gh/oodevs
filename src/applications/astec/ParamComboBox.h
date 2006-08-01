@@ -44,7 +44,7 @@ class ParamComboBox : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, bool bOptional );
+    ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamComboBox();
     //@}
 
@@ -69,9 +69,9 @@ private:
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
-ParamComboBox<T>::ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, bool bOptional )
+ParamComboBox<T>::ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , output_       ( output )
 {
     pLabel_ = new QLabel( strLabel.c_str(), this );
@@ -109,6 +109,9 @@ void ParamComboBox<T>::AddItem( const std::string strLabel, const T& value )
 template< class T >
 void ParamComboBox<T>::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     output_ = pComboBox_->GetValue();
     strMsg << pLabel_->text().latin1() << ": " << pComboBox_->GetValue();
 }

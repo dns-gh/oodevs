@@ -27,9 +27,9 @@
 // Name: ParamBool constructor
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent, bool bOptional )
+ParamBool::ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QCheckBox     ( strLabel.c_str(), pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , asnBool_      ( asnBool )
 {
     this->setChecked( bDefaultValue );
@@ -51,6 +51,9 @@ ParamBool::~ParamBool()
 // -----------------------------------------------------------------------------
 void ParamBool::WriteMsg( std::stringstream& strMsg )
 {
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     asnBool_ = this->isChecked();
     strMsg << this->text().latin1() << ((this->isChecked()) ? ": true" : ": false");
 }

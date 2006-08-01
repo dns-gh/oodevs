@@ -44,6 +44,7 @@ public:
 
 private:
     static int nDIABlessuresTraiteesIdx_;
+    static int nDIAPositionDeploiementIdx_;
 
 };
 

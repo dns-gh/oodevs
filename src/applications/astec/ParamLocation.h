@@ -48,7 +48,7 @@ class ParamLocation : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData = false );
+     ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional, bool bOutsideData = false );
     virtual ~ParamLocation();
     //@}
 

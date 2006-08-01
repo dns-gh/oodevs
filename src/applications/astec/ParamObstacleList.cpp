@@ -31,9 +31,9 @@
 // Name: ParamObstacleList constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamObstacleList::ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QVBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , asnObjectList_( asnObjectList )
     , pObstacles_   ( 0 )
     , pSelectedItem_( 0 )
@@ -130,8 +130,11 @@ void ParamObstacleList::WriteMsg( std::stringstream& strMsg )
     asnObjectList_.n    = nNbrChilds;
 
     assert( !( nNbrChilds == 0 && !IsOptional() ) );
-    if( nNbrChilds == 0 && IsOptional() )
+    if( nNbrChilds == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     delete[] pObstacles_;
     pObstacles_ = new ASN1T_MissionGenObject[ nNbrChilds ];
@@ -173,7 +176,7 @@ void ParamObstacleList::OnSelectionChanged( QListViewItem* pItem )
         return;
 
     ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
-    pObstacleEditor_ = new ParamObstacle( *pAsnObject, "Obstacle", "Obstacle", this, true, true );
+    pObstacleEditor_ = new ParamObstacle( *pAsnObject, "Obstacle", "Obstacle", this, pOptional_, true );
     pObstacleEditor_->show();
     //$$$$ pas de tr.
 }

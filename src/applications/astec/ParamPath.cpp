@@ -34,9 +34,9 @@
 // Name: ParamPath constructor
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( ASN1T_Itineraire& asnListPoint, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamPath::ParamPath( ASN1T_Itineraire& asnListPoint, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView ( strLabel, false, pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnListPoint_     ( asnListPoint )
     , pUMTCoords_       ( 0 )
@@ -74,7 +74,7 @@ void ParamPath::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext&
 // -----------------------------------------------------------------------------
 bool ParamPath::CheckValidity()
 {
-    if( ! pointList_.empty() )
+    if( ! pointList_.empty() || IsOptional() )
         return true;
 
     // If the pointlist is empty, flash the header red.
@@ -94,6 +94,9 @@ void ParamPath::WriteMsg( std::stringstream& strMsg )
     assert( pointList_.size() >= 1 );
     uint nNbrPoints = pointList_.size();
     strMsg << nNbrPoints << " points. [";
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     asnListPoint_.type               = EnumTypeLocalisation::line;
     asnListPoint_.vecteur_point.n    = nNbrPoints;

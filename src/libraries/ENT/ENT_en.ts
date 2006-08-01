@@ -910,10 +910,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion LOG DistribuerMoyens</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion LOG TrierBlesses</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,10 +923,6 @@
     </message>
     <message>
         <source>Pion LOG Reparer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Evacuer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1099,18 +1091,6 @@
     </message>
     <message>
         <source>Pion ASA MISTRAL Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG DistribuerRessources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG ConstituerConvoi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Livrer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1663,6 +1643,10 @@
     </message>
     <message>
         <source>Pion: Reprendre Aux Ordres Remorqueurs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion LOG Renforcer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3201,10 +3185,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error ravitaillement en cours</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>attente disponibilite ambulance releve</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3502,6 +3482,10 @@
     </message>
     <message>
         <source>regime 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hospitalisation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

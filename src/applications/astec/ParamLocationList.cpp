@@ -34,9 +34,9 @@
 // Name: ParamLocationList constructor
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( ASN1T_ListLocalisation& asnListLoc, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamLocationList::ParamLocationList( ASN1T_ListLocalisation& asnListLoc, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView     ( strLabel, true, pParent )
-    , Param_ABC         ( bOptional )
+    , Param_ABC         ( pOptional )
     , strMenuText_          ( strMenuText )
     , asnListLoc_           ( asnListLoc )
     , pAsnLocalisationList_ ( 0 )
@@ -59,9 +59,9 @@ ParamLocationList::ParamLocationList( ASN1T_ListLocalisation& asnListLoc, const 
 // Name: ParamLocationList constructor
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( ASN1T_ListPolygon& asnListPoly, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamLocationList::ParamLocationList( ASN1T_ListPolygon& asnListPoly, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView ( strLabel, true, pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnListLoc_       ( (ASN1T_ListLocalisation&)asnListPoly )
     , pAsnLocalisationList_ ( 0 )
@@ -80,9 +80,9 @@ ParamLocationList::ParamLocationList( ASN1T_ListPolygon& asnListPoly, const std:
 // Name: ParamLocationList constructor
 // Created: APE 2004-09-07
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( ASN1T_ListPoint& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamLocationList::ParamLocationList( ASN1T_ListPoint& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView ( strLabel, true, pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnListLoc_       ( (ASN1T_ListLocalisation&)asnListPoint )
     , pAsnLocalisationList_ ( 0 )
@@ -133,13 +133,12 @@ void ParamLocationList::FillRemotePopupMenu( QPopupMenu& popupMenu, const Action
 // -----------------------------------------------------------------------------
 bool ParamLocationList::CheckValidity()
 {
-    if( this->childCount() > 0 )
+    if( this->childCount() > 0 || IsOptional() )
         return true;
 
     this->TurnHeaderRed( 3000 );
     return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocationList::WriteMsg
@@ -152,9 +151,11 @@ void ParamLocationList::WriteMsg( std::stringstream& strMsg )
     uint nNbrChilds = this->childCount();
     asnListLoc_.n = nNbrChilds;
 
-    assert( !( nNbrChilds == 0 && ! IsOptional() ) );
-    if( nNbrChilds == 0 && IsOptional() )
+    if( nNbrChilds == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     delete[] pAsnLocalisationList_;
     pAsnLocalisationList_ = new ASN1T_Localisation[ nNbrChilds ];

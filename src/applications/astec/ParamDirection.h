@@ -46,7 +46,7 @@ class ParamDirection : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent, bool bOptional );
+     ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamDirection();
     //@}
 

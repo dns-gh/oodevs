@@ -20,6 +20,7 @@
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
+int MIL_PionMission_LOG_DecontaminerBlesses::nDIAPositionDeploiementIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -29,7 +30,8 @@
 // static
 void MIL_PionMission_LOG_DecontaminerBlesses::InitializeDIA( const MIL_PionMissionType& type )
 {
-    (void)DEC_Tools::GetDIAType( type.GetDIATypeName() );
+    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
+    nDIAPositionDeploiementIdx_ = DEC_Tools::InitializeDIAField( "positionDeploiement_", diaType );
 
 }
 
@@ -65,6 +67,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_DecontaminerBlesses::Initialize( co
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
+    const ASN1T_Mission_Pion_LOG_DecontaminerBlesses& asnMission = *asnMsg.mission.u.mission_pion_log_decontaminer_blesses;
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.m.position_deploiementPresent ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -79,7 +84,7 @@ bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-
+    
     return true;    
 }
 
@@ -93,6 +98,7 @@ bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( MIL_PionMission_ABC& m
         return false;
     MIL_PionMission_LOG_DecontaminerBlesses& mission = static_cast< MIL_PionMission_LOG_DecontaminerBlesses& >( missionTmp );
 
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), GetVariable( nDIAPositionDeploiementIdx_ ) );
 
     return true;
 }                                                                    
@@ -103,7 +109,7 @@ bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( MIL_PionMission_ABC& m
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DecontaminerBlesses::Terminate()
 {
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 
@@ -123,6 +129,7 @@ void MIL_PionMission_LOG_DecontaminerBlesses::Serialize( ASN1T_MsgPionOrder& asn
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_log_decontaminer_blesses;
     asnMsg.mission.u.mission_pion_log_decontaminer_blesses  = &asnMission;
 
+    NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement );
 
 }
 
@@ -135,6 +142,7 @@ void MIL_PionMission_LOG_DecontaminerBlesses::CleanAfterSerialization( ASN1T_Msg
     assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_log_decontaminer_blesses );
     ASN1T_Mission_Pion_LOG_DecontaminerBlesses& asnMission = *asnMsg.mission.u.mission_pion_log_decontaminer_blesses;
 
+    NET_ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
 

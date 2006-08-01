@@ -23,6 +23,7 @@
 #include "AGR_pch.h"
 #include "AGR_Type_ABC.h"
 #include "AGR_Member.h"
+#include "AGR_Class.h"
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Type_ABC constructor
@@ -147,8 +148,37 @@ std::string AGR_Type_ABC::MissionInitialisationCode( const AGR_Member& member ) 
 // -----------------------------------------------------------------------------
 std::string AGR_Type_ABC::Mos2InitialisationCode( const AGR_Member& member ) const
 {
-    return "    Create" + strFunctionSuffix_ + "( " + member.Mos2ASNPrefixedName() + ", \"" 
-            + member.HumanName() + "\", " + ( member.IsOptional() ? "true" : "false" ) + " );\n";
+    std::string strTmp = "    Create" + strFunctionSuffix_ + "( " + member.Mos2ASNPrefixedName() + ", \"" 
+                            + member.HumanName() + "\"";
+
+    if( member.IsOptional() )
+        strTmp += ", BuildOptionalParamFunctor< OptionalParamFunctor_" + member.OwnerClass().Name() + "_" + member.ASNName()
+               +                          ", ASN1T_" + member.OwnerClass().Name() + ">( asnMission )";
+
+    strTmp += ");\n";
+    return strTmp;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::Mos2OptionalParamCode
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::Mos2OptionalParamCode( const AGR_Member& member ) const
+{
+    if( !member.IsOptional() ) 
+        return "";
+
+    std::string strTmp  = "class OptionalParamFunctor_"  + member.OwnerClass().Name() + "_" + member.ASNName() + " : public OptionalParamFunctor_ABC\n"
+                        + "{\n"
+                        + "public:\n"
+                        + "    OptionalParamFunctor_"  + member.OwnerClass().Name() + "_" + member.ASNName() + "( ASN1T_" + member.OwnerClass().Name() +  "&asnMission )\n"
+                        + "      : pAsnMission_( &asnMission ){}\n"
+                        + "    virtual void SetOptionalPresent(){\n"
+                        + "        pAsnMission_->m." + member.ASNName() + "Present = 1;}\n"
+                        + "private:\n"
+                        + "    ASN1T_" + member.OwnerClass().Name() + "* pAsnMission_;\n"
+                        + "};\n\n";
+    return strTmp;                            
 }
 
 // -----------------------------------------------------------------------------

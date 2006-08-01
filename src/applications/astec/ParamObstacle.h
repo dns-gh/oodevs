@@ -46,7 +46,7 @@ class ParamObstacle : public QGroupBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData = false );
+     ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional, bool bOutsideData = false );
     ~ParamObstacle();
     //@}
 

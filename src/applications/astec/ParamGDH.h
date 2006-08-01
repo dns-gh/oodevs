@@ -41,7 +41,7 @@ class ParamGDH : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent, bool bOptional );
+    ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamGDH();
     //@}
 

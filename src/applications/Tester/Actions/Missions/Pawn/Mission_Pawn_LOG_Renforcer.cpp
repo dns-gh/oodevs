@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "Tester_pch.h"
-#include "Mission_Pawn_LOG_DistribuerMoyens.h"
+#include "Mission_Pawn_LOG_Renforcer.h"
 #include "Entities/Pawn.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/ASN_Tools.h"
@@ -16,51 +16,56 @@
 using namespace TEST;
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_LOG_DistribuerMoyens constructor
+// Name: Mission_Pawn_LOG_Renforcer constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_DistribuerMoyens::Mission_Pawn_LOG_DistribuerMoyens( Pawn& pawn )
-    : Mission_Pawn_ABC ( "Pawn_LOG_DistribuerMoyens", pawn )
+Mission_Pawn_LOG_Renforcer::Mission_Pawn_LOG_Renforcer( Pawn& pawn )
+    : Mission_Pawn_ABC ( "Pawn_LOG_Renforcer", pawn )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_LOG_DistribuerMoyens destructor
+// Name: Mission_Pawn_LOG_Renforcer destructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_DistribuerMoyens::~Mission_Pawn_LOG_DistribuerMoyens()
+Mission_Pawn_LOG_Renforcer::~Mission_Pawn_LOG_Renforcer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_LOG_DistribuerMoyens::Serialize
+// Name: Mission_Pawn_LOG_Renforcer::Serialize
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-void Mission_Pawn_LOG_DistribuerMoyens::Serialize()
+void Mission_Pawn_LOG_Renforcer::Serialize()
 {
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_DistribuerMoyens& asnMission = *new ASN1T_Mission_Pion_LOG_DistribuerMoyens();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_distribuer_moyens;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_distribuer_moyens = &asnMission;
+    ASN1T_Mission_Pion_LOG_Renforcer& asnMission = *new ASN1T_Mission_Pion_LOG_Renforcer();
+    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_renforcer;
+    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_renforcer = &asnMission;
 
+    const Position& lieuRenforcement_ = pTarget_->GetTestParam_Point();
 
+    ASN_Tools::CopyPoint( lieuRenforcement_, asnMission.lieu_renforcement );
+    ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.automate );
 
+    delete &lieuRenforcement_;
 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_LOG_DistribuerMoyens::Clean
+// Name: Mission_Pawn_LOG_Renforcer::Clean
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Mission_Pawn_LOG_DistribuerMoyens::Clean()
+void Mission_Pawn_LOG_Renforcer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_distribuer_moyens );
-    ASN1T_Mission_Pion_LOG_DistribuerMoyens& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_distribuer_moyens;
+    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_renforcer );
+    ASN1T_Mission_Pion_LOG_Renforcer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_renforcer;
 
+    ASN_Tools::Delete( asnMission.lieu_renforcement );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

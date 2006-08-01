@@ -9,67 +9,16 @@ ScipioPionMission_LOG DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, 
         Point, ListPoint, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
 
--- SANTE
-
-Mission-Pion-LOG-DistribuerMoyens ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-TrierBlesses ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-TraiterBlesses ::= SEQUENCE
-{
-    blessures-traitees SantePriorites
-}
-
-Mission-Pion-LOG-TrierEtTraiterBlesses ::= SEQUENCE
-{
-    blessures-traitees SantePriorites
-}
-
-Mission-Pion-LOG-PrendreEnCompteReactionsMentales ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-DecontaminerBlesses ::= SEQUENCE
-{
-}
-
--- MAINTENANCE
-
-Mission-Pion-LOG-Reparer ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-Evacuer ::= SEQUENCE
-{
-}
-
-
--- RAV
-
-Mission-Pion-LOG-Convoyer ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-DistribuerRessources ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-ConstituerConvoi ::= SEQUENCE
-{
-}
-
-Mission-Pion-LOG-Livrer ::= SEQUENCE
-{
-}
-
 -- COMMUNES
 Mission-Pion-LOG-SeDeployer ::= SEQUENCE
 {
-    position-deploiement    Point
+    position-deploiement Point OPTIONAL
+}
+
+Mission-Pion-LOG-Renforcer ::= SEQUENCE
+{
+    lieu-renforcement   Point,
+    automate            Automate
 }
 
 Mission-Pion-LOG-PreparerBascule ::= SEQUENCE
@@ -78,6 +27,47 @@ Mission-Pion-LOG-PreparerBascule ::= SEQUENCE
     rester-sur-place      BOOLEAN
 }
 
+-- SANTE
+
+Mission-Pion-LOG-DecontaminerBlesses ::= SEQUENCE
+{
+    position-deploiement Point OPTIONAL
+}
+
+Mission-Pion-LOG-TrierEtTraiterBlesses ::= SEQUENCE
+{
+    blessures-traitees   SantePriorites,
+    position-deploiement Point OPTIONAL
+}
+
+Mission-Pion-LOG-TrierBlesses ::= SEQUENCE
+{
+    position-deploiement Point OPTIONAL
+}
+
+Mission-Pion-LOG-TraiterBlesses ::= SEQUENCE
+{
+    blessures-traitees   SantePriorites,
+    position-deploiement Point OPTIONAL    
+}
+
+Mission-Pion-LOG-PrendreEnCompteReactionsMentales ::= SEQUENCE
+{
+    position-deploiement Point OPTIONAL
+}
+
+-- RAV
+
+Mission-Pion-LOG-Convoyer ::= SEQUENCE
+{
+}
+
+-- MAINTENANCE
+
+Mission-Pion-LOG-Reparer ::= SEQUENCE
+{
+    position-deploiement Point OPTIONAL
+}
 
 -- CIRCULATION
 

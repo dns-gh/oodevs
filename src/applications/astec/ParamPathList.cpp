@@ -32,9 +32,9 @@
 // Name: ParamPathList constructor
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( ASN1T_ListItineraire& asnPathList, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional )
+ParamPathList::ParamPathList( ASN1T_ListItineraire& asnPathList, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : ParamListView( strLabel, true, pParent )
-    , Param_ABC     ( bOptional )
+    , Param_ABC     ( pOptional )
     , strMenuText_      ( strMenuText )
     , asnPathList_      ( asnPathList )
     , pLocalisations_   ( 0 )
@@ -80,6 +80,9 @@ bool ParamPathList::CheckValidity()
 {
     if( this->childCount() >= nMinItems_ && this->childCount() <= nMaxItems_ )
         return true;
+    
+    if( IsOptional() )
+        return true;
 
     this->TurnHeaderRed( 3000 );
     return false;
@@ -98,6 +101,9 @@ void ParamPathList::WriteMsg( std::stringstream& strMsg )
     asnPathList_.n    = nNbrChildren;
     if( nNbrChildren == 0 )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     delete[] pLocalisations_;
     pLocalisations_ = new ASN1T_Itineraire[ nNbrChildren ];

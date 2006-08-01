@@ -148,19 +148,15 @@
 #include "Pawn/Mission_Pawn_INF_RepondreAAggression.cpp"
 #include "Pawn/Mission_Pawn_INF_AppuyerSurPosition.cpp"
 #include "Pawn/Mission_Pawn_LOG_SeDeployer.cpp"
-#include "Pawn/Mission_Pawn_LOG_DistribuerMoyens.cpp"
+#include "Pawn/Mission_Pawn_LOG_Renforcer.cpp"
+#include "Pawn/Mission_Pawn_LOG_PreparerBascule.cpp"
+#include "Pawn/Mission_Pawn_LOG_DecontaminerBlesses.cpp"
+#include "Pawn/Mission_Pawn_LOG_TrierEtTraiterBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_TrierBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_TraiterBlesses.cpp"
-#include "Pawn/Mission_Pawn_LOG_TrierEtTraiterBlesses.cpp"
 #include "Pawn/Mission_Pawn_LOG_PrendreEnCompteReactionsMentales.cpp"
-#include "Pawn/Mission_Pawn_LOG_DecontaminerBlesses.cpp"
-#include "Pawn/Mission_Pawn_LOG_Reparer.cpp"
-#include "Pawn/Mission_Pawn_LOG_Evacuer.cpp"
 #include "Pawn/Mission_Pawn_LOG_Convoyer.cpp"
-#include "Pawn/Mission_Pawn_LOG_DistribuerRessources.cpp"
-#include "Pawn/Mission_Pawn_LOG_ConstituerConvoi.cpp"
-#include "Pawn/Mission_Pawn_LOG_Livrer.cpp"
-#include "Pawn/Mission_Pawn_LOG_PreparerBascule.cpp"
+#include "Pawn/Mission_Pawn_LOG_Reparer.cpp"
 #include "Pawn/Mission_Pawn_LOG_AppuyerMouvement.cpp"
 #include "Pawn/Mission_Pawn_LOG_ReconnaitreItineraire.cpp"
 #include "Pawn/Mission_Pawn_LOG_TransporterUnite.cpp"
@@ -395,19 +391,15 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_INF_RepondreAAggression >( "Pion INF RepondreAAggression" );
     Register< Mission_Pawn_INF_AppuyerSurPosition >( "Pion INF AppuyerSurPosition" );
     Register< Mission_Pawn_LOG_SeDeployer >( "Pion LOG SeDeployer" );
-    Register< Mission_Pawn_LOG_DistribuerMoyens >( "Pion LOG DistribuerMoyens" );
+    Register< Mission_Pawn_LOG_Renforcer >( "Pion LOG Renforcer" );
+    Register< Mission_Pawn_LOG_PreparerBascule >( "Pion LOG PreparerBascule" );
+    Register< Mission_Pawn_LOG_DecontaminerBlesses >( "Pion LOG DecontaminerBlesses" );
+    Register< Mission_Pawn_LOG_TrierEtTraiterBlesses >( "Pion LOG TrierEtTraiterBlesses" );
     Register< Mission_Pawn_LOG_TrierBlesses >( "Pion LOG TrierBlesses" );
     Register< Mission_Pawn_LOG_TraiterBlesses >( "Pion LOG TraiterBlesses" );
-    Register< Mission_Pawn_LOG_TrierEtTraiterBlesses >( "Pion LOG TrierEtTraiterBlesses" );
     Register< Mission_Pawn_LOG_PrendreEnCompteReactionsMentales >( "Pion LOG PrendreEnCompteReactionsMentales" );
-    Register< Mission_Pawn_LOG_DecontaminerBlesses >( "Pion LOG DecontaminerBlesses" );
-    Register< Mission_Pawn_LOG_Reparer >( "Pion LOG Reparer" );
-    Register< Mission_Pawn_LOG_Evacuer >( "Pion LOG Evacuer" );
     Register< Mission_Pawn_LOG_Convoyer >( "Pion LOG Convoyer" );
-    Register< Mission_Pawn_LOG_DistribuerRessources >( "Pion LOG DistribuerRessources" );
-    Register< Mission_Pawn_LOG_ConstituerConvoi >( "Pion LOG ConstituerConvoi" );
-    Register< Mission_Pawn_LOG_Livrer >( "Pion LOG Livrer" );
-    Register< Mission_Pawn_LOG_PreparerBascule >( "Pion LOG PreparerBascule" );
+    Register< Mission_Pawn_LOG_Reparer >( "Pion LOG Reparer" );
     Register< Mission_Pawn_LOG_AppuyerMouvement >( "Pion LOG AppuyerMouvement" );
     Register< Mission_Pawn_LOG_ReconnaitreItineraire >( "Pion LOG ReconnaitreItineraire" );
     Register< Mission_Pawn_LOG_TransporterUnite >( "Pion LOG TransporterUnite" );

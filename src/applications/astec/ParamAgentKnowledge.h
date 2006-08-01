@@ -43,7 +43,7 @@ class ParamAgentKnowledge : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamAgentKnowledge( ASN1T_KnowledgeAgent& asnKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+    ParamAgentKnowledge( ASN1T_KnowledgeAgent& asnKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamAgentKnowledge();
     //@}
 

@@ -42,8 +42,8 @@ class ParamNumericField
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamNumericField( ASN1INT& asnInt,     int nMin,   int nMax,   int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional );
-    ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional );
+    ParamNumericField( ASN1INT& asnInt,     int nMin,   int nMax,   int nDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
+    ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamNumericField();
     //@}
 

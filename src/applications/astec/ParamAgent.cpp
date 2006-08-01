@@ -31,9 +31,9 @@
 // Name: ParamAgent constructor
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
-ParamAgent::ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamAgent::ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , strMenuText_  ( strMenuText )
     , asnAgent_     ( asnAgent )
     , pPopupAgent_  ( 0 )
@@ -78,7 +78,7 @@ void ParamAgent::FillRemotePopupMenu( QPopupMenu& popupMenu, const ActionContext
 // -----------------------------------------------------------------------------
 bool ParamAgent::CheckValidity()
 {
-    if( pAgent_ != 0 )
+    if( pAgent_ != 0 || IsOptional() )
         return true;
 
     pLabel_->TurnRed( 3000 );
@@ -92,9 +92,12 @@ bool ParamAgent::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamAgent::WriteMsg( std::stringstream& strMsg )
 {
-    assert( pAgent_ != 0 && !IsOptional() );
-    if( pAgent_ == 0 && IsOptional() )
+    if( pAgent_ )
         return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
+
     strMsg << pLabel_->text().latin1() << ": agent #" << pAgent_->GetID();
     asnAgent_ = pAgent_->GetID();
 }

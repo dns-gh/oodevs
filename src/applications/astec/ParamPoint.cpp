@@ -27,14 +27,15 @@
 #include "App.h"
 #include "World.h"
 #include "ActionContext.h"
+#include "OptionalParamFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
+ParamPoint::ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional )
     : QHBox         ( pParent )
-    , Param_ABC ( bOptional )
+    , Param_ABC ( pOptional )
     , asnPoint_     ( asnPoint )
     , strMenuText_  ( strMenuText )
     , point_        ( 0.0, 0.0 )
@@ -64,7 +65,7 @@ ParamPoint::~ParamPoint()
 // -----------------------------------------------------------------------------
 bool ParamPoint::CheckValidity()
 {
-    if( pPosLabel_->text() == "---" )
+    if( pPosLabel_->text() == "---" && !IsOptional() )
     {
         pLabel_->TurnRed( 3000 );
         return false;
@@ -80,6 +81,12 @@ bool ParamPoint::CheckValidity()
 void ParamPoint::WriteMsg( std::stringstream& strMsg )
 {
     strMsg << pLabel_->text().latin1() << ": ";
+
+    if( pPosLabel_->text() == "---" )
+        return;
+
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 
     asnPoint_.type                  = EnumTypeLocalisation::point;
     asnPoint_.vecteur_point.n       = 1;

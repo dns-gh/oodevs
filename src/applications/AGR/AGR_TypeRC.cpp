@@ -49,6 +49,13 @@ AGR_TypeRC::Param::Param( MT_XXmlInputArchive& input, const AGR_Workspace& works
     bool bOptional = input.ReadAttribute( "minOccurs", nTmp );
     if( !bOptional )
         input.ClearLastError();
+
+    bool bCock;
+    if( input.ReadAttribute( "default", bCock ) )
+        bOptional = false;
+    else
+        input.ClearLastError();           
+
     input.EnableExceptions( true );
 
     input.EndSection(); // xsd:element

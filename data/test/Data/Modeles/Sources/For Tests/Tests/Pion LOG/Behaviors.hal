@@ -232,6 +232,11 @@ behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDum
     
         if( DIA_ModuleBegins() )
         {
+            if( mission.positionDeploiement_ == 0 )
+                DEC_Debug( "Pas de position de deploiement" );
+            else
+                DEC_Debug( "Position de deploiement : " + DEC_PointToString( mission.positionDeploiement_  ) );
+        
             DEC_Maintenance_ActiverChaine();
             DEC_Sante_ActiverChaine();
             DEC_Ravitaillement_ActiverChaine();
@@ -501,7 +506,7 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
     }
     on spontaneous end:
     {
-        DEC_Ravitaillement_Convoi_FinMission();
+        //DEC_Ravitaillement_Convoi_FinMission();
         if( supplyAction != 0 )
             DEC_StopAction( supplyAction );
     }   

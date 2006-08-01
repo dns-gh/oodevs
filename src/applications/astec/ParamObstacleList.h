@@ -49,7 +49,7 @@ class ParamObstacleList : public QVBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+     ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamObstacleList();
     //@}
 

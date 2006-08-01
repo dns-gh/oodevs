@@ -52,7 +52,7 @@ class ParamObjectKnowledgeList : public ParamListView, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional );
+    ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamObjectKnowledgeList();
     //@}
 

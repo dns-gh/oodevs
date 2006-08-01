@@ -991,7 +991,7 @@
     </message>
     <message>
         <source>Pion LOG DistribuerMoyens</source>
-        <translation>Pion LOG DistribuerMoyens</translation>
+        <translation type="obsolete">Pion LOG DistribuerMoyens</translation>
     </message>
     <message>
         <source>Pion LOG TrierBlesses</source>
@@ -1023,7 +1023,7 @@
     </message>
     <message>
         <source>Pion LOG Evacuer</source>
-        <translation>Pion LOG Evacuer</translation>
+        <translation type="obsolete">Pion LOG Evacuer</translation>
     </message>
     <message>
         <source>Pion LOG Convoyer</source>
@@ -1343,15 +1343,15 @@
     </message>
     <message>
         <source>Pion LOG DistribuerRessources</source>
-        <translation>Pion LOG DistribuerRessources</translation>
+        <translation type="obsolete">Pion LOG DistribuerRessources</translation>
     </message>
     <message>
         <source>Pion LOG ConstituerConvoi</source>
-        <translation>Pion LOG ConstituerConvoi</translation>
+        <translation type="obsolete">Pion LOG ConstituerConvoi</translation>
     </message>
     <message>
         <source>Pion LOG Livrer</source>
-        <translation>Pion LOG Livrer</translation>
+        <translation type="obsolete">Pion LOG Livrer</translation>
     </message>
     <message>
         <source>Pion LOG Basculer</source>
@@ -1931,6 +1931,10 @@
     </message>
     <message>
         <source>Pion: Reprendre Aux Ordres Remorqueurs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion LOG Renforcer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3469,10 +3473,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error ravitaillement en cours</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>attente disponibilite ambulance releve</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3770,6 +3770,10 @@
     </message>
     <message>
         <source>regime 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hospitalisation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

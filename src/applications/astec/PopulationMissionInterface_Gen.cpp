@@ -55,7 +55,7 @@ void PopulationMissionInterface::CreateMission_FaireMouvement()
     ASN1T_Mission_Population_FaireMouvement& asnMission = *new ASN1T_Mission_Population_FaireMouvement();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Population_mission_population_faire_mouvement;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_population_faire_mouvement = &asnMission;
-    CreatePoint( asnMission.destination, "Destination", false );
+    CreatePoint( asnMission.destination, "Destination");
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void PopulationMissionInterface::CreateMission_Manifester()
     ASN1T_Mission_Population_Manifester& asnMission = *new ASN1T_Mission_Population_Manifester();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Population_mission_population_manifester;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_population_manifester = &asnMission;
-    CreatePoint( asnMission.destination, "Destination", false );
+    CreatePoint( asnMission.destination, "Destination");
 }
 
 // -----------------------------------------------------------------------------

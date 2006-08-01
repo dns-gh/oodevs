@@ -48,7 +48,7 @@ class ParamAgent : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+    ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
     ~ParamAgent();
     //@}
 

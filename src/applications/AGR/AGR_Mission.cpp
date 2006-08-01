@@ -80,6 +80,11 @@ void AGR_Mission::Read( MT_XXmlInputArchive& input, const AGR_Workspace& workspa
             if( !bOptional )
                 input.ClearLastError();
 
+            bool bCock;
+            if( input.ReadAttribute( "default", bCock ) )
+                bOptional = false;
+            else
+                input.ClearLastError();           
 
             AGR_Member* pMember = 0;
             const AGR_Enumeration* pEnumeration = 0;
@@ -429,6 +434,12 @@ std::string AGR_Mission::GenerateMos2Implementation() const
               << "// Created: AGR\n"
               << "// -----------------------------------------------------------------------------\n";
 
+    // Optional parameter functors creation
+    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
+    {
+        const AGR_Member& member = **it;
+        strResult << member.Mos2OptionalParamCode();
+    }
 
     // model : void MissionPion::CreateMission_DestroyObject() {
     strResult << "void " << strFunctionName << "()\n"
