@@ -21,6 +21,50 @@ const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Medical::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::EnableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePionLOG_Medical::EnableHealingFunction()
+{
+    bHealingFunctionEnabled_ = true;
+    // bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::DisableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePionLOG_Medical::DisableHealingFunction()
+{
+    bHealingFunctionEnabled_ = false;
+    // bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::EnableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePionLOG_Medical::EnableSortingFunction()
+{
+    bSortingFunctionEnabled_ = true;
+    // bHasChanged_    = true; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::DisableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePionLOG_Medical::DisableSortingFunction()
+{
+    bSortingFunctionEnabled_ = false;
+    // bHasChanged_    = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::EnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -41,7 +85,6 @@ void PHY_RolePionLOG_Medical::DisableSystem()
     bSystemEnabled_ = false;
     bHasChanged_    = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::ReserveForSorting

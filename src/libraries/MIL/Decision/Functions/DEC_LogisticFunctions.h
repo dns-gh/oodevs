@@ -42,11 +42,19 @@ public:
     //@{
     static void PionMedicalEnableSystem            ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMedicalDisableSystem           ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void PionMedicalEnableSortingFunction   ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void PionMedicalDisableSortingFunction  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void PionMedicalEnableHealingFunction   ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void PionMedicalDisableHealingFunction  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMedicalChangePriorities        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void PionMedicalChangeTacticalPriorities( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
 
     static void AutomateMedicalEnableSystem            ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMedicalDisableSystem           ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AutomateMedicalEnableSortingFunction   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AutomateMedicalDisableSortingFunction  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AutomateMedicalEnableHealingFunction   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void AutomateMedicalDisableHealingFunction  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMedicalChangePriorities        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateMedicalChangeTacticalPriorities( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 

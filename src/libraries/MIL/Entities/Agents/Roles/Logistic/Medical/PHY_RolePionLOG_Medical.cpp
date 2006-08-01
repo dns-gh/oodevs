@@ -35,16 +35,18 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Medical, "PHY_RolePionLOG_Medical" )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_AgentPionLOG_ABC& pion )
-    : PHY_RolePion_Medical   ( role )
-    , pPion_                 ( &pion )
-    , bHasChanged_           ( true )
-    , bSystemEnabled_        ( false )
-    , priorities_            ()
-    , tacticalPriorities_    ()
-    , consigns_              ()
-    , evacuationAmbulances_  ()
-    , collectionAmbulances_  ()
-    , reservations_          ()
+    : PHY_RolePion_Medical    ( role )
+    , pPion_                  ( &pion )
+    , bHasChanged_            ( true )
+    , bSystemEnabled_         ( false )
+    , bSortingFunctionEnabled_( false )
+    , bHealingFunctionEnabled_( false )
+    , priorities_             ()
+    , tacticalPriorities_     ()
+    , consigns_               ()
+    , evacuationAmbulances_   ()
+    , collectionAmbulances_   ()
+    , reservations_           ()
 {
     priorities_.reserve( 5 );
     priorities_.push_back( & PHY_HumanWound::woundedUE_  );
@@ -60,16 +62,18 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MT_RoleContainer& role, MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical()
-    : PHY_RolePion_Medical   ()
-    , pPion_                 ( 0 )
-    , bHasChanged_           ( true )
-    , bSystemEnabled_        ( false )
-    , priorities_            ()
-    , tacticalPriorities_    ()
-    , consigns_              ()
-    , evacuationAmbulances_  ()
-    , collectionAmbulances_  ()
-    , reservations_          ()
+    : PHY_RolePion_Medical    ()
+    , pPion_                  ( 0 )
+    , bHasChanged_            ( true )
+    , bSystemEnabled_         ( false )
+    , bSortingFunctionEnabled_( false )
+    , bHealingFunctionEnabled_( false )
+    , priorities_             ()
+    , tacticalPriorities_     ()
+    , consigns_               ()
+    , evacuationAmbulances_   ()
+    , collectionAmbulances_   ()
+    , reservations_           ()
 {
 }
 
@@ -229,6 +233,9 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< PHY_RolePion_Medical >( *this )
          >> pPion_
+         >> bSystemEnabled_
+         >> bSortingFunctionEnabled_
+         >> bHealingFunctionEnabled_
          >> priorities_
          >> tacticalPriorities_
          >> evacuationAmbulances_
@@ -258,6 +265,9 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const uint )
 {
     file << boost::serialization::base_object< PHY_RolePion_Medical >( *this )
          << pPion_
+         << bSystemEnabled_
+         << bSortingFunctionEnabled_
+         << bHealingFunctionEnabled_
          << priorities_
          << tacticalPriorities_
          << evacuationAmbulances_
@@ -620,7 +630,7 @@ void PHY_RolePionLOG_Medical::HandleHumanForSorting( const PHY_MedicalCollection
 // -----------------------------------------------------------------------------
 int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/ ) const
 {
-    if( !bSystemEnabled_ || !HasUsableDoctorForSorting() )
+    if( !bSystemEnabled_ || !bSortingFunctionEnabled_ || !HasUsableDoctorForSorting() )
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
@@ -629,15 +639,6 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCo
     uint nNbrDoctorsAvailable = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-
-/*    int nScore = nNbrDoctorsAvailable - consigns_.size();
-    if( HasUsableDoctorForHealing() )
-    {
-        if( ambulance.IsAnEmergency() )
-            nScore += 100;
-        else
-            nScore -= 5;
-    }*/
 
     int nScore = nNbrDoctorsAvailable;
     for( CIT_CollectionAmbulancesSet itReservation = reservations_.begin(); itReservation != reservations_.end(); ++itReservation )
@@ -652,7 +653,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCo
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& humanState )
 {
-    if( !bSystemEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
+    if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return false;
 
     PHY_MedicalHealingConsign* pConsign = new PHY_MedicalHealingConsign( *this, humanState );
@@ -666,7 +667,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 // -----------------------------------------------------------------------------
 int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanState& humanState )
 {
-    if( !bSystemEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
+    if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;

@@ -225,6 +225,42 @@ void DEC_LogisticFunctions::PionMedicalDisableSystem( DIA_Call_ABC& /*call*/, MI
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::PionMedicalEnableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Medical >().EnableSortingFunction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::PionMedicalDisableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Medical >().DisableSortingFunction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::PionMedicalEnableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Medical >().EnableHealingFunction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::PionMedicalDisableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Medical >().DisableHealingFunction();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMedicalChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -271,6 +307,42 @@ void DEC_LogisticFunctions::AutomateMedicalEnableSystem( DIA_Call_ABC& call, MIL
 void DEC_LogisticFunctions::AutomateMedicalDisableSystem( DIA_Call_ABC& call, MIL_Automate&  callerAutomate )
 {
     PionMedicalDisableSystem( call, callerAutomate.GetPionPC() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    PionMedicalEnableSortingFunction( call, callerAutomate.GetPionPC() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    PionMedicalDisableSortingFunction( call, callerAutomate.GetPionPC() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    PionMedicalEnableHealingFunction( call, callerAutomate.GetPionPC() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    PionMedicalDisableHealingFunction( call, callerAutomate.GetPionPC() );
 }
 
 // -----------------------------------------------------------------------------

@@ -75,6 +75,7 @@ void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RolePion_Supply >( *this )
          & pPion_
+         & bSystemEnabled_
          & pStocks_;
 }
 

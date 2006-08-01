@@ -155,6 +155,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uin
 {
     file >> boost::serialization::base_object< PHY_RolePion_Maintenance >( *this )
          >> pPion_
+         >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
          
@@ -185,6 +186,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
 {
     file << boost::serialization::base_object< PHY_RolePion_Maintenance >( *this )
          << pPion_
+         << bSystemEnabled_
          << priorities_
          << tacticalPriorities_
          << pWorkRate_->GetAsnID()

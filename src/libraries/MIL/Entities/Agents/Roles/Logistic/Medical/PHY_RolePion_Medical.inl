@@ -138,6 +138,46 @@ void PHY_RolePion_Medical::DisableSystem()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::EnableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Medical::EnableHealingFunction()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::DisableHealingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Medical::DisableHealingFunction()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::EnableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Medical::EnableSortingFunction()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::DisableSortingFunction
+// Created: NLD 2006-08-01
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Medical::DisableSortingFunction()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Medical::ChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------

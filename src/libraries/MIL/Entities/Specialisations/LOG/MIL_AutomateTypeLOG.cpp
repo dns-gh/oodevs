@@ -31,6 +31,10 @@ MIL_AutomateTypeLOG::MIL_AutomateTypeLOG( const std::string& strName, MIL_InputA
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalEnableSystem            , "DEC_Sante_ActiverChaine"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalDisableSystem           , "DEC_Sante_DesactiverChaine"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction   , "DEC_Sante_ActiverFonctionTri"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction  , "DEC_Sante_DesactiverFonctionTri"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction   , "DEC_Sante_ActiverFonctionSoin"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction  , "DEC_Sante_DesactiverFonctionSoin"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalChangePriorities        , "DEC_Sante_ChangerPriorites"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities, "DEC_Sante_ChangerPrioritesTactiques" );
 

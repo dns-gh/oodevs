@@ -26,7 +26,24 @@
         <Mission nom="Pion Test MoveTo"/>
         <Mission nom="Pion Test CreateBypass"/>
         <Mission nom="Pion LOG Convoyer"/>
-        <Mission nom="Pion LOG TraiterBlesses"/>
+        <Mission nom="Pion LOG TraiterBlesses">
+            <OrdresConduite>
+                <OrdreConduite nom="ModifierPrioritesBlesses"/>
+                <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion LOG TrierBlesses">
+            <OrdresConduite>
+                <OrdreConduite nom="ModifierPrioritesBlesses"/>
+                <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion LOG TrierEtTraiterBlesses">
+            <OrdresConduite>
+                <OrdreConduite nom="ModifierPrioritesBlesses"/>
+                <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            </OrdresConduite>
+        </Mission>
         <Mission nom="Pion LOG SeDeployer">
           <OrdresConduite>
             <OrdreConduite nom="ModifierPrioritesReparations"/>

@@ -48,8 +48,12 @@ public:
 
     //! @name Main
     //@{
-    virtual void EnableSystem ();
-    virtual void DisableSystem();
+    virtual void EnableSystem          ();
+    virtual void DisableSystem         ();
+    virtual void EnableHealingFunction ();
+    virtual void DisableHealingFunction();
+    virtual void EnableSortingFunction ();
+    virtual void DisableSortingFunction();
 
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities );
     virtual void ChangePriorities( const T_AutomateVector& priorities );

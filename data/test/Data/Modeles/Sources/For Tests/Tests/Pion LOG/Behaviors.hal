@@ -5,7 +5,123 @@ max_activations     =   10;
 actuators = deplacement, ordre;
 
 default Default()
-{
+{  
+    when updated:
+    {
+        persistent T_Action actionPreterVSRAM = 0;
+        persistent T_Action actionPreterRemorqueurs = 0;
+                   
+        selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+        with ( x in ordres_recus)
+        {
+        	Rep_OrdreConduite ordre = x;
+        	switch( ordre.eOrdre_ )
+        	{
+                case eOrdreConduite_ModifierPrioritesReparations :
+                {
+                    Rep_OrderConduite_ModifierPrioritesReparations tmp = ordre;
+                    DEC_Maintenance_ChangerPriorites( tmp.orderConduiteModifierPrioritesReparations_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }
+                
+                case eOrdreConduite_ModifierPrioritesBlesses :
+                {
+                    Rep_OrderConduite_ModifierPrioritesBlesses tmp = ordre;
+                    DEC_Sante_ChangerPriorites( tmp.orderConduiteModifierPrioritesBlesses_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }                
+                
+                case eOrdreConduite_ModifierPrioritesTactiquesReparations :
+                {
+                    Rep_OrderConduite_ModifierPrioritesTactiquesReparations tmp = ordre;
+                    DEC_Maintenance_ChangerPrioritesTactiques( tmp.orderConduiteModifierPrioritesTactiquesReparations_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }
+                
+                case eOrdreConduite_ModifierPrioritesTactiquesBlesses :
+                {
+                    Rep_OrderConduite_ModifierPrioritesTactiquesBlesses tmp = ordre;
+                    DEC_Sante_ChangerPrioritesTactiques( tmp.orderConduiteModifierPrioritesTactiquesBlesses_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }
+                
+                
+                case eOrdreConduite_ModifierRegimeTravailMaintenance:
+                {
+                    Rep_OrderConduite_ModifierRegimeTravailMaintenance tmp = ordre;
+                    DEC_Maintenance_ChangerRegimeTravail( tmp.orderConduiteModifierRegimeTravailMaintenance_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }
+               
+                
+                case eOrdreConduite_Pion_RenforcerEnVSRAM:
+                {
+                    Rep_OrderConduite_Pion_RenforcerEnVSRAM tmp = ordre;
+                    //DEC_Sante_PreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+        		    
+        		    bool bDummy;
+        		    actionPreterVSRAM = DEC_StartPreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_, bDummy );
+                    break;
+                }                
+                
+                case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM:
+                {                   
+                    Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM tmp = ordre;
+                    DEC_RecupererVSRAM( tmp.pionRenforce_, tmp.nbrAmbulances_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }       
+                
+                case eOrdreConduite_Pion_RenforcerEnRemorqueurs:
+                {
+                    Rep_OrderConduite_Pion_RenforcerEnRemorqueurs tmp = ordre;
+                    //DEC_Sante_PreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+        		    
+        		    bool bDummy;
+        		    actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_, bDummy );
+                    break;
+                }                
+                
+                case eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs:
+                {                   
+                    Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs tmp = ordre;
+                    DEC_RecupererRemorqueurs( tmp.pionRenforce_, tmp.nbrRemorqueurs_ );
+                    DIA_RemoveFromCategory( "ordres_recus", ordre );
+        		    DIA_DeleteRepresentation( ordre );
+                    break;
+                }                                        
+            }
+        }
+    }
+    on spontaneous end:
+    {
+        if( actionPreterVSRAM != 0 )
+        {
+            DEC_StopAction( actionPreterVSRAM );
+            actionPreterVSRAM = 0;
+        }
+        
+        if( actionPreterRemorqueurs != 0 )
+        {
+            DEC_StopAction( actionPreterRemorqueurs );
+            actionPreterRemorqueurs = 0;
+        }       
+    }
 }
 
 behavior BEH_Defaut( id nDummy )
@@ -193,43 +309,10 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
     }    
 }
 
-behavior MIS_Pion_LOG_TraiterBlesses( T_Mission_Pion_LOG_TraiterBlesses mission, id nDummy )
-{
-    if( DIA_ModuleBegins() )
-        DEC_Sante_ChangerPriorites( mission.blessuresTraitees_ );
-}
-
-
-
 behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDummy )
 {
-/*    when updated:
-    {
-        persistent float rTimer = 0;
-        persistent T_Pion monPC = DEC_Pion_PionPC();
-        persistent bool   bPret = false;
-    
-        DEC_Debug( FloatToString( rTimer ) );
-        DEC_Debug( "Etat pret : " + BoolToString( bPret ) );
-    
-        rTimer = rTimer + 1;
-                
-        if ( rTimer == 10 )        
-            DEC_Sante_StartPreterVSRAM( monPC, 4, bPret );
-            
-        if ( rTimer == 200 )
-            DEC_Sante_RecupererVSRAM( monPC, 3 );
-            
-        if ( rTimer == 300 )
-            DEC_Sante_RecupererVSRAM( monPC, 1 );
-     }
-*/
     when updated:
     {
-        persistent T_Action actionPreterVSRAM = 0;
-        persistent T_Action actionPreterRemorqueurs = 0;
-        
-    
         if( DIA_ModuleBegins() )
         {
             if( mission.positionDeploiement_ == 0 )
@@ -239,123 +322,73 @@ behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDum
         
             DEC_Maintenance_ActiverChaine();
             DEC_Sante_ActiverChaine();
+            DEC_Sante_ActiverFonctionTri();
+            DEC_Sante_ActiverFonctionSoin();    
             DEC_Ravitaillement_ActiverChaine();
-        }
-    
-    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
-    	with ( x in ordres_recus)
-    	{
-    		Rep_OrdreConduite ordre = x;
-			switch( ordre.eOrdre_ )
-			{
-                case eOrdreConduite_ModifierPrioritesReparations :
-                {
-                    Rep_OrderConduite_ModifierPrioritesReparations tmp = ordre;
-                    DEC_Maintenance_ChangerPriorites( tmp.orderConduiteModifierPrioritesReparations_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }
-                
-                case eOrdreConduite_ModifierPrioritesBlesses :
-                {
-                    Rep_OrderConduite_ModifierPrioritesBlesses tmp = ordre;
-                    DEC_Sante_ChangerPriorites( tmp.orderConduiteModifierPrioritesBlesses_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }                
-                
-                case eOrdreConduite_ModifierPrioritesTactiquesReparations :
-                {
-                    Rep_OrderConduite_ModifierPrioritesTactiquesReparations tmp = ordre;
-                    DEC_Maintenance_ChangerPrioritesTactiques( tmp.orderConduiteModifierPrioritesTactiquesReparations_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }
-                
-                case eOrdreConduite_ModifierPrioritesTactiquesBlesses :
-                {
-                    Rep_OrderConduite_ModifierPrioritesTactiquesBlesses tmp = ordre;
-                    DEC_Sante_ChangerPrioritesTactiques( tmp.orderConduiteModifierPrioritesTactiquesBlesses_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }
-                
-                
-                case eOrdreConduite_ModifierRegimeTravailMaintenance:
-                {
-                    Rep_OrderConduite_ModifierRegimeTravailMaintenance tmp = ordre;
-                    DEC_Maintenance_ChangerRegimeTravail( tmp.orderConduiteModifierRegimeTravailMaintenance_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }
-               
-                
-                case eOrdreConduite_Pion_RenforcerEnVSRAM:
-                {
-                    Rep_OrderConduite_Pion_RenforcerEnVSRAM tmp = ordre;
-                    //DEC_Sante_PreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-				    
-				    bool bDummy;
-				    actionPreterVSRAM = DEC_StartPreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_, bDummy );
-                    break;
-                }                
-                
-                case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM:
-                {                   
-                    Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM tmp = ordre;
-                    DEC_RecupererVSRAM( tmp.pionRenforce_, tmp.nbrAmbulances_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }       
-                
-                case eOrdreConduite_Pion_RenforcerEnRemorqueurs:
-                {
-                    Rep_OrderConduite_Pion_RenforcerEnRemorqueurs tmp = ordre;
-                    //DEC_Sante_PreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-				    
-				    bool bDummy;
-				    actionPreterRemorqueurs = DEC_StartPreterRemorqueurs( tmp.pionARenforcer_, tmp.nbrRemorqueurs_, bDummy );
-                    break;
-                }                
-                
-                case eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs:
-                {                   
-                    Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs tmp = ordre;
-                    DEC_RecupererRemorqueurs( tmp.pionRenforce_, tmp.nbrRemorqueurs_ );
-                    DIA_RemoveFromCategory( "ordres_recus", ordre );
-				    DIA_DeleteRepresentation( ordre );
-                    break;
-                }                                        
-            }
         }
     }
     on spontaneous end:
     {
-        if( actionPreterVSRAM != 0 )
-        {
-            DEC_StopAction( actionPreterVSRAM );
-            actionPreterVSRAM = 0;
-        }
-        
-        if( actionPreterRemorqueurs != 0 )
-        {
-            DEC_StopAction( actionPreterRemorqueurs );
-            actionPreterRemorqueurs = 0;
-        }        
-    
         DEC_Maintenance_DesactiverChaine();
         DEC_Sante_DesactiverChaine();
+        DEC_Sante_DesactiverFonctionTri();
+        DEC_Sante_DesactiverFonctionSoin();        
         DEC_Ravitaillement_DesactiverChaine();
+    }
+}
+
+behavior MIS_Pion_LOG_TrierBlesses( T_Mission_Pion_LOG_TrierBlesses mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {       
+            DEC_Sante_ActiverChaine();
+            DEC_Sante_ActiverFonctionTri();
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Sante_DesactiverChaine();
+        DEC_Sante_DesactiverFonctionTri();
+    }
+}
+
+behavior MIS_Pion_LOG_TraiterBlesses( T_Mission_Pion_LOG_TraiterBlesses mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {       
+            DEC_Sante_ActiverChaine();
+            DEC_Sante_ActiverFonctionSoin();    
+            DEC_Sante_ChangerPriorites( mission.blessuresTraitees_ );            
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Sante_DesactiverChaine();
+        DEC_Sante_DesactiverFonctionSoin();
+    }
+}
+
+behavior MIS_Pion_LOG_TrierEtTraiterBlesses( T_Mission_Pion_LOG_TrierEtTraiterBlesses mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {       
+            DEC_Sante_ActiverChaine();
+            DEC_Sante_ActiverFonctionTri();
+            DEC_Sante_ActiverFonctionSoin();            
+            DEC_Sante_ChangerPriorites( mission.blessuresTraitees_ );            
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Sante_DesactiverChaine();
+        DEC_Sante_DesactiverFonctionTri();
+        DEC_Sante_DesactiverFonctionSoin();
     }
 }
 

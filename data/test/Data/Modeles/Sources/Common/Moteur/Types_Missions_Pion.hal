@@ -867,60 +867,52 @@ typedef struct T_Mission_Pion_LOG_SeDeployer : T_Mission_Pion
 T_Point positionDeploiement_;
 };
 
-typedef struct T_Mission_Pion_LOG_DistribuerMoyens : T_Mission_Pion
+typedef struct T_Mission_Pion_LOG_Renforcer : T_Mission_Pion
 {
-};
-
-typedef struct T_Mission_Pion_LOG_TrierBlesses : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_TraiterBlesses : T_Mission_Pion
-{
-T_SantePriorites blessuresTraitees_;
-};
-
-typedef struct T_Mission_Pion_LOG_TrierEtTraiterBlesses : T_Mission_Pion
-{
-T_SantePriorites blessuresTraitees_;
-};
-
-typedef struct T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_DecontaminerBlesses : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_Reparer : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_Evacuer : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_Convoyer : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_DistribuerRessources : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_ConstituerConvoi : T_Mission_Pion
-{
-};
-
-typedef struct T_Mission_Pion_LOG_Livrer : T_Mission_Pion
-{
+T_Point lieuRenforcement_;
+T_Automate automate_;
 };
 
 typedef struct T_Mission_Pion_LOG_PreparerBascule : T_Mission_Pion
 {
 T_Automate automatePourBascule_;
 bool resterSurPlace_;
+};
+
+typedef struct T_Mission_Pion_LOG_DecontaminerBlesses : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_LOG_TrierEtTraiterBlesses : T_Mission_Pion
+{
+T_SantePriorites blessuresTraitees_;
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_LOG_TrierBlesses : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_LOG_TraiterBlesses : T_Mission_Pion
+{
+T_SantePriorites blessuresTraitees_;
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_LOG_Convoyer : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_Reparer : T_Mission_Pion
+{
+T_Point positionDeploiement_;
 };
 
 typedef struct T_Mission_Pion_LOG_AppuyerMouvement : T_Mission_Pion

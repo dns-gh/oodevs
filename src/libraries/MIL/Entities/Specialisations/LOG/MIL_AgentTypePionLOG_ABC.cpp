@@ -36,12 +36,16 @@ MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, 
 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalEnableSystem                , "DEC_Sante_ActiverChaine"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalDisableSystem               , "DEC_Sante_DesactiverChaine"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalEnableSortingFunction       , "DEC_Sante_ActiverFonctionTri"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalDisableSortingFunction      , "DEC_Sante_DesactiverFonctionTri"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalEnableHealingFunction       , "DEC_Sante_ActiverFonctionSoin"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalDisableHealingFunction      , "DEC_Sante_DesactiverFonctionSoin"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalChangePriorities            , "DEC_Sante_ChangerPriorites"          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities    , "DEC_Sante_ChangerPrioritesTactiques" );
 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionSupplyEnableSystem                 , "DEC_Ravitaillement_ActiverChaine"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionSupplyDisableSystem                , "DEC_Ravitaillement_DesactiverChaine"   );
-    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionSupplyEnableSystem                 , "DEC_Ravitaillement_ActiverChaine"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionSupplyDisableSystem                , "DEC_Ravitaillement_DesactiverChaine" );
+        
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsLoadingDone                    , "DEC_Ravitaillement_Convoi_ChargementEffectue"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsUnloadingDone                  , "DEC_Ravitaillement_Convoi_DechargementEffectue" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetSupplyingAutomate             , "DEC_Ravitaillement_Convoi_AutomateRavitaillant" );

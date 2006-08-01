@@ -54,8 +54,12 @@ public:
     virtual void UpdateLogistic( bool bIsDead );
     virtual void Clean         ();
 
-    virtual void EnableSystem ();
-    virtual void DisableSystem();
+    virtual void EnableSystem          ();
+    virtual void DisableSystem         ();
+    virtual void EnableHealingFunction ();
+    virtual void DisableHealingFunction();
+    virtual void EnableSortingFunction ();
+    virtual void DisableSortingFunction();
 
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities );
     virtual void ChangePriorities( const T_AutomateVector& priorities );
@@ -141,6 +145,9 @@ private:
     MIL_AgentPionLOG_ABC*   pPion_;
     bool                    bHasChanged_;
     bool                    bSystemEnabled_;
+    bool                    bSortingFunctionEnabled_;
+    bool                    bHealingFunctionEnabled_;
+
     T_MedicalPriorityVector priorities_;
     T_AutomateVector        tacticalPriorities_;
 
