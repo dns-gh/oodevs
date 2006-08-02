@@ -11,7 +11,7 @@
 #include "MagicOrdersInterface.h"
 #include "moc_MagicOrdersInterface.cpp"
 #include "Controllers.h"
-#include "Model.h"
+#include "StaticModel.h"
 #include "Agent.h"
 #include "MagicOrders.h"
 #include "OptionVariant.h"
@@ -28,18 +28,18 @@
 // Name: MagicOrdersInterface constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, ParametersLayer& layer )
+MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, ParametersLayer& layer )
     : QObject( parent )
     , controllers_( controllers )
     , publisher_( publisher )
-    , model_( model )
+    , static_( staticModel )
     , selectedAgent_( controllers )
     , selectedGroup_( controllers )
     , selectedTeam_( controllers )
     , controller_( true )
     , magicMove_( false )
 {
-    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, publisher_, model_ );
+    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, publisher_, static_ );
     changeHumanFactors_ = new ChangeHumanFactorsDialog( parent, controllers_, publisher_ );
     
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
@@ -296,7 +296,7 @@ void MagicOrdersInterface::Handle( const T_PointVector& points )
         message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
 
         ASN1T_CoordUTM utm;
-        utm = model_.coordinateConverter_.ConvertToMgrs( points[0] ).c_str();
+        utm = static_.coordinateConverter_.ConvertToMgrs( points[0] ).c_str();
         message.GetAsnMsg().action.u.move_to = &utm;
         message.Send( publisher_, 56 );
     }

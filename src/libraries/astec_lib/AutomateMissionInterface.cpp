@@ -45,14 +45,14 @@ AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agen
 void AutomateMissionInterface::CreateDefaultParameters()
 {
     ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
-    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2", false );
-    CreateLimaList( order.oid_limas, "Ajouter aux limas", true );
+    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2" );
+    CreateLimaList( order.oid_limas, "Ajouter aux limas" );
     ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>& buttonGroup
-        = CreateRadioButtonGroup( order.formation, "Formation", false );
+        = CreateRadioButtonGroup( order.formation, "Formation" );
     buttonGroup.AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
     buttonGroup.AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
 
-    CreateDirection( order.direction_dangereuse, "Direction dangeureuse", true );
+    CreateDirection( order.direction_dangereuse, "Direction dangeureuse" );
 }
 
 

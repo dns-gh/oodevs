@@ -14,6 +14,7 @@
 
 class Controllers;
 class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  ObjectFactory
@@ -27,7 +28,7 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controllers& controllers, Model& model );
+             ObjectFactory( Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~ObjectFactory();
     //@}
 
@@ -48,6 +49,7 @@ private:
     //@{
     Controllers& controllers_;
     Model& model_;
+    const StaticModel& static_;
     //@}
 };
 

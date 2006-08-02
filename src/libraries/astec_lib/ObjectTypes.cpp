@@ -34,6 +34,8 @@ ObjectTypes::ObjectTypes()
 // -----------------------------------------------------------------------------
 void ObjectTypes::Load( const std::string& scipioXml )
 {
+    Purge();
+
     xml::xifstream scipio( scipioXml );
     std::string idFile, dotations, equipments, nbc, pannes;
     scipio >> start( "Scipio" )

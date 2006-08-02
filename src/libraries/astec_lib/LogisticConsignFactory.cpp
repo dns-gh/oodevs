@@ -17,14 +17,16 @@
 #include "ObjectTypes.h"
 #include "Controllers.h"
 #include "AgentTypes.h"
+#include "StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogisticConsignFactory::LogisticConsignFactory( Controllers& controllers, Model& model )
+LogisticConsignFactory::LogisticConsignFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
     : controllers_( controllers )
     , model_( model )
+    , static_( staticModel )
 {
     // NOTHING
 }
@@ -44,7 +46,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message )
 {
-    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, model_.types_, model_.objectTypes_ );
+    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +55,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const A
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& message )
 {
-    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.objectTypes_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, static_.objectTypes_, message );
 }
     
 // -----------------------------------------------------------------------------

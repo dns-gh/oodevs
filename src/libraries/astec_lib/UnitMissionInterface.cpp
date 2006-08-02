@@ -14,6 +14,7 @@
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
 #include "Agent.h"
+#include "OptionalParamFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor
@@ -39,6 +40,16 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent& agent, uint 
     CreateInterface();
 }
 
+namespace
+{
+    struct OrderBlahBlah : public OptionalParamFunctor_ABC
+    {
+        OrderBlahBlah( ASN1T_MsgPionOrder& ) {};
+        virtual void SetOptionalPresent() {
+            // NOTHING
+        }
+    };
+};
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface::CreateDefaultParameters
@@ -47,9 +58,9 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent& agent, uint 
 void UnitMissionInterface::CreateDefaultParameters()
 {
     ASN1T_MsgPionOrder& order = pASNMsgOrder_->GetAsnMsg();
-    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2", true );
-    CreateLimaList( order.oid_limas, "Ajouter aux limas", true );
-    CreateDirection( order.direction_dangereuse, "Direction dangeureuse", true );
+    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2", BuildOptionalParamFunctor< OrderBlahBlah, ASN1T_MsgPionOrder >( order ) );
+    CreateLimaList( order.oid_limas, "Ajouter aux limas" );
+    CreateDirection( order.direction_dangereuse, "Direction dangeureuse" );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ class Agent;
 class KnowledgeGroup;
 class Team;
 class Controllers;
-class Model;
+class StaticModel;
 class LogisticSupplyRecompletionDialog;
 class ChangeHumanFactorsDialog;
 class LocationCreator;
@@ -45,7 +45,7 @@ class MagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, ParametersLayer& layer );
+             MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, ParametersLayer& layer );
     virtual ~MagicOrdersInterface();
     //@}
 
@@ -92,7 +92,7 @@ private:
     //@{
     Controllers& controllers_;
     Publisher_ABC& publisher_;
-    const Model& model_;
+    const StaticModel& static_;
     bool controller_;
     SafePointer< Agent > selectedAgent_;
     SafePointer< KnowledgeGroup > selectedGroup_;

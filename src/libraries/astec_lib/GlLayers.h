@@ -14,6 +14,7 @@
 
 class Controllers;
 class Model;
+class StaticModel;
 class ColorStrategy;
 class ParametersLayer;
 class GraphicSetup_ABC;
@@ -31,7 +32,7 @@ class GlLayers : public GlProxy
 public:
     //! @name Constructors/Destructor
     //@{
-             GlLayers( Controllers& controllers, Model& model, GraphicSetup_ABC& setup );
+             GlLayers( Controllers& controllers, const StaticModel& staticModel, Model& model, GraphicSetup_ABC& setup );
     virtual ~GlLayers();
     //@}
 
@@ -58,6 +59,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    const StaticModel& static_;
     Model& model_;
     GraphicSetup_ABC& setup_;
 

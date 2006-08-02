@@ -23,14 +23,16 @@
 #include "Controllers.h"
 #include "ObjectPositions.h"
 #include "CoordinateConverter.h"
+#include "StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-ObjectFactory::ObjectFactory( Controllers& controllers, Model& model )
+ObjectFactory::ObjectFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
     : controllers_( controllers )
     , model_( model )
+    , static_( staticModel )
 {
     // NOTHING
 }
@@ -50,9 +52,9 @@ ObjectFactory::~ObjectFactory()
 // -----------------------------------------------------------------------------
 Object* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
-    Object* result = new Object( message, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.objectTypes_, model_.objectTypes_ );
+    Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.objectTypes_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
-    result->Attach< Positions >( *new ObjectPositions( model_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new ObjectPositions( static_.coordinateConverter_ ) );
     switch( message.type )
     {
     case EnumObjectType::camp_prisonniers:
@@ -66,11 +68,11 @@ Object* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        result->Attach( *new NBCAttributes( controllers_.controller_, model_.objectTypes_ ) );
+        result->Attach( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
         result->Update( message );
         break;
     case EnumObjectType::rota:
-        result->Attach( *new RotaAttributes( controllers_.controller_, model_.objectTypes_ ) );
+        result->Attach( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
         result->Update( message );
         break;
     case EnumObjectType::site_franchissement:

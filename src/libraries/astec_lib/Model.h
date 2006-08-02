@@ -19,22 +19,18 @@ class LimitsModel;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
 class Controllers;
-class AgentTypes;
 class ObjectKnowledgeFactory;
 class AgentKnowledgeFactory;
 class TeamFactory_ABC;
-class ObjectTypes;
 class LogisticConsignFactory_ABC;
 class Simulation;
 class FireResultFactory;
 class FiresModel;
-class CoordinateConverter;
 class FireFactory;
 class WeatherModel;
-class DetectionMap;
-class SurfaceFactory;
 class Workers;
 class Publisher_ABC;
+class StaticModel;
 
 // =============================================================================
 /** @class  Model
@@ -48,26 +44,20 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controllers& controllers, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher );
+             Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher );
     virtual ~Model();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
     void Purge();
-    void PurgeDynamic();
     //@}
 
 public:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    CoordinateConverter& coordinateConverter_;
-    DetectionMap& detection_;
-
-    AgentTypes& types_;
-    ObjectTypes& objectTypes_;
+    const StaticModel& static_;
 
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
@@ -77,7 +67,6 @@ public:
     ObjectFactory_ABC&          objectFactory_;
     LogisticConsignFactory_ABC& logisticFactory_;
     FireFactory&                fireFactory_;
-    SurfaceFactory&             surfaceFactory_;
 
     AgentsModel&    agents_;
     ObjectsModel&   objects_;

@@ -19,6 +19,7 @@ class OptionsPanel;
 
 class Controllers;
 class Model;
+class StaticModel;
 class GlLayers;
 class GlWidget;
 class Gl3dWidget;
@@ -27,7 +28,7 @@ class Simulation;
 class ParametersLayer;
 class AgentsLayer;
 class GlPlaceHolder;
-class BigBrother;
+class BigBrother; // $$$$ AGE 2006-08-02: Duh !
 class Network;
 
 // =============================================================================
@@ -52,7 +53,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controllers& controllers, Model& model, Network& network );
+             MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network );
     virtual ~MainWindow();
     //@}
 
@@ -98,6 +99,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
+    StaticModel& staticModel_;
     Model& model_;
     Network& network_;
     std::string scipioXml_;

@@ -14,6 +14,7 @@
 
 class Network;
 class MainWindow;
+class StaticModel;
 class Model;
 class Simulation;
 class Controllers;
@@ -58,6 +59,7 @@ private:
     //! @name Member data
     //@{
     Controllers* controllers_;
+    StaticModel* staticModel_;
     Model* model_;
     Simulation* simulation_;
     Workers* workers_;

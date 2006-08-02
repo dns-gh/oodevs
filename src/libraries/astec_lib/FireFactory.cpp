@@ -12,6 +12,7 @@
 #include "DirectFire.h"
 #include "IndirectFire.h"
 #include "Model.h"
+#include "StaticModel.h"
 #include "AgentsModel.h"
 #include "PopulationFire.h"
 #include "CoordinateConverter.h"
@@ -47,7 +48,7 @@ Fire_ABC* FireFactory::CreateFire( const ASN1T_MsgStartPionFire& message )
     case T_MsgStartPionFire_cible_population:
         return new DirectFire( message, model_.agents_, model_.agents_ );
     case T_MsgStartPionFire_cible_position:
-        return new IndirectFire( message, model_.agents_, model_.coordinateConverter_ );
+        return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
     default: 
         throw std::runtime_error( "Invalid target type" );
 

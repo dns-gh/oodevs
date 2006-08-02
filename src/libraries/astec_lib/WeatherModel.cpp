@@ -12,6 +12,7 @@
 #include "AmmoEffect.h"
 #include "Controllers.h"
 #include "Model.h"
+#include "StaticModel.h"
 #include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
@@ -49,7 +50,7 @@ void WeatherModel::Purge()
 // -----------------------------------------------------------------------------
 void WeatherModel::CreateAmmoEffect( const ASN1T_MsgStartFireEffect& message )
 {
-    Register( message.oid_effet, *new AmmoEffect( message, controllers_.controller_, model_.coordinateConverter_ ) );
+    Register( message.oid_effet, *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
 }
     
 // -----------------------------------------------------------------------------

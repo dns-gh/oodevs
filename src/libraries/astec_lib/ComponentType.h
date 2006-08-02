@@ -24,7 +24,7 @@ class ComponentType
 public:
     //! @name Constructors/Destructor
     //@{
-             ComponentType( xml::xistream& xis );
+    explicit ComponentType( xml::xistream& xis );
     virtual ~ComponentType();
     //@}
 

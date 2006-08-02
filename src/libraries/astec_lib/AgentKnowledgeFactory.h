@@ -15,6 +15,7 @@
 
 class Controllers;
 class Model;
+class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgeFactory
@@ -29,7 +30,7 @@ class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgeFactory( Controllers& controllers, Model& model );
+             AgentKnowledgeFactory( Controllers& controllers, Model& model, const CoordinateConverter_ABC& converter );
     virtual ~AgentKnowledgeFactory();
     //@}
 
@@ -51,6 +52,7 @@ private:
     //@{
     Controllers& controllers_;
     Model& model_;
+    const CoordinateConverter_ABC& converter_;
     //@}
 };
 

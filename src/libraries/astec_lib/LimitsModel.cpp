@@ -12,18 +12,16 @@
 #include "TacticalLine_ABC.h"
 #include "Limit.h"
 #include "Lima.h"
-#include "Model.h"
 #include "Controllers.h"
-#include "CoordinateConverter.h"
 #include "Publisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-LimitsModel::LimitsModel( Model& model, Controllers& controllers, Publisher_ABC& publisher )
-    : model_( model )
-    , controllers_( controllers )
+LimitsModel::LimitsModel( Controllers& controllers, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+    : controllers_( controllers )
+    , converter_( converter )
     , publisher_( publisher )
 {
     // NOTHING
@@ -66,7 +64,7 @@ void LimitsModel::UseSimTacticalLines()
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
 {
-    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, asnMsg, model_.coordinateConverter_ );
+    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, asnMsg, converter_ );
     Register( asnMsg.oid, *line );
 }
 
@@ -76,7 +74,7 @@ void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, asnMsg, model_.coordinateConverter_ );
+    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, asnMsg, converter_ );
     Register( asnMsg.oid, *line );
 }
 
@@ -86,7 +84,7 @@ void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLimit( const T_PointVector& points )
 {
-    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, points, model_.coordinateConverter_ );
+    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, points, converter_ );
     Register( line->GetId(), *line );
 }
 
@@ -96,7 +94,7 @@ void LimitsModel::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLima( E_FuncLimaType type, const T_PointVector& points )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, points, type, model_.coordinateConverter_ );
+    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, points, type, converter_ );
     Register( line->GetId(), *line );
 }
 

@@ -19,6 +19,7 @@ class Agent_ABC;
 class Simulation;
 class Workers;
 class Publisher_ABC;
+class StaticModel;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -32,7 +33,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( Controllers& controllers, Model& model, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers );
+             AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers );
     virtual ~AgentFactory();
     //@}
 
@@ -60,6 +61,7 @@ private:
     //@{
     Controllers& controllers_;
     Model& model_;
+    const StaticModel& static_;
     Publisher_ABC& publisher_;
     const Simulation& simulation_;
     Workers& workers_;

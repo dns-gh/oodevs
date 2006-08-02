@@ -14,7 +14,7 @@
 #include "DisplayBuilder.h"
 #include "Controllers.h"
 #include "ActionController.h"
-#include "Model.h"
+#include "StaticModel.h"
 #include "CoordinateConverter_ABC.h"
 #include "AgentsModel.h"
 #include "Team.h"
@@ -39,10 +39,10 @@
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ParametersLayer& layer )
     : QGroupBox( 2, Qt::Horizontal, tr( "Informations" ), parent )
     , controllers_( controllers )
-    , model_( model )
+    , static_( model )
     , layer_( layer )
     , umtCoords_( 0 )
     , activeAttributes_( 0 )
@@ -71,8 +71,8 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     campAttributes_          = new CampPrototype( parent, controllers );         campAttributes_->hide();
     crossingSiteAttributes_  = new CrossingSitePrototype( parent );              crossingSiteAttributes_->hide();
     logisticRouteAttributes_ = new LogisticRoutePrototype( parent );             logisticRouteAttributes_->hide();
-    nbcAttributes_           = new NBCPrototype( parent, model_.objectTypes_ );  nbcAttributes_->hide();
-    rotaAttributes_          = new RotaPrototype( parent, model_.objectTypes_ ); rotaAttributes_->hide();
+    nbcAttributes_           = new NBCPrototype( parent, static_.objectTypes_ );  nbcAttributes_->hide();
+    rotaAttributes_          = new RotaPrototype( parent, static_.objectTypes_ ); rotaAttributes_->hide();
     
     controllers.Register( *this );
 
@@ -86,7 +86,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
 void ObjectPrototype::showEvent( QShowEvent* )
 {
     objectTypes_->Clear();
-    Resolver< ObjectType >& resolver = model_.objectTypes_; // $$$$ AGE 2006-05-03: evenement de chargement des données statiques
+    Resolver< ObjectType >& resolver = static_.objectTypes_; // $$$$ AGE 2006-05-03: evenement de chargement des données statiques
     Iterator< const ObjectType& > it( resolver.CreateIterator() );
     while( it.HasMoreElements() )
     {
@@ -165,7 +165,7 @@ void ObjectPrototype::Serialize( ASN_MsgObjectMagicAction& msg )
 
         for( unsigned i = 0; i < nbrPoints; ++i )
         {
-            const std::string coord = model_.coordinateConverter_.ConvertToMgrs( locationPoints_[i] );
+            const std::string coord = static_.coordinateConverter_.ConvertToMgrs( locationPoints_[i] );
             creation.localisation.vecteur_point.elem[i] = coord.c_str();
         }
     }

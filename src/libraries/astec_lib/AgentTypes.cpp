@@ -38,6 +38,8 @@ AgentTypes::AgentTypes()
 // -----------------------------------------------------------------------------
 void AgentTypes::Load( const std::string& scipioXml )
 {
+    Purge();
+
     xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) );
     symbolFactory_ = new SymbolFactory( xisSymbols );
 

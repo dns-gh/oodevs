@@ -16,7 +16,6 @@
 #include "TeamsModel.h"
 #include "PopulationKnowledge.h"
 #include "Controllers.h"
-#include "CoordinateConverter.h"
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
 
@@ -24,9 +23,10 @@
 // Name: AgentKnowledgeFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledgeFactory::AgentKnowledgeFactory( Controllers& controllers, Model& model )
+AgentKnowledgeFactory::AgentKnowledgeFactory( Controllers& controllers, Model& model, const CoordinateConverter_ABC& converter )
     : controllers_( controllers )
     , model_( model )
+    , converter_( converter )
 {
     // NOTHING
 }
@@ -46,9 +46,9 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // -----------------------------------------------------------------------------
 AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message )
 {
-    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, model_.coordinateConverter_, model_.agents_, model_.teams_ );
+    AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
-    result->Attach< Positions >( *new AgentKnowledgePositions( model_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
     return result;
 }
 
@@ -58,7 +58,7 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGrou
 // -----------------------------------------------------------------------------
 PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup& group, const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
-    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, model_.coordinateConverter_, model_.agents_, message );
+    PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.agents_, message );
     result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );
     return result;
 }

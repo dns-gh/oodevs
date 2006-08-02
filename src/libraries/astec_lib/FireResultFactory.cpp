@@ -12,6 +12,7 @@
 #include "AgentFireResult.h"
 #include "PopulationFireResult.h"
 #include "Model.h"
+#include "StaticModel.h"
 #include "AgentsModel.h"
 #include "ObjectTypes.h"
 
@@ -40,7 +41,7 @@ FireResultFactory::~FireResultFactory()
 // -----------------------------------------------------------------------------
 AgentFireResult* FireResultFactory::CreateFireResult( const ASN1T_FireDamagesPion& message )
 {
-    return new AgentFireResult( message, model_.agents_, model_.objectTypes_ );
+    return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_ );
 }
 
 // -----------------------------------------------------------------------------

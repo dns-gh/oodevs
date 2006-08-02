@@ -14,7 +14,7 @@
 
 class Agent;
 class Controllers;
-class Model;
+class StaticModel;
 class Equipment;
 class Dotation;
 class Publisher_ABC;
@@ -30,7 +30,7 @@ class LogisticSupplyRecompletionDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const Model& model );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
@@ -97,7 +97,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    const Model& model_;
+    const StaticModel& static_;
     SafePointer< Agent > agent_;
 
     QTable*          equipmentsTable_;

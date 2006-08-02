@@ -16,48 +16,41 @@
 #include "LimitsModel.h"
 #include "AgentFactory.h"
 #include "ObjectFactory.h"
-#include "AgentTypes.h"
 #include "ObjectKnowledgeFactory.h"
 #include "TeamFactory.h"
 #include "AgentKnowledgeFactory.h"
 #include "KnowledgeGroupsModel.h"
-#include "ObjectTypes.h"
 #include "LogisticConsignFactory.h"
 #include "FireResultFactory.h"
 #include "FiresModel.h"
-#include "CoordinateConverter.h"
 #include "FireFactory.h"
 #include "WeatherModel.h"
-#include "DetectionMap.h"
-#include "SurfaceFactory.h"
 #include "ModelLoaded.h"
 #include "Controllers.h"
 #include "Controller.h"
+#include "StaticModel.h"
+#include "CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher )
+Model::Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher )
     : controllers_( controllers )
-    , coordinateConverter_( *new CoordinateConverter() )
-    , detection_( *new DetectionMap() )
-    , types_( *new AgentTypes() )
-    , objectTypes_( *new ObjectTypes() )
-    , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this ) )
-    , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this ) )
+    , static_( staticModel )
+    , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
+    , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, publisher, simulation, workers ) )
-    , logisticFactory_( *new LogisticConsignFactory( controllers, *this ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, simulation, workers ) )
+    , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
     , fireFactory_( *new FireFactory( *this ) )
-    , surfaceFactory_( *new SurfaceFactory( detection_, types_ ) )
-    , objectFactory_( *new ObjectFactory( controllers, *this ) )
+    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
-    , limits_( *new LimitsModel( *this, controllers, publisher ) )
+    , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, publisher ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
@@ -80,7 +73,6 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
-    delete &surfaceFactory_;
     delete &fireFactory_;
     delete &logisticFactory_;
     delete &objectFactory_;
@@ -88,17 +80,13 @@ Model::~Model()
     delete &teamFactory_;
     delete &agentsKnowledgeFactory_;
     delete &objectKnowledgeFactory_;
-    delete &objectTypes_;
-    delete &types_;
-    delete &detection_;
-    delete &coordinateConverter_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::PurgeDynamic
-// Created: AGE 2006-06-23
+// Name: Model::Purge
+// Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void Model::PurgeDynamic()
+void Model::Purge()
 {
     agents_.Purge();
     objects_.Purge();
@@ -108,32 +96,6 @@ void Model::PurgeDynamic()
 //    limits_.Purge();
     fires_.Purge();
     weather_.Purge();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::Purge
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void Model::Purge()
-{
-    PurgeDynamic();
-    
-    types_.Purge();
-    objectTypes_.Purge();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::Load
-// Created: AGE 2006-04-28
-// -----------------------------------------------------------------------------
-void Model::Load( const std::string& scipioXml )
-{
-    Purge();
-    coordinateConverter_.Load( scipioXml );
-    detection_.Load( scipioXml );
-    types_.Load( scipioXml );
-    objectTypes_.Load( scipioXml );
-    controllers_.controller_.Update( ModelLoaded( scipioXml ) );
 }
     
 

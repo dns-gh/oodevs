@@ -36,6 +36,7 @@
 #include "astec_lib/EventToolbar.h"
 #include "astec_lib/MissionLayer.h"
 #include "astec_lib/DetectionMap.h"
+#include "astec_lib/StaticModel.h"
 #include "astec_lib/Model.h"
 #include "astec_lib/ObjectTypes.h"
 #include "astec_lib/Network.h"
@@ -80,9 +81,10 @@ using namespace xml;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_( controllers )
+    , staticModel_( staticModel )
     , model_      ( model )
     , network_    ( network )
     , layers_     ( 0 )
@@ -98,7 +100,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
     new Dialogs( this, controllers, model_, publisher ); // $$$$ SBO 2006-06-30: leak
 
-    layers_ = new GlLayers( controllers, model, prefDialog->GetPreferences() );
+    layers_ = new GlLayers( controllers, staticModel_, model_, prefDialog->GetPreferences() );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, model );
@@ -157,7 +159,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers, model, publisher, layers_->GetParametersLayer(), *layers_ );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, layers_->GetParametersLayer(), *layers_ );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
@@ -178,7 +180,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
     moveDockWindow( pObjectCreationWnd, Qt::DockRight );
     pObjectCreationWnd->hide();
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, model_, layers_->GetParametersLayer(), *layers_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, staticModel_, layers_->GetParametersLayer(), *layers_ );
     pObjectCreationWnd->setWidget( objectCreationPanel );
     pObjectCreationWnd->setResizeEnabled( true );
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
@@ -186,7 +188,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) ); // $$$$ AGE 2006-06-30: 
 
-    new MagicOrdersInterface( this, controllers_, publisher, model_, layers_->GetParametersLayer() );
+    new MagicOrdersInterface( this, controllers_, publisher, staticModel_, layers_->GetParametersLayer() );
 
     new SIMControlToolbar( this, controllers, network, publisher );
     new MapToolbar( this, controllers );
@@ -203,7 +205,7 @@ MainWindow::MainWindow( Controllers& controllers, Model& model, Network& network
 
     layers_->RegisterBaseLayers();
 
-    pStatus_ = new StatusBar( statusBar(), model_.detection_, model_.coordinateConverter_, controllers_ );
+    pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
 
     displayTimer_ = new QTimer( this );
@@ -246,7 +248,8 @@ void MainWindow::Load( const std::string& scipioXml )
     widget2d_ = new GlWidget( this, controllers_, scipioXml );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
-    model_.Load( scipioXml );
+    model_.Purge();
+    staticModel_.Load( scipioXml );
 
     layers_->ChangeTo( widget2d_ );
     layers_->RegisterTo( widget2d_ );
@@ -394,7 +397,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, model_.detection_ );
+                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, staticModel_.detection_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
                     layers_->RegisterTo( widget3d_ );
                 }
@@ -427,7 +430,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     if( ! simulation.IsConnected() )
     {
         controllers_.actions_.Select( Nothing() );
-        model_.PurgeDynamic();
+        model_.Purge();
     }
     if( simulation.IsConnected() )
         CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );

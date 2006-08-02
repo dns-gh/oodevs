@@ -16,6 +16,7 @@
 
 class Entity_ABC;
 class Model;
+class StaticModel;
 class Controller;
 class SupplyStates;
 class DataDictionary;
@@ -36,7 +37,7 @@ class Logistics : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Logistics( Entity_ABC& holder, Controller& controller, Model& model, DataDictionary& dico );
+             Logistics( Entity_ABC& holder, Controller& controller, Model& model, const StaticModel& staticModel, DataDictionary& dico );
     virtual ~Logistics();
     //@}
 
@@ -62,6 +63,7 @@ private:
     Entity_ABC& holder_;
     Controller& controller_;
     Model& model_;
+    const StaticModel& static_;
     DataDictionary& dico_;
     //@}
 };

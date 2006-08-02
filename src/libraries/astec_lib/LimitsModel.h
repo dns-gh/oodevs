@@ -14,10 +14,10 @@
 #include "ASN_Types.h"
 #include "Resolver.h"
 
-class TacticalLine_ABC;
-class Model;
 class Controllers;
+class CoordinateConverter_ABC;
 class Publisher_ABC;
+class TacticalLine_ABC;
 
 namespace DIN {
     class DIN_Input;
@@ -35,7 +35,7 @@ class LimitsModel : public Resolver< TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsModel( Model& model, Controllers& controllers, Publisher_ABC& publisher );
+             LimitsModel( Controllers& controllers, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
     virtual ~LimitsModel();
     //@}
 
@@ -63,8 +63,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Model& model_;
     Controllers& controllers_;
+    const CoordinateConverter_ABC& converter_;
     Publisher_ABC& publisher_;
     //@}
 };

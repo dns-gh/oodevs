@@ -14,7 +14,7 @@
 
 class ObjectPrototype;
 class Controllers;
-class Model;
+class StaticModel;
 class ParametersLayer;
 class GlTools_ABC;
 class Publisher_ABC;
@@ -32,7 +32,7 @@ class ObjectCreationPanel : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, ParametersLayer& layer, const GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, const GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 

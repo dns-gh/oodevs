@@ -14,6 +14,7 @@
 #include "MainWindow.h"
 
 #include "astec_lib/Network.h"
+#include "astec_lib/StaticModel.h"
 #include "astec_lib/Model.h"
 #include "astec_lib/Simulation.h"
 #include "astec_lib/Controllers.h"
@@ -88,9 +89,10 @@ void Application::Initialize( int argc, char** argv )
     simulation_  = new Simulation( *controllers_ );
     workers_     = new Workers();
     network_     = new Network( *controllers_, *simulation_ );
-    model_       = new Model( *controllers_, *simulation_, *workers_, network_->GetMessageMgr() );
+    staticModel_ = new StaticModel( *controllers_ );
+    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr() );
     network_->GetMessageMgr().SetModel( *model_ );
-    mainWindow_  = new MainWindow( *controllers_, *model_, *network_ );
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_ );
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
         mainWindow_->Load( conffile );

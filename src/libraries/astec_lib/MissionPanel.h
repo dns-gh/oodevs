@@ -24,7 +24,7 @@ class Mission;
 class Controllers;
 class ParametersLayer;
 class CoordinateConverter_ABC;
-class Model;
+class StaticModel;
 class GlTools_ABC;
 class AgentKnowledgeConverter_ABC;
 class Publisher_ABC;
@@ -43,7 +43,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, Controllers& controllers, Model& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools );
+             MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools );
     virtual ~MissionPanel();
     //@}
 
@@ -84,7 +84,7 @@ private:
     //! @name Member Data
     //@{
     Controllers& controllers_;
-    const Model& model_;
+    const StaticModel& static_;
     Publisher_ABC& publisher_;
     ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;

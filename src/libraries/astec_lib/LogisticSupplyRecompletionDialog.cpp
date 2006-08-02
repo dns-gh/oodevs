@@ -13,7 +13,7 @@
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
 
 #include "ASN_Messages.h"
-#include "Model.h"
+#include "StaticModel.h"
 #include "Agent.h"
 #include "Equipments.h"
 #include "Troops.h"
@@ -80,10 +80,10 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel )
     : QDialog( parent, "Recompletement" )
     , publisher_( publisher )
-    , model_( model )
+    , static_( staticModel )
     , agent_( controllers )
 {
     setCaption( tr( "Recompletement" ) );
@@ -261,7 +261,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
 void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent& /*agent*/ )
 {
     dotationsTable_->setNumRows( 0 );
-    const Resolver< DotationType >& dotations = model_.objectTypes_;
+    const Resolver< DotationType >& dotations = static_.objectTypes_;
     Iterator< const DotationType& > it = dotations.CreateIterator();
     std::set< unsigned long > inserted;
     while( it.HasMoreElements() )

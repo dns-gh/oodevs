@@ -14,6 +14,7 @@
 
 class Controllers;
 class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  LogisticConsignFactory
@@ -27,7 +28,7 @@ class LogisticConsignFactory : public LogisticConsignFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsignFactory( Controllers& controllers, Model& model );
+             LogisticConsignFactory( Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~LogisticConsignFactory();
     //@}
 
@@ -50,6 +51,7 @@ private:
     //@{
     Controllers& controllers_;
     Model& model_;
+    const StaticModel& static_;
     //@}
 };
 

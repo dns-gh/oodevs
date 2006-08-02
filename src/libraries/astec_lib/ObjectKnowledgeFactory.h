@@ -15,11 +15,13 @@
 class ObjectKnowledge;
 class Controllers;
 class Model;
+class StaticModel;
 class Team;
 
 // =============================================================================
 /** @class  ObjectKnowledgeFactory
     @brief  ObjectKnowledgeFactory
+    // $$$$ AGE 2006-08-02: abc
 */
 // Created: AGE 2006-02-14
 // =============================================================================
@@ -29,7 +31,7 @@ class ObjectKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgeFactory( Controllers& controllers, Model& model );
+             ObjectKnowledgeFactory( Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~ObjectKnowledgeFactory();
     //@}
 
@@ -50,6 +52,7 @@ private:
     //@{
     Controllers& controllers_;
     Model& model_;
+    const StaticModel& static_;
     //@}
 };
 

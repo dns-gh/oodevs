@@ -28,13 +28,15 @@
 #include "AgentKnowledgesLayer.h"
 #include "PopulationKnowledgesLayer.h"
 #include "ObjectKnowledgesLayer.h"
+#include "StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlLayers::GlLayers( Controllers& controllers, Model& model, GraphicSetup_ABC& setup )
+GlLayers::GlLayers( Controllers& controllers, const StaticModel& staticModel, Model& model, GraphicSetup_ABC& setup )
     : controllers_( controllers )
+    , static_     ( staticModel )
     , model_      ( model )
     , setup_      ( setup )
     , strategy_( new ColorStrategy( controllers_, *this ) )
@@ -62,8 +64,8 @@ void GlLayers::RegisterBaseLayers()
     // $$$$ AGE 2006-05-17: qui ne sont clairement pas compatibles. 
     // $$$$ AGE 2006-05-17: Trouver un truc pas dégueu qui fonctionne. 
     // $$$$ AGE 2006-05-17: Par exemple, filer une stratégie qui dispatcherait les bidules.
-    Register( *new Elevation2dLayer( controllers_.controller_, model_.detection_ ) );
-    Register( *new Elevation3dLayer( controllers_.controller_, model_.detection_ ) );
+    Register( *new Elevation2dLayer( controllers_.controller_, static_.detection_ ) );
+    Register( *new Elevation3dLayer( controllers_.controller_, static_.detection_ ) );
     Register( *new TerrainLayer( controllers_, *this, setup_ ) );
     Register( *new MetricsLayer( controllers_, *this ) );
     Register( *new LimitsLayer( controllers_, *this, *strategy_, *parameters_, model_.limits_ ) );

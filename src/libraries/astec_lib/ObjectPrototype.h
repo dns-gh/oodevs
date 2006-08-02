@@ -18,7 +18,7 @@
 #include "ShapeHandler_ABC.h"
 
 class Controllers;
-class Model;
+class StaticModel;
 class Team;
 class ObjectType;
 class ObjectPrototypeAttributes_ABC;
@@ -50,7 +50,7 @@ class ObjectPrototype : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, Controllers& controllers, const Model& model, ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 
@@ -91,7 +91,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Model& model_;
+    const StaticModel& static_;
     ParametersLayer& layer_;
 
     ValuedComboBox< const Team* >* teams_;

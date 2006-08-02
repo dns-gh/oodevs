@@ -103,8 +103,9 @@ void EntityListParameterBase::AddToMenu( QPopupMenu& menu )
 // -----------------------------------------------------------------------------
 bool EntityListParameterBase::CheckValidity()
 {
-    if( !IsOptional() && childCount() == 0 ) // $$$$ AGE 2006-03-14: min number ?
-        return Invalid();
+    // $$$$ AGE 2006-03-14: min number ?
+//    if( !IsOptional() && childCount() == 0 ) 
+//        return Invalid();
     return true;
 }
 

@@ -61,14 +61,16 @@
 #include "MagicOrders.h"
 #include "CoordinateConverter.h"
 #include "DataDictionary.h"
+#include "StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers )
     : controllers_( controllers )
     , model_( model )
+    , static_( staticModel )
     , publisher_( publisher )
     , simulation_( simulation )
     , workers_( workers )
@@ -87,6 +89,7 @@ AgentFactory::~AgentFactory()
 
 // $$$$ AGE 2006-04-10: C'est l'ordre d'attach qui impose l'ordre de dessin. 
 // $$$$ AGE 2006-04-10: C'est pas terrible
+// $$$$ AGE 2006-08-01: Faire un drawer qui parcours les extensions, les enregistre et détermine un ordre
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
@@ -94,17 +97,17 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
+    Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
-    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_, result->Get< DataDictionary >() ) );
+    result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
-    result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
+    result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
+    result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Attach( *new MagicOrders( controllers_.controller_, *result ) );
     result->Update( asnMsg );
@@ -117,14 +120,14 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, model_.types_, model_.agents_, model_.knowledgeGroups_ );
+    Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
-    result->Attach( *new Attributes( controllers_.controller_, model_.coordinateConverter_, result->Get< DataDictionary >() ) );
+    result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
     AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
-    result->Attach< Positions >( *new AgentPositions( *result, model_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
+    result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
+    result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Attach( *new MagicOrders( controllers_.controller_, *result ) );
     return result;
@@ -136,7 +139,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    Population* result = new Population( asnMsg, controllers_.controller_, model_.coordinateConverter_, model_.teams_, model_.types_ );
+    Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.types_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
@@ -150,20 +153,20 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 void AgentFactory::AttachExtensions( Agent_ABC& agent )
 {
     DataDictionary& dico = agent.Get< DataDictionary >();
-    agent.Attach( *new Contaminations( controllers_.controller_, model_.objectTypes_, dico ) );
+    agent.Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new DebugPoints() );
-    agent.Attach( *new Dotations( controllers_.controller_, model_.objectTypes_, agent.Get< DataDictionary >() ) );
-    agent.Attach( *new Equipments( controllers_.controller_, model_.objectTypes_, dico ) );
+    agent.Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, agent.Get< DataDictionary >() ) );
+    agent.Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new HumanFactors( controllers_.controller_, dico ) );
-    agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );
-    agent.Attach( *new Borrowings( controllers_.controller_, model_.agents_, model_.objectTypes_ ) );
+    agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
+    agent.Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );
-    agent.Attach( *new Paths( model_.coordinateConverter_ ) );
+    agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_ ) );
     agent.Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Troops( controllers_.controller_ ) );
-    agent.Attach( *new Logistics( agent, controllers_.controller_, model_, dico ) );
+    agent.Attach( *new Logistics( agent, controllers_.controller_, model_, static_, dico ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
