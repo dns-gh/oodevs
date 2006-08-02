@@ -37,7 +37,7 @@ class ParamRadioBtnGroup : public MT_ValuedRadioButtonGroup<T>, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
+    ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, OptionalParamFunctor_ABC* pOptional = 0);
     ~ParamRadioBtnGroup();
     //@}
 

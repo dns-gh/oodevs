@@ -49,7 +49,7 @@ class ParamLimits : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamLimits( ASN1T_OID& asnLimit1ID, ASN1T_OID& asnLimit2ID, const std::string strLabel, const std::string strMenuText1, const std::string strMenuText2, QWidget* pParent, OptionalParamFunctor_ABC* pOptional );
+    ParamLimits( ASN1T_OID& asnLimit1ID, ASN1T_OID& asnLimit2ID, const std::string strLabel, const std::string strMenuText1, const std::string strMenuText2, QWidget* pParent, OptionalParamFunctor_ABC* pOptional = 0 );
     ~ParamLimits();
     //@}
 
