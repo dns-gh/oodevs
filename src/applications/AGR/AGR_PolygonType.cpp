@@ -23,6 +23,7 @@
 #include "AGR_pch.h"
 #include "AGR_PolygonType.h"
 #include "AGR_Member.h"
+#include "AGR_Class.h"
 
 // -----------------------------------------------------------------------------
 // Name: AGR_PolygonType constructor
@@ -49,6 +50,13 @@ AGR_PolygonType::~AGR_PolygonType()
 // -----------------------------------------------------------------------------
 std::string AGR_PolygonType::Mos2InitialisationCode( const AGR_Member& member ) const
 {
-    return "    CreateLocation( " + member.Mos2ASNPrefixedName() + ", \"" 
-            + member.HumanName() + "\", " + ( member.IsOptional() ? "true" : "false" ) + " );\n";
+    std::string strTmp = "    CreateLocation( " + member.Mos2ASNPrefixedName() + ", \"" 
+                            + member.HumanName() + "\"";
+
+    if( member.IsOptional() )
+        strTmp += ", BuildOptionalParamFunctor< OptionalParamFunctor_" + member.OwnerClass().Name() + "_" + member.ASNName()
+               +                          ", ASN1T_" + member.OwnerClass().Name() + ">( asnMission )";
+
+    strTmp += ");\n";
+    return strTmp;
 }

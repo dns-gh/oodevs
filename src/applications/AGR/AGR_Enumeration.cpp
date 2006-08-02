@@ -19,6 +19,7 @@
 #include "AGR_pch.h"
 #include "AGR_Enumeration.h"
 #include "AGR_Member.h"
+#include "AGR_Class.h"
 
 #include <boost/algorithm/string.hpp>
 #include <cstdio>
@@ -98,7 +99,16 @@ std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
 std::string AGR_Enumeration::Mos2InitialisationCode( const AGR_Member& member ) const
 {
     std::string strResult = "    ParamComboBox< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ", \"" 
-            + member.HumanName() + "\", " + ( member.IsOptional() ? "true" : "false" ) + " );\n";
+            + member.HumanName() + "\"";
+
+    if( member.IsOptional() )
+    {
+        strResult += ", BuildOptionalParamFunctor< OptionalParamFunctor_" + member.OwnerClass().Name() + "_" + member.ASNName()
+               +                          ", ASN1T_" + member.OwnerClass().Name() + ">( asnMission )";
+    }
+    strResult += ");\n";
+
+
     for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues )
         strResult += "    pSelector_" + member.ASNName() + "->AddItem( \"" + HumanName( *itValues ) + "\", " + strName_ + "::" + *itValues + " );\n";
     return strResult;

@@ -82,14 +82,12 @@ void UnitMissionInterface::CreateDefaultParameters()
                                                  "Limites" ,
                                                  "Fixer limite 1",
                                                  "Fixer limite 2",
-                                                 this, 
-                                                 false ) );
+                                                 this ) );
 
     paramVector_.push_back( new ParamLimaList( order.oid_limas,
                                                    "Limas",
                                                    "Ajouter aux limas",
-                                                   this, 
-                                                   false ) );
+                                                   this ) );
 
     paramVector_.push_back( new ParamDirection( order.direction_dangereuse, "Direction dangeureuse", this, false ) );
 }

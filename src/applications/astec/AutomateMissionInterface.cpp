@@ -80,16 +80,14 @@ void AutomateMissionInterface::CreateDefaultParameters()
                                         "Limites" ,
                                         "Fixer limite 1",
                                         "Fixer limite 2",
-                                        this,
-                                        false );
+                                        this );
     paramVector_.push_back( pParamLimits_ );
 
     // Limas
     paramVector_.push_back( new ParamLimaList( order.oid_limas,
                                                    "Limas",
                                                    "Ajouter aux limas",
-                                                   this,
-                                                   false ) );
+                                                   this ) );
 
     // Formation
     ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>* pParam 
@@ -97,8 +95,7 @@ void AutomateMissionInterface::CreateDefaultParameters()
                                                                  "Formation",
                                                                  2,
                                                                  Qt::Horizontal,
-                                                                 this,
-                                                                 false );
+                                                                 this );
     pParam->AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
     pParam->AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
     paramVector_.push_back( pParam );

@@ -299,7 +299,7 @@ void FragmentaryOrderInterface::CreateOrder_ChangerAmbiance()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_ambiance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumAmbianceMission >* pSelector_order_conduite_changer_ambiance = &CreateVarList( asnMission.order_conduite_changer_ambiance, "Order conduite changer ambiance", false );
+    ParamComboBox< ASN1T_EnumAmbianceMission >* pSelector_order_conduite_changer_ambiance = &CreateVarList( asnMission.order_conduite_changer_ambiance, "Order conduite changer ambiance");
     pSelector_order_conduite_changer_ambiance->AddItem( "Surete", EnumAmbianceMission::surete );
     pSelector_order_conduite_changer_ambiance->AddItem( "Vitesse", EnumAmbianceMission::vitesse );
 #undef asnMission
@@ -313,7 +313,7 @@ void FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumRoe >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement", false );
+    ParamComboBox< ASN1T_EnumRoe >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement");
     pSelector_order_conduite_changer_regles_engagement->AddItem( "None", EnumRoe::none );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir libre", EnumRoe::tir_libre );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir sur riposte", EnumRoe::tir_sur_riposte );
@@ -329,7 +329,7 @@ void FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagementPopulation()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumRoePopulation >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population", false );
+    ParamComboBox< ASN1T_EnumRoePopulation >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population");
     pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumRoePopulation::none );
     pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Emploi force interdit", EnumRoePopulation::emploi_force_interdit );
     pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Maintien a distance par moyens non letaux", EnumRoePopulation::maintien_a_distance_par_moyens_non_letaux );
@@ -431,7 +431,7 @@ void FragmentaryOrderInterface::CreateOrder_Pion_AppliquerFeux()
     ASN1T_OrderConduite_Pion_AppliquerFeux& asnMission = *new ASN1T_OrderConduite_Pion_AppliquerFeux();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_appliquer_feux = &asnMission;
-    ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions", false );
+    ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions");
     pSelector_munitions->AddItem( "Explosif", EnumTypeMunitionTirIndirect::explosif );
     pSelector_munitions->AddItem( "Grenade", EnumTypeMunitionTirIndirect::grenade );
     pSelector_munitions->AddItem( "Aced", EnumTypeMunitionTirIndirect::aced );
@@ -554,7 +554,7 @@ void FragmentaryOrderInterface::CreateOrder_ModifierRegimeTravailMaintenance()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumLogMaintenanceRegimeTravail >* pSelector_order_conduite_modifier_regime_travail_maintenance = &CreateVarList( asnMission.order_conduite_modifier_regime_travail_maintenance, "Order conduite modifier regime travail maintenance", false );
+    ParamComboBox< ASN1T_EnumLogMaintenanceRegimeTravail >* pSelector_order_conduite_modifier_regime_travail_maintenance = &CreateVarList( asnMission.order_conduite_modifier_regime_travail_maintenance, "Order conduite modifier regime travail maintenance");
     pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 1", EnumLogMaintenanceRegimeTravail::regime_1 );
     pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 2", EnumLogMaintenanceRegimeTravail::regime_2 );
     pSelector_order_conduite_modifier_regime_travail_maintenance->AddItem( "Regime 3", EnumLogMaintenanceRegimeTravail::regime_3 );
@@ -645,7 +645,7 @@ void FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni()
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
-    ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action", false );
+    ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action");
     pSelector_action->AddItem( "Detruire moyens", EnumActionReagirFaceAEni::detruire_moyens );
     pSelector_action->AddItem( "Defendre", EnumActionReagirFaceAEni::defendre );
     pSelector_action->AddItem( "Demonter", EnumActionReagirFaceAEni::demonter );
@@ -684,7 +684,7 @@ void FragmentaryOrderInterface::CreateOrder_Automate_TC2_GererMaterielAvantDepla
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Order conduite automate tc2 gerer materiel avant deplacement", false );
+    ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Order conduite automate tc2 gerer materiel avant deplacement");
     pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Deborder materiels vers bld", EnumTC2GererMaterielAvantDeplacement::deborder_materiels_vers_bld );
     pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Detruire materiels en reparation", EnumTC2GererMaterielAvantDeplacement::detruire_materiels_en_reparation );
     pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Reparer materiels sur place", EnumTC2GererMaterielAvantDeplacement::reparer_materiels_sur_place );
@@ -724,7 +724,7 @@ void FragmentaryOrderInterface::CreateOrder_Population_ChangerAttitude()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_population_changer_attitude;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    ParamComboBox< ASN1T_EnumPopulationAttitude >* pSelector_order_conduite_population_changer_attitude = &CreateVarList( asnMission.order_conduite_population_changer_attitude, "Order conduite population changer attitude", false );
+    ParamComboBox< ASN1T_EnumPopulationAttitude >* pSelector_order_conduite_population_changer_attitude = &CreateVarList( asnMission.order_conduite_population_changer_attitude, "Order conduite population changer attitude");
     pSelector_order_conduite_population_changer_attitude->AddItem( "Calme", EnumPopulationAttitude::calme );
     pSelector_order_conduite_population_changer_attitude->AddItem( "Agitee", EnumPopulationAttitude::agitee );
     pSelector_order_conduite_population_changer_attitude->AddItem( "Excitee", EnumPopulationAttitude::excitee );

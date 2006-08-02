@@ -79,6 +79,6 @@ void PopulationMissionInterface::CreateMission_CommettreExactions()
     ASN1T_Mission_Population_CommettreExactions& asnMission = *new ASN1T_Mission_Population_CommettreExactions();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Population_mission_population_commettre_exactions;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_population_commettre_exactions = &asnMission;
-    CreateLocation( asnMission.zone, "Zone", false );
+    CreateLocation( asnMission.zone, "Zone");
 }
 
