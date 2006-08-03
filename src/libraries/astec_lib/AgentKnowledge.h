@@ -20,7 +20,7 @@
 #include "Resolver_ABC.h"
 #include "Drawable_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class Displayer_ABC;
 class Team;
@@ -43,7 +43,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
-                             const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver );
+                             const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
 
@@ -63,7 +63,7 @@ public:
     //@{
     virtual unsigned long GetId       () const;
     virtual std::string   GetName     () const;
-    Agent&                GetRealAgent() const;
+    Agent_ABC&                GetRealAgent() const;
     const Team*           GetKnowledgeTeam() const;
     const KnowledgeGroup& GetKnowledgeGroup() const;
     //@}
@@ -77,12 +77,12 @@ private:
 public:
     Controller& controller_;
     const CoordinateConverter_ABC& converter_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
     const Resolver_ABC< Team >& teamResolver_;
     const KnowledgeGroup& group_;
 
     unsigned long nID_;
-    Agent&      realAgent_;
+    Agent_ABC&      realAgent_;
     const Team* team_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?

@@ -17,7 +17,7 @@
 #include <qdialog.h>
 
 class Controllers;
-class Agent;
+class Agent_ABC;
 class Publisher_ABC;
 
 // =============================================================================
@@ -29,8 +29,8 @@ class Publisher_ABC;
 // =============================================================================
 class ChangeLogisticLinksDialog : public QDialog
                                 , public Observer_ABC
-                                , public ElementObserver_ABC< Agent >
-                                , public ContextMenuObserver_ABC< Agent >
+                                , public ElementObserver_ABC< Agent_ABC >
+                                , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
@@ -43,9 +43,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const Agent& agent );
-    virtual void NotifyDeleted( const Agent& agent );
-    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyCreated( const Agent_ABC& agent );
+    virtual void NotifyDeleted( const Agent_ABC& agent );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
     //@}
 
 private slots:
@@ -68,11 +68,11 @@ private:
     //@{
     Controllers& controllers_;
     Publisher_ABC& publisher_;
-    ValuedComboBox< const Agent* >* tc2Combo_;
-    ValuedComboBox< const Agent* >* maintenanceCombo_;
-    ValuedComboBox< const Agent* >* medicalCombo_;
-    ValuedComboBox< const Agent* >* supplyCombo_;
-    SafePointer< Agent > selected_;
+    ValuedComboBox< const Agent_ABC* >* tc2Combo_;
+    ValuedComboBox< const Agent_ABC* >* maintenanceCombo_;
+    ValuedComboBox< const Agent_ABC* >* medicalCombo_;
+    ValuedComboBox< const Agent_ABC* >* supplyCombo_;
+    SafePointer< Agent_ABC > selected_;
     //@}
 };
 

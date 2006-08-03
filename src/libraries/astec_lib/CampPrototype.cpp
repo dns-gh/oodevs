@@ -11,7 +11,7 @@
 #include "CampPrototype.h"
 #include "moc_CampPrototype.cpp"
 
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Controllers.h"
 #include "ASN_Messages.h"
 #include "AutomatType.h"
@@ -28,7 +28,7 @@ CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers )
     , selected_( controllers )
 {
     new QLabel( qApp->tr( "TC2:" ), this );
-    tc2s_ = new ValuedComboBox< const Agent* >( this );
+    tc2s_ = new ValuedComboBox< const Agent_ABC* >( this );
     controllers_.Register( *this );
 }
     
@@ -89,7 +89,7 @@ void CampPrototype::Clean()
 // Name: CampPrototype::NotifyCreated
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CampPrototype::NotifyCreated( const Agent& agent )
+void CampPrototype::NotifyCreated( const Agent_ABC& agent )
 {
     if( tc2s_->GetItemIndex( &agent ) != -1 )
         return;
@@ -101,7 +101,7 @@ void CampPrototype::NotifyCreated( const Agent& agent )
 // Name: CampPrototype::NotifyDeleted
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CampPrototype::NotifyDeleted( const Agent& agent )
+void CampPrototype::NotifyDeleted( const Agent_ABC& agent )
 {
     tc2s_->RemoveItem( &agent );
 }
@@ -110,7 +110,7 @@ void CampPrototype::NotifyDeleted( const Agent& agent )
 // Name: CampPrototype::NotifyContextMenu
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void CampPrototype::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void CampPrototype::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
     {

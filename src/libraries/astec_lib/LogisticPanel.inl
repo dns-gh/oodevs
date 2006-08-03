@@ -57,7 +57,7 @@ void LogisticPanel< ConcretePanel, Consign >::AddConsignColumn( const char* colu
 template< typename ConcretePanel, typename Consign >
 void LogisticPanel< ConcretePanel, Consign >::showEvent( QShowEvent* )
 {
-    const Agent* selected = selected_;
+    const Agent_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -67,7 +67,7 @@ void LogisticPanel< ConcretePanel, Consign >::showEvent( QShowEvent* )
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-void LogisticPanel< ConcretePanel, Consign >::NotifySelected( const Agent* agent )
+void LogisticPanel< ConcretePanel, Consign >::NotifySelected( const Agent_ABC* agent )
 {
     if( ! agent || agent != selected_ )
     {

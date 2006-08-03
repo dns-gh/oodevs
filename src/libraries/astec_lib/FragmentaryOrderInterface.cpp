@@ -13,14 +13,14 @@
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
 #include "MissionPanel.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: FragmentaryOrderInterface constructor
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
     , publisher_( publisher )
     , nMissionId_         ( nMissionId )

@@ -14,7 +14,7 @@
 #include "MiniView.h"
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void MiniViews::BuildContextMenu( const Entity_ABC& agent, QPopupMenu& menu )
 // Name: MiniViews::NotifyContextMenu
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void MiniViews::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     BuildContextMenu( agent, menu );
 }

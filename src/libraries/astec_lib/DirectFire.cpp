@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "DirectFire.h"
 #include "Population.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "GlTools_ABC.h"
 #include "Positions.h"
 
@@ -18,7 +18,7 @@
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< Population >& populationResolver )
+DirectFire::DirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< Population >& populationResolver )
     : Fire_ABC( agentResolver.Get( message.tireur ) )
     , id_( message.oid_tir )
 {

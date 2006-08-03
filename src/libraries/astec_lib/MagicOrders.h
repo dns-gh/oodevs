@@ -15,7 +15,7 @@
 #include "Observer_ABC.h"
 #include "ASN_Types.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 
 // =============================================================================
@@ -32,7 +32,7 @@ class MagicOrders : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrders( Controller& controller, const Agent& agent );
+             MagicOrders( Controller& controller, const Agent_ABC& agent );
     virtual ~MagicOrders();
     //@}
 
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     bool transportersReady_;
     //@}
 };

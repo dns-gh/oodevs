@@ -13,7 +13,7 @@
 #include "EntityParameter.h"
 
 class AgentKnowledge;
-class Agent;
+class Agent_ABC;
 class Entity_ABC;
 class AgentKnowledgeConverter_ABC;
 
@@ -24,7 +24,7 @@ class AgentKnowledgeConverter_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamAgentKnowledge : public EntityParameter< AgentKnowledge >
-                          , public ContextMenuObserver_ABC< Agent >
+                          , public ContextMenuObserver_ABC< Agent_ABC >
 {
 
 public:
@@ -44,13 +44,13 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent& entity, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& entity, QPopupMenu& menu );
     //@}
 
     //! @name Member data
     //@{
     AgentKnowledgeConverter_ABC& converter_;
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     //@}
 };
 

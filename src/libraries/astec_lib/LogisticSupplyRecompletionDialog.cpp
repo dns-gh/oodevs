@@ -14,7 +14,7 @@
 
 #include "ASN_Messages.h"
 #include "StaticModel.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Equipments.h"
 #include "Troops.h"
 #include "Dotations.h"
@@ -205,7 +205,7 @@ LogisticSupplyRecompletionDialog::~LogisticSupplyRecompletionDialog()
 // Name: LogisticSupplyRecompletionDialog::InitializeEquipments
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent& agent )
+void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent_ABC& agent )
 {
     equipmentsList_.clear();
     equipmentsList_.append( "" );
@@ -231,7 +231,7 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent& agent 
 // Name: LogisticSupplyRecompletionDialog::InitializePersonal
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializePersonal( const Agent& agent )
+void LogisticSupplyRecompletionDialog::InitializePersonal( const Agent_ABC& agent )
 {
     const Troops& troops = agent.Get< Troops >();
     personalsTable_->setNumRows( 0 );
@@ -258,7 +258,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
 // Name: LogisticSupplyRecompletionDialog::InitializeDotations
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent& /*agent*/ )
+void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent_ABC& /*agent*/ )
 {
     dotationsTable_->setNumRows( 0 );
     const Resolver< DotationType >& dotations = static_.objectTypes_;
@@ -282,7 +282,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent& /*agent
 // Name: LogisticSupplyRecompletionDialog::InitializeAmmunitions
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeAmmunitions( const Agent& /*agent*/ )
+void LogisticSupplyRecompletionDialog::InitializeAmmunitions( const Agent_ABC& /*agent*/ )
 {
     munitionsFamilyTable_->setNumRows( 0 );
     AddAmmunition( 0, tr( "Obus" ) );
@@ -308,7 +308,7 @@ void LogisticSupplyRecompletionDialog::AddAmmunition( unsigned nPos, const QStri
 // Name: LogisticSupplyRecompletionDialog::InitializeSupplies
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeSupplies( const Agent& agent )
+void LogisticSupplyRecompletionDialog::InitializeSupplies( const Agent_ABC& agent )
 {
     stocks_.clear();
     stockTable_->setNumRows( 0 );
@@ -338,7 +338,7 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies( const Agent& agent )
 // Name: LogisticSupplyRecompletionDialog::Show
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::Show( const Agent& agent )
+void LogisticSupplyRecompletionDialog::Show( const Agent_ABC& agent )
 {
     agent_ = &agent;
     InitializeEquipments ( agent );

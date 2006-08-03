@@ -14,7 +14,7 @@
 #include "SafePointer.h"
 
 class Entity_ABC;
-class Agent;
+class Agent_ABC;
 class Population;
 class Controllers;
 class SmartGridWidget;
@@ -29,7 +29,7 @@ class MiniView;
 // =============================================================================
 class MiniViews : public QDockWindow
                 , public Observer_ABC
-                , public ContextMenuObserver_ABC< Agent >
+                , public ContextMenuObserver_ABC< Agent_ABC >
                 , public ContextMenuObserver_ABC< Population >
 {
     Q_OBJECT;
@@ -57,7 +57,7 @@ private:
     //! @name Helpers
     //@{
     void BuildContextMenu( const Entity_ABC& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
     virtual void NotifyContextMenu( const Population& popup, QPopupMenu& menu );
     //@}
 

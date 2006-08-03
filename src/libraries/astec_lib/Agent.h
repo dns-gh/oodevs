@@ -17,7 +17,6 @@
 class Controller;
 class AgentType;
 class AutomatType;
-class DecisionalModel;
 
 // =============================================================================
 /** @class  Agent
@@ -26,6 +25,9 @@ class DecisionalModel;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent : public Agent_ABC
+            , public Extension_ABC
+            , public Aggregatable_ABC
+            , public Drawable_ABC
             , public Updatable_ABC< ASN1T_MsgChangeAutomateAck >
             , public Updatable_ABC< ASN1T_MsgChangeAutomate >
             , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
@@ -37,12 +39,12 @@ public:
              Agent( const ASN1T_MsgAutomateCreation& message,
                     Controller& controller, 
                     const Resolver_ABC< AutomatType >& resolver,
-                    const Resolver_ABC< Agent >& agentResolver, 
+                    const Resolver_ABC< Agent_ABC >& agentResolver, 
                     const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
              Agent( const ASN1T_MsgPionCreation& message,
                     Controller& controller, 
                     const Resolver_ABC< AgentType >& resolver,
-                    const Resolver_ABC< Agent >& agentResolver, 
+                    const Resolver_ABC< Agent_ABC >& agentResolver, 
                     const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
     virtual ~Agent();
     //@}
@@ -52,15 +54,13 @@ public:
     virtual bool IsInTeam( const Team& team ) const;
     virtual const Team& GetTeam() const;
     virtual KnowledgeGroup& GetKnowledgeGroup() const;
+    virtual const Agent_ABC* GetSuperior() const;
 
     virtual std::string GetName() const;
     virtual unsigned long GetId() const;
 
-    const DecisionalModel& GetDecisionalModel() const;
-    const DecisionalModel* GetAutomatDecisionalModel() const;
-    const Agent* GetSuperior() const;
-
-    const AutomatType* GetAutomatType() const;
+    virtual const AutomatType* GetAutomatType() const;
+    virtual const AgentType& GetType() const;
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
@@ -83,11 +83,12 @@ private:
     void ChangeKnowledgeGroup( unsigned long id );
     void ChangeKnowledgeGroup( KnowledgeGroup& gtia );
     void ChangeSuperior( unsigned long id );
-    void AddChild   ( Agent& child );
-    void RemoveChild( Agent& child );
     virtual void Aggregate( const bool& );
 
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
+    void RemoveChild( Agent_ABC& child );
+    void AddChild( Agent_ABC& child );
 
     void CreateDictionary();
     //@}
@@ -96,10 +97,10 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& agentResolver_;
+    const Resolver_ABC< Agent_ABC >& agentResolver_;
     const Resolver_ABC< KnowledgeGroup >&  gtiaResolver_;
-    std::string   name_;
     unsigned long id_;
+    std::string   name_;
 
     // Automat only
     AutomatType*  automatType_;

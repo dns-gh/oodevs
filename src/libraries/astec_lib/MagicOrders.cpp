@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "MagicOrders.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AutomatDecisions.h"
 #include "Controller.h"
 
@@ -17,7 +17,7 @@
 // Name: MagicOrders constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrders::MagicOrders( Controller& controller, const Agent& agent )
+MagicOrders::MagicOrders( Controller& controller, const Agent_ABC& agent )
     : controller_( controller )
     , agent_( agent )
     , transportersReady_( false )
@@ -60,7 +60,7 @@ bool MagicOrders::CanSurrender() const
 bool MagicOrders::CanMagicMove() const
 {
     if( agent_.GetAutomatType() )
-        return agent_.Retrieve< AutomatDecisions >()->IsEmbraye();
+        return true;
     if( agent_.GetSuperior() && agent_.GetSuperior()->GetAutomatType() )
         return !agent_.GetSuperior()->Retrieve< AutomatDecisions >()->IsEmbraye();
     return false;

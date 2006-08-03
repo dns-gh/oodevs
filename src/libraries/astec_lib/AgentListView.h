@@ -18,7 +18,7 @@
 
 class Team;
 class KnowledgeGroup;
-class Agent;
+class Agent_ABC;
 class ActionContext;
 class Controllers;
 class ValuedListItem;
@@ -36,13 +36,13 @@ class AgentListView : public ListView< AgentListView >
                     , public Observer_ABC
                     , public ElementObserver_ABC< Team >
                     , public ElementObserver_ABC< KnowledgeGroup >
-                    , public ElementObserver_ABC< Agent >
+                    , public ElementObserver_ABC< Agent_ABC >
                     , public ElementObserver_ABC< AutomatDecisions >
                     , public SelectionObserver_Base< Team > // $$$$ AGE 2006-03-21: refactor these crap
                     , public SelectionObserver_Base< KnowledgeGroup >
-                    , public SelectionObserver_Base< Agent >
+                    , public SelectionObserver_Base< Agent_ABC >
                     , public SelectionObserver_ABC
-                    , public ActivationObserver_ABC< Agent >
+                    , public ActivationObserver_ABC< Agent_ABC >
                     , public OptionsObserver_ABC
 {
    Q_OBJECT;
@@ -66,7 +66,7 @@ public:
     //@{
     void Display( const Team& team,            ValuedListItem* item );
     void Display( const KnowledgeGroup& group, ValuedListItem* item );
-    void Display( const Agent& agent,          ValuedListItem* item );
+    void Display( const Agent_ABC& agent,          ValuedListItem* item );
     //@}
 
 private:
@@ -92,15 +92,15 @@ private:
     virtual void NotifyDeleted( const Team& team );
 
     virtual void NotifyUpdated( const KnowledgeGroup& group );
-    virtual void NotifyUpdated( const Agent& agent );
+    virtual void NotifyUpdated( const Agent_ABC& agent );
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
 
     virtual void Select( const Team& element );
     virtual void Select( const KnowledgeGroup& element );
-    virtual void Select( const Agent& element );
+    virtual void Select( const Agent_ABC& element );
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void NotifyActivated( const Agent& element );
+    virtual void NotifyActivated( const Agent_ABC& element );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
 
     template< typename ParentType, typename ChildType >

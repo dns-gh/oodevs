@@ -22,7 +22,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolve
     , nbcArea_( 0 )
     , nbcCloud_( 0 )
 {
-    new QLabel( tr( "Agent NBC:" ), this );
+    new QLabel( tr( "Agent_ABC NBC:" ), this );
     nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );
 
     Iterator< const NBCAgent& > it( resolver.CreateIterator() );

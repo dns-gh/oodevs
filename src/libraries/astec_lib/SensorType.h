@@ -8,7 +8,7 @@
 #include "Types.h"
 #include "Perception_Def.h"
 
-class Agent;
+class Agent_ABC;
 enum E_PerceptionResult;
 
 namespace xml { class xistream; };
@@ -37,7 +37,7 @@ public:
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
 
-    float GetDistanceModificator( const Agent& agent ) const;
+    float GetDistanceModificator( const Agent_ABC& agent ) const;
     //@}
 
 private:
@@ -64,7 +64,7 @@ private:
     void InitializeEnvironnementFactors( xml::xistream& xis );
     void InitializeAngle               ( xml::xistream& xis );
 
-    float GetPostureSourceFactor    ( const Agent& agent ) const;
+    float GetPostureSourceFactor    ( const Agent_ABC& agent ) const;
     float ComputeEnvironementFactor ( bool inForest, bool inTown, bool inGround ) const;
     //@}
 

@@ -16,7 +16,7 @@
 class DetectionMap;
 class SensorType;
 class Surface;
-class Agent;
+class Agent_ABC;
 class VisionMap;
 
 // =============================================================================
@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    Surface* CreateSurface( const Agent& agent, const VisionConesMessage& input );
+    Surface* CreateSurface( const Agent_ABC& agent, const VisionConesMessage& input );
     VisionMap* CreateVisionMap();
     //@}
 

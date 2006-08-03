@@ -13,7 +13,7 @@
 #include "Resolver.h"
 #include "ASN_Types.h"
 
-class Agent;
+class Agent_ABC;
 class Entity_ABC;
 class Population;
 
@@ -29,7 +29,7 @@ class FiresModel : public Resolver< Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const Resolver_ABC< Agent >& agents, const Resolver_ABC< Population >& populations );
+             FiresModel( const Resolver_ABC< Agent_ABC >& agents, const Resolver_ABC< Population >& populations );
     virtual ~FiresModel();
     //@}
 
@@ -55,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< Agent >& agents_;
+    const Resolver_ABC< Agent_ABC >& agents_;
     const Resolver_ABC< Population >& populations_;
     //@}
 };

@@ -12,7 +12,7 @@
 #include "Perception_Def.h"
 
 class SensorType;
-class Agent;
+class Agent_ABC;
 class GlTools_ABC;
 class DetectionMap;
 class VisionMap;
@@ -26,7 +26,7 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const Agent& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver );
+             Surface( const Agent_ABC& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver );
     virtual ~Surface();
     //@}
 
@@ -63,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     const DetectionMap& map_;
     geometry::Point2f origin_;
     float height_;

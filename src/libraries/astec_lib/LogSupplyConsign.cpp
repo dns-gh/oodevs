@@ -19,7 +19,7 @@
 #include "astec_pch.h"
 
 #include "LogSupplyConsign.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Controller.h"
 #include "LogisticConsigns.h"
 #include "Displayer_ABC.h"
@@ -33,7 +33,7 @@ using namespace geometry;
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& message )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , dotationResolver_     ( dotationResolver )

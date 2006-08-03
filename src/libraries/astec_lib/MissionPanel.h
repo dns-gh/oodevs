@@ -17,7 +17,7 @@
 class QPopupMenu;
 class Decisions;
 class AutomatDecisions;
-class Agent;
+class Agent_ABC;
 class Population;
 class MissionInterface_ABC;
 class Mission;
@@ -34,7 +34,7 @@ class Publisher_ABC;
 // =============================================================================
 class MissionPanel : public QDockWindow
                    , public Observer_ABC
-                   , public ContextMenuObserver_ABC< Agent >
+                   , public ContextMenuObserver_ABC< Agent_ABC >
                    , public ContextMenuObserver_ABC< Population >
         
 {
@@ -71,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
     virtual void NotifyContextMenu( const Population& agent, QPopupMenu& menu );
     int AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, const QString& name, const char* slot );
     void AddAgentMissions( const Decisions& decisions, QPopupMenu& menu ); 
@@ -92,7 +92,7 @@ private:
 
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
-    const Agent* selected_;
+    const Agent_ABC* selected_;
     const Population* selectedPopulation_;
     //@}
 };

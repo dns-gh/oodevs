@@ -18,7 +18,7 @@
 #include "NBCAttributes.h"
 #include "RotaAttributes.h"
 #include "Controllers.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "DotationType.h"
 
 #include "DisplayBuilder.h"
@@ -62,7 +62,7 @@ ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers, ItemFactor
                 .AddLabel( "TC2:" );
 
     display_->AddGroup( "Nuage/Zone NBC" )
-                .AddLabel( "Agent NBC:" );
+                .AddLabel( "Agent_ABC NBC:" );
 
     display_->AddGroup( "ROTA" )
                 .AddLabel( "Danger:" )

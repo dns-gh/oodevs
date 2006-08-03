@@ -16,7 +16,7 @@
 #include "Resolver_ABC.h"
 #include "Perception.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 
 // =============================================================================
@@ -31,7 +31,7 @@ class PerceptionMap : public Extension_ABC, public Updatable_ABC< ASN1T_MsgUnitK
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionMap( Controller& controller, const Resolver_ABC< Agent >& resolver );
+             PerceptionMap( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver );
     virtual ~PerceptionMap();
     //@}
 
@@ -60,7 +60,7 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
     T_Perceptions perceptions_;
     //@}
 };

@@ -17,7 +17,7 @@
 // Name: Transports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Transports::Transports( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico )
+Transports::Transports( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , transporter_( 0 )

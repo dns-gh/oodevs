@@ -95,7 +95,7 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
+Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     DataDictionary& dico = result->Get< DataDictionary >();
@@ -118,7 +118,7 @@ Agent* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
+Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     result->Attach( *new Lives( *result ) );

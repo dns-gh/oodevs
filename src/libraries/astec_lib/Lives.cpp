@@ -10,13 +10,13 @@
 #include "astec_pch.h"
 #include "Lives.h"
 #include "GlTools_ABC.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Lives constructor
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-Lives::Lives( const Agent& agent )
+Lives::Lives( const Agent_ABC& agent )
     : agent_( agent ) 
     , life_( 1.f )
     , bEmbraye_( false )
@@ -44,7 +44,7 @@ float Lives::GetLife() const
         return life_;
     float result = life_;
     unsigned count = 1;
-    Iterator< const Agent& > children = agent_.CreateIterator();
+    Iterator< const Agent_ABC& > children = agent_.CreateIterator();
     while( children.HasMoreElements() )
     {
         result += children.NextElement().Get< Lives >().GetLife();
@@ -62,7 +62,7 @@ void Lives::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
     if( ! viewport.IsInside( where ) )
         return;
     glPushAttrib( GL_CURRENT_BIT );
-    if( agent_.GetAutomatDecisionalModel() && bEmbraye_ )
+    if( agent_.GetAutomatType() && bEmbraye_ )
         glColor4f( 1, 1, 0, 0.4f );
     else
         glColor4f( 1, 1, 1, 0.4f );

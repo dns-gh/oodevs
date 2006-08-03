@@ -11,7 +11,7 @@
 #define __Loan_h_
 
 class EquipmentType;
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  Loan
@@ -25,7 +25,7 @@ class Loan
 public:
     //! @name Constructors/Destructor
     //@{
-             Loan( const EquipmentType& type, const Agent& agent, unsigned int quantity );
+             Loan( const EquipmentType& type, const Agent_ABC& agent, unsigned int quantity );
     virtual ~Loan();
     //@}
 
@@ -33,7 +33,7 @@ public:
     //! @name Member data
     //@{
     const EquipmentType* type_;
-    const Agent* agent_;
+    const Agent_ABC* agent_;
     unsigned int quantity_;
     //@}
 };

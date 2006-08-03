@@ -11,7 +11,7 @@
 #define __TeamSelectionObserver_h_
 
 #include "SelectionObserver_ABC.h"
-class Agent;
+class Agent_ABC;
 class KnowledgeGroup;
 class Team;
 class Object;
@@ -27,7 +27,7 @@ class TeamSelectionObserver
     : public SelectionObserver_ABC
     , public SelectionObserver_Base< Team >
     , public SelectionObserver_Base< KnowledgeGroup >
-    , public SelectionObserver_Base< Agent >
+    , public SelectionObserver_Base< Agent_ABC >
     , public SelectionObserver_Base< Object >
     , public SelectionObserver_Base< Population >
 {
@@ -53,7 +53,7 @@ protected:
     virtual void AfterSelection();
     virtual void Select( const Team& element );
     virtual void Select( const KnowledgeGroup& element );
-    virtual void Select( const Agent& element );
+    virtual void Select( const Agent_ABC& element );
     virtual void Select( const Object& element );
     virtual void Select( const Population& element );
     virtual void Select( const Team* ) = 0;

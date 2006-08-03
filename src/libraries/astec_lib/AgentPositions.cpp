@@ -11,7 +11,7 @@
 #include "AgentPositions.h"
 #include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 using namespace geometry;
 
@@ -19,7 +19,7 @@ using namespace geometry;
 // Name: AgentPositions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( const Agent& agent, const CoordinateConverter_ABC& converter )
+AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverter_ABC& converter )
     : agent_( agent )
     , converter_( converter )
     , aggregated_( false )
@@ -50,7 +50,7 @@ Point2f AgentPositions::GetPosition() const
 
     Point2f aggregatedPosition = position_;
     unsigned count = 1;
-    Iterator< const Agent& > children = agent_.CreateIterator();
+    Iterator< const Agent_ABC& > children = agent_.CreateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();

@@ -16,7 +16,7 @@
 #include "Resolver_ABC.h"
 #include "Loan.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class EquipmentType;
 
@@ -33,7 +33,7 @@ class Lendings : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Lendings( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver );
+             Lendings( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver );
     virtual ~Lendings();
     //@}
 
@@ -60,7 +60,7 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
     const Resolver_ABC< EquipmentType >& equipmentResolver_;
     T_Lendings lendings_;
     //@}

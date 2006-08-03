@@ -11,7 +11,7 @@
 #include "ActionLogger.h"
 #include "Controllers.h"
 #include "MT/MT_logger/MT_Logger_lib.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Object.h"
 #include "Team.h"
 #include "Population.h"
@@ -63,7 +63,7 @@ void ActionLogger::AfterSelection()
 // Name: ActionLogger::Select
 // Created: AGE 2006-06-19
 // -----------------------------------------------------------------------------
-void ActionLogger::Select( const Agent& element )
+void ActionLogger::Select( const Agent_ABC& element )
 {
     LogSelection( element );
 }

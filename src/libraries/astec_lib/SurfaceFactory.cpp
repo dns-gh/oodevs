@@ -36,7 +36,7 @@ SurfaceFactory::~SurfaceFactory()
 // Name: SurfaceFactory::CreateSurface
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-Surface* SurfaceFactory::CreateSurface( const Agent& agent, const VisionConesMessage& input )
+Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const VisionConesMessage& input )
 {
     return new Surface( agent, input, map_, resolver_ );
 }

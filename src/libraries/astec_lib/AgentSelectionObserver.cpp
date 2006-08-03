@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "AgentSelectionObserver.h"
 #include "Population.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentSelectionObserver constructor
@@ -62,7 +62,7 @@ void AgentSelectionObserver::Select( const Population& element )
 // Name: AgentSelectionObserver::Select
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void AgentSelectionObserver::Select( const Agent& element )
+void AgentSelectionObserver::Select( const Agent_ABC& element )
 {
     selected_ = &element;
 }

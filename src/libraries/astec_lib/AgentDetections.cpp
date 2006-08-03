@@ -11,14 +11,14 @@
 #include "AgentDetections.h"
 #include "Controller.h"
 #include "Positions.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent >& resolver, const Team& team )
+AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team& team )
     : controller_( controller )
     , resolver_  ( resolver )
     , team_      ( team )
@@ -47,7 +47,7 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
     bool bRecordMode;
 
     message >> id >> nVisType >> nMaxVisType >> bRecordMode;
-    Agent* agent = & resolver_.Get( id );
+    Agent_ABC* agent = & resolver_.Get( id );
 
     // 4 = eRecorded
     detections_[ agent ] = bRecordMode ? E_UnitVisType( 4 ) : E_UnitVisType( nVisType );
@@ -68,7 +68,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rect
     glLineWidth( 1.f );
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
-        const Agent& agent = *it->first;
+        const Agent_ABC& agent = *it->first;
         if( ! agent.IsInTeam( team_ ) && it->second != eVisTypeInvisible )
         {
             if( it->second == eVisTypeRecognized )

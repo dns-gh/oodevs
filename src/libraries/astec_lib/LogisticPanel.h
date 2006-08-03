@@ -20,7 +20,7 @@
 
 class ItemFactory_ABC;
 class Controllers;
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  LogisticPanel
@@ -31,7 +31,7 @@ class Agent;
 template< typename ConcretePanel, typename Consign >
 class LogisticPanel : public InfoPanel_ABC
                     , public Observer_ABC
-                    , public SelectionObserver< Agent >
+                    , public SelectionObserver< Agent_ABC >
                     , public ElementObserver_ABC< LogisticConsigns >
                     , public ElementObserver_ABC< Consign >
 {
@@ -63,8 +63,8 @@ protected:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );
-    virtual void NotifySelected( const Agent* agent );
-    virtual void NotifySelected( const Agent& agent ) = 0;
+    virtual void NotifySelected( const Agent_ABC* agent );
+    virtual void NotifySelected( const Agent_ABC& agent ) = 0;
     virtual void NotifyUpdated( const LogisticConsigns& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
 
@@ -82,7 +82,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     ListDisplayer< ConcretePanel >* pConsignListView_;
     ListDisplayer< ConcretePanel >* pConsignHandledListView_;
     SubItemDisplayer* logDisplay_;

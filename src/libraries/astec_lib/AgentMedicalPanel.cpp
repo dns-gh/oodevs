@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "AgentMedicalPanel.h"
 #include "LogMedicalConsign.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "MedicalStates.h"
 #include "LogisticConsigns.h"
 #include "ListDisplayer.h"
@@ -75,7 +75,7 @@ AgentMedicalPanel::~AgentMedicalPanel()
 // Name: AgentMedicalPanel::NotifySelected
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentMedicalPanel::NotifySelected( const Agent& agent )
+void AgentMedicalPanel::NotifySelected( const Agent_ABC& agent )
 {
     display_->Hide();
     dispoReleveAmbulances_->hide();

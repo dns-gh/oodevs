@@ -9,17 +9,18 @@
 
 #include "astec_pch.h"
 #include "Decisions.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Controller.h"
 #include "DecisionalModel.h"
 #include "GlTools_ABC.h"
 #include "Displayer_ABC.h"
+#include "AgentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: Decisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Decisions::Decisions( Controller& controller, const Agent& agent )
+Decisions::Decisions( Controller& controller, const Agent_ABC& agent )
     : controller_( controller )
     , agent_( agent )
     , bEmbraye_( false )
@@ -57,7 +58,7 @@ void Decisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
     lastOrderId_ = message.order_id;
-    next_ = & agent_.GetDecisionalModel().Resolver< Mission >::Get( message.mission.t - 1 ); // $$$$ AGE 2006-04-19: -1 car enum != asn...
+    next_ = & GetDecisionalModel().Resolver< Mission >::Get( message.mission.t - 1 ); // $$$$ AGE 2006-04-19: -1 car enum != asn...
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +89,7 @@ bool Decisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 Iterator< const Mission& > Decisions::GetMissions() const
 {
-    return agent_.GetDecisionalModel().Resolver< Mission >::CreateIterator();
+    return GetDecisionalModel().Resolver< Mission >::CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,14 +98,14 @@ Iterator< const Mission& > Decisions::GetMissions() const
 // -----------------------------------------------------------------------------
 Iterator< const FragOrder& > Decisions::GetFragOrders() const
 {
-    return agent_.GetDecisionalModel().Resolver< FragOrder >::CreateIterator();
+    return GetDecisionalModel().Resolver< FragOrder >::CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Decisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent& Decisions::GetAgent() const
+const Agent_ABC& Decisions::GetAgent() const
 {
     return agent_;
 }
@@ -138,3 +139,11 @@ void Decisions::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( "Mission", current_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Decisions::GetDecisionalModel
+// Created: SBO 2006-08-03
+// -----------------------------------------------------------------------------
+const DecisionalModel& Decisions::GetDecisionalModel() const
+{
+    return agent_.GetType().GetDecisionalModel();
+}

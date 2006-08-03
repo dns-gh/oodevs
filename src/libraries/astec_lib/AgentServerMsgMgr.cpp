@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "AgentServerMsgMgr.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Agent_ABC.h"
 #include "Object.h"
 #include "Lima.h"
@@ -61,7 +61,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     , needsVisionSurfaces_( false )
 {
     const DIN_ConnectorGuest theConnector( (DIN::DIN_Connector_ABC::DIN_ConnectionID)( eConnector_SIM_MOS ) );
-    pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>( *this, engine, theConnector, "Msgs MOS Server -> Agent Server" );
+    pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>( *this, engine, theConnector, "Msgs MOS Server -> Agent_ABC Server" );
 
     pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & AgentServerMsgMgr::OnReceiveMsgInit                );
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
@@ -243,7 +243,7 @@ enum E_UnitMagicAction
 // Name: AgentServerMsgMgr::SendMagicDestruction
 // Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMagicDestruction( const Agent& agent )
+void AgentServerMsgMgr::SendMagicDestruction( const Agent_ABC& agent )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg << agent.GetId();
@@ -1422,7 +1422,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDest
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire& message )
 {
-    Agent& src = GetModel().agents_.GetAgent( message.tireur );
+    Agent_ABC& src = GetModel().agents_.GetAgent( message.tireur );
     src.Update( message );
     GetModel().fires_.AddFire( message );
 }

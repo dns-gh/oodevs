@@ -18,7 +18,7 @@
 #include "Drawable_ABC.h"
 
 class Controller;
-class Agent;
+class Agent_ABC;
 class Team;
 
 // =============================================================================
@@ -35,7 +35,7 @@ class AgentDetections : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentDetections( Controller& controller, const Resolver_ABC< Agent >& resolver, const Team& team );
+             AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team& team );
     virtual ~AgentDetections();
     //@}
 
@@ -53,7 +53,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Agent*, E_UnitVisType > T_AgentDetections;
+    typedef std::map< const Agent_ABC*, E_UnitVisType > T_AgentDetections;
     typedef T_AgentDetections::const_iterator     CIT_AgentDetections;
     //@}
 
@@ -66,7 +66,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
     const Team& team_;
 
     T_AgentDetections detections_;

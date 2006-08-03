@@ -9,14 +9,14 @@
 
 #include "astec_pch.h"
 #include "ParamAgent.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgent constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 ParamAgent::ParamAgent(  QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
-    : EntityParameter< Agent >( pParent, id, label, menu )
+    : EntityParameter< Agent_ABC >( pParent, id, label, menu )
 {
     // NOTHING
 }

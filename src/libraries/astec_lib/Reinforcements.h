@@ -15,7 +15,7 @@
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class Displayer_ABC;
 class DataDictionary;
@@ -33,7 +33,7 @@ class Reinforcements : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reinforcements( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico );
+             Reinforcements( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico );
     virtual ~Reinforcements();
     //@}
 
@@ -56,16 +56,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent* > T_Agents;
+    typedef std::vector< const Agent_ABC* > T_Agents;
     //@}
 
 public:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
 
-    const Agent* reinforced_;
+    const Agent_ABC* reinforced_;
     T_Agents reinforcements_;
     //@}
 };

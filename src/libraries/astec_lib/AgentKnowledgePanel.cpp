@@ -20,14 +20,14 @@
 #include "AgentKnowledgePanel.h"
 #include "moc_AgentKnowledgePanel.cpp"
 
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AgentKnowledges.h"
 #include "AgentKnowledge.h"
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
 #include "KnowledgeGroup.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AgentKnowledge.h"
 #include "Tools.h"
 #include "Units.h"
@@ -56,7 +56,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& cont
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Détails" )
                 .AddLabel( "Id:" )
-                .AddLabel( "Agent associé:" )
+                .AddLabel( "Agent_ABC associé:" )
                 .AddLabel( "Position:" )
                 .AddLabel( "Direction:" )
                 .AddLabel( "Vitesse:" )
@@ -78,7 +78,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& cont
                 .AddLabel( "Pertinence:"  );
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( "Agent" ).
+    pPerceptionListView_->AddColumn( "Agent_ABC" ).
                           AddColumn( "Niveau perception" );
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
@@ -262,6 +262,6 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( perception.detected_ );
-    displayer.Display( "Agent", perception.detected_->GetName() ); // to prevent link
+    displayer.Display( "Agent_ABC", perception.detected_->GetName() ); // to prevent link
     displayer.Display( "Niveau perception", perception.level_ );
 }

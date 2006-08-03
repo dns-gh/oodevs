@@ -21,7 +21,7 @@
 class Displayer_ABC;
 class Object;
 class Controller;
-class Agent;
+class Agent_ABC;
 class Team;
 class CoordinateConverter_ABC;
 class ObjectType;
@@ -44,7 +44,7 @@ public:
              ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
                               Controller& controller, const CoordinateConverter_ABC& converter,
                               const Resolver_ABC< Object >& objectResolver,
-                              const Resolver_ABC< Agent >& agentResolver, 
+                              const Resolver_ABC< Agent_ABC >& agentResolver, 
                               const Resolver_ABC< ObjectType >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
@@ -77,7 +77,7 @@ private:
     
     //! @name Types
     //@{
-    typedef std::set< const Agent* > T_Agents;
+    typedef std::set< const Agent_ABC* > T_Agents;
     //@}
 
     //! @name Helpers
@@ -90,7 +90,7 @@ private:
     //@{
     const CoordinateConverter_ABC& converter_;
     const Resolver_ABC< Object >& objectResolver_;
-    const Resolver_ABC< Agent >& agentResolver_;
+    const Resolver_ABC< Agent_ABC >& agentResolver_;
     Controller& controller_;
     const Team& owner_;
 

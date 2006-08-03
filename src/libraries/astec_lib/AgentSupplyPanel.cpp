@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "AgentSupplyPanel.h"
 #include "LogSupplyConsign.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "SupplyStates.h"
 #include "LogisticConsigns.h"
 #include "ListDisplayer.h"
@@ -71,7 +71,7 @@ AgentSupplyPanel::~AgentSupplyPanel()
 // Name: AgentSupplyPanel::NotifySelected
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentSupplyPanel::NotifySelected( const Agent& agent )
+void AgentSupplyPanel::NotifySelected( const Agent_ABC& agent )
 {
     display_->Hide();
     pStocks_->hide();

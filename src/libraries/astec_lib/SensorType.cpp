@@ -9,7 +9,7 @@
 #include "Net_Def.h"
 #include "Tools.h"
 #include "Attr_Def.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Experience.h"
 #include "Tiredness.h"
 #include "Attributes.h"
@@ -158,7 +158,7 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
 // Name: SensorType::GetPostureSourceFactor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-float SensorType::GetPostureSourceFactor( const Agent& agent ) const
+float SensorType::GetPostureSourceFactor( const Agent_ABC& agent ) const
 {
     return agent.Get< Attributes >().ComputePostureFactor( postureSourceFactors_ );
 }
@@ -167,7 +167,7 @@ float SensorType::GetPostureSourceFactor( const Agent& agent ) const
 // Name: SensorType::GetDistanceModificator
 // Created: NLD 2004-12-02
 // -----------------------------------------------------------------------------
-float SensorType::GetDistanceModificator( const Agent& agent ) const
+float SensorType::GetDistanceModificator( const Agent_ABC& agent ) const
 {
 //    const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
 //          MT_Float rPopulationFactor = 1.;

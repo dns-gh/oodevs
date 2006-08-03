@@ -17,7 +17,7 @@
 #include "SafePointer.h"
 
 template< typename T > class ListDisplayer;
-class Agent;
+class Agent_ABC;
 class Controllers;
 class Dotation;
 class Dotations;
@@ -34,7 +34,7 @@ class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
-    @brief  Agent resources panel
+    @brief  Agent_ABC resources panel
 */
 // Created: APE 2004-03-10
 // =============================================================================
@@ -45,7 +45,7 @@ class AgentResourcesPanel : public InfoPanel_ABC
                           , public ElementObserver_ABC< Lendings >
                           , public ElementObserver_ABC< Borrowings >
                           , public ElementObserver_ABC< Troops >
-                          , public SelectionObserver< Agent >
+                          , public SelectionObserver< Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -78,7 +78,7 @@ private:
     virtual void NotifyUpdated( const Lendings& a );
     virtual void NotifyUpdated( const Borrowings& a );
     virtual void NotifyUpdated( const Troops& a );
-    virtual void NotifySelected( const Agent* agent );
+    virtual void NotifySelected( const Agent_ABC* agent );
 
     template< typename T >
     bool ShouldUpdate( const T& a );
@@ -98,7 +98,7 @@ private:
     T_ListView* pTroops_;
     T_ListView* pLendings_;
     T_ListView* pBorrowings_;
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     //@}
 };
 

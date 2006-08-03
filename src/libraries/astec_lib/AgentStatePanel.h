@@ -15,7 +15,7 @@
 #include "InfoPanel_ABC.h"
 #include "SafePointer.h"
 
-class Agent;
+class Agent_ABC;
 class ReportListView;
 class DisplayBuilder;
 class Controllers;
@@ -33,14 +33,14 @@ class ItemFactory_ABC;
 // =============================================================================
 class AgentStatePanel : public InfoPanel_ABC
                       , public Observer_ABC
-                      , public ElementObserver_ABC< Agent >
+                      , public ElementObserver_ABC< Agent_ABC >
                       , public ElementObserver_ABC< Attributes >
                       , public ElementObserver_ABC< Contaminations >
                       , public ElementObserver_ABC< HumanFactors >
                       , public ElementObserver_ABC< Reinforcements >
                       , public ElementObserver_ABC< LogisticLinks >
                       , public ElementObserver_ABC< Transports >
-                      , public SelectionObserver< Agent >
+                      , public SelectionObserver< Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,7 +49,7 @@ public:
     virtual ~AgentStatePanel();
     //@}
 
-    virtual void NotifySelected( const Agent* element );
+    virtual void NotifySelected( const Agent_ABC* element );
 
 private:
     //! @name Copy / Assignment
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyDeleted( const Agent& );
+    virtual void NotifyDeleted( const Agent_ABC& );
     virtual void NotifyUpdated( const Attributes& attributes );
     virtual void NotifyUpdated( const Contaminations& attributes );
     virtual void NotifyUpdated( const HumanFactors& attributes );
@@ -80,7 +80,7 @@ private:
     //@{
     Controllers& controllers_;
     DisplayBuilder* display_;
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     //@}
 };
 

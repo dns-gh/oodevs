@@ -112,7 +112,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
     QVBox* agentPanel = new QVBox();
-    new EntitySearchBox< Agent >( agentPanel, controllers );
+    new EntitySearchBox< Agent_ABC >( agentPanel, controllers );
     AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers, publisher, *factory );
     pListsTabWidget->addTab( agentPanel, tr( "Agents" ) );
     pAgentList_->header()->hide();

@@ -16,7 +16,7 @@
 #include "Tiredness.h"
 #include "Experience.h"
 #include "Morale.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 namespace 
 {
@@ -82,7 +82,7 @@ ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 // Name: ChangeHumanFactorsDialog::Show
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::Show( const Agent& agent )
+void ChangeHumanFactorsDialog::Show( const Agent_ABC& agent )
 {
     Populate( Tiredness::GetTirednesses(), *pTirednessCombo_ );
     Populate( Morale::GetMorales(), *pMoralCombo_ );
@@ -113,7 +113,7 @@ void ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     if ( pAllUnitsCheckBox_->isChecked() )
     {
-        Iterator< const Agent& > it = agent_->CreateIterator();
+        Iterator< const Agent_ABC& > it = agent_->CreateIterator();
         while( it.HasMoreElements() )
             SendMessage( it.NextElement().GetId(), tiredness, moral, experience );
     }

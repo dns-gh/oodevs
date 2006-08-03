@@ -23,7 +23,7 @@ class StaticModel;
 
 // =============================================================================
 /** @class  AgentFactory
-    @brief  Agent factory
+    @brief  Agent_ABC factory
 */
 // Created: AGE 2006-02-13
 // =============================================================================
@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Agent* Create( const ASN1T_MsgAutomateCreation& asnMsg );
-    virtual Agent* Create( const ASN1T_MsgPionCreation& asnMsg );
+    virtual Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg );
+    virtual Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg );
     virtual Population* Create( const ASN1T_MsgPopulationCreation& asnMsg );
     //@}
 

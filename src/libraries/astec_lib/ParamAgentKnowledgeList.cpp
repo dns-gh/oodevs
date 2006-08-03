@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "ParamAgentKnowledgeList.h"
 #include "AgentKnowledge.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
 ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityListParameter< AgentKnowledge >( pParent, asn.n, asn.elem, label, menu )
     , converter_( converter )
-    , agent_    ( dynamic_cast< const Agent& >( agent ) )
+    , agent_    ( dynamic_cast< const Agent_ABC& >( agent ) )
 {
     // NOTHING
 }
@@ -38,7 +38,7 @@ ParamAgentKnowledgeList::~ParamAgentKnowledgeList()
 // Name: ParamAgentKnowledgeList::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::NotifyContextMenu( const Agent& entity, QPopupMenu& menu )
+void ParamAgentKnowledgeList::NotifyContextMenu( const Agent_ABC& entity, QPopupMenu& menu )
 {
     const AgentKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
     if( knowledge )

@@ -13,7 +13,7 @@
 #include "moc_ChangeLogisticLinksDialog.cpp"
 #include "ASN_Messages.h"
 #include "Controllers.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "LogisticLinks.h"
 #include "AutomatType.h"
 
@@ -42,26 +42,26 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     color->setMaximumWidth( 10 );
     QLabel* label = new QLabel( tr( "TC2" ), grid );
     label->setMaximumWidth( 150 );
-    tc2Combo_ = new ValuedComboBox< const Agent* >( grid );
+    tc2Combo_ = new ValuedComboBox< const Agent_ABC* >( grid );
     tc2Combo_->setMinimumWidth( 200 );
 
     color = new QLabel( grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 128, 0, 0 ) );
     label = new QLabel( tr( "Superieur maintenance" ), grid );
-    maintenanceCombo_ = new ValuedComboBox< const Agent* >( grid );
+    maintenanceCombo_ = new ValuedComboBox< const Agent_ABC* >( grid );
 
     color = new QLabel( "", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 164, 200 ) );
     label = new QLabel( tr( "Superieur santé" ), grid );
-    medicalCombo_ = new ValuedComboBox< const Agent* >( grid );
+    medicalCombo_ = new ValuedComboBox< const Agent_ABC* >( grid );
 
     color = new QLabel( "  ", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 150, 10 ) );
     label = new QLabel( tr( "Superieur ravitaillement" ), grid );
-    supplyCombo_ = new ValuedComboBox< const Agent* >( grid );
+    supplyCombo_ = new ValuedComboBox< const Agent_ABC* >( grid );
    
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
@@ -98,7 +98,7 @@ void ChangeLogisticLinksDialog::Show()
 {
     if( !selected_ )
         return;
-    const Agent& agent = *selected_;
+    const Agent_ABC& agent = *selected_;
 
     const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
     const AutomatType* type = agent.GetAutomatType();
@@ -119,7 +119,7 @@ void ChangeLogisticLinksDialog::Show()
 // Name: ChangeLogisticLinksDialog::NotifyCreated
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyCreated( const Agent& agent )
+void ChangeLogisticLinksDialog::NotifyCreated( const Agent_ABC& agent )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type )
@@ -138,7 +138,7 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Agent& agent )
 // Name: ChangeLogisticLinksDialog::NotifyDeleted
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyDeleted( const Agent& agent )
+void ChangeLogisticLinksDialog::NotifyDeleted( const Agent_ABC& agent )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type )
@@ -155,11 +155,11 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Agent& agent )
 
 namespace
 {
-    unsigned int SetId( ValuedComboBox< const Agent* >& combo, unsigned int& id )
+    unsigned int SetId( ValuedComboBox< const Agent_ABC* >& combo, unsigned int& id )
     {
         if( combo.isEnabled() )
         {
-            const Agent* agent = combo.GetValue();
+            const Agent_ABC* agent = combo.GetValue();
             id = agent ? agent->GetId() : 0;
         }
         return combo.isEnabled();
@@ -200,7 +200,7 @@ void ChangeLogisticLinksDialog::Reject()
 // Name: ChangeLogisticLinksDialog::NotifyContextMenu
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void ChangeLogisticLinksDialog::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type || !agent.Retrieve< LogisticLinks >() )

@@ -72,7 +72,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& co
                 .AddLabel( "TC2:" );
 
     display_->AddGroup( "Nuage/Zone NBC" )
-                .AddLabel( "Agent NBC:" );
+                .AddLabel( "Agent_ABC NBC:" );
 
     display_->AddGroup( "ROTA" )
                 .AddLabel( "Danger:" )
@@ -86,7 +86,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& co
                 .AddLabel( "Poids supporté:" );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( "Agent" );
+    pPerceptionListView_->AddColumn( "Agent_ABC" );
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) );
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
@@ -160,7 +160,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge& element )
 // Name: ObjectKnowledgePanel::Display
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const Agent* agent, Displayer_ABC& displayer, ValuedListItem* )
+void ObjectKnowledgePanel::Display( const Agent_ABC* agent, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( agent );
 }

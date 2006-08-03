@@ -23,7 +23,7 @@ class PopulationKnowledge;
 class PopulationFlowKnowledge;
 class PopulationConcentrationKnowledge;
 class KnowledgeGroup;
-class Agent;
+class Agent_ABC;
 class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
 class ValuedListItem;

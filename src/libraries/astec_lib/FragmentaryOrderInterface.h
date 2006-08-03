@@ -14,7 +14,7 @@
 
 class Mission;
 class ASN_MsgOrderConduite;
-class Agent;
+class Agent_ABC;
 class ObjectTypes;
 class Publisher_ABC;
 
@@ -26,7 +26,7 @@ class FragmentaryOrderInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FragmentaryOrderInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             FragmentaryOrderInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~FragmentaryOrderInterface();
     //@}
 

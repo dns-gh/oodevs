@@ -14,7 +14,7 @@
 #include "Types.h"
 #include "Resolver.h"
 #include "Casualties.h"
-class Agent;
+class Agent_ABC;
 class EquipmentType;
 class Equipment;
 
@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentFireResult( const ASN1T_FireDamagesPion& message, 
-                              const Resolver_ABC< Agent >& resolver,
+                              const Resolver_ABC< Agent_ABC >& resolver,
                               const Resolver_ABC< EquipmentType >& equipmentResolver );
     virtual ~AgentFireResult();
     //@}
@@ -50,7 +50,7 @@ private:
 public:
     //! @name Member data
     //@{
-    const Agent& target_;
+    const Agent_ABC& target_;
     Casualties casualties_[ eNbrHumanWound ];
     //@}
 };

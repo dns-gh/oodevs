@@ -34,9 +34,9 @@ struct ListItemRtti< const KnowledgeGroup* > {
     enum { rtti = 1002 };
 };
 
-class Agent;
+class Agent_ABC;
 template< >
-struct ListItemRtti< const Agent* > {
+struct ListItemRtti< const Agent_ABC* > {
     enum { rtti = 1003 };
 };
 
@@ -190,9 +190,9 @@ struct ListItemRtti< ParamPath* > {
     enum { rtti = 1028 };
 };
 
-template< typename T > class SafePointer;
-template< typename T >
-struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 
-{};
+//template< typename T > class SafePointer;
+//template< typename T >
+//struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 
+//{};
 
 #endif // __ListItemRtti_h_

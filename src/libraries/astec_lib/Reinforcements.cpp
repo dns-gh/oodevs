@@ -17,7 +17,7 @@
 // Name: Reinforcements constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico )
+Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , reinforced_( 0 )
@@ -47,7 +47,7 @@ void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         reinforcements_.reserve( message.pions_renforcant.n );
         for( uint i = 0; i < message.pions_renforcant.n; ++i )
         {
-            Agent* agent = resolver_.Find( message.pions_renforcant.elem[i] );
+            Agent_ABC* agent = resolver_.Find( message.pions_renforcant.elem[i] );
             reinforcements_.push_back( agent );
         }
     }

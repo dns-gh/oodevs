@@ -23,12 +23,11 @@
 // -----------------------------------------------------------------------------
 Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller, 
               const Resolver_ABC< AutomatType >& resolver,
-              const Resolver_ABC< Agent >& agentResolver, 
+              const Resolver_ABC< Agent_ABC >& agentResolver, 
               const Resolver_ABC< KnowledgeGroup >& gtiaResolver )
     : controller_( controller )
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
-    , name_( message.nom )
     , id_( message.oid_automate )
     , automatType_( & resolver.Get( message.type_automate ) )
     , type_( automatType_->GetTypePC() )
@@ -36,10 +35,14 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     , gtia_( 0 )
     , aggregated_( false )
 {
+    std::stringstream ss;
+    ss << message.nom << " [" << id_ << "]";
+    name_ = ss.str();
+
     CreateDictionary();
 
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
-    controller_.Create( *this );
+    controller_.Create( *(Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,12 +51,11 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
 // -----------------------------------------------------------------------------
 Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller, 
               const Resolver_ABC< AgentType >& resolver,
-              const Resolver_ABC< Agent >& agentResolver, 
+              const Resolver_ABC< Agent_ABC >& agentResolver, 
               const Resolver_ABC< KnowledgeGroup >& gtiaResolver )
     : controller_( controller )
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
-    , name_( message.nom )
     , id_( message.oid_pion )
     , automatType_( 0 )
     , type_( & resolver.Get( message.type_pion ) )
@@ -61,9 +63,13 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     , gtia_( 0 )
     , aggregated_( false )
 {
+    std::stringstream ss;
+    ss << message.nom << " [" << id_ << "]";
+    name_ = ss.str();
+
     CreateDictionary();
     ChangeSuperior( message.oid_automate );
-    controller_.Create( *this );
+    controller_.Create( *(Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +81,8 @@ Agent::~Agent()
     ChangeKnowledgeGroup( 0 );
     ChangeSuperior( 0 );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->superior_ = 0;
-    controller_.Delete( *this );
+        static_cast< Agent* >( it->second )->superior_ = 0;
+    controller_.Delete( *(Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +131,7 @@ void Agent::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
     if( message.error_code == EnumObjectErrorCode::no_error ) 
     {
         ChangeKnowledgeGroup( message.oid_groupe_connaissance );
-        controller_.Update( *this );
+        controller_.Update( *(Agent_ABC*)this );
     }
 }
 
@@ -150,8 +156,8 @@ void Agent::ChangeKnowledgeGroup( KnowledgeGroup& gtia )
         gtia_->RemoveAutomat( id_ );
     gtia_ = &gtia;
     gtia_->AddAutomat( id_, *this );
-    for( Resolver< Agent >::IT_Elements it = Resolver< Agent >::elements_.begin(); it != Resolver< Agent >::elements_.end(); ++it )
-        it->second->gtia_ = gtia_;
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        static_cast< Agent* >( it->second )->gtia_ = gtia_;
 }
 
 // -----------------------------------------------------------------------------
@@ -162,31 +168,32 @@ void Agent::ChangeSuperior( unsigned long id )
 {
     if( superior_ )
         superior_->RemoveChild( *this );
-    superior_ = agentResolver_.Find( id );
+    superior_ = static_cast< Agent* >( agentResolver_.Find( id ) );
     if( superior_ )
         superior_->AddChild( *this );
-    controller_.Update( *this );
+    controller_.Update( *(Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::AddChild
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void Agent::AddChild( Agent& child )
+void Agent::AddChild( Agent_ABC& child )
 {
-    Resolver< Agent >::Register( child.id_, child );
-    controller_.Update( *this );
+    Resolver< Agent_ABC >::Register( child.GetId(), child );
+    controller_.Update( *(Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::RemoveChild
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void Agent::RemoveChild( Agent& child )
+void Agent::RemoveChild( Agent_ABC& child )
 {
-    Resolver< Agent >::Remove( child.id_ );
-    controller_.Update( *this );
+    Resolver< Agent_ABC >::Remove( child.GetId() );
+    controller_.Update( *(Agent_ABC*)this );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetKnowledgeGroup
@@ -211,28 +218,10 @@ const Team& Agent::GetTeam() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetDecisionalModel
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-const DecisionalModel& Agent::GetDecisionalModel() const
-{
-    return type_->GetDecisionalModel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::GetAutomatDecisionalModel
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-const DecisionalModel* Agent::GetAutomatDecisionalModel() const
-{
-    return automatType_ ? & automatType_->GetDecisionalModel() : 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::GetSuperior
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent* Agent::GetSuperior() const
+const Agent_ABC* Agent::GetSuperior() const
 {
     return superior_;
 }
@@ -270,6 +259,15 @@ const AutomatType* Agent::GetAutomatType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::GetType
+// Created: SBO 2006-08-03
+// -----------------------------------------------------------------------------
+const AgentType& Agent::GetType() const
+{
+    return *type_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::IsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
@@ -297,7 +295,7 @@ void Agent::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Agent::Select( ActionController& controller ) const
 {
-    controller.Select( *this );
+    controller.Select( *(Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +304,7 @@ void Agent::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void Agent::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( *(Agent_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -315,5 +313,5 @@ void Agent::ContextMenu( ActionController& controller, const QPoint& where ) con
 // -----------------------------------------------------------------------------
 void Agent::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this );
+    controller.Activate( *(Agent_ABC*)this );
 }

@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "LabelDisplayer.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "DotationType.h"
 #include "RichLabel.h"
 #include "ItemFactory_ABC.h"

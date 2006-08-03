@@ -11,7 +11,7 @@
 #define __Perception_h_
 
 #include "Perception_Def.h"
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  Perception
@@ -25,14 +25,14 @@ class Perception
 public:
     //! @name Constructors/Destructor
     //@{
-             Perception( const Agent& detected, E_PerceptionResult level );
+             Perception( const Agent_ABC& detected, E_PerceptionResult level );
     virtual ~Perception();
     //@}
 
 public:
     //! @name Member data
     //@{
-    const Agent* detected_;
+    const Agent_ABC* detected_;
     E_PerceptionResult level_;
     //@}
 };

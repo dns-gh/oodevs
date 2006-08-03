@@ -18,7 +18,7 @@
 #include "ContextMenuObserver_ABC.h"
 #include "SafePointer.h"
 
-class Agent;
+class Agent_ABC;
 class Controllers;
 
 struct ASN1T_MagicActionCreateObject;
@@ -33,8 +33,8 @@ struct ASN1T_AttrObjectCampRefugies;
 // =============================================================================
 class CampPrototype : public ObjectPrototypeAttributes_ABC
                     , public Observer_ABC
-                    , public ElementObserver_ABC< Agent >
-                    , public ContextMenuObserver_ABC< Agent >
+                    , public ElementObserver_ABC< Agent_ABC >
+                    , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
@@ -68,19 +68,19 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Agent& agent );
-    virtual void NotifyDeleted( const Agent& agent );
-    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    virtual void NotifyCreated( const Agent_ABC& agent );
+    virtual void NotifyDeleted( const Agent_ABC& agent );
+    virtual void NotifyContextMenu( const Agent_ABC&, QPopupMenu& );
     //@}
 
 private:
     //! @name Member Data
     //@{
     Controllers& controllers_;
-    ValuedComboBox< const Agent* >* tc2s_;
+    ValuedComboBox< const Agent_ABC* >* tc2s_;
     ASN1T_AttrObjectCampPrisonniers* attrPrisonners_;
     ASN1T_AttrObjectCampRefugies* attrRefugees_;
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     //@}
 };
 

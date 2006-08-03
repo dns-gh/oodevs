@@ -10,7 +10,7 @@
 #ifndef __InternalLinks_h_
 #define __InternalLinks_h_
 
-class Agent;
+class Agent_ABC;
 class Object;
 class Population;
 class AgentKnowledge;
@@ -40,7 +40,7 @@ public:
 public:
     //! @name Operations
     //@{
-    static QString CreateLink( const Agent& entity, const QString& message );
+    static QString CreateLink( const Agent_ABC& entity, const QString& message );
     static QString CreateLink( const Object& entity, const QString& message );
     static QString CreateLink( const Population& entity, const QString& message );
 

@@ -18,7 +18,7 @@
 
 class Controller;
 class Object;
-class Agent;
+class Agent_ABC;
 class Displayer_ABC;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class CampAttributes : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CampAttributes( Controller& controller, const Resolver_ABC< Agent >& resolver );
+             CampAttributes( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver );
     virtual ~CampAttributes();
     //@}
 
@@ -70,8 +70,8 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
-    Agent* tc2_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
+    Agent_ABC* tc2_;
     //@}
 };
 

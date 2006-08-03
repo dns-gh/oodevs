@@ -26,7 +26,7 @@ RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resol
     new QLabel( tr( "Danger:" ), this );
     danger_ = new QSpinBox( 0, 100, 1, this );
 
-    nbcAgentsLabel_ = new RichLabel( tr( "Agent(s) NBC:" ), this );
+    nbcAgentsLabel_ = new RichLabel( tr( "Agent_ABC(s) NBC:" ), this );
     nbcAgents_ = new QListView( this );
     nbcAgents_->setSelectionMode( QListView::Multi );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible

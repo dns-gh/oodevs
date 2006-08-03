@@ -18,7 +18,7 @@
 
 #include "astec_pch.h"
 #include "LogMaintenanceConsign.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "LogisticConsigns.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
@@ -32,7 +32,7 @@ using namespace geometry;
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< ComponentType >& componentResolver, const Resolver_ABC< BreakdownType >& breakdownResolver )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& message, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< ComponentType >& componentResolver, const Resolver_ABC< BreakdownType >& breakdownResolver )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne )

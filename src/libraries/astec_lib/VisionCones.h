@@ -21,7 +21,7 @@
 class Surface;
 class CoordinateConverter_ABC;
 class SensorType;
-class Agent;
+class Agent_ABC;
 class SurfaceFactory;
 class VisionMap;
 class Workers;
@@ -41,7 +41,7 @@ class VisionCones : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones( const Agent& agent, SurfaceFactory& factory, Workers& workers );
+             VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers );
     virtual ~VisionCones();
     //@}
 
@@ -79,7 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     SurfaceFactory& factory_;
     Workers& workers_;
     VisionMap* map_;

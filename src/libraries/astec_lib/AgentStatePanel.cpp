@@ -13,7 +13,7 @@
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Controllers.h"
 #include "Attributes.h"
 #include "Contaminations.h"
@@ -101,7 +101,7 @@ AgentStatePanel::~AgentStatePanel()
 // Name: AgentStatePanel::NotifySelected
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifySelected( const Agent* agent )
+void AgentStatePanel::NotifySelected( const Agent_ABC* agent )
 {
     if( selected_ != agent || ! agent )
     {
@@ -210,7 +210,7 @@ void AgentStatePanel::NotifyUpdated( const Transports& attributes )
 // Name: AgentStatePanel::NotifyDeleted
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyDeleted( const Agent& agent )
+void AgentStatePanel::NotifyDeleted( const Agent_ABC& agent )
 {
     if( selected_ = & agent )
         NotifySelected( 0 );

@@ -11,7 +11,7 @@
 #include "AgentsModel.h"
 #include "DIN/DIN_Input.h"
 #include "AgentFactory_ABC.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ AgentsModel::~AgentsModel()
 // -----------------------------------------------------------------------------
 void AgentsModel::Purge()
 {
-    Resolver< Agent >::DeleteAll();
+    Resolver< Agent_ABC >::DeleteAll();
     Resolver< Population >::DeleteAll();
 }
 
@@ -49,10 +49,10 @@ void AgentsModel::Purge()
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    if( !Resolver< Agent >::Find( asnMsg.oid_automate ) )
+    if( !Resolver< Agent_ABC >::Find( asnMsg.oid_automate ) )
     {
-        Agent* pAgent = agentFactory_.Create( asnMsg );
-        Resolver< Agent >::Register( asnMsg.oid_automate, *pAgent );
+        Agent_ABC* pAgent = agentFactory_.Create( asnMsg );
+        Resolver< Agent_ABC >::Register( asnMsg.oid_automate, *pAgent );
     }
 }
 
@@ -62,10 +62,10 @@ void AgentsModel::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
 {
-    if( !Resolver< Agent >::Find( asnMsg.oid_pion ) )
+    if( !Resolver< Agent_ABC >::Find( asnMsg.oid_pion ) )
     {
-        Agent* pAgent = agentFactory_.Create( asnMsg );
-        Resolver< Agent >::Register( asnMsg.oid_pion, *pAgent );
+        Agent_ABC* pAgent = agentFactory_.Create( asnMsg );
+        Resolver< Agent_ABC >::Register( asnMsg.oid_pion, *pAgent );
     }
 }
 
@@ -73,18 +73,18 @@ void AgentsModel::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
 // Name: AgentsModel::GetAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Agent& AgentsModel::GetAgent( unsigned long id ) const
+Agent_ABC& AgentsModel::GetAgent( unsigned long id ) const
 {
-    return Resolver< Agent >::Get( id );
+    return Resolver< Agent_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::FindAgent
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent* AgentsModel::FindAgent( unsigned long id ) const
+Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 {
-    return Resolver< Agent >::Find( id );
+    return Resolver< Agent_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ Agent* AgentsModel::FindAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 {
-    Entity_ABC* agent = Resolver< Agent >::Find( id );
+    Entity_ABC* agent = Resolver< Agent_ABC >::Find( id );
     if( ! agent )
         agent = Resolver< Population >::Find( id );
     return agent;

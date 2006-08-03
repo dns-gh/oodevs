@@ -16,7 +16,7 @@
 #include "ASN_Types.h"
 #include "Aggregatable_ABC.h"
 
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  Lives
@@ -33,7 +33,7 @@ class Lives : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Lives( const Agent& agent );
+    explicit Lives( const Agent_ABC& agent );
     virtual ~Lives();
     //@}
 
@@ -59,7 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     float life_;
     bool bEmbraye_;
     bool aggregated_;

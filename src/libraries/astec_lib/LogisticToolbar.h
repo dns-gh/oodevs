@@ -13,7 +13,7 @@
 #include "ElementObserver_ABC.h"
 
 class Controllers;
-class Agent;
+class Agent_ABC;
 class AgentsLayer;
 
 // =============================================================================
@@ -24,7 +24,7 @@ class AgentsLayer;
 // =============================================================================
 class LogisticToolbar : public QToolBar
                       , public Observer_ABC
-                      , public ElementObserver_ABC< Agent >
+                      , public ElementObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
@@ -51,13 +51,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Agent& );
-    virtual void NotifyDeleted( const Agent& );
+    virtual void NotifyCreated( const Agent_ABC& );
+    virtual void NotifyDeleted( const Agent_ABC& );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent* > T_Agents;
+    typedef std::vector< const Agent_ABC* > T_Agents;
     typedef T_Agents::iterator         IT_Agents;
     typedef T_Agents::const_iterator  CIT_Agents;
     //@}

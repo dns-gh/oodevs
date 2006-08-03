@@ -22,7 +22,7 @@
 #include "ListDisplayer.h"
 #include "Controllers.h"
 #include "LogisticConsigns.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "LogMaintenanceConsign.h"
 #include "MaintenanceStates.h"
 #include "Availability.h"
@@ -78,7 +78,7 @@ AgentMaintenancePanel::~AgentMaintenancePanel()
 // Name: AgentMaintenancePanel::NotifySelected
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentMaintenancePanel::NotifySelected( const Agent& agent )
+void AgentMaintenancePanel::NotifySelected( const Agent_ABC& agent )
 {
     display_->Hide();
     dispoHaulers_->hide();

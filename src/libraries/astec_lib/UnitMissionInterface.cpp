@@ -13,14 +13,14 @@
 #include "MissionPanel.h"
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "OptionalParamFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+UnitMissionInterface::UnitMissionInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
     , publisher_( publisher )
     , agent_( agent )

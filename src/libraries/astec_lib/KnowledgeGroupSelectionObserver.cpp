@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "KnowledgeGroupSelectionObserver.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupSelectionObserver constructor
@@ -61,7 +61,7 @@ void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup& element )
 // Name: KnowledgeGroupSelectionObserver::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void KnowledgeGroupSelectionObserver::Select( const Agent& element )
+void KnowledgeGroupSelectionObserver::Select( const Agent_ABC& element )
 {
     selected_ = & element.GetKnowledgeGroup();
 }

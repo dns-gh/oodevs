@@ -13,7 +13,7 @@
 
 #include "Controllers.h"
 #include "Decisions.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Mission.h"
 #include "AutomatDecisions.h"
 #include "StaticModel.h"
@@ -67,7 +67,7 @@ MissionPanel::~MissionPanel()
 // Name: MissionPanel::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     selected_ = &agent;
 
@@ -164,7 +164,7 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent_ABC& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -182,7 +182,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent_ABC& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -197,7 +197,7 @@ void MissionPanel::ActivateFragOrder( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent_ABC& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else

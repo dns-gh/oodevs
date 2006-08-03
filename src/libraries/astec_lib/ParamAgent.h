@@ -12,7 +12,7 @@
 
 #include "EntityParameter.h"
 
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  ParamAgent
@@ -20,7 +20,7 @@ class Agent;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgent : public EntityParameter< Agent >
+class ParamAgent : public EntityParameter< Agent_ABC >
 {
 
 public:

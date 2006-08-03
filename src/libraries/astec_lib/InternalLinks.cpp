@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "InternalLinks.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Object.h"
 #include "Population.h"
 #include "AgentKnowledge.h"
@@ -28,7 +28,7 @@ const QString InternalLinks::populationKnowledge_( "populationKnowledge" );
 // Name: InternalLinks::CreateLink
 // Created: AGE 2006-05-12
 // -----------------------------------------------------------------------------
-QString InternalLinks::CreateLink( const Agent& entity, const QString& message )
+QString InternalLinks::CreateLink( const Agent_ABC& entity, const QString& message )
 {
     return Embed( message, agent_, entity.GetId() );
 }

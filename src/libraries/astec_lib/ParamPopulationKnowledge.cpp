@@ -11,7 +11,7 @@
 #include "ParamPopulationKnowledge.h"
 #include "PopulationKnowledge.h"
 #include "Population.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -21,7 +21,7 @@
 ParamPopulationKnowledge::ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityParameter< PopulationKnowledge >( pParent, id, label, menu )
     , converter_( converter )
-    , agent_( dynamic_cast< const Agent& >( agent ) )
+    , agent_( dynamic_cast< const Agent_ABC& >( agent ) )
 {
     // NOTHING
 }

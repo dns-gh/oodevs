@@ -14,7 +14,7 @@
 #include "Controllers.h"
 #include "TristateOption.h"
 #include "ToolListButton.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AgentsLayer.h"
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ LogisticToolbar::~LogisticToolbar()
 // Name: LogisticToolbar::NotifyCreated
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticToolbar::NotifyCreated( const Agent& agent )
+void LogisticToolbar::NotifyCreated( const Agent_ABC& agent )
 {
     if( agent.GetAutomatType() && std::find( automats_.begin(), automats_.end(), &agent ) == automats_.end() )
         automats_.push_back( &agent );
@@ -61,7 +61,7 @@ void LogisticToolbar::NotifyCreated( const Agent& agent )
 // Name: LogisticToolbar::NotifyDeleted
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticToolbar::NotifyDeleted( const Agent& agent )
+void LogisticToolbar::NotifyDeleted( const Agent_ABC& agent )
 {
     IT_Agents it = std::find( automats_.begin(), automats_.end(), &agent );
     if( it != automats_.end() )

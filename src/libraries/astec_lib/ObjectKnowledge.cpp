@@ -25,7 +25,7 @@
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
-                                  const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
+                                  const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
     : owner_         ( owner )
     , converter_     ( converter )
     , objectResolver_( objectResolver )

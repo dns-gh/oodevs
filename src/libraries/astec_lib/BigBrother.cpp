@@ -12,7 +12,7 @@
 #include "moc_BigBrother.cpp"
 #include "Controllers.h"
 #include "ActionController.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Population.h"
 #include "AttributeView.h"
 #include "GlWidget.h"
@@ -54,7 +54,7 @@ BigBrother::~BigBrother()
 // Name: BigBrother::NotifyContextMenu
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void BigBrother::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     NotifyContextMenu( (Entity_ABC&)agent, menu );
 }
@@ -72,7 +72,7 @@ void BigBrother::NotifyContextMenu( const Population& popu, QPopupMenu& menu )
 // Name: BigBrother::NotifyDeleted
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyDeleted( const Agent& agent )
+void BigBrother::NotifyDeleted( const Agent_ABC& agent )
 {
     RemoveAgent( agent );
 }

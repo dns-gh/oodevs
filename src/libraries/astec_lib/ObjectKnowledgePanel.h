@@ -69,7 +69,7 @@ public:
     //! @name Operations
     //@{
     void Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Agent* agent, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Agent_ABC* agent, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private slots:

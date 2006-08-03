@@ -9,17 +9,18 @@
 
 #include "astec_pch.h"
 #include "AutomatDecisions.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "DecisionalModel.h"
 #include "Controller.h"
 #include "ASN_Messages.h"
 #include "Displayer_ABC.h"
+#include "AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Agent& agent )
+AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Agent_ABC& agent )
     : controller_( controller )
     , publisher_( publisher )
     , agent_( agent )
@@ -57,7 +58,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
     lastOrderId_ = message.order_id;
-    next_ = & agent_.GetAutomatDecisionalModel()->Resolver< Mission >::Get( message.mission.t -1 );// $$$$ AGE 2006-04-19: -1 car enum != asn...
+    next_ = & GetAutomatDecisionalModel().Resolver< Mission >::Get( message.mission.t -1 );// $$$$ AGE 2006-04-19: -1 car enum != asn...
 }
 
 // -----------------------------------------------------------------------------
@@ -79,9 +80,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrderAck& message )
 // -----------------------------------------------------------------------------
 Iterator< const Mission& > AutomatDecisions::GetMissions() const
 {
-    if( ! agent_.GetAutomatDecisionalModel() )
-        throw std::runtime_error( "AutomatDecisions attached on agent" );
-    return agent_.GetAutomatDecisionalModel()->Resolver< Mission >::CreateIterator();
+    return GetAutomatDecisionalModel().Resolver< Mission >::CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,9 +89,7 @@ Iterator< const Mission& > AutomatDecisions::GetMissions() const
 // -----------------------------------------------------------------------------
 Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
 {
-    if( ! agent_.GetAutomatDecisionalModel() )
-        throw std::runtime_error( "AutomatDecisions attached on agent" );
-    return agent_.GetAutomatDecisionalModel()->Resolver< FragOrder >::CreateIterator();
+    return GetAutomatDecisionalModel().Resolver< FragOrder >::CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +105,7 @@ const Mission* AutomatDecisions::GetCurrentMission() const
 // Name: AutomatDecisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent& AutomatDecisions::GetAgent() const
+const Agent_ABC& AutomatDecisions::GetAgent() const
 {
     return agent_;
 }
@@ -153,4 +150,15 @@ void AutomatDecisions::Disengage() const
 void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "Mission automate", current_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::GetAutomatDecisionalModel
+// Created: SBO 2006-08-03
+// -----------------------------------------------------------------------------
+const DecisionalModel& AutomatDecisions::GetAutomatDecisionalModel() const
+{
+    if( !agent_.GetAutomatType() )
+        throw std::runtime_error( "AutomatDecisions attached to an agent" );
+    return agent_.GetAutomatType()->GetDecisionalModel();
 }

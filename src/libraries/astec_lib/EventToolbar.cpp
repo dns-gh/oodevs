@@ -13,7 +13,7 @@
 #include "Controllers.h"
 #include "ActionController.h"
 #include "Report_ABC.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void EventToolbar::MessageClicked()
 {
     if( messageAgents_.empty() )
         return;
-    const Agent* agent = dynamic_cast< const Agent* >( messageAgents_.front() );
+    const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( messageAgents_.front() );
     if( agent )
     {
         controllers_.actions_.Select( *agent );

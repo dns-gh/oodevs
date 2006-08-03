@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "AgentKnowledgeConverter.h"
 #include "AgentKnowledge.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Population.h"
 #include "PopulationKnowledge.h"
 #include "Controllers.h"
@@ -47,7 +47,7 @@ const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base,
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent& base, const KnowledgeGroup& owner )
+const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent_ABC& base, const KnowledgeGroup& owner )
 {
     return agents_[ &owner ][ &base ];
 }

@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 
 #include "LogMedicalConsign.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "LogisticConsigns.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
@@ -23,7 +23,7 @@ using namespace geometry;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& message )
+LogMedicalConsign::LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& message )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.oid_consigne )

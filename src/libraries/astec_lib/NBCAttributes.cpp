@@ -89,5 +89,5 @@ void NBCAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 void NBCAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Nuage/Zone NBC" )
-        .Display( "Agent NBC:", nbc_ );
+        .Display( "Agent_ABC NBC:", nbc_ );
 }

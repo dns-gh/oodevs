@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "ColorStrategy.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
 #include "Controllers.h"
@@ -62,7 +62,7 @@ void ColorStrategy::BeforeSelection()
 // Name: ColorStrategy::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Agent& element )
+void ColorStrategy::Select( const Agent_ABC& element )
 {
     selectedAgent_    = &element;
     selectedSuperior_ = element.GetSuperior();
@@ -117,7 +117,7 @@ void ColorStrategy::AfterSelection()
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const Agent& agent )
+void ColorStrategy::SelectColor( const Agent_ABC& agent )
 {
     const Team& team = agent.GetTeam();
     QColor color = teamColors_[ &team ].second;

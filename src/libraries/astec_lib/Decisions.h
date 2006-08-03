@@ -16,11 +16,12 @@
 #include "Resolver.h"
 #include "Drawable_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class Mission;
 class FragOrder;
 class Displayer_ABC;
+class DecisionalModel;
 
 // =============================================================================
 /** @class  Decisions
@@ -38,7 +39,7 @@ class Decisions : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Decisions( Controller& controller, const Agent& agent ); // $$$$ AGE 2006-04-05: Agent, pas terrible...
+             Decisions( Controller& controller, const Agent_ABC& agent ); // $$$$ AGE 2006-04-05: Agent_ABC, pas terrible...
     virtual ~Decisions();
     //@}
 
@@ -46,7 +47,7 @@ public:
     //@{
     void DisplayInTooltip( Displayer_ABC& displayer ) const;
 
-    const Agent& GetAgent() const;
+    const Agent_ABC& GetAgent() const;
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     virtual Iterator< const Mission& > GetMissions() const;
     virtual Iterator< const FragOrder& > GetFragOrders() const;
@@ -67,13 +68,15 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
     virtual void DoUpdate( const ASN1T_MsgPionOrderAck& message );
+
+    const DecisionalModel& GetDecisionalModel() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     bool bEmbraye_;
 
     unsigned long lastOrderId_;

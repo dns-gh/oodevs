@@ -41,7 +41,7 @@ void ParamObjectKnowledge::NotifyContextMenu( const Object& entity, QPopupMenu& 
     // $$$$ AGE 2006-03-14: 
 //    if( context.selectedElement_.pObject_ != 0 )
 //    {
-//        pPopupKnowledge_ = dynamic_cast<Agent*>(&agent_)->GetTeam().FindKnowledgeOnObject( *(context.selectedElement_.pObject_) );
+//        pPopupKnowledge_ = dynamic_cast<Agent_ABC*>(&agent_)->GetTeam().FindKnowledgeOnObject( *(context.selectedElement_.pObject_) );
 //        if( pPopupKnowledge_ == 0 )
 //            return;
 //    }

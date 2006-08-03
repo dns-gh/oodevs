@@ -11,7 +11,7 @@
 
 #include "astec_pch.h"
 #include "RC.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "InternalLinks.h"
 
 //-----------------------------------------------------------------------------

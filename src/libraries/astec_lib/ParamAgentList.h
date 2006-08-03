@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 #include "EntityListParameter.h"
 
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  ParamAgentList
@@ -21,7 +21,7 @@ class Agent;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgentList : public EntityListParameter< Agent >
+class ParamAgentList : public EntityListParameter< Agent_ABC >
 {
 
 public:

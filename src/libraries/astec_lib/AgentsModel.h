@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 #include "Resolver.h"
 
-class Agent;
+class Agent_ABC;
 class Entity_ABC;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
@@ -38,7 +38,7 @@ namespace DIN {
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class AgentsModel : public Resolver< Agent >
+class AgentsModel : public Resolver< Agent_ABC >
                   , public Resolver< Population >
 {
 
@@ -53,8 +53,8 @@ public:
     //@{
     void CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg );
     void CreateAgent( const ASN1T_MsgPionCreation& asnMsg );
-    Agent& GetAgent( unsigned long id ) const;
-    Agent* FindAgent( unsigned long id ) const;
+    Agent_ABC& GetAgent( unsigned long id ) const;
+    Agent_ABC* FindAgent( unsigned long id ) const;
 
     Entity_ABC* FindAllAgent( unsigned long id ) const;
 

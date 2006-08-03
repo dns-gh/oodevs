@@ -37,7 +37,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Call( const Agent& value );
+    virtual void Call( const Agent_ABC& value );
     virtual void Call( const Population& value );
     virtual void Call( const Object& value );
     //@}

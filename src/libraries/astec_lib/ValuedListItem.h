@@ -13,6 +13,7 @@
 #include "RichListItem.h"
 #include "ListItemRtti.h"
 #include "ActionController.h"
+#include "SafePointer.h"
 
 class ValueContainer_ABC;
 
@@ -93,6 +94,17 @@ ValuedListItem* FindItem( const T& searched, QListViewItem* root )
     }
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::FindItem
+// Created: SBO 2006-08-03
+// -----------------------------------------------------------------------------
+template< typename T >
+ValuedListItem* FindItem( const SafePointer< T >& searched, QListViewItem* root )
+{
+    return FindItem( (const T*)searched, root );
+}
+
 
 // =============================================================================
 /** @function  FindSibling

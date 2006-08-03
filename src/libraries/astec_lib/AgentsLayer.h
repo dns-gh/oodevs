@@ -11,7 +11,7 @@
 #define __AgentsLayer_h_
 
 #include "EntityLayer.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "ContextMenuObserver_ABC.h"
 #include "SafePointer.h"
 
@@ -22,8 +22,8 @@
 // Created: AGE 2006-03-23
 // =============================================================================
 class AgentsLayer : public QObject
-                  , public EntityLayer< Agent >
-                  , public ContextMenuObserver_ABC< Agent >
+                  , public EntityLayer< Agent_ABC >
+                  , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
@@ -36,10 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    void Aggregate   ( const Agent& agent );
-    void Disaggregate( const Agent& agent );
-    void Engage      ( const Agent& agent ); // $$$$ AGE 2006-06-29: ca a pas spécialement besoin d'etre dans le layer opengl...
-    void Disengage   ( const Agent& agent );
+    void Aggregate   ( const Agent_ABC& agent );
+    void Disaggregate( const Agent_ABC& agent );
+    void Engage      ( const Agent_ABC& agent ); // $$$$ AGE 2006-06-29: ca a pas spécialement besoin d'etre dans le layer opengl...
+    void Disengage   ( const Agent_ABC& agent );
     //@}
 
 private slots:
@@ -60,10 +60,10 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    virtual void NotifyContextMenu( const Agent_ABC&, QPopupMenu& );
     virtual void Select( const Entity_ABC&, bool );
-    virtual void DisplayTooltip( const Agent& entity, Displayer_ABC& displayer );
-    void Toggle( const Agent& automat, bool aggregate );
+    virtual void DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
+    void Toggle( const Agent_ABC& automat, bool aggregate );
     //@}
 
     //! @name Types
@@ -74,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     T_Agents aggregated_;
     //@}
 };

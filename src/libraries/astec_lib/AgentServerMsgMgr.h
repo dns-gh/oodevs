@@ -26,7 +26,7 @@
 #include "boost/thread/mutex.hpp"
 
 class AgentServerController;
-class Agent;
+class Agent_ABC;
 class MsgRecorder;
 class Model;
 class Simulation;
@@ -101,12 +101,12 @@ public:
 
     virtual void Send( ASN1T_MsgsMosSim& message );
     virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 );
-    virtual void SendMagicDestruction( const Agent& agent );
+    virtual void SendMagicDestruction( const Agent_ABC& agent );
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
     void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx );
-    void SendMsgUnitMagicActionDestroyComposante( const Agent& agent );
+    void SendMsgUnitMagicActionDestroyComposante( const Agent_ABC& agent );
 
     void SetModel( Model& model );
     //@}

@@ -24,7 +24,7 @@
 #include "Resolver_ABC.h"
 #include "Drawable_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class Displayer_ABC;
 class ComponentType;
@@ -39,7 +39,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn,
-                                    const Resolver_ABC< Agent >& resolver, const Resolver_ABC< ComponentType >& componentResolver,
+                                    const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< ComponentType >& componentResolver,
                                     const Resolver_ABC< BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
     //@}
@@ -64,10 +64,10 @@ private:
 
 private:
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
     uint    nID_;
-    Agent&  pion_;
-    Agent*  pPionLogHandling_;
+    Agent_ABC&  pion_;
+    Agent_ABC*  pPionLogHandling_;
     const ComponentType* equipmentType_;
     const BreakdownType* breakdownType_;
     bool    diagnosed_;

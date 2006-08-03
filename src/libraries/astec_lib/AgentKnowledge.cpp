@@ -17,7 +17,7 @@
 #include "Displayer_ABC.h"
 #include "Units.h"
 #include "CoordinateConverter_ABC.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
 #include "GlTools_ABC.h"
@@ -28,7 +28,7 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< Team >& teamResolver )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team >& teamResolver )
     : controller_  ( controller )
     , converter_   ( converter )
     , resolver_    ( resolver )
@@ -131,7 +131,7 @@ unsigned long AgentKnowledge::GetId() const
 // Name: AgentKnowledge::GetRealAgent
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-Agent& AgentKnowledge::GetRealAgent() const
+Agent_ABC& AgentKnowledge::GetRealAgent() const
 {
     return realAgent_;
 }
@@ -152,7 +152,7 @@ std::string AgentKnowledge::GetName() const
 void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 {
     displayer.Display( "Id:", nID_ )
-             .Display( "Agent associé:", realAgent_ )
+             .Display( "Agent_ABC associé:", realAgent_ )
              .Display( "Position:", strPosition_ )
              .Display( "Direction:", nDirection_ * Units::degrees )
              .Display( "Vitesse:", nSpeed_ * Units::metersPerSecond )

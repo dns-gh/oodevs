@@ -11,7 +11,7 @@
 #define __AgentFactory_ABC_h_
 
 #include "ASN_Types.h"
-class Agent;
+class Agent_ABC;
 class Population;
 
 // =============================================================================
@@ -32,8 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Agent* Create( const ASN1T_MsgAutomateCreation& asnMsg ) = 0;
-    virtual Agent* Create( const ASN1T_MsgPionCreation& asnMsg ) = 0;
+    virtual Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg ) = 0;
+    virtual Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg ) = 0;
     virtual Population* Create( const ASN1T_MsgPopulationCreation& asnMsg ) = 0;
     //@}
 

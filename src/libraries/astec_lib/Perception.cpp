@@ -14,7 +14,7 @@
 // Name: Perception constructor
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Perception::Perception( const Agent& detected, E_PerceptionResult level )
+Perception::Perception( const Agent_ABC& detected, E_PerceptionResult level )
     : detected_( &detected )
     , level_( level )
 {

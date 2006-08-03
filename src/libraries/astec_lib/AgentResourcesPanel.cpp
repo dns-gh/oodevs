@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "AgentResourcesPanel.h"
 
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Tools.h"
 #include "Controllers.h"
 #include "Dotations.h"
@@ -80,7 +80,7 @@ AgentResourcesPanel::~AgentResourcesPanel()
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::showEvent( QShowEvent* )
 {
-    const Agent* selected = selected_;
+    const Agent_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -213,7 +213,7 @@ void AgentResourcesPanel::Display( const Humans& humans, Displayer_ABC& displaye
 // Name: AgentResourcesPanel::NotifySelected
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentResourcesPanel::NotifySelected( const Agent* agent )
+void AgentResourcesPanel::NotifySelected( const Agent_ABC* agent )
 {
     if( selected_ != agent || ! agent )
     {

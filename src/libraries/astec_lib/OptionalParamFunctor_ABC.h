@@ -1,11 +1,11 @@
 //*****************************************************************************
 // 
 // $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Agent.h $
+// $Archive: /MVW_v10/Build/SDK/Light2/src/Agent_ABC.h $
 // $Author: Nld $
 // $Modtime: 8/07/05 15:18 $
 // $Revision: 25 $
-// $Workfile: Agent.h $
+// $Workfile: Agent_ABC.h $
 // 
 //*****************************************************************************
 

@@ -13,7 +13,7 @@
 #include "Displayer_ABC.h"
 #include "GlTools_ABC.h"
 #include "Positions.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AutomatType.h"
 #include "DataDictionary.h"
 
@@ -21,7 +21,7 @@
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent >& resolver, const AutomatType& type, DataDictionary& dictionary )
+LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const AutomatType& type, DataDictionary& dictionary )
     : controller_( controller )
     , resolver_( resolver )
     , type_( type )
@@ -49,7 +49,7 @@ LogisticLinks::~LogisticLinks()
 // Name: LogisticLinks::GetTC2
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent* LogisticLinks::GetTC2() const
+Agent_ABC* LogisticLinks::GetTC2() const
 {
     return Resolve( tc2_, idTc2_ );
 }
@@ -58,7 +58,7 @@ Agent* LogisticLinks::GetTC2() const
 // Name: LogisticLinks::GetMaintenance
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent* LogisticLinks::GetMaintenance() const
+Agent_ABC* LogisticLinks::GetMaintenance() const
 {
     return Resolve( maintenanceSuperior_, idMaintenance_);
 }
@@ -67,7 +67,7 @@ Agent* LogisticLinks::GetMaintenance() const
 // Name: LogisticLinks::GetMedical
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent* LogisticLinks::GetMedical() const
+Agent_ABC* LogisticLinks::GetMedical() const
 {
     return Resolve( medicalSuperior_, idMedical_ );
 }
@@ -76,7 +76,7 @@ Agent* LogisticLinks::GetMedical() const
 // Name: LogisticLinks::GetSupply
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent* LogisticLinks::GetSupply() const
+Agent_ABC* LogisticLinks::GetSupply() const
 {
     return Resolve( supplySuperior_, idSupply_ );
 }
@@ -85,7 +85,7 @@ Agent* LogisticLinks::GetSupply() const
 // Name: LogisticLinks::Resolve
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent* LogisticLinks::Resolve( Agent*& agent, unsigned long id ) const
+Agent_ABC* LogisticLinks::Resolve( Agent_ABC*& agent, unsigned long id ) const
 {
     if( ! agent )
         agent = resolver_.Find( id );
@@ -149,7 +149,7 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
 // Name: LogisticLinks::DrawLink
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
+void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent_ABC* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
 {
     if( agent && link )
         tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );

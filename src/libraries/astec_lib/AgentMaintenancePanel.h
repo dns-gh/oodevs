@@ -22,7 +22,7 @@
 #include "LogisticPanel.h"
 #include "ElementObserver_ABC.h"
 #include "LogMaintenanceConsign.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 class MaintenanceStates;
 class Availability;
@@ -32,7 +32,7 @@ class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentMaintenancePanel
-    @brief  Agent maintenance panel
+    @brief  Agent_ABC maintenance panel
 */
 // Created: AGE 2005-04-01
 // =============================================================================
@@ -55,7 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const Agent& agent );
+    virtual void NotifySelected( const Agent_ABC& agent );
     virtual void NotifyUpdated( const MaintenanceStates& consigns );
 
     virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMaintenancePanel >* list );

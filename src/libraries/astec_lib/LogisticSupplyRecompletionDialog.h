@@ -12,7 +12,7 @@
 
 #include "SafePointer.h"
 
-class Agent;
+class Agent_ABC;
 class Controllers;
 class StaticModel;
 class Equipment;
@@ -36,7 +36,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void Show( const Agent& agent );
+    void Show( const Agent_ABC& agent );
     //@}
 
 private slots:
@@ -62,11 +62,11 @@ private:
 private:
     //! @name Helpers
     //@{
-    void InitializeEquipments ( const Agent& agent );
-    void InitializePersonal   ( const Agent& agent );
-    void InitializeDotations  ( const Agent& agent );
-    void InitializeAmmunitions( const Agent& agent );
-    void InitializeSupplies   ( const Agent& agent );
+    void InitializeEquipments ( const Agent_ABC& agent );
+    void InitializePersonal   ( const Agent_ABC& agent );
+    void InitializeDotations  ( const Agent_ABC& agent );
+    void InitializeAmmunitions( const Agent_ABC& agent );
+    void InitializeSupplies   ( const Agent_ABC& agent );
 
     void AddPersonal( unsigned pos, const QString& label, unsigned max );
     void AddAmmunition( unsigned pos, const QString& label );
@@ -98,7 +98,7 @@ private:
     //@{
     Publisher_ABC& publisher_;
     const StaticModel& static_;
-    SafePointer< Agent > agent_;
+    SafePointer< Agent_ABC > agent_;
 
     QTable*          equipmentsTable_;
     QStringList      equipmentsList_;

@@ -16,7 +16,7 @@
 #include "ElementObserver_ABC.h"
 
 class Controllers;
-class Agent;
+class Agent_ABC;
 class Population;
 class Entity_ABC;
 class QToolBox;
@@ -30,9 +30,9 @@ class Report_ABC;
 // =============================================================================
 class BigBrother : public QVBox
                  , public Observer_ABC
-                 , public ContextMenuObserver_ABC< Agent >
+                 , public ContextMenuObserver_ABC< Agent_ABC >
                  , public ContextMenuObserver_ABC< Population >
-                 , public ElementObserver_ABC< Agent >
+                 , public ElementObserver_ABC< Agent_ABC >
                  , public ElementObserver_ABC< Population >
                  , public ElementObserver_ABC< Report_ABC >
 {
@@ -47,9 +47,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Agent&, QPopupMenu& );
+    virtual void NotifyContextMenu( const Agent_ABC&, QPopupMenu& );
     virtual void NotifyContextMenu( const Population&, QPopupMenu& );
-    virtual void NotifyDeleted( const Agent& agent );
+    virtual void NotifyDeleted( const Agent_ABC& agent );
     virtual void NotifyDeleted( const Population& agent );
     //@}
 

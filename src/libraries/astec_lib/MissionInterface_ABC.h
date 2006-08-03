@@ -16,7 +16,7 @@
 
 class ActionController;
 class Entity_ABC;
-class Agent;
+class Agent_ABC;
 class Param_ABC;
 class ParametersLayer;
 class CoordinateConverter_ABC;

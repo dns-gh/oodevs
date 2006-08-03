@@ -14,7 +14,7 @@
 #include "ValuedListItem.h"
 #include "Controllers.h"
 
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "AutomatDecisions.h"
@@ -112,7 +112,7 @@ void AgentListView::NotifyUpdated( const KnowledgeGroup& group )
 // Name: AgentListView::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const Agent& agent )
+void AgentListView::NotifyUpdated( const Agent_ABC& agent )
 {
     Update( agent );
 }
@@ -148,14 +148,14 @@ void AgentListView::Display( const KnowledgeGroup& group, ValuedListItem* item )
     item->Set( &group, group.GetName().c_str());
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    RecursiveDisplay< KnowledgeGroup, Agent >( group, item );
+    RecursiveDisplay< KnowledgeGroup, Agent_ABC >( group, item );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Display
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Agent& agent, ValuedListItem* item )
+void AgentListView::Display( const Agent_ABC& agent, ValuedListItem* item )
 {
     item->Set( &agent, agent.GetName().c_str() );
     item->setDropEnabled( true );
@@ -164,7 +164,7 @@ void AgentListView::Display( const Agent& agent, ValuedListItem* item )
     {
         const QPixmap pix = agent.Get< AutomatDecisions >().IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
         item->setPixmap( 0, pix );
-        RecursiveDisplay< Agent, Agent >( agent, item );
+        RecursiveDisplay< Agent_ABC, Agent_ABC >( agent, item );
     }
 }
 
@@ -248,7 +248,7 @@ void AgentListView::Select( const KnowledgeGroup& element )
 // Name: AgentListView::Select
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void AgentListView::Select( const Agent& element )
+void AgentListView::Select( const Agent_ABC& element )
 {
     setSelected( FindItem( &element, firstChild() ), true );
     ensureItemVisible( selectedItem() );
@@ -320,16 +320,16 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 
     QPoint position = viewport()->mapFromParent( pEvent->pos() );
     ValuedListItem* pItemWhereToDrop = (ValuedListItem*)itemAt( position );
-    if( !pItemToDrop || !pItemWhereToDrop || !pItemToDrop->IsA< const Agent* >() )
+    if( !pItemToDrop || !pItemWhereToDrop || !pItemToDrop->IsA< const Agent_ABC* >() )
     {
         pEvent->ignore();
         return;
     }
 
-    if( pItemWhereToDrop->IsA< const Agent* >() )
+    if( pItemWhereToDrop->IsA< const Agent_ABC* >() )
     {
-        const Agent& agent    = *pItemToDrop->GetValue< const Agent* >();
-        const Agent& superior = *pItemWhereToDrop->GetValue< const Agent* >();
+        const Agent_ABC& agent    = *pItemToDrop->GetValue< const Agent_ABC* >();
+        const Agent_ABC& superior = *pItemWhereToDrop->GetValue< const Agent_ABC* >();
         if( agent.GetSuperior() == 0 || agent.GetSuperior() == &superior )
         {
             pEvent->ignore();
@@ -348,7 +348,7 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
     }
     else if( pItemWhereToDrop->IsA< const KnowledgeGroup* >() )
     {
-        const Agent&          agent = *pItemToDrop->GetValue< const Agent* >();
+        const Agent_ABC&          agent = *pItemToDrop->GetValue< const Agent_ABC* >();
         const KnowledgeGroup& kg    = *pItemWhereToDrop->GetValue< const KnowledgeGroup* >();
 
         if( agent.GetSuperior() != 0 )
@@ -379,7 +379,7 @@ void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
 // Name: AgentListView::NotifyActivated
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyActivated( const Agent& element )
+void AgentListView::NotifyActivated( const Agent_ABC& element )
 {
     ValuedListItem* item = FindItem( &element, firstChild() );    
     if( item )

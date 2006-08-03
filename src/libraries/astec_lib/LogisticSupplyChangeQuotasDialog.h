@@ -17,7 +17,7 @@
 
 class Controllers;
 class Model;
-class Agent;
+class Agent_ABC;
 class Dotation;
 class Publisher_ABC;
 
@@ -29,7 +29,7 @@ class Publisher_ABC;
 // =============================================================================
 class LogisticSupplyChangeQuotasDialog : public QDialog
                                        , public Observer_ABC
-                                       , public ContextMenuObserver_ABC< Agent >
+                                       , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
     //@}
 
 private slots:
@@ -78,9 +78,9 @@ private:
     Controllers& controllers_;
     Publisher_ABC& publisher_;
     const Model& model_;
-    ValuedComboBox< const Agent* >* targetCombo_;
+    ValuedComboBox< const Agent_ABC* >* targetCombo_;
     QTable* table_;
-    SafePointer< Agent > selected_;
+    SafePointer< Agent_ABC > selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
     //@}

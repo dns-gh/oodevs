@@ -19,19 +19,17 @@
 
 class KnowledgeGroup;
 class Team;
-class Agent;
+class AgentType;
+class AutomatType;
 
 // =============================================================================
 /** @class  Agent_ABC
-    @brief  Agent base class.
+    @brief  Agent_ABC base class.
 */
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent_ABC : public Entity_ABC
-                , public Extension_ABC
-                , public Aggregatable_ABC
-                , public Resolver< Agent >
-                , public Drawable_ABC
+                , public Resolver< Agent_ABC >
 {
 
 public:
@@ -44,11 +42,15 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsInTeam( const Team& team ) const = 0;
+    virtual const Agent_ABC* GetSuperior() const = 0;
     virtual const Team& GetTeam() const = 0;
     virtual KnowledgeGroup& GetKnowledgeGroup() const = 0;
 
     virtual std::string GetName() const = 0;
     virtual unsigned long GetId() const = 0;
+
+    virtual const AutomatType* GetAutomatType() const = 0;
+    virtual const AgentType& GetType() const = 0;
     //@}
 
     //! @name Operations
@@ -56,8 +58,6 @@ public:
     virtual void Select( ActionController& controller ) const = 0;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
-
-    virtual void Aggregate( const bool& ) = 0;
     //@}
 };
 

@@ -11,13 +11,13 @@
 #include "AutomateMissionInterface.h"
 #include "ASN_Messages.h"
 #include "ASN_Types.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
     , publisher_( publisher )
     , agent_( agent )

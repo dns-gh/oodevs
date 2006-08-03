@@ -15,7 +15,7 @@
 #include "OptionsObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class KnowledgeGroup;
 class Team;
 class Controllers;
@@ -36,7 +36,7 @@ class MagicOrdersInterface : public QObject
                            , public Observer_ABC
                            , public ContextMenuObserver_ABC< Team >
                            , public ContextMenuObserver_ABC< KnowledgeGroup >
-                           , public ContextMenuObserver_ABC< Agent >
+                           , public ContextMenuObserver_ABC< Agent_ABC >
                            , public OptionsObserver_ABC
                            , public ShapeHandler_ABC
 {
@@ -53,7 +53,7 @@ public:
     //@{
     virtual void NotifyContextMenu( const Team& agent, QPopupMenu& menu );
     virtual void NotifyContextMenu( const KnowledgeGroup& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const Agent& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     virtual void Handle( const T_PointVector& points );
     //@}
@@ -79,7 +79,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddMagicMove( const Agent& agent, QPopupMenu* menu );
+    void AddMagicMove( const Agent_ABC& agent, QPopupMenu* menu );
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void ApplyOnHierarchy( const KnowledgeGroup& group, int id );
@@ -94,7 +94,7 @@ private:
     Publisher_ABC& publisher_;
     const StaticModel& static_;
     bool controller_;
-    SafePointer< Agent > selectedAgent_;
+    SafePointer< Agent_ABC > selectedAgent_;
     SafePointer< KnowledgeGroup > selectedGroup_;
     SafePointer< Team > selectedTeam_;
     LogisticSupplyRecompletionDialog* supplyRecompletion_;

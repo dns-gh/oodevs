@@ -15,7 +15,7 @@
 #include "Resolver_ABC.h"
 #include "Drawable_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class Displayer_ABC;
 
@@ -27,7 +27,7 @@ class LogMedicalConsign : public Drawable_ABC
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
+             LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
     virtual ~LogMedicalConsign();
     //@}
 
@@ -53,11 +53,11 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
 
     uint    nID_;
-    Agent&  pion_;
-    Agent*  pPionLogHandling_;
+    Agent_ABC&  pion_;
+    Agent_ABC*  pPionLogHandling_;
     bool    bMentalDeceased_;
     bool    bContaminated_;
     bool    diagnosed_;

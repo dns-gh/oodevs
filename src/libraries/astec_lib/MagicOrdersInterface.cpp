@@ -12,7 +12,7 @@
 #include "moc_MagicOrdersInterface.cpp"
 #include "Controllers.h"
 #include "StaticModel.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "MagicOrders.h"
 #include "OptionVariant.h"
 #include "ASN_Messages.h"
@@ -60,7 +60,7 @@ MagicOrdersInterface::~MagicOrdersInterface()
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     if( !controller_ )
         return;
@@ -170,7 +170,7 @@ namespace
     struct MagicFunctor
     {
         MagicFunctor( Publisher_ABC& publisher, int id ) : publisher_( publisher ), id_( id ) {};
-        void operator()( const Agent& agent ) const
+        void operator()( const Agent_ABC& agent ) const
         {
             ASN_MsgUnitMagicAction asnMsg;
             asnMsg.GetAsnMsg().oid      = agent.GetId();
@@ -186,14 +186,14 @@ namespace
     struct RecursiveMagicFunctor : public MagicFunctor
     {
         RecursiveMagicFunctor( Publisher_ABC& publisher, int id ) : MagicFunctor( publisher, id ) {};
-        void operator()( const Agent& agent ) const
+        void operator()( const Agent_ABC& agent ) const
         {
             MagicFunctor::operator()( agent );
-            agent.Resolver< Agent >::Apply( *this );
+            agent.Resolver< Agent_ABC >::Apply( *this );
         }
         void operator()( const KnowledgeGroup& group ) const
         {
-            group.Resolver< Agent >::Apply( *this );
+            group.Resolver< Agent_ABC >::Apply( *this );
         }
     };
 }
@@ -228,7 +228,7 @@ void MagicOrdersInterface::Magic( int type )
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id )
 {
-    group.Resolver< Agent >::Apply( RecursiveMagicFunctor( publisher_, id ) );
+    group.Resolver< Agent_ABC >::Apply( RecursiveMagicFunctor( publisher_, id ) );
 }
 
 // -----------------------------------------------------------------------------

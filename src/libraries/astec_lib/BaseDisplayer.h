@@ -11,7 +11,7 @@
 #define __BaseDisplayer_h_
 
 #include "Displayer_ABC.h"
-class Agent;
+class Agent_ABC;
 class Object;
 class Team;
 class DotationType;
@@ -38,7 +38,7 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< bool >
                   , public Caller< Population >
                   , public Caller< PopulationConcentration >
-                  , public Caller< Agent >
+                  , public Caller< Agent_ABC >
                   , public Caller< Object >
                   , public Caller< Team >
                   , public Caller< DotationType >
@@ -71,7 +71,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const bool& value );
-    virtual void Call( const Agent& value );
+    virtual void Call( const Agent_ABC& value );
     virtual void Call( const Population& value );
     virtual void Call( const PopulationConcentration& value );
     virtual void Call( const Object& value );

@@ -16,7 +16,7 @@
 #include "SelectionObserver_ABC.h"
 
 class Team;
-class Agent;
+class Agent_ABC;
 class Object;
 class Population;
 class Controllers;
@@ -35,7 +35,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public Observer_ABC
                     , public ElementObserver_ABC< Team >
                     , public SelectionObserver_ABC
-                    , public SelectionObserver_Base< Agent >
+                    , public SelectionObserver_Base< Agent_ABC >
                     , public SelectionObserver_Base< Object >
                     , public SelectionObserver_Base< Population >
                     , public SelectionObserver_Base< Lima >
@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SelectColor( const Agent& agent );
+    virtual void SelectColor( const Agent_ABC& agent );
     virtual void SelectColor( const Object& object );
     virtual void SelectColor( const Population& population );
     virtual void SelectColor( const AgentKnowledge& k );
@@ -73,7 +73,7 @@ private:
     virtual void NotifyDeleted( const Team& );
 
     virtual void BeforeSelection();
-    virtual void Select( const Agent& element );
+    virtual void Select( const Agent_ABC& element );
     virtual void Select( const Object& element );
     virtual void Select( const Population& element );
     virtual void Select( const Lima& element );
@@ -106,8 +106,8 @@ private:
     GlTools_ABC& tools_;
 
     const Object*     selectedObject_;
-    const Agent*      selectedAgent_;
-    const Agent*      selectedSuperior_;
+    const Agent_ABC*      selectedAgent_;
+    const Agent_ABC*      selectedSuperior_;
     const Population* selectedPopulation_;
     const TacticalLine_ABC* selectedLine_;
 

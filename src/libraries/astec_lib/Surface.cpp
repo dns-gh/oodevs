@@ -12,7 +12,7 @@
 #include "VisionLine.h"
 #include "VisionMap.h"
 #include "Positions.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 
 using namespace geometry;
 
@@ -20,7 +20,7 @@ using namespace geometry;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
+Surface::Surface( const Agent_ABC& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
     : agent_( agent )
     , map_( map )
     , elongation_( 1 )

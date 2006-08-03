@@ -9,7 +9,7 @@
 
 #include "astec_pch.h"
 #include "BaseDisplayer.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "DotationType.h"
 #include "Team.h"
 #include "EquipmentType.h"
@@ -58,7 +58,7 @@ void BaseDisplayer::Call( const bool& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const Agent& value )
+void BaseDisplayer::Call( const Agent_ABC& value )
 {
     AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
 }

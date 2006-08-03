@@ -14,7 +14,7 @@
 #include "SafePointer.h"
 #include "ValuedComboBox.h"
 
-class Agent;
+class Agent_ABC;
 class Controllers;
 class Publisher_ABC;
 
@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void Show( const Agent& agent );
+    void Show( const Agent_ABC& agent );
     //@}
 
 private slots:
@@ -61,7 +61,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    SafePointer< Agent > agent_;
+    SafePointer< Agent_ABC > agent_;
     ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
     ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;
     ValuedComboBox< ASN1T_EnumUnitExperience >*  pExperienceCombo_;

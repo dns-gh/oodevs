@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/KnowledgeGroup.h $
-// $Author: Ape $
-// $Modtime: 23/11/04 18:22 $
-// $Revision: 8 $
-// $Workfile: KnowledgeGroup.h $
-//
-// *****************************************************************************
 
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
@@ -25,7 +16,7 @@
 #include "Resolver.h"
 
 class Team;
-class Agent;
+class Agent_ABC;
 class AgentKnowledge;
 class Population;
 class PopulationKnowledge;
@@ -39,7 +30,7 @@ class Controller;
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public Entity_ABC
-                     , public Resolver< Agent >
+                     , public Resolver< Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -54,7 +45,7 @@ public:
     const Team& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
-    void AddAutomat( unsigned long id, Agent& automat );
+    void AddAutomat( unsigned long id, Agent_ABC& automat );
     void RemoveAutomat( unsigned long id );
     //@}
 

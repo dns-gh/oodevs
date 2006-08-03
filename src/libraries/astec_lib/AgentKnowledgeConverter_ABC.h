@@ -11,7 +11,7 @@
 #define __AgentKnowledgeConverter_ABC_h_
 
 class KnowledgeGroup;
-class Agent;
+class Agent_ABC;
 class AgentKnowledge;
 class Population;
 class PopulationKnowledge;
@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const KnowledgeGroup& owner ) = 0;
-    virtual const AgentKnowledge*      Find( const Agent& base,          const KnowledgeGroup& owner ) = 0;
+    virtual const AgentKnowledge*      Find( const Agent_ABC& base,          const KnowledgeGroup& owner ) = 0;
     virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const KnowledgeGroup& owner ) = 0;
     virtual const PopulationKnowledge* Find( const Population& base,          const KnowledgeGroup& owner ) = 0;
     //@}

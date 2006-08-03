@@ -25,7 +25,7 @@
 #include "Drawable_ABC.h"
 
 class DotationRequest;
-class Agent;
+class Agent_ABC;
 class Controller;
 class Displayer_ABC;
 class DotationType ;
@@ -40,7 +40,7 @@ class LogSupplyConsign : public Resolver< DotationRequest >, public Drawable_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
+             LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
     virtual ~LogSupplyConsign();
     //@}
 
@@ -66,14 +66,14 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
+    const Resolver_ABC< Agent_ABC >& resolver_;
     const Resolver_ABC< DotationType >& dotationResolver_;
 
     uint   nID_;
-    Agent& pion_;
-    Agent* pAutomateLogHandling_;
-    Agent* pPionLogConvoying_;
-    Agent* pAutomateLogProvidingConvoyResources_;
+    Agent_ABC& pion_;
+    Agent_ABC* pAutomateLogHandling_;
+    Agent_ABC* pPionLogConvoying_;
+    Agent_ABC* pAutomateLogProvidingConvoyResources_;
     E_LogRavitaillementTraitementEtat nState_;
     //@}
 };

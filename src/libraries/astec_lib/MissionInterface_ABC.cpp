@@ -32,7 +32,7 @@
 #include "ParamNumericField.h"
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Object.h"
 #include "ObjectKnowledge.h"
 #include "AgentKnowledge.h"

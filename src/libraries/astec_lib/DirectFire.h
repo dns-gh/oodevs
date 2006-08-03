@@ -16,7 +16,7 @@
 
 class Entity_ABC;
 class Population;
-class Agent;
+class Agent_ABC;
 
 // =============================================================================
 /** @class  DirectFire
@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFire( const ASN1T_MsgStartPionFire& message, 
-                 const Resolver_ABC< Agent >& agentResolver, 
+                 const Resolver_ABC< Agent_ABC >& agentResolver, 
                  const Resolver_ABC< Population >& populationResolver );
     virtual ~DirectFire();
     //@}

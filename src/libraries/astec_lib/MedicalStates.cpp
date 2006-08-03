@@ -18,7 +18,7 @@
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver, DataDictionary& dico )
+MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , agentResolver_( agentResolver )

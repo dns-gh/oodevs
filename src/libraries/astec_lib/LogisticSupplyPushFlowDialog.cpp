@@ -12,7 +12,7 @@
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
 #include "Controllers.h"
 #include "Model.h"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "AgentsModel.h"
 #include "AutomatType.h"
 #include "Dotation.h"
@@ -40,7 +40,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
     new QLabel( tr( "Cible:" ), box );
-    targetCombo_ = new ValuedComboBox< const Agent* >( box );
+    targetCombo_ = new ValuedComboBox< const Agent_ABC* >( box );
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
 
@@ -84,7 +84,7 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type || !type->IsLogisticSupply() )
@@ -105,10 +105,10 @@ void LogisticSupplyPushFlowDialog::Show()
         return;
 
     targetCombo_->Clear();
-    Iterator< const Agent& > it = model_.agents_.Resolver< Agent >::CreateIterator();
+    Iterator< const Agent_ABC& > it = model_.agents_.Resolver< Agent_ABC >::CreateIterator();
     while( it.HasMoreElements() )
     {
-        const Agent& agent = it.NextElement();
+        const Agent_ABC& agent = it.NextElement();
         const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
         if( log && log->GetSupply() == selected_ )
             targetCombo_->AddItem( agent.GetName().c_str(), &agent );
@@ -123,7 +123,7 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    const Agent* target = targetCombo_->GetValue();
+    const Agent_ABC* target = targetCombo_->GetValue();
     if( !selected_ || !target )
         return;
 
@@ -173,7 +173,7 @@ void LogisticSupplyPushFlowDialog::Reject()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnSelectionChanged()
 {
-    const Agent* agent = targetCombo_->GetValue();
+    const Agent_ABC* agent = targetCombo_->GetValue();
     if( !agent )
         return;
 
@@ -197,7 +197,7 @@ void LogisticSupplyPushFlowDialog::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnValueChanged( int row, int col )
 {
-    const Agent* agent = targetCombo_->GetValue();
+    const Agent_ABC* agent = targetCombo_->GetValue();
     if( !selected_ || !agent )
         return;
 
@@ -244,7 +244,7 @@ void LogisticSupplyPushFlowDialog::OnValueChanged( int row, int col )
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::AddItem()
 {
-    const Agent* agent = targetCombo_->GetValue();
+    const Agent_ABC* agent = targetCombo_->GetValue();
     if( !selected_ || !agent )
         return;
     const unsigned int rows = table_->numRows() + 1;

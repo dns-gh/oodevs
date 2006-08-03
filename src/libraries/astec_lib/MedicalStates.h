@@ -18,7 +18,7 @@
 
 class Controller;
 class EquipmentType;
-class Agent;
+class Agent_ABC;
 class Displayer_ABC;
 class DataDictionary;
 
@@ -34,7 +34,7 @@ class MedicalStates : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver, DataDictionary& dico );
+             MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico );
     virtual ~MedicalStates();
     //@}
 
@@ -54,7 +54,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< E_HumanWound > T_Priorities;
-    typedef std::vector< const Agent* > T_Agents;
+    typedef std::vector< const Agent_ABC* > T_Agents;
     typedef std::vector< Availability > T_Availabilities;
     //@}
 
@@ -63,7 +63,7 @@ public:
     //@{
     Controller&      controller_;
     const Resolver_ABC< EquipmentType >& resolver_;
-    const Resolver_ABC< Agent >&         agentResolver_;
+    const Resolver_ABC< Agent_ABC >&         agentResolver_;
 
     bool             bChainEnabled_;
     T_Availabilities dispoReleveAmbulances_;

@@ -14,7 +14,7 @@
 
 class Mission;
 class ASN_MsgAutomateOrder;
-class Agent;
+class Agent_ABC;
 class ObjectTypes;
 class Publisher_ABC;
 
@@ -26,7 +26,7 @@ class AutomateMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateMissionInterface( QWidget* parent, Agent& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             AutomateMissionInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~AutomateMissionInterface();
     //@}
 
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    Agent&                agent_;
+    Agent_ABC&                agent_;
     uint                  nMissionId_;
     ASN_MsgAutomateOrder* pASNMsgOrder_;
     //@}

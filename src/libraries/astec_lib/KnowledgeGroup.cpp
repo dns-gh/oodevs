@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/KnowledgeGroup.cpp $
-// $Author: Ape $
-// $Modtime: 24/11/04 10:03 $
-// $Revision: 7 $
-// $Workfile: KnowledgeGroup.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "KnowledgeGroup.h"
@@ -50,9 +41,9 @@ KnowledgeGroup::~KnowledgeGroup()
 // Name: KnowledgeGroup::AddAutomat
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::AddAutomat( unsigned long id, Agent& automat )
+void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
 {
-    Resolver< Agent >::Register( id, automat );
+    Resolver< Agent_ABC >::Register( id, automat );
     controller_.Update( *this );
 }
 
@@ -62,7 +53,7 @@ void KnowledgeGroup::AddAutomat( unsigned long id, Agent& automat )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::RemoveAutomat( unsigned long id )
 {
-    Resolver< Agent >::Remove( id );
+    Resolver< Agent_ABC >::Remove( id );
     controller_.Update( *this );
 }
 

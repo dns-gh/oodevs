@@ -15,7 +15,7 @@
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
 
-class Agent;
+class Agent_ABC;
 class Controller;
 class Displayer_ABC;
 class DataDictionary;
@@ -33,7 +33,7 @@ class Transports : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Transports( Controller& controller, const Resolver_ABC< Agent >& resolver, DataDictionary& dico );
+             Transports( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico );
     virtual ~Transports();
     //@}
 
@@ -51,7 +51,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent* > T_Agents;
+    typedef std::vector< const Agent_ABC* > T_Agents;
     //@}
 
     //! @name Helpers
@@ -63,8 +63,8 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Agent >& resolver_;
-    const Agent* transporter_; 
+    const Resolver_ABC< Agent_ABC >& resolver_;
+    const Agent_ABC* transporter_; 
     T_Agents transported_;
     //@}
 };

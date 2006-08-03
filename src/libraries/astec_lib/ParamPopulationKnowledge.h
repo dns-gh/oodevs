@@ -15,7 +15,7 @@
 class PopulationKnowledge;
 class Population;
 class AgentKnowledgeConverter_ABC;
-class Agent;
+class Agent_ABC;
 class Entity_ABC;
 
 // =============================================================================
@@ -51,7 +51,7 @@ private:
     //! @name Member data
     //@{
     AgentKnowledgeConverter_ABC& converter_;
-    const Agent& agent_;
+    const Agent_ABC& agent_;
     //@}
 };
 

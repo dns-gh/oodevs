@@ -19,7 +19,7 @@
 // Name: VisionCones constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-VisionCones::VisionCones( const Agent& agent, SurfaceFactory& factory, Workers& workers )
+VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers )
     : agent_( agent )
     , factory_( factory )
     , workers_( workers )

@@ -10,20 +10,21 @@
 #include "astec_pch.h"
 #include "AgentsLayer.h"
 #include "moc_AgentsLayer.cpp"
-#include "Agent.h"
+#include "Agent_ABC.h"
 #include "Aggregatable_ABC.h"
 #include "AutomatDecisions.h"
 #include "Attributes.h"
 #include "Reports.h"
 #include "AutomatDecisions.h"
 #include "Decisions.h"
+#include "Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : EntityLayer< Agent >( controllers, tools, strategy, view )
+    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view )
     , selected_( controllers )
 {
     // NOTHING
@@ -42,7 +43,7 @@ AgentsLayer::~AgentsLayer()
 // Name: AgentsLayer::Aggregate
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::Aggregate( const Agent& automat )
+void AgentsLayer::Aggregate( const Agent_ABC& automat )
 {
     Toggle( automat, true );
 }
@@ -51,7 +52,7 @@ void AgentsLayer::Aggregate( const Agent& automat )
 // Name: AgentsLayer::Disaggregate
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::Disaggregate( const Agent& automat )
+void AgentsLayer::Disaggregate( const Agent_ABC& automat )
 {
     Toggle( automat, false );
 }
@@ -60,14 +61,14 @@ void AgentsLayer::Disaggregate( const Agent& automat )
 // Name: AgentsLayer::Toggle
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void AgentsLayer::Toggle( const Agent& automat, bool aggregate )
+void AgentsLayer::Toggle( const Agent_ABC& automat, bool aggregate )
 {
     if( automat.GetSuperior() )
         return;
-    Iterator< const Agent& > children = automat.CreateIterator();
+    Iterator< const Agent_ABC& > children = automat.CreateIterator();
     while( children.HasMoreElements() )
     {
-        const Agent& child = children.NextElement();
+        const Agent_ABC& child = children.NextElement();
         child.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );    
         if( aggregate )
             RemoveEntity( child );
@@ -86,7 +87,7 @@ void AgentsLayer::Toggle( const Agent& automat, bool aggregate )
 // Name: AgentsLayer::Engage
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-void AgentsLayer::Engage( const Agent& automat )
+void AgentsLayer::Engage( const Agent_ABC& automat )
 {
     if( automat.GetSuperior() )
         return;
@@ -97,7 +98,7 @@ void AgentsLayer::Engage( const Agent& automat )
 // Name: AgentsLayer::Disengage
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-void AgentsLayer::Disengage( const Agent& automat )
+void AgentsLayer::Disengage( const Agent_ABC& automat )
 {
     if( automat.GetSuperior() )
         return;
@@ -108,7 +109,7 @@ void AgentsLayer::Disengage( const Agent& automat )
 // Name: AgentsLayer::NotifyContextMenu
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
+void AgentsLayer::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 {
     if( agent.GetSuperior() )
         return;
@@ -176,8 +177,8 @@ void AgentsLayer::Disengage()
 // -----------------------------------------------------------------------------
 void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 {
-    const Agent& agent = static_cast< const Agent& >( entity );
-    const Agent* superior = agent.GetSuperior();
+    const Agent_ABC& agent = static_cast< const Agent_ABC& >( entity );
+    const Agent_ABC* superior = agent.GetSuperior();
     if( shift && superior )
     {
         controllers_.actions_.Select( *superior );
@@ -191,7 +192,7 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 // Name: AgentsLayer::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void AgentsLayer::DisplayTooltip( const Agent& agent, Displayer_ABC& displayer )
+void AgentsLayer::DisplayTooltip( const Agent_ABC& agent, Displayer_ABC& displayer )
 {
     displayer.Display( "", agent );
     agent.Get< Attributes >().DisplayInTooltip( displayer );

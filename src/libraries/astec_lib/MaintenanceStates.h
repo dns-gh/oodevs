@@ -19,7 +19,7 @@
 class Controller;
 class Displayer_ABC;
 class EquipmentType;
-class Agent;
+class Agent_ABC;
 class DataDictionary;
 
 // =============================================================================
@@ -34,7 +34,7 @@ class MaintenanceStates : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent >& agentResolver, DataDictionary& dico );
+             MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 
@@ -55,7 +55,7 @@ private:
     //@{
     typedef std::vector< const EquipmentType* > T_Priorities;
     typedef std::vector< Availability >         T_Availabilities;
-    typedef std::vector< const Agent* >         T_Agents;
+    typedef std::vector< const Agent_ABC* >         T_Agents;
     //@}
 
 public:
@@ -63,7 +63,7 @@ public:
     //@{
     Controller&      controller_;
     const Resolver_ABC< EquipmentType >& resolver_;
-    const Resolver_ABC< Agent >& agentResolver_;
+    const Resolver_ABC< Agent_ABC >& agentResolver_;
 
     bool             bChainEnabled_;
     unsigned         nWorkRate_;
