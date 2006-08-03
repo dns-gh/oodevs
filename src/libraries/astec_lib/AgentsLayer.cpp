@@ -75,6 +75,11 @@ void AgentsLayer::Toggle( const Agent& automat, bool aggregate )
             AddEntity( child );
     }
     automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
+
+    if( aggregate )
+        aggregated_.insert( &automat );
+    else
+        aggregated_.erase( &automat );
 }   
 
 // -----------------------------------------------------------------------------
@@ -119,7 +124,7 @@ void AgentsLayer::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
             menu.insertItem( tr( "Debrayer" ), this, SLOT( Disengage() ) );
     }
 
-    if( ! agent.IsAggregated() )
+    if( aggregated_.find( &agent ) == aggregated_.end() )
         menu.insertItem( tr( "Aggreger" ), this, SLOT( Aggregate() ) );
     else
         menu.insertItem( tr( "Désaggreger" ), this, SLOT( Disaggregate() ) );

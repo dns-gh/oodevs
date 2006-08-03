@@ -66,10 +66,16 @@ private:
     void Toggle( const Agent& automat, bool aggregate );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::set< const Agent_ABC* > T_Agents;
+    //@}
+
 private:
     //! @name Member data
     //@{
     SafePointer< Agent > selected_;
+    T_Agents aggregated_;
     //@}
 };
 

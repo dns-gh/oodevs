@@ -62,8 +62,6 @@ public:
 
     const AutomatType* GetAutomatType() const;
 
-    bool IsAggregated() const;
-
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
