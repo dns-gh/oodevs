@@ -67,27 +67,29 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu
 
     selectedAgent_ = &agent;
     selectedGroup_ = 0;
-    const MagicOrders& orders = agent.Get< MagicOrders >();
-    QPopupMenu* magicMenu = new QPopupMenu( &menu );
+    if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
+    {
+        QPopupMenu* magicMenu = new QPopupMenu( &menu );
 
-    int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
-    magicMenu->setItemEnabled( moveId, orders.CanMagicMove() );
-    AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
-    AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
-    AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
-    AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
-    AddMagic( tr( "Recompletement partiel" ),    SLOT( Recompletion() ),      magicMenu );
-    AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
-    AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
-    AddMagic( tr( "Facteurs humains" ),          SLOT( ChangeHumanFactors() ), magicMenu );
+        int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
+        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
+        AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
+        AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
+        AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
+        AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
+        AddMagic( tr( "Recompletement partiel" ),    SLOT( Recompletion() ),      magicMenu );
+        AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
+        AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+        AddMagic( tr( "Facteurs humains" ),          SLOT( ChangeHumanFactors() ), magicMenu );
 
-    if( orders.CanSurrender() )
-        AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
+        if( orders->CanSurrender() )
+            AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
 
-    if( orders.CanRetrieveTransporters() )
-        AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
+        if( orders->CanRetrieveTransporters() )
+            AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
 
-    menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+        menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -100,6 +100,8 @@ private:
     virtual void NotifyUpdated( const RotaAttributes& element );
     template< typename T >
     void DisplayExtension( const T& extension );
+    template< typename T >
+    void UpdateExtension( const ObjectKnowledge& k );
     virtual void Select( const Team* );
     //@}
 

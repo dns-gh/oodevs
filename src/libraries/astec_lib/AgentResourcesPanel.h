@@ -82,6 +82,8 @@ private:
 
     template< typename T >
     bool ShouldUpdate( const T& a );
+    template< typename T >
+    void UpdateExtension( const Agent_ABC& agent );
     //@}
 
     //! @name Types

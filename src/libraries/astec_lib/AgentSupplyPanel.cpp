@@ -79,14 +79,15 @@ void AgentSupplyPanel::NotifySelected( const Agent_ABC& agent )
     pDispoTransporters_->hide();
 
     const SupplyStates* states = agent.Retrieve< SupplyStates >();
-    const LogisticConsigns& consigns = agent.Get< LogisticConsigns >();
-    if( ! consigns.requestedSupplies_.empty() 
+    const LogisticConsigns* consigns = agent.Retrieve< LogisticConsigns >();
+    if( ( consigns && ! consigns->requestedSupplies_.empty() ) 
        || states )
         Show();
     else
         Hide();
 
-    Parent::NotifyUpdated( consigns );
+    if( consigns )
+        Parent::NotifyUpdated( *consigns );
     if( states )
         NotifyUpdated( *states );
 }

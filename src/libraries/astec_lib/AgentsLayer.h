@@ -64,6 +64,8 @@ private:
     virtual void Select( const Entity_ABC&, bool );
     virtual void DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
     void Toggle( const Agent_ABC& automat, bool aggregate );
+    template< typename Extension >
+    void AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
     //@}
 
     //! @name Types

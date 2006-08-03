@@ -210,21 +210,23 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent_ABC& ag
     equipmentsList_.clear();
     equipmentsList_.append( "" );
     equipmentsMax_.clear();
-    const Equipments& equipments = agent.Get< Equipments >();
-    Iterator< const Equipment& > it = equipments.CreateIterator();
-    QStringList equipmentList;
-    while( it.HasMoreElements() )
+    if( const Equipments* equipments = agent.Retrieve< Equipments >() )
     {
-        const Equipment& equipment = it.NextElement();
-        equipmentsList_.append( equipment.GetName().c_str() );
-        equipments_[ equipment.GetName().c_str() ] = &equipment;
-        equipmentsMax_.push_back( equipment.Total() );
+        Iterator< const Equipment& > it = equipments->CreateIterator();
+        QStringList equipmentList;
+        while( it.HasMoreElements() )
+        {
+            const Equipment& equipment = it.NextElement();
+            equipmentsList_.append( equipment.GetName().c_str() );
+            equipments_[ equipment.GetName().c_str() ] = &equipment;
+            equipmentsMax_.push_back( equipment.Total() );
+        }
+        equipmentsTable_->setNumRows( 0 );
+        equipmentsTable_->insertRows( 0, 1 );
+        equipmentsTable_->setItem( 0, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
+        equipmentsTable_->setText( 0, 1, "0" );
+        equipmentsTable_->setMinimumHeight( equipmentsTable_->rowHeight( 0 ) * 4 );
     }
-    equipmentsTable_->setNumRows( 0 );
-    equipmentsTable_->insertRows( 0, 1 );
-    equipmentsTable_->setItem( 0, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
-    equipmentsTable_->setText( 0, 1, "0" );
-    equipmentsTable_->setMinimumHeight( equipmentsTable_->rowHeight( 0 ) * 4 );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,12 +235,14 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent_ABC& ag
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::InitializePersonal( const Agent_ABC& agent )
 {
-    const Troops& troops = agent.Get< Troops >();
-    personalsTable_->setNumRows( 0 );
-    AddPersonal( 0, tr( "officier" ), troops.humans_[ eTroopHealthStateTotal ].officers_ );
-    AddPersonal( 1, tr( "sous-officier" ), troops.humans_[ eTroopHealthStateTotal ].subOfficers_ );
-    AddPersonal( 2, tr( "mdr" ), troops.humans_[ eTroopHealthStateTotal ].troopers_ );
-    personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
+    if( const Troops* troops = agent.Retrieve< Troops >() )
+    {
+        personalsTable_->setNumRows( 0 );
+        AddPersonal( 0, tr( "officier" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
+        AddPersonal( 1, tr( "sous-officier" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
+        AddPersonal( 2, tr( "mdr" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
+        personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
+    }
 }
 
 // -----------------------------------------------------------------------------

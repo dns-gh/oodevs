@@ -38,5 +38,6 @@ PopulationsLayer::~PopulationsLayer()
 void PopulationsLayer::DisplayTooltip( const Population& entity, Displayer_ABC& displayer )
 {
     entity.DisplayInTooltip( displayer );
-    entity.Get< Reports >().DisplayInTooltip( displayer );
+    if( const Reports* reports = entity.Retrieve< Reports >() )
+        reports->DisplayInTooltip( displayer );
 }            

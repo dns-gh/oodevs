@@ -110,6 +110,18 @@ void ObjectPanel::showEvent( QShowEvent* )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPanel::UpdateExtension
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void ObjectPanel::UpdateExtension( const Object& object )
+{
+    const T* extension = object.Retrieve< T >();
+    if( extension )
+        NotifyUpdated( *extension );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifySelected
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
@@ -124,20 +136,11 @@ void ObjectPanel::NotifySelected( const Object* object )
             Show();
             display_->Hide();
             NotifyUpdated( *selected_ );
-            if( selected_->Retrieve< CampAttributes >() )
-                NotifyUpdated( selected_->Get< CampAttributes >() );
-
-            if( selected_->Retrieve< CrossingSiteAttributes >() )
-                NotifyUpdated( selected_->Get< CrossingSiteAttributes >() );
-
-            if( selected_->Retrieve< LogisticRouteAttributes >() )
-                NotifyUpdated( selected_->Get< LogisticRouteAttributes >() );
-
-            if( selected_->Retrieve< NBCAttributes >() )
-                NotifyUpdated( selected_->Get< NBCAttributes >() );
-
-            if( selected_->Retrieve< RotaAttributes >() )
-                NotifyUpdated( selected_->Get< RotaAttributes >() );
+            UpdateExtension< CampAttributes >( *selected_ );
+            UpdateExtension< CrossingSiteAttributes >( *selected_ );
+            UpdateExtension< LogisticRouteAttributes >( *selected_ );
+            UpdateExtension< NBCAttributes >( *selected_ );
+            UpdateExtension< RotaAttributes >( *selected_ );
         }
         else
             Hide();

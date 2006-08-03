@@ -88,8 +88,9 @@ void ReportListView::NotifySelected( const Entity_ABC* element )
     if( element != selected_ )
     {
         selected_ = element;
-        if( selected_  )
-            NotifyUpdated( selected_->Get< Reports >() );
+        const Reports* reports = selected_ ? selected_->Retrieve< Reports >() : 0;
+        if( reports )
+            NotifyUpdated( *reports );
     }
 }
 

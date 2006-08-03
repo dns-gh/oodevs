@@ -73,6 +73,8 @@ private:
     bool ShouldUpdate( const Extension& extension );
     template< typename Extension >
     void DisplayIfNeeded( const Extension& extension );
+    template< typename Extension >
+    bool UpdateExtension( const Agent_ABC& agent );
     //@}
 
 private:

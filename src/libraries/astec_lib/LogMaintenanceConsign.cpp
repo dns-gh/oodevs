@@ -43,7 +43,8 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1
     , diagnosed_       ( false )
     , nState_          ( eLogMaintenanceTraitementEtat_Termine )
 {
-    pion_.Get< LogisticConsigns >().AddConsign( *this );
+    if( LogisticConsigns* consign = pion_.Retrieve< LogisticConsigns >() )
+        consign->AddConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,10 +53,11 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
-    // $$$$ AGE 2006-05-19: LogisticConsigns peut etre en cours de destruction ! => CRASH
-    pion_.Get< LogisticConsigns >().RemoveConsign( *this );
+    if( LogisticConsigns* consign = pion_.Retrieve< LogisticConsigns >() )
+        consign->RemoveConsign( *this );
     if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogisticConsigns >().TerminateConsign( *this );
+        if( LogisticConsigns* consign = pPionLogHandling_->Retrieve< LogisticConsigns >() )
+            consign->TerminateConsign( *this );
 }
 
 

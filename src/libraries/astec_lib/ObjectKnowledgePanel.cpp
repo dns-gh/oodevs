@@ -244,6 +244,18 @@ void ObjectKnowledgePanel::Select( const Team* team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::UpdateExtension
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge& k )
+{
+    const T* extension = k.Retrieve< T >();
+    if( extension )
+        NotifyUpdated( *extension );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
@@ -256,16 +268,11 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );
-            if( subSelected_->Retrieve< CampAttributes >() )
-                NotifyUpdated( subSelected_->Get< CampAttributes >() );
-            if( subSelected_->Retrieve< CrossingSiteAttributes >() )
-                NotifyUpdated( subSelected_->Get< CrossingSiteAttributes >() );
-            if( subSelected_->Retrieve< LogisticRouteAttributes >() )
-                NotifyUpdated( subSelected_->Get< LogisticRouteAttributes >() );
-            if( subSelected_->Retrieve< NBCAttributes >() )
-                NotifyUpdated( subSelected_->Get< NBCAttributes >() );
-            if( subSelected_->Retrieve< RotaAttributes >() )
-                NotifyUpdated( subSelected_->Get< RotaAttributes >() );
+            UpdateExtension< CampAttributes >( *subSelected_ );
+            UpdateExtension< CrossingSiteAttributes >( *subSelected_ );
+            UpdateExtension< LogisticRouteAttributes >( *subSelected_ );
+            UpdateExtension< NBCAttributes >( *subSelected_ );
+            UpdateExtension< RotaAttributes >( *subSelected_ );
         }
     }
 }

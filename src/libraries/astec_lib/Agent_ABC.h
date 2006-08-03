@@ -41,7 +41,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const Team& team ) const = 0;
+    virtual bool IsInTeam( const Team& team ) const = 0; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual const Agent_ABC* GetSuperior() const = 0;
     virtual const Team& GetTeam() const = 0;
     virtual KnowledgeGroup& GetKnowledgeGroup() const = 0;

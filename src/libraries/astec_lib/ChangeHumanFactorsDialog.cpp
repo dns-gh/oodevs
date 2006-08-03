@@ -89,15 +89,18 @@ void ChangeHumanFactorsDialog::Show( const Agent_ABC& agent )
     Populate( Experience::GetExperiences(), *pExperienceCombo_ );
 
     agent_ = &agent;
-    const HumanFactors& humanFactors = agent_->Get< HumanFactors >();
-    pTirednessCombo_->SetCurrentItem( humanFactors.GetTiredness().GetAsnID() );
-    pMoralCombo_->SetCurrentItem( humanFactors.GetMorale().GetAsnID() );
-    pExperienceCombo_->SetCurrentItem( humanFactors.GetExperience().GetAsnID() );
-    if ( agent_->GetAutomatType() )
-        pAllUnitsCheckBox_->show();
-    else
-        pAllUnitsCheckBox_->hide();
-    show();
+    
+    if( const HumanFactors* humanFactors = agent_->Retrieve< HumanFactors >() )
+    {
+        pTirednessCombo_->SetCurrentItem( humanFactors->GetTiredness().GetAsnID() );
+        pMoralCombo_->SetCurrentItem( humanFactors->GetMorale().GetAsnID() );
+        pExperienceCombo_->SetCurrentItem( humanFactors->GetExperience().GetAsnID() );
+        if ( agent_->GetAutomatType() )
+            pAllUnitsCheckBox_->show();
+        else
+            pAllUnitsCheckBox_->hide();
+        show();
+    }
 }
 
 // -----------------------------------------------------------------------------

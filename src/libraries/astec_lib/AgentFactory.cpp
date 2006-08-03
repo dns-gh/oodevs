@@ -101,7 +101,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach( *new Lives( *result ) );
     result->InterfaceContainer< Extension_ABC >::Register( *result );
-    result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
+    result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
     AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
@@ -155,7 +155,7 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     DataDictionary& dico = agent.Get< DataDictionary >();
     agent.Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new DebugPoints() );
-    agent.Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, agent.Get< DataDictionary >() ) );
+    agent.Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new HumanFactors( controllers_.controller_, dico ) );
     agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );

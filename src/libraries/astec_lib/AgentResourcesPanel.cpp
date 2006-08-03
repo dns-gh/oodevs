@@ -210,6 +210,18 @@ void AgentResourcesPanel::Display( const Humans& humans, Displayer_ABC& displaye
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentResourcesPanel::UpdateExtension
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void AgentResourcesPanel::UpdateExtension( const Agent_ABC& agent )
+{
+    const T* extension = agent.Retrieve< T >();
+    if( extension )
+        NotifyUpdated( *extension );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel::NotifySelected
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
@@ -222,11 +234,11 @@ void AgentResourcesPanel::NotifySelected( const Agent_ABC* agent )
         {
             // $$$$ AGE 2006-02-17: refactor that
             Show();
-            NotifyUpdated( selected_->Get< Dotations >() );
-            NotifyUpdated( selected_->Get< Equipments >() );
-            NotifyUpdated( selected_->Get< Lendings >() );
-            NotifyUpdated( selected_->Get< Borrowings >() );
-            NotifyUpdated( selected_->Get< Troops >() );
+            UpdateExtension< Dotations > ( *selected_ );
+            UpdateExtension< Equipments >( *selected_ );
+            UpdateExtension< Lendings >  ( *selected_ );
+            UpdateExtension< Borrowings >( *selected_ );
+            UpdateExtension< Troops >    ( *selected_ );
         }
         else
             Hide();

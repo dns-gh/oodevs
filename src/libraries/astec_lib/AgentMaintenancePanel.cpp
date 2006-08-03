@@ -85,7 +85,8 @@ void AgentMaintenancePanel::NotifySelected( const Agent_ABC& agent )
     dispoRepairers_->hide();
 
     Show();
-    Parent::NotifyUpdated( agent.Get< LogisticConsigns >() );
+    if( const LogisticConsigns* consigns = agent.Retrieve< LogisticConsigns >() )
+        Parent::NotifyUpdated( *consigns );
     
     if( const MaintenanceStates* states = agent.Retrieve< MaintenanceStates >() )
         NotifyUpdated( *states );

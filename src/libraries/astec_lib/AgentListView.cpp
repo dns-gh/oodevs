@@ -160,9 +160,10 @@ void AgentListView::Display( const Agent_ABC& agent, ValuedListItem* item )
     item->Set( &agent, agent.GetName().c_str() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    if( agent.Retrieve< AutomatDecisions >() )
+    const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
+    if( decisions )
     {
-        const QPixmap pix = agent.Get< AutomatDecisions >().IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
+        const QPixmap pix = decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
         item->setPixmap( 0, pix );
         RecursiveDisplay< Agent_ABC, Agent_ABC >( agent, item );
     }

@@ -95,6 +95,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     const GlTools_ABC& tools_;
     View_ABC& view_;
     T_Entities entities_;
@@ -143,8 +144,6 @@ protected:
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelected( const ConcreteEntity* );
     virtual void SelectColor( const Entity_ABC& );
-    virtual void Select     ( const Entity_ABC&, bool );
-    virtual void ContextMenu( const Entity_ABC&, const QPoint&  );
     virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
     virtual bool DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer );
     virtual void DisplayTooltip( const ConcreteEntity& entity, Displayer_ABC& displayer );

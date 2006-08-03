@@ -83,7 +83,8 @@ void AgentMedicalPanel::NotifySelected( const Agent_ABC& agent )
     dispoDispoDoctors_->hide();
 
     Show();
-    Parent::NotifyUpdated( agent.Get< LogisticConsigns >() );
+    if( const LogisticConsigns* consigns = agent.Retrieve< LogisticConsigns >() )
+        Parent::NotifyUpdated( *consigns );
     if( const MedicalStates* states = agent.Retrieve< MedicalStates >() )
         NotifyUpdated( *states );
 }

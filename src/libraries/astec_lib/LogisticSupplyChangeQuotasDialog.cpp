@@ -174,13 +174,13 @@ void LogisticSupplyChangeQuotasDialog::Reject()
 void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 {
     const Agent_ABC* agent = targetCombo_->GetValue();
-    if( !agent )
+    const SupplyStates* states = agent ? agent->Retrieve< SupplyStates >() : 0;
+    if( !states )
         return;
 
-    const SupplyStates& states = agent->Get< SupplyStates >();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    Iterator< const Dotation& > it = states.CreateIterator();
+    Iterator< const Dotation& > it = states->CreateIterator();
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
@@ -189,7 +189,7 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
         supplies_[ type ] = 0;
     }
 
-    for( std::vector< Dotation >::const_iterator it = states.quotas_.begin(); it != states.quotas_.end(); ++it )
+    for( std::vector< Dotation >::const_iterator it = states->quotas_.begin(); it != states->quotas_.end(); ++it )
         supplies_[ it->type_->GetCategory().c_str() ] = &*it;
 
     table_->setNumRows( 0 );

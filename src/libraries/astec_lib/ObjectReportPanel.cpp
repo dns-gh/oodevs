@@ -85,7 +85,9 @@ void ObjectReportPanel::NotifySelected( const Object* object )
         if( selected_ )
         {
             Show();
-            NotifyUpdated( selected_->Get< Explosions >() );
+            const Explosions* explosions = selected_->Retrieve< Explosions >();
+            if( explosions )
+                NotifyUpdated( *explosions  );
         }
         else
             Hide();

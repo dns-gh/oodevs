@@ -13,13 +13,15 @@
 #include "OptionVariant.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
+#include "Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view )
-    : tools_      ( tools )
+    : controllers_( controllers )
+    , tools_      ( tools )
     , view_       ( view )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
     , tooltip_    ( new GlTooltip() )
@@ -122,6 +124,24 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
         }
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::Select
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+void EntityLayerBase::Select( const Entity_ABC& entity, bool )
+{
+    entity.Select( controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::ContextMenu
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const QPoint& point )
+{
+    entity.ContextMenu( controllers_.actions_, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,24 +267,6 @@ void EntityLayerBase::SelectEntity( const Entity_ABC& entity )
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 void EntityLayerBase::SelectColor( const Entity_ABC& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::Select
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const Entity_ABC&, bool )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::ContextMenu
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void EntityLayerBase::ContextMenu( const Entity_ABC&, const QPoint&  )
 {
     // NOTHING
 }

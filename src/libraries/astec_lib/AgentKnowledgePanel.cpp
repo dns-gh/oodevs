@@ -188,7 +188,9 @@ void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
     if( subSelected_ )
     {
         NotifyUpdated( *subSelected_ );
-        NotifyUpdated( subSelected_->Get< PerceptionMap >() );
+        const PerceptionMap* perceptions = subSelected_->Retrieve< PerceptionMap >();
+        if( perceptions )
+            NotifyUpdated( *perceptions  );
     }
     else
         display_->Hide();

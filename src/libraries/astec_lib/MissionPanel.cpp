@@ -73,10 +73,11 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 
     if( menu.count() > 0 )
         menu.insertSeparator();
-
-    AddAgentMissions( agent.Get< Decisions >(), menu );
-    if( agent.Retrieve< AutomatDecisions >() )
-        AddAutomatMissions( agent.Get< AutomatDecisions >(), menu );
+    
+    if( const Decisions* decisions = agent.Retrieve< Decisions >() )
+        AddAgentMissions( *decisions, menu );
+    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
+        AddAutomatMissions( *decisions, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,15 +219,18 @@ void MissionPanel::NotifyContextMenu( const Population& agent, QPopupMenu& menu 
     if( menu.count() > 0 )
         menu.insertSeparator();
 
-    QPopupMenu& missions = *new QPopupMenu( &menu );
-    Iterator< const Mission& > it = agent.Get< PopulationDecisions >().GetMissions();
-    while( it.HasMoreElements() )
+    if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
     {
-        const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( mission.GetName().c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
-        missions.setItemParameter( nId, mission.GetId() );
+        QPopupMenu& missions = *new QPopupMenu( &menu );
+        Iterator< const Mission& > it = decisions->GetMissions();
+        while( it.HasMoreElements() )
+        {
+            const Mission& mission = it.NextElement();
+            int nId = missions.insertItem( mission.GetName().c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
+            missions.setItemParameter( nId, mission.GetId() );
+        }
+        menu.insertItem( tr( "Missions Population" ), &missions  );
     }
-    menu.insertItem( tr( "Missions Population" ), &missions  );
 }
 
 // -----------------------------------------------------------------------------

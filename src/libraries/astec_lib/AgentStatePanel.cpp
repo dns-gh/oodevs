@@ -98,6 +98,19 @@ AgentStatePanel::~AgentStatePanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentStatePanel::UpdateExtension
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+template< typename Extension >
+bool AgentStatePanel::UpdateExtension( const Agent_ABC& agent )
+{
+    const Extension* extension = agent.Retrieve< Extension>();
+    if( extension )
+        NotifyUpdated( *extension );
+    return extension;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentStatePanel::NotifySelected
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
@@ -109,15 +122,13 @@ void AgentStatePanel::NotifySelected( const Agent_ABC* agent )
         if( selected_ )
         {
             Show();
-            NotifyUpdated( selected_->Get< Attributes >() );
-            NotifyUpdated( selected_->Get< Contaminations >() );
-            NotifyUpdated( selected_->Get< HumanFactors >() );
-            NotifyUpdated( selected_->Get< Reinforcements >() );
-            if( selected_->Retrieve< LogisticLinks >() )
-                NotifyUpdated( selected_->Get< LogisticLinks >() );
-            else
+            UpdateExtension< Attributes >( *selected_ );
+            UpdateExtension< Contaminations >( *selected_ );
+            UpdateExtension< HumanFactors >( *selected_ );
+            UpdateExtension< Reinforcements >( *selected_ );
+            if( ! UpdateExtension< LogisticLinks >( *selected_ ) )
                 display_->Group( "Liens logistiques" ).Hide();
-            NotifyUpdated( selected_->Get< Transports >() );
+            UpdateExtension< Transports >( *selected_ );
         }
         else
             Hide();

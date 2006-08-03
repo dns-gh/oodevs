@@ -189,23 +189,25 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::AddToTooltip
+// Created: AGE 2006-08-03
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void AgentsLayer::AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
+{
+    if( const Extension* extension = entity.Retrieve< Extension >() )
+        extension->DisplayInTooltip( displayer );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 void AgentsLayer::DisplayTooltip( const Agent_ABC& agent, Displayer_ABC& displayer )
 {
     displayer.Display( "", agent );
-    agent.Get< Attributes >().DisplayInTooltip( displayer );
-    {
-        const Decisions* decisions = agent.Retrieve< Decisions >();
-        if( decisions )
-            decisions->DisplayInTooltip( displayer );
-    }
-    {
-        const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
-        if( decisions )
-            decisions->DisplayInTooltip( displayer );
-
-    }
-    agent.Get< Reports >().DisplayInTooltip( displayer );
+    AddToTooltip< Attributes >      ( agent, displayer );
+    AddToTooltip< Decisions >       ( agent, displayer );
+    AddToTooltip< AutomatDecisions >( agent, displayer );
+    AddToTooltip< Reports >         ( agent, displayer );
 }

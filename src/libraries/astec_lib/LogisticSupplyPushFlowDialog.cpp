@@ -174,12 +174,13 @@ void LogisticSupplyPushFlowDialog::Reject()
 void LogisticSupplyPushFlowDialog::OnSelectionChanged()
 {
     const Agent_ABC* agent = targetCombo_->GetValue();
-    if( !agent )
+    const SupplyStates* states = agent ? agent->Retrieve< SupplyStates >() : 0;
+    if( !states )
         return;
 
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    Iterator< const Dotation& > it = agent->Get< SupplyStates >().CreateIterator();
+    Iterator< const Dotation& > it = states->CreateIterator();
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
