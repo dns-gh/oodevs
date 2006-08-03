@@ -145,12 +145,12 @@ void Network::Update()
             }
             else if( it->lost_ )
             {
-                MT_LOG_INFO_MSG( "Connexion à " << it->address_ << " perdue (raison :" << it->error_ << ")" );   
+                MT_LOG_WARNING_MSG( "Connexion à " << it->address_ << " perdue (raison :" << it->error_ << ")" );   
                 simu_.Disconnect();
             }
             else
             {
-                MT_LOG_INFO_MSG( "Non connecté à " << it->address_ << " (raison :" << it->error_ << ")" );   
+                MT_LOG_WARNING_MSG( "Non connecté à " << it->address_ << " (raison :" << it->error_ << ")" );   
                 simu_.Disconnect();
             }
         }

@@ -175,6 +175,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
+    connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
 
     // object creation window
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );

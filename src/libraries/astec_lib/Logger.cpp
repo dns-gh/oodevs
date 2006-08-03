@@ -24,11 +24,6 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
     , MT_Logger_ABC ()
     , factory_( factory )
 {
-    layers_[ (E_DataFlow)-1 ] = new sLoggerLayer( (E_DataFlow)-1, Qt::black     );
-    layers_[ eDefault       ] = new sLoggerLayer( eReceived     , Qt::black     );
-    layers_[ eReceived      ] = new sLoggerLayer( eReceived     , Qt::darkBlue  );
-    layers_[ eSent          ] = new sLoggerLayer( eSent         , Qt::darkGreen );
-
     MT_LogManager::Instance().RegisterLogger( *this );
 
     setMinimumSize( 1, 1 );
@@ -53,36 +48,55 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
 Logger::~Logger()
 {
     MT_LogManager::Instance().UnregisterLogger( *this );
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
-        delete it->second;
 }
+
+namespace
+{
+    QColor ChooseMessageColor( MT_Logger_ABC::E_LogLevel level )
+    {
+        switch( level )
+        {
+        case MT_Logger_ABC::eLogLevel_Error:
+        case MT_Logger_ABC::eLogLevel_FatalError: 
+            return Qt::red;
+        case MT_Logger_ABC::eLogLevel_Warning:
+            return Qt::darkRed;
+        case MT_Logger_ABC::eLogLevel_Message:
+        case MT_Logger_ABC::eLogLevel_Info:
+            return Qt::black;
+        };
+        return Qt::darkBlue;
+    };
+
+    bool IsErrorMesssage( MT_Logger_ABC::E_LogLevel level )
+    {
+        return ( level & ( MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError | MT_Logger_ABC::eLogLevel_Warning ) ) != 0;
+    };
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: Logger::LogString
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-void Logger::LogString( const char* /*szLayerName*/, E_LogLevel nLevel, const char* szMsg, const char* szContext, int code )
+void Logger::LogString( const char* /*szLayerName*/, E_LogLevel nLevel, const char* szMsg, const char* szContext, int /*code*/ )
 {
-    const sLoggerLayer* layer = layers_[ (E_DataFlow)code ];
-    if( !layer )
-        throw std::runtime_error( "Unregistered logging layer" );
-
-    // lastItem() ?  firstChild();
     ValuedListItem* pItem = factory_.CreateItem( this );
-    pItem->Set( layer, GetTimestampAsString(), szMsg );
-    if( nLevel == eLogLevel_Info )
-        pItem->SetFontColor( layer->color_ );
-    else
-        pItem->SetFontColor( Qt::darkRed );
+    pItem->setText( 0, GetTimestampAsString() );
+    pItem->setText( 1, szMsg );
+    const QColor itemColor = ChooseMessageColor( nLevel );
+    pItem->SetFontColor( itemColor );
 
     if( szContext != 0 )
     {
         ValuedListItem* pSubItem = factory_.CreateItem( pItem );
-        pSubItem->Set( layer, "", szContext );
+        pSubItem->setText( 1, szContext );
         pSubItem->setMultiLinesEnabled( true );
-        pSubItem->SetFontColor( layer->color_ );
-        
+        pSubItem->SetFontColor( itemColor );
     }
+
+    if( IsErrorMesssage( nLevel ) )
+        emit Error();
 }
 
 

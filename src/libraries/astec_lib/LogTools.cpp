@@ -23,12 +23,12 @@ bool CheckAcknowledge( int errorCode, const char* logMessage )
 {
     if( errorCode )
     {
-        MT_LOG_WARNING( logMessage << " acknowledge error", eReceived, 0 );
+        MT_LOG_WARNING_MSG( logMessage << " acknowledge error" );
         return false;
     }
     else
     {
-        MT_LOG_INFO( logMessage << " acknowledged ok", eReceived, 0 );
+        MT_LOG_INFO_MSG( logMessage << " acknowledged ok" );
         return true;
     }
 }

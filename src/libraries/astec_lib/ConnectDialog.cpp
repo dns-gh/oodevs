@@ -99,7 +99,7 @@ void ConnectDialog::Validate()
         std::stringstream strMsg;
         strMsgTitle << "Non connecté à " << pHostNameComboBox_->currentText().ascii() << ":" << pPortSpinBox_->value();
         strMsg << "Raison :" << std::endl << e.what();
-        MT_LOG_INFO( strMsgTitle.str().c_str(), eDefault, strMsg.str().c_str() );
+        MT_LOG_INFO( strMsgTitle.str().c_str(), 0, strMsg.str().c_str() );
         reject();
         return;
     }

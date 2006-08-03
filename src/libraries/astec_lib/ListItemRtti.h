@@ -172,28 +172,22 @@ struct ListItemRtti< const PopulationFlowKnowledge* > {
     enum { rtti = 1025 };
 };
 
-struct sLoggerLayer;
-template< >
-struct ListItemRtti< const sLoggerLayer* > {
-    enum { rtti = 1026 };
-};
-
 class NBCAgent;
 template< >
 struct ListItemRtti< const NBCAgent* > {
-    enum { rtti = 1027 };
+    enum { rtti = 1026 };
 };
 
 class ParamObstacle;
 template< >
 struct ListItemRtti< ParamObstacle* > {
-    enum { rtti = 1028 };
+    enum { rtti = 1027 };
 };
 
 class ParamPath;
 template< >
 struct ListItemRtti< ParamPath* > {
-    enum { rtti = 1029 };
+    enum { rtti = 1028 };
 };
 
 template< typename T > class SafePointer;

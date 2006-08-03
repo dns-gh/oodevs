@@ -83,12 +83,5 @@ typedef unsigned long  MIL_LineID;
 #define MIL_NULL_AGENT_ID   (MIL_AgentID)-1
 #define MIL_NULL_LINE_ID       (MIL_LineID)-1
 
-enum E_DataFlow
-{
-    eDefault,
-    eSent,
-    eReceived
-};
-
 
 #endif // __Types_h_
