@@ -92,7 +92,7 @@ bool ParamAgent::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamAgent::WriteMsg( std::stringstream& strMsg )
 {
-    if( pAgent_ )
+    if( !pAgent_ )
         return;
 
     if( pOptional_ )
