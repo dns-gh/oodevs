@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Object* Create( const ASN1T_MsgObjectCreation& message );
+    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
     //@}
 
 private:

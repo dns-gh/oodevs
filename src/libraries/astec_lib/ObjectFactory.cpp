@@ -50,7 +50,7 @@ ObjectFactory::~ObjectFactory()
 // Name: ObjectFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Object* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
+Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 {
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.objectTypes_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );

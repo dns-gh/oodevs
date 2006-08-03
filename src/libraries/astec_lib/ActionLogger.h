@@ -13,7 +13,7 @@
 #include "SelectionObserver_ABC.h"
 class Controllers;
 class Agent_ABC;
-class Object;
+class Object_ABC;
 class Team;
 class Population;
 class KnowledgeGroup;
@@ -26,7 +26,7 @@ class KnowledgeGroup;
 // =============================================================================
 class ActionLogger : public Observer_ABC, public SelectionObserver_ABC
                    , public SelectionObserver_Base< Agent_ABC >
-                   , public SelectionObserver_Base< Object >
+                   , public SelectionObserver_Base< Object_ABC >
                    , public SelectionObserver_Base< Team >
                    , public SelectionObserver_Base< Population >
                    , public SelectionObserver_Base< KnowledgeGroup >
@@ -51,7 +51,7 @@ private:
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const Agent_ABC& element );
-    virtual void Select( const Object& element );
+    virtual void Select( const Object_ABC& element );
     virtual void Select( const Team& element );
     virtual void Select( const Population& element );
     virtual void Select( const KnowledgeGroup& element );

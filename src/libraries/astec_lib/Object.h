@@ -12,7 +12,7 @@
 
 #include "ASN_Types.h"
 #include "IDManager.h"
-#include "Entity_ABC.h"
+#include "Object_ABC.h"
 #include "Extension_ABC.h"
 #include "Updatable_ABC.h"
 #include "Resolver_ABC.h"
@@ -28,7 +28,7 @@ class CoordinateConverter_ABC;
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object : public Entity_ABC
+class Object : public Object_ABC
              , public Extension_ABC
              , public Updatable_ABC< ASN1T_MsgObjectUpdate >
              , public Drawable_ABC
@@ -45,9 +45,9 @@ public:
 
     //! @name Operations
     //@{
-    bool IsInTeam( const Team& team ) const;
-    void Display( Displayer_ABC& displayer ) const;
-    void DisplayInTooltip( Displayer_ABC& displayer ) const;
+    virtual bool IsInTeam( const Team& team ) const;
+    virtual void Display( Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
     virtual void Select( ActionController& controller ) const;
@@ -59,8 +59,8 @@ public:
     //@{
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
-    const Team& GetTeam() const;
-    ObjectType& GetType() const;
+    virtual const Team& GetTeam() const;
+    virtual ObjectType& GetType() const;
     //@}
     
 private:

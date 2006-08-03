@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-06-11 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectPanel.h $
-// $Author: Age $
-// $Modtime: 5/04/05 17:11 $
-// $Revision: 3 $
-// $Workfile: ObjectPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __ObjectPanel_h_
 #define __ObjectPanel_h_
@@ -24,7 +15,7 @@
 #include "SelectionObserver_ABC.h"
 #include "SafePointer.h"
 
-class Object;
+class Object_ABC;
 class CampAttributes;
 class CrossingSiteAttributes;
 class LogisticRouteAttributes;
@@ -44,13 +35,13 @@ class ItemFactory_ABC;
 // =============================================================================
 class ObjectPanel : public InfoPanel_ABC
                   , public Observer_ABC
-                  , public ElementObserver_ABC< Object >
+                  , public ElementObserver_ABC< Object_ABC >
                   , public ElementObserver_ABC< CampAttributes >
                   , public ElementObserver_ABC< CrossingSiteAttributes >
                   , public ElementObserver_ABC< LogisticRouteAttributes >
                   , public ElementObserver_ABC< NBCAttributes >
                   , public ElementObserver_ABC< RotaAttributes >
-                  , public SelectionObserver< Object >
+                  , public SelectionObserver< Object_ABC >
 
 {
 
@@ -63,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Object* object );
+    virtual void NotifySelected( const Object_ABC* object );
     //@}
 
 private:
@@ -78,8 +69,8 @@ private:
     //@{
     void showEvent( QShowEvent* );
 
-    virtual void NotifyUpdated( const Object& );
-    virtual void NotifyDeleted( const Object& );
+    virtual void NotifyUpdated( const Object_ABC& );
+    virtual void NotifyDeleted( const Object_ABC& );
     virtual void NotifyUpdated( const CampAttributes& attributes );
     virtual void NotifyUpdated( const CrossingSiteAttributes& attributes );
     virtual void NotifyUpdated( const LogisticRouteAttributes& attributes );
@@ -89,7 +80,7 @@ private:
     template< typename Extension >
     bool ShouldUpdate( const Extension& extension );
     template< typename T >
-    void UpdateExtension( const Object& object );
+    void UpdateExtension( const Object_ABC& object );
     //@}
 
 private:
@@ -97,7 +88,7 @@ private:
     //@{
     Controllers& controllers_;
     DisplayBuilder* display_;
-    SafePointer< Object > selected_;
+    SafePointer< Object_ABC > selected_;
 
 //    QPushButton* pApplyButton_;
 //    QPushButton* pCancelButton_;

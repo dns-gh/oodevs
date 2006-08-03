@@ -15,7 +15,7 @@
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : EntityLayer< Object >( controllers, tools, strategy, view )
+    : EntityLayer< Object_ABC >( controllers, tools, strategy, view )
 {
     // NOTHING
 }
@@ -33,7 +33,7 @@ ObjectsLayer::~ObjectsLayer()
 // Name: ObjectsLayer::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void ObjectsLayer::DisplayTooltip( const Object& entity, Displayer_ABC& displayer )
+void ObjectsLayer::DisplayTooltip( const Object_ABC& entity, Displayer_ABC& displayer )
 {
     entity.DisplayInTooltip( displayer );
 }

@@ -19,7 +19,7 @@
 #include "Drawable_ABC.h"
 
 class Displayer_ABC;
-class Object;
+class Object_ABC;
 class Controller;
 class Agent_ABC;
 class Team;
@@ -43,7 +43,7 @@ public:
     //@{
              ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
                               Controller& controller, const CoordinateConverter_ABC& converter,
-                              const Resolver_ABC< Object >& objectResolver,
+                              const Resolver_ABC< Object_ABC >& objectResolver,
                               const Resolver_ABC< Agent_ABC >& agentResolver, 
                               const Resolver_ABC< ObjectType >& typeResolver );
     virtual ~ObjectKnowledge();
@@ -89,7 +89,7 @@ private:
     //! @name Member data
     //@{
     const CoordinateConverter_ABC& converter_;
-    const Resolver_ABC< Object >& objectResolver_;
+    const Resolver_ABC< Object_ABC >& objectResolver_;
     const Resolver_ABC< Agent_ABC >& agentResolver_;
     Controller& controller_;
     const Team& owner_;
@@ -98,7 +98,7 @@ private:
     const ObjectType* type_;
 
     std::string position_;
-    Object* pRealObject_;
+    Object_ABC* pRealObject_;
 
     OptionalValue< unsigned int >  nPourcentageConstruction_;
     OptionalValue< unsigned int >  nPourcentageValorisation_;

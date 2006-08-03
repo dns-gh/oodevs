@@ -17,7 +17,6 @@
 #include "Resolver_ABC.h"
 
 class Controller;
-class Object;
 class Displayer_ABC;
 class NBCAgent;
 

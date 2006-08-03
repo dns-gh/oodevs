@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "ObjectsModel.h"
 #include "ObjectFactory_ABC.h"
-#include "Object.h"
+#include "Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectsModel constructor
@@ -37,7 +37,7 @@ ObjectsModel::~ObjectsModel()
 // -----------------------------------------------------------------------------
 void ObjectsModel::Purge()
 {
-    Resolver< Object >::DeleteAll();
+    Resolver< Object_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +46,10 @@ void ObjectsModel::Purge()
 // -----------------------------------------------------------------------------
 void ObjectsModel::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 {
-    if( ! Resolver< Object >::Find( asnMsg.oid ) )
+    if( ! Resolver< Object_ABC >::Find( asnMsg.oid ) )
     {
-        Object* pObject = objectFactory_.Create( asnMsg );
-        Resolver< Object >::Register( asnMsg.oid, *pObject );
+        Object_ABC* pObject = objectFactory_.Create( asnMsg );
+        Resolver< Object_ABC >::Register( asnMsg.oid, *pObject );
     }
 }
  
@@ -57,9 +57,9 @@ void ObjectsModel::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
 // Name: ObjectsModel::GetObject
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Object& ObjectsModel::GetObject( unsigned long id )
+Object_ABC& ObjectsModel::GetObject( unsigned long id )
 {
-    return Resolver< Object >::Get( id );
+    return Resolver< Object_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ Object& ObjectsModel::GetObject( unsigned long id )
 // -----------------------------------------------------------------------------
 void ObjectsModel::DeleteObject( unsigned long id )
 {
-    delete Resolver< Object >::Find( id );
-    Resolver< Object >::Remove( id );
+    delete Resolver< Object_ABC >::Find( id );
+    Resolver< Object_ABC >::Remove( id );
 }
 

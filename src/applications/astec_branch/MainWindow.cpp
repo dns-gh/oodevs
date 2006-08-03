@@ -50,8 +50,9 @@
 #include "astec_lib/CoordinateConverter.h"
 #include "astec_lib/ActionLogger.h"
 
-#include "astec_lib/Agent.h"
-#include "astec_lib/Object.h"
+#include "astec_lib/Agent_ABC.h"
+#include "astec_lib/Object_ABC.h"
+#include "astec_lib/DataDictionary.h"
 #include "astec_lib/Population.h"
 #include "astec_lib/EntitySearchBox.h"
 #include "astec_lib/Menu.h"
@@ -118,7 +119,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pAgentList_->header()->hide();
 
     QVBox* objectPanel = new QVBox();
-    new EntitySearchBox< Object >( objectPanel, controllers );
+    new EntitySearchBox< Object_ABC >( objectPanel, controllers );
     ObjectListView* pObjectList_ = new ObjectListView( objectPanel, controllers, *factory );
     pListsTabWidget->addTab( objectPanel, tr( "Objets" ) );
     pObjectList_->header()->hide();

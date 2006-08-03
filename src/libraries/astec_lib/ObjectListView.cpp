@@ -6,19 +6,10 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-08-05 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectListView.cpp $
-// $Author: Ape $
-// $Modtime: 4/11/04 11:16 $
-// $Revision: 6 $
-// $Workfile: ObjectListView.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ObjectListView.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "Team.h"
 #include "Tools.h"
 #include "ASN_Messages.h"
@@ -96,7 +87,7 @@ void ObjectListView::OnRequestCenter()
 // Name: ObjectListView::NotifyCreated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyCreated( const Object& object )
+void ObjectListView::NotifyCreated( const Object_ABC& object )
 {
     const Team& team = object.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
@@ -132,7 +123,7 @@ namespace
 // Name: ObjectListView::NotifyDeleted
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyDeleted( const Object& object )
+void ObjectListView::NotifyDeleted( const Object_ABC& object )
 {
     DeleteHierarchy( FindItem( &object, firstChild() ) );
 }
@@ -150,7 +141,7 @@ QSize ObjectListView::sizeHint() const
 // Name: ObjectListView::Select
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void ObjectListView::Select( const Object& object )
+void ObjectListView::Select( const Object_ABC& object )
 {
     setSelected( FindItem( &object, firstChild() ), true );
     ensureItemVisible( selectedItem() );

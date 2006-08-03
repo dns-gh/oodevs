@@ -11,7 +11,7 @@
 #include "TeamSelectionObserver.h"
 #include "KnowledgeGroup.h"
 #include "Agent_ABC.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void TeamSelectionObserver::Select( const Agent_ABC& element )
 // Name: TeamSelectionObserver::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void TeamSelectionObserver::Select( const Object& element )
+void TeamSelectionObserver::Select( const Object_ABC& element )
 {
     Select( element.GetTeam() );
 }

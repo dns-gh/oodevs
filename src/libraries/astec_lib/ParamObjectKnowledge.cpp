@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "ParamObjectKnowledge.h"
 #include "ObjectKnowledge.h"
-#include "Object.h"
+#include "Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledge constructor
@@ -35,7 +35,7 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // Name: ParamObjectKnowledge::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledge::NotifyContextMenu( const Object& entity, QPopupMenu& menu )
+void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu )
 {
     // agent_.GetKnowledgeGroup()->GetTeam().Get< ObjectKnowledges >()....
     // $$$$ AGE 2006-03-14: 

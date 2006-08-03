@@ -13,7 +13,7 @@
 #include "KnowledgeGroup.h"
 #include "Team.h"
 #include "Controllers.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "Population.h"
 #include "Lima.h"
 #include "Limit.h"
@@ -72,7 +72,7 @@ void ColorStrategy::Select( const Agent_ABC& element )
 // Name: ColorStrategy::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Object& element )
+void ColorStrategy::Select( const Object_ABC& element )
 {
     selectedObject_ = &element;
 }
@@ -142,7 +142,7 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const Object& object )
+void ColorStrategy::SelectColor( const Object_ABC& object )
 {
     const Team& team = object.GetTeam();
     QColor color = teamColors_[ &team ].second;

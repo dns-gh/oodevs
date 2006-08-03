@@ -17,7 +17,6 @@
 #include "Resolver_ABC.h"
 
 class Controller;
-class Object;
 class Displayer_ABC;
 
 // =============================================================================
@@ -64,7 +63,6 @@ public:
     //! @name Member data
     //@{
     Controller& controller_;
-
     OptionalValue< unsigned > nLogRouteFlow_;
     OptionalValue< unsigned > nLogRouteWidth_;
     OptionalValue< unsigned > nLogRouteLength_;

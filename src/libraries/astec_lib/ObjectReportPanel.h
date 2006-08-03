@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-09-08 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectReportPanel.h $
-// $Author: Sbo $
-// $Modtime: 5/04/05 17:11 $
-// $Revision: 3 $
-// $Workfile: ObjectReportPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __ObjectReportPanel_h_
 #define __ObjectReportPanel_h_
@@ -25,7 +16,7 @@
 #include "SafePointer.h"
 
 class FireResultListView;
-class Object;
+class Object_ABC;
 class Controllers;
 class Explosions;
 class Displayer_ABC;
@@ -46,7 +37,7 @@ class ItemFactory_ABC;
 class ObjectReportPanel : public InfoPanel_ABC
                         , public Observer_ABC
                         , public ElementObserver_ABC< Explosions >
-                        , public SelectionObserver< Object >
+                        , public SelectionObserver< Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -70,15 +61,15 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Explosions& );
-    virtual void NotifyDeleted( const Object& );
-    virtual void NotifySelected( const Object* );
+    virtual void NotifyDeleted( const Object_ABC& );
+    virtual void NotifySelected( const Object_ABC* );
     //@}
 
 private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    SafePointer< Object > selected_;
+    SafePointer< Object_ABC > selected_;
     FireResultListView* reports_;
     //@}
 };

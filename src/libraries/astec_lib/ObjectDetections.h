@@ -17,7 +17,7 @@
 #include "Drawable_ABC.h"
 
 class Controller;
-class Object;
+class Object_ABC;
 
 // =============================================================================
 /** @class  ObjectDetections
@@ -32,7 +32,7 @@ class ObjectDetections : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectDetections( Controller& controller, const Resolver_ABC< Object >& resolver );
+             ObjectDetections( Controller& controller, const Resolver_ABC< Object_ABC >& resolver );
     virtual ~ObjectDetections();
     //@}
 
@@ -55,7 +55,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const Object* >   T_Objects;
+    typedef std::set< const Object_ABC* >   T_Objects;
     typedef T_Objects::const_iterator CIT_Objects;
     //@}
 
@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Object >& resolver_;
+    const Resolver_ABC< Object_ABC >& resolver_;
 
     T_Objects perceivedObjects_;
     //@}

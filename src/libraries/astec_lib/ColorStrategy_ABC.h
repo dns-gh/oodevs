@@ -11,7 +11,7 @@
 #define __ColorStrategy_ABC_h_
 
 class Agent_ABC;
-class Object;
+class Object_ABC;
 class Population;
 class AgentKnowledge;
 class ObjectKnowledge;
@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void SelectColor( const Agent_ABC& agent ) = 0;
-    virtual void SelectColor( const Object& object ) = 0;
+    virtual void SelectColor( const Object_ABC& object ) = 0;
     virtual void SelectColor( const Population& population ) = 0;
     virtual void SelectColor( const AgentKnowledge& k ) = 0;
     virtual void SelectColor( const ObjectKnowledge& k ) = 0;

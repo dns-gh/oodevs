@@ -90,7 +90,7 @@ bool LinkInterpreter::InterpreteId( const QUrl& url )
     const unsigned long id = strId.toULong( &ok );
     return ok && ( 
         ( classId == InternalLinks::agent_      && Activate< Agent_ABC >( model_.agents_, id ) )
-     || ( classId == InternalLinks::object_     && Activate< Object >( model_.objects_, id ) )
+     || ( classId == InternalLinks::object_     && Activate< Object_ABC >( model_.objects_, id ) )
      || ( classId == InternalLinks::population_ && Activate< Population >( model_.agents_, id ) ) );
     // $$$$ AGE 2006-06-27: manque les connaissances. Observer les KnowledgeGroups ?
 }

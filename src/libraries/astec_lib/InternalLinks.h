@@ -11,7 +11,7 @@
 #define __InternalLinks_h_
 
 class Agent_ABC;
-class Object;
+class Object_ABC;
 class Population;
 class AgentKnowledge;
 class ObjectKnowledge;
@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     static QString CreateLink( const Agent_ABC& entity, const QString& message );
-    static QString CreateLink( const Object& entity, const QString& message );
+    static QString CreateLink( const Object_ABC& entity, const QString& message );
     static QString CreateLink( const Population& entity, const QString& message );
 
     static QString CreateLink( const AgentKnowledge& entity, const QString& message );

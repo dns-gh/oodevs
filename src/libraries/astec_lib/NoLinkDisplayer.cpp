@@ -11,7 +11,7 @@
 #include "NoLinkDisplayer.h"
 #include "Agent_ABC.h"
 #include "Population.h"
-#include "Object.h"
+#include "Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: NoLinkDisplayer constructor
@@ -53,7 +53,7 @@ void NoLinkDisplayer::Call( const Population& value )
 // Name: NoLinkDisplayer::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void NoLinkDisplayer::Call( const Object& value )
+void NoLinkDisplayer::Call( const Object_ABC& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

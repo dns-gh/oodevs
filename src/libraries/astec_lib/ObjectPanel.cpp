@@ -10,7 +10,7 @@
 #include "astec_pch.h"
 #include "ObjectPanel.h"
 
-#include "Object.h"
+#include "Object_ABC.h"
 #include "ObjectType.h"
 #include "CampAttributes.h"
 #include "CrossingSiteAttributes.h"
@@ -104,7 +104,7 @@ ObjectPanel::~ObjectPanel()
 // -----------------------------------------------------------------------------
 void ObjectPanel::showEvent( QShowEvent* )
 {
-    const Object* selected = selected_;
+    const Object_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -114,7 +114,7 @@ void ObjectPanel::showEvent( QShowEvent* )
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
 template< typename T >
-void ObjectPanel::UpdateExtension( const Object& object )
+void ObjectPanel::UpdateExtension( const Object_ABC& object )
 {
     const T* extension = object.Retrieve< T >();
     if( extension )
@@ -125,7 +125,7 @@ void ObjectPanel::UpdateExtension( const Object& object )
 // Name: ObjectPanel::NotifySelected
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifySelected( const Object* object )
+void ObjectPanel::NotifySelected( const Object_ABC* object )
 {
     if( selected_ != object || ! object )
     {
@@ -151,7 +151,7 @@ void ObjectPanel::NotifySelected( const Object* object )
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const Object& object )
+void ObjectPanel::NotifyUpdated( const Object_ABC& object )
 {
     if( selected_  != &object || ! IsVisible() )
         return;
@@ -164,7 +164,7 @@ void ObjectPanel::NotifyUpdated( const Object& object )
 // Name: ObjectPanel::NotifyDeleted
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyDeleted( const Object& object )
+void ObjectPanel::NotifyDeleted( const Object_ABC& object )
 {
     if( selected_ == &object )
         NotifySelected( 0 );

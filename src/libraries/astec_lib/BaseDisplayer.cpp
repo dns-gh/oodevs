@@ -13,7 +13,7 @@
 #include "DotationType.h"
 #include "Team.h"
 #include "EquipmentType.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "CoordinateConverter_ABC.h"
@@ -94,7 +94,7 @@ void BaseDisplayer::Call( const EquipmentType& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const Object& value )
+void BaseDisplayer::Call( const Object_ABC& value )
 {
     AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
 }

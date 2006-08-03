@@ -11,7 +11,7 @@
 #define __ObjectsLayer_h_
 
 #include "EntityLayer.h"
-#include "Object.h"
+#include "Object_ABC.h"
 
 // =============================================================================
 /** @class  ObjectsLayer
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class ObjectsLayer : public EntityLayer< Object >
+class ObjectsLayer : public EntityLayer< Object_ABC >
 {
 
 public:
@@ -32,7 +32,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const Object& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const Object_ABC& entity, Displayer_ABC& displayer );
     //@}
 
 private:

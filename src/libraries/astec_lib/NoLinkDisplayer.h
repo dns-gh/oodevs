@@ -39,7 +39,7 @@ private:
     //@{
     virtual void Call( const Agent_ABC& value );
     virtual void Call( const Population& value );
-    virtual void Call( const Object& value );
+    virtual void Call( const Object_ABC& value );
     //@}
 };
 

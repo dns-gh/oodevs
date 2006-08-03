@@ -1,20 +1,18 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 03-07-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectKnowledge.cpp $
-// $Author: Ape $
-// $Modtime: 4/11/04 11:15 $
-// $Revision: 3 $
-// $Workfile: ObjectKnowledge.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ObjectKnowledge.h"
 #include "Controller.h"
 #include "Displayer_ABC.h"
 #include "Units.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "ObjectType.h"
 #include "CoordinateConverter_ABC.h"
 #include "Team.h"
@@ -25,7 +23,7 @@
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
-                                  const Resolver_ABC< Object >& objectResolver , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
+                                  const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
     : owner_         ( owner )
     , converter_     ( converter )
     , objectResolver_( objectResolver )

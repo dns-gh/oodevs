@@ -17,7 +17,6 @@
 #include "Resolver_ABC.h"
 
 class Controller;
-class Object;
 class Agent_ABC;
 class Displayer_ABC;
 

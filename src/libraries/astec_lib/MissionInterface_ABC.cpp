@@ -33,7 +33,7 @@
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "Agent_ABC.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "ObjectKnowledge.h"
 #include "AgentKnowledge.h"
 #include "PopulationKnowledge.h"

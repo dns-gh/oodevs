@@ -12,14 +12,14 @@
 #include "Controller.h"
 #include "Attr_Def.h"
 #include "GlTools_ABC.h"
-#include "Object.h"
+#include "Object_ABC.h"
 #include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< Object >& resolver )
+ObjectDetections::ObjectDetections( Controller& controller, const Resolver_ABC< Object_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {
@@ -45,7 +45,7 @@ void ObjectDetections::DoUpdate( const ObjectDetectionMessage& message )
     unsigned char  nObjectVisType;
 
     message >> id >> nObjectVisType;
-    Object* object = & resolver_.Get( id );
+    Object_ABC* object = & resolver_.Get( id );
 
     if( nObjectVisType == eVisTypeInvisible )
         perceivedObjects_.erase( object );

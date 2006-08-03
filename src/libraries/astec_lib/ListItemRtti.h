@@ -46,9 +46,9 @@ struct ListItemRtti< const ObjectType* > {
     enum { rtti = 1004 };
 };
 
-class Object;
+class Object_ABC;
 template< >
-struct ListItemRtti< const Object* > {
+struct ListItemRtti< const Object_ABC* > {
     enum { rtti = 1005 };
 };
 

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-09-02 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "Object.h"
@@ -22,6 +13,7 @@
 #include "Net_Def.h"
 #include "Tools.h"
 #include "Controller.h"
+#include "ActionController.h"
 #include "Units.h"
 #include "Displayer_ABC.h"
 #include "ObjectType.h"
@@ -58,7 +50,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     if( message.m.type_dotation_valorisationPresent )
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
 
-    controller_.Create( *this );
+    controller_.Create( *(Object_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +59,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(Object_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +120,7 @@ void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
     if( message.m.pourcentage_creation_contournementPresent )
         rBypassConstructionPercentage_ = message.pourcentage_creation_contournement;
 
-    controller_.Update( *this );
+    controller_.Update( *(Object_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +153,7 @@ void Object::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "", *this )
+    displayer.Display( "", *(Object_ABC*)this )
              .Display( "Niveau de construction", rConstructionPercentage_ * Units::percentage )
              .Display( "Valorisation",           rValorizationPercentage_ * Units::percentage )
              .Display( "Contournement",          rBypassConstructionPercentage_ * Units::percentage );
@@ -191,7 +183,7 @@ bool Object::IsInTeam( const Team& team ) const
 // -----------------------------------------------------------------------------
 void Object::Select( ActionController& controller ) const
 {
-     // $$$$ SBO 2006-08-02: 
+    controller.Select( *(Object_ABC*)this );
 }
     
 // -----------------------------------------------------------------------------
@@ -200,7 +192,7 @@ void Object::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void Object::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.ContextMenu( *(Object_ABC*)this, where );
 }
     
 // -----------------------------------------------------------------------------
@@ -209,5 +201,5 @@ void Object::ContextMenu( ActionController& controller, const QPoint& where ) co
 // -----------------------------------------------------------------------------
 void Object::Activate( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Activate( *(Object_ABC*)this );
 }

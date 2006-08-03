@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-08-05 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectListView.h $
-// $Author: Ape $
-// $Modtime: 26/08/04 11:03 $
-// $Revision: 3 $
-// $Workfile: ObjectListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ObjectListView_h_
 #define __ObjectListView_h_
@@ -23,7 +14,7 @@
 #include "SelectionObserver_ABC.h"
 #include "OptionsObserver_ABC.h"
 
-class Object;
+class Object_ABC;
 class Controllers;
 class Team;
 class ItemFactory_ABC;
@@ -36,8 +27,8 @@ class ItemFactory_ABC;
 // =============================================================================
 class ObjectListView : public QListView
                      , public Observer_ABC
-                     , public ElementObserver_ABC< Object >
-                     , public SelectionObserver_Base< Object >
+                     , public ElementObserver_ABC< Object_ABC >
+                     , public SelectionObserver_Base< Object_ABC >
                      , public OptionsObserver_ABC
 {
     Q_OBJECT;
@@ -69,9 +60,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Object& object );
-    virtual void NotifyDeleted( const Object& object );
-    virtual void Select( const Object& object );
+    virtual void NotifyCreated( const Object_ABC& object );
+    virtual void NotifyDeleted( const Object_ABC& object );
+    virtual void Select( const Object_ABC& object );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 

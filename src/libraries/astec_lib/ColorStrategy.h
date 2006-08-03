@@ -17,7 +17,7 @@
 
 class Team;
 class Agent_ABC;
-class Object;
+class Object_ABC;
 class Population;
 class Controllers;
 class TacticalLine_ABC;
@@ -36,7 +36,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public ElementObserver_ABC< Team >
                     , public SelectionObserver_ABC
                     , public SelectionObserver_Base< Agent_ABC >
-                    , public SelectionObserver_Base< Object >
+                    , public SelectionObserver_Base< Object_ABC >
                     , public SelectionObserver_Base< Population >
                     , public SelectionObserver_Base< Lima >
                     , public SelectionObserver_Base< Limit >
@@ -52,7 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void SelectColor( const Agent_ABC& agent );
-    virtual void SelectColor( const Object& object );
+    virtual void SelectColor( const Object_ABC& object );
     virtual void SelectColor( const Population& population );
     virtual void SelectColor( const AgentKnowledge& k );
     virtual void SelectColor( const ObjectKnowledge& k );
@@ -74,7 +74,7 @@ private:
 
     virtual void BeforeSelection();
     virtual void Select( const Agent_ABC& element );
-    virtual void Select( const Object& element );
+    virtual void Select( const Object_ABC& element );
     virtual void Select( const Population& element );
     virtual void Select( const Lima& element );
     virtual void Select( const Limit& element );
@@ -105,7 +105,7 @@ private:
     Controllers& controllers_;
     GlTools_ABC& tools_;
 
-    const Object*     selectedObject_;
+    const Object_ABC*     selectedObject_;
     const Agent_ABC*      selectedAgent_;
     const Agent_ABC*      selectedSuperior_;
     const Population* selectedPopulation_;

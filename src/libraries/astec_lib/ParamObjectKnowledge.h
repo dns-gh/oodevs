@@ -13,7 +13,7 @@
 #include "EntityParameter.h"
 
 class ObjectKnowledge;
-class Object;
+class Object_ABC;
 
 // =============================================================================
 /** @class  ParamObjectKnowledge
@@ -22,7 +22,7 @@ class Object;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge >
-                           , public ContextMenuObserver_ABC< Object >
+                           , public ContextMenuObserver_ABC< Object_ABC >
 {
 
 public:
@@ -42,7 +42,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Object& entity, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu );
     //@}
 };
 

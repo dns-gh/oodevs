@@ -14,8 +14,7 @@
 #include "Resolver.h"
 
 class ObjectFactory_ABC;
-class Object;
-
+class Object_ABC;
 
 // =============================================================================
 /** @class  ObjectsModel
@@ -23,13 +22,13 @@ class Object;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class ObjectsModel : public Resolver< Object >
+class ObjectsModel : public Resolver< Object_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsModel( ObjectFactory_ABC& objectFactory ); 
+    explicit ObjectsModel( ObjectFactory_ABC& objectFactory ); 
     virtual ~ObjectsModel();
     //@}
 
@@ -38,7 +37,7 @@ public:
     void Purge();
 
     void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
-    Object& GetObject( unsigned long id );
+    Object_ABC& GetObject( unsigned long id );
     void DeleteObject( unsigned long id );
     //@}
 
