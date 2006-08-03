@@ -53,12 +53,16 @@ public:
     bool IsInTeam( const Team& team ) const;
     bool KnowledgeIsInTeam( const Team& team ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned long         GetId       () const;
-    std::string           GetName     () const;
+    virtual unsigned long GetId       () const;
+    virtual std::string   GetName     () const;
     Agent&                GetRealAgent() const;
     const Team*           GetKnowledgeTeam() const;
     const KnowledgeGroup& GetKnowledgeGroup() const;

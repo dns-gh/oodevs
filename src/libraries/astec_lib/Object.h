@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-09-02 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Object_h_
 #define __Object_h_
@@ -58,12 +49,16 @@ public:
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInTooltip( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned long GetId() const;
-    std::string GetName() const;
+    virtual unsigned long GetId() const;
+    virtual std::string GetName() const;
     const Team& GetTeam() const;
     ObjectType& GetType() const;
     //@}

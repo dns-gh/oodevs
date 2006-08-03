@@ -1433,7 +1433,7 @@ void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& message )
 {
-    Agent_ABC* src = GetModel().fires_.FindFirer( message );
+    Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
         src->Update( message );
     GetModel().fires_.RemoveFire( message );
@@ -1483,7 +1483,7 @@ void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPop
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopulationFire& message )
 {
-    Agent_ABC* src = GetModel().fires_.FindFirer( message );
+    Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
         src->Update( message );
     GetModel().fires_.RemoveFire( message );

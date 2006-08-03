@@ -84,7 +84,7 @@ bool LinkInterpreter::ExecuteCommand( const QUrl& url )
 bool LinkInterpreter::InterpreteId( const QUrl& url )
 {
     const QString classId = url.host();
-    const QString strId = url.path();
+    const QString strId = url.fileName();
 
     bool ok = false;
     const unsigned long id = strId.toULong( &ok );

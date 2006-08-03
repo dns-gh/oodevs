@@ -14,7 +14,7 @@
 #include "ASN_Types.h"
 
 class Agent;
-class Agent_ABC;
+class Entity_ABC;
 class Population;
 
 // =============================================================================
@@ -23,7 +23,7 @@ class Population;
 */
 // Created: AGE 2006-03-13
 // =============================================================================
-class FiresModel : public Resolver< Agent_ABC >
+class FiresModel : public Resolver< Entity_ABC >
 {
 
 public:
@@ -39,8 +39,8 @@ public:
 
     void AddFire        ( const ASN1T_MsgStartPionFire& message );
     void AddFire        ( const ASN1T_MsgStartPopulationFire& message );
-    Agent_ABC* FindFirer( const ASN1T_MsgStopPionFire& message );
-    Agent_ABC* FindFirer( const ASN1T_MsgStopPopulationFire& message );
+    Entity_ABC* FindFirer( const ASN1T_MsgStopPionFire& message );
+    Entity_ABC* FindFirer( const ASN1T_MsgStopPopulationFire& message );
     void RemoveFire     ( const ASN1T_MsgStopPionFire& message );
     void RemoveFire     ( const ASN1T_MsgStopPopulationFire& message );
     //@}

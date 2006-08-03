@@ -52,6 +52,15 @@ std::string PopulationFlow::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetId
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+unsigned long PopulationFlow::GetId() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationFlow::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
@@ -191,4 +200,31 @@ bool PopulationFlow::IsIn( const geometry::Rectangle2f& ) const
 geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
 {
     return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationFlow::Select( ActionController& controller ) const
+{
+     // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationFlow::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+     // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationFlow::Activate( ActionController& controller ) const
+{
+     // $$$$ SBO 2006-08-02: 
 }

@@ -48,8 +48,8 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned long GetId() const;
-    std::string GetName() const;
+    virtual unsigned long GetId() const;
+    virtual std::string GetName() const;
 
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
@@ -59,6 +59,10 @@ public:
 
     const KnowledgeGroup& GetKnowledgeGroup() const;
     const Population& GetRealPopulation() const;
+
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
 
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}

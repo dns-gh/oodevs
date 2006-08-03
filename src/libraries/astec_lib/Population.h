@@ -13,7 +13,7 @@
 #include "Types.h"
 #include "ASN_Types.h"
 
-#include "Agent_ABC.h"
+#include "Entity_ABC.h"
 #include "AgentKnowledge.h"
 #include "Resolver.h"
 #include "Extension_ABC.h"
@@ -34,7 +34,7 @@ class Displayer_ABC;
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class Population : public Agent_ABC
+class Population : public Entity_ABC
                  , public Resolver< PopulationFlow >
                  , public Resolver< PopulationConcentration >
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?

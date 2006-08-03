@@ -103,3 +103,30 @@ bool KnowledgeGroup::IsInTeam( const Team& team ) const
 {
     return team_ == team;
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Select( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}

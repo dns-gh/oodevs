@@ -17,7 +17,7 @@
 
 class Controllers;
 class Report_ABC;
-class Agent_ABC;
+class Entity_ABC;
 
 // =============================================================================
 /** @class  EventToolbar
@@ -55,7 +55,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::list< const Agent_ABC* > T_Agents;
+    typedef std::list< const Entity_ABC* > T_Agents;
     typedef T_Agents::const_iterator    CIT_Agents;
     //@}
 

@@ -35,7 +35,7 @@ Team::Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGr
     input >> strName_;
     controller_.Create( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team destructor
 // Created: NLD 2004-03-18
@@ -68,7 +68,7 @@ unsigned long Team::GetId() const
 {
     return nID_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team::GetName
 // Created: AGE 2006-02-15
@@ -85,4 +85,31 @@ std::string Team::GetName() const
 bool Team::operator==( const Team& team ) const
 {
     return this == &team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void Team::Select( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02:
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void Team::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void Team::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
 }

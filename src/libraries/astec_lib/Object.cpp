@@ -184,3 +184,30 @@ bool Object::IsInTeam( const Team& team ) const
 {
     return team_ == team;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void Object::Select( ActionController& controller ) const
+{
+     // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Object::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void Object::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Object::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void Object::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}

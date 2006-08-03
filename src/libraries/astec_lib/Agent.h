@@ -12,19 +12,12 @@
 
 #include "ASN_Types.h"
 #include "Agent_ABC.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Resolver.h"
-#include "Drawable_ABC.h"
-#include "Aggregatable_ABC.h"
 #include "DataDictionary.h"
 
 class Controller;
 class AgentType;
 class AutomatType;
-class KnowledgeGroup;
 class DecisionalModel;
-class Team;
 
 // =============================================================================
 /** @class  Agent
@@ -33,13 +26,9 @@ class Team;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent : public Agent_ABC
-            , public Extension_ABC
             , public Updatable_ABC< ASN1T_MsgChangeAutomateAck >
             , public Updatable_ABC< ASN1T_MsgChangeAutomate >
             , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
-            , public Aggregatable_ABC
-            , public Resolver< Agent > // $$$$ AGE 2006-02-16: Split Agent and Automat
-            , public Drawable_ABC
 {
 
 public:
@@ -60,13 +49,12 @@ public:
 
     //! @name Operations
     //@{
-    bool IsInTeam( const Team& team ) const;
-    // $$$$ AGE 2006-03-14: Gets de merde 
-    const Team& GetTeam() const;
+    virtual bool IsInTeam( const Team& team ) const;
+    virtual const Team& GetTeam() const;
+    virtual KnowledgeGroup& GetKnowledgeGroup() const;
+
     virtual std::string GetName() const;
     virtual unsigned long GetId() const;
-    
-    KnowledgeGroup& GetKnowledgeGroup() const;
 
     const DecisionalModel& GetDecisionalModel() const;
     const DecisionalModel* GetAutomatDecisionalModel() const;

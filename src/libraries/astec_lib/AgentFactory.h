@@ -15,7 +15,7 @@
 class Controllers;
 class Model;
 class AgentTypes;
-class Agent_ABC;
+class Entity_ABC;
 class Simulation;
 class Workers;
 class Publisher_ABC;
@@ -53,7 +53,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AttachExtensions( Agent_ABC& agent );
+    void AttachExtensions( Entity_ABC& agent );
     //@}
 
 private:

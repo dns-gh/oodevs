@@ -51,7 +51,7 @@ MiniViews::~MiniViews()
 // Name: MiniViews::BuildContextMenu
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void MiniViews::BuildContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void MiniViews::BuildContextMenu( const Entity_ABC& agent, QPopupMenu& menu )
 {
     selected_ = &agent;
     if( menu.count() ) 

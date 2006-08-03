@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ReportPanel.cpp $
-// $Author: Age $
-// $Modtime: 4/05/05 19:13 $
-// $Revision: 2 $
-// $Workfile: ReportPanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ReportPanel.h"
@@ -53,7 +44,7 @@ ReportPanel::~ReportPanel()
 // Name: ReportPanel::NotifySelected
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportPanel::NotifySelected( const Agent_ABC* element )
+void ReportPanel::NotifySelected( const Entity_ABC* element )
 {
     if( selected_ != element || ! element )
     {

@@ -14,7 +14,7 @@
 #include "Resolver.h"
 
 class Agent;
-class Agent_ABC;
+class Entity_ABC;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
 class Team;
@@ -56,7 +56,7 @@ public:
     Agent& GetAgent( unsigned long id ) const;
     Agent* FindAgent( unsigned long id ) const;
 
-    Agent_ABC* FindAllAgent( unsigned long id ) const;
+    Entity_ABC* FindAllAgent( unsigned long id ) const;
 
     void CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg );
     Population& GetPopulation( unsigned long id );

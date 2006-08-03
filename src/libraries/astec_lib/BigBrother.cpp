@@ -56,7 +56,7 @@ BigBrother::~BigBrother()
 // -----------------------------------------------------------------------------
 void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 {
-    NotifyContextMenu( (Agent_ABC&)agent, menu );
+    NotifyContextMenu( (Entity_ABC&)agent, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ void BigBrother::NotifyContextMenu( const Agent& agent, QPopupMenu& menu )
 // -----------------------------------------------------------------------------
 void BigBrother::NotifyContextMenu( const Population& popu, QPopupMenu& menu )
 {
-    NotifyContextMenu( (Agent_ABC&)popu, menu );
+    NotifyContextMenu( (Entity_ABC&)popu, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void BigBrother::NotifyDeleted( const Population& agent )
 // Name: BigBrother::RemoveAgent
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::RemoveAgent( const Agent_ABC& agent )
+void BigBrother::RemoveAgent( const Entity_ABC& agent )
 {
     if( selected_ == &agent )
         selected_ = 0;
@@ -101,7 +101,7 @@ void BigBrother::RemoveAgent( const Agent_ABC& agent )
 // Name: BigBrother::NotifyContextMenu
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void BigBrother::NotifyContextMenu( const Entity_ABC& agent, QPopupMenu& menu )
 {
     CIT_Agents it = spied_.find( &agent );
     if( it == spied_.end() )
@@ -149,7 +149,7 @@ void BigBrother::RemoveAll()
 // Name: BigBrother::CreateView
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-QWidget* BigBrother::CreateView( const Agent_ABC& agent )
+QWidget* BigBrother::CreateView( const Entity_ABC& agent )
 {
     return new AttributeView( this, controllers_, agent );
 }
@@ -160,7 +160,7 @@ QWidget* BigBrother::CreateView( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void BigBrother::NotifyCreated( const Report_ABC& report )
 {
-    const Agent_ABC* agent = &report.GetAgent();
+    const Entity_ABC* agent = &report.GetAgent();
     CIT_Agents it = spied_.find( agent );
     if( it == spied_.end() )
         return;

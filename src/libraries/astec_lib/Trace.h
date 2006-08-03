@@ -26,7 +26,7 @@ class Trace : public Report_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Trace( const Agent_ABC& agent, const Simulation& simulation, const TraceMessage& input );
+             Trace( const Entity_ABC& agent, const Simulation& simulation, const TraceMessage& input );
     virtual ~Trace();
     //@}
 

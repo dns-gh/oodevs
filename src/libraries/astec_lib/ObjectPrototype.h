@@ -40,7 +40,7 @@ class ASN_MsgObjectMagicAction;
 // Created: SBO 2006-04-18
 // =============================================================================
 class ObjectPrototype : public QGroupBox
-                      , public Entity_ABC
+//                      , public Entity_ABC
                       , public Observer_ABC
                       , public ElementObserver_ABC< Team >
                       , public ShapeHandler_ABC

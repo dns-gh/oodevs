@@ -11,16 +11,27 @@
 #define __Agent_ABC_h_
 
 #include "Entity_ABC.h"
+#include "Extension_ABC.h"
+#include "Updatable_ABC.h"
+#include "Resolver.h"
+#include "Drawable_ABC.h"
+#include "Aggregatable_ABC.h"
 
-class ActionController;
+class KnowledgeGroup;
+class Team;
+class Agent;
 
 // =============================================================================
 /** @class  Agent_ABC
-    @brief  Agent base class.  // $$$$ AGE 2006-04-10: Add stuff ! Inutilisé pour l'instant par rapport à Entity
+    @brief  Agent base class.
 */
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent_ABC : public Entity_ABC
+                , public Extension_ABC
+                , public Aggregatable_ABC
+                , public Resolver< Agent >
+                , public Drawable_ABC
 {
 
 public:
@@ -30,14 +41,23 @@ public:
     virtual ~Agent_ABC();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
+    virtual bool IsInTeam( const Team& team ) const = 0;
+    virtual const Team& GetTeam() const = 0;
+    virtual KnowledgeGroup& GetKnowledgeGroup() const = 0;
+
     virtual std::string GetName() const = 0;
     virtual unsigned long GetId() const = 0;
+    //@}
 
+    //! @name Operations
+    //@{
     virtual void Select( ActionController& controller ) const = 0;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
+
+    virtual void Aggregate( const bool& ) = 0;
     //@}
 };
 

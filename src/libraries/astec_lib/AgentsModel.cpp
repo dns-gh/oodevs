@@ -91,9 +91,9 @@ Agent* AgentsModel::FindAgent( unsigned long id ) const
 // Name: AgentsModel::FindAllAgent
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
+Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 {
-    Agent_ABC* agent = Resolver< Agent >::Find( id );
+    Entity_ABC* agent = Resolver< Agent >::Find( id );
     if( ! agent )
         agent = Resolver< Population >::Find( id );
     return agent;

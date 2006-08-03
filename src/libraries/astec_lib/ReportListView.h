@@ -58,7 +58,7 @@ public slots:
 private:
     //! @name Slots
     //@{
-    virtual void NotifySelected( const Agent_ABC* element );
+    virtual void NotifySelected( const Entity_ABC* element );
 
     virtual void NotifyUpdated( const Reports& reports );
     virtual void NotifyCreated( const Report_ABC& report );
@@ -78,7 +78,7 @@ private:
     Controllers&               controllers_;
     ItemFactory_ABC&           factory_;
     const ReportFilterOptions& filter_;
-    const Agent_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    const Entity_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
     //@}
 };
 

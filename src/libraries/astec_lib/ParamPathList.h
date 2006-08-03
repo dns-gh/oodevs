@@ -16,7 +16,7 @@
 
 class ParametersLayer;
 class CoordinateConverter_ABC;
-class Agent_ABC;
+class Entity_ABC;
 class ValuedListItem;
 class ActionController;
 
@@ -33,7 +33,7 @@ class ParamPathList : public QVBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent, ActionController& controller );
+             ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller );
     virtual ~ParamPathList();
     //@}
 
@@ -66,7 +66,7 @@ private:
     ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;
     ActionController& controller_;
-    const Agent_ABC& agent_;
+    const Entity_ABC& agent_;
     ASN1T_ListItineraire& asn_;
     ASN1T_Itineraire* paths_;
 

@@ -14,14 +14,14 @@
 #include "RichLabel.h"
 #include "CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
-#include "Agent_ABC.h"
+#include "Entity_ABC.h"
 #include "Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent )
+ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QHBox( pParent )
     , asn_( asn )
     , menu_( menu )

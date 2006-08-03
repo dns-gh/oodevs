@@ -223,3 +223,30 @@ void PopulationKnowledge::Draw( const geometry::Point2f& where, const geometry::
 {
     // $$$$ AGE 2006-05-18: 
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::Select( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}

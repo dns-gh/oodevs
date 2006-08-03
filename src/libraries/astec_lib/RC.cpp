@@ -18,7 +18,7 @@
 // Name: RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-RC::RC( const Agent_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg )
+RC::RC( const Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg )
     : Report_ABC( agent, simulation )
 {
     Initialize( asnMsg  );

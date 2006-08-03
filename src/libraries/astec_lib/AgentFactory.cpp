@@ -150,7 +150,7 @@ Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 // Name: AgentFactory::AttachExtensions
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentFactory::AttachExtensions( Agent_ABC& agent )
+void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
     DataDictionary& dico = agent.Get< DataDictionary >();
     agent.Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );

@@ -16,7 +16,7 @@
 
 #include <qtable.h>
 
-class Agent_ABC;
+class Entity_ABC;
 class DataDictionary;
 class Controllers;
 
@@ -34,7 +34,7 @@ class AttributeView : public QTable, public NoLinkDisplayer, public Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeView( QWidget* parent, Controllers& controllers, const Agent_ABC& agent );
+             AttributeView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent );
     virtual ~AttributeView();
     //@}
 

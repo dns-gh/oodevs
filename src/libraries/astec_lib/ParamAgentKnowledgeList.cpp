@@ -17,10 +17,10 @@
 // Name: ParamAgentKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Agent_ABC& agent )
+ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityListParameter< AgentKnowledge >( pParent, asn.n, asn.elem, label, menu )
     , converter_( converter )
-    , agent_    ( static_cast< const Agent& >( agent ) )
+    , agent_    ( dynamic_cast< const Agent& >( agent ) )
 {
     // NOTHING
 }

@@ -180,3 +180,30 @@ void ObjectKnowledge::Draw( const geometry::Point2f& where, const geometry::Rect
         tools.Select( backupState );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Select( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}

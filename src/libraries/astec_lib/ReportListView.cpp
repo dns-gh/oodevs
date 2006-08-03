@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ReportListView.cpp $
-// $Author: Age $
-// $Modtime: 5/04/05 16:41 $
-// $Revision: 5 $
-// $Workfile: ReportListView.cpp $
-//
-// *****************************************************************************
 
 #include "astec_pch.h"
 #include "ReportListView.h"
@@ -23,7 +14,7 @@
 #include "Report_ABC.h"
 #include "ReportFilterOptions.h"
 #include "Reports.h"
-#include "Agent_ABC.h"
+#include "Entity_ABC.h"
 #include "Controllers.h"
 #include "ItemFactory_ABC.h"
 
@@ -72,7 +63,7 @@ ReportListView::~ReportListView()
 // -----------------------------------------------------------------------------
 void ReportListView::showEvent( QShowEvent* )
 {
-    const Agent_ABC* selected = selected_;
+    const Entity_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -83,7 +74,7 @@ void ReportListView::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void ReportListView::OnOptionsChanged()
 {
-    const Agent_ABC* selected = selected_;
+    const Entity_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -92,7 +83,7 @@ void ReportListView::OnOptionsChanged()
 // Name: ReportListView::NotifySelected
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::NotifySelected( const Agent_ABC* element )
+void ReportListView::NotifySelected( const Entity_ABC* element )
 {
     if( element != selected_ )
     {

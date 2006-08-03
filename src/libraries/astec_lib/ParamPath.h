@@ -27,7 +27,7 @@
 class ParametersLayer;
 class CoordinateConverter_ABC;
 class RichLabel;
-class Agent_ABC;
+class Entity_ABC;
 
 // =============================================================================
 /** @class  ParamPath
@@ -44,7 +44,7 @@ class ParamPath : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent );
+             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent );
     virtual ~ParamPath();
     //@}
 

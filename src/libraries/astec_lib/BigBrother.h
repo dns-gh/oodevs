@@ -18,7 +18,7 @@
 class Controllers;
 class Agent;
 class Population;
-class Agent_ABC;
+class Entity_ABC;
 class QToolBox;
 class Report_ABC;
 
@@ -70,16 +70,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Agent_ABC*, int >   T_Agents;
+    typedef std::map< const Entity_ABC*, int >   T_Agents;
     typedef T_Agents::const_iterator          CIT_Agents;
     //@}
 
     //! @name Helpers
     //@{
-    QWidget* CreateView( const Agent_ABC& agent );
+    QWidget* CreateView( const Entity_ABC& agent );
     virtual void NotifyCreated( const Report_ABC& report );
-    void NotifyContextMenu( const Agent_ABC&, QPopupMenu& menu );
-    void RemoveAgent( const Agent_ABC& agent );
+    void NotifyContextMenu( const Entity_ABC&, QPopupMenu& menu );
+    void RemoveAgent( const Entity_ABC& agent );
     //@}
 
 private:
@@ -87,7 +87,7 @@ private:
     //@{
     Controllers& controllers_;
     T_Agents spied_;
-    const Agent_ABC* selected_; // $$$$ AGE 2006-06-30: watch deletions
+    const Entity_ABC* selected_; // $$$$ AGE 2006-06-30: watch deletions
     QToolBox* toolBox_;
     //@}
 };

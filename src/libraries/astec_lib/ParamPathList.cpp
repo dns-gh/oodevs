@@ -12,7 +12,7 @@
 #include "moc_ParamPathList.cpp"
 #include "ParametersLayer.h"
 #include "CoordinateConverter_ABC.h"
-#include "Agent_ABC.h"
+#include "Entity_ABC.h"
 #include "ParamPath.h"
 #include "ValuedListItem.h"
 #include "ActionController.h"
@@ -21,7 +21,7 @@
 // Name: ParamPathList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Agent_ABC& agent, ActionController& controller )
+ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
     : QVBox( parent )
     , layer_( layer )
     , converter_( converter )

@@ -40,6 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string  GetName() const = 0;
+    virtual unsigned long GetId() const = 0;
     virtual unsigned int GetDeadHumans() const = 0;
     virtual unsigned int GetLivingHumans() const = 0;
     virtual unsigned int GetDensity() const = 0;
@@ -48,6 +49,10 @@ public:
     virtual std::string  GetAttitude() const;
 
     virtual float GetHeight() const;
+
+    virtual void Select( ActionController& controller ) const = 0;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
+    virtual void Activate( ActionController& controller ) const = 0;
     //@}
 
 protected:

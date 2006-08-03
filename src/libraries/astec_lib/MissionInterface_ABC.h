@@ -15,7 +15,7 @@
 #include "ParamRadioBtnGroup.h"
 
 class ActionController;
-class Agent_ABC;
+class Entity_ABC;
 class Agent;
 class Param_ABC;
 class ParametersLayer;
@@ -37,7 +37,7 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, Agent_ABC& agent, ActionController& controller, ParametersLayer& layer, 
+             MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller, ParametersLayer& layer, 
                                    const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter,
                                    const ObjectTypes& objectTypes );
     virtual ~MissionInterface_ABC();
@@ -141,7 +141,7 @@ private:
     //! @name Member data
     //@{
     ActionController& controller_;
-    Agent_ABC& agent_;
+    Entity_ABC& agent_;
     ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;
     AgentKnowledgeConverter_ABC& knowledgeConverter_;

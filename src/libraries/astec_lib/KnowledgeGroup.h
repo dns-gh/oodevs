@@ -52,10 +52,17 @@ public:
     //@{
     bool IsInTeam( const Team& team ) const;
     const Team& GetTeam() const;
-    unsigned long GetId() const;
-    std::string GetName() const;
+    virtual unsigned long GetId() const;
+    virtual std::string GetName() const;
     void AddAutomat( unsigned long id, Agent& automat );
     void RemoveAutomat( unsigned long id );
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
 private:

@@ -225,3 +225,30 @@ const KnowledgeGroup& AgentKnowledge::GetKnowledgeGroup() const
 {
     return group_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Select( ActionController& controller ) const
+{
+     // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void AgentKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}

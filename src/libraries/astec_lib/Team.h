@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Team.h $
-// $Author: Ape $
-// $Modtime: 16/02/05 15:52 $
-// $Revision: 8 $
-// $Workfile: Team.h $
-//
-// *****************************************************************************
 
 #ifndef __Team_h_
 #define __Team_h_
@@ -52,12 +43,16 @@ public:
     //@{
     void CreateKnowledgeGroup( unsigned int id );
     bool operator==( const Team& ) const;
+
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned long GetId  () const;
-    std::string GetName() const;
+    virtual unsigned long GetId  () const;
+    virtual std::string GetName() const;
     //@}
 
 private:

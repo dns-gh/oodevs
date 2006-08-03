@@ -20,7 +20,7 @@
 // Name: AttributeView constructor
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const Agent_ABC& agent )
+AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent )
     : QTable( 1, 2, parent )
     , controllers_( controllers )
     , dictionary_( agent.Get< DataDictionary >() )

@@ -14,7 +14,7 @@
 #include "Fire_ABC.h"
 #include "Resolver_ABC.h"
 
-class Agent_ABC;
+class Entity_ABC;
 class Population;
 class Agent;
 
@@ -45,7 +45,7 @@ public:
     //! @name Member data
     //@{
     unsigned int id_;
-    const Agent_ABC* target_;
+    const Entity_ABC* target_;
     //@}
 };
 

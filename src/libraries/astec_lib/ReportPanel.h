@@ -49,7 +49,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Agent_ABC* element );
+    virtual void NotifySelected( const Entity_ABC* element );
     //@}    
 
 private:
@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    const Agent_ABC*     selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    const Entity_ABC*     selected_; // $$$$ AGE 2006-04-20: watch deletions !
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;
     FireResultListView*  pFireResultListView_;

@@ -6,20 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-08-04 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Report_ABC.h $
-// $Author: Ape $
-// $Modtime: 4/08/04 15:18 $
-// $Revision: 2 $
-// $Workfile: Report_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __Report_ABC_h_
 #define __Report_ABC_h_
 
-class Agent_ABC;
+class Entity_ABC;
 class Simulation;
 class Displayer_ABC;
 
@@ -46,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Report_ABC( const Agent_ABC& agent, const Simulation& simulation );
+             Report_ABC( const Entity_ABC& agent, const Simulation& simulation );
     virtual ~Report_ABC();
     //@}
 
@@ -60,7 +51,7 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    const Agent_ABC& GetAgent() const;
+    const Entity_ABC& GetAgent() const;
     
     E_Type      GetType () const;
     bool        IsRCType() const;
@@ -84,7 +75,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const Agent_ABC& agent_;
+    const Entity_ABC& agent_;
     std::string strTitle_; 
     int         nTime_;
     bool        bNew_;

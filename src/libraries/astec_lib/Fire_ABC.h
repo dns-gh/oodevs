@@ -14,7 +14,7 @@
 #include "Updatable_ABC.h"
 #include "Drawable_ABC.h"
 
-class Agent_ABC;
+class Entity_ABC;
 
 // =============================================================================
 /** @class  Fire_ABC
@@ -30,7 +30,7 @@ class Fire_ABC : public Updatable_ABC< ASN1T_MsgStopPionFire >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Fire_ABC( Agent_ABC& origin );
+    explicit Fire_ABC( Entity_ABC& origin );
     virtual ~Fire_ABC();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Agent_ABC& origin_;
+    Entity_ABC& origin_;
     //@}
 };
 

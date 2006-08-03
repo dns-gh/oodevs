@@ -18,6 +18,7 @@
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter_ABC& converter, float density )
     : position_( converter.ConvertToXY( asnMsg.position ) )
+    , nID_( asnMsg.oid_concentration )
     , density_ ( density )
     , nLivingHumans_( 0 )
     , nDeadHumans_( 0 )
@@ -44,6 +45,15 @@ std::string PopulationConcentration::GetName() const
 {
     static std::string concentration( "Concentration" );
     return concentration;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetId
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+unsigned long PopulationConcentration::GetId() const
+{
+    return nID_;
 }
 
 // -----------------------------------------------------------------------------
@@ -149,4 +159,31 @@ bool PopulationConcentration::IsIn( const geometry::Rectangle2f& ) const
 geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 {
     return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Select
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Select( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::ContextMenu
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationConcentration::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    // $$$$ SBO 2006-08-02: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::Activate
+// Created: SBO 2006-08-02
+// -----------------------------------------------------------------------------
+void PopulationConcentration::Activate( ActionController& controller ) const
+{
+    // $$$$ SBO 2006-08-02: 
 }

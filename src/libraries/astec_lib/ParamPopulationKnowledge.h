@@ -16,7 +16,7 @@ class PopulationKnowledge;
 class Population;
 class AgentKnowledgeConverter_ABC;
 class Agent;
-class Agent_ABC;
+class Entity_ABC;
 
 // =============================================================================
 /** @class  ParamPopulationKnowledge
@@ -31,7 +31,7 @@ class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Agent_ABC& agent );
+             ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent );
     virtual ~ParamPopulationKnowledge();
     //@}
 

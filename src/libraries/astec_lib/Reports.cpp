@@ -18,7 +18,7 @@
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Agent_ABC& agent, Controller& controller, const Simulation& simulation )
+Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation )
     : agent_( agent )
     , controller_( controller )
     , simulation_( simulation )

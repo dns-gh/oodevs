@@ -14,6 +14,8 @@
 #include "InterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
+
+class ActionController;
 class GlTools_ABC;
 
 // =============================================================================
@@ -33,8 +35,18 @@ public:
     virtual ~Entity_ABC();
     //@}
 
+    //! @name Accessors
+    //@{
+    virtual std::string GetName() const = 0;
+    virtual unsigned long GetId() const = 0;
+    //@}
+
     //! @name Operations
     //@{
+    virtual void Select( ActionController& controller ) const = 0;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
+    virtual void Activate( ActionController& controller ) const = 0;
+
     template< typename T >
     void Update( const T& updateMessage ) 
     {

@@ -17,7 +17,7 @@
 #include "ASN_Types.h"
 #include "Report_ABC.h"
 
-class Agent_ABC;
+class Entity_ABC;
 enum E_OrderConduiteID;
 class Simulation;
 
@@ -29,7 +29,7 @@ class RC : public Report_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             RC( const Agent_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg );
+             RC( const Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg );
     virtual ~RC();
     //@}
 

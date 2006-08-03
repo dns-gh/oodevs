@@ -6,18 +6,10 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-08-04 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Report_ABC.cpp $
-// $Author: Ape $
-// $Modtime: 4/08/04 11:57 $
-// $Revision: 1 $
-// $Workfile: Report_ABC.cpp $
-//
-// *****************************************************************************
+
 #include "astec_pch.h"
 #include "Report_ABC.h"
-#include "Agent_ABC.h"
+#include "Entity_ABC.h"
 #include "Attributes.h"
 #include "Simulation.h"
 #include "Displayer_ABC.h"
@@ -26,7 +18,7 @@
 // Name: Report_ABC constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-Report_ABC::Report_ABC( const Agent_ABC& agent, const Simulation& simulation )
+Report_ABC::Report_ABC( const Entity_ABC& agent, const Simulation& simulation )
     : agent_  ( agent )
     , nTime_  ( simulation.GetTime() )
     , bNew_   ( true )
@@ -87,7 +79,7 @@ bool Report_ABC::IsRCType() const
 // Name: Report_ABC::GetAgent
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-const Agent_ABC& Report_ABC::GetAgent() const
+const Entity_ABC& Report_ABC::GetAgent() const
 {
     return agent_;
 }

@@ -19,7 +19,7 @@
 // Name: MiniView constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-MiniView::MiniView( QWidget* parent, Controllers& controllers, const Agent_ABC& agent, GlWidget* widget )
+MiniView::MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent, GlWidget* widget )
     : QFrame( parent, "MiniView", WRepaintNoErase )
     , actions_( controllers.actions_ )
     , agent_( agent )

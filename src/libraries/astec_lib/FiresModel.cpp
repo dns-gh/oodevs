@@ -65,7 +65,7 @@ void FiresModel::AddFire( const ASN1T_MsgStartPopulationFire& message )
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-Agent_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPionFire& message )
+Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPionFire& message )
 {
     return Find( message.oid_tir );
 }
@@ -74,7 +74,7 @@ Agent_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPionFire& message )
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-Agent_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPopulationFire& message )
+Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPopulationFire& message )
 {
     return Find( message.oid_tir );
 }
