@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Supply_Data.h $
-// $Author: Ape $
-// $Modtime: 22/03/05 16:02 $
-// $Revision: 1 $
-// $Workfile: ADN_Supply_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Supply_Data_h_
 #define __ADN_Supply_Data_h_
@@ -22,6 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Units_Data.h"
+#include "ADN_AvailabilityWarning.h"
 
 class ADN_XmlInput_Helper;
 
@@ -86,6 +78,7 @@ public:
     T_ConvoyInfoVector vConvoySetupInfos_;
     T_ConvoyInfoVector vConvoyLoadingInfos_;
     T_ConvoyInfoVector vConvoyUnloadingInfos_;
+    T_AvailabilityWarning_Vector vVectorWarnings_;
 };
 
 

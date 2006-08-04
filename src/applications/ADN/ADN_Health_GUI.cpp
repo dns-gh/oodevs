@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Health_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 21/04/05 16:50 $
-// $Revision: 5 $
-// $Workfile: ADN_Health_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "ADN_pch.h"
 #include "ADN_Health_GUI.h"
@@ -27,11 +18,12 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_TimeField.h"
 #include "ADN_TableItem_TimeField.h"
-
+#include "ADN_AvailabilityWarningTable.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qgroupbox.h>
+#include <qhgroupbox.h>
 #include <qhbox.h>
 #include <qvbox.h>
 
@@ -69,15 +61,17 @@ void ADN_Health_GUI::Build()
 
     // Create the top widget.
     pMainWidget_ = new QWidget( 0 );
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Health" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Health" ), pMainWidget_ );
 
-    QWidget* pHolder = builder.AddFieldHolder( pGroup );
+    QVBox* pVBox = new QVBox( pGroup ); 
+
+    QWidget* pHolder = builder.AddFieldHolder( pVBox );
 
     builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic time" ), data_.diagnosticTime_ );
     builder.AddField< ADN_TimeField >( pHolder, tr( "Sorting time" ), data_.sortingTime_ );
     
     // wounds
-    QHBox* pWoundsGroup = new QHBox( pGroup );
+    QHBox* pWoundsGroup = new QHBox( pVBox );
     pWoundsGroup->setSpacing( 5 );
 
     ADN_Table* pWoundTable = builder.CreateTable( pWoundsGroup );
@@ -120,6 +114,20 @@ void ADN_Health_GUI::Build()
     builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n + 1, data_.contaminationRestingTime_ );
     pWoundTable->setItem( 2, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
     pWoundTable->setItem( 3, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
+
+    // Warning tables
+    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Resources availability warnings" ), pGroup );
+    QHGroupBox* pAvailabilityGroup = new QHGroupBox( tr( "Changeover" ), pWarningGroup );
+    ADN_AvailabilityWarningTable* pChangeOverWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
+    pChangeOverWarningTable->GetConnector().Connect( & data_.vChangeOverWarnings_ );
+    
+    pAvailabilityGroup = new QHGroupBox( tr( "Collect" ), pWarningGroup );
+    ADN_AvailabilityWarningTable* pCollectWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
+    pCollectWarningTable->GetConnector().Connect( & data_.vCollectingWarnings_ );
+
+    pAvailabilityGroup = new QHGroupBox( tr( "Doctors" ), pWarningGroup );
+    ADN_AvailabilityWarningTable* pDoctorsWarningTable = new ADN_AvailabilityWarningTable( pAvailabilityGroup );
+    pDoctorsWarningTable->GetConnector().Connect( & data_.vDoctorsWarnings_ );
 
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 5 );

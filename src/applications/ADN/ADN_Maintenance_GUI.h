@@ -6,23 +6,13 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Maintenance_GUI.h $
-// $Author: Ape $
-// $Modtime: 21/03/05 12:18 $
-// $Revision: 1 $
-// $Workfile: ADN_Maintenance_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Maintenance_GUI_h_
 #define __ADN_Maintenance_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 
-#include "ADN_Maintenance_Data.h"
-
+class ADN_Maintenance_Data;
 
 // =============================================================================
 /** @class  ADN_Maintenance_GUI
@@ -44,6 +34,12 @@ public:
     //! @name Operations
     //@{
     void Build();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void BuildWorkingSchemeTable( QWidget* parent );
     //@}
 
 private:

@@ -13,6 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
+#include "ADN_AvailabilityWarning.h"
 
 class ADN_XmlInput_Helper;
 
@@ -53,7 +54,6 @@ public:
     typedef ADN_Type_Vector_ABC< WorkingSchemeInfo >  T_WorkingSchemeInfo_Vector;
     typedef T_WorkingSchemeInfo_Vector::iterator     IT_WorkingSchemeInfo_Vector;
 
-
 // *****************************************************************************
 public:
     //! @name Constructors/Destructor
@@ -74,6 +74,8 @@ private:
 
 public:
     T_WorkingSchemeInfo_Vector vWorkingSchemes_;
+    T_AvailabilityWarning_Vector vRepairerWarnings_;
+    T_AvailabilityWarning_Vector vHaulerWarnings_;
 };
 
 #endif // __ADN_Maintenance_Data_h_

@@ -84,7 +84,6 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( MT_OutputArchive_ABC
     output.EndSection();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_Data constructor
 // Created: APE 2005-03-14
@@ -104,6 +103,8 @@ ADN_Maintenance_Data::ADN_Maintenance_Data()
 ADN_Maintenance_Data::~ADN_Maintenance_Data()
 {
     vWorkingSchemes_.Reset();
+    vRepairerWarnings_.Reset();
+    vHaulerWarnings_.Reset();
 }
 
 
@@ -123,6 +124,9 @@ void ADN_Maintenance_Data::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Maintenance_Data::Reset()
 {
+    vWorkingSchemes_.Reset();
+    vRepairerWarnings_.Reset();
+    vHaulerWarnings_.Reset();
 }
 
 
@@ -136,8 +140,31 @@ void ADN_Maintenance_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.Section( "RegimesTravail" );
     for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->ReadArchive( input );
-    input.EndSection(); // RegimesTravail
-    input.EndSection(); // Maintenance
+    input.EndSection();
+
+    input.Section( "AlertesDisponibiliteMoyens" );
+        input.BeginList( "AlertesDisponibiliteReparateurs" );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+            pNew->ReadArchive( input, "AlerteDisponibiliteReparateurs" );
+            vRepairerWarnings_.AddItem( pNew.release() );
+        }
+        vRepairerWarnings_.AddItem( 0 );
+        input.EndList();
+
+        input.BeginList( "AlertesDisponibiliteRemorqueurs" );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+            pNew->ReadArchive( input, "AlerteDisponibiliteRemorqueurs" );
+            vHaulerWarnings_.AddItem( pNew.release() );
+        }
+        vHaulerWarnings_.AddItem( 0 );
+        input.EndList();
+    input.EndSection();
+
+    input.EndSection();
 }
 
 
@@ -151,6 +178,19 @@ void ADN_Maintenance_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.Section( "RegimesTravail" );
     for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );
-    output.EndSection(); // RegimesTravail
-    output.EndSection(); // Maintenance
+    output.EndSection();
+
+    output.Section( "AlertesDisponibiliteMoyens" );
+        output.BeginList( "AlertesDisponibiliteReparateurs", vRepairerWarnings_.size() );
+        for( IT_AvailabilityWarning_Vector it = vRepairerWarnings_.begin(); it != vRepairerWarnings_.end(); ++it )
+            (*it)->WriteArchive( output, "AlerteDisponibiliteReparateurs" );
+        output.EndList();
+
+        output.BeginList( "AlertesDisponibiliteRemorqueurs", vHaulerWarnings_.size() );
+        for( IT_AvailabilityWarning_Vector it = vHaulerWarnings_.begin(); it != vHaulerWarnings_.end(); ++it )
+            (*it)->WriteArchive( output, "AlerteDisponibiliteRemorqueurs" );
+        output.EndList();
+    output.EndSection();
+
+    output.EndSection();
 }

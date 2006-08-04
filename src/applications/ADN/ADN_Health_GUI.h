@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Health_GUI.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 2 $
-// $Workfile: ADN_Health_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Health_GUI_h_
 #define __ADN_Health_GUI_h_

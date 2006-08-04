@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Supply_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 25/04/05 18:14 $
-// $Revision: 6 $
-// $Workfile: ADN_Supply_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "ADN_pch.h"
 #include "ADN_Supply_GUI.h"
@@ -26,12 +17,14 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Tr.h"
 #include "ADN_SupplyUnitSelector.h"
+#include "ADN_AvailabilityWarningTable.h"
 
 #include "ENT/ENT_Tr.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qgroupbox.h>
+#include <qhgroupbox.h>
 #include <qhbox.h>
 #include <qvbox.h>
 
@@ -69,24 +62,28 @@ void ADN_Supply_GUI::Build()
 
     // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
-    QGroupBox* pGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Supply" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 5, Qt::Horizontal, tr( "Supply" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
 
     builder.AddField< ADN_SupplyUnitSelector >( pHolder, tr( "Unit" ), data_.ptrUnit_ );
     builder.AddEnumField<E_UnitMission>( pHolder, tr( "Mission" ), data_.nSupplyMission_, ENT_Tr::ConvertFromUnitMission );
 
-    QGroupBox* pTrucksGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Convoy setup times" ), pGroup );
+    QHGroupBox* pTrucksGroup = new QHGroupBox( tr( "Convoy setup times" ), pGroup );
     ADN_Supply_TrucksTable* pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
     pTrucksTable->GetConnector().Connect( & data_.vConvoySetupInfos_ );
 
-    pTrucksGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Convoy loading times" ), pGroup );
+    pTrucksGroup = new QHGroupBox( tr( "Convoy loading times" ), pGroup );
     pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
     pTrucksTable->GetConnector().Connect( & data_.vConvoyLoadingInfos_ );
 
-    pTrucksGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Convoy unloading times" ), pGroup );
+    pTrucksGroup = new QHGroupBox( tr( "Convoy unloading times" ), pGroup );
     pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
     pTrucksTable->GetConnector().Connect( & data_.vConvoyUnloadingInfos_ );
+
+    QHGroupBox* pVectorGroup = new QHGroupBox( tr( "Vector availability warnings" ), pGroup );
+    ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );
+    pWarningTable->GetConnector().Connect( & data_.vVectorWarnings_ );
 
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );

@@ -110,6 +110,7 @@ ADN_Supply_Data::~ADN_Supply_Data()
     vConvoySetupInfos_    .Reset();
     vConvoyLoadingInfos_  .Reset();
     vConvoyUnloadingInfos_.Reset();
+    vVectorWarnings_      .Reset();
 }
 
 
@@ -132,6 +133,7 @@ void ADN_Supply_Data::Reset()
     vConvoySetupInfos_    .Reset();
     vConvoyLoadingInfos_  .Reset();
     vConvoyUnloadingInfos_.Reset();
+    vVectorWarnings_      .Reset();
 }
 
 
@@ -188,6 +190,19 @@ void ADN_Supply_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.EndSection(); // Mission
 
     input.EndSection(); // Convois
+
+    input.Section( "AlertesDisponibiliteMoyens" );
+        input.BeginList( "AlertesDisponibiliteVecteurs" );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+            pNew->ReadArchive( input, "AlerteDisponibiliteVecteurs" );
+            vVectorWarnings_.AddItem( pNew.release() );
+        }
+        vVectorWarnings_.AddItem( 0 );
+        input.EndList();
+    input.EndSection();
+
     input.EndSection(); // Ravitaillement
 }
 
@@ -236,5 +251,13 @@ void ADN_Supply_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.EndSection(); // Mission
 
     output.EndSection(); // Convois
+
+    output.Section( "AlertesDisponibiliteMoyens" );
+        output.BeginList( "AlertesDisponibiliteVecteurs", vVectorWarnings_.size() );
+        for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
+            (*it)->WriteArchive( output, "AlerteDisponibiliteVecteurs" );
+        output.EndList();
+    output.EndSection();
+
     output.EndSection(); // Ravitaillement
 }

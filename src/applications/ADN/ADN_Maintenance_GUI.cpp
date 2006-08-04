@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Maintenance_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 21/04/05 16:51 $
-// $Revision: 6 $
-// $Workfile: ADN_Maintenance_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "ADN_pch.h"
 #include "ADN_Maintenance_GUI.h"
@@ -25,6 +16,7 @@
 #include "ADN_Table.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_TableItem_TimeField.h"
+#include "ADN_AvailabilityWarningTable.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -62,13 +54,33 @@ ADN_Maintenance_GUI::~ADN_Maintenance_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Maintenance_GUI::Build()
 {
-    assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
-
-    // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
 
-    QGroupBox* pGroup = new QHGroupBox( tr( "Regimes de travail" ), pMainWidget_ );
+    QHGroupBox* pGroup = new QHGroupBox( tr( "Maintenance data" ), pMainWidget_ );
+    BuildWorkingSchemeTable( pGroup );
+
+    QHGroupBox* pWarningGroup = new QHGroupBox( tr( "Resources availability warnings" ), pGroup );
+    QHGroupBox* pRepairerGroup = new QHGroupBox( tr( "Repairers" ), pWarningGroup );
+    ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
+    pRepairerWarningTable->GetConnector().Connect( & data_.vRepairerWarnings_ );
+    QHGroupBox* pHaulerGroup = new QHGroupBox( tr( "Haulers" ), pWarningGroup );
+    ADN_AvailabilityWarningTable* pHaulerWarningTable = new ADN_AvailabilityWarningTable( pHaulerGroup );
+    pHaulerWarningTable->GetConnector().Connect( & data_.vHaulerWarnings_ );
+
+    // Layout
+    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+    pLayout->addWidget( pGroup );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Maintenance_GUI::BuildWorkingSchemeTable
+// Created: SBO 2006-08-04
+// -----------------------------------------------------------------------------
+void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
+{
+    ADN_GuiBuilder builder;
+
+    QGroupBox* pGroup = new QHGroupBox( tr( "Regimes de travail" ), parent );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
     pTable->setNumCols( data_.vWorkingSchemes_.size() );
@@ -96,8 +108,4 @@ void ADN_Maintenance_GUI::Build()
         builder.AddTableCell< ADN_TableItem_TimeField >( pTable, &modifiers, 1, n, modifiers.warningDelay_ );
         ++n;
     }
-
-    // Layout
-    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
-    pLayout->addWidget( pGroup );
 }

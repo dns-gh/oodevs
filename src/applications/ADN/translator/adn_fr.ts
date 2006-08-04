@@ -2295,7 +2295,7 @@
     </message>
     <message>
         <source>Pion LOG DistribuerMoyens</source>
-        <translation>Pion LOG DistribuerMoyens</translation>
+        <translation type="obsolete">Pion LOG DistribuerMoyens</translation>
     </message>
     <message>
         <source>Pion LOG TrierBlesses</source>
@@ -2327,7 +2327,7 @@
     </message>
     <message>
         <source>Pion LOG Evacuer</source>
-        <translation>Pion LOG Evacuer</translation>
+        <translation type="obsolete">Pion LOG Evacuer</translation>
     </message>
     <message>
         <source>Pion LOG Convoyer</source>
@@ -2335,15 +2335,15 @@
     </message>
     <message>
         <source>Pion LOG DistribuerRessources</source>
-        <translation>Pion LOG DistribuerRessources</translation>
+        <translation type="obsolete">Pion LOG DistribuerRessources</translation>
     </message>
     <message>
         <source>Pion LOG ConstituerConvoi</source>
-        <translation>Pion LOG ConstituerConvoi</translation>
+        <translation type="obsolete">Pion LOG ConstituerConvoi</translation>
     </message>
     <message>
         <source>Pion LOG Livrer</source>
-        <translation>Pion LOG Livrer</translation>
+        <translation type="obsolete">Pion LOG Livrer</translation>
     </message>
     <message>
         <source>Pion LOG PreparerBascule</source>
@@ -2761,6 +2761,10 @@
         <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
         <translation>Automate ASY CommettreExactionsSurPopulationDansZone</translation>
     </message>
+    <message>
+        <source>Pion LOG Renforcer</source>
+        <translation>Pion LOG Renforcer</translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -3059,6 +3063,22 @@
     <message>
         <source>Resting time</source>
         <translation>Temps de repos</translation>
+    </message>
+    <message>
+        <source>Resources availability warnings</source>
+        <translation>Alertes de disponibilité des moyens</translation>
+    </message>
+    <message>
+        <source>Changeover</source>
+        <translation>Relève</translation>
+    </message>
+    <message>
+        <source>Collect</source>
+        <translation>Ramassage</translation>
+    </message>
+    <message>
+        <source>Doctors</source>
+        <translation>Médecins</translation>
     </message>
 </context>
 <context>
@@ -3532,6 +3552,22 @@ du tireur</translation>
     <message>
         <source>Warning Delay</source>
         <translation>Délai avant avertissement</translation>
+    </message>
+    <message>
+        <source>Maintenance data</source>
+        <translation>Maintenance</translation>
+    </message>
+    <message>
+        <source>Repairers</source>
+        <translation>Réparateurs</translation>
+    </message>
+    <message>
+        <source>Haulers</source>
+        <translation>Remorqueurs</translation>
+    </message>
+    <message>
+        <source>Resources availability warnings</source>
+        <translation>Alertes de disponibilité des moyens</translation>
     </message>
 </context>
 <context>
@@ -4769,6 +4805,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Convoy unloading times</source>
         <translation>Temps déchargement convois</translation>
+    </message>
+    <message>
+        <source>Vector availability warnings</source>
+        <translation>Alertes de disponibilité des vecteurs</translation>
     </message>
 </context>
 <context>

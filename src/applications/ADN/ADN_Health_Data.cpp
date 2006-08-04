@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Health_Data.cpp $
-// $Author: Ape $
-// $Modtime: 22/03/05 15:05 $
-// $Revision: 1 $
-// $Workfile: ADN_Health_Data.cpp $
-//
-// *****************************************************************************
 
 #include "ADN_pch.h"
 #include "ADN_Health_Data.h"
@@ -131,6 +122,39 @@ void ADN_Health_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadAttribute( "tempsRepos", contaminationRestingTime_ );
     input.EndSection(); // Contamines 
 
+    input.Section( "AlertesDisponibiliteMoyens" );
+        input.BeginList( "AlertesDisponibiliteMoyensReleve" );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+            pNew->ReadArchive( input, "AlerteDisponibiliteMoyensReleve" );
+            vChangeOverWarnings_.AddItem( pNew.release() );
+        }
+        vChangeOverWarnings_.AddItem( 0 );
+        input.EndList();
+
+        input.BeginList( "AlertesDisponibiliteMoyensRamassage" );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+            pNew->ReadArchive( input, "AlerteDisponibiliteMoyensRamassage" );
+            vCollectingWarnings_.AddItem( pNew.release() );
+        }
+        vCollectingWarnings_.AddItem( 0 );
+        input.EndList();
+
+        input.BeginList( "AlertesDisponibiliteMedecins" );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+            pNew->ReadArchive( input, "AlerteDisponibiliteMedecins" );
+            vDoctorsWarnings_.AddItem( pNew.release() );
+        }
+        vDoctorsWarnings_.AddItem( 0 );
+        input.EndList();
+
+    input.EndSection();
+
     input.EndSection(); // Sante
 }
 
@@ -160,6 +184,23 @@ void ADN_Health_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteAttribute( "tempsSoin", contaminationTreatTime_.GetData() );
     output.WriteAttribute( "tempsRepos", contaminationRestingTime_.GetData() );
     output.EndSection(); // Contamines 
+
+    output.Section( "AlertesDisponibiliteMoyens" );
+        output.BeginList( "AlertesDisponibiliteMoyensReleve", vChangeOverWarnings_.size() );
+        for( IT_AvailabilityWarning_Vector it = vChangeOverWarnings_.begin(); it != vChangeOverWarnings_.end(); ++it )
+            (*it)->WriteArchive( output, "AlerteDisponibiliteMoyensReleve" );
+        output.EndList();
+
+        output.BeginList( "AlertesDisponibiliteMoyensRamassage", vCollectingWarnings_.size() );
+        for( IT_AvailabilityWarning_Vector it = vCollectingWarnings_.begin(); it != vCollectingWarnings_.end(); ++it )
+            (*it)->WriteArchive( output, "AlerteDisponibiliteMoyensRamassage" );
+        output.EndList();
+
+        output.BeginList( "AlertesDisponibiliteMedecins", vDoctorsWarnings_.size() );
+        for( IT_AvailabilityWarning_Vector it = vDoctorsWarnings_.begin(); it != vDoctorsWarnings_.end(); ++it )
+            (*it)->WriteArchive( output, "AlerteDisponibiliteMedecins" );
+        output.EndList();
+    output.EndSection();
 
     output.EndSection(); // Sante
 }

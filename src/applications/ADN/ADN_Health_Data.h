@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Health_Data.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 2 $
-// $Workfile: ADN_Health_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Health_Data_h_
 #define __ADN_Health_Data_h_
@@ -22,6 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
+#include "ADN_AvailabilityWarning.h"
 
 class ADN_XmlInput_Helper;
 
@@ -87,6 +79,10 @@ public:
 
     ADN_Type_Time   contaminationTreatTime_;
     ADN_Type_Time   contaminationRestingTime_;
+
+    T_AvailabilityWarning_Vector vChangeOverWarnings_;
+    T_AvailabilityWarning_Vector vCollectingWarnings_;
+    T_AvailabilityWarning_Vector vDoctorsWarnings_;
 };
 
 
