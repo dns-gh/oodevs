@@ -49,6 +49,9 @@
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Agents/Roles/Logistic/Supply/PHY_Convoy_ABC.h"
+#include "Agents/Roles/Logistic/Maintenance/PHY_MaintenanceResourcesAlarms.h"
+#include "Agents/Roles/Logistic/Medical/PHY_MedicalResourcesAlarms.h"
+#include "Agents/Roles/Logistic/Supply/PHY_SupplyResourcesAlarms.h"
 #include "Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
@@ -105,27 +108,30 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     MIL_PopulationAttitude       ::Initialize();
     PHY_DotationLogisticType     ::Initialize();
 
-    InitializeType< PHY_MaintenanceWorkRate     >( archive, "Maintenance"         );
-    InitializeType< PHY_Experience              >( archive, "FacteursHumains"     );
-    InitializeType< PHY_Tiredness               >( archive, "FacteursHumains"     );    
-    InitializeType< PHY_Volume                  >( archive, "Volumes"             );
-    InitializeType< PHY_Protection              >( archive, "Protections"         );
-    InitializeType< PHY_DotationNature          >( archive, "DotationNatures"     );
-    InitializeType< PHY_DotationType            >( archive, "Dotations"           );
-    InitializeType< MIL_RealObjectType          >( archive, "Objets"              );
-    InitializeType< MIL_VirtualObjectType       >( archive, "Objets"              );
-    InitializeType< PHY_BreakdownType           >( archive, "Pannes"              );
-    InitializeType< PHY_LauncherType            >( archive, "Lanceurs"            );
-    InitializeType< PHY_WeaponType              >( archive, "Armements"           );
+    InitializeType< PHY_MaintenanceWorkRate        >( archive, "Maintenance"         );
+    InitializeType< PHY_MaintenanceResourcesAlarms >( archive, "Maintenance"         );
+    InitializeType< PHY_Experience                 >( archive, "FacteursHumains"     );
+    InitializeType< PHY_Tiredness                  >( archive, "FacteursHumains"     );    
+    InitializeType< PHY_Volume                     >( archive, "Volumes"             );
+    InitializeType< PHY_Protection                 >( archive, "Protections"         );
+    InitializeType< PHY_DotationNature             >( archive, "DotationNatures"     );
+    InitializeType< PHY_DotationType               >( archive, "Dotations"           );
+    InitializeType< MIL_RealObjectType             >( archive, "Objets"              );
+    InitializeType< MIL_VirtualObjectType          >( archive, "Objets"              );
+    InitializeType< PHY_BreakdownType              >( archive, "Pannes"              );
+    InitializeType< PHY_LauncherType               >( archive, "Lanceurs"            );
+    InitializeType< PHY_WeaponType                 >( archive, "Armements"           );
     InitializeSensors( archive );
-    InitializeType< PHY_ComposanteTypePion      >( archive, "Composantes"         );
-    InitializeType< MIL_AgentTypePion           >( archive, "Pions"               );
-    InitializeType< MIL_AutomateType            >( archive, "Automates"           );
-    InitializeType< MIL_KnowledgeGroupType      >( archive, "GroupesConnaissance" );
-    InitializeType< MIL_NbcAgentType            >( archive, "NBC"                 );
-    InitializeType< PHY_Convoy_ABC              >( archive, "Ravitaillement"      );   
-    InitializeType< PHY_RolePion_Communications >( archive, "Communications"      );
-    InitializeType< MIL_PopulationType          >( archive, "Populations"         );
+    InitializeType< PHY_ComposanteTypePion         >( archive, "Composantes"         );
+    InitializeType< MIL_AgentTypePion              >( archive, "Pions"               );
+    InitializeType< MIL_AutomateType               >( archive, "Automates"           );
+    InitializeType< MIL_KnowledgeGroupType         >( archive, "GroupesConnaissance" );
+    InitializeType< MIL_NbcAgentType               >( archive, "NBC"                 );
+    InitializeType< PHY_SupplyResourcesAlarms      >( archive, "Ravitaillement"      );   
+    InitializeType< PHY_Convoy_ABC                 >( archive, "Ravitaillement"      );
+    InitializeType< PHY_MedicalResourcesAlarms     >( archive, "Sante"               );
+    InitializeType< PHY_RolePion_Communications    >( archive, "Communications"      );
+    InitializeType< MIL_PopulationType             >( archive, "Populations"         );
     InitializeMedical( archive );
 }
 
@@ -256,47 +262,50 @@ MIL_EntityManager::~MIL_EntityManager()
         delete itArmy->second;
 
     // Types
-    MIL_PopulationAttitude       ::Terminate();
-    MIL_AutomateType             ::Terminate();
-    MIL_AgentTypePion            ::Terminate();
-    PHY_SensorType               ::Terminate();  
-    PHY_ComposanteTypePion       ::Terminate(); 
-    PHY_WeaponType               ::Terminate();
-    PHY_LauncherType             ::Terminate();
-    PHY_DotationType             ::Terminate();
-    PHY_DotationNature           ::Terminate();
-    MIL_RealObjectType           ::Terminate();
-    MIL_VirtualObjectType        ::Terminate();
-    MIL_NbcAgentType             ::Terminate();
-    PHY_Protection               ::Terminate();
-    PHY_Volume                   ::Terminate();
-    PHY_HumanRank                ::Terminate();
-    PHY_HumanWound               ::Terminate();
-    PHY_ComposanteState          ::Terminate();
-    PHY_IndirectFireDotationClass::Terminate();
-    PHY_AmmoDotationClass        ::Terminate();
-    MIL_KnowledgeGroupType       ::Terminate();
-    PHY_Experience               ::Terminate();
-    PHY_Tiredness                ::Terminate();
-    PHY_Morale                   ::Terminate();
-    PHY_MaintenanceLevel         ::Terminate();
-    PHY_PerceptionLevel          ::Terminate();
-    PHY_RadarClass               ::Terminate();
-    PHY_NatureLevel              ::Terminate();
-    PHY_NatureWeapon             ::Terminate();
-    PHY_NatureSpecialization     ::Terminate();
-    PHY_NatureQualifier          ::Terminate();
-    PHY_NatureCategory           ::Terminate();
-    PHY_NatureMobility           ::Terminate();
-    PHY_NatureAtlas              ::Terminate();
-    PHY_MissionCapacity          ::Terminate();
-    PHY_RoePopulation            ::Terminate();
-    PHY_MaintenanceWorkRate      ::Terminate();
-    PHY_Convoy_ABC               ::Terminate();
-    PHY_RadarType                ::Terminate();
-    MIL_PopulationType           ::Terminate();
-    PHY_DotationLogisticType     ::Terminate();
-
+    MIL_PopulationAttitude        ::Terminate();
+    MIL_AutomateType              ::Terminate();
+    MIL_AgentTypePion             ::Terminate();
+    PHY_SensorType                ::Terminate();  
+    PHY_ComposanteTypePion        ::Terminate(); 
+    PHY_WeaponType                ::Terminate();
+    PHY_LauncherType              ::Terminate();
+    PHY_DotationType              ::Terminate();
+    PHY_DotationNature            ::Terminate();
+    MIL_RealObjectType            ::Terminate();
+    MIL_VirtualObjectType         ::Terminate();
+    MIL_NbcAgentType              ::Terminate();
+    PHY_Protection                ::Terminate();
+    PHY_Volume                    ::Terminate();
+    PHY_HumanRank                 ::Terminate();
+    PHY_HumanWound                ::Terminate();
+    PHY_ComposanteState           ::Terminate();
+    PHY_IndirectFireDotationClass ::Terminate();
+    PHY_AmmoDotationClass         ::Terminate();
+    MIL_KnowledgeGroupType        ::Terminate();
+    PHY_Experience                ::Terminate();
+    PHY_Tiredness                 ::Terminate();
+    PHY_Morale                    ::Terminate();
+    PHY_MaintenanceLevel          ::Terminate();
+    PHY_PerceptionLevel           ::Terminate();
+    PHY_RadarClass                ::Terminate();
+    PHY_NatureLevel               ::Terminate();
+    PHY_NatureWeapon              ::Terminate();
+    PHY_NatureSpecialization      ::Terminate();
+    PHY_NatureQualifier           ::Terminate();
+    PHY_NatureCategory            ::Terminate();
+    PHY_NatureMobility            ::Terminate();
+    PHY_NatureAtlas               ::Terminate();
+    PHY_MissionCapacity           ::Terminate();
+    PHY_RoePopulation             ::Terminate();
+    PHY_MaintenanceWorkRate       ::Terminate();
+    PHY_Convoy_ABC                ::Terminate();
+    PHY_RadarType                 ::Terminate();
+    MIL_PopulationType            ::Terminate();
+    PHY_DotationLogisticType      ::Terminate();
+    PHY_SupplyResourcesAlarms     ::Terminate();
+    PHY_MaintenanceResourcesAlarms::Terminate();
+    PHY_MedicalResourcesAlarms    ::Terminate();
+        
     delete &effectManager_;
     delete pObjectManager_;
 }

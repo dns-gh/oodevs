@@ -19,9 +19,10 @@
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
 class PHY_Breakdown;
-class MIL_AgentPionLOG_ABC;
 class PHY_MaintenanceComposanteState;
 class PHY_MaintenanceConsign_ABC;
+class PHY_ComposanteUsePredicate;
+class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
 
 // =============================================================================
@@ -108,9 +109,10 @@ private:
     void InsertConsign ( PHY_MaintenanceConsign_ABC& consign );
     void InsertConsigns( const T_MaintenanceConsigns& );
 
-    bool HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
-    bool HasUsableRepairer                    ( const PHY_Breakdown& breakdown ) const;
-    uint GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
+    bool     HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
+    bool     HasUsableRepairer                    ( const PHY_Breakdown& breakdown ) const;
+    uint     GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
+    MT_Float GetAvailabilityRatio                 ( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}    
 
 private:

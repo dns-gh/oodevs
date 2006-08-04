@@ -15,5 +15,22 @@
   <ReacMental pourcentage="50" tempsRepos="2m" tempsSoin="1080s"/>
 
   <Contamines tempsRepos="13m" tempsSoin="720s"/>
+  
+  
+  <AlertesDisponibiliteMoyens>
+    <AlertesDisponibiliteMoyensReleve>
+        <AlerteDisponibiliteMoyensReleve pourcentageMoyensDisponibles="75"/>
+    </AlertesDisponibiliteMoyensReleve>
+    
+    <AlertesDisponibiliteMoyensRamassage>
+        <AlerteDisponibiliteMoyensRamassage pourcentageMoyensDisponibles="25"/>
+        <AlerteDisponibiliteMoyensRamassage pourcentageMoyensDisponibles="75"/>
+    </AlertesDisponibiliteMoyensRamassage>
+    
+    <AlertesDisponibiliteMedecins>
+        <AlerteDisponibiliteMedecins pourcentageMoyensDisponibles="15"/>
+    </AlertesDisponibiliteMedecins>
+    
+  </AlertesDisponibiliteMoyens>
 
 </Sante>

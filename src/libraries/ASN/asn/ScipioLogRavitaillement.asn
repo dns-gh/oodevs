@@ -59,6 +59,7 @@ RavitaillementDisponibiliteMoyens ::= SEQUENCE
     nbr-total        INTEGER,
     nbr-disponibles  INTEGER,       
     nbr-au-travail   INTEGER,
+    nbr-pretes       INTEGER DEFAULT 0,
     nbr-au-repos     INTEGER OPTIONAL -- applicable uniquement à certains moyens
 }
 

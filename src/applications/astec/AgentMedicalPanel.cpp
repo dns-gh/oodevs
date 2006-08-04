@@ -52,6 +52,7 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
     pDispoReleveAmbulances_->addColumn( tr( "Disponibles" ) );
     pDispoReleveAmbulances_->addColumn( tr( "Au travail" ) );
     pDispoReleveAmbulances_->addColumn( tr( "Au repos" ) );
+    pDispoReleveAmbulances_->addColumn( tr( "Prêtés" ) );
     pDispoReleveAmbulances_->setMargin( 5 );
     pDispoReleveAmbulances_->setLineWidth( 2 );
     pDispoReleveAmbulances_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -64,6 +65,7 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
     pDispoRamassageAmbulances_->addColumn( tr( "Disponibles" ) );
     pDispoRamassageAmbulances_->addColumn( tr( "Au travail" ) );
     pDispoRamassageAmbulances_->addColumn( tr( "Au repos" ) );
+    pDispoRamassageAmbulances_->addColumn( tr( "Prêtés" ) );
     pDispoRamassageAmbulances_->setMargin( 5 );
     pDispoRamassageAmbulances_->setLineWidth( 2 );
     pDispoRamassageAmbulances_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -76,6 +78,7 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* pParent )
     pDispoDoctors_->addColumn( tr( "Disponibles" ) );
     pDispoDoctors_->addColumn( tr( "Au travail" ) );
     pDispoDoctors_->addColumn( tr( "Au repos" ) );
+    pDispoDoctors_->addColumn( tr( "Prêtés" ) );
     pDispoDoctors_->setMargin( 5 );
     pDispoDoctors_->setLineWidth( 2 );
     pDispoDoctors_->setFrameStyle( QFrame::Sunken | QFrame::Box );

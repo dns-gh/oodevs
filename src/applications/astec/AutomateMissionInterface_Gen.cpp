@@ -1901,12 +1901,23 @@ void AutomateMissionInterface::CreateMission_INF_AppuyerSurPosition()
 // Name: AutomateMissionInterface::CreateMission_LOG_SeDeployer
 // Created: AGR
 // -----------------------------------------------------------------------------
+class OptionalParamFunctor_Mission_Automate_LOG_SeDeployer_position_deploiement : public OptionalParamFunctor_ABC
+{
+public:
+    OptionalParamFunctor_Mission_Automate_LOG_SeDeployer_position_deploiement( ASN1T_Mission_Automate_LOG_SeDeployer&asnMission )
+      : pAsnMission_( &asnMission ){}
+    virtual void SetOptionalPresent(){
+        pAsnMission_->m.position_deploiementPresent = 1;}
+private:
+    ASN1T_Mission_Automate_LOG_SeDeployer* pAsnMission_;
+};
+
 void AutomateMissionInterface::CreateMission_LOG_SeDeployer()
 {
     ASN1T_Mission_Automate_LOG_SeDeployer& asnMission = *new ASN1T_Mission_Automate_LOG_SeDeployer();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_se_deployer;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_se_deployer = &asnMission;
-    CreatePoint( asnMission.position_deploiement, "Position deploiement");
+    CreatePoint( asnMission.position_deploiement, "Position deploiement", BuildOptionalParamFunctor< OptionalParamFunctor_Mission_Automate_LOG_SeDeployer_position_deploiement, ASN1T_Mission_Automate_LOG_SeDeployer>( asnMission ));
 }
 
 // -----------------------------------------------------------------------------

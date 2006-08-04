@@ -591,6 +591,7 @@ void Agent::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& a
             dataDispo.nNbrTotal_        = asn.disponibilites_remorqueurs.elem[i].nbr_total;
             dataDispo.nNbrAvailable_    = asn.disponibilites_remorqueurs.elem[i].nbr_disponibles;
             dataDispo.nNbrWorking_      = asn.disponibilites_remorqueurs.elem[i].nbr_au_travail;
+            dataDispo.nNbrLent_         = asn.disponibilites_remorqueurs.elem[i].nbr_pretes;
             dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
             if( asn.disponibilites_remorqueurs.elem[i].m.nbr_au_reposPresent )
                 dataDispo.nNbrResting_ = asn.disponibilites_remorqueurs.elem[i].nbr_au_repos;
@@ -606,6 +607,7 @@ void Agent::OnReceiveMsgLogMaintenanceEtat( const ASN1T_MsgLogMaintenanceEtat& a
             dataDispo.nNbrTotal_        = asn.disponibilites_reparateurs.elem[i].nbr_total;
             dataDispo.nNbrAvailable_    = asn.disponibilites_reparateurs.elem[i].nbr_disponibles;
             dataDispo.nNbrWorking_      = asn.disponibilites_reparateurs.elem[i].nbr_au_travail;
+            dataDispo.nNbrLent_         = asn.disponibilites_reparateurs.elem[i].nbr_pretes;
             dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
             if( asn.disponibilites_reparateurs.elem[i].m.nbr_au_reposPresent )
                 dataDispo.nNbrResting_ = asn.disponibilites_reparateurs.elem[i].nbr_au_repos;
@@ -650,6 +652,7 @@ void Agent::OnReceiveMsgLogMedicalEtat( const ASN1T_MsgLogSanteEtat& asn )
             dataDispo.nNbrTotal_        = asn.disponibilites_ambulances_ramassage.elem[i].nbr_total;
             dataDispo.nNbrAvailable_    = asn.disponibilites_ambulances_ramassage.elem[i].nbr_disponibles;
             dataDispo.nNbrWorking_      = asn.disponibilites_ambulances_ramassage.elem[i].nbr_au_travail;
+            dataDispo.nNbrLent_         = asn.disponibilites_ambulances_ramassage.elem[i].nbr_pretes;
             dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
             if( asn.disponibilites_ambulances_ramassage.elem[i].m.nbr_au_reposPresent )
                 dataDispo.nNbrResting_ = asn.disponibilites_ambulances_ramassage.elem[i].nbr_au_repos;
@@ -665,6 +668,7 @@ void Agent::OnReceiveMsgLogMedicalEtat( const ASN1T_MsgLogSanteEtat& asn )
             dataDispo.nNbrTotal_        = asn.disponibilites_ambulances_releve.elem[i].nbr_total;
             dataDispo.nNbrAvailable_    = asn.disponibilites_ambulances_releve.elem[i].nbr_disponibles;
             dataDispo.nNbrWorking_      = asn.disponibilites_ambulances_releve.elem[i].nbr_au_travail;
+            dataDispo.nNbrLent_         = asn.disponibilites_ambulances_releve.elem[i].nbr_pretes;
             dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
             if( asn.disponibilites_ambulances_releve.elem[i].m.nbr_au_reposPresent )
                 dataDispo.nNbrResting_ = asn.disponibilites_ambulances_releve.elem[i].nbr_au_repos;
@@ -680,6 +684,7 @@ void Agent::OnReceiveMsgLogMedicalEtat( const ASN1T_MsgLogSanteEtat& asn )
             dataDispo.nNbrTotal_        = asn.disponibilites_medecins.elem[i].nbr_total;
             dataDispo.nNbrAvailable_    = asn.disponibilites_medecins.elem[i].nbr_disponibles;
             dataDispo.nNbrWorking_      = asn.disponibilites_medecins.elem[i].nbr_au_travail;
+            dataDispo.nNbrLent_         = asn.disponibilites_medecins.elem[i].nbr_pretes;
             dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
             if( asn.disponibilites_medecins.elem[i].m.nbr_au_reposPresent )
                 dataDispo.nNbrResting_ = asn.disponibilites_medecins.elem[i].nbr_au_repos;
@@ -710,6 +715,7 @@ void Agent::OnReceiveMsgLogSupplyEtat( const ASN1T_MsgLogRavitaillementEtat& asn
             dataDispo.nNbrTotal_        = asn.disponibilites_transporteurs_convois.elem[i].nbr_total;
             dataDispo.nNbrAvailable_    = asn.disponibilites_transporteurs_convois.elem[i].nbr_disponibles;
             dataDispo.nNbrWorking_      = asn.disponibilites_transporteurs_convois.elem[i].nbr_au_travail;
+            dataDispo.nNbrLent_         = asn.disponibilites_transporteurs_convois.elem[i].nbr_pretes;
             dataDispo.nNbrResting_      = std::numeric_limits< uint >::max();
             if( asn.disponibilites_transporteurs_convois.elem[i].m.nbr_au_reposPresent )
                 dataDispo.nNbrResting_ = asn.disponibilites_transporteurs_convois.elem[i].nbr_au_repos;

@@ -605,6 +605,12 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_PopulationVictimeExplosionMines" ] = "eReportMission";
     rcTypes_[ "eRC_TirIndirectFratricide" ] =  "eReportArtillery";
     rcTypes_[ "eRC_TirIndirectSurPopulation" ] = "eReportArtillery";
+    rcTypes_[ "eRC_AlerteDisponibiliteMoyensReleve" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_lerteDisponibiliteMoyensRamassage" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_AlerteDisponibiliteMedecins" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_AlerteDisponibiliteRemorqueurs" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_AlerteDisponibiliteReparateurs" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_AlerteDisponibiliteVecteurs" ] = "eReportLogisticSituation";
 }
     
 // -----------------------------------------------------------------------------

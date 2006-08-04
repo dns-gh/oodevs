@@ -274,6 +274,7 @@ public:
         uint nNbrTotal_;
         uint nNbrAvailable_;
         uint nNbrWorking_;
+        uint nNbrLent_;
         uint nNbrResting_; // std::numeric_limits< uint >::max() quand pas applicable
     };
 

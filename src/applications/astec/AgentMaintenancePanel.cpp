@@ -54,6 +54,7 @@ AgentMaintenancePanel::AgentMaintenancePanel( QWidget* pParent )
     pDispoHaulers_->addColumn( tr( "Disponibles" ) );
     pDispoHaulers_->addColumn( tr( "Au travail" ) );
     pDispoHaulers_->addColumn( tr( "Au repos" ) );
+    pDispoHaulers_->addColumn( tr( "Prêtés" ) );
     pDispoHaulers_->setMargin( 5 );
     pDispoHaulers_->setLineWidth( 2 );
     pDispoHaulers_->setFrameStyle( QFrame::Sunken | QFrame::Box );
@@ -66,6 +67,7 @@ AgentMaintenancePanel::AgentMaintenancePanel( QWidget* pParent )
     pDispoRepairers_->addColumn( tr( "Disponibles" ) );
     pDispoRepairers_->addColumn( tr( "Au travail" ) );
     pDispoRepairers_->addColumn( tr( "Au repos" ) );
+    pDispoRepairers_->addColumn( tr( "Prêtés" ) );
     pDispoRepairers_->setMargin( 5 );
     pDispoRepairers_->setLineWidth( 2 );
     pDispoRepairers_->setFrameStyle( QFrame::Sunken | QFrame::Box );

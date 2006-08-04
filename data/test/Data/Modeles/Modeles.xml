@@ -26,6 +26,8 @@
         <Mission nom="Pion Test MoveTo"/>
         <Mission nom="Pion Test CreateBypass"/>
         <Mission nom="Pion LOG Convoyer"/>
+        <Mission nom="Pion LOG PreparerBascule"/>
+        <Mission nom="Pion LOG Renforcer"/>        
         <Mission nom="Pion LOG TraiterBlesses">
             <OrdresConduite>
                 <OrdreConduite nom="ModifierPrioritesBlesses"/>

@@ -11,7 +11,7 @@ IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-
 
 Mission-Automate-LOG-SeDeployer ::= SEQUENCE
 {
-    position-deploiement    Point
+    position-deploiement Point OPTIONAL
 }
 
 Mission-Automate-LOG-AppuyerMouvement ::= SEQUENCE

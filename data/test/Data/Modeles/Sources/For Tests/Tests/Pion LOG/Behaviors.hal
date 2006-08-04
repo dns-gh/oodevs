@@ -545,3 +545,10 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
     }   
 }
 
+behavior MIS_Pion_LOG_PreparerBascule( T_Mission_Pion_LOG_PreparerBascule mission, id nDummy )
+{
+}
+
+behavior MIS_Pion_LOG_Renforcer( T_Mission_Pion_LOG_Renforcer mission, id nDummy )
+{
+}

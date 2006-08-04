@@ -111,11 +111,12 @@ protected:
             QString strNbrTotal     = QString( "%1" ).arg( it->nNbrTotal_ );
             QString strNbrAvailable = QString( "%1" ).arg( it->nNbrAvailable_ );
             QString strNbrWorking   = QString( "%1" ).arg( it->nNbrWorking_ );
+            QString strNbrLent      = QString( "%1" ).arg( it->nNbrLent_ );
             QString strNbrResting   = "-";
             if( it->nNbrResting_ != std::numeric_limits< uint >::max() )
                 strNbrResting = QString( "%1" ).arg( it->nNbrResting_ );
 
-            new QListViewItem( &viewer, strEquipment, strNbrTotal, strNbrAvailable, strNbrWorking, strNbrResting );
+            new QListViewItem( &viewer, strEquipment, strNbrTotal, strNbrAvailable, strNbrWorking, strNbrResting, strNbrLent );
         }
         viewer.scrollBy( 0, y );
         viewer.show();

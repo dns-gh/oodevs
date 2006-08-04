@@ -52,6 +52,7 @@ public:
         uint nNbrAvailable_;
         uint nNbrUsed_;
         uint nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
+        uint nNbrLent_;
     };
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
@@ -76,7 +77,10 @@ public:
 
     //! @name Operations 
     //@{
-    template< typename T > void Apply ( T& t ) const;
+    template< typename T > void                Apply              ( T& t ) const;
+    template< typename T > PHY_ComposantePion* GetComposante      ( T& t ) const;
+    template< typename T > void                GetComposantesUse  ( T_ComposanteUseMap& composanteUse, T& t ) const;
+    template< typename T > bool                HasUsableComposante( T& t ) const;   
 
     void Update( bool bIsDead );
     void Clean ();
@@ -112,6 +116,8 @@ public:
     void NotifyLentComposanteReturned( PHY_RolePion_Composantes& lender, PHY_ComposantePion& composante );
     //@}
 
+    //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
+
     //! @name Logistic - maintenance
     //@{
     void                            PreprocessRandomBreakdowns           ( uint nEndDayTimeStep ) const;
@@ -119,14 +125,8 @@ public:
     PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
 
-    bool                            HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
+    //$$$$ a deplacer (functor)
     PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& composanteType ) const;
-    void                            GetHaulersUse                        ( T_ComposanteUseMap& composanteUse ) const; 
-
-    bool                            HasUsableRepairer                    ( const PHY_Breakdown& breakdown ) const;
-    PHY_ComposantePion*             GetAvailableRepairer                 ( const PHY_Breakdown& breakdown ) const;    
-    void                            GetRepairersUse                      ( T_ComposanteUseMap& composanteUse ) const; 
-    void                            GetRepairersUse                      ( T_ComposanteUseMap& composanteUse, const PHY_Breakdown& breakdown ) const; 
     //@}
 
     //! @name Logistic - Medical
@@ -136,31 +136,14 @@ public:
     PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 );
     PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
     void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
-
-    bool                   HasUsableEvacuationAmbulance    () const;
-    PHY_ComposantePion*    GetAvailableEvacuationAmbulance () const;
-    void                   GetEvacuationAmbulancesUse      ( T_ComposanteUseMap& composanteUse ) const;
-    bool                   HasUsableCollectionAmbulance    () const;
-    PHY_ComposantePion*    GetAvailableCollectionAmbulance () const;
-    void                   GetCollectionAmbulancesUse      ( T_ComposanteUseMap& composanteUse ) const;
-
-    void                   GetDoctorsUse                   ( T_ComposanteUseMap& composanteUse ) const;
-    PHY_ComposantePion*    GetAvailableDoctorForDiagnosing () const; 
-
-    bool                   HasUsableDoctorForSorting       () const;
-    PHY_ComposantePion*    GetAvailableDoctorForSorting    () const;
-    void                   GetDoctorsUseForSorting         ( T_ComposanteUseMap& composanteUse ) const;
-
-    bool                   HasUsableDoctorForHealing       () const;
-    bool                   HasUsableDoctorForHealing       ( const PHY_Human& human ) const;       
-    PHY_ComposantePion*    GetAvailableDoctorForHealing    ( const PHY_Human& human ) const;
-    void                   GetDoctorsUseForHealing         ( T_ComposanteUseMap& composanteUse, const PHY_Human& human ) const;
     //@}
 
     //! @name Logistic - Supply
     //@{
+
+    //$$$$ a deplacer (functor)
     PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
-    void                GetConvoyTransporters        ( T_ComposanteUseMap& composanteUse ) const;
+    void                GetConvoyTransportersUse     ( T_ComposanteUseMap& composanteUse ) const;
     //@}
 
     //! @name Prisoners

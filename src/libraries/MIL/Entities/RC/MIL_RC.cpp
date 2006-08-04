@@ -133,6 +133,13 @@ const MIL_RC_PopulationVictimeAffrontements*    MIL_RC::pRcPopulationVictimeAffr
 const MIL_RC*                                   MIL_RC::pRcBloquee_                            = 0;
 const MIL_RC*                                   MIL_RC::pRcFiltree_                            = 0;
 const MIL_RC*                                   MIL_RC::pRcAttentatTerroristeDansPopulation_   = 0;
+const MIL_RC*                                   MIL_RC::pRcAlerteDisponibiliteMoyensReleve_                 = 0;
+const MIL_RC*                                   MIL_RC::pRcAlerteDisponibiliteMoyensRamassage_              = 0;
+const MIL_RC*                                   MIL_RC::pRcAlerteDisponibiliteMedecins_                     = 0;
+const MIL_RC*                                   MIL_RC::pRcAlerteDisponibiliteRemorqueurs_                  = 0;
+const MIL_RC*                                   MIL_RC::pRcAlerteDisponibiliteReparateurs_                  = 0;
+const MIL_RC*                                   MIL_RC::pRcAlerteDisponibiliteVecteurs_                     = 0;    
+    
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -254,6 +261,12 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_RavitaillementDotationsAnnule ] = new MIL_RC( eRC_RavitaillementDotationsAnnule, T_MsgCR_cr_cr_ravitaillement_dotations_annule );
 	rcs_[ eRC_RavitaillementStockAnnule ] = new MIL_RC( eRC_RavitaillementStockAnnule, T_MsgCR_cr_cr_ravitaillement_stock_annule );
 	rcs_[ eRC_HumainRetourDeSante ] = new MIL_RC( eRC_HumainRetourDeSante, T_MsgCR_cr_cr_humain_retour_de_sante );
+	rcs_[ eRC_AlerteDisponibiliteMoyensReleve ] = new MIL_RC( eRC_AlerteDisponibiliteMoyensReleve, T_MsgCR_cr_cr_alerte_disponibilite_moyens_releve );
+	rcs_[ eRC_AlerteDisponibiliteMoyensRamassage ] = new MIL_RC( eRC_AlerteDisponibiliteMoyensRamassage, T_MsgCR_cr_cr_alerte_disponibilite_moyens_ramassage );
+	rcs_[ eRC_AlerteDisponibiliteMedecins ] = new MIL_RC( eRC_AlerteDisponibiliteMedecins, T_MsgCR_cr_cr_alerte_disponibilite_medecins );
+	rcs_[ eRC_AlerteDisponibiliteRemorqueurs ] = new MIL_RC( eRC_AlerteDisponibiliteRemorqueurs, T_MsgCR_cr_cr_alerte_disponibilite_remorqueurs );
+	rcs_[ eRC_AlerteDisponibiliteReparateurs ] = new MIL_RC( eRC_AlerteDisponibiliteReparateurs, T_MsgCR_cr_cr_alerte_disponibilite_reparateurs );
+	rcs_[ eRC_AlerteDisponibiliteVecteurs ] = new MIL_RC( eRC_AlerteDisponibiliteVecteurs, T_MsgCR_cr_cr_alerte_disponibilite_vecteurs );
 	rcs_[ eRC_PretMaterielEnCours ] = new MIL_RC( eRC_PretMaterielEnCours, T_MsgCR_cr_cr_pret_materiel_en_cours );
 	rcs_[ eRC_PretMaterielAnnule ] = new MIL_RC( eRC_PretMaterielAnnule, T_MsgCR_cr_cr_pret_materiel_annule );
 	rcs_[ eRC_PretMaterielEffectue ] = new MIL_RC( eRC_PretMaterielEffectue, T_MsgCR_cr_cr_pret_materiel_effectue );
@@ -458,12 +471,18 @@ void MIL_RC::Initialize()
     pRcRecuperationMaterielPreteImpossible_             =                                            rcs_[ eRC_RecuperationMaterielPreteImpossible              ];
     pRcMaterielPrete_                                   =                                            rcs_[ eRC_MaterielPrete                                    ];
     pRcMaterielRendu_                                   =                                            rcs_[ eRC_MaterielRendu                                    ];
-    pRcDebutInterventionFaceAPopulation_  = (MIL_RC_DebutInterventionFaceAPopulation*) rcs_[ eRC_DebutInterventionFaceAPopulation  ];
-    pRcPopulationVictimeExplosionMines_   = (MIL_RC_PopulationVictimeExplosionMines*)  rcs_[ eRC_PopulationVictimeExplosionMines   ];
-    pRcPopulationVictimeAffrontements_    = (MIL_RC_PopulationVictimeAffrontements*)   rcs_[ eRC_PopulationVictimeAffrontements    ];
-    pRcBloquee_                           =                                            rcs_[ eRC_Bloquee                           ];
-    pRcFiltree_                           =                                            rcs_[ eRC_Filtree                           ];
-    pRcAttentatTerroristeDansPopulation_  =                                            rcs_[ eRC_AttentatTerroristeDansPopulation  ];
+    pRcDebutInterventionFaceAPopulation_                = (MIL_RC_DebutInterventionFaceAPopulation*) rcs_[ eRC_DebutInterventionFaceAPopulation                 ];
+    pRcPopulationVictimeExplosionMines_                 = (MIL_RC_PopulationVictimeExplosionMines*)  rcs_[ eRC_PopulationVictimeExplosionMines                  ];
+    pRcPopulationVictimeAffrontements_                  = (MIL_RC_PopulationVictimeAffrontements*)   rcs_[ eRC_PopulationVictimeAffrontements                   ];
+    pRcBloquee_                                         =                                            rcs_[ eRC_Bloquee                                          ];
+    pRcFiltree_                                         =                                            rcs_[ eRC_Filtree                                          ];
+    pRcAttentatTerroristeDansPopulation_                =                                            rcs_[ eRC_AttentatTerroristeDansPopulation                 ];
+    pRcAlerteDisponibiliteMoyensReleve_                 =                                            rcs_[ eRC_AlerteDisponibiliteMoyensReleve                  ];
+    pRcAlerteDisponibiliteMoyensRamassage_              =                                            rcs_[ eRC_AlerteDisponibiliteMoyensRamassage               ];
+    pRcAlerteDisponibiliteMedecins_                     =                                            rcs_[ eRC_AlerteDisponibiliteMedecins                      ];
+    pRcAlerteDisponibiliteRemorqueurs_                  =                                            rcs_[ eRC_AlerteDisponibiliteRemorqueurs                   ];
+    pRcAlerteDisponibiliteReparateurs_                  =                                            rcs_[ eRC_AlerteDisponibiliteReparateurs                   ];
+    pRcAlerteDisponibiliteVecteurs_                     =                                            rcs_[ eRC_AlerteDisponibiliteVecteurs                      ];
 }
 
 // -----------------------------------------------------------------------------

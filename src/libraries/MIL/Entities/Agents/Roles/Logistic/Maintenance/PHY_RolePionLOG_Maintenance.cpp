@@ -17,6 +17,7 @@
 #include "PHY_MaintenanceRepairConsign.h"
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_MaintenanceComposanteState.h"
+#include "PHY_MaintenanceResourcesAlarms.h"
 #include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -24,6 +25,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_ASN_Messages.h"
@@ -203,6 +205,66 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetAvailabilityRatio
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate ) const
+{
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+
+    uint nNbrTotal                  = 0;
+    uint nNbrAvailableAllowedToWork = 0;
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    {
+        nNbrTotal                  += it->second.nNbrTotal_;
+        if( pWorkRate )
+        {
+            const uint nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
+            if( nNbrAllowedToWork > it->second.nNbrUsed_ )
+                nNbrAvailableAllowedToWork += ( nNbrAllowedToWork - it->second.nNbrUsed_ );
+        }
+        else
+            nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
+    }
+
+    if( nNbrTotal == 0 )
+        return 1.;
+    return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::StartUsingForLogistic
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& composante )
+{
+    PHY_ComposanteUsePredicate repairerUsePred( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
+    PHY_ComposanteUsePredicate haulerUsePred  ( &PHY_ComposantePion::CanHaul  , &PHY_ComposanteTypePion::CanHaul   );    
+
+    MT_Float rRepairerRatio = GetAvailabilityRatio( repairerUsePred, pWorkRate_ );
+    MT_Float rHaulerRatio   = GetAvailabilityRatio( haulerUsePred   );
+
+    bHasChanged_ = true;
+    composante.StartUsingForLogistic();
+
+    if( PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( rRepairerRatio, GetAvailabilityRatio( repairerUsePred, pWorkRate_ ) ) )
+        MIL_RC::pRcAlerteDisponibiliteReparateurs_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+    if( PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( rHaulerRatio, GetAvailabilityRatio( haulerUsePred ) ) )
+        MIL_RC::pRcAlerteDisponibiliteRemorqueurs_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::StopUsingForLogistic
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& composante )
+{
+    bHasChanged_ = true;
+    composante.StopUsingForLogistic();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableHauler
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -216,7 +278,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_C
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const
 {
-    return GetRole< PHY_RolePion_Composantes >().HasUsableHauler( composanteType );
+    PHY_ComposanteTypePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposanteTypePion::CanHaul, composanteType );
+    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +289,9 @@ bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion&
 uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const
 {
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse, breakdown );
+    PHY_ComposanteUsePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair, breakdown );
+    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );   
+
     uint nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
@@ -245,7 +310,8 @@ uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const P
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY_Breakdown& breakdown ) const
 {
-    PHY_ComposantePion* pRepairer = GetRole< PHY_RolePion_Composantes >().GetAvailableRepairer( breakdown );
+    PHY_ComposantePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, breakdown );
+    PHY_ComposantePion* pRepairer = GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
     if( pRepairer && GetNbrAvailableRepairersAllowedToWork( breakdown ) > 0 )
         return pRepairer;
     return 0;
@@ -257,7 +323,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Maintenance::HasUsableRepairer( const PHY_Breakdown& breakdown ) const
 {
-    return GetRole< PHY_RolePion_Composantes >().HasUsableRepairer( breakdown );
+    PHY_ComposanteTypePredicate1< PHY_Breakdown > predicate( &PHY_ComposanteTypePion::CanRepair, breakdown );
+    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
 // -----------------------------------------------------------------------------
@@ -453,7 +520,9 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetHaulersUse( composanteUse );
+    PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
+    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+
     uint nNbrHaulersAvailable = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrHaulersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -554,26 +623,6 @@ void PHY_RolePionLOG_Maintenance::Clean()
     bHasChanged_ = false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::StartUsingForLogistic
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& composante )
-{
-    bHasChanged_ = true;
-    composante.StartUsingForLogistic();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::StopUsingForLogistic
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& composante )
-{
-    bHasChanged_ = true;
-    composante.StopUsingForLogistic();
-}
-
 // =============================================================================
 // NETWOKR
 // =============================================================================
@@ -599,7 +648,8 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
 
         data.nbr_total       = itData->second.nNbrTotal_;
         data.nbr_au_travail  = itData->second.nNbrUsed_;
-        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
+        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_; // nNbrAvailableAllowedToWork
+        data.nbr_pretes      = itData->second.nNbrLent_;
 
         if( pWorkRate )
         {
@@ -655,11 +705,13 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
     }
    
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetHaulersUse( composanteUse );
+    PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
+    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );   
     SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_remorqueurs, 0 );
 
     composanteUse.clear();
-    GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse );
+    PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
+    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );   
     SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_reparateurs, pWorkRate_ );
 
     asn.Send();

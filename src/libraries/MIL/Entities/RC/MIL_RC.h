@@ -130,6 +130,12 @@ public:
     static const MIL_RC*                                    pRcBloquee_;
     static const MIL_RC*                                    pRcFiltree_;
     static const MIL_RC*                                    pRcAttentatTerroristeDansPopulation_;
+    static const MIL_RC*                                    pRcAlerteDisponibiliteMoyensReleve_;
+    static const MIL_RC*                                    pRcAlerteDisponibiliteMoyensRamassage_;
+    static const MIL_RC*                                    pRcAlerteDisponibiliteMedecins_;
+    static const MIL_RC*                                    pRcAlerteDisponibiliteRemorqueurs_;
+    static const MIL_RC*                                    pRcAlerteDisponibiliteReparateurs_;
+    static const MIL_RC*                                    pRcAlerteDisponibiliteVecteurs_;    
     //@}
    
 public:
@@ -272,6 +278,12 @@ protected:
         eRC_RavitaillementDotationsAnnule,
         eRC_RavitaillementStockAnnule,
         eRC_HumainRetourDeSante,
+        eRC_AlerteDisponibiliteMoyensReleve,
+        eRC_AlerteDisponibiliteMoyensRamassage,
+        eRC_AlerteDisponibiliteMedecins,
+        eRC_AlerteDisponibiliteRemorqueurs,
+        eRC_AlerteDisponibiliteReparateurs,
+        eRC_AlerteDisponibiliteVecteurs,
         eRC_PretMaterielEnCours,
         eRC_PretMaterielAnnule,
         eRC_PretMaterielEffectue,

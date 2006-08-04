@@ -66,6 +66,7 @@ AgentSupplyPanel::AgentSupplyPanel( QWidget* pParent )
     pDispoTransporters_->addColumn( tr( "Disponibles" ) );
     pDispoTransporters_->addColumn( tr( "Au travail" ) );
     pDispoTransporters_->addColumn( tr( "Au repos" ) );
+    pDispoTransporters_->addColumn( tr( "Prêtés" ) );
     pDispoTransporters_->setMargin( 5 );
     pDispoTransporters_->setLineWidth( 2 );
     pDispoTransporters_->setFrameStyle( QFrame::Sunken | QFrame::Box );

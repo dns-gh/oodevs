@@ -87,7 +87,8 @@ public:
 private:
     //! @name Tools
     //@{
-    MT_Float GetStockValue( const PHY_DotationCategory& category ) const;
+    MT_Float GetStockValue                         ( const PHY_DotationCategory& category ) const;
+    MT_Float GetConvoyTransportersAvailabilityRatio() const;
     //@}
 
 private:

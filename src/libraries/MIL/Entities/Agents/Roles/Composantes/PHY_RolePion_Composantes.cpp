@@ -1507,6 +1507,64 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
 }
 
 // =============================================================================
+// LOGISTIC - SUPPLY $$$ a deplacer (functor)
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetAvailableConvoyTransporter
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+
+        if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory ) )
+            return &composante;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetConvoyTransportersUse
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const
+{
+    composanteUse.clear();
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        if( (**it).CouldBePartOfConvoy() )
+        {
+            T_ComposanteUse& data = composanteUse[ &(**it).GetType() ];
+            ++ data.nNbrTotal_;
+
+            if( (**it).GetState().IsUsable() )
+            {
+                ++ data.nNbrAvailable_;
+                if( !(**it).CanBePartOfConvoy() )
+                    ++ data.nNbrUsed_;
+            }
+        }
+    }
+
+    for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
+    {
+        const T_ComposantePionVector& composantes = itLoan->second;
+        for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
+        {
+            if( (**it).CouldBePartOfConvoy() )
+            {
+                T_ComposanteUse& data = composanteUse[ &(**it).GetType() ];
+                ++ data.nNbrTotal_;
+                ++ data.nNbrLent_;
+            }
+        }
+    }
+}
+
+// =============================================================================
 // LOGISTIC - MAINTENANCE
 // =============================================================================
 
@@ -1558,21 +1616,7 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableHauler
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanHaul( composanteType ) && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableHauler
+// Name: PHY_RolePion_Composantes::GetAvailableHauler  $$$ a deplacer (functor)
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const
@@ -1595,106 +1639,6 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableHauler( const PHY_Comp
         }
     }
     return pSelectedHauler;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableRepairer
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableRepairer( const PHY_Breakdown& breakdown ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanRepair( breakdown ) && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableRepairer
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableRepairer( const PHY_Breakdown& breakdown ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanRepair( breakdown ) )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetHaulersUse
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetHaulersUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanHaul() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanHaul() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetRepairersUse
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanRepair() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanRepair() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetRepairersUse
-// Created: NLD 2005-11-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse, const PHY_Breakdown& breakdown ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanRepair( breakdown ) )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanRepair( breakdown ) )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
 }
 
 // =============================================================================
@@ -1750,266 +1694,6 @@ PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanWaitingForMedical( P
 void PHY_RolePion_Composantes::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
 {
     GetRole< PHY_RolePion_Humans >().NotifyHumanBackFromMedical( humanState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableEvacuationAmbulance
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableEvacuationAmbulance() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanEvacuateCasualties() && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableEvacuationAmbulance
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableEvacuationAmbulance() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanEvacuateCasualties() )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetEvacuationAmbulancesUse
-// Created: NLD 2005-01-13
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetEvacuationAmbulancesUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanEvacuateCasualties() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanEvacuateCasualties() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableCollectionAmbulance
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableCollectionAmbulance() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanCollectCasualties() && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableCollectionAmbulance
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableCollectionAmbulance() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanCollectCasualties() )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetCollectionAmbulancesUse
-// Created: NLD 2005-01-13
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetCollectionAmbulancesUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanCollectCasualties() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanCollectCasualties() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableDoctorForDiagnosing
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableDoctorForDiagnosing() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanDiagnoseHumans() )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetDoctorsUse
-// Created: NLD 2005-01-13
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetDoctorsUse( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanDiagnoseHumans() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanDiagnoseHumans() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableDoctorForSorting
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableDoctorForSorting() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanSortHumans() && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableDoctorForSorting
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableDoctorForSorting() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanSortHumans() )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetDoctorsUseForSorting
-// Created: NLD 2005-01-11
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetDoctorsUseForSorting( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanSortHumans() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanSortHumans() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableDoctorForHealing
-// Created: NLD 2005-01-13
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableDoctorForHealing() const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanHealHumans() && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HasUsableDoctorForHealing
-// Created: NLD 2005-01-12
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Composantes::HasUsableDoctorForHealing( const PHY_Human& human ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).GetType().CanHealHuman( human ) && (**it).GetState().IsUsable() )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableDoctorForHealing
-// Created: NLD 2005-01-12
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableDoctorForHealing( const PHY_Human& human ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CanHealHuman( human ) )
-            return *it;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetDoctorsUseForHealing
-// Created: NLD 2005-11-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetDoctorsUseForHealing( T_ComposanteUseMap& composanteUse, const PHY_Human& human ) const
-{
-     composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).GetType().CanHealHuman( human )  )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanHealHuman( human ) )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
 }
 
 // =============================================================================
@@ -2083,49 +1767,6 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RolePion_Composantes&
     borrower.NotifyLentComposanteReturned( *this, composante );
 }
 
-// =============================================================================
-// LOGISTIC - SUPPLY
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetAvailableConvoyTransporter
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-
-        if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory ) )
-            return &composante;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetConvoyTransporters
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetConvoyTransporters( T_ComposanteUseMap& composanteUse ) const
-{
-    composanteUse.clear();
-    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        if( (**itComposante).CouldBePartOfConvoy() )
-        {
-            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**itComposante).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !(**itComposante).CanBePartOfConvoy() )
-                    ++ data.nNbrUsed_;
-            }
-        }
-    }
-}
 
 // =============================================================================
 // PRISONERS

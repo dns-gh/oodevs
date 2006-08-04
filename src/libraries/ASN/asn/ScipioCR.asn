@@ -152,6 +152,12 @@ CR-RavitaillementStockEffectue              ::= NULL
 CR-RavitaillementDotationsAnnule            ::= NULL
 CR-RavitaillementStockAnnule                ::= NULL
 CR-HumainRetourDeSante                      ::= NULL
+CR-AlerteDisponibiliteMoyensReleve          ::= NULL
+CR-AlerteDisponibiliteMoyensRamassage       ::= NULL
+CR-AlerteDisponibiliteMedecins              ::= NULL
+CR-AlerteDisponibiliteRemorqueurs           ::= NULL
+CR-AlerteDisponibiliteReparateurs           ::= NULL
+CR-AlerteDisponibiliteVecteurs              ::= NULL
 
 CR-PretMaterielEnCours                              ::= NULL
 CR-PretMaterielAnnule                               ::= NULL
@@ -478,7 +484,13 @@ MsgCR ::= SEQUENCE
         cr-ravitaillement-stock-effectue                                CR-RavitaillementStockEffectue,
         cr-ravitaillement-dotations-annule                              CR-RavitaillementDotationsAnnule,
         cr-ravitaillement-stock-annule                                  CR-RavitaillementStockAnnule,
-        cr-humain-retour-de-sante                                       CR-HumainRetourDeSante,      
+        cr-humain-retour-de-sante                                       CR-HumainRetourDeSante,             
+        cr-alerte-disponibilite-moyens-releve                           CR-AlerteDisponibiliteMoyensReleve,
+        cr-alerte-disponibilite-moyens-ramassage                        CR-AlerteDisponibiliteMoyensRamassage,
+        cr-alerte-disponibilite-medecins                                CR-AlerteDisponibiliteMedecins,
+        cr-alerte-disponibilite-remorqueurs                             CR-AlerteDisponibiliteRemorqueurs,
+        cr-alerte-disponibilite-reparateurs                             CR-AlerteDisponibiliteReparateurs,
+        cr-alerte-disponibilite-vecteurs                                CR-AlerteDisponibiliteVecteurs,
         cr-pret-materiel-en-cours                                       CR-PretMaterielEnCours,
         cr-pret-materiel-annule                                         CR-PretMaterielAnnule,
         cr-pret-materiel-effectue                                       CR-PretMaterielEffectue,

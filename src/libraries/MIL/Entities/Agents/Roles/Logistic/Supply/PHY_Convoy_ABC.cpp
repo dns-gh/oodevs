@@ -40,6 +40,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_Convoy_ABC, "PHY_Convoy_ABC" )
 // -----------------------------------------------------------------------------
 void PHY_Convoy_ABC::Initialize( MIL_InputArchive& archive )
 {
+    MT_LOG_INFO_MSG( "Initializing convoys" );
+
     archive.Section( "Ravitaillement" );
     archive.Section( "Convois" );
 

@@ -26,6 +26,7 @@ class PHY_MedicalEvacuationConsign;
 class PHY_MedicalCollectionConsign;
 class PHY_MedicalEvacuationAmbulance;
 class PHY_MedicalCollectionAmbulance;
+class PHY_ComposanteUsePredicate;
 
 // =============================================================================
 // @class  PHY_RolePionLOG_Medical
@@ -139,6 +140,8 @@ private:
     bool HasUsableDoctorForSorting   () const;
     bool HasUsableDoctorForHealing   () const;
     bool HasUsableDoctorForHealing   ( const PHY_Human& human ) const;
+
+    MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;
     //@}    
 
 private:

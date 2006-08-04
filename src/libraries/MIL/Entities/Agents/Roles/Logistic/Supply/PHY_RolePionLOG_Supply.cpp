@@ -16,6 +16,7 @@
 #include "PHY_SupplyDotationConsign.h"
 #include "PHY_SupplyDotationRequest.h"
 #include "PHY_SupplyDotationRequestContainer.h"
+#include "PHY_SupplyResourcesAlarms.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
@@ -158,13 +159,39 @@ void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory&
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio
+// Created: NLD 2005-01-05
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
+{
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetConvoyTransportersUse( composanteUse );
+
+    uint nNbrTotal                  = 0;
+    uint nNbrAvailableAllowedToWork = 0;
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    {
+        nNbrTotal                  += it->second.nNbrTotal_;
+        nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
+    }
+    if( nNbrTotal == 0 )
+        return 1.;
+    return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::StartUsingForLogistic
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::StartUsingForLogistic( PHY_ComposantePion& composante )
 {
+    MT_Float rTransporterRatio = GetConvoyTransportersAvailabilityRatio();
+
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
+
+    if( PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( rTransporterRatio, GetConvoyTransportersAvailabilityRatio() ) )
+        MIL_RC::pRcAlerteDisponibiliteVecteurs_->Send( *pPion_, MIL_RC::eRcTypeOperational );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,16 +355,8 @@ void SendComposanteUse( const PHY_RolePion_Composantes::T_ComposanteUseMap& data
 
         data.nbr_total       = itData->second.nNbrTotal_;
         data.nbr_au_travail  = itData->second.nNbrUsed_;
-        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_;
-
-//        if( pWorkTime )
-//        {
-//            uint nNbrAllowedToWork = std::max( (uint)0, pWorkTime->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ ) - itData->second.nNbrUsed_ );
-//
-//            data.m.nbr_au_reposPresent = 1;
-//            data.nbr_disponibles = nNbrAllowedToWork;
-//            data.nbr_au_repos    = itData->second.nNbrAvailable_ - nNbrAllowedToWork - itData->second.nNbrUsed_;
-//        }
+        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_; // nNbrAvailableAllowedToWork
+        data.nbr_pretes      = itData->second.nNbrLent_;
     }
     asn.elem = pData;
 }
@@ -358,7 +377,7 @@ void PHY_RolePionLOG_Supply::SendFullState() const
     asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
   
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetConvoyTransporters( composanteUse );
+    GetRole< PHY_RolePion_Composantes >().GetConvoyTransportersUse( composanteUse );
     SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_transporteurs_convois  );
 
     assert( pStocks_ );
@@ -394,7 +413,7 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
       
         PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-        GetRole< PHY_RolePion_Composantes >().GetConvoyTransporters( composanteUse );
+        GetRole< PHY_RolePion_Composantes >().GetConvoyTransportersUse( composanteUse );
         SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_transporteurs_convois );
     }
 

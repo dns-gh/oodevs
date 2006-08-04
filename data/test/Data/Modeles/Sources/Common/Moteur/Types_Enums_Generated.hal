@@ -328,7 +328,7 @@ typedef enum E_TypeMissionPion
     eMission_Pion_LOG_MettreEnOeuvreZoneStationnement,
     eMission_Pion_LOG_AppuyerFranchissementSurUnPoint,
     eMission_Pion_LOG_BloquerZone,
-    eMission_Pion_LOG_ReconnaitreZoneDeDeploiement, 
+    eMission_Pion_LOG_ReconnaitreZoneDeDeploiement,
     eMission_Pion_LOG_ArmerPIA,
     eMission_Pion_LOG_Surveiller,
     eMission_Pion_Test_Heliporter,
