@@ -16,9 +16,12 @@
 // -----------------------------------------------------------------------------
 ActionController::ActionController()
     : selecting_( false )
-    , popupMenu_( new QPopupMenu() )
+    , menu_()
 {
-    // NOTHING
+    menu_.AddCategory( "Parametre" );
+    menu_.AddCategory( "Interface" );
+    menu_.AddCategory( "Ordre" );
+    menu_.AddCategory( "Commande" );
 }
 
 // -----------------------------------------------------------------------------
@@ -27,7 +30,7 @@ ActionController::ActionController()
 // -----------------------------------------------------------------------------
 ActionController::~ActionController()
 {
-    delete popupMenu_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +58,5 @@ void ActionController::Remove( Observer_ABC& observer )
 // -----------------------------------------------------------------------------
 void ActionController::ShowMenu( const QPoint& where )
 {
-    if( popupMenu_->count() )
-        popupMenu_->popup( where );
+    menu_.Popup( where );
 }

@@ -62,9 +62,9 @@ void EntityParameterBase::SetId( ASN1T_OID id )
 // Name: EntityParameterBase::AddToMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void EntityParameterBase::AddToMenu( QPopupMenu& menu )
+void EntityParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.insertItem( menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------

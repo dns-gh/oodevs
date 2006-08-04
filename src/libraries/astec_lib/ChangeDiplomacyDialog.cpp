@@ -124,10 +124,8 @@ void ChangeDiplomacyDialog::NotifyDeleted( const Team& team )
 // Name: ChangeDiplomacyDialog::NotifyContextMenu
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyContextMenu( const Team& team, QPopupMenu& menu )
+void ChangeDiplomacyDialog::NotifyContextMenu( const Team& team, ContextMenu& menu )
 {
     pArmy1ComboBox_->SetCurrentItem( team.GetId() );
-    if( menu.count() )
-        menu.insertSeparator();
-    menu.insertItem( tr( "Diplomatie" ), this, SLOT( show() ) );
+    menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );
 }

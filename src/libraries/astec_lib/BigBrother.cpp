@@ -54,7 +54,7 @@ BigBrother::~BigBrother()
 // Name: BigBrother::NotifyContextMenu
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void BigBrother::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     NotifyContextMenu( (Entity_ABC&)agent, menu );
 }
@@ -63,7 +63,7 @@ void BigBrother::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 // Name: BigBrother::NotifyContextMenu
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Population& popu, QPopupMenu& menu )
+void BigBrother::NotifyContextMenu( const Population& popu, ContextMenu& menu )
 {
     NotifyContextMenu( (Entity_ABC&)popu, menu );
 }
@@ -101,15 +101,13 @@ void BigBrother::RemoveAgent( const Entity_ABC& agent )
 // Name: BigBrother::NotifyContextMenu
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Entity_ABC& agent, QPopupMenu& menu )
+void BigBrother::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
 {
     CIT_Agents it = spied_.find( &agent );
     if( it == spied_.end() )
     {
-        if( menu.count() > 0 )
-            menu.insertSeparator();
         selected_ = &agent;
-        menu.insertItem( "Espionner", this, SLOT( Bookmark() ) );
+        menu.InsertItem( "Interface", "Espionner", this, SLOT( Bookmark() ) );
     }
 }
 

@@ -85,7 +85,7 @@ private:
     virtual bool HandleKeyPress        ( QKeyEvent* key );
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
 
-    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu );
 
     virtual bool IsInSelection( const TacticalLine_ABC& line, const geometry::Point2f& point ) const;
     void Select( const TacticalLine_ABC& line );

@@ -35,7 +35,7 @@ ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 // Name: ParamObjectKnowledgeList::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledgeList::NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu )
+void ParamObjectKnowledgeList::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
     // $$$$ AGE 2006-03-14: TODO !
 }

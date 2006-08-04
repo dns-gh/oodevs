@@ -38,7 +38,7 @@ ParamAgentKnowledgeList::~ParamAgentKnowledgeList()
 // Name: ParamAgentKnowledgeList::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledgeList::NotifyContextMenu( const Agent_ABC& entity, QPopupMenu& menu )
+void ParamAgentKnowledgeList::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
 {
     const AgentKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
     if( knowledge )

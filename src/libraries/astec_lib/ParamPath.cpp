@@ -117,9 +117,9 @@ void ParamPath::CommitTo( ASN1T_Itineraire& destination )
 // Name: ParamPath::NotifyContextMenu
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu )
+void ParamPath::NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu )
 {   
-    menu.insertItem( menu_.c_str(), this, SLOT( StartPath() ) );
+    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( StartPath() ) );
 }
 
 // -----------------------------------------------------------------------------

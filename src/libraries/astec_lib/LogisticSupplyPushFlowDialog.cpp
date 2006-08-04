@@ -84,15 +84,13 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type || !type->IsLogisticSupply() )
         return;
     selected_ = &agent;
-    if( menu.count() )
-        menu.insertSeparator();
-    menu.insertItem( tr( "Pousser des flux" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Commande", tr( "Pousser des flux" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------

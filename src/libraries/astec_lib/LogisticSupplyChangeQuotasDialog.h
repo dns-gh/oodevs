@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     //@}
 
 private slots:

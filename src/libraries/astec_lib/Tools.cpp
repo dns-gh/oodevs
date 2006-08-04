@@ -238,28 +238,6 @@ QString Tools::ToString( ASN1T_EnumMissionGenPriorite nObject )
 // Name: Tools::ToString
 // Created: APE 2004-05-17
 // -----------------------------------------------------------------------------
-//QString Tools::ToString( Meteo_ABC::E_WeatherType nType )
-//{
-//    QObject a;
-//    switch( nType )
-//    {
-//        case Meteo_ABC::eWeather_Clear:     return a.tr( "Dégagé" );
-//        case Meteo_ABC::eWeather_Storm:     return a.tr( "Tempête" );
-//        case Meteo_ABC::eWeather_Fog:       return a.tr( "Brouillard" );
-//        case Meteo_ABC::eWeather_Drizzle:   return a.tr( "Crachin" );
-//        case Meteo_ABC::eWeather_Rain:      return a.tr( "Pluie" );
-//        case Meteo_ABC::eWeather_Snow:      return a.tr( "Neige" );
-//        default:
-//            assert( false );
-//            return "Unknown";
-//    }
-//}
-
-
-// -----------------------------------------------------------------------------
-// Name: Tools::ToString
-// Created: APE 2004-05-17
-// -----------------------------------------------------------------------------
 const char* Tools::ToString( const ASN1T_EnumInfoContextErrorCode& nCode )
 {
     switch( nCode )
@@ -408,35 +386,6 @@ void Tools::FromString( const char* szString, ASN1T_EnumTypeLocalisation& nId )
     }
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: Tools::PointNearLine
-// Created: APE 2004-06-14
-// -----------------------------------------------------------------------------
-//bool Tools::PointNearLine( const MT_Vector2D& point, const T_PointVector& line, MT_Float rMinDist, bool bLineLoop )
-//{
-//    assert( ! line.empty() );
-//
-//    if( line.size() == 1 )
-//        return point.SquareDistance( line.front() ) < (rMinDist * rMinDist);
-//
-//    for( uint n = 0; n < line.size() - 1; ++n )
-//    {
-//        MT_Line tmpLine( line[n], line[n+1] );
-//        if( tmpLine.IsInside( point, rMinDist ) )
-//            return true;
-//    }
-//
-//    if( bLineLoop )
-//    {
-//        MT_Line tmpLine( line[line.size()-1], line[0] );
-//        if( tmpLine.IsInside( point, rMinDist ) )
-//            return true;
-//    }
-//
-//    return false;
-//}
-
 Tools::converter< E_NatureAtlasType > Tools::natureAtlasConverter_[] = 
 {
     converter< E_NatureAtlasType >( "Blinde"          , eNatureAtlas_Armored         ),
@@ -491,15 +440,6 @@ Tools::converter< E_LightingType > Tools::lightingConverter_[] =
         converter< E_LightingType >( ""                      , (E_LightingType)-1 )
 };
 
-//Tools::converter< RawVisionData::E_VisionObject > Tools::environnementConverter_[] =
-//{
-//    converter< RawVisionData::E_VisionObject >( "Sol"   , RawVisionData::eVisionGround ),
-//    converter< RawVisionData::E_VisionObject >( "Vide"  , RawVisionData::eVisionEmpty  ),
-//    converter< RawVisionData::E_VisionObject >( "Foret" , RawVisionData::eVisionForest ),
-//    converter< RawVisionData::E_VisionObject >( "Urbain", RawVisionData::eVisionUrban  ),
-//    converter< RawVisionData::E_VisionObject >( ""      , (RawVisionData::E_VisionObject)-1 )
-//};
-
 Tools::converter< ASN1T_EnumDiplomatie > Tools::diplomatyConverter_[] =
 {
     converter< ASN1T_EnumDiplomatie >( "inconnu", EnumDiplomatie::inconnu ),
@@ -508,15 +448,6 @@ Tools::converter< ASN1T_EnumDiplomatie > Tools::diplomatyConverter_[] =
     converter< ASN1T_EnumDiplomatie >( "ennemi" , EnumDiplomatie::ennemi  ),
     converter< ASN1T_EnumDiplomatie >( ""       , (ASN1T_EnumDiplomatie)-1 )
 };
-
-// -----------------------------------------------------------------------------
-// Name: Tools::ConvertEnvironementType
-// Created: JVT 2004-09-27
-// -----------------------------------------------------------------------------
-//std::string Tools::ConvertEnvironementType( RawVisionData::E_VisionObject nObject )
-//{
-//    return InverseFindInConverter( environnementConverter_, nObject );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: Tools::ConvertWeatherType

@@ -35,7 +35,7 @@ EntityParameter< ConcreteEntity >::~EntityParameter()
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, QPopupMenu& menu )
+void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu )
 {
     potential_ = &entity;
     AddToMenu( menu );

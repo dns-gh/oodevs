@@ -35,7 +35,7 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // Name: ParamObjectKnowledge::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu )
+void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
     // agent_.GetKnowledgeGroup()->GetTeam().Get< ObjectKnowledges >()....
     // $$$$ AGE 2006-03-14: 

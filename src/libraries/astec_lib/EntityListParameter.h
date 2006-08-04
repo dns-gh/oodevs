@@ -51,7 +51,7 @@ private slots:
 protected:
     //! @name Helpers
     //@{
-    void AddToMenu( QPopupMenu& menu );
+    void AddToMenu( ContextMenu& menu );
     virtual bool Invalid();
     virtual unsigned long GetId( ValuedListItem* item ) = 0;
     //@}
@@ -96,7 +96,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const ConcreteEntity& entity, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu );
     virtual void MenuItemValidated();
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );

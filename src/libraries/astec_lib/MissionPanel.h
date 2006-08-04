@@ -71,13 +71,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const Population& agent, QPopupMenu& menu );
-    int AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, const QString& name, const char* slot );
-    void AddAgentMissions( const Decisions& decisions, QPopupMenu& menu ); 
-    void AddAutomatMissions( const AutomatDecisions& decisions, QPopupMenu& menu ); 
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const Population& agent, ContextMenu& menu );
+    int AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot );
+    void AddAgentMissions( const Decisions& decisions, ContextMenu& menu ); 
+    void AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu ); 
     template< typename D >
-    int AddFragOrders( const D& decisions, QPopupMenu& menu, const QString& name, const char* slot );
+    int AddFragOrders( const D& decisions, ContextMenu& menu, const QString& name, const char* slot );
     //@}
 
 private:

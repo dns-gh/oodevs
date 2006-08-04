@@ -200,19 +200,17 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
 // Name: LimitsLayer::NotifyContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, QPopupMenu& menu )
+void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& menu )
 {
-    if( menu.count() > 0 )
-        menu.insertSeparator();
-    menu.insertItem( tr( "Créer limite" ), this, SLOT( OnCreateLimit() ) );
+    menu.InsertItem( "Parametre", tr( "Créer limite" ), this, SLOT( OnCreateLimit() ) );
 
-    QPopupMenu* limaMenu = new QPopupMenu( &menu );
+    QPopupMenu* limaMenu = new QPopupMenu( menu );
     for( int n = 0; n < eLimaFuncNbr; ++n )
     {
         int nId = limaMenu->insertItem( Tools::ToString( (E_FuncLimaType)n ), this, SLOT( OnCreateLima( int ) ) ); 
         limaMenu->setItemParameter( nId, n );
     }
-    menu.insertItem( tr( "Créer lima" ), limaMenu );
+    menu.InsertItem( "Parametre", tr( "Créer lima" ), limaMenu );
 }
 
 // -----------------------------------------------------------------------------

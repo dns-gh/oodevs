@@ -49,7 +49,7 @@ private:
     //@{
     virtual void NotifyCreated( const Team& );
     virtual void NotifyDeleted( const Team& );
-    virtual void NotifyContextMenu( const Team&, QPopupMenu& );
+    virtual void NotifyContextMenu( const Team&, ContextMenu& );
     //@}
 
 private:

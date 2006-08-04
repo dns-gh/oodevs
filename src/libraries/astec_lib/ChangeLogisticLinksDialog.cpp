@@ -200,13 +200,11 @@ void ChangeLogisticLinksDialog::Reject()
 // Name: ChangeLogisticLinksDialog::NotifyContextMenu
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void ChangeLogisticLinksDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type || !agent.Retrieve< LogisticLinks >() )
         return;
     selected_ = &agent;
-    if( menu.count() )
-        menu.insertSeparator();
-    menu.insertItem( tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Commande", tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );
 }

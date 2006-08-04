@@ -44,7 +44,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& entity, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu );
     //@}
 
     //! @name Member data

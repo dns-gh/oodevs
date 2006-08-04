@@ -43,7 +43,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Object_ABC& entity, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu );
     //@}
 };
 

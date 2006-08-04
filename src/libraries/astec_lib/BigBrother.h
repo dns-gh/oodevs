@@ -47,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC&, QPopupMenu& );
-    virtual void NotifyContextMenu( const Population&, QPopupMenu& );
+    virtual void NotifyContextMenu( const Agent_ABC&, ContextMenu& );
+    virtual void NotifyContextMenu( const Population&, ContextMenu& );
     virtual void NotifyDeleted( const Agent_ABC& agent );
     virtual void NotifyDeleted( const Population& agent );
     //@}
@@ -78,7 +78,7 @@ private:
     //@{
     QWidget* CreateView( const Entity_ABC& agent );
     virtual void NotifyCreated( const Report_ABC& report );
-    void NotifyContextMenu( const Entity_ABC&, QPopupMenu& menu );
+    void NotifyContextMenu( const Entity_ABC&, ContextMenu& menu );
     void RemoveAgent( const Entity_ABC& agent );
     //@}
 

@@ -51,20 +51,18 @@ MiniViews::~MiniViews()
 // Name: MiniViews::BuildContextMenu
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void MiniViews::BuildContextMenu( const Entity_ABC& agent, QPopupMenu& menu )
+void MiniViews::BuildContextMenu( const Entity_ABC& agent, ContextMenu& menu )
 {
     selected_ = &agent;
-    if( menu.count() ) 
-        menu.insertSeparator();
     bool remove = miniViews_.find( &agent ) != miniViews_.end();
-    menu.insertItem( remove ? "Supprimer la minivue" : "Ajouter une minivue" , this, SLOT( OnMiniView() ) );
+    menu.InsertItem( "Interface", remove ? "Supprimer la minivue" : "Ajouter une minivue" , this, SLOT( OnMiniView() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MiniViews::NotifyContextMenu
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void MiniViews::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     BuildContextMenu( agent, menu );
 }
@@ -73,7 +71,7 @@ void MiniViews::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 // Name: MiniViews::NotifyContextMenu
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Population& popu, QPopupMenu& menu )
+void MiniViews::NotifyContextMenu( const Population& popu, ContextMenu& menu )
 {
     BuildContextMenu( popu, menu );
 }

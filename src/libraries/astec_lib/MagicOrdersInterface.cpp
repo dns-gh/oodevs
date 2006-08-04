@@ -60,7 +60,7 @@ MagicOrdersInterface::~MagicOrdersInterface()
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     if( !controller_ )
         return;
@@ -69,7 +69,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu
     selectedGroup_ = 0;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
-        QPopupMenu* magicMenu = new QPopupMenu( &menu );
+        QPopupMenu* magicMenu = new QPopupMenu( menu );
 
         int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
@@ -88,7 +88,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
 
-        menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+        menu.InsertItem( "Ordre", tr( "Ordres magiques" ), magicMenu );
     }
 }
 
@@ -96,32 +96,32 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup& group, QPopupMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup& group, ContextMenu& menu )
 {   
     if( !controller_ )
         return;
     selectedAgent_ = 0;
     selectedGroup_ = &group;
     selectedTeam_ = 0;
-    QPopupMenu* magicMenu = new QPopupMenu( &menu );
+    QPopupMenu* magicMenu = new QPopupMenu( menu );
     FillCommonOrders( magicMenu );
-    menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+    menu.InsertItem( "Ordre", tr( "Ordres magiques" ), magicMenu );
 } 
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const Team& team, QPopupMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const Team& team, ContextMenu& menu )
 {
     if( !controller_ )
         return;
     selectedAgent_ = 0;
     selectedGroup_ = 0;
     selectedTeam_ = &team;
-    QPopupMenu* magicMenu = new QPopupMenu( &menu );
+    QPopupMenu* magicMenu = new QPopupMenu( menu );
     FillCommonOrders( magicMenu );
-    menu.insertItem( tr( "Ordres magiques" ), magicMenu );
+    menu.InsertItem( "Ordre", tr( "Ordres magiques" ), magicMenu );
 }
 
 // -----------------------------------------------------------------------------

@@ -41,7 +41,7 @@ public:
     //@{
     void AddLocationType( const QString& message, ASN1T_EnumTypeLocalisation type );
     void Draw( const T_PointVector& points, ASN1T_EnumTypeLocalisation type, const GlTools_ABC& tools );
-    virtual void NotifyContextMenu( const geometry::Point2f&, QPopupMenu& );
+    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& );
     void StartPoint();
     //@}
 

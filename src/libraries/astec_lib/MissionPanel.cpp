@@ -67,13 +67,10 @@ MissionPanel::~MissionPanel()
 // Name: MissionPanel::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     selected_ = &agent;
 
-    if( menu.count() > 0 )
-        menu.insertSeparator();
-    
     if( const Decisions* decisions = agent.Retrieve< Decisions >() )
         AddAgentMissions( *decisions, menu );
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
@@ -84,16 +81,16 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-int MissionPanel::AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, const QString& name, const char* slot )
+int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
 {
-    QPopupMenu& missions = *new QPopupMenu( &menu );
+    QPopupMenu& missions = *new QPopupMenu( menu );
     while( it.HasMoreElements() )
     {
         const Mission& mission = it.NextElement();
         int nId = missions.insertItem( mission.GetName().c_str(), this, slot );
         missions.setItemParameter( nId, mission.GetId() );
     }
-    return menu.insertItem( name, &missions  );
+    return menu.InsertItem( "Ordre", name, &missions  );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,10 +98,10 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, QPopupMenu& menu, 
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
 template< typename D >
-int MissionPanel::AddFragOrders( const D& decisions, QPopupMenu& menu, const QString& name, const char* slot )
+int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
     std::set< unsigned long > fragOrders_;
-    QPopupMenu& orders = *new QPopupMenu( &menu );
+    QPopupMenu& orders = *new QPopupMenu( menu );
     Iterator< const FragOrder& > fragIt = decisions.GetFragOrders();
     while( fragIt.HasMoreElements() )
     {
@@ -129,17 +126,17 @@ int MissionPanel::AddFragOrders( const D& decisions, QPopupMenu& menu, const QSt
             }
         }
     }
-    return menu.insertItem( name, &orders  );
+    return menu.InsertItem( "Ordre", name, &orders  );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel::AddAgentMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::AddAgentMissions( const Decisions& decisions, QPopupMenu& menu )
+void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& menu )
 {
     const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Pion" ), SLOT( ActivateAgentMission( int ) ) );
-    menu.setItemEnabled( id, ! decisions.IsEmbraye() );
+    menu.SetItemEnabled( id, ! decisions.IsEmbraye() );
     if( ! decisions.IsEmbraye() )
         AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
 }
@@ -148,10 +145,10 @@ void MissionPanel::AddAgentMissions( const Decisions& decisions, QPopupMenu& men
 // Name: MissionPanel::AddAutomatMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, QPopupMenu& menu )
+void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu )
 {
     const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Automate" ), SLOT( ActivateAutomatMission( int ) ) );
-    menu.setItemEnabled( id, decisions.IsEmbraye() );
+    menu.SetItemEnabled( id, decisions.IsEmbraye() );
     if( decisions.IsEmbraye() )
         AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
 }
@@ -213,15 +210,12 @@ void MissionPanel::ActivateFragOrder( int id )
 // Name: MissionPanel::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::NotifyContextMenu( const Population& agent, QPopupMenu& menu )
+void MissionPanel::NotifyContextMenu( const Population& agent, ContextMenu& menu )
 {
     selectedPopulation_ = &agent;
-    if( menu.count() > 0 )
-        menu.insertSeparator();
-
     if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
     {
-        QPopupMenu& missions = *new QPopupMenu( &menu );
+        QPopupMenu& missions = *new QPopupMenu( menu );
         Iterator< const Mission& > it = decisions->GetMissions();
         while( it.HasMoreElements() )
         {
@@ -229,7 +223,7 @@ void MissionPanel::NotifyContextMenu( const Population& agent, QPopupMenu& menu 
             int nId = missions.insertItem( mission.GetName().c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
             missions.setItemParameter( nId, mission.GetId() );
         }
-        menu.insertItem( tr( "Missions Population" ), &missions  );
+        menu.InsertItem( "Ordre", tr( "Missions Population" ), &missions  );
     }
 }
 

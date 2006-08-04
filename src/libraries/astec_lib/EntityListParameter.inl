@@ -46,7 +46,7 @@ void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity&
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, QPopupMenu& menu )
+void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu )
 {
     if( ! FindItem( &entity, firstChild() ) )
     {

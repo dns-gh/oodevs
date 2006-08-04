@@ -110,15 +110,12 @@ void CampPrototype::NotifyDeleted( const Agent_ABC& agent )
 // Name: CampPrototype::NotifyContextMenu
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void CampPrototype::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void CampPrototype::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
     {
         selected_ = &agent;
-        if( menu.count() )
-            menu.insertSeparator();
-
-        menu.insertItem( tr( "TC2 du camp" ), this, SLOT( SetSelected() ) );
+        menu.InsertItem( "Parametre", tr( "TC2 du camp" ), this, SLOT( SetSelected() ) );
     }
 }
 

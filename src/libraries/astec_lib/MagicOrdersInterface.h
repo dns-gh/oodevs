@@ -51,9 +51,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Team& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const KnowledgeGroup& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Team& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const KnowledgeGroup& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     virtual void Handle( const T_PointVector& points );
     //@}

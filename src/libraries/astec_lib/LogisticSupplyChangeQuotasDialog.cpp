@@ -84,15 +84,13 @@ LogisticSupplyChangeQuotasDialog::~LogisticSupplyChangeQuotasDialog()
 // Name: LogisticSupplyChangeQuotasDialog::NotifyContextMenu
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     const AutomatType* type = agent.GetAutomatType();
     if( !type || !type->IsLogisticSupply() )
         return;
     selected_ = &agent;
-    if( menu.count() )
-        menu.insertSeparator();
-    menu.insertItem( tr( "Affecter des quotas ravitaillement" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Commande", tr( "Affecter des quotas ravitaillement" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------

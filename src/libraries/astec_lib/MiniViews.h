@@ -56,9 +56,9 @@ private:
 
     //! @name Helpers
     //@{
-    void BuildContextMenu( const Entity_ABC& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
-    virtual void NotifyContextMenu( const Population& popup, QPopupMenu& menu );
+    void BuildContextMenu( const Entity_ABC& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const Population& popup, ContextMenu& menu );
     //@}
 
     //! @name Types

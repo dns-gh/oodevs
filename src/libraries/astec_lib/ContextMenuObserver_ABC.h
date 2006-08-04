@@ -11,7 +11,7 @@
 #define __ContextMenuObserver_ABC_h_
 
 #include "Observer_ABC.h"
-class QPopupMenu;
+#include "ContextMenu.h"
 
 // =============================================================================
 /** @class  ContextMenuObserver_ABC
@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Element&, QPopupMenu& ) = 0;
+    virtual void NotifyContextMenu( const Element&, ContextMenu& ) = 0;
     //@}
 };
 

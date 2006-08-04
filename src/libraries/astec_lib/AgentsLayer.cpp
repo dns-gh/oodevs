@@ -109,26 +109,24 @@ void AgentsLayer::Disengage( const Agent_ABC& automat )
 // Name: AgentsLayer::NotifyContextMenu
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu )
+void AgentsLayer::NotifyContextMenu( const Agent_ABC& agent, ::ContextMenu& menu )
 {
     if( agent.GetSuperior() )
         return;
-    if( menu.count() > 0 )
-        menu.insertSeparator();
 
     selected_ = &agent;
     if( agent.Retrieve< AutomatDecisions >() )
     {
         if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
-            menu.insertItem( tr( "Embrayer" ), this, SLOT( Engage() ) );
+            menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
         else
-            menu.insertItem( tr( "Debrayer" ), this, SLOT( Disengage() ) );
+            menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
     }
 
     if( aggregated_.find( &agent ) == aggregated_.end() )
-        menu.insertItem( tr( "Aggreger" ), this, SLOT( Aggregate() ) );
+        menu.InsertItem( "Interface", tr( "Aggreger" ), this, SLOT( Aggregate() ) );
     else
-        menu.insertItem( tr( "Désaggreger" ), this, SLOT( Disaggregate() ) );
+        menu.InsertItem( "Interface", tr( "Désaggreger" ), this, SLOT( Disaggregate() ) );
 }
 
 // -----------------------------------------------------------------------------

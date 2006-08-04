@@ -92,9 +92,9 @@ bool EntityListParameterBase::Invalid()
 // Name: EntityListParameterBase::AddToMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void EntityListParameterBase::AddToMenu( QPopupMenu& menu )
+void EntityListParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.insertItem( menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------

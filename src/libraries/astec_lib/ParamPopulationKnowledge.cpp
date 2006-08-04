@@ -39,7 +39,7 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // Name: ParamPopulationKnowledge::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamPopulationKnowledge::NotifyContextMenu( const Population& entity, QPopupMenu& menu )
+void ParamPopulationKnowledge::NotifyContextMenu( const Population& entity, ContextMenu& menu )
 {
     const PopulationKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
     if( knowledge )

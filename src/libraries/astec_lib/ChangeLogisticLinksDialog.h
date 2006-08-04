@@ -45,7 +45,7 @@ public:
     //@{
     virtual void NotifyCreated( const Agent_ABC& agent );
     virtual void NotifyDeleted( const Agent_ABC& agent );
-    virtual void NotifyContextMenu( const Agent_ABC& agent, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     //@}
 
 private slots:

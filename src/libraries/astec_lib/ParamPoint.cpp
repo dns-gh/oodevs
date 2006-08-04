@@ -84,10 +84,10 @@ void ParamPoint::Commit()
 // Name: ParamPoint::NotifyContextMenu
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, QPopupMenu& menu )
+void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, ContextMenu& menu )
 {
     popupPoint_ = point;
-    menu.insertItem( menu_.c_str(), this, SLOT( AcceptPopupMenuPoint() ) );
+    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( AcceptPopupMenuPoint() ) );
 }
 
 // -----------------------------------------------------------------------------

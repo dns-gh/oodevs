@@ -15,7 +15,7 @@
 #include "SelectionObserver_ABC.h"
 #include "ContextMenuObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
-#include <qpopupmenu.h>
+#include "ContextMenu.h"
 
 // =============================================================================
 /** @class  ActionController
@@ -58,8 +58,8 @@ public:
     template< typename T >
     void ContextMenu( const T& element,const QPoint& where )
     {
-        popupMenu_->clear();
-        Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, *popupMenu_ );
+        menu_.Clear();
+        Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, menu_ );
         ShowMenu( where );
     }
 
@@ -82,11 +82,14 @@ private:
     void ShowMenu( const QPoint& where );
     //@}
 
+    
+private:
     //! @name Member data
     //@{
     bool selecting_;
-    QPopupMenu* popupMenu_;
+    ::ContextMenu menu_;
     //@}
+
 };
 
 #endif // __ActionController_h_

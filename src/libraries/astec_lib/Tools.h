@@ -17,9 +17,6 @@
 #include "Order_Def.h"
 #include "Attr_Def.h"
 #include "Perception_Def.h"
-//#include "Meteo_ABC.h"
-//#include "RawVisionData.h"
-//#include "Team.h"
 
 class QListView;
 
@@ -144,7 +141,6 @@ private:
     static converter< E_PerceptionResult >                perceptionLevelConverter_[];
     static converter< E_WeatherType >                     weatherConverter_[];
     static converter< E_LightingType >                    lightingConverter_[];
-//    static converter< RawVisionData::E_VisionObject > environnementConverter_[];
     static converter< ASN1T_EnumDiplomatie >              diplomatyConverter_[];
 };
 

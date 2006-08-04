@@ -66,12 +66,12 @@ void LocationCreator::AddLocationType( const QString& message, ASN1T_EnumTypeLoc
 // Name: LocationCreator::NotifyContextMenu
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, QPopupMenu& menu )
+void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, ContextMenu& menu )
 {
     if( !pPopupMenu_ )
         return;
     popupPoint_ = point;
-    menu.insertItem( menu_.c_str(), pPopupMenu_ );
+    menu.InsertItem( "Parametre", menu_.c_str(), pPopupMenu_ );
 }
 
 // -----------------------------------------------------------------------------

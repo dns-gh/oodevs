@@ -45,7 +45,7 @@ protected:
     //@{
     bool Invalid();
     void SetId( ASN1T_OID id );
-    void AddToMenu( QPopupMenu& menu );
+    void AddToMenu( ContextMenu& menu );
     void Display( const QString& what );
     //@}
 
@@ -93,7 +93,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const ConcreteEntity& entity, QPopupMenu& menu );
+    virtual void NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu );
     virtual void MenuItemValidated();
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
