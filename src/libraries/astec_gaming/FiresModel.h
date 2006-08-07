@@ -10,7 +10,7 @@
 #ifndef __FiresModel_h_
 #define __FiresModel_h_
 
-#include "Resolver.h"
+#include "astec_kernel/Resolver.h"
 #include "ASN_Types.h"
 
 class Agent_ABC;

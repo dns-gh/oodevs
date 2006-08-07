@@ -11,10 +11,10 @@
 #define __AgentPositions_h_
 
 #include "ASN_Types.h"
-#include "Updatable_ABC.h"
-#include "Positions.h"
-#include "Drawable_ABC.h"
-#include "Aggregatable_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/Positions.h"
+#include "astec_kernel/Drawable_ABC.h"
+#include "astec_kernel/Aggregatable_ABC.h"
 
 class CoordinateConverter_ABC;
 class Agent_ABC;

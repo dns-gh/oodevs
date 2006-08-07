@@ -11,9 +11,9 @@
 #define __ReportListView_h_
 
 #include "ListDisplayer.h"
-#include "astec_gaming/Observer_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
 #include "astec_gaming/AgentSelectionObserver.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 class Agent_ABC;
 class Report_ABC;

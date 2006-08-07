@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/ActionController.h"
-#include "astec_gaming/Drawable_ABC.h"
-#include "astec_gaming/Positions.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/ActionController.h"
+#include "astec_kernel/Drawable_ABC.h"
+#include "astec_kernel/Positions.h"
 #include "ColorStrategy_ABC.h"
 #include "GlTools_ABC.h"
 #include "graphics/MapWidget.h"

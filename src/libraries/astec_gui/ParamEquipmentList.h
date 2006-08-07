@@ -12,7 +12,7 @@
 
 #include "astec_gaming/ASN_Types.h"
 #include "Param_ABC.h"
-#include "astec_gaming/Resolver.h"
+#include "astec_kernel/Resolver.h"
 
 #include <qtable.h>
 

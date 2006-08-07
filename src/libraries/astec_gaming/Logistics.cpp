@@ -12,9 +12,9 @@
 #include "MaintenanceStates.h"
 #include "MedicalStates.h"
 #include "SupplyStates.h"
-#include "Entity_ABC.h"
+#include "astec_kernel/Entity_ABC.h"
 #include "Model.h"
-#include "ObjectTypes.h"
+#include "astec_kernel/ObjectTypes.h"
 #include "AgentsModel.h"
 #include "StaticModel.h"
 

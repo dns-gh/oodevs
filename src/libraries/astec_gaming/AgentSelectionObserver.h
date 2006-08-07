@@ -10,7 +10,7 @@
 #ifndef __AgentSelectionObserver_h_
 #define __AgentSelectionObserver_h_
 
-#include "SelectionObserver_ABC.h"
+#include "astec_kernel/SelectionObserver_ABC.h"
 
 class Population;
 class Agent_ABC;

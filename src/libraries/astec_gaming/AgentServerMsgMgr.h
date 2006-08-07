@@ -20,7 +20,7 @@
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
-#include "OptionsObserver_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
 #include "Publisher_ABC.h"
 
 #include "boost/thread/mutex.hpp"

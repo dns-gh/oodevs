@@ -9,8 +9,8 @@
 
 #include "astec_gui_pch.h"
 #include "LabelDisplayer.h"
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/DotationType.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/DotationType.h"
 #include "RichLabel.h"
 #include "ItemFactory_ABC.h"
 

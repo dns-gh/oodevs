@@ -11,11 +11,11 @@
 #define __PopulationPart_ABC_h_
 
 #include "ASN_Types.h"
-#include "Entity_ABC.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Drawable_ABC.h"
-#include "Positions.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/Drawable_ABC.h"
+#include "astec_kernel/Positions.h"
 
 // =============================================================================
 /** @class  PopulationPart_ABC

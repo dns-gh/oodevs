@@ -11,8 +11,8 @@
 #define __Troops_h_
 
 #include "ASN_Types.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
 #include "Humans.h"
 
 class Controller;

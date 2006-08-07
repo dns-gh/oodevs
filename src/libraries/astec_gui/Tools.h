@@ -17,6 +17,7 @@
 #include "astec_gaming/Order_Def.h"
 #include "astec_gaming/Attr_Def.h"
 #include "astec_gaming/Perception_Def.h"
+#include "ENT/ENT_Tr.h"
 
 class QListView;
 

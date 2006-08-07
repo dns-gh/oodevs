@@ -6,12 +6,12 @@
 
 #include "Surface.h"
 #include "Net_Def.h"
-#include "SensorType.h"
-#include "DetectionMap.h"
+#include "astec_kernel/SensorType.h"
+#include "astec_kernel/DetectionMap.h"
 #include "VisionLine.h"
 #include "VisionMap.h"
-#include "Positions.h"
-#include "Agent_ABC.h"
+#include "astec_kernel/Positions.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
 
 using namespace geometry;

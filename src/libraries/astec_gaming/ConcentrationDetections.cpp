@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "ConcentrationDetections.h"
 #include "Attr_Def.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------

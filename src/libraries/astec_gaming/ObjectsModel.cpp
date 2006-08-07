@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "ObjectsModel.h"
 #include "ObjectFactory_ABC.h"
-#include "Object_ABC.h"
+#include "astec_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectsModel constructor

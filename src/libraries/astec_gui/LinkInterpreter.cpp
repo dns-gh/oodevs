@@ -14,8 +14,8 @@
 #include "astec_gaming/Model.h"
 #include "astec_gaming/AgentsModel.h"
 #include "astec_gaming/ObjectsModel.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/ActionController.h"
 
 #include <qprocess.h>
 

@@ -11,8 +11,8 @@
 #define __MetricsLayer_h_
 
 #include "Layer_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
 class GlTools_ABC;
 class Controllers;
 

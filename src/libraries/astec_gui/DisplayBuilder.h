@@ -10,7 +10,7 @@
 #ifndef __Display_h_
 #define __Display_h_
 
-#include "Displayer_ABC.h"
+#include "astec_kernel/Displayer_ABC.h"
 #include "GroupDisplayer.h"
 
 class ItemFactory_ABC;

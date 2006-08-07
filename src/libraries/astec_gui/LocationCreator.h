@@ -11,7 +11,7 @@
 #define __LocationCreator_h_
 
 #include "astec_gaming/ASN_Types.h"
-#include "astec_gaming/ContextMenuObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
 
 class ParametersLayer;
 class GlTools_ABC;

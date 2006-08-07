@@ -10,17 +10,24 @@
 #include "astec_gui_pch.h"
 #include "Menu.h"
 #include "OptionMenu.h"
-#include "astec_gaming/Controllers.h"
-#include "TristateOption.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/TristateOption.h"
 #include "RecorderToolbar.h"
 #include "AboutDialog.h"
 
 namespace
 {
+    void Populate( OptionMenu< TristateOption >& menu )
+    {
+        menu.AddItem( qApp->tr( TristateOption::auto_ ), TristateOption::auto_ );
+        menu.AddItem( qApp->tr( TristateOption::on_ ), TristateOption::on_ );
+        menu.AddItem( qApp->tr( TristateOption::off_ ), TristateOption::off_ );
+    }
+
     void AddSubMenu( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( parent, options, option );
-        TristateOption::Populate( *optionMenu );
+        Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
 }

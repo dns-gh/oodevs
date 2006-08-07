@@ -14,7 +14,7 @@
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
-#include "ObjectTypes.h"
+#include "astec_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireResultFactory constructor

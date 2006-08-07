@@ -11,7 +11,7 @@
 #include "ParamPopulationKnowledge.h"
 #include "astec_gaming/PopulationKnowledge.h"
 #include "astec_gaming/Population.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------

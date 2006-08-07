@@ -9,10 +9,10 @@
 
 #include "astec_gaming_pch.h"
 #include "Report_ABC.h"
-#include "Entity_ABC.h"
+#include "astec_kernel/Entity_ABC.h"
 #include "Attributes.h"
 #include "Simulation.h"
-#include "astec_gui/Displayer_ABC.h"
+#include "astec_kernel/Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Report_ABC constructor

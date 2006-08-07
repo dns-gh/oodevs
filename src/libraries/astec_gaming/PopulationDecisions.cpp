@@ -10,8 +10,8 @@
 #include "astec_gaming_pch.h"
 #include "PopulationDecisions.h"
 #include "Population.h"
-#include "PopulationType.h"
-#include "DecisionalModel.h"
+#include "astec_kernel/PopulationType.h"
+#include "astec_kernel/DecisionalModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationDecisions constructor

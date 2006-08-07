@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ParamPoint.h"
 #include "moc_ParamPoint.cpp"
-#include "astec_gaming/CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "RichLabel.h"
 #include "GlTools_ABC.h"
 

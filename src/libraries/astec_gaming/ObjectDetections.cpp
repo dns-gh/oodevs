@@ -9,11 +9,11 @@
 
 #include "astec_gaming_pch.h"
 #include "ObjectDetections.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "Attr_Def.h"
 #include "astec_gui/GlTools_ABC.h"
-#include "Object_ABC.h"
-#include "Positions.h"
+#include "astec_kernel/Object_ABC.h"
+#include "astec_kernel/Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectDetections constructor

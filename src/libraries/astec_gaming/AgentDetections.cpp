@@ -9,9 +9,9 @@
 
 #include "astec_gaming_pch.h"
 #include "AgentDetections.h"
-#include "Controller.h"
-#include "Positions.h"
-#include "Agent_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Positions.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------

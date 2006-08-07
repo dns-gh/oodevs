@@ -20,7 +20,7 @@
 #define __OptionsPanel_h_
 
 #include <qvbox.h>
-#include "astec_gaming/OptionsObserver_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
 
 class QCheckBox;
 class Controllers;

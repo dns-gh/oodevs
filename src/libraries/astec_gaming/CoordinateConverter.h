@@ -12,15 +12,16 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
-#include "WorldParameters.h"
+#include "astec_kernel/WorldParameters.h"
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
 #include "geocoord/Geodetic.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 
 // =============================================================================
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-04-28: warning : not thread safe
+// $$$$ AGE 2006-08-07: passer dans kernel
 // =============================================================================
 class CoordinateConverter : public CoordinateConverter_ABC
 {

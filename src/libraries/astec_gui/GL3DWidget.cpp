@@ -18,7 +18,7 @@
 #include "ColorStrategy.h"
 #include "astec_gaming/Model.h"
 #include "ParametersLayer.h"
-#include "astec_gaming/DetectionMap.h"
+#include "astec_kernel/DetectionMap.h"
 
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Compass.h"

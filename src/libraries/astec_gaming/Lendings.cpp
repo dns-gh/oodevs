@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "Lendings.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "Loan.h"
 
 // -----------------------------------------------------------------------------

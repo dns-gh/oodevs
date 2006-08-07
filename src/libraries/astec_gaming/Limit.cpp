@@ -11,8 +11,8 @@
 #include "Limit.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/ActionController.h"
 
 IDManager Limit::idManager_( 138 );
 

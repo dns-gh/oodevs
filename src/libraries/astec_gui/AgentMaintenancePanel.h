@@ -20,9 +20,9 @@
 #define __AgentMaintenancePanel_h_
 
 #include "LogisticPanel.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_gaming/LogMaintenanceConsign.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 
 class MaintenanceStates;
 class Availability;

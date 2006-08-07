@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "AttributeViewCellEditor.h"
 #include "moc_AttributeViewCellEditor.cpp"
-#include "astec_gaming/DataDictionary.h"
+#include "astec_kernel/DataDictionary.h"
 #include <qtable.h>
 
 // -----------------------------------------------------------------------------

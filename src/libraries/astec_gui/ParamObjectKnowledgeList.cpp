@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "ParamObjectKnowledgeList.h"
-#include "astec_gaming/Object_ABC.h"
+#include "astec_kernel/Object_ABC.h"
 #include "astec_gaming/ObjectKnowledge.h"
 
 // -----------------------------------------------------------------------------

@@ -11,13 +11,13 @@
 
 #include "astec_gaming_pch.h"
 #include "PopulationFlowKnowledge.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationKnowledge.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "Units.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/Units.h"
 
 // =============================================================================
 // FlowPart

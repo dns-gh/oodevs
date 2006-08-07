@@ -9,9 +9,9 @@
 
 #include "astec_gaming_pch.h"
 #include "Equipments.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "Equipment.h"
-#include "DataDictionary.h"
+#include "astec_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor

@@ -9,10 +9,10 @@
 
 #include "astec_gaming_pch.h"
 #include "MedicalStates.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "Units.h"
-#include "DataDictionary.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/Units.h"
+#include "astec_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalStates constructor

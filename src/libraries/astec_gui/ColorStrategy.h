@@ -11,9 +11,9 @@
 #define __ColorStrategy_h_
 
 #include "ColorStrategy_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/SelectionObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/SelectionObserver_ABC.h"
 
 class Team;
 class Agent_ABC;

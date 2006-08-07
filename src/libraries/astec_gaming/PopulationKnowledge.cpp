@@ -16,8 +16,8 @@
 #include "Population.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
 

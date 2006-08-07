@@ -11,9 +11,9 @@
 #define __ChangeLogisticLinksDialog_h_
 
 #include "ValuedComboBox.h"
-#include "astec_gaming/SafePointer.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/ContextMenuObserver_ABC.h"
+#include "astec_kernel/SafePointer.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
 #include <qdialog.h>
 
 class Controllers;

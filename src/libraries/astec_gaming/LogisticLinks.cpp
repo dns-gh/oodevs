@@ -9,13 +9,13 @@
 
 #include "astec_gaming_pch.h"
 #include "LogisticLinks.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
-#include "Positions.h"
-#include "Agent_ABC.h"
-#include "AutomatType.h"
-#include "DataDictionary.h"
+#include "astec_kernel/Positions.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/AutomatType.h"
+#include "astec_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor

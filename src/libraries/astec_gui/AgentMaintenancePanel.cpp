@@ -20,13 +20,13 @@
 #include "AgentMaintenancePanel.h"
 #include "DisplayBuilder.h"
 #include "ListDisplayer.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_gaming/LogisticConsigns.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/LogMaintenanceConsign.h"
 #include "astec_gaming/MaintenanceStates.h"
 #include "astec_gaming/Availability.h"
-#include "astec_gaming/Units.h"
+#include "astec_kernel/Units.h"
 #include "SubItemDisplayer.h"
 
 // -----------------------------------------------------------------------------

@@ -14,8 +14,8 @@
 #include "Tools.h"
 #include "GlTools_ABC.h"
 #include "LocationCreator.h"
-#include "astec_gaming/ActionController.h"
-#include "astec_gaming/CoordinateConverter_ABC.h"
+#include "astec_kernel/ActionController.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocation constructor

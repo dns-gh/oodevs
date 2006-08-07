@@ -10,7 +10,7 @@
 #ifndef __GroupDisplayer_h_
 #define __GroupDisplayer_h_
 
-#include "Displayer_ABC.h"
+#include "astec_kernel/Displayer_ABC.h"
 
 #include <qlabel.h>
 #include <qgroupbox.h>

@@ -9,13 +9,13 @@
 
 #include "astec_gaming_pch.h"
 #include "StaticModel.h"
-#include "AgentTypes.h"
-#include "ObjectTypes.h"
+#include "astec_kernel/AgentTypes.h"
+#include "astec_kernel/ObjectTypes.h"
+#include "astec_kernel/DetectionMap.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Controller.h"
 #include "SurfaceFactory.h"
 #include "CoordinateConverter.h"
-#include "DetectionMap.h"
-#include "Controllers.h"
-#include "Controller.h"
 #include "ModelLoaded.h"
 
 // -----------------------------------------------------------------------------

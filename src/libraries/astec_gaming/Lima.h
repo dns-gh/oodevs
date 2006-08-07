@@ -11,7 +11,7 @@
 #define __Lima_h_
 
 #include "TacticalLine_ABC.h"
-#include "IDManager.h"
+#include "astec_kernel/IDManager.h"
 #include "ASN_Types.h"
 
 class Controller;

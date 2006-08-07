@@ -10,9 +10,9 @@
 #ifndef __MissionPanel_h_
 #define __MissionPanel_h_
 
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/Iterator.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/Iterator.h"
 
 class QPopupMenu;
 class Decisions;

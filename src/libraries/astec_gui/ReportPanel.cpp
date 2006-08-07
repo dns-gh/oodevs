@@ -12,7 +12,7 @@
 #include "ReportListView.h"
 #include "FireResultListView.h"
 #include "ReportFilterOptions.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportPanel constructor

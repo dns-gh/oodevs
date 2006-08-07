@@ -10,10 +10,10 @@
 #include "astec_gui_pch.h"
 #include "EventToolbar.h"
 #include "moc_EventToolbar.cpp"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/ActionController.h"
 #include "astec_gaming/Report_ABC.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/Population.h"
 
 // -----------------------------------------------------------------------------

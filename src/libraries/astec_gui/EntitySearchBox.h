@@ -11,9 +11,9 @@
 #define __EntitySearchBox_h_
 
 #include "EntitySearchBox_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/ActionController.h"
 
 // =============================================================================
 /** @class  EntitySearchBox

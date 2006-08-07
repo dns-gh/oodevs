@@ -26,8 +26,8 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "ModelLoaded.h"
-#include "Controllers.h"
-#include "Controller.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Controller.h"
 #include "StaticModel.h"
 #include "CoordinateConverter.h"
 

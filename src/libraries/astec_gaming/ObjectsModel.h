@@ -11,7 +11,7 @@
 #define __ObjectsModel_h_
 
 #include "ASN_Types.h"
-#include "Resolver.h"
+#include "astec_kernel/Resolver.h"
 
 class ObjectFactory_ABC;
 class Object_ABC;

@@ -18,7 +18,7 @@
 
 #include "astec_gui_pch.h"
 #include "Param_ABC.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: Param_ABC constructor

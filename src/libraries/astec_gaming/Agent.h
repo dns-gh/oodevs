@@ -11,8 +11,8 @@
 #define __Agent_h_
 
 #include "ASN_Types.h"
-#include "Agent_ABC.h"
-#include "DataDictionary.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/DataDictionary.h"
 
 class Controller;
 class AgentType;

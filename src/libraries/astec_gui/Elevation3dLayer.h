@@ -13,8 +13,8 @@
 #include "Layer_ABC.h"
 #include "graphics/ElevationColor_ABC.h"
 #include "graphics/ViewFrustum.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 class DetectionMap;
 class ElevationTextureTree;

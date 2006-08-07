@@ -10,8 +10,8 @@
 #include "astec_gaming_pch.h"
 #include "TeamSelectionObserver.h"
 #include "KnowledgeGroup.h"
-#include "Agent_ABC.h"
-#include "Object_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Object_ABC.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------

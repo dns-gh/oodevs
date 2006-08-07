@@ -12,13 +12,13 @@
 
 #include "Layer_ABC.h"
 #include "graphics/GraphicManager_ABC.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
-#include "TristateOption.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
+#include "astec_kernel/TristateOption.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/WorldParameters.h"
 #include "pathfind/TerrainData.h"
 #include "pathfind/SpatialContainer.h"
 #include "terrain/TesselatedShape.h"
-#include "astec_gaming/WorldParameters.h"
-#include "astec_gaming/ElementObserver_ABC.h"
 
 class GraphicShape;
 class Controllers;

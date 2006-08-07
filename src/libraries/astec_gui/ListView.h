@@ -10,7 +10,7 @@
 #ifndef __ListView_h_
 #define __ListView_h_
 
-#include "astec_gaming/Iterator.h"
+#include "astec_kernel/Iterator.h"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 

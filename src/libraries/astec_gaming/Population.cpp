@@ -9,17 +9,17 @@
 
 #include "astec_gaming_pch.h"
 #include "Population.h"
-#include "DataDictionary.h"
+#include "astec_kernel/DataDictionary.h"
 
 #include "Team.h"
-#include "PopulationType.h"
+#include "astec_kernel/PopulationType.h"
 
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "Model.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "ActionController.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/ActionController.h"
 
 using namespace geometry;
 

@@ -10,11 +10,11 @@
 #include "astec_gui_pch.h"
 #include "MiniViews.h"
 #include "moc_MiniViews.cpp"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "MiniView.h"
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/Population.h"
 
 // -----------------------------------------------------------------------------

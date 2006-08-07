@@ -11,9 +11,9 @@
 #define __KnowledgeGroup_h_
 
 #include "ASN_Types.h"
-#include "Entity_ABC.h"
-#include "IDManager.h"
-#include "Resolver.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/IDManager.h"
+#include "astec_kernel/Resolver.h"
 
 class Team;
 class Agent_ABC;

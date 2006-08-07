@@ -11,12 +11,12 @@
 #define __Object_h_
 
 #include "ASN_Types.h"
-#include "IDManager.h"
-#include "Object_ABC.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Resolver_ABC.h"
-#include "Drawable_ABC.h"
+#include "astec_kernel/IDManager.h"
+#include "astec_kernel/Object_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/Resolver_ABC.h"
+#include "astec_kernel/Drawable_ABC.h"
 
 class Controller;
 class Team;

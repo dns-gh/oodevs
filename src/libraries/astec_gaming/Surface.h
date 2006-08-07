@@ -8,7 +8,7 @@
 #include "Types.h"
 #include "Sector.h"
 #include "DIN_Types.h"
-#include "Resolver_ABC.h"
+#include "astec_kernel/Resolver_ABC.h"
 #include "Perception_Def.h"
 
 class SensorType;

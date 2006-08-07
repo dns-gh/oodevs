@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "Paths.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
 
 using namespace geometry;

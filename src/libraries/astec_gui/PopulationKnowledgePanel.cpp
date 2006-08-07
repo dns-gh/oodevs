@@ -15,7 +15,7 @@
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
 #include "ListDisplayer.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_gaming/KnowledgeGroup.h"
 #include "astec_gaming/PopulationKnowledges.h"
 #include "astec_gaming/PopulationKnowledge.h"

@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "ObjectKnowledges.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "ObjectKnowledge.h"
 #include "ObjectKnowledgeFactory.h"
 

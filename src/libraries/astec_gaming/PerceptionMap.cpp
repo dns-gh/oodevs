@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "PerceptionMap.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: PerceptionMap constructor

@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "LogisticConsigns.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "astec_gui/GlTools_ABC.h"
 #include "LogSupplyConsign.h"
 #include "LogMaintenanceConsign.h"

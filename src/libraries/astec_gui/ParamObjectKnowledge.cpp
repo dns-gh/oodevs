@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ParamObjectKnowledge.h"
 #include "astec_gaming/ObjectKnowledge.h"
-#include "astec_gaming/Object_ABC.h"
+#include "astec_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledge constructor

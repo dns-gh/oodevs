@@ -10,9 +10,9 @@
 #ifndef __MagicOrdersInterface_h_
 #define __MagicOrdersInterface_h_
 
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/SafePointer.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/SafePointer.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
 
 class Agent_ABC;

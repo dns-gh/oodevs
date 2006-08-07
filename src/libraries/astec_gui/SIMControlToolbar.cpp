@@ -19,7 +19,7 @@
 #include "DisconnectDialog.h"
 #include "MT_SpinBox.h"
 #include "astec_gaming/Simulation.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar constructor

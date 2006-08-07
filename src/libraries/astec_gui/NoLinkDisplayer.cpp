@@ -9,9 +9,9 @@
 
 #include "astec_gui_pch.h"
 #include "NoLinkDisplayer.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/Population.h"
-#include "astec_gaming/Object_ABC.h"
+#include "astec_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: NoLinkDisplayer constructor

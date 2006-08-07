@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ColoredElevationLayer.h"
 #include "xeumeuleu/xml.h"
-#include "astec_gaming/DetectionMap.h"
+#include "astec_kernel/DetectionMap.h"
 #include "boost/static_assert.hpp"
 using namespace xml;
 

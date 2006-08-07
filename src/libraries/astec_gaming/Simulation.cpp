@@ -9,8 +9,8 @@
 
 #include "astec_gaming_pch.h"
 #include "Simulation.h"
-#include "Controllers.h"
-#include "Controller.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Controller.h"
 #include "Network.h"
 
 // -----------------------------------------------------------------------------

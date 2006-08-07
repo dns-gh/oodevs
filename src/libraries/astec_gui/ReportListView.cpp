@@ -14,8 +14,8 @@
 #include "astec_gaming/Report_ABC.h"
 #include "ReportFilterOptions.h"
 #include "astec_gaming/Reports.h"
-#include "astec_gaming/Entity_ABC.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/Controllers.h"
 #include "ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------

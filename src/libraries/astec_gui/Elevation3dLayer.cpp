@@ -12,9 +12,9 @@
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Visitor3d.h"
 #include "GLTools_ABC.h"
-#include "astec_gaming/Controller.h"
+#include "astec_kernel/Controller.h"
 #include "astec_gaming/InitializationMessage.h"
-#include "astec_gaming/DetectionMap.h"
+#include "astec_kernel/DetectionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation3dLayer constructor

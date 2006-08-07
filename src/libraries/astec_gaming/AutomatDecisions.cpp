@@ -9,12 +9,12 @@
 
 #include "astec_gaming_pch.h"
 #include "AutomatDecisions.h"
-#include "Agent_ABC.h"
-#include "DecisionalModel.h"
-#include "Controller.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/DecisionalModel.h"
+#include "astec_kernel/Controller.h"
 #include "ASN_Messages.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "AutomatType.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor

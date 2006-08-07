@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ParamEquipmentList.h"
 #include "moc_ParamEquipmentList.cpp"
-#include "astec_gaming/EquipmentType.h"
+#include "astec_kernel/EquipmentType.h"
 #include "ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------

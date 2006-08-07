@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "AttributeViewCell.h"
-#include "astec_gaming/DataDictionary.h"
+#include "astec_kernel/DataDictionary.h"
 #include "AttributeViewCellEditor.h"
 
 // -----------------------------------------------------------------------------

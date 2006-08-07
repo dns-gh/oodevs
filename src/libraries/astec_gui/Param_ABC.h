@@ -19,8 +19,8 @@
 #ifndef __Param_ABC_h_
 #define __Param_ABC_h_
 
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/Drawable_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/Drawable_ABC.h"
 
 class ActionController;
 class GlTools_ABC;

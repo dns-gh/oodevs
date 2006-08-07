@@ -19,9 +19,9 @@
 #ifndef __ControllerToolbar_h_
 #define __ControllerToolbar_h_
 
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
 
 class Team;
 class Controllers;

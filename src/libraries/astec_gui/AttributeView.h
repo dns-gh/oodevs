@@ -12,7 +12,7 @@
 
 #include "NoLinkDisplayer.h"
 #include "astec_gaming/Simulation.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 #include <qtable.h>
 

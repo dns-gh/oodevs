@@ -11,7 +11,7 @@
 #define __AgentKnowledgeConverter_h_
 
 #include "AgentKnowledgeConverter_ABC.h"
-#include "ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 class Controllers;
 

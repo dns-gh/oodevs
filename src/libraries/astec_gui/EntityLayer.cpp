@@ -9,11 +9,11 @@
 
 #include "astec_gui_pch.h"
 #include "EntityLayer.h"
-#include "astec_gaming/Entity_ABC.h"
-#include "astec_gaming/OptionVariant.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/OptionVariant.h"
+#include "astec_kernel/Controllers.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
-#include "astec_gaming/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase

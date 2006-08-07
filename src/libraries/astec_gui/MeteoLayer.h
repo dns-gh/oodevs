@@ -11,7 +11,7 @@
 #define __MeteoLayer_h_
 
 #include "Layer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 class AmmoEffect;
 class Controllers;

@@ -17,8 +17,8 @@
 #include "astec_gaming/StaticModel.h"
 #include "astec_gaming/Model.h"
 #include "astec_gaming/Simulation.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Workers.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Workers.h"
 #include "astec_gaming/AgentServerMsgMgr.h"
 
 #pragma warning( push )

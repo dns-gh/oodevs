@@ -9,12 +9,12 @@
 
 #include "astec_gaming_pch.h"
 #include "ObjectKnowledge.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "Units.h"
-#include "Object_ABC.h"
-#include "ObjectType.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/Units.h"
+#include "astec_kernel/Object_ABC.h"
+#include "astec_kernel/ObjectType.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "Team.h"
 #include "astec_gui/GlTools_ABC.h"
 

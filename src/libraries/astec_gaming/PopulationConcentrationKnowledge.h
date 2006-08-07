@@ -13,8 +13,8 @@
 #define __PopulationConcentrationKnowledge_h_
 
 #include "ASN_Types.h"
-#include "IDManager.h"
-#include "OptionalValue.h"
+#include "astec_kernel/IDManager.h"
+#include "astec_kernel/OptionalValue.h"
 #include "PopulationPartKnowledge_ABC.h"
 
 class CoordinateConverter_ABC;

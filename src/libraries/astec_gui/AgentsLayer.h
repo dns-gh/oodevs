@@ -11,9 +11,9 @@
 #define __AgentsLayer_h_
 
 #include "EntityLayer.h"
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/SafePointer.h"
 
 // =============================================================================
 /** @class  AgentsLayer

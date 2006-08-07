@@ -14,17 +14,17 @@
 
 #include "astec_gaming/ASN_Messages.h"
 #include "astec_gaming/StaticModel.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/Equipments.h"
 #include "astec_gaming/Troops.h"
 #include "astec_gaming/Dotations.h"
 #include "astec_gaming/Dotation.h"
-#include "astec_gaming/DotationType.h"
-#include "astec_gaming/ObjectTypes.h"
+#include "astec_kernel/DotationType.h"
+#include "astec_kernel/ObjectTypes.h"
 #include "astec_gaming/SupplyStates.h"
 #include "astec_gaming/Equipments.h"
 #include "astec_gaming/Equipment.h"
-#include "astec_gaming/EquipmentType.h"
+#include "astec_kernel/EquipmentType.h"
 #include "ExclusiveComboTableItem.h"
 
 #include <qtable.h>

@@ -18,7 +18,7 @@
 
 #include "astec_gui_pch.h"
 #include "Settings.h"
-#include "TristateOption.h"
+#include "astec_kernel/TristateOption.h"
 
 #include <qmainwindow.h>
 #include <qdockwindow.h>

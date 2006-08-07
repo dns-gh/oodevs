@@ -21,8 +21,8 @@
 
 #include "Types.h"
 #include "ASN_Types.h"
-#include "Resolver.h"
-#include "Drawable_ABC.h"
+#include "astec_kernel/Resolver.h"
+#include "astec_kernel/Drawable_ABC.h"
 
 class DotationRequest;
 class Agent_ABC;

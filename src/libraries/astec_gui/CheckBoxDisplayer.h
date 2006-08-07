@@ -10,7 +10,7 @@
 #ifndef __CheckBoxDisplayer_h_
 #define __CheckBoxDisplayer_h_
 
-#include "Displayer_ABC.h"
+#include "astec_kernel/Displayer_ABC.h"
 
 // =============================================================================
 /** @class  CheckBoxDisplayer

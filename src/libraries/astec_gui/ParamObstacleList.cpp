@@ -13,7 +13,7 @@
 #include "ParamListView.h"
 #include "ParamObstacle.h"
 #include "ValuedListItem.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList constructor

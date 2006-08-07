@@ -9,8 +9,8 @@
 
 #include "astec_gui_pch.h"
 #include "NBCPrototype.h"
-#include "astec_gaming/NBCAgent.h"
-#include "astec_gaming/Iterator.h"
+#include "astec_kernel/NBCAgent.h"
+#include "astec_kernel/Iterator.h"
 #include "astec_gaming/ASN_Messages.h"
 
 // -----------------------------------------------------------------------------

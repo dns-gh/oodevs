@@ -10,13 +10,13 @@
 #include "astec_gui_pch.h"
 #include "BigBrother.h"
 #include "moc_BigBrother.cpp"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/ActionController.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/ActionController.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/Population.h"
 #include "AttributeView.h"
 #include "GlWidget.h"
-#include "astec_gaming/Positions.h"
+#include "astec_kernel/Positions.h"
 #include "astec_gaming/Report_ABC.h"
 
 #include <qtoolbox.h>

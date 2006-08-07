@@ -9,8 +9,8 @@
 
 #include "astec_gaming_pch.h"
 #include "AgentServerMsgMgr.h"
-#include "Agent_ABC.h"
-#include "Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "Object.h"
 #include "Lima.h"
 #include "Limit.h"
@@ -38,10 +38,10 @@
 #include "WeatherModel.h"
 #include "DIN_InputDeepCopy.h"
 #include <ctime>
-#include "Controllers.h"
-#include "OptionVariant.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/OptionVariant.h"
 #include "astec_gui/LogTools.h"
-#include "astec_gui/TristateOption.h"
+#include "astec_kernel/TristateOption.h"
 
 using namespace DIN;
 using namespace log_tools;

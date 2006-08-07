@@ -10,21 +10,21 @@
 #include "astec_gui_pch.h"
 #include "ObjectPanel.h"
 
-#include "astec_gaming/Object_ABC.h"
-#include "astec_gaming/ObjectType.h"
+#include "astec_kernel/Object_ABC.h"
+#include "astec_kernel/ObjectType.h"
 #include "astec_gaming/CampAttributes.h"
 #include "astec_gaming/CrossingSiteAttributes.h"
 #include "astec_gaming/LogisticRouteAttributes.h"
 #include "astec_gaming/NBCAttributes.h"
 #include "astec_gaming/RotaAttributes.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/DotationType.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/DotationType.h"
 
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
-#include "astec_gaming/Units.h"
+#include "astec_kernel/Units.h"
 
 #include <qgrid.h>
 

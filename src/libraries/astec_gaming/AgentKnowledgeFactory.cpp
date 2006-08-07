@@ -15,7 +15,7 @@
 #include "PerceptionMap.h"
 #include "TeamsModel.h"
 #include "PopulationKnowledge.h"
-#include "Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
 

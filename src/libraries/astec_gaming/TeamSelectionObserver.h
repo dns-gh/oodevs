@@ -10,7 +10,7 @@
 #ifndef __TeamSelectionObserver_h_
 #define __TeamSelectionObserver_h_
 
-#include "SelectionObserver_ABC.h"
+#include "astec_kernel/SelectionObserver_ABC.h"
 class Agent_ABC;
 class KnowledgeGroup;
 class Team;

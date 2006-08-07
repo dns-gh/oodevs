@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "KnowledgeGroup.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "Team.h"
 
 IDManager KnowledgeGroup::idManager_( 0 );

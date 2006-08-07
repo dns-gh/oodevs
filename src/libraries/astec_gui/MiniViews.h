@@ -10,8 +10,8 @@
 #ifndef __MiniViews_h_
 #define __MiniViews_h_
 
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/SafePointer.h"
 
 class Entity_ABC;
 class Agent_ABC;

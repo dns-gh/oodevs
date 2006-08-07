@@ -10,9 +10,9 @@
 #include "astec_gui_pch.h"
 #include "ParamLocationList.h"
 #include "LocationCreator.h"
-#include "astec_gaming/CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "astec_kernel/ActionController.h"
 #include "Tools.h"
-#include "astec_gaming/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocationList constructor

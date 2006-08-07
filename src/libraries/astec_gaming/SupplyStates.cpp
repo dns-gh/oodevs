@@ -9,9 +9,9 @@
 
 #include "astec_gaming_pch.h"
 #include "SupplyStates.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "DataDictionary.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStates constructor

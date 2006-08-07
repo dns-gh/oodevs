@@ -12,10 +12,10 @@
 #include "moc_ParamPath.cpp"
 #include "ParametersLayer.h"
 #include "RichLabel.h"
-#include "astec_gaming/CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "GlTools_ABC.h"
-#include "astec_gaming/Entity_ABC.h"
-#include "astec_gaming/Positions.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath constructor

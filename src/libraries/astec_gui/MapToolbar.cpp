@@ -9,14 +9,25 @@
 
 #include "astec_gui_pch.h"
 #include "MapToolbar.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Options.h"
-#include "astec_gaming/OptionVariant.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Options.h"
+#include "astec_kernel/OptionVariant.h"
 #include "ToolListButton.h"
-#include "TristateOption.h"
+#include "astec_kernel/TristateOption.h"
 #include "BooleanOptionButton.h"
 
 #include "resources.h"
+
+namespace
+{
+    void Populate( ToolListButton< TristateOption >& button )
+    {
+        button.AddItem( qApp->tr( TristateOption::auto_ ), TristateOption::auto_ );
+        button.AddItem( qApp->tr( TristateOption::on_ ),   TristateOption::on_ );
+        button.AddItem( qApp->tr( TristateOption::off_ ),  TristateOption::off_ );
+        button.setMinimumWidth( 55 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MapToolbar constructor
@@ -27,9 +38,9 @@ MapToolbar::MapToolbar( QMainWindow* pParent, Controllers& controllers )
 {
     setLabel( tr( "Options carte" ) );
 
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textsmall ),     tr( "Afficher petits textes" ),   this, controllers.options_, "SmallText" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textbig ),       tr( "Afficher grands textes" ),   this, controllers.options_, "BigText" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( tacticallines ), tr( "Afficher lignes tactiques" ), this, controllers.options_, "TacticalLines" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textsmall ),     tr( "Afficher petits textes" ),   this, controllers.options_, "SmallText" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textbig ),       tr( "Afficher grands textes" ),   this, controllers.options_, "BigText" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( tacticallines ), tr( "Afficher lignes tactiques" ), this, controllers.options_, "TacticalLines" ) );
 
     new BooleanOptionButton( MAKE_ICON( weather ), tr( "Afficher météo" ), this, controllers.options_, "Weather" );
 

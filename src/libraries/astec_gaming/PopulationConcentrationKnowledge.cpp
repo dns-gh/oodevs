@@ -15,9 +15,9 @@
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge

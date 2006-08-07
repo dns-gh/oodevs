@@ -11,7 +11,7 @@
 #include "AgentFactory.h"
 
 #include "Model.h"
-#include "AgentTypes.h"
+#include "astec_kernel/AgentTypes.h"
 #include "Agent.h"
 #include "Population.h"
 
@@ -44,8 +44,8 @@
 #include "LimitsModel.h"
 #include "AgentFactory.h"
 #include "ObjectFactory.h"
-#include "AgentTypes.h"
-#include "ObjectTypes.h"
+#include "astec_kernel/AgentTypes.h"
+#include "astec_kernel/ObjectTypes.h"
 #include "PopulationDetections.h"
 #include "LogisticConsigns.h"
 #include "Logistics.h"
@@ -55,12 +55,12 @@
 #include "Fires.h"
 #include "AgentPositions.h"
 #include "PopulationPositions.h"
-#include "Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "Lives.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
 #include "CoordinateConverter.h"
-#include "DataDictionary.h"
+#include "astec_kernel/DataDictionary.h"
 #include "StaticModel.h"
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
-    result->Attach( *new MagicOrders( controllers_.controller_, *result ) );
+    result->Attach( *new MagicOrders( *result ) );
     result->Update( asnMsg );
     return result;
 }
@@ -129,7 +129,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
-    result->Attach( *new MagicOrders( controllers_.controller_, *result ) );
+    result->Attach( *new MagicOrders( *result ) );
     return result;
 }
 

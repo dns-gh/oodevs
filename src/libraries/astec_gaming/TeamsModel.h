@@ -11,7 +11,7 @@
 #define __TeamsModel_h_
 
 #include "ASN_Types.h"
-#include "Resolver.h"
+#include "astec_kernel/Resolver.h"
 
 class Team;
 class TeamFactory_ABC;

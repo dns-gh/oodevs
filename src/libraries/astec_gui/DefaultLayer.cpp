@@ -9,8 +9,8 @@
 
 #include "astec_gui_pch.h"
 #include "DefaultLayer.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: DefaultLayer constructor

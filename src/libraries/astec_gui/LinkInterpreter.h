@@ -10,7 +10,7 @@
 #ifndef __LinkInterpreter_h_
 #define __LinkInterpreter_h_
 
-#include "astec_gaming/Resolver_ABC.h"
+#include "astec_kernel/Resolver_ABC.h"
 
 class Model;
 class Controllers;

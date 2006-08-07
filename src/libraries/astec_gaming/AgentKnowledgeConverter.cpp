@@ -10,10 +10,10 @@
 #include "astec_gaming_pch.h"
 #include "AgentKnowledgeConverter.h"
 #include "AgentKnowledge.h"
-#include "Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "Population.h"
 #include "PopulationKnowledge.h"
-#include "Controllers.h"
+#include "astec_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter constructor

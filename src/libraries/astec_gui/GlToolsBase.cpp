@@ -9,9 +9,9 @@
 
 #include "astec_gui_pch.h"
 #include "GlToolsBase.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Options.h"
-#include "TristateOption.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Options.h"
+#include "astec_kernel/TristateOption.h"
 #include "GlFont.h"
 
 using namespace geometry;

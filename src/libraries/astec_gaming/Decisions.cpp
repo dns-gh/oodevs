@@ -9,12 +9,12 @@
 
 #include "astec_gaming_pch.h"
 #include "Decisions.h"
-#include "Agent_ABC.h"
-#include "Controller.h"
-#include "DecisionalModel.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/DecisionalModel.h"
 #include "astec_gui/GlTools_ABC.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "AgentType.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/AgentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: Decisions constructor

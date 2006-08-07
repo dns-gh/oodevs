@@ -11,7 +11,7 @@
 #define __Gl3dWidget_h_
 
 #include "graphics/Widget3D.h"
-#include "astec_gaming/WorldParameters.h"
+#include "astec_kernel/WorldParameters.h"
 #include "GlToolsBase.h"
 #include "View_ABC.h"
 #include "SetGlOptions.h"

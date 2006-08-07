@@ -13,7 +13,7 @@
 #include "astec_gaming/Population.h"
 #include "astec_gaming/PopulationConcentration.h"
 #include "astec_gaming/PopulationFlow.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"

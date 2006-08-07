@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "SpinBoxDisplayer.h"
-#include "astec_gaming/Units.h"
+#include "astec_kernel/Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: SpinBoxDisplayer constructor

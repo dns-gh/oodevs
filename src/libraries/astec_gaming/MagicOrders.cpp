@@ -9,20 +9,19 @@
 
 #include "astec_gaming_pch.h"
 #include "MagicOrders.h"
-#include "Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "AutomatDecisions.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrders constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrders::MagicOrders( Controller& controller, const Agent_ABC& agent )
-    : controller_( controller )
-    , agent_( agent )
+MagicOrders::MagicOrders( const Agent_ABC& agent )
+    : agent_( agent )
     , transportersReady_( false )
 {
-    controller_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +30,7 @@ MagicOrders::MagicOrders( Controller& controller, const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 MagicOrders::~MagicOrders()
 {
-    controller_.Remove( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

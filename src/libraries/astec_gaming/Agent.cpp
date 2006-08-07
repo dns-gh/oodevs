@@ -9,13 +9,13 @@
 
 #include "astec_gaming_pch.h"
 #include "Agent.h"
-#include "AgentType.h"
-#include "AutomatType.h"
-#include "Controller.h"
+#include "astec_kernel/AgentType.h"
+#include "astec_kernel/AutomatType.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/DataDictionary.h"
+#include "astec_kernel/ActionController.h"
 #include "KnowledgeGroup.h"
 #include "Attributes.h"
-#include "DataDictionary.h"
-#include "ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor

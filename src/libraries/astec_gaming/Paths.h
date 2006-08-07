@@ -11,9 +11,9 @@
 #define __Paths_h_
 
 #include "ASN_Types.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Drawable_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/Drawable_ABC.h"
 
 class CoordinateConverter_ABC;
 

@@ -11,11 +11,11 @@
 #define __AgentDetections_h_
 
 #include "DIN_Types.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Resolver_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/Resolver_ABC.h"
+#include "astec_kernel/Drawable_ABC.h"
 #include "Attr_Def.h"
-#include "Drawable_ABC.h"
 
 class Controller;
 class Agent_ABC;

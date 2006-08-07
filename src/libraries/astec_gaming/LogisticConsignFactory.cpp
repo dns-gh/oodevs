@@ -14,9 +14,9 @@
 #include "LogMaintenanceConsign.h"
 #include "LogSupplyConsign.h"
 #include "LogMedicalConsign.h"
-#include "ObjectTypes.h"
-#include "Controllers.h"
-#include "AgentTypes.h"
+#include "astec_kernel/ObjectTypes.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/AgentTypes.h"
 #include "StaticModel.h"
 
 // -----------------------------------------------------------------------------

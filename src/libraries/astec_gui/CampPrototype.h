@@ -11,12 +11,12 @@
 #define __ObjectPrototypeCampAttributes_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
-#include "astec_gaming/Resolver.h"
+#include "astec_kernel/Resolver.h"
 #include "ValuedComboBox.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/SafePointer.h"
 
 class Agent_ABC;
 class Controllers;

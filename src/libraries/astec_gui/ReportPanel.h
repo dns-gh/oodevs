@@ -20,7 +20,7 @@
 #define __ReportPanel_h_
 
 #include "InfoPanel_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
 #include "astec_gaming/AgentSelectionObserver.h"
 
 class ReportListView;

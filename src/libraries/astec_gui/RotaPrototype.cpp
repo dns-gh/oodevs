@@ -9,11 +9,12 @@
 
 #include "astec_gui_pch.h"
 #include "RotaPrototype.h"
-#include "astec_gaming/NBCAgent.h"
+
+#include "astec_kernel/NBCAgent.h"
+#include "astec_kernel/Iterator.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "ValuedListItem.h"
-#include "astec_gaming/Iterator.h"
 #include "RichLabel.h"
+#include "ValuedListItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: RotaPrototype constructor

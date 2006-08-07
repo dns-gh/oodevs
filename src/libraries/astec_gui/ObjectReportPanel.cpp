@@ -9,10 +9,10 @@
 
 #include "astec_gui_pch.h"
 #include "ObjectReportPanel.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "FireResultListView.h"
 
-#include "astec_gaming/Object_ABC.h"
+#include "astec_kernel/Object_ABC.h"
 #include "astec_gaming/Explosions.h"
 #include "astec_gaming/Equipment.h"
 

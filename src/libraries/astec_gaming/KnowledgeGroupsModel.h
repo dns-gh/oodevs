@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupsModel_h_
 #define __KnowledgeGroupsModel_h_
 
-#include "Resolver_ABC.h"
+#include "astec_kernel/Resolver_ABC.h"
 
 class KnowledgeGroup;
 class TeamsModel;

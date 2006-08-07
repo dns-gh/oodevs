@@ -11,10 +11,10 @@
 #define __AgentListView_h_
 
 #include "ListView.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/SelectionObserver_ABC.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
-#include "astec_gaming/ActivationObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/SelectionObserver_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
+#include "astec_kernel/ActivationObserver_ABC.h"
 
 class Team;
 class KnowledgeGroup;

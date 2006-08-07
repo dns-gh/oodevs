@@ -9,12 +9,12 @@
 
 #include "astec_gaming_pch.h"
 #include "Attributes.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "Units.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/Units.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
-#include "DataDictionary.h"
+#include "astec_kernel/DataDictionary.h"
 
 using namespace geometry;
 

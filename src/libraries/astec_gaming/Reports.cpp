@@ -11,7 +11,7 @@
 #include "Reports.h"
 #include "RC.h"
 #include "Trace.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "astec_gui/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------

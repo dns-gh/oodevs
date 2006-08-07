@@ -10,8 +10,8 @@
 #ifndef __LogisticSupplyChangeQuotasDialog_h_
 #define __LogisticSupplyChangeQuotasDialog_h_
 
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/SafePointer.h"
 #include "ValuedComboBox.h"
 #include <qdialog.h>
 

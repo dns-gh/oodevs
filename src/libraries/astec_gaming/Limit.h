@@ -11,7 +11,7 @@
 #define __Limit_h_
 
 #include "TacticalLine_ABC.h"
-#include "IDManager.h"
+#include "astec_kernel/IDManager.h"
 
 class CoordinateConverter_ABC;
 class Controller;

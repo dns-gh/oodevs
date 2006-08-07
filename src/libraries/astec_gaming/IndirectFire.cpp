@@ -9,8 +9,8 @@
 
 #include "astec_gaming_pch.h"
 #include "IndirectFire.h"
-#include "Agent_ABC.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------

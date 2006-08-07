@@ -13,12 +13,12 @@
 #define __AgentKnowledge_h_
 
 #include "ASN_Types.h"
-#include "Entity_ABC.h"
-#include "IDManager.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/IDManager.h"
 #include "Perception_Def.h"
-#include "OptionalValue.h"
-#include "Resolver_ABC.h"
-#include "Drawable_ABC.h"
+#include "astec_kernel/OptionalValue.h"
+#include "astec_kernel/Resolver_ABC.h"
+#include "astec_kernel/Drawable_ABC.h"
 
 class Agent_ABC;
 class Controller;

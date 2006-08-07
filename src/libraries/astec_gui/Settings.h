@@ -23,6 +23,7 @@
 
 class QDockWindow;
 class QMainWindow;
+class QWidget;
 class TristateOption;
 
 // =============================================================================

@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "BooleanOptionButton.h"
 #include "moc_BooleanOptionButton.cpp"
-#include "astec_gaming/Options.h"
+#include "astec_kernel/Options.h"
 
 // -----------------------------------------------------------------------------
 // Name: BooleanOptionButton constructor

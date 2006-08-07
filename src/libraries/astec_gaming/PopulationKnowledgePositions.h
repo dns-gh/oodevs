@@ -10,7 +10,7 @@
 #ifndef __PopulationKnowledgePositions_h_
 #define __PopulationKnowledgePositions_h_
 
-#include "Positions.h"
+#include "astec_kernel/Positions.h"
 class PopulationKnowledge;
 
 // =============================================================================

@@ -10,9 +10,9 @@
 #include "astec_gui_pch.h"
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
-#include "astec_gaming/DetectionMap.h"
-#include "astec_gaming/CoordinateConverter_ABC.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/DetectionMap.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_gaming/Simulation.h"
 
 #include <qstatusbar.h>

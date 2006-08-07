@@ -12,10 +12,10 @@
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/LogisticLinks.h"
-#include "astec_gaming/AutomatType.h"
+#include "astec_kernel/AutomatType.h"
 
 #include <qgrid.h>
 

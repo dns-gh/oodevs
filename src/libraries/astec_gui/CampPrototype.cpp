@@ -11,10 +11,10 @@
 #include "CampPrototype.h"
 #include "moc_CampPrototype.cpp"
 
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/AutomatType.h"
+#include "astec_kernel/AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: CampPrototype::CampPrototype

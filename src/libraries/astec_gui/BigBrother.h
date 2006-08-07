@@ -10,10 +10,10 @@
 #ifndef __BigBrother_h_
 #define __BigBrother_h_
 
-#include "astec_gaming/ContextMenuObserver_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/SafePointer.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/SafePointer.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 class Controllers;
 class Agent_ABC;

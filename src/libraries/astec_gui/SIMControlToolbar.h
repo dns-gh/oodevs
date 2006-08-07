@@ -13,7 +13,7 @@
 #define __SIMControlToolbar_h_
 
 #include "astec_gaming/Types.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 
 class ConnectDialog;
 class DisconnectDialog;

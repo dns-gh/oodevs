@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "Equipment.h"
-#include "EquipmentType.h"
+#include "astec_kernel/EquipmentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: Equipment constructor

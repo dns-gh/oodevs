@@ -11,10 +11,10 @@
 #define __NBCAttributes_h_
 
 #include "ASN_Types.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "OptionalValue.h"
-#include "Resolver_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/OptionalValue.h"
+#include "astec_kernel/Resolver_ABC.h"
 
 class Controller;
 class Displayer_ABC;

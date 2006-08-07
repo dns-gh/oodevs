@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "Diplomacies.h"
 #include "Team.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacies constructor

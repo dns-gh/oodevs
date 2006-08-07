@@ -12,8 +12,8 @@
 #include "moc_ObjectCreationPanel.cpp"
 #include "ObjectPrototype.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/ObjectType.h"
-#include "astec_gaming/IDManager.h"
+#include "astec_kernel/ObjectType.h"
+#include "astec_kernel/IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectCreationPanel constructor

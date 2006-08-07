@@ -9,16 +9,16 @@
 
 #include "astec_gui_pch.h"
 #include "AgentListView.h"
-#include "astec_gaming/Controller.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/ActionController.h"
 #include "ValuedListItem.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/Team.h"
 #include "astec_gaming/KnowledgeGroup.h"
 #include "astec_gaming/AutomatDecisions.h"
-#include "astec_gaming/OptionVariant.h"
+#include "astec_kernel/OptionVariant.h"
 #include "astec_gaming/ASN_Messages.h"
 #include "ItemFactory_ABC.h"
 

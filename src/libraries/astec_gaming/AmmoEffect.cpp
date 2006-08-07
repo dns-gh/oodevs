@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "AmmoEffect.h"
 #include "astec_gui/GlTools_ABC.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: AmmoEffect constructor

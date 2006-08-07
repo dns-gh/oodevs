@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "LocationPositions.h"
-#include "CoordinateConverter_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_gui/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------

@@ -18,7 +18,7 @@
 #include "Team.h"
 #include "Diplomacies.h"
 #include "AgentKnowledgeFactory.h"
-#include "Controllers.h"
+#include "astec_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor

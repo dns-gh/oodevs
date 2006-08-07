@@ -20,8 +20,8 @@
 #include "ControllerToolbar.h"
 #include "moc_ControllerToolbar.cpp"
 #include "astec_gaming/Team.h"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Options.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Options.h"
 
 #include <qprocess.h>
 

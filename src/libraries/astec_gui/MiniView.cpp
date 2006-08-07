@@ -9,10 +9,10 @@
 
 #include "astec_gui_pch.h"
 #include "MiniView.h"
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/Positions.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Positions.h"
 #include "GlWidget.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include <qpainter.h>
 
 // -----------------------------------------------------------------------------

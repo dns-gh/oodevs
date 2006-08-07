@@ -10,7 +10,7 @@
 #ifndef __LogisticSupplyRecompletionDialog_h_
 #define __LogisticSupplyRecompletionDialog_h_
 
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/SafePointer.h"
 
 class Agent_ABC;
 class Controllers;

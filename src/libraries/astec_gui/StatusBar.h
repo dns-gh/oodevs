@@ -10,7 +10,7 @@
 #ifndef __StatusBar_h_
 #define __StatusBar_h_
 
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_gaming/Simulation.h"
 
 class DetectionMap;

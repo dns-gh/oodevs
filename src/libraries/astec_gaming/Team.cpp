@@ -20,7 +20,7 @@
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "KnowledgeGroupFactory_ABC.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor

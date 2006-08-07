@@ -9,9 +9,20 @@
 
 #include "astec_gui_pch.h"
 #include "UnitToolbar.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/TristateOption.h"
 #include "ToolListButton.h"
-#include "TristateOption.h"
+
+namespace
+{
+    void Populate( ToolListButton< TristateOption >& button )
+    {
+        button.AddItem( qApp->tr( TristateOption::auto_ ), TristateOption::auto_ );
+        button.AddItem( qApp->tr( TristateOption::on_ ), TristateOption::on_ );
+        button.AddItem( qApp->tr( TristateOption::off_ ), TristateOption::off_ );
+        button.setMinimumWidth( 55 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: UnitToolbar constructor
@@ -22,11 +33,11 @@ UnitToolbar::UnitToolbar( QMainWindow* pParent, Controllers& controllers )
 {
     setLabel( tr( "Options unité" ) );
 
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionlines ),    tr( "Afficher lignes de vision" ),   this, controllers.options_, "VisionLines" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visioncones ),    tr( "Afficher cones de vision" ),    this, controllers.options_, "VisionCones" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionsurfaces ), tr( "Afficher surfaces de vision" ), this, controllers.options_, "VisionSurfaces" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( path ),           tr( "Afficher les itinéraires" ),    this, controllers.options_, "Paths" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( oldpath ),        tr( "Afficher chemin parcouru" ),    this, controllers.options_, "OldPaths" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionlines ),    tr( "Afficher lignes de vision" ),   this, controllers.options_, "VisionLines" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visioncones ),    tr( "Afficher cones de vision" ),    this, controllers.options_, "VisionCones" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionsurfaces ), tr( "Afficher surfaces de vision" ), this, controllers.options_, "VisionSurfaces" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( path ),           tr( "Afficher les itinéraires" ),    this, controllers.options_, "Paths" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( oldpath ),        tr( "Afficher chemin parcouru" ),    this, controllers.options_, "OldPaths" ) );
 }
 
 // -----------------------------------------------------------------------------

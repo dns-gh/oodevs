@@ -11,7 +11,7 @@
 #include "Elevation2dLayer.h"
 #include "ColoredElevationLayer.h"
 #include "GLTools_ABC.h"
-#include "astec_gaming/Controller.h"
+#include "astec_kernel/Controller.h"
 #include "astec_gaming/InitializationMessage.h"
 
 // -----------------------------------------------------------------------------

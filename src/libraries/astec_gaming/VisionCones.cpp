@@ -13,7 +13,7 @@
 #include "astec_gui/GlTools_ABC.h"
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
-#include "Workers.h"
+#include "astec_kernel/Workers.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones constructor

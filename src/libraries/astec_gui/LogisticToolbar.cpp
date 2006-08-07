@@ -11,11 +11,22 @@
 #include "LogisticToolbar.h"
 #include "moc_LogisticToolbar.cpp"
 
-#include "astec_gaming/Controllers.h"
-#include "TristateOption.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/TristateOption.h"
 #include "ToolListButton.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "AgentsLayer.h"
+
+namespace
+{
+    void Populate( ToolListButton< TristateOption >& button )
+    {
+        button.AddItem( qApp->tr( TristateOption::auto_ ), TristateOption::auto_ );
+        button.AddItem( qApp->tr( TristateOption::on_ ),   TristateOption::on_ );
+        button.AddItem( qApp->tr( TristateOption::off_ ),  TristateOption::off_ );
+        button.setMinimumWidth( 55 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticToolbar constructor
@@ -28,9 +39,9 @@ LogisticToolbar::LogisticToolbar( QMainWindow* pParent, Controllers& controllers
 {
     setLabel( tr( "Options logistique" ) );
 
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( loglink ),     tr( "Afficher les liens logistiques" ),               this, controllers.options_, "LogisticLinks" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( missinglog ),  tr( "Afficher les liens logistiques manquant" ),      this, controllers.options_, "MissingLogisticLinks" ) );
-    TristateOption::Populate( *new ToolListButton< TristateOption >( MAKE_ICON( realtimelog ), tr( "Affichage temps réel des actions logistiques" ), this, controllers.options_, "RealTimeLogistic" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( loglink ),     tr( "Afficher les liens logistiques" ),               this, controllers.options_, "LogisticLinks" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( missinglog ),  tr( "Afficher les liens logistiques manquant" ),      this, controllers.options_, "MissingLogisticLinks" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( realtimelog ), tr( "Affichage temps réel des actions logistiques" ), this, controllers.options_, "RealTimeLogistic" ) );
     
     new QToolButton( MAKE_ICON( aggregate ),    tr( "Aggréger tous les automates" ), "", this,    SLOT( AggregateAll() ), this );
     new QToolButton( MAKE_ICON( desaggregate ), tr( "Désaggréger tous les automates" ), "", this, SLOT( DisaggregateAll() ), this );

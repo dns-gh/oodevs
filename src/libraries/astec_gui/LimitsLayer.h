@@ -11,12 +11,12 @@
 #define __LimitsLayer_h_
 
 #include "Layer_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/ContextMenuObserver_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
-#include "TristateOption.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
+#include "astec_kernel/TristateOption.h"
 
 class Controllers;
 class Lima;

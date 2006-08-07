@@ -10,9 +10,9 @@
 #include "astec_gui_pch.h"
 #include "ParamObstacle.h"
 #include "ParamLocation.h"
-#include "astec_gaming/ObjectTypes.h"
-#include "astec_gaming/ObjectType.h"
-#include "astec_gaming/Resolver.h"
+#include "astec_kernel/ObjectTypes.h"
+#include "astec_kernel/ObjectType.h"
+#include "astec_kernel/Resolver.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle constructor

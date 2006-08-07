@@ -10,7 +10,7 @@
 #ifndef __ObjectCreationPanel_h_
 #define __ObjectCreationPanel_h_
 
-#include "astec_gaming/Resolver.h"
+#include "astec_kernel/Resolver.h"
 
 class ObjectPrototype;
 class Controllers;

@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "VisionMap.h"
 #include "astec_gui/GlTools_ABC.h"
-#include "DetectionMap.h"
+#include "astec_kernel/DetectionMap.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionMap constructor

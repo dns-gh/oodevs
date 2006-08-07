@@ -10,9 +10,9 @@
 #ifndef __ObjectPrototype_h_
 #define __ObjectPrototype_h_
 
-#include "astec_gaming/Entity_ABC.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_gaming/ASN_Types.h"
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"

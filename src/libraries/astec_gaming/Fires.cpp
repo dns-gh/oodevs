@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "Fires.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 #include "IndirectFire.h"
 #include "DirectFire.h"
 #include "FireFactory.h"

@@ -11,7 +11,7 @@
 #define __ChangeHumanFactorsDialog_h_
 
 #include "astec_gaming/ASN_Types.h"
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/SafePointer.h"
 #include "ValuedComboBox.h"
 
 class Agent_ABC;

@@ -11,14 +11,14 @@
 #include "MissionPanel.h"
 #include "moc_MissionPanel.cpp"
 
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Mission.h"
+#include "astec_kernel/FragOrder.h"
+
 #include "astec_gaming/Decisions.h"
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/Mission.h"
 #include "astec_gaming/AutomatDecisions.h"
 #include "astec_gaming/StaticModel.h"
-#include "GlTools_ABC.h"
-#include "astec_gaming/FragOrder.h"
 #include "astec_gaming/PopulationDecisions.h"
 #include "astec_gaming/Population.h"
 
@@ -28,6 +28,7 @@
 #include "FragmentaryOrderInterface.h"
 #include "astec_gaming/CoordinateConverter.h"
 #include "astec_gaming/AgentKnowledgeConverter.h"
+#include "GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor

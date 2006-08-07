@@ -11,9 +11,9 @@
 #define __ToolListButton_h_
 
 #include <qtoolbutton.h>
-#include "astec_gaming/Options.h"
-#include "astec_gaming/Observer_ABC.h"
-#include "astec_gaming/OptionsObserver_ABC.h"
+#include "astec_kernel/Options.h"
+#include "astec_kernel/Observer_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
 #include "OptionMenu.h"
 
 // =============================================================================

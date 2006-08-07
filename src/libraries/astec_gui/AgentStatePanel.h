@@ -10,10 +10,10 @@
 #ifndef __AgentStatePanel_h_
 #define __AgentStatePanel_h_
 
-#include "astec_gaming/ElementObserver_ABC.h"
-#include "astec_gaming/SelectionObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
+#include "astec_kernel/SelectionObserver_ABC.h"
 #include "InfoPanel_ABC.h"
-#include "astec_gaming/SafePointer.h"
+#include "astec_kernel/SafePointer.h"
 
 class Agent_ABC;
 class ReportListView;

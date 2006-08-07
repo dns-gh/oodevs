@@ -11,9 +11,9 @@
 #define __Lendings_h_
 
 #include "ASN_Types.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Resolver_ABC.h"
+#include "astec_kernel/Extension_ABC.h"
+#include "astec_kernel/Updatable_ABC.h"
+#include "astec_kernel/Resolver_ABC.h"
 #include "Loan.h"
 
 class Agent_ABC;

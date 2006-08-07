@@ -19,9 +19,9 @@
 #include "astec_gui_pch.h"
 #include "OptionsPanel.h"
 #include "moc_OptionsPanel.cpp"
-#include "astec_gaming/Controllers.h"
-#include "astec_gaming/Options.h"
-#include "astec_gaming/OptionVariant.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/Options.h"
+#include "astec_kernel/OptionVariant.h"
 #include "Settings.h"
 
 // -----------------------------------------------------------------------------

@@ -9,9 +9,9 @@
 
 #include "astec_gaming_pch.h"
 #include "LogisticRouteAttributes.h"
-#include "Controller.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "Units.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRouteAttributes constructor

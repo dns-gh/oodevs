@@ -11,7 +11,7 @@
 #include "AgentKnowledges.h"
 #include "AgentKnowledge.h"
 #include "AgentKnowledgeFactory_ABC.h"
-#include "Controller.h"
+#include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledges constructor

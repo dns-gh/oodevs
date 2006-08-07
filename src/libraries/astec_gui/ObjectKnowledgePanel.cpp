@@ -22,7 +22,7 @@
 
 #include "ListDisplayer.h"
 #include "DisplayBuilder.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_gaming/ObjectKnowledges.h"
 #include "astec_gaming/ObjectKnowledge.h"
 #include "astec_gaming/CampAttributes.h"

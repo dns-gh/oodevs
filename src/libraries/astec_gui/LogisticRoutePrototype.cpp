@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "LogisticRoutePrototype.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Units.h"
+#include "astec_kernel/Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype constructor

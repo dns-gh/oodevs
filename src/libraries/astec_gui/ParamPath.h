@@ -21,7 +21,7 @@
 
 #include "astec_gaming/ASN_Types.h"
 #include "Param_ABC.h"
-#include "astec_gaming/ContextMenuObserver_ABC.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
 
 class ParametersLayer;

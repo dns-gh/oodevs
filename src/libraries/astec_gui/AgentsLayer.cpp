@@ -10,14 +10,14 @@
 #include "astec_gui_pch.h"
 #include "AgentsLayer.h"
 #include "moc_AgentsLayer.cpp"
-#include "astec_gaming/Agent_ABC.h"
-#include "astec_gaming/Aggregatable_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Aggregatable_ABC.h"
 #include "astec_gaming/AutomatDecisions.h"
 #include "astec_gaming/Attributes.h"
 #include "astec_gaming/Reports.h"
 #include "astec_gaming/AutomatDecisions.h"
 #include "astec_gaming/Decisions.h"
-#include "Displayer_ABC.h"
+#include "astec_kernel/Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor

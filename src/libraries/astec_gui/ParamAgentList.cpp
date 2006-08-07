@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "ParamAgentList.h"
-#include "astec_gaming/Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentList constructor

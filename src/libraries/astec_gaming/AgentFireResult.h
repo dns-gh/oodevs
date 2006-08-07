@@ -12,7 +12,7 @@
 
 #include "ASN_Types.h"
 #include "Types.h"
-#include "Resolver.h"
+#include "astec_kernel/Resolver.h"
 #include "Casualties.h"
 class Agent_ABC;
 class EquipmentType;

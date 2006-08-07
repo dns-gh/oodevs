@@ -11,7 +11,7 @@
 #include "AgentsModel.h"
 #include "DIN/DIN_Input.h"
 #include "AgentFactory_ABC.h"
-#include "Agent_ABC.h"
+#include "astec_kernel/Agent_ABC.h"
 #include "Population.h"
 
 // -----------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "MeteoLayer.h"
-#include "astec_gaming/Controllers.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_gaming/AmmoEffect.h"
 #include "GlTools_ABC.h"
 

@@ -12,13 +12,13 @@
 
 #include "Net_Def.h"
 #include "astec_gui/Tools.h"
-#include "Controller.h"
-#include "ActionController.h"
-#include "Units.h"
-#include "astec_gui/Displayer_ABC.h"
-#include "ObjectType.h"
-#include "CoordinateConverter_ABC.h"
-#include "Positions.h"
+#include "astec_kernel/Controller.h"
+#include "astec_kernel/ActionController.h"
+#include "astec_kernel/Units.h"
+#include "astec_kernel/Displayer_ABC.h"
+#include "astec_kernel/ObjectType.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "astec_kernel/Positions.h"
 #include "Team.h"
 
 // -----------------------------------------------------------------------------

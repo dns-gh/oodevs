@@ -10,8 +10,8 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include "astec_gaming/OptionsObserver_ABC.h"
-#include "astec_gaming/ElementObserver_ABC.h"
+#include "astec_kernel/OptionsObserver_ABC.h"
+#include "astec_kernel/ElementObserver_ABC.h"
 #include <qmainwindow.h>
 
 class Options;

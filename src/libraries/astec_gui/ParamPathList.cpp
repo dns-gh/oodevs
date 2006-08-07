@@ -11,11 +11,11 @@
 #include "ParamPathList.h"
 #include "moc_ParamPathList.cpp"
 #include "ParametersLayer.h"
-#include "astec_gaming/CoordinateConverter_ABC.h"
-#include "astec_gaming/Entity_ABC.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "astec_kernel/Entity_ABC.h"
 #include "ParamPath.h"
 #include "ValuedListItem.h"
-#include "astec_gaming/ActionController.h"
+#include "astec_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPathList constructor
