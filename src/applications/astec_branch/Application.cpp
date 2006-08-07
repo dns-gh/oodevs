@@ -13,13 +13,13 @@
 
 #include "MainWindow.h"
 
-#include "astec_lib/Network.h"
-#include "astec_lib/StaticModel.h"
-#include "astec_lib/Model.h"
-#include "astec_lib/Simulation.h"
-#include "astec_lib/Controllers.h"
-#include "astec_lib/Workers.h"
-#include "astec_lib/AgentServerMsgMgr.h"
+#include "astec_gaming/Network.h"
+#include "astec_gaming/StaticModel.h"
+#include "astec_gaming/Model.h"
+#include "astec_gaming/Simulation.h"
+#include "astec_gaming/Controllers.h"
+#include "astec_gaming/Workers.h"
+#include "astec_gaming/AgentServerMsgMgr.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
