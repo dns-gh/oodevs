@@ -56,3 +56,12 @@ std::string AGR_DotationDType::Mos2InitialisationCode( const AGR_Member& member 
     return strTmp;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: AGR_DotationDType::TesterSerializationCode
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+std::string AGR_DotationDType::TesterSerializationCode( const AGR_Member& member ) const
+{
+    return "    ASN_Tools::CopyDotationDType( pTarget_->GetTestParam_DotationDType(), asnMission." + member.ASNName() + " );\n";
+}
