@@ -336,6 +336,16 @@ T_IdVector& Testable_Entity::GetTestParam_MedicalPriorities() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Testable_Entity::GetTestParam_DotationDType
+// Created: NLD 2006-08-08
+// -----------------------------------------------------------------------------
+uint Testable_Entity::GetTestParam_DotationDType() const
+{
+    std::cerr << "[Testable_Entity::GetTestParam_DotationDType] Parameter type 'DotationDType' not set" << std::endl;
+    return 0; //$$$$ TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_Limas
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------

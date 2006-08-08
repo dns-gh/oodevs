@@ -73,6 +73,7 @@ public:
     virtual uint               GetTestParam_NatureAtlas        () const;
     virtual uint               GetTestParam_GDH                () const;
     virtual T_IdVector&        GetTestParam_MedicalPriorities  () const;
+    virtual uint               GetTestParam_DotationDType      () const;
 
     virtual T_IdVector&        GetTestParam_Limas              () const;
     virtual T_EntityId         GetTestParam_LeftLimit          ();
