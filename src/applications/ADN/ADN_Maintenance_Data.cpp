@@ -124,7 +124,6 @@ void ADN_Maintenance_Data::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Maintenance_Data::Reset()
 {
-    vWorkingSchemes_.Reset();
     vRepairerWarnings_.Reset();
     vHaulerWarnings_.Reset();
 }
