@@ -1010,8 +1010,8 @@ typedef struct T_Mission_Pion_Test_Fire : T_Mission_Pion
 {
 T_Point point_;
 bool tirIndirect_;
-id munitions_;
-float nbObus_;
+T_Dotation munitions_;
+float nbIt_;
 T_ListeConnaissancesAgent targets_;
 };
 

@@ -10,6 +10,16 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: PHY_IndirectFireData::HasWeaponsAndNoAmmo
+// Created: NLD 2004-11-30
+// -----------------------------------------------------------------------------
+inline
+bool PHY_IndirectFireData::HasWeaponsAndNoAmmo() const
+{
+    return bHasWeaponsAndNoAmmo_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::HasWeaponsReady
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
@@ -59,4 +69,14 @@ PHY_Weapon* PHY_IndirectFireData::sComposanteWeapons::GetUnusedWeapon() const
     if( weaponsReady_.empty() )
         return 0;
     return weaponsReady_.front();
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_IndirectFireData::RemoveFirer
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+inline
+void PHY_IndirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
+{
+    int nOut = composantesWeapons_.erase( &firer );
+    assert( nOut == 1 );
 }

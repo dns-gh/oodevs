@@ -347,48 +347,6 @@ const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_Rea
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::FillDirectFireData
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::FillDirectFireData( PHY_DirectFireData& data )
-{
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-    {
-        PHY_Weapon& weapon = **itWeapon;        
-        if( weapon.CanDirectFire() )
-            data.AddWeapon( *this, weapon );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::FillIndirectFireData
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::FillIndirectFireData( PHY_IndirectFireData& data )
-{
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-    {
-        PHY_Weapon& weapon = **itWeapon;        
-        if( weapon.CanIndirectFire() )
-            data.AddWeapon( *this, weapon );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::FillIndirectFireData
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::FillIndirectFireData( PHY_SmokeData& data )
-{
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-    {
-        PHY_Weapon& weapon = **itWeapon;        
-        if( weapon.CanIndirectFire() && data.AddWeapon( weapon ) )
-            return;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
@@ -541,20 +499,20 @@ MT_Float PHY_ComposantePion::GetMinRangeToFireOnWithPosture( const DEC_Knowledge
 // Name: PHY_ComposantePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
+MT_Float PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), ammoClass, bCheckDotationsAvailability ) : -1.;
+    return CanFire() ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : -1.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
+MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), ammoClass, bCheckDotationsAvailability ) : std::numeric_limits< MT_Float >::max();
+    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : std::numeric_limits< MT_Float >::max();
 }
 
 

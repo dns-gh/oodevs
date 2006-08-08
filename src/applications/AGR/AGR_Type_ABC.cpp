@@ -202,10 +202,19 @@ std::string AGR_Type_ABC::ResetCode( const AGR_Member& member ) const
 // -----------------------------------------------------------------------------
 std::string AGR_Type_ABC::SerializationCode( const AGR_Member& member ) const
 {
-    return "    NET_ASN_Tools::Copy" + strFunctionSuffix_
-           + "( GetVariable( " + member.DIAIndexName() + " )"
-           + ", asnMission." + member.ASNName()
-           + " );\n";
+    std::string strTmp;
+    if( member.IsOptional() )
+    {
+        strTmp = "    if( NET_ASN_Tools::Copy" + strFunctionSuffix_ + "( GetVariable( " + member.DIAIndexName() + " )"
+                                                                    + ", asnMission." + member.ASNName() + " ) )\n"
+               + "        asnMission.m." + member.ASNName() + "Present = 1;\n";
+    }
+    else
+    {
+        strTmp = "    NET_ASN_Tools::Copy" + strFunctionSuffix_ + "( GetVariable( " + member.DIAIndexName() + " )"
+                                                                + ", asnMission." + member.ASNName() + " );\n";
+    }
+    return strTmp;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,10 +223,15 @@ std::string AGR_Type_ABC::SerializationCode( const AGR_Member& member ) const
 // -----------------------------------------------------------------------------
 std::string AGR_Type_ABC::SerializationCleaningCode( const AGR_Member& member ) const
 {
-    if( bRequiresCleaning_ )
-        return "    NET_ASN_Tools::Delete( asnMission." + member.ASNName()+ " );\n";
-    else
+    if( !bRequiresCleaning_ )
         return "";
+
+    if( !member.IsOptional() )
+        return "    NET_ASN_Tools::Delete( asnMission." + member.ASNName()+ " );\n";
+
+    std::string strTmp = "    if( asnMission.m." + member.ASNName() + "Present )\n"
+                      +  "        NET_ASN_Tools::Delete( asnMission." + member.ASNName()+ " );\n";
+    return strTmp;
 }
 
 // -----------------------------------------------------------------------------
@@ -336,4 +350,13 @@ std::string AGR_Type_ABC::MOSRCCode( const std::string& strAsnParam ) const
 const std::string& AGR_Type_ABC::GetHumanName() const
 {
     return strHumanName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::AllowOptionalMembers
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool AGR_Type_ABC::AllowOptionalMembers() const
+{
+    return false;
 }

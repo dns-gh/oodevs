@@ -91,6 +91,7 @@ protected:
     void CreateBool                     ( ASN1BOOL& asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 , QWidget* pParent = 0 );
     void CreateNumeric                  ( ASN1INT&  asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateNumeric                  ( ASN1REAL& asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateDotationDType            ( ASN1T_OID& asn                 , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
 
     void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateMedicalPriorities    ( ASN1T_SantePriorites&       asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );

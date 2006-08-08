@@ -368,10 +368,10 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( DIA_Call_AB
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::ChangeDotationValueUsingTC2
+// Name: DEC_LogisticFunctions::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ChangeDotationValueUsingTC2( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     const PHY_DotationType*      pDotationType      = PHY_DotationType::FindDotationType( call.GetParameter( 0 ).ToId() );
     const MT_Float               rCapacityFactor    = call.GetParameter( 1 ).ToFloat();
@@ -382,6 +382,21 @@ void DEC_LogisticFunctions::ChangeDotationValueUsingTC2( DIA_Call_ABC& call, MIL
         pAmmoDotationClass = PHY_AmmoDotationClass::Find( call.GetParameter( 2 ).ToId() );
     
     callerAgent.GetRole< PHY_RolePion_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::GetDotationValue
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::GetDotationValue( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeDotation( call.GetParameter( 0 ) ) );
+    const PHY_DotationCategory* pDotationCategory = call.GetParameter( 0 ).ToUserPtr( pDotationCategory );
+
+    if( pDotationCategory )
+        call.GetResult().SetValue( (float)callerAgent.GetRole< PHY_RolePion_Dotations >().GetDotationValue( *pDotationCategory ) );
+    else
+        call.GetResult().SetValue( (float)0. );
 }
 
 // -----------------------------------------------------------------------------

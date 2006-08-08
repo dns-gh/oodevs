@@ -26,7 +26,6 @@ class PHY_FireResults_ABC;
 class PHY_DotationCategory;
 class PHY_ComposanteType_ABC;
 class PHY_RolePion_Dotations;
-class PHY_IndirectFireDotationClass;
 
 // =============================================================================
 // @class  PHY_Weapon
@@ -53,7 +52,7 @@ public:
     bool     IndirectFire             ( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect );
     bool     DirectFire               ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH );
     bool     DirectFire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, PHY_FireResults_ABC& fireResult );
-    void     ThrowSmoke               ( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo ) const;
+    void     ThrowSmoke               ( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
     MT_Float GetDangerosity           ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
     MT_Float GetDangerosity           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, MT_Float rDistBtwFirerAndTarget ) const;
     MT_Float GetMaxRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;

@@ -66,7 +66,7 @@ TypePion::TypePion( const std::string& strName, InputArchive& archive )
                 archive.ReadAttribute( "nom", strName );
                 uint qte = 0;
                 archive.ReadAttribute( "contenance", qte );
-                stocks_[ App::GetApp().GetRessourceID( strName ) ] = qte;
+                stocks_[ App::GetApp().GetDotationTypeID( strName ) ] = qte;
                 archive.EndSection(); //Categorie
             }
             archive.EndList(); //Categories

@@ -130,11 +130,14 @@ uint PHY_DirectFireData::GetNbrWeaponsUsable() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::AddWeapon
-// Created: NLD 2004-10-05
+// Name: PHY_DirectFireData::operator()
+// Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
-void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
+void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
+    if( !compFirer.CanFire() || !weapon.CanDirectFire() ) 
+        return;
+    
     if( nComposanteFiringType_ == eFireUsingOnlyComposantesLoadable && !compFirer.CanBeLoaded() )
         return;
 
@@ -142,7 +145,7 @@ void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& w
         return;
 
     if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
-        return;  
+        return;
 
     if( !firer_.GetRole< PHY_RolePion_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;
@@ -151,7 +154,7 @@ void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& w
         sComposanteWeapons& data = composantesWeapons_[ &compFirer ];
         data.AddWeapon( weapon );
 
-        bHasWeaponsNotReady_ |= data.IsFiring       ();    
+        bHasWeaponsNotReady_ |= data.IsFiring();    
     }
 }
 
@@ -159,7 +162,7 @@ void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& w
 // Name: PHY_DirectFireData::RemoveWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_DirectFireData::RemoveWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon )
+void PHY_DirectFireData::RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon )
 {
     sComposanteWeapons& data = composantesWeapons_[ &firer ];
     data.RemoveWeapon( weapon );
@@ -169,7 +172,7 @@ void PHY_DirectFireData::RemoveWeapon( PHY_ComposantePion& firer, PHY_Weapon& we
 // Name: PHY_DirectFireData::RemoveFirer
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_DirectFireData::RemoveFirer( PHY_ComposantePion& firer )
+void PHY_DirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 {
     int nOut = composantesWeapons_.erase( &firer );
     assert( nOut == 1 );
@@ -227,7 +230,7 @@ bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPio
 // Name: PHY_DirectFireData::ChooseBestWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const
+void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const
 {
     MT_Float rBestScore = 0;
     pBestFirer  = 0;
@@ -246,7 +249,7 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
 // Name: PHY_DirectFireData::ChooseRandomWeapon
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
-void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_ComposantePion*& pRandomFirer, PHY_Weapon*& pRandomWeapon ) const
+void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pRandomFirer, PHY_Weapon*& pRandomWeapon ) const
 {
     const uint nRnd = randomGenerator_.rand32_ii( 0, composantesWeapons_.size() - 1 );
 
@@ -273,7 +276,7 @@ void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const 
 // Name: PHY_DirectFireData::GetUnusedFirerWeapon
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-bool PHY_DirectFireData::GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const
+bool PHY_DirectFireData::GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const
 {
     pUnusedFirerWeapon = 0;
     pUnusedFirer       = 0;
@@ -292,7 +295,7 @@ bool PHY_DirectFireData::GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer
 // Name: PHY_DirectFireData::ReleaseWeapon
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-void PHY_DirectFireData::ReleaseWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon )
+void PHY_DirectFireData::ReleaseWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon )
 {
     switch( nFiringMode_ )
     {

@@ -80,7 +80,7 @@ void LogSupplyConsign_ListView_Item::Update()
     for( LogSupplyConsign::CIT_DotationMap itDot = pConsign_->GetDotations().begin(); itDot != pConsign_->GetDotations().end(); ++itDot )
     {
         std::stringstream streamItem;
-        streamItem << App::GetApp().GetResourceName( itDot->first ) << " : "
+        streamItem << App::GetApp().GetDotationTypeName( itDot->first ) << " : "
                    << itDot->second.nNbrRequested_ << "/"
                    << itDot->second.nNbrReserved_ << "/"
                    << itDot->second.nNbrConvoyed_;

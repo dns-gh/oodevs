@@ -26,6 +26,7 @@
 #include "AGR_FragOrder.h"
 #include "AGR_TypeRC.h"
 #include "AGR_RC.h"
+#include "AGR_DotationDType.h"
 
 #include <windows.h>
 
@@ -76,6 +77,7 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:NatureAtlas", "NatureAtlas", "E_NatureAtlasType", "uint", false ) );
     typeList_.push_back( new AGR_OIDType() );
     typeList_.push_back( new AGR_PointType() );
+    typeList_.push_back( new AGR_DotationDType() );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListPolygon", "PolygonList", "T_ListeLocalisations", "T_LocationVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:MaintenancePriorites", "MaintenancePriorities", "T_MaintenancePriorites", "", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:SantePriorites", "MedicalPriorities", "T_SantePriorites", "T_IdVector", true ) );

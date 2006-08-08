@@ -129,7 +129,8 @@ void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Serialize( ASN1T_MsgP
     asnMsg.mission.t                           = T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales;
     asnMsg.mission.u.mission_pion_log_prendre_en_compte_reactions_mentales  = &asnMission;
 
-    NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement );
+    if( NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement ) )
+        asnMission.m.position_deploiementPresent = 1;
 
 }
 
@@ -142,7 +143,8 @@ void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::CleanAfterSerializati
     assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales );
     ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales& asnMission = *asnMsg.mission.u.mission_pion_log_prendre_en_compte_reactions_mentales;
 
-    NET_ASN_Tools::Delete( asnMission.position_deploiement );
+    if( asnMission.m.position_deploiementPresent )
+        NET_ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
 

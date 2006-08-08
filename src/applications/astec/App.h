@@ -15,7 +15,6 @@
 #include "Types.h"
 
 #include "RawVisionData.h"
-#include "Resource.h"
 
 #include <qapplication.h>
 
@@ -44,7 +43,7 @@ class Object_ABC;
 class TacticalLine_ABC;
 class QSplashScreen;
 class TypePopulation;
-class Resource;
+class DotationType;
 
 typedef std::map< MIL_AgentID, std::string > T_MosId_String_Map;
 typedef T_MosId_String_Map::iterator         IT_MosId_String_Map;
@@ -63,6 +62,10 @@ class App : public QApplication
 {
     Q_OBJECT
     MT_COPYNOTALLOWED( App );
+
+public:
+    typedef std::map< uint, const DotationType* > T_DotationTypeMap;
+    typedef T_DotationTypeMap::const_iterator     CIT_DotationTypeMap;
 
 public:
     //-------------------------------------------------------------------------
@@ -176,8 +179,9 @@ public:
 
     //! @name Helpers
     //@{
-    std::string                 GetResourceName         ( MIL_AgentID )                     const;
-    const Resource&             GetResource             ( MIL_AgentID )                     const;
+    std::string                 GetDotationTypeName     ( uint nID )                        const;
+    uint                        GetDotationTypeID       ( const std::string& strName  )     const;
+    const DotationType&         GetDotationType        ( uint nID )                        const;
     std::string                 GetEquipmentName        ( MIL_AgentID )                     const;
     uint                        GetEquipementID         ( const std::string& strName )      const;
     std::string                 GetTransportDotationName( MIL_AgentID )                     const;
@@ -185,10 +189,9 @@ public:
     std::string                 GetNBCName              ( uint )                            const;
     uint                        GetNBCID                ( const std::string& strName )      const;
     const T_MosId_String_Map&   GetNBCNames             ()                                  const;
-    const T_MosId_String_Map&   GetResourceNames        ()                                  const;
     const T_MosId_String_Map&   GetEquipmentNames       ()                                  const;
     const SensorType*           FindSensorType          ( const std::string& strName )      const;
-    unsigned int                GetRessourceID          ( const std::string& strRessource ) const;
+    const T_DotationTypeMap&    GetDotationTypes        () const;
     //@}
 
     //! @name Options
@@ -269,7 +272,7 @@ private slots:
 private:
     void InitializeRawVisionData( InputArchive& scipioArchive );
     void InitializeTerrainData  ( InputArchive& scipioArchive );
-    void InitializeRessourceIDs ( InputArchive& scipioArchive );
+    void InitializeDotationTypes( InputArchive& scipioArchive );
     void InitializeEquipementIDs( InputArchive& scipioArchive );
     void InitializeAgentNBCIDs  ( InputArchive& scipioArchive );
     void InitializeMeteo        ( InputArchive& scipioArchive );
@@ -278,14 +281,12 @@ private:
     void InitializeObjectIds    ( InputArchive& scipioArchive );
 
     friend class GLTool;
+
 private:
     typedef std::map< std::string, const SensorType* > T_SensorTypeMap;
     typedef T_SensorTypeMap::const_iterator                CIT_SensorTypeMap;
-
-public:
-    typedef std::map< uint, Resource >                T_ResourceMap;
-    typedef T_ResourceMap::iterator                       IT_ResourceMap;
-    typedef T_ResourceMap::const_iterator                 CIT_ResourceMap;
+    
+ 
 
 private:
     //! @name Member data
@@ -306,11 +307,10 @@ private:
     uint               nTickDuration_;
 
     T_MosId_String_Map equipementNameMap_;
-    T_MosId_String_Map resourcesNameMap_;
     T_MosId_String_Map breakDownsNameMap_;
     T_MosId_String_Map nbcNamesMap_;
 
-    T_ResourceMap      resourcesMap_;
+    T_DotationTypeMap   dotationTypes_;
 
     T_SensorTypeMap    sensorTypes_;
 

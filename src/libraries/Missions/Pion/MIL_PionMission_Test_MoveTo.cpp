@@ -86,7 +86,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_MoveTo::Initialize( const ASN1T_Ms
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.verrouillage_vision, GetVariable( nDIAVerrouillageVisionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.vision_point, GetVariable( nDIAVisionPointIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.vision_point, GetVariable( nDIAVisionPointIdx_ ), asnMission.m.vision_pointPresent ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyDirection( asnMission.vision_direction, GetVariable( nDIAVisionDirectionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -158,7 +158,8 @@ void MIL_PionMission_Test_MoveTo::Serialize( ASN1T_MsgPionOrder& asnMsg )
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIATypeItineraireIdx_ ), asnMission.type_itineraire );
     NET_ASN_Tools::CopyBool( GetVariable( nDIADebarqueIdx_ ), asnMission.debarque );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAVerrouillageVisionIdx_ ), asnMission.verrouillage_vision );
-    NET_ASN_Tools::CopyPoint( GetVariable( nDIAVisionPointIdx_ ), asnMission.vision_point );
+    if( NET_ASN_Tools::CopyPoint( GetVariable( nDIAVisionPointIdx_ ), asnMission.vision_point ) )
+        asnMission.m.vision_pointPresent = 1;
     NET_ASN_Tools::CopyDirection( GetVariable( nDIAVisionDirectionIdx_ ), asnMission.vision_direction );
 
 }
@@ -173,7 +174,8 @@ void MIL_PionMission_Test_MoveTo::CleanAfterSerialization( ASN1T_MsgPionOrder& a
     ASN1T_Mission_Pion_Test_MoveTo& asnMission = *asnMsg.mission.u.mission_pion_test_move_to;
 
     NET_ASN_Tools::Delete( asnMission.itineraire );
-    NET_ASN_Tools::Delete( asnMission.vision_point );
+    if( asnMission.m.vision_pointPresent )
+        NET_ASN_Tools::Delete( asnMission.vision_point );
 
     delete &asnMission;
 

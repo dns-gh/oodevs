@@ -233,7 +233,7 @@ void LogisticSupplyRecompletionDialog::SetAgent( const Agent& agent )
             uint nPos = pStockTable_->numRows();
             pStockTable_->insertRows( nPos, 1 );
             pStockTable_->setItem( nPos, 0, new QCheckTableItem( pStockTable_, 0 ) );
-            pStockTable_->setText( nPos, 1, App::GetApp().GetResourceName( it->first ).c_str() );
+            pStockTable_->setText( nPos, 1, App::GetApp().GetDotationTypeName( it->first ).c_str() );
             pStockTable_->setText( nPos, 2, QString::number( it->second ) );
         }
         if( supplyMap.size() > 0 )
@@ -430,7 +430,7 @@ void LogisticSupplyRecompletionDialog::Validate()
             assert( pQttyItem );
 
             ASN1T_RecompletementStock& asnStock = pAsnStocks[ nAsnIdx ++ ];
-            asnStock.ressource_id        = (ASN1T_TypeDotation)App::GetApp().GetRessourceID( pItem->text().ascii() );
+            asnStock.ressource_id        = (ASN1T_TypeDotation)App::GetApp().GetDotationTypeID( pItem->text().ascii() );
             asnStock.quantite_disponible = pQttyItem->text().toUInt();
         }
     } 

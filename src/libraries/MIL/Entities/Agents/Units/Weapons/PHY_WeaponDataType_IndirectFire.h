@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class PHY_WeaponType;
+class PHY_FireResults_ABC;
 class MIL_Effect_IndirectFire;
 class MIL_AgentPion;
 
@@ -40,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void Fire      ( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const;
-    void ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo ) const;
+    void ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
 private:

@@ -75,7 +75,8 @@ public:
     static bool CheckTypePerceptionObjectsLocalisation      ( const DIA_Variable_ABC& diaVariable );   
     static bool CheckTypePerceptionFlyingShell              ( const DIA_Variable_ABC& diaVariable );   
     static bool CheckTypeMaintenancePriorites               ( const DIA_Variable_ABC& diaVariable );   
-    static bool CheckTypeSantePriorites                     ( const DIA_Variable_ABC& diaVariable );   
+    static bool CheckTypeSantePriorites                     ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeDotation                           ( const DIA_Variable_ABC& diaVariable ); 
     //@}
 
     //! @name Accessors
@@ -102,6 +103,7 @@ public:
     static const DIA_TypeDef& GetTypePerceptionFlyingShell          ();
     static const DIA_TypeDef& GetTypeMaintenancePriorites           ();
     static const DIA_TypeDef& GetTypeSantePriorites                 ();    
+    static const DIA_TypeDef& GetTypeDotation                       ();
     //@}
 
 private:
@@ -131,6 +133,7 @@ private:
     static const DIA_TypeDef* pTypeMaintenancePriorites_;
     static const DIA_TypeDef* pTypeSantePriorites_;
     static const DIA_TypeDef* pTypePerceptionFlyingShell_;
+    static const DIA_TypeDef* pTypeDotation_;
 };
 
 //! @name DIA Functions registration tools

@@ -180,23 +180,13 @@ MT_Float PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protecti
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::IndirectFire
+// Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
     const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
-    pIndirectFireData_->Fire( firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
+    pIndirectFireData_->ApplyEffect( firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::IndirectFire
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_DotationCategory::IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired ) const
-{
-    assert( pIndirectFireData_ );
-    const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
-    pIndirectFireData_->Fire( firer, vSourcePosition, vTargetPosition, rInterventionTypeFired );
-}

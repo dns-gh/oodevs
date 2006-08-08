@@ -73,7 +73,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_AppliquerFeux::Initialize( const
         return nCode; 
 
     const ASN1T_OrderConduite_Pion_AppliquerFeux& asnMission = *asnMsg.u.order_conduite_pion_appliquer_feux;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.munitions, GetVariable( nDIAMunitionsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyDotation( asnMission.munitions, GetVariable( nDIAMunitionsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNumeric( asnMission.nb_IT, GetVariable( nDIANbITIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -90,7 +90,7 @@ void MIL_OrderConduite_Pion_AppliquerFeux::Initialize( DIA_Parameters& diaParams
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyEnumeration( diaParams[nCurDIAParamIdx++], GetVariable( nDIAMunitionsIdx_));
+    NET_ASN_Tools::CopyDotation( diaParams[nCurDIAParamIdx++], GetVariable( nDIAMunitionsIdx_));
     NET_ASN_Tools::CopyNumeric( diaParams[nCurDIAParamIdx++], GetVariable( nDIANbITIdx_));
     NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], GetVariable( nDIACibleIdx_));
 

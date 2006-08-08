@@ -23,7 +23,7 @@
 int MIL_PionMission_Test_Fire::nDIAPointIdx_ = 0 ;
 int MIL_PionMission_Test_Fire::nDIATirIndirectIdx_ = 0 ;
 int MIL_PionMission_Test_Fire::nDIAMunitionsIdx_ = 0 ;
-int MIL_PionMission_Test_Fire::nDIANbObusIdx_ = 0 ;
+int MIL_PionMission_Test_Fire::nDIANbItIdx_ = 0 ;
 int MIL_PionMission_Test_Fire::nDIATargetsIdx_ = 0 ;
 
 
@@ -38,7 +38,7 @@ void MIL_PionMission_Test_Fire::InitializeDIA( const MIL_PionMissionType& type )
     nDIAPointIdx_ = DEC_Tools::InitializeDIAField( "point_", diaType );
     nDIATirIndirectIdx_ = DEC_Tools::InitializeDIAField( "tirIndirect_", diaType );
     nDIAMunitionsIdx_ = DEC_Tools::InitializeDIAField( "munitions_", diaType );
-    nDIANbObusIdx_ = DEC_Tools::InitializeDIAField( "nbObus_", diaType );
+    nDIANbItIdx_ = DEC_Tools::InitializeDIAField( "nbIt_", diaType );
     nDIATargetsIdx_ = DEC_Tools::InitializeDIAField( "targets_", diaType );
 
 }
@@ -80,9 +80,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_Fire::Initialize( const ASN1T_MsgP
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.tir_indirect, GetVariable( nDIATirIndirectIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.munitions, GetVariable( nDIAMunitionsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyDotation( asnMission.munitions, GetVariable( nDIAMunitionsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyNumeric( asnMission.nb_obus, GetVariable( nDIANbObusIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyNumeric( asnMission.nb_it, GetVariable( nDIANbItIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.targets, GetVariable( nDIATargetsIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -116,8 +116,8 @@ bool MIL_PionMission_Test_Fire::Initialize( MIL_PionMission_ABC& missionTmp )
 
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), GetVariable( nDIAPointIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIATirIndirectIdx_ ), GetVariable( nDIATirIndirectIdx_ ) );
-    NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAMunitionsIdx_ ), GetVariable( nDIAMunitionsIdx_ ) );
-    NET_ASN_Tools::CopyNumeric( mission.GetVariable( nDIANbObusIdx_ ), GetVariable( nDIANbObusIdx_ ) );
+    NET_ASN_Tools::CopyDotation( mission.GetVariable( nDIAMunitionsIdx_ ), GetVariable( nDIAMunitionsIdx_ ) );
+    NET_ASN_Tools::CopyNumeric( mission.GetVariable( nDIANbItIdx_ ), GetVariable( nDIANbItIdx_ ) );
     NET_ASN_Tools::CopyAgentKnowledgeList( mission.GetVariable( nDIATargetsIdx_ ), GetVariable( nDIATargetsIdx_ ) );
 
     return true;
@@ -151,8 +151,8 @@ void MIL_PionMission_Test_Fire::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointIdx_ ), asnMission.point );
     NET_ASN_Tools::CopyBool( GetVariable( nDIATirIndirectIdx_ ), asnMission.tir_indirect );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAMunitionsIdx_ ), asnMission.munitions );
-    NET_ASN_Tools::CopyNumeric( GetVariable( nDIANbObusIdx_ ), asnMission.nb_obus );
+    NET_ASN_Tools::CopyDotation( GetVariable( nDIAMunitionsIdx_ ), asnMission.munitions );
+    NET_ASN_Tools::CopyNumeric( GetVariable( nDIANbItIdx_ ), asnMission.nb_it );
     NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIATargetsIdx_ ), asnMission.targets, pion_.GetKnowledgeGroup() );
 
 }

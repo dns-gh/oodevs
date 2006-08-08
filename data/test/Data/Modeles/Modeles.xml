@@ -152,6 +152,7 @@
         <Mission nom="Automate GEN RealiserSystemeObstacles"/>
         <Mission nom="Automate GEN RetablirItineraires"/>
         <Mission nom="Automate GEN AmenagerTerrainPoserSommaire"/>
+        <Mission nom="Automate LOG SeDeployer"/>        
       </Missions>
     </Modele>
   </Automates>

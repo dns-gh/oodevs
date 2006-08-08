@@ -12,6 +12,40 @@ signatures
 
 functions
 {
+T_ListeConnaissancesAgent S_ConnaissancesEnnemiesVivantesPercuesVolantes()
+{
+    DIA_Clear( S_ConnaissancesEnnemiesVivantesPercuesVolantes );
+
+    T_ListeConnaissancesAgent listeUnitesEnnemiesVivantesPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues();
+    with( x in listeUnitesEnnemiesVivantesPercues )
+        DEC_UserTypeList_PushBack( S_ConnaissancesEnnemiesVivantesPercuesVolantes, x );
+}
+
+    //-------------------------------------------------------------------------
+    // Calcul d'une force entre 1 et 2 par rapport à la distance à un eni.
+    //-------------------------------------------------------------------------
+    float S_Connaissance_ForceDistance( T_ConnaissanceAgent ksA )
+    {
+        E_ValiditeRequete	eValidite = eRequeteInvalide;
+        T_Point 			positionA;
+        
+        positionA = DEC_ConnaissanceAgent_Position( ksA, eValidite );       
+        if( eValidite == eRequeteInvalide )
+        {        
+        	S_Connaissance_ForceDistance = 0;
+            return;
+        }
+ 
+        S_Connaissance_ForceDistance = 1;
+    } 
+    
+    float S_Connaissance_ForceDistance2( float prout, T_Point point )
+    {
+        S_Connaissance_ForceDistance2 = 1;
+    }
+
+
+
     //-------------------------------------------------------------------------
     // Fonction appellée lorsque un ordre de conduite a été séléctionné
     // param @strMission     Mission courante

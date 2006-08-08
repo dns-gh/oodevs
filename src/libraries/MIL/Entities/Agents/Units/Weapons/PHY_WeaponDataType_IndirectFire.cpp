@@ -64,7 +64,7 @@ void PHY_WeaponDataType_IndirectFire::Fire( MIL_AgentPion& /*firer*/, MIL_Effect
 // Name: PHY_WeaponDataType_IndirectFire::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo ) const
+void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
-    weaponType_.GetDotationCategory().IndirectFire( firer, vSourcePosition, vTargetPosition, nNbrAmmo );
+    weaponType_.GetDotationCategory().ApplyIndirectFireEffect( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 }

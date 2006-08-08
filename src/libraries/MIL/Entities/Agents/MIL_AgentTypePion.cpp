@@ -573,7 +573,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToIndirectFire                , "DEC_Tir_PorteeMinTirIndirect"                         );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck, "DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck, "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions" );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent               , "DEC_Tir_LancerFumigeneSurConnaissance"                 );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent               , "DEC_Tir_LancerFumigeneSurConnaissance"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMunitionForIndirectFire               , "DEC_Tir_MunitionPourTirIndirect"                      );
 
     // RC
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_AgentPion >, "DEC_RC"      );
@@ -595,7 +596,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::UndoLendHaulerComposantes                         , "DEC_RecupererRemorqueurs"    );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                                        , "DEC_Pion_TC2"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionRequestSupply                                 , "DEC_DemandeDeRavitaillement" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationValueUsingTC2                       , "DEC_ChangeValeurDotations"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2                      , "DEC_ChangeValeurDotations"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::GetDotationValue                                  , "DEC_ValeurDotation"          ); 
+
     
     // Transport / Héliportage
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPion                       , "DEC_Transport_AjouterPion"              );

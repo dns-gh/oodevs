@@ -3713,14 +3713,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>grenade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>detruire moyens</source>
         <translation type="unfinished"></translation>
     </message>

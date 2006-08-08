@@ -52,10 +52,10 @@ PHY_DotationCategory_IndirectMineFire::~PHY_DotationCategory_IndirectMineFire()
 // =============================================================================
   
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectMineFire::Fire
+// Name: PHY_DotationCategory_IndirectMineFire::ApplyEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectMineFire::Fire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
+void PHY_DotationCategory_IndirectMineFire::ApplyEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     MT_Vector2D vFireDirection( 0., 1. );
     if( vTargetPosition != vSourcePosition )

@@ -12,11 +12,13 @@
 #include "MIL_pch.h"
 
 #include "PHY_ActionIndirectFire_Knowledge.h"
+
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -25,13 +27,17 @@
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     : PHY_ActionIndirectFire_ABC( pion, diaCall )
+    , pEffect_                  ( 0 )
 {
     assert( DEC_Tools::CheckTypeConnaissanceAgent( diaCall.GetParameter( 3 ) ) );
-
     uint nTargetKnowledgeID_ = (uint)diaCall.GetParameter( 3 ).ToPtr();
-    pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID_, *pIndirectWeaponClass_, rNbInterventionType_ );
-    pEffect_->IncRef();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+
+    if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
+    {
+        pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID_, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
+        pEffect_->IncRef();
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -40,9 +46,11 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 {
-    assert( pEffect_ );
-    pEffect_->ForceFlying();
-    pEffect_->DecRef();
+    if( pEffect_ )
+    {
+        pEffect_->ForceFlying();
+        pEffect_->DecRef();
+    }
 }
 
 // =============================================================================
@@ -55,8 +63,7 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Knowledge::Execute()
 {
-    assert( pEffect_ );
-    const int nResult = role_.Fire( *pEffect_ );
+    const int nResult = role_.Fire( pEffect_ );
     diaReturnCode_.SetValue( nResult );
 }
 

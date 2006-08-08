@@ -36,6 +36,9 @@ AGR_Member::AGR_Member( const std::string& strName, const AGR_Type_ABC& type, co
     , pOwnerClass_( &ownerClass )
     , bOptional_( bOptional )
 {
+    if( bOptional && !type.AllowOptionalMembers() )
+        throw std::exception( std::string( "Optional members not allowed for type " + type.GetHumanName() ).c_str() );
+
     //NOTHING
 }
 

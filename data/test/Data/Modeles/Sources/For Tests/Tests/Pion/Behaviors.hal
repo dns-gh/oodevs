@@ -9,8 +9,29 @@ actuators = deplacement, ordre, toto;
     DEC_ConnaissanceAgent_EstValide( prout );
 }*/
 
+
+
+behavior Crash( float prout, T_Point bite, E_TypeLima prout2 )
+{
+        //TEsT CRASH 
+        T_Direction dir;
+        DEC_Geometrie_ConvertirPointEnLocalisation( dir );
+
+}
+
 default Default()
-{    
+{       
+/*
+    T_PerceptionRadar cock  = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, DEC_Geometrie_ConvertirPointEnLocalisation( DEC_Agent_Position() ) );
+    T_PerceptionRadar cock2 = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, DEC_Geometrie_ConvertirPointEnLocalisation( DEC_Agent_Position() ) );
+    
+    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, cock2 );   
+    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, cock2 );
+    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, cock );
+*/    
+    
+
+    //behavior Crash( 5, 0, eTypeLima_LCA );
     DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau();
 
     if( DEC_Agent_EstMort() )
@@ -171,18 +192,7 @@ default Default()
     */    
     // DEC_Debug( BoolToString( DEC_Agent_PeutConstruireObjet( eTypeObjectBouchonMines ) ) );
     
-/*
-    DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Explosif ) ) );
-    DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Explosif ) ) );
-    DEC_Debug( "Tir indirect max fumigene : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Fumigenes ) ) );
-    DEC_Debug( "Tir indirect min fumigene : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Fumigenes ) ) );   
-
-
-    DEC_Debug( "Tir indirect max explosif sans tester dotations : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( eObus_Explosif ) ) );
-    DEC_Debug( "Tir indirect min explosif sans tester dotations : " + FloatToString( DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( eObus_Explosif ) ) );
-    DEC_Debug( "Tir indirect max fumigene sans tester dotations : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( eObus_Fumigenes ) ) );
-    DEC_Debug( "Tir indirect min fumigene sans tester dotations : " + FloatToString( DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( eObus_Fumigenes ) ) );   
-*/
+    
     
     behavior BEH_GererOrdreConduite();
 }
@@ -459,10 +469,76 @@ behavior BEH_MoveTo2( T_Mission_Pion_Test_MoveTo mission )
 }
 
 
+behavior Bite( T_Point point )
+{
+    DEC_Debug( "bite" );
+}
+
+behavior Prout( T_Point point )
+{
+    DEC_Debug( "prout" );
+    
+    behavior Crash( 4, point, eTypeLima_LD );
+}
+
+behavior Cock()
+{
+    DEC_Agent_Position();
+    T_ListeConnaissancesAgent toto = S_ConnaissancesEnnemiesVivantesPercuesVolantes();
+    DEC_Debug( "DTC : " + FloatToString( DIA_Size( toto ) ));
+    with( x in toto )
+    {
+        E_ValiditeRequete              nFusse;
+        
+        
+        behavior Bite( DEC_ConnaissanceAgent_Position( x, nFusse ) ) : strength = S_Connaissance_ForceDistance( x );
+        
+        start behavior Prout( DEC_ConnaissanceAgent_Position( x, nFusse ) ) : strength = S_Connaissance_ForceDistance( x );
+        
+        behavior Bite( DEC_ConnaissanceAgent_Position( x, nFusse ) ) : strength = S_Connaissance_ForceDistance2( DEC_Geometrie_Distance( myself.DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( x, nFusse ) ), 0 );
+    }
+}
+
+behavior Asslicker()
+{
+    persistent T_Point ptFoo;
+    persistent T_Point ptFoo2;
+    
+    if( DIA_ModuleBegins() )
+    {   
+        T_ListeConnaissancesAgent toto = S_ConnaissancesEnnemiesVivantesPercuesVolantes();
+        with( x in toto )
+        {
+            DEC_Debug( "Asslicker 1" );
+            E_ValiditeRequete nFusse;
+            ptFoo = DEC_ConnaissanceAgent_Position( x, nFusse );
+        }
+    }
+    else
+    {
+        T_ListeConnaissancesAgent toto = S_ConnaissancesEnnemiesVivantesPercuesVolantes();
+        with( x in toto )
+        {
+            DEC_Debug( "Asslicker 2" );
+            E_ValiditeRequete nFusse;
+            ptFoo2 = DEC_ConnaissanceAgent_Position( x, nFusse );
+        }
+    }
+    
+}
+
 behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 {
     when updated:
     {
+        /*behavior Cock();        
+        behavior Bite( DEC_Agent_Position() );        
+        behavior Asslicker();*/
+        
+        DEC_Geometrie_PositionsEgales( myself.DEC_Agent_Position(), DEC_ListePoints_GetAt( mission.itineraire_, DEC_ListePoints_Size( mission.itineraire_ ) -1 ) );
+        
+        DEC_Agent_Position();
+        
         // Affichage connaissance        
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesPrenantAPartie() ) ) + " prenant a partie" );
         DEC_Debug( FloatToString( DIA_Size( DEC_Connaissances_UnitesEnnemiesDangereuses() ) ) + " unites ennemies dangereuse" );
@@ -492,6 +568,19 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 
         if( DIA_ModuleBegins() )
         {
+            if( mission.visionPoint_ != 0 )
+            {
+                T_Dotation dotDeMerde = DEC_Tir_MunitionPourTirIndirect( eObus_Explosif, mission.visionPoint_ ); 
+                
+                DEC_Debug( "Valeur dotDeMerde : " + FloatToString( DEC_ValeurDotation( dotDeMerde ) ) );
+                        
+                DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( dotDeMerde ) ) );
+                DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( dotDeMerde ) ) );
+                
+                DEC_Debug( "Tir indirect max explosif sans tester dotations : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( dotDeMerde ) ) );
+                DEC_Debug( "Tir indirect min explosif sans tester dotations : " + FloatToString( DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( dotDeMerde ) ) );
+            }
+                
             DEC_Connaissances_ObjetAmiLePlusProche( eTypeObjectCampRefugies );
     
         
@@ -548,7 +637,24 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
     {
         persistent bool                           bState;
         
-        persistent T_PerceptionTirIndirect perception = 0; 
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Connaissances_ObjetsDansCercle( DEC_Agent_Position(), 2000, eTypeObjectBouchonMines );
+            DEC_Connaissances_ObjetsDansZone( mission.forme_, eTypeObjectBouchonMines );
+            DEC_Connaissances_ObjetsDansFuseau( eTypeObjectBouchonMines );
+        
+            
+            E_LocalisationFunctionsReturnCode returnCode;
+            T_Point			ptRetour = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( mission.forme_, returnCode );
+            DEC_Debug( "taaaaaaaaaaaaaah " + EnumToString( returnCode, E_LocalisationFunctionsReturnCode ) );
+            if( ptRetour == 0 )
+                DEC_Debug( "ptRetour == 0" );
+            else
+                DEC_Debug( "ptRetour != 0" );
+        }
+        
+        persistent T_PerceptionTirIndirect perception;
+        
         if ( DIA_ModuleBegins() )
         {
             perception = DEC_Perception_ActiverPerceptionTirsIndirect( mission.forme_ );
@@ -932,9 +1038,9 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
         if( DIA_ModuleBegins() )
         {
             //if( DIA_Size( mission.targets_ ) > 0 )
-            //    currentAction = DEC_StartTirIndirectSurConnaissance( nEtatTirIndirect, mission.munitions_, mission.nbObus_, DEC_UserTypeList_GetAt( mission.targets_, 0 ) );
+            //    currentAction = DEC_StartTirIndirectSurConnaissance( nEtatTirIndirect, mission.munitions_, mission.nbIt_, DEC_UserTypeList_GetAt( mission.targets_, 0 ) );
             //else
-                currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbObus_, mission.point_ );
+                currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbIt_, mission.point_ );
         }
         DEC_Debug( "Etat tir indirect : " + EnumToString( nEtatTirIndirect, E_EtatActionTirIndirect ) );
     }
@@ -1085,6 +1191,8 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
                 T_ConnaissanceAgent tmp = target;
                 E_ValiditeRequete nValidite;
                 
+                DEC_Tir_LancerFumigeneSurConnaissance( tmp );
+                
                 if( DEC_ConnaissanceAgent_SEstRendu( tmp, nValidite ) && nValidite == eRequeteValide )
                 {
                     T_ConnaissanceObjet camp = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampPrisonniers );
@@ -1113,6 +1221,8 @@ behavior TestOnSpontaneousEndNotCalled()
     when updated:
     {
         persistent float cock = gTest;
+        
+        behavior Crash( 3, 0, eTypeLima_LO );
         if( DIA_ModuleBegins() )
             DEC_Debug( "TestOnSpontaneousEndNotCalled::begin " + FloatToString( gTest ) );
         DEC_Debug( "TestOnSpontaneousEndNotCalled::updated " + FloatToString( gTest ) );
@@ -1163,7 +1273,7 @@ behavior MIS_Pion_LOG_DistribuerMoyens( T_Mission_Pion_ALAT_Freiner mission, id 
 action TestOnSpontaneousShouldNotBeCalled( float bite ) using toto
 {
     when selected:
-    {
+    {        
         persistent float cock = gTest;
         if( DIA_ModuleBegins() )
             DEC_Debug( "TestOnSpontaneousEndNotCalled::begin " + FloatToString( gTest ) );
@@ -1221,4 +1331,6 @@ behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations miss
         DEC_Debug( "MIS_Canaliser : on spontaneous end" );
     }
 }
+
+
 

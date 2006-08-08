@@ -43,7 +43,7 @@ Mission-Pion-Test-MoveTo ::= SEQUENCE
         point,
         direction
     },
-    vision-point       Point,
+    vision-point       Point OPTIONAL,
     vision-direction   Direction  
 }
 Mission-Pion-Test-CreateObject ::= SEQUENCE
@@ -65,16 +65,8 @@ Mission-Pion-Test-Fire ::= SEQUENCE
 {
     point           Point,
     tir-indirect    BOOLEAN,
-    munitions   ENUMERATED
-    {
-        mun-obus-explosif  (0),
-        mun-obus-grenade   (1),
-        mun-obus-aced      (2),
-        mun-obus-fumigene  (3),
-        mun-obus-eclairant (4),
-        mun-obus-mine      (5)
-    },
-    nb_obus         INTEGER,
+    munitions       TypeDotationTrancheD,
+    nb_it           INTEGER,
     targets         ListKnowledgeAgent
 
 }

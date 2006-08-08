@@ -68,6 +68,7 @@ ListKnowledgeAgent      ::= SEQUENCE OF KnowledgeAgent
 ListKnowledgeObject     ::= SEQUENCE OF KnowledgeObject
 TypeEquipement          ::= OID
 TypeDotation            ::= OID
+TypeDotationTrancheD    ::= OID
 TypePanne               ::= OID
 TypePion                ::= OID
 TypeAutomate            ::= OID

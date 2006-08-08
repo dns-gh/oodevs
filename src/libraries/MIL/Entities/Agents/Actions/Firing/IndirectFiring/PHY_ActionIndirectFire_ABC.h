@@ -17,7 +17,7 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_IndirectFiring;
-class PHY_IndirectFireDotationClass;
+class PHY_DotationCategory;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -36,9 +36,9 @@ public:
     virtual ~PHY_ActionIndirectFire_ABC();
 
 protected:
-    PHY_RoleAction_IndirectFiring&       role_;
-    DIA_Variable_ABC&                    diaReturnCode_;
-    const PHY_IndirectFireDotationClass* pIndirectWeaponClass_;
+          PHY_RoleAction_IndirectFiring& role_;
+          DIA_Variable_ABC&              diaReturnCode_;
+    const PHY_DotationCategory*          pDotationCategory_;
     const MT_Float                       rNbInterventionType_;
 };
 

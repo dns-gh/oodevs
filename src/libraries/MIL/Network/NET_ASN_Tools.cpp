@@ -20,6 +20,8 @@
 
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -1136,14 +1138,8 @@ void NET_ASN_Tools::CopyAgentKnowledgeList( const DIA_Variable_ABC& diaFrom, DIA
 // Name: NET_ASN_Tools::CopyAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgent( const ASN1T_Agent& asn, DIA_Variable_ABC& dia, bool bValueIfOptional /*= true*/ )
+bool NET_ASN_Tools::CopyAgent( const ASN1T_Agent& asn, DIA_Variable_ABC& dia )
 {
-    if( !bValueIfOptional )
-    {
-        dia.SetValue( *(DIA_TypedObject*)0 );
-        return true;
-    }
-
     DEC_RolePion_Decision* pAgent = NET_ASN_Tools::ReadAgent( asn );
     dia.SetValue( *pAgent );
     return pAgent != 0;
@@ -1188,14 +1184,8 @@ bool NET_ASN_Tools::CopyAgent( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC
 // Name: NET_ASN_Tools::CopyAutomate
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAutomate( const ASN1T_Agent& asn, DIA_Variable_ABC& dia, bool bValueIfOptional /*= true*/ )
+bool NET_ASN_Tools::CopyAutomate( const ASN1T_Agent& asn, DIA_Variable_ABC& dia )
 {
-    if( !bValueIfOptional )
-    {
-        dia.SetValue( *(DIA_TypedObject*)0 );
-        return true;
-    }
-
     DEC_AutomateDecision* pAgent = NET_ASN_Tools::ReadAutomate( asn );
     dia.SetValue( *pAgent );
     return pAgent != 0;
@@ -1775,11 +1765,9 @@ bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& dia, ASN1T_Point& asn )
     assert( DEC_Tools::CheckTypePoint( dia ) );
 
     MT_Vector2D* pPoint = dia.ToUserPtr( pPoint );
-    if( !pPoint )
-    {
-        assert( false );
+    if( !pPoint ) // Optional
         return false;
-    }
+
     NET_ASN_Tools::WritePoint( *pPoint, asn );
     return true;
 }
@@ -1793,11 +1781,9 @@ bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& dia, ASN1T_CoordUTM& asn 
     assert( DEC_Tools::CheckTypePoint( dia ) );
 
     MT_Vector2D* pPoint = dia.ToUserPtr( pPoint );
-    if( !pPoint )
-    {
-        assert( false );
+    if( !pPoint ) // Optional
         return false;
-    }
+
     NET_ASN_Tools::WritePoint( *pPoint, asn );
     return true;
 }
@@ -1813,7 +1799,6 @@ bool NET_ASN_Tools::CopyPoint( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC
     const MT_Vector2D* pSrc = diaFrom.ToUserPtr( pSrc );
     if( !pSrc )   
     {
-        assert( false );
         diaTo.SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return false;
     }
@@ -2005,14 +1990,8 @@ bool NET_ASN_Tools::CopyPathList( const DIA_Variable_ABC& diaFrom, DIA_Variable_
 // Name: NET_ASN_Tools::CopyGDH
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGDH( const ASN1T_GDH& asn, DIA_Variable_ABC& dia, bool bValueIfOptional /*= true*/ )
+bool NET_ASN_Tools::CopyGDH( const ASN1T_GDH& asn, DIA_Variable_ABC& dia )
 {
-    if( !bValueIfOptional )    
-    {
-        dia.SetValue( (float)0. );
-        return true;
-    }
-
     dia.SetValue( MIL_Tools::ConvertRealTimeSimToDia( NET_ASN_Tools::ReadGDH( asn ) ) );
     return true;
 }
@@ -2262,6 +2241,57 @@ bool NET_ASN_Tools::CopyNatureAtlas( const DIA_Variable_ABC& diaFrom, DIA_Variab
     diaTo.SetValue( diaFrom.ToId() );
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// DOTATION
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyDotation
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyDotation( const ASN1T_TypeDotation& asn, DIA_Variable_ABC& dia )
+{
+    const PHY_DotationCategory* pData = PHY_DotationType::FindDotationCategory( asn );
+    if( !pData ) 
+        return false;
+
+    dia.SetValue( (void*)pData, &DEC_Tools::GetTypeDotation() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyDotation
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyDotation( const DIA_Variable_ABC& dia, ASN1T_TypeDotation& asn )
+{
+    assert( DEC_Tools::CheckTypeDotation( dia ) );
+
+    const PHY_DotationCategory* pDotationCategory = dia.ToUserPtr( pDotationCategory );
+    assert( pDotationCategory );
+    if( !pDotationCategory )
+        return false;
+
+    asn = pDotationCategory->GetMosID();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyDotation
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyDotation( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypeDotation( diaFrom ) );
+    assert( DEC_Tools::CheckTypeDotation( diaTo ) );
+    diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypeDotation() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// ENUMERATION
+// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyEnumeration

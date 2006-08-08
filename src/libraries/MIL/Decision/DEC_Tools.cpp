@@ -45,6 +45,7 @@ const DIA_TypeDef* DEC_Tools::pTypeMaintenancePriorites_          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeSantePriorites_                = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionObjectsLocalisation_ = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
+const DIA_TypeDef* DEC_Tools::pTypeDotation_                      = 0;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::InitializeDIA
@@ -78,6 +79,7 @@ void DEC_Tools::InitializeDIA()
     pTypeSantePriorites_                = &GetDIAType( "T_SantePriorites"               );
     pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet"  );
     pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"        );
+    pTypeDotation_                      = &GetDIAType( "T_Dotation"                     );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +268,6 @@ bool DEC_Tools::CheckTypeListeListesPoints( const DIA_Variable_ABC& diaVariable 
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeListeDirection
 // Created: JVT 2005-01-25
@@ -282,7 +283,7 @@ bool DEC_Tools::CheckTypeListeDirection( const DIA_Variable_ABC& diaVariable )
             return false;
     return true;
 }
-  
+ 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::ManageDeletion
 // Created: NLD 2005-12-09
@@ -352,6 +353,8 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
         delete static_cast< T_MedicalPriorityVector* >( pPtr );
     else if( *pType == *pTypePerceptionFlyingShell_ )
         assert( false );
+    else if( *pType == *pTypeDotation_ )
+        ; // NOTHING
     else
         assert( false );
 }

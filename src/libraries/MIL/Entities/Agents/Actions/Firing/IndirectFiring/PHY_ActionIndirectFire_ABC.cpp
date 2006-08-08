@@ -15,20 +15,23 @@
 
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_ABC constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC       ( pion, diaCall )
-    , role_                ( pion.GetRole< PHY_RoleAction_IndirectFiring >() )
-    , diaReturnCode_       ( diaCall.GetParameter( 0 ) )
-    , pIndirectWeaponClass_( PHY_IndirectFireDotationClass::Find( diaCall.GetParameter( 1 ).ToId() ) )
-    , rNbInterventionType_ ( std::max( (float)1., diaCall.GetParameter( 2 ).ToFloat() ) )
+    : PHY_Action_ABC      ( pion, diaCall )
+    , role_               ( pion.GetRole< PHY_RoleAction_IndirectFiring >() )
+    , diaReturnCode_      ( diaCall.GetParameter( 0 ) )
+    , pDotationCategory_  ( 0 ) 
+    , rNbInterventionType_( std::max( (float)1., diaCall.GetParameter( 2 ).ToFloat() ) )
 {
-    assert( pIndirectWeaponClass_ );
+    assert( DEC_Tools::CheckTypeDotation( diaCall.GetParameter( 1 ) ) );
+    
+    pDotationCategory_ = diaCall.GetParameter( 1 ).ToUserPtr( pDotationCategory_ ); // Can be 0
+
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
 }
 

@@ -34,7 +34,7 @@
 #include "Population.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
-#include "Resource.h"
+#include "DotationType.h"
 
 using namespace DIN;
 
@@ -998,7 +998,7 @@ void Agent::ReadODB( InputArchive& archive, bool bAutomata )
                             archive.ReadAttribute( "nom", strName );
                             uint quota;
                             archive.ReadAttribute( "quota", quota );
-                            pSupplyData_->quotas_.push_back( std::pair< uint, uint >( App::GetApp().GetRessourceID( strName ), quota ) );
+                            pSupplyData_->quotas_.push_back( std::pair< uint, uint >( App::GetApp().GetDotationTypeID( strName ), quota ) );
                             archive.EndSection(); //Categorie
                         }
                         archive.EndList(); //Categories
@@ -1085,12 +1085,12 @@ void Agent::WriteODB( MT_XXmlOutputArchive& archive )
                     {
                         for( Agent::CIT_LogisticStockAvailabilities itQuota = pSupplyData_->quotas_.begin(); itQuota != pSupplyData_->quotas_.end(); ++itQuota )
                         {
-                            const Resource& resource = App::GetApp().GetResource( itQuota->first );
+                            const DotationType& dotationType = App::GetApp().GetDotationType( itQuota->first );
                             archive.Section( "Dotation" );
-                            archive.WriteAttribute( "nom", resource.GetDotationName() );
+                            archive.WriteAttribute( "nom", dotationType.GetCategory() );
                             archive.Section( "Categories" );
                             archive.Section( "Categorie" );
-                            archive.WriteAttribute( "nom", resource.GetName() );
+                            archive.WriteAttribute( "nom", dotationType.GetName() );
                             archive.WriteAttribute( "quota", itQuota->second );
                             archive.EndSection();
                             archive.EndSection();

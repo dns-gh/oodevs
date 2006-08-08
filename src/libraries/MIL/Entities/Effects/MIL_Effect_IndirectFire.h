@@ -16,14 +16,12 @@
 
 #include "MIL_Effect_ABC.h"
 
-class PHY_WeaponDataType_IndirectFire;
 class PHY_Composante_ABC;
-class PHY_IndirectFireDotationClass;
-class MIL_AgentPion;
-class PHY_Weapon;
-class PHY_DotationCategory;
+class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_WeaponDataType_IndirectFire;
 class PHY_FireResults_Pion;
+class PHY_Weapon;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  MIL_Effect_IndirectFire
@@ -34,14 +32,19 @@ class MIL_Effect_IndirectFire : public MIL_Effect_ABC
     MT_COPYNOTALLOWED( MIL_Effect_IndirectFire )
 
 public:
-             MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID           , const PHY_IndirectFireDotationClass& indirectWeaponClass, MT_Float rInterventionTypeToFire );
-             MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_IndirectFireDotationClass& indirectWeaponClass, MT_Float rInterventionTypeToFire );
+             MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID           , const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
+             MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
     virtual ~MIL_Effect_IndirectFire();
 
     //! @name Accessors
     //@{
-    bool IsInterventionTypeFired() const;
-    bool IsTargetValid          () const;
+          bool                                   IsInterventionTypeFired    () const;
+          bool                                   IsTargetValid              () const;
+
+    const PHY_DotationCategory_IndirectFire_ABC& GetIndirectDotationCategory         () const;
+          uint                                   GetFireID                           () const;
+          uint                                   GetNbrAmmoFired                     () const;
+          uint                                   GetNbrAmmoToCompleteInterventionType() const;
 
     void IncRef();
     void DecRef();
@@ -51,16 +54,10 @@ public:
     //@{
     virtual bool Execute();
 
-          uint                  GetFireID                           () const;
-          void                  ForceFlying                         (); 
-          bool                  CanWeaponBeUsed                     ( const PHY_Weapon& weapon ) const;
-    const PHY_DotationCategory* GetWeaponDotationCategory           () const;
-          void                  SetWeaponDotationCategory           ( const PHY_DotationCategory& dotationCategory );
-          void                  NotifyAmmoFired                     ( const PHY_WeaponDataType_IndirectFire& weaponType, uint nNbrAmmoReserved );
-          uint                  GetNbrAmmoFired                     () const;
-          uint                  GetNbrAmmoToCompleteInterventionType() const;
-          bool                  FlyThroughLocalisation              ( const TER_Localisation& localisation ) const;
-          MT_Float              GetFlyingDistance                   () const;
+    void ForceFlying                (); 
+    void NotifyAmmoFired            ( const PHY_WeaponDataType_IndirectFire& weaponType, uint nNbrAmmoReserved );
+    bool IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const;
+    bool CanWeaponBeUsed            ( const PHY_Weapon& weapon ) const;
     //@}
 
 private:
@@ -72,18 +69,18 @@ private:
     //@}
 
 private:
-          uint                           nNbrRefs_;
-    const MIL_AgentPion&                 firer_;
-    const PHY_IndirectFireDotationClass& indirectWeaponClass_;
-    const MT_Float                       rInterventionTypeToFire_;
-    const PHY_DotationCategory*          pWeaponDotationCategory_;
-    const MT_Vector2D                    vSourcePosition_;
-          MT_Vector2D                    vTargetPosition_;
-          uint                           nTargetKnowledgeID_;
-          uint                           nNbrAmmoFired_;
-          bool                           bIsFlying_;
-          MT_Float                       rImpactTimeStep_;
-          PHY_FireResults_Pion*          pFireResult_;
+          uint                                   nNbrRefs_;
+    const MIL_AgentPion&                         firer_;
+    const MT_Float                               rInterventionTypeToFire_;
+    const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;                                                
+    const MT_Vector2D                            vSourcePosition_;
+          MT_Vector2D                            vTargetPosition_;
+          uint                                   nTargetKnowledgeID_;
+          uint                                   nNbrAmmoFired_;
+          bool                                   bIsFlying_;
+          bool                                   bFired_;
+          MT_Float                               rImpactTimeStep_;
+          PHY_FireResults_Pion*                  pFireResult_;
 };
 
 #include "MIL_Effect_IndirectFire.inl"

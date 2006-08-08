@@ -10,6 +10,18 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeDotation
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeDotation( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeDotation_ );
+    return diaVariable.GetType() == *pTypeDotation_;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeMaintenancePriorites
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
@@ -573,3 +585,13 @@ const DIA_TypeDef& DEC_Tools::GetTypePopulationConnaissanceObjet()
     return *pTypePopulationConnaissanceObjet_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeDotation
+// Created: NLD 2004-10-21
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeDotation()
+{
+    assert( pTypeDotation_ );
+    return *pTypeDotation_;
+}

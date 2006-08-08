@@ -1051,52 +1051,6 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::FillDirectFireData
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::FillDirectFireData( PHY_DirectFireData& data ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.CanFire() )
-            composante.FillDirectFireData( data );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::FillIndirectFireData
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::FillIndirectFireData( PHY_IndirectFireData& data ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.CanFire() )
-            composante.FillIndirectFireData( data );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::FillIndirectFireData
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::FillIndirectFireData( PHY_SmokeData& data ) const
-{
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.CanFire() )
-        {
-            composante.FillIndirectFireData( data );
-            if( data.HasWeapon() )
-                return;
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetComposantesAbleToBeFired
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
@@ -1444,12 +1398,12 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_K
 // Name: PHY_RolePion_Composantes::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
+MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = -1.;
 
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( ammoClass, bCheckDotationsAvailability ) );
+        rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
     return rRange;
 }
 
@@ -1457,12 +1411,12 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_Indirect
 // Name: PHY_RolePion_Composantes::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
+MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
 
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( ammoClass, bCheckDotationsAvailability ) );
+        rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
     return rRange;
 }
 

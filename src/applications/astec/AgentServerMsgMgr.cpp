@@ -1233,8 +1233,8 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& asn
     {
         ASN1T_MsgPionOrder& asnPionOrder = asnMsg.missions.elem[i];
 
-        strOutputMsg2 << "Pion " << asnPionOrder.oid_unite_executante
-                     << " - Mission " << asnPionOrder.mission.t << endl;
+        strOutputMsg2 << "[Pion " << asnPionOrder.oid_unite_executante
+                     << " - Mission " << (uint)asnPionOrder.mission.t << "]" << endl;
 
         Agent* pAgent = App::GetApp().GetAgentManager().FindAgent( asnPionOrder.oid_unite_executante );
         pAgent->OnReceiveMission( asnPionOrder );
@@ -1685,7 +1685,7 @@ void AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire&
     assert( pAgentSrc );
 
     if( asnMsg.m.munitionPresent )
-        strOutputMsg << " - Munition : " << App::GetApp().GetResourceName( asnMsg.munition );
+        strOutputMsg << " - Munition : " << App::GetApp().GetDotationTypeName( asnMsg.munition );
 
     if( asnMsg.cible.t == T_MsgStartPionFire_cible_pion )
     {

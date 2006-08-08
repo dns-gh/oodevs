@@ -34,24 +34,21 @@ public:
 
     //! @name Operations
     //@{
-    void AddWeapon           ( PHY_ComposantePion& firer, PHY_Weapon& weapon );
-    void RemoveFirer         ( PHY_ComposantePion& firer );
-    void PreselectWeapons    ();
-    bool GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const;
+    void operator()          ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    void RemoveFirer         ( const PHY_ComposantePion& firer );
+    bool GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const;
     //@}
 
     //! @name Accessors
     //@{
     bool HasWeaponsReady    () const;
     bool HasWeaponsNotReady () const;
+    bool HasWeaponsAndNoAmmo() const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< const PHY_DotationCategory* > T_WeaponsDotationsSet;
-    typedef T_WeaponsDotationsSet::const_iterator   CIT_WeaponsDotationsSet;
-
     typedef std::vector< PHY_Weapon* >     T_WeaponVector;
     typedef T_WeaponVector::iterator       IT_WeaponVector;
     typedef T_WeaponVector::const_iterator CIT_WeaponVector;
@@ -69,10 +66,8 @@ private:
 
         //! @name Operations
         //@{
-        void        AddWeapon                    ( PHY_Weapon& weapon );
-        void        PreselectWeapons             ( T_WeaponsDotationsSet& weaponsDotations, const MT_Float rDist ) const;
-        void        RemoveWeaponsNotUsingDotation( const PHY_DotationCategory& dotationCategory );
-        PHY_Weapon* GetUnusedWeapon              () const;
+        void        AddWeapon      ( PHY_Weapon& weapon );
+        PHY_Weapon* GetUnusedWeapon() const;
         //@}
 
     private:
@@ -81,9 +76,8 @@ private:
         T_WeaponVector  weapons_;
     };
 
-    typedef std::map< PHY_ComposantePion*, sComposanteWeapons > T_ComposanteWeaponsMap;
-    typedef T_ComposanteWeaponsMap::iterator                    IT_ComposanteWeaponsMap;
-    typedef T_ComposanteWeaponsMap::const_iterator              CIT_ComposanteWeaponsMap;
+    typedef std::map< const PHY_ComposantePion*, sComposanteWeapons > T_ComposanteWeaponsMap;
+    typedef T_ComposanteWeaponsMap::const_iterator                    CIT_ComposanteWeaponsMap;
     //@}
 
 private:
@@ -92,6 +86,7 @@ private:
     T_ComposanteWeaponsMap   composantesWeapons_;
     bool                     bHasWeaponsReady_;
     bool                     bHasWeaponsNotReady_;
+    bool                     bHasWeaponsAndNoAmmo_;
 };
 
 #include "PHY_IndirectFireData.inl"

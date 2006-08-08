@@ -25,6 +25,7 @@
 #include "moc_MissionInterface_ABC.cpp"
 
 #include "MissionPanel.h"
+#include "ParamDotationDType.h"
 #include "ParamPoint.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
@@ -159,6 +160,14 @@ void MissionInterface_ABC::CreatePoint( ASN1T_Point& asn, const std::string& str
     paramVector_.push_back( new ParamPoint( asn, strName, strName, this, pOptional ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CreateDotationDType
+// Created: NLD 2006-08-05
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CreateDotationDType( ASN1T_OID& asn                 , const std::string& strName, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
+{
+    paramVector_.push_back( new ParamDotationDType( asn, strName, this, pOptional ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreatePath
@@ -176,7 +185,7 @@ void MissionInterface_ABC::CreatePath( ASN1T_Itineraire& asn, const std::string&
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreatePathList( ASN1T_ListItineraire& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    paramVector_.push_back( new ParamPathList( asn, strName, strName, 1, 999, this, pOptional ) );
+    paramVector_.push_back( new ParamPathList( asn, strName, strName, 0, 999, this, pOptional ) );
 }
 
 
@@ -276,7 +285,7 @@ void MissionInterface_ABC::CreateAgentKnowledge( ASN1T_KnowledgeAgent& asn, cons
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    paramVector_.push_back( new ParamAgentKnowledgeList( asn, agent_, strName, strName, 1, 999, this, pOptional ) );
+    paramVector_.push_back( new ParamAgentKnowledgeList( asn, agent_, strName, strName, 0, 999, this, pOptional ) );
 }
 
 
@@ -297,7 +306,7 @@ void MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn, co
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    paramVector_.push_back( new ParamObjectKnowledgeList( asn, agent_, strName, strName, 1, 999, this, pOptional ) );
+    paramVector_.push_back( new ParamObjectKnowledgeList( asn, agent_, strName, strName, 0, 999, this, pOptional ) );
 }
 
 

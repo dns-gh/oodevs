@@ -60,3 +60,12 @@ std::string AGR_PointType::ASNInitialisationCode( const AGR_Member& member ) con
     strResult += " )\n        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
     return strResult;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_PointType::AllowOptionalMembers
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool AGR_PointType::AllowOptionalMembers() const
+{
+    return true;
+}

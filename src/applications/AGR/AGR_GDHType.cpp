@@ -53,10 +53,7 @@ std::string AGR_GDHType::ASNInitialisationCode( const AGR_Member& member ) const
     strResult += "NET_ASN_Tools::CopyGDH( ";
     strResult += member.ASNPrefixedName() + ", GetVariable( ";
     strResult += member.DIAIndexName();
-    if( member.IsOptional() )
-        strResult += " ), asnMission.m." + member.ASNName() + "Present )";
-    else
-        strResult += " ) )";
+    strResult += " ) )";
     strResult += " )\n        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
     return strResult;
 }

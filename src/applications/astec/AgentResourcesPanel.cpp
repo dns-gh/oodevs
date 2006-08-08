@@ -135,7 +135,7 @@ void AgentResourcesPanel::OnAgentUpdated( Agent& agent )
     for( CIT_ResourceQty_Map it2 = composition.resources_.begin(); it2 != composition.resources_.end(); ++it2 )
     {
         QListViewItem* pItem = resources_[ n2++ ];
-        pItem->setText( 0, App::GetApp().GetResourceName( (*it2).first ).c_str() );
+        pItem->setText( 0, App::GetApp().GetDotationTypeName( (*it2).first ).c_str() );
         pItem->setText( 1, QString::number( (*it2).second ) );
     }
 

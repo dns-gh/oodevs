@@ -16,6 +16,7 @@
 
 class MIL_AgentPion;
 class PHY_Weapon;
+class PHY_ComposantePion;
 class PHY_IndirectFireDotationClass;
 
 // =============================================================================
@@ -32,9 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    bool        AddWeapon( PHY_Weapon& weapon );
-    bool        HasWeapon() const;
-    PHY_Weapon* GetWeapon() const;
+    void        operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon );
+    PHY_Weapon* GetWeapon () const;
     //@}
 
 private:

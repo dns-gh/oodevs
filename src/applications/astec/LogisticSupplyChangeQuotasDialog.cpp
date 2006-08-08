@@ -130,7 +130,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
             QListViewItem* pItem = pQuotas_->firstChild();
             while( pItem )
             {
-                quotas.push_back( std::pair< uint, uint >(App::GetApp().GetRessourceID( (const char*)pItem->text( 0 ) ) , pItem->text( 1 ).toInt()) );
+                quotas.push_back( std::pair< uint, uint >(App::GetApp().GetDotationTypeID( (const char*)pItem->text( 0 ) ) , pItem->text( 1 ).toInt()) );
                 pItem = pItem->nextSibling();
             }
         }
@@ -151,7 +151,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
         uint i = 0;
         while( pItem )
         {
-            pAsnQuota[i].ressource_id     = App::GetApp().GetRessourceID( (const char*)pItem->text( 0 ) );
+            pAsnQuota[i].ressource_id     = App::GetApp().GetDotationTypeID( (const char*)pItem->text( 0 ) );
             pAsnQuota[i].quota_disponible = pItem->text( 1 ).toInt();
             ++i;
             pItem = pItem->nextSibling();
@@ -222,7 +222,7 @@ void LogisticSupplyChangeQuotasDialog::OnSuppliedChanged( int nItem )
     const T_ResourceQty_Map& ressources = supplied.pSupplyData_->stocks_;
     for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
     {
-        const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
+        const std::string strRessourceName = App::GetApp().GetDotationTypeName( it->first );
         pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
         menuRessources.insert( strRessourceName );
     }
@@ -235,7 +235,7 @@ void LogisticSupplyChangeQuotasDialog::OnSuppliedChanged( int nItem )
         const T_ResourceQty_Map& ressources = ( *itChild )->pSupplyData_->stocks_;
         for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
         {
-            const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
+            const std::string strRessourceName = App::GetApp().GetDotationTypeName( it->first );
             if( menuRessources.find( strRessourceName ) == menuRessources.end() )
             {
                 pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
@@ -248,7 +248,7 @@ void LogisticSupplyChangeQuotasDialog::OnSuppliedChanged( int nItem )
     const Agent::T_LogisticStockAvailabilities quotas = supplied.pSupplyData_->quotas_;
     for ( Agent::CIT_LogisticStockAvailabilities it = quotas.begin(); it != quotas.end(); ++it )
     {
-        std::string str = App::GetApp().GetResourceName( it->first );
+        std::string str = App::GetApp().GetDotationTypeName( it->first );
         int value = it->second;
         QListViewItem* item = new QListViewItem( pQuotas_, str.c_str(), QString::number( value ) );
         item->setRenameEnabled( 1, true );

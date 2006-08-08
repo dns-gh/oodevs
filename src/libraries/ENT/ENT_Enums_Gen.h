@@ -923,18 +923,6 @@ enum E_AmbianceMission
 };
 
 
-enum E_TypeMunitionTirIndirect
-{
-    eTypeMunitionTirIndirect_Explosif,
-    eTypeMunitionTirIndirect_Grenade,
-    eTypeMunitionTirIndirect_Aced,
-    eTypeMunitionTirIndirect_Fumigene,
-    eTypeMunitionTirIndirect_Eclairant,
-    eTypeMunitionTirIndirect_Mine,
-    eNbrTypeMunitionTirIndirect
-};
-
-
 enum E_ActionReagirFaceAEni
 {
     eActionReagirFaceAEni_DetruireMoyens,

@@ -90,13 +90,13 @@ Object_ABC::Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
 
     if( asnMsg.m.type_dotation_constructionPresent )
     {
-        strTypeDotationConstruction_ = App::GetApp().GetResourceName( asnMsg.type_dotation_construction );
+        strTypeDotationConstruction_ = App::GetApp().GetDotationTypeName( asnMsg.type_dotation_construction );
         nNbrDotationConstruction_    = 0;
     }
     
     if( asnMsg.m.type_dotation_valorisationPresent )
     {
-        strTypeDotationValorization_ = App::GetApp().GetResourceName( asnMsg.type_dotation_valorisation );
+        strTypeDotationValorization_ = App::GetApp().GetDotationTypeName( asnMsg.type_dotation_valorisation );
         nNbrDotationValorization_    = 0;
     }
 }

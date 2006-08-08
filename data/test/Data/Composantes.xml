@@ -335,7 +335,7 @@
     </Objets>
     <Pannes>
       <PannesAleatoires>
-        <Panne nom="Panne 1" pourcentage="100"/>
+        <Panne nom="Delco casse" pourcentage="100"/>
       </PannesAleatoires>
       <PannesAttritions>
         <Panne nom="Panne 1" pourcentage="100"/>

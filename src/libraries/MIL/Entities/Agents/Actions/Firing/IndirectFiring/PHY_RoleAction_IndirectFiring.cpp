@@ -19,8 +19,10 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Entities/Actions/PHY_FireResults_Default.h"
 #include "PHY_IndirectFireData.h"
 #include "PHY_SmokeData.h"
+#include "PHY_MunitionForIndirectFireData.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_IndirectFiring, "PHY_RoleAction_IndirectFiring" )
 
@@ -75,39 +77,40 @@ void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const uint )
 // Name: PHY_RoleAction_IndirectFiring::Fire
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire& effect )
+int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
 {   
-    if( effect.IsInterventionTypeFired() )
+    if( !pEffect )
+        return eImpossible;
+
+    if( pEffect->IsInterventionTypeFired() )
         return eFinished;
 
-    if( !effect.IsTargetValid() )
+    if( !pEffect->IsTargetValid() ) 
         return eImpossible;
 
     // Firers
     assert( pPion_ );
     
-    PHY_IndirectFireData firerWeapons( *pPion_, effect );
-    GetRole< PHY_RolePion_Composantes >().FillIndirectFireData( firerWeapons );
+    PHY_IndirectFireData firerWeapons( *pPion_, *pEffect );
+    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
     if( !firerWeapons.HasWeaponsReady() )
     {
         if( firerWeapons.HasWeaponsNotReady() )
             return eRunning;
+        if( firerWeapons.HasWeaponsAndNoAmmo() )
+            return eNoAmmo;
         return eNoCapacity;
     }
-
-    firerWeapons.PreselectWeapons();
-    if( !effect.GetWeaponDotationCategory() )
-        return eNoAmmo;
 
     // 
     PHY_ComposantePion* pFirer               = 0;
     PHY_Weapon*         pFirerWeapon         = 0;
-    while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) && !effect.IsInterventionTypeFired() )
+    while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) && !pEffect->IsInterventionTypeFired() ) // ready weapons
     {
-        if( !pFirerWeapon->IndirectFire( *pPion_, effect ) )
+        if( !pFirerWeapon->IndirectFire( *pPion_, *pEffect ) )
         {
-            effect.ForceFlying();
-            if( effect.GetNbrAmmoFired() )
+            pEffect->ForceFlying(); 
+            if( pEffect->GetNbrAmmoFired() )
                 return eFinished;
             else
                 return eNoAmmo;
@@ -115,7 +118,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire& effect )
         firerWeapons.RemoveFirer( *pFirer );
     }
 
-    if( effect.IsInterventionTypeFired() )
+    if( pEffect->IsInterventionTypeFired() )
         return eFinished;
 
     return eRunning;
@@ -139,12 +142,29 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
     assert( pPion_ );
     
     PHY_SmokeData smokeData( *pPion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
-    GetRole< PHY_RolePion_Composantes >().FillIndirectFireData( smokeData );
+    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( smokeData );
     
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
         return eNoCapacity;
 
-    pWeapon->ThrowSmoke( *pPion_, pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), vTargetPosition, nNbrAmmo );
+    PHY_FireResults_Default fireResult; //$$$ POURRI
+    pWeapon->ThrowSmoke( *pPion_, pPion_->GetRole< PHY_RolePion_Location >().GetPosition(), vTargetPosition, nNbrAmmo, fireResult );
     return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire
+// Created: NLD 2006-08-08
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* PHY_RoleAction_IndirectFiring::GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition )
+{
+    assert( pPion_ );
+
+    const MT_Float rRange = pPion_->GetRole< PHY_RolePion_Location >().GetPosition().Distance( vTargetPosition );
+    
+    PHY_MunitionForIndirectFireData fireData( *pPion_, indirectWeaponCategory, rRange );
+    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( fireData );
+
+    return fireData.GetChoosenMunition();
 }

@@ -38,8 +38,8 @@ signatures
     U /*T_Action*/                          A::DEC_StartTirDirectDebarques                         ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );
     U /*T_Action*/                          A::DEC_StartTirDirectTransporteurs                     ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );    
     U /*T_Action*/                          A::DEC_StartTirDirectSurComposantesMajeures            ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );    
-    U /*T_Action*/                          A::DEC_StartTirIndirectSurPosition                     ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*position*/     );
-    U /*T_Action*/                          A::DEC_StartTirIndirectSurConnaissance                 ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*connaissance*/ );    
+    U /*T_Action*/                          A::DEC_StartTirIndirectSurPosition                     ( I /*E_EtatActionTirIndirect*/, U /*T_Dotation*/, R /*Nb d'IT*/, U /*position*/     );
+    U /*T_Action*/                          A::DEC_StartTirIndirectSurConnaissance                 ( I /*E_EtatActionTirIndirect*/, U /*T_Dotation*/, R /*Nb d'IT*/, U /*connaissance*/ );    
     U /*T_Action*/                          A::DEC_StartTirSurPopulation                           ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissancePopulation*/ );
     V                                       A::DEC_Tir_LancerFumigeneSurConnaissance               ( U /*T_ConnaissanceAgent*/ );
     R                                       A::DEC_Tir_PorteeMaxPourTirerSurUnite                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
@@ -48,10 +48,11 @@ signatures
     R                                       A::DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );    
     R                                       A::DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
     R                                       A::DEC_Tir_PorteeMaxPourEtreTireParUnite               ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                       A::DEC_Tir_PorteeMaxTirIndirect                        ( I /*E_TypeObus*/ );
-    R                                       A::DEC_Tir_PorteeMinTirIndirect                        ( I /*E_TypeObus*/ );
-    R                                       A::DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( I /*E_TypeObus*/ );
-    R                                       A::DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( I /*E_TypeObus*/ );
+    R                                       A::DEC_Tir_PorteeMaxTirIndirect                        ( U /*T_Dotation*/ );
+    R                                       A::DEC_Tir_PorteeMinTirIndirect                        ( U /*T_Dotation*/ );
+    R                                       A::DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( U /*T_Dotation*/ );
+    R                                       A::DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( U /*T_Dotation*/ );
+    U /*T_Dotation*/                        A::DEC_Tir_MunitionPourTirIndirect                     ( I /*E_TypeObus*/, U /*T_Point cible*/ );
                                             
                                             
     // Embarquement / débarquement          
@@ -340,6 +341,7 @@ signatures
     A /*T_Automate*/                        A::DEC_Pion_TC2                  (); // ATTENTION : La valeur de retour peut être nulle
     V                                       A::DEC_DemandeDeRavitaillement   ();
     V                                       A::DEC_ChangeValeurDotations     ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
+    R                                       A::DEC_ValeurDotation            ( U /*T_Dotation*/ );
 
     // Test / debug 
     V                                       A::DEC_PostureForTest    ( I );

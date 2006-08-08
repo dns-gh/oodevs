@@ -55,10 +55,10 @@ PHY_DotationCategory_IndirectWeatherFire::~PHY_DotationCategory_IndirectWeatherF
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectWeatherFire::Fire
+// Name: PHY_DotationCategory_IndirectWeatherFire::ApplyEffect
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectWeatherFire::Fire( const MIL_AgentPion& /*firer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired ) const
+void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_AgentPion& /*firer*/, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     MT_Vector2D vFireDirection( 0., 1. );
     if( vTargetPosition != vSourcePosition )
@@ -72,14 +72,5 @@ void PHY_DotationCategory_IndirectWeatherFire::Fire( const MIL_AgentPion& /*fire
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, rLifeDuration_, rDeploymentDuration_ );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectWeatherFire::Fire
-// Created: NLD 2004-10-12
-// -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectWeatherFire::Fire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
-{
-    Fire( firer, vSourcePosition, vTargetPosition, rInterventionTypeFired );
 }
 

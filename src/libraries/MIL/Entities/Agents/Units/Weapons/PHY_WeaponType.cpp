@@ -247,10 +247,10 @@ void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC
 // Name: PHY_WeaponType::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo ) const
+void PHY_WeaponType::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
-    pIndirectFireData_->ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo );
+    pIndirectFireData_->ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,13 +335,9 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_AgentPion& fi
 // Name: PHY_WeaponType::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
+MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
 {
-    assert( pDotationCategory_ );
-
-    if ( !pIndirectFireData_ 
-      || !pDotationCategory_->GetIndirectFireData()
-      ||  pDotationCategory_->GetIndirectFireData()->GetIndirectFireDotationCategory() != ammoClass )
+    if ( !pIndirectFireData_ )
         return -1.;
 
     if( bCheckDotationsAvailability && !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
@@ -354,13 +350,9 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 // Name: PHY_WeaponType::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
+MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
 {
-    assert( pDotationCategory_ );
-    
-    if ( !pIndirectFireData_ 
-      || !pDotationCategory_->GetIndirectFireData()
-      ||  pDotationCategory_->GetIndirectFireData()->GetIndirectFireDotationCategory() != ammoClass )
+    if ( !pIndirectFireData_ )
       return std::numeric_limits< MT_Float >::max();
 
     if( bCheckDotationsAvailability && !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )

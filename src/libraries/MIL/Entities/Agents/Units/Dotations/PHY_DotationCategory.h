@@ -57,8 +57,7 @@ public:
           MT_Float                               GetAttritionScore  ( const PHY_Protection& protectionTarget ) const;
     const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData() const;
 
-    void IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
-    void IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired ) const;
+    void ApplyIndirectFireEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
     //! @name Packaging

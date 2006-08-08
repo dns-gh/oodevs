@@ -92,7 +92,7 @@ namespace
     public:
         std::string GetName( unsigned int n ) const
         {
-            return App::GetApp().GetResourceName( n );
+            return App::GetApp().GetDotationTypeName( n );
         }
     };
 }

@@ -43,6 +43,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool AllowOptionalMembers() const;
+
     virtual bool IsOfType( const std::string& strASNType ) const;
 
 //    std::string Declaration                    ( const AGR_Member& member ) const;
@@ -87,6 +89,7 @@ private:
     //@{
     std::string RemoveNamespace( const std::string& strName ) const;
     //@}    
+
 private:
     //! @name Member data
     //@{

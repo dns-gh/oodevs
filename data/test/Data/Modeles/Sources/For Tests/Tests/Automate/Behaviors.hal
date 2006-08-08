@@ -4,7 +4,6 @@ max_activations     =   10;
 
 behavior BEH_Defaut( id nDummy )
 {
-
     DEC_Debug( "Rapfor global: " + FloatToString( DEC_RapportDeForceGlobal() ) );
 
     /*T_ListePions selFusse = DEC_Geometrie_PionEstCoordonne( DEC_Automate_PionPC(), DEC_Automate_PionsSansPC(), 2000 );
@@ -74,11 +73,32 @@ behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
     }
 }
 
+behavior Prout( T_Mission_Automate_Test_MoveTo mission )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {
+            T_Mission_Pion_Test_MoveTo missionPion = DEC_CDT_CreerMissionPion( DIA_GetAt( DEC_Automate_PionsSansPC(), 0 ), eMission_Pion_Test_MoveTo );
+            missionPion.typeItineraire_ = eTypeItiLogistique;
+            DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
+            DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "Test" );
+    }
+}
+
 behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )
 {
     when updated:
     {   
-    
+        if( DIA_ModuleBegins() )
+            behavior Prout( mission );
+  
+   
       /*  persistent bool bDummy = false;
         T_Lima lima = DEC_GetLima( eTypeLima_LC );
         if( lima != 0 )
@@ -228,4 +248,37 @@ behavior MIS_Automate_MRT_GEN_RealiserSystemeObstacles( T_Mission_Automate_GEN_R
 behavior MIS_Automate_CDT_GEN_RealiserSystemeObstacles( T_Mission_Automate_GEN_RealiserSystemeObstacles mission, id nDummy )
 {
     // NOTHING: to test ObstacleList mission parameters
+}
+
+
+
+
+behavior MIS_Automate_MRT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
+{
+    if( DIA_ModuleBegins() )
+    { 
+        DEC_Debug( "MIS_Automate_MRT_LOG_SeDeployer" );
+                       
+        T_ListePions selPions = DEC_Automate_PionsAvecPC();
+        
+//        DEC_MRT_AffecteFuseaux( selPions );
+
+        with( y in selPions )
+        {
+            T_Pion pion = y;
+            
+            T_Mission_Pion_LOG_SeDeployer missionPion = DEC_MRT_CreerMissionPion( pion, eMission_Pion_LOG_SeDeployer );
+            if( missionPion != 0 )
+            {
+                if( mission.positionDeploiement_ != 0 )
+                    DEC_Copie_Point( mission.positionDeploiement_, missionPion.positionDeploiement_ );
+            }
+        }       
+
+        DEC_MRT_Valide();
+    }
+}
+
+ behavior MIS_Automate_CDT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
+{
 }

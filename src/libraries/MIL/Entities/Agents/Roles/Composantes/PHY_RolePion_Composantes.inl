@@ -13,6 +13,17 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h" 
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > void PHY_RolePion_Composantes::ApplyOnWeapons
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+template< typename T > 
+inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        (**it).ApplyOnWeapons( t );
+}
+
+// -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_RolePion_Composantes::Apply
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------

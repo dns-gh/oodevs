@@ -857,17 +857,6 @@ ENT_Tr::T_ConverterAmbianceMission ENT_Tr::AmbianceMissionConverter_[] =
     T_ConverterAmbianceMission( "", "", (E_AmbianceMission)-1 )
 };
 
-ENT_Tr::T_ConverterTypeMunitionTirIndirect ENT_Tr::TypeMunitionTirIndirectConverter_[] =
-{
-    T_ConverterTypeMunitionTirIndirect( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosif" ), eTypeMunitionTirIndirect_Explosif ),
-    T_ConverterTypeMunitionTirIndirect( "grenade", QT_TRANSLATE_NOOP( "ENT_Tr", "grenade" ), eTypeMunitionTirIndirect_Grenade ),
-    T_ConverterTypeMunitionTirIndirect( "aced", QT_TRANSLATE_NOOP( "ENT_Tr", "aced" ), eTypeMunitionTirIndirect_Aced ),
-    T_ConverterTypeMunitionTirIndirect( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "fumigene" ), eTypeMunitionTirIndirect_Fumigene ),
-    T_ConverterTypeMunitionTirIndirect( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "eclairant" ), eTypeMunitionTirIndirect_Eclairant ),
-    T_ConverterTypeMunitionTirIndirect( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "mine" ), eTypeMunitionTirIndirect_Mine ),
-    T_ConverterTypeMunitionTirIndirect( "", "", (E_TypeMunitionTirIndirect)-1 )
-};
-
 ENT_Tr::T_ConverterActionReagirFaceAEni ENT_Tr::ActionReagirFaceAEniConverter_[] =
 {
     T_ConverterActionReagirFaceAEni( "detruire moyens", QT_TRANSLATE_NOOP( "ENT_Tr", "detruire moyens" ), eActionReagirFaceAEni_DetruireMoyens ),
@@ -1396,7 +1385,6 @@ void ENT_Tr::InitTranslations()
     InitTr( SetAutomateModeErrorCodeConverter_, "ENT_Tr" );
     InitTr( UnitAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( AmbianceMissionConverter_, "ENT_Tr" );
-    InitTr( TypeMunitionTirIndirectConverter_, "ENT_Tr" );
     InitTr( ActionReagirFaceAEniConverter_, "ENT_Tr" );
     InitTr( TC2GererMaterielAvantDeplacementConverter_, "ENT_Tr" );
 
@@ -1990,15 +1978,6 @@ const std::string& ENT_Tr::ConvertFromUnitAttrErrorCode( E_UnitAttrErrorCode nVa
 const std::string& ENT_Tr::ConvertFromAmbianceMission( E_AmbianceMission nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( AmbianceMissionConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTypeMunitionTirIndirect
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TypeMunitionTirIndirectConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2643,15 +2622,6 @@ E_UnitAttrErrorCode ENT_Tr::ConvertToUnitAttrErrorCode( const std::string& strNa
 E_AmbianceMission ENT_Tr::ConvertToAmbianceMission( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( AmbianceMissionConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTypeMunitionTirIndirect
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TypeMunitionTirIndirect ENT_Tr::ConvertToTypeMunitionTirIndirect( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TypeMunitionTirIndirectConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

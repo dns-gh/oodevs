@@ -184,15 +184,6 @@ const T_MosId_String_Map& App::GetNBCNames() const
     return nbcNamesMap_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: App::GetResourceNames
-// Created: SBO 2005-09-08
-// -----------------------------------------------------------------------------
-inline
-const T_MosId_String_Map& App::GetResourceNames() const
-{
-    return resourcesNameMap_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: App::GetEquipmentNames
@@ -252,14 +243,24 @@ const std::string& App::GetRootConfigFile() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: App::GetResource
-// Created: HME 2005-11-04
+// Name: App::GetDotationType
+// Created: NLD 2006-08-05
 // -----------------------------------------------------------------------------
 inline
-const Resource& App::GetResource ( MIL_AgentID id ) const
+const DotationType& App::GetDotationType( uint nID ) const
 {
-    CIT_ResourceMap it = resourcesMap_.find( id );
-    assert( it != resourcesMap_.end() );
-    return  it->second;
+    CIT_DotationTypeMap it = dotationTypes_.find( nID );
+    assert( it != dotationTypes_.end() );
+    return  *it->second;
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::GetDotationTypes
+// Created: NLD 2006-08-05
+// -----------------------------------------------------------------------------
+inline
+const App::T_DotationTypeMap& App::GetDotationTypes() const
+{
+    return dotationTypes_;
 }

@@ -135,7 +135,8 @@ void MIL_PionMission_LOG_TraiterBlesses::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.u.mission_pion_log_traiter_blesses  = &asnMission;
 
     NET_ASN_Tools::CopyMedicalPriorities( GetVariable( nDIABlessuresTraiteesIdx_ ), asnMission.blessures_traitees );
-    NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement );
+    if( NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement ) )
+        asnMission.m.position_deploiementPresent = 1;
 
 }
 
@@ -149,7 +150,8 @@ void MIL_PionMission_LOG_TraiterBlesses::CleanAfterSerialization( ASN1T_MsgPionO
     ASN1T_Mission_Pion_LOG_TraiterBlesses& asnMission = *asnMsg.mission.u.mission_pion_log_traiter_blesses;
 
     NET_ASN_Tools::Delete( asnMission.blessures_traitees );
-    NET_ASN_Tools::Delete( asnMission.position_deploiement );
+    if( asnMission.m.position_deploiementPresent )
+        NET_ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
 

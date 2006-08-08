@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -121,7 +122,7 @@ bool PHY_Weapon::IsReady() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: phy_weapon::GetMaxRangeToIndirectFire
+// Name: PHY_Weapon::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
 MT_Float PHY_Weapon::GetMaxRangeToIndirectFire() const
@@ -232,7 +233,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
 bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect )
 {
     assert( type_.CanIndirectFire() && IsReady() );
-    assert( effect.GetWeaponDotationCategory() && type_.GetDotationCategory() == *effect.GetWeaponDotationCategory() );
+    assert( type_.GetDotationCategory() == effect.GetIndirectDotationCategory().GetDotationCategory() );
     
     bool bHasFired = false;
     const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -275,9 +276,9 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
 // Name: PHY_Weapon::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_Weapon::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo ) const
+void PHY_Weapon::ThrowSmoke( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
 {
     uint nNbrAmmoReserved = (uint)firer.GetRole< PHY_RolePion_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmo );
     assert( nNbrAmmoReserved == nNbrAmmo );
-    type_.ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo );
+    type_.ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
 }

@@ -12,6 +12,17 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > void PHY_ComposantePion::FillFireData
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+template< typename T > 
+inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
+{
+    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
+        functor( *this, **itWeapon );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyHumansWounds
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------

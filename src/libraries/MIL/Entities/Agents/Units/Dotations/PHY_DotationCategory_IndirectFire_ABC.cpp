@@ -41,13 +41,3 @@ PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( co
 PHY_DotationCategory_IndirectFire_ABC::~PHY_DotationCategory_IndirectFire_ABC()
 {
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectFire_ABC::Fire
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire_ABC::Fire( const MIL_AgentPion& /*firer*/, const MT_Vector2D& /*vSourcePosition*/, const MT_Vector2D& /*vTargetPosition*/, MT_Float /*rInterventionTypeFired*/ ) const
-{
-    // NOTHING
-}

@@ -73,11 +73,11 @@ public:
 
     //! @name Mission parameters tools : Agent / Automate / Pion
     //@{
-    static bool CopyAutomate ( const ASN1T_Agent& asn, DIA_Variable_ABC& dia, bool bValueIfOptional = true );
+    static bool CopyAutomate ( const ASN1T_Agent& asn, DIA_Variable_ABC& dia );
     static bool CopyAutomate ( const DIA_Variable_ABC& dia, ASN1T_Agent& asn );
     static bool CopyAutomate ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyAgent ( const ASN1T_Agent& asn, DIA_Variable_ABC& dia, bool bValueIfOptional = true );
+    static bool CopyAgent ( const ASN1T_Agent& asn, DIA_Variable_ABC& dia );
     static bool CopyAgent ( const DIA_Variable_ABC& dia, ASN1T_Agent& asn );   
     static bool CopyAgent ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
@@ -149,7 +149,7 @@ public:
 
     //! @name Mission parameters tools : GDH DIA - SIM - ASN
     //@{
-    static bool CopyGDH ( const ASN1T_GDH&        asn    , DIA_Variable_ABC& dia, bool bValueIfOptional = true );
+    static bool CopyGDH ( const ASN1T_GDH&        asn    , DIA_Variable_ABC& dia );
     static bool CopyGDH ( const DIA_Variable_ABC& dia    , ASN1T_GDH& asn          );
     static bool CopyGDH ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
@@ -179,6 +179,12 @@ public:
     static bool CopyNatureAtlas ( const ASN1T_NatureAtlas& asn, DIA_Variable_ABC& dia );
     static bool CopyNatureAtlas ( const DIA_Variable_ABC& dia, ASN1T_NatureAtlas& asn );
     static bool CopyNatureAtlas ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
+
+    static bool CopyDotation( const ASN1T_TypeDotation& asn, DIA_Variable_ABC& dia );
+//    static bool CopyDotation( const ASN1T_TypeDotationTrancheD& asn, DIA_Variable_ABC& dia ); idem
+    static bool CopyDotation( const DIA_Variable_ABC& dia, ASN1T_TypeDotation& asn );
+//    static bool CopyDotation( const DIA_Variable_ABC& dia, ASN1T_TypeDotationTrancheD& asn ); idem
+    static bool CopyDotation( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyEnumeration ( uint asn, DIA_Variable_ABC& dia );
     template< typename T > static bool CopyEnumeration ( const DIA_Variable_ABC& dia, T& asn )

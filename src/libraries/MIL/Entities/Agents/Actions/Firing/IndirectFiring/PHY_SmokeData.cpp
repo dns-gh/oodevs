@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
@@ -42,22 +43,21 @@ PHY_SmokeData::~PHY_SmokeData()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SmokeData::AddWeapon
+// Name: PHY_SmokeData::operator()
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-bool PHY_SmokeData::AddWeapon( PHY_Weapon& weapon )
+void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
-    assert( weapon.CanIndirectFire() );
-    if( pWeapon_ )
-        return true;
+    if( pWeapon_ || !compFirer.CanFire() || !weapon.CanIndirectFire() )
+        return;
 
     const PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData = weapon.GetDotationCategory().GetIndirectFireData();
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
-        return false;
+        return;
 
     if( firer_.GetRole< PHY_RolePion_Dotations >().GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
-        return false;
+        return;
     
     pWeapon_ = &weapon;
-    return true;
+    return;
 }

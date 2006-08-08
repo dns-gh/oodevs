@@ -177,19 +177,20 @@ void DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy( DIA_Call_ABC& call, const M
 // -----------------------------------------------------------------------------
 void DEC_FireFunctions::GetMaxRangeToIndirectFire( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
-    
-    if ( pClass )
+    assert( DEC_Tools::CheckTypeDotation( call.GetParameter( 0 ) ) );
+
+    const PHY_DotationCategory* pDotationCategory = call.GetParameter( 0 ).ToUserPtr( pDotationCategory );
+    if( !pDotationCategory )
     {
-        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pClass, true );
-        
-        if ( rRange < 0. ) // Pas de possibilité de tir
-            call.GetResult().SetValue( -1.f );
-        else
-            call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
-    }
-    else
         call.GetResult().SetValue( -1.f );
+        return;
+    }
+
+    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, true );
+    if( rRange < 0. ) // Pas de possibilité de tir
+        call.GetResult().SetValue( -1.f );
+    else
+        call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,19 +199,20 @@ void DEC_FireFunctions::GetMaxRangeToIndirectFire( DIA_Call_ABC& call, const MIL
 // -----------------------------------------------------------------------------
 void DEC_FireFunctions::GetMinRangeToIndirectFire( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
-    
-    if ( pClass )
-    {
-        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pClass, true );
+    assert( DEC_Tools::CheckTypeDotation( call.GetParameter( 0 ) ) );
 
-        if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
-            call.GetResult().SetValue( -1.f );
-        else
-            call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
-    }
-    else
+    const PHY_DotationCategory* pDotationCategory = call.GetParameter( 0 ).ToUserPtr( pDotationCategory );
+    if( !pDotationCategory )
+    {
         call.GetResult().SetValue( -1.f );
+        return;
+    }
+    
+    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, true );
+    if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
+        call.GetResult().SetValue( -1.f );
+    else
+        call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,19 +221,21 @@ void DEC_FireFunctions::GetMinRangeToIndirectFire( DIA_Call_ABC& call, const MIL
 // -----------------------------------------------------------------------------
 void DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
-    
-    if ( pClass )
+    assert( DEC_Tools::CheckTypeDotation( call.GetParameter( 0 ) ) );
+
+    const PHY_DotationCategory* pDotationCategory = call.GetParameter( 0 ).ToUserPtr( pDotationCategory );
+    if( !pDotationCategory )
     {
-        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pClass, false );
-        
-        if ( rRange < 0. ) // Pas de possibilité de tir
-            call.GetResult().SetValue( -1.f );
-        else
-            call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
-    }
-    else
         call.GetResult().SetValue( -1.f );
+        return;
+    }
+
+    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, false );
+    
+    if ( rRange < 0. ) // Pas de possibilité de tir
+        call.GetResult().SetValue( -1.f );
+    else
+        call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,19 +244,21 @@ void DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC&
 // -----------------------------------------------------------------------------
 void DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
-    
-    if ( pClass )
-    {
-        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pClass, false );
+    assert( DEC_Tools::CheckTypeDotation( call.GetParameter( 0 ) ) );
 
-        if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
-            call.GetResult().SetValue( -1.f );
-        else
-            call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
-    }
-    else
+    const PHY_DotationCategory* pDotationCategory = call.GetParameter( 0 ).ToUserPtr( pDotationCategory );
+    if( !pDotationCategory )
+    {
         call.GetResult().SetValue( -1.f );
+        return;
+    }
+
+    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, false );
+
+    if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
+        call.GetResult().SetValue( -1.f );
+    else
+        call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,4 +271,21 @@ void DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent( DIA_Call_ABC& call, MIL_Agen
     DEC_Knowledge_Agent* pTarget = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( pTarget )
         callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( pTarget->GetPosition(), 2 ); //$$$ 
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMunitionForIndirectFire
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::GetMunitionForIndirectFire( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
+    assert( pClass );
+
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
+    const MT_Vector2D* pTarget = call.GetParameter( 1 ).ToUserPtr( pTarget );
+
+    const PHY_DotationCategory* pDotationCategory = callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().GetMunitionForIndirectFire( *pClass, *pTarget );
+    
+    call.GetResult().SetValue( (void*)pDotationCategory, &DEC_Tools::GetTypeDotation() );
 }

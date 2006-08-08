@@ -10,6 +10,16 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::GetDotationCategory
+// Created: NLD 2006-08-07
+// -----------------------------------------------------------------------------
+inline
+const PHY_DotationCategory& PHY_DotationCategory_IndirectFire_ABC::GetDotationCategory() const
+{
+    return dotationCategory_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire_ABC::GetIndirectFireDotationCategory
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------

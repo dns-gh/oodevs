@@ -69,6 +69,8 @@ public:
     //@{
     void Update();
     void TransferComposante( PHY_RolePion_Composantes& newRole );
+
+    template< typename T > void ApplyOnWeapons( T& t ) const;
     //@}
 
     //! @name Logistic - Maintenance
@@ -128,10 +130,6 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-    void     FillDirectFireData             ( PHY_DirectFireData&   data );
-    void     FillIndirectFireData           ( PHY_IndirectFireData& data );
-    void     FillIndirectFireData           ( PHY_SmokeData&        data );
-
     void     ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
     void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
     void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
@@ -145,8 +143,8 @@ public:
     MT_Float GetMinRangeToFireOn            ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
     MT_Float GetMaxRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToIndirectFire      ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability           ) const;
-    MT_Float GetMinRangeToIndirectFire      ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability           ) const;
+    MT_Float GetMaxRangeToIndirectFire      ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    MT_Float GetMinRangeToIndirectFire      ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     //@}
 
     //! @name Accessors

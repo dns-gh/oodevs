@@ -33,6 +33,7 @@
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "Options.h"
+#include "DotationType.h"
 #include "MT/MT_IO/MT_CommandLine.h"
 
 #include <direct.h>
@@ -198,7 +199,7 @@ void App::InitializeData( const std::string& strFilename )
         InitializeTerrainData  ( scipioArchive );
         InitializeRawVisionData( scipioArchive );   
         InitializeMeteo        ( scipioArchive ); 
-        InitializeRessourceIDs ( scipioArchive );
+        InitializeDotationTypes( scipioArchive );
         InitializeEquipementIDs( scipioArchive );
         InitializeAgentNBCIDs  ( scipioArchive );
         InitializeSensors      ( scipioArchive );
@@ -296,10 +297,10 @@ void App::InitializeTerrainData( InputArchive& scipioArchive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: App::InitializeRessourceIDs
+// Name: App::InitializeDotationTypes
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void App::InitializeRessourceIDs( InputArchive& scipioArchive )
+void App::InitializeDotationTypes( InputArchive& scipioArchive )
 {
     std::string strDotationFile;
     scipioArchive.ReadField( "Dotations", strDotationFile );
@@ -311,19 +312,17 @@ void App::InitializeRessourceIDs( InputArchive& scipioArchive )
     while( dotArchive.NextListElement() )
     {
         dotArchive.Section( "Dotation" );
-        std::string strDot;
-        dotArchive.ReadAttribute( "nom", strDot );
+        std::string strClass;
+        dotArchive.ReadAttribute( "nom", strClass );
         dotArchive.BeginList( "Categories" );
         while( dotArchive.NextListElement() )
         {
             dotArchive.Section( "Categorie" );
             std::string strName;
-            uint        nID;
             dotArchive.ReadAttribute( "nom", strName );
-            dotArchive.ReadField( "MosID", nID );
 
-            resourcesNameMap_.insert( std::make_pair( nID, strName ) );
-            resourcesMap_.insert( std::make_pair( nID, Resource( nID, strName, strDot ) ) );
+            DotationType* pDotationType = new DotationType( strClass, strName, dotArchive );
+            dotationTypes_.insert( std::make_pair( pDotationType->GetID(), pDotationType ) );
 
             dotArchive.EndSection(); // Categorie
         }
@@ -1036,19 +1035,6 @@ void App::SetSplashText( const QString& strText )
 }
 
 
-//-----------------------------------------------------------------------------
-// Name: App::GetResourceName
-// Created: AGN 03-06-04
-//-----------------------------------------------------------------------------
-std::string App::GetResourceName( MIL_AgentID id ) const
-{
-    CIT_MosId_String_Map found = resourcesNameMap_.find( id );
-    if( found != resourcesNameMap_.end() )
-        return found->second;
-    else
-        return itostring( id );
-}
-
 
 //-----------------------------------------------------------------------------
 // Name: App::GetEquipmentName 
@@ -1090,15 +1076,30 @@ std::string App::GetBreakDownName( uint id ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: App::GetRessourceID
-// Created: AGE 2005-04-06
+// Name: App::GetDotationTypeID
+// Created: NLD 2006-08-05
 // -----------------------------------------------------------------------------
-unsigned int App::GetRessourceID( const std::string& strRessource ) const
+uint App::GetDotationTypeID( const std::string& strName  ) const
 {
-    for( CIT_MosId_String_Map it = resourcesNameMap_.begin(); it != resourcesNameMap_.end(); ++it )
-        if( it->second == strRessource )
-            return it->first;
-    return (unsigned)(-1);
+    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    {
+        if( it->second->GetName() == strName )
+            return it->second->GetID();
+    }
+    return (uint)-1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: App::GetDotationTypeName
+// Created: NLD 2006-08-05
+// -----------------------------------------------------------------------------
+std::string App::GetDotationTypeName( uint nID ) const
+{
+    CIT_DotationTypeMap it = dotationTypes_.find( nID );
+    if( it != dotationTypes_.end() )
+        return it->second->GetName();
+    else
+        return itostring( nID );
 }
 
 // -----------------------------------------------------------------------------

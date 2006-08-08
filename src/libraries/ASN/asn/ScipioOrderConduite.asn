@@ -66,20 +66,10 @@ OrderConduite-Pion-ChangerDePosition            ::= Point
 ---------------------------------------
 OrderConduite-Population-ChangerAttitude        ::= EnumPopulationAttitude
 
-
-EnumTypeMunitionTirIndirect ::= ENUMERATED
-{
-    explosif  (0),
-    grenade   (1),
-    aced      (2),
-    fumigene  (3),
-    eclairant (4),
-    mine      (5)
-}
   
 OrderConduite-Pion-AppliquerFeux ::= SEQUENCE
 {
-    munitions   EnumTypeMunitionTirIndirect,
+    munitions   TypeDotationTrancheD,
     nb_IT		INTEGER,
     cible       Point 
 }

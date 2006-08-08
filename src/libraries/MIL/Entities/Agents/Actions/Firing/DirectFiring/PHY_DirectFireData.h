@@ -60,12 +60,12 @@ public:
 
     //! @name Operations
     //@{
-    void AddWeapon   ( PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    void operator() ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
 
-    void ChooseRandomWeapon  ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
-    void ChooseBestWeapon    ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
-    bool GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const;
-    void ReleaseWeapon       ( PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    void ChooseRandomWeapon  ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
+    void ChooseBestWeapon    ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
+    bool GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const;
+    void ReleaseWeapon       ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
 
     //! @name Accessors
@@ -78,8 +78,8 @@ public:
 private:
     //! @name Tools
     //@{
-    void RemoveFirer ( PHY_ComposantePion& firer );
-    void RemoveWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    void RemoveFirer ( const PHY_ComposantePion& firer );
+    void RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
 
 private:
@@ -113,8 +113,8 @@ private:
         T_WeaponVector  weaponsReady_;
     };
 
-    typedef std::map< PHY_ComposantePion*, sComposanteWeapons > T_ComposanteWeaponsMap;
-    typedef T_ComposanteWeaponsMap::const_iterator              CIT_ComposanteWeaponsMap;
+    typedef std::map< const PHY_ComposantePion*, sComposanteWeapons > T_ComposanteWeaponsMap;
+    typedef T_ComposanteWeaponsMap::const_iterator                    CIT_ComposanteWeaponsMap;
     //@}
 
 private:

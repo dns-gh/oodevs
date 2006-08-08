@@ -175,7 +175,7 @@ int PHY_RoleAction_DirectFiring::FirePion( uint nTargetKnowledgeID, PHY_DirectFi
 
     // Firers
     PHY_DirectFireData firerWeapons( *pPion_, nComposanteFiringType, nFiringMode, rPercentageComposantesToUse, pAmmoDotationClass );
-    GetRole< PHY_RolePion_Composantes >().FillDirectFireData( firerWeapons );
+    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
@@ -235,7 +235,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_ControlZone& zone, PHY_Fir
     zone.GetTargets( *pPion_, targets );
 
     PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireUsingOnlyComposantesLoadable, PHY_DirectFireData::eFiringModeNormal );
-    GetRole< PHY_RolePion_Composantes >().FillDirectFireData( firerWeapons );
+    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
 
     for( MIL_ControlZone::CIT_TargetVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
@@ -279,7 +279,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
    
     // Firers
     PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ );
-    GetRole< PHY_RolePion_Composantes >().FillDirectFireData( firerWeapons );
+    GetRole< PHY_RolePion_Composantes >().ApplyOnWeapons( firerWeapons );
 
     const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )

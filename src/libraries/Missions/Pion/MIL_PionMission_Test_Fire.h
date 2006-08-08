@@ -46,7 +46,7 @@ private:
     static int nDIAPointIdx_;
     static int nDIATirIndirectIdx_;
     static int nDIAMunitionsIdx_;
-    static int nDIANbObusIdx_;
+    static int nDIANbItIdx_;
     static int nDIATargetsIdx_;
 
 };

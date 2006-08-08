@@ -470,9 +470,9 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
         if( DIA_ModuleBegins() )
         {
             if( DIA_Size( mission.targets_ ) > 0 )
-                currentAction = DEC_StartTirIndirectSurConnaissance( nEtatTirIndirect, mission.munitions_, mission.nbObus_, DEC_UserTypeList_GetAt( mission.targets_, 0 ) );
+                currentAction = DEC_StartTirIndirectSurConnaissance( nEtatTirIndirect, mission.munitions_, mission.nbIt_, DEC_UserTypeList_GetAt( mission.targets_, 0 ) );
             else
-                currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbObus_, mission.point_ );
+                currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbIt_, mission.point_ );
         }        
         
         DEC_Debug( "Etat tir indirect : " + EnumToString( nEtatTirIndirect, E_EtatActionTirIndirect ) );

@@ -100,7 +100,8 @@ void MIL_AutomateMission_LOG_SeDeployer::Serialize( ASN1T_MsgAutomateOrder& asnM
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_log_se_deployer;
     asnMsg.mission.u.mission_automate_log_se_deployer  = &asnMission;
 
-    NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement );
+    if( NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionDeploiementIdx_ ), asnMission.position_deploiement ) )
+        asnMission.m.position_deploiementPresent = 1;
 
 }
 
@@ -113,7 +114,8 @@ void MIL_AutomateMission_LOG_SeDeployer::CleanAfterSerialization( ASN1T_MsgAutom
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_log_se_deployer );
     ASN1T_Mission_Automate_LOG_SeDeployer& asnMission = *asnMsg.mission.u.mission_automate_log_se_deployer;
 
-    NET_ASN_Tools::Delete( asnMission.position_deploiement );
+    if( asnMission.m.position_deploiementPresent )
+        NET_ASN_Tools::Delete( asnMission.position_deploiement );
 
     delete &asnMission;
 

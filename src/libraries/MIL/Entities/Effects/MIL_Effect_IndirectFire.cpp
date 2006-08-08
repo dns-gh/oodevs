@@ -16,7 +16,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_IndirectFire.h"
-#include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -31,19 +30,19 @@
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID, const PHY_IndirectFireDotationClass& indirectWeaponClass, MT_Float rInterventionTypeToFire )
-    : nNbrRefs_               ( 0 )
-    , firer_                  ( firer )
-    , indirectWeaponClass_    ( indirectWeaponClass )
-    , rInterventionTypeToFire_( rInterventionTypeToFire )
-    , pWeaponDotationCategory_( )
-    , vSourcePosition_        ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
-    , vTargetPosition_        ( -1., -1. )
-    , nTargetKnowledgeID_     ( nTargetKnowledgeID )
-    , nNbrAmmoFired_          ( 0 )
-    , bIsFlying_              ( false )
-    , rImpactTimeStep_        ( 0. )
-    , pFireResult_            ( 0 )    
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, uint nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+    : nNbrRefs_                ( 0 )
+    , firer_                   ( firer )
+    , rInterventionTypeToFire_ ( rInterventionTypeToFire )
+    , indirectDotationCategory_( indirectDotationCategory )
+    , vSourcePosition_         ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vTargetPosition_         ( -1., -1. )
+    , nTargetKnowledgeID_      ( nTargetKnowledgeID )
+    , nNbrAmmoFired_           ( 0 )
+    , bIsFlying_               ( false )
+    , bFired_                  ( false )
+    , rImpactTimeStep_         ( 0. )
+    , pFireResult_             ( 0 )    
 {
     UpdateTargetPositionFromKnowledge(); /// Update vTargetPosition_
     IncRef();
@@ -53,19 +52,19 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, ui
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_IndirectFireDotationClass& indirectWeaponClass, MT_Float rInterventionTypeToFire )
-    : nNbrRefs_               ( 0 )
-    , firer_                  ( firer )
-    , indirectWeaponClass_    ( indirectWeaponClass )
-    , rInterventionTypeToFire_( rInterventionTypeToFire )
-    , pWeaponDotationCategory_( )
-    , vSourcePosition_        ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
-    , vTargetPosition_        ( vTargetPosition )
-    , nTargetKnowledgeID_     ( 0 )
-    , nNbrAmmoFired_          ( 0 )
-    , bIsFlying_              ( false )
-    , rImpactTimeStep_        ( 0. )
-    , pFireResult_            ( 0 )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+    : nNbrRefs_                ( 0 )
+    , firer_                   ( firer )
+    , rInterventionTypeToFire_ ( rInterventionTypeToFire )
+    , indirectDotationCategory_( indirectDotationCategory )
+    , vSourcePosition_         ( firer.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , vTargetPosition_         ( vTargetPosition )
+    , nTargetKnowledgeID_      ( 0 )
+    , nNbrAmmoFired_           ( 0 )
+    , bIsFlying_               ( false )
+    , bFired_                  ( false )
+    , rImpactTimeStep_         ( 0. )
+    , pFireResult_             ( 0 )
 {
     IncRef();
 }
@@ -107,15 +106,18 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 {
     assert( !bIsFlying_ );
-    if( pWeaponDotationCategory_ )
-    {
-        return weapon.GetDotationCategory() == *pWeaponDotationCategory_;
-    }
-    else
-    {
-        const PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData = weapon.GetDotationCategory().GetIndirectFireData();
-        return pIndirectFireData && pIndirectFireData->GetIndirectFireDotationCategory() == indirectWeaponClass_;
-    }
+
+    if( !weapon.CanIndirectFire() )
+        return false;
+
+    if( weapon.GetDotationCategory() != indirectDotationCategory_.GetDotationCategory() )
+        return false;
+
+    const MT_Float rFlyingDist = vSourcePosition_.Distance( vTargetPosition_ );
+    if( rFlyingDist < weapon.GetMinRangeToIndirectFire() || rFlyingDist > weapon.GetMaxRangeToIndirectFire() )
+        return false;
+
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,16 +126,15 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 // -----------------------------------------------------------------------------
 void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, uint nNbrAmmoReserved )
 {
-    assert( pWeaponDotationCategory_ && pWeaponDotationCategory_->GetIndirectFireData() );
     assert( !bIsFlying_ );
-
+      
     UpdateTargetPositionFromKnowledge();
 
     const MT_Float rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
     rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
     
     nNbrAmmoFired_ += nNbrAmmoReserved;
-    if( pWeaponDotationCategory_->GetIndirectFireData()->ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
+    if( indirectDotationCategory_.ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
         StartFlying();
 }
 
@@ -163,9 +164,8 @@ bool MIL_Effect_IndirectFire::Execute()
     if( nNbrAmmoFired_ > 0 )
     {
         UpdateTargetPositionFromKnowledge();
-        assert( pWeaponDotationCategory_ );
         assert( pFireResult_ );
-        pWeaponDotationCategory_->IndirectFire( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
+        indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, vTargetPosition_, nNbrAmmoFired_, *pFireResult_ );
     }
     StopFlying();
     DecRef();
@@ -178,10 +178,11 @@ bool MIL_Effect_IndirectFire::Execute()
 // -----------------------------------------------------------------------------
 void MIL_Effect_IndirectFire::StartFlying()
 {
+    bFired_ = true;
     if( !pFireResult_ )
-        pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, *pWeaponDotationCategory_ );
+        pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, indirectDotationCategory_.GetDotationCategory() );
 
-    if( bIsFlying_ )
+    if( !bIsFlying_ )
     {
         bIsFlying_ = true;
         MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().RegisterFlyingShell( *this );
@@ -213,17 +214,20 @@ void MIL_Effect_IndirectFire::StopFlying()
 // -----------------------------------------------------------------------------
 uint MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() const
 {
-    MT_Float rTmp = pWeaponDotationCategory_->GetIndirectFireData()->ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
+    if( bFired_ )
+        return 0;
+
+    MT_Float rTmp = indirectDotationCategory_.ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
     if( rTmp <= 0. )
         return 0;
     return std::max( (uint)1, (uint)rTmp );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Effect_IndirectFire::FlyThroughLocalisation
+// Name: MIL_Effect_IndirectFire::IsFlyingThroughLocalisation
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-bool MIL_Effect_IndirectFire::FlyThroughLocalisation( const TER_Localisation& localisation ) const
+bool MIL_Effect_IndirectFire::IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const
 {
     if( !bIsFlying_ )
         return false;

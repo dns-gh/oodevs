@@ -105,7 +105,7 @@ void LogisticSupplyPushFlowDialog::SetAgent( const Agent& agent )
     const T_ResourceQty_Map& ressources = agent.pSupplyData_->stocks_;
     for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
     {
-        const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
+        const std::string strRessourceName = App::GetApp().GetDotationTypeName( it->first );
         pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
         menuRessources.insert( strRessourceName );
     }
@@ -118,7 +118,7 @@ void LogisticSupplyPushFlowDialog::SetAgent( const Agent& agent )
         const T_ResourceQty_Map& ressources = ( *itChild )->pSupplyData_->stocks_;
         for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
         {
-            const std::string strRessourceName = App::GetApp().GetResourceName( it->first );
+            const std::string strRessourceName = App::GetApp().GetDotationTypeName( it->first );
             if( menuRessources.find( strRessourceName ) == menuRessources.end() )
             {
                 pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
@@ -152,7 +152,7 @@ void LogisticSupplyPushFlowDialog::Validate()
         uint i = 0;
         while( pItem )
         {
-            pAsnStock[i].ressource_id        = App::GetApp().GetRessourceID( pItem->text( 0 ).ascii() );
+            pAsnStock[i].ressource_id        = App::GetApp().GetDotationTypeID( pItem->text( 0 ).ascii() );
             pAsnStock[i].quantite_disponible = pItem->text( 1 ).toInt();
             ++i;
             pItem = pItem->nextSibling();

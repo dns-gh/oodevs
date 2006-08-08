@@ -12,11 +12,13 @@
 #include "MIL_pch.h"
 
 #include "PHY_ActionIndirectFire_Position.h"
+
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -25,14 +27,18 @@
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     : PHY_ActionIndirectFire_ABC( pion, diaCall )
+    , pEffect_                  ( 0 )
 {
     assert( DEC_Tools::CheckTypePoint( diaCall.GetParameter( 3 ) ) );
-
     MT_Vector2D* pTargetPosition = diaCall.GetParameter( 3 ).ToUserPtr( pTargetPosition );
     assert( pTargetPosition );
-    pEffect_ = new MIL_Effect_IndirectFire( pion, *pTargetPosition, *pIndirectWeaponClass_, rNbInterventionType_ );
-    pEffect_->IncRef();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+
+    if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
+    {
+        pEffect_ = new MIL_Effect_IndirectFire( pion, *pTargetPosition, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
+        pEffect_->IncRef();
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -41,9 +47,11 @@ PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion&
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 {
-    assert( pEffect_ );
-    pEffect_->ForceFlying();
-    pEffect_->DecRef();
+    if( pEffect_ )
+    {
+        pEffect_->ForceFlying();
+        pEffect_->DecRef();
+    }
 }
 
 // =============================================================================
@@ -56,8 +64,7 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Position::Execute()
 {
-    assert( pEffect_ );
-    int nResult = role_.Fire( *pEffect_ );
+    int nResult = role_.Fire( pEffect_ );
     diaReturnCode_.SetValue( nResult );
 }
 

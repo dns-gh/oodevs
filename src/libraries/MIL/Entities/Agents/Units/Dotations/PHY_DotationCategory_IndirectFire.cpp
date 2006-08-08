@@ -74,16 +74,15 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 {
 }
 
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================
    
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectFire::Fire
+// Name: PHY_DotationCategory_IndirectFire::ApplyEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
     MT_Vector2D vFireDirection        = ( vTargetPosition - vSourcePosition ).Normalize();
     MT_Vector2D vRotatedFireDirection = vFireDirection;

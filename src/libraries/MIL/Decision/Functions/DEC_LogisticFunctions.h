@@ -81,7 +81,8 @@ public:
     static void AutomateRequestSupply      ( DIA_Call_ABC& call, MIL_Automate&  callerAutomate );
     static void PionRequestSupply          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
 
-    static void ChangeDotationValueUsingTC2( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void ChangeDotationsValueUsingTC2( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void GetDotationValue            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     //@}
     
     //! @name Misc

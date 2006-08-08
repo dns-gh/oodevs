@@ -10,24 +10,13 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Effect_IndirectFire::GetWeaponDotationCategory
-// Created: NLD 2004-10-11
+// Name: MIL_Effect_IndirectFire::GetIndirectDotationCategory
+// Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
 inline
-const PHY_DotationCategory* MIL_Effect_IndirectFire::GetWeaponDotationCategory() const
+const PHY_DotationCategory_IndirectFire_ABC& MIL_Effect_IndirectFire::GetIndirectDotationCategory() const
 {
-    return pWeaponDotationCategory_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Effect_IndirectFire::SetWeaponDotationCategory
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-inline
-void MIL_Effect_IndirectFire::SetWeaponDotationCategory( const PHY_DotationCategory& dotationCategory )
-{
-    assert( !pWeaponDotationCategory_ );
-    pWeaponDotationCategory_ = &dotationCategory;
+    return indirectDotationCategory_;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +36,7 @@ bool MIL_Effect_IndirectFire::IsTargetValid() const
 inline
 bool MIL_Effect_IndirectFire::IsInterventionTypeFired() const
 {
-    return bIsFlying_ || rInterventionTypeToFire_ == 0.;
+    return bFired_ || GetNbrAmmoToCompleteInterventionType() == 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,15 +79,5 @@ inline
 uint MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Effect_IndirectFire::GetFlyingDistance
-// Created: JVT 2005-05-02
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_Effect_IndirectFire::GetFlyingDistance() const
-{
-    return vSourcePosition_.Distance( vTargetPosition_ );
 }
 

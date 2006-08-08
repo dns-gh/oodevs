@@ -83,7 +83,7 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
         const MIL_Effect_IndirectFire& flyingShell = (**itFlyingShell);
         for( CIT_ZoneVector itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
         {
-            if( flyingShell.FlyThroughLocalisation( **itZone ) )
+            if( flyingShell.IsFlyingThroughLocalisation( **itZone ) )
             {
                 perceivedFlyingShells.insert( &flyingShell );
                 if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )

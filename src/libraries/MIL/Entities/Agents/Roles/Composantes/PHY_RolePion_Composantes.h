@@ -80,7 +80,10 @@ public:
     template< typename T > void                Apply              ( T& t ) const;
     template< typename T > PHY_ComposantePion* GetComposante      ( T& t ) const;
     template< typename T > void                GetComposantesUse  ( T_ComposanteUseMap& composanteUse, T& t ) const;
-    template< typename T > bool                HasUsableComposante( T& t ) const;   
+    template< typename T > bool                HasUsableComposante( T& t ) const;
+
+    template< typename T > void                ApplyOnWeapons     ( T& t ) const;
+
 
     void Update( bool bIsDead );
     void Clean ();
@@ -153,9 +156,6 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-            void     FillDirectFireData              ( PHY_DirectFireData& data ) const;
-            void     FillIndirectFireData            ( PHY_IndirectFireData& data ) const;
-            void     FillIndirectFireData            ( PHY_SmokeData& data ) const;
             bool     IsNeutralized                   () const;
     virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void     GetComposantesAbleToBeFired     ( T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
@@ -170,8 +170,8 @@ public:
             MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToIndirectFire       ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
-            MT_Float GetMinRangeToIndirectFire       ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
+            MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+            MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
             MT_Float GetDangerosity                  ( const DEC_Knowledge_Agent& target ) const;
     //@}
 

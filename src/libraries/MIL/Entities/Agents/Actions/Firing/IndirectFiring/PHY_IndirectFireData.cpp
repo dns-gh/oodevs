@@ -53,34 +53,6 @@ void PHY_IndirectFireData::sComposanteWeapons::AddWeapon( PHY_Weapon& weapon )
         bIsFiring_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_IndirectFireData::PreselectWeapons
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-void PHY_IndirectFireData::sComposanteWeapons::PreselectWeapons( T_WeaponsDotationsSet& weaponsDotations, const MT_Float rDist ) const
-{
-    for ( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-        if ( (*itWeapon)->GetMinRangeToIndirectFire() <= rDist 
-          && (*itWeapon)->GetMaxRangeToIndirectFire() > rDist )
-            weaponsDotations.insert( &(*itWeapon)->GetDotationCategory() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_IndirectFireData::RemoveWeaponsNotUsingDotation
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-void PHY_IndirectFireData::sComposanteWeapons::RemoveWeaponsNotUsingDotation( const PHY_DotationCategory& dotationCategory )
-{
-    for( IT_WeaponVector itWeapon = weaponsReady_.begin(); itWeapon != weaponsReady_.end(); )
-    {   
-        const PHY_Weapon& weapon = **itWeapon;
-        if( weapon.GetDotationCategory() == dotationCategory )
-            ++itWeapon;
-        else
-            itWeapon = weaponsReady_.erase( itWeapon );
-    }
-}
-
 // =============================================================================
 // 
 // =============================================================================
@@ -92,6 +64,7 @@ void PHY_IndirectFireData::sComposanteWeapons::RemoveWeaponsNotUsingDotation( co
 PHY_IndirectFireData::PHY_IndirectFireData( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect )
     : bHasWeaponsReady_     ( false )
     , bHasWeaponsNotReady_  ( false )
+    , bHasWeaponsAndNoAmmo_ ( false )
     , firer_                ( firer )
     , effect_               ( effect )
 {
@@ -114,69 +87,27 @@ PHY_IndirectFireData::~PHY_IndirectFireData()
 // Name: PHY_IndirectFireData::AddWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_IndirectFireData::AddWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon )
+void PHY_IndirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
-    if( effect_.CanWeaponBeUsed( weapon ) )
+    if( !compFirer.CanFire() || !effect_.CanWeaponBeUsed( weapon ) ) 
+        return;
+
+    if( !firer_.GetRole< PHY_RolePion_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
+        bHasWeaponsAndNoAmmo_ = true;
+    else
     {
-        sComposanteWeapons& data = composantesWeapons_[ &firer ];
+        sComposanteWeapons& data = composantesWeapons_[ &compFirer ];
         data.AddWeapon( weapon );
         bHasWeaponsReady_    |= data.HasWeaponsReady   ();
         bHasWeaponsNotReady_ |= data.IsFiring          ();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_IndirectFireData::RemoveFirer
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void PHY_IndirectFireData::RemoveFirer( PHY_ComposantePion& firer )
-{
-    int nOut = composantesWeapons_.erase( &firer );
-    assert( nOut == 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_IndirectFireData::PreselectWeapons
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-void PHY_IndirectFireData::PreselectWeapons()
-{
-    if( effect_.GetWeaponDotationCategory() )
-        return;
-    
-    T_WeaponsDotationsSet weaponsDotations;
-    for( CIT_ComposanteWeaponsMap it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
-        it->second.PreselectWeapons( weaponsDotations, effect_.GetFlyingDistance() );
-
-    const PHY_RolePion_Dotations& roleDotations            = firer_.GetRole< PHY_RolePion_Dotations >();
-    const PHY_DotationCategory*   pChoosenDotationCategory = 0;
-          MT_Float                rNbrDotations            = 0;
-          
-    for ( CIT_WeaponsDotationsSet it = weaponsDotations.begin(); it != weaponsDotations.end(); ++it )
-    {
-        const MT_Float rNbr = roleDotations.GetDotationValue( **it );
-        if( rNbr > rNbrDotations )
-        {
-            rNbrDotations            = rNbr;
-            pChoosenDotationCategory = *it;
-        }
-    }
-
-    if( pChoosenDotationCategory )
-    {
-        for( IT_ComposanteWeaponsMap it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
-            it->second.RemoveWeaponsNotUsingDotation( *pChoosenDotationCategory );
-        effect_.SetWeaponDotationCategory( *pChoosenDotationCategory );
-    }
-    else
-        composantesWeapons_.clear();
+    }    
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireData::GetUnusedFirerWeapon
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-bool PHY_IndirectFireData::GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const
+bool PHY_IndirectFireData::GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const
 {
     pUnusedFirerWeapon = 0;
     pUnusedFirer       = 0;
