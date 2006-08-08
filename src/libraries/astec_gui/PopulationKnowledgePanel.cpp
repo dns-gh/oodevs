@@ -27,7 +27,7 @@
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, "C. popu" )
+    : InfoPanel_ABC( pParent, "Connaissances population" )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )

@@ -30,7 +30,7 @@
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "C. agent" ) )
+    : InfoPanel_ABC( pParent, tr( "Connaissances agent" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-05-04 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ObjectKnowledgePanel.cpp $
-// $Author: Age $
-// $Modtime: 5/04/05 18:34 $
-// $Revision: 9 $
-// $Workfile: ObjectKnowledgePanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "ObjectKnowledgePanel.h"
@@ -37,7 +28,7 @@
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "C. objet" ) )
+    : InfoPanel_ABC( pParent, tr( "Connaissances objet" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )

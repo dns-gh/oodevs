@@ -25,7 +25,7 @@
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 PopulationPanel::PopulationPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC ( pParent, tr( "Population" ) )
+    : InfoPanel_ABC ( pParent, tr( "Etat population" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )
 {

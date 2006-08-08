@@ -6,38 +6,18 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/InfoPanels.h $
-// $Author: Age $
-// $Modtime: 21/04/05 16:03 $
-// $Revision: 8 $
-// $Workfile: InfoPanels.h $
-//
-// *****************************************************************************
 
 #ifndef __InfoPanels_h_
 #define __InfoPanels_h_
 
-class AgentStatePanel;
-class AgentResourcesPanel;
-class AgentKnowledgePanel;
-class AgentMaintenancePanel;
-class AgentMedicalPanel;
-class AgentSupplyPanel;
-class ReportPanel;
-class ObjectPanel;
-class ObjectReportPanel;
-class ObjectKnowledgePanel;
-class PopulationPanel;
-class PopulationKnowledgePanel;
 class Controllers;
 class ItemFactory_ABC;
+class InfoPanel_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class InfoPanels : public QWidgetStack
+class InfoPanels : public QVBox
 {
     Q_OBJECT;
 
@@ -52,7 +32,6 @@ public:
     //@{
     void Add   ( QWidget* widget, const QString& name );
     void Remove( QWidget* widget );
-    void Show  ( QWidget* widget );
     //@}
 
 private:
@@ -70,7 +49,9 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void CurrentPageChanged( QWidget* widget );
+    void Select( int index );
+    void PreviousPage();
+    void NextPage();
     //@}
 
 private:
@@ -84,30 +65,36 @@ private:
 
     //! @name Helpers
     //@{
+    void AddPanel( InfoPanel_ABC* panel );
+    void UpdateCombo();
+    void Select( QWidget* widget );
+    void CheckButtons();
+
     IT_SelectedWidgets FindSelectedSet();
-    void ShowPreferedWidget();
+    void ShowPreferedWidget( QWidget* defaultSelection );
+    void SaveSelection( QWidget* widget );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< QWidget*, bool > T_PanelStates;
+    typedef std::vector< QWidget* > T_Panels;
+    typedef T_Panels::const_iterator CIT_Panels;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QTabWidget*               pTabWidget_;
-    AgentStatePanel*          pStatePanel_;
-    ReportPanel*              pReportPanel_;
-    AgentResourcesPanel*      pResourcesPanel_;
-    AgentKnowledgePanel*      pAgentKnowledgePanel_;
-    AgentMaintenancePanel*    pAgentMaintenancePanel_;
-    AgentMedicalPanel*        pAgentMedicalPanel_;
-    AgentSupplyPanel*         pAgentSupplyPanel_;
+    QPushButton*        previous_;
+    QPushButton*        next_;
+    QComboBox*          combo_;
+    QWidgetStack*       stack_;
+    QWidget*            dummy_;
 
-    ObjectPanel*              pObjectPanel_;
-    ObjectReportPanel*        pObjectReportPanel_;
-    ObjectKnowledgePanel*     pObjectKnowledgePanel_;
-
-    PopulationPanel*          pPopulationPanel_;
-    PopulationKnowledgePanel* pPopulationKnowledgePanel_;
-
-    T_SelectedWidgets         widgets_;
+    T_SelectedWidgets   widgets_;
+    T_PanelStates       panelStates_;
+    T_Panels            panels_;
+    T_Panels            currentPanels_;
     //@}
 };
 

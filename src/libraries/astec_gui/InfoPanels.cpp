@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-10 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/InfoPanels.cpp $
-// $Author: Age $
-// $Modtime: 21/04/05 16:05 $
-// $Revision: 10 $
-// $Workfile: InfoPanels.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "InfoPanels.h"
@@ -31,35 +22,48 @@
 #include "AgentMaintenancePanel.h"
 #include "AgentMedicalPanel.h"
 #include "AgentSupplyPanel.h"
+#include "InfoPanel_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels constructor
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 InfoPanels::InfoPanels( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : QWidgetStack( pParent )
+    : QVBox( pParent )
 {
-    this->setMinimumSize( 1, 1 );
-    pStatePanel_               = new AgentStatePanel         ( this, controllers, factory );
-    pResourcesPanel_           = new AgentResourcesPanel     ( this, controllers, factory );
-    pAgentKnowledgePanel_      = new AgentKnowledgePanel     ( this, controllers, factory );
-    pObjectPanel_              = new ObjectPanel             ( this, controllers, factory );
-    pObjectReportPanel_        = new ObjectReportPanel       ( this, controllers, factory );
-    pObjectKnowledgePanel_     = new ObjectKnowledgePanel    ( this, controllers, factory );
-    pAgentMaintenancePanel_    = new AgentMaintenancePanel   ( this, controllers, factory );
-    pAgentMedicalPanel_        = new AgentMedicalPanel       ( this, controllers, factory );
-    pAgentSupplyPanel_         = new AgentSupplyPanel        ( this, controllers, factory );
-    pReportPanel_              = new ReportPanel             ( this, controllers, factory );
-    pPopulationPanel_		   = new PopulationPanel         ( this, controllers, factory );
-    pPopulationKnowledgePanel_ = new PopulationKnowledgePanel( this, controllers, factory );
+    setMinimumSize( 1, 1 );
 
-    pTabWidget_ = new QTabWidget( this );
+    QHBox* box = new QHBox( this );
+    previous_ = new QPushButton( "<", box );
+    previous_->setMaximumSize( 20, 20 );
+    next_ = new QPushButton( ">", box );
+    next_->setMaximumSize( 20, 20 );
+    combo_ = new QComboBox( box );
+    combo_->setFocusPolicy( QWidget::StrongFocus );
 
-    addWidget  ( pTabWidget_ );
-    raiseWidget( pTabWidget_ );
-    pTabWidget_->setCurrentPage( 0 );
-    // $$$$ AGE 2006-05-22: faire une page vide ?
-    connect( pTabWidget_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( CurrentPageChanged( QWidget* ) ) );
+    stack_ = new QWidgetStack( this );
+    AddPanel( new AgentStatePanel         ( this, controllers, factory ) );
+    AddPanel( new AgentResourcesPanel     ( this, controllers, factory ) );
+    AddPanel( new AgentKnowledgePanel     ( this, controllers, factory ) );
+    AddPanel( new ObjectPanel             ( this, controllers, factory ) );
+    AddPanel( new ObjectReportPanel       ( this, controllers, factory ) );
+    AddPanel( new ObjectKnowledgePanel    ( this, controllers, factory ) );
+    AddPanel( new AgentMaintenancePanel   ( this, controllers, factory ) );
+    AddPanel( new AgentMedicalPanel       ( this, controllers, factory ) );
+    AddPanel( new AgentSupplyPanel        ( this, controllers, factory ) );
+    AddPanel( new ReportPanel             ( this, controllers, factory ) );
+    AddPanel( new PopulationPanel         ( this, controllers, factory ) );
+    AddPanel( new PopulationKnowledgePanel( this, controllers, factory ) );
+
+    dummy_ = new QWidget( stack_ );
+    stack_->addWidget( dummy_ );
+    stack_->raiseWidget( dummy_ );
+
+    CheckButtons();
+
+    connect( combo_, SIGNAL( activated( int ) ), this, SLOT( Select( int ) ) );
+    connect( previous_, SIGNAL( clicked() ), this, SLOT( PreviousPage() ) );
+    connect( next_, SIGNAL( clicked() ), this, SLOT( NextPage() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,18 +76,85 @@ InfoPanels::~InfoPanels()
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfoPanels::AddPanel
+// Created: SBO 2006-08-08
+// -----------------------------------------------------------------------------
+void InfoPanels::AddPanel( InfoPanel_ABC* panel )
+{
+    stack_->addWidget( panel );
+    panelStates_[panel] = false;
+    panels_.push_back( panel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::Select
+// Created: SBO 2006-08-08
+// -----------------------------------------------------------------------------
+void InfoPanels::Select( int index )
+{
+    if( !currentPanels_.empty() && index != -1 )
+    {
+        stack_->raiseWidget( currentPanels_[index] );
+        combo_->setCurrentItem( index );
+        SaveSelection( currentPanels_[index] );
+        CheckButtons();
+    }
+    else
+        stack_->raiseWidget( dummy_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::Select
+// Created: SBO 2006-08-08
+// -----------------------------------------------------------------------------
+void InfoPanels::Select( QWidget* widget )
+{
+    if( currentPanels_.empty() || !widget )
+    {
+        Select( -1 );
+        return;
+    }
+    for( unsigned int i = 0; i < currentPanels_.size(); ++i )
+        if( currentPanels_[i] == widget )
+        {
+            Select( i );
+            return;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::UpdateCombo
+// Created: SBO 2006-08-08  
+// -----------------------------------------------------------------------------
+void InfoPanels::UpdateCombo()
+{
+    combo_->clear();
+    currentPanels_.clear();
+    for( CIT_Panels it = panels_.begin(); it != panels_.end(); ++it )
+        if( panelStates_[*it] )
+        {
+            combo_->insertItem( static_cast< InfoPanel_ABC* >( *it )->GetName() );
+            currentPanels_.push_back( *it );
+        }
+    CheckButtons();
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfoPanels::Add
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void InfoPanels::Add( QWidget* widget, const QString& name )
+void InfoPanels::Add( QWidget* widget, const QString& )
 {
-    if( pTabWidget_->indexOf( widget ) == -1 )
-    {
-        pTabWidget_->insertTab( widget, name );
-        ShowPreferedWidget();   
-        if( pTabWidget_->currentPage() )
-            pTabWidget_->currentPage()->show();
-    }
+    for( unsigned int i = 0; i < currentPanels_.size(); ++i )
+        if( currentPanels_[i] == widget )
+            return;
+
+    QWidget* selected = 0;
+    if( !currentPanels_.empty() )
+        selected = currentPanels_[combo_->currentItem()];
+    panelStates_[widget] = true;
+    UpdateCombo();
+    ShowPreferedWidget( selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,11 +163,12 @@ void InfoPanels::Add( QWidget* widget, const QString& name )
 // -----------------------------------------------------------------------------
 void InfoPanels::Remove( QWidget* widget )
 {
-    if( pTabWidget_->indexOf( widget ) != -1 )
-    {
-        pTabWidget_->removePage( widget );
-        ShowPreferedWidget();
-    }
+    QWidget* selected = 0;
+    if( !currentPanels_.empty() )
+        selected = currentPanels_[combo_->currentItem()];
+    panelStates_[widget] = false;
+    UpdateCombo();
+    ShowPreferedWidget( selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,33 +184,60 @@ QSize InfoPanels::sizeHint() const
 // Name: InfoPanels::ShowPreferedWidget
 // Created: AGE 2006-05-22
 // -----------------------------------------------------------------------------
-void InfoPanels::ShowPreferedWidget()
+void InfoPanels::ShowPreferedWidget( QWidget* defaultSelection )
 {
     IT_SelectedWidgets it = FindSelectedSet();
     if( it != widgets_.end() )
-    {
-        disconnect( pTabWidget_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( CurrentPageChanged( QWidget* ) ) );
-        pTabWidget_->setCurrentPage( pTabWidget_->indexOf( it->second ) );
-        connect( pTabWidget_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( CurrentPageChanged( QWidget* ) ) );
-    }
+        Select( it->second );
+    else
+        Select( defaultSelection );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels::CurrentPageChanged
 // Created: AGE 2006-05-22
 // -----------------------------------------------------------------------------
-void InfoPanels::CurrentPageChanged( QWidget* widget )
+void InfoPanels::SaveSelection( QWidget* widget )
 {
     IT_SelectedWidgets it = FindSelectedSet();
     if( it == widgets_.end() )
     {
         widgets_.push_back( T_SelectedWidget() );
-        unsigned int i = 0;
-        while( widgets_.back().first.insert( pTabWidget_->page( i ) ).second )
-            ++i;
+        for( unsigned int i = 0; i < currentPanels_.size(); ++i )
+            widgets_.back().first.insert( currentPanels_[i] );
         it = widgets_.end() - 1;
     }
     it->second = widget;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::CheckButtons
+// Created: SBO 2006-08-08
+// -----------------------------------------------------------------------------
+void InfoPanels::CheckButtons()
+{
+    previous_->setEnabled( combo_->currentItem() > 0 );
+    next_->setEnabled( combo_->currentItem() < combo_->count() - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::PreviousPage
+// Created: SBO 2006-08-08
+// -----------------------------------------------------------------------------
+void InfoPanels::PreviousPage()
+{
+    if( combo_->currentItem() > 0 )
+        Select( combo_->currentItem() - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::NextPage
+// Created: SBO 2006-08-08
+// -----------------------------------------------------------------------------
+void InfoPanels::NextPage()
+{
+    if( combo_->currentItem() < combo_->count() - 1 )
+        Select( combo_->currentItem() + 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,9 +247,8 @@ void InfoPanels::CurrentPageChanged( QWidget* widget )
 InfoPanels::IT_SelectedWidgets InfoPanels::FindSelectedSet()
 {
     T_Widgets current;
-    unsigned int i = 0;
-    while( current.insert( pTabWidget_->page( i ) ).second )
-        ++i;
+    for( unsigned int i = 0; i < currentPanels_.size(); ++i )
+        current.insert( currentPanels_[i] );
 
     IT_SelectedWidgets it = widgets_.begin();
     while( it != widgets_.end() && it->first != current )

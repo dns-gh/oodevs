@@ -43,6 +43,11 @@ public:
     bool IsVisible() const;
     //@}
 
+    //! @name Accessors
+    //@{
+    const QString& GetName() const { return name_; }
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

@@ -26,7 +26,7 @@
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
 AgentSupplyPanel::AgentSupplyPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentSupplyPanel, LogSupplyConsign >( pParent, controllers, factory, tr( "Ch. rav." ) )
+    : LogisticPanel< AgentSupplyPanel, LogSupplyConsign >( pParent, controllers, factory, tr( "Chaine ravitaillement" ) )
     , controllers_( controllers )
     , factory_( factory )
 {

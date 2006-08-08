@@ -31,7 +31,7 @@
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::AgentResourcesPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "Res." ) )
+    : InfoPanel_ABC( pParent, tr( "Ressources" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {

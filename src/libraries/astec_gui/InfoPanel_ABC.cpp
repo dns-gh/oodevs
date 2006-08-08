@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-05 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/InfoPanel_ABC.cpp $
-// $Author: Age $
-// $Modtime: 5/04/05 19:08 $
-// $Revision: 1 $
-// $Workfile: InfoPanel_ABC.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "InfoPanel_ABC.h"

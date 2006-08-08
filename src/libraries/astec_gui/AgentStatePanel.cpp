@@ -30,7 +30,7 @@
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( info, tr( "Etat" ) )
+    : InfoPanel_ABC( info, tr( "Etat agent" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {

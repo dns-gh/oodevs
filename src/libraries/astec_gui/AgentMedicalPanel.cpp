@@ -24,7 +24,7 @@
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMedicalPanel::AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentMedicalPanel, LogMedicalConsign >( pParent, controllers, factory, tr( "Ch. medicale" ) )
+    : LogisticPanel< AgentMedicalPanel, LogMedicalConsign >( pParent, controllers, factory, tr( "Chaine santé" ) )
     , controllers_( controllers )
 {
     AddConsignColumn( "Blessure :" );

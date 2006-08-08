@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentMaintenancePanel.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 18:28 $
-// $Revision: 3 $
-// $Workfile: AgentMaintenancePanel.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "AgentMaintenancePanel.h"
@@ -34,7 +25,7 @@
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( pParent, controllers, factory, tr( "Ch. maint." ) )
+    : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( pParent, controllers, factory, tr( "Chaine maintenance" ) )
     , controllers_( controllers )
 {
     AddConsignColumn( "Type d'équipement :" );
