@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-10-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/RecorderToolbar.h $
-// $Author: Ape $
-// $Modtime: 21/10/04 10:40 $
-// $Revision: 1 $
-// $Workfile: RecorderToolbar.h $
-//
-// *****************************************************************************
 
 #ifndef __RecorderToolbar_h_
 #define __RecorderToolbar_h_

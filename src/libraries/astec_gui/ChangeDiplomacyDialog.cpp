@@ -1,13 +1,11 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ChangeDiplomacyDialog.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 15:32 $
-// $Revision: 2 $
-// $Workfile: ChangeDiplomacyDialog.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_gui_pch.h"
 

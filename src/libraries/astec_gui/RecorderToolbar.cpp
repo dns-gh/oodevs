@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-10-20 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/RecorderToolbar.cpp $
-// $Author: Ape $
-// $Modtime: 22/06/05 15:59 $
-// $Revision: 3 $
-// $Workfile: RecorderToolbar.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "RecorderToolbar.h"
