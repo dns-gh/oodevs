@@ -386,4 +386,15 @@ enum E_EquipmentState
     eNbrEquipmentState
 };
 
+enum E_TypeMunitionTirIndirect
+{
+    eTypeMunitionTirIndirect_Explosif,
+    eTypeMunitionTirIndirect_Grenade,
+    eTypeMunitionTirIndirect_Aced,
+    eTypeMunitionTirIndirect_Fumigene,
+    eTypeMunitionTirIndirect_Eclairant,
+    eTypeMunitionTirIndirect_Mine,
+    eNbrTypeMunitionTirIndirect
+};
+
 #endif // __ADN_Enums_h_

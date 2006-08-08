@@ -180,7 +180,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     pHolder = builder.AddFieldHolder( pIndirectGroup );
 
-    ADN_ComboBox_Enum<E_TypeMunitionTirIndirect>* pIndirectTypeCombo_ = builder.AddEnumField<E_TypeMunitionTirIndirect>( pHolder, tr( "Type" ), vConnectors[eIndirectType], ENT_Tr::ConvertFromTypeMunitionTirIndirect );
+    ADN_ComboBox_Enum<E_TypeMunitionTirIndirect>* pIndirectTypeCombo_ = builder.AddEnumField<E_TypeMunitionTirIndirect>( pHolder, tr( "Type" ), vConnectors[eIndirectType], ADN_Tr::ConvertFromTypeMunitionTirIndirect );
     pIndirectGroup->connect( pIndirectTypeCombo_, SIGNAL(activated(int)), this, SLOT( IndirectTypeComboActivated(int) ) );
 
     builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Intervention" ), vConnectors[eIntervention], 0, eGreaterEqualZero );

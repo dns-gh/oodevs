@@ -55,6 +55,7 @@ public:
     static const std::string& ConvertFromStockCategory( E_StockCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromDeviceCategory( E_DeviceCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
+    static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
@@ -80,6 +81,7 @@ public:
     static E_StockCategory   ConvertToStockCategory    ( const std::string& );
     static E_DeviceCategory  ConvertToDeviceCategory   ( const std::string& );
     static E_EquipmentState  ConvertToEquipmentState   ( const std::string& );
+    static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -108,6 +110,7 @@ public:
     typedef converter<E_StockCategory>       T_ConverterStockCategory;
     typedef converter<E_DeviceCategory>      T_ConverterDeviceCategory;
     typedef converter<E_EquipmentState>      T_ConverterEquipmentState;
+    typedef converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
     //@}
 
     //! @name Convertors
@@ -133,6 +136,7 @@ public:
     static T_ConverterStockCategory     stockCategoryConverter_[];
     static T_ConverterDeviceCategory    deviceCategoryConverter_[];
     static T_ConverterEquipmentState    equipmentStateConverter_[];
+    static T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_ [];
     //@}
 };
 

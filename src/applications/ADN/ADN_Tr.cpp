@@ -580,6 +580,15 @@ const std::string& ADN_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, E
     return ADN_Tr::InverseFindInConverter( equipmentStateConverter_, nValue, nConversion );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromTypeMunitionTirIndirect
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( TypeMunitionTirIndirectConverter_, nValue, nConverterType );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToSMission
 // Created: APE 2005-02-18
@@ -777,6 +786,15 @@ E_EquipmentState ADN_Tr::ConvertToEquipmentState( const std::string& strName )
     return ADN_Tr::FindInConverter( equipmentStateConverter_, strName );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToTypeMunitionTirIndirect
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_TypeMunitionTirIndirect ADN_Tr::ConvertToTypeMunitionTirIndirect( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( TypeMunitionTirIndirectConverter_, strName );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
@@ -805,3 +823,18 @@ void ADN_Tr::InitTranslations()
     InitTr( deviceCategoryConverter_, "ADN_Tr" );
     InitTr( equipmentStateConverter_, "ADN_Tr" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::InitTranslations
+// Created: APE 2005-02-18
+// -----------------------------------------------------------------------------
+ADN_Tr::T_ConverterTypeMunitionTirIndirect ADN_Tr::TypeMunitionTirIndirectConverter_[] =
+{
+    T_ConverterTypeMunitionTirIndirect( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosif" ), eTypeMunitionTirIndirect_Explosif ),
+    T_ConverterTypeMunitionTirIndirect( "grenade", QT_TRANSLATE_NOOP( "ENT_Tr", "grenade" ), eTypeMunitionTirIndirect_Grenade ),
+    T_ConverterTypeMunitionTirIndirect( "aced", QT_TRANSLATE_NOOP( "ENT_Tr", "aced" ), eTypeMunitionTirIndirect_Aced ),
+    T_ConverterTypeMunitionTirIndirect( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "fumigene" ), eTypeMunitionTirIndirect_Fumigene ),
+    T_ConverterTypeMunitionTirIndirect( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "eclairant" ), eTypeMunitionTirIndirect_Eclairant ),
+    T_ConverterTypeMunitionTirIndirect( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "mine" ), eTypeMunitionTirIndirect_Mine ),
+    T_ConverterTypeMunitionTirIndirect( "", "", (E_TypeMunitionTirIndirect)-1 )
+};

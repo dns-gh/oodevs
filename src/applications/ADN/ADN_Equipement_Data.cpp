@@ -364,7 +364,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( ADN_XmlInput_Helper& i
 
     std::string strTmp;
     input.ReadAttribute( "type", strTmp );
-    nIndirectType_ = ENT_Tr::ConvertToTypeMunitionTirIndirect( strTmp );
+    nIndirectType_ = ADN_Tr::ConvertToTypeMunitionTirIndirect( strTmp );
     if( nIndirectType_ == (E_TypeMunitionTirIndirect)-1 )
         input.ThrowError( MT_FormatString( "Le type de munition indirecte '%s' est invalide.", strTmp.c_str() ) );
 
@@ -416,7 +416,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( ADN_XmlInput_Helper& i
 void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "TirIndirect" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromTypeMunitionTirIndirect( nIndirectType_.GetData() ) );
+    output.WriteAttribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( nIndirectType_.GetData() ) );
 
     output.WriteField( "InterventionType", nIntervention_.GetData() );
     output.WriteField( "DispersionX", rDispersionX_.GetData() );

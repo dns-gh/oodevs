@@ -6543,6 +6543,33 @@ Erreur: %3</translation>
     </message>
 </context>
 <context>
+    <name>ENT_Tr</name>
+    <message>
+        <source>explosif</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>grenade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>aced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fumigene</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eclairant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>d</source>
