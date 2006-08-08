@@ -16,11 +16,12 @@
 #include "astec_gaming/Team.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_gaming/Lima.h"
 #include "astec_gaming/Limit.h"
 #include "astec_gaming/ObjectKnowledge.h"
 #include "astec_gaming/PopulationKnowledge.h"
+#include "astec_gaming/AgentKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
@@ -82,7 +83,7 @@ void ColorStrategy::Select( const Object_ABC& element )
 // Name: ColorStrategy::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Population& element )
+void ColorStrategy::Select( const Population_ABC& element )
 {
     selectedPopulation_ = &element;
 }
@@ -157,7 +158,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const Population& population )
+void ColorStrategy::SelectColor( const Population_ABC& population )
 {
     const Team& team = population.GetTeam();
      QColor color = teamColors_[ &team ].second;

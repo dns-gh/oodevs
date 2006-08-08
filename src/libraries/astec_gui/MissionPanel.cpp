@@ -20,7 +20,7 @@
 #include "astec_gaming/AutomatDecisions.h"
 #include "astec_gaming/StaticModel.h"
 #include "astec_gaming/PopulationDecisions.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
@@ -211,7 +211,7 @@ void MissionPanel::ActivateFragOrder( int id )
 // Name: MissionPanel::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void MissionPanel::NotifyContextMenu( const Population& agent, ContextMenu& menu )
+void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& menu )
 {
     selectedPopulation_ = &agent;
     if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
@@ -237,7 +237,7 @@ void MissionPanel::ActivatePopulationMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population_ABC& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, static_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();

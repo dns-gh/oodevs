@@ -14,7 +14,7 @@
 // Name: PopulationFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult::PopulationFireResult( const ASN1T_FireDamagesPopulation& message , const Resolver_ABC< Population >& resolver )
+PopulationFireResult::PopulationFireResult( const ASN1T_FireDamagesPopulation& message , const Resolver_ABC< Population_ABC >& resolver )
     : target_( resolver.Get( message .cible ) )
     , deadPeople_( message.nb_morts )
 {

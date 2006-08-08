@@ -11,13 +11,14 @@
 #include "PopulationsLayer.h"
 #include "astec_gaming/Reports.h"
 #include "astec_gaming/PopulationDecisions.h"
+#include "astec_gaming/Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 PopulationsLayer::PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : EntityLayer< Population >( controllers, tools, strategy, view )
+    : EntityLayer< Population_ABC >( controllers, tools, strategy, view )
 {
     // NOTHING
 }
@@ -35,9 +36,11 @@ PopulationsLayer::~PopulationsLayer()
 // Name: PopulationsLayer::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void PopulationsLayer::DisplayTooltip( const Population& entity, Displayer_ABC& displayer )
+void PopulationsLayer::DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer )
 {
-    entity.DisplayInTooltip( displayer );
+    const Population* popu = dynamic_cast< const Population* >( &entity ); // $$$$ AGE 2006-08-07: 
+    if( popu )
+        popu->DisplayInTooltip( displayer );
     if( const Reports* reports = entity.Retrieve< Reports >() )
         reports->DisplayInTooltip( displayer );
 }            

@@ -13,7 +13,7 @@
 #include "EntityParameter.h"
 
 class PopulationKnowledge;
-class Population;
+class Population_ABC;
 class AgentKnowledgeConverter_ABC;
 class Agent_ABC;
 class Entity_ABC;
@@ -25,7 +25,7 @@ class Entity_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge >
-                               , public ContextMenuObserver_ABC< Population >
+                               , public ContextMenuObserver_ABC< Population_ABC >
 {
 
 public:
@@ -45,7 +45,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Population& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu );
     //@}
 
     //! @name Member data

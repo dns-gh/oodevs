@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ParamPopulationKnowledge.h"
 #include "astec_gaming/PopulationKnowledge.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/AgentKnowledgeConverter_ABC.h"
 
@@ -39,7 +39,7 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // Name: ParamPopulationKnowledge::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamPopulationKnowledge::NotifyContextMenu( const Population& entity, ContextMenu& menu )
+void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
 {
     const PopulationKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
     if( knowledge )

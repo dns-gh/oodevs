@@ -14,7 +14,7 @@
 #include "astec_kernel/ActionController.h"
 #include "astec_gaming/Report_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor
@@ -68,18 +68,9 @@ void EventToolbar::MessageClicked()
 {
     if( messageAgents_.empty() )
         return;
-    const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( messageAgents_.front() );
-    if( agent )
-    {
-        controllers_.actions_.Select( *agent );
-        controllers_.actions_.Activate( *agent );
-    }
-    else
-    {
-        const Population* popu = static_cast< const Population* >( messageAgents_.front() );
-        controllers_.actions_.Select( *popu );
-        controllers_.actions_.Activate( *popu );
-    }
+    const Entity_ABC* entity = messageAgents_.front();
+    entity->Select( controllers_.actions_ );
+    entity->Activate( controllers_.actions_ );
     messageAgents_.pop_front();
     messageButton_->setTextLabel( QString::number( messageAgents_.size() ) );
 }

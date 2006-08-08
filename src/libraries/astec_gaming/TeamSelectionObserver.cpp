@@ -12,7 +12,7 @@
 #include "KnowledgeGroup.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Object_ABC.h"
-#include "Population.h"
+#include "Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamSelectionObserver constructor
@@ -91,7 +91,7 @@ void TeamSelectionObserver::Select( const Object_ABC& element )
 // Name: TeamSelectionObserver::Select
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void TeamSelectionObserver::Select( const Population& element )
+void TeamSelectionObserver::Select( const Population_ABC& element )
 {
     Select( element.GetTeam() );
 }

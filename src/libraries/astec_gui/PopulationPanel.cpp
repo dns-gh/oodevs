@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "PopulationPanel.h"
 
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_gaming/PopulationConcentration.h"
 #include "astec_gaming/PopulationFlow.h"
 #include "astec_kernel/Controllers.h"
@@ -61,7 +61,7 @@ PopulationPanel::~PopulationPanel()
 // -----------------------------------------------------------------------------
 void PopulationPanel::showEvent( QShowEvent* )
 {
-    const Population* selected = selected_;
+    const Population_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
@@ -70,7 +70,7 @@ void PopulationPanel::showEvent( QShowEvent* )
 // Name: PopulationPanel::NotifySelected
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::NotifySelected( const Population* popu )
+void PopulationPanel::NotifySelected( const Population_ABC* popu )
 {
     if( selected_ != popu || ! popu )
     {
@@ -88,7 +88,7 @@ void PopulationPanel::NotifySelected( const Population* popu )
 // Name: PopulationPanel::DisplayParts
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::DisplayParts( const Population& population )
+void PopulationPanel::DisplayParts( const Population_ABC& population )
 {
     ValuedListItem* item = pPartsListView_->DisplayList( population.Resolver< PopulationConcentration >::CreateIterator() );
     item = pPartsListView_->DisplayList( population.Resolver< PopulationFlow >::CreateIterator(), pPartsListView_, item );
@@ -112,7 +112,7 @@ void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& di
 // Name: PopulationPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::NotifyUpdated( const Population& p )
+void PopulationPanel::NotifyUpdated( const Population_ABC& p )
 {
     if( ! IsVisible() || selected_ != &p )
         return;
@@ -127,7 +127,7 @@ void PopulationPanel::NotifyUpdated( const Population& p )
 // Name: PopulationPanel::NotifyDeleted
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void PopulationPanel::NotifyDeleted( const Population& popu )
+void PopulationPanel::NotifyDeleted( const Population_ABC& popu )
 {
     if( selected_ == &popu )
         NotifySelected( 0 );

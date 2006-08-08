@@ -23,7 +23,7 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
-#include "Population.h"
+#include "Population_ABC.h"
 #include "PopulationKnowledge.h"
 #include "Simulation.h"
 #include "Model.h"
@@ -1472,7 +1472,7 @@ void AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& message
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPopulationFire& message )
 {
-    Population& src = GetModel().agents_.GetPopulation( message.oid_src );
+    Population_ABC& src = GetModel().agents_.GetPopulation( message.oid_src );
     src.Update( message );
     GetModel().fires_.AddFire( message );
 }

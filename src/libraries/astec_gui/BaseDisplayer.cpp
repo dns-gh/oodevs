@@ -14,7 +14,7 @@
 #include "astec_gaming/Team.h"
 #include "astec_kernel/EquipmentType.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_gaming/PopulationConcentration.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/NBCAgent.h"
@@ -103,7 +103,7 @@ void BaseDisplayer::Call( const Object_ABC& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const Population& value )
+void BaseDisplayer::Call( const Population_ABC& value )
 {
     AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
 }

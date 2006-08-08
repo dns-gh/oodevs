@@ -12,7 +12,7 @@
 #include "astec_gaming_pch.h"
 #include "PopulationFlowKnowledge.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
-#include "Population.h"
+#include "Population_ABC.h"
 #include "PopulationFlow.h"
 #include "PopulationKnowledge.h"
 #include "astec_kernel/Controller.h"
@@ -42,7 +42,7 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const Coord
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )

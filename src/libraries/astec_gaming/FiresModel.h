@@ -15,7 +15,7 @@
 
 class Agent_ABC;
 class Entity_ABC;
-class Population;
+class Population_ABC;
 
 // =============================================================================
 /** @class  FiresModel
@@ -29,7 +29,7 @@ class FiresModel : public Resolver< Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const Resolver_ABC< Agent_ABC >& agents, const Resolver_ABC< Population >& populations );
+             FiresModel( const Resolver_ABC< Agent_ABC >& agents, const Resolver_ABC< Population_ABC >& populations );
     virtual ~FiresModel();
     //@}
 
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     const Resolver_ABC< Agent_ABC >& agents_;
-    const Resolver_ABC< Population >& populations_;
+    const Resolver_ABC< Population_ABC >& populations_;
     //@}
 };
 

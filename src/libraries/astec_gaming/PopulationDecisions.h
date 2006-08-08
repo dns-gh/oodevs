@@ -13,7 +13,7 @@
 #include "astec_kernel/Extension_ABC.h"
 #include "astec_kernel/Iterator.h"
 
-class Population;
+class Population_ABC;
 class Mission;
 
 // =============================================================================
@@ -29,7 +29,7 @@ class PopulationDecisions : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationDecisions( const Population& popu );
+    explicit PopulationDecisions( const Population_ABC& popu );
     virtual ~PopulationDecisions();
     //@}
 
@@ -48,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Population& popu_;
+    const Population_ABC& popu_;
     //@}
 };
 

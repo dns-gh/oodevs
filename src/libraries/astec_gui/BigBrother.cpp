@@ -13,7 +13,7 @@
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "AttributeView.h"
 #include "GlWidget.h"
 #include "astec_kernel/Positions.h"
@@ -63,7 +63,7 @@ void BigBrother::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 // Name: BigBrother::NotifyContextMenu
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Population& popu, ContextMenu& menu )
+void BigBrother::NotifyContextMenu( const Population_ABC& popu, ContextMenu& menu )
 {
     NotifyContextMenu( (Entity_ABC&)popu, menu );
 }
@@ -81,7 +81,7 @@ void BigBrother::NotifyDeleted( const Agent_ABC& agent )
 // Name: BigBrother::NotifyDeleted
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyDeleted( const Population& agent )
+void BigBrother::NotifyDeleted( const Population_ABC& agent )
 {
     RemoveAgent( agent );
 }

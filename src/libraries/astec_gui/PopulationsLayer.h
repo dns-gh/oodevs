@@ -11,7 +11,7 @@
 #define __PopulationsLayer_h_
 
 #include "EntityLayer.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 
 // =============================================================================
 /** @class  PopulationsLayer
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class PopulationsLayer : public EntityLayer< Population >
+class PopulationsLayer : public EntityLayer< Population_ABC >
 {
 
 public:
@@ -32,7 +32,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const Population& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer );
     //@}
 
 private:

@@ -17,7 +17,7 @@
 
 class QListViewItem;
 class DisplayBuilder;
-class Population;
+class Population_ABC;
 class Controllers;
 class ValuedListItem;
 class PopulationPart_ABC;
@@ -30,8 +30,8 @@ class ItemFactory_ABC;
 // =============================================================================
 class PopulationPanel : public InfoPanel_ABC
                       , public Observer_ABC
-                      , public SelectionObserver< Population >
-                      , public ElementObserver_ABC< Population >
+                      , public SelectionObserver< Population_ABC >
+                      , public ElementObserver_ABC< Population_ABC >
 {
 
 public:
@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Population* popu );
+    virtual void NotifySelected( const Population_ABC* popu );
     void Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
@@ -51,14 +51,14 @@ private:
     //! @name Helpers
     //@{
     void showEvent( QShowEvent* );
-    virtual void NotifyUpdated( const Population& );
-    virtual void NotifyDeleted( const Population& );
-    void DisplayParts( const Population& population );
+    virtual void NotifyUpdated( const Population_ABC& );
+    virtual void NotifyDeleted( const Population_ABC& );
+    void DisplayParts( const Population_ABC& population );
     //@}
 
 private:
     Controllers& controllers_;
-    SafePointer< Population > selected_;
+    SafePointer< Population_ABC > selected_;
     DisplayBuilder* display_;
     ListDisplayer< PopulationPanel >* pPartsListView_;
 };

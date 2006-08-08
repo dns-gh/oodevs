@@ -13,9 +13,7 @@
 #include "Types.h"
 #include "ASN_Types.h"
 
-#include "astec_kernel/Entity_ABC.h"
-#include "AgentKnowledge.h"
-#include "astec_kernel/Resolver.h"
+#include "Population_ABC.h"
 #include "astec_kernel/Extension_ABC.h"
 #include "astec_kernel/Updatable_ABC.h"
 #include "astec_kernel/Drawable_ABC.h"
@@ -34,9 +32,7 @@ class Displayer_ABC;
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class Population : public Entity_ABC
-                 , public Resolver< PopulationFlow >
-                 , public Resolver< PopulationConcentration >
+class Population : public Population_ABC
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
                  , public Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
@@ -55,15 +51,6 @@ public:
     virtual ~Population();
     //@}
 
-    //! @name Network
-    //@{
-    const PopulationConcentration* FindConcentration ( uint nID ) const;
-    const PopulationFlow*          FindFlow          ( uint nID ) const;
-
-    const PopulationConcentration& GetConcentration ( uint nID ) const;
-    const PopulationFlow&          GetFlow          ( uint nID ) const;
-    //@}
-
     //! @name Operations
     //@{
     void DisplayInTooltip( Displayer_ABC& displayer ) const;
@@ -77,10 +64,6 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
-
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
     //@}
 
     //! @name Accessors

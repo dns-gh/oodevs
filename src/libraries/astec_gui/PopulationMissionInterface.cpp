@@ -10,14 +10,14 @@
 #include "astec_gui_pch.h"
 #include "PopulationMissionInterface.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population_ABC& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectTypes )
     , publisher_( publisher )
     , nMissionId_( nMissionId )

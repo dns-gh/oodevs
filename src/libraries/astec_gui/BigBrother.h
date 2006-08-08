@@ -17,7 +17,7 @@
 
 class Controllers;
 class Agent_ABC;
-class Population;
+class Population_ABC;
 class Entity_ABC;
 class QToolBox;
 class Report_ABC;
@@ -31,9 +31,9 @@ class Report_ABC;
 class BigBrother : public QVBox
                  , public Observer_ABC
                  , public ContextMenuObserver_ABC< Agent_ABC >
-                 , public ContextMenuObserver_ABC< Population >
+                 , public ContextMenuObserver_ABC< Population_ABC >
                  , public ElementObserver_ABC< Agent_ABC >
-                 , public ElementObserver_ABC< Population >
+                 , public ElementObserver_ABC< Population_ABC >
                  , public ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
@@ -48,9 +48,9 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const Agent_ABC&, ContextMenu& );
-    virtual void NotifyContextMenu( const Population&, ContextMenu& );
+    virtual void NotifyContextMenu( const Population_ABC&, ContextMenu& );
     virtual void NotifyDeleted( const Agent_ABC& agent );
-    virtual void NotifyDeleted( const Population& agent );
+    virtual void NotifyDeleted( const Population_ABC& agent );
     //@}
 
 private slots:

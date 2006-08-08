@@ -15,7 +15,7 @@
 #include "astec_kernel/Resolver_ABC.h"
 
 class Entity_ABC;
-class Population;
+class Population_ABC;
 class Agent_ABC;
 
 // =============================================================================
@@ -32,7 +32,7 @@ public:
     //@{
              DirectFire( const ASN1T_MsgStartPionFire& message, 
                  const Resolver_ABC< Agent_ABC >& agentResolver, 
-                 const Resolver_ABC< Population >& populationResolver );
+                 const Resolver_ABC< Population_ABC >& populationResolver );
     virtual ~DirectFire();
     //@}
 

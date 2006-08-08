@@ -288,30 +288,3 @@ void Agent::CreateDictionary()
     dictionary.Register( "Info/Nom", name_ );
     dictionary.Register( "Hiérarchie/Supérieur", superior_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Select
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Agent::Select( ActionController& controller ) const
-{
-    controller.Select( *(Agent_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ContextMenu
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Agent::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *(Agent_ABC*)this, where );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Activate
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Agent::Activate( ActionController& controller ) const
-{
-    controller.Activate( *(Agent_ABC*)this );
-}

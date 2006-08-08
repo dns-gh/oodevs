@@ -15,7 +15,7 @@
 
 class Entity_ABC;
 class Agent_ABC;
-class Population;
+class Population_ABC;
 class Controllers;
 class SmartGridWidget;
 class GlWidget;
@@ -30,7 +30,7 @@ class MiniView;
 class MiniViews : public QDockWindow
                 , public Observer_ABC
                 , public ContextMenuObserver_ABC< Agent_ABC >
-                , public ContextMenuObserver_ABC< Population >
+                , public ContextMenuObserver_ABC< Population_ABC >
 {
     Q_OBJECT;
 
@@ -58,7 +58,7 @@ private:
     //@{
     void BuildContextMenu( const Entity_ABC& agent, ContextMenu& menu );
     virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const Population& popup, ContextMenu& menu );
+    virtual void NotifyContextMenu( const Population_ABC& popup, ContextMenu& menu );
     //@}
 
     //! @name Types

@@ -12,7 +12,7 @@
 
 class Agent_ABC;
 class Object_ABC;
-class Population;
+class Population_ABC;
 class AgentKnowledge;
 class ObjectKnowledge;
 class PopulationKnowledge;
@@ -42,7 +42,7 @@ public:
     //@{
     static QString CreateLink( const Agent_ABC& entity, const QString& message );
     static QString CreateLink( const Object_ABC& entity, const QString& message );
-    static QString CreateLink( const Population& entity, const QString& message );
+    static QString CreateLink( const Population_ABC& entity, const QString& message );
 
     static QString CreateLink( const AgentKnowledge& entity, const QString& message );
     static QString CreateLink( const ObjectKnowledge& entity, const QString& message );

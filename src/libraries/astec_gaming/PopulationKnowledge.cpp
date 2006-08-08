@@ -13,7 +13,7 @@
 #include "PopulationKnowledge.h"
 
 #include "KnowledgeGroup.h"
-#include "Population.h"
+#include "Population_ABC.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "astec_kernel/Controller.h"
@@ -25,7 +25,7 @@
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
     : group_     ( group )
     , controller_( controller )
     , converter_ ( converter )
@@ -201,7 +201,7 @@ const KnowledgeGroup& PopulationKnowledge::GetKnowledgeGroup() const
 // Name: PopulationKnowledge::GetRealPopulation
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const Population& PopulationKnowledge::GetRealPopulation() const
+const Population_ABC& PopulationKnowledge::GetRealPopulation() const
 {
     return popu_;
 }

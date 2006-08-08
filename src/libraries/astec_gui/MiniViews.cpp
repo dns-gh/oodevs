@@ -15,7 +15,7 @@
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MiniViews constructor
@@ -71,7 +71,7 @@ void MiniViews::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 // Name: MiniViews::NotifyContextMenu
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Population& popu, ContextMenu& menu )
+void MiniViews::NotifyContextMenu( const Population_ABC& popu, ContextMenu& menu )
 {
     BuildContextMenu( popu, menu );
 }

@@ -21,7 +21,7 @@ class CoordinateConverter_ABC;
 class PopulationFlow;
 class PopulationKnowledge;
 class Controller;
-class Population;
+class Population_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -45,7 +45,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
+             PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -75,7 +75,7 @@ private:
     Controller& controller_;
     const CoordinateConverter_ABC& converter_;
 
-    const Population& popu_; 
+    const Population_ABC& popu_; 
     const uint nID_;
     const PopulationFlow* pFlow_;
 

@@ -12,7 +12,7 @@
 
 class Agent_ABC;
 class Object_ABC;
-class Population;
+class Population_ABC;
 class AgentKnowledge;
 class ObjectKnowledge;
 class PopulationKnowledge;
@@ -38,7 +38,7 @@ public:
     //@{
     virtual void SelectColor( const Agent_ABC& agent ) = 0;
     virtual void SelectColor( const Object_ABC& object ) = 0;
-    virtual void SelectColor( const Population& population ) = 0;
+    virtual void SelectColor( const Population_ABC& population ) = 0;
     virtual void SelectColor( const AgentKnowledge& k ) = 0;
     virtual void SelectColor( const ObjectKnowledge& k ) = 0;
     virtual void SelectColor( const PopulationKnowledge& k ) = 0;

@@ -22,7 +22,7 @@
 class Controller;
 class CoordinateConverter_ABC;
 class Team;
-class Population;
+class Population_ABC;
 class TypePopulation;
 class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
@@ -42,7 +42,7 @@ class PopulationKnowledge : public Entity_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -58,7 +58,7 @@ public:
     const Team* GetKnowledgeTeam() const;
 
     const KnowledgeGroup& GetKnowledgeGroup() const;
-    const Population& GetRealPopulation() const;
+    const Population_ABC& GetRealPopulation() const;
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
@@ -93,7 +93,7 @@ private:
     Controller& controller_;
     const CoordinateConverter_ABC& converter_;
 
-    const Population& popu_;
+    const Population_ABC& popu_;
     unsigned long nID_;
     unsigned int domination_;
     //@}

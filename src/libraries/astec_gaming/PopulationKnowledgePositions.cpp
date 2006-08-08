@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "PopulationKnowledgePositions.h"
 #include "PopulationKnowledge.h"
-#include "Population.h"
+#include "Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions constructor
@@ -34,12 +34,22 @@ PopulationKnowledgePositions::~PopulationKnowledgePositions()
 // $$$$ AGE 2006-05-18: pas terribule
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledgePositions::GetRealPosition
+// Created: AGE 2006-08-07
+// -----------------------------------------------------------------------------
+const Positions& PopulationKnowledgePositions::GetRealPosition() const
+{
+    // $$$$ AGE 2006-08-07: pas terribule atole
+    return knowledge_.GetRealPopulation().Get< Positions >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions::GetPosition
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 geometry::Point2f PopulationKnowledgePositions::GetPosition() const
 {
-    return knowledge_.GetRealPopulation().GetPosition();
+    return GetRealPosition().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +58,7 @@ geometry::Point2f PopulationKnowledgePositions::GetPosition() const
 // -----------------------------------------------------------------------------
 float PopulationKnowledgePositions::GetHeight() const
 {
-    return knowledge_.GetRealPopulation().GetHeight();
+    return GetRealPosition().GetHeight();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +67,7 @@ float PopulationKnowledgePositions::GetHeight() const
 // -----------------------------------------------------------------------------
 bool PopulationKnowledgePositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
 {
-    return knowledge_.GetRealPopulation().IsAt( pos, precision );
+    return GetRealPosition().IsAt( pos, precision );
 }   
 
 // -----------------------------------------------------------------------------
@@ -66,7 +76,7 @@ bool PopulationKnowledgePositions::IsAt( const geometry::Point2f& pos, float pre
 // -----------------------------------------------------------------------------
 bool PopulationKnowledgePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return knowledge_.GetRealPopulation().IsIn( rectangle );
+    return GetRealPosition().IsIn( rectangle );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,5 +85,5 @@ bool PopulationKnowledgePositions::IsIn( const geometry::Rectangle2f& rectangle 
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f PopulationKnowledgePositions::GetBoundingBox() const
 {
-    return knowledge_.GetRealPopulation().GetBoundingBox();
+    return GetRealPosition().GetBoundingBox();
 }

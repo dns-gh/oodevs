@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 #include "astec_kernel/Resolver_ABC.h"
 
-class Population;
+class Population_ABC;
 
 // =============================================================================
 /** @class  PopulationFireResult
@@ -27,7 +27,7 @@ class PopulationFireResult
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFireResult( const ASN1T_FireDamagesPopulation& message, const Resolver_ABC< Population >& resolver );
+             PopulationFireResult( const ASN1T_FireDamagesPopulation& message, const Resolver_ABC< Population_ABC >& resolver );
     virtual ~PopulationFireResult();
     //@}
 
@@ -45,7 +45,7 @@ private:
 public:
     //! @name Member data
     //@{
-    const Population& target_;
+    const Population_ABC& target_;
     unsigned int deadPeople_;
     //@}
 };

@@ -61,10 +61,6 @@ public:
 
     virtual const AutomatType* GetAutomatType() const;
     virtual const AgentType& GetType() const;
-
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
     //@}
 
 private:

@@ -10,13 +10,13 @@
 #include "astec_gaming_pch.h"
 #include "FiresModel.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "Population.h"
+#include "Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel constructor
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-FiresModel::FiresModel( const Resolver_ABC< Agent_ABC >& agents, const Resolver_ABC< Population >& populations )
+FiresModel::FiresModel( const Resolver_ABC< Agent_ABC >& agents, const Resolver_ABC< Population_ABC >& populations )
     : agents_( agents )
     , populations_( populations )
 {

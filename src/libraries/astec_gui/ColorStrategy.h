@@ -18,7 +18,7 @@
 class Team;
 class Agent_ABC;
 class Object_ABC;
-class Population;
+class Population_ABC;
 class Controllers;
 class TacticalLine_ABC;
 class Lima;
@@ -37,7 +37,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public SelectionObserver_ABC
                     , public SelectionObserver_Base< Agent_ABC >
                     , public SelectionObserver_Base< Object_ABC >
-                    , public SelectionObserver_Base< Population >
+                    , public SelectionObserver_Base< Population_ABC >
                     , public SelectionObserver_Base< Lima >
                     , public SelectionObserver_Base< Limit >
 {
@@ -53,7 +53,7 @@ public:
     //@{
     virtual void SelectColor( const Agent_ABC& agent );
     virtual void SelectColor( const Object_ABC& object );
-    virtual void SelectColor( const Population& population );
+    virtual void SelectColor( const Population_ABC& population );
     virtual void SelectColor( const AgentKnowledge& k );
     virtual void SelectColor( const ObjectKnowledge& k );
     virtual void SelectColor( const PopulationKnowledge& k );
@@ -75,7 +75,7 @@ private:
     virtual void BeforeSelection();
     virtual void Select( const Agent_ABC& element );
     virtual void Select( const Object_ABC& element );
-    virtual void Select( const Population& element );
+    virtual void Select( const Population_ABC& element );
     virtual void Select( const Lima& element );
     virtual void Select( const Limit& element );
     virtual void AfterSelection();
@@ -108,7 +108,7 @@ private:
     const Object_ABC*     selectedObject_;
     const Agent_ABC*      selectedAgent_;
     const Agent_ABC*      selectedSuperior_;
-    const Population* selectedPopulation_;
+    const Population_ABC* selectedPopulation_;
     const TacticalLine_ABC* selectedLine_;
 
     T_TeamColors teamColors_;

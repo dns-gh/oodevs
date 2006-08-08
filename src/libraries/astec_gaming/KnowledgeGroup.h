@@ -18,7 +18,7 @@
 class Team;
 class Agent_ABC;
 class AgentKnowledge;
-class Population;
+class Population_ABC;
 class PopulationKnowledge;
 class Controller;
 

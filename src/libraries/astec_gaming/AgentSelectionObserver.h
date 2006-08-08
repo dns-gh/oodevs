@@ -12,7 +12,7 @@
 
 #include "astec_kernel/SelectionObserver_ABC.h"
 
-class Population;
+class Population_ABC;
 class Agent_ABC;
 class Entity_ABC;
 
@@ -24,7 +24,7 @@ class Entity_ABC;
 // =============================================================================
 class AgentSelectionObserver
     : public SelectionObserver_ABC
-    , public SelectionObserver_Base< Population >
+    , public SelectionObserver_Base< Population_ABC >
     , public SelectionObserver_Base< Agent_ABC >
 {
 
@@ -46,7 +46,7 @@ private:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const Population& element );
+    virtual void Select( const Population_ABC& element );
     virtual void Select( const Agent_ABC& element );
     virtual void NotifySelected( const Entity_ABC* ) = 0;
     //@}

@@ -137,7 +137,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
+Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.types_ );
     AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !

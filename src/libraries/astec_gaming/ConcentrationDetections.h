@@ -16,7 +16,7 @@
 #include "astec_kernel/Resolver_ABC.h"
 
 class Controller;
-class Population;
+class Population_ABC;
 class PopulationConcentration;
 
 // =============================================================================
@@ -32,7 +32,7 @@ class ConcentrationDetections : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConcentrationDetections( Controller& controller, const Resolver_ABC< Population >& resolver );
+             ConcentrationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver );
     virtual ~ConcentrationDetections();
     //@}
 
@@ -61,7 +61,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Population >& resolver_;
+    const Resolver_ABC< Population_ABC >& resolver_;
 
     T_Concentrations perceivedConcentrations_;
     //@}

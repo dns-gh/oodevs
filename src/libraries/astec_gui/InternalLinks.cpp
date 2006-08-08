@@ -11,7 +11,7 @@
 #include "InternalLinks.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_gaming/AgentKnowledge.h"
 #include "astec_gaming/ObjectKnowledge.h"
 #include "astec_gaming/PopulationKnowledge.h"
@@ -46,7 +46,7 @@ QString InternalLinks::CreateLink( const Object_ABC& entity, const QString& mess
 // Name: InternalLinks::CreateLink
 // Created: AGE 2006-05-12
 // -----------------------------------------------------------------------------
-QString InternalLinks::CreateLink( const Population& entity, const QString& message )
+QString InternalLinks::CreateLink( const Population_ABC& entity, const QString& message )
 {
     return Embed( message, population_, entity.GetId() );
 }

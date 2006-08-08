@@ -12,7 +12,7 @@
 #include "DIN/DIN_Input.h"
 #include "AgentFactory_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "Population.h"
+#include "Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel constructor
@@ -40,7 +40,7 @@ AgentsModel::~AgentsModel()
 void AgentsModel::Purge()
 {
     Resolver< Agent_ABC >::DeleteAll();
-    Resolver< Population >::DeleteAll();
+    Resolver< Population_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 {
     Entity_ABC* agent = Resolver< Agent_ABC >::Find( id );
     if( ! agent )
-        agent = Resolver< Population >::Find( id );
+        agent = Resolver< Population_ABC >::Find( id );
     return agent;
 }
 
@@ -105,10 +105,10 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 void AgentsModel::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
 {
-    if( !Resolver< Population >::Find( asnMsg.oid_population ) )
+    if( !Resolver< Population_ABC >::Find( asnMsg.oid_population ) )
     {
-        Population* popu = agentFactory_.Create( asnMsg );
-        Resolver< Population >::Register( asnMsg.oid_population, *popu );
+        Population_ABC* popu = agentFactory_.Create( asnMsg );
+        Resolver< Population_ABC >::Register( asnMsg.oid_population, *popu );
     }
 }
 
@@ -116,17 +116,17 @@ void AgentsModel::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
 // Name: AgentsModel::GetPopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population& AgentsModel::GetPopulation( unsigned long id )
+Population_ABC& AgentsModel::GetPopulation( unsigned long id )
 {
-    return Resolver< Population >::Get( id );
+    return Resolver< Population_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::FindPopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population* AgentsModel::FindPopulation( unsigned long id )
+Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 {
-    return Resolver< Population >::Find( id );
+    return Resolver< Population_ABC>::Find( id );
 }
 

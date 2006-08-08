@@ -17,7 +17,7 @@
 #include "astec_kernel/Drawable_ABC.h"
 
 class Controller;
-class Population;
+class Population_ABC;
 class PopulationPart_ABC;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class PopulationDetections : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDetections( Controller& controller, const Resolver_ABC< Population >& resolver );
+             PopulationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver );
     virtual ~PopulationDetections();
     //@}
 
@@ -68,7 +68,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Population >& resolver_;
+    const Resolver_ABC< Population_ABC >& resolver_;
     T_Parts perceived_;
     T_PointVector shape_;
     //@}

@@ -18,7 +18,7 @@
 #include "PopulationPartKnowledge_ABC.h"
 
 class CoordinateConverter_ABC;
-class Population;
+class Population_ABC;
 class PopulationConcentration;
 class PopulationKnowledge;
 class Controller;
@@ -33,7 +33,7 @@ class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& popu,
+             PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu,
                  const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
     virtual ~PopulationConcentrationKnowledge();
     //@}
@@ -65,7 +65,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Population& resolver_;
+    const Population_ABC& resolver_;
     const uint nID_;
     
     const PopulationConcentration*         pConcentration_;

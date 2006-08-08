@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "NoLinkDisplayer.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ void NoLinkDisplayer::Call( const Agent_ABC& value )
 // Name: NoLinkDisplayer::Call
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-void NoLinkDisplayer::Call( const Population& value )
+void NoLinkDisplayer::Call( const Population_ABC& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

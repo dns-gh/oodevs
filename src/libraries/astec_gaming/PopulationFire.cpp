@@ -9,13 +9,13 @@
 
 #include "astec_gaming_pch.h"
 #include "PopulationFire.h"
-#include "Population.h"
+#include "Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFire::PopulationFire( const ASN1T_MsgStartPopulationFire& message, const Resolver_ABC< Population >& resolver )
+PopulationFire::PopulationFire( const ASN1T_MsgStartPopulationFire& message, const Resolver_ABC< Population_ABC >& resolver )
     : Fire_ABC( resolver.Get( message.oid_src ) )
     , id_( message.oid_tir )
 {

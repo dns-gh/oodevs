@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "PopulationDecisions.h"
-#include "Population.h"
+#include "Population_ABC.h"
 #include "astec_kernel/PopulationType.h"
 #include "astec_kernel/DecisionalModel.h"
 
@@ -17,7 +17,7 @@
 // Name: PopulationDecisions constructor
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-PopulationDecisions::PopulationDecisions( const Population& popu )
+PopulationDecisions::PopulationDecisions( const Population_ABC& popu )
     : popu_( popu )
 {
     // NOTHING

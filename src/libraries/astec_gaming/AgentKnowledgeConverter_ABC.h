@@ -13,7 +13,7 @@
 class KnowledgeGroup;
 class Agent_ABC;
 class AgentKnowledge;
-class Population;
+class Population_ABC;
 class PopulationKnowledge;
 
 // =============================================================================
@@ -37,7 +37,7 @@ public:
     virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const KnowledgeGroup& owner ) = 0;
     virtual const AgentKnowledge*      Find( const Agent_ABC& base,          const KnowledgeGroup& owner ) = 0;
     virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const KnowledgeGroup& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const Population& base,          const KnowledgeGroup& owner ) = 0;
+    virtual const PopulationKnowledge* Find( const Population_ABC& base,          const KnowledgeGroup& owner ) = 0;
     //@}
 
 private:

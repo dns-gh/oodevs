@@ -39,7 +39,7 @@ public:
     virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const KnowledgeGroup& owner );
     virtual const AgentKnowledge*      Find( const Agent_ABC& base,          const KnowledgeGroup& owner );
     virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const KnowledgeGroup& owner );
-    virtual const PopulationKnowledge* Find( const Population& base,          const KnowledgeGroup& owner );
+    virtual const PopulationKnowledge* Find( const Population_ABC& base,          const KnowledgeGroup& owner );
     //@}
 
 private:
@@ -61,7 +61,7 @@ private:
     //@{
     typedef std::map< const Agent_ABC*, const AgentKnowledge* >                 T_KnowledgeMap;
     typedef std::map< const KnowledgeGroup* , T_KnowledgeMap >              T_Knowledges;
-    typedef std::map< const Population*, const PopulationKnowledge* >       T_PopulationKnowledgeMap;
+    typedef std::map< const Population_ABC*, const PopulationKnowledge* >       T_PopulationKnowledgeMap;
     typedef std::map< const KnowledgeGroup* , T_PopulationKnowledgeMap >    T_PopulationKnowledges;
     //@}
 

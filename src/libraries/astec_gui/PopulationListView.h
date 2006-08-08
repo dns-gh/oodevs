@@ -15,7 +15,7 @@
 #include "astec_kernel/OptionsObserver_ABC.h"
 
 class Controllers;
-class Population;
+class Population_ABC;
 class Team;
 class ItemFactory_ABC;
 
@@ -27,8 +27,8 @@ class ItemFactory_ABC;
 // =============================================================================
 class PopulationListView : public QListView
                          , public Observer_ABC
-                         , public ElementObserver_ABC< Population >
-                         , public SelectionObserver_Base< Population >
+                         , public ElementObserver_ABC< Population_ABC >
+                         , public SelectionObserver_Base< Population_ABC > // $$$$ AGE 2006-08-07: SelectionObserver_Base ????
                          , public OptionsObserver_ABC
 {
     Q_OBJECT;
@@ -58,9 +58,9 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Population& popu );
-    virtual void NotifyDeleted( const Population& popu );
-    virtual void Select( const Population& popu );
+    virtual void NotifyCreated( const Population_ABC& popu );
+    virtual void NotifyDeleted( const Population_ABC& popu );
+    virtual void Select( const Population_ABC& popu );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     //@}
 

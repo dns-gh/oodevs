@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "PopulationDetections.h"
-#include "Population.h"
+#include "Population_ABC.h"
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "Attr_def.h"
@@ -18,7 +18,7 @@
 // Name: PopulationDetections constructor
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationDetections::PopulationDetections( Controller& controller, const Resolver_ABC< Population >& resolver )
+PopulationDetections::PopulationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {
@@ -46,7 +46,7 @@ void PopulationDetections::DoUpdate( const ConcentrationDetectionMessage& messag
 
     message >> nPopulationID >> nConcentrationID >> nVisType;
 
-    const Population* pPopulation = & resolver_.Get( nPopulationID );
+    const Population_ABC* pPopulation = & resolver_.Get( nPopulationID );
     const PopulationPart_ABC* pConcentration = & pPopulation->GetConcentration( nConcentrationID );
     if( nVisType == eVisTypeInvisible )
         perceived_.erase( pConcentration );
@@ -64,7 +64,7 @@ void PopulationDetections::DoUpdate( const FlowDetectionMessage& message )
     unsigned long nFlowID;
 
     message >> nPopulationID >> nFlowID;
-    const Population* pPopulation = & resolver_.Get( nPopulationID );
+    const Population_ABC* pPopulation = & resolver_.Get( nPopulationID );
 
     const PopulationPart_ABC* pFlow = & pPopulation->GetFlow( nFlowID );
 

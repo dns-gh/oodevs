@@ -14,7 +14,7 @@
 #include "Fire_ABC.h"
 #include "astec_kernel/Resolver_ABC.h"
 
-class Population;
+class Population_ABC;
 
 // =============================================================================
 /** @class  PopulationFire
@@ -28,7 +28,7 @@ class PopulationFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFire( const ASN1T_MsgStartPopulationFire& message, const Resolver_ABC< Population >& resolver );
+    explicit PopulationFire( const ASN1T_MsgStartPopulationFire& message, const Resolver_ABC< Population_ABC >& resolver );
     virtual ~PopulationFire();
     //@}
 

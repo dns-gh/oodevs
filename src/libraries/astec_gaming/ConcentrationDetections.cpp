@@ -11,13 +11,13 @@
 #include "ConcentrationDetections.h"
 #include "Attr_Def.h"
 #include "astec_kernel/Controller.h"
-#include "Population.h"
+#include "Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ConcentrationDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ConcentrationDetections::ConcentrationDetections( Controller& controller, const Resolver_ABC< Population >& resolver )
+ConcentrationDetections::ConcentrationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {
@@ -44,7 +44,7 @@ void ConcentrationDetections::Update( const ConcentrationDetectionMessage& messa
     unsigned char  nVisType;
 
     message >> nPopulationID >> nConcentrationID >> nVisType;
-    Population& popu = resolver_.Get( nPopulationID );
+    Population_ABC& popu = resolver_.Get( nPopulationID );
     const PopulationConcentration* pConcentration = & popu.GetConcentration( nConcentrationID );
 
     if( nVisType == eVisTypeInvisible )

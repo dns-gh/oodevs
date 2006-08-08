@@ -55,9 +55,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Select( ActionController& controller ) const = 0;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
-    virtual void Activate( ActionController& controller ) const = 0;
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 };
 

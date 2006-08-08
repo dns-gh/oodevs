@@ -8,61 +8,50 @@
 // *****************************************************************************
 
 #include "astec_gaming_pch.h"
-#include "AgentSelectionObserver.h"
 #include "Population_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentSelectionObserver constructor
-// Created: AGE 2006-03-09
+// Name: Population_ABC constructor
+// Created: AGE 2006-08-07
 // -----------------------------------------------------------------------------
-AgentSelectionObserver::AgentSelectionObserver()
-    : selected_( 0 )
+Population_ABC::Population_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentSelectionObserver destructor
-// Created: AGE 2006-03-09
+// Name: Population_ABC destructor
+// Created: AGE 2006-08-07
 // -----------------------------------------------------------------------------
-AgentSelectionObserver::~AgentSelectionObserver()
+Population_ABC::~Population_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentSelectionObserver::BeforeSelection
-// Created: AGE 2006-03-09
+// Name: Population_ABC::Select
+// Created: AGE 2006-08-07
 // -----------------------------------------------------------------------------
-void AgentSelectionObserver::BeforeSelection()
+void Population_ABC::Select( ActionController& controller ) const
 {
-    selected_ = 0;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentSelectionObserver::AfterSelection
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-void AgentSelectionObserver::AfterSelection()
-{
-    NotifySelected( selected_ );
+    controller.Select( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentSelectionObserver::Select
-// Created: AGE 2006-03-09
+// Name: Population_ABC::ContextMenu
+// Created: AGE 2006-08-07
 // -----------------------------------------------------------------------------
-void AgentSelectionObserver::Select( const Population_ABC& element )
+void Population_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    selected_ = &element;
+    controller.ContextMenu( *this, where );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentSelectionObserver::Select
-// Created: AGE 2006-03-09
+// Name: Population_ABC::Activate
+// Created: AGE 2006-08-07
 // -----------------------------------------------------------------------------
-void AgentSelectionObserver::Select( const Agent_ABC& element )
+void Population_ABC::Activate( ActionController& controller ) const
 {
-    selected_ = &element;
+    controller.Activate( *this );
 }

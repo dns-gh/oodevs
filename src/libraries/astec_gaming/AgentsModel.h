@@ -24,7 +24,7 @@ class LogMedicalConsign;
 class KnowledgeGroup;
 class Object_ABC;
 class App;
-class Population;
+class Population_ABC;
 class TacticalLine_ABC;
 
 namespace DIN {
@@ -39,7 +39,7 @@ namespace DIN {
 // Created: AGE 2006-02-10
 // =============================================================================
 class AgentsModel : public Resolver< Agent_ABC >
-                  , public Resolver< Population >
+                  , public Resolver< Population_ABC >
 {
 
 public:
@@ -59,8 +59,8 @@ public:
     Entity_ABC* FindAllAgent( unsigned long id ) const;
 
     void CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg );
-    Population& GetPopulation( unsigned long id );
-    Population* FindPopulation( unsigned long id );
+    Population_ABC& GetPopulation( unsigned long id );
+    Population_ABC* FindPopulation( unsigned long id );
 
     void Purge();
     //@}

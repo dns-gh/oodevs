@@ -16,7 +16,7 @@ class Object_ABC;
 class Team;
 class DotationType;
 class EquipmentType;
-class Population;
+class Population_ABC;
 class PopulationConcentration;
 class CoordinateConverter_ABC;
 class NBCAgent;
@@ -36,7 +36,7 @@ class Mission;
 // =============================================================================
 class BaseDisplayer : public Displayer_ABC
                   , public Caller< bool >
-                  , public Caller< Population >
+                  , public Caller< Population_ABC>
                   , public Caller< PopulationConcentration >
                   , public Caller< Agent_ABC >
                   , public Caller< Object_ABC >
@@ -72,7 +72,7 @@ private:
     //@{
     virtual void Call( const bool& value );
     virtual void Call( const Agent_ABC& value );
-    virtual void Call( const Population& value );
+    virtual void Call( const Population_ABC& value );
     virtual void Call( const PopulationConcentration& value );
     virtual void Call( const Object_ABC& value );
     virtual void Call( const Team& value );

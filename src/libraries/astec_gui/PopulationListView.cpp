@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "PopulationListView.h"
-#include "astec_gaming/Population.h"
+#include "astec_gaming/Population_ABC.h"
 #include "astec_gaming/Team.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/ActionController.h"
@@ -58,7 +58,7 @@ PopulationListView::~PopulationListView()
 // Name: PopulationListView::NotifyCreated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void PopulationListView::NotifyCreated( const Population& popu )
+void PopulationListView::NotifyCreated( const Population_ABC& popu )
 {
     const Team& team = popu.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
@@ -74,7 +74,7 @@ void PopulationListView::NotifyCreated( const Population& popu )
 // Name: PopulationListView::NotifyDeleted
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void PopulationListView::NotifyDeleted( const Population& popu )
+void PopulationListView::NotifyDeleted( const Population_ABC& popu )
 {
     QListViewItem* item = FindItem( &popu, firstChild() );
     QListViewItem* teamItem = item ? item->parent() : 0;
@@ -127,7 +127,7 @@ void PopulationListView::OnContextMenuRequested( QListViewItem* i, const QPoint&
 // Name: PopulationListView::Select
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void PopulationListView::Select( const Population& popu )
+void PopulationListView::Select( const Population_ABC& popu )
 {
     setSelected( FindItem( &popu, firstChild() ), true );
     ensureItemVisible( selectedItem() );

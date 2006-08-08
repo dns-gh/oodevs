@@ -45,6 +45,11 @@ private:
     PopulationKnowledgePositions& operator=( const PopulationKnowledgePositions& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    const Positions& GetRealPosition() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

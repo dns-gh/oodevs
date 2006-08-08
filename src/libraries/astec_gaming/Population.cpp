@@ -40,7 +40,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     DataDictionary& dictionary = *new DataDictionary();
     Attach( dictionary );
     InterfaceContainer< Extension_ABC >::Register( *this );
-    controller_.Create( *this );
+    controller_.Create( *(Population_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(Population_ABC*)this );
     Resolver< PopulationFlow >::DeleteAll();
     Resolver< PopulationConcentration >::DeleteAll();
 }
@@ -111,7 +111,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
     Resolver< PopulationConcentration >::Get( asnMsg.oid_concentration ).Update( asnMsg );
-    controller_.Update( *this );
+    controller_.Update( *(Population_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
     {
         Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
         ComputeCenter();
-        controller_.Update( *this );
+        controller_.Update( *(Population_ABC*)this );
     }
 }
 
@@ -138,7 +138,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
     {
         Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
         ComputeCenter();
-        controller_.Update( *this );
+        controller_.Update( *(Population_ABC*)this );
     }
 }
 
@@ -151,7 +151,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
     delete Resolver< PopulationFlow >::Find( asnMsg.oid_flux );
     Resolver< PopulationFlow >::Remove( asnMsg.oid_flux );
     ComputeCenter();
-    controller_.Update( *this );
+    controller_.Update( *(Population_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& as
     delete Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration );
     Resolver< PopulationConcentration >::Remove( asnMsg.oid_concentration );
     ComputeCenter();
-    controller_.Update( *this );
+    controller_.Update( *(Population_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,42 +183,6 @@ void Population::DoUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
 unsigned long Population::GetId() const
 {
     return nPopulationID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::FindConcentration
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-const PopulationConcentration* Population::FindConcentration( uint nID ) const
-{
-    return Resolver< PopulationConcentration >::Find( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::FindFlow
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-const PopulationFlow* Population::FindFlow( uint nID ) const
-{
-    return Resolver< PopulationFlow >::Find( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetConcentration
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-const PopulationConcentration& Population::GetConcentration( uint nID ) const
-{
-    return Resolver< PopulationConcentration >::Get( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetFlow
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-const PopulationFlow& Population::GetFlow( uint nID ) const
-{
-    return Resolver< PopulationFlow >::Get( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,34 +364,7 @@ bool Population::IsInTeam( const Team& team ) const
 // -----------------------------------------------------------------------------
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "", this )
+    displayer.Display( "", (Population_ABC*)this )
              .Display( "Vivants", GetLivingHumans() )
              .Display( "Domination", nDomination_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::Select
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Population::Select( ActionController& controller ) const
-{
-    controller.Select( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::ContextMenu
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Population::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *this, where );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::Activate
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Population::Activate( ActionController& controller ) const
-{
-    controller.Activate( *this );
 }

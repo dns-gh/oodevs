@@ -12,7 +12,7 @@
 #include "astec_gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 
-#include "Population.h"
+#include "Population_ABC.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
 #include "astec_kernel/Controller.h"
@@ -23,7 +23,7 @@
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
     : controller_( controller )
     , resolver_  ( resolver )
     , nID_           ( asnMsg.oid_connaissance_concentration )

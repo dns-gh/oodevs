@@ -41,7 +41,7 @@ public:
     //@{
     virtual Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg );
     virtual Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg );
-    virtual Population* Create( const ASN1T_MsgPopulationCreation& asnMsg );
+    virtual Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg );
     //@}
 
 private:
