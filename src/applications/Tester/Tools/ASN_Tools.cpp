@@ -403,6 +403,15 @@ void ASN_Tools::CopyMedicalPriorities( const T_IdVector& ids, ASN1T_SantePriorit
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyDotationDType
+// Created: NLD 2006-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyDotationDType( uint nIdValue, ASN1T_TypeDotation& asn )
+{
+    asn = nIdValue;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------

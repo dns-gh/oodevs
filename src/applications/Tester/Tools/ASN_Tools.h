@@ -80,6 +80,7 @@ public:
     static void CopyGDH                ( uint                     nTime         , ASN1T_GDH&                  asn );
     static void CopyPopulationKnowledge( uint                     nIdPopulation , ASN1T_KnowledgePopulation&  asn );
     static void CopyMedicalPriorities  ( const T_IdVector&        ids           , ASN1T_SantePriorites&       asn );
+    static void CopyDotationDType      ( uint                     nIdValue      , ASN1T_TypeDotation&         asn ); 
     //@}
 
     template< typename T >
