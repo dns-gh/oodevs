@@ -10,8 +10,7 @@
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
 
-#include "Order_Def.h"
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "ASN_Types.h"
 
 class CoordinateConverter_ABC;
@@ -91,7 +90,7 @@ protected:
     template< typename Message >
     void Send( Message& message )
     {
-        message.Send( publisher_, (MIL_MOSContextID)this );
+        message.Send( publisher_, (unsigned long)this );
         nNetworkState_ = eNetworkStateRegistering;
     }
     void DrawName( const GlTools_ABC& tools ) const;

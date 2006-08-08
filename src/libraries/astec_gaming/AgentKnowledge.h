@@ -15,7 +15,6 @@
 #include "ASN_Types.h"
 #include "astec_kernel/Entity_ABC.h"
 #include "astec_kernel/IDManager.h"
-#include "Perception_Def.h"
 #include "astec_kernel/OptionalValue.h"
 #include "astec_kernel/Resolver_ABC.h"
 #include "astec_kernel/Drawable_ABC.h"

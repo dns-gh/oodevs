@@ -13,7 +13,7 @@
 #include "ParametersLayer.h"
 #include "RichLabel.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Entity_ABC.h"
 #include "astec_kernel/Positions.h"
 

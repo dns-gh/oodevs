@@ -23,7 +23,7 @@
 
 using namespace geometry;
 
-MIL_AgentID Population::nMaxId_ = 200;
+unsigned long Population::nMaxId_ = 200;
 
 // -----------------------------------------------------------------------------
 // Name: Population constructor

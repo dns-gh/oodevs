@@ -12,7 +12,7 @@
 #include "astec_kernel/Controller.h"
 #include "Dotation.h"
 #include "astec_kernel/DotationType.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------

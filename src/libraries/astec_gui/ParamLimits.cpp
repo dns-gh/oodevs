@@ -19,7 +19,7 @@ ParamLimits::ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, cons
     : limit1_( new EntityParameter< Limit >( pParent, id1, label1, menu1 ) )
     , limit2_( new EntityParameter< Limit >( pParent, id2, label2, menu2 ) )
 {
-    id1 = id2 = MIL_NULL_LINE_ID;
+    id1 = id2 = ( unsigned long )( -1 );
 }
 
 // -----------------------------------------------------------------------------

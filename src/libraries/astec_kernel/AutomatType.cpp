@@ -9,7 +9,7 @@
 #include "astec_kernel_pch.h"
 #include "AutomatType.h"
 #include "SymbolFactory.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;

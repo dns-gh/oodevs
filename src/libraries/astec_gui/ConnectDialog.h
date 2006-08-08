@@ -22,7 +22,7 @@
 #ifndef __ConnectDialog_h_
 #define __ConnectDialog_h_
 
-#include "astec_gaming/Types.h"
+#include "Types.h"
 
 class QComboBox;
 class QSpinBox;

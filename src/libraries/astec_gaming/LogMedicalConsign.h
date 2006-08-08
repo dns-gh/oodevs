@@ -10,7 +10,7 @@
 #ifndef __LogMedicalConsign_h_
 #define __LogMedicalConsign_h_
 
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "ASN_Types.h"
 #include "astec_kernel/Resolver_ABC.h"
 #include "astec_kernel/Drawable_ABC.h"

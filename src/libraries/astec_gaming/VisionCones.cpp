@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "VisionCones.h"
 #include "Surface.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
 #include "astec_kernel/Workers.h"

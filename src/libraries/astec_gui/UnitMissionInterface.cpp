@@ -74,8 +74,8 @@ void UnitMissionInterface::OnOk()
 
     Commit();
     ASN1T_MsgPionOrder& order = pASNMsgOrder_->GetAsnMsg();
-    order.m.oid_limite_gauchePresent = (order.oid_limite_gauche != MIL_NULL_LINE_ID) ? 1 : 0;
-    order.m.oid_limite_droitePresent = (order.oid_limite_droite != MIL_NULL_LINE_ID) ? 1 : 0;
+    order.m.oid_limite_gauchePresent = (order.oid_limite_gauche != (unsigned long)(-1)) ? 1 : 0;
+    order.m.oid_limite_droitePresent = (order.oid_limite_droite != (unsigned long)(-1)) ? 1 : 0;
     pASNMsgOrder_->Send( publisher_, 45 );
 
     agent_.Update( order );

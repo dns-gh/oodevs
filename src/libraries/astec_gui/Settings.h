@@ -6,19 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-06-01 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/Settings.h $
-// $Author: Ape $
-// $Modtime: 10/09/04 17:53 $
-// $Revision: 2 $
-// $Workfile: Settings.h $
-//
-// *****************************************************************************
 
 #ifndef __Settings_h_
 #define __Settings_h_
 
+#include "astec_kernel/Settings_ABC.h"
 #include <qsettings.h>
 
 class QDockWindow;
@@ -29,18 +21,10 @@ class TristateOption;
 // =============================================================================
 // Created: APE 2004-06-01
 // =============================================================================
-class Settings : public QSettings
+class Settings : public QSettings, public Settings_ABC
 {
 
 public:
-    //! @name Constants
-    //@{
-    static const char intPrefix      = 'I';
-    static const char boolPrefix     = 'B';
-    static const char floatPrefix    = 'F';
-    static const char tristatePrefix = 'T';
-    //@}
-
     //! @name Constructors/Destructor
     //@{
              Settings();
@@ -50,15 +34,17 @@ public:
 
     //! @name Helpers
     //@{
-    void Save( const std::string& name, int value );
-    void Save( const std::string& name, bool value );
-    void Save( const std::string& name, float value );
-    void Save( const std::string& name, const TristateOption& value );
+    virtual QStringList EntryList( const char* path );
 
-    int            Load( const std::string& name, int defaultValue );
-    bool           Load( const std::string& name, bool defaultValue );
-    float          Load( const std::string& name, float defaultValue );
-    TristateOption Load( const std::string& name, const TristateOption& defaultValue );
+    virtual void Save( const std::string& name, int value );
+    virtual void Save( const std::string& name, bool value );
+    virtual void Save( const std::string& name, float value );
+    virtual void Save( const std::string& name, const TristateOption& value );
+
+    virtual int            Load( const std::string& name, int defaultValue );
+    virtual bool           Load( const std::string& name, bool defaultValue );
+    virtual float          Load( const std::string& name, float defaultValue );
+    virtual TristateOption Load( const std::string& name, const TristateOption& defaultValue );
 
     template< typename T >
     void Save( const std::string&, T ) {};

@@ -11,7 +11,7 @@
 #include "ConcentrationDetections.h"
 #include "Attr_Def.h"
 #include "astec_kernel/Controller.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ConcentrationDetections constructor

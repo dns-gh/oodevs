@@ -12,7 +12,7 @@
 #include "astec_gaming_pch.h"
 #include "PopulationFlowKnowledge.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "PopulationFlow.h"
 #include "PopulationKnowledge.h"
 #include "astec_kernel/Controller.h"

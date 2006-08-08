@@ -43,7 +43,7 @@ OptionVariant::~OptionVariant()
 // Name: OptionVariant::Save
 // Created: AGE 2006-07-05
 // -----------------------------------------------------------------------------
-void OptionVariant::Save( Settings& settings, const std::string& name ) const
+void OptionVariant::Save( Settings_ABC& settings, const std::string& name ) const
 {
     if( holder_ )
         holder_->Save( settings, name );

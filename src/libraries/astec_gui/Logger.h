@@ -10,7 +10,7 @@
 #ifndef __Logger_h_
 #define __Logger_h_
 
-#include "astec_gaming/Types.h"
+#include "Types.h"
 #include "MT/MT_logger/MT_Logger_ABC.h"
 
 class ItemFactory_ABC;

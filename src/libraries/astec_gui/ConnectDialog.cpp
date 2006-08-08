@@ -122,7 +122,7 @@ void ConnectDialog::Reject()
 //-----------------------------------------------------------------------------
 void ConnectDialog::LoadDefaultConfig()
 {
-    pPortSpinBox_->setValue( DEFAULT_PORT_AS_MOS );
+    pPortSpinBox_->setValue( 10000 );
 
     QSettings settings;
     settings.setPath( "MASA", "Astec" );

@@ -9,7 +9,7 @@
 
 #include "astec_kernel_pch.h"
 #include "Formatter.h"
-#include "astec_gui/Tools.h"
+#include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: FormatterNotImplemented::Error
@@ -49,7 +49,7 @@ void Formatter< E_DisponibiliteAuTir >::operator()( const E_DisponibiliteAuTir& 
 }
 
 void Formatter< E_PerceptionResult >::operator()( const E_PerceptionResult& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( Tools::ToString( e ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void Formatter< E_NatureLevel >::operator()( const E_NatureLevel& e, Displayer_ABC& displayer ) const {
@@ -81,7 +81,7 @@ void Formatter< E_UnitCapaciteMission >::operator()( const E_UnitCapaciteMission
 }
 
 void Formatter< E_TroopHealthState >::operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( Tools::ToString( e ) );
+    displayer.AddToDisplay( tools::ToString( e ) );
 }
 
 void  Formatter< E_HumanWound >::operator()( const E_HumanWound& e, Displayer_ABC& displayer ) const {

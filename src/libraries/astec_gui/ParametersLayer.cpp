@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "ParametersLayer.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
 
 // -----------------------------------------------------------------------------

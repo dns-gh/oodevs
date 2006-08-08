@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ParamPopulationKnowledge.h"
 #include "astec_gaming/PopulationKnowledge.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/AgentKnowledgeConverter_ABC.h"
 

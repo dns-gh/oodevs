@@ -13,7 +13,7 @@
 #include "astec_kernel/Displayer_ABC.h"
 #include "astec_kernel/Units.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/DataDictionary.h"
 
 using namespace geometry;

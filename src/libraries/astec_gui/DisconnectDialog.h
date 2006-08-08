@@ -22,7 +22,7 @@
 #ifndef __DisconnectDialog_h_
 #define __DisconnectDialog_h_
 
-#include "astec_gaming/Types.h"
+#include "Types.h"
 
 class Network;
 

@@ -11,7 +11,7 @@
 #include "Lima.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "astec_gui/Tools.h"
+#include "Tools.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/ActionController.h"
 
@@ -22,7 +22,7 @@ IDManager Lima::idManager_( 137 );
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( Tools::ToString( eLimaFuncLCA ).ascii(), idManager_.GetFreeIdentifier(), converter, publisher )
+    : TacticalLine_ABC( tools::ToString( eLimaFuncLCA ), idManager_.GetFreeIdentifier(), converter, publisher )
     , controller_     ( controller )
     , nFuncType_      ( eLimaFuncLCA )
 {
@@ -35,7 +35,7 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, const CoordinateCo
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( Tools::ToString( nFuncType ).ascii(), idManager_.GetFreeIdentifier(), pointList, converter, publisher )
+    : TacticalLine_ABC( tools::ToString( nFuncType ), idManager_.GetFreeIdentifier(), pointList, converter, publisher )
     , controller_     ( controller )
     , nFuncType_      ( nFuncType )
 {
@@ -48,7 +48,7 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, const T_PointVecto
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( Tools::ToString( (E_FuncLimaType)asnMsg.fonction ).ascii(), asnMsg.oid, asnMsg.geometrie, converter, publisher )
+    : TacticalLine_ABC( tools::ToString( (E_FuncLimaType)asnMsg.fonction ), asnMsg.oid, asnMsg.geometrie, converter, publisher )
     , controller_     ( controller )
     , nFuncType_      ( (E_FuncLimaType)asnMsg.fonction )
 {

@@ -15,7 +15,7 @@
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MiniViews constructor

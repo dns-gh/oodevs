@@ -12,7 +12,7 @@
 #include "astec_kernel/Drawable_ABC.h"
 #include "astec_kernel/Positions.h"
 #include "ColorStrategy_ABC.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "graphics/MapWidget.h"
 
 // -----------------------------------------------------------------------------

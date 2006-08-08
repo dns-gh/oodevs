@@ -9,8 +9,8 @@
 
 #include "astec_kernel_pch.h"
 #include "ObjectType.h"
-#include "astec_gui/GlTools_ABC.h"
-#include "astec_gui/resources.h"
+#include "GlTools_ABC.h"
+#include "objecticons.h"
 #include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------

@@ -10,8 +10,7 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "Order_Def.h"
-#include "ASN_Types.h"
+#include "Types.h"
 #include "astec_kernel/Resolver.h"
 
 class Controllers;

@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "PopulationDetections.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "Attr_def.h"

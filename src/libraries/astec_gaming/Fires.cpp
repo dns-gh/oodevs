@@ -14,7 +14,7 @@
 #include "DirectFire.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Fires constructor

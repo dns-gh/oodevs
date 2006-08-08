@@ -12,7 +12,7 @@
 #include "xeumeuleu/xml.h"
 #include "AgentNature.h"
 #include "SymbolFactory.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "GlTools_ABC.h"
 
 using namespace xml;
 

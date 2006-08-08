@@ -24,7 +24,7 @@
 #include "LogisticConsigns.h"
 #include "astec_kernel/Displayer_ABC.h"
 #include "DotationRequest.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Positions.h"
 
 using namespace geometry;

@@ -10,10 +10,10 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "ASN_Types.h"
 
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_kernel/Extension_ABC.h"
 #include "astec_kernel/Updatable_ABC.h"
 #include "astec_kernel/Drawable_ABC.h"
@@ -102,7 +102,7 @@ private:
     //@{
     Controller&                controller_;
     const CoordinateConverter_ABC& converter_;
-	MIL_AgentID                nPopulationID_;
+	unsigned long              nPopulationID_;
 	std::string                strName_;
     const PopulationType&      type_;
 	Team&                      team_;
@@ -112,7 +112,7 @@ private:
     //@}
 
 private:
-    static MIL_AgentID        nMaxId_;
+    static unsigned long nMaxId_;
 };
 
 #endif // __Population_h_

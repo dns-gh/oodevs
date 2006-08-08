@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "PopulationDecisions.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_kernel/PopulationType.h"
 #include "astec_kernel/DecisionalModel.h"
 

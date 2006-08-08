@@ -10,7 +10,7 @@
 #ifndef __AgentServerMsgMgr_h_
 #define __AgentServerMsgMgr_h_
 
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "ASN_Types.h"
 
 #include "DIN/DIN_Engine.h"
@@ -105,7 +105,7 @@ public:
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
-    void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx );
+    void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, unsigned long nCtx );
     void SendMsgUnitMagicActionDestroyComposante( const Agent_ABC& agent );
 
     void SetModel( Model& model );
@@ -178,7 +178,7 @@ private:
     // Attributes
     void OnReceiveMsgUnitAttributes    ( const ASN1T_MsgUnitAttributes& asnMsg );
     void OnReceiveMsgUnitDotations     ( const ASN1T_MsgUnitDotations&  asnMsg );
-    void OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgUnitPathFind      ( const ASN1T_MsgUnitPathFind& asnMsg );
 
     // Log maintenance
@@ -199,16 +199,16 @@ private:
     void OnReceiveMsgLogRavitaillementTraitementUpdate     ( const ASN1T_MsgLogRavitaillementTraitementUpdate& asnMsg );
     void OnReceiveMsgLogRavitaillementEtat                 ( const ASN1T_MsgLogRavitaillementEtat&  asnMsg );
     void OnReceiveMsgLogRavitaillementQuotas               ( const ASN1T_MsgLogRavitaillementQuotas& asnMsg );
-    void OnReceiveMsgLogRavitaillementChangeQuotaAck       ( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLogRavitaillementPousserFluxAck       ( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgLogRavitaillementChangeQuotaAck       ( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLogRavitaillementPousserFluxAck       ( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, unsigned long nCtx );
 
     // Limas / Limits
-    void OnReceiveMsgLimitCreationAck   ( const ASN1T_MsgLimitCreationAck&    asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLimitUpdateAck     ( const ASN1T_MsgLimitUpdateAck&      asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLimaCreationAck    ( const ASN1T_MsgLimaCreationAck&    asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLimaUpdateAck      ( const ASN1T_MsgLimaUpdateAck&      asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLimaDestructionAck ( const ASN1T_MsgLimaDestructionAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgLimitCreationAck   ( const ASN1T_MsgLimitCreationAck&    asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimitUpdateAck     ( const ASN1T_MsgLimitUpdateAck&      asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimaCreationAck    ( const ASN1T_MsgLimaCreationAck&    asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimaUpdateAck      ( const ASN1T_MsgLimaUpdateAck&      asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimaDestructionAck ( const ASN1T_MsgLimaDestructionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgLimitCreation      ( const ASN1T_MsgLimitCreation& asnMsg );
     void OnReceiveMsgLimitDestruction   ( const ASN1T_MsgLimitDestruction& asnMsg );
     void OnReceiveMsgLimaCreation       ( const ASN1T_MsgLimaCreation& asnMsg );
@@ -218,7 +218,7 @@ private:
     void OnReceiveMsgObjectCreation      ( const ASN1T_MsgObjectCreation& asnMsg );
     void OnReceiveMsgObjectUpdate        ( const ASN1T_MsgObjectUpdate& asnMsg );
     void OnReceiveMsgObjectDestruction   ( const ASN1T_MsgObjectDestruction& asnMsg );
-    void OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& asnMsg, unsigned long nCtx );
 
     // Knowledge unit
     void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
@@ -242,22 +242,22 @@ private:
     void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
 
     // Orders
-    void OnReceiveMsgAutomateOrderAck    ( const ASN1T_MsgAutomateOrderAck& asnMsg    , MIL_MOSContextID nCtx ); 
-    void OnReceiveMsgPionOrderAck        ( const ASN1T_MsgPionOrderAck& asnMsg        , MIL_MOSContextID nCtx ); 
-    void OnReceiveMsgOrderConduiteAck    ( const ASN1T_MsgOrderConduiteAck& asnMsg, MIL_MOSContextID nCtx ); 
+    void OnReceiveMsgAutomateOrderAck    ( const ASN1T_MsgAutomateOrderAck& asnMsg    , unsigned long nCtx ); 
+    void OnReceiveMsgPionOrderAck        ( const ASN1T_MsgPionOrderAck& asnMsg        , unsigned long nCtx ); 
+    void OnReceiveMsgOrderConduiteAck    ( const ASN1T_MsgOrderConduiteAck& asnMsg, unsigned long nCtx ); 
     void OnReceiveMsgOrderManagement     ( const ASN1T_MsgOrderManagement& asnMsg );
     void OnReceiveMsgAutomateMRT         ( const ASN1T_MsgAutomateMRT& asnMsg );
     void OnReceiveMsgPionOrder           ( const ASN1T_MsgPionOrder& asnMsg ); 
 
     // Automate mode
-    void OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, unsigned long nCtx );
     
     // Hierachy changes
-    void OnReceiveMsgChangeAutomateAck          ( const ASN1T_MsgChangeAutomateAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgChangeAutomateAck          ( const ASN1T_MsgChangeAutomateAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgChangeAutomate             ( const ASN1T_MsgChangeAutomate& asnMsg );
-    void OnReceiveMsgChangeDiplomacyAck         ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeLiensLogistiquesAck  ( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgChangeDiplomacyAck         ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgChangeLiensLogistiquesAck  ( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, unsigned long nCtx );
 
     // RC
     void OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg );
@@ -280,7 +280,7 @@ private:
 	void OnMsgPopulationFluxCreation			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
 	void OnMsgPopulationFluxDestruction			( const ASN1T_MsgPopulationFluxDestruction& asnMsg ); 
 	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
-    void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
     //@}
 
     //! @name Helpers

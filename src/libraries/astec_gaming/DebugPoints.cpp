@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "DebugPoints.h"
 #include "Net_Def.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DebugPoints constructor

@@ -9,9 +9,9 @@
 
 #include "astec_gaming_pch.h"
 #include "DirectFire.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Positions.h"
 
 // -----------------------------------------------------------------------------

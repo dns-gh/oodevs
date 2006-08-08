@@ -12,7 +12,7 @@
 
 #include "TacticalLine_ABC.h"
 #include "astec_kernel/IDManager.h"
-#include "ASN_Types.h"
+#include "Types.h"
 
 class Controller;
 

@@ -10,7 +10,7 @@
 #ifndef __OptionVariant_h_
 #define __OptionVariant_h_
 
-class Settings;
+class Settings_ABC;
 
 namespace detail 
 {
@@ -33,7 +33,7 @@ public:
                  template< typename T >
     /*implicit*/ OptionVariant( const T& value );
                  template< typename T >
-                 OptionVariant( Settings& settings, const std::string& name, const T& defaultValue );
+                 OptionVariant( Settings_ABC& settings, const std::string& name, const T& defaultValue );
                  OptionVariant( const OptionVariant& rhs );
                 ~OptionVariant();
     //@}
@@ -43,7 +43,7 @@ public:
     template< typename T >
     T To() const;
 
-    void Save( Settings& settings, const std::string& name ) const;
+    void Save( Settings_ABC& settings, const std::string& name ) const;
     OptionVariant& operator=( const OptionVariant& rhs );
     //@}
 
@@ -54,7 +54,7 @@ private:
     //@}
 };
 
-#include "astec_gui/Settings.h"
+#include "Settings_ABC.h"
 
 namespace detail
 {
@@ -63,8 +63,8 @@ namespace detail
     public:
         virtual ~ValueHolder_ABC() {};
         virtual std::string Typename() const = 0;
-        virtual void Save( Settings& settings, const std::string& name ) const = 0;
-        virtual void Load( Settings& settings, const std::string& name ) = 0;
+        virtual void Save( Settings_ABC& settings, const std::string& name ) const = 0;
+        virtual void Load( Settings_ABC& settings, const std::string& name ) = 0;
         virtual ValueHolder_ABC* Clone() const = 0;
     };
 
@@ -78,11 +78,11 @@ namespace detail
         {
             return typeid( T ).name();
         }
-        virtual void Save( Settings& settings, const std::string& name ) const
+        virtual void Save( Settings_ABC& settings, const std::string& name ) const
         {
             settings.Save( name, value_ );
         }
-        virtual void Load( Settings& settings, const std::string& name )
+        virtual void Load( Settings_ABC& settings, const std::string& name )
         {
             value_ = settings.Load( name, value_ );
         }
@@ -123,7 +123,7 @@ T OptionVariant::To() const
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-OptionVariant::OptionVariant( Settings& settings, const std::string& name, const T& defaultValue )
+OptionVariant::OptionVariant( Settings_ABC& settings, const std::string& name, const T& defaultValue )
     : holder_( new detail::ValueHolder< T >( defaultValue ) )
 {
     holder_->Load( settings, name );

@@ -13,8 +13,9 @@
 #include "Observer_ABC.h"
 #include "OptionVariant.h"
 #include "TristateOption.h"
-#include "astec_gui/Settings.h"
+#include "Settings_ABC.h"
 #include <algorithm>
+#include <qstringlist.h>
 
 // -----------------------------------------------------------------------------
 // Name: Options constructor
@@ -88,7 +89,7 @@ const OptionVariant& Options::GetOption( const std::string& name, const OptionVa
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-void Options::Load( Settings& settings, const std::string& name, T defaultValue )
+void Options::Load( Settings_ABC& settings, const std::string& name, T defaultValue )
 {
     Change( name, OptionVariant( settings, name, defaultValue ) );
 }
@@ -97,9 +98,9 @@ void Options::Load( Settings& settings, const std::string& name, T defaultValue 
 // Name: Options::Load
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-void Options::Load( Settings& settings )
+void Options::Load( Settings_ABC& settings )
 {
-    QStringList list = settings.entryList( "/" );
+    QStringList list = settings.EntryList( "/" );
     for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
     {
         const std::string typedName = (*it).ascii();
@@ -107,13 +108,13 @@ void Options::Load( Settings& settings )
         {
             char type = typedName[0];
             const std::string name = typedName.substr( 1 );
-            if( type == Settings::intPrefix ) // $$$$ AGE 2006-04-19: kaka
+            if( type == Settings_ABC::intPrefix ) // $$$$ AGE 2006-04-19: kaka
                 Load( settings, name, 1 );
-            else if( type == Settings::boolPrefix )
+            else if( type == Settings_ABC::boolPrefix )
                 Load( settings, name, false );
-            else if( type == Settings::floatPrefix )
+            else if( type == Settings_ABC::floatPrefix )
                 Load( settings, name, 1.f );
-            else if( type == Settings::tristatePrefix )
+            else if( type == Settings_ABC::tristatePrefix )
                 Load( settings, name, TristateOption::auto_ );
         }
     }
@@ -123,7 +124,7 @@ void Options::Load( Settings& settings )
 // Name: Options::Save
 // Created: AGE 2006-04-19
 // -----------------------------------------------------------------------------
-void Options::Save( Settings& settings )
+void Options::Save( Settings_ABC& settings )
 {
     for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
         it->second.Save( settings, it->first );

@@ -67,8 +67,8 @@
 #include "astec_gui/LinkInterpreter.h"
 #include "astec_gui/BigBrother.h"
 #include "astec_gui/MiniViews.h"
-#include "astec_gui/PathTools.h"
 #include "astec_gui/resources.h"
+#include "astec_kernel/PathTools.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )

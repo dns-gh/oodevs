@@ -11,7 +11,7 @@
 #define __PopulationsLayer_h_
 
 #include "EntityLayer.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 
 // =============================================================================
 /** @class  PopulationsLayer

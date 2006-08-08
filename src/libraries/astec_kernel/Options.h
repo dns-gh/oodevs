@@ -17,7 +17,7 @@
 
 class Observer_ABC;
 class OptionsObserver_ABC;
-class Settings;
+class Settings_ABC;
 
 // =============================================================================
 /** @class  Options
@@ -43,8 +43,8 @@ public:
     void Change( const std::string& name, const OptionVariant& value );
     const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );
 
-    void Load( Settings& settings );
-    void Save( Settings& settings );
+    void Load( Settings_ABC& settings );
+    void Save( Settings_ABC& settings );
     //@}
 
 private:
@@ -66,7 +66,7 @@ private:
     //! @name Helpers
     //@{
     template< typename T >
-    void Load( Settings& settings, const std::string& name, T defaultValue );
+    void Load( Settings_ABC& settings, const std::string& name, T defaultValue );
     //@}
 
 private:

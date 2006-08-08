@@ -1,87 +1,31 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Types.h $
-// $Author: Ape $
-// $Modtime: 7/01/05 11:19 $
-// $Revision: 9 $
-// $Workfile: Types.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#ifndef __Types_h_
-#define __Types_h_
+#ifndef __Gaming_Types_h_
+#define __Gaming_Types_h_
 
-//-----------------------------------------------------------------------------
-// Machine type: simple client-server structure
-//-----------------------------------------------------------------------------
+#include "ASN_Types.h"
+#include "astec_kernel/Types.h"
 
-enum SCP_ConnMagicCookie
+enum E_FuncLimaType
 {
-    eConnMagicMOSServerAgentServer = 1
+    eLimaFuncLD     = 0, // Ligne de débouché
+    eLimaFuncLCA    = 1, // Ligne de changement d'attitude
+    eLimaFuncLC     = 2, // Ligne de coordination
+    eLimaFuncLI     = 3, // Ligne à interdire
+    eLimaFuncLO     = 4, // Ligne d'objectif
+    eLimaFuncLCAR   = 5, // Ligne de coup d'arrêt
+    eLimaFuncLR     = 6, // Ligne de recueil
+    eLimaFuncLDM    = 7, // Ligne de début de mission
+    eLimaFuncLFM    = 8, // Ligne de fin de mission
+    eLimaFuncLIA    = 9, // Ligne d'identification acceuil
+    eLimaFuncNbr         // Keep this at the end of the enum! No !
 };
 
-
-enum E_TroopHealthState
-{
-    eTroopHealthStateTotal = 0,
-    eTroopHealthStateOperational,
-    eTroopHealthStateDead,
-    eTroopHealthStateWounded,
-    eTroopHealthStateMentalWounds,
-    eTroopHealthStateContaminated,
-    eTroopHealthStateInTreatment,
-    eTroopHealthStateUsedForMaintenance,
-    eTroopHealthStateNbrStates
-};
-
-enum E_WeatherType
-{
-    eWeatherTypeNone,
-    eWeatherTypeRainOrSnowStorm,
-    eWeatherTypeFog,
-    eWeatherTypeDrizzle,
-    eWeatherTypeRain,
-    eWeatherTypeSnow,
-    eWeatherTypeSmoke,
-
-    eNbrWeatherType
-};
-
-enum E_LightingType
-{
-    eLightingJourSansNuage,
-    eLightingJourPeuNuageux,
-    eLightingJourMoyennementNuageux,
-    eLightingJourAssezNuageux,
-    eLightingJourTresNuageux,
-
-    eLightingNuitPleineLune,
-    eLightingNuitTroisQuartDeLune,
-    eLightingNuitDemiLune,
-    eLightingNuitQuartDeLune,
-    eLightingNuitNouvelleLune,
-
-    eLightingEclairant,
-
-    eNbrLightingType
-};
-
-enum E_TypeAgent
-{
-    eAgent,
-    ePopulation
-};
-
-#define DEFAULT_PORT_AS_MOS 10000
-
-typedef unsigned long  MIL_AgentID;
-typedef unsigned long  MIL_MOSContextID;
-typedef unsigned long  MIL_SensorCapacityID;
-typedef unsigned long  MIL_LineID;
-
-#define MIL_NULL_AGENT_ID   (MIL_AgentID)-1
-#define MIL_NULL_LINE_ID       (MIL_LineID)-1
-
-
-#endif // __Types_h_
+#endif // __Gaming_Types_h_

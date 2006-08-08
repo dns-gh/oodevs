@@ -11,7 +11,7 @@
 #include "ObjectDetections.h"
 #include "astec_kernel/Controller.h"
 #include "Attr_Def.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Object_ABC.h"
 #include "astec_kernel/Positions.h"
 

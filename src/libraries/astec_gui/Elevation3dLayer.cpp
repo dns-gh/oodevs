@@ -11,9 +11,9 @@
 #include "Elevation3dLayer.h"
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Visitor3d.h"
-#include "GLTools_ABC.h"
-#include "astec_kernel/Controller.h"
 #include "astec_gaming/InitializationMessage.h"
+#include "astec_kernel/GLTools_ABC.h"
+#include "astec_kernel/Controller.h"
 #include "astec_kernel/DetectionMap.h"
 
 // -----------------------------------------------------------------------------

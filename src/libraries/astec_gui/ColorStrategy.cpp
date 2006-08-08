@@ -9,14 +9,14 @@
 
 #include "astec_gui_pch.h"
 #include "ColorStrategy.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/KnowledgeGroup.h"
 #include "astec_gaming/Team.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_gaming/Lima.h"
 #include "astec_gaming/Limit.h"
 #include "astec_gaming/ObjectKnowledge.h"

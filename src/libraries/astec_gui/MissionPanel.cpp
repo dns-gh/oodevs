@@ -20,7 +20,7 @@
 #include "astec_gaming/AutomatDecisions.h"
 #include "astec_gaming/StaticModel.h"
 #include "astec_gaming/PopulationDecisions.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
@@ -28,7 +28,7 @@
 #include "FragmentaryOrderInterface.h"
 #include "astec_gaming/CoordinateConverter.h"
 #include "astec_gaming/AgentKnowledgeConverter.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor

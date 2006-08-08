@@ -11,7 +11,7 @@
 #define __GlProxy_h_
 
 #include "View_ABC.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 class GlWidget;
 class Gl3dWidget;

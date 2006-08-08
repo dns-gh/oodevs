@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "Network.h"
 #include "Net_Def.h"
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "Simulation.h"

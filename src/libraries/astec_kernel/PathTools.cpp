@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_kernel_pch.h"
 #include "PathTools.h"
 
 #pragma warning( push )

@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "astec_kernel_pch.h"
 #include "Population_ABC.h"
-#include "astec_kernel/ActionController.h"
+#include "ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: Population_ABC constructor

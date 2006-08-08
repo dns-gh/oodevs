@@ -12,7 +12,7 @@
 #include "astec_gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
 #include "astec_kernel/Controller.h"

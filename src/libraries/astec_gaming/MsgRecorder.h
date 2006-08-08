@@ -46,7 +46,7 @@ public:
     //! @name Operations
     //@{
     void OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
-    void OnNewMsgWithContext( int nType, MIL_MOSContextID nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
+    void OnNewMsgWithContext( int nType, unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
 
     void Play();
     void Record();

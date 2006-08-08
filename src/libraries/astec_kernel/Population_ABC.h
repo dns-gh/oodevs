@@ -10,8 +10,8 @@
 #ifndef __Population_ABC_h_
 #define __Population_ABC_h_
 
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/Resolver.h"
+#include "Entity_ABC.h"
+#include "Resolver.h"
 
 class PopulationFlow;
 class PopulationConcentration;

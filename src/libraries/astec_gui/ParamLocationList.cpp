@@ -152,7 +152,7 @@ void ParamLocationList::Handle( const T_PointVector& points )
 {
     points_.push_back( points );
     types_.push_back( creator_->GetCurrentType() );
-    new QListViewItem( this, Tools::ToString(  creator_->GetCurrentType() ) );
+    new QListViewItem( this, tools::ToString(  creator_->GetCurrentType() ) );
 }
 
 // -----------------------------------------------------------------------------

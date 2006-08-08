@@ -18,12 +18,12 @@
 #include "Net_Def.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
-#include "astec_gui/Tools.h"
+#include "Tools.h"
 #include "MsgRecorder.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "PopulationKnowledge.h"
 #include "Simulation.h"
 #include "Model.h"
@@ -416,7 +416,7 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgDebugDrawPoints( DIN::DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.FindAllAgent( nAgentID )->Update( DebugPointsMessage( input ) );
 }
@@ -436,7 +436,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitVisionCones( DIN_Link& /*linkFrom*/, DIN
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgUnitVisionCones( DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( VisionConesMessage( input ) );
 }
@@ -456,7 +456,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*linkFr
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( DetectionMessage( input ) );
 }
@@ -476,7 +476,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN:
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( ConcentrationDetectionMessage( input ) );
 }
@@ -496,7 +496,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( FlowDetectionMessage( input ) );
 }
@@ -516,7 +516,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::D
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgPopulationCollision( DIN::DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( PopulationCollisionMessage( input ) );
 }
@@ -536,7 +536,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*link
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
+    unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( ObjectDetectionMessage( input ) );
 }
@@ -617,7 +617,7 @@ void AgentServerMsgMgr::SendMsgMosSim( ASN1OCTET* pMsg, int nMsgLength )
 // Name: AgentServerMsgMgr::SendMsgMosSimWithContext
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, MIL_MOSContextID nCtx )
+void AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, unsigned long nCtx )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg << nCtx;
@@ -824,7 +824,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogR
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& message, unsigned long )
 {
     CheckAcknowledge( message, "MsgLogRavitaillementChangeQuotasAck" );
 }
@@ -833,7 +833,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& message, unsigned long )
 {
     CheckAcknowledge( message, "MsgLogRavitaillementPousserFluxAck" );
 }
@@ -851,7 +851,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const ASN1T_MsgUnitPathFind& m
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( message, "UnitMagicActionAck" );
 }
@@ -860,7 +860,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagic
 // Name: AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( message, "ObjectMagicActionAck" );
 }
@@ -968,7 +968,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "LimitCreationAck" ) )
     {
@@ -984,7 +984,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "LimitUpdateAck" ) )
     {
@@ -999,7 +999,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( message, "LimitDestructionAck" ) )
         GetModel().limits_.DeleteLimit( message.oid );
@@ -1009,7 +1009,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDes
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "LimaCreationAck" ) )
     {
@@ -1025,7 +1025,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreation
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "LimaUpdateAck" ) )
     {
@@ -1039,7 +1039,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck&
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestructionAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestructionAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( message, "LimaDestructionAck" ) )
         GetModel().limits_.DeleteLima( message.oid );
@@ -1103,7 +1103,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( message, "AutomateOrderAck" );
 }
@@ -1112,7 +1112,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
 // Name: AgentServerMsgMgr::OnReceiveMsgPionOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( message, "PionOrderAck" ) )
         GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
@@ -1122,7 +1122,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& m
 // Name: AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderConduiteAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderConduiteAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( message, "OrderConduiteAck" );
 }
@@ -1173,7 +1173,7 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message
 // Name: AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( message, "SetAutomateModeAck" );
 }
@@ -1182,7 +1182,7 @@ void AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutoma
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeAutomateAck" ) )
         GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
@@ -1207,7 +1207,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomat
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeDiplomacyAck" ) )
     {
@@ -1221,7 +1221,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeGroupeConnaissanceAck" ) )
         GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
@@ -1231,7 +1231,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& message, MIL_MOSContextID )
+void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeLiensLogistiquesAck" ) )
         GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
@@ -1575,7 +1575,7 @@ void AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFlux
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck
 // Created: SBO 2005-11-02
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, MIL_MOSContextID /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( message, "PopulationMagicActionAck" );
 }
@@ -1732,7 +1732,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, D
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgSimMosWithContext( DIN_Input& input )
 {
-    MIL_MOSContextID nCtx;
+    unsigned long nCtx;
     input >> nCtx;
 
     uint nAsnMsgSize = input.GetAvailable();

@@ -12,7 +12,7 @@
 #include "moc_LocationCreator.cpp"
 #include "ParametersLayer.h"
 #include "Tools.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
 
 // -----------------------------------------------------------------------------

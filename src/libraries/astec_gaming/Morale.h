@@ -12,7 +12,7 @@
 #ifndef __Morale_h_
 #define __Morale_h_
 
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "ASN_Types.h"
 #include "MT_Tools/MT_Tools_Types.h"
 

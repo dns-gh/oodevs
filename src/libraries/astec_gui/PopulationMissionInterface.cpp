@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "PopulationMissionInterface.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------

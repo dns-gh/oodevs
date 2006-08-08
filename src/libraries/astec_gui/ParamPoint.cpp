@@ -12,7 +12,7 @@
 #include "moc_ParamPoint.cpp"
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "RichLabel.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint constructor

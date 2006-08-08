@@ -13,7 +13,7 @@
 #include "PopulationKnowledge.h"
 
 #include "KnowledgeGroup.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "astec_kernel/Controller.h"

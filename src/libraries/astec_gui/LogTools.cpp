@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "LogTools.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-#include "astec_gaming/Types.h"
+#include "Types.h"
 
 namespace log_tools
 {

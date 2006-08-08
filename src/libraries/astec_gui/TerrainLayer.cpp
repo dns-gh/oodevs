@@ -19,7 +19,7 @@
 #include "astec_gaming/ModelLoaded.h"
 #include "astec_gaming/InitializationMessage.h"
 #include "graphics/GraphicData.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 using namespace pathfind;
 

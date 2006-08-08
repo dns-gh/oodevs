@@ -10,7 +10,7 @@
 #ifndef __AgentResourcesPanel_h_
 #define __AgentResourcesPanel_h_
 
-#include "astec_gaming/Types.h"
+#include "Types.h"
 #include "InfoPanel_ABC.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_kernel/SelectionObserver_ABC.h"

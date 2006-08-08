@@ -19,7 +19,7 @@
 #ifndef __LogSupplyConsign_h_
 #define __LogSupplyConsign_h_
 
-#include "Types.h"
+#include "astec_kernel/Types.h"
 #include "ASN_Types.h"
 #include "astec_kernel/Resolver.h"
 #include "astec_kernel/Drawable_ABC.h"

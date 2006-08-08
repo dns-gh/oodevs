@@ -14,7 +14,7 @@
 #include "EquipmentType.h"
 #include "NBCAgent.h"
 #include "BreakdownType.h"
-#include "astec_gui/PathTools.h"
+#include "PathTools.h"
 #include "ENT/ENT_Tr.h"
 
 #include "xeumeuleu/xml.h"

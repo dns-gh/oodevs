@@ -10,7 +10,7 @@
 #ifndef __VisionMap_h_
 #define __VisionMap_h_
 
-#include "Perception_Def.h"
+#include "Types.h"
 
 class GlTools_ABC;
 class DetectionMap;

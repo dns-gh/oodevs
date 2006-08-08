@@ -1,6 +1,11 @@
-//*****************************************************************************
-// Created: JVT 02-08-30
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __Surface_h_
 #define __Surface_h_
@@ -9,7 +14,6 @@
 #include "Sector.h"
 #include "DIN_Types.h"
 #include "astec_kernel/Resolver_ABC.h"
-#include "Perception_Def.h"
 
 class SensorType;
 class Agent_ABC;

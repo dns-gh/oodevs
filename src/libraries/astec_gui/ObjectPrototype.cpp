@@ -264,7 +264,7 @@ void ObjectPrototype::Handle( const T_PointVector& points )
         || ( locationType_ == EnumTypeLocalisation::line    && locationPoints_.size() >= 2 )
         || ( locationType_ == EnumTypeLocalisation::circle  && locationPoints_.size() == 2 )
         || ( locationType_ == EnumTypeLocalisation::polygon && locationPoints_.size() > 2 ) )
-        locationLabel_->setText( Tools::ToString( locationType_ ) );
+        locationLabel_->setText( tools::ToString( locationType_ ) );
     else
         locationLabel_->setText( tr( "---" ) );
 }

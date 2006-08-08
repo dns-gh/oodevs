@@ -1,6 +1,11 @@
-//*****************************************************************************
-// Created: JVT 02-08-30
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
  
 #include "astec_gaming_pch.h"
 
@@ -12,7 +17,7 @@
 #include "VisionMap.h"
 #include "astec_kernel/Positions.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 using namespace geometry;
 

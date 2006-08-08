@@ -10,7 +10,7 @@
 #include "astec_kernel_pch.h"
 #include "WorldParameters.h"
 #include "xeumeuleu/xml.h"
-#include "astec_gui/pathTools.h"
+#include "PathTools.h"
 
 using namespace xml;
 

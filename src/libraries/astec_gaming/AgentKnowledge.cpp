@@ -20,7 +20,7 @@
 #include "astec_kernel/Agent_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Team.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
 

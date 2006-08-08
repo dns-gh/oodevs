@@ -16,7 +16,6 @@
 #include "astec_kernel/Updatable_ABC.h"
 #include "astec_kernel/Drawable_ABC.h"
 #include "astec_kernel/Resolver_ABC.h"
-#include "Perception_Def.h"
 
 class Surface;
 class CoordinateConverter_ABC;

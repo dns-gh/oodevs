@@ -12,8 +12,7 @@
 
 #include <qstring.h>
 #include "Displayer_ABC.h"
-#include "astec_gaming/Perception_Def.h"
-#include "astec_gaming/Types.h"
+#include "Types.h"
 #include "ENT/ENT_Tr.h"
 
 // =============================================================================

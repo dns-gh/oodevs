@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "PopulationListView.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_gaming/Team.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/ActionController.h"

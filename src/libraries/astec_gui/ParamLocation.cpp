@@ -12,7 +12,7 @@
 #include "ParametersLayer.h"
 #include "RichLabel.h"
 #include "Tools.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "LocationCreator.h"
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
@@ -127,7 +127,7 @@ void ParamLocation::Handle( const T_PointVector& points )
         || (nType_ == EnumTypeLocalisation::line    && points_.size() >= 2 )
         || (nType_ == EnumTypeLocalisation::circle  && points_.size() == 2 )
         || (nType_ == EnumTypeLocalisation::polygon && points_.size() > 2 ) )
-        pShapeLabel_->setText( Tools::ToString( nType_ ) );
+        pShapeLabel_->setText( tools::ToString( nType_ ) );
     else
         pShapeLabel_->setText( tr( "---" ) );
 }

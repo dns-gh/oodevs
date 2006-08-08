@@ -10,7 +10,8 @@
 #ifndef __Perception_h_
 #define __Perception_h_
 
-#include "Perception_Def.h"
+#include "Types.h"
+
 class Agent_ABC;
 
 // =============================================================================

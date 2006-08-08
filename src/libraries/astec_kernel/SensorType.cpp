@@ -6,8 +6,7 @@
 
 #include "SensorType.h"
 
-#include "astec_gui/Tools.h"
-//#include "Attr_Def.h"
+#include "Tools.h"
 #include "Agent_ABC.h"
 //#include "Experience.h"
 //#include "Tiredness.h"
@@ -73,7 +72,7 @@ void SensorType::InitializeWeatherFactors( xml::xistream& xis )
     for( unsigned i = 0; i < eNbrWeatherType; ++i )
     {
         float& rFactor = weatherFactors_[ i ];
-        xis >> content( Tools::ConvertWeatherType( (E_WeatherType)i ), rFactor );
+        xis >> content( tools::ToString( (E_WeatherType)i ), rFactor );
     }
     xis >> end();
 }
@@ -88,7 +87,7 @@ void SensorType::InitializeLightingFactors( xml::xistream& xis )
     for( unsigned i = 0; i < eNbrLightingType; ++i )
     {
         float& rFactor = lightingFactors_[ i ];
-        xis >> content( Tools::ConvertLightingType( (E_LightingType)i ), rFactor );
+        xis >> content( tools::ToString( (E_LightingType)i ), rFactor );
     }
     xis >> end();
 }
@@ -107,7 +106,7 @@ void SensorType::InitializeAngle( xml::xistream& xis )
             >> attribute( "balayage", bScanningAllowed_ )
         >> end();
     if ( !::stricmp( unit.c_str(), "degre" ) )
-        rAngle_ *= ( std::acos( -1.f ) / 180. );
+        rAngle_ *= ( std::acos( -1.f ) / 180.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +147,7 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
     {
         float& rFactor = postureSourceFactors_[ i ];
-        xis >> content( Tools::ToString( (E_UnitPosture)i ).ascii(), rFactor );
+        xis >> content( tools::ToString( (E_UnitPosture)i ), rFactor );
     }
     xis >> end();
 }
@@ -220,7 +219,7 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
     rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );
-    return rDistanceModificator <= 1e-8 ? -1. : rCurrentNRJ - distance / rDistanceModificator;
+    return rDistanceModificator <= 1e-8 ? -1.f : rCurrentNRJ - distance / rDistanceModificator;
 }
 
 // -----------------------------------------------------------------------------

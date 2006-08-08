@@ -11,7 +11,7 @@
 #include "InternalLinks.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_gaming/AgentKnowledge.h"
 #include "astec_gaming/ObjectKnowledge.h"
 #include "astec_gaming/PopulationKnowledge.h"

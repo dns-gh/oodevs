@@ -30,7 +30,7 @@ namespace internal
     public:
         explicit Message( std::ifstream& input );
         explicit Message( ASN1PEREncodeBuffer& asnPEREncodeBuffer );
-                 Message( MIL_MOSContextID nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
+                 Message( unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
         virtual ~Message();
 
         void Write( std::ofstream& output ) const;
@@ -38,7 +38,7 @@ namespace internal
 
     private:
         char bContext_;
-        MIL_MOSContextID nContext_;
+        unsigned long nContext_;
         ASN1OCTET* pMsg_;
         int nMsgLength_;
     };
@@ -79,7 +79,7 @@ Message::Message( ASN1PEREncodeBuffer& asnPEREncodeBuffer )
 // Name: Message::Message
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-Message::Message( MIL_MOSContextID nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
+Message::Message( unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
     : bContext_ ( true )
     , nContext_ ( nContext )
     , pMsg_     ( asnPEREncodeBuffer.GetMsgCopy() )
@@ -161,7 +161,7 @@ void MsgRecorder::OnNewMsg( int /*nType*/, ASN1PEREncodeBuffer& /*asnPEREncodeBu
 // Name: MsgRecorder::OnNewMsgWithContext
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MsgRecorder::OnNewMsgWithContext( int nType, MIL_MOSContextID nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
+void MsgRecorder::OnNewMsgWithContext( int nType, unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
 {
     if( ! recording_ )
         return;

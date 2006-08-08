@@ -11,7 +11,7 @@
 #include "AgentKnowledgeConverter.h"
 #include "AgentKnowledge.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "PopulationKnowledge.h"
 #include "astec_kernel/Controllers.h"
 

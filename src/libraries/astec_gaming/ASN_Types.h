@@ -10,7 +10,7 @@
 #ifndef __ASN_Types_h_
 #define __ASN_Types_h_
 
-#include "Types.h"
+#include "astec_kernel/Types.h"
 
 #pragma warning( push, 3 )
 

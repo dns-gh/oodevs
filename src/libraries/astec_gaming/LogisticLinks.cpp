@@ -11,7 +11,7 @@
 #include "LogisticLinks.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/Displayer_ABC.h"
-#include "astec_gui/GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Positions.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/AutomatType.h"

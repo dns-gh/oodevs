@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-06-01 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/Settings.cpp $
-// $Author: Ape $
-// $Modtime: 2/09/04 11:19 $
-// $Revision: 2 $
-// $Workfile: Settings.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "Settings.h"
@@ -28,10 +19,9 @@
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
 Settings::Settings()
-    : QSettings()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Settings constructor
@@ -42,8 +32,8 @@ Settings::Settings()
 Settings::Settings( QSettings::Format nFormat )
     : QSettings( nFormat )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Settings destructor
@@ -51,8 +41,17 @@ Settings::Settings( QSettings::Format nFormat )
 // -----------------------------------------------------------------------------
 Settings::~Settings()
 {
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: Settings::EntryList
+// Created: AGE 2006-08-08
+// -----------------------------------------------------------------------------
+QStringList Settings::EntryList( const char* path )
+{
+    return entryList( path );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Settings::WriteEntry

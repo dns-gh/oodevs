@@ -19,7 +19,7 @@
 #include "MissionFactory.h"
 #include "SymbolFactory.h"
 #include "xeumeuleu/xml.h"
-#include "astec_gui/PathTools.h"
+#include "PathTools.h"
 
 using namespace xml;
 

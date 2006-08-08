@@ -14,7 +14,7 @@
 #include "astec_gaming/Team.h"
 #include "astec_kernel/EquipmentType.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_gaming/PopulationConcentration.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/NBCAgent.h"

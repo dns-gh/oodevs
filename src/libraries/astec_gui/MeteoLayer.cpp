@@ -11,7 +11,7 @@
 #include "MeteoLayer.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_gaming/AmmoEffect.h"
-#include "GlTools_ABC.h"
+#include "astec_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoLayer constructor

@@ -12,7 +12,7 @@
 #include "DIN/DIN_Input.h"
 #include "AgentFactory_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "Population_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel constructor
