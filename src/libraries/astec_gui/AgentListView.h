@@ -112,6 +112,20 @@ private:
     QDragObject* dragObject();
     void dropEvent( QDropEvent* pEvent );
     void dragEnterEvent( QDragEnterEvent* pEvent );
+
+    bool Drop( ValuedListItem& item, ValuedListItem& target );
+    template< typename T >
+    bool DoDrop( ValuedListItem& item, ValuedListItem& target );
+
+    virtual bool Drop( const Agent_ABC& item, const Agent_ABC& target );
+    virtual bool Drop( const Agent_ABC& item, const KnowledgeGroup_ABC& target );
+    virtual bool Drop( const Agent_ABC& item, const Team_ABC& target );
+    virtual bool Drop( const KnowledgeGroup_ABC& item, const Agent_ABC& target );
+    virtual bool Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target );
+    virtual bool Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target );
+    virtual bool Drop( const Team_ABC& item, const Agent_ABC& target );
+    virtual bool Drop( const Team_ABC& item, const KnowledgeGroup_ABC& target );
+    virtual bool Drop( const Team_ABC& item, const Team_ABC& target );
     //@}
 
 private:

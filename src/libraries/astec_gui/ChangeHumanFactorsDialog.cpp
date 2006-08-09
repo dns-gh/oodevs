@@ -18,6 +18,8 @@
 #include "astec_gaming/Morale.h"
 #include "astec_kernel/Agent_ABC.h"
 
+#include <QGrid.h>
+
 namespace 
 {
     template< typename Container, typename Combo >
@@ -57,16 +59,14 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pAllUnitsCheckBox_ = new QCheckBox( tr( "Toutes les unités" ), this );
     pLayout->addMultiCellWidget( pAllUnitsCheckBox_, 4, 4, 0, 1 );
 
-    QHBoxLayout* pButtonLayout = new QHBoxLayout( this );
-    QPushButton* pOKButton     = new QPushButton( tr("OK")    , this );
-    QPushButton* pCancelButton = new QPushButton( tr("Annuler"), this );
-    pButtonLayout->addWidget( pOKButton     );
-    pButtonLayout->addWidget( pCancelButton );
-    pOKButton->setDefault( true );
-    pLayout->addMultiCellLayout( pButtonLayout, 5, 5, 0, 1, Qt::AlignCenter );
+    QHBox* box = new QHBox( this );
+    QPushButton* okBtn = new QPushButton( tr( "OK" ), box );
+    QPushButton* cancelBtn = new QPushButton( tr( "Annuler" ), box );
+    okBtn->setDefault( true );
+    pLayout->addMultiCellWidget( box, 5, 5, 0, 1, Qt::AlignCenter );
 
-    connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
-    connect( pCancelButton, SIGNAL( clicked() ), SLOT( hide() ) );
+    connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( hide() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,4 +143,13 @@ void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue tired
     asnMagicAction.moral      = moral;
     asnMagicAction.experience = experience;
     asnMsg.Send( publisher_ );
-};
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::sizeHint
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+QSize ChangeHumanFactorsDialog::sizeHint() const
+{
+    return QSize( 240, 120 );
+}

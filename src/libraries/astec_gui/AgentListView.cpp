@@ -316,55 +316,146 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
          return;
 
     QByteArray tmp = pEvent->encodedData( agentMimeType_ );
-
-    ValuedListItem* pItemToDrop = *reinterpret_cast< ValuedListItem** >( tmp.data() );
-
+    ValuedListItem* droppedItem = *reinterpret_cast< ValuedListItem** >( tmp.data() );
     QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    ValuedListItem* pItemWhereToDrop = (ValuedListItem*)itemAt( position );
-    if( !pItemToDrop || !pItemWhereToDrop || !pItemToDrop->IsA< const Agent_ABC* >() )
-    {
+    ValuedListItem* targetItem = (ValuedListItem*)itemAt( position );
+
+    if( !droppedItem || !targetItem || !Drop( *droppedItem, *targetItem ) )
         pEvent->ignore();
-        return;
-    }
-
-    if( pItemWhereToDrop->IsA< const Agent_ABC* >() )
-    {
-        const Agent_ABC& agent    = *pItemToDrop->GetValue< const Agent_ABC* >();
-        const Agent_ABC& superior = *pItemWhereToDrop->GetValue< const Agent_ABC* >();
-        if( agent.GetSuperior() == 0 || agent.GetSuperior() == &superior )
-        {
-            pEvent->ignore();
-            return;
-        }
-        unsigned int superiorId = superior.GetId();
-        if( superior.GetSuperior() != 0 )
-            superiorId = superior.GetSuperior()->GetId();
-
-        ASN_MsgChangeAutomate asnMsg;
-        asnMsg.GetAsnMsg().oid_pion     = agent.GetId();
-        asnMsg.GetAsnMsg().oid_automate = superiorId;
-        asnMsg.Send( publisher_ );
-
+    else
         pEvent->accept();
-    }
-    else if( pItemWhereToDrop->IsA< const KnowledgeGroup_ABC* >() )
-    {
-        const Agent_ABC&          agent = *pItemToDrop->GetValue< const Agent_ABC* >();
-        const KnowledgeGroup_ABC& kg    = *pItemWhereToDrop->GetValue< const KnowledgeGroup_ABC* >();
+}
 
-        if( agent.GetSuperior() != 0 )
-        {
-            pEvent->ignore();
-            return;
-        }
-        ASN_MsgChangeGroupeConnaissance asnMsg;
-        asnMsg.GetAsnMsg().oid_automate            = agent.GetId();
-        asnMsg.GetAsnMsg().oid_camp                = kg.GetTeam().GetId();
-        asnMsg.GetAsnMsg().oid_groupe_connaissance = kg.GetId();
-        asnMsg.Send( publisher_ );
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+template< typename T >
+bool AgentListView::DoDrop( ValuedListItem& item, ValuedListItem& target )
+{
+    const T& concreteItem = *item.GetValue< const T* >();
+    if( target.IsA< const Agent_ABC* >() )
+        return Drop( concreteItem, *target.GetValue< const Agent_ABC* >() );
+    if( target.IsA< const KnowledgeGroup_ABC* >() )
+        return Drop( concreteItem, *target.GetValue< const KnowledgeGroup_ABC* >() );
+    if( target.IsA< const Team_ABC* >() )
+        return Drop( concreteItem, *target.GetValue< const Team_ABC* >() );
+    return false;
+}
 
-        pEvent->accept();
-    }
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
+{
+    if( item.IsA< const Agent_ABC* >() )
+        return DoDrop< Agent_ABC >( item, target );
+    if( item.IsA< const KnowledgeGroup_ABC* >() )
+        return DoDrop< KnowledgeGroup_ABC >( item, target );
+    if( item.IsA< const Team_ABC* >() )
+        return DoDrop< Team_ABC >( item, target );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const Agent_ABC& item, const Agent_ABC& target )
+{
+    if( item.GetSuperior() == 0 || item.GetSuperior() == &target )
+        return false;
+
+    unsigned int superiorId = target.GetId();
+    if( target.GetSuperior() != 0 )
+        superiorId = target.GetSuperior()->GetId();
+
+    ASN_MsgChangeAutomate asnMsg;
+    asnMsg.GetAsnMsg().oid_pion = item.GetId();
+    asnMsg.GetAsnMsg().oid_automate = superiorId;
+    asnMsg.Send( publisher_ );
+    return true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const Agent_ABC& item, const KnowledgeGroup_ABC& target )
+{
+    if( item.GetSuperior() != 0 )
+        return false;
+        
+    ASN_MsgChangeGroupeConnaissance asnMsg;
+    asnMsg.GetAsnMsg().oid_automate = item.GetId();
+    asnMsg.GetAsnMsg().oid_camp  = target.GetTeam().GetId();
+    asnMsg.GetAsnMsg().oid_groupe_connaissance = target.GetId();
+    asnMsg.Send( publisher_ );
+    return true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const Agent_ABC&, const Team_ABC& )
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const KnowledgeGroup_ABC&, const Agent_ABC& )
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const KnowledgeGroup_ABC&, const KnowledgeGroup_ABC& )
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const KnowledgeGroup_ABC&, const Team_ABC& )
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const Team_ABC&, const Agent_ABC& )
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const Team_ABC&, const KnowledgeGroup_ABC& )
+{
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const Team_ABC&, const Team_ABC& )
+{
+    return false;
 }
 
 // -----------------------------------------------------------------------------

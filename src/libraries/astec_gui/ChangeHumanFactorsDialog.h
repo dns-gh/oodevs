@@ -37,6 +37,7 @@ public:
     //! @name Operations
     //@{
     void Show( const Agent_ABC& agent );
+    virtual QSize sizeHint() const;
     //@}
 
 private slots:

@@ -14,7 +14,7 @@
 #include "Tools.h"
 #include "astec_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
-#include "Point.h"
+#include "astec_kernel/Point.h"
 
 // -----------------------------------------------------------------------------
 // Name: LocationCreator constructor

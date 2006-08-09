@@ -11,11 +11,11 @@
 #include "ParametersLayer.h"
 #include "astec_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
-#include "Point.h"
-#include "Lines.h"
-#include "Polygon.h"
-#include "Circle.h"
-#include "Path.h"
+#include "astec_kernel/Point.h"
+#include "astec_kernel/Lines.h"
+#include "astec_kernel/Polygon.h"
+#include "astec_kernel/Circle.h"
+#include "astec_kernel/Path.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer constructor
