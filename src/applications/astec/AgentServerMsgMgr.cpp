@@ -205,10 +205,10 @@ void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& a
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    uint32 nId;
-    input >> nId;
     uint32 nTeamID;
     input >> nTeamID;
+    uint32 nId;
+    input >> nId;
     Team* pTeam = App::GetApp().GetAgentManager().FindTeam( nTeamID );
     assert( pTeam != 0 );
     pTeam->CreateGtia( nId );

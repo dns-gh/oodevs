@@ -192,8 +192,8 @@ void MIL_KnowledgeGroup::SendCreation()
     NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
 
     DIN::DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    msg << (uint32)nID_;
     msg << (uint32)pArmy_->GetID();
+    msg << (uint32)nID_;
     msgMgr.SendMsgKnowledgeGroup( msg );
 }
 
