@@ -9,9 +9,9 @@
 
 #include "astec_gaming_pch.h"
 #include "Team.h"
-#include "KnowledgeGroup.h"
 #include "KnowledgeGroupFactory_ABC.h"
 #include "astec_kernel/Controller.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
@@ -46,10 +46,10 @@ void Team::DoUpdate( const KnowledgeGroupCreationMessage& message )
 {
     unsigned long id;
     message >> id;
-    if( ! Resolver< KnowledgeGroup >::Find( id ) )
+    if( ! Resolver< KnowledgeGroup_ABC >::Find( id ) )
     {
-        KnowledgeGroup* group = factory_.CreateKnowledgeGroup( id, *this );
-        Resolver< KnowledgeGroup >::Register( id, *group );
+        KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( id, *this );
+        Resolver< KnowledgeGroup_ABC >::Register( id, *group );
         controller_.Update( *(Team_ABC*)this );
     };
 }

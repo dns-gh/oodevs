@@ -44,7 +44,7 @@ AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers, It
                 .AddLabel( "Direction:" )
                 .AddLabel( "Altitude:" )
                 .AddLabel( "Troupes:" )
-                .AddLabel( "Transporteurs d'hommes disponibles:" );
+                .AddLabel( "Transporteurs d'hommes:" );
     display_->AddGroup( "NBC" )
                 .AddLabel( "Tenue NBC:" )
                 .AddLabel( "Agents contaminants:" )

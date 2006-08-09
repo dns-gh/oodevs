@@ -21,7 +21,7 @@ class Controllers;
 class AgentKnowledges;
 class AgentKnowledge;
 class DisplayBuilder;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class PerceptionMap;
 class Perception;
 class Displayer_ABC;
@@ -69,7 +69,7 @@ private:
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const AgentKnowledge& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
-    void Select( const KnowledgeGroup* group );
+    void Select( const KnowledgeGroup_ABC* group );
     void Display( const AgentKnowledge& k );
     void showEvent( QShowEvent* );
     //@}

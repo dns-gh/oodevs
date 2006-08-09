@@ -11,26 +11,18 @@
 #define __KnowledgeGroup_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/IDManager.h"
-#include "astec_kernel/Resolver.h"
 
-class Team_ABC;
-class Agent_ABC;
-class AgentKnowledge;
-class Population_ABC;
-class PopulationKnowledge;
 class Controller;
 
 // =============================================================================
 /** @class  KnowledgeGroup
     @brief  Represents a gtia.
-    @par    Holds the gtia's knowledge on other agents.
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class KnowledgeGroup : public Entity_ABC
-                     , public Resolver< Agent_ABC >
+class KnowledgeGroup : public KnowledgeGroup_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -41,12 +33,12 @@ public:
 
     //! @name Accessors & Modifiers
     //@{
-    bool IsInTeam( const Team_ABC& team ) const;
-    const Team_ABC& GetTeam() const;
+    virtual bool IsInTeam( const Team_ABC& team ) const;
+    virtual const Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
-    void AddAutomat( unsigned long id, Agent_ABC& automat );
-    void RemoveAutomat( unsigned long id );
+    virtual void AddAutomat( unsigned long id, Agent_ABC& automat );
+    virtual void RemoveAutomat( unsigned long id );
     //@}
 
     //! @name Operations

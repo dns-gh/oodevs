@@ -1,31 +1,28 @@
-//*****************************************************************************
-// 
-// $Created: AGN 03-04-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/PopulationKnowledge.cpp $
-// $Author: Age $
-// $Modtime: 31/03/05 17:45 $
-// $Revision: 8 $
-// $Workfile: PopulationKnowledge.cpp $
-// 
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_gaming_pch.h"
 #include "PopulationKnowledge.h"
 
-#include "KnowledgeGroup.h"
-#include "astec_kernel/Population_ABC.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/Displayer_ABC.h"
-#include "KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
+#include "astec_kernel/Population_ABC.h"
 #include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
     : group_     ( group )
     , controller_( controller )
     , converter_ ( converter )
@@ -192,7 +189,7 @@ bool PopulationKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 // Name: PopulationKnowledge::GetKnowledgeGroup
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const KnowledgeGroup& PopulationKnowledge::GetKnowledgeGroup() const
+const KnowledgeGroup_ABC& PopulationKnowledge::GetKnowledgeGroup() const
 {
     return group_;
 }

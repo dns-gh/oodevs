@@ -24,7 +24,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const
     , nID_ ( nId )
 {
     idManager_.LockIdentifier( nID_ );
-    controller_.Create( *this );
+    controller_.Create( *(KnowledgeGroup_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(KnowledgeGroup_ABC*)this );
     idManager_.ReleaseIdentifier( nID_ );
 }
 
@@ -44,7 +44,7 @@ KnowledgeGroup::~KnowledgeGroup()
 void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
 {
     Resolver< Agent_ABC >::Register( id, automat );
-    controller_.Update( *this );
+    controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
 void KnowledgeGroup::RemoveAutomat( unsigned long id )
 {
     Resolver< Agent_ABC >::Remove( id );
-    controller_.Update( *this );
+    controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

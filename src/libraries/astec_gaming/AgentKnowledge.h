@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 03-04-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentKnowledge.h $
-// $Author: Age $
-// $Modtime: 31/03/05 17:36 $
-// $Revision: 5 $
-// $Workfile: AgentKnowledge.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __AgentKnowledge_h_
 #define __AgentKnowledge_h_
@@ -24,7 +22,7 @@ class Controller;
 class Displayer_ABC;
 class Team_ABC;
 class CoordinateConverter_ABC;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -41,7 +39,7 @@ class AgentKnowledge : public Entity_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
+             AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
                              const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
@@ -64,7 +62,7 @@ public:
     virtual std::string   GetName     () const;
     Agent_ABC&                GetRealAgent() const;
     const Team_ABC*           GetKnowledgeTeam() const;
-    const KnowledgeGroup& GetKnowledgeGroup() const;
+    const KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     //@}
 
 private:
@@ -78,7 +76,7 @@ public:
     const CoordinateConverter_ABC& converter_;
     const Resolver_ABC< Agent_ABC >& resolver_;
     const Resolver_ABC< Team_ABC >& teamResolver_;
-    const KnowledgeGroup& group_;
+    const KnowledgeGroup_ABC& group_;
 
     unsigned long nID_;
     Agent_ABC&      realAgent_;

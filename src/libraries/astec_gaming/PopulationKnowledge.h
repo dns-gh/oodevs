@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 03-04-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/PopulationKnowledge.h $
-// $Author: Age $
-// $Modtime: 31/03/05 17:36 $
-// $Revision: 5 $
-// $Workfile: PopulationKnowledge.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __PopulationKnowledge_h_
 #define __PopulationKnowledge_h_
@@ -28,7 +26,7 @@ class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
 class PopulationConcentrationKnowledge;
 class PopulationFlowKnowledge;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -42,7 +40,7 @@ class PopulationKnowledge : public Entity_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( const KnowledgeGroup& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -57,7 +55,7 @@ public:
     bool KnowledgeIsInTeam( const Team_ABC& team ) const;
     const Team_ABC* GetKnowledgeTeam() const;
 
-    const KnowledgeGroup& GetKnowledgeGroup() const;
+    const KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     const Population_ABC& GetRealPopulation() const;
 
     virtual void Select( ActionController& controller ) const;
@@ -89,7 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const KnowledgeGroup& group_;
+    const KnowledgeGroup_ABC& group_;
     Controller& controller_;
     const CoordinateConverter_ABC& converter_;
 

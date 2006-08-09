@@ -1,13 +1,11 @@
-//*****************************************************************************
-// 
-// $Created: AGN 03-04-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentKnowledge.cpp $
-// $Author: Age $
-// $Modtime: 31/03/05 17:45 $
-// $Revision: 8 $
-// $Workfile: AgentKnowledge.cpp $
-// 
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_gaming_pch.h"
 #include "AgentKnowledge.h"
@@ -18,7 +16,7 @@
 #include "astec_kernel/Units.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/GlTools_ABC.h"
 
@@ -28,7 +26,7 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver )
     : controller_  ( controller )
     , converter_   ( converter )
     , resolver_    ( resolver )
@@ -221,7 +219,7 @@ const Team_ABC* AgentKnowledge::GetKnowledgeTeam() const
 // Name: AgentKnowledge::GetKnowledgeGroup
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const KnowledgeGroup& AgentKnowledge::GetKnowledgeGroup() const
+const KnowledgeGroup_ABC& AgentKnowledge::GetKnowledgeGroup() const
 {
     return group_;
 }

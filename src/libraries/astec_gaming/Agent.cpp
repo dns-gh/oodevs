@@ -14,7 +14,7 @@
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/DataDictionary.h"
 #include "astec_kernel/ActionController.h"
-#include "KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "Attributes.h"
 
 // -----------------------------------------------------------------------------
@@ -24,7 +24,7 @@
 Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller, 
               const Resolver_ABC< AutomatType >& resolver,
               const Resolver_ABC< Agent_ABC >& agentResolver, 
-              const Resolver_ABC< KnowledgeGroup >& gtiaResolver )
+              const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
     : controller_( controller )
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
@@ -52,7 +52,7 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
 Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller, 
               const Resolver_ABC< AgentType >& resolver,
               const Resolver_ABC< Agent_ABC >& agentResolver, 
-              const Resolver_ABC< KnowledgeGroup >& gtiaResolver )
+              const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
     : controller_( controller )
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
@@ -141,7 +141,7 @@ void Agent::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
 // -----------------------------------------------------------------------------
 void Agent::ChangeKnowledgeGroup( unsigned long id )
 {
-    KnowledgeGroup* gtia = gtiaResolver_.Find( id );
+    KnowledgeGroup_ABC* gtia = gtiaResolver_.Find( id );
     if( gtia )
         ChangeKnowledgeGroup( *gtia );
 }
@@ -150,7 +150,7 @@ void Agent::ChangeKnowledgeGroup( unsigned long id )
 // Name: Agent::ChangeKnowledgeGroup
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void Agent::ChangeKnowledgeGroup( KnowledgeGroup& gtia )
+void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC& gtia )
 {
     if( gtia_ )
         gtia_->RemoveAutomat( id_ );
@@ -199,7 +199,7 @@ void Agent::RemoveChild( Agent_ABC& child )
 // Name: Agent::GetKnowledgeGroup
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup& Agent::GetKnowledgeGroup() const
+KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 {
     if( gtia_ )
         return *gtia_;

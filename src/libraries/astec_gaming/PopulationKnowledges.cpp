@@ -17,7 +17,7 @@
 // Name: PopulationKnowledges constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-PopulationKnowledges::PopulationKnowledges( Controller& controller, const KnowledgeGroup& owner, PopulationKnowledgeFactory_ABC& factory )
+PopulationKnowledges::PopulationKnowledges( Controller& controller, const KnowledgeGroup_ABC& owner, PopulationKnowledgeFactory_ABC& factory )
     : owner_( owner )
     , controller_( controller )
     , factory_( factory )

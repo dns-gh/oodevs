@@ -15,7 +15,7 @@
 
 class Team_ABC;
 class TeamFactory_ABC;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 
 namespace DIN {
     class DIN_Input;
@@ -46,7 +46,7 @@ public:
     Team_ABC& GetTeam( unsigned long id );
     Team_ABC* FindTeam( const std::string& team );
 
-    KnowledgeGroup* FindKnowledgeGroup( const unsigned long& identifier ) const;
+    KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& identifier ) const;
     //@}
 
 private:

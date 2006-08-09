@@ -20,7 +20,7 @@ class ObjectFactory_ABC;
 class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogMedicalConsign;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class Object_ABC;
 class App;
 class Population_ABC;

@@ -81,12 +81,12 @@ Team_ABC* TeamsModel::FindTeam( const std::string& team )
 // Name: TeamsModel::FindKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
+KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
 {
     for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
     {
-        Resolver_ABC< KnowledgeGroup >& team = *it->second;
-        KnowledgeGroup* group = team.Find( id );
+        Resolver_ABC< KnowledgeGroup_ABC >& team = *it->second;
+        KnowledgeGroup_ABC* group = team.Find( id );
         if( group )
             return group;
     }

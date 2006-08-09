@@ -17,7 +17,7 @@
 // Name: AgentKnowledges constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup& group, AgentKnowledgeFactory_ABC& factory )
+AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup_ABC& group, AgentKnowledgeFactory_ABC& factory )
     : controller_( controller )
     , group_( group )
     , factory_( factory )

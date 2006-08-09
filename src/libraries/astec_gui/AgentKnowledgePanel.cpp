@@ -15,7 +15,7 @@
 #include "astec_gaming/AgentKnowledges.h"
 #include "astec_gaming/AgentKnowledge.h"
 #include "astec_kernel/Controllers.h"
-#include "astec_gaming/KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/AgentKnowledge.h"
 #include "astec_kernel/Units.h"
@@ -146,7 +146,7 @@ void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displ
 // Name: AgentKnowledgePanel::Select
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Select( const KnowledgeGroup* element )
+void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
     const AgentKnowledges* k = element ? element->Retrieve< AgentKnowledges >() : 0;
     owner_ = element ? & element->GetTeam() : 0;

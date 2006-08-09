@@ -28,9 +28,9 @@ struct ListItemRtti< const Team_ABC* > {
     enum { rtti = 1001 };
 };
 
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 template< >
-struct ListItemRtti< const KnowledgeGroup* > {
+struct ListItemRtti< const KnowledgeGroup_ABC* > {
     enum { rtti = 1002 };
 };
 

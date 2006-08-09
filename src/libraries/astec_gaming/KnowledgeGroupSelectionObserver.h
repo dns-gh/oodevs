@@ -13,7 +13,7 @@
 #include "astec_kernel/SelectionObserver_ABC.h"
 
 class Agent_ABC;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class Controllers;
 
 // =============================================================================
@@ -24,7 +24,7 @@ class Controllers;
 // =============================================================================
 class KnowledgeGroupSelectionObserver
     : public SelectionObserver_ABC
-    , public SelectionObserver_Base< KnowledgeGroup >
+    , public SelectionObserver_Base< KnowledgeGroup_ABC >
     , public SelectionObserver_Base< Agent_ABC >
 {
 
@@ -46,15 +46,15 @@ private:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const KnowledgeGroup& element );
+    virtual void Select( const KnowledgeGroup_ABC& element );
     virtual void Select( const Agent_ABC& element );
-    virtual void Select( const KnowledgeGroup* ) = 0;
+    virtual void Select( const KnowledgeGroup_ABC* ) = 0;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const KnowledgeGroup* selected_;
+    const KnowledgeGroup_ABC* selected_;
     //@}
 };
 

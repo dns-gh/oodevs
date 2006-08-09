@@ -11,8 +11,9 @@
 #define __TeamSelectionObserver_h_
 
 #include "astec_kernel/SelectionObserver_ABC.h"
+
 class Agent_ABC;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class Team_ABC;
 class Object_ABC;
 class Population_ABC;
@@ -26,7 +27,7 @@ class Population_ABC;
 class TeamSelectionObserver
     : public SelectionObserver_ABC
     , public SelectionObserver_Base< Team_ABC >
-    , public SelectionObserver_Base< KnowledgeGroup >
+    , public SelectionObserver_Base< KnowledgeGroup_ABC >
     , public SelectionObserver_Base< Agent_ABC >
     , public SelectionObserver_Base< Object_ABC >
     , public SelectionObserver_Base< Population_ABC>
@@ -52,7 +53,7 @@ protected:
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const Team_ABC& element );
-    virtual void Select( const KnowledgeGroup& element );
+    virtual void Select( const KnowledgeGroup_ABC& element );
     virtual void Select( const Agent_ABC& element );
     virtual void Select( const Object_ABC& element );
     virtual void Select( const Population_ABC& element );

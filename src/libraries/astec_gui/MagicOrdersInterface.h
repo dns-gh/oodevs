@@ -16,7 +16,7 @@
 #include "ShapeHandler_ABC.h"
 
 class Agent_ABC;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class Team_ABC;
 class Controllers;
 class StaticModel;
@@ -35,7 +35,7 @@ class Publisher_ABC;
 class MagicOrdersInterface : public QObject
                            , public Observer_ABC
                            , public ContextMenuObserver_ABC< Team_ABC >
-                           , public ContextMenuObserver_ABC< KnowledgeGroup >
+                           , public ContextMenuObserver_ABC< KnowledgeGroup_ABC >
                            , public ContextMenuObserver_ABC< Agent_ABC >
                            , public OptionsObserver_ABC
                            , public ShapeHandler_ABC
@@ -52,7 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const Team_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const KnowledgeGroup& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const KnowledgeGroup_ABC& agent, ContextMenu& menu );
     virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     virtual void Handle( const T_PointVector& points );
@@ -82,7 +82,7 @@ private:
     void AddMagicMove( const Agent_ABC& agent, QPopupMenu* menu );
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void ApplyOnHierarchy( const KnowledgeGroup& group, int id );
+    void ApplyOnHierarchy( const KnowledgeGroup_ABC& group, int id );
     void ApplyOnHierarchy( const Team_ABC& team, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
     //@}
@@ -95,7 +95,7 @@ private:
     const StaticModel& static_;
     bool controller_;
     SafePointer< Agent_ABC > selectedAgent_;
-    SafePointer< KnowledgeGroup > selectedGroup_;
+    SafePointer< KnowledgeGroup_ABC > selectedGroup_;
     SafePointer< Team_ABC > selectedTeam_;
     LogisticSupplyRecompletionDialog* supplyRecompletion_;
     ChangeHumanFactorsDialog*         changeHumanFactors_;

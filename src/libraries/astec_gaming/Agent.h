@@ -40,12 +40,12 @@ public:
                     Controller& controller, 
                     const Resolver_ABC< AutomatType >& resolver,
                     const Resolver_ABC< Agent_ABC >& agentResolver, 
-                    const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
+                    const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver );
              Agent( const ASN1T_MsgPionCreation& message,
                     Controller& controller, 
                     const Resolver_ABC< AgentType >& resolver,
                     const Resolver_ABC< Agent_ABC >& agentResolver, 
-                    const Resolver_ABC< KnowledgeGroup >& gtiaResolver );
+                    const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver );
     virtual ~Agent();
     //@}
 
@@ -53,7 +53,7 @@ public:
     //@{
     virtual bool IsInTeam( const Team_ABC& team ) const;
     virtual const Team_ABC& GetTeam() const;
-    virtual KnowledgeGroup& GetKnowledgeGroup() const;
+    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     virtual const Agent_ABC* GetSuperior() const;
 
     virtual std::string GetName() const;
@@ -77,7 +77,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
 
     void ChangeKnowledgeGroup( unsigned long id );
-    void ChangeKnowledgeGroup( KnowledgeGroup& gtia );
+    void ChangeKnowledgeGroup( KnowledgeGroup_ABC& gtia );
     void ChangeSuperior( unsigned long id );
     virtual void Aggregate( const bool& );
 
@@ -94,7 +94,7 @@ private:
     //@{
     Controller& controller_;
     const Resolver_ABC< Agent_ABC >& agentResolver_;
-    const Resolver_ABC< KnowledgeGroup >&  gtiaResolver_;
+    const Resolver_ABC< KnowledgeGroup_ABC >&  gtiaResolver_;
     unsigned long id_;
     std::string   name_;
 
@@ -106,7 +106,7 @@ private:
     Agent*  superior_;
 
     // Automat only
-    KnowledgeGroup* gtia_;
+    KnowledgeGroup_ABC* gtia_;
 
     bool aggregated_;
     //@}

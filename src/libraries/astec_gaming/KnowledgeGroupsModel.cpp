@@ -43,7 +43,7 @@ void KnowledgeGroupsModel::Purge()
 // Name: KnowledgeGroupsModel::Find
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup* KnowledgeGroupsModel::Find( const unsigned long& identifier ) const
+KnowledgeGroup_ABC* KnowledgeGroupsModel::Find( const unsigned long& identifier ) const
 {
     return teams_.FindKnowledgeGroup( identifier );
 }
@@ -52,10 +52,10 @@ KnowledgeGroup* KnowledgeGroupsModel::Find( const unsigned long& identifier ) co
 // Name: KnowledgeGroupsModel::Get
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup& KnowledgeGroupsModel::Get( const unsigned long& identifier ) const
+KnowledgeGroup_ABC& KnowledgeGroupsModel::Get( const unsigned long& identifier ) const
 {
-    KnowledgeGroup* group = Find( identifier );
+    KnowledgeGroup_ABC* group = Find( identifier );
     if( ! group )
-        throw std::runtime_error( "KnowledgeGroup not found" );
+        throw std::runtime_error( "KnowledgeGroup_ABC not found" );
     return *group;
 }

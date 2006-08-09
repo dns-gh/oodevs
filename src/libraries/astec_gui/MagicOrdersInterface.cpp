@@ -21,7 +21,7 @@
 #include "ParametersLayer.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "ChangeHumanFactorsDialog.h"
-#include "astec_gaming/KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup& group, ContextMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, ContextMenu& menu )
 {   
     if( !controller_ )
         return;
@@ -193,7 +193,7 @@ namespace
             MagicFunctor::operator()( agent );
             agent.Resolver< Agent_ABC >::Apply( *this );
         }
-        void operator()( const KnowledgeGroup& group ) const
+        void operator()( const KnowledgeGroup_ABC& group ) const
         {
             group.Resolver< Agent_ABC >::Apply( *this );
         }
@@ -228,7 +228,7 @@ void MagicOrdersInterface::Magic( int type )
 // Name: MagicOrdersInterface::ApplyOnHierarchy
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id )
+void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup_ABC& group, int id )
 {
     group.Resolver< Agent_ABC >::Apply( RecursiveMagicFunctor( publisher_, id ) );
 }
@@ -239,7 +239,7 @@ void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::ApplyOnHierarchy( const Team_ABC& team, int id )
 {
-    team.Resolver< KnowledgeGroup >::Apply( RecursiveMagicFunctor( publisher_, id ) );
+    team.Resolver< KnowledgeGroup_ABC >::Apply( RecursiveMagicFunctor( publisher_, id ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 
 #include "astec_gaming_pch.h"
 #include "TeamSelectionObserver.h"
-#include "KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Object_ABC.h"
 #include "astec_kernel/Population_ABC.h"
@@ -64,7 +64,7 @@ void TeamSelectionObserver::Select( const Team_ABC& element )
 // Name: TeamSelectionObserver::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void TeamSelectionObserver::Select( const KnowledgeGroup& element )
+void TeamSelectionObserver::Select( const KnowledgeGroup_ABC& element )
 {
     Select( element.GetTeam() );
 }

@@ -56,9 +56,9 @@ Team_ABC* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team_ABC& team  )
+KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team_ABC& team  )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( id, controllers_.controller_, team );
+    KnowledgeGroup_ABC* result = new KnowledgeGroup( id, controllers_.controller_, team );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     return result;

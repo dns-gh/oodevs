@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupFactory_ABC_h_
 #define __KnowledgeGroupFactory_ABC_h_
 
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class Team_ABC;
 
 // =============================================================================
@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id, const Team_ABC& team ) = 0;
+    virtual KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, const Team_ABC& team ) = 0;
     //@}
 };
 

@@ -147,14 +147,14 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 {
     // $$$$ AGE 2006-03-17: Split attributes ?
     displayer.Group( "Info" )
-                .Display( "Etat opérationnel:",                  nRawOpState_ * Units::percentage )
-                .Display( "Mort:",                               bDead_ )
-                .Display( "Neutralisé:",                         bNeutralized_ )
-                .Display( "Vitesse:",                            nSpeed_ * Units::metersPerSecond )
-                .Display( "Direction:",                          nDirection_ * Units::degrees )
-                .Display( "Altitude:",                           nAltitude_  * Units::meters )
-                .Display( "Troupes:",                            bLoadingState_ ? "Embarqué" : "Débarqué" )
-                .Display( "Transporteurs d'hommes disponibles:", bHumanTransportersReady_ );
+                .Display( "Etat opérationnel:",      nRawOpState_ * Units::percentage )
+                .Display( "Mort:",                   bDead_ )
+                .Display( "Neutralisé:",             bNeutralized_ )
+                .Display( "Vitesse:",                nSpeed_ * Units::metersPerSecond )
+                .Display( "Direction:",              nDirection_ * Units::degrees )
+                .Display( "Altitude:",               nAltitude_  * Units::meters )
+                .Display( "Troupes:",                bLoadingState_ ? "Embarqué" : "Débarqué" )
+                .Display( "Transporteurs d'hommes:", bHumanTransportersReady_ ? "Disponibles" : "Indisponibles" );
 
     displayer.Group( "Postures" )
                 .Display( "Ancienne posture:", nOldPosture_ )

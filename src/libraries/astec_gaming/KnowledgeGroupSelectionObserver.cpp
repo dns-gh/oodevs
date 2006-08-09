@@ -52,7 +52,7 @@ void KnowledgeGroupSelectionObserver::AfterSelection()
 // Name: KnowledgeGroupSelectionObserver::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup& element )
+void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup_ABC& element )
 {
     selected_ = &element;
 }

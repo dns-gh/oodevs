@@ -16,7 +16,7 @@
 #include "LabelDisplayer.h"
 #include "ListDisplayer.h"
 #include "astec_kernel/Controllers.h"
-#include "astec_gaming/KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_gaming/PopulationKnowledges.h"
 #include "astec_gaming/PopulationKnowledge.h"
 #include "astec_gaming/PopulationConcentrationKnowledge.h"
@@ -232,7 +232,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationConcentrationKnowl
 // Name: PopulationKnowledgePanel::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::Select( const KnowledgeGroup* element )
+void PopulationKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
     const PopulationKnowledges* k = element ? element->Retrieve< PopulationKnowledges >() : 0;
     owner_ = element ? & element->GetTeam() : 0;

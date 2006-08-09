@@ -13,7 +13,7 @@
 #include "Entity_ABC.h"
 #include "Resolver.h"
 
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 
 // =============================================================================
 /** @class  Team_ABC
@@ -22,7 +22,7 @@ class KnowledgeGroup;
 // Created: SBO 2006-08-08
 // =============================================================================
 class Team_ABC : public Entity_ABC
-               , public Resolver< KnowledgeGroup >
+               , public Resolver< KnowledgeGroup_ABC >
 {
 
 public:

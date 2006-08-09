@@ -12,7 +12,7 @@
 
 #include "astec_kernel/Resolver_ABC.h"
 
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class TeamsModel;
 
 // =============================================================================
@@ -21,7 +21,7 @@ class TeamsModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class KnowledgeGroupsModel : public Resolver_ABC< KnowledgeGroup >
+class KnowledgeGroupsModel : public Resolver_ABC< KnowledgeGroup_ABC >
 {
 
 public:
@@ -35,8 +35,8 @@ public:
     //@{
     void Purge();
 
-    virtual KnowledgeGroup* Find( const unsigned long& identifier ) const;
-    virtual KnowledgeGroup& Get( const unsigned long& identifier ) const;
+    virtual KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
+    virtual KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
     //@}
 
 private:

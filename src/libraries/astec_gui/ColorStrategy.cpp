@@ -12,7 +12,7 @@
 #include "astec_kernel/GlTools_ABC.h"
 
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/KnowledgeGroup.h"
+#include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Object_ABC.h"

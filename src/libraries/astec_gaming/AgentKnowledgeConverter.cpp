@@ -38,7 +38,7 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base, const KnowledgeGroup& owner )
+const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base, const KnowledgeGroup_ABC& owner )
 {
     return Find( base.GetRealAgent(), owner );
 }
@@ -47,7 +47,7 @@ const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base,
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent_ABC& base, const KnowledgeGroup& owner )
+const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent_ABC& base, const KnowledgeGroup_ABC& owner )
 {
     return agents_[ &owner ][ &base ];
 }
@@ -56,7 +56,7 @@ const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent_ABC& base, cons
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const PopulationKnowledge* AgentKnowledgeConverter::Find( const PopulationKnowledge& base, const KnowledgeGroup& owner )
+const PopulationKnowledge* AgentKnowledgeConverter::Find( const PopulationKnowledge& base, const KnowledgeGroup_ABC& owner )
 {
     return Find( base.GetRealPopulation(), owner );
 }
@@ -65,7 +65,7 @@ const PopulationKnowledge* AgentKnowledgeConverter::Find( const PopulationKnowle
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const PopulationKnowledge* AgentKnowledgeConverter::Find( const Population_ABC& base, const KnowledgeGroup& owner )
+const PopulationKnowledge* AgentKnowledgeConverter::Find( const Population_ABC& base, const KnowledgeGroup_ABC& owner )
 {
     return populations_[ &owner ][ &base ];
 }

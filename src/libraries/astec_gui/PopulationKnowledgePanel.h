@@ -22,7 +22,7 @@ class PopulationKnowledges;
 class PopulationKnowledge;
 class PopulationFlowKnowledge;
 class PopulationConcentrationKnowledge;
-class KnowledgeGroup;
+class KnowledgeGroup_ABC;
 class Agent_ABC;
 class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
@@ -78,7 +78,7 @@ private:
     virtual void NotifyUpdated( const PopulationKnowledge& element );
     virtual void NotifyUpdated( const PopulationFlowKnowledge& element );
     virtual void NotifyUpdated( const PopulationConcentrationKnowledge& element );
-    virtual void Select( const KnowledgeGroup* element );
+    virtual void Select( const KnowledgeGroup_ABC* element );
     //@}
 
 private:
