@@ -38,6 +38,7 @@ public:
 
     bool IsGas() const;
     bool IsAmmunition() const;
+    bool IsDType() const;
     //@}
 
 private:
@@ -47,6 +48,11 @@ private:
     DotationType& operator=( const DotationType& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void ReadDType( xml::xistream& xis );
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -54,7 +60,7 @@ private:
     unsigned long id_;
     unsigned long nameId_; // $$$$ AGE 2006-04-28: name == category
     std::string category_;
-    bool gaz_, ammunition_;
+    bool gaz_, ammunition_, dType_;
     //@}
 };
 

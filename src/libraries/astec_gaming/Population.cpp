@@ -11,7 +11,7 @@
 #include "Population.h"
 #include "astec_kernel/DataDictionary.h"
 
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/PopulationType.h"
 
 #include "PopulationFlow.h"
@@ -29,7 +29,7 @@ unsigned long Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team_ABC >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
     : controller_   ( controller )
     , converter_    ( converter )
     , nPopulationID_( message.oid_population )
@@ -198,7 +198,7 @@ std::string Population::GetName() const
 // Name: Population::GetTeam
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-const Team& Population::GetTeam() const
+const Team_ABC& Population::GetTeam() const
 {
     return team_;
 }
@@ -353,7 +353,7 @@ const PopulationType& Population::GetType() const
 // Name: Population::IsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool Population::IsInTeam( const Team& team ) const
+bool Population::IsInTeam( const Team_ABC& team ) const
 {
     return team_ == team;
 }

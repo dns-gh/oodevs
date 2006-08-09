@@ -19,13 +19,13 @@
 #include "astec_kernel/ObjectType.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/Positions.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
+Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team_ABC >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
     : controller_                    ( controller )
     , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
@@ -86,7 +86,7 @@ std::string Object::GetName() const
 // Name: Object::GetTeam
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-const Team& Object::GetTeam() const
+const Team_ABC& Object::GetTeam() const
 {
     return team_;
 }
@@ -172,7 +172,7 @@ void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
 // Name: Object::IsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool Object::IsInTeam( const Team& team ) const
+bool Object::IsInTeam( const Team_ABC& team ) const
 {
     return team_ == team;
 }

@@ -431,13 +431,7 @@ void FragmentaryOrderInterface::CreateOrder_Pion_AppliquerFeux()
     ASN1T_OrderConduite_Pion_AppliquerFeux& asnMission = *new ASN1T_OrderConduite_Pion_AppliquerFeux();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_appliquer_feux = &asnMission;
-    ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions");
-    pSelector_munitions->AddItem( "Explosif", EnumTypeMunitionTirIndirect::explosif );
-    pSelector_munitions->AddItem( "Grenade", EnumTypeMunitionTirIndirect::grenade );
-    pSelector_munitions->AddItem( "Aced", EnumTypeMunitionTirIndirect::aced );
-    pSelector_munitions->AddItem( "Fumigene", EnumTypeMunitionTirIndirect::fumigene );
-    pSelector_munitions->AddItem( "Eclairant", EnumTypeMunitionTirIndirect::eclairant );
-    pSelector_munitions->AddItem( "Mine", EnumTypeMunitionTirIndirect::mine );
+    CreateDotationDType( asnMission.munitions, "Munitions");
     CreateNumeric( asnMission.nb_IT, "Nb IT");
     CreatePoint( asnMission.cible, "Cible");
 }

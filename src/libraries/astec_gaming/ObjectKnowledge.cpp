@@ -15,14 +15,14 @@
 #include "astec_kernel/Object_ABC.h"
 #include "astec_kernel/ObjectType.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
+ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
                                   const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
     : owner_         ( owner )
     , converter_     ( converter )
@@ -124,7 +124,7 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // Name: ObjectKnowledge::IsInTeam
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-bool ObjectKnowledge::IsInTeam( const Team& team ) const
+bool ObjectKnowledge::IsInTeam( const Team_ABC& team ) const
 {
     return owner_ == team;
 }
@@ -133,7 +133,7 @@ bool ObjectKnowledge::IsInTeam( const Team& team ) const
 // Name: ObjectKnowledge::KnowledgeIsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool ObjectKnowledge::KnowledgeIsInTeam( const Team& team ) const
+bool ObjectKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
     return pRealObject_ && pRealObject_->GetTeam() == team;
 }
@@ -160,7 +160,7 @@ std::string ObjectKnowledge::GetName() const
 // Name: ObjectKnowledge::GetKnowledgeTeam
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const Team* ObjectKnowledge::GetKnowledgeTeam() const
+const Team_ABC* ObjectKnowledge::GetKnowledgeTeam() const
 {
     return pRealObject_ ? & pRealObject_->GetTeam() : 0;
 }

@@ -55,7 +55,7 @@ void TeamSelectionObserver::AfterSelection()
 // Name: TeamSelectionObserver::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void TeamSelectionObserver::Select( const Team& element )
+void TeamSelectionObserver::Select( const Team_ABC& element )
 {
     selected_ = &element;
 }

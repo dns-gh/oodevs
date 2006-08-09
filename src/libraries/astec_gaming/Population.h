@@ -23,7 +23,7 @@
 class PopulationPart_ABC;
 class PopulationConcentration;
 class PopulationFlow;
-class Team;
+class Team_ABC;
 class Controller;
 class PopulationType;
 class CoordinateConverter_ABC;
@@ -47,7 +47,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, const CoordinateConverter_ABC& converter,
-                         const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< PopulationType >& typeResolver );
+                         const Resolver_ABC< Team_ABC >& teamResolver, const Resolver_ABC< PopulationType >& typeResolver );
     virtual ~Population();
     //@}
 
@@ -58,7 +58,7 @@ public:
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
 
-    bool IsInTeam( const Team& team ) const;
+    virtual bool IsInTeam( const Team_ABC& team ) const;
     virtual geometry::Point2f GetPosition() const;
     virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
@@ -68,7 +68,7 @@ public:
 
     //! @name Accessors
     //@{
-    const Team& GetTeam() const;
+    virtual const Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual std::string   GetName() const;
     const PopulationType& GetType() const;
@@ -105,7 +105,7 @@ private:
 	unsigned long              nPopulationID_;
 	std::string                strName_;
     const PopulationType&      type_;
-	Team&                      team_;
+	Team_ABC&                  team_;
 
     geometry::Point2f          center_;
     OptionalValue< int >       nDomination_;

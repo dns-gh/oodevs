@@ -16,7 +16,7 @@
 #include "astec_kernel/OptionsObserver_ABC.h"
 #include "astec_kernel/ActivationObserver_ABC.h"
 
-class Team;
+class Team_ABC;
 class KnowledgeGroup;
 class Agent_ABC;
 class ActionContext;
@@ -34,11 +34,11 @@ class Publisher_ABC;
 // =============================================================================
 class AgentListView : public ListView< AgentListView >
                     , public Observer_ABC
-                    , public ElementObserver_ABC< Team >
+                    , public ElementObserver_ABC< Team_ABC >
                     , public ElementObserver_ABC< KnowledgeGroup >
                     , public ElementObserver_ABC< Agent_ABC >
                     , public ElementObserver_ABC< AutomatDecisions >
-                    , public SelectionObserver_Base< Team > // $$$$ AGE 2006-03-21: refactor these crap
+                    , public SelectionObserver_Base< Team_ABC > // $$$$ AGE 2006-03-21: refactor these crap
                     , public SelectionObserver_Base< KnowledgeGroup >
                     , public SelectionObserver_Base< Agent_ABC >
                     , public SelectionObserver_ABC
@@ -64,7 +64,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const Team& team,            ValuedListItem* item );
+    void Display( const Team_ABC& team,            ValuedListItem* item );
     void Display( const KnowledgeGroup& group, ValuedListItem* item );
     void Display( const Agent_ABC& agent,          ValuedListItem* item );
     //@}
@@ -87,15 +87,15 @@ private slots:
     //! @name Helpers
     //@{
 private:
-    virtual void NotifyCreated( const Team& team );
-    virtual void NotifyUpdated( const Team& team );
-    virtual void NotifyDeleted( const Team& team );
+    virtual void NotifyCreated( const Team_ABC& team );
+    virtual void NotifyUpdated( const Team_ABC& team );
+    virtual void NotifyDeleted( const Team_ABC& team );
 
     virtual void NotifyUpdated( const KnowledgeGroup& group );
     virtual void NotifyUpdated( const Agent_ABC& agent );
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
 
-    virtual void Select( const Team& element );
+    virtual void Select( const Team_ABC& element );
     virtual void Select( const KnowledgeGroup& element );
     virtual void Select( const Agent_ABC& element );
     virtual void BeforeSelection();
@@ -120,7 +120,7 @@ private:
     Controllers& controllers_;
     Publisher_ABC& publisher_;
     ItemFactory_ABC& factory_;
-    const Team* currentTeam_;
+    const Team_ABC* currentTeam_;
     //@}
 };
 

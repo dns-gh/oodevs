@@ -11,7 +11,7 @@
 #include "BaseDisplayer.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/DotationType.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/EquipmentType.h"
 #include "astec_kernel/Object_ABC.h"
 #include "astec_kernel/Population_ABC.h"
@@ -76,7 +76,7 @@ void BaseDisplayer::Call( const DotationType& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const Team& value )
+void BaseDisplayer::Call( const Team_ABC& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

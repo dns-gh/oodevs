@@ -10,14 +10,13 @@
 #include "astec_gaming_pch.h"
 #include "AgentServerMsgMgr.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Team_ABC.h"
 #include "Object.h"
 #include "Lima.h"
 #include "Limit.h"
 #include "ASN_Messages.h"
 #include "Net_Def.h"
 #include "KnowledgeGroup.h"
-#include "Team.h"
 #include "Tools.h"
 #include "MsgRecorder.h"
 #include "LogMaintenanceConsign.h"
@@ -340,9 +339,9 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/,
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::_OnReceiveMsgKnowledgeGroup( DIN::DIN_Input& input )
 {
-    unsigned long id, team;
-    input >> id >> team; // $$$$ AGE 2006-02-15: Pkoi dans cet ordre la ndd ?
-    GetModel().teams_.Get( team ).CreateKnowledgeGroup( id );
+    unsigned long team;
+    input >> team;
+    GetModel().teams_.Get( team ).Update( KnowledgeGroupCreationMessage( input ) );
 }
 
 // -----------------------------------------------------------------------------

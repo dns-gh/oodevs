@@ -22,9 +22,9 @@ struct ListItemRtti
     // NOTHING
 };
 
-class Team;
+class Team_ABC;
 template< >
-struct ListItemRtti< const Team* > {
+struct ListItemRtti< const Team_ABC* > {
     enum { rtti = 1001 };
 };
 

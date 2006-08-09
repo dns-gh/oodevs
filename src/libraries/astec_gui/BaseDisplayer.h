@@ -13,7 +13,7 @@
 #include "astec_kernel/Displayer_ABC.h"
 class Agent_ABC;
 class Object_ABC;
-class Team;
+class Team_ABC;
 class DotationType;
 class EquipmentType;
 class Population_ABC;
@@ -40,7 +40,7 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< PopulationConcentration >
                   , public Caller< Agent_ABC >
                   , public Caller< Object_ABC >
-                  , public Caller< Team >
+                  , public Caller< Team_ABC >
                   , public Caller< DotationType >
                   , public Caller< EquipmentType >
                   , public Caller< NBCAgent >
@@ -75,7 +75,7 @@ private:
     virtual void Call( const Population_ABC& value );
     virtual void Call( const PopulationConcentration& value );
     virtual void Call( const Object_ABC& value );
-    virtual void Call( const Team& value );
+    virtual void Call( const Team_ABC& value );
     virtual void Call( const DotationType& value );
     virtual void Call( const EquipmentType& value );
     virtual void Call( const NBCAgent& value );

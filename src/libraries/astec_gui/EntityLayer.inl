@@ -94,7 +94,7 @@ void EntityLayer< ConcreteEntity >::SelectColor( const Entity_ABC& entity )
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Team& team )
+bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Team_ABC& team )
 {
     return static_cast< const ConcreteEntity& >( entity ).IsInTeam( team );
 }

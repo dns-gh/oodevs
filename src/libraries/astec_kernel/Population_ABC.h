@@ -15,7 +15,7 @@
 
 class PopulationFlow;
 class PopulationConcentration;
-class Team;
+class Team_ABC;
 class PopulationType;
 
 // =============================================================================
@@ -38,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team& team ) const = 0;
-    virtual const Team& GetTeam() const = 0;
+    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
+    virtual const Team_ABC& GetTeam() const = 0;
     virtual const PopulationType& GetType() const = 0;
 
     virtual unsigned int GetLivingHumans() const = 0;
@@ -74,15 +74,6 @@ private:
     //@{
     Population_ABC( const Population_ABC& );            //!< Copy constructor
     Population_ABC& operator=( const Population_ABC& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

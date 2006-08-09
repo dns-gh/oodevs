@@ -18,7 +18,7 @@
 // Name: AgentDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team& team )
+AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team_ABC& team )
     : controller_( controller )
     , resolver_  ( resolver )
     , team_      ( team )

@@ -16,7 +16,7 @@
 #include "ValuedComboBox.h"
 #include "astec_gaming/ASN_Types.h"
 
-class Team;
+class Team_ABC;
 class Controllers;
 class Publisher_ABC;
 
@@ -25,8 +25,8 @@ class Publisher_ABC;
 //=============================================================================
 class ChangeDiplomacyDialog : public QDialog
                             , public Observer_ABC
-                            , public ElementObserver_ABC< Team >
-                            , public ContextMenuObserver_ABC< Team >
+                            , public ElementObserver_ABC< Team_ABC >
+                            , public ContextMenuObserver_ABC< Team_ABC >
 {
     Q_OBJECT
 
@@ -47,9 +47,9 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team& );
-    virtual void NotifyDeleted( const Team& );
-    virtual void NotifyContextMenu( const Team&, ContextMenu& );
+    virtual void NotifyCreated( const Team_ABC& );
+    virtual void NotifyDeleted( const Team_ABC& );
+    virtual void NotifyContextMenu( const Team_ABC&, ContextMenu& );
     //@}
 
 private:

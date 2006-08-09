@@ -12,7 +12,7 @@
 
 #include "Entity_ABC.h"
 
-class Team;
+class Team_ABC;
 class ObjectType;
 class ActionController;
 class Displayer_ABC;
@@ -44,10 +44,10 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const Team& team ) const = 0;
+    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
     virtual unsigned long GetId() const = 0;
     virtual std::string GetName() const = 0;
-    virtual const Team& GetTeam() const = 0;
+    virtual const Team_ABC& GetTeam() const = 0;
     virtual ObjectType& GetType() const = 0;
     //@}
 };

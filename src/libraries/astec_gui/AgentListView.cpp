@@ -15,7 +15,7 @@
 #include "astec_kernel/Controllers.h"
 
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_gaming/KnowledgeGroup.h"
 #include "astec_gaming/AutomatDecisions.h"
 #include "astec_kernel/OptionVariant.h"
@@ -62,7 +62,7 @@ AgentListView::~AgentListView()
 // Name: AgentListView::NotifyCreated
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const Team& team )
+void AgentListView::NotifyCreated( const Team_ABC& team )
 {
     factory_.CreateItem( this )->Set( &team, team.GetName().c_str() );
     NotifyUpdated( team );
@@ -85,7 +85,7 @@ void AgentListView::Update( const T& value )
 // Name: AgentListView::NotifyUpdated
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const Team& team )
+void AgentListView::NotifyUpdated( const Team_ABC& team )
 {
     Update( team );
 }
@@ -94,7 +94,7 @@ void AgentListView::NotifyUpdated( const Team& team )
 // Name: AgentListView::NotifyDeleted
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const Team& team )
+void AgentListView::NotifyDeleted( const Team_ABC& team )
 {
     delete FindSibling( &team, firstChild() );
 }
@@ -131,12 +131,12 @@ void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* i
 // Name: AgentListView::Display
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Team& team, ValuedListItem* item )
+void AgentListView::Display( const Team_ABC& team, ValuedListItem* item )
 {
     item->Set( &team, team.GetName().c_str() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    RecursiveDisplay< Team, KnowledgeGroup >( team, item );
+    RecursiveDisplay< Team_ABC, KnowledgeGroup >( team, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ QSize AgentListView::sizeHint() const
 // Name: AgentListView::Select
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void AgentListView::Select( const Team& element )
+void AgentListView::Select( const Team_ABC& element )
 {
     setSelected( FindItem( &element, firstChild() ), true );
     ensureItemVisible( selectedItem() );
@@ -280,7 +280,7 @@ void AgentListView::AfterSelection()
 void AgentListView::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team* >();
+        currentTeam_ = value.To< const Team_ABC* >();
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {

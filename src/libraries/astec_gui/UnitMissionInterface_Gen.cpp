@@ -2818,6 +2818,17 @@ void UnitMissionInterface::CreateMission_Test_Heliporter()
 // Name: UnitMissionInterface::CreateMission_Test_MoveTo
 // Created: AGR
 // -----------------------------------------------------------------------------
+class OptionalParamFunctor_Mission_Pion_Test_MoveTo_vision_point : public OptionalParamFunctor_ABC
+{
+public:
+    OptionalParamFunctor_Mission_Pion_Test_MoveTo_vision_point( ASN1T_Mission_Pion_Test_MoveTo&asnMission )
+      : pAsnMission_( &asnMission ){}
+    virtual void SetOptionalPresent(){
+        pAsnMission_->m.vision_pointPresent = 1;}
+private:
+    ASN1T_Mission_Pion_Test_MoveTo* pAsnMission_;
+};
+
 void UnitMissionInterface::CreateMission_Test_MoveTo()
 {
     ASN1T_Mission_Pion_Test_MoveTo& asnMission = *new ASN1T_Mission_Pion_Test_MoveTo();
@@ -2838,7 +2849,7 @@ void UnitMissionInterface::CreateMission_Test_MoveTo()
     pSelector_verrouillage_vision->AddItem( "Rien", Mission_Pion_Test_MoveTo_verrouillage_vision::rien );
     pSelector_verrouillage_vision->AddItem( "Point", Mission_Pion_Test_MoveTo_verrouillage_vision::point );
     pSelector_verrouillage_vision->AddItem( "Direction", Mission_Pion_Test_MoveTo_verrouillage_vision::direction );
-    CreatePoint( asnMission.vision_point, "Vision point");
+    CreatePoint( asnMission.vision_point, "Vision point", BuildOptionalParamFunctor< OptionalParamFunctor_Mission_Pion_Test_MoveTo_vision_point, ASN1T_Mission_Pion_Test_MoveTo>( asnMission ));
     CreateDirection( asnMission.vision_direction, "Vision direction");
 }
 
@@ -2930,14 +2941,8 @@ void UnitMissionInterface::CreateMission_Test_Fire()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_test_fire = &asnMission;
     CreatePoint( asnMission.point, "Point");
     CreateBool( asnMission.tir_indirect, "Tir indirect");
-    ParamComboBox< ASN1T_Mission_Pion_Test_Fire_munitions >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions");
-    pSelector_munitions->AddItem( "Mun obus explosif", Mission_Pion_Test_Fire_munitions::mun_obus_explosif );
-    pSelector_munitions->AddItem( "Mun obus grenade", Mission_Pion_Test_Fire_munitions::mun_obus_grenade );
-    pSelector_munitions->AddItem( "Mun obus aced", Mission_Pion_Test_Fire_munitions::mun_obus_aced );
-    pSelector_munitions->AddItem( "Mun obus fumigene", Mission_Pion_Test_Fire_munitions::mun_obus_fumigene );
-    pSelector_munitions->AddItem( "Mun obus eclairant", Mission_Pion_Test_Fire_munitions::mun_obus_eclairant );
-    pSelector_munitions->AddItem( "Mun obus mine", Mission_Pion_Test_Fire_munitions::mun_obus_mine );
-    CreateNumeric( asnMission.nb_obus, "Nb obus");
+    CreateDotationDType( asnMission.munitions, "Munitions");
+    CreateNumeric( asnMission.nb_it, "Nb it");
     CreateAgentKnowledgeList( asnMission.targets, "Targets");
 }
 

@@ -15,7 +15,7 @@
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_kernel/SelectionObserver_ABC.h"
 
-class Team;
+class Team_ABC;
 class Agent_ABC;
 class Object_ABC;
 class Population_ABC;
@@ -33,7 +33,7 @@ class GlTools_ABC;
 // =============================================================================
 class ColorStrategy : public ColorStrategy_ABC
                     , public Observer_ABC
-                    , public ElementObserver_ABC< Team >
+                    , public ElementObserver_ABC< Team_ABC >
                     , public SelectionObserver_ABC
                     , public SelectionObserver_Base< Agent_ABC >
                     , public SelectionObserver_Base< Object_ABC >
@@ -69,8 +69,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team& );
-    virtual void NotifyDeleted( const Team& );
+    virtual void NotifyCreated( const Team_ABC& );
+    virtual void NotifyDeleted( const Team_ABC& );
 
     virtual void BeforeSelection();
     virtual void Select( const Agent_ABC& element );
@@ -94,7 +94,7 @@ private:
 
     //! @name Types 
     //@{
-    typedef std::map< const Team*, std::pair< std::string, QColor > > T_TeamColors;
+    typedef std::map< const Team_ABC*, std::pair< std::string, QColor > > T_TeamColors;
     typedef std::map< std::string, std::string >                      T_Synonyms;
     typedef std::map< std::string, QColor >                           T_Colors;
     //@}

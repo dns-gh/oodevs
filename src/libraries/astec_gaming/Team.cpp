@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/Team.cpp $
-// $Author: Ape $
-// $Modtime: 16/02/05 15:54 $
-// $Revision: 7 $
-// $Workfile: Team.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gaming_pch.h"
 #include "Team.h"
@@ -26,14 +17,15 @@
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory )
+Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory )
     : controller_( controller )
     , factory_( factory )
-    , strName_()
-    , nID_    ( nID  )
+    , name_()
+    , id_( id )
 {
-    input >> strName_;
-    controller_.Create( *this );
+    InterfaceContainer< Extension_ABC >::Register( *this );
+    input >> name_;
+    controller_.Create( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,21 +34,23 @@ Team::Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGr
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(Team_ABC*)this );
     DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::CreateKnowledgeGroup
-// Created: AGE 2006-02-15
+// Name: Team::Update
+// Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-void Team::CreateKnowledgeGroup( unsigned int id )
+void Team::DoUpdate( const KnowledgeGroupCreationMessage& message )
 {
+    unsigned long id;
+    message >> id;
     if( ! Resolver< KnowledgeGroup >::Find( id ) )
     {
         KnowledgeGroup* group = factory_.CreateKnowledgeGroup( id, *this );
         Resolver< KnowledgeGroup >::Register( id, *group );
-        controller_.Update( *this );
+        controller_.Update( *(Team_ABC*)this );
     };
 }
 
@@ -66,7 +60,7 @@ void Team::CreateKnowledgeGroup( unsigned int id )
 // -----------------------------------------------------------------------------
 unsigned long Team::GetId() const
 {
-    return nID_;
+    return id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,41 +69,5 @@ unsigned long Team::GetId() const
 // -----------------------------------------------------------------------------
 std::string Team::GetName() const
 {
-    return strName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::operator==
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool Team::operator==( const Team& team ) const
-{
-    return this == &team;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void Team::Select( ActionController& controller ) const
-{
-    // $$$$ SBO 2006-08-02:
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void Team::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    // $$$$ SBO 2006-08-02: 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void Team::Activate( ActionController& controller ) const
-{
-    // $$$$ SBO 2006-08-02: 
+    return name_;
 }

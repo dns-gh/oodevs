@@ -15,7 +15,7 @@
 #include "astec_kernel/IDManager.h"
 #include "astec_kernel/Resolver.h"
 
-class Team;
+class Team_ABC;
 class Agent_ABC;
 class AgentKnowledge;
 class Population_ABC;
@@ -35,14 +35,14 @@ class KnowledgeGroup : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, Controller& controller, const Team& team );
+             KnowledgeGroup( unsigned long nId, Controller& controller, const Team_ABC& team );
     virtual ~KnowledgeGroup();
     //@}
 
     //! @name Accessors & Modifiers
     //@{
-    bool IsInTeam( const Team& team ) const;
-    const Team& GetTeam() const;
+    bool IsInTeam( const Team_ABC& team ) const;
+    const Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
     void AddAutomat( unsigned long id, Agent_ABC& automat );
@@ -67,7 +67,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Team& team_;
+    const Team_ABC& team_;
     unsigned long      nID_;
     //@}
 

@@ -16,7 +16,7 @@ class ObjectKnowledge;
 class Controllers;
 class Model;
 class StaticModel;
-class Team;
+class Team_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledgeFactory
@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ObjectKnowledge* Create( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
+    virtual ObjectKnowledge* Create( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
     //@}
 
 private:

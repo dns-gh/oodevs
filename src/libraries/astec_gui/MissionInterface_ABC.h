@@ -86,6 +86,7 @@ protected:
     void CreateNumeric            ( ASN1REAL& asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateLimaList           ( ASN1T_ListOID& asn             , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateLimits             ( ASN1T_OID& id1, ASN1T_OID& id2 , const std::string& name1, const std::string& name2, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateDotationDType      ( ASN1T_TypeDotationTrancheD& asn, const std::string& name   , OptionalParamFunctor_ABC* pOptional = 0 );
 
     void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateMedicalPriorities    ( ASN1T_SantePriorites&       asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );

@@ -20,12 +20,14 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 DotationType::DotationType( const std::string& dotationName, xistream& xis )
     : name_( dotationName )
+    , nameId_( ENT_Tr::ConvertToFamilleDotation( name_ ) )
     , gaz_( name_ == "carburant" ) // $$$$ AGE 2006-04-10: 
     , ammunition_( name_ == "munition" )
-    , nameId_( ENT_Tr::ConvertToFamilleDotation( name_ ) )
+    , dType_( false )
 {
     int id;
     xis >> attribute( "nom", category_ )
+        >> list( "TrancheD", *this, &DotationType::ReadDType )
         >> content( "MosID", id );
     id_ = id;
 }
@@ -37,6 +39,15 @@ DotationType::DotationType( const std::string& dotationName, xistream& xis )
 DotationType::~DotationType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::ReadDType
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+void DotationType::ReadDType( xml::xistream& )
+{
+    dType_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,4 +102,13 @@ bool DotationType::IsAmmunition() const
 unsigned long DotationType::GetFamily() const
 {
     return nameId_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::IsDType
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+bool DotationType::IsDType() const
+{
+    return dType_;
 }

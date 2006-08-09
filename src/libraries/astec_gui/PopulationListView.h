@@ -16,7 +16,7 @@
 
 class Controllers;
 class Population_ABC;
-class Team;
+class Team_ABC;
 class ItemFactory_ABC;
 
 // =============================================================================
@@ -70,7 +70,7 @@ private:
     Controllers& controllers_;
     ItemFactory_ABC& factory_;
     QPopupMenu* pPopupMenu_;
-    const Team* currentTeam_;
+    const Team_ABC* currentTeam_;
     //@}
 };
 

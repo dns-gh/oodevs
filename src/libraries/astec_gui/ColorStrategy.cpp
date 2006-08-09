@@ -13,7 +13,7 @@
 
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/KnowledgeGroup.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Object_ABC.h"
 #include "astec_kernel/Population_ABC.h"
@@ -121,7 +121,7 @@ void ColorStrategy::AfterSelection()
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Agent_ABC& agent )
 {
-    const Team& team = agent.GetTeam();
+    const Team_ABC& team = agent.GetTeam();
     QColor color = teamColors_[ &team ].second;
     if( selectedAgent_ == &agent )
     {
@@ -146,7 +146,7 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Object_ABC& object )
 {
-    const Team& team = object.GetTeam();
+    const Team_ABC& team = object.GetTeam();
     QColor color = teamColors_[ &team ].second;
     if( selectedObject_ == &object )
         color = SelectedColor( color );
@@ -160,7 +160,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Population_ABC& population )
 {
-    const Team& team = population.GetTeam();
+    const Team_ABC& team = population.GetTeam();
      QColor color = teamColors_[ &team ].second;
     if( selectedPopulation_ == &population )
         color = SelectedColor( color );
@@ -175,7 +175,7 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 void ColorStrategy::SelectColor( const AgentKnowledge& k )
 {
     QColor color( 255, 255, 255 );
-    const Team* team = k.GetKnowledgeTeam();
+    const Team_ABC* team = k.GetKnowledgeTeam();
     if( team )
         color = teamColors_[ team ].second;
     color = KnowledgeColor( color );
@@ -189,7 +189,7 @@ void ColorStrategy::SelectColor( const AgentKnowledge& k )
 void ColorStrategy::SelectColor( const ObjectKnowledge& k )
 {
     QColor color( 255, 255, 255 );
-    const Team* team = k.GetKnowledgeTeam();
+    const Team_ABC* team = k.GetKnowledgeTeam();
     if( team )
         color = teamColors_[ team ].second;
     color = KnowledgeColor( color );
@@ -203,7 +203,7 @@ void ColorStrategy::SelectColor( const ObjectKnowledge& k )
 void ColorStrategy::SelectColor( const PopulationKnowledge& k )
 {
     QColor color( 255, 255, 255 );
-    const Team* team = k.GetKnowledgeTeam();
+    const Team_ABC* team = k.GetKnowledgeTeam();
     if( team )
         color = teamColors_[ team ].second;
     color = KnowledgeColor( color );
@@ -303,7 +303,7 @@ void ColorStrategy::CreateNewColor( const std::string& name  )
 // Name: ColorStrategy::NotifyCreated
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void ColorStrategy::NotifyCreated( const Team& team )
+void ColorStrategy::NotifyCreated( const Team_ABC& team )
 {
     std::string name = team.GetName();
     std::transform( name.begin(), name.end(), name.begin(), tolower );
@@ -324,7 +324,7 @@ void ColorStrategy::NotifyCreated( const Team& team )
 // Name: ColorStrategy::NotifyDeleted
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void ColorStrategy::NotifyDeleted( const Team& team )
+void ColorStrategy::NotifyDeleted( const Team_ABC& team )
 {
     T_TeamColors::iterator it = teamColors_.find( &team );
     if( it != teamColors_.end() )

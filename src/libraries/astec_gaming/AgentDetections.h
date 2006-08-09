@@ -19,7 +19,7 @@
 
 class Controller;
 class Agent_ABC;
-class Team;
+class Team_ABC;
 
 // =============================================================================
 /** @class  AgentDetections
@@ -35,7 +35,7 @@ class AgentDetections : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team& team );
+             AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team_ABC& team );
     virtual ~AgentDetections();
     //@}
 
@@ -67,7 +67,7 @@ private:
     //@{
     Controller& controller_;
     const Resolver_ABC< Agent_ABC >& resolver_;
-    const Team& team_;
+    const Team_ABC& team_;
 
     T_AgentDetections detections_;
     //@}

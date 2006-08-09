@@ -19,7 +19,7 @@
 #include "astec_kernel/Drawable_ABC.h"
 
 class Controller;
-class Team;
+class Team_ABC;
 class ObjectType;
 class DotationType;
 class Displayer_ABC;
@@ -38,14 +38,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter_ABC& converter,
-                     const Resolver_ABC< Team >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
+                     const Resolver_ABC< Team_ABC >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
                      const Resolver_ABC< DotationType >& dotationResolver );
     virtual ~Object();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team& team ) const;
+    virtual bool IsInTeam( const Team_ABC& team ) const;
     virtual void Display( Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
@@ -59,7 +59,7 @@ public:
     //@{
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
-    virtual const Team& GetTeam() const;
+    virtual const Team_ABC& GetTeam() const;
     virtual ObjectType& GetType() const;
     //@}
     
@@ -84,7 +84,7 @@ public:
     ObjectType&   type_;
     unsigned long nId_;
     std::string   strName_;
-    Team&         team_;
+    Team_ABC&     team_;
 
     float rConstructionPercentage_;
     float rValorizationPercentage_;

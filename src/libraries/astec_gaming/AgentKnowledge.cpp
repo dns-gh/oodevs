@@ -19,7 +19,7 @@
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "KnowledgeGroup.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/GlTools_ABC.h"
 
 IDManager AgentKnowledge::idManager_( 158 );
@@ -28,7 +28,7 @@ IDManager AgentKnowledge::idManager_( 158 );
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team >& teamResolver )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver )
     : controller_  ( controller )
     , converter_   ( converter )
     , resolver_    ( resolver )
@@ -178,7 +178,7 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // Name: AgentKnowledge::IsInTeam
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-bool AgentKnowledge::IsInTeam( const Team& team ) const
+bool AgentKnowledge::IsInTeam( const Team_ABC& team ) const
 {
     return group_.GetTeam() == team;
 }
@@ -187,7 +187,7 @@ bool AgentKnowledge::IsInTeam( const Team& team ) const
 // Name: AgentKnowledge::KnowledgeIsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool AgentKnowledge::KnowledgeIsInTeam( const Team& team ) const
+bool AgentKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
     return team_ && *team_ == team;
 }
@@ -212,7 +212,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Recta
 // Name: AgentKnowledge::GetKnowledgeTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-const Team* AgentKnowledge::GetKnowledgeTeam() const
+const Team_ABC* AgentKnowledge::GetKnowledgeTeam() const
 {
     return team_;
 }

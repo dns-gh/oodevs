@@ -20,5 +20,6 @@ DECLARE_MESSAGE_WRAPPER( ConcentrationDetectionMessage );
 DECLARE_MESSAGE_WRAPPER( FlowDetectionMessage );
 DECLARE_MESSAGE_WRAPPER( PopulationCollisionMessage );
 DECLARE_MESSAGE_WRAPPER( ObjectDetectionMessage );
+DECLARE_MESSAGE_WRAPPER( KnowledgeGroupCreationMessage );
 
 #endif // __DIN_Astec_Types_h_

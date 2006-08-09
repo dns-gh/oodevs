@@ -7,32 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __KnowledgeGroupFactory_ABC_h_
-#define __KnowledgeGroupFactory_ABC_h_
+#ifndef __ParamDotationDType_h_
+#define __ParamDotationDType_h_
 
-class KnowledgeGroup;
-class Team_ABC;
+#include "astec_gaming/ASN_Types.h"
+#include "ParamComboBox.h"
+#include "astec_kernel/Resolver.h"
+
+class DotationType;
 
 // =============================================================================
-/** @class  KnowledgeGroupFactory_ABC
-    @brief  KnowledgeGroupFactory_ABC
+/** @class  ParamDotationDType
+    @brief  ParamDotationDType
 */
-// Created: AGE 2006-02-15
+// Created: SBO 2006-08-09
 // =============================================================================
-class KnowledgeGroupFactory_ABC
+class ParamDotationDType : public ParamComboBox< ASN1T_TypeDotationTrancheD >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory_ABC() {};
-    virtual ~KnowledgeGroupFactory_ABC() {};
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual KnowledgeGroup* CreateKnowledgeGroup( unsigned long id, const Team_ABC& team ) = 0;
+             ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asnListEquipment, const std::string& label, const Resolver< DotationType >& resolver );
+    virtual ~ParamDotationDType();
     //@}
 };
 
-#endif // __KnowledgeGroupFactory_ABC_h_
+#endif // __ParamDotationDType_h_

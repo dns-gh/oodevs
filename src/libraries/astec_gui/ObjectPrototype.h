@@ -19,7 +19,7 @@
 
 class Controllers;
 class StaticModel;
-class Team;
+class Team_ABC;
 class ObjectType;
 class ObjectPrototypeAttributes_ABC;
 class CampPrototype;
@@ -41,7 +41,7 @@ class ASN_MsgObjectMagicAction;
 // =============================================================================
 class ObjectPrototype : public QGroupBox
                       , public Observer_ABC
-                      , public ElementObserver_ABC< Team >
+                      , public ElementObserver_ABC< Team_ABC >
                       , public ShapeHandler_ABC
 {
     Q_OBJECT
@@ -80,8 +80,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team& team );
-    virtual void NotifyDeleted( const Team& team );
+    virtual void NotifyCreated( const Team_ABC& team );
+    virtual void NotifyDeleted( const Team_ABC& team );
     virtual void showEvent( QShowEvent* );
     virtual void hideEvent( QHideEvent* );
     //@}
@@ -93,7 +93,7 @@ private:
     const StaticModel& static_;
     ParametersLayer& layer_;
 
-    ValuedComboBox< const Team* >* teams_;
+    ValuedComboBox< const Team_ABC* >* teams_;
     ValuedComboBox< const ObjectType* >* objectTypes_;
     QLineEdit* name_;
 

@@ -17,7 +17,6 @@ class Agent_ABC;
 class Entity_ABC;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
-class Team;
 class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogMedicalConsign;

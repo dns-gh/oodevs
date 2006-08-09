@@ -17,7 +17,7 @@
 #include "astec_gaming/StaticModel.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_gaming/AgentsModel.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/ObjectType.h"
 #include "astec_kernel/ObjectTypes.h"
 #include "GroupDisplayer.h"
@@ -51,7 +51,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     name_ = new QLineEdit( this );
 
     new QLabel( tr( "Camp:" ), this );
-    teams_ = new ValuedComboBox< const Team* >( this );
+    teams_ = new ValuedComboBox< const Team_ABC* >( this );
 
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
@@ -192,7 +192,7 @@ void ObjectPrototype::Clean()
 // Name: ObjectPrototype::NotifyCreated
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::NotifyCreated( const Team& team )
+void ObjectPrototype::NotifyCreated( const Team_ABC& team )
 {
     if( teams_->GetItemIndex( &team ) != -1 )
         return;
@@ -203,7 +203,7 @@ void ObjectPrototype::NotifyCreated( const Team& team )
 // Name: ObjectPrototype::NotifyDeleted
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::NotifyDeleted( const Team& team )
+void ObjectPrototype::NotifyDeleted( const Team_ABC& team )
 {
     teams_->RemoveItem( &team );
 }

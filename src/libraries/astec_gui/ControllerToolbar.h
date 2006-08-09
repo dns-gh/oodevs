@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ControllerToolbar.h $
-// $Author: Age $
-// $Modtime: 14/04/05 12:53 $
-// $Revision: 2 $
-// $Workfile: ControllerToolbar.h $
-//
-// *****************************************************************************
 
 #ifndef __ControllerToolbar_h_
 #define __ControllerToolbar_h_
@@ -23,7 +14,7 @@
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_kernel/OptionsObserver_ABC.h"
 
-class Team;
+class Team_ABC;
 class Controllers;
 
 // =============================================================================
@@ -34,7 +25,7 @@ class Controllers;
 // =============================================================================
 class ControllerToolbar : public QToolBar
                         , public Observer_ABC
-                        , public ElementObserver_ABC< Team >
+                        , public ElementObserver_ABC< Team_ABC >
 {
     Q_OBJECT;
 
@@ -56,8 +47,8 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team& );
-    virtual void NotifyDeleted( const Team& );
+    virtual void NotifyCreated( const Team_ABC& );
+    virtual void NotifyDeleted( const Team_ABC& );
     //@}
 
 private:
@@ -71,7 +62,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    std::vector< const Team* > teams_;
+    std::vector< const Team_ABC* > teams_;
     QComboBox* pTeamCombo_;
     //@}
 };

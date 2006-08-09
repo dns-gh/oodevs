@@ -17,7 +17,7 @@
 #include "astec_kernel/SafePointer.h"
 
 template< typename T > class ListDisplayer;
-class Team;
+class Team_ABC;
 class ObjectKnowledges;
 class ObjectKnowledge;
 class CampAttributes;
@@ -93,7 +93,7 @@ private:
     void DisplayExtension( const T& extension );
     template< typename T >
     void UpdateExtension( const ObjectKnowledge& k );
-    virtual void Select( const Team* );
+    virtual void Select( const Team_ABC* );
     //@}
 
 private:
@@ -101,7 +101,7 @@ private:
     //@{
     Controllers& controllers_;
 
-    SafePointer< Team > owner_;
+    SafePointer< Team_ABC > owner_;
     SafePointer< ObjectKnowledges > selected_;
     ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 

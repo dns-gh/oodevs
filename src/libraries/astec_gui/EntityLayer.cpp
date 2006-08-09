@@ -87,7 +87,7 @@ bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 // Name: EntityLayerBase::IsInTeam
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::IsInTeam( const Entity_ABC&, const Team& )
+bool EntityLayerBase::IsInTeam( const Entity_ABC&, const Team_ABC& )
 {
     return true;
 }
@@ -202,7 +202,7 @@ bool EntityLayerBase::DisplayTooltip( const Entity_ABC&, Displayer_ABC& )
 void EntityLayerBase::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team* >();
+        currentTeam_ = value.To< const Team_ABC* >();
 }
 
 // -----------------------------------------------------------------------------

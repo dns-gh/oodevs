@@ -19,7 +19,7 @@
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/Displayer_ABC.h"
 #include "KnowledgeGroup.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
@@ -174,7 +174,7 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 // Name: PopulationKnowledge::IsInTeam
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-bool PopulationKnowledge::IsInTeam( const Team& team ) const
+bool PopulationKnowledge::IsInTeam( const Team_ABC& team ) const
 {
      return group_.IsInTeam( team );
 }
@@ -183,7 +183,7 @@ bool PopulationKnowledge::IsInTeam( const Team& team ) const
 // Name: PopulationKnowledge::KnowledgeIsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool PopulationKnowledge::KnowledgeIsInTeam( const Team& team ) const
+bool PopulationKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
     return popu_.GetTeam() == team;
 }
@@ -210,7 +210,7 @@ const Population_ABC& PopulationKnowledge::GetRealPopulation() const
 // Name: PopulationKnowledge::GetKnowledgeTeam
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const Team* PopulationKnowledge::GetKnowledgeTeam() const
+const Team_ABC* PopulationKnowledge::GetKnowledgeTeam() const
 {
     return & popu_.GetTeam();
 }

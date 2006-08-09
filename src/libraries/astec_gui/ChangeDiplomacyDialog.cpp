@@ -14,7 +14,7 @@
 #include "astec_kernel/Controllers.h"
 
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog constructor
@@ -102,7 +102,7 @@ void ChangeDiplomacyDialog::Reject()
 // Name: ChangeDiplomacyDialog::NotifyCreated
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyCreated( const Team& team )
+void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 {
     pArmy1ComboBox_->AddItem( team.GetName().c_str(), team.GetId() );
     pArmy2ComboBox_->AddItem( team.GetName().c_str(), team.GetId() );
@@ -112,7 +112,7 @@ void ChangeDiplomacyDialog::NotifyCreated( const Team& team )
 // Name: ChangeDiplomacyDialog::NotifyDeleted
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyDeleted( const Team& team )
+void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 {
     pArmy1ComboBox_->RemoveItem( team.GetId() );
     pArmy2ComboBox_->RemoveItem( team.GetId() );
@@ -122,7 +122,7 @@ void ChangeDiplomacyDialog::NotifyDeleted( const Team& team )
 // Name: ChangeDiplomacyDialog::NotifyContextMenu
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void ChangeDiplomacyDialog::NotifyContextMenu( const Team& team, ContextMenu& menu )
+void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
     pArmy1ComboBox_->SetCurrentItem( team.GetId() );
     menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );

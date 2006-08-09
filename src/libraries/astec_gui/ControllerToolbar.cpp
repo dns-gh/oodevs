@@ -6,20 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ControllerToolbar.cpp $
-// $Author: Age $
-// $Modtime: 14/04/05 12:53 $
-// $Revision: 2 $
-// $Workfile: ControllerToolbar.cpp $
-//
-// *****************************************************************************
 
 #include "astec_gui_pch.h"
 #include "ControllerToolbar.h"
 #include "moc_ControllerToolbar.cpp"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Options.h"
 
@@ -69,7 +60,7 @@ ControllerToolbar::~ControllerToolbar()
 // -----------------------------------------------------------------------------
 void ControllerToolbar::OnTeamChanged( int nValue )
 {
-    const Team* current = teams_.at( nValue );
+    const Team_ABC* current = teams_.at( nValue );
     controllers_.options_.Change( "CurrentTeam", current );
 }
 
@@ -101,7 +92,7 @@ void ControllerToolbar::LaunchScipioDbg()
 // Name: ControllerToolbar::NotifyCreated
 // Created: AGE 2006-03-27
 // -----------------------------------------------------------------------------
-void ControllerToolbar::NotifyCreated( const Team& team )
+void ControllerToolbar::NotifyCreated( const Team_ABC& team )
 {
     teams_.push_back( &team );
     pTeamCombo_->insertItem( team.GetName().c_str(), teams_.size() - 1 );
@@ -111,7 +102,7 @@ void ControllerToolbar::NotifyCreated( const Team& team )
 // Name: ControllerToolbar::NotifyDeleted
 // Created: AGE 2006-03-27
 // -----------------------------------------------------------------------------
-void ControllerToolbar::NotifyDeleted( const Team& team )
+void ControllerToolbar::NotifyDeleted( const Team_ABC& team )
 {
     for( unsigned i = 0; i < teams_.size(); ++i )
         if( teams_.at( i ) == &team )

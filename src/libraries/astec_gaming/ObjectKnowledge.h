@@ -22,7 +22,7 @@ class Displayer_ABC;
 class Object_ABC;
 class Controller;
 class Agent_ABC;
-class Team;
+class Team_ABC;
 class CoordinateConverter_ABC;
 class ObjectType;
 
@@ -41,7 +41,7 @@ class ObjectKnowledge : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const Team& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
+             ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
                               Controller& controller, const CoordinateConverter_ABC& converter,
                               const Resolver_ABC< Object_ABC >& objectResolver,
                               const Resolver_ABC< Agent_ABC >& agentResolver, 
@@ -58,9 +58,9 @@ public:
     void DisplayInList( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
-    bool IsInTeam( const Team& team ) const;
-    bool KnowledgeIsInTeam( const Team& team ) const;
-    const Team* GetKnowledgeTeam() const;
+    bool IsInTeam( const Team_ABC& team ) const;
+    bool KnowledgeIsInTeam( const Team_ABC& team ) const;
+    const Team_ABC* GetKnowledgeTeam() const;
 
 
     virtual void Select( ActionController& controller ) const;
@@ -92,7 +92,7 @@ private:
     const Resolver_ABC< Object_ABC >& objectResolver_;
     const Resolver_ABC< Agent_ABC >& agentResolver_;
     Controller& controller_;
-    const Team& owner_;
+    const Team_ABC& owner_;
 
     unsigned long id_;
     const ObjectType* type_;

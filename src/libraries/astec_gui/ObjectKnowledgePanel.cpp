@@ -21,7 +21,7 @@
 #include "astec_gaming/LogisticRouteAttributes.h"
 #include "astec_gaming/NBCAttributes.h"
 #include "astec_gaming/RotaAttributes.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel constructor
@@ -216,7 +216,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes& element )
 // Name: ObjectKnowledgePanel::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Select( const Team* team )
+void ObjectKnowledgePanel::Select( const Team_ABC* team )
 {
     owner_ = team;
     const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;

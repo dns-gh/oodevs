@@ -18,7 +18,7 @@
 #include "Aggregatable_ABC.h"
 
 class KnowledgeGroup;
-class Team;
+class Team_ABC;
 class AgentType;
 class AutomatType;
 
@@ -41,9 +41,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const Team& team ) const = 0; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
+    virtual bool IsInTeam( const Team_ABC& team ) const = 0; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual const Agent_ABC* GetSuperior() const = 0;
-    virtual const Team& GetTeam() const = 0;
+    virtual const Team_ABC& GetTeam() const = 0;
     virtual KnowledgeGroup& GetKnowledgeGroup() const = 0;
 
     virtual std::string GetName() const = 0;

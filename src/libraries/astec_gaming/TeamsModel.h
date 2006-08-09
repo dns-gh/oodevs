@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 #include "astec_kernel/Resolver.h"
 
-class Team;
+class Team_ABC;
 class TeamFactory_ABC;
 class KnowledgeGroup;
 
@@ -28,7 +28,7 @@ namespace DIN {
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class TeamsModel : public Resolver< Team >
+class TeamsModel : public Resolver< Team_ABC >
 {
 
 public:
@@ -43,8 +43,8 @@ public:
     void Purge();
 
     void CreateTeam( DIN::DIN_Input& );
-    Team& GetTeam( unsigned long id );
-    Team* FindTeam( const std::string& team );
+    Team_ABC& GetTeam( unsigned long id );
+    Team_ABC* FindTeam( const std::string& team );
 
     KnowledgeGroup* FindKnowledgeGroup( const unsigned long& identifier ) const;
     //@}

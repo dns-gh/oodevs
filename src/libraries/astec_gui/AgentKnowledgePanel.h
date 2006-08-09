@@ -26,7 +26,7 @@ class PerceptionMap;
 class Perception;
 class Displayer_ABC;
 class ValuedListItem;
-class Team;
+class Team_ABC;
 class ItemFactory_ABC;
 
 // =============================================================================
@@ -92,7 +92,7 @@ private:
     DisplayBuilder* display_;
     ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
-    SafePointer< Team >            owner_;
+    SafePointer< Team_ABC >        owner_;
     SafePointer< AgentKnowledges > selected_;
     SafePointer< AgentKnowledge >  subSelected_;
     QCheckBox* pOwnTeamCheckBox_;

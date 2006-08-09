@@ -21,7 +21,7 @@
 
 class Controller;
 class CoordinateConverter_ABC;
-class Team;
+class Team_ABC;
 class Population_ABC;
 class TypePopulation;
 class Displayer_ABC;
@@ -53,9 +53,9 @@ public:
 
     void Display( Displayer_ABC& displayer ) const;
     void DisplayInList( Displayer_ABC& displayer ) const;
-    bool IsInTeam( const Team& team ) const;
-    bool KnowledgeIsInTeam( const Team& team ) const;
-    const Team* GetKnowledgeTeam() const;
+    bool IsInTeam( const Team_ABC& team ) const;
+    bool KnowledgeIsInTeam( const Team_ABC& team ) const;
+    const Team_ABC* GetKnowledgeTeam() const;
 
     const KnowledgeGroup& GetKnowledgeGroup() const;
     const Population_ABC& GetRealPopulation() const;

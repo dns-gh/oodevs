@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "TeamsModel.h"
 #include "DIN/DIN_Input.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "TeamFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
-    Resolver< Team >::DeleteAll();
+    Resolver< Team_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +49,10 @@ void TeamsModel::CreateTeam( DIN::DIN_Input& input )
 {
     unsigned long id;
     input >> id;
-    if( ! Resolver< Team >::Find( id ) )
+    if( ! Resolver< Team_ABC >::Find( id ) )
     {
-        Team* team = factory_.CreateTeam( id, input );
-        Resolver< Team >::Register( id, *team );
+        Team_ABC* team = factory_.CreateTeam( id, input );
+        Resolver< Team_ABC >::Register( id, *team );
     }
 }
  
@@ -60,18 +60,18 @@ void TeamsModel::CreateTeam( DIN::DIN_Input& input )
 // Name: TeamsModel::GetTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Team& TeamsModel::GetTeam( unsigned long id )
+Team_ABC& TeamsModel::GetTeam( unsigned long id )
 {
-    return Resolver< Team >::Get( id );
+    return Resolver< Team_ABC >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TeamsModel::FindTeam
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Team* TeamsModel::FindTeam( const std::string& team )
+Team_ABC* TeamsModel::FindTeam( const std::string& team )
 {
-    for( Resolver< Team >::CIT_Elements it = Resolver< Team >::elements_.begin(); it != Resolver< Team >::elements_.end(); ++it )
+    for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
         if( it->second->GetName() == team )
             return it->second;
     return 0;
@@ -83,7 +83,7 @@ Team* TeamsModel::FindTeam( const std::string& team )
 // -----------------------------------------------------------------------------
 KnowledgeGroup* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
 {
-    for( Resolver< Team >::CIT_Elements it = Resolver< Team >::elements_.begin(); it != Resolver< Team >::elements_.end(); ++it )
+    for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
     {
         Resolver_ABC< KnowledgeGroup >& team = *it->second;
         KnowledgeGroup* group = team.Find( id );

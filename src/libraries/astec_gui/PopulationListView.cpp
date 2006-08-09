@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "PopulationListView.h"
 #include "astec_kernel/Population_ABC.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/Controllers.h"
@@ -60,7 +60,7 @@ PopulationListView::~PopulationListView()
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyCreated( const Population_ABC& popu )
 {
-    const Team& team = popu.GetTeam();
+    const Team_ABC& team = popu.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {
@@ -140,7 +140,7 @@ void PopulationListView::Select( const Population_ABC& popu )
 void PopulationListView::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team* >();
+        currentTeam_ = value.To< const Team_ABC* >();
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {

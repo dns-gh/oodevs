@@ -27,7 +27,7 @@ class Agent_ABC;
 class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
 class ValuedListItem;
-class Team;
+class Team_ABC;
 class ItemFactory_ABC;
 
 // =============================================================================
@@ -85,7 +85,7 @@ private:
     //! @name Member data
     //@{
     Controllers& controllers_;
-    SafePointer< Team > owner_;
+    SafePointer< Team_ABC > owner_;
     ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     DisplayBuilder* display_;
     SafePointer< PopulationKnowledges >        selected_;

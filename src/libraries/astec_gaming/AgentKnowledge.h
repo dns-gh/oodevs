@@ -22,7 +22,7 @@
 class Agent_ABC;
 class Controller;
 class Displayer_ABC;
-class Team;
+class Team_ABC;
 class CoordinateConverter_ABC;
 class KnowledgeGroup;
 
@@ -42,15 +42,15 @@ public:
     //! @name Constructor / Destructor
     //@{
              AgentKnowledge( const KnowledgeGroup& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
-                             const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team >& teamResolver );
+                             const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
 
     //! @name operations
     //@{
     void Display( Displayer_ABC& displayer ) const;
-    bool IsInTeam( const Team& team ) const;
-    bool KnowledgeIsInTeam( const Team& team ) const;
+    bool IsInTeam( const Team_ABC& team ) const;
+    bool KnowledgeIsInTeam( const Team_ABC& team ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
     virtual void Select( ActionController& controller ) const;
@@ -63,7 +63,7 @@ public:
     virtual unsigned long GetId       () const;
     virtual std::string   GetName     () const;
     Agent_ABC&                GetRealAgent() const;
-    const Team*           GetKnowledgeTeam() const;
+    const Team_ABC*           GetKnowledgeTeam() const;
     const KnowledgeGroup& GetKnowledgeGroup() const;
     //@}
 
@@ -77,12 +77,12 @@ public:
     Controller& controller_;
     const CoordinateConverter_ABC& converter_;
     const Resolver_ABC< Agent_ABC >& resolver_;
-    const Resolver_ABC< Team >& teamResolver_;
+    const Resolver_ABC< Team_ABC >& teamResolver_;
     const KnowledgeGroup& group_;
 
     unsigned long nID_;
     Agent_ABC&      realAgent_;
-    const Team* team_;
+    const Team_ABC* team_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
     OptionalValue< std::string >                strPosition_;

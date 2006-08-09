@@ -17,7 +17,7 @@
 // Name: ObjectKnowledges constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledges::ObjectKnowledges( const Team& team, Controller& controller, ObjectKnowledgeFactory& factory )
+ObjectKnowledges::ObjectKnowledges( const Team_ABC& team, Controller& controller, ObjectKnowledgeFactory& factory )
     : team_( team )
     , controller_( controller )
     , factory_( factory )

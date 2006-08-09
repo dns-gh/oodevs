@@ -15,7 +15,7 @@
 #include "astec_kernel/Updatable_ABC.h"
 #include "astec_kernel/Resolver_ABC.h"
 
-class Team;
+class Team_ABC;
 class Controller;
 
 // =============================================================================
@@ -32,7 +32,7 @@ class Diplomacies : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacies( Controller& controller, const Resolver_ABC< Team >& resolver );
+             Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver );
     virtual ~Diplomacies();
     //@}
 
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Resolver_ABC< Team >& resolver_;
+    const Resolver_ABC< Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
     //@}
 };

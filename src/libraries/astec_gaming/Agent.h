@@ -51,8 +51,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team& team ) const;
-    virtual const Team& GetTeam() const;
+    virtual bool IsInTeam( const Team_ABC& team ) const;
+    virtual const Team_ABC& GetTeam() const;
     virtual KnowledgeGroup& GetKnowledgeGroup() const;
     virtual const Agent_ABC* GetSuperior() const;
 

@@ -10,7 +10,7 @@
 #include "astec_gui_pch.h"
 #include "ObjectListView.h"
 #include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "Tools.h"
 #include "astec_gaming/ASN_Messages.h"
 #include "astec_kernel/Controller.h"
@@ -89,7 +89,7 @@ void ObjectListView::OnRequestCenter()
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyCreated( const Object_ABC& object )
 {
-    const Team& team = object.GetTeam();
+    const Team_ABC& team = object.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {
@@ -154,7 +154,7 @@ void ObjectListView::Select( const Object_ABC& object )
 void ObjectListView::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team* >();
+        currentTeam_ = value.To< const Team_ABC* >();
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {

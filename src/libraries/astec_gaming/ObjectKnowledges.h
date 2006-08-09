@@ -18,7 +18,7 @@
 class ObjectKnowledge;
 class Controller;
 class ObjectKnowledgeFactory;
-class Team;
+class Team_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledges
@@ -36,7 +36,7 @@ class ObjectKnowledges : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledges( const Team& team, Controller& controller, ObjectKnowledgeFactory& factory );
+             ObjectKnowledges( const Team_ABC& team, Controller& controller, ObjectKnowledgeFactory& factory );
     virtual ~ObjectKnowledges();
     //@}
 
@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Team& team_;
+    const Team_ABC& team_;
     Controller& controller_;
     ObjectKnowledgeFactory& factory_;
     //@}

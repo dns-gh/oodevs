@@ -9,14 +9,14 @@
 
 #include "astec_gaming_pch.h"
 #include "Diplomacies.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacies constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team >& resolver )
+Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {
@@ -39,8 +39,8 @@ Diplomacies::~Diplomacies()
 template< typename T >
 void Diplomacies::UpdateData( const T& message )
 {
-    Team* team1 = & resolver_.Get( message.oid_camp1 );
-    Team* team2 = & resolver_.Get( message.oid_camp2 );
+    Team_ABC* team1 = & resolver_.Get( message.oid_camp1 );
+    Team_ABC* team2 = & resolver_.Get( message.oid_camp2 );
     if( & team1->Get< Diplomacies >() != this )
         diplomacies_[ & team1->Get< Diplomacies >() ] = message.diplomatie;
     if( & team2->Get< Diplomacies >() != this )

@@ -22,7 +22,7 @@
 #include "LogisticSupplyRecompletionDialog.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "astec_gaming/KnowledgeGroup.h"
-#include "astec_gaming/Team.h"
+#include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor
@@ -112,7 +112,7 @@ void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup& group, Conte
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const Team& team, ContextMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
     if( !controller_ )
         return;
@@ -144,7 +144,7 @@ void MagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 void MagicOrdersInterface::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
-        controller_ = value.To< const Team* >() == 0;
+        controller_ = value.To< const Team_ABC* >() == 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup& group, int id
 // Name: MagicOrdersInterface::ApplyOnHierarchy
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::ApplyOnHierarchy( const Team& team, int id )
+void MagicOrdersInterface::ApplyOnHierarchy( const Team_ABC& team, int id )
 {
     team.Resolver< KnowledgeGroup >::Apply( RecursiveMagicFunctor( publisher_, id ) );
 }

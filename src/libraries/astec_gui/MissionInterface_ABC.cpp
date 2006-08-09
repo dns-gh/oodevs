@@ -32,6 +32,7 @@
 #include "ParamNumericField.h"
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
+#include "ParamDotationDType.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Object_ABC.h"
 #include "astec_gaming/ObjectKnowledge.h"
@@ -392,4 +393,13 @@ void MissionInterface_ABC::CreateLimaList( ASN1T_ListOID& asn, const std::string
 void MissionInterface_ABC::CreateLimits( ASN1T_OID& id1, ASN1T_OID& id2 , const std::string& name1, const std::string& name2, OptionalParamFunctor_ABC* pOptional )
 {
     AddParameter( *new ParamLimits( this, id1, id2, "Limite 1", "Limite 2", name1, name2 ), pOptional );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CreateDotationDType
+// Created: SBO 2006-08-09
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CreateDotationDType( ASN1T_TypeDotationTrancheD& asn, const std::string& name, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
+{
+    AddParameter( *new ParamDotationDType( this, asn, name, objectTypes_ ), pOptional );
 }

@@ -23,7 +23,7 @@ class GlTools_ABC;
 class ColorStrategy_ABC;
 class View_ABC;
 class Entity_ABC;
-class Team;
+class Team_ABC;
 class GlTooltip;
 class Displayer_ABC;
 
@@ -71,7 +71,7 @@ protected:
     virtual void Select     ( const Entity_ABC&, bool );
     virtual void ContextMenu( const Entity_ABC&, const QPoint& );
     virtual bool ShouldDisplay( const Entity_ABC& );
-    virtual bool IsInTeam     ( const Entity_ABC&, const Team& team );
+    virtual bool IsInTeam     ( const Entity_ABC&, const Team_ABC& team );
 
     virtual bool ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( unsigned i, const geometry::Point2f& point );
@@ -104,7 +104,7 @@ private:
 
 protected: // $$$$ AGE 2006-05-17: 
     unsigned selected_;
-    SafePointer< Team > currentTeam_;
+    SafePointer< Team_ABC > currentTeam_;
     //@}
 };
 
@@ -144,7 +144,7 @@ protected:
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelected( const ConcreteEntity* );
     virtual void SelectColor( const Entity_ABC& );
-    virtual bool IsInTeam   ( const Entity_ABC&, const Team& team );
+    virtual bool IsInTeam   ( const Entity_ABC&, const Team_ABC& team );
     virtual bool DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer );
     virtual void DisplayTooltip( const ConcreteEntity& entity, Displayer_ABC& displayer );
     //@}

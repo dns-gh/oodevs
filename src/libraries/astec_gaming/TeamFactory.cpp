@@ -44,7 +44,7 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
+Team_ABC* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 {
     Team* result = new Team( id, input, controllers_.controller_, *this );
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
@@ -56,7 +56,7 @@ Team* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team& team  )
+KnowledgeGroup* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team_ABC& team  )
 {
     KnowledgeGroup* result = new KnowledgeGroup( id, controllers_.controller_, team );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );

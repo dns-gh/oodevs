@@ -10,7 +10,7 @@
 #include "astec_gaming_pch.h"
 #include "KnowledgeGroup.h"
 #include "astec_kernel/Controller.h"
-#include "Team.h"
+#include "astec_kernel/Team_ABC.h"
 
 IDManager KnowledgeGroup::idManager_( 0 );
 
@@ -18,7 +18,7 @@ IDManager KnowledgeGroup::idManager_( 0 );
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const Team& team )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const Team_ABC& team )
     : controller_( controller )
     , team_( team )
     , nID_ ( nId )
@@ -81,7 +81,7 @@ std::string KnowledgeGroup::GetName() const
 // Name: KnowledgeGroup::GetTeam
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-const Team& KnowledgeGroup::GetTeam() const
+const Team_ABC& KnowledgeGroup::GetTeam() const
 {
     return team_;
 }
@@ -90,7 +90,7 @@ const Team& KnowledgeGroup::GetTeam() const
 // Name: KnowledgeGroup::IsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool KnowledgeGroup::IsInTeam( const Team& team ) const
+bool KnowledgeGroup::IsInTeam( const Team_ABC& team ) const
 {
     return team_ == team;
 }

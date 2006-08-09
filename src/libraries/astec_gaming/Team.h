@@ -11,47 +11,34 @@
 #define __Team_h_
 
 #include "DIN_Types.h"
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/Resolver.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Extension_ABC.h"
 #include "astec_kernel/Updatable_ABC.h"
 
-class KnowledgeGroup;
 class KnowledgeGroupFactory_ABC;
 class Controller;
 
 // =============================================================================
 /** @class  Team
-    @brief  Represents a team.
-    @par    Holds the team's knowledge on dynamic objects and a concatenation
-            of it's gtia's agent knowledges.     
+    @brief  Team
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Team : public Entity_ABC, 
-             public Resolver< KnowledgeGroup >
+class Team : public Team_ABC
+           , public Extension_ABC
+           , public Updatable_ABC< KnowledgeGroupCreationMessage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( uint nID, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory );
+             Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory );
     virtual ~Team();
-    //@}
-
-    //! @name Operations
-    //@{
-    void CreateKnowledgeGroup( unsigned int id );
-    bool operator==( const Team& ) const;
-
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId  () const;
+    virtual unsigned long GetId() const;
     virtual std::string GetName() const;
     //@}
 
@@ -62,13 +49,18 @@ private:
     Team& operator=( const Team& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const KnowledgeGroupCreationMessage& message );
+    //@}
+
 private:
     //! @name Member data
     //@{
     Controller& controller_;
     KnowledgeGroupFactory_ABC& factory_;
-    std::string         strName_;
-    unsigned long              nID_;
+    std::string name_;
+    unsigned long id_;
     //@}
 };
 
