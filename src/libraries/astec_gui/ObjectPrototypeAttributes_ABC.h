@@ -12,22 +12,25 @@
 
 #include <qgroupbox.h>
 
-struct ASN1T_MagicActionCreateObject;
-
+// =============================================================================
+/** @class  ObjectPrototypeAttributes_ABC
+    @brief  Object prototype attributes definition
+*/
+// Created: SBO 2006-04-20
+// =============================================================================
 class ObjectPrototypeAttributes_ABC : public QGroupBox
 {
 public:
     //! @name Constructor/Destructor
     //@{
-             ObjectPrototypeAttributes_ABC( QWidget* parent = 0, const char* name = 0 )
-                 : QGroupBox( 2, Qt::Horizontal, name, parent ) {};
-    virtual ~ObjectPrototypeAttributes_ABC() {};
+             ObjectPrototypeAttributes_ABC( QWidget* parent, const QString& name );
+    virtual ~ObjectPrototypeAttributes_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const = 0;
-    virtual void Serialize( ASN1T_MagicActionCreateObject& msg ) = 0;
+    virtual void Commit() = 0;
     virtual void Clean() = 0;
     //@}
 };

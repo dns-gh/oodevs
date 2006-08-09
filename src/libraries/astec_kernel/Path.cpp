@@ -1,0 +1,102 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "astec_kernel_pch.h"
+#include "Path.h"
+#include "LocationVisitor_ABC.h"
+#include "Positions.h"
+#include "GlTools_ABC.h"
+
+// -----------------------------------------------------------------------------
+// Name: Path constructor
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+Path::Path( const Positions& position )
+    : position_( position )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path destructor
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+Path::~Path()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::PopPoint
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void Path::PopPoint()
+{
+    if( ! points_.empty() )
+        points_.pop_back();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::AddPoint
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void Path::AddPoint( const geometry::Point2f& point )
+{
+    points_.push_back( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::IsValid
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+bool Path::IsValid() const
+{
+    return !points_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::IsDone
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+bool Path::IsDone() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::Accept
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void Path::Accept( LocationVisitor_ABC& visitor ) const
+{
+    // $$$$ AGE 2006-08-09: le point d'origine n'est pas passé. Bien noter.
+    visitor.VisitLines( points_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::Draw
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void Path::Draw( const GlTools_ABC& tools ) const
+{
+    if( ! points_.empty() )
+    {
+        tools.DrawLine( position_.GetPosition(), points_.front() );
+        tools.DrawLines( points_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::GetName
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+std::string Path::GetName() const
+{
+    return "chemin"; // $$$$ AGE 2006-08-09: crap.
+}

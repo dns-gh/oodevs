@@ -21,6 +21,7 @@
 #include "astec_kernel/GlTools_ABC.h"
 #include "Tools.h"
 #include "ParametersLayer.h"
+#include "astec_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer constructor
@@ -234,15 +235,25 @@ void LimitsLayer::OnCreateLima( int i )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsLayer::Handle
-// Created: AGE 2006-03-24
+// Name: LimitsLayer::VisitLines
+// Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-void LimitsLayer::Handle( const T_PointVector& points )
+void LimitsLayer::VisitLines( const T_PointVector& points )
 {
     if( type_ == -1 )
         model_.CreateLimit( points );
     else
         model_.CreateLima( E_FuncLimaType( type_ ), points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Handle
+// Created: AGE 2006-03-24
+// -----------------------------------------------------------------------------
+void LimitsLayer::Handle( Location_ABC& location )
+{
+    if( location.IsValid() )
+        location.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------

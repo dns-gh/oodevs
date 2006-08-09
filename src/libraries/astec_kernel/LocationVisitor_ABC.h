@@ -7,31 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __ShapeHandler_ABC_h_
-#define __ShapeHandler_ABC_h_
-
-class Location_ABC;
+#ifndef __LocationFunctor_ABC_h_
+#define __LocationFunctor_ABC_h_
 
 // =============================================================================
-/** @class  ShapeHandler_ABC
-    @brief  ShapeHandler_ABC // $$$$ AGE 2006-03-24: renommer
+/** @class  LocationVisitor_ABC
+    @brief  Location visitor definition
 */
-// Created: AGE 2006-03-24
+// Created: AGE 2006-08-09
 // =============================================================================
-class ShapeHandler_ABC
+class LocationVisitor_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ShapeHandler_ABC() {};
-    virtual ~ShapeHandler_ABC() {};
+             LocationVisitor_ABC() {};
+    virtual ~LocationVisitor_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual void Handle( Location_ABC& location ) = 0;
+    virtual void VisitLines  ( const T_PointVector& points ) = 0;
+    virtual void VisitPolygon( const T_PointVector& points ) = 0;
+    virtual void VisitCircle ( const geometry::Point2f& center, float radius ) = 0;
+    virtual void VisitPoint  ( const geometry::Point2f& point ) = 0;
     //@}
 };
 
-#endif // __ShapeHandler_ABC_h_
+#endif // __LocationFunctor_ABC_h_

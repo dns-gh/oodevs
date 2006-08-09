@@ -16,24 +16,12 @@
 // Name: CrossingSitePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CrossingSitePrototype::CrossingSitePrototype( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Site de franchissement" ) )
+CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+    : CrossingSitePrototype_ABC( parent )
+    , msg_( msg )
     , attr_( 0 )
 {
-    new QLabel( tr( "Largeur:" ), this );
-    width_ = new QSpinBox( 0, 10000, 10, this );
-    width_->setSuffix( Units::meters );
-
-    new QLabel( tr( "Profondeur:" ), this );
-    depth_ = new QSpinBox( 0, 1000, 10, this );
-    depth_->setSuffix( Units::meters );
-
-    new QLabel( tr( "Vitesse courant:" ), this );
-    speed_ = new QSpinBox( 0, 100, 1, this );
-    speed_->setSuffix( Units::metersPerSecond );
-
-    new QLabel( tr( "Berges à aménager:" ), this );
-    needsConstruction_ = new QCheckBox( this );
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -44,23 +32,14 @@ CrossingSitePrototype::~CrossingSitePrototype()
 {
     Clean();
 }
-
-// -----------------------------------------------------------------------------
-// Name: CrossingSitePrototype::CheckValidity
-// Created: SBO 2006-04-19
-// -----------------------------------------------------------------------------
-bool CrossingSitePrototype::CheckValidity() const
-{
-    return true;
-}
     
 // -----------------------------------------------------------------------------
-// Name: CrossingSitePrototype::Serialize
+// Name: CrossingSitePrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CrossingSitePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
+void CrossingSitePrototype::Commit()
 {
-    if( msg.type != EnumObjectType::site_franchissement )
+    if( msg_.type != EnumObjectType::site_franchissement )
         return;
 
     attr_ = new ASN1T_AttrObjectSiteFranchissement();
@@ -69,9 +48,9 @@ void CrossingSitePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
     attr_->profondeur        = depth_->value();
     attr_->vitesse_courant   = speed_->value();
     attr_->berges_a_amenager = needsConstruction_->isOn();
-    msg.m.attributs_specifiquesPresent    = 1;
-    msg.attributs_specifiques.t           = T_AttrObjectSpecific_site_franchissement;
-    msg.attributs_specifiques.u.site_franchissement = attr_;
+    msg_.m.attributs_specifiquesPresent    = 1;
+    msg_.attributs_specifiques.t           = T_AttrObjectSpecific_site_franchissement;
+    msg_.attributs_specifiques.u.site_franchissement = attr_;
 }
 
 // -----------------------------------------------------------------------------

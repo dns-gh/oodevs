@@ -23,6 +23,7 @@
 #include "ChangeHumanFactorsDialog.h"
 #include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Team_ABC.h"
+#include "astec_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor
@@ -43,7 +44,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     changeHumanFactors_ = new ChangeHumanFactorsDialog( parent, controllers_, publisher_ );
     
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
-    magicMoveLocation_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
+    magicMoveLocation_->Allow( true, false, false, false );
     controllers_.Register( *this );
 }
 
@@ -289,21 +290,28 @@ void MagicOrdersInterface::Move()
 // Name: MagicOrdersInterface::Handle
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::Handle( const T_PointVector& points )
+void MagicOrdersInterface::Handle( Location_ABC& location )
 {
-    if( magicMove_ && points.size() == 1 )
-    {
-        ASN_MsgUnitMagicAction message;
-        message.GetAsnMsg().oid = selectedAgent_->GetId();
-        message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
-
-        ASN1T_CoordUTM utm;
-        utm = static_.coordinateConverter_.ConvertToMgrs( points[0] ).c_str();
-        message.GetAsnMsg().action.u.move_to = &utm;
-        message.Send( publisher_, 56 );
-    }
+    if( magicMove_ && location.IsValid() )
+        location.Accept( *this );
     controllers_.Remove( *magicMoveLocation_ );
     magicMove_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::VisitPoint
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
+{
+    ASN_MsgUnitMagicAction message;
+    message.GetAsnMsg().oid = selectedAgent_->GetId();
+    message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
+
+    ASN1T_CoordUTM utm;
+    utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
+    message.GetAsnMsg().action.u.move_to = &utm;
+    message.Send( publisher_, 56 );
 }
 
 // -----------------------------------------------------------------------------

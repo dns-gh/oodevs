@@ -22,6 +22,7 @@
 #include "astec_gaming/ASN_Types.h"
 #include "Param_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "LocationSerializer.h"
 
 class ParametersLayer;
 class CoordinateConverter_ABC;
@@ -50,7 +51,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();
-    virtual void Handle( const T_PointVector& points );
+    virtual void Handle( Location_ABC& location );
     void CommitTo( ASN1T_Localisation& destination );
     //@}
 
@@ -64,15 +65,12 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_Localisation& asn_;
     const CoordinateConverter_ABC& converter_;
-
+    LocationSerializer serializer_;
     LocationCreator* creator_;
     RichLabel* pLabel_;
     QLabel* pShapeLabel_;
-    T_PointVector points_;
-    ASN1T_CoordUTM* pUMTCoords_;
-    ASN1T_EnumTypeLocalisation nType_;
+    Location_ABC* location_;
     ActionController* controller_; // $$$$ AGE 2006-04-03: sucks
     //@}
 };

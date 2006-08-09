@@ -10,11 +10,9 @@
 #ifndef __CrossingSitePrototype_h_
 #define __CrossingSitePrototype_h_
 
-#include "ObjectPrototypeAttributes_ABC.h"
+#include "CrossingSitePrototype_ABC.h"
 
-class QSpinBox;
-class QCheckBox;
-
+struct ASN1T_MagicActionCreateObject;
 struct ASN1T_AttrObjectSiteFranchissement;
 
 // =============================================================================
@@ -23,20 +21,19 @@ struct ASN1T_AttrObjectSiteFranchissement;
 */
 // Created: SBO 2006-04-19
 // =============================================================================
-class CrossingSitePrototype : public ObjectPrototypeAttributes_ABC
+class CrossingSitePrototype : public CrossingSitePrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CrossingSitePrototype( QWidget* parent );
+             CrossingSitePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
     virtual ~CrossingSitePrototype();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity() const;
-    virtual void Serialize( ASN1T_MagicActionCreateObject& msg );
+    virtual void Commit();
     virtual void Clean();
     //@}
 
@@ -50,10 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QSpinBox* width_;
-    QSpinBox* depth_;
-    QSpinBox* speed_;
-    QCheckBox* needsConstruction_;
+    ASN1T_MagicActionCreateObject& msg_;
     ASN1T_AttrObjectSiteFranchissement* attr_;
     //@}
 };

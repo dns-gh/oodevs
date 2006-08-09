@@ -34,6 +34,7 @@
 #include "Tools.h"
 #include "RichLabel.h"
 #include "astec_gaming/CoordinateConverter.h"
+#include "astec_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype constructor
@@ -44,8 +45,9 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     , controllers_( controllers )
     , static_( model )
     , layer_( layer )
-    , umtCoords_( 0 )
+    , serializer_( model.coordinateConverter_, creation_.localisation )
     , activeAttributes_( 0 )
+    , location_( 0 )
 {
     new QLabel( tr( "Nom:" ), this );
     name_ = new QLineEdit( this );
@@ -56,23 +58,22 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
-    location_ = new RichLabel( tr( "Position:" ), this );
+    position_ = new RichLabel( tr( "Position:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new LocationCreator( location_, "Nouvel objet", layer_, *this );
-    locationCreator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
-    locationCreator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
-    locationCreator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
-    locationCreator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
+    locationCreator_ = new LocationCreator( position_, "Nouvel objet", layer_, *this );
 
-    campAttributes_          = new CampPrototype( parent, controllers );         campAttributes_->hide();
-    crossingSiteAttributes_  = new CrossingSitePrototype( parent );              crossingSiteAttributes_->hide();
-    logisticRouteAttributes_ = new LogisticRoutePrototype( parent );             logisticRouteAttributes_->hide();
-    nbcAttributes_           = new NBCPrototype( parent, static_.objectTypes_ );  nbcAttributes_->hide();
-    rotaAttributes_          = new RotaPrototype( parent, static_.objectTypes_ ); rotaAttributes_->hide();
+    msg_.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_create_object;
+    msg_.GetAsnMsg().action.u.create_object   = &creation_;
+
+    campAttributes_          = new CampPrototype( parent, controllers, creation_ );          campAttributes_->hide();
+    crossingSiteAttributes_  = new CrossingSitePrototype( parent, creation_ );               crossingSiteAttributes_->hide();
+    logisticRouteAttributes_ = new LogisticRoutePrototype( parent, creation_ );              logisticRouteAttributes_->hide();
+    nbcAttributes_           = new NBCPrototype( parent, static_.objectTypes_, creation_ );  nbcAttributes_->hide();
+    rotaAttributes_          = new RotaPrototype( parent, static_.objectTypes_, creation_ ); rotaAttributes_->hide();
     
     controllers.Register( *this );
 
@@ -80,10 +81,29 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPrototype::NotifyUpdated
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void ObjectPrototype::NotifyUpdated( const ModelLoaded& )
+{
+    FillObjectTypes();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPrototype::showEvent
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
 void ObjectPrototype::showEvent( QShowEvent* )
+{
+    FillObjectTypes();
+    controllers_.Register( *locationCreator_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype::FillObjectTypes
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void ObjectPrototype::FillObjectTypes()
 {
     objectTypes_->Clear();
     Resolver< ObjectType >& resolver = static_.objectTypes_; // $$$$ AGE 2006-05-03: evenement de chargement des données statiques
@@ -93,7 +113,6 @@ void ObjectPrototype::showEvent( QShowEvent* )
         const ObjectType& element = it.NextElement();
         objectTypes_->AddItem( element.GetName().c_str(), &element );
     }
-    controllers_.Register( *locationCreator_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -112,6 +131,7 @@ void ObjectPrototype::hideEvent( QHideEvent* )
 // -----------------------------------------------------------------------------
 ObjectPrototype::~ObjectPrototype()
 {
+    delete location_;
     delete campAttributes_;
     delete crossingSiteAttributes_;
     delete logisticRouteAttributes_;
@@ -130,51 +150,42 @@ bool ObjectPrototype::CheckValidity() const
     if( !objectTypes_->count() || !objectTypes_->GetValue() )
         return false;
 
-    if( !locationPoints_.size() )
+    if( ! location_ )
     {
-        location_->Warn( 3000 );
+        position_->Warn( 3000 );
         return false;
     }
     return ( !activeAttributes_ || activeAttributes_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPrototype::Serialize
+// Name: ObjectPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Serialize( ASN_MsgObjectMagicAction& msg )
+void ObjectPrototype::Commit( Publisher_ABC& publisher )
 {
-    ASN1T_MagicActionCreateObject& creation = *msg.GetAsnMsg().action.u.create_object;
+    msg_.GetAsnMsg().oid_objet = GetType().manager_.GetFreeIdentifier();
 
     if( !name_->text().isEmpty() )
     {
-        creation.m.nomPresent = 1;
-        creation.nom = name_->text().ascii();
+        creation_.m.nomPresent = 1;
+        creation_.nom = name_->text().ascii();
     }
-    creation.camp = teams_->GetValue()->GetId();
-    creation.type = (ASN1T_EnumObjectType)objectTypes_->GetValue()->id_;
-
-    creation.localisation.type = locationCreator_->GetCurrentType();
-    unsigned nbrPoints = locationPoints_.size();
-
-    creation.localisation.vecteur_point.n = nbrPoints;
-    if( nbrPoints )
-    {
-        umtCoords_ = new ASN1T_CoordUTM[ nbrPoints ];
-        creation.localisation.vecteur_point.elem = umtCoords_;
-
-        for( unsigned i = 0; i < nbrPoints; ++i )
-        {
-            const std::string coord = static_.coordinateConverter_.ConvertToMgrs( locationPoints_[i] );
-            creation.localisation.vecteur_point.elem[i] = coord.c_str();
-        }
-    }
+    creation_.camp = teams_->GetValue()->GetId();
+    creation_.type = (ASN1T_EnumObjectType)objectTypes_->GetValue()->id_;
+    if( location_ )
+        serializer_.Serialize( *location_ );
 
     if( activeAttributes_ )
     {
-        creation.m.attributs_specifiquesPresent = 1;
-        activeAttributes_->Serialize( creation );
+        creation_.m.attributs_specifiquesPresent = 1;
+        activeAttributes_->Commit();
     }
+    else
+        creation_.m.attributs_specifiquesPresent = 0;
+
+    msg_.Send( publisher );
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +194,6 @@ void ObjectPrototype::Serialize( ASN_MsgObjectMagicAction& msg )
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Clean()
 {
-    delete[] umtCoords_;
     if( activeAttributes_ )
         activeAttributes_->Clean();
 }
@@ -256,15 +266,12 @@ void ObjectPrototype::OnTypeChanged( int )
 // Name: ObjectPrototype::Handle
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Handle( const T_PointVector& points )
+void ObjectPrototype::Handle( Location_ABC& location )
 {
-    locationType_ = locationCreator_->GetCurrentType();
-    locationPoints_ = points;
-    if(    ( locationType_ == EnumTypeLocalisation::point   && locationPoints_.size() == 1 )
-        || ( locationType_ == EnumTypeLocalisation::line    && locationPoints_.size() >= 2 )
-        || ( locationType_ == EnumTypeLocalisation::circle  && locationPoints_.size() == 2 )
-        || ( locationType_ == EnumTypeLocalisation::polygon && locationPoints_.size() > 2 ) )
-        locationLabel_->setText( tools::ToString( locationType_ ) );
+    delete location_;
+    location_ = &location;
+    if( location.IsValid() )
+        locationLabel_->setText( location.GetName().c_str() );
     else
         locationLabel_->setText( tr( "---" ) );
 }
@@ -275,8 +282,8 @@ void ObjectPrototype::Handle( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Draw( const GlTools_ABC& tools ) const
 {
-    if( isVisible() )
-        locationCreator_->Draw( locationPoints_, locationType_, tools );
+    if( isVisible() && location_ )
+        location_->Draw( tools );
 }
 
 // -----------------------------------------------------------------------------

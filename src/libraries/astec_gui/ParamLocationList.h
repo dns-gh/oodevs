@@ -18,6 +18,7 @@
 class LocationCreator;
 class ParametersLayer;
 class CoordinateConverter_ABC;
+class LocationSerializer;
 
 // =============================================================================
 /** @class  ParamLocationList
@@ -39,7 +40,7 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( ActionController& controller );
-    virtual void Handle( const T_PointVector& points );
+    virtual void Handle( Location_ABC& location );
     virtual bool CheckValidity();
     virtual void Commit();
     //@}
@@ -60,10 +61,13 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< T_PointVector >              T_Points;
-    typedef std::vector< ASN1T_EnumTypeLocalisation > T_Types;
-    typedef std::vector< ASN1T_CoordUTM* > T_CoordVector;
-    typedef T_CoordVector::iterator       IT_CoordVector;
+    typedef std::vector< Location_ABC* >       T_Locations;
+    typedef std::vector< LocationSerializer* > T_Serializers;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ClearSerializers();
     //@}
 
 private:
@@ -72,11 +76,10 @@ private:
     const CoordinateConverter_ABC& converter_;
     ASN1T_ListLocalisation& asn_;
     ASN1T_Localisation* pAsnLocalisationList_;
-    T_CoordVector asnUMTCoordPtrList_;
 
     LocationCreator* creator_;
-    T_Points points_;
-    T_Types  types_;
+    T_Locations locations_;
+    T_Serializers serializers_;
     ActionController* controller_;
     //@}
 };

@@ -10,9 +10,10 @@
 #ifndef __LogisticRoutePrototype_h_
 #define __LogisticRoutePrototype_h_
 
-#include "ObjectPrototypeAttributes_ABC.h"
+#include "LogisticRoutePrototype_ABC.h"
 
 struct ASN1T_AttrObjectItineraireLogistique;
+struct ASN1T_MagicActionCreateObject;
 
 // =============================================================================
 /** @class  LogisticRoutePrototype
@@ -20,20 +21,19 @@ struct ASN1T_AttrObjectItineraireLogistique;
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class LogisticRoutePrototype : public ObjectPrototypeAttributes_ABC
+class LogisticRoutePrototype : public LogisticRoutePrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LogisticRoutePrototype( QWidget* parent );
+             LogisticRoutePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
     virtual ~LogisticRoutePrototype();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity() const;
-    virtual void Serialize( ASN1T_MagicActionCreateObject& msg );
+    virtual void Commit();
     virtual void Clean();
     //@}
 
@@ -44,18 +44,10 @@ private:
     LogisticRoutePrototype& operator=( const LogisticRoutePrototype& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    QSpinBox* flow_;
-    QSpinBox* width_;
-    QSpinBox* length_;
-    QSpinBox* maxWeight_;
-    QCheckBox* equipped_;
+    ASN1T_MagicActionCreateObject& msg_;
     ASN1T_AttrObjectItineraireLogistique* attr_;
     //@}
 };

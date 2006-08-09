@@ -17,6 +17,7 @@
 #include "ShapeHandler_ABC.h"
 #include "astec_kernel/OptionsObserver_ABC.h"
 #include "astec_kernel/TristateOption.h"
+#include "astec_kernel/LocationVisitor_ABC.h"
 
 class Controllers;
 class Lima;
@@ -41,6 +42,7 @@ class LimitsLayer : public QObject
                   , public ContextMenuObserver_ABC< geometry::Point2f >
                   , public OptionsObserver_ABC
                   , private ShapeHandler_ABC
+                  , private LocationVisitor_ABC
                   
 {
     Q_OBJECT;
@@ -91,9 +93,14 @@ private:
     void Select( const TacticalLine_ABC& line );
     void ContextMenu( const TacticalLine_ABC& line, const QPoint& point );
 
-    virtual void Handle( const T_PointVector& points );
+    virtual void Handle( Location_ABC& location );
 
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+
+    virtual void VisitLines  ( const T_PointVector& points );
+    virtual void VisitPolygon( const T_PointVector& ) {};
+    virtual void VisitCircle ( const geometry::Point2f& , float ) {};
+    virtual void VisitPoint  ( const geometry::Point2f& ) {};
     //@}
 
     //! @name Types

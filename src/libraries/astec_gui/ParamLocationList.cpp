@@ -13,6 +13,8 @@
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/ActionController.h"
 #include "Tools.h"
+#include "astec_kernel/Location_ABC.h"
+#include "LocationSerializer.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocationList constructor
@@ -26,10 +28,6 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& 
     , controller_( 0 )
 {
     creator_ = new LocationCreator( this, menu, layer, *this );
-    creator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
-    creator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
-    creator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
-    creator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +41,7 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, 
     , pAsnLocalisationList_( 0 )
 {
     creator_ = new LocationCreator( this, menu, layer, *this );
-    creator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
+    creator_->Allow( false, false, true, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +55,7 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, co
     , pAsnLocalisationList_( 0 )
 {
     creator_ = new LocationCreator( this, menu, layer, *this );
-    creator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
+    creator_->Allow( true, false, false, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,10 +65,18 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, co
 ParamLocationList::~ParamLocationList()
 {
     delete[] pAsnLocalisationList_;
-    while( ! asnUMTCoordPtrList_.empty() )
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::ClearSerializers
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void ParamLocationList::ClearSerializers()
+{
+    while( ! serializers_.empty() )
     {
-        delete[] asnUMTCoordPtrList_.back();
-        asnUMTCoordPtrList_.pop_back();
+        delete serializers_.back();
+        serializers_.pop_back();
     }
 }
 
@@ -102,7 +108,7 @@ void ParamLocationList::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamLocationList::CheckValidity()
 {
-    if( points_.empty() && ! IsOptional() )
+    if( locations_.empty() && ! IsOptional() )
         return Invalid();
     return true;
 }
@@ -113,7 +119,7 @@ bool ParamLocationList::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocationList::Commit()
 {
-    const unsigned nNbrChilds = points_.size();
+    const unsigned nNbrChilds = locations_.size();
     asn_.n = nNbrChilds;
 
     if( nNbrChilds == 0 && IsOptional() )
@@ -123,24 +129,11 @@ void ParamLocationList::Commit()
     pAsnLocalisationList_ = new ASN1T_Localisation[ nNbrChilds ];
     asn_.elem = pAsnLocalisationList_;
 
-    while( ! asnUMTCoordPtrList_.empty() )
+    ClearSerializers();
+    for( unsigned i = 0; i < locations_.size(); ++i )
     {
-        delete[] asnUMTCoordPtrList_.back();
-        asnUMTCoordPtrList_.pop_back();
-    }
-
-    for( unsigned i = 0; i < points_.size(); ++i )
-    {
-        const T_PointVector& points = points_.at( i );
-        asn_.elem[i].type               = types_.at( i );
-        asn_.elem[i].vecteur_point.n    = points.size();
-        asn_.elem[i].vecteur_point.elem = new ASN1T_CoordUTM[ points.size() ];
-        for( unsigned j = 0; j < points.size(); ++j )
-        {
-            const std::string coord = converter_.ConvertToMgrs( points.at( j ) );
-            asn_.elem[i].vecteur_point.elem[j] = coord.c_str();
-        }
-        asnUMTCoordPtrList_.push_back( pAsnLocalisationList_[i].vecteur_point.elem );
+        serializers_.push_back( new LocationSerializer( converter_, asn_.elem[i] ) );
+        serializers_.back()->Serialize( *locations_.at( i ) );
     }
 }
 
@@ -148,11 +141,10 @@ void ParamLocationList::Commit()
 // Name: ParamLocationList::Handle
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-void ParamLocationList::Handle( const T_PointVector& points )
+void ParamLocationList::Handle( Location_ABC& location )
 {
-    points_.push_back( points );
-    types_.push_back( creator_->GetCurrentType() );
-    new QListViewItem( this, tools::ToString(  creator_->GetCurrentType() ) );
+    locations_.push_back( &location );
+    new QListViewItem( this, location.GetName().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,10 +161,10 @@ void ParamLocationList::OnDeleteSelectedItem()
         ++index;
         item = item->nextSibling();
     }
-    if( item == selected && index < points_.size() )
+    if( item == selected && index < locations_.size() )
     {
-        points_.erase( points_.begin() + index );
-        types_.erase( types_.begin() + index );
+        delete *(locations_.begin() + index);
+        locations_.erase( locations_.begin() + index );
     }
     ParamListView::OnDeleteSelectedItem();
 }
@@ -184,10 +176,6 @@ void ParamLocationList::OnDeleteSelectedItem()
 void ParamLocationList::OnClearList()
 {
     delete[] pAsnLocalisationList_;
-    while( ! asnUMTCoordPtrList_.empty() )
-    {
-        delete[] asnUMTCoordPtrList_.back();
-        asnUMTCoordPtrList_.pop_back();
-    }
+    ClearSerializers();
     ParamListView::OnClearList();
 }

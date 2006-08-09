@@ -14,6 +14,7 @@
 #include "astec_kernel/SafePointer.h"
 #include "astec_kernel/OptionsObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "astec_kernel/LocationVisitor_ABC.h"
 
 class Agent_ABC;
 class KnowledgeGroup_ABC;
@@ -39,6 +40,7 @@ class MagicOrdersInterface : public QObject
                            , public ContextMenuObserver_ABC< Agent_ABC >
                            , public OptionsObserver_ABC
                            , public ShapeHandler_ABC
+                           , private LocationVisitor_ABC
 {
     Q_OBJECT;
 
@@ -55,7 +57,7 @@ public:
     virtual void NotifyContextMenu( const KnowledgeGroup_ABC& agent, ContextMenu& menu );
     virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
-    virtual void Handle( const T_PointVector& points );
+    virtual void Handle( Location_ABC& location );
     //@}
 
 private slots:
@@ -85,6 +87,11 @@ private:
     void ApplyOnHierarchy( const KnowledgeGroup_ABC& group, int id );
     void ApplyOnHierarchy( const Team_ABC& team, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
+
+    virtual void VisitLines  ( const T_PointVector& ) {};
+    virtual void VisitPolygon( const T_PointVector& ) {};
+    virtual void VisitCircle ( const geometry::Point2f& , float ) {};
+    virtual void VisitPoint  ( const geometry::Point2f& point );
     //@}
 
 private:

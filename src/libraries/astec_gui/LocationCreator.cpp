@@ -14,6 +14,7 @@
 #include "Tools.h"
 #include "astec_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "Point.h"
 
 // -----------------------------------------------------------------------------
 // Name: LocationCreator constructor
@@ -26,6 +27,7 @@ LocationCreator::LocationCreator( QWidget* parent, const std::string& menu, Para
     , menu_     ( menu )
 {
     pPopupMenu_ = new QPopupMenu( parent );
+    Allow( true, true, true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,9 +35,9 @@ LocationCreator::LocationCreator( QWidget* parent, const std::string& menu, Para
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
 LocationCreator::LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
-    : QObject   ( parent )
-    , layer_    ( layer )
-    , handler_  ( handler )
+    : QObject    ( parent )
+    , layer_     ( layer )
+    , handler_   ( handler )
     , pPopupMenu_( 0 )
 {
     // NOTHING
@@ -51,15 +53,23 @@ LocationCreator::~LocationCreator()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationCreator::AddLocationType
-// Created: AGE 2006-04-03
+// Name: LocationCreator::Allow
+// Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-void LocationCreator::AddLocationType( const QString& message, ASN1T_EnumTypeLocalisation type )
-{
-    if( !pPopupMenu_ )
-        return;
-    int n = pPopupMenu_->insertItem( message, this, SLOT( Start( int ) ) );
-    pPopupMenu_->setItemParameter( n, (int)type );
+void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle )
+{   
+    if( pPopupMenu_ )
+    {
+        pPopupMenu_->clear();
+        if( point )
+            pPopupMenu_->insertItem( "point", this, SLOT( StartPoint() ) );
+        if( line )
+            pPopupMenu_->insertItem( "ligne", this, SLOT( StartLine() ) );
+        if( polygon )
+            pPopupMenu_->insertItem( "polygone", this, SLOT( StartPolygon() ) );
+        if( circle )
+            pPopupMenu_->insertItem( "cercle", this, SLOT( StartCircle() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,72 +85,44 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationCreator::Start
-// Created: AGE 2006-03-31
-// -----------------------------------------------------------------------------
-void LocationCreator::Start( int type )
-{
-    type_ = ASN1T_EnumTypeLocalisation( type );
-    // Special case for point parameter.
-    if( type == EnumTypeLocalisation::point )
-    {
-        if( !pPopupMenu_ )
-            layer_.StartPoints( handler_, 1 );
-        else
-        {
-            T_PointVector points;
-            points.push_back( popupPoint_ );
-            handler_.Handle( points );
-        }
-    }
-    else
-    {
-        if( type == EnumTypeLocalisation::line )
-            layer_.StartLine( handler_ );
-        else if( type == EnumTypeLocalisation::circle )
-            layer_.StartCircle( handler_ );
-        else if( type == EnumTypeLocalisation::polygon )
-            layer_.StartPolygon( handler_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocationCreator::StartPoint
-// Created: SBO 2006-06-19
+// Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
 void LocationCreator::StartPoint()
 {
-    Start( EnumTypeLocalisation::point ); // $$$$ SBO 2006-06-19: for magic move
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationCreator::Draw
-// Created: AGE 2006-04-03
-// -----------------------------------------------------------------------------
-void LocationCreator::Draw( const T_PointVector& points, ASN1T_EnumTypeLocalisation type, const GlTools_ABC& tools )
-{
-    if( points.empty() )
-        return;
-    
-    if( type == EnumTypeLocalisation::point )
-        for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-            tools.DrawCross( *it );
-    else if( type == EnumTypeLocalisation::line )
-        tools.DrawLines( points );
-    else if( type == EnumTypeLocalisation::polygon )
+    if( !pPopupMenu_ )
+        layer_.StartPoint( handler_ );
+    else
     {
-        tools.DrawLines( points );
-        tools.DrawLine( points.back(), points.front() );
+        Location_ABC* location = new Point();
+        location->AddPoint( popupPoint_ );
+        handler_.Handle( *location );
     }
-    else if( type == EnumTypeLocalisation::circle && points.size() >= 2 )
-        tools.DrawCircle( points.front(), points.front().Distance( points.back() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationCreator::GetCurrentType
-// Created: AGE 2006-04-03
+// Name: LocationCreator::StartLine
+// Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-ASN1T_EnumTypeLocalisation LocationCreator::GetCurrentType() const
+void LocationCreator::StartLine()
 {
-    return type_;
+    layer_.StartLine( handler_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::StartPolygon
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void LocationCreator::StartPolygon()
+{
+    layer_.StartPolygon( handler_ );
+}   
+    
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::StartCircle
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void LocationCreator::StartCircle()
+{
+    layer_.StartCircle( handler_ );
 }

@@ -11,7 +11,6 @@
 #include "ObjectCreationPanel.h"
 #include "moc_ObjectCreationPanel.cpp"
 #include "ObjectPrototype.h"
-#include "astec_gaming/ASN_Messages.h"
 #include "astec_kernel/ObjectType.h"
 #include "astec_kernel/IDManager.h"
 
@@ -46,16 +45,7 @@ void ObjectCreationPanel::Commit()
 {
     if( !created_->CheckValidity() )
         return;
-
-    ASN_MsgObjectMagicAction msg;
-    msg.GetAsnMsg().oid_objet = created_->GetType().manager_.GetFreeIdentifier();
-
-    ASN1T_MagicActionCreateObject action;
-    msg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_create_object;
-    msg.GetAsnMsg().action.u.create_object   = &action;
-    created_->Serialize( msg );
-    msg.Send( publisher_ );
-    created_->Clean();
+    created_->Commit( publisher_ );
 }
 
 // -----------------------------------------------------------------------------

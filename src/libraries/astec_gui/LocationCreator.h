@@ -16,10 +16,11 @@
 class ParametersLayer;
 class GlTools_ABC;
 class ShapeHandler_ABC;
+class Location_ABC;
 
 // =============================================================================
 /** @class  LocationCreator
-    @brief  LocationCreator
+    @brief  Location creator
 */
 // Created: APE 2004-05-06
 // =============================================================================
@@ -39,21 +40,22 @@ public:
 
     //! @name Operations
     //@{
-    void AddLocationType( const QString& message, ASN1T_EnumTypeLocalisation type );
-    void Draw( const T_PointVector& points, ASN1T_EnumTypeLocalisation type, const GlTools_ABC& tools );
-    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& );
-    void StartPoint();
+    void Allow( bool point, bool line, bool polygon, bool circle ); // $$$$ AGE 2006-08-09: pas terrible
     //@}
 
-    //! @name Accessors
-    //@{
-    ASN1T_EnumTypeLocalisation GetCurrentType() const; // $$$$ AGE 2006-04-03: hié
-    //@}
-
-private slots:
+public slots:
     //! @name Slots
     //@{
-    void Start( int );
+    void StartPoint();
+    void StartLine();
+    void StartPolygon();
+    void StartCircle();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& );
     //@}
 
 private:
@@ -71,9 +73,7 @@ private:
     
     std::string menu_;
     QPopupMenu* pPopupMenu_;
-
     geometry::Point2f popupPoint_;
-    ASN1T_EnumTypeLocalisation type_;
     //@}
 };
 

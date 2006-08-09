@@ -16,6 +16,7 @@
 #include "LocationCreator.h"
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/CoordinateConverter_ABC.h"
+#include "astec_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocation constructor
@@ -23,10 +24,10 @@
 // -----------------------------------------------------------------------------
 ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QHBox      ( pParent )
-    , asn_       ( asn )
     , converter_ ( converter )
-    , pUMTCoords_( 0 )
+    , serializer_( converter, asn )
     , controller_( 0 )
+    , location_( 0 )
 {
     setSpacing( 5 );
     pLabel_ = new RichLabel( label.c_str(), false, this, "" );
@@ -37,13 +38,9 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const s
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
     creator_ = new LocationCreator( this, label, layer, *this );
-    creator_->AddLocationType( tr( "point" ), EnumTypeLocalisation::point );
-    creator_->AddLocationType( tr( "ligne" ), EnumTypeLocalisation::line );
-    creator_->AddLocationType( tr( "polygone" ), EnumTypeLocalisation::polygon );
-    creator_->AddLocationType( tr( "cercle" ), EnumTypeLocalisation::circle );
 
-    asn_.vecteur_point.elem = 0;
-    asn_.vecteur_point.n = 0;
+    asn.vecteur_point.elem = 0;
+    asn.vecteur_point.n = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +49,7 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const s
 // -----------------------------------------------------------------------------
 ParamLocation::~ParamLocation()
 {
-    delete[] pUMTCoords_;
+    delete location_;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +80,7 @@ void ParamLocation::RegisterIn( ActionController& controller )
 // -----------------------------------------------------------------------------
 bool ParamLocation::CheckValidity()
 {
-    if( ! IsOptional() && points_.empty() )
+    if( ! IsOptional() && !location_ )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -97,37 +94,20 @@ bool ParamLocation::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamLocation::Commit()
 {
-    asn_.type = nType_;
-    unsigned nNbrPoints = points_.size();
-
-    asn_.vecteur_point.n = nNbrPoints;
-    if( ! nNbrPoints )
-        return;
-
-    delete[] pUMTCoords_;
-    pUMTCoords_ = new ASN1T_CoordUTM[ nNbrPoints ];
-    asn_.vecteur_point.elem = pUMTCoords_;
-
-    for( uint i = 0; i < nNbrPoints; ++i )
-    {
-        const std::string coord = converter_.ConvertToMgrs( points_[i] );
-        asn_.vecteur_point.elem[i] = coord.c_str();
-    }
+    if( location_ )
+        serializer_.Serialize( *location_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: ParamLocation::Handle
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLocation::Handle( const T_PointVector& points )
+void ParamLocation::Handle( Location_ABC& location )
 {
-    nType_ = creator_->GetCurrentType();
-    points_ = points;
-    if(    (nType_ == EnumTypeLocalisation::point   && points_.size() == 1 )
-        || (nType_ == EnumTypeLocalisation::line    && points_.size() >= 2 )
-        || (nType_ == EnumTypeLocalisation::circle  && points_.size() == 2 )
-        || (nType_ == EnumTypeLocalisation::polygon && points_.size() > 2 ) )
-        pShapeLabel_->setText( tools::ToString( nType_ ) );
+    delete location_;
+    location_ = &location;
+    if( location.IsValid() )
+        pShapeLabel_->setText( location.GetName().c_str() );
     else
         pShapeLabel_->setText( tr( "---" ) );
 }
@@ -138,7 +118,8 @@ void ParamLocation::Handle( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ParamLocation::Draw( const geometry::Point2f& , const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
-    creator_->Draw( points_, nType_, tools );
+    if( location_ )
+        location_->Draw( tools );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,9 +128,9 @@ void ParamLocation::Draw( const geometry::Point2f& , const geometry::Rectangle2f
 // -----------------------------------------------------------------------------
 void ParamLocation::CommitTo( ASN1T_Localisation& destination )
 {
-    destination.type = asn_.type;
-    destination.vecteur_point.n    = asn_.vecteur_point.n;
-    destination.vecteur_point.elem = new ASN1T_CoordUTM[ asn_.vecteur_point.n ];
-    for( unsigned int i = 0; i < asn_.vecteur_point.n; ++i )
-        destination.vecteur_point.elem[i] = asn_.vecteur_point.elem[i];
+    if( location_ )
+    {
+        LocationSerializer serializer( converter_ );
+        serializer.Serialize( *location_, destination );
+    }
 }

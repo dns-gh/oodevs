@@ -7,49 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __RotaPrototype_h_
-#define __RotaPrototype_h_
+#ifndef __Polygon_h_
+#define __Polygon_h_
 
-#include "RotaPrototype_ABC.h"
-
-struct ASN1T_AttrObjectROTA;
-struct ASN1T_MagicActionCreateObject;
+#include "Location_ABC.h"
 
 // =============================================================================
-/** @class  RotaPrototype
-    @brief  RotaPrototype
+/** @class  Polygon
+    @brief  Polygon
 */
-// Created: SBO 2006-04-20
+// Created: AGE 2006-08-09
 // =============================================================================
-class RotaPrototype : public RotaPrototype_ABC
+class Polygon : public Location_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
-    virtual ~RotaPrototype();
+             Polygon();
+    virtual ~Polygon();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Commit();
-    virtual void Clean();
+    virtual void PopPoint();
+    virtual void AddPoint( const geometry::Point2f& point );
+    virtual bool IsValid() const;
+    virtual bool IsDone() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Accept( LocationVisitor_ABC& ) const;
+    virtual void Draw( const GlTools_ABC& tools ) const;
+    virtual std::string GetName() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    RotaPrototype( const RotaPrototype& );            //!< Copy constructor
-    RotaPrototype& operator=( const RotaPrototype& ); //!< Assignement operator
+    Polygon( const Polygon& );            //!< Copy constructor
+    Polygon& operator=( const Polygon& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_AttrObjectROTA* attr_;
+    T_PointVector points_;
     //@}
 };
 
-#endif // __RotaPrototype_h_
+#endif // __Polygon_h_

@@ -13,6 +13,8 @@
 #include "Layer_ABC.h"
 class GlTools_ABC;
 class ShapeHandler_ABC;
+class Location_ABC;
+class Positions;
 
 // =============================================================================
 /** @class  ParametersLayer
@@ -32,10 +34,12 @@ public:
 
     //! @name Operations
     //@{
-    void StartPoints( ShapeHandler_ABC& handler, unsigned expected = 1 );
-    void StartLine( ShapeHandler_ABC& handler, unsigned expected = std::numeric_limits< unsigned >::max() );
-    void StartPolygon( ShapeHandler_ABC& handler, unsigned expected = std::numeric_limits< unsigned >::max() );
-    void StartCircle( ShapeHandler_ABC& handler );
+    void StartPoint  ( ShapeHandler_ABC& handler );
+    void StartLine   ( ShapeHandler_ABC& handler );
+    void StartPolygon( ShapeHandler_ABC& handler );
+    void StartCircle ( ShapeHandler_ABC& handler );
+    void StartPath   ( ShapeHandler_ABC& handler, const Positions& position );
+    void Start       ( ShapeHandler_ABC& handler, Location_ABC& location );
 
     void AddPoint( const geometry::Point2f& point );
 
@@ -49,17 +53,7 @@ private:
     ParametersLayer( const ParametersLayer& );            //!< Copy constructor
     ParametersLayer& operator=( const ParametersLayer& ); //!< Assignement operator
     //@}
-        
-    //! @name Types
-    //@{
-    enum E_Type {
-        points,
-        lines,
-        polygon,
-        circle
-    };
-    //@}
-
+   
     //! @name Helpers
     //@{
     virtual bool HandleKeyPress        ( QKeyEvent* key );
@@ -67,10 +61,7 @@ private:
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
 
-    bool IsDone() const;
     void NotifyDone();
-
-    void Start( ShapeHandler_ABC& handler, unsigned expected, E_Type type );
     //@}
 
 private:
@@ -78,10 +69,8 @@ private:
     //@{
     const GlTools_ABC& tools_;
     ShapeHandler_ABC* handler_;
+    Location_ABC* current_;
     geometry::Rectangle2f world_;
-    E_Type type_;
-    unsigned expected_;
-    T_PointVector points_;
     //@}
 };
 

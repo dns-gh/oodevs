@@ -16,6 +16,7 @@
 #include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Entity_ABC.h"
 #include "astec_kernel/Positions.h"
+#include "astec_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath constructor
@@ -23,12 +24,12 @@
 // -----------------------------------------------------------------------------
 ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QHBox( pParent )
-    , asn_( asn )
-    , menu_( menu )
-    , layer_( layer )
     , converter_( converter )
-    , agentPos_( agent.Get< Positions >().GetPosition() )
-    , pUMTCoords_( 0 )
+    , layer_( layer )
+    , positions_( agent.Get< Positions >() )
+    , serializer_( converter, asn )
+    , menu_( menu )
+    , location_( 0 )
 {
     setSpacing( 5 );
     pLabel_ = new RichLabel( label.c_str(), false, this, "" );
@@ -45,20 +46,17 @@ ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
-    delete pUMTCoords_;
+    delete location_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& , const GlTools_ABC& tools ) const
+void ParamPath::Draw( const geometry::Point2f& , const geometry::Rectangle2f& , const GlTools_ABC& tools ) const
 {
-    if( ! points_.empty() )
-    {
-        tools.DrawLine( point, points_.front() );
-        tools.DrawLines( points_ );
-    }
+    if( location_ )
+        location_->Draw( tools );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +65,7 @@ void ParamPath::Draw( const geometry::Point2f& point, const geometry::Rectangle2
 // -----------------------------------------------------------------------------
 bool ParamPath::CheckValidity()
 {
-    if( points_.size() <= 1 )
+    if( ! location_ || !location_->IsValid() )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -81,19 +79,8 @@ bool ParamPath::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPath::Commit()
 {
-    unsigned nNbrPoints  = points_.size() - 1;
-    asn_.type            = EnumTypeLocalisation::line;
-    asn_.vecteur_point.n = nNbrPoints;
-
-    delete[] pUMTCoords_;
-    pUMTCoords_ = new ASN1T_CoordUTM[ nNbrPoints ];
-    asn_.vecteur_point.elem = pUMTCoords_;
-
-    for( unsigned i = 0; i < nNbrPoints; ++i )
-    {
-        const std::string coord = converter_.ConvertToMgrs( points_[i+1] );
-        asn_.vecteur_point.elem[i] = coord.c_str();
-    }
+    if( location_ )
+        serializer_.Serialize( *location_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,14 +89,10 @@ void ParamPath::Commit()
 // -----------------------------------------------------------------------------
 void ParamPath::CommitTo( ASN1T_Itineraire& destination )
 {
-    destination.type = EnumTypeLocalisation::line;
-    const unsigned int points = points_.size() - 1;
-    destination.vecteur_point.n = points;
-    destination.vecteur_point.elem = new ASN1T_CoordUTM[ points ];
-    for( unsigned int i = 0; i < points; ++i )
+    if( location_ )
     {
-        const std::string coord = converter_.ConvertToMgrs( points_[ i + 1 ] );
-        destination.vecteur_point.elem[i] = coord.c_str();
+        LocationSerializer serializer( converter_ );
+        serializer.Serialize( *location_, destination );
     }
 }
 
@@ -128,20 +111,19 @@ void ParamPath::NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void ParamPath::StartPath()
 {
-    points_.clear();
-    layer_.StartLine( *this );
-    layer_.AddPoint( agentPos_ );
+    layer_.StartPath( *this, positions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath::Handle
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::Handle( const T_PointVector& points )
+void ParamPath::Handle( Location_ABC& location )
 {
-    if( points.empty() )
-        return;
-
-    points_ = points;
-    pPosLabel_->setText( converter_.ConvertToMgrs( points_.back() ).c_str() );
+    if( location.IsValid() )
+    {
+        delete location_;
+        location_ = &location;
+        pPosLabel_->setText( location.GetName().c_str() );
+    }
 }

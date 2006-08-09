@@ -10,14 +10,11 @@
 #ifndef __NBCPrototype_h_
 #define __NBCPrototype_h_
 
-#include "ObjectPrototypeAttributes_ABC.h"
-#include "astec_kernel/Resolver.h"
-#include "ValuedComboBox.h"
-
-class NBCAgent;
+#include "NBCPrototype_ABC.h"
 
 struct ASN1T_AttrObjectZoneNBC;
 struct ASN1T_AttrObjectNuageNBC;
+struct ASN1T_MagicActionCreateObject;
 
 // =============================================================================
 /** @class  NBCPrototype
@@ -25,20 +22,19 @@ struct ASN1T_AttrObjectNuageNBC;
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class NBCPrototype : public ObjectPrototypeAttributes_ABC
+class NBCPrototype : public NBCPrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver );
+             NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
     virtual ~NBCPrototype();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity() const;
-    virtual void Serialize( ASN1T_MagicActionCreateObject& msg );
+    virtual void Commit();
     virtual void Clean();
     //@}
 
@@ -49,14 +45,10 @@ private:
     NBCPrototype& operator=( const NBCPrototype& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-    ValuedComboBox< const NBCAgent* >* nbcAgents_;
+    ASN1T_MagicActionCreateObject& msg_;
     ASN1T_AttrObjectZoneNBC* nbcArea_;
     ASN1T_AttrObjectNuageNBC* nbcCloud_;
     //@}

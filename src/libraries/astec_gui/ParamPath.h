@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-25 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ParamPath.h $
-// $Author: Ape $
-// $Modtime: 1/09/04 15:36 $
-// $Revision: 7 $
-// $Workfile: ParamPath.h $
-//
-// *****************************************************************************
 
 #ifndef __ParamPath_h_
 #define __ParamPath_h_
@@ -23,11 +14,14 @@
 #include "Param_ABC.h"
 #include "astec_kernel/ContextMenuObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "LocationSerializer.h"
 
 class ParametersLayer;
 class CoordinateConverter_ABC;
 class RichLabel;
 class Entity_ABC;
+class Location_ABC;
+class Positions;
 
 // =============================================================================
 /** @class  ParamPath
@@ -54,7 +48,7 @@ public:
     virtual bool CheckValidity();
     virtual void Commit();
     virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& );
-    virtual void Handle( const T_PointVector& points );
+    virtual void Handle( Location_ABC& location );
     void CommitTo( ASN1T_Itineraire& destination );
     //@}
 
@@ -74,17 +68,15 @@ private:
 private:
     //! @name Member data
     //@{
-    ParametersLayer& layer_;
     const CoordinateConverter_ABC& converter_;
-    ASN1T_Itineraire& asn_;
+    ParametersLayer& layer_;
+    const Positions& positions_;
+    LocationSerializer serializer_;
 
     std::string menu_;
     RichLabel* pLabel_;
-    QLabel*            pPosLabel_;
-    
-    geometry::Point2f agentPos_;
-    T_PointVector points_;
-    ASN1T_CoordUTM* pUMTCoords_;
+    QLabel*       pPosLabel_;
+    Location_ABC* location_;
     //@}
 };
 

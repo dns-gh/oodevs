@@ -10,33 +10,17 @@
 #include "astec_gui_pch.h"
 #include "LogisticRoutePrototype.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_kernel/Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-LogisticRoutePrototype::LogisticRoutePrototype( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Itinéraire logistique" ) )
+LogisticRoutePrototype::LogisticRoutePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+    : LogisticRoutePrototype_ABC( parent )
+    , msg_( msg )
     , attr_( 0 )
 {
-    new QLabel( tr( "Débit:" ), this );
-    flow_ = new QSpinBox( 0, 10000, 1, this );
-    flow_->setSuffix( Units::vehiclesPerHour );
-
-    new QLabel( tr( "Largeur:" ), this );
-    width_ = new QSpinBox( 0, 10000, 1, this );
-    width_->setSuffix( Units::meters );
-
-    new QLabel( tr( "Longueur:" ), this );
-    length_ = new QSpinBox( 0, 10000, 1, this );
-    length_->setSuffix( Units::meters );
-
-    new QLabel( tr( "Poids maximum:" ), this );
-    maxWeight_ = new QSpinBox( 0, 10000, 1, this );
-    maxWeight_->setSuffix( Units::tons );
-
-    equipped_ = new QCheckBox( tr( "Equipé:" ), this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,21 +33,12 @@ LogisticRoutePrototype::~LogisticRoutePrototype()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRoutePrototype::CheckValidity
+// Name: LogisticRoutePrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-bool LogisticRoutePrototype::CheckValidity() const
+void LogisticRoutePrototype::Commit()
 {
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticRoutePrototype::Serialize
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void LogisticRoutePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
-{
-    if( msg.type != EnumObjectType::itineraire_logistique )
+    if( msg_.type != EnumObjectType::itineraire_logistique )
         return;
 
     attr_ = new ASN1T_AttrObjectItineraireLogistique();
@@ -72,9 +47,9 @@ void LogisticRoutePrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
     attr_->longueur           = length_->value();
     attr_->poids_max_supporte = maxWeight_->value();
     attr_->itineraire_equipe  = equipped_->isOn();
-    msg.m.attributs_specifiquesPresent    = 1;
-    msg.attributs_specifiques.t           = T_AttrObjectSpecific_itineraire_logistique;
-    msg.attributs_specifiques.u.itineraire_logistique = attr_;
+    msg_.m.attributs_specifiquesPresent    = 1;
+    msg_.attributs_specifiques.t           = T_AttrObjectSpecific_itineraire_logistique;
+    msg_.attributs_specifiques.u.itineraire_logistique = attr_;
 }
 
 // -----------------------------------------------------------------------------

@@ -20,26 +20,12 @@
 // Name: RotaPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "ROTA" ) )
+RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg )
+    : RotaPrototype_ABC( parent, resolver )
+    , msg_( msg )
     , attr_( 0 )
 {
-    new QLabel( tr( "Danger:" ), this );
-    danger_ = new QSpinBox( 0, 100, 1, this );
-
-    nbcAgentsLabel_ = new RichLabel( tr( "Agent_ABC(s) NBC:" ), this );
-    nbcAgents_ = new QListView( this );
-    nbcAgents_->setSelectionMode( QListView::Multi );
-    nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
-    nbcAgents_->addColumn( tr( "Type" ) );
-
-    Iterator< const NBCAgent& > it( resolver.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const NBCAgent& element = it.NextElement();
-        ValuedListItem* item = new ValuedListItem( nbcAgents_ );
-        item->Set( &element, element.GetName().c_str() );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,26 +38,12 @@ RotaPrototype::~RotaPrototype()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RotaPrototype::CheckValidity
+// Name: RotaPrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-bool RotaPrototype::CheckValidity() const
+void RotaPrototype::Commit()
 {
-    if( !GetAgentCount() )
-    {
-        nbcAgentsLabel_->Warn( 3000 );
-        return false;
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RotaPrototype::Serialize
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void RotaPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
-{
-    if( msg.type != EnumObjectType::rota )
+    if( msg_.type != EnumObjectType::rota )
         return;
 
     attr_ = new ASN1T_AttrObjectROTA();
@@ -84,9 +56,9 @@ void RotaPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
             attr_->agents_nbc.elem[i++] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent* >()->GetId();
 
     attr_->niveau_danger = danger_->text().toUInt();
-    msg.m.attributs_specifiquesPresent = 1;
-    msg.attributs_specifiques.t        = T_AttrObjectSpecific_rota;
-    msg.attributs_specifiques.u.rota   = attr_;
+    msg_.m.attributs_specifiquesPresent = 1;
+    msg_.attributs_specifiques.t        = T_AttrObjectSpecific_rota;
+    msg_.attributs_specifiques.u.rota   = attr_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,17 +68,4 @@ void RotaPrototype::Serialize( ASN1T_MagicActionCreateObject& msg )
 void RotaPrototype::Clean()
 {
     delete attr_; attr_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RotaPrototype::GetAgentCount
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-unsigned RotaPrototype::GetAgentCount() const
-{
-    unsigned selected = 0;
-    for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
-        if( item->isSelected() )
-            ++selected;
-    return selected;
 }
