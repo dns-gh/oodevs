@@ -78,6 +78,7 @@
 #include <qimage.h>
 #include <qmainwindow.h>
 #include <qdockwindow.h>
+#include <qapplication.h>
 
 #include <map>
 #include <vector>

@@ -1,25 +1,24 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: FBD 03-01-14 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/SIMControlToolbar.cpp $
-// $Author: Ape $
-// $Modtime: 7/10/04 17:07 $
-// $Revision: 2 $
-// $Workfile: SIMControlToolbar.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 
 #include "SIMControlToolbar.h"
 #include "moc_SIMControlToolbar.cpp"
 
-#include "astec_gaming/ASN_Messages.h"
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-#include "MT_SpinBox.h"
+#include "astec_gaming/ASN_Messages.h"
 #include "astec_gaming/Simulation.h"
 #include "astec_kernel/Controllers.h"
+#include "astec_gui/MT_SpinBox.h"
+#include "astec_gui/resources.h"
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar constructor

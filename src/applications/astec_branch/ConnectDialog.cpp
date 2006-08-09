@@ -1,15 +1,13 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ConnectDialog.cpp $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:19 $
-// $Revision: 5 $
-// $Workfile: ConnectDialog.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 
 #include "ConnectDialog.h"
 #include "moc_ConnectDialog.cpp"

@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "UnitToolbar.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/TristateOption.h"
-#include "ToolListButton.h"
+#include "astec_gui/ToolListButton.h"
+#include "astec_gui/resources.h"
 
 namespace
 {

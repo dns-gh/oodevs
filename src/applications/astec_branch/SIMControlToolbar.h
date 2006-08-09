@@ -1,18 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: FBD 03-01-14 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/SIMControlToolbar.h $
-// $Author: Ape $
-// $Modtime: 23/09/04 17:28 $
-// $Revision: 2 $
-// $Workfile: SIMControlToolbar.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __SIMControlToolbar_h_
 #define __SIMControlToolbar_h_
 
-#include "Types.h"
+#include "astec_gui/Types.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 
 class ConnectDialog;

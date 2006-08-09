@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "EventToolbar.h"
 #include "moc_EventToolbar.cpp"
 #include "astec_kernel/Controllers.h"
@@ -15,6 +15,7 @@
 #include "astec_gaming/Report_ABC.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Population_ABC.h"
+#include "astec_gui/resources.h"
 
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor

@@ -9,43 +9,34 @@
 // All Rights Reserved. DIN is a trademark of MASA Corporation.
 //
 //****************************************************************************
-//
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ConnectDialog.h $
-// $Author: Ape $
-// $Modtime: 21/09/04 15:56 $
-// $Revision: 3 $
-// $Workfile: ConnectDialog.h $
-//
-//*****************************************************************************
 
-#ifndef __ConnectDialog_h_
-#define __ConnectDialog_h_
+#ifndef __DisconnectDialog_h_
+#define __DisconnectDialog_h_
 
-#include "Types.h"
+#include "astec_gui/Types.h"
 
-class QComboBox;
-class QSpinBox;
-class QCheckBox;
-class QLabel;
 class Network;
 
 //=============================================================================
+/**
+*   @class  DisconnectDialog
+*   @brief  Disconnect dialog
+*/
 // Created:  NLD 2002-01-03 
 //=============================================================================
-class ConnectDialog : public QDialog
+class DisconnectDialog : public QDialog
 {
     Q_OBJECT
 
 public:
     //! @name Constructor/Destructor
     //@{
-             ConnectDialog( QWidget* pParent, Network& network );
-    virtual ~ConnectDialog();
+             DisconnectDialog( QWidget* pParent, Network& network );
+    virtual ~DisconnectDialog();
     //@}
 
 private slots:
-    //! @name Main methods
+    //! @name Slots
     //@{
     void Validate();
     void Reject();
@@ -54,23 +45,20 @@ private slots:
 private:
     //! @name Copy/Assignment
     //@{
-    ConnectDialog( const ConnectDialog& );
-    ConnectDialog& operator=( const ConnectDialog& );
-    //@}
-
-private:
-    //! @name Config management
-    //@{
-    void LoadDefaultConfig();
+    DisconnectDialog( const DisconnectDialog& );
+    DisconnectDialog& operator=( const DisconnectDialog& );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Network&     network_;
-    QComboBox*   pHostNameComboBox_;
-    QSpinBox*    pPortSpinBox_;
+    Network& network_;
     //@}
 };
 
-#endif // __ConnectDialog_h_
+
+#ifdef USE_INLINE
+#   include "DisconnectDialog.inl"
+#endif
+
+#endif // __DisconnectDialog_h_

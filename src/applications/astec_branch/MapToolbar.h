@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-03-16 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/MapToolbar.h $
-// $Author: Age $
-// $Modtime: 13/05/05 17:27 $
-// $Revision: 3 $
-// $Workfile: MapToolbar.h $
-//
-// *****************************************************************************
 
 #ifndef __MapToolbar_h_
 #define __MapToolbar_h_

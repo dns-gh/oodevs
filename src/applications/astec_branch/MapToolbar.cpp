@@ -7,16 +7,15 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "MapToolbar.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Options.h"
 #include "astec_kernel/OptionVariant.h"
-#include "ToolListButton.h"
 #include "astec_kernel/TristateOption.h"
-#include "BooleanOptionButton.h"
-
-#include "resources.h"
+#include "astec_gui/BooleanOptionButton.h"
+#include "astec_gui/ToolListButton.h"
+#include "astec_gui/resources.h"
 
 namespace
 {

@@ -1,15 +1,13 @@
-//****************************************************************************
+// *****************************************************************************
 //
-// $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/DisconnectDialog.cpp $
-// $Author: Ape $
-// $Modtime: 21/09/04 15:56 $
-// $Revision: 3 $
-// $Workfile: DisconnectDialog.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 
 #include "DisconnectDialog.h"
 #include "moc_DisconnectDialog.cpp"
