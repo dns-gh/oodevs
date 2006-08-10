@@ -13,13 +13,13 @@
 
 #include "AgentKnowledgePanel.h"
 #include "ObjectKnowledgePanel.h"
+#include "ObjectReportPanel.h"
 #include "PopulationKnowledgePanel.h"
+#include "ReportPanel.h"
 
 #include "astec_gui/AgentStatePanel.h"
-#include "astec_gui/ReportPanel.h"
 #include "astec_gui/AgentResourcesPanel.h"
 #include "astec_gui/ObjectPanel.h"
-#include "astec_gui/ObjectReportPanel.h"
 #include "astec_gui/PopulationPanel.h"
 #include "astec_gui/AgentMaintenancePanel.h"
 #include "astec_gui/AgentMedicalPanel.h"
@@ -255,13 +255,4 @@ InfoPanels::IT_SelectedWidgets InfoPanels::FindSelectedSet()
     while( it != widgets_.end() && it->first != current )
         ++it;
     return it;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoPanels::operator QWidget*
-// Created: SBO 2006-08-10
-// -----------------------------------------------------------------------------
-InfoPanels::operator QWidget*()
-{
-    return this;
 }

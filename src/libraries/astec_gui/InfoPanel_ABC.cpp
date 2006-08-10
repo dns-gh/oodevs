@@ -17,7 +17,7 @@
 // -----------------------------------------------------------------------------
 InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name )
     : QScrollView( parent )
-    , parent_( panel )
+    , stack_( panel )
     , name_( name )
     , pBox_( new QVBox( viewport() ) )
 {
@@ -46,7 +46,7 @@ InfoPanel_ABC::~InfoPanel_ABC()
 // -----------------------------------------------------------------------------
 void InfoPanel_ABC::Show()
 {
-    parent_.Add( this, name_ );
+    stack_.Add( this, name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void InfoPanel_ABC::Show()
 // -----------------------------------------------------------------------------
 void InfoPanel_ABC::Hide()
 {
-    parent_.Remove( this );
+    stack_.Remove( this );
 }
 
 // -----------------------------------------------------------------------------

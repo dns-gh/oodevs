@@ -10,9 +10,9 @@
 #ifndef __FireResultListView_h_
 #define __FireResultListView_h_
 
-#include "ListDisplayer.h"
-class SubItemDisplayer;
+#include "astec_gui/ListDisplayer.h"
 
+class SubItemDisplayer;
 class PopulationFireResult;
 class AgentFireResult;
 class Equipment;

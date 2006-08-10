@@ -38,7 +38,6 @@ public:
     //@{
     virtual void Add( QWidget* widget, const QString& name );
     virtual void Remove( QWidget* widget );
-    virtual operator QWidget*();
     //@}
 
 private:

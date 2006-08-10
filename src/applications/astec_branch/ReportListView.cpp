@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "ReportListView.h"
 #include "moc_ReportListView.cpp"
 
@@ -16,7 +16,7 @@
 #include "astec_gaming/Reports.h"
 #include "astec_kernel/Entity_ABC.h"
 #include "astec_kernel/Controllers.h"
-#include "ItemFactory_ABC.h"
+#include "astec_gui/ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor

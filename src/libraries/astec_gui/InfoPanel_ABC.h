@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-05 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/InfoPanel_ABC.h $
-// $Author: Age $
-// $Modtime: 6/04/05 11:56 $
-// $Revision: 2 $
-// $Workfile: InfoPanel_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __InfoPanel_ABC_h_
 #define __InfoPanel_ABC_h_
@@ -65,7 +56,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    PanelStack_ABC& parent_;
+    PanelStack_ABC& stack_;
     QString name_; 
     QVBox* pBox_;
     //@}

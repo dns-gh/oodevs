@@ -10,7 +10,7 @@
 #ifndef __ObjectReportPanel_h_
 #define __ObjectReportPanel_h_
 
-#include "InfoPanel_ABC.h"
+#include "astec_gui/InfoPanel_ABC.h"
 #include "astec_kernel/SelectionObserver_ABC.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_kernel/SafePointer.h"
@@ -19,13 +19,6 @@ class FireResultListView;
 class Object_ABC;
 class Controllers;
 class Explosions;
-class Displayer_ABC;
-class ValuedListItem;
-class PopulationFireResult;
-class AgentFireResult;
-class Equipment;
-class SubItemDisplayer;
-class Casualties;
 class ItemFactory_ABC;
 
 // =============================================================================
@@ -44,11 +37,6 @@ public:
     //@{
              ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectReportPanel();
-    //@}
-
-    //! @name Operations
-    //@{
-    
     //@}
 
 private:
