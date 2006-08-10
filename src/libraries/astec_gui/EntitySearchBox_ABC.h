@@ -10,6 +10,10 @@
 #ifndef __EntitySearchBox_ABC_h_
 #define __EntitySearchBox_ABC_h_
 
+class EntitySearchItem;
+class Entity_ABC;
+class ActionController;
+
 // =============================================================================
 /** @class  EntitySearchBox_ABC
     @brief  EntitySearchBox_ABC
@@ -23,23 +27,8 @@ class EntitySearchBox_ABC : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntitySearchBox_ABC( QWidget* parent );
+             EntitySearchBox_ABC( QWidget* parent, ActionController& actions );
     virtual ~EntitySearchBox_ABC();
-    //@}
-
-    //! @name Types
-    //@{
-    class SearchableItem_ABC
-    {
-    public:
-        explicit SearchableItem_ABC( unsigned id ) : id_( id ) {};
-        virtual ~SearchableItem_ABC() {};
-        virtual bool Matches( const QString& input ) const = 0;
-        virtual void Activate() = 0;
-        const unsigned id_;
-    private:
-        SearchableItem_ABC& operator=( const SearchableItem_ABC& );
-    };
     //@}
 
 protected slots:
@@ -52,23 +41,31 @@ protected slots:
 protected:
     //! @name Types
     //@{
-    typedef std::vector< SearchableItem_ABC* >    T_Items;
-    typedef T_Items::iterator                    IT_Items;
-    typedef T_Items::const_iterator             CIT_Items;
+    typedef std::vector< EntitySearchItem* >    T_Items;
+    typedef T_Items::iterator                  IT_Items;
+    typedef T_Items::const_iterator           CIT_Items;
     //@}
 
     //! @name Helpers
     //@{
-    void AddItem( SearchableItem_ABC& item );
-    void RemoveItem( unsigned long id );
+    void AddItem( const Entity_ABC& entity );
+    void RemoveItem( const Entity_ABC& entity );
     
     void Find();
     bool Find( CIT_Items begin, CIT_Items end );
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    EntitySearchBox_ABC( const EntitySearchBox_ABC& );
+    EntitySearchBox_ABC& operator=( const EntitySearchBox_ABC& );
+    //@}
+
+private:
     //! @name Member data
     //@{
+    ActionController& actions_;
     T_Items items_;
     QString currentSearch_;
     CIT_Items lastItem_;

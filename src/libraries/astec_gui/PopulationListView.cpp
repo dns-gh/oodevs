@@ -36,6 +36,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
     setAcceptDrops( true );
+    header()->hide();
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );

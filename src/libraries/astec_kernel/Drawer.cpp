@@ -19,8 +19,10 @@
 Drawer::Drawer()
 {
     SetPosition( "Lives",      0 );
-    SetPosition( "Agent",      1 );
-    SetPosition( "Attributes", 2 );
+    SetPosition( "Positions",  1 );
+    SetPosition( "Object",     2 );
+    SetPosition( "Agent",      2 );
+    SetPosition( "Attributes", 3 );
 }
 
 // -----------------------------------------------------------------------------

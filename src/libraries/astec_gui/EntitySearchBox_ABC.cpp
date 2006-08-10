@@ -10,13 +10,15 @@
 #include "astec_gui_pch.h"
 #include "EntitySearchBox_ABC.h"
 #include "moc_EntitySearchBox_ABC.cpp"
+#include "EntitySearchItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntitySearchBox_ABC constructor
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-EntitySearchBox_ABC::EntitySearchBox_ABC( QWidget* parent )
+EntitySearchBox_ABC::EntitySearchBox_ABC( QWidget* parent, ActionController& actions )
     : QHBox( parent )
+    , actions_( actions )
 {
     setMargin( 2 );
     setSpacing( 10 );
@@ -45,9 +47,9 @@ EntitySearchBox_ABC::~EntitySearchBox_ABC()
 // Name: EntitySearchBox_ABC::AddItem
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void EntitySearchBox_ABC::AddItem( SearchableItem_ABC& item )
+void EntitySearchBox_ABC::AddItem( const Entity_ABC& entity )
 {
-    items_.push_back( &item );
+    items_.push_back( new EntitySearchItem( actions_, entity ) );
     lastItem_ = items_.begin();
 }
 
@@ -55,11 +57,11 @@ void EntitySearchBox_ABC::AddItem( SearchableItem_ABC& item )
 // Name: EntitySearchBox_ABC::RemoveItem
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void EntitySearchBox_ABC::RemoveItem( unsigned long id )
+void EntitySearchBox_ABC::RemoveItem( const Entity_ABC& entity )
 {
     for( IT_Items it = items_.begin(); it != items_.end(); ++it )
     {
-        if( (*it)->id_ == id )
+        if( (*it)->Matches( entity ) )
         {
             std::swap( *it, items_.back() );
             delete items_.back();

@@ -53,44 +53,13 @@ private:
     //@}
 };
 
-namespace
-{
-    template< typename Entity >
-    class Searchable : public EntitySearchBox_ABC::SearchableItem_ABC
-    {
-    public:
-        Searchable( Controllers& controllers, const Entity& entity )
-            : SearchableItem_ABC( entity.GetId() )
-            , controllers_( &controllers )
-            , entity_( &entity )
-            , name_( entity.GetName().c_str() + QString::number( entity.GetId() ) )
-        {
-            name_ = name_.lower();
-        };
-        virtual ~Searchable()
-        {};
-        virtual bool Matches( const QString& input ) const {
-            return name_.find( input ) != -1;
-        };
-        virtual void Activate() 
-        {
-            controllers_->actions_.Select( *entity_ );
-            controllers_->actions_.Activate( *entity_ );
-        };
-    private:
-        Controllers* controllers_;
-        const Entity* entity_;
-        QString name_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: EntitySearchBox constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 template< typename Entity >
 EntitySearchBox< Entity >::EntitySearchBox( QWidget* pParent, Controllers& controllers )
-    : EntitySearchBox_ABC( pParent )
+    : EntitySearchBox_ABC( pParent, controllers.actions_ )
     , controllers_( controllers )
 {
     controllers_.Register( *this );
@@ -113,7 +82,7 @@ EntitySearchBox< Entity >::~EntitySearchBox()
 template< typename Entity >
 void EntitySearchBox< Entity >::NotifyCreated( const Entity& entity )
 {
-    AddItem( *new Searchable< Entity >( controllers_, entity ) );
+    AddItem( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +92,7 @@ void EntitySearchBox< Entity >::NotifyCreated( const Entity& entity )
 template< typename Entity >
 void EntitySearchBox< Entity >::NotifyDeleted( const Entity& entity )
 {
-    RemoveItem( entity.GetId() );
+    RemoveItem( entity );
 }
 
 

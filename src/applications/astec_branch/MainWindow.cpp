@@ -23,11 +23,9 @@
 #include "UnitToolbar.h"
 
 #include "astec_kernel/ActionController.h"
-#include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/DataDictionary.h"
 #include "astec_kernel/DetectionMap.h"
-#include "astec_kernel/Object_ABC.h"
 #include "astec_kernel/ObjectTypes.h"
 #include "astec_kernel/Options.h"
 #include "astec_kernel/OptionVariant.h"
@@ -44,9 +42,9 @@
 #include "astec_gaming/Tiredness.h"
 
 #include "astec_gui/Logger.h"
-#include "astec_gui/AgentListView.h"
-#include "astec_gui/ObjectListView.h"
-#include "astec_gui/PopulationListView.h"
+#include "astec_gui/AgentList.h"
+#include "astec_gui/ObjectList.h"
+#include "astec_gui/PopulationList.h"
 #include "astec_gui/Settings.h"
 #include "astec_gui/OptionsPanel.h"
 #include "astec_gui/MissionPanel.h"
@@ -59,7 +57,6 @@
 #include "astec_gui/Dialogs.h"
 #include "astec_gui/MagicOrdersInterface.h"
 #include "astec_gui/PreferencesDialog.h"
-#include "astec_gui/EntitySearchBox.h"
 #include "astec_gui/ParametersLayer.h"
 #include "astec_gui/GlPlaceHolder.h"
 #include "astec_gui/RichItemFactory.h"
@@ -112,24 +109,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    QVBox* agentPanel = new QVBox();
-    new EntitySearchBox< Agent_ABC >( agentPanel, controllers );
-    AgentListView* pAgentList_ = new AgentListView( agentPanel, controllers, publisher, *factory );
-    pListsTabWidget->addTab( agentPanel, tr( "Agents" ) );
-    pAgentList_->header()->hide();
-
-    QVBox* objectPanel = new QVBox();
-    new EntitySearchBox< Object_ABC >( objectPanel, controllers );
-    ObjectListView* pObjectList_ = new ObjectListView( objectPanel, controllers, *factory );
-    pListsTabWidget->addTab( objectPanel, tr( "Objets" ) );
-    pObjectList_->header()->hide();
-
-    QVBox* populationPanel = new QVBox();
-    new EntitySearchBox< Population >( populationPanel, controllers );
-    PopulationListView* pPopulationList_ = new PopulationListView( populationPanel, controllers, *factory );
-	pListsTabWidget->addTab( populationPanel, tr( "Populations" ) );
-	pPopulationList_->header()->hide();
-
+    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
+    pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );

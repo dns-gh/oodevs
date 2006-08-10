@@ -41,6 +41,7 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publis
     addColumn( "Unités" );
     setRootIsDecorated( true );
     setAcceptDrops( true );
+    header()->hide();
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );

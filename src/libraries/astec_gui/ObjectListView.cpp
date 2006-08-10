@@ -40,6 +40,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, Item
     addColumn( "Objets" );
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
+    header()->hide();
 
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
