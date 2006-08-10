@@ -27,8 +27,8 @@
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgePanel::ObjectKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "Connaissances objet" ) )
+ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC( parent, panel, tr( "Connaissances objet" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )

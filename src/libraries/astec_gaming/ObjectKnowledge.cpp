@@ -33,8 +33,8 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
     , type_          ( & typeResolver.Get( message.type ) )
     , pRealObject_   ( 0 )
 {
+    RegisterSelf( *this );
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
-    InterfaceContainer< Extension_ABC >::Register( *this );
     controller_.Create( *this );
 }
 

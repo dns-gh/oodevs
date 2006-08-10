@@ -15,9 +15,9 @@
 // Name: InfoPanel_ABC constructor
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-InfoPanel_ABC::InfoPanel_ABC( PanelStack_ABC* parent, const QString& name )
-    : QScrollView( (QWidget*)parent )
-    , parent_( parent )
+InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QString& name )
+    : QScrollView( parent )
+    , parent_( panel )
     , name_( name )
     , pBox_( new QVBox( viewport() ) )
 {
@@ -46,7 +46,7 @@ InfoPanel_ABC::~InfoPanel_ABC()
 // -----------------------------------------------------------------------------
 void InfoPanel_ABC::Show()
 {
-    parent_->Add( this, name_ );
+    parent_.Add( this, name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void InfoPanel_ABC::Show()
 // -----------------------------------------------------------------------------
 void InfoPanel_ABC::Hide()
 {
-    parent_->Remove( this );
+    parent_.Remove( this );
 }
 
 // -----------------------------------------------------------------------------

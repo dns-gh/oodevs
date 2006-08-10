@@ -36,7 +36,7 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_Msg
     , realAgent_   ( resolver_.Get( message.oid_unite_reelle ) )
     , team_        ( 0 )
 {
-    InterfaceContainer< Extension_ABC >::Register( *this );
+    RegisterSelf( *this );
     controller_.Create( *this );
 }
 

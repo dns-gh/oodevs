@@ -87,10 +87,6 @@ AgentFactory::~AgentFactory()
     // NOTHING
 }
 
-// $$$$ AGE 2006-04-10: C'est l'ordre d'attach qui impose l'ordre de dessin. 
-// $$$$ AGE 2006-04-10: C'est pas terrible
-// $$$$ AGE 2006-08-01: Faire un drawer qui parcours les extensions, les enregistre et détermine un ordre
-
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
@@ -100,9 +96,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach( *new Lives( *result ) );
-    result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
-    AttachExtensions( *result );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
@@ -110,6 +104,8 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Attach( *new MagicOrders( *result ) );
+
+    AttachExtensions( *result );
     result->Update( asnMsg );
     return result;
 }
@@ -122,14 +118,13 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     result->Attach( *new Lives( *result ) );
-    result->InterfaceContainer< Extension_ABC >::Register( *result );
     result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
-    AttachExtensions( *result );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Attach( *new MagicOrders( *result ) );
+    AttachExtensions( *result );
     return result;
 }
 
@@ -140,9 +135,9 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.types_ );
-    AttachExtensions( *result ); // $$$$ AGE 2006-02-16: pas tout !
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
+    AttachExtensions( *result );
     return result;
 }
 

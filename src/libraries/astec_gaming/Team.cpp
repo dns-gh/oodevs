@@ -23,7 +23,7 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGro
     , name_()
     , id_( id )
 {
-    InterfaceContainer< Extension_ABC >::Register( *this );
+    RegisterSelf( *this );
     input >> name_;
     controller_.Create( *(Team_ABC*)this );
 }

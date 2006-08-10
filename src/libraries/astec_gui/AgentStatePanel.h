@@ -44,7 +44,7 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentStatePanel();
     //@}
 

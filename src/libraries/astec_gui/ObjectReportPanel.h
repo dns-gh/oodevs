@@ -42,7 +42,7 @@ class ObjectReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectReportPanel();
     //@}
 

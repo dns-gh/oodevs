@@ -30,8 +30,8 @@
 // Name: AgentResourcesPanel constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-AgentResourcesPanel::AgentResourcesPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "Ressources" ) )
+AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC( parent, panel, tr( "Ressources" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {

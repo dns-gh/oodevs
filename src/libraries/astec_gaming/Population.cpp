@@ -37,9 +37,8 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     , type_         ( typeResolver.Get( message.type_population ) )
     , team_         ( resolver.Get( message.oid_camp ) )
 {
-    DataDictionary& dictionary = *new DataDictionary();
-    Attach( dictionary );
-    InterfaceContainer< Extension_ABC >::Register( *this );
+    RegisterSelf( *this );
+    Attach( *new DataDictionary() );
     controller_.Create( *(Population_ABC*)this );
 }
 

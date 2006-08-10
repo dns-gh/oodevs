@@ -24,8 +24,8 @@
 // Name: AgentMaintenancePanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMaintenancePanel::AgentMaintenancePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( pParent, controllers, factory, tr( "Chaine maintenance" ) )
+AgentMaintenancePanel::AgentMaintenancePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( parent, panel, controllers, factory, tr( "Chaine maintenance" ) )
     , controllers_( controllers )
 {
     AddConsignColumn( "Type d'équipement :" );

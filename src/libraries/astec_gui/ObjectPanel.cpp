@@ -32,10 +32,10 @@
 // Name: ObjectPanel constructor
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( PanelStack_ABC* info, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC ( info, tr( "Etat objet" ) )
-    , controllers_( controllers )
-    , selected_( controllers )
+ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC( parent, panel, tr( "Etat objet" ) )
+    , controllers_ ( controllers )
+    , selected_    ( controllers )
 {
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Informations" )

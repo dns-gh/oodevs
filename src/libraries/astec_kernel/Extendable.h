@@ -50,7 +50,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void AddExtension( BaseType*& where, BaseType* ext );
+    virtual void AddExtension( BaseType& ext );
     //@}
 
 private:

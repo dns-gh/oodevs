@@ -35,6 +35,7 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     , gtia_( 0 )
     , aggregated_( false )
 {
+    RegisterSelf( *this );
     std::stringstream ss;
     ss << message.nom << " [" << id_ << "]";
     name_ = ss.str();
@@ -63,6 +64,8 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     , gtia_( 0 )
     , aggregated_( false )
 {
+    RegisterSelf( *this );
+
     std::stringstream ss;
     ss << message.nom << " [" << id_ << "]";
     name_ = ss.str();

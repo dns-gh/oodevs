@@ -33,7 +33,7 @@ class AgentMaintenancePanel : public LogisticPanel< AgentMaintenancePanel, LogMa
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMaintenancePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentMaintenancePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMaintenancePanel();
     //@}
 

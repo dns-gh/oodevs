@@ -36,7 +36,7 @@ class AgentSupplyPanel : public LogisticPanel< AgentSupplyPanel, LogSupplyConsig
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentSupplyPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentSupplyPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentSupplyPanel();
     //@}
 

@@ -50,7 +50,7 @@ class AgentResourcesPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentResourcesPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentResourcesPanel();
     //@}
 

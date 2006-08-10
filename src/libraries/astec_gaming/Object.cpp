@@ -42,7 +42,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     , nDotationConstruction_         ( 0 )
     , nDotationValorization_         ( 0 )
 {
-    InterfaceContainer< Extension_ABC >::Register( *this );
+    RegisterSelf( *this );
 
     if( message.m.type_dotation_constructionPresent )
         construction_ = & dotationResolver.Get( message.type_dotation_construction );

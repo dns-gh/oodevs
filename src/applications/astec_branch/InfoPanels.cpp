@@ -43,18 +43,18 @@ InfoPanels::InfoPanels( QWidget* pParent, Controllers& controllers, ItemFactory_
     combo_->setFocusPolicy( QWidget::StrongFocus );
 
     stack_ = new QWidgetStack( this );
-    AddPanel( new AgentStatePanel         ( this, controllers, factory ) );
-    AddPanel( new AgentResourcesPanel     ( this, controllers, factory ) );
-    AddPanel( new AgentKnowledgePanel     ( this, controllers, factory ) );
-    AddPanel( new PopulationPanel         ( this, controllers, factory ) );
-    AddPanel( new PopulationKnowledgePanel( this, controllers, factory ) );
-    AddPanel( new ObjectPanel             ( this, controllers, factory ) );
-    AddPanel( new ObjectReportPanel       ( this, controllers, factory ) );
-    AddPanel( new ObjectKnowledgePanel    ( this, controllers, factory ) );
-    AddPanel( new ReportPanel             ( this, controllers, factory ) );
-    AddPanel( new AgentMaintenancePanel   ( this, controllers, factory ) );
-    AddPanel( new AgentMedicalPanel       ( this, controllers, factory ) );
-    AddPanel( new AgentSupplyPanel        ( this, controllers, factory ) );
+    AddPanel( new AgentStatePanel         ( this, *this, controllers, factory ) );
+    AddPanel( new AgentResourcesPanel     ( this, *this, controllers, factory ) );
+    AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );
+    AddPanel( new PopulationPanel         ( this, *this, controllers, factory ) );
+    AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );
+    AddPanel( new ObjectPanel             ( this, *this, controllers, factory ) );
+    AddPanel( new ObjectReportPanel       ( this, *this, controllers, factory ) );
+    AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
+    AddPanel( new ReportPanel             ( this, *this, controllers, factory ) );
+    AddPanel( new AgentMaintenancePanel   ( this, *this, controllers, factory ) );
+    AddPanel( new AgentMedicalPanel       ( this, *this, controllers, factory ) );
+    AddPanel( new AgentSupplyPanel        ( this, *this, controllers, factory ) );
 
     dummy_ = new QWidget( stack_ );
     stack_->addWidget( dummy_ );

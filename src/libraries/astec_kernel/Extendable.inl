@@ -41,9 +41,9 @@ Extendable< BaseType >::~Extendable()
 // Created: AGE 2006-02-07
 // -----------------------------------------------------------------------------
 template< typename BaseType >
-void Extendable< BaseType >::AddExtension( BaseType*& where, BaseType* ext )
+void Extendable< BaseType >::AddExtension( BaseType& )
 {
-    where = ext;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,8 @@ void Extendable< BaseType >::Attach( Extension& extension )
     BaseType*& ext = Find< Extension >();
     if( ext )
         throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " already attached to " + typeid( *this ).name() );
-    AddExtension( ext, &extension );
+    AddExtension( extension );
+    ext = &extension;
 }
 
 // -----------------------------------------------------------------------------

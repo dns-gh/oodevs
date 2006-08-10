@@ -18,6 +18,7 @@
 class ActionController;
 class GlTools_ABC;
 class QPoint;
+class Drawer;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -61,6 +62,12 @@ public:
     InterfaceContainer< Extension_ABC >& Interface() const;
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    void RegisterSelf( Extension_ABC& ext );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -70,7 +77,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void AddExtension( Extension_ABC*& where, Extension_ABC* ext );
+    virtual void AddExtension( Extension_ABC& ext );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Drawer* drawer_;
     //@}
 };
 

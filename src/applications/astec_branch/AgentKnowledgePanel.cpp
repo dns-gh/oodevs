@@ -27,8 +27,8 @@
 // Name: AgentKnowledgePanel constructor
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-AgentKnowledgePanel::AgentKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, tr( "Connaissances agent" ) )
+AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC( parent, panel, tr( "Connaissances agent" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )

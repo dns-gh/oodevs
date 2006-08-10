@@ -18,8 +18,8 @@
 // Name: ReportPanel constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportPanel::ReportPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC     ( pParent, tr( "Rapports" ) )
+ReportPanel::ReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC     ( parent, panel, tr( "Rapports" ) )
     , controllers_      ( controllers )
     , selected_         ( 0 )
 {

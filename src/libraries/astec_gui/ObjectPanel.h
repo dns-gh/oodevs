@@ -47,7 +47,7 @@ class ObjectPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectPanel();
     //@}
 

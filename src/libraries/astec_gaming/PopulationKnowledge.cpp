@@ -30,6 +30,7 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Contr
     , popu_      ( resolver.Get( message.oid_population_reelle ) )
     , domination_( 0 )
 {
+    RegisterSelf( *this );
     controller_.Create( *this );
 }
 

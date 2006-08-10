@@ -26,8 +26,8 @@
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-PopulationKnowledgePanel::PopulationKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( pParent, "Connaissances population" )
+PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC( parent, panel, "Connaissances population" )
     , controllers_ ( controllers )
     , owner_       ( controllers )
     , selected_    ( controllers )

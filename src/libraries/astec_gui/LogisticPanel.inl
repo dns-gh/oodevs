@@ -13,8 +13,8 @@
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-LogisticPanel< ConcretePanel, Consign >::LogisticPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName )
-    : InfoPanel_ABC( pParent, tabName )
+LogisticPanel< ConcretePanel, Consign >::LogisticPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName )
+    : InfoPanel_ABC( parent, panel, tabName )
     , selected_( controllers )
 {
     pConsignListView_ = new ListDisplayer< ConcretePanel >( this, (ConcretePanel&)*this, factory );

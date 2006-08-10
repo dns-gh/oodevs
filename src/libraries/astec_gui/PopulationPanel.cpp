@@ -24,8 +24,8 @@
 // Name: PopulationPanel constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationPanel::PopulationPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC ( pParent, tr( "Etat population" ) )
+PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+    : InfoPanel_ABC ( parent, panel, tr( "Etat population" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )
 {

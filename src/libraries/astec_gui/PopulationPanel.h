@@ -37,7 +37,7 @@ class PopulationPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationPanel();
     //@}
 
