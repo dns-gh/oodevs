@@ -10,7 +10,6 @@
 #ifndef __AboutDialog_h_
 #define __AboutDialog_h_
 
-#include <qdialog.h>
 class ItemFactory_ABC;
 
 // =============================================================================

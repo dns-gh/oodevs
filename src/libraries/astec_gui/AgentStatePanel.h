@@ -25,7 +25,6 @@ class HumanFactors;
 class Reinforcements;
 class LogisticLinks;
 class Transports;
-class InfoPanels;
 class ItemFactory_ABC;
 
 // =============================================================================
@@ -45,7 +44,7 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentStatePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentStatePanel();
     //@}
 

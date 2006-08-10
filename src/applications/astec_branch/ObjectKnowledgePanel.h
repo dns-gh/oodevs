@@ -10,8 +10,8 @@
 #ifndef __ObjectKnowledgePanel_h_
 #define __ObjectKnowledgePanel_h_
 
-#include "Types.h"
-#include "InfoPanel_ABC.h"
+//#include "astec_gui/Types.h"
+#include "astec_gui/InfoPanel_ABC.h"
 #include "astec_gaming/TeamSelectionObserver.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_kernel/SafePointer.h"
@@ -53,7 +53,7 @@ class ObjectKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectKnowledgePanel();
     //@}
 

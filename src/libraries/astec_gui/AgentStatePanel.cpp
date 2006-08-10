@@ -29,7 +29,7 @@
 // Name: AgentStatePanel constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( InfoPanels* info, Controllers& controllers, ItemFactory_ABC& factory )
+AgentStatePanel::AgentStatePanel( PanelStack_ABC* info, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( info, tr( "Etat agent" ) )
     , controllers_( controllers )
     , selected_( controllers )

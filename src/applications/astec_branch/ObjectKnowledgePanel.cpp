@@ -7,13 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "ObjectKnowledgePanel.h"
 #include "moc_ObjectKnowledgePanel.cpp"
 
-#include "ListDisplayer.h"
-#include "DisplayBuilder.h"
 #include "astec_kernel/Controllers.h"
+#include "astec_kernel/Team_ABC.h"
 #include "astec_gaming/ObjectKnowledges.h"
 #include "astec_gaming/ObjectKnowledge.h"
 #include "astec_gaming/CampAttributes.h"
@@ -21,13 +20,14 @@
 #include "astec_gaming/LogisticRouteAttributes.h"
 #include "astec_gaming/NBCAttributes.h"
 #include "astec_gaming/RotaAttributes.h"
-#include "astec_kernel/Team_ABC.h"
+#include "astec_gui/ListDisplayer.h"
+#include "astec_gui/DisplayBuilder.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-ObjectKnowledgePanel::ObjectKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+ObjectKnowledgePanel::ObjectKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "Connaissances objet" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )

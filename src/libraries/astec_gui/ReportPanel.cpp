@@ -18,7 +18,7 @@
 // Name: ReportPanel constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportPanel::ReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+ReportPanel::ReportPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC     ( pParent, tr( "Rapports" ) )
     , controllers_      ( controllers )
     , selected_         ( 0 )

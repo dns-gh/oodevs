@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-21 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/ReportPanel.h $
-// $Author: Age $
-// $Modtime: 21/04/05 16:06 $
-// $Revision: 1 $
-// $Workfile: ReportPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __ReportPanel_h_
 #define __ReportPanel_h_
@@ -42,7 +33,7 @@ class ReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory);
+             ReportPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory);
     virtual ~ReportPanel();
     //@}
 

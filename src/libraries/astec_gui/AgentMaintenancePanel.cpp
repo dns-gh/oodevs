@@ -24,7 +24,7 @@
 // Name: AgentMaintenancePanel constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-AgentMaintenancePanel::AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+AgentMaintenancePanel::AgentMaintenancePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( pParent, controllers, factory, tr( "Chaine maintenance" ) )
     , controllers_( controllers )
 {

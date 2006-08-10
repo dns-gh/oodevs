@@ -32,7 +32,7 @@
 // Name: ObjectPanel constructor
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( InfoPanels* info, Controllers& controllers, ItemFactory_ABC& factory )
+ObjectPanel::ObjectPanel( PanelStack_ABC* info, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC ( info, tr( "Etat objet" ) )
     , controllers_( controllers )
     , selected_( controllers )

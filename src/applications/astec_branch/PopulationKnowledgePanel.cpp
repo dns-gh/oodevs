@@ -7,26 +7,26 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "PopulationKnowledgePanel.h"
 #include "moc_PopulationKnowledgePanel.cpp"
 
-#include "DisplayBuilder.h"
-#include "GroupDisplayer.h"
-#include "LabelDisplayer.h"
-#include "ListDisplayer.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_gaming/PopulationKnowledges.h"
 #include "astec_gaming/PopulationKnowledge.h"
 #include "astec_gaming/PopulationConcentrationKnowledge.h"
 #include "astec_gaming/PopulationFlowKnowledge.h"
+#include "astec_gui/DisplayBuilder.h"
+#include "astec_gui/GroupDisplayer.h"
+#include "astec_gui/LabelDisplayer.h"
+#include "astec_gui/ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-PopulationKnowledgePanel::PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+PopulationKnowledgePanel::PopulationKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, "Connaissances population" )
     , controllers_ ( controllers )
     , owner_       ( controllers )

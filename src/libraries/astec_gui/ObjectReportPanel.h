@@ -42,7 +42,7 @@ class ObjectReportPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectReportPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectReportPanel();
     //@}
 

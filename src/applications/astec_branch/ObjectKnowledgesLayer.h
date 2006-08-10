@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledgesLayer_h_
 #define __ObjectKnowledgesLayer_h_
 
-#include "KnowledgeLayer.h"
+#include "astec_gui/KnowledgeLayer.h"
 #include "astec_gaming/ObjectKnowledge.h"
 
 // =============================================================================

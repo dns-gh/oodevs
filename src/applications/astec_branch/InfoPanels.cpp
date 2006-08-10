@@ -3,30 +3,31 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "InfoPanels.h"
 #include "moc_InfoPanels.cpp"
-#include "AgentStatePanel.h"
-#include "ReportPanel.h"
-#include "AgentResourcesPanel.h"
+
 #include "AgentKnowledgePanel.h"
-#include "ObjectPanel.h"
-#include "ObjectReportPanel.h"
 #include "ObjectKnowledgePanel.h"
-#include "PopulationPanel.h"
 #include "PopulationKnowledgePanel.h"
-#include "AgentMaintenancePanel.h"
-#include "AgentMedicalPanel.h"
-#include "AgentSupplyPanel.h"
-#include "InfoPanel_ABC.h"
+
+#include "astec_gui/AgentStatePanel.h"
+#include "astec_gui/ReportPanel.h"
+#include "astec_gui/AgentResourcesPanel.h"
+#include "astec_gui/ObjectPanel.h"
+#include "astec_gui/ObjectReportPanel.h"
+#include "astec_gui/PopulationPanel.h"
+#include "astec_gui/AgentMaintenancePanel.h"
+#include "astec_gui/AgentMedicalPanel.h"
+#include "astec_gui/AgentSupplyPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels constructor
-// Created: APE 2004-03-10
+// Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
 InfoPanels::InfoPanels( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : QVBox( pParent )
@@ -68,7 +69,7 @@ InfoPanels::InfoPanels( QWidget* pParent, Controllers& controllers, ItemFactory_
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels destructor
-// Created: APE 2004-03-10
+// Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
 InfoPanels::~InfoPanels()
 {
@@ -173,7 +174,7 @@ void InfoPanels::Remove( QWidget* widget )
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels::sizeHint
-// Created: APE 2004-06-02
+// Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
 QSize InfoPanels::sizeHint() const
 {
@@ -254,4 +255,13 @@ InfoPanels::IT_SelectedWidgets InfoPanels::FindSelectedSet()
     while( it != widgets_.end() && it->first != current )
         ++it;
     return it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanels::operator QWidget*
+// Created: SBO 2006-08-10
+// -----------------------------------------------------------------------------
+InfoPanels::operator QWidget*()
+{
+    return this;
 }

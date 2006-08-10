@@ -7,13 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "Menu.h"
-#include "OptionMenu.h"
+#include "AboutDialog.h"
+#include "RecorderToolbar.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/TristateOption.h"
-#include "RecorderToolbar.h"
-#include "AboutDialog.h"
+#include "astec_gui/OptionMenu.h"
+#include "astec_gui/resources.h"
 
 namespace
 {

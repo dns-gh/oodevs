@@ -3,21 +3,27 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __InfoPanels_h_
 #define __InfoPanels_h_
 
+#include "astec_gui/PanelStack_ABC.h"
+
 class Controllers;
 class ItemFactory_ABC;
 class InfoPanel_ABC;
 
 // =============================================================================
-// Created: APE 2004-03-10
+/** @class  InfoPanels
+    @brief  Info panels container
+*/
+// Created: SBO 2006-08-08
 // =============================================================================
 class InfoPanels : public QVBox
+                 , public PanelStack_ABC
 {
     Q_OBJECT;
 
@@ -30,8 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    void Add   ( QWidget* widget, const QString& name );
-    void Remove( QWidget* widget );
+    virtual void Add( QWidget* widget, const QString& name );
+    virtual void Remove( QWidget* widget );
+    virtual operator QWidget*();
     //@}
 
 private:

@@ -13,7 +13,7 @@
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-LogisticPanel< ConcretePanel, Consign >::LogisticPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName )
+LogisticPanel< ConcretePanel, Consign >::LogisticPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName )
     : InfoPanel_ABC( pParent, tabName )
     , selected_( controllers )
 {

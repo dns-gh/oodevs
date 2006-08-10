@@ -33,7 +33,7 @@ class AgentMedicalPanel : public LogisticPanel< AgentMedicalPanel, LogMedicalCon
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMedicalPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentMedicalPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMedicalPanel();
     //@}
 

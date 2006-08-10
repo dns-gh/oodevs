@@ -24,7 +24,6 @@ class RotaAttributes;
 
 class Controllers;
 class DisplayBuilder;
-class InfoPanels;
 class ItemFactory_ABC;
 
 // =============================================================================
@@ -48,7 +47,7 @@ class ObjectPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectPanel();
     //@}
 

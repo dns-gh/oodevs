@@ -10,8 +10,7 @@
 #ifndef __AgentKnowledgePanel_h_
 #define __AgentKnowledgePanel_h_
 
-#include "Types.h"
-#include "InfoPanel_ABC.h"
+#include "astec_gui/InfoPanel_ABC.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_gaming/KnowledgeGroupSelectionObserver.h"
 #include "astec_kernel/SafePointer.h"
@@ -46,7 +45,7 @@ class AgentKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentKnowledgePanel();
     //@}
 

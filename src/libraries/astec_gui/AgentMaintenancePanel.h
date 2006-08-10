@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-04-01 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/AgentMaintenancePanel.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 18:27 $
-// $Revision: 3 $
-// $Workfile: AgentMaintenancePanel.h $
-//
-// *****************************************************************************
 
 #ifndef __AgentMaintenancePanel_h_
 #define __AgentMaintenancePanel_h_
@@ -42,7 +33,7 @@ class AgentMaintenancePanel : public LogisticPanel< AgentMaintenancePanel, LogMa
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMaintenancePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentMaintenancePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMaintenancePanel();
     //@}
 

@@ -33,26 +33,6 @@ public:
              Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar, ItemFactory_ABC& factory );
     virtual ~Menu();
     //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    Menu( const Menu& );            //!< Copy constructor
-    Menu& operator=( const Menu& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __Menu_h_

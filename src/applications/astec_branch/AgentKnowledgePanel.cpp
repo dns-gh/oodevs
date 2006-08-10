@@ -7,29 +7,27 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "AgentKnowledgePanel.h"
 #include "moc_AgentKnowledgePanel.cpp"
 
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/AgentKnowledges.h"
-#include "astec_gaming/AgentKnowledge.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/AgentKnowledge.h"
 #include "astec_kernel/Units.h"
+#include "astec_gaming/AgentKnowledge.h"
+#include "astec_gaming/AgentKnowledges.h"
 #include "astec_gaming/PerceptionMap.h"
-#include "DisplayBuilder.h"
-#include "GroupDisplayer.h"
-#include "LabelDisplayer.h"
-#include "ListDisplayer.h"
+#include "astec_gui/DisplayBuilder.h"
+#include "astec_gui/GroupDisplayer.h"
+#include "astec_gui/LabelDisplayer.h"
+#include "astec_gui/ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-AgentKnowledgePanel::AgentKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+AgentKnowledgePanel::AgentKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( pParent, tr( "Connaissances agent" ) )
     , controllers_ ( controllers )
     , owner_       ( controllers )

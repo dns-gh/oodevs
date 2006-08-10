@@ -10,7 +10,7 @@
 #ifndef __PopulationKnowledgePanel_h_
 #define __PopulationKnowledgePanel_h_
 
-#include "InfoPanel_ABC.h"
+#include "astec_gui/InfoPanel_ABC.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 #include "astec_gaming/KnowledgeGroupSelectionObserver.h"
 #include "astec_kernel/SafePointer.h"
@@ -45,7 +45,7 @@ class PopulationKnowledgePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgePanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationKnowledgePanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationKnowledgePanel();
     //@}
 

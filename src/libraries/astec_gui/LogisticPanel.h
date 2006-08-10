@@ -39,7 +39,7 @@ class LogisticPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPanel( InfoPanels* pParent, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName );
+             LogisticPanel( PanelStack_ABC* pParent, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName );
     virtual ~LogisticPanel();
     //@}
 

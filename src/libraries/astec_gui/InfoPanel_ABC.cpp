@@ -9,14 +9,14 @@
 
 #include "astec_gui_pch.h"
 #include "InfoPanel_ABC.h"
-#include "InfoPanels.h"
+#include "PanelStack_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanel_ABC constructor
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-InfoPanel_ABC::InfoPanel_ABC( InfoPanels* parent, const QString& name )
-    : QScrollView( parent )
+InfoPanel_ABC::InfoPanel_ABC( PanelStack_ABC* parent, const QString& name )
+    : QScrollView( (QWidget*)parent )
     , parent_( parent )
     , name_( name )
     , pBox_( new QVBox( viewport() ) )

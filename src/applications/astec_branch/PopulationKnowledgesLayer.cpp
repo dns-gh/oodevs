@@ -7,24 +7,24 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
-#include "AgentKnowledgesLayer.h"
+#include "astec_pch.h"
+#include "PopulationKnowledgesLayer.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgesLayer constructor
-// Created: AGE 2006-05-17
+// Name: PopulationKnowledgesLayer constructor
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : KnowledgeLayer< AgentKnowledge >( controllers, tools, strategy, view )
+PopulationKnowledgesLayer::PopulationKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+    : KnowledgeLayer< PopulationKnowledge >( controllers, tools, strategy, view )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgesLayer destructor
-// Created: AGE 2006-05-17
+// Name: PopulationKnowledgesLayer destructor
+// Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::~AgentKnowledgesLayer()
+PopulationKnowledgesLayer::~PopulationKnowledgesLayer()
 {
     // NOTHING
 }

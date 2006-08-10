@@ -10,7 +10,7 @@
 #ifndef __PopulationKnowledgesLayer_h_
 #define __PopulationKnowledgesLayer_h_
 
-#include "KnowledgeLayer.h"
+#include "astec_gui/KnowledgeLayer.h"
 #include "astec_gaming/PopulationKnowledge.h"
 
 // =============================================================================
