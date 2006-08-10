@@ -39,8 +39,13 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     : dotationCapacitiesTC1_          ( "ContenanceTC1", archive )    
     , stockLogisticThresholdRatios_   ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), 0.1 )
+    , composanteTypes_                ()
     , postureTimes_                   ( PHY_Posture::GetPostures().size(), 0 )
+    , rInstallationTime_              ( 0. )
+    , rUninstallationTime_            ( 0. )
     , rCoupDeSondeLength_             ( 0. )
+    , rCoupDeSondeWidth_              ( 0. )
+    , commandersRepartition_          ()
     , rCoefDecontaminationPerTimeStep_( 0. )
     , bCanFly_                        ( false )
     , bIsAutonomous_                  ( false )
@@ -48,6 +53,7 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     InitializeComposantes                 ( archive );
     InitializeCommanderRepartition        ( archive );
     InitializePostureTimes                ( archive );
+    InitializeInstallationTimes           ( archive );
     InitializeCoupDeSonde                 ( archive );
     InitializeNBC                         ( archive );
     InitializeStockLogisticThresholdRatios( archive );
@@ -224,6 +230,24 @@ void PHY_UnitType::InitializePostureTimes( MIL_InputArchive& archive )
         archive.EndSection(); // Posture
     }
     archive.EndSection(); // TempsMiseEnPosture
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::InitializeInstallationTimes
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+void PHY_UnitType::InitializeInstallationTimes( MIL_InputArchive& archive )
+{
+    if( !archive.Section( "Installation", MIL_InputArchive::eNothing ) )
+        return;
+
+    archive.ReadTimeField( "DelaiInstallation"   , rInstallationTime_  , CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadTimeField( "DelaiDesinstallation", rUninstallationTime_, CheckValueGreaterOrEqual( 0. ) );
+    
+    rInstallationTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rInstallationTime_   );
+    rUninstallationTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ );
+
+    archive.EndSection(); // Installation
 }
 
 // -----------------------------------------------------------------------------

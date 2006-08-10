@@ -172,6 +172,8 @@ MsgUnitAttributes ::= SEQUENCE
     posture-old                   EnumUnitPosture         OPTIONAL,
     posture-new                   EnumUnitPosture         OPTIONAL,
     posture-pourcentage           Pourcentage             OPTIONAL,
+    
+    etat-installation             Pourcentage             OPTIONAL,
                                                           
     en-tenue-de-protection-nbc    BOOLEAN                 OPTIONAL,
     contamine-par-agents-nbc      ListOID                 OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml

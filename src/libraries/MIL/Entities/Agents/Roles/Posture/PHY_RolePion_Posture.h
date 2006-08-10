@@ -57,7 +57,14 @@ public:
     void EnableDiscreteMode ();
     void DisableDiscreteMode();
     
-    void SetTimingFactor( MT_Float rFactor );
+    void SetTimingFactor( MT_Float rFactor ); //$$$ A GICLER
+    //@}
+
+    //! @name Installation
+    //@{
+    bool IsInstalled  () const;
+    bool IsUninstalled() const;
+    void Install      ();
     //@}
 
     //! @name Perception
@@ -96,9 +103,10 @@ public:
 private:
     //! @name Tools
     //@{
-    MT_Float GetPostureTime() const;
+    MT_Float GetPostureTime                   () const;
     void     ChangePosture                    ( const PHY_Posture& newPosture );
     void     ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
+    void     Uninstall                        ();
     //@}
 
 private:
@@ -112,12 +120,18 @@ private:
           MT_Float       rStealthFactor_;
           bool           bIsStealth_;
 
+          // Installation
+          MT_Float       rInstallationState_;
+          bool           bInstallationSetUpInProgress_;
+
           // Network
-          bool           bPosturesHasChanged_;
+          bool           bInstallationStateHasChanged_;
+          bool           bPostureHasChanged_;
           bool           bPercentageCrossed50_;
           bool           bStealthFactorHasChanged_;
-          bool           bPourcentageHasChanged_;
-          MT_Float       rLastPostureCompletionPercentage_;
+          bool           bPercentageHasChanged_;
+          MT_Float       rLastPostureCompletionPercentageSent_;
+          MT_Float       rLastInstallationStateSent_;
 
 private:
     static MT_Random  random_;

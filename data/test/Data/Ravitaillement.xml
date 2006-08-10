@@ -22,10 +22,11 @@
     <TypeUnite nom="Pion Convoi"/>
     <Mission nom="Pion LOG Convoyer"/>
   </Convois>
-  
+
   <AlertesDisponibiliteMoyens>
     <AlertesDisponibiliteVecteurs>
-        <AlerteDisponibiliteVecteurs pourcentageMoyensDisponibles="75"/>
+      <AlerteDisponibiliteVecteurs pourcentageMoyensDisponibles="75"/>
     </AlertesDisponibiliteVecteurs>
   </AlertesDisponibiliteMoyens>
+
 </Ravitaillement>

@@ -20,7 +20,14 @@ behavior Crash( float prout, T_Point bite, E_TypeLima prout2 )
 }
 
 default Default()
-{       
+{    
+    if( DEC_Agent_EstInstalle() )
+        DEC_Debug( "Installe" );
+
+    if( DEC_Agent_EstDesinstalle() )
+        DEC_Debug( "Desinstalle" );
+
+   
 /*
     T_PerceptionRadar cock  = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, DEC_Geometrie_ConvertirPointEnLocalisation( DEC_Agent_Position() ) );
     T_PerceptionRadar cock2 = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, DEC_Geometrie_ConvertirPointEnLocalisation( DEC_Agent_Position() ) );
@@ -468,72 +475,12 @@ behavior BEH_MoveTo2( T_Mission_Pion_Test_MoveTo mission )
     }    
 }
 
-
-behavior Bite( T_Point point )
-{
-    DEC_Debug( "bite" );
-}
-
-behavior Prout( T_Point point )
-{
-    DEC_Debug( "prout" );
-    
-    behavior Crash( 4, point, eTypeLima_LD );
-}
-
-behavior Cock()
-{
-    DEC_Agent_Position();
-    T_ListeConnaissancesAgent toto = S_ConnaissancesEnnemiesVivantesPercuesVolantes();
-    DEC_Debug( "DTC : " + FloatToString( DIA_Size( toto ) ));
-    with( x in toto )
-    {
-        E_ValiditeRequete              nFusse;
-        
-        
-        behavior Bite( DEC_ConnaissanceAgent_Position( x, nFusse ) ) : strength = S_Connaissance_ForceDistance( x );
-        
-        start behavior Prout( DEC_ConnaissanceAgent_Position( x, nFusse ) ) : strength = S_Connaissance_ForceDistance( x );
-        
-        behavior Bite( DEC_ConnaissanceAgent_Position( x, nFusse ) ) : strength = S_Connaissance_ForceDistance2( DEC_Geometrie_Distance( myself.DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( x, nFusse ) ), 0 );
-    }
-}
-
-behavior Asslicker()
-{
-    persistent T_Point ptFoo;
-    persistent T_Point ptFoo2;
-    
-    if( DIA_ModuleBegins() )
-    {   
-        T_ListeConnaissancesAgent toto = S_ConnaissancesEnnemiesVivantesPercuesVolantes();
-        with( x in toto )
-        {
-            DEC_Debug( "Asslicker 1" );
-            E_ValiditeRequete nFusse;
-            ptFoo = DEC_ConnaissanceAgent_Position( x, nFusse );
-        }
-    }
-    else
-    {
-        T_ListeConnaissancesAgent toto = S_ConnaissancesEnnemiesVivantesPercuesVolantes();
-        with( x in toto )
-        {
-            DEC_Debug( "Asslicker 2" );
-            E_ValiditeRequete nFusse;
-            ptFoo2 = DEC_ConnaissanceAgent_Position( x, nFusse );
-        }
-    }
-    
-}
-
 behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 {
     when updated:
     {
-        /*behavior Cock();        
-        behavior Bite( DEC_Agent_Position() );        
-        behavior Asslicker();*/
+        DEC_Agent_SInstaller();
+
         
         DEC_Geometrie_PositionsEgales( myself.DEC_Agent_Position(), DEC_ListePoints_GetAt( mission.itineraire_, DEC_ListePoints_Size( mission.itineraire_ ) -1 ) );
         

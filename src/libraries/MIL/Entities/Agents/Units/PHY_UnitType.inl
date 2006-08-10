@@ -78,3 +78,23 @@ bool PHY_UnitType::IsAutonomous() const
 {
     return bIsAutonomous_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetInstallationTime
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_UnitType::GetInstallationTime() const
+{
+    return rInstallationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetUninstallationTime
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_UnitType::GetUninstallationTime() const
+{
+    return rUninstallationTime_;
+}

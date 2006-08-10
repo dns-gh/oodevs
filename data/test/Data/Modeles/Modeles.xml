@@ -27,24 +27,24 @@
         <Mission nom="Pion Test CreateBypass"/>
         <Mission nom="Pion LOG Convoyer"/>
         <Mission nom="Pion LOG PreparerBascule"/>
-        <Mission nom="Pion LOG Renforcer"/>        
+        <Mission nom="Pion LOG Renforcer"/>
         <Mission nom="Pion LOG TraiterBlesses">
-            <OrdresConduite>
-                <OrdreConduite nom="ModifierPrioritesBlesses"/>
-                <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
-            </OrdresConduite>
+          <OrdresConduite>
+            <OrdreConduite nom="ModifierPrioritesBlesses"/>
+            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+          </OrdresConduite>
         </Mission>
         <Mission nom="Pion LOG TrierBlesses">
-            <OrdresConduite>
-                <OrdreConduite nom="ModifierPrioritesBlesses"/>
-                <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
-            </OrdresConduite>
+          <OrdresConduite>
+            <OrdreConduite nom="ModifierPrioritesBlesses"/>
+            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+          </OrdresConduite>
         </Mission>
         <Mission nom="Pion LOG TrierEtTraiterBlesses">
-            <OrdresConduite>
-                <OrdreConduite nom="ModifierPrioritesBlesses"/>
-                <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
-            </OrdresConduite>
+          <OrdresConduite>
+            <OrdreConduite nom="ModifierPrioritesBlesses"/>
+            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+          </OrdresConduite>
         </Mission>
         <Mission nom="Pion LOG SeDeployer">
           <OrdresConduite>
@@ -152,7 +152,7 @@
         <Mission nom="Automate GEN RealiserSystemeObstacles"/>
         <Mission nom="Automate GEN RetablirItineraires"/>
         <Mission nom="Automate GEN AmenagerTerrainPoserSommaire"/>
-        <Mission nom="Automate LOG SeDeployer"/>        
+        <Mission nom="Automate LOG SeDeployer"/>
       </Missions>
     </Modele>
   </Automates>

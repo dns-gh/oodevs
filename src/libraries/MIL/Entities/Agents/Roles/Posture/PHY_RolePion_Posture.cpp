@@ -27,26 +27,32 @@ MT_Random PHY_RolePion_Posture::random_;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Posture, "PHY_RolePion_Posture" )
 
+static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_AgentPion& pion )
-    : PHY_RoleInterface_Posture        ( role )
-    , pPion_                           ( &pion )
-    , pCurrentPosture_                 ( &PHY_Posture::arret_ )
-    , pLastPosture_                    ( &PHY_Posture::arret_ )
-    , rPostureCompletionPercentage_    ( 1. )
-    , bDiscreteModeEnabled_            ( false )
-    , bPosturesHasChanged_             ( true  )
-    , bPercentageCrossed50_            ( false )
-    , bStealthFactorHasChanged_        ( true  )
-    , bPourcentageHasChanged_          ( true  )
-    , rLastPostureCompletionPercentage_( 0. )
-    , bIsStealth_                      ( false )
-    , rTimingFactor_                   ( 1. )
-    , rStealthFactor_                  ( 1. ) // Non furtif
-    , rElongationFactor_               ( 1. )
+    : PHY_RoleInterface_Posture            ( role )
+    , pPion_                               ( &pion )
+    , pCurrentPosture_                     ( &PHY_Posture::arret_ )
+    , pLastPosture_                        ( &PHY_Posture::arret_ )
+    , rPostureCompletionPercentage_        ( 1. )
+    , bDiscreteModeEnabled_                ( false )
+    , bPostureHasChanged_                  ( true  )
+    , bPercentageCrossed50_                ( false )
+    , bStealthFactorHasChanged_            ( true  )
+    , bPercentageHasChanged_               ( true  )
+    , rLastPostureCompletionPercentageSent_( 0. )
+    , bIsStealth_                          ( false )
+    , rTimingFactor_                       ( 1. )
+    , rStealthFactor_                      ( 1. ) // Non furtif
+    , rElongationFactor_                   ( 1. )
+    , rInstallationState_                  ( 0. )
+    , rLastInstallationStateSent_          ( 0. )
+    , bInstallationSetUpInProgress_        ( false )
+    , bInstallationStateHasChanged_        ( true )
 {
 }
 
@@ -55,21 +61,25 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture()
-    : PHY_RoleInterface_Posture        (  )
-    , pPion_                           ( 0 )
-    , pCurrentPosture_                 ( 0 )
-    , pLastPosture_                    ( 0 )
-    , rPostureCompletionPercentage_    ( 1. )
-    , bDiscreteModeEnabled_            ( false )
-    , bPosturesHasChanged_             ( true  )
-    , bPercentageCrossed50_            ( false )
-    , bStealthFactorHasChanged_        ( true  )
-    , bPourcentageHasChanged_          ( true  )
-    , rLastPostureCompletionPercentage_( 0. )
-    , bIsStealth_                      ( false )
-    , rTimingFactor_                   ( 1. )
-    , rStealthFactor_                  ( 1. ) // Non furtif
-    , rElongationFactor_               ( 1. )
+    : PHY_RoleInterface_Posture            (  )
+    , pPion_                               ( 0 )
+    , pCurrentPosture_                     ( 0 )
+    , pLastPosture_                        ( 0 )
+    , rPostureCompletionPercentage_        ( 1. )
+    , bDiscreteModeEnabled_                ( false )
+    , bPostureHasChanged_                  ( true  )
+    , bPercentageCrossed50_                ( false )
+    , bStealthFactorHasChanged_            ( true  )
+    , bPercentageHasChanged_               ( true  )
+    , rLastPostureCompletionPercentageSent_( 0. )
+    , bIsStealth_                          ( false )
+    , rTimingFactor_                       ( 1. )
+    , rStealthFactor_                      ( 1. ) // Non furtif
+    , rElongationFactor_                   ( 1. )
+    , rInstallationState_                  ( 0. )
+    , rLastInstallationStateSent_          ( 0. )
+    , bInstallationSetUpInProgress_        ( false )
+    , bInstallationStateHasChanged_        ( true )
 {
 
 }
@@ -109,7 +119,9 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
          >> rStealthFactor_
          >> bIsStealth_
          >> bPercentageCrossed50_
-         >> rLastPostureCompletionPercentage_;
+         >> rLastPostureCompletionPercentageSent_
+         >> rInstallationState_
+         >> rLastInstallationStateSent_;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +141,9 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
          << rStealthFactor_
          << bIsStealth_
          << bPercentageCrossed50_
-         << rLastPostureCompletionPercentage_;
+         << rLastPostureCompletionPercentageSent_
+         << rInstallationState_
+         << rLastInstallationStateSent_;
 }
 
 // =============================================================================
@@ -163,9 +177,8 @@ void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const MT_Float rNe
     // Network
     bPercentageCrossed50_ = ( 0.5 - rPostureCompletionPercentage_ ) * ( 0.5 - rNewPercentage ) <= 0;
 
-    static const MT_Float rDeltaPercentageForNetwork = 0.05;
-    if( fabs( rLastPostureCompletionPercentage_ - rNewPercentage ) > rDeltaPercentageForNetwork || rNewPercentage == 0. || rNewPercentage == 1. )
-        bPourcentageHasChanged_ = true;
+    if( fabs( rLastPostureCompletionPercentageSent_ - rNewPercentage ) > rDeltaPercentageForNetwork || rNewPercentage == 0. || rNewPercentage == 1. )
+        bPercentageHasChanged_ = true;
 
     rPostureCompletionPercentage_ = rNewPercentage;
 }
@@ -180,13 +193,13 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
     if( pCurrentPosture_ == &newPosture )
         return;
     
-    pLastPosture_                 = pCurrentPosture_;
-    pCurrentPosture_              = &newPosture;
+    pLastPosture_    = pCurrentPosture_;
+    pCurrentPosture_ = &newPosture;
 
     ChangePostureCompletionPercentage( 0. );
 
-    bPosturesHasChanged_    = true;
-    bPourcentageHasChanged_ = true;
+    bPostureHasChanged_    = true;
+    bPercentageHasChanged_ = true;
 }
 
 // =============================================================================
@@ -199,11 +212,13 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Update( bool bIsDead )
 {
+    Uninstall();
+
     if( bIsDead )
     {
         ChangePosture                    ( PHY_Posture::arret_ );
         ChangePostureCompletionPercentage( 1. );
-        bIsStealth_      = false;
+        bIsStealth_ = false;
         return;
     }
 
@@ -220,7 +235,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     }
     else
     {
-        const MT_Float rPostureTime                = GetPostureTime();
+        const MT_Float rPostureTime                   = GetPostureTime();
               MT_Float rNewPostureCompetionPercentage = rPostureCompletionPercentage_;
         if( rPostureTime )
         {
@@ -291,6 +306,55 @@ bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) cons
 }
 
 // =============================================================================
+// INSTALLATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Install
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Install()
+{
+    bInstallationSetUpInProgress_ = true;
+    if( rInstallationState_ >= 1. )
+        return;
+
+    const MT_Float rTime = pPion_->GetType().GetUnitType().GetInstallationTime();
+    if( rTime == 0 )
+        rInstallationState_ = 1.;
+    else
+    {
+        rInstallationState_ += 1. / rTime;
+        rInstallationState_ = std::min( 1., rInstallationState_ );
+    }
+
+    if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
+        bInstallationStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Uninstall
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Uninstall()
+{
+    if( rInstallationState_ <= 0. || bInstallationSetUpInProgress_ )
+        return;
+
+    const MT_Float rTime = pPion_->GetType().GetUnitType().GetUninstallationTime();
+    if( rTime == 0 )
+        rInstallationState_ = 0.;
+    else
+    {
+        rInstallationState_ -= 1. / rTime;
+        rInstallationState_ = std::max( 0., rInstallationState_ );
+    }
+
+    if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
+        bInstallationStateHasChanged_ = true;
+}
+
+// =============================================================================
 // NETWORK
 // =============================================================================
 
@@ -300,7 +364,7 @@ bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) cons
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg )
 {
-    if( bPosturesHasChanged_ )
+    if( bPostureHasChanged_ )
     {
         msg.GetAsnMsg().m.posture_oldPresent = 1;
         msg.GetAsnMsg().m.posture_newPresent = 1;
@@ -308,17 +372,24 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg )
         msg.GetAsnMsg().posture_new = pCurrentPosture_->GetAsnID();
     }
 
-    if( bPourcentageHasChanged_ )
+    if( bPercentageHasChanged_ )
     {
         msg.GetAsnMsg().m.posture_pourcentagePresent = 1;
         msg.GetAsnMsg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
-        rLastPostureCompletionPercentage_            = rPostureCompletionPercentage_;
+        rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
     }
 
     if( bStealthFactorHasChanged_ )
     {
         msg.GetAsnMsg().m.mode_furtif_actifPresent = 1;
         msg.GetAsnMsg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
+    }
+
+    if( bInstallationStateHasChanged_ )
+    {
+        msg.GetAsnMsg().m.etat_installationPresent = 1;
+        msg.GetAsnMsg().etat_installation          = (uint)( rInstallationState_ * 100. );
+        rLastInstallationStateSent_                = rInstallationState_;
     }
 }
 
@@ -335,10 +406,14 @@ void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg )
 
     msg.GetAsnMsg().m.posture_pourcentagePresent = 1;
     msg.GetAsnMsg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
-    rLastPostureCompletionPercentage_            = rPostureCompletionPercentage_;
+    rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
 
     msg.GetAsnMsg().m.mode_furtif_actifPresent = 1;
     msg.GetAsnMsg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
+
+    msg.GetAsnMsg().m.etat_installationPresent = 1;
+    msg.GetAsnMsg().etat_installation          = (uint)( rInstallationState_ * 100. );
+    rLastInstallationStateSent_                = rInstallationState_;
 }
 
 // -----------------------------------------------------------------------------

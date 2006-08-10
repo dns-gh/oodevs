@@ -51,6 +51,8 @@ public:
     const PHY_DotationCapacities&    GetTC1Capacities                 () const;
     const T_CommanderRepartitionMap& GetCommanderRepartition          () const;
           MT_Float                   GetPostureTime                   ( const PHY_Posture& posture ) const;
+          MT_Float                   GetInstallationTime              () const;
+          MT_Float                   GetUninstallationTime            () const;
           MT_Float                   GetCoupDeSondeLength             () const;
           MT_Float                   GetCoupDeSondeWidth              () const;
           MT_Float                   GetCoefDecontaminationPerTimeStep() const;
@@ -88,6 +90,7 @@ private:
     void InitializePostureTimes                ( MIL_InputArchive& archive );
     void InitializeCoupDeSonde                 ( MIL_InputArchive& archive );
     void InitializeNBC                         ( MIL_InputArchive& archive );
+    void InitializeInstallationTimes           ( MIL_InputArchive& archive );
     void InitializeStockLogisticThresholdRatios( MIL_InputArchive& archive );
     //@}
 
@@ -96,6 +99,8 @@ private:
           T_StockLogisticThresholdRatios stockLogisticThresholdRatios_;
           T_ComposanteTypeMap            composanteTypes_;
           T_PostureTimesVector           postureTimes_;
+          MT_Float                       rInstallationTime_;
+          MT_Float                       rUninstallationTime_;
           MT_Float                       rCoupDeSondeLength_;
           MT_Float                       rCoupDeSondeWidth_;
           T_CommanderRepartitionMap      commandersRepartition_;

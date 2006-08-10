@@ -78,8 +78,8 @@ public:
 
     // Etats du pion
     static void IsFlying           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void SetFlyingHeight    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void SetElongationFactor( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void SetFlyingHeight    ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void SetElongationFactor( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void TimeLeftForMoving  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void TimeToMoveDistance ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
@@ -110,6 +110,11 @@ public:
     static void DisableInvulnerability              ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void GetRoePopulation                    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void ChannelPopulations                  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+
+    // Installation
+    static void IsInstalled  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsUninstalled( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void Install      ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
    
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

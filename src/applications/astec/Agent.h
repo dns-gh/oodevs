@@ -332,6 +332,8 @@ public:
     E_UnitPosture				nCurrentPosture_;
     uint						nPostureCompletionPourcentage_;
 
+    uint                        nInstallationState_;
+
     bool						bLoadingState_;
     bool						bStealthModeEnabled_;
 

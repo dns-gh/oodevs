@@ -54,7 +54,9 @@ AgentStatePanel::AgentStatePanel( QWidget* pParent )
                 .AddItem( "Direction:" )
                 .AddItem( "Altitude:" )
                 .AddItem( "Troupes:" )
-                .AddItem( "Transporteurs d'hommes disponibles:" );
+                .AddItem( "Transporteurs d'hommes disponibles:" )
+                .AddItem( "Etat installation:" );
+        
     display_->AddGroup( "NBC" )
                 .AddItem( "Agents contaminants:" )
                 .AddItem( "Contamination:" );
@@ -157,7 +159,8 @@ void AgentStatePanel::OnAgentUpdated( Agent& agent )
                 .Display( "Direction:", QString::number( agent.GetDirection() ) + "°"  )
                 .Display( "Altitude:", QString::number( agent.GetAltitude() ) + "m" )
                 .Display( "Troupes:", agent.IsLoaded() ? tr( "Embarqué" ) : tr( "Débarqué" ) )
-                .Display( "Transporteurs d'hommes disponibles:", Display::YesNo( agent.AreHumanTransportersReady() ) );
+                .Display( "Transporteurs d'hommes disponibles:", Display::YesNo( agent.AreHumanTransportersReady() ) )
+                .Display( "Etat installation:", QString( "%1 %" ).arg( agent.nInstallationState_ ) );
 
     const Agent::T_NbcAgentVector& contaminatingAgents = agent.GetContaminatingNBCAgents();
     std::stringstream strNBCAgents;

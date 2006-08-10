@@ -883,3 +883,35 @@ void DEC_AgentFunctions::GetKilledOfficers( DIA_Call_ABC& call, const MIL_AgentP
         rRatio = rAlive / rTotal;
     call.GetResult().SetValue( (float)rRatio );
 }
+
+// =============================================================================
+// INSTALLATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInstalled
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::IsInstalled( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Posture >().IsInstalled() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsUninstalled
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::IsUninstalled( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    call.GetResult().SetValue( callerAgent.GetRole< PHY_RolePion_Posture >().IsUninstalled() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::Install
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::Install( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Posture >().Install();
+}
+

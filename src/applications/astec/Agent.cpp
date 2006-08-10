@@ -169,6 +169,7 @@ void Agent::Initialize()
     pSupplyData_                  = ( new Agent::T_SupplyData() );
     pTypeAutomate_				  = 0;
     bAggregated_                  = false;
+    nInstallationState_           = 0;
 
     nOldPosture_     = eUnitPosture_PostureArret;
     nCurrentPosture_ = eUnitPosture_PostureArret;
@@ -534,8 +535,10 @@ void Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.refugie_pris_en_comptePresent )
         bRefugeesManaged_ = asnMsg.refugie_pris_en_compte;
-}
 
+    if( asnMsg.m.etat_installationPresent )
+        nInstallationState_ = asnMsg.etat_installation;
+}
 
 //-----------------------------------------------------------------------------
 // Name: Agent::OnAttributeUpdated

@@ -68,7 +68,7 @@ void PHY_RolePion_Posture::DisableDiscreteMode()
 inline
 bool PHY_RolePion_Posture::HasChanged() const
 {
-    return bPosturesHasChanged_ || bPourcentageHasChanged_;
+    return bPostureHasChanged_ || bPercentageHasChanged_ || bInstallationStateHasChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ bool PHY_RolePion_Posture::HasChanged() const
 inline
 bool PHY_RolePion_Posture::HLAStatusHasChanged() const
 {
-    return bPosturesHasChanged_ || bPercentageCrossed50_;
+    return bPostureHasChanged_ || bPercentageCrossed50_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,9 +88,11 @@ bool PHY_RolePion_Posture::HLAStatusHasChanged() const
 inline
 void PHY_RolePion_Posture::Clean()
 {
-    bPosturesHasChanged_      = false;
-    bPourcentageHasChanged_   = false;
-    bStealthFactorHasChanged_ = false;
+    bPostureHasChanged_           = false;
+    bPercentageHasChanged_        = false;
+    bStealthFactorHasChanged_     = false;
+    bInstallationSetUpInProgress_ = false;
+    bInstallationStateHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -149,4 +151,24 @@ inline
 bool PHY_RolePion_Posture::IsStealth() const
 {
     return bIsStealth_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsInstalled
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RolePion_Posture::IsInstalled() const
+{
+    return rInstallationState_ >= 1.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsUninstalled
+// Created: NLD 2006-08-10
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RolePion_Posture::IsUninstalled() const
+{
+    return rInstallationState_ <= 0.;
 }

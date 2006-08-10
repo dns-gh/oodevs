@@ -359,6 +359,11 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::Trace          , "DEC_Trace"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::SetPosture     , "DEC_PostureForTest"     ); //$$ Used for test only
 
+    // Installation
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsInstalled  , "DEC_Agent_EstInstalle"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsUninstalled, "DEC_Agent_EstDesinstalle" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::Install      , "DEC_Agent_SInstaller"     );
+
     // Pion accessors    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsPC                    , "DEC_Agent_EstPC"                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsTransported           , "DEC_Agent_EstTransporte"                    );

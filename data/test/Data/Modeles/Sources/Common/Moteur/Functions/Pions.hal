@@ -32,6 +32,11 @@ signatures
                                             
     // Refugies                             
     B                                       A::DEC_OrienterRefugies( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de refugiés*/, I /*E_ValiditeRequete&*/ );
+    
+    // Installation
+    B                                       A::DEC_Agent_EstInstalle   ();
+    B                                       A::DEC_Agent_EstDesinstalle();
+    V                                       A::DEC_Agent_SInstaller    ();
                                             
     // Tir                                  
     U /*T_Action*/                          A::DEC_StartTirDirect                                  ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );
