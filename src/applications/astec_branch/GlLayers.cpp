@@ -13,6 +13,7 @@
 #include "AgentKnowledgesLayer.h"
 #include "MeteoLayer.h"
 #include "ObjectKnowledgesLayer.h"
+#include "astec_gui/ParametersLayer.h"
 #include "PopulationKnowledgesLayer.h"
 
 #include "astec_gui/AgentsLayer.h"
@@ -23,7 +24,6 @@
 #include "astec_gui/LimitsLayer.h"
 #include "astec_gui/MetricsLayer.h"
 #include "astec_gui/ObjectsLayer.h"
-#include "astec_gui/ParametersLayer.h"
 #include "astec_gui/PopulationsLayer.h"
 #include "astec_gui/TerrainLayer.h"
 #include "astec_kernel/DetectionMap.h"

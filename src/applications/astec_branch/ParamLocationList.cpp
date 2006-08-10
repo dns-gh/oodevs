@@ -1,0 +1,181 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "astec_pch.h"
+#include "ParamLocationList.h"
+#include "astec_gui/LocationCreator.h"
+#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "astec_kernel/ActionController.h"
+#include "astec_gui/Tools.h"
+#include "astec_kernel/Location_ABC.h"
+#include "astec_gui/LocationSerializer.h"
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList constructor
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( pParent, label.c_str() )
+    , converter_( converter )
+    , asn_( asn )
+    , pAsnLocalisationList_( 0 )
+    , controller_( 0 )
+{
+    creator_ = new LocationCreator( this, menu, layer, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList constructor
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( pParent, label.c_str() )
+    , converter_( converter )
+    , asn_( (ASN1T_ListLocalisation&)asn )
+    , pAsnLocalisationList_( 0 )
+{
+    creator_ = new LocationCreator( this, menu, layer, *this );
+    creator_->Allow( false, false, true, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList constructor
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( pParent, label.c_str() )
+    , converter_( converter )
+    , asn_( (ASN1T_ListLocalisation&)asn )
+    , pAsnLocalisationList_( 0 )
+{
+    creator_ = new LocationCreator( this, menu, layer, *this );
+    creator_->Allow( true, false, false, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList destructor
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+ParamLocationList::~ParamLocationList()
+{
+    delete[] pAsnLocalisationList_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::ClearSerializers
+// Created: AGE 2006-08-09
+// -----------------------------------------------------------------------------
+void ParamLocationList::ClearSerializers()
+{
+    while( ! serializers_.empty() )
+    {
+        delete serializers_.back();
+        serializers_.pop_back();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::RemoveFromController
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void ParamLocationList::RemoveFromController()
+{
+    if( controller_ )
+        controller_->Remove( *creator_ );
+    Param_ABC::RemoveFromController();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::RegisterIn
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void ParamLocationList::RegisterIn( ActionController& controller )
+{
+    controller_ = & controller;
+    controller_->Register( *creator_ );
+    Param_ABC::RegisterIn( controller );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::CheckValidity
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+bool ParamLocationList::CheckValidity()
+{
+    if( locations_.empty() && ! IsOptional() )
+        return Invalid();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::Commit
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void ParamLocationList::Commit()
+{
+    const unsigned nNbrChilds = locations_.size();
+    asn_.n = nNbrChilds;
+
+    if( nNbrChilds == 0 && IsOptional() )
+        return;
+
+    delete[] pAsnLocalisationList_;
+    pAsnLocalisationList_ = new ASN1T_Localisation[ nNbrChilds ];
+    asn_.elem = pAsnLocalisationList_;
+
+    ClearSerializers();
+    for( unsigned i = 0; i < locations_.size(); ++i )
+    {
+        serializers_.push_back( new LocationSerializer( converter_, asn_.elem[i] ) );
+        serializers_.back()->Serialize( *locations_.at( i ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::Handle
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void ParamLocationList::Handle( Location_ABC& location )
+{
+    locations_.push_back( &location );
+    new QListViewItem( this, location.GetName().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::OnDeleteSelectedItem
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void ParamLocationList::OnDeleteSelectedItem()
+{
+    QListViewItem* selected = selectedItem();
+    unsigned index = 0;
+    QListViewItem* item = firstChild();
+    while( item && item != selected )
+    {
+        ++index;
+        item = item->nextSibling();
+    }
+    if( item == selected && index < locations_.size() )
+    {
+        delete *(locations_.begin() + index);
+        locations_.erase( locations_.begin() + index );
+    }
+    ParamListView::OnDeleteSelectedItem();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationList::OnClearList
+// Created: AGE 2006-04-03
+// -----------------------------------------------------------------------------
+void ParamLocationList::OnClearList()
+{
+    delete[] pAsnLocalisationList_;
+    ClearSerializers();
+    ParamListView::OnClearList();
+}
