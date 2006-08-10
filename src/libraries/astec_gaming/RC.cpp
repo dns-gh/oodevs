@@ -1,18 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/RC.cpp $
-// $Author: Nld $
-// $Modtime: 4/07/05 12:33 $
-// $Revision: 16 $
-// $Workfile: RC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "astec_gaming_pch.h"
 #include "RC.h"
 #include "astec_kernel/Agent_ABC.h"
-#include "astec_gui/InternalLinks.h"
+#include "InternalLinks.h"
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor

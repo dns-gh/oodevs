@@ -15,6 +15,7 @@
 #include "astec_kernel/CoordinateConverter_ABC.h"
 #include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/DataDictionary.h"
+#include "statusicons.h"
 
 using namespace geometry;
 

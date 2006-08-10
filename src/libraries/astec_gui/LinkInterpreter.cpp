@@ -9,7 +9,7 @@
 
 #include "astec_gui_pch.h"
 #include "LinkInterpreter.h"
-#include "InternalLinks.h"
+#include "astec_gaming/InternalLinks.h"
 #include "moc_LinkInterpreter.cpp"
 #include "astec_gaming/Model.h"
 #include "astec_gaming/AgentsModel.h"

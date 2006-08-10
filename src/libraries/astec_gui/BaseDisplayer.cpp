@@ -25,7 +25,7 @@
 #include "astec_gaming/Morale.h"
 #include "astec_gaming/Tiredness.h"
 #include "astec_kernel/Mission.h"
-#include "InternalLinks.h"
+#include "astec_gaming/InternalLinks.h"
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor

@@ -31,7 +31,7 @@
 #include "WeatherModel.h"
 #include "DIN_Types.h"
 #include "DIN_InputDeepCopy.h"
-#include "astec_gui/LogTools.h"
+#include "LogTools.h"
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/KnowledgeGroup_ABC.h"

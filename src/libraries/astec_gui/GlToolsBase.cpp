@@ -13,6 +13,7 @@
 #include "astec_kernel/Options.h"
 #include "astec_kernel/TristateOption.h"
 #include "GlFont.h"
+#include "astec_gaming/statusicons.h"
 
 using namespace geometry;
 

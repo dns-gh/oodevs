@@ -16,6 +16,7 @@
 #include "astec_kernel/Agent_ABC.h"
 #include "astec_kernel/Population_ABC.h"
 #include "astec_gui/resources.h"
+#include "astec_gaming/statusicons.h"
 
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor

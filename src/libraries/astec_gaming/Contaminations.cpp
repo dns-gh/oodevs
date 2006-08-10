@@ -13,6 +13,7 @@
 #include "astec_kernel/Displayer_ABC.h"
 #include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/DataDictionary.h"
+#include "statusicons.h"
 
 // -----------------------------------------------------------------------------
 // Name: Contaminations constructor

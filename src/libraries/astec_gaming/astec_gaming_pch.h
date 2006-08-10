@@ -95,9 +95,4 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 #include "ENT/ENT_Tr.h"
 
-#include "astec_gui/resources.h"
-
-#define APP_NAME    "ASTEC - EM"
-#define APP_VERSION "beta-2"
-
 #endif // __astec_gaming_pch_h_

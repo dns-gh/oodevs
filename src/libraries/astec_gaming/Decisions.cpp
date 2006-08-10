@@ -15,6 +15,7 @@
 #include "astec_kernel/GlTools_ABC.h"
 #include "astec_kernel/Displayer_ABC.h"
 #include "astec_kernel/AgentType.h"
+#include "statusicons.h"
 
 // -----------------------------------------------------------------------------
 // Name: Decisions constructor
