@@ -244,6 +244,10 @@ public:
 
         ADN_Type_Bool                                               bStrengthRatioFeedbackTime_;
         ADN_Type_Time                                               strengthRatioFeedbackTime_;
+
+        ADN_Type_Bool                                               bInstallationDelay_;
+        ADN_Type_Time                                               installationDelay_;
+        ADN_Type_Time                                               uninstallationDelay_;
     };
 
     typedef ADN_Type_Vector_ABC<UnitInfos>    T_UnitInfos_Vector;

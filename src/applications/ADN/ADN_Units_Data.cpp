@@ -491,6 +491,9 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 , bIsAutonomous_( false )
 , rWeaponsReach_( 0.0 )
 , rSensorsReach_( 0.0 )
+, bInstallationDelay_( false )
+, installationDelay_( "0s" )
+, uninstallationDelay_( "0s" )
 {
     BindExistenceTo(&ptrModel_);
 
@@ -629,6 +632,10 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
 
     pCopy->bStrengthRatioFeedbackTime_ = bStrengthRatioFeedbackTime_.GetData();
     pCopy->strengthRatioFeedbackTime_  = strengthRatioFeedbackTime_.GetData();
+
+    pCopy->bInstallationDelay_  = bInstallationDelay_.GetData();
+    pCopy->installationDelay_   = installationDelay_.GetData();
+    pCopy->uninstallationDelay_ = uninstallationDelay_.GetData();
 
     return pCopy;
 }
@@ -777,6 +784,14 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     }
     input.EndSection(); // TempsMiseEnPosture
 
+    if( input.Section( "Installation", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bInstallationDelay_ = true;
+        input.ReadField( "DelaiInstallation", installationDelay_ );
+        input.ReadField( "DelaiDesinstallation", uninstallationDelay_ );
+        input.EndSection();
+    }
+
     input.ReadField( "DelaiDecontaminationNBC", decontaminationDelay_ );
 
 
@@ -907,6 +922,14 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
         (*itPosture)->WriteArchive( output );
     }
     output.EndSection(); // TempsMiseEnPosture
+
+    if( bInstallationDelay_.GetData() )
+    {
+        output.Section( "Installation" );
+        output.WriteField( "DelaiInstallation", installationDelay_.GetData() );
+        output.WriteField( "DelaiDesinstallation", uninstallationDelay_.GetData() );
+        output.EndSection(); // Installation
+    }
 
     output.WriteField( "DelaiDecontaminationNBC", decontaminationDelay_.GetData() );
 

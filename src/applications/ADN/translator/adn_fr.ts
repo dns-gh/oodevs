@@ -6148,6 +6148,18 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Is autonomous (UAV)</source>
         <translation>Pion autonome (Drônes ...)</translation>
     </message>
+    <message>
+        <source>Installation</source>
+        <translation>Installation</translation>
+    </message>
+    <message>
+        <source>Installation delay</source>
+        <translation>Délai installation</translation>
+    </message>
+    <message>
+        <source>Uninstallation delay</source>
+        <translation>Délai désinstallation</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
@@ -6546,27 +6558,27 @@ Erreur: %3</translation>
     <name>ENT_Tr</name>
     <message>
         <source>explosif</source>
-        <translation type="unfinished"></translation>
+        <translation>explosif</translation>
     </message>
     <message>
         <source>grenade</source>
-        <translation type="unfinished"></translation>
+        <translation>grenade</translation>
     </message>
     <message>
         <source>aced</source>
-        <translation type="unfinished"></translation>
+        <translation>aced</translation>
     </message>
     <message>
         <source>fumigene</source>
-        <translation type="unfinished"></translation>
+        <translation>fumigène</translation>
     </message>
     <message>
         <source>eclairant</source>
-        <translation type="unfinished"></translation>
+        <translation>éclairant</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation type="unfinished"></translation>
+        <translation>mine</translation>
     </message>
 </context>
 <context>

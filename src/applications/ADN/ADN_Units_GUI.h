@@ -67,6 +67,9 @@ public:
         eIsAutonomous,
         eWeaponsReach,
         eSensorsReach,
+        eHasInstallation,
+        eInstallationDelay,
+        eUninstallationDelay,
         eNbrGuiElements
     };
 
@@ -99,6 +102,7 @@ private:
     QComboBox* pTypeCombo_;
     ADN_GroupBox* pStockGroup_;
     ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
+    ADN_GroupBox* pInstallationGroup_;
     //@}
 };
 

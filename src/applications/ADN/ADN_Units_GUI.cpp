@@ -169,10 +169,18 @@ void ADN_Units_GUI::Build()
     pNCOfficersEditLine_ = builder.AddField<ADN_EditLine_Int>( pCommandGroup, tr( "Nbr of NC officer(s)" ), vInfosConnectors[eNbNCOfficer] );
     connect( pNCOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfNCOfficersChanged() ) );
 
+    QVBox* postureInstallationBox = new QVBox( pGroup );
+
     // Postures
-    QVGroupBox* pPosturesGroup = new QVGroupBox( tr( "Stances" ), pGroup );
+    QVGroupBox* pPosturesGroup = new QVGroupBox( tr( "Stances" ), postureInstallationBox );
     ADN_Units_Postures_GUI* pPostures = new ADN_Units_Postures_GUI( pPosturesGroup );
     vInfosConnectors[ePostures] = &pPostures->GetConnector();
+
+    // Installation
+    pInstallationGroup_ = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Installation" ), postureInstallationBox );
+    vInfosConnectors[eHasInstallation] = &pInstallationGroup_->GetConnector();
+    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Installation delay" ), vInfosConnectors[eInstallationDelay] );
+    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Uninstallation delay" ), vInfosConnectors[eUninstallationDelay] );
 
 
     // Distances before point on path
@@ -217,7 +225,7 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( pCommandGroup, 1, 1, 3, 5 );
 
     pGroupLayout->addMultiCellWidget( pDistancesGroup  , 2, 2, 0, 1 );
-    pGroupLayout->addMultiCellWidget( pPosturesGroup   , 2, 2, 2, 3 );
+    pGroupLayout->addMultiCellWidget( postureInstallationBox   , 2, 2, 2, 3 );
     pGroupLayout->addMultiCellWidget( pComposantesGroup, 2, 2, 4, 5 );
 
     pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 3, 0, 2 );
