@@ -7,18 +7,17 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_kernel/Controllers.h"
 #include "astec_gaming/HumanFactors.h"
 #include "astec_gaming/Tiredness.h"
 #include "astec_gaming/Experience.h"
 #include "astec_gaming/Morale.h"
 #include "astec_kernel/Agent_ABC.h"
-
-#include <QGrid.h>
+#include "astec_kernel/Controllers.h"
+#include "astec_gaming/MagicOrders.h"
 
 namespace 
 {
@@ -36,8 +35,9 @@ namespace
 // -----------------------------------------------------------------------------
 ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher )
     : QDialog( pParent, "Facteurs Humains" )
+    , controllers_( controllers )
     , publisher_( publisher )
-    , agent_( controllers )
+    , selected_( controllers )
 {
     setCaption( "Facteurs humains" );
     QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
@@ -67,6 +67,9 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( hide() ) );
+
+    controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,27 +78,25 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
 // -----------------------------------------------------------------------------
 ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 {
-    //NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ChangeHumanFactorsDialog::Show
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::Show( const Agent_ABC& agent )
+void ChangeHumanFactorsDialog::Show()
 {
     Populate( Tiredness::GetTirednesses(), *pTirednessCombo_ );
     Populate( Morale::GetMorales(), *pMoralCombo_ );
     Populate( Experience::GetExperiences(), *pExperienceCombo_ );
 
-    agent_ = &agent;
-    
-    if( const HumanFactors* humanFactors = agent_->Retrieve< HumanFactors >() )
+    if( const HumanFactors* humanFactors = selected_->Retrieve< HumanFactors >() )
     {
         pTirednessCombo_->SetCurrentItem( humanFactors->GetTiredness().GetAsnID() );
         pMoralCombo_->SetCurrentItem( humanFactors->GetMorale().GetAsnID() );
         pExperienceCombo_->SetCurrentItem( humanFactors->GetExperience().GetAsnID() );
-        if ( agent_->GetAutomatType() )
+        if ( selected_->GetAutomatType() )
             pAllUnitsCheckBox_->show();
         else
             pAllUnitsCheckBox_->hide();
@@ -109,18 +110,18 @@ void ChangeHumanFactorsDialog::Show( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::Validate()
 {
-    if( ! agent_ )
+    if( ! selected_ )
         return;
     const ASN1T_EnumUnitFatigue tiredness = (ASN1T_EnumUnitFatigue)pTirednessCombo_->GetValue();
     const ASN1T_EnumUnitMoral moral = (ASN1T_EnumUnitMoral)pMoralCombo_->GetValue();
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     if ( pAllUnitsCheckBox_->isChecked() )
     {
-        Iterator< const Agent_ABC& > it = agent_->CreateIterator();
+        Iterator< const Agent_ABC& > it = selected_->CreateIterator();
         while( it.HasMoreElements() )
             SendMessage( it.NextElement().GetId(), tiredness, moral, experience );
     }
-    SendMessage( agent_->GetId(), tiredness, moral, experience );
+    SendMessage( selected_->GetId(), tiredness, moral, experience );
     hide();
 }
 
@@ -152,4 +153,17 @@ void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitFatigue tired
 QSize ChangeHumanFactorsDialog::sizeHint() const
 {
     return QSize( 240, 120 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::NotifyContextMenu
+// Created: SBO 2006-08-10
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+{
+    if( !agent.Retrieve< MagicOrders >() )
+        return;
+    selected_ = &agent;
+    QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+    subMenu->insertItem( tr( "Facteurs humains" ), this, SLOT( Show() ) );
 }

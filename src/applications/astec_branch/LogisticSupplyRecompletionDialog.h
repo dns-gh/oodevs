@@ -11,6 +11,7 @@
 #define __LogisticSupplyRecompletionDialog_h_
 
 #include "astec_kernel/SafePointer.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
 
 class Agent_ABC;
 class Controllers;
@@ -24,6 +25,8 @@ struct ASN1T_MagicActionRecompletementPartiel;
 // Created:  SBO 2005-07-27 
 //=============================================================================
 class LogisticSupplyRecompletionDialog : public QDialog
+                                       , public Observer_ABC
+                                       , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
@@ -36,12 +39,13 @@ public:
 
     //! @name Modifiers
     //@{
-    void Show( const Agent_ABC& agent );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     //@}
 
 private slots:
     //! @name Slots
     //@{
+    void Show                   ();
     void Validate               ();
     void Reject                 ();
     void closeEvent             ( QCloseEvent * e );
@@ -62,11 +66,11 @@ private:
 private:
     //! @name Helpers
     //@{
-    void InitializeEquipments ( const Agent_ABC& agent );
-    void InitializePersonal   ( const Agent_ABC& agent );
-    void InitializeDotations  ( const Agent_ABC& agent );
-    void InitializeAmmunitions( const Agent_ABC& agent );
-    void InitializeSupplies   ( const Agent_ABC& agent );
+    void InitializeEquipments ();
+    void InitializePersonal   ();
+    void InitializeDotations  ();
+    void InitializeAmmunitions();
+    void InitializeSupplies   ();
 
     void AddPersonal( unsigned pos, const QString& label, unsigned max );
     void AddAmmunition( unsigned pos, const QString& label );
@@ -96,9 +100,10 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     Publisher_ABC& publisher_;
     const StaticModel& static_;
-    SafePointer< Agent_ABC > agent_;
+    SafePointer< Agent_ABC > selected_;
 
     QTable*          equipmentsTable_;
     QStringList      equipmentsList_;

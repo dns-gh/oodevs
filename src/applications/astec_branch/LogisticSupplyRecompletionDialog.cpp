@@ -7,28 +7,26 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
-
+#include "astec_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
-
 #include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/StaticModel.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/Equipments.h"
-#include "astec_gaming/Troops.h"
 #include "astec_gaming/Dotations.h"
 #include "astec_gaming/Dotation.h"
-#include "astec_kernel/DotationType.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_gaming/SupplyStates.h"
-#include "astec_gaming/Equipments.h"
 #include "astec_gaming/Equipment.h"
+#include "astec_gaming/Equipments.h"
+#include "astec_gaming/MagicOrders.h"
+#include "astec_gaming/StaticModel.h"
+#include "astec_gaming/SupplyStates.h"
+#include "astec_gaming/Troops.h"
+#include "astec_gui/ExclusiveComboTableItem.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/AutomatType.h"
+#include "astec_kernel/DotationType.h"
 #include "astec_kernel/EquipmentType.h"
-#include "ExclusiveComboTableItem.h"
+#include "astec_kernel/ObjectTypes.h"
 
-#include <qtable.h>
-#include <qspinbox.h>
+#include "ENT/ENT_Tr.h"
 
 class SpinTableItem : public QTableItem
 {
@@ -82,9 +80,10 @@ private:
 // -----------------------------------------------------------------------------
 LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel )
     : QDialog( parent, "Recompletement" )
+    , controllers_( controllers )
     , publisher_( publisher )
     , static_( staticModel )
-    , agent_( controllers )
+    , selected_( controllers )
 {
     setCaption( tr( "Recompletement" ) );
     resize( 280, 430 );
@@ -181,6 +180,9 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     connect( equipmentsTable_     , SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged     ( int, int ) ) );
     connect( personalsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnPersonalChanged      ( int, int ) ) );
     connect( stockTable_          , SIGNAL( valueChanged( int, int ) ), SLOT( OnStockChanged         ( int, int ) ) );
+
+    controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,19 +200,19 @@ void LogisticSupplyRecompletionDialog::closeEvent( QCloseEvent * )
 // -----------------------------------------------------------------------------
 LogisticSupplyRecompletionDialog::~LogisticSupplyRecompletionDialog()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::InitializeEquipments
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent_ABC& agent )
+void LogisticSupplyRecompletionDialog::InitializeEquipments()
 {
     equipmentsList_.clear();
     equipmentsList_.append( "" );
     equipmentsMax_.clear();
-    if( const Equipments* equipments = agent.Retrieve< Equipments >() )
+    if( const Equipments* equipments = selected_->Retrieve< Equipments >() )
     {
         Iterator< const Equipment& > it = equipments->CreateIterator();
         QStringList equipmentList;
@@ -233,9 +235,9 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments( const Agent_ABC& ag
 // Name: LogisticSupplyRecompletionDialog::InitializePersonal
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializePersonal( const Agent_ABC& agent )
+void LogisticSupplyRecompletionDialog::InitializePersonal()
 {
-    if( const Troops* troops = agent.Retrieve< Troops >() )
+    if( const Troops* troops = selected_->Retrieve< Troops >() )
     {
         personalsTable_->setNumRows( 0 );
         AddPersonal( 0, tr( "officier" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
@@ -262,7 +264,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
 // Name: LogisticSupplyRecompletionDialog::InitializeDotations
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent_ABC& /*agent*/ )
+void LogisticSupplyRecompletionDialog::InitializeDotations()
 {
     dotationsTable_->setNumRows( 0 );
     const Resolver< DotationType >& dotations = static_.objectTypes_;
@@ -286,7 +288,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations( const Agent_ABC& /*a
 // Name: LogisticSupplyRecompletionDialog::InitializeAmmunitions
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeAmmunitions( const Agent_ABC& /*agent*/ )
+void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
     AddAmmunition( 0, tr( "Obus" ) );
@@ -312,11 +314,11 @@ void LogisticSupplyRecompletionDialog::AddAmmunition( unsigned nPos, const QStri
 // Name: LogisticSupplyRecompletionDialog::InitializeSupplies
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::InitializeSupplies( const Agent_ABC& agent )
+void LogisticSupplyRecompletionDialog::InitializeSupplies()
 {
     stocks_.clear();
     stockTable_->setNumRows( 0 );
-    const SupplyStates* supplies = agent.Retrieve< SupplyStates >();
+    const SupplyStates* supplies = selected_->Retrieve< SupplyStates >();
     bool show = false;
     if( supplies )
     {
@@ -342,14 +344,15 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies( const Agent_ABC& agen
 // Name: LogisticSupplyRecompletionDialog::Show
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::Show( const Agent_ABC& agent )
+void LogisticSupplyRecompletionDialog::Show()
 {
-    agent_ = &agent;
-    InitializeEquipments ( agent );
-    InitializePersonal   ( agent );
-    InitializeDotations  ( agent );
-    InitializeAmmunitions( agent );
-    InitializeSupplies   ( agent );
+    if( !selected_ )
+        return;
+    InitializeEquipments ();
+    InitializePersonal   ();
+    InitializeDotations  ();
+    InitializeAmmunitions();
+    InitializeSupplies   ();
     show();
 }
 
@@ -542,11 +545,11 @@ void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionRecomplete
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::Validate()
 {
-    if( ! agent_ )
+    if( ! selected_ )
         return;
 
     ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid = agent_->GetId();
+    asnMsg.GetAsnMsg().oid = selected_->GetId();
 
     ASN1T_MagicActionRecompletementPartiel asnMagicAction;
     asnMsg.GetAsnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
@@ -573,7 +576,7 @@ void LogisticSupplyRecompletionDialog::Validate()
 
     if( asnMagicAction.m.stocksPresent && asnMagicAction.stocks.n > 0 )
         delete [] asnMagicAction.stocks.elem;
-    agent_ = 0;
+    selected_ = 0;
     hide();
 }
 
@@ -583,7 +586,7 @@ void LogisticSupplyRecompletionDialog::Validate()
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::Reject()
 {
-    agent_ = 0;
+    selected_ = 0;
     hide();
 }
 
@@ -716,4 +719,17 @@ void LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
     QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
     assert( pCheckTableItem );
     pCheckTableItem->setChecked( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyRecompletionDialog::NotifyContextMenu
+// Created: SBO 2006-08-10
+// -----------------------------------------------------------------------------
+void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+{
+    if( !agent.Retrieve< MagicOrders >() )
+        return;
+    selected_ = &agent;
+    QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+    subMenu->insertItem( tr( "Recompletement partiel" ), this, SLOT( Show() ) );
 }

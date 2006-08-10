@@ -9,9 +9,9 @@
 
 #include "astec_pch.h"
 #include "ReportPanel.h"
-#include "astec_gui/ReportListView.h"
-#include "astec_gui/FireResultListView.h"
-#include "astec_gui/ReportFilterOptions.h"
+#include "ReportListView.h"
+#include "FireResultListView.h"
+#include "ReportFilterOptions.h"
 #include "astec_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------

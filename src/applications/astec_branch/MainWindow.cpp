@@ -12,6 +12,7 @@
 #include "moc_MainWindow.cpp"
 
 #include "ControllerToolbar.h"
+#include "Dialogs.h"
 #include "EventToolbar.h"
 #include "GlLayers.h"
 #include "InfoPanels.h"
@@ -54,7 +55,6 @@
 #include "astec_gui/MissionLayer.h"
 #include "astec_gui/GraphicPreferences.h"
 #include "astec_gui/StatusBar.h"
-#include "astec_gui/Dialogs.h"
 #include "astec_gui/MagicOrdersInterface.h"
 #include "astec_gui/PreferencesDialog.h"
 #include "astec_gui/ParametersLayer.h"
@@ -96,7 +96,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
-    new Dialogs( this, controllers, model_, publisher ); // $$$$ SBO 2006-06-30: leak
+    new Dialogs( this, controllers, model_, staticModel, publisher ); // $$$$ SBO 2006-06-30: leak
 
     layers_ = new GlLayers( controllers, staticModel_, model_, prefDialog->GetPreferences() );
 

@@ -21,8 +21,6 @@ class KnowledgeGroup_ABC;
 class Team_ABC;
 class Controllers;
 class StaticModel;
-class LogisticSupplyRecompletionDialog;
-class ChangeHumanFactorsDialog;
 class LocationCreator;
 class ParametersLayer;
 class Publisher_ABC;
@@ -64,9 +62,7 @@ private slots:
     //! @name Slots
     //@{
     void Magic( int );
-    void Recompletion();
     void DestroyComponent();
-    void ChangeHumanFactors();
     void Move();
     void Surrender();
     void RecoverHumanTransporters();
@@ -104,8 +100,6 @@ private:
     SafePointer< Agent_ABC > selectedAgent_;
     SafePointer< KnowledgeGroup_ABC > selectedGroup_;
     SafePointer< Team_ABC > selectedTeam_;
-    LogisticSupplyRecompletionDialog* supplyRecompletion_;
-    ChangeHumanFactorsDialog*         changeHumanFactors_;
     bool magicMove_;
     LocationCreator* magicMoveLocation_;
     //@}

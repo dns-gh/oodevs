@@ -11,8 +11,9 @@
 #include "GlLayers.h"
 
 #include "AgentKnowledgesLayer.h"
-#include "PopulationKnowledgesLayer.h"
+#include "MeteoLayer.h"
 #include "ObjectKnowledgesLayer.h"
+#include "PopulationKnowledgesLayer.h"
 
 #include "astec_gui/AgentsLayer.h"
 #include "astec_gui/ColorStrategy.h"
@@ -20,7 +21,6 @@
 #include "astec_gui/Elevation2dLayer.h"
 #include "astec_gui/Elevation3dLayer.h"
 #include "astec_gui/LimitsLayer.h"
-#include "astec_gui/MeteoLayer.h"
 #include "astec_gui/MetricsLayer.h"
 #include "astec_gui/ObjectsLayer.h"
 #include "astec_gui/ParametersLayer.h"

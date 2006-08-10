@@ -46,6 +46,8 @@ public:
     int InsertItem( const std::string& category, const QString& text, int id = -1 );
     int InsertItem( const std::string& category, const QString& text, QPopupMenu* popup, int id = -1 );
     int InsertItem( const std::string& category, QWidget* widget, int id = -1 );
+    
+    QPopupMenu* SubMenu( const std::string& category, const QString& text );
 
     void Popup( const QPoint& where );
     //@}

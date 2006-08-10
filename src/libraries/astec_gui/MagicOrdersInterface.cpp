@@ -19,8 +19,6 @@
 #include "astec_gaming/CoordinateConverter.h"
 #include "LocationCreator.h"
 #include "ParametersLayer.h"
-#include "LogisticSupplyRecompletionDialog.h"
-#include "ChangeHumanFactorsDialog.h"
 #include "astec_kernel/KnowledgeGroup_ABC.h"
 #include "astec_kernel/Team_ABC.h"
 #include "astec_kernel/Location_ABC.h"
@@ -40,9 +38,6 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& contro
     , controller_( true )
     , magicMove_( false )
 {
-    supplyRecompletion_ = new LogisticSupplyRecompletionDialog( parent, controllers_, publisher_, static_ );
-    changeHumanFactors_ = new ChangeHumanFactorsDialog( parent, controllers_, publisher_ );
-    
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->Allow( true, false, false, false );
     controllers_.Register( *this );
@@ -70,7 +65,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
     selectedGroup_ = 0;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
-        QPopupMenu* magicMenu = new QPopupMenu( menu );
+        QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
 
         int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
@@ -78,18 +73,14 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
         AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
         AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
         AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
-        AddMagic( tr( "Recompletement partiel" ),    SLOT( Recompletion() ),      magicMenu );
         AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
         AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
-        AddMagic( tr( "Facteurs humains" ),          SLOT( ChangeHumanFactors() ), magicMenu );
 
         if( orders->CanSurrender() )
             AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
 
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
-
-        menu.InsertItem( "Ordre", tr( "Ordres magiques" ), magicMenu );
     }
 }
 
@@ -104,9 +95,8 @@ void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, C
     selectedAgent_ = 0;
     selectedGroup_ = &group;
     selectedTeam_ = 0;
-    QPopupMenu* magicMenu = new QPopupMenu( menu );
+    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     FillCommonOrders( magicMenu );
-    menu.InsertItem( "Ordre", tr( "Ordres magiques" ), magicMenu );
 } 
 
 // -----------------------------------------------------------------------------
@@ -120,9 +110,8 @@ void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu&
     selectedAgent_ = 0;
     selectedGroup_ = 0;
     selectedTeam_ = &team;
-    QPopupMenu* magicMenu = new QPopupMenu( menu );
+    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     FillCommonOrders( magicMenu );
-    menu.InsertItem( "Ordre", tr( "Ordres magiques" ), magicMenu );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,16 +233,6 @@ void MagicOrdersInterface::ApplyOnHierarchy( const Team_ABC& team, int id )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MagicOrdersInterface::Recompletion
-// Created: AGE 2006-04-28
-// -----------------------------------------------------------------------------
-void MagicOrdersInterface::Recompletion()
-{
-    if( selectedAgent_ )
-        supplyRecompletion_->Show( *selectedAgent_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::DestroyComponent
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
@@ -261,16 +240,6 @@ void MagicOrdersInterface::DestroyComponent()
 {
     if( selectedAgent_ )
         publisher_.SendMagicDestruction( *selectedAgent_ ); // $$$$ SBO 2006-07-06: 
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MagicOrdersInterface::ChangeHumanFactors
-// Created: AGE 2006-04-28
-// -----------------------------------------------------------------------------
-void MagicOrdersInterface::ChangeHumanFactors()
-{
-    if( selectedAgent_ )
-        changeHumanFactors_->Show( *selectedAgent_ );
 }
     
 // -----------------------------------------------------------------------------

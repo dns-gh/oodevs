@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/Model.h"
-#include "astec_kernel/Agent_ABC.h"
 #include "astec_gaming/AgentsModel.h"
-#include "astec_kernel/AutomatType.h"
-#include "astec_gaming/Dotation.h"
-#include "astec_kernel/DotationType.h"
-#include "astec_gaming/LogisticLinks.h"
-#include "astec_gaming/SupplyStates.h"
-#include "astec_kernel/Iterator.h"
 #include "astec_gaming/ASN_Messages.h"
-#include "ExclusiveComboTableItem.h"
+#include "astec_gaming/Dotation.h"
+#include "astec_gaming/LogisticLinks.h"
+#include "astec_gaming/Model.h"
+#include "astec_gaming/SupplyStates.h"
+#include "astec_kernel/Agent_ABC.h"
+#include "astec_kernel/Controllers.h"
+#include "astec_kernel/AutomatType.h"
+#include "astec_kernel/DotationType.h"
+#include "astec_kernel/Iterator.h"
+#include "astec_gui/ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog constructor

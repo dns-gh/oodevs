@@ -10,11 +10,11 @@
 #include "astec_pch.h"
 #include "ObjectReportPanel.h"
 
+#include "FireResultListView.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/Object_ABC.h"
 #include "astec_gaming/Explosions.h"
 #include "astec_gaming/Equipment.h"
-#include "astec_gui/FireResultListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel constructor

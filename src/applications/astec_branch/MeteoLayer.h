@@ -10,7 +10,7 @@
 #ifndef __MeteoLayer_h_
 #define __MeteoLayer_h_
 
-#include "Layer_ABC.h"
+#include "astec_gui/Layer_ABC.h"
 #include "astec_kernel/ElementObserver_ABC.h"
 
 class AmmoEffect;

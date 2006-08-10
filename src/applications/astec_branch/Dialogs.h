@@ -12,6 +12,7 @@
 
 class Controllers;
 class Model;
+class StaticModel;
 class Publisher_ABC;
 
 // =============================================================================
@@ -26,7 +27,7 @@ class Dialogs
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, Controllers& controllers, const Model& model, Publisher_ABC& publisher );
+             Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher );
     virtual ~Dialogs();
     //@}
 };

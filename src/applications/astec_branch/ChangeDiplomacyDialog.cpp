@@ -7,13 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
-
+#include "astec_pch.h"
 #include "ChangeDiplomacyDialog.h"
 #include "moc_ChangeDiplomacyDialog.cpp"
-#include "astec_kernel/Controllers.h"
-
 #include "astec_gaming/ASN_Messages.h"
+#include "astec_kernel/Controllers.h"
 #include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------

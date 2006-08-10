@@ -11,8 +11,9 @@
 #define __ChangeHumanFactorsDialog_h_
 
 #include "astec_gaming/ASN_Types.h"
+#include "astec_gui/ValuedComboBox.h"
 #include "astec_kernel/SafePointer.h"
-#include "ValuedComboBox.h"
+#include "astec_kernel/ContextMenuObserver_ABC.h"
 
 class Agent_ABC;
 class Controllers;
@@ -25,6 +26,8 @@ class Publisher_ABC;
 // Created: AGE 2005-09-22
 // =============================================================================
 class ChangeHumanFactorsDialog : public QDialog
+                               , public Observer_ABC
+                               , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT
 public:
@@ -36,13 +39,14 @@ public:
 
     //! @name Operations
     //@{
-    void Show( const Agent_ABC& agent );
+    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
     virtual QSize sizeHint() const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
+    void Show();
     void Validate();
     //@}
 
@@ -61,8 +65,9 @@ private:
 private:
     //! @name Member data
     //@{
+    Controllers& controllers_;
     Publisher_ABC& publisher_;
-    SafePointer< Agent_ABC > agent_;
+    SafePointer< Agent_ABC > selected_;
     ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
     ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;
     ValuedComboBox< ASN1T_EnumUnitExperience >*  pExperienceCombo_;

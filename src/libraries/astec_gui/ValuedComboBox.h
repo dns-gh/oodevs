@@ -276,7 +276,7 @@ template< typename T >
 T ValuedComboBox<T>::GetValue()
 {
     int nIndex = currentItem();
-    assert( nIndex >= 0 && nIndex < (int)values_.size() );
+//    assert( nIndex >= 0 && nIndex < (int)values_.size() );
     return values_[nIndex];
 }
 

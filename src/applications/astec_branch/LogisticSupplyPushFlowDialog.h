@@ -7,13 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __LogisticSupplyChangeQuotasDialog_h_
-#define __LogisticSupplyChangeQuotasDialog_h_
+#ifndef __LogisticSupplyPushFlowDialog_h_
+#define __LogisticSupplyPushFlowDialog_h_
 
 #include "astec_kernel/ContextMenuObserver_ABC.h"
 #include "astec_kernel/SafePointer.h"
-#include "ValuedComboBox.h"
-#include <qdialog.h>
+#include "astec_gui/ValuedComboBox.h"
 
 class Controllers;
 class Model;
@@ -22,22 +21,23 @@ class Dotation;
 class Publisher_ABC;
 
 // =============================================================================
-/** @class  LogisticSupplyChangeQuotasDialog
-    @brief  LogisticSupplyChangeQuotasDialog
+/** @class  LogisticSupplyPushFlowDialog
+    @brief  LogisticSupplyPushFlowDialog
 */
+// $$$$ SBO 2006-07-03: look somehow similar to LogisticSupplyChangeQuotasDialog...
 // Created: SBO 2006-07-03
 // =============================================================================
-class LogisticSupplyChangeQuotasDialog : public QDialog
-                                       , public Observer_ABC
-                                       , public ContextMenuObserver_ABC< Agent_ABC >
+class LogisticSupplyPushFlowDialog : public QDialog
+                                   , public Observer_ABC
+                                   , public ContextMenuObserver_ABC< Agent_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model );
-    virtual ~LogisticSupplyChangeQuotasDialog();
+             LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model );
+    virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
     //! @name Operations
@@ -58,8 +58,8 @@ private slots:
 private:
     //! @name Copy/Assignement
     //@{
-    LogisticSupplyChangeQuotasDialog( const LogisticSupplyChangeQuotasDialog& );            //!< Copy constructor
-    LogisticSupplyChangeQuotasDialog& operator=( const LogisticSupplyChangeQuotasDialog& ); //!< Assignement operator
+    LogisticSupplyPushFlowDialog( const LogisticSupplyPushFlowDialog& );            //!< Copy constructor
+    LogisticSupplyPushFlowDialog& operator=( const LogisticSupplyPushFlowDialog& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -86,4 +86,4 @@ private:
     //@}
 };
 
-#endif // __LogisticSupplyChangeQuotasDialog_h_
+#endif // __LogisticSupplyPushFlowDialog_h_
