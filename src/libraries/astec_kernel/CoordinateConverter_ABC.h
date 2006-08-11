@@ -10,6 +10,8 @@
 #ifndef __CoordinateConverter_ABC_h_
 #define __CoordinateConverter_ABC_h_
 
+struct ASN1T_CoordUTM; // $$$$ AGE 2006-08-11: crap !
+
 // =============================================================================
 /** @class  CoordinateConverter_ABC
     @brief  CoordinateConverter_ABC

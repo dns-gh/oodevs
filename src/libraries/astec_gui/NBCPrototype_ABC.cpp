@@ -18,16 +18,11 @@
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >& resolver )
     : ObjectPrototypeAttributes_ABC( parent, tr( "Paramètres NBC" ) )
+    , resolver_( resolver )
 {
     new QLabel( tr( "Agent_ABC NBC:" ), this );
     nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );
-
-    Iterator< const NBCAgent& > it( resolver.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const NBCAgent& element = it.NextElement();
-        nbcAgents_->AddItem( element.GetName().c_str(), &element );
-    }
+    FillTypes();
 }
     
 // -----------------------------------------------------------------------------
@@ -37,6 +32,31 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >&
 NBCPrototype_ABC::~NBCPrototype_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCPrototype_ABC::FillTypes
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void NBCPrototype_ABC::FillTypes()
+{
+    nbcAgents_->Clear();
+    Iterator< const NBCAgent& > it( resolver_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const NBCAgent& element = it.NextElement();
+        nbcAgents_->AddItem( element.GetName().c_str(), &element );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCPrototype_ABC::showEvent
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void NBCPrototype_ABC::showEvent( QShowEvent* e )
+{
+    FillTypes();
+    QGroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

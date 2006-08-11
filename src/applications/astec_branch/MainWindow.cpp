@@ -25,6 +25,7 @@
 #include "RecorderToolbar.h"
 #include "SIMControlToolbar.h"
 #include "UnitToolbar.h"
+#include "LinkInterpreter.h"
 
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/Controllers.h"
@@ -60,7 +61,6 @@
 #include "astec_gui/PreferencesDialog.h"
 #include "astec_gui/GlPlaceHolder.h"
 #include "astec_gui/RichItemFactory.h"
-#include "astec_gui/LinkInterpreter.h"
 #include "astec_gui/BigBrother.h"
 #include "astec_gui/MiniViews.h"
 #include "astec_gui/resources.h"

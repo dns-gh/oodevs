@@ -22,6 +22,7 @@
 // -----------------------------------------------------------------------------
 RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >& resolver )
     : ObjectPrototypeAttributes_ABC( parent, tr( "ROTA" ) )
+    , resolver_( resolver )
 {
     new QLabel( tr( "Danger:" ), this );
     danger_ = new QSpinBox( 0, 100, 1, this );
@@ -32,13 +33,7 @@ RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver< NBCAgent 
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tr( "Type" ) );
 
-    Iterator< const NBCAgent& > it( resolver.CreateIterator() );
-    while( it.HasMoreElements() )
-    {
-        const NBCAgent& element = it.NextElement();
-        ValuedListItem* item = new ValuedListItem( nbcAgents_ );
-        item->Set( &element, element.GetName().c_str() );
-    }
+    FillTypes();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +43,32 @@ RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver< NBCAgent 
 RotaPrototype_ABC::~RotaPrototype_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaPrototype_ABC::showEvent
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void RotaPrototype_ABC::showEvent( QShowEvent* e )
+{
+    FillTypes();
+    QGroupBox::showEvent( e );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaPrototype_ABC::FillTypes
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void RotaPrototype_ABC::FillTypes()
+{
+    nbcAgents_->clear();
+    Iterator< const NBCAgent& > it( resolver_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const NBCAgent& element = it.NextElement();
+        ValuedListItem* item = new ValuedListItem( nbcAgents_ );
+        item->Set( &element, element.GetName().c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

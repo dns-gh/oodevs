@@ -46,9 +46,16 @@ private:
     NBCPrototype_ABC& operator=( const NBCPrototype_ABC& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void FillTypes();
+    virtual void showEvent( QShowEvent* );
+    //@}
+
 protected:
     //! @name Member data
     //@{
+    const Resolver< NBCAgent >& resolver_;
     ValuedComboBox< const NBCAgent* >* nbcAgents_;
     //@}
 };

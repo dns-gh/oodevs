@@ -46,6 +46,12 @@ private:
     RotaPrototype_ABC& operator=( const RotaPrototype_ABC& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void showEvent( QShowEvent* );
+    void FillTypes();
+    //@}
+
 protected:
     //! @name Helpers
     //@{
@@ -54,6 +60,7 @@ protected:
 
     //! @name Member data
     //@{
+    const Resolver< NBCAgent >& resolver_;
     RichLabel* nbcAgentsLabel_;
     QSpinBox* danger_;
     QListView* nbcAgents_;
