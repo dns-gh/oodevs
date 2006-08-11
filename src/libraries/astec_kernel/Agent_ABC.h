@@ -46,14 +46,10 @@ public:
     virtual const Team_ABC& GetTeam() const = 0;
     virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
 
-    virtual std::string GetName() const = 0;
-    virtual unsigned long GetId() const = 0;
-
     virtual const AutomatType* GetAutomatType() const = 0;
     virtual const AgentType& GetType() const = 0;
     //@}
 
-    //! @name Operations
     //@{
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

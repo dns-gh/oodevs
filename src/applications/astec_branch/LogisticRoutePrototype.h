@@ -10,7 +10,7 @@
 #ifndef __LogisticRoutePrototype_h_
 #define __LogisticRoutePrototype_h_
 
-#include "LogisticRoutePrototype_ABC.h"
+#include "astec_gui/LogisticRoutePrototype_ABC.h"
 
 struct ASN1T_AttrObjectItineraireLogistique;
 struct ASN1T_MagicActionCreateObject;

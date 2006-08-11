@@ -71,6 +71,20 @@
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
+    
+    <!--
+    <target name="library.astec.kernel" depends="library.ENT" description="build astec kernel static library">
+        <build-lib name="astec_kernel"/>
+    </target>
+    <target name="library.astec.gui" depends="library.astec.kernel" description="build astec gui static library">
+        <build-lib name="astec_gui"/>
+    </target>
+    <target name="library.astec.gaming" depends="library.astec.kernel,library.ASN" description="build astec gaming static library">
+        <build-lib name="astec_gaming"/>
+    </target>
+    <target name="libraries.astec" description="build astec static libraries"
+            depends="library.astec.gaming, library.astec.gui"/>
+    -->
 
     <!--
     ============================================================================
@@ -136,7 +150,7 @@
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32,iphlpapi"/>
         </build-app>
     </target>
-
+    
     <target name="application.Tester" description="build Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
         <build-app name="Tester"
                    subsystem="console"
@@ -239,6 +253,10 @@
         <clean name="SIM"/>
         <clean name="ADN"/>
         <clean name="astec"/>
+        <clean name="astec_kernel"/>
+        <clean name="astec_gui"/>
+        <clean name="astec_gaming"/>
+        <clean name="astec_branch"/>
         <clean name="Tester"/>
         <clean name="HLA_Manager"/>
         <clean name="AGR"/>
@@ -309,8 +327,8 @@
     <target name="build.SCIPIO" depends="libraries.SCIPIO,applications.SCIPIO"/>
 
     <target name="build.TIC" depends="libraries.TIC,applications.TIC"/>
-
-    <target name="build" depends="build.SCIPIO,build.TIC"/>
+    
+    <target name="build" depends="build.SCIPIO,build.TIC,build.astec"/>
 
     <target name="all" depends="configure,build,test" description="build and package distribution"/>
 

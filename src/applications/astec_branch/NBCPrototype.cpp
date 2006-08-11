@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "NBCPrototype.h"
 #include "astec_kernel/NBCAgent.h"
 #include "astec_kernel/Iterator.h"

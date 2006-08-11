@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "ObjectCreationPanel.h"
 #include "moc_ObjectCreationPanel.cpp"
 #include "ObjectPrototype.h"

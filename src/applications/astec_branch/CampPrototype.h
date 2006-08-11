@@ -10,7 +10,7 @@
 #ifndef __ObjectPrototypeCampAttributes_h_
 #define __ObjectPrototypeCampAttributes_h_
 
-#include "CampPrototype_ABC.h"
+#include "astec_gui/CampPrototype_ABC.h"
 
 struct ASN1T_MagicActionCreateObject;
 struct ASN1T_AttrObjectCampPrisonniers;

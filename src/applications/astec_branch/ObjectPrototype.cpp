@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "astec_pch.h"
 #include "ObjectPrototype.h"
 #include "astec_gaming/StaticModel.h"
 #include "astec_gaming/CoordinateConverter.h"
@@ -57,6 +57,7 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
 {
     msg_.GetAsnMsg().oid_objet = GetType().manager_.GetFreeIdentifier();
 
+    creation_.m.nomPresent = 0;
     if( !name_->text().isEmpty() )
     {
         creation_.m.nomPresent = 1;

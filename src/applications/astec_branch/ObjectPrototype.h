@@ -10,9 +10,9 @@
 #ifndef __ObjectPrototype_h_
 #define __ObjectPrototype_h_
 
-#include "ObjectPrototype_ABC.h"
+#include "astec_gui/ObjectPrototype_ABC.h"
 #include "astec_gaming/ASN_messages.h"
-#include "LocationSerializer.h"
+#include "astec_gui/LocationSerializer.h"
 
 class StaticModel;
 class Publisher_ABC;

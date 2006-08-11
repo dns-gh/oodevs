@@ -12,6 +12,7 @@
 
 #include "Net_Def.h"
 #include "Tools.h"
+#include "astec_kernel/IDManager.h"
 #include "astec_kernel/Controller.h"
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/Units.h"
@@ -49,6 +50,8 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     
     if( message.m.type_dotation_valorisationPresent )
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
+
+    type_.manager_.LockIdentifier( nId_ );
 
     controller_.Create( *(Object_ABC*)this );
 }
@@ -175,31 +178,4 @@ void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
 bool Object::IsInTeam( const Team_ABC& team ) const
 {
     return team_ == team;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void Object::Select( ActionController& controller ) const
-{
-    controller.Select( *(Object_ABC*)this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Object::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void Object::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *(Object_ABC*)this, where );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Object::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void Object::Activate( ActionController& controller ) const
-{
-    controller.Activate( *(Object_ABC*)this );
 }

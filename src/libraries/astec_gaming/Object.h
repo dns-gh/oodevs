@@ -49,10 +49,6 @@ public:
     virtual void Display( Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
-
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
     //@}
 
     //! @name Accessors
