@@ -8,52 +8,47 @@
 // *****************************************************************************
 
 #include "astec_gui_pch.h"
-#include "LinkInterpreter.h"
-#include "astec_gaming/InternalLinks.h"
-#include "moc_LinkInterpreter.cpp"
-#include "astec_gaming/Model.h"
-#include "astec_gaming/AgentsModel.h"
-#include "astec_gaming/ObjectsModel.h"
-#include "astec_kernel/Controllers.h"
+#include "LinkInterpreter_ABC.h"
+#include "moc_LinkInterpreter_ABC.cpp"
 #include "astec_kernel/ActionController.h"
+#include "astec_kernel/Entity_ABC.h"
 
 #include <qprocess.h>
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter constructor
+// Name: LinkInterpreter_ABC constructor
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, Model& model )
+LinkInterpreter_ABC::LinkInterpreter_ABC( QObject* parent, ActionController& actions )
     : QObject( parent )
-    , controllers_( controllers )
-    , model_( model )
+    , actions_( actions )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter destructor
+// Name: LinkInterpreter_ABC destructor
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-LinkInterpreter::~LinkInterpreter()
+LinkInterpreter_ABC::~LinkInterpreter_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter::Interprete
+// Name: LinkInterpreter_ABC::Interprete
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::Interprete( const QString& link )
+bool LinkInterpreter_ABC::Interprete( const QString& link )
 {
     return Interprete( QUrl( link ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter::Interprete
+// Name: LinkInterpreter_ABC::Interprete
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::Interprete( const QUrl& url )
+bool LinkInterpreter_ABC::Interprete( const QUrl& url )
 {
     const QString protocol = url.protocol();
     if( protocol == "cmd" || protocol == "http" )
@@ -64,10 +59,10 @@ bool LinkInterpreter::Interprete( const QUrl& url )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter::ExecuteCommand
+// Name: LinkInterpreter_ABC::ExecuteCommand
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::ExecuteCommand( const QUrl& url )
+bool LinkInterpreter_ABC::ExecuteCommand( const QUrl& url )
 {
     QProcess openPage(0);
     openPage.addArgument( "cmd" );
@@ -78,35 +73,37 @@ bool LinkInterpreter::ExecuteCommand( const QUrl& url )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter::InterpreteId
+// Name: LinkInterpreter_ABC::InterpreteId
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::InterpreteId( const QUrl& url )
+bool LinkInterpreter_ABC::InterpreteId( const QUrl& url )
 {
     const QString classId = url.host();
     const QString strId = url.fileName();
-
     bool ok = false;
     const unsigned long id = strId.toULong( &ok );
-    return ok && ( 
-        ( classId == InternalLinks::agent_      && Activate< Agent_ABC >( model_.agents_, id ) )
-     || ( classId == InternalLinks::object_     && Activate< Object_ABC >( model_.objects_, id ) )
-     || ( classId == InternalLinks::population_ && Activate< Population_ABC >( model_.agents_, id ) ) );
-    // $$$$ AGE 2006-06-27: manque les connaissances. Observer les KnowledgeGroups ?
+
+    const Entity_ABC* entity = entites_[ classId ][ id ];
+    if( entity )
+        entity->Activate( actions_ );
+    return entity;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter::Activate
-// Created: AGE 2006-05-12
+// Name: LinkInterpreter_ABC::AddEntity
+// Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-template< typename T >
-bool LinkInterpreter::Activate( const Resolver_ABC< T >& resolver, unsigned long id )
+void LinkInterpreter_ABC::AddEntity( const QString& category, const Entity_ABC& entity )
 {
-    const T* activated = resolver.Find( id );
-    if( activated )
-        controllers_.actions_.Activate( *activated );
-    return activated;
+    entites_[ category ][ entity.GetId() ] = & entity;
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter_ABC::RemoveEntity
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void LinkInterpreter_ABC::RemoveEntity( const QString& category, const Entity_ABC& entity )
+{
+    entites_[ category ][ entity.GetId() ] = 0;
+}
  

@@ -7,29 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __LinkInterpreter_h_
-#define __LinkInterpreter_h_
+#ifndef __LinkInterpreter_ABC_h_
+#define __LinkInterpreter_ABC_h_
 
 #include "astec_kernel/Resolver_ABC.h"
 
 class Model;
-class Controllers;
+class ActionController;
+class Entity_ABC;
 
 // =============================================================================
-/** @class  LinkInterpreter
-    @brief  LinkInterpreter
+/** @class  LinkInterpreter_ABC
+    @brief  LinkInterpreter_ABC
 */
 // Created: AGE 2006-05-11
 // =============================================================================
-class LinkInterpreter : public QObject
+class LinkInterpreter_ABC : public QObject
 {   
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkInterpreter( QObject* parent, Controllers& controllers, Model& model );
-    virtual ~LinkInterpreter();
+             LinkInterpreter_ABC( QObject* parent, ActionController& actions );
+    virtual ~LinkInterpreter_ABC();
     //@}
 
     //! @name Slots
@@ -38,11 +39,18 @@ public slots:
     virtual bool Interprete( const QString& link );
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    void AddEntity   ( const QString& category, const Entity_ABC& entity );
+    void RemoveEntity( const QString& category, const Entity_ABC& entity );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
-    LinkInterpreter( const LinkInterpreter& );            //!< Copy constructor
-    LinkInterpreter& operator=( const LinkInterpreter& ); //!< Assignement operator
+    LinkInterpreter_ABC( const LinkInterpreter_ABC& );            //!< Copy constructor
+    LinkInterpreter_ABC& operator=( const LinkInterpreter_ABC& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -50,16 +58,20 @@ private:
     virtual bool Interprete( const QUrl& url );
     bool ExecuteCommand( const QUrl& url );
     bool InterpreteId( const QUrl& url );
-    template< typename T >
-    bool Activate( const Resolver_ABC< T >& resolver, unsigned long id );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, const Entity_ABC* > T_Entities;
+    typedef std::map< QString, T_Entities >             T_TypedEntities;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    Model& model_;
+    ActionController& actions_;
+    T_TypedEntities entites_;
     //@}
 };
 
-#endif // __LinkInterpreter_h_
+#endif // __LinkInterpreter_ABC_h_

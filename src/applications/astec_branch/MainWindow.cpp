@@ -101,7 +101,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     layers_ = new GlLayers( controllers, staticModel_, model_, prefDialog->GetPreferences() );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
-    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, model );
+    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Agent list panel
