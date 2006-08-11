@@ -9,19 +9,17 @@
 
 #include "astec_gui_pch.h"
 #include "ObjectListView.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_kernel/Team_ABC.h"
+#include "moc_ObjectListView.cpp"
 #include "Tools.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_kernel/Controller.h"
+#include "ItemFactory_ABC.h"
 #include "ValuedListItem.h"
+#include "astec_kernel/Controller.h"
 #include "astec_kernel/ObjectType.h"
 #include "astec_kernel/ActionController.h"
 #include "astec_kernel/Controllers.h"
 #include "astec_kernel/OptionVariant.h"
-#include "ItemFactory_ABC.h"
-
-#include "moc_ObjectListView.cpp"
+#include "astec_kernel/Object_ABC.h"
+#include "astec_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
