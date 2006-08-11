@@ -11,6 +11,7 @@
 #define __TacticalLine_ABC_h_
 
 #include "astec_kernel/Types.h"
+#include "astec_kernel/Entity_ABC.h"
 #include "ASN_Types.h"
 
 class CoordinateConverter_ABC;
@@ -24,7 +25,7 @@ class Publisher_ABC;
 */
 // Created: APE 2004-04-14
 // =============================================================================
-class TacticalLine_ABC
+class TacticalLine_ABC : public Entity_ABC
 {
 
 public:
@@ -50,15 +51,12 @@ public:
     void UpdateToSim();
 
     bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
-
-    virtual void Select( ActionController& actions ) const = 0;
-    virtual void ContextMenu( ActionController& actions, const QPoint& point ) const = 0;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned long GetId() const;
-    std::string   GetName() const;
+    virtual unsigned long GetId() const;
+    virtual std::string   GetName() const;
 
     bool IsUpdatingToSim() const;
     bool IsCreatedByMos() const;

@@ -102,7 +102,6 @@ void Lima::UpdateToSim( E_State state )
             Send( asnMsg );
         }
         break;
-            break;
     }
 }
 
@@ -139,4 +138,13 @@ void Lima::Select( ActionController& actions ) const
 void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
 {
     actions.ContextMenu( *this, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Activate
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void Lima::Activate( ActionController& actions ) const
+{
+    actions.Activate( *this );
 }

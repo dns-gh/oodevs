@@ -39,6 +39,7 @@ public:
     virtual void Draw( const GlTools_ABC& tools ) const;
     virtual void Select( ActionController& actions ) const;
     virtual void ContextMenu( ActionController& actions, const QPoint& point ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
 private:

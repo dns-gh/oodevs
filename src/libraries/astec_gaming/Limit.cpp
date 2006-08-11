@@ -142,3 +142,12 @@ void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
 {
     actions.ContextMenu( *this, point );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Activate
+// Created: AGE 2006-08-11
+// -----------------------------------------------------------------------------
+void Limit::Activate( ActionController& actions ) const
+{
+    actions.Activate( *this );
+}
