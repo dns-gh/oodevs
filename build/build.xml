@@ -328,7 +328,7 @@
 
     <target name="build.TIC" depends="libraries.TIC,applications.TIC"/>
     
-    <target name="build" depends="build.SCIPIO,build.TIC,build.astec"/>
+    <target name="build" depends="build.SCIPIO,build.TIC"/>
 
     <target name="all" depends="configure,build,test" description="build and package distribution"/>
 
