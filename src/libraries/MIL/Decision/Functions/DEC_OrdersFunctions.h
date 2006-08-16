@@ -44,9 +44,6 @@ public:
     static void CDT_SendOrderConduiteToPion         ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_CreatePionMission               ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_GivePionMission                 ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-
-private:
-    static MT_Random randomGenerator_; //$$$ Pourri TMP
 };
 
 #include "DEC_OrdersFunctions.inl"
