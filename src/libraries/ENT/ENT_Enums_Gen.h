@@ -745,7 +745,6 @@ enum E_LogMaintenanceTraitementEtat
     eLogMaintenanceTraitementEtat_AttenteDisponibilitePieces,
     eLogMaintenanceTraitementEtat_AttenteDisponibiliteReparateur,
     eLogMaintenanceTraitementEtat_Reparation,
-    eLogMaintenanceTraitementEtat_AttenteRetourPion,
     eLogMaintenanceTraitementEtat_RetourPion,
     eLogMaintenanceTraitementEtat_Termine,
     eNbrLogMaintenanceTraitementEtat

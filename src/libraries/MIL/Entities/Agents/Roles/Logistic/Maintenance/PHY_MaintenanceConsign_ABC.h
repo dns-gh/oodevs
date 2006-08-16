@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-            void Cancel();
+    virtual void Cancel();
     virtual bool Update() = 0;
 
             void Clean     ();
@@ -79,7 +79,6 @@ protected:
         eWaitingForParts,
         eWaitingForRepairer,
         eRepairing,
-        eWaitingForGoingBackToWar,
         eGoingBackToWar,
         eFinished
     };
@@ -88,47 +87,27 @@ protected:
 protected:
     //! @name
     //@{
-    bool DoWaitingForCarrier               ();
-    bool DoSearchingForUpperLevel          ();  
-    bool DoWaitingForParts                 ();
-    bool DoWaitingForRepairer              (); 
-    bool DoWaitingForGoingBackToWar        ();
-    void DoReturnComposante                ();
-
-    void EnterStateWaitingForCarrier       ();
-    void EnterStateGoingFrom               ();
-    void EnterStateCarrierGoingTo          ();
-    void EnterStateCarrierLoading          ();
-    void EnterStateCarrierGoingFrom        ();
-    void EnterStateCarrierUnloading        ();
-    void EnterStateDiagnosing              ();
-    void ChooseStateAfterDiagnostic        ();
-
-    void EnterStateWaitingForParts         ();
-    void EnterStateWaitingForRepairer      ();
-    void EnterStateRepairing               ();
-    void EnterStateWaitingForGoingBackToWar();
-    void EnterStateGoingBackToWar          ();
-    void EnterStateFinished                ();
+    void EnterStateFinished();
 
     E_State GetState() const;
     //@}
 
-private:
+protected:
     //! @name Tools
     //@{
     void SetState( E_State nNewState );    
+
+    PHY_RolePionLOG_Maintenance& GetPionMaintenance() const;
     //@}
 
 private:
     PHY_RolePionLOG_Maintenance*    pMaintenance_;
-    PHY_MaintenanceComposanteState* pComposanteState_;
-    PHY_ComposantePion*             pActor_; // Carrier / repairer ...
     E_State                         nState_;
     bool                            bHasChanged_;
 
 protected:
     int                             nTimer_;        
+    PHY_MaintenanceComposanteState* pComposanteState_;
 };
 
 #include "PHY_MaintenanceConsign_ABC.inl"

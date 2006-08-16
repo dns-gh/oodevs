@@ -76,7 +76,7 @@ bool PHY_MedicalConsign_ABC::IsFinished() const
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 inline
-PHY_RolePionLOG_Medical& PHY_MedicalConsign_ABC::GetPionMedical()
+PHY_RolePionLOG_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 {
     assert( pMedical_ );
     return *pMedical_;
@@ -85,6 +85,7 @@ PHY_RolePionLOG_Medical& PHY_MedicalConsign_ABC::GetPionMedical()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::serialize
 // Created: JVT 2005-04-11

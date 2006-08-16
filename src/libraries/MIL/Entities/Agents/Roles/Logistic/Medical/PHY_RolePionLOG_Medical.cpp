@@ -428,9 +428,9 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing() const
 // Name: PHY_RolePionLOG_Medical::HasUsableDoctorForHealing
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human ) const
+bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human, bool bBypassPriorities /* = false */ ) const
 {
-    if( human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
+    if( !bBypassPriorities && human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
         return false;
 
     PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
@@ -717,9 +717,6 @@ void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::UpdateLogistic( bool bIsDead )
 {
-    if( bIsDead )
-        return;
-
     for( IT_EvacuationAmbulancesMMap itEvacuationAmbulance = evacuationAmbulances_.begin(); itEvacuationAmbulance != evacuationAmbulances_.end(); )
     {
         PHY_MedicalEvacuationAmbulance& ambulance = *itEvacuationAmbulance->second;

@@ -73,6 +73,7 @@ public:
     const MT_Vector2D&        GetPosition             () const;
           PHY_ComposantePion* GetAvailableHauler      ( const PHY_ComposanteTypePion& composanteType ) const;          
           PHY_ComposantePion* GetAvailableRepairer    ( const PHY_Breakdown& breakdown ) const;
+          bool                HasUsableRepairer       ( const PHY_Breakdown& breakdown ) const;
           bool                ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );
 
           void StartUsingForLogistic( PHY_ComposantePion& composante );
@@ -110,7 +111,6 @@ private:
     void InsertConsigns( const T_MaintenanceConsigns& );
 
     bool     HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
-    bool     HasUsableRepairer                    ( const PHY_Breakdown& breakdown ) const;
     uint     GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
     MT_Float GetAvailabilityRatio                 ( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}    

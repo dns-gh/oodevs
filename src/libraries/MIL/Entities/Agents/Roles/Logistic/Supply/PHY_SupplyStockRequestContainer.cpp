@@ -94,9 +94,9 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         // Overhead
         if( rTotalValue > 0. )
         {
-            const MT_Float rAffecterValue = rTotalValue / pionStocks.size();
+            const MT_Float rAffectedValue = rTotalValue / pionStocks.size();
             for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end(); ++it )
-                it->second += rAffecterValue;
+                it->second += rAffectedValue;
         }
 
         // Request creation

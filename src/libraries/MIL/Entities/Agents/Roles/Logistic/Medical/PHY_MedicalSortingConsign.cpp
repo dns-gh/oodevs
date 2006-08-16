@@ -92,7 +92,7 @@ bool PHY_MedicalSortingConsign::DoWaitingForSorting()
     assert( !pDoctor_ );
  
     pDoctor_ = GetPionMedical().GetAvailableDoctorForSorting();
-    if( !pDoctor_ )
+    if( !pDoctor_ ) // $$$ TODO if !HasUsable => changer de secteur de tri
         return false;
     
     GetPionMedical().StartUsingForLogistic( *pDoctor_ );

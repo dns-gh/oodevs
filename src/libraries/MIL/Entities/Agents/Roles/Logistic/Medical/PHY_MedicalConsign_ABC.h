@@ -101,7 +101,7 @@ protected:
     E_State GetState() const;
     void    SetState( E_State nNewState );
 
-    PHY_RolePionLOG_Medical& GetPionMedical();
+    PHY_RolePionLOG_Medical& GetPionMedical() const;
     //@}
 
 private:

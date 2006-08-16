@@ -93,7 +93,11 @@ bool PHY_MedicalHealingConsign::DoWaitingForHealing()
 
     pDoctor_ = GetPionMedical().GetAvailableDoctorForHealing( pHumanState_->GetHuman() );
     if( !pDoctor_ )
+    {
+        if( !GetPionMedical().HasUsableDoctorForHealing( pHumanState_->GetHuman(), true /*Bypass priorities*/ ) )
+            EnterStateSearchingForHealingArea();
         return false;
+    }
     
     GetPionMedical().StartUsingForLogistic( *pDoctor_ );
     return true;

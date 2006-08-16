@@ -600,9 +600,6 @@ void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool bIsDead )
 {
-    if( bIsDead )
-        return; 
-
     for ( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if ( (*itConsign)->Update() )

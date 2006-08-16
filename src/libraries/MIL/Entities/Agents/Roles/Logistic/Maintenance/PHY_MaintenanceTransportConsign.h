@@ -38,8 +38,28 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Cancel();
     virtual bool Update(); 
     //@}
+
+private:
+    //! @name 
+    //@{
+    bool DoWaitingForCarrier               ();
+    bool DoSearchForUpperLevel             ();  
+
+    void EnterStateWaitingForCarrier       ();
+    void EnterStateGoingFrom               ();
+    void EnterStateCarrierGoingTo          ();
+    void EnterStateCarrierLoading          ();
+    void EnterStateCarrierGoingFrom        ();
+    void EnterStateCarrierUnloading        ();
+    void EnterStateDiagnosing              ();
+    void ChooseStateAfterDiagnostic        ();
+    //@}
+
+private:
+    PHY_ComposantePion* pCarrier_;
 };
 
 #include "PHY_MaintenanceTransportConsign.inl"

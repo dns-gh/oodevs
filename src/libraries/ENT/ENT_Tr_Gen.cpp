@@ -697,7 +697,6 @@ ENT_Tr::T_ConverterLogMaintenanceTraitementEtat ENT_Tr::LogMaintenanceTraitement
     T_ConverterLogMaintenanceTraitementEtat( "attente disponibilite pieces", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite pieces" ), eLogMaintenanceTraitementEtat_AttenteDisponibilitePieces ),
     T_ConverterLogMaintenanceTraitementEtat( "attente disponibilite reparateur", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite reparateur" ), eLogMaintenanceTraitementEtat_AttenteDisponibiliteReparateur ),
     T_ConverterLogMaintenanceTraitementEtat( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "reparation" ), eLogMaintenanceTraitementEtat_Reparation ),
-    T_ConverterLogMaintenanceTraitementEtat( "attente retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "attente retour pion" ), eLogMaintenanceTraitementEtat_AttenteRetourPion ),
     T_ConverterLogMaintenanceTraitementEtat( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "retour pion" ), eLogMaintenanceTraitementEtat_RetourPion ),
     T_ConverterLogMaintenanceTraitementEtat( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogMaintenanceTraitementEtat_Termine ),
     T_ConverterLogMaintenanceTraitementEtat( "", "", (E_LogMaintenanceTraitementEtat)-1 )

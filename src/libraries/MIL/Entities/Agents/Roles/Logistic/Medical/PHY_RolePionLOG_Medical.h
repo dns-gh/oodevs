@@ -82,6 +82,7 @@ public:
     PHY_ComposantePion*             GetAvailableDoctorForDiagnosing() const;
     PHY_ComposantePion*             GetAvailableDoctorForSorting   () const;
     PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const PHY_Human& human ) const;
+    bool                            HasUsableDoctorForHealing      ( const PHY_Human& human, bool bBypassPriorities = false ) const;
     //@}
 
     //! @name Tools
@@ -139,7 +140,6 @@ private:
     bool HasUsableCollectionAmbulance() const;
     bool HasUsableDoctorForSorting   () const;
     bool HasUsableDoctorForHealing   () const;
-    bool HasUsableDoctorForHealing   ( const PHY_Human& human ) const;
 
     MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;
     //@}    

@@ -37,9 +37,8 @@ EnumLogMaintenanceTraitementEtat ::= ENUMERATED
     attente-disponibilite-pieces                (8),
     attente-disponibilite-reparateur            (9),
     reparation                                  (10),
-    attente-retour-pion                         (11),
-    retour-pion                                 (12),
-    termine                                     (13)
+    retour-pion                                 (11),
+    termine                                     (12)
 }
 
 MsgLogMaintenanceTraitementEquipementUpdate ::= SEQUENCE

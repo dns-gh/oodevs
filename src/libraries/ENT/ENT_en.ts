@@ -3137,10 +3137,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>attente retour pion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>retour pion</source>
         <translation type="unfinished"></translation>
     </message>
