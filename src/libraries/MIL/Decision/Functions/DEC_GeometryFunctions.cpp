@@ -83,7 +83,7 @@ void DEC_GeometryFunctions::ComputeDestPointForPion( DIA_Call_ABC& call, MIL_Aut
 // -----------------------------------------------------------------------------
 void DEC_GeometryFunctions::CreateLocalisation( DIA_Call_ABC& call )
 {
-    TER_Localisation* pLoc = new TER_Localisation(); // $$$ RAM
+    TER_Localisation* pLoc = new TER_Localisation();
     call.GetResult().SetValue( (void*)pLoc, &DEC_Tools::GetTypeLocalisation() );
 }
 
@@ -93,7 +93,7 @@ void DEC_GeometryFunctions::CreateLocalisation( DIA_Call_ABC& call )
 //-----------------------------------------------------------------------------
 void DEC_GeometryFunctions::CreateListPoint( DIA_Call_ABC& call )
 {
-    T_PointVector* pResult = new T_PointVector(); //$$ RAM
+    T_PointVector* pResult = new T_PointVector();
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 }
 
@@ -104,7 +104,7 @@ void DEC_GeometryFunctions::CreateListPoint( DIA_Call_ABC& call )
 // static
 void DEC_GeometryFunctions::CreatePoint( DIA_Call_ABC& call )
 {
-    MT_Vector2D* pVect = new MT_Vector2D(); //$$$ RAM
+    MT_Vector2D* pVect = new MT_Vector2D();
     call.GetResult().SetValue( (void*)pVect, &DEC_Tools::GetTypePoint() );
 }
 
@@ -327,7 +327,7 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     }
 
     // 7. Répartition des points
-    T_PointVector* pOutPoints = new T_PointVector(); //$$$ RAM
+    T_PointVector* pOutPoints = new T_PointVector();
 
     pOutPoints->reserve( pions.size() + 1 );
 
@@ -388,7 +388,7 @@ void DEC_GeometryFunctions::ConvertPointToLocalisation( DIA_Call_ABC& call )
     MT_Vector2D* pPos = call.GetParameter( 0 ).ToUserPtr( pPos );
     assert( pPos );
 
-    TER_Localisation* pLoc = new TER_Localisation(); //$$$ RAM
+    TER_Localisation* pLoc = new TER_Localisation();
     pLoc->Reset( *pPos );
 
     call.GetResult().SetValue( (void*)pLoc, &DEC_Tools::GetTypeLocalisation() );
@@ -518,7 +518,7 @@ void DEC_GeometryFunctions::ComputeSupportPosition( DIA_Call_ABC& call, const MI
 
     vDirLooked.Rotate90ClockWise();
 
-    MT_Vector2D* pResult = new MT_Vector2D(); //$$$ RAM
+    MT_Vector2D* pResult = new MT_Vector2D();
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 
     // $$$$ Position dans le fuseau : devrait être générique
@@ -569,7 +569,7 @@ void DEC_GeometryFunctions::ComputeAmbushPosition( DIA_Call_ABC& call, const MIL
     assert( pAmbushPosition  );
     assert( pRetreatPosition );
 
-    MT_Vector2D* pResult = new MT_Vector2D(); //$$$ RAM
+    MT_Vector2D* pResult = new MT_Vector2D();
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 
     MT_Vector2D vDirAmbushPos = callerAgent.GetDirDanger();
@@ -616,7 +616,7 @@ void DEC_GeometryFunctions::ComputeSafetyPosition( DIA_Call_ABC& call, const MIL
 
     TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
-    MT_Vector2D* pResult = new MT_Vector2D( vSafetyPos ); // $$ RAM
+    MT_Vector2D* pResult = new MT_Vector2D( vSafetyPos );
     call.GetResult().SetValue( pResult, &DEC_Tools::GetTypePoint() );
 }
 
@@ -684,7 +684,7 @@ void DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( DIA_Call_ABC& ca
 
     TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
-    MT_Vector2D* pResult = new MT_Vector2D( vSafetyPos ); // $$ RAM
+    MT_Vector2D* pResult = new MT_Vector2D( vSafetyPos );
     call.GetResult().SetValue( pResult, &DEC_Tools::GetTypePoint() );
 }
 
@@ -695,7 +695,7 @@ void DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( DIA_Call_ABC& ca
 //-----------------------------------------------------------------------------
 void DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ RAM
+    MT_Vector2D* pResult = new MT_Vector2D();
     callerAgent.GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), *pResult );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
@@ -758,7 +758,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASAOmni( DIA_Call_ABC& call, co
     if( nNbrPos <= 0 )
         return;
 
-    T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
+    T_PointVector* pResult = new T_PointVector();
     pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
@@ -801,7 +801,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASANasse( DIA_Call_ABC& call, c
     const MT_Vector2D vSupport1( pMainDirection->Rotated(  rSemiAngle ) * rBetweenDist );
     const MT_Vector2D vSupport2( pMainDirection->Rotated( -rSemiAngle ) * rBetweenDist );
 
-    T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
+    T_PointVector* pResult = new T_PointVector();
     pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
@@ -852,7 +852,7 @@ void DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( DIA_Call_ABC& 
         return;
     }
 
-    T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
+    T_PointVector* pResult = new T_PointVector();
     pResult->reserve( nNbrPos );
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
 
@@ -899,7 +899,7 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
         return;
     }
 
-    T_PointVector* pResult = new T_PointVector(); // $$$ RAM
+    T_PointVector* pResult = new T_PointVector();
 
     bool bResult = callerAutomate.GetFuseau().ComputePointsBeforeLima( *pLima, rDistBeforeLima, (uint)rNbPoints, *pResult );
     diaReturnCode.SetValue( bResult );
@@ -1243,7 +1243,7 @@ void DEC_GeometryFunctions::ComputeRandomPointInCircle( DIA_Call_ABC& call )
     MT_Float rAlpha = randomGenerator.rand_ii( -MT_PI, MT_PI );
     MT_Float rMod   = randomGenerator.rand_oi();
 
-    MT_Vector2D* pRandomPosition = new MT_Vector2D( *pCenter ); // $$ RAM
+    MT_Vector2D* pRandomPosition = new MT_Vector2D( *pCenter );
     (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) ); 
 
     TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition ); 
