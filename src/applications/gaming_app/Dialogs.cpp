@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "Dialogs.h"
 #include "ChangeDiplomacyDialog.h"
 #include "ChangeLogisticLinksDialog.h"

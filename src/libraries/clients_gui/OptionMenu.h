@@ -10,9 +10,9 @@
 #ifndef __OptionMenu_h_
 #define __OptionMenu_h_
 
-#include "astec_kernel/Options.h"
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 // =============================================================================
 /** @class  OptionMenuBase

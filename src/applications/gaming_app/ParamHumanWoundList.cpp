@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamHumanWoundList.h"
 #include "moc_ParamHumanWoundList.cpp"
-#include "astec_gui/ExclusiveComboTableItem.h"
+#include "clients_gui/ExclusiveComboTableItem.h"
 
 #include "ENT/ENT_Tr.h"
 

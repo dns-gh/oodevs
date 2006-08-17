@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "LogisticConsigns.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "LogSupplyConsign.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"

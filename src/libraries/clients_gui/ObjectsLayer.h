@@ -11,7 +11,7 @@
 #define __ObjectsLayer_h_
 
 #include "EntityLayer.h"
-#include "astec_kernel/Object_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 
 // =============================================================================
 /** @class  ObjectsLayer

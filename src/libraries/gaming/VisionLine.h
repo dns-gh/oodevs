@@ -10,7 +10,7 @@
 #ifndef __VisionLine_h_
 #define __VisionLine_h_
 
-#include "astec_kernel/DetectionMapIterator.h"
+#include "clients_kernel/DetectionMapIterator.h"
 
 // =============================================================================
 /** @class  VisionLine

@@ -10,7 +10,7 @@
 #ifndef __GlToolsBase_h_
 #define __GlToolsBase_h_
 
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 class GlFont;
 
 // =============================================================================

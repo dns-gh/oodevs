@@ -11,7 +11,7 @@
 #define __AgentsModel_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Resolver.h"
 
 class Agent_ABC;
 class Entity_ABC;

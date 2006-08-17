@@ -12,8 +12,8 @@
 
 #include "ASN_Types.h"
 #include "PopulationPart_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 
 class CoordinateConverter_ABC;
 

@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamObstacle.h"
 #include "ParamLocation.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_kernel/ObjectType.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Resolver.h"
 
 #include "ENT/ENT_Tr.h"
 

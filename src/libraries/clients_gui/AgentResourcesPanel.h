@@ -12,9 +12,9 @@
 
 #include "Types.h"
 #include "InfoPanel_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/SelectionObserver_ABC.h"
-#include "astec_kernel/SafePointer.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 template< typename T > class ListDisplayer;
 class Agent_ABC;

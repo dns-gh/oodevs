@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "DecisionalModel.h"
 #include "Mission.h"
 #include "FragOrder.h"

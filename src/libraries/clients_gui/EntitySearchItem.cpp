@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "EntitySearchItem.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntitySearchItem constructor

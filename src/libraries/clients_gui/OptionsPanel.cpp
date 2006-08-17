@@ -16,12 +16,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "OptionsPanel.h"
 #include "moc_OptionsPanel.cpp"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Options.h"
-#include "astec_kernel/OptionVariant.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
 #include "Settings.h"
 
 // -----------------------------------------------------------------------------

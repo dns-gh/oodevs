@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Limit.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
 
 IDManager Limit::idManager_( 138 );
 

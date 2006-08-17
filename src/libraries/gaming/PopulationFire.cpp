@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "PopulationFire.h"
-#include "astec_kernel/Population_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFire constructor

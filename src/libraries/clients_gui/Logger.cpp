@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "Logger.h"
 #include "moc_Logger.cpp"
 

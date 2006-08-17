@@ -11,7 +11,7 @@
 #define __ParamComboBox_h_
 
 #include "Param_ABC.h"
-#include "astec_gui/ValuedComboBox.h"
+#include "clients_gui/ValuedComboBox.h"
 
 // =============================================================================
 /** @class  ParamComboBox

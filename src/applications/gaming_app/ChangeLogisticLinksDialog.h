@@ -10,10 +10,10 @@
 #ifndef __ChangeLogisticLinksDialog_h_
 #define __ChangeLogisticLinksDialog_h_
 
-#include "astec_kernel/SafePointer.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
-#include "astec_gui/ValuedComboBox.h"
+#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_gui/ValuedComboBox.h"
 
 class Controllers;
 class Agent_ABC;

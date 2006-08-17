@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/LogisticLinks.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/AutomatType.h"
-#include "astec_kernel/Controllers.h"
+#include "gaming/ASN_Messages.h"
+#include "gaming/LogisticLinks.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controllers.h"
 
 #include <qgrid.h>
 

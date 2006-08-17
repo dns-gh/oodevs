@@ -10,7 +10,7 @@
 #ifndef __NBCPrototype_h_
 #define __NBCPrototype_h_
 
-#include "astec_gui/NBCPrototype_ABC.h"
+#include "clients_gui/NBCPrototype_ABC.h"
 
 struct ASN1T_AttrObjectZoneNBC;
 struct ASN1T_AttrObjectNuageNBC;

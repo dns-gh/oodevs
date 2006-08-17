@@ -10,7 +10,7 @@
 #ifndef __ReportFilterOptions_h_
 #define __ReportFilterOptions_h_
 
-#include "astec_gaming/Report_ABC.h"
+#include "gaming/Report_ABC.h"
 
 // =============================================================================
 /** @class  ReportFilterOptions

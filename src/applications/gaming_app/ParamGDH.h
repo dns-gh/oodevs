@@ -10,7 +10,7 @@
 #ifndef __ParamGDH_h_
 #define __ParamGDH_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
 
 // =============================================================================

@@ -12,10 +12,10 @@
 
 #include "ASN_Types.h"
 #include "DIN_Types.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class Surface;
 class CoordinateConverter_ABC;

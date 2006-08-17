@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "SurfaceFactory.h"
 #include "Surface.h"
 #include "VisionMap.h"

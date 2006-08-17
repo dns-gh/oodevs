@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "WorldParameters.h"
 #include "xeumeuleu/xml.h"
 #include "PathTools.h"

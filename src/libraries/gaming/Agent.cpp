@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Agent.h"
-#include "astec_kernel/AgentType.h"
-#include "astec_kernel/AutomatType.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/DataDictionary.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "Attributes.h"
 
 // -----------------------------------------------------------------------------

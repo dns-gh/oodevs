@@ -11,8 +11,8 @@
 #define __LogisticConsigns_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 class LogSupplyConsign;
 class LogMaintenanceConsign;

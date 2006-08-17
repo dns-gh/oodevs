@@ -10,7 +10,7 @@
 #ifndef __RC_h_
 #define __RC_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 #include "Attr_Def.h"
 #include "ASN_Types.h"
 #include "Report_ABC.h"

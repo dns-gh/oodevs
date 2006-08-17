@@ -7,23 +7,23 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AgentStatePanel.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controller.h"
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/Attributes.h"
-#include "astec_gaming/Contaminations.h"
-#include "astec_gaming/HumanFactors.h"
-#include "astec_gaming/Reinforcements.h"
-#include "astec_gaming/Experience.h"
-#include "astec_gaming/Morale.h"
-#include "astec_gaming/Tiredness.h"
-#include "astec_gaming/LogisticLinks.h"
-#include "astec_gaming/Transports.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/Attributes.h"
+#include "gaming/Contaminations.h"
+#include "gaming/HumanFactors.h"
+#include "gaming/Reinforcements.h"
+#include "gaming/Experience.h"
+#include "gaming/Morale.h"
+#include "gaming/Tiredness.h"
+#include "gaming/LogisticLinks.h"
+#include "gaming/Transports.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentStatePanel constructor

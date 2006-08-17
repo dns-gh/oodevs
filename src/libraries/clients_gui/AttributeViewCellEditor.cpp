@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AttributeViewCellEditor.h"
 #include "moc_AttributeViewCellEditor.cpp"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/DataDictionary.h"
 #include <qtable.h>
 
 // -----------------------------------------------------------------------------

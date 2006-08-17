@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "LogisticLinks.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/AutomatType.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor

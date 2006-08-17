@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ObjectKnowledgePanel.h"
 #include "moc_ObjectKnowledgePanel.cpp"
 
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_gaming/ObjectKnowledges.h"
-#include "astec_gaming/ObjectKnowledge.h"
-#include "astec_gaming/CampAttributes.h"
-#include "astec_gaming/CrossingSiteAttributes.h"
-#include "astec_gaming/LogisticRouteAttributes.h"
-#include "astec_gaming/NBCAttributes.h"
-#include "astec_gaming/RotaAttributes.h"
-#include "astec_gui/ListDisplayer.h"
-#include "astec_gui/DisplayBuilder.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
+#include "gaming/ObjectKnowledges.h"
+#include "gaming/ObjectKnowledge.h"
+#include "gaming/CampAttributes.h"
+#include "gaming/CrossingSiteAttributes.h"
+#include "gaming/LogisticRouteAttributes.h"
+#include "gaming/NBCAttributes.h"
+#include "gaming/RotaAttributes.h"
+#include "clients_gui/ListDisplayer.h"
+#include "clients_gui/DisplayBuilder.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel constructor

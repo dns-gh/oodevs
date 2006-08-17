@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "LimitsModel.h"
 #include "TacticalLine_ABC.h"
 #include "Limit.h"
 #include "Lima.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 #include "Publisher_ABC.h"
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #ifndef __LogisticToolbar_h_
 #define __LogisticToolbar_h_
 
-#include "astec_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 class Controllers;
 class Agent_ABC;

@@ -7,23 +7,23 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AgentResourcesPanel.h"
 
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "Tools.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/Dotations.h"
-#include "astec_gaming/Dotation.h"
-#include "astec_kernel/DotationType.h"
-#include "astec_gaming/Equipments.h"
-#include "astec_gaming/Troops.h"
-#include "astec_gaming/Equipment.h"
-#include "astec_kernel/EquipmentType.h"
-#include "astec_gaming/Loan.h"
-#include "astec_gaming/Lendings.h"
-#include "astec_gaming/Borrowings.h"
-#include "astec_gaming/Humans.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/Dotations.h"
+#include "gaming/Dotation.h"
+#include "clients_kernel/DotationType.h"
+#include "gaming/Equipments.h"
+#include "gaming/Troops.h"
+#include "gaming/Equipment.h"
+#include "clients_kernel/EquipmentType.h"
+#include "gaming/Loan.h"
+#include "gaming/Lendings.h"
+#include "gaming/Borrowings.h"
+#include "gaming/Humans.h"
 #include "ListDisplayer.h"
 
 // -----------------------------------------------------------------------------

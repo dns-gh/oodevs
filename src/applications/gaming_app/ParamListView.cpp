@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamListView.h"
 #include "moc_ParamListView.cpp"
 

@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Network.h"
 #include "Net_Def.h"
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "Simulation.h"

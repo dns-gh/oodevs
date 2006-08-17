@@ -11,8 +11,8 @@
 #define __KnowledgeGroup_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/IDManager.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/IDManager.h"
 
 class Controller;
 

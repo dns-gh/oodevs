@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamLocation.h"
-#include "astec_gui/ParametersLayer.h"
-#include "astec_gui/RichLabel.h"
-#include "astec_gui/Tools.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_gui/LocationCreator.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/Location_ABC.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_gui/Tools.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/LocationCreator.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocation constructor

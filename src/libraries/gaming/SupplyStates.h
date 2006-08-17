@@ -11,11 +11,11 @@
 #define __SupplyStates_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "Availability.h"
 #include "Dotation.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Resolver.h"
 
 class Controller;
 class EquipmentType;

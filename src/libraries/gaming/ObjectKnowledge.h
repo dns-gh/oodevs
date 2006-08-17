@@ -11,12 +11,12 @@
 #define __ObjectKnowledge_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/Resolver_ABC.h"
-#include "astec_kernel/OptionalValue.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 class Displayer_ABC;
 class Object_ABC;

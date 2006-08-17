@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#include "astec_prepa_app_pch.h"
+#include "preparation_app_pch.h"
 #include "Application.h"
 
 #include "MainWindow.h"
 
-#include "astec_gaming/StaticModel.h"
-//#include "astec_gaming/Model.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Workers.h"
+#include "gaming/StaticModel.h"
+//#include "gaming/Model.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Workers.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )

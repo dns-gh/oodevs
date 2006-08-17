@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "Elevation2dLayer.h"
 #include "ColoredElevationLayer.h"
-#include "astec_kernel/GLTools_ABC.h"
-#include "astec_kernel/Controller.h"
-#include "astec_gaming/InitializationMessage.h"
+#include "clients_kernel/GLTools_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "gaming/InitializationMessage.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation2dLayer constructor

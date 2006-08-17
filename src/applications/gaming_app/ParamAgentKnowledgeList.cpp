@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamAgentKnowledgeList.h"
-#include "astec_gaming/AgentKnowledge.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/AgentKnowledgeConverter_ABC.h"
+#include "gaming/AgentKnowledge.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "gaming/AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledgeList constructor

@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "ColorStrategy.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_gaming/Lima.h"
-#include "astec_gaming/Limit.h"
-#include "astec_gaming/ObjectKnowledge.h"
-#include "astec_gaming/PopulationKnowledge.h"
-#include "astec_gaming/AgentKnowledge.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "gaming/Lima.h"
+#include "gaming/Limit.h"
+#include "gaming/ObjectKnowledge.h"
+#include "gaming/PopulationKnowledge.h"
+#include "gaming/AgentKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor

@@ -10,10 +10,10 @@
 #ifndef __ChangeHumanFactorsDialog_h_
 #define __ChangeHumanFactorsDialog_h_
 
-#include "astec_gaming/ASN_Types.h"
-#include "astec_gui/ValuedComboBox.h"
-#include "astec_kernel/SafePointer.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "gaming/ASN_Types.h"
+#include "clients_gui/ValuedComboBox.h"
+#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 class Agent_ABC;
 class Controllers;

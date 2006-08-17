@@ -10,7 +10,7 @@
 #ifndef __BaseDisplayer_h_
 #define __BaseDisplayer_h_
 
-#include "astec_kernel/Displayer_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 class Agent_ABC;
 class Object_ABC;
 class Team_ABC;

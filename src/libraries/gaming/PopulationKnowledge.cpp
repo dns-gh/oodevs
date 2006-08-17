@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "PopulationKnowledge.h"
 
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Team_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge

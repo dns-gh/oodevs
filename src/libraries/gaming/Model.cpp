@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -26,8 +26,8 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "ModelLoaded.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 #include "StaticModel.h"
 #include "CoordinateConverter.h"
 

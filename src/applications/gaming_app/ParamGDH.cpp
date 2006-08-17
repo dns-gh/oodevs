@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamGDH.h"
 #include "moc_ParamGDH.cpp"
 

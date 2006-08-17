@@ -11,7 +11,7 @@
 #define __PopulationFireResult_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class Population_ABC;
 

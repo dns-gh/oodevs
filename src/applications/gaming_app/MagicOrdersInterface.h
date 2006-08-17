@@ -10,11 +10,11 @@
 #ifndef __MagicOrdersInterface_h_
 #define __MagicOrdersInterface_h_
 
-#include "astec_kernel/ContextMenuObserver_ABC.h"
-#include "astec_kernel/SafePointer.h"
-#include "astec_kernel/OptionsObserver_ABC.h"
-#include "astec_gui/ShapeHandler_ABC.h"
-#include "astec_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_gui/ShapeHandler_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 class Agent_ABC;
 class KnowledgeGroup_ABC;

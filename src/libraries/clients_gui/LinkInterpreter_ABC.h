@@ -10,7 +10,7 @@
 #ifndef __LinkInterpreter_ABC_h_
 #define __LinkInterpreter_ABC_h_
 
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class Model;
 class ActionController;

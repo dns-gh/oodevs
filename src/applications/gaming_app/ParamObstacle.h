@@ -10,9 +10,9 @@
 #ifndef __ParamObstacle_h_
 #define __ParamObstacle_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
-#include "astec_gui/ValuedComboBox.h"
+#include "clients_gui/ValuedComboBox.h"
 
 class ParamLocation;
 class ObjectTypes;

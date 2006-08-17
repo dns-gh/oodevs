@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "LogisticRoutePrototype_ABC.h"
-#include "astec_kernel/Units.h"
+#include "clients_kernel/Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype_ABC constructor

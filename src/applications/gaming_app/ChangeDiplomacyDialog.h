@@ -11,10 +11,10 @@
 #ifndef __ChangeDiplomacyDialog_h_
 #define __ChangeDiplomacyDialog_h_
 
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
-#include "astec_gaming/ASN_Types.h"
-#include "astec_gui/ValuedComboBox.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "gaming/ASN_Types.h"
+#include "clients_gui/ValuedComboBox.h"
 
 class Team_ABC;
 class Controllers;

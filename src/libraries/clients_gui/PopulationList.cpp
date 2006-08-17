@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "PopulationList.h"
 #include "PopulationListView.h"
 #include "EntitySearchBox.h"
-#include "astec_kernel/Population_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationList constructor

@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "LimitsLayer.h"
 #include "moc_LimitsLayer.cpp"
 
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_gaming/Lima.h"
-#include "astec_gaming/Limit.h"
-#include "astec_gaming/LimitsModel.h"
-#include "astec_kernel/OptionVariant.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
+#include "gaming/Lima.h"
+#include "gaming/Limit.h"
+#include "gaming/LimitsModel.h"
+#include "clients_kernel/OptionVariant.h"
 #include "ColorStrategy_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "Tools.h"
 #include "ParametersLayer.h"
-#include "astec_kernel/Location_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer constructor

@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Report_ABC.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "Attributes.h"
 #include "Simulation.h"
-#include "astec_kernel/Displayer_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Report_ABC constructor

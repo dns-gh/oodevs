@@ -10,8 +10,8 @@
 #ifndef __PopulationDecisions_h_
 #define __PopulationDecisions_h_
 
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Iterator.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Iterator.h"
 
 class Population_ABC;
 class Mission;

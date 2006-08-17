@@ -9,15 +9,15 @@
 // 
 //*****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 
-#include "astec_kernel/Population_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "PopulationConcentration.h"
 #include "PopulationKnowledge.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge

@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Attributes.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/Units.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Units.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/DataDictionary.h"
 #include "statusicons.h"
 
 using namespace geometry;

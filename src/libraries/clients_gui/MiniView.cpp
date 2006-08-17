@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "MiniView.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Positions.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "GlWidget.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 
 // -----------------------------------------------------------------------------

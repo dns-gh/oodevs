@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AttributeView.h"
 #include "moc_AttributeView.cpp"
-#include "astec_kernel/DataDictionary.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "AttributeViewCell.h"
 #include "AttributeViewCellEditor.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: AttributeView constructor

@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
-#include "astec_kernel/DetectionMap.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/Simulation.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/Simulation.h"
 
 #include <qstatusbar.h>
 

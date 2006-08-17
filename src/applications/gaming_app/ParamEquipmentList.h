@@ -10,9 +10,9 @@
 #ifndef __ParamEquipmentList_h_
 #define __ParamEquipmentList_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Resolver.h"
 
 #include <qtable.h>
 

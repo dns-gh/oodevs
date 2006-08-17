@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ControllerToolbar.h"
 #include "moc_ControllerToolbar.cpp"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Options.h"
-#include "astec_gui/resources.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
+#include "clients_gui/resources.h"
 
 #include <qprocess.h>
 

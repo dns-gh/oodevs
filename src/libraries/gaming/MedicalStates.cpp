@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "MedicalStates.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/Units.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Units.h"
+#include "clients_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalStates constructor

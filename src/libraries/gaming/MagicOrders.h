@@ -10,8 +10,8 @@
 #ifndef __MagicOrders_h_
 #define __MagicOrders_h_
 
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "ASN_Types.h"
 
 class Agent_ABC;

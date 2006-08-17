@@ -10,7 +10,7 @@
 #ifndef __ParamAgentKnowledgeList_h_
 #define __ParamAgentKnowledgeList_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "EntityListParameter.h"
 
 class AgentKnowledge;

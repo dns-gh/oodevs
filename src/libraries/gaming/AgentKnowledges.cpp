@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AgentKnowledges.h"
 #include "AgentKnowledge.h"
 #include "AgentKnowledgeFactory_ABC.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledges constructor

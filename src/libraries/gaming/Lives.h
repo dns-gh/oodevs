@@ -10,11 +10,11 @@
 #ifndef __Lives_h_
 #define __Lives_h_
 
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "ASN_Types.h"
-#include "astec_kernel/Aggregatable_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
 
 class Agent_ABC;
 

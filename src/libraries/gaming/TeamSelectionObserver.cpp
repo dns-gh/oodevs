@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "TeamSelectionObserver.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_kernel/Population_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamSelectionObserver constructor

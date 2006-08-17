@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/HumanFactors.h"
-#include "astec_gaming/Tiredness.h"
-#include "astec_gaming/Experience.h"
-#include "astec_gaming/Morale.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/MagicOrders.h"
+#include "gaming/ASN_Messages.h"
+#include "gaming/HumanFactors.h"
+#include "gaming/Tiredness.h"
+#include "gaming/Experience.h"
+#include "gaming/Morale.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/MagicOrders.h"
 
 namespace 
 {

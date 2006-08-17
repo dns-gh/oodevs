@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "Menu.h"
 #include "AboutDialog.h"
 #include "RecorderToolbar.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/TristateOption.h"
-#include "astec_gui/OptionMenu.h"
-#include "astec_gui/resources.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/TristateOption.h"
+#include "clients_gui/OptionMenu.h"
+#include "clients_gui/resources.h"
 
 namespace
 {

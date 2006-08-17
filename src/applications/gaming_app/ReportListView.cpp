@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ReportListView.h"
 #include "moc_ReportListView.cpp"
 
-#include "astec_gaming/Report_ABC.h"
+#include "gaming/Report_ABC.h"
 #include "ReportFilterOptions.h"
-#include "astec_gaming/Reports.h"
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gui/ItemFactory_ABC.h"
+#include "gaming/Reports.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_gui/ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor

@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "CampPrototype_ABC.h"
 #include "moc_CampPrototype_ABC.cpp"
 
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/AutomatType.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: CampPrototype_ABC::CampPrototype_ABC

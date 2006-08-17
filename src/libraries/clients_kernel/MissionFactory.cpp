@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "MissionFactory.h"
 #include "ENT/ENT_Tr.h"
 #include "Mission.h"

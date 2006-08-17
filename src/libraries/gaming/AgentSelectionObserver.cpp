@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AgentSelectionObserver.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentSelectionObserver constructor

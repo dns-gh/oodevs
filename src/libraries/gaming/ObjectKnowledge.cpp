@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "ObjectKnowledge.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/Units.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_kernel/ObjectType.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Units.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor

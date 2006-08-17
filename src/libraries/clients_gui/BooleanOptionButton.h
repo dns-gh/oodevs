@@ -10,7 +10,7 @@
 #ifndef __BooleanOptionButton_h_
 #define __BooleanOptionButton_h_
 
-#include "astec_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 class Options;
 
 // =============================================================================

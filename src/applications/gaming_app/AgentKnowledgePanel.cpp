@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "AgentKnowledgePanel.h"
 #include "moc_AgentKnowledgePanel.cpp"
 
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Units.h"
-#include "astec_gaming/AgentKnowledge.h"
-#include "astec_gaming/AgentKnowledges.h"
-#include "astec_gaming/PerceptionMap.h"
-#include "astec_gui/DisplayBuilder.h"
-#include "astec_gui/GroupDisplayer.h"
-#include "astec_gui/LabelDisplayer.h"
-#include "astec_gui/ListDisplayer.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Units.h"
+#include "gaming/AgentKnowledge.h"
+#include "gaming/AgentKnowledges.h"
+#include "gaming/PerceptionMap.h"
+#include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/GroupDisplayer.h"
+#include "clients_gui/LabelDisplayer.h"
+#include "clients_gui/ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor

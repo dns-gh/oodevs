@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "statusicons.h"
 
 #define static 

@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "LocationCreator.h"
 #include "moc_LocationCreator.cpp"
 #include "ParametersLayer.h"
 #include "Tools.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
-#include "astec_kernel/Point.h"
+#include "clients_kernel/Point.h"
 
 // -----------------------------------------------------------------------------
 // Name: LocationCreator constructor

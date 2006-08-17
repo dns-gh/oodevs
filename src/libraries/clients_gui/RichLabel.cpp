@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "RichLabel.h"
 #include "moc_RichLabel.cpp"
 #include <qsimplerichtext.h>

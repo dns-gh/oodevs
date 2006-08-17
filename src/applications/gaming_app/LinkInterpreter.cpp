@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "LinkInterpreter.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/InternalLinks.h"
-#include "astec_gaming/ObjectKnowledge.h"
-#include "astec_gaming/AgentKnowledge.h"
-#include "astec_gaming/PopulationKnowledge.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "gaming/InternalLinks.h"
+#include "gaming/ObjectKnowledge.h"
+#include "gaming/AgentKnowledge.h"
+#include "gaming/PopulationKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter constructor

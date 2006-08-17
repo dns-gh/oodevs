@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "GlWidget.h"
-#include "astec_gaming/Model.h"
+#include "gaming/Model.h"
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
 #include "MiniView.h"

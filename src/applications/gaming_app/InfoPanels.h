@@ -10,7 +10,7 @@
 #ifndef __InfoPanels_h_
 #define __InfoPanels_h_
 
-#include "astec_gui/PanelStack_ABC.h"
+#include "clients_gui/PanelStack_ABC.h"
 
 class Controllers;
 class ItemFactory_ABC;

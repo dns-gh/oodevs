@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Availability.h"
-#include "astec_kernel/Displayer_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Availability constructor

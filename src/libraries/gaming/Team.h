@@ -11,9 +11,9 @@
 #define __Team_h_
 
 #include "DIN_Types.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 class KnowledgeGroupFactory_ABC;
 class Controller;

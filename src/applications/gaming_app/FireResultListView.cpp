@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "FireResultListView.h"
-#include "astec_gaming/PopulationFireResult.h"
-#include "astec_gaming/AgentFireResult.h"
-#include "astec_gaming/Equipment.h"
-#include "astec_gaming/Casualties.h"
-#include "astec_gui/SubItemDisplayer.h"
-#include "astec_gui/ItemFactory_ABC.h"
+#include "gaming/PopulationFireResult.h"
+#include "gaming/AgentFireResult.h"
+#include "gaming/Equipment.h"
+#include "gaming/Casualties.h"
+#include "clients_gui/SubItemDisplayer.h"
+#include "clients_gui/ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView constructor

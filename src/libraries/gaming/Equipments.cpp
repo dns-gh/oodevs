@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Equipments.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controller.h"
 #include "Equipment.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/DataDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor

@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ChangeDiplomacyDialog.h"
 #include "moc_ChangeDiplomacyDialog.cpp"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Team_ABC.h"
+#include "gaming/ASN_Messages.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog constructor

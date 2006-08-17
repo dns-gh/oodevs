@@ -10,11 +10,11 @@
 #ifndef __EntityListParameter_h_
 #define __EntityListParameter_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_gui/ValuedListItem.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_gui/ValuedListItem.h"
 
 // =============================================================================
 /** @class  EntityListParameterBase

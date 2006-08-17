@@ -10,7 +10,7 @@
 #ifndef __LocationSerializer_h_
 #define __LocationSerializer_h_
 
-#include "astec_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 struct ASN1T_CoordUTM;
 struct ASN1T_Localisation;
 class CoordinateConverter_ABC;

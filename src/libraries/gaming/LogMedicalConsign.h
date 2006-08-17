@@ -10,10 +10,10 @@
 #ifndef __LogMedicalConsign_h_
 #define __LogMedicalConsign_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 #include "ASN_Types.h"
-#include "astec_kernel/Resolver_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 class Agent_ABC;
 class Controller;

@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamPopulationKnowledge.h"
-#include "astec_gaming/PopulationKnowledge.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/AgentKnowledgeConverter_ABC.h"
+#include "gaming/PopulationKnowledge.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "gaming/AgentKnowledgeConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPopulationKnowledge constructor

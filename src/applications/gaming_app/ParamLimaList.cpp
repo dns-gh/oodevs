@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamLimaList.h"
-#include "astec_gaming/Lima.h"
+#include "gaming/Lima.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLimaList constructor

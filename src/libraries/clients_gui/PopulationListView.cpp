@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "PopulationListView.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/OptionVariant.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
 #include "ItemFactory_ABC.h"
 #include "ValuedListItem.h"
 

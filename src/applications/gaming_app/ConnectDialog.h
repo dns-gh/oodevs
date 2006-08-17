@@ -13,7 +13,7 @@
 #ifndef __ConnectDialog_h_
 #define __ConnectDialog_h_
 
-#include "astec_gui/Types.h"
+#include "clients_gui/Types.h"
 
 class QComboBox;
 class QSpinBox;

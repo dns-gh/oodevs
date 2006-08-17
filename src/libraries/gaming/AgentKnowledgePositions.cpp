@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AgentKnowledgePositions.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePositions constructor

@@ -10,9 +10,9 @@
 #ifndef __PopulationListView_h_
 #define __PopulationListView_h_
 
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/SelectionObserver_ABC.h"
-#include "astec_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 class Controllers;
 class Population_ABC;

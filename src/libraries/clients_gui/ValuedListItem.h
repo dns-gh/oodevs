@@ -12,8 +12,8 @@
 
 #include "RichListItem.h"
 #include "ListItemRtti.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/SafePointer.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/SafePointer.h"
 
 class ValueContainer_ABC;
 

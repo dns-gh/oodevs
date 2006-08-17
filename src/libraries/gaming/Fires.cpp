@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Fires.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controller.h"
 #include "IndirectFire.h"
 #include "DirectFire.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Fires constructor

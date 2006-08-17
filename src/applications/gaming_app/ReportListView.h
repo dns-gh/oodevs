@@ -10,10 +10,10 @@
 #ifndef __ReportListView_h_
 #define __ReportListView_h_
 
-#include "astec_gui/ListDisplayer.h"
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_gaming/AgentSelectionObserver.h"
-#include "astec_kernel/ElementObserver_ABC.h"
+#include "clients_gui/ListDisplayer.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "gaming/AgentSelectionObserver.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 class Controllers;
 class Report_ABC;

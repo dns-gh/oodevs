@@ -7,19 +7,19 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "Application.h"
 #include "moc_Application.cpp"
 
 #include "MainWindow.h"
 
-#include "astec_gaming/Network.h"
-#include "astec_gaming/StaticModel.h"
-#include "astec_gaming/Model.h"
-#include "astec_gaming/Simulation.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Workers.h"
-#include "astec_gaming/AgentServerMsgMgr.h"
+#include "gaming/Network.h"
+#include "gaming/StaticModel.h"
+#include "gaming/Model.h"
+#include "gaming/Simulation.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Workers.h"
+#include "gaming/AgentServerMsgMgr.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )

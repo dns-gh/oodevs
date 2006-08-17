@@ -10,8 +10,8 @@
 #ifndef __LocationPositions_h_
 #define __LocationPositions_h_
 
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "ASN_Types.h"
 
 class CoordinateConverter_ABC;

@@ -10,7 +10,7 @@
 #ifndef __AgentServerMsgMgr_h_
 #define __AgentServerMsgMgr_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 #include "ASN_Types.h"
 
 #include "DIN/DIN_Engine.h"
@@ -20,7 +20,7 @@
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
-#include "astec_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "Publisher_ABC.h"
 
 #include "boost/thread/mutex.hpp"

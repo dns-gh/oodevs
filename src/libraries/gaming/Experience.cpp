@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Experience.h"
 #include "xeumeuleu/xml.h"
 using namespace xml;

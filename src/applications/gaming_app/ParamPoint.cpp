@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamPoint.h"
 #include "moc_ParamPoint.cpp"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_gui/RichLabel.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPoint constructor

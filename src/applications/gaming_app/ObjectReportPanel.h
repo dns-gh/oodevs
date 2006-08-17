@@ -10,10 +10,10 @@
 #ifndef __ObjectReportPanel_h_
 #define __ObjectReportPanel_h_
 
-#include "astec_gui/InfoPanel_ABC.h"
-#include "astec_kernel/SelectionObserver_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/SafePointer.h"
+#include "clients_gui/InfoPanel_ABC.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 class FireResultListView;
 class Object_ABC;

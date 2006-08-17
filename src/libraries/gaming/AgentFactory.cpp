@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AgentFactory.h"
 
 #include "Model.h"
-#include "astec_kernel/AgentTypes.h"
+#include "clients_kernel/AgentTypes.h"
 #include "Agent.h"
 #include "Population.h"
 
@@ -44,8 +44,8 @@
 #include "LimitsModel.h"
 #include "AgentFactory.h"
 #include "ObjectFactory.h"
-#include "astec_kernel/AgentTypes.h"
-#include "astec_kernel/ObjectTypes.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "PopulationDetections.h"
 #include "LogisticConsigns.h"
 #include "Logistics.h"
@@ -55,12 +55,12 @@
 #include "Fires.h"
 #include "AgentPositions.h"
 #include "PopulationPositions.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 #include "Lives.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
 #include "CoordinateConverter.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/DataDictionary.h"
 #include "StaticModel.h"
 
 // -----------------------------------------------------------------------------

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AgentServerMsgMgr.h"
 #include "Lima.h"
 #include "Limit.h"
@@ -32,14 +32,14 @@
 #include "DIN_Types.h"
 #include "DIN_InputDeepCopy.h"
 #include "LogTools.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_kernel/OptionVariant.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/TristateOption.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/TristateOption.h"
 
 #include <ctime>
 

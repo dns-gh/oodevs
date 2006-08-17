@@ -7,20 +7,20 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "PopulationKnowledgePanel.h"
 #include "moc_PopulationKnowledgePanel.cpp"
 
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_gaming/PopulationKnowledges.h"
-#include "astec_gaming/PopulationKnowledge.h"
-#include "astec_gaming/PopulationConcentrationKnowledge.h"
-#include "astec_gaming/PopulationFlowKnowledge.h"
-#include "astec_gui/DisplayBuilder.h"
-#include "astec_gui/GroupDisplayer.h"
-#include "astec_gui/LabelDisplayer.h"
-#include "astec_gui/ListDisplayer.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "gaming/PopulationKnowledges.h"
+#include "gaming/PopulationKnowledge.h"
+#include "gaming/PopulationConcentrationKnowledge.h"
+#include "gaming/PopulationFlowKnowledge.h"
+#include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/GroupDisplayer.h"
+#include "clients_gui/LabelDisplayer.h"
+#include "clients_gui/ListDisplayer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel constructor

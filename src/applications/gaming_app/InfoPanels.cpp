@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "InfoPanels.h"
 #include "moc_InfoPanels.cpp"
 
@@ -17,13 +17,13 @@
 #include "PopulationKnowledgePanel.h"
 #include "ReportPanel.h"
 
-#include "astec_gui/AgentStatePanel.h"
-#include "astec_gui/AgentResourcesPanel.h"
-#include "astec_gui/ObjectPanel.h"
-#include "astec_gui/PopulationPanel.h"
-#include "astec_gui/AgentMaintenancePanel.h"
-#include "astec_gui/AgentMedicalPanel.h"
-#include "astec_gui/AgentSupplyPanel.h"
+#include "clients_gui/AgentStatePanel.h"
+#include "clients_gui/AgentResourcesPanel.h"
+#include "clients_gui/ObjectPanel.h"
+#include "clients_gui/PopulationPanel.h"
+#include "clients_gui/AgentMaintenancePanel.h"
+#include "clients_gui/AgentMedicalPanel.h"
+#include "clients_gui/AgentSupplyPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels constructor

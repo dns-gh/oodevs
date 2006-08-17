@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamPath.h"
 #include "moc_ParamPath.cpp"
-#include "astec_gui/ParametersLayer.h"
-#include "astec_gui/RichLabel.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/Location_ABC.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPath constructor

@@ -11,8 +11,8 @@
 #define __AttributeView_h_
 
 #include "NoLinkDisplayer.h"
-#include "astec_gaming/Simulation.h"
-#include "astec_kernel/ElementObserver_ABC.h"
+#include "gaming/Simulation.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 #include <qtable.h>
 

@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "PopulationPanel.h"
 
-#include "astec_kernel/Population_ABC.h"
-#include "astec_gaming/PopulationConcentration.h"
-#include "astec_gaming/PopulationFlow.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Population_ABC.h"
+#include "gaming/PopulationConcentration.h"
+#include "gaming/PopulationFlow.h"
+#include "clients_kernel/Controllers.h"
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 #include "LabelDisplayer.h"

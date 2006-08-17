@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ReportPanel.h"
 #include "ReportListView.h"
 #include "FireResultListView.h"
 #include "ReportFilterOptions.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportPanel constructor

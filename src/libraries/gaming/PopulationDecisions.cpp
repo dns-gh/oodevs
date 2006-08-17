@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "PopulationDecisions.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/PopulationType.h"
-#include "astec_kernel/DecisionalModel.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/PopulationType.h"
+#include "clients_kernel/DecisionalModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationDecisions constructor

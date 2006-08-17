@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "LogisticToolbar.h"
 #include "moc_LogisticToolbar.cpp"
 
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/TristateOption.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gui/AgentsLayer.h"
-#include "astec_gui/ToolListButton.h"
-#include "astec_gui/resources.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_gui/AgentsLayer.h"
+#include "clients_gui/ToolListButton.h"
+#include "clients_gui/resources.h"
 
 namespace
 {

@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "MetricsLayer.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/OptionVariant.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
 #include <iomanip>
 
 // -----------------------------------------------------------------------------

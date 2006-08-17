@@ -11,9 +11,9 @@
 #define __AgentMedicalPanel_h_
 
 #include "LogisticPanel.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_gaming/LogMedicalConsign.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "gaming/LogMedicalConsign.h"
+#include "clients_kernel/Agent_ABC.h"
 
 class MedicalStates;
 class Availability;

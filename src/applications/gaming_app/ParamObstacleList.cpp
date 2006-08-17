@@ -6,14 +6,14 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamObstacleList.h"
 #include "moc_ParamObstacleList.cpp"
 
 #include "ParamListView.h"
 #include "ParamObstacle.h"
-#include "astec_gui/ValuedListItem.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_gui/ValuedListItem.h"
+#include "clients_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList constructor

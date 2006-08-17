@@ -10,12 +10,12 @@
 #ifndef __EntityLayer_h_
 #define __EntityLayer_h_
 
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/ActivationObserver_ABC.h"
-#include "astec_kernel/SelectionObserver_ABC.h"
-#include "astec_kernel/OptionsObserver_ABC.h"
-#include "astec_kernel/SafePointer.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ActivationObserver_ABC.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "Layer_ABC.h"
 
 class Controllers;

@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AgentMaintenancePanel.h"
 #include "DisplayBuilder.h"
 #include "ListDisplayer.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/LogisticConsigns.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/LogMaintenanceConsign.h"
-#include "astec_gaming/MaintenanceStates.h"
-#include "astec_gaming/Availability.h"
-#include "astec_kernel/Units.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/LogisticConsigns.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "gaming/LogMaintenanceConsign.h"
+#include "gaming/MaintenanceStates.h"
+#include "gaming/Availability.h"
+#include "clients_kernel/Units.h"
 #include "SubItemDisplayer.h"
 
 // -----------------------------------------------------------------------------

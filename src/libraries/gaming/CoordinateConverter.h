@@ -10,13 +10,13 @@
 #ifndef __CoordinateConverter_h_
 #define __CoordinateConverter_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 #include "ASN_Types.h"
-#include "astec_kernel/WorldParameters.h"
+#include "clients_kernel/WorldParameters.h"
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
 #include "geocoord/Geodetic.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 // =============================================================================
 // Created: APE 2004-07-19

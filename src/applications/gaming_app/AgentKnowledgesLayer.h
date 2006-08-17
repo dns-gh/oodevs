@@ -10,8 +10,8 @@
 #ifndef __AgentKnowledgesLayer_h_
 #define __AgentKnowledgesLayer_h_
 
-#include "astec_gui/KnowledgeLayer.h"
-#include "astec_gaming/AgentKnowledge.h"
+#include "clients_gui/KnowledgeLayer.h"
+#include "gaming/AgentKnowledge.h"
 
 // =============================================================================
 /** @class  AgentKnowledgesLayer

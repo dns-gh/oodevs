@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamEquipmentList.h"
 #include "moc_ParamEquipmentList.cpp"
-#include "astec_kernel/EquipmentType.h"
-#include "astec_gui/ExclusiveComboTableItem.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_gui/ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList constructor

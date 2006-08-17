@@ -10,7 +10,7 @@
 #ifndef __Gui_Tools_h_
 #define __Gui_Tools_h_
 
-#include "astec_gaming/Tools.h"
+#include "gaming/Tools.h"
 
 
 #endif // __Gui_Tools_h_

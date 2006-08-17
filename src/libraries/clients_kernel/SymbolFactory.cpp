@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
 #include "SymbolRequest.h"
 #include "SymbolRule.h"

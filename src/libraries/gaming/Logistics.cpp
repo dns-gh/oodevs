@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Logistics.h"
 #include "MaintenanceStates.h"
 #include "MedicalStates.h"
 #include "SupplyStates.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "Model.h"
-#include "astec_kernel/ObjectTypes.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "AgentsModel.h"
 #include "StaticModel.h"
 

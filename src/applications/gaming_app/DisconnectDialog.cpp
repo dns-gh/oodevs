@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 
 #include "DisconnectDialog.h"
 #include "moc_DisconnectDialog.cpp"
-#include "astec_gaming/Network.h"
+#include "gaming/Network.h"
 
 //-----------------------------------------------------------------------------
 // Name: DisconnectDialog constructor

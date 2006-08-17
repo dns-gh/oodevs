@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "Lines.h"
 #include "GlTools_ABC.h"
 #include "LocationVisitor_ABC.h"

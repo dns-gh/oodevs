@@ -7,4 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "preparation_app_pch.h"
+#include "icons.h"
+
+#include "clients_kernel/objecticons.cpp"

@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamLimits.h"
-#include "astec_gaming/Limit.h"
+#include "gaming/Limit.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamLimits constructor

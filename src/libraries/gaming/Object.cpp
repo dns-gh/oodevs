@@ -7,20 +7,20 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Object.h"
 
 #include "Net_Def.h"
 #include "Tools.h"
-#include "astec_kernel/IDManager.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/Units.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/ObjectType.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/Team_ABC.h"
+#include "clients_kernel/IDManager.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Units.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Object::Object

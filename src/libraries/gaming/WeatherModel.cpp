@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "WeatherModel.h"
 #include "AmmoEffect.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "CoordinateConverter.h"

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "DIN_InputDeepCopy.h"
 #include "DIN/DIN_Input.h"
 

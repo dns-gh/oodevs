@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "TeamsModel.h"
 #include "DIN/DIN_Input.h"
-#include "astec_kernel/Team_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "TeamFactory_ABC.h"
 
 // -----------------------------------------------------------------------------

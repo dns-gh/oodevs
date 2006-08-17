@@ -10,7 +10,7 @@
 #ifndef __ParamObstacleList_h_
 #define __ParamObstacleList_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
 
 class ActionController;

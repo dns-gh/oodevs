@@ -10,11 +10,11 @@
 #ifndef __ParamPath_h_
 #define __ParamPath_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
-#include "astec_gui/ShapeHandler_ABC.h"
-#include "astec_gui/LocationSerializer.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_gui/ShapeHandler_ABC.h"
+#include "clients_gui/LocationSerializer.h"
 
 class ParametersLayer;
 class CoordinateConverter_ABC;

@@ -13,7 +13,7 @@
 #include "Types.h"
 #include "Sector.h"
 #include "DIN_Types.h"
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class SensorType;
 class Agent_ABC;

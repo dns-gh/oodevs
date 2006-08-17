@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "LogTools.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "Types.h"

@@ -10,7 +10,7 @@
 #ifndef __SurfaceFactory_h_
 #define __SurfaceFactory_h_
 
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "DIN_Types.h"
 
 class DetectionMap;

@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "BigBrother.h"
 #include "moc_BigBrother.cpp"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Population_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "AttributeView.h"
 #include "GlWidget.h"
-#include "astec_kernel/Positions.h"
-#include "astec_gaming/Report_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "gaming/Report_ABC.h"
 
 #include <qtoolbox.h>
 #include <qsizepolicy.h>

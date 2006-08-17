@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "ObjectFactory.h"
 #include "Object.h"
 #include "LogisticRouteAttributes.h"
@@ -19,8 +19,8 @@
 #include "Model.h"
 #include "TeamsModel.h"
 #include "AgentsModel.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Controllers.h"
 #include "ObjectPositions.h"
 #include "CoordinateConverter.h"
 #include "StaticModel.h"

@@ -10,7 +10,7 @@
 #ifndef __LocationCreator_h_
 #define __LocationCreator_h_
 
-#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 class ParametersLayer;
 class GlTools_ABC;

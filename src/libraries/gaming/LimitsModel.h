@@ -11,7 +11,7 @@
 #define __LimitsModel_h_
 
 #include "Types.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Resolver.h"
 
 class Controllers;
 class CoordinateConverter_ABC;

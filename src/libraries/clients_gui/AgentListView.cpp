@@ -7,19 +7,19 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AgentListView.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
 #include "ValuedListItem.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_gaming/AutomatDecisions.h"
-#include "astec_kernel/OptionVariant.h"
-#include "astec_gaming/ASN_Messages.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "gaming/AutomatDecisions.h"
+#include "clients_kernel/OptionVariant.h"
+#include "gaming/ASN_Messages.h"
 #include "ItemFactory_ABC.h"
 
 #include "moc_AgentListView.cpp"

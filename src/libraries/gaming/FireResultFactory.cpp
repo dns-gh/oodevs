@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "FireResultFactory.h"
 #include "AgentFireResult.h"
 #include "PopulationFireResult.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
-#include "astec_kernel/ObjectTypes.h"
+#include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireResultFactory constructor

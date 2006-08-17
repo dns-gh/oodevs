@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "EventToolbar.h"
 #include "moc_EventToolbar.cpp"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_gaming/Report_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_gui/resources.h"
-#include "astec_gaming/statusicons.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
+#include "gaming/Report_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_gui/resources.h"
+#include "gaming/statusicons.h"
 
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor

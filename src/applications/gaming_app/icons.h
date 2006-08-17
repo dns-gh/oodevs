@@ -10,8 +10,8 @@
 #ifndef __icons_h_
 #define __icons_h_
 
-#include "astec_gaming/statusicons.h"
-#include "astec_kernel/objecticons.h"
-#include "astec_gui/resources.h"
+#include "gaming/statusicons.h"
+#include "clients_kernel/objecticons.h"
+#include "clients_gui/resources.h"
 
 #endif // __icons_h_

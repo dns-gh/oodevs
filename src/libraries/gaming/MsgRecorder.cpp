@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "MsgRecorder.h"
 #include "AgentServerMsgMgr.h"
 #include "Network.h"

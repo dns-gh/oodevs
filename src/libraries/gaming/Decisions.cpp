@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Decisions.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/DecisionalModel.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/AgentType.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/DecisionalModel.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "statusicons.h"
 
 // -----------------------------------------------------------------------------

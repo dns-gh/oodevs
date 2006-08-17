@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamAgent.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamAgent constructor

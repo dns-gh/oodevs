@@ -11,8 +11,8 @@
 #define __AgentFireResult_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Types.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Types.h"
+#include "clients_kernel/Resolver.h"
 #include "Casualties.h"
 class Agent_ABC;
 class EquipmentType;

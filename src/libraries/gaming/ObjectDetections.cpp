@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "ObjectDetections.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controller.h"
 #include "Attr_Def.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_kernel/Positions.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectDetections constructor

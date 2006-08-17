@@ -10,7 +10,7 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "ParamComboBox.h"
 #include "ParamRadioBtnGroup.h"
 

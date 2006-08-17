@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "Settings.h"
-#include "astec_kernel/TristateOption.h"
+#include "clients_kernel/TristateOption.h"
 
 #include <qmainwindow.h>
 #include <qdockwindow.h>

@@ -7,19 +7,19 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"
 
 #include "DisplayBuilder.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/ObjectType.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_kernel/Iterator.h"
-#include "astec_kernel/Location_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Iterator.h"
+#include "clients_kernel/Location_ABC.h"
 
 #include "LocationCreator.h"
 #include "ParametersLayer.h"

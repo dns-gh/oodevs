@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_prepa_app_pch.h"
+#include "preparation_app_pch.h"
 #include "Application.h"
 
 #include "tools/Win32/StackWalkerProxy.h"

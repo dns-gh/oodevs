@@ -10,15 +10,15 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 #include "ASN_Types.h"
 
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/OptionalValue.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/OptionalValue.h"
 
 class PopulationPart_ABC;
 class PopulationConcentration;

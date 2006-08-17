@@ -11,13 +11,13 @@
 #define __LimitsLayer_h_
 
 #include "Layer_ABC.h"
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "ShapeHandler_ABC.h"
-#include "astec_kernel/OptionsObserver_ABC.h"
-#include "astec_kernel/TristateOption.h"
-#include "astec_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/TristateOption.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 class Controllers;
 class Lima;

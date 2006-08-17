@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Lives.h"
-#include "astec_kernel/GlTools_ABC.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Lives constructor

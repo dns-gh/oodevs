@@ -89,4 +89,6 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
+#include "icons.h"
+
 #endif // __astec_prepa_app_pch_h_

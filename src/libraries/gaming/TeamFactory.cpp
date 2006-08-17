@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "TeamFactory.h"
 #include "Model.h"
 #include "TeamsModel.h"
@@ -18,7 +18,7 @@
 #include "Team.h"
 #include "Diplomacies.h"
 #include "AgentKnowledgeFactory.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor

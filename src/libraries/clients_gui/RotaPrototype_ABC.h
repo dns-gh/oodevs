@@ -11,7 +11,7 @@
 #define __RotaPrototype_ABC_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Resolver.h"
 
 class NBCAgent;
 class RichLabel;

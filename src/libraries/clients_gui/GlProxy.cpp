@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "GlProxy.h"
 #include "Gl3dWidget.h"
 #include "GlWidget.h"

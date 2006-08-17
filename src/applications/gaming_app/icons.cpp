@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 
-#include "astec_gaming/statusicons.cpp"
-#include "astec_kernel/objecticons.cpp"
-#include "astec_gui/resources.cpp"
+#include "gaming/statusicons.cpp"
+#include "clients_kernel/objecticons.cpp"
+#include "clients_gui/resources.cpp"

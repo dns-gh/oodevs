@@ -12,7 +12,7 @@
 
 #include "graphics/MapWidget.h"
 
-#include "astec_kernel/WorldParameters.h"
+#include "clients_kernel/WorldParameters.h"
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"

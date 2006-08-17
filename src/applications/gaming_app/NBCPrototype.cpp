@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "NBCPrototype.h"
-#include "astec_kernel/NBCAgent.h"
-#include "astec_kernel/Iterator.h"
-#include "astec_gaming/ASN_Messages.h"
+#include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/Iterator.h"
+#include "gaming/ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: NBCPrototype constructor

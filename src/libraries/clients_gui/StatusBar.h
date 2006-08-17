@@ -10,8 +10,8 @@
 #ifndef __StatusBar_h_
 #define __StatusBar_h_
 
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_gaming/Simulation.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "gaming/Simulation.h"
 
 class DetectionMap;
 class CoordinateConverter_ABC;

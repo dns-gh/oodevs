@@ -10,7 +10,7 @@
 #ifndef __ParamAgentList_h_
 #define __ParamAgentList_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "EntityListParameter.h"
 
 class Agent_ABC;

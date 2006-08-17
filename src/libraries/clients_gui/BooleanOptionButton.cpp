@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "BooleanOptionButton.h"
 #include "moc_BooleanOptionButton.cpp"
-#include "astec_kernel/Options.h"
+#include "clients_kernel/Options.h"
 
 // -----------------------------------------------------------------------------
 // Name: BooleanOptionButton constructor

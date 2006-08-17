@@ -2,7 +2,7 @@
 // Created: JVT 02-08-30
 //*****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 
 #include "SensorType.h"
 

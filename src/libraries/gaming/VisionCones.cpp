@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "VisionCones.h"
 #include "Surface.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
-#include "astec_kernel/Workers.h"
+#include "clients_kernel/Workers.h"
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones constructor

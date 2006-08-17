@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "RotaPrototype_ABC.h"
 
-#include "astec_kernel/NBCAgent.h"
-#include "astec_kernel/Iterator.h"
-#include "astec_gaming/ASN_Messages.h"
+#include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/Iterator.h"
+#include "gaming/ASN_Messages.h"
 #include "RichLabel.h"
 #include "ValuedListItem.h"
 

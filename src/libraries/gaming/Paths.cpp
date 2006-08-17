@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Paths.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 using namespace geometry;
 

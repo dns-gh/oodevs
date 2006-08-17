@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 
 #include "ConnectDialog.h"
 #include "moc_ConnectDialog.cpp"
-#include "astec_gaming/Network.h"
+#include "gaming/Network.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 //-----------------------------------------------------------------------------

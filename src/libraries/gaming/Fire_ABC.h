@@ -11,8 +11,8 @@
 #define __Fire_ABC_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 class Entity_ABC;
 

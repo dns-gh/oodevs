@@ -10,7 +10,7 @@
 #ifndef __FireResultListView_h_
 #define __FireResultListView_h_
 
-#include "astec_gui/ListDisplayer.h"
+#include "clients_gui/ListDisplayer.h"
 
 class SubItemDisplayer;
 class PopulationFireResult;

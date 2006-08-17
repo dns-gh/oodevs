@@ -10,8 +10,8 @@
 #ifndef __LinkInterpreter_h_
 #define __LinkInterpreter_h_
 
-#include "astec_gui/LinkInterpreter_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
+#include "clients_gui/LinkInterpreter_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 class Agent_ABC;
 class Population_ABC;

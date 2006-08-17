@@ -10,7 +10,7 @@
 #ifndef __ParamObjectKnowledgeList_h_
 #define __ParamObjectKnowledgeList_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "EntityListParameter.h"
 
 class ObjectKnowledge;

@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AutomatDecisions.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/DecisionalModel.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/DecisionalModel.h"
+#include "clients_kernel/Controller.h"
 #include "ASN_Messages.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/AutomatType.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/AutomatType.h"
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor

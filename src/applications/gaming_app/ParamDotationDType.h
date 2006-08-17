@@ -10,9 +10,9 @@
 #ifndef __ParamDotationDType_h_
 #define __ParamDotationDType_h_
 
-#include "astec_gaming/ASN_Types.h"
+#include "gaming/ASN_Types.h"
 #include "ParamComboBox.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Resolver.h"
 
 class DotationType;
 

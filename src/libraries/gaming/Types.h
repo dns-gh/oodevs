@@ -11,7 +11,7 @@
 #define __Gaming_Types_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 
 enum E_FuncLimaType
 {

@@ -10,7 +10,7 @@
 #ifndef __Humans_h_
 #define __Humans_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 
 // =============================================================================
 /** @class  Humans

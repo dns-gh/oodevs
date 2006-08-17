@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "AboutDialog.h"
 #include "splashscreen.cpp"
-#include "astec_gui/RichLabel.h"
-#include "astec_gui/ItemFactory_ABC.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_gui/ItemFactory_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AboutDialog constructor

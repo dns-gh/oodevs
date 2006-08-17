@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
  
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 
 #include "Surface.h"
 #include "Net_Def.h"
-#include "astec_kernel/SensorType.h"
-#include "astec_kernel/DetectionMap.h"
+#include "clients_kernel/SensorType.h"
+#include "clients_kernel/DetectionMap.h"
 #include "VisionLine.h"
 #include "VisionMap.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 using namespace geometry;
 

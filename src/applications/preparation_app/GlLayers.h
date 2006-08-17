@@ -10,7 +10,7 @@
 #ifndef __GlLayers_h_
 #define __GlLayers_h_
 
-#include "astec_gui/GlProxy.h"
+#include "clients_gui/GlProxy.h"
 
 class Controllers;
 class Model;

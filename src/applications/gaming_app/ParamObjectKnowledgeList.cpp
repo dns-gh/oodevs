@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamObjectKnowledgeList.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/ObjectKnowledge.h"
+#include "clients_kernel/Object_ABC.h"
+#include "gaming/ObjectKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledgeList constructor

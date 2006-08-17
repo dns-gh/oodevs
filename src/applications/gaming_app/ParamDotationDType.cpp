@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamDotationDType.h"
-#include "astec_kernel/DotationType.h"
-#include "astec_kernel/Iterator.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Iterator.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamDotationDType constructor

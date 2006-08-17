@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "TacticalLine_ABC.h"
 #include "ASN_Messages.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor

@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "LogisticConsignFactory.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "LogMaintenanceConsign.h"
 #include "LogSupplyConsign.h"
 #include "LogMedicalConsign.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/AgentTypes.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/AgentTypes.h"
 #include "StaticModel.h"
 
 // -----------------------------------------------------------------------------

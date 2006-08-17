@@ -10,7 +10,7 @@
 #ifndef __CrossingSitePrototype_h_
 #define __CrossingSitePrototype_h_
 
-#include "astec_gui/CrossingSitePrototype_ABC.h"
+#include "clients_gui/CrossingSitePrototype_ABC.h"
 
 struct ASN1T_MagicActionCreateObject;
 struct ASN1T_AttrObjectSiteFranchissement;

@@ -10,7 +10,7 @@
 #ifndef __ASN_Messages_h_
 #define __ASN_Messages_h_
 
-#include "astec_kernel/Types.h"
+#include "clients_kernel/Types.h"
 
 #include "Network.h"
 #include "AgentServerMsgMgr.h"

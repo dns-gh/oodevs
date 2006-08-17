@@ -10,7 +10,7 @@
 #ifndef __Settings_h_
 #define __Settings_h_
 
-#include "astec_kernel/Settings_ABC.h"
+#include "clients_kernel/Settings_ABC.h"
 #include <qsettings.h>
 
 class QDockWindow;

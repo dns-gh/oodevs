@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "Param_ABC.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: Param_ABC constructor

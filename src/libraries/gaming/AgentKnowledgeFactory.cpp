@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "AgentKnowledgeFactory.h"
 #include "AgentKnowledge.h"
 #include "Model.h"
@@ -15,7 +15,7 @@
 #include "PerceptionMap.h"
 #include "TeamsModel.h"
 #include "PopulationKnowledge.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Controllers.h"
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
 

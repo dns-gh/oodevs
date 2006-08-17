@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "VisionLine.h"
-#include "astec_kernel/DetectionMap.h"
+#include "clients_kernel/DetectionMap.h"
 
 using namespace geometry;
 

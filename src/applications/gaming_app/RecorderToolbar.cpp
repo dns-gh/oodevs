@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "RecorderToolbar.h"
 #include "moc_RecorderToolbar.cpp"
-#include "astec_gaming/Network.h"
-#include "astec_gaming/AgentServerMsgMgr.h"
-#include "astec_gaming/MsgRecorder.h"
-#include "astec_gui/resources.h"
+#include "gaming/Network.h"
+#include "gaming/AgentServerMsgMgr.h"
+#include "gaming/MsgRecorder.h"
+#include "clients_gui/resources.h"
 
 #include <fstream>
 

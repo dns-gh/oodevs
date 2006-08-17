@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "MeteoLayer.h"
-#include "astec_gaming/AmmoEffect.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "gaming/AmmoEffect.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoLayer constructor

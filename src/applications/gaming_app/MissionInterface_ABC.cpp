@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 
@@ -33,16 +33,16 @@
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "ParamDotationDType.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/ObjectKnowledge.h"
-#include "astec_gaming/AgentKnowledge.h"
-#include "astec_gaming/PopulationKnowledge.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "gaming/ObjectKnowledge.h"
+#include "gaming/AgentKnowledge.h"
+#include "gaming/PopulationKnowledge.h"
 #include "ParamLimits.h"
 #include "ParamLimaList.h"
-#include "astec_gaming/Lima.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/ObjectTypes.h"
+#include "gaming/Lima.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "OptionalParamFunctor_ABC.h"
 
 // -----------------------------------------------------------------------------

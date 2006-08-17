@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "LocationSerializer.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_gaming/ASN_Types.h"
-#include "astec_kernel/Location_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "gaming/ASN_Types.h"
+#include "clients_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer constructor

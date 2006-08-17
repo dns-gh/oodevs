@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "CrossingSitePrototype.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_kernel/Units.h"
+#include "gaming/ASN_Messages.h"
+#include "clients_kernel/Units.h"
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype constructor

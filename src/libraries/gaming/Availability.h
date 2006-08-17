@@ -11,7 +11,7 @@
 #define __Availability_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class EquipmentType;
 class Displayer_ABC;

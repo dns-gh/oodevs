@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Reports.h"
 #include "RC.h"
 #include "Trace.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: Reports constructor

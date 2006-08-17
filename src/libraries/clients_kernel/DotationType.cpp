@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "DotationType.h"
 #include "xeumeuleu/xml.h"
 #include "ENT/ENT_Tr.h"

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "RichItemFactory.h"
 #include "moc_RichItemFactory.cpp"
 #include "ValuedListItem.h"

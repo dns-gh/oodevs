@@ -10,7 +10,7 @@
 #ifndef __SpinBoxDisplayer_h_
 #define __SpinBoxDisplayer_h_
 
-#include "astec_kernel/Displayer_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 
 class Unit;
 

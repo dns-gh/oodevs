@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "PopulationMissionInterface.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_gui/Tools.h"
+#include "gaming/ASN_Messages.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_gui/Tools.h"
 
 #include "ENT/ENT_Tr.h"
 

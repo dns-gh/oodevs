@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "DefaultLayer.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: DefaultLayer constructor

@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "PopulationKnowledges.h"
 #include "PopulationKnowledge.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/Controller.h"
 #include "PopulationKnowledgeFactory_ABC.h"
 
 // -----------------------------------------------------------------------------

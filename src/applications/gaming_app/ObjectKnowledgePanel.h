@@ -10,11 +10,11 @@
 #ifndef __ObjectKnowledgePanel_h_
 #define __ObjectKnowledgePanel_h_
 
-//#include "astec_gui/Types.h"
-#include "astec_gui/InfoPanel_ABC.h"
-#include "astec_gaming/TeamSelectionObserver.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/SafePointer.h"
+//#include "clients_gui/Types.h"
+#include "clients_gui/InfoPanel_ABC.h"
+#include "gaming/TeamSelectionObserver.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 template< typename T > class ListDisplayer;
 class Team_ABC;

@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "RC.h"
-#include "astec_kernel/Agent_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "InternalLinks.h"
 
 //-----------------------------------------------------------------------------

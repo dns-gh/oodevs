@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "LogisticRoutePrototype.h"
-#include "astec_gaming/ASN_Messages.h"
+#include "gaming/ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype constructor

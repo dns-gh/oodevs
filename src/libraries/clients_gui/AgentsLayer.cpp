@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AgentsLayer.h"
 #include "moc_AgentsLayer.cpp"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Aggregatable_ABC.h"
-#include "astec_gaming/AutomatDecisions.h"
-#include "astec_gaming/Attributes.h"
-#include "astec_gaming/Reports.h"
-#include "astec_gaming/AutomatDecisions.h"
-#include "astec_gaming/Decisions.h"
-#include "astec_kernel/Displayer_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
+#include "gaming/AutomatDecisions.h"
+#include "gaming/Attributes.h"
+#include "gaming/Reports.h"
+#include "gaming/AutomatDecisions.h"
+#include "gaming/Decisions.h"
+#include "clients_kernel/Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor

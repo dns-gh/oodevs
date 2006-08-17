@@ -10,8 +10,8 @@
 #ifndef __SIMControlToolbar_h_
 #define __SIMControlToolbar_h_
 
-#include "astec_gui/Types.h"
-#include "astec_kernel/ElementObserver_ABC.h"
+#include "clients_gui/Types.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 class ConnectDialog;
 class DisconnectDialog;

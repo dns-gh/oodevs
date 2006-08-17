@@ -10,8 +10,8 @@
 #ifndef __LogisticSupplyRecompletionDialog_h_
 #define __LogisticSupplyRecompletionDialog_h_
 
-#include "astec_kernel/SafePointer.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 class Agent_ABC;
 class Controllers;

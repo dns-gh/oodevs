@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ParamPathList.h"
 #include "moc_ParamPathList.cpp"
-#include "astec_gui/ParametersLayer.h"
-#include "astec_kernel/CoordinateConverter_ABC.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "ParamPath.h"
-#include "astec_gui/ValuedListItem.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_gui/ValuedListItem.h"
+#include "clients_kernel/ActionController.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParamPathList constructor

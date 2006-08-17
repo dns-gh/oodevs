@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "PreferencesDialog.h"
 #include "OptionsPanel.h"
 #include "GraphicsPanel.h"

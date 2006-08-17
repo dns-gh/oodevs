@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "ParametersLayer.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
-#include "astec_kernel/Point.h"
-#include "astec_kernel/Lines.h"
-#include "astec_kernel/Polygon.h"
-#include "astec_kernel/Circle.h"
-#include "astec_kernel/Path.h"
+#include "clients_kernel/Point.h"
+#include "clients_kernel/Lines.h"
+#include "clients_kernel/Polygon.h"
+#include "clients_kernel/Circle.h"
+#include "clients_kernel/Path.h"
 
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer constructor

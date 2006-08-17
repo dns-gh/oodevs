@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "LinkInterpreter_ABC.h"
 #include "moc_LinkInterpreter_ABC.cpp"
-#include "astec_kernel/ActionController.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Entity_ABC.h"
 
 #include <qprocess.h>
 

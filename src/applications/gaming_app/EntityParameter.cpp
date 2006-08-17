@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "EntityParameter.h"
 #include "moc_EntityParameter.cpp"
-#include "astec_gui/RichLabel.h"
+#include "clients_gui/RichLabel.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityParameterBase constructor

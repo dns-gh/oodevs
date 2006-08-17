@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AttributeViewCell.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/DataDictionary.h"
 #include "AttributeViewCellEditor.h"
 
 // -----------------------------------------------------------------------------

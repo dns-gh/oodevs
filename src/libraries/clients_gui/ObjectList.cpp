@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "ObjectList.h"
 #include "ObjectListView.h"
 #include "EntitySearchBox.h"
-#include "astec_kernel/Object_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectList constructor

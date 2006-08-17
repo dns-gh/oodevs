@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "StaticModel.h"
-#include "astec_kernel/AgentTypes.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_kernel/DetectionMap.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Controller.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 #include "SurfaceFactory.h"
 #include "CoordinateConverter.h"
 #include "ModelLoaded.h"

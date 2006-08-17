@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "FireFactory.h"
 #include "DirectFire.h"
 #include "IndirectFire.h"

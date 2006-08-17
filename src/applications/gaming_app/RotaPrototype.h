@@ -10,7 +10,7 @@
 #ifndef __RotaPrototype_h_
 #define __RotaPrototype_h_
 
-#include "astec_gui/RotaPrototype_ABC.h"
+#include "clients_gui/RotaPrototype_ABC.h"
 
 struct ASN1T_AttrObjectROTA;
 struct ASN1T_MagicActionCreateObject;

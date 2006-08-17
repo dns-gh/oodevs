@@ -7,19 +7,19 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Population.h"
-#include "astec_kernel/DataDictionary.h"
+#include "clients_kernel/DataDictionary.h"
 
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/PopulationType.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/PopulationType.h"
 
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "Model.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Displayer_ABC.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/ActionController.h"
 
 using namespace geometry;
 

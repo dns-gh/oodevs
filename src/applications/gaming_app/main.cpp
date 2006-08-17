@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "Application.h"
 
 #include "tools/Win32/StackWalkerProxy.h"

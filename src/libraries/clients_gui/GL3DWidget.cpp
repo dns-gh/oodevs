@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "Gl3dWidget.h"
 #include "AgentsLayer.h"
 #include "ObjectsLayer.h"
@@ -16,8 +16,8 @@
 #include "PopulationsLayer.h"
 #include "LimitsLayer.h"
 #include "ColorStrategy.h"
-#include "astec_gaming/Model.h"
-#include "astec_kernel/DetectionMap.h"
+#include "gaming/Model.h"
+#include "clients_kernel/DetectionMap.h"
 
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Compass.h"

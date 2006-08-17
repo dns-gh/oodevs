@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "CampPrototype.h"
 
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/ASN_Messages.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "gaming/ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: CampPrototype::CampPrototype

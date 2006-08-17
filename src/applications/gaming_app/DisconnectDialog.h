@@ -13,7 +13,7 @@
 #ifndef __DisconnectDialog_h_
 #define __DisconnectDialog_h_
 
-#include "astec_gui/Types.h"
+#include "clients_gui/Types.h"
 
 class Network;
 

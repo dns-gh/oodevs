@@ -12,7 +12,7 @@
 
 #include "ASN_Types.h"
 #include "Fire_ABC.h"
-#include "astec_kernel/Resolver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class Entity_ABC;
 class Population_ABC;

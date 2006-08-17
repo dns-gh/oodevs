@@ -7,19 +7,19 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "TerrainLayer.h"
 #include "graphics/GraphicSetup_ABC.h"
 #include "graphics/DataFactory.h"
 #include "graphics/GraphicFactory.h"
 #include "graphics/GraphicShape.h"
-#include "astec_kernel/OptionVariant.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Controller.h"
-#include "astec_gaming/ModelLoaded.h"
-#include "astec_gaming/InitializationMessage.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
+#include "gaming/ModelLoaded.h"
+#include "gaming/InitializationMessage.h"
 #include "graphics/GraphicData.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 using namespace pathfind;
 

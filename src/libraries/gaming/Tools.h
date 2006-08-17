@@ -10,7 +10,7 @@
 #ifndef __Gaming_Tools_h_
 #define __Gaming_Tools_h_
 
-#include "astec_kernel/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "Types.h"
 #include "ASN_Types.h"
 

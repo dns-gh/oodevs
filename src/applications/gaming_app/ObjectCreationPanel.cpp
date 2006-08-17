@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ObjectCreationPanel.h"
 #include "moc_ObjectCreationPanel.cpp"
 #include "ObjectPrototype.h"
-#include "astec_kernel/ObjectType.h"
-#include "astec_kernel/IDManager.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectCreationPanel constructor

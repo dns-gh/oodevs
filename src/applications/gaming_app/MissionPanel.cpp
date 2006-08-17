@@ -7,28 +7,28 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "MissionPanel.h"
 #include "moc_MissionPanel.cpp"
 
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Mission.h"
-#include "astec_kernel/FragOrder.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Mission.h"
+#include "clients_kernel/FragOrder.h"
 
-#include "astec_gaming/Decisions.h"
-#include "astec_gaming/AutomatDecisions.h"
-#include "astec_gaming/StaticModel.h"
-#include "astec_gaming/PopulationDecisions.h"
-#include "astec_kernel/Population_ABC.h"
+#include "gaming/Decisions.h"
+#include "gaming/AutomatDecisions.h"
+#include "gaming/StaticModel.h"
+#include "gaming/PopulationDecisions.h"
+#include "clients_kernel/Population_ABC.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
-#include "astec_gaming/CoordinateConverter.h"
-#include "astec_gaming/AgentKnowledgeConverter.h"
-#include "astec_kernel/GlTools_ABC.h"
+#include "gaming/CoordinateConverter.h"
+#include "gaming/AgentKnowledgeConverter.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor

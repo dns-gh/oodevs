@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-#include "astec_gaming/AgentsModel.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Dotation.h"
-#include "astec_gaming/LogisticLinks.h"
-#include "astec_gaming/Model.h"
-#include "astec_gaming/SupplyStates.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/AutomatType.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/DotationType.h"
-#include "astec_kernel/Iterator.h"
-#include "astec_gui/ExclusiveComboTableItem.h"
+#include "gaming/AgentsModel.h"
+#include "gaming/ASN_Messages.h"
+#include "gaming/Dotation.h"
+#include "gaming/LogisticLinks.h"
+#include "gaming/Model.h"
+#include "gaming/SupplyStates.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Iterator.h"
+#include "clients_gui/ExclusiveComboTableItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor

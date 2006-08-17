@@ -10,9 +10,9 @@
 #ifndef __ReportPanel_h_
 #define __ReportPanel_h_
 
-#include "astec_gui/InfoPanel_ABC.h"
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_gaming/AgentSelectionObserver.h"
+#include "clients_gui/InfoPanel_ABC.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "gaming/AgentSelectionObserver.h"
 
 class ReportListView;
 class FireResultListView;

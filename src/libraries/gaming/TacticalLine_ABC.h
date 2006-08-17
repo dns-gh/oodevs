@@ -10,8 +10,8 @@
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
 
-#include "astec_kernel/Types.h"
-#include "astec_kernel/Entity_ABC.h"
+#include "clients_kernel/Types.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "ASN_Types.h"
 
 class CoordinateConverter_ABC;

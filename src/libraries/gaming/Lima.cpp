@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "Lima.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
 
 IDManager Lima::idManager_( 137 );
 

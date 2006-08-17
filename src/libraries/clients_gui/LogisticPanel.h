@@ -11,10 +11,10 @@
 #define __LogisticPanel_h_
 
 #include "InfoPanel_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/SelectionObserver_ABC.h"
-#include "astec_gaming/LogisticConsigns.h"
-#include "astec_kernel/SafePointer.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
+#include "gaming/LogisticConsigns.h"
+#include "clients_kernel/SafePointer.h"
 #include "ListDisplayer.h"
 #include "SubItemDisplayer.h"
 

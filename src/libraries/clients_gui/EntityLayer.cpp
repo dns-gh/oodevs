@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "EntityLayer.h"
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/OptionVariant.h"
-#include "astec_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Controllers.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 

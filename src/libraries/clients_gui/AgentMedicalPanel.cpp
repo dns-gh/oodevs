@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "AgentMedicalPanel.h"
-#include "astec_gaming/LogMedicalConsign.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/MedicalStates.h"
-#include "astec_gaming/LogisticConsigns.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Units.h"
+#include "gaming/LogMedicalConsign.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "gaming/MedicalStates.h"
+#include "gaming/LogisticConsigns.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Units.h"
 #include "SubItemDisplayer.h"
 #include "ListDisplayer.h"
 #include "DisplayBuilder.h"

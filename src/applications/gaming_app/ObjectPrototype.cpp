@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ObjectPrototype.h"
-#include "astec_gaming/StaticModel.h"
-#include "astec_gaming/CoordinateConverter.h"
-#include "astec_kernel/ObjectTypes.h"
-#include "astec_kernel/ObjectType.h"
-#include "astec_kernel/Team_ABC.h"
+#include "gaming/StaticModel.h"
+#include "gaming/CoordinateConverter.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Team_ABC.h"
 #include "CampPrototype.h"
 #include "CrossingSitePrototype.h"
 #include "LogisticRoutePrototype.h"

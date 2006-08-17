@@ -11,8 +11,8 @@
 #define __AgentKnowledgePositions_h_
 
 #include "ASN_Types.h"
-#include "astec_kernel/Positions.h"
-#include "astec_kernel/Updatable_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 class CoordinateConverter_ABC;
 

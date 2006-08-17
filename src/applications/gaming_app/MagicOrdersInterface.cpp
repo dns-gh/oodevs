@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "MagicOrdersInterface.h"
 #include "moc_MagicOrdersInterface.cpp"
-#include "astec_kernel/Controllers.h"
-#include "astec_gaming/StaticModel.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gaming/MagicOrders.h"
-#include "astec_kernel/OptionVariant.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/CoordinateConverter.h"
-#include "astec_gui/LocationCreator.h"
-#include "astec_gui/ParametersLayer.h"
-#include "astec_kernel/KnowledgeGroup_ABC.h"
-#include "astec_kernel/Team_ABC.h"
-#include "astec_kernel/Location_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/StaticModel.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "gaming/MagicOrders.h"
+#include "clients_kernel/OptionVariant.h"
+#include "gaming/ASN_Messages.h"
+#include "gaming/CoordinateConverter.h"
+#include "clients_gui/LocationCreator.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor

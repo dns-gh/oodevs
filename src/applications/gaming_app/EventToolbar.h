@@ -10,8 +10,8 @@
 #ifndef __EventToolbar_h_
 #define __EventToolbar_h_
 
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/Observer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/Observer_ABC.h"
 
 #include <list>
 

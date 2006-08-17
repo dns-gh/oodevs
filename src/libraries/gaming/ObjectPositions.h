@@ -11,7 +11,7 @@
 #define __ObjectPositions_h_
 
 #include "LocationPositions.h"
-#include "astec_kernel/Updatable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 // =============================================================================
 /** @class  ObjectPositions

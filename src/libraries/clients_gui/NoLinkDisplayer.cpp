@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "NoLinkDisplayer.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_kernel/Population_ABC.h"
-#include "astec_kernel/Object_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: NoLinkDisplayer constructor

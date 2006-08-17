@@ -11,9 +11,9 @@
 #define __DebugPoints_h_
 
 #include "DIN_Types.h"
-#include "astec_kernel/Extension_ABC.h"
-#include "astec_kernel/Updatable_ABC.h"
-#include "astec_kernel/Drawable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 // =============================================================================
 /** @class  DebugPoints

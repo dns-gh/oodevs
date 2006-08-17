@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "ObjectReportPanel.h"
 
 #include "FireResultListView.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Object_ABC.h"
-#include "astec_gaming/Explosions.h"
-#include "astec_gaming/Equipment.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Object_ABC.h"
+#include "gaming/Explosions.h"
+#include "gaming/Equipment.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel constructor

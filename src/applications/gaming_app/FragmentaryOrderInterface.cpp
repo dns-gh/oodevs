@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 #include "FragmentaryOrderInterface.h"
 
 #include "MissionPanel.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/ASN_Types.h"
-#include "astec_kernel/Agent_ABC.h"
-#include "astec_gui/Tools.h"
+#include "gaming/ASN_Messages.h"
+#include "gaming/ASN_Types.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_gui/Tools.h"
 
 #include "ENT/ENT_Tr.h"
 

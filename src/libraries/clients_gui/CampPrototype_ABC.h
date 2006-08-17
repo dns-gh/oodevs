@@ -11,11 +11,11 @@
 #define __CampPrototype_ABC_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
-#include "astec_kernel/Resolver.h"
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/ContextMenuObserver_ABC.h"
-#include "astec_kernel/SafePointer.h"
+#include "clients_kernel/Resolver.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "ValuedComboBox.h"
 
 class Agent_ABC;

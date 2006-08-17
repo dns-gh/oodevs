@@ -7,24 +7,24 @@
 //
 // *****************************************************************************
 
-#include "astec_prepa_app_pch.h"
+#include "preparation_app_pch.h"
 #include "GlLayers.h"
 
-#include "astec_gui/ParametersLayer.h"
-//#include "astec_gui/AgentsLayer.h"
-//#include "astec_gui/ColorStrategy.h"
-#include "astec_gui/DefaultLayer.h"
-#include "astec_gui/Elevation2dLayer.h"
-#include "astec_gui/Elevation3dLayer.h"
-#include "astec_gui/LimitsLayer.h"
-#include "astec_gui/MetricsLayer.h"
-#include "astec_gui/ObjectsLayer.h"
-//#include "astec_gui/PopulationsLayer.h"
-//#include "astec_gui/TerrainLayer.h"
-#include "astec_kernel/DetectionMap.h"
-#include "astec_kernel/DetectionMap.h"
-#include "astec_preparation/Model.h"
-#include "astec_preparation/StaticModel.h"
+#include "clients_gui/ParametersLayer.h"
+//#include "clients_gui/AgentsLayer.h"
+//#include "clients_gui/ColorStrategy.h"
+#include "clients_gui/DefaultLayer.h"
+#include "clients_gui/Elevation2dLayer.h"
+#include "clients_gui/Elevation3dLayer.h"
+#include "clients_gui/LimitsLayer.h"
+#include "clients_gui/MetricsLayer.h"
+#include "clients_gui/ObjectsLayer.h"
+//#include "clients_gui/PopulationsLayer.h"
+//#include "clients_gui/TerrainLayer.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/DetectionMap.h"
+#include "preparation/Model.h"
+#include "preparation/StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor

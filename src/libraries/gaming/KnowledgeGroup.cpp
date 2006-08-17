@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "KnowledgeGroup.h"
-#include "astec_kernel/Controller.h"
-#include "astec_kernel/Team_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Team_ABC.h"
 
 IDManager KnowledgeGroup::idManager_( 0 );
 

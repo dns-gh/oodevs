@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "PopulationsLayer.h"
-#include "astec_gaming/Reports.h"
-#include "astec_gaming/PopulationDecisions.h"
-#include "astec_gaming/Population.h"
+#include "gaming/Reports.h"
+#include "gaming/PopulationDecisions.h"
+#include "gaming/Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationsLayer constructor

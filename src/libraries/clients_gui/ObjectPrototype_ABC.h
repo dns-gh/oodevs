@@ -10,10 +10,10 @@
 #ifndef __ObjectPrototype_ABC_h_
 #define __ObjectPrototype_ABC_h_
 
-#include "astec_kernel/Entity_ABC.h"
-#include "astec_kernel/Observer_ABC.h"
-#include "astec_kernel/ElementObserver_ABC.h"
-#include "astec_kernel/Resolver.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/Resolver.h"
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"
 

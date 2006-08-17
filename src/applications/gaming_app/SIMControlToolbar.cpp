@@ -7,18 +7,18 @@
 //
 // *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_app_pch.h"
 
 #include "SIMControlToolbar.h"
 #include "moc_SIMControlToolbar.cpp"
 
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-#include "astec_gaming/ASN_Messages.h"
-#include "astec_gaming/Simulation.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_gui/MT_SpinBox.h"
-#include "astec_gui/resources.h"
+#include "gaming/ASN_Messages.h"
+#include "gaming/Simulation.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_gui/MT_SpinBox.h"
+#include "clients_gui/resources.h"
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar constructor

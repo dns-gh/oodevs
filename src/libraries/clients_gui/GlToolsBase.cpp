@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "astec_gui_pch.h"
+#include "clients_gui_pch.h"
 #include "GlToolsBase.h"
-#include "astec_kernel/Controllers.h"
-#include "astec_kernel/Options.h"
-#include "astec_kernel/TristateOption.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/TristateOption.h"
 #include "GlFont.h"
 
 using namespace geometry;

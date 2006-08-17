@@ -6,7 +6,7 @@
 //
 // *****************************************************************************
 
-#include "astec_kernel_pch.h"
+#include "clients_kernel_pch.h"
 #include "AutomatType.h"
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"

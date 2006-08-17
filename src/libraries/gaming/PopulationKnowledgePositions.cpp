@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "astec_gaming_pch.h"
+#include "gaming_pch.h"
 #include "PopulationKnowledgePositions.h"
 #include "PopulationKnowledge.h"
-#include "astec_kernel/Population_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions constructor
