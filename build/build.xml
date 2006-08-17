@@ -160,6 +160,7 @@
                          MT_Tools_SCIPIO,ASN,geocoord,
                          asn1per,xerces-c_2"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
+            <includepath path="${applications.dir}/Tester"/>
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm"/>
         </build-app>
