@@ -18,8 +18,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 
-#include "TER/TER_Localisation.h"
-#include "TER/TER_PathFindManager.h"
+#include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_PathFindManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetPosition

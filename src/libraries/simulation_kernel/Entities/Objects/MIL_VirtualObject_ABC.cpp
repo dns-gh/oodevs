@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_VirtualObject_ABC.h"
 #include "MIL_VirtualObjectType.h"

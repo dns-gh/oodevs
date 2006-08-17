@@ -2,7 +2,7 @@
 // Created: DFT 02-02-26
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_PerceptionAlat.h"
 
@@ -14,7 +14,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionAlat constructor

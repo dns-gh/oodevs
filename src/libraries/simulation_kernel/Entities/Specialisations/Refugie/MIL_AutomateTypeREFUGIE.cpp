@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_AutomateTypeREFUGIE.h"
 #include "Decision/DEC_ModelAutomate.h"

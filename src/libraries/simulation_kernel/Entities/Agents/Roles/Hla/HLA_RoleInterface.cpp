@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_RoleInterface.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.h"
 

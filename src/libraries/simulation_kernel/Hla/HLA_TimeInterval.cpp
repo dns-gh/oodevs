@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_TimeInterval.h"
 #include "hla/Serializer.h"
 #include <strstream>

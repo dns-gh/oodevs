@@ -9,14 +9,14 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "DEC_DIAFunctions.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/PHY_Ephemeride.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Path;
 

@@ -9,15 +9,15 @@
 //
 //*****************************************************************************
 
-#include "SIM_pch.h"
+#include "simulation_app_pch.h"
 
 #include "SIM_App.h"
 #include <ctime>
 #include <signal.h>
 #include "SIM_NetworkLogger.h"
 
-#include "MIL/MIL_AgentServer.h"
-#include "Missions/Missions.h"
+#include "simulation_kernel/MIL_AgentServer.h"
+#include "simulation_missions/Missions.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"

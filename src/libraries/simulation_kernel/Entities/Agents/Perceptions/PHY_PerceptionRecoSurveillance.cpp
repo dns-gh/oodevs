@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoSurveillance.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -21,7 +21,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 #include "Tools/MIL_Tools.h"
 

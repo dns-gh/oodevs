@@ -9,10 +9,10 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
 
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
 

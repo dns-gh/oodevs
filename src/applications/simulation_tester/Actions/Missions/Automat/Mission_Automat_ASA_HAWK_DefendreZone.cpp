@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "Mission_Automat_ASA_HAWK_DefendreZone.h"
 #include "Entities/Automat.h"
 #include "Messages/ASN_Messages.h"

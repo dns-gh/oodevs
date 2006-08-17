@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -33,7 +33,7 @@
 
 #include "Tools/MIL_Tools.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 #include "Hla/HLA_UpdateFunctor.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"

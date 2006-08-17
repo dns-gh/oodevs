@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectCampPrisonniers.h"
 
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"

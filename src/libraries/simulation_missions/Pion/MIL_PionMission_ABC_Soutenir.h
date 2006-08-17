@@ -12,8 +12,8 @@
 #ifndef __MIL_PionMission_ABC_Soutenir_h_
 #define __MIL_PionMission_ABC_Soutenir_h_
 
-#include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_kernel/Entities/Orders/Pion/MIL_PionMission_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 //*****************************************************************************
 // Created: 

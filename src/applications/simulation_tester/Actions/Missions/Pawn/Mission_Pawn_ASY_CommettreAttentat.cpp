@@ -20,7 +20,7 @@
 #   pragma implementation
 #endif
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "Mission_Pawn_ASY_CommettreAttentat.h"
 #include "Entities/Pawn.h"
 #include "Messages/ASN_Messages.h"

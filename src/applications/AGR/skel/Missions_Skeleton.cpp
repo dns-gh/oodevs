@@ -9,13 +9,13 @@
 //
 // *****************************************************************************
 
-#include "Missions_pch.h"
+#include "simulation_missions_pch.h"
 #include "Missions.h"
 
-#include "MIL/Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "MIL/Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "MIL/Entities/Orders/Population/MIL_PopulationMissionType.h"
-#include "MIL/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
+#include "simulation_kernel/Entities/Orders/Pion/MIL_PionMissionType.h"
+#include "simulation_kernel/Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "simulation_kernel/Entities/Orders/Population/MIL_PopulationMissionType.h"
+#include "simulation_kernel/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 
 $IncludeList$
 

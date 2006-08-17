@@ -8,10 +8,10 @@
 #include "MIL.h"
 
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
-#include "TER/TER_Agent_ABC.h"
-#include "TER/TER_Object_ABC.h"
-#include "TER/TER_PopulationFlow_ABC.h"
-#include "TER/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_Object_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;

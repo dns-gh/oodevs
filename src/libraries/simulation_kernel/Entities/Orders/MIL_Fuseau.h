@@ -13,7 +13,7 @@
 #define __MIL_Fuseau_h_
 
 #include "MIL.h"
-#include "TER/TER_Polygon.h"
+#include "simulation_terrain/TER_Polygon.h"
 
 class TER_Localisation;
 class MIL_Limit;

@@ -12,8 +12,8 @@
 #ifndef __MIL_PopulationMission_Manifester_h_
 #define __MIL_PopulationMission_Manifester_h_
 
-#include "MIL/Entities/Orders/Population/MIL_PopulationMission_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_kernel/Entities/Orders/Population/MIL_PopulationMission_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 //*****************************************************************************
 // Created: 

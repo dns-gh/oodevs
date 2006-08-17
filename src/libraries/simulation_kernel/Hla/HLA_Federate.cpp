@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_Federate.h"
 
 #include "hla/hla_lib.h"

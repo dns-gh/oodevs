@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
 
 #include "MIL_AgentServer.h"
@@ -20,7 +20,7 @@
 #include "Entities/Orders/Lima/MIL_Lima.h"
 #include "Decision/DEC_Tools.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator

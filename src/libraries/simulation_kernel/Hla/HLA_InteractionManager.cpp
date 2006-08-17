@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_InteractionManager.h"
 #include "HLA_DirectFire.h"
 #include "HLA_IndirectFire.h"

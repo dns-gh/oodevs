@@ -13,7 +13,7 @@
 #define __DEC_Path_ABC_h_
 
 #include "MIL.h"
-#include "TER/TER_PathFindRequest_ABC.h"
+#include "simulation_terrain/TER_PathFindRequest_ABC.h"
 
 class TER_PathFindReplay;
 class DEC_PathSection_ABC;

@@ -51,15 +51,15 @@ void AGR_TesterProjectGenerator::Generate( const AGR_Workspace& workspace, const
 {
     MT_MakeDir( strOutputPath + "/src" );
     MT_MakeDir( strOutputPath + "/src/applications" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Pawn" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Automat" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Population" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Order" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Pawn" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Automat" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Population" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Order" );
 
-    std::cout << "Generating TESTER project files" << std::endl;
+    std::cout << "Generating simulation tester project files" << std::endl;
     GenerateMissionsCPPFile    ( workspace, strOutputPath );
     GenerateMissionsHeaderFile ( workspace, strOutputPath );
 }
@@ -101,7 +101,7 @@ void AGR_TesterProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$IncludeList$", strPawnIncludeList );
     workspace.ReplaceInString( strBaseContent, "$PionMissionsRegistration$", strPawnRegistrationList );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/Tester/Actions/Missions/Mission_Pawn_Type.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Mission_Pawn_Type.cpp" );
 
     // automat types
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_TesterMission_Automat_Type_Skeleton.cpp", strBaseContent );
@@ -109,7 +109,7 @@ void AGR_TesterProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$IncludeList$", strAutomatIncludeList );
     workspace.ReplaceInString( strBaseContent, "$AutomateMissionsRegistration$", strAutomatRegistrationList );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/Tester/Actions/Missions/Mission_Automat_Type.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Mission_Automat_Type.cpp" );
 
     // population types
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_TesterMission_Population_Type_Skeleton.cpp", strBaseContent );
@@ -117,7 +117,7 @@ void AGR_TesterProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$IncludeList$", strPopulationIncludeList );
     workspace.ReplaceInString( strBaseContent, "$PopulationMissionsRegistration$", strPopulationRegistrationList );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/Tester/Actions/Missions/Mission_Population_Type.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Mission_Population_Type.cpp" );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ void AGR_TesterProjectGenerator::GenerateMissionsHeaderFile( const AGR_Workspace
     std::string strBaseContent;
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_TesterMissions_Pawn_Type_Skeleton.h", strBaseContent );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/Tester/Actions/Missions/Mission_Pawn_Type.h" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Mission_Pawn_Type.h" );
     */
 }
 

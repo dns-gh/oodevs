@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Location.h"
 #include "Tools/MIL_Tools.h"
 #include "Hla/HLA_Serialization.h"

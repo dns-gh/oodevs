@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/MIL_AgentPion.h"

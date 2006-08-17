@@ -12,8 +12,8 @@
 #ifndef __MIL_AutomateMission_ABC_SurveillerItineraire_h_
 #define __MIL_AutomateMission_ABC_SurveillerItineraire_h_
 
-#include "MIL/Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_kernel/Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 //=============================================================================
 // Created: 

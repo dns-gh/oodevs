@@ -4,7 +4,7 @@
 #define __MIL_h_
 
 #include "MT/MT_Tools/MT_Types.h"
-#include "TER/TER.h"
+#include "simulation_terrain/TER.h"
 
 enum E_Tristate
 {

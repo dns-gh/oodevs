@@ -14,7 +14,7 @@
 
 #include "Sim.h"
 
-#include "MIL/Tools/MIL_Config.h"
+#include "simulation_kernel/Tools/MIL_Config.h"
 
 class SIM_NetworkLogger;
 

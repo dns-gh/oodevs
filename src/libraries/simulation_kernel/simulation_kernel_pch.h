@@ -63,15 +63,15 @@
 
 #include "Network/NET_ASN_Types.h"
 
-#include "TER/TER.h"
-#include "TER/TER_Localisation.h"
-#include "TER/TER_World.h"
-#include "TER/TER_PathFindRequest_ABC.h"
-#include "TER/TER_Agent_ABC.h"
-#include "TER/TER_Object_ABC.h"
-#include "TER/TER_AgentManager.h"
-#include "TER/TER_ObjectManager.h"
-#include "TER/TER_Polygon.h"
+#include "simulation_terrain/TER.h"
+#include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_PathFindRequest_ABC.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_Object_ABC.h"
+#include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_Polygon.h"
 
 #endif // __MIL_pch_h_
 

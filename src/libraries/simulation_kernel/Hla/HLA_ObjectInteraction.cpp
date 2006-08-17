@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_ObjectInteraction.h"
 #include "MIL_AgentServer.h"
 #include "HLA_Federate.h"

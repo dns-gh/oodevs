@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "Testable_Entity.h"
 #include "Automat.h"
 #include "Pawn.h"

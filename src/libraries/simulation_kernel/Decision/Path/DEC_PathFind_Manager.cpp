@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "DEC_PathFind_Manager.h"
 #include "DEC_Path_ABC.h"
@@ -18,9 +18,9 @@
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
 
-#include "TER/TER_PathfinderThread.h"
-#include "TER/TER_PathFindManager.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_PathfinderThread.h"
+#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor

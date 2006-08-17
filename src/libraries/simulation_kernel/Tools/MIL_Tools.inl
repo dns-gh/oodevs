@@ -11,7 +11,7 @@
 
 #include "MIL_AgentServer.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
                
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertCoordMosToSim

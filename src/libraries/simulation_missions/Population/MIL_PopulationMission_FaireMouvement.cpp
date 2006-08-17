@@ -9,15 +9,15 @@
 //
 // *****************************************************************************
 
-#include "Missions_pch.h"
+#include "simulation_missions_pch.h"
 #include "MIL_PopulationMission_FaireMouvement.h"
 
-#include "MIL/Entities/Orders/Population/MIL_PopulationOrderManager.h"
-#include "MIL/Entities/Orders/Population/MIL_PopulationMissionType.h"
-#include "MIL/Entities/Populations/MIL_Population.h"
-#include "MIL/Knowledge/MIL_KnowledgeGroup.h"
-#include "MIL/Network/NET_ASN_Tools.h"
-#include "MIL/Decision/DEC_Tools.h"
+#include "simulation_kernel/Entities/Orders/Population/MIL_PopulationOrderManager.h"
+#include "simulation_kernel/Entities/Orders/Population/MIL_PopulationMissionType.h"
+#include "simulation_kernel/Entities/Populations/MIL_Population.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_kernel/Network/NET_ASN_Tools.h"
+#include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PopulationMission_FaireMouvement::nDIADestinationIdx_ = 0 ;
 

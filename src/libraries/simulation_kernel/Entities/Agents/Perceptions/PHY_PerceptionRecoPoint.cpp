@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoPoint.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -20,7 +20,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoPoint::PHY_PerceptionRecoPoint

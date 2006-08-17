@@ -8,7 +8,7 @@
 // $Workfile: TER_Polygon.cpp $
 //
 //*****************************************************************************
-#include "TER_pch.h"
+#include "simulation_terrain_pch.h"
 #include "TER_Polygon.h"
 
 #include "TER_Polygon.inl"

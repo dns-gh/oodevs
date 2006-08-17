@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "Mission_Automat_Type.h"
 
 #include "Automat/Mission_Automat_ABC_ArmerPointDeControle.cpp"

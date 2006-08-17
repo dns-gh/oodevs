@@ -9,16 +9,16 @@
 //
 // *****************************************************************************
 
-#include "Missions_pch.h"
+#include "simulation_missions_pch.h"
 #include "MIL_PionMission_GEN_AmeliorerMobilite.h"
 
-#include "MIL/Entities/Orders/Pion/MIL_PionOrderManager.h"
-#include "MIL/Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "MIL/Entities/Agents/MIL_AgentPion.h"
-#include "MIL/Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "MIL/Knowledge/MIL_KnowledgeGroup.h"
-#include "MIL/Network/NET_ASN_Tools.h"
-#include "MIL/Decision/DEC_Tools.h"
+#include "simulation_kernel/Entities/Orders/Pion/MIL_PionOrderManager.h"
+#include "simulation_kernel/Entities/Orders/Pion/MIL_PionMissionType.h"
+#include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
+#include "simulation_kernel/Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_kernel/Network/NET_ASN_Tools.h"
+#include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_AmeliorerMobilite::nDIAZoneIdx_ = 0 ;
 

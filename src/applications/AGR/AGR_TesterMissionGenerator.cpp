@@ -51,15 +51,15 @@ void AGR_TesterMissionGenerator::Generate( const AGR_Workspace& workspace, const
 {
     MT_MakeDir( strOutputPath + "/src" );
     MT_MakeDir( strOutputPath + "/src/applications" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Pawn" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Automat" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Population" );
-    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Order" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Pawn" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Automat" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Population" );
+    MT_MakeDir( strOutputPath + "/src/applications/simulation_tester/Actions/Missions/Order" );
 
-    std::cout << "Generating TESTER mission files" << std::endl;
+    std::cout << "Generating simulation tester mission files" << std::endl;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;

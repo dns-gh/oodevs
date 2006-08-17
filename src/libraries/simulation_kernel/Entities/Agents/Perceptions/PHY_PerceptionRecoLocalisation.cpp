@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoLocalisation.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -18,7 +18,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"

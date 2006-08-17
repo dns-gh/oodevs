@@ -9,14 +9,14 @@
 //
 // *****************************************************************************
 
-#include "Missions_pch.h"
+#include "simulation_missions_pch.h"
 
 #include "MIL_AutomateMission_LOG_AppuyerMouvement.h"
-#include "MIL/Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "MIL/Entities/Automates/MIL_Automate.h"
-#include "MIL/Knowledge/MIL_KnowledgeGroup.h"
-#include "MIL/Network/NET_ASN_Tools.h"
-#include "MIL/Decision/DEC_Tools.h"
+#include "simulation_kernel/Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "simulation_kernel/Entities/Automates/MIL_Automate.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_kernel/Network/NET_ASN_Tools.h"
+#include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_AutomateMission_LOG_AppuyerMouvement::nDIAUnitesAAppuyerIdx_ = 0 ;
 

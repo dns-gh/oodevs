@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_RealObject_ABC.h"
 
@@ -33,8 +33,8 @@
 
 #include "Decision/DEC_Tools.h"
 
-#include "TER/TER_PathFindManager.h"
-#include "TER/TER_DynamicData.h"
+#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_DynamicData.h"
 
 #include "HLA/HLA_Object_ABC.h"
 #include "HLA/HLA_UpdateFunctor.h"

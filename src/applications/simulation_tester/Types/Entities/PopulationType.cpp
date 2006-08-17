@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 
 #include "PopulationType.h"
 #include "PopulationModel.h"

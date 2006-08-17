@@ -21,7 +21,7 @@
 
 #include "MIL.h"
 
-#include "TER/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "MT_Tools/MT_Random.h"
 
 class MIL_Population;

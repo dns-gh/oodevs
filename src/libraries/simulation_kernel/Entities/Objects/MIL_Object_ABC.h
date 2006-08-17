@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "TER/TER_Object_ABC.h"
+#include "simulation_terrain/TER_Object_ABC.h"
 
 class MIL_Agent_ABC;
 class MIL_Army;

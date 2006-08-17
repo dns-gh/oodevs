@@ -9,14 +9,14 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoObjects.h"
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjects::sReco copnstructor

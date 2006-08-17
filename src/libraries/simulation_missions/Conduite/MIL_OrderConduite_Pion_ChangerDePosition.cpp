@@ -9,13 +9,13 @@
 //
 // *****************************************************************************
 
-#include "Missions_pch.h"
+#include "simulation_missions_pch.h"
 #include "MIL_OrderConduite_Pion_ChangerDePosition.h"
 
-#include "MIL/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
-#include "MIL/Network/NET_ASN_Tools.h"
-#include "MIL/Knowledge/MIL_KnowledgeGroup.h"
-#include "MIL/Decision/DEC_Tools.h"
+#include "simulation_kernel/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
+#include "simulation_kernel/Network/NET_ASN_Tools.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_OrderConduite_Pion_ChangerDePosition::nDIAOrderConduitePionChangerDePositionIdx_ = 0 ;
 

@@ -22,7 +22,7 @@
 #include "MIL.h"
 
 #include "MIL_PopulationElement_ABC.h"
-#include "TER/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;

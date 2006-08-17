@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ter_pch.h"
+#include "simulation_terrain_pch.h"
 #include "TER_ObjectTraits.h"
 #include "pathfind/SpatialContainerTraits.h"
 #include "MT_Tools/MT_Rect.h"

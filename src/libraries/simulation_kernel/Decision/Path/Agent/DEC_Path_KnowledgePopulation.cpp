@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgePopulation.h"
 
 #include "DEC_Agent_PathClass.h"
@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 namespace
 {

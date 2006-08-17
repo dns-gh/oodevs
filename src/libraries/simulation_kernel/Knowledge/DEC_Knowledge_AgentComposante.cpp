@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentComposante.h"
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"

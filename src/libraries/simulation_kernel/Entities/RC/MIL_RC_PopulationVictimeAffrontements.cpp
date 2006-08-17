@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_RC_PopulationVictimeAffrontements.h"
 #include "Entities/Agents/MIL_AgentPion.h"

@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
@@ -23,11 +23,11 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/RC/MIL_RC.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "TER/TER_Agent_ABC.h"
-#include "TER/TER_PopulationConcentration_ABC.h"
-#include "TER/TER_PopulationFlow_ABC.h"
-#include "TER/TER_PopulationManager.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include "simulation_terrain/TER_PopulationManager.h"
+#include "simulation_terrain/TER_World.h"
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
 

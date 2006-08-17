@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "AutomatModel.h"
 #include "Actions/Missions/Mission_Automat_Type.h"
 #include "Actions/Scheduler.h"

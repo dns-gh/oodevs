@@ -2,7 +2,7 @@
 // Created: DFT 02-02-26
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_PerceptionCoupDeSonde.h"
 
@@ -14,7 +14,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionCoupDeSonde constructor

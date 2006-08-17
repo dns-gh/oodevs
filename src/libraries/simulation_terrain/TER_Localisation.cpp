@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "TER_pch.h"
+#include "simulation_terrain_pch.h"
 #include "TER_Localisation.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -20,7 +20,7 @@
 #include "MT/MT_IO/MT_FormatString.h"
 
 // $$$$ JVT : CRADE
-#include "../../src/libraries/MIL/CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "../../src/libraries/simulation_kernel/CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 const MT_Float TER_Localisation::rPrecision_ = 2.1242;
 

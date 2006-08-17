@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ter_pch.h"
+#include "simulation_terrain_pch.h"
 #include "TER_AgentManager.h"
 #include "TER_Agent_ABC.h"
 #include "TER_Localisation.h"

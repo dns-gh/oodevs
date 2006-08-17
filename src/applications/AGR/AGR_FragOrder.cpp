@@ -223,7 +223,7 @@ void AGR_FragOrder::GenerateMilClassHeader( const AGR_Workspace& workspace, cons
 //    workspace.ReplaceInString( strBaseContent, "$OrderMember$", strDeclarations );
     //workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    std::string strResultFileName( "/src/libraries/Missions/" + MilFilePathName() + ".h" );
+    std::string strResultFileName( "/src/libraries/simulation_missions/" + MilFilePathName() + ".h" );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );    
 }
 
@@ -284,7 +284,7 @@ void AGR_FragOrder::GenerateMilClassCpp( const AGR_Workspace& workspace, const s
     workspace.ReplaceInString( strBaseContent, "$InitMemberFromDIA$", strDIAMemberInit );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    std::string strResultFileName( "/src/libraries/Missions/" + MilFilePathName() + ".cpp" );
+    std::string strResultFileName( "/src/libraries/simulation_missions/" + MilFilePathName() + ".cpp" );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );        
 }
 

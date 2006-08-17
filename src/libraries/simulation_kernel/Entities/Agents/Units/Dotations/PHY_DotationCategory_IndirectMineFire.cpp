@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_DotationCategory_IndirectMineFire.h"
 #include "MIL_AgentServer.h"
@@ -17,7 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Objects/MIL_ZoneMineeParDispersion.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create

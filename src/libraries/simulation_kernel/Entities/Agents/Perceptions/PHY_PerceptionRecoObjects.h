@@ -13,7 +13,7 @@
 #define __PHY_PerceptionRecoObjects_h_
 
 #include "PHY_Perception_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 // =============================================================================
 // @class  PHY_PerceptionRecoObjects

@@ -9,12 +9,12 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 #include "Entities/MIL_Army.h"
 

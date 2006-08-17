@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Composantes.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteHLA.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"

@@ -20,7 +20,7 @@
 #define __HLA_DistantObject_h_
 
 #include "HLA_Object_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "hla/ObjectIdentifier.h"
 
 class MIL_RealObject_ABC;

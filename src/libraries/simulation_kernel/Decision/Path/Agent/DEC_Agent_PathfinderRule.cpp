@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "DEC_Agent_PathfinderRule.h"
 
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"

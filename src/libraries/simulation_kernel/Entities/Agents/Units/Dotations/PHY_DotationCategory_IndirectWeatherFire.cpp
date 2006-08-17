@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "Entities/Effects/MIL_Effect_Weather.h"

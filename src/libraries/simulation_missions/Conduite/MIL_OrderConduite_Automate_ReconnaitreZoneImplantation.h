@@ -12,8 +12,8 @@
 #ifndef __MIL_OrderConduite_Automate_ReconnaitreZoneImplantation_h_
 #define __MIL_OrderConduite_Automate_ReconnaitreZoneImplantation_h_
 
-#include "MIL/Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_kernel/Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 // =============================================================================
 /** @class  MIL_OrderConduite_Automate_ReconnaitreZoneImplantation

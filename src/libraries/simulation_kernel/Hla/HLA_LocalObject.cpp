@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_LocalObject.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "MIL_AgentServer.h"

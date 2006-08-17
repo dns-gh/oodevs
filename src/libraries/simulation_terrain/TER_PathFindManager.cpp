@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ter_pch.h"
+#include "simulation_terrain_pch.h"
 #include "TER_PathFindManager.h"
 #include "TER_PathFinderThread.h"
 #include "TER_World.h"

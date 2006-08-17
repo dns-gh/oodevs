@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "Mission_Automat_INF_FlancGarder.h"
 #include "Entities/Automat.h"
 #include "Messages/ASN_Messages.h"

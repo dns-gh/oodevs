@@ -17,7 +17,7 @@
 #include "MIL_Object_ABC.h"
 #include "Network/NET_ASN_Types.h"
 #include "MT_Tools/MT_Random.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 class MIL_PopulationElement_ABC;
 class MIL_RealObjectType;

@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_Fuseau.h"
 
@@ -19,8 +19,8 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 
-#include "TER/TER_PathFindManager.h"
-#include "TER/TER_DynamicData.h"
+#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_DynamicData.h"
 #include "MT_Tools/MT_Polyline.h"
 
 uint MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER

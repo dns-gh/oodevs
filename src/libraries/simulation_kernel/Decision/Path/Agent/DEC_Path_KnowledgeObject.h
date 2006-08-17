@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
 class DEC_Path;

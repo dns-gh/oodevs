@@ -48,12 +48,12 @@ AGR_MilRCGenerator::~AGR_MilRCGenerator()
 // -----------------------------------------------------------------------------
 void AGR_MilRCGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    std::cout << "Generating MIL RCs" << std::endl;
+    std::cout << "Generating simulation RCs" << std::endl;
     MT_MakeDir( strOutputPath + "/src" );
     MT_MakeDir( strOutputPath + "/src/libraries" );
-    MT_MakeDir( strOutputPath + "/src/libraries/MIL" );
-    MT_MakeDir( strOutputPath + "/src/libraries/MIL/Entities" );
-    MT_MakeDir( strOutputPath + "/src/libraries/MIL/Entities/RC" );
+    MT_MakeDir( strOutputPath + "/src/libraries/simulation_kernel" );
+    MT_MakeDir( strOutputPath + "/src/libraries/simulation_kernel/Entities" );
+    MT_MakeDir( strOutputPath + "/src/libraries/simulation_kernel/Entities/RC" );
     GenerateMILRCClassHeader( workspace, strOutputPath );
     GenerateMILRCClassBody  ( workspace, strOutputPath );
 }
@@ -80,7 +80,7 @@ void AGR_MilRCGenerator::GenerateMILRCClassHeader( const AGR_Workspace& workspac
     }   
     strTmp << "        eNbr" << std::endl;
     workspace.ReplaceInString( strBaseContent, "$AGR_MIL_EnumRcs$", strTmp.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/MIL/Entities/RC/MIL_RC.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/simulation_kernel/Entities/RC/MIL_RC.h" );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,5 +109,5 @@ void AGR_MilRCGenerator::GenerateMILRCClassBody( const AGR_Workspace& workspace,
 
     workspace.ReplaceInString( strBaseContent, "$AGR_MIL_RCs_Initialize$", strCodeInitialize.str() );
     workspace.ReplaceInString( strBaseContent, "$AGR_MIL_RCs_Includes$"  , strCodeIncludes.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/MIL/Entities/RC/MIL_RC.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/simulation_kernel/Entities/RC/MIL_RC.cpp" );
 }

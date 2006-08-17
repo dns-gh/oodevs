@@ -23,7 +23,7 @@
 
 #include "MIL_PopulationElement_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
-#include "TER/TER_PopulationFlow_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
 
 class MIL_Population;
 class MIL_PopulationConcentration;

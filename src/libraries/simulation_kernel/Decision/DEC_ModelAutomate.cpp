@@ -10,7 +10,7 @@
 // *****************************************************************************
 
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_ModelAutomate.h"
 
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"

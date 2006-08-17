@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
 
 #include "Decision/Path/DEC_PathType.h"

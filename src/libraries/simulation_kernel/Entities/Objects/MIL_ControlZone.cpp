@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_ControlZone.h"
 
@@ -22,7 +22,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 MT_Random MIL_ControlZone::randomGenerator_;
 

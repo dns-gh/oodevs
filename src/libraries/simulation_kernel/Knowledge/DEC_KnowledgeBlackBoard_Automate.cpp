@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_Automate.h"
 
 #include "DEC_KnowledgeBlackBoard_Army.h"

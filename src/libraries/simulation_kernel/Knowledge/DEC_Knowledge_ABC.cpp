@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ABC.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ABC, "DEC_Knowledge_ABC" )

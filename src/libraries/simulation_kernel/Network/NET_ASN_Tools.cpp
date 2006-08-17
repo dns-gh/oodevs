@@ -9,13 +9,13 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "NET_ASN_Tools.h"
 
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Ellipse.h"
 
 #include "Entities/MIL_EntityManager.h"

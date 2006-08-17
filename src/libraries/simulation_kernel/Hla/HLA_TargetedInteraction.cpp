@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "HLA_TargetedInteraction.h"
 #include "Entities/Agents/Roles/HLA/HLA_RoleInterface.h"
 #include "MIL_AgentServer.h"

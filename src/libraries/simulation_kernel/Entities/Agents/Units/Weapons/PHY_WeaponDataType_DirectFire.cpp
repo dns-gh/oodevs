@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_WeaponDataType_DirectFire.h"
 #include "PHY_WeaponType.h"
@@ -33,10 +33,10 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/MIL_EntityManager.h"
-#include "TER/TER_PopulationConcentration_ABC.h"
-#include "TER/TER_PopulationFlow_ABC.h"
-#include "TER/TER_PopulationManager.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include "simulation_terrain/TER_PopulationManager.h"
+#include "simulation_terrain/TER_World.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 

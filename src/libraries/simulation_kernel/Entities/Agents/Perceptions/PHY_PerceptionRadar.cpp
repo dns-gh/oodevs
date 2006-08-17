@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadar.h"
 
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"

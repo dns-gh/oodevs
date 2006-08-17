@@ -13,7 +13,7 @@
 #define __PHY_PerceptionFlyingShell_h_
 
 #include "PHY_Perception_ABC.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 class MIL_Effect_IndirectFire;
 

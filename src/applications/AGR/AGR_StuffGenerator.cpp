@@ -115,7 +115,7 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$ConvertPopulationIdAsnToSim$", strMissionPopulationIdConversion );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/libraries/Missions/MIL_OrderTools.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/libraries/simulation_missions/MIL_OrderTools.cpp" );
 }
     
 // -----------------------------------------------------------------------------
@@ -140,6 +140,6 @@ void AGR_StuffGenerator::GenerateMilMissionConverterFile( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$MissionConverterList$", strConverterList );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/libraries/Missions/MIL_MissionConverter.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/libraries/simulation_missions/MIL_MissionConverter.cpp" );
 }
 

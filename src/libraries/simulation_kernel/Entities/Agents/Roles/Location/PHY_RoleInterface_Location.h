@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-#include "TER/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
 
 class MIL_Agent_ABC;
 class MIL_RealObject_ABC;

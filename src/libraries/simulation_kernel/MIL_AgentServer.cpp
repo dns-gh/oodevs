@@ -2,7 +2,7 @@
 // Created: DFT 02-02-28
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_AgentServer.h"
 
@@ -24,7 +24,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Hla/HLA_Federate.h"
 
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_World.h"
 
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_ArchiveDirectoryHelper.h"

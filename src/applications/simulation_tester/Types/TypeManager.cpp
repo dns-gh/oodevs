@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_pch.h"
+#include "simulation_tester_pch.h"
 #include "TypeManager.h"
 #include "Entities/PawnType.h"
 #include "Entities/PopulationType.h"

@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "MIL_Limit.h"
 
@@ -20,8 +20,8 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
 
-#include "TER/TER_PathFindManager.h"
-#include "TER/TER_DynamicData.h"
+#include "simulation_terrain/TER_PathFindManager.h"
+#include "simulation_terrain/TER_DynamicData.h"
 #include "MT_Tools/MT_Assert.h"
 
 using namespace DIN;

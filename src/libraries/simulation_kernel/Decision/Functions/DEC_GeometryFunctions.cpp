@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FunctionsTools.h"
@@ -24,7 +24,7 @@
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Tools/MIL_Tools.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Random.h"
 
 #define PRECISION 0.0000001

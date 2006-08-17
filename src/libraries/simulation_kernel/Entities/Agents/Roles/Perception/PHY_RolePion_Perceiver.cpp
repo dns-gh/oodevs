@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_RolePion_Perceiver.h"
 
@@ -49,11 +49,11 @@
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 
-#include "TER/TER_Agent_ABC.h"
-#include "TER/TER_PopulationConcentration_ABC.h"
-#include "TER/TER_PopulationFlow_ABC.h"
-#include "TER/TER_PopulationManager.h"
-#include "TER/TER_World.h"
+#include "simulation_terrain/TER_Agent_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationFlow_ABC.h"
+#include "simulation_terrain/TER_PopulationManager.h"
+#include "simulation_terrain/TER_World.h"
 
 const uint PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 

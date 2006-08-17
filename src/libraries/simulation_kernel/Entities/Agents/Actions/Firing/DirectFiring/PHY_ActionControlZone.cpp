@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_pch.h"
+#include "simulation_kernel_pch.h"
 
 #include "PHY_ActionControlZone.h"
 
@@ -23,7 +23,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
 #include "MIL_AgentServer.h"
-#include "TER/TER_Localisation.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionControlZone constructor
