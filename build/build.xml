@@ -30,6 +30,7 @@
     <target name="library.MIL" description="build MIL static library" depends="library.ASN,library.TER">
         <build-lib name="MIL">
             <includepath path="${include.dir}/ASN"/>
+            <includepath path="${libraries.dir}/MIL"/> <!-- pour MIL.h -->
         </build-lib>
     </target>
 
