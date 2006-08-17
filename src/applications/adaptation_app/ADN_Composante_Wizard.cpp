@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Composante_Wizard.h"
 
 #include "ADN_Wizard_FirstPage_Default.h"

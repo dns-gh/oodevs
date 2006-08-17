@@ -8,7 +8,7 @@
 // $Workfile: ADN_Composantes_Dotations_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "moc_ADN_Composantes_Dotations_GUI.cpp"
 

@@ -17,7 +17,7 @@
 // *****************************************************************************
 
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Sensor_Wizard.h"
 
 #include "ADN_Sensors_Data.h"

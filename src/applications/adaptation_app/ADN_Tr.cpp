@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Tr.h"
 
 ADN_Tr::T_ConverterLocation ADN_Tr::locationConverter_[] =

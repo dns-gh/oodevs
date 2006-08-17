@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Composantes_ConsumptionsTable.h"
 
 #include <qpopupmenu.h>

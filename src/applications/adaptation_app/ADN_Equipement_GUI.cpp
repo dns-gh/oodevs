@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Equipement_GUI.h"
 #include "moc_ADN_Equipement_GUI.cpp"
 

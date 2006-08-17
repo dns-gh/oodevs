@@ -17,7 +17,7 @@
 // *****************************************************************************
 
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_ChangeValueCommand_String.h"
 #include "moc_ADN_ChangeValueCommand_String.cpp"
 

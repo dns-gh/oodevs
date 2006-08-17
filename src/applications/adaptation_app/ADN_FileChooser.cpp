@@ -8,7 +8,7 @@
 // $Workfile: ADN_FileChooser.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_FileChooser.h"
 #include "moc_ADN_FileChooser.cpp"
 

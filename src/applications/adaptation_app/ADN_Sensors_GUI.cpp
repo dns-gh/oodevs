@@ -8,7 +8,7 @@
 // $Workfile: ADN_Sensors_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Sensors_GUI.h"
 
 #include <qlayout.h>

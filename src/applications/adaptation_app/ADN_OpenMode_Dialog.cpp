@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_OpenMode_Dialog.h"
 
 #include "ADN_Enums.h"

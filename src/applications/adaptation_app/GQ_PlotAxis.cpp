@@ -20,7 +20,7 @@
 #   pragma implementation
 #endif
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "GQ_PlotAxis.h"
 #include "moc_GQ_PlotAxis.cpp"
 

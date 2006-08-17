@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Point_GUI.h"
 
 #include <qpopupmenu.h>

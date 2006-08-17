@@ -8,7 +8,7 @@
 // $Workfile: ADN_TableItem_ComboBox.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_TableItem_ComboBox.h"
 
 #include <qstyle.h>

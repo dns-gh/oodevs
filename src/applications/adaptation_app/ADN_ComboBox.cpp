@@ -8,7 +8,7 @@
 // $Workfile: ADN_ComboBox.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_ComboBox.h"
 
 #include "moc_ADN_ComboBox.cpp"

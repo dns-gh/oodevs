@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Weapon_Wizard.h"
 
 #include "ADN_Weapon_Wizard_Page0.h"

@@ -8,7 +8,7 @@
 // $Workfile: ADN_RunProcessDialog.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_RunProcessDialog.h"
 #include "moc_ADN_RunProcessDialog.cpp"
 

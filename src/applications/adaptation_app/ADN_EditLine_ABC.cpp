@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_EditLine_ABC.h"
 #include "moc_ADN_EditLine_ABC.cpp"
 

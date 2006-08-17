@@ -8,7 +8,7 @@
 // $Workfile: ADN_Equipement_Postures_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_Equipement_Postures_GUI.h"
 
 #include <qpopmenu.h>

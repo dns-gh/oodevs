@@ -9,8 +9,8 @@
 //
 //*****************************************************************************
 
-#ifndef __ADN_PCH_H_
-#define __ADN_PCH_H_
+#ifndef __ADN_APPLICATION_PCH_H_
+#define __ADN_APPLICATION_PCH_H_
 
 #include "MT/MT_Archive/MT_Archive_lib.h"
 #include "MT/MT_Tools/MT_Tools_lib.h"
@@ -25,4 +25,4 @@
 #include "MT_Tools/MT_ScipioException.h"
 
 
-#endif // __ADN_PCH_H_
+#endif // __ADN_APPLICATION_PCH_H_

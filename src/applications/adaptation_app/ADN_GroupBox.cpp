@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_GroupBox.h"
 #include "moc_ADN_GroupBox.cpp"
 

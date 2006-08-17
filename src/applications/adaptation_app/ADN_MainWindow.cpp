@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
 

@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_TableItem_TimeField.h"
 #include "moc_ADN_TableItem_TimeField.cpp"
 
