@@ -75,6 +75,51 @@ namespace bfs = boost::filesystem;
 #include "xeumeuleu/xml.h"
 using namespace xml;
 
+namespace
+{
+    class Gl2dWidgetImp : public GlWidget
+    {
+    public:
+        Gl2dWidgetImp( QWidget* pParent, Controllers& controllers, const std::string& scipioXml )
+            : GlWidget( pParent, controllers, scipioXml ) {}
+
+    private:
+        virtual void InitializeIconLocations()
+        {
+            iconLocations_[ xpm_cadenas         ] = geometry::Point2f( -200, 270 );
+            iconLocations_[ xpm_radars_on       ] = geometry::Point2f(  200, 270 );
+            iconLocations_[ xpm_brouillage      ] = geometry::Point2f(  200, 50 );
+            iconLocations_[ xpm_talkie_interdit ] = geometry::Point2f(  100, 50 );
+            iconLocations_[ xpm_gas             ] = geometry::Point2f( -200, 170 );
+            iconLocations_[ xpm_ammo            ] = geometry::Point2f( -200, 100 );
+            iconLocations_[ xpm_nbc             ] = geometry::Point2f( -200, 25 );
+            iconLocations_[ xpm_construction    ] = geometry::Point2f(  200, 150 );
+            iconLocations_[ xpm_observe         ] = geometry::Point2f(  200, 150 );
+        }
+    };
+
+    class Gl3dWidgetImp : public Gl3dWidget
+    {
+    public:
+        Gl3dWidgetImp( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation )
+            : Gl3dWidget( pParent, controllers, scipioXml, elevation ) {}
+
+    private:
+        virtual void InitializeIconLocations()
+        {
+            iconLocations_[ xpm_cadenas         ] = geometry::Point2f( -200, 270 );
+            iconLocations_[ xpm_radars_on       ] = geometry::Point2f(  200, 270 );
+            iconLocations_[ xpm_brouillage      ] = geometry::Point2f(  200, 50 );
+            iconLocations_[ xpm_talkie_interdit ] = geometry::Point2f(  100, 50 );
+            iconLocations_[ xpm_gas             ] = geometry::Point2f( -200, 170 );
+            iconLocations_[ xpm_ammo            ] = geometry::Point2f( -200, 100 );
+            iconLocations_[ xpm_nbc             ] = geometry::Point2f( -200, 25 );
+            iconLocations_[ xpm_construction    ] = geometry::Point2f(  200, 150 );
+            iconLocations_[ xpm_observe         ] = geometry::Point2f(  200, 150 );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -229,7 +274,7 @@ void MainWindow::Load( const std::string& scipioXml )
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
-    widget2d_ = new GlWidget( this, controllers_, scipioXml );
+    widget2d_ = new Gl2dWidgetImp( this, controllers_, scipioXml );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Purge();
@@ -381,7 +426,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, staticModel_.detection_ );
+                    widget3d_ = new Gl3dWidgetImp( this, controllers_, scipioXml_, staticModel_.detection_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
                     layers_->RegisterTo( widget3d_ );
                 }

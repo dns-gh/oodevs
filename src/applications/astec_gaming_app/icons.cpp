@@ -7,12 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __astec_preparation_pch_h_
-#define __astec_preparation_pch_h_
+#include "astec_pch.h"
 
-#include <string>
-#include <map>
-#include <vector>
-#include <set>
-
-#endif // __astec_preparation_pch_h_
+#include "astec_gaming/statusicons.cpp"
+#include "astec_kernel/objecticons.cpp"
+#include "astec_gui/resources.cpp"

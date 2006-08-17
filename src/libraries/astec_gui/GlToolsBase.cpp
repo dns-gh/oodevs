@@ -13,7 +13,6 @@
 #include "astec_kernel/Options.h"
 #include "astec_kernel/TristateOption.h"
 #include "GlFont.h"
-#include "astec_gaming/statusicons.h"
 
 using namespace geometry;
 
@@ -111,15 +110,7 @@ void GlToolsBase::BindIcon( const char** xpm )
 // -----------------------------------------------------------------------------
 void GlToolsBase::InitializeIconLocations()
 {
-    iconLocations_[ xpm_cadenas         ] = Point2f( -200, 270 );
-    iconLocations_[ xpm_radars_on       ] = Point2f(  200, 270 );
-    iconLocations_[ xpm_brouillage      ] = Point2f(  200, 50 );
-    iconLocations_[ xpm_talkie_interdit ] = Point2f(  100, 50 );
-    iconLocations_[ xpm_gas             ] = Point2f( -200, 170 );
-    iconLocations_[ xpm_ammo            ] = Point2f( -200, 100 );
-    iconLocations_[ xpm_nbc             ] = Point2f( -200, 25 );
-    iconLocations_[ xpm_construction    ] = Point2f(  200, 150 );
-    iconLocations_[ xpm_observe         ] = Point2f(  200, 150 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

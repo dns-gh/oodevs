@@ -58,8 +58,11 @@ private:
 
     //! @name Helpers
     //@{
-    void InitializeIconLocations();
+    virtual void InitializeIconLocations();
     //@}
+
+protected:
+    T_IconLocations iconLocations_; // $$$$ SBO 2006-08-17: 
 
 private:
     //! @name Member data
@@ -68,7 +71,6 @@ private:
     mutable bool selected_;
 
     T_Icons         icons_;
-    T_IconLocations iconLocations_;
 
     GlFont* app6Font_;
     GlFont* app6OutlinedFont_;
