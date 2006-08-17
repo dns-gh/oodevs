@@ -49,11 +49,11 @@
         <build-lib name="ENT"/>
     </target>
 
-    <target name="libraries.TIC" description="build static library"
-            depends="library.TIC, library.TIC_Export"/>
+    <target name="libraries.TIC" description="build static library" depends="library.TIC,library.TIC_Export"/>
 
     <target name="library.TIC" description="build TIC static library" depends="library.ASN,library.MT_Tools_Scipio">
         <build-lib name="TIC">
+            <includepath path="${libraries.dir}/TIC"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
@@ -73,20 +73,6 @@
         </build-lib>
     </target>
     
-    <!--
-    <target name="library.astec.kernel" depends="library.ENT" description="build astec kernel static library">
-        <build-lib name="astec_kernel"/>
-    </target>
-    <target name="library.astec.gui" depends="library.astec.kernel" description="build astec gui static library">
-        <build-lib name="astec_gui"/>
-    </target>
-    <target name="library.astec.gaming" depends="library.astec.kernel,library.ASN" description="build astec gaming static library">
-        <build-lib name="astec_gaming"/>
-    </target>
-    <target name="libraries.astec" description="build astec static libraries"
-            depends="library.astec.gaming, library.astec.gui"/>
-    -->
-
     <!--
     ============================================================================
      applications
@@ -255,10 +241,6 @@
         <clean name="SIM"/>
         <clean name="ADN"/>
         <clean name="astec"/>
-        <clean name="astec_kernel"/>
-        <clean name="astec_gui"/>
-        <clean name="astec_gaming"/>
-        <clean name="astec_branch"/>
         <clean name="Tester"/>
         <clean name="HLA_Manager"/>
         <clean name="AGR"/>
