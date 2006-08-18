@@ -13,9 +13,7 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-class Experience;
-class Tiredness;
-class Morale;
+
 class Controller;
 class Displayer_ABC;
 class DataDictionary;
@@ -44,9 +42,9 @@ public:
 
     //! @name Accessors
     //@{
-    const Experience& GetExperience() const;
-    const Tiredness& GetTiredness() const;
-    const Morale& GetMorale() const;
+    E_UnitExperience GetExperience() const;
+    E_UnitFatigue GetTiredness() const;
+    E_UnitMoral GetMorale() const;
     //@}
 
 private:
@@ -65,9 +63,9 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
-    const Experience* pExperience_;
-    const Tiredness*  pTiredness_;
-    const Morale*     pMorale_;
+    E_UnitExperience experience_;
+    E_UnitFatigue    tiredness_;
+    E_UnitMoral      morale_;
     //@}
 };
 

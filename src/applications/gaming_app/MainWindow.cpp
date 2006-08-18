@@ -38,13 +38,11 @@
 
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/CoordinateConverter.h"
-#include "gaming/Experience.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/Population.h"
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
-#include "gaming/Tiredness.h"
 
 #include "clients_gui/AgentList.h"
 #include "clients_gui/Gl3dWidget.h"
@@ -64,6 +62,7 @@
 #include "clients_gui/BigBrother.h"
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/IconLayout.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -74,51 +73,6 @@ namespace bfs = boost::filesystem;
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
-
-namespace
-{
-    class Gl2dWidgetImp : public GlWidget
-    {
-    public:
-        Gl2dWidgetImp( QWidget* pParent, Controllers& controllers, const std::string& scipioXml )
-            : GlWidget( pParent, controllers, scipioXml ) {}
-
-    private:
-        virtual void InitializeIconLocations()
-        {
-            iconLocations_[ xpm_cadenas         ] = geometry::Point2f( -200, 270 );
-            iconLocations_[ xpm_radars_on       ] = geometry::Point2f(  200, 270 );
-            iconLocations_[ xpm_brouillage      ] = geometry::Point2f(  200, 50 );
-            iconLocations_[ xpm_talkie_interdit ] = geometry::Point2f(  100, 50 );
-            iconLocations_[ xpm_gas             ] = geometry::Point2f( -200, 170 );
-            iconLocations_[ xpm_ammo            ] = geometry::Point2f( -200, 100 );
-            iconLocations_[ xpm_nbc             ] = geometry::Point2f( -200, 25 );
-            iconLocations_[ xpm_construction    ] = geometry::Point2f(  200, 150 );
-            iconLocations_[ xpm_observe         ] = geometry::Point2f(  200, 150 );
-        }
-    };
-
-    class Gl3dWidgetImp : public Gl3dWidget
-    {
-    public:
-        Gl3dWidgetImp( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation )
-            : Gl3dWidget( pParent, controllers, scipioXml, elevation ) {}
-
-    private:
-        virtual void InitializeIconLocations()
-        {
-            iconLocations_[ xpm_cadenas         ] = geometry::Point2f( -200, 270 );
-            iconLocations_[ xpm_radars_on       ] = geometry::Point2f(  200, 270 );
-            iconLocations_[ xpm_brouillage      ] = geometry::Point2f(  200, 50 );
-            iconLocations_[ xpm_talkie_interdit ] = geometry::Point2f(  100, 50 );
-            iconLocations_[ xpm_gas             ] = geometry::Point2f( -200, 170 );
-            iconLocations_[ xpm_ammo            ] = geometry::Point2f( -200, 100 );
-            iconLocations_[ xpm_nbc             ] = geometry::Point2f( -200, 25 );
-            iconLocations_[ xpm_construction    ] = geometry::Point2f(  200, 150 );
-            iconLocations_[ xpm_observe         ] = geometry::Point2f(  200, 150 );
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -133,6 +87,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , layers_     ( 0 )
     , widget2d_   ( 0 )
     , widget3d_   ( 0 )
+    , iconLayout_ ( 0 )
     , b3d_        ( false )
 {
     setIcon( MAKE_PIXMAP( astec ) );
@@ -270,11 +225,11 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 void MainWindow::Load( const std::string& scipioXml )
 {
-    InitializeHumanFactors( scipioXml );
+    BuildIconLayout();
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
-    widget2d_ = new Gl2dWidgetImp( this, controllers_, scipioXml );
+    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Purge();
@@ -289,24 +244,6 @@ void MainWindow::Load( const std::string& scipioXml )
     connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
     displayTimer_->start( 50 );
     widget2d_->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::InitializeHumanFactors
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-void MainWindow::InitializeHumanFactors( const std::string& conffile )
-{
-    xifstream xis( conffile );
-    xis >> start( "Scipio" )
-            >> start( "Donnees" );
-    std::string strHumanFactorsFile;
-    xis >> content( "FacteursHumains", strHumanFactorsFile );
-    const std::string factorsName = path_tools::BuildChildPath( conffile, strHumanFactorsFile );
-    xifstream factors( factorsName );
-
-    Tiredness ::Initialize( factors );
-    Experience::Initialize( factors );
 }
 
 // -----------------------------------------------------------------------------
@@ -426,7 +363,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidgetImp( this, controllers_, scipioXml_, staticModel_.detection_ );
+                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, staticModel_.detection_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
                     layers_->RegisterTo( widget3d_ );
                 }
@@ -490,4 +427,24 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
     const char drive = path.at( 0 );
     path = path.substr( 2 );
     return "\\\\" + server + "\\" + drive + '$' + path;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::BuildIconLayout
+// Created: SBO 2006-08-18
+// -----------------------------------------------------------------------------
+void MainWindow::BuildIconLayout()
+{
+    if( iconLayout_ )
+        return;
+    iconLayout_ = new IconLayout();
+    iconLayout_->AddIcon( xpm_cadenas        , -200, 270 );
+    iconLayout_->AddIcon( xpm_radars_on      ,  200, 270 );
+    iconLayout_->AddIcon( xpm_brouillage     ,  200, 50 );
+    iconLayout_->AddIcon( xpm_talkie_interdit,  100, 50 );
+    iconLayout_->AddIcon( xpm_gas            , -200, 170 );
+    iconLayout_->AddIcon( xpm_ammo           , -200, 100 );
+    iconLayout_->AddIcon( xpm_nbc            , -200, 25 );
+    iconLayout_->AddIcon( xpm_construction   ,  200, 150 );
+    iconLayout_->AddIcon( xpm_observe        ,  200, 150 );
 }

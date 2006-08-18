@@ -259,6 +259,24 @@ struct Formatter< E_UnitCapaciteMission >
 };
 
 template< >
+struct Formatter< E_UnitExperience >
+{
+    void operator()( const E_UnitExperience& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< E_UnitMoral >
+{
+    void operator()( const E_UnitMoral& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< E_UnitFatigue >
+{
+    void operator()( const E_UnitFatigue& e, Displayer_ABC& displayer ) const;
+};
+
+template< >
 struct Formatter< E_TroopHealthState >
 {
     void operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const;

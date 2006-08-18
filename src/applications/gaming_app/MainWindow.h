@@ -30,6 +30,7 @@ class AgentsLayer;
 class GlPlaceHolder;
 class BigBrother; // $$$$ AGE 2006-08-02: Duh !
 class Network;
+class IconLayout;
 
 // =============================================================================
 /** @class  MainWindow
@@ -83,10 +84,10 @@ private:
     virtual void OptionChanged( const std::string& name, const OptionVariant& value );
     virtual void NotifyUpdated( const Simulation& simulation );
 
-    void InitializeHumanFactors( const std::string& scipioXml );
-
     void CompareConfigPath( const std::string& server, const std::string& serverPath );
     static std::string BuildRemotePath( std::string server, std::string path );
+
+    void BuildIconLayout();
     //@}
 
     //! @name Copy/Assignment
@@ -108,6 +109,7 @@ private:
     GlWidget*   widget2d_;
     Gl3dWidget* widget3d_;
     GlPlaceHolder* glPlaceHolder_;
+    IconLayout* iconLayout_;
 
     bool b3d_;
 

@@ -19,9 +19,6 @@
 #include "gaming/Contaminations.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
-#include "gaming/Experience.h"
-#include "gaming/Morale.h"
-#include "gaming/Tiredness.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/Transports.h"
 

@@ -80,6 +80,18 @@ void Formatter< E_UnitCapaciteMission >::operator()( const E_UnitCapaciteMission
     displayer.AddToDisplay( ENT_Tr::ConvertFromUnitCapaciteMission( e ) );
 }
 
+void Formatter< E_UnitExperience >::operator()( const E_UnitExperience& e, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitExperience( e ) );
+}
+
+void Formatter< E_UnitMoral >::operator()( const E_UnitMoral& e, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitMoral( e ) );
+}
+
+void Formatter< E_UnitFatigue >::operator()( const E_UnitFatigue& e, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitFatigue( e ) );
+}
+
 void Formatter< E_TroopHealthState >::operator()( const E_TroopHealthState& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( tools::ToString( e ) );
 }

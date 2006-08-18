@@ -13,6 +13,7 @@
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
 #include "MiniView.h"
+#include "clients_gui/IconLayout.h"
 
 using namespace geometry;
 
@@ -38,7 +39,7 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , MapWidget( context_, pParent, width_, height_ )
@@ -48,6 +49,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
     , circle_( 0 )
     , viewport_( 0, 0, width_, height_ )
     , frame_( 0 )
+    , iconLayout_( iconLayout )
 {
     SetReverse( true );
     SetExclusive( true );
@@ -471,7 +473,7 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );
     Base().BindIcon( xpm );
-    const Point2f iconTranslation = Base().IconLocation( xpm );
+    const Point2f iconTranslation = iconLayout_.IconLocation( xpm );
     glTranslatef( where.X() + iconTranslation.X(), where.Y() + iconTranslation.Y(), 0.f );
         glBegin( GL_QUADS );
             glTexCoord2f( 0.f, 1.f );

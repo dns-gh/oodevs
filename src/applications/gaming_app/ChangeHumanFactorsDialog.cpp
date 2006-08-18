@@ -12,21 +12,23 @@
 #include "moc_ChangeHumanFactorsDialog.cpp"
 #include "gaming/ASN_Messages.h"
 #include "gaming/HumanFactors.h"
-#include "gaming/Tiredness.h"
-#include "gaming/Experience.h"
-#include "gaming/Morale.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/MagicOrders.h"
 
+#include "ENT/ENT_Tr.h"
+
 namespace 
 {
-    template< typename Container, typename Combo >
-    void Populate( const Container& cont, Combo& combo )
+    template< typename Enum, typename Combo, typename Converter >
+    void Populate( Enum size, Combo& combo, Converter converter )
     {
         combo.Clear();
-        for( typename Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
-            combo.AddItem( it->second->GetName().c_str(), it->second->GetAsnID() );
+        for( unsigned int i = 0; i < (unsigned int)size; ++i )
+        {
+            const std::string& value = converter( (Enum)i, ENT_Tr_ABC::eToSim );
+            combo.AddItem( value.c_str(), (Enum)i );
+        }
     }
 }
 // -----------------------------------------------------------------------------
@@ -45,15 +47,15 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pLayout->setRowStretch( 2, 0 );
     
     pLayout->addWidget( new QLabel( tr( "Fatigue:" ), this ), 1, 0 );
-    pTirednessCombo_ = new ValuedComboBox< ASN1T_EnumUnitFatigue >( this );
+    pTirednessCombo_ = new ValuedComboBox< E_UnitFatigue >( this );
     pLayout->addWidget( pTirednessCombo_, 1, 1 );
 
     pLayout->addWidget( new QLabel( tr( "Moral:" ), this ), 2, 0 );
-    pMoralCombo_ = new ValuedComboBox< ASN1T_EnumUnitMoral >( this );
+    pMoralCombo_ = new ValuedComboBox< E_UnitMoral >( this );
     pLayout->addWidget( pMoralCombo_, 2, 1 );
 
     pLayout->addWidget( new QLabel( tr( "Experience:" ), this ), 3, 0 );
-    pExperienceCombo_ = new ValuedComboBox< ASN1T_EnumUnitExperience >( this );
+    pExperienceCombo_ = new ValuedComboBox< E_UnitExperience >( this );
     pLayout->addWidget( pExperienceCombo_, 3, 1 );
 
     pAllUnitsCheckBox_ = new QCheckBox( tr( "Toutes les unités" ), this );
@@ -87,15 +89,15 @@ ChangeHumanFactorsDialog::~ChangeHumanFactorsDialog()
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::Show()
 {
-    Populate( Tiredness::GetTirednesses(), *pTirednessCombo_ );
-    Populate( Morale::GetMorales(), *pMoralCombo_ );
-    Populate( Experience::GetExperiences(), *pExperienceCombo_ );
+    Populate( eNbrUnitFatigue, *pTirednessCombo_, &ENT_Tr::ConvertFromUnitFatigue );
+    Populate( eNbrUnitMoral, *pMoralCombo_, &ENT_Tr::ConvertFromUnitMoral );
+    Populate( eNbrUnitExperience, *pExperienceCombo_, &ENT_Tr::ConvertFromUnitExperience );
 
     if( const HumanFactors* humanFactors = selected_->Retrieve< HumanFactors >() )
     {
-        pTirednessCombo_->SetCurrentItem( humanFactors->GetTiredness().GetAsnID() );
-        pMoralCombo_->SetCurrentItem( humanFactors->GetMorale().GetAsnID() );
-        pExperienceCombo_->SetCurrentItem( humanFactors->GetExperience().GetAsnID() );
+        pTirednessCombo_->SetCurrentItem( humanFactors->GetTiredness() );
+        pMoralCombo_->SetCurrentItem( humanFactors->GetMorale() );
+        pExperienceCombo_->SetCurrentItem( humanFactors->GetExperience() );
         if ( selected_->GetAutomatType() )
             pAllUnitsCheckBox_->show();
         else

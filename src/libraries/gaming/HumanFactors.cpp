@@ -9,9 +9,6 @@
 
 #include "gaming_pch.h"
 #include "HumanFactors.h"
-#include "Experience.h"
-#include "Tiredness.h"
-#include "Morale.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DataDictionary.h"
@@ -22,13 +19,13 @@
 // -----------------------------------------------------------------------------
 HumanFactors::HumanFactors( Controller& controller, DataDictionary& dictionary )
     : controller_( controller )
-    , pExperience_( 0 )
-    , pTiredness_( 0 )
-    , pMorale_( 0 )
+    , experience_( (E_UnitExperience)0 )
+    , tiredness_( (E_UnitFatigue)0 )
+    , morale_( (E_UnitMoral)0 )
 {
-    dictionary.Register( "Facteurs Humains/Experience", pExperience_ );
-    dictionary.Register( "Facteurs Humains/Fatigue", pTiredness_ );
-    dictionary.Register( "Facteurs Humains/Moral", pMorale_ );
+    dictionary.Register( "Facteurs Humains/Experience", experience_ );
+    dictionary.Register( "Facteurs Humains/Fatigue", tiredness_ );
+    dictionary.Register( "Facteurs Humains/Moral", morale_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,13 +44,13 @@ HumanFactors::~HumanFactors()
 void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.moralPresent )
-        pMorale_ = Morale::Find( message.moral );
+        morale_ = (E_UnitMoral)message.moral;
 
     if( message.m.experiencePresent )
-        pExperience_ = Experience::Find( message.experience );
+        experience_ = (E_UnitExperience)message.experience;
 
     if( message.m.fatiguePresent )
-        pTiredness_ = Tiredness::Find( message.fatigue );
+        tiredness_ = (E_UnitFatigue)message.fatigue;
 
     controller_.Update( *this );
 }
@@ -65,34 +62,34 @@ void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void HumanFactors::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "Facteurs humains" )
-                .Display( "Experience:", pExperience_ )
-                .Display( "Moral:", pMorale_ )
-                .Display( "Fatigue:", pTiredness_ );
+                .Display( "Experience:", experience_ )
+                .Display( "Moral:", morale_ )
+                .Display( "Fatigue:", tiredness_ );
 }
    
 // -----------------------------------------------------------------------------
 // Name: HumanFactors::GetExperience
 // Created: SBO 2006-06-27
 // -----------------------------------------------------------------------------
-const Experience& HumanFactors::GetExperience() const
+E_UnitExperience HumanFactors::GetExperience() const
 {
-    return *pExperience_;
+    return experience_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: HumanFactors::GetTiredness
 // Created: SBO 2006-06-27
 // -----------------------------------------------------------------------------
-const Tiredness& HumanFactors::GetTiredness() const
+E_UnitFatigue HumanFactors::GetTiredness() const
 {
-    return *pTiredness_;
+    return tiredness_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: HumanFactors::GetMorale
 // Created: SBO 2006-06-27
 // -----------------------------------------------------------------------------
-const Morale& HumanFactors::GetMorale() const
+E_UnitMoral HumanFactors::GetMorale() const
 {
-    return *pMorale_;
+    return morale_;
 }

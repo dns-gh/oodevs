@@ -19,6 +19,7 @@
 
 class Controllers;
 class MiniView;
+class IconLayout;
 
 // =============================================================================
 /** @class  GlWidget
@@ -32,7 +33,7 @@ class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml );
+             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout );
     virtual ~GlWidget();
     //@}
 
@@ -102,6 +103,7 @@ private:
     GlFont* font_;
 
     T_Views views_;
+    IconLayout& iconLayout_;
     //@}
 };
 

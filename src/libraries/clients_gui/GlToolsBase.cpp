@@ -105,26 +105,6 @@ void GlToolsBase::BindIcon( const char** xpm )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlToolsBase::InitializeIconLocations
-// Created: AGE 2006-04-07
-// -----------------------------------------------------------------------------
-void GlToolsBase::InitializeIconLocations()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::IconLocation
-// Created: AGE 2006-04-07
-// -----------------------------------------------------------------------------
-Point2f GlToolsBase::IconLocation( const char** xpm )
-{
-    if( iconLocations_.empty() )
-        InitializeIconLocations();
-    return iconLocations_[ xpm ];
-}
-
-// -----------------------------------------------------------------------------
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------

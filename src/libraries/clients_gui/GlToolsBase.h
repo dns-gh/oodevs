@@ -40,6 +40,8 @@ public:
     geometry::Point2f IconLocation( const char** xpm );
     void PrintApp6( const std::string symbol, bool outlined );
     geometry::Vector2f GetSize( const std::string& symbol );
+
+    void SetIconLocation( const char** xpm, const geometry::Point2f& position );
     //@}
 
 private:
@@ -53,16 +55,7 @@ private:
     //@{
     typedef std::map< const char**, unsigned >            T_Icons;
     typedef T_Icons::const_iterator                     CIT_Icons;
-    typedef std::map< const char**, geometry::Point2f > T_IconLocations;
     //@}
-
-    //! @name Helpers
-    //@{
-    virtual void InitializeIconLocations();
-    //@}
-
-protected:
-    T_IconLocations iconLocations_; // $$$$ SBO 2006-08-17: 
 
 private:
     //! @name Member data

@@ -23,9 +23,6 @@ class NBCAgent;
 class ComponentType;
 class BreakdownType;
 class ObjectType;
-class Experience;
-class Morale;
-class Tiredness;
 class Mission;
 
 // =============================================================================
@@ -47,9 +44,6 @@ class BaseDisplayer : public Displayer_ABC
                   , public Caller< ComponentType >
                   , public Caller< BreakdownType >
                   , public Caller< ObjectType >
-                  , public Caller< Experience >
-                  , public Caller< Morale >
-                  , public Caller< Tiredness >
                   , public Caller< QTime >
                   , public Caller< Mission >
 {
@@ -82,9 +76,6 @@ private:
     virtual void Call( const ComponentType& value );
     virtual void Call( const BreakdownType& value );
     virtual void Call( const ObjectType& value );
-    virtual void Call( const Experience& value );
-    virtual void Call( const Morale& value );
-    virtual void Call( const Tiredness& value );
     virtual void Call( const QTime& value );
     virtual void Call( const Mission& value );
     //@}

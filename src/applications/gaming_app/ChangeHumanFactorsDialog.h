@@ -68,9 +68,9 @@ private:
     Controllers& controllers_;
     Publisher_ABC& publisher_;
     SafePointer< Agent_ABC > selected_;
-    ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
-    ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;
-    ValuedComboBox< ASN1T_EnumUnitExperience >*  pExperienceCombo_;
+    ValuedComboBox< E_UnitFatigue >*     pTirednessCombo_;
+    ValuedComboBox< E_UnitMoral >*       pMoralCombo_;
+    ValuedComboBox< E_UnitExperience >*  pExperienceCombo_;
     QCheckBox*                                   pAllUnitsCheckBox_;
     //@}
 };
