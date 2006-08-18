@@ -215,10 +215,21 @@
       tests
     ============================================================================
     -->
-    <target name="test" description="run all tests">
+    <target name="tests" description="run all tests" depends="test-test-scripts, test-main-scripts" />
+    
+    <target name="test-main-scripts" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
             <arg value="${data.dir}/main/scipio.xml"/>
+            <arg value="-test"/>
+            <arg value="-forceodbcomposition"/>
+        </exec>
+    </target>
+    
+    <target name="test-test-scripts" description="run all tests">
+        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <arg value="-conffile"/>
+            <arg value="${data.dir}/test/scipio.xml"/>
             <arg value="-test"/>
             <arg value="-forceodbcomposition"/>
         </exec>
@@ -268,6 +279,6 @@
     -->
     <target name="build" depends="libraries, applications"/>
 
-    <target name="all" depends="configure, build, test" description="build and package distribution"/>
+    <target name="all" depends="configure, build, tests" description="build and package distribution"/>
 
 </project>
