@@ -1,14 +1,13 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-08 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_ConfigDialog.cpp $
-// $Author: Ape $
-// $Modtime: 10/02/05 16:10 $
-// $Revision: 2 $
-// $Workfile: ADN_ConfigDialog.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-#include "ADN_pch.h"
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "adaptation_app_pch.h"
 #include "ADN_ConfigDialog.h"
 #include "moc_ADN_ConfigDialog.cpp"
 

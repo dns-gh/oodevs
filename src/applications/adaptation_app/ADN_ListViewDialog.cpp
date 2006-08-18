@@ -6,17 +6,8 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ListViewDialog.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 15:53 $
-// $Revision: 3 $
-// $Workfile: ADN_ListViewDialog.cpp $
-//
-// *****************************************************************************
 
-#include "ADN_pch.h"
+#include "adaptation_app_pch.h"
 #include "ADN_ListViewDialog.h"
 #include "moc_ADN_ListViewDialog.cpp"
 
