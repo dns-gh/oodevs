@@ -55,6 +55,8 @@ void AGR_Mos2Generator::Generate( const AGR_Workspace& workspace, const std::str
     MT_MakeDir( strOutputPath + "/src" );
     MT_MakeDir( strOutputPath + "/src/applications" );
     MT_MakeDir( strOutputPath + "/src/applications/gaming_app" );
+    MT_MakeDir( strOutputPath + "/src/libraries" );
+    MT_MakeDir( strOutputPath + "/src/libraries/gaming" );
     GenerateMos2MissionInterfaceHeaderFiles( workspace, strOutputPath );
     GenerateMos2MissionInterfaceCppFiles   ( workspace, strOutputPath );
     GenerateMos2Rcs                        ( workspace, strOutputPath );
@@ -250,5 +252,5 @@ void AGR_Mos2Generator::GenerateMos2Rcs( const AGR_Workspace& workspace, const s
     }
 
     workspace.ReplaceInString( strBaseContent, "$AGR_MOS2_RC$", strTmp.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/gaming_app/RC.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/gaming/RC.cpp" );
 }

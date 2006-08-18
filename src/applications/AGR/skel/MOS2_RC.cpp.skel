@@ -1,31 +1,26 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-15 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/RC.cpp $
-// $Author: Nld $
-// $Modtime: 4/07/05 12:33 $
-// $Revision: 16 $
-// $Workfile: RC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "astec_pch.h"
+#include "gaming_pch.h"
 #include "RC.h"
-
-#include "App.h"
-#include "AgentManager.h"
-#include "Agent.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "InternalLinks.h"
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-RC::RC( Agent_ABC& agent )
-    : Report_ABC( agent.GetPos() )
-    , agent_        ( agent )
+RC::RC( const Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg )
+    : Report_ABC( agent, simulation )
 {
+    Initialize( asnMsg  );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: RC destructor
@@ -33,6 +28,7 @@ RC::RC( Agent_ABC& agent )
 //-----------------------------------------------------------------------------
 RC::~RC()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -45,7 +41,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
     switch( asnMsg.cr.t )
     {
     
-    $AGR_MOS2_RC$
+$AGR_MOS2_RC$
 /*    case T_MsgCR_cr_cr_preparation_mission                           : 
         {
             if( asnMsg.cr.u.cr_preparation_mission->m.delaiPresent )
@@ -55,7 +51,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
             break;
         }  */
     default:
-        assert( false );
+        strMsg << "Unknown RC " << asnMsg.cr.t;
     }
 
     strTitle_ = strMsg.str();
@@ -80,6 +76,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
     }
 }
 
+// $$$$ AGE 2006-05-12: resoudre tous ces trucs pour afficher un nom
 
 // -----------------------------------------------------------------------------
 // Name: RC::ObjectKnowledgeLink
@@ -87,11 +84,8 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // -----------------------------------------------------------------------------
 std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
-    std::stringstream str;
-    str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
-    return str.str();
+    return InternalLinks::CreateLink( InternalLinks::objectKnowledge_, nId, QString::number( nId ) ).ascii();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RC::AgentKnowledgeLink
@@ -99,9 +93,7 @@ std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
-    std::stringstream str;
-    str << "<a href=\"AgentKnowledge:" << nId << "\">" << nId << "</a>";
-    return str.str();
+    return InternalLinks::CreateLink( InternalLinks::agentKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,9 +102,7 @@ std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 {
-    std::stringstream str;
-    str << "<a href=\"PopulationKnowledge:" << nId << "\">" << nId << "</a>";
-    return str.str();
+    return InternalLinks::CreateLink( InternalLinks::populationKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -121,12 +111,5 @@ std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentLink( ASN1T_OID nId )
 {
-    Agent_ABC* pAgent = App::GetApp().GetAgentManager().FindAllAgent( nId );
-    if( pAgent == 0 )
-        return std::string( " !Agent non trouvé! " );
-
-    std::stringstream str;
-    str << "<a href=\"Agent:" << nId << "\">" << pAgent->GetName() << "</a>";
-    return str.str();
-
+    return InternalLinks::CreateLink( InternalLinks::agent_, nId, QString::number( nId ) ).ascii();
 }
