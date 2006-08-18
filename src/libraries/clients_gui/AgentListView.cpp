@@ -17,7 +17,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "gaming/AutomatDecisions.h"
 #include "clients_kernel/OptionVariant.h"
 #include "gaming/ASN_Messages.h"
 #include "ItemFactory_ABC.h"
@@ -161,24 +160,7 @@ void AgentListView::Display( const Agent_ABC& agent, ValuedListItem* item )
     item->Set( &agent, agent.GetName().c_str() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
-    if( decisions )
-    {
-        const QPixmap pix = decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
-        item->setPixmap( 0, pix );
-        RecursiveDisplay< Agent_ABC, Agent_ABC >( agent, item );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
-{
-    ValuedListItem* item = FindItem( & decisions.GetAgent(), firstChild() );
-    if( item )
-        item->setPixmap( 0, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
+    RecursiveDisplay< Agent_ABC, Agent_ABC >( agent, item );
 }
 
 // -----------------------------------------------------------------------------

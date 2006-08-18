@@ -12,11 +12,6 @@
 #include "moc_AgentsLayer.cpp"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
-#include "gaming/AutomatDecisions.h"
-#include "gaming/Attributes.h"
-#include "gaming/Reports.h"
-#include "gaming/AutomatDecisions.h"
-#include "gaming/Decisions.h"
 #include "clients_kernel/Displayer_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -84,28 +79,6 @@ void AgentsLayer::Toggle( const Agent_ABC& automat, bool aggregate )
 }   
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::Engage
-// Created: SBO 2006-06-19
-// -----------------------------------------------------------------------------
-void AgentsLayer::Engage( const Agent_ABC& automat )
-{
-    if( automat.GetSuperior() )
-        return;
-    automat.Retrieve< AutomatDecisions >()->Engage();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Disengage
-// Created: SBO 2006-06-19
-// -----------------------------------------------------------------------------
-void AgentsLayer::Disengage( const Agent_ABC& automat )
-{
-    if( automat.GetSuperior() )
-        return;
-    automat.Retrieve< AutomatDecisions >()->Disengage();
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsLayer::NotifyContextMenu
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
@@ -115,14 +88,6 @@ void AgentsLayer::NotifyContextMenu( const Agent_ABC& agent, ::ContextMenu& menu
         return;
 
     selected_ = &agent;
-    if( agent.Retrieve< AutomatDecisions >() )
-    {
-        if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
-            menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
-        else
-            menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
-    }
-
     if( aggregated_.find( &agent ) == aggregated_.end() )
         menu.InsertItem( "Interface", tr( "Aggreger" ), this, SLOT( Aggregate() ) );
     else
@@ -150,26 +115,6 @@ void AgentsLayer::Disaggregate()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::Engage
-// Created: SBO 2006-06-19
-// -----------------------------------------------------------------------------
-void AgentsLayer::Engage()
-{
-    if( selected_ )
-        Engage( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Disengage
-// Created: SBO 2006-06-19
-// -----------------------------------------------------------------------------
-void AgentsLayer::Disengage()
-{
-    if( selected_ )
-        Disengage( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsLayer::Select
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
@@ -187,25 +132,10 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::AddToTooltip
-// Created: AGE 2006-08-03
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void AgentsLayer::AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
-{
-    if( const Extension* extension = entity.Retrieve< Extension >() )
-        extension->DisplayInTooltip( displayer );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsLayer::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 void AgentsLayer::DisplayTooltip( const Agent_ABC& agent, Displayer_ABC& displayer )
 {
-    displayer.Display( "", agent );
-    AddToTooltip< Attributes >      ( agent, displayer );
-    AddToTooltip< Decisions >       ( agent, displayer );
-    AddToTooltip< AutomatDecisions >( agent, displayer );
-    AddToTooltip< Reports >         ( agent, displayer );
+    // NOTHING
 }

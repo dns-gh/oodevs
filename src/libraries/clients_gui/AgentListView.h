@@ -37,7 +37,6 @@ class AgentListView : public ListView< AgentListView >
                     , public ElementObserver_ABC< Team_ABC >
                     , public ElementObserver_ABC< KnowledgeGroup_ABC >
                     , public ElementObserver_ABC< Agent_ABC >
-                    , public ElementObserver_ABC< AutomatDecisions >
                     , public SelectionObserver_Base< Team_ABC > // $$$$ AGE 2006-03-21: refactor these crap
                     , public SelectionObserver_Base< KnowledgeGroup_ABC >
                     , public SelectionObserver_Base< Agent_ABC >
@@ -64,9 +63,9 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const Team_ABC& team,            ValuedListItem* item );
-    void Display( const KnowledgeGroup_ABC& group, ValuedListItem* item );
-    void Display( const Agent_ABC& agent,          ValuedListItem* item );
+    virtual void Display( const Team_ABC& team,            ValuedListItem* item );
+    virtual void Display( const KnowledgeGroup_ABC& group, ValuedListItem* item );
+    virtual void Display( const Agent_ABC& agent,          ValuedListItem* item );
     //@}
 
 private:
@@ -93,7 +92,6 @@ private:
 
     virtual void NotifyUpdated( const KnowledgeGroup_ABC& group );
     virtual void NotifyUpdated( const Agent_ABC& agent );
-    virtual void NotifyUpdated( const AutomatDecisions& decisions );
 
     virtual void Select( const Team_ABC& element );
     virtual void Select( const KnowledgeGroup_ABC& element );

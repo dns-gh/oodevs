@@ -60,6 +60,9 @@ private slots:
     void ActivateAutomatMission( int );
     void ActivateFragOrder( int );
     void ActivatePopulationMission( int );
+
+    void Engage();
+    void Disengage();
     //@}
 
 private:

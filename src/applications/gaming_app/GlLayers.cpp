@@ -13,10 +13,9 @@
 #include "AgentKnowledgesLayer.h"
 #include "MeteoLayer.h"
 #include "ObjectKnowledgesLayer.h"
-#include "clients_gui/ParametersLayer.h"
 #include "PopulationKnowledgesLayer.h"
+#include "AgentsLayerImp.h"
 
-#include "clients_gui/AgentsLayer.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
@@ -24,6 +23,7 @@
 #include "clients_gui/LimitsLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/ObjectsLayer.h"
+#include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PopulationsLayer.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_kernel/DetectionMap.h"
@@ -43,7 +43,7 @@ GlLayers::GlLayers( Controllers& controllers, const StaticModel& staticModel, Mo
     , strategy_( new ColorStrategy( controllers_, *this ) )
 {
     parameters_ = new ParametersLayer( *this );
-    agents_ = new AgentsLayer( controllers_, *this, *strategy_, *this );
+    agents_ = new AgentsLayerImp( controllers_, *this, *strategy_, *this );
 }
 
 // -----------------------------------------------------------------------------

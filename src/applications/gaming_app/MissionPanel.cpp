@@ -76,6 +76,14 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu 
         AddAgentMissions( *decisions, menu );
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         AddAutomatMissions( *decisions, menu );
+    
+    if( agent.Retrieve< AutomatDecisions >() )
+    {
+        if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
+            menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
+        else
+            menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -270,4 +278,26 @@ void MissionPanel::Draw( const geometry::Rectangle2f& viewport )
         pMissionInterface_->Draw( tools_, viewport );
         glPopAttrib();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::Engage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void MissionPanel::Engage()
+{
+    if( !selected_ || selected_->GetSuperior() )
+        return;
+    selected_->Retrieve< AutomatDecisions >()->Engage();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::Disengage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void MissionPanel::Disengage()
+{
+    if( !selected_ || selected_->GetSuperior() )
+        return;
+    selected_->Retrieve< AutomatDecisions >()->Disengage();
 }

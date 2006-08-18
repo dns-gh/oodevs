@@ -40,6 +40,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
     std::stringstream strMsg;
     switch( asnMsg.cr.t )
     {
+    
         case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
@@ -152,6 +153,12 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_ravitaillement_dotations_annule : strMsg << "ravitaillement dotations annule"; break;
         case T_MsgCR_cr_cr_ravitaillement_stock_annule : strMsg << "ravitaillement stock annule"; break;
         case T_MsgCR_cr_cr_humain_retour_de_sante : strMsg << "humain retour de sante"; break;
+        case T_MsgCR_cr_cr_alerte_disponibilite_moyens_releve : strMsg << "alerte disponibilite moyens releve"; break;
+        case T_MsgCR_cr_cr_alerte_disponibilite_moyens_ramassage : strMsg << "alerte disponibilite moyens ramassage"; break;
+        case T_MsgCR_cr_cr_alerte_disponibilite_medecins : strMsg << "alerte disponibilite medecins"; break;
+        case T_MsgCR_cr_cr_alerte_disponibilite_remorqueurs : strMsg << "alerte disponibilite remorqueurs"; break;
+        case T_MsgCR_cr_cr_alerte_disponibilite_reparateurs : strMsg << "alerte disponibilite reparateurs"; break;
+        case T_MsgCR_cr_cr_alerte_disponibilite_vecteurs : strMsg << "alerte disponibilite vecteurs"; break;
         case T_MsgCR_cr_cr_pret_materiel_en_cours : strMsg << "pret materiel en cours"; break;
         case T_MsgCR_cr_cr_pret_materiel_annule : strMsg << "pret materiel annule"; break;
         case T_MsgCR_cr_cr_pret_materiel_effectue : strMsg << "pret materiel effectue"; break;

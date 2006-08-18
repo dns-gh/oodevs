@@ -10,6 +10,9 @@
 #ifndef __AgentList_h_
 #define __AgentList_h_
 
+#include "EntitySearchBox.h"
+#include "clients_kernel/Agent_ABC.h"
+
 class Controllers;
 class Publisher_ABC;
 class ItemFactory_ABC;
@@ -20,6 +23,7 @@ class ItemFactory_ABC;
 */
 // Created: AGE 2006-08-10
 // =============================================================================
+template< typename List >
 class AgentList : public QVBox
 {
 
@@ -37,5 +41,26 @@ private:
     AgentList& operator=( const AgentList& ); //!< Assignement operator
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: AgentList constructor
+// Created: AGE 2006-08-10
+// -----------------------------------------------------------------------------
+template< typename List >
+AgentList< List >::AgentList( Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory )
+{
+    new EntitySearchBox< Agent_ABC >( this, controllers );
+    new List( this, controllers, publisher, factory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentList destructor
+// Created: AGE 2006-08-10
+// -----------------------------------------------------------------------------
+template< typename List >
+AgentList< List >::~AgentList()
+{
+    // NOTHING
+}
 
 #endif // __AgentList_h_

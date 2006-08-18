@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "PopulationsLayer.h"
 #include "gaming/Reports.h"
-#include "gaming/PopulationDecisions.h"
 #include "gaming/Population.h"
 
 // -----------------------------------------------------------------------------

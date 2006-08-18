@@ -38,8 +38,6 @@ public:
     //@{
     void Aggregate   ( const Agent_ABC& agent );
     void Disaggregate( const Agent_ABC& agent );
-    void Engage      ( const Agent_ABC& agent ); // $$$$ AGE 2006-06-29: ca a pas spécialement besoin d'etre dans le layer opengl...
-    void Disengage   ( const Agent_ABC& agent );
     //@}
 
 private slots:
@@ -47,8 +45,6 @@ private slots:
     //@{
     void Aggregate   ();
     void Disaggregate();
-    void Engage      ();
-    void Disengage   ();
     //@}
 
 private:
@@ -64,8 +60,6 @@ private:
     virtual void Select( const Entity_ABC&, bool );
     virtual void DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
     void Toggle( const Agent_ABC& automat, bool aggregate );
-    template< typename Extension >
-    void AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
     //@}
 
     //! @name Types

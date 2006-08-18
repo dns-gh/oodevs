@@ -26,6 +26,7 @@
 #include "SIMControlToolbar.h"
 #include "UnitToolbar.h"
 #include "LinkInterpreter.h"
+#include "AgentListViewImp.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -109,7 +110,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new AgentList< AgentListViewImp >( controllers, publisher, *factory ), tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );

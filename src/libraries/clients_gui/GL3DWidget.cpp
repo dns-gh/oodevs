@@ -9,14 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "Gl3dWidget.h"
-#include "AgentsLayer.h"
-#include "ObjectsLayer.h"
 #include "ColorStrategy.h"
 #include "GlFont.h"
-#include "PopulationsLayer.h"
-#include "LimitsLayer.h"
+#include "EntityLayer.h"
 #include "ColorStrategy.h"
-#include "gaming/Model.h"
 #include "clients_kernel/DetectionMap.h"
 
 #include "graphics/ElevationTextureTree.h"
