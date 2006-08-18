@@ -347,6 +347,13 @@ bool ravitaillementDebutMission_;
 id porteeAction_;
 };
 
+typedef struct T_Mission_Automate_ALAT_AllerSeRecompleter : T_Mission_Automate
+{
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
 typedef struct T_Mission_Automate_ASA_DefendreZone : T_Mission_Automate
 {
 T_Localisation zone_;

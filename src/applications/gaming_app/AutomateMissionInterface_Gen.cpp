@@ -64,6 +64,7 @@ AutomateMissionInterface::~AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_profondeur; break;
         case T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_zone; break;
         case T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_effectuer_recherche_et_sauvetage; break;
+        case T_Mission_Automate_mission_automate_alat_aller_se_recompleter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_aller_se_recompleter; break;
         case T_Mission_Automate_mission_automate_asa_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone; break;
         case T_Mission_Automate_mission_automate_asa_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site; break;
         case T_Mission_Automate_mission_automate_asa_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller; break;
@@ -231,6 +232,7 @@ void AutomateMissionInterface::CreateInterface()
         case eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur : CreateMission_ALAT_DetruireNeutraliserDansProfondeur(); break;
         case eMission_Automate_ALAT_DetruireNeutraliserDansZone : CreateMission_ALAT_DetruireNeutraliserDansZone(); break;
         case eMission_Automate_ALAT_EffectuerRechercheEtSauvetage : CreateMission_ALAT_EffectuerRechercheEtSauvetage(); break;
+        case eMission_Automate_ALAT_AllerSeRecompleter : CreateMission_ALAT_AllerSeRecompleter(); break;
         case eMission_Automate_ASA_DefendreZone : CreateMission_ASA_DefendreZone(); break;
         case eMission_Automate_ASA_DefendreSite : CreateMission_ASA_DefendreSite(); break;
         case eMission_Automate_ASA_Surveiller : CreateMission_ASA_Surveiller(); break;
@@ -1145,6 +1147,27 @@ void AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage(
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
     pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
     pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_AllerSeRecompleter
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_AllerSeRecompleter()
+{
+    ASN1T_Mission_Automate_ALAT_AllerSeRecompleter& asnMission = *new ASN1T_Mission_Automate_ALAT_AllerSeRecompleter();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_aller_se_recompleter;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_aller_se_recompleter = &asnMission;
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------

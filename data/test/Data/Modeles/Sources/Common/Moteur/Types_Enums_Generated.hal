@@ -63,6 +63,7 @@ typedef enum E_TypeMissionAutomate
     eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
     eMission_Automate_ALAT_DetruireNeutraliserDansZone,
     eMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
+    eMission_Automate_ALAT_AllerSeRecompleter,
     eMission_Automate_ASA_DefendreZone,
     eMission_Automate_ASA_DefendreSite,
     eMission_Automate_ASA_Surveiller,
@@ -173,6 +174,7 @@ typedef enum E_TypeMissionAutomate
 
 typedef enum E_TypeMissionPion
 {
+    eMission_Pion_ALAT_AllerSeRecompleter,
     eMission_Pion_ALAT_EvacuationSanitaire,
     eMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
     eMission_Pion_ALAT_ReconnaitreContourEnnemi,

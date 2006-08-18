@@ -1649,6 +1649,14 @@
         <source>Pion LOG Renforcer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automate ALAT AllerSeRecompleter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ALAT AllerSeRecompleter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>

@@ -59,6 +59,7 @@
 #include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur.cpp"
 #include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansZone.cpp"
 #include "Automat/Mission_Automat_ALAT_EffectuerRechercheEtSauvetage.cpp"
+#include "Automat/Mission_Automat_ALAT_AllerSeRecompleter.cpp"
 #include "Automat/Mission_Automat_ASA_DefendreZone.cpp"
 #include "Automat/Mission_Automat_ASA_DefendreSite.cpp"
 #include "Automat/Mission_Automat_ASA_Surveiller.cpp"
@@ -243,6 +244,7 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur >( "Automate ALAT DetruireNeutraliserDansProfondeur" );
     Register< Mission_Automat_ALAT_DetruireNeutraliserDansZone >( "Automate ALAT DetruireNeutraliserDansZone" );
     Register< Mission_Automat_ALAT_EffectuerRechercheEtSauvetage >( "Automate ALAT EffectuerRechercheEtSauvetage" );
+    Register< Mission_Automat_ALAT_AllerSeRecompleter >( "Automate ALAT AllerSeRecompleter" );
     Register< Mission_Automat_ASA_DefendreZone >( "Automate ASA DefendreZone" );
     Register< Mission_Automat_ASA_DefendreSite >( "Automate ASA DefendreSite" );
     Register< Mission_Automat_ASA_Surveiller >( "Automate ASA Surveiller" );

@@ -194,6 +194,7 @@ enum E_SMission
     // 3D - ALAT
     eSMission_Pion_ALAT_Debut,
 
+    eSMission_Pion_ALAT_AllerSeRecompleter,
     eSMission_Pion_ALAT_EvacuationSanitaire,
     eSMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
     eSMission_Pion_ALAT_ReconnaitreContourEnnemi,
@@ -479,6 +480,7 @@ enum E_SMission
     eSMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
     eSMission_Automate_ALAT_DetruireNeutraliserDansZone,
     eSMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
+    eSMission_Automate_ALAT_AllerSeRecompleter,
 
     eSMission_Automate_ALAT_Fin,
 

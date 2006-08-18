@@ -206,4 +206,11 @@ Mission-Automate-ALAT-EffectuerRechercheEtSauvetage ::= SEQUENCE
     portee-action                   EnumMissionALAT_PorteeAction
 }
 
+Mission-Automate-ALAT-AllerSeRecompleter ::= SEQUENCE
+{
+    plots-ravitaillement ListKnowledgeObject,
+    portee-action        EnumMissionALAT_PorteeAction,
+    ambiance-mission     EnumMissionALAT_AmbianceMission
+}
+
 END -- ScipioAutomateMission_ALAT

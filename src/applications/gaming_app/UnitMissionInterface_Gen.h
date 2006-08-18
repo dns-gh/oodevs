@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+    void CreateMission_ALAT_AllerSeRecompleter();
     void CreateMission_ALAT_EvacuationSanitaire();
     void CreateMission_ALAT_ReconnaitreDansLaProfondeur();
     void CreateMission_ALAT_ReconnaitreContourEnnemi();

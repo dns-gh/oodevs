@@ -50,9 +50,6 @@ AGR_MilProjectGenerator::~AGR_MilProjectGenerator()
 // -----------------------------------------------------------------------------
 void AGR_MilProjectGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-//    MT_MakeDir( strOutputPath + "/build" );
-//    MT_MakeDir( strOutputPath + "/build/vc71" );
-
     MT_MakeDir( strOutputPath + "/src" );
     MT_MakeDir( strOutputPath + "/src/libraries" );
     MT_MakeDir( strOutputPath + "/src/libraries/simulation_missions" );

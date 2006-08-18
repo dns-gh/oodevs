@@ -10,6 +10,7 @@
 #include "simulation_tester_pch.h"
 #include "Mission_Pawn_Type.h"
 
+#include "Pawn/Mission_Pawn_ALAT_AllerSeRecompleter.cpp"
 #include "Pawn/Mission_Pawn_ALAT_EvacuationSanitaire.cpp"
 #include "Pawn/Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur.cpp"
 #include "Pawn/Mission_Pawn_ALAT_ReconnaitreContourEnnemi.cpp"
@@ -253,6 +254,7 @@ Mission_Pawn_Type::~Mission_Pawn_Type()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Type::Initialize()
 {
+    Register< Mission_Pawn_ALAT_AllerSeRecompleter >( "Pion ALAT AllerSeRecompleter" );
     Register< Mission_Pawn_ALAT_EvacuationSanitaire >( "Pion ALAT EvacuationSanitaire" );
     Register< Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur >( "Pion ALAT ReconnaitreDansLaProfondeur" );
     Register< Mission_Pawn_ALAT_ReconnaitreContourEnnemi >( "Pion ALAT ReconnaitreContourEnnemi" );

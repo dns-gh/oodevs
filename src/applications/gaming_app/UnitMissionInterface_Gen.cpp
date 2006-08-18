@@ -16,6 +16,7 @@ UnitMissionInterface::~UnitMissionInterface()
 {
     switch( pASNMsgOrder_->GetAsnMsg().mission.t )
     {
+        case T_Mission_Pion_mission_pion_alat_aller_se_recompleter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_aller_se_recompleter; break;
         case T_Mission_Pion_mission_pion_alat_evacuation_sanitaire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_evacuation_sanitaire; break;
         case T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_dans_la_profondeur; break;
         case T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_contour_ennemi; break;
@@ -242,6 +243,7 @@ void UnitMissionInterface::CreateInterface()
 {
     switch( nMissionId_ )
     {
+        case eMission_Pion_ALAT_AllerSeRecompleter : CreateMission_ALAT_AllerSeRecompleter(); break;
         case eMission_Pion_ALAT_EvacuationSanitaire : CreateMission_ALAT_EvacuationSanitaire(); break;
         case eMission_Pion_ALAT_ReconnaitreDansLaProfondeur : CreateMission_ALAT_ReconnaitreDansLaProfondeur(); break;
         case eMission_Pion_ALAT_ReconnaitreContourEnnemi : CreateMission_ALAT_ReconnaitreContourEnnemi(); break;
@@ -462,6 +464,27 @@ void UnitMissionInterface::CreateInterface()
     this->CreateOkCancelButtons();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ALAT_AllerSeRecompleter
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ALAT_AllerSeRecompleter()
+{
+    ASN1T_Mission_Pion_ALAT_AllerSeRecompleter& asnMission = *new ASN1T_Mission_Pion_ALAT_AllerSeRecompleter();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_aller_se_recompleter;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_aller_se_recompleter = &asnMission;
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface::CreateMission_ALAT_EvacuationSanitaire

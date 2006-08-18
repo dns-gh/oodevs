@@ -56,6 +56,7 @@
     void CreateMission_ALAT_DetruireNeutraliserDansProfondeur();
     void CreateMission_ALAT_DetruireNeutraliserDansZone();
     void CreateMission_ALAT_EffectuerRechercheEtSauvetage();
+    void CreateMission_ALAT_AllerSeRecompleter();
     void CreateMission_ASA_DefendreZone();
     void CreateMission_ASA_DefendreSite();
     void CreateMission_ASA_Surveiller();

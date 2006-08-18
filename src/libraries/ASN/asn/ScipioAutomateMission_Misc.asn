@@ -53,7 +53,7 @@ Mission-Automate-SeFaireTransporter ::= SEQUENCE
 	zone-embarquement Polygon
 }
 
-Mission-Automate-SeRecompleter::= SEQUENCE
+Mission-Automate-SeRecompleter ::= SEQUENCE
 {
 	zone-ravitaillement Polygon
 }

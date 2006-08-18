@@ -3,6 +3,13 @@
 // Created : 
 // *******************************************************************************************
 
+typedef struct T_Mission_Pion_ALAT_AllerSeRecompleter : T_Mission_Pion
+{
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
 typedef struct T_Mission_Pion_ALAT_EvacuationSanitaire : T_Mission_Pion
 {
 T_Point pointDebarquement_;

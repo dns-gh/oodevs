@@ -215,5 +215,12 @@ Mission-Pion-ALAT-EvacuationSanitaire ::= SEQUENCE
 	portee-action                   EnumMissionALAT_PorteeAction
 }
 
+Mission-Pion-ALAT-AllerSeRecompleter ::= SEQUENCE
+{
+    plots-ravitaillement ListKnowledgeObject,
+    portee-action        EnumMissionALAT_PorteeAction,
+    ambiance-mission     EnumMissionALAT_AmbianceMission
+}
+
 END -- ScipioPionMission_ALAT
 

@@ -926,6 +926,7 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
     T_ConverterAutomataMission( "Automate ALAT DetruireNeutraliserDansProfondeur", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT DetruireNeutraliserDansProfondeur" ), eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur ),
     T_ConverterAutomataMission( "Automate ALAT DetruireNeutraliserDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT DetruireNeutraliserDansZone" ), eMission_Automate_ALAT_DetruireNeutraliserDansZone ),
     T_ConverterAutomataMission( "Automate ALAT EffectuerRechercheEtSauvetage", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT EffectuerRechercheEtSauvetage" ), eMission_Automate_ALAT_EffectuerRechercheEtSauvetage ),
+    T_ConverterAutomataMission( "Automate ALAT AllerSeRecompleter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT AllerSeRecompleter" ), eMission_Automate_ALAT_AllerSeRecompleter ),
     T_ConverterAutomataMission( "Automate ASA DefendreZone", QT_TRANSLATE_NOOP( "ENT", "Automate ASA DefendreZone" ), eMission_Automate_ASA_DefendreZone ),
     T_ConverterAutomataMission( "Automate ASA DefendreSite", QT_TRANSLATE_NOOP( "ENT", "Automate ASA DefendreSite" ), eMission_Automate_ASA_DefendreSite ),
     T_ConverterAutomataMission( "Automate ASA Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate ASA Surveiller" ), eMission_Automate_ASA_Surveiller ),
@@ -1036,6 +1037,7 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
 
 ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
 {
+    T_ConverterUnitMission( "Pion ALAT AllerSeRecompleter", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT AllerSeRecompleter" ), eMission_Pion_ALAT_AllerSeRecompleter ),
     T_ConverterUnitMission( "Pion ALAT EvacuationSanitaire", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT EvacuationSanitaire" ), eMission_Pion_ALAT_EvacuationSanitaire ),
     T_ConverterUnitMission( "Pion ALAT ReconnaitreDansLaProfondeur", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT ReconnaitreDansLaProfondeur" ), eMission_Pion_ALAT_ReconnaitreDansLaProfondeur ),
     T_ConverterUnitMission( "Pion ALAT ReconnaitreContourEnnemi", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT ReconnaitreContourEnnemi" ), eMission_Pion_ALAT_ReconnaitreContourEnnemi ),

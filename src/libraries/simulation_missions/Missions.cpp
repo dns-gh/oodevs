@@ -49,6 +49,7 @@
 #include "Automate\MIL_AutomateMission_ABC_EscorterUnite.cpp"
 #include "Automate\MIL_AutomateMission_ABC_EscorterUnites.cpp"
 #include "Automate\MIL_AutomateMission_ABC_AppuyerSurPosition.cpp"
+#include "Pion\MIL_PionMission_ALAT_AllerSeRecompleter.cpp"
 #include "Pion\MIL_PionMission_ALAT_EvacuationSanitaire.cpp"
 #include "Pion\MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur.cpp"
 #include "Pion\MIL_PionMission_ALAT_ReconnaitreContourEnnemi.cpp"
@@ -84,6 +85,7 @@
 #include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur.cpp"
 #include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone.cpp"
 #include "Automate\MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_AllerSeRecompleter.cpp"
 #include "Automate\MIL_AutomateMission_ASA_DefendreZone.cpp"
 #include "Automate\MIL_AutomateMission_ASA_DefendreSite.cpp"
 #include "Automate\MIL_AutomateMission_ASA_Surveiller.cpp"
@@ -512,6 +514,7 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur>( "Automate ALAT DetruireNeutraliserDansProfondeur", eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur, "T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone>( "Automate ALAT DetruireNeutraliserDansZone", eMission_Automate_ALAT_DetruireNeutraliserDansZone, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone, "T_Mission_Automate_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage>( "Automate ALAT EffectuerRechercheEtSauvetage", eMission_Automate_ALAT_EffectuerRechercheEtSauvetage, T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage, "T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_MRT_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_CDT_ALAT_EffectuerRechercheEtSauvetage");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_AllerSeRecompleter>( "Automate ALAT AllerSeRecompleter", eMission_Automate_ALAT_AllerSeRecompleter, T_Mission_Automate_mission_automate_alat_aller_se_recompleter, "T_Mission_Automate_ALAT_AllerSeRecompleter", "MIS_Automate_MRT_ALAT_AllerSeRecompleter", "MIS_Automate_CDT_ALAT_AllerSeRecompleter");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreZone>( "Automate ASA DefendreZone", eMission_Automate_ASA_DefendreZone, T_Mission_Automate_mission_automate_asa_defendre_zone, "T_Mission_Automate_ASA_DefendreZone", "MIS_Automate_MRT_ASA_DefendreZone", "MIS_Automate_CDT_ASA_DefendreZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreSite>( "Automate ASA DefendreSite", eMission_Automate_ASA_DefendreSite, T_Mission_Automate_mission_automate_asa_defendre_site, "T_Mission_Automate_ASA_DefendreSite", "MIS_Automate_MRT_ASA_DefendreSite", "MIS_Automate_CDT_ASA_DefendreSite");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_Surveiller>( "Automate ASA Surveiller", eMission_Automate_ASA_Surveiller, T_Mission_Automate_mission_automate_asa_surveiller, "T_Mission_Automate_ASA_Surveiller", "MIS_Automate_MRT_ASA_Surveiller", "MIS_Automate_CDT_ASA_Surveiller");
@@ -624,6 +627,7 @@ void missions::RegisterAutomateMissions()
 // -----------------------------------------------------------------------------
 void missions::RegisterPionMissions()
 {
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_AllerSeRecompleter>( "Pion ALAT AllerSeRecompleter", eMission_Pion_ALAT_AllerSeRecompleter, T_Mission_Pion_mission_pion_alat_aller_se_recompleter, "T_Mission_Pion_ALAT_AllerSeRecompleter", "MIS_Pion_ALAT_AllerSeRecompleter");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_EvacuationSanitaire>( "Pion ALAT EvacuationSanitaire", eMission_Pion_ALAT_EvacuationSanitaire, T_Mission_Pion_mission_pion_alat_evacuation_sanitaire, "T_Mission_Pion_ALAT_EvacuationSanitaire", "MIS_Pion_ALAT_EvacuationSanitaire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur>( "Pion ALAT ReconnaitreDansLaProfondeur", eMission_Pion_ALAT_ReconnaitreDansLaProfondeur, T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur, "T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur", "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_ReconnaitreContourEnnemi>( "Pion ALAT ReconnaitreContourEnnemi", eMission_Pion_ALAT_ReconnaitreContourEnnemi, T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi, "T_Mission_Pion_ALAT_ReconnaitreContourEnnemi", "MIS_Pion_ALAT_ReconnaitreContourEnnemi");

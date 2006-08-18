@@ -28,7 +28,8 @@ IMPORTS Mission-Pion-ALAT-ReconnaitreDansLaProfondeur,
         Mission-Pion-ALAT-AppuyerDirectAuContact,
         Mission-Pion-ALAT-Couvrir,
         Mission-Pion-ALAT-Attaquer,
-        Mission-Pion-ALAT-EvacuationSanitaire FROM ScipioPionMission_ALAT
+        Mission-Pion-ALAT-EvacuationSanitaire,
+        Mission-Pion-ALAT-AllerSeRecompleter FROM ScipioPionMission_ALAT
         
 IMPORTS Mission-Pion-ASA-DefendreSite,
         Mission-Pion-ASA-DefendreSiteAPartirPosition,
@@ -237,6 +238,7 @@ IMPORTS Mission-Pion-TRANS-EtablirGererLiaison FROM ScipioPionMission_TRANS;
 
 Mission-Pion ::= CHOICE
 {
+    mission-pion-alat-aller-se-recompleter                              Mission-Pion-ALAT-AllerSeRecompleter,
     mission-pion-alat-evacuation-sanitaire                              Mission-Pion-ALAT-EvacuationSanitaire,
     mission-pion-alat-reconnaitre-dans-la-profondeur                    Mission-Pion-ALAT-ReconnaitreDansLaProfondeur,
     mission-pion-alat-reconnaitre-contour-ennemi                        Mission-Pion-ALAT-ReconnaitreContourEnnemi,

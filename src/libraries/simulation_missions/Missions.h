@@ -80,6 +80,7 @@ namespace missions
         eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
         eMission_Automate_ALAT_DetruireNeutraliserDansZone,
         eMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
+        eMission_Automate_ALAT_AllerSeRecompleter,
         eMission_Automate_ASA_DefendreZone,
         eMission_Automate_ASA_DefendreSite,
         eMission_Automate_ASA_Surveiller,
@@ -189,6 +190,7 @@ namespace missions
 
     enum E_PionMission
     {
+        eMission_Pion_ALAT_AllerSeRecompleter,
         eMission_Pion_ALAT_EvacuationSanitaire,
         eMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
         eMission_Pion_ALAT_ReconnaitreContourEnnemi,
