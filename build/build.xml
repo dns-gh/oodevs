@@ -76,9 +76,15 @@
     -->
 
     <target name="applications" description="build Astec executables"
-            depends="application.simulation_app, application.simulation_tester, application.adaptation_app"/>            
+            depends="applications.simulation, applications.clients"/>
+            
+    <target name="applications.simulation" description="build Astec Simulation executables" 
+            depends="application.simulation_app, application.simulation_tester, application.AGR, application.ScriptCompiler" />
+            
+    <target name="applications.clients" description="build Astec Clients executables" 
+            depends="application.gaming_app, application.preparation_app, application.adaptation_app" />
 
-    <target name="application.simulation_app" description="build Astec Simulation executable" > <!-- depends="library.simulation_missions" -->
+    <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions">
         <build-app name="simulation_app"
                    subsystem="console"
                    libs="MT_Tools, MT_IO, MT_Logger, MT_Thread, MT_Time, MT_Archive, MT_XmlTools,
@@ -152,37 +158,28 @@
             <syslibset libs="gdi32, user32, wsock32, winmm, opengl32, glu32, shell32, iphlpapi, psapi, dbghelp"/>
         </build-app>
     </target>
-
-    <!--
-    en cours
-    
-    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
-                         NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools_SCIPIO,ASN,ENT,
-                         geocoord,graphics,pathfind,terrain,paranoia,
-                         asn1per,qtmain,qt-mt336,xerces-c_2,
-                         libboost_filesystem-vc71-mt-1_32">
-                         
+                        
     <target name="application.AGR" description="build AGR executable">
         <build-app name="AGR"
                    subsystem="console"
                    excludes="**/*_Skeleton.*"
-                   libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
+                   libs="MT_Tools, MT_IO, MT_Archive, MT_XmlTools,
                          libboost_filesystem-vc71-mt-1_32,xerces-c_2">
             <syslibset libs="user32"/>
         </build-app>
     </target>
 
-    <target name="application.ScriptCompiler" description="build ScriptCompiler executable" depends="library.MT_Tools_Scipio">
+    <target name="application.ScriptCompiler" description="build Astec ScriptCompiler executable" depends="library.MT_Tools_Scipio">
         <build-app name="ScriptCompiler"
                    subsystem="console"
-                   libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,
-                         DIA_Motivation,DIA_Representation,DIA_SDK_Manager,DIA_Tool_Archive,DIA_Tool_Debugger,DIA_Tool_DebugInfoGen,DIA_Tool_Scripts,DIA_ToolManager,DIA_Behavior,DIA_Kernel,
+                   libs="MT_Tools, MT_IO, MT_Archive, MT_XmlTools, MT_Logger,
+                         DIA_Motivation, DIA_Representation, DIA_SDK_Manager, DIA_Tool_Archive, DIA_Tool_Debugger, DIA_Tool_DebugInfoGen, DIA_Tool_Scripts, DIA_ToolManager, DIA_Behavior, DIA_Kernel,
                          MT_Tools_Scipio,
                          xerces-c_2">
             <syslibset libs="advapi32,user32"/>
         </build-app>
-    </target>-->
+    </target>
+
 
     <!--
     ============================================================================
@@ -219,9 +216,9 @@
     ============================================================================
     -->
     <target name="test" description="run all tests">
-        <exec executable="${out.dir}/release/applications/SIM/SIM.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
-            <arg value="${data.dir}/test/scipio.xml"/>
+            <arg value="${data.dir}/main/scipio.xml"/>
             <arg value="-test"/>
             <arg value="-forceodbcomposition"/>
         </exec>
@@ -269,8 +266,8 @@
       main
     ============================================================================
     -->
-    <target name="build" depends="libraries,applications"/>
+    <target name="build" depends="libraries, applications"/>
 
-    <target name="all" depends="configure,build,test" description="build and package distribution"/>
+    <target name="all" depends="configure, build, test" description="build and package distribution"/>
 
 </project>
