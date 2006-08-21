@@ -12,7 +12,6 @@
 #include "ColoredElevationLayer.h"
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "gaming/InitializationMessage.h"
 
 // -----------------------------------------------------------------------------
 // Name: Elevation2dLayer constructor
@@ -55,7 +54,6 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !layer_ && modelLoaded_ )
     {
-        controller_.Update( InitializationMessage( "Génération de la texture 2D..." ) );
         layer_ = new ColoredElevationLayer( elevation_ );
         layer_->Initialize( geometry::Rectangle2f() );
     }

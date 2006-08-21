@@ -11,7 +11,6 @@
 #include "Elevation3dLayer.h"
 #include "graphics/ElevationTextureTree.h"
 #include "graphics/Visitor3d.h"
-#include "gaming/InitializationMessage.h"
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
@@ -76,10 +75,7 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
     if( ! tree_ && modelLoaded_ )
-    {
-        controller_.Update( InitializationMessage( "Génération de la texture 3D..." ) );
         tree_ = new ElevationTextureTree( elevation_.GetMap(), *this );
-    }
 
     if( !tree_ )
         return;

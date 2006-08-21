@@ -7,29 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __InitializationMessage_h_
-#define __InitializationMessage_h_
+#ifndef __PopulationsLayerImp_h_
+#define __PopulationsLayerImp_h_
+
+#include "clients_gui/PopulationsLayer.h"
 
 // =============================================================================
-/** @class  InitializationMessage
-    @brief  InitializationMessage
+/** @class  PopulationsLayerImp
+    @brief  PopulationsLayerImp
 */
-// Created: AGE 2006-04-21
+// Created: SBO 2006-08-21
 // =============================================================================
-class InitializationMessage
+class PopulationsLayerImp : public PopulationsLayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InitializationMessage( const std::string& message );
-    virtual ~InitializationMessage();
+             PopulationsLayerImp( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+    virtual ~PopulationsLayerImp();
     //@}
 
-    //! @name Member data
+private:
+    //! @name Helpers
     //@{
-    std::string message_;
+    virtual void DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer );
     //@}
 };
 
-#endif // __InitializationMessage_h_
+#endif // __PopulationsLayerImp_h_

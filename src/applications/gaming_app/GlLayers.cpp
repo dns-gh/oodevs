@@ -15,6 +15,7 @@
 #include "ObjectKnowledgesLayer.h"
 #include "PopulationKnowledgesLayer.h"
 #include "AgentsLayerImp.h"
+#include "PopulationsLayerImp.h"
 
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/DefaultLayer.h"
@@ -24,7 +25,6 @@
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/ObjectsLayer.h"
 #include "clients_gui/ParametersLayer.h"
-#include "clients_gui/PopulationsLayer.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/DetectionMap.h"
@@ -71,7 +71,7 @@ void GlLayers::RegisterBaseLayers()
     Register( *new MetricsLayer( controllers_, *this ) );
     Register( *new LimitsLayer( controllers_, *this, *strategy_, *parameters_, model_.limits_ ) );
     Register( *new ObjectsLayer( controllers_, *this, *strategy_, *this ) );
-    Register( *new PopulationsLayer( controllers_, *this, *strategy_, *this ) );
+    Register( *new PopulationsLayerImp( controllers_, *this, *strategy_, *this ) );
     Register( *new AgentKnowledgesLayer( controllers_, *this, *strategy_, *this ) );
     Register( *new PopulationKnowledgesLayer( controllers_, *this, *strategy_, *this ) );
     Register( *new ObjectKnowledgesLayer( controllers_, *this, *strategy_, *this ) );

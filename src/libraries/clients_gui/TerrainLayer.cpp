@@ -17,7 +17,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "gaming/ModelLoaded.h"
-#include "gaming/InitializationMessage.h"
 #include "graphics/GraphicData.h"
 #include "clients_kernel/GlTools_ABC.h"
 
@@ -116,7 +115,6 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( shapes_.empty() && !parameters_.graphicsDirectory_.empty() )
     {
-        controllers_.controller_.Update( InitializationMessage( "Chargement de la planimétrie..." ) );
         world_.Set( 0, 0, parameters_.width_, parameters_.height_ );
         DataFactory dataFactory;
         GraphicFactory factory( *this, dataFactory );
