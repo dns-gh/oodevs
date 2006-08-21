@@ -240,14 +240,15 @@
       package
     ============================================================================
     -->
-    <!--<target name="package" description="package the distribution">
+    <target name="package" description="package the distribution" depends="applications">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/oscar-2A.zip">
-            <zipfileset dir="${out.dir}/release/libraries/oscar-2A" includes="*.dll"/>
-            <zipfileset dir="${out.dir}/release/applications/oscar-2A_app" includes="*.exe"/>
-            <zipfileset dir="${libraries.dir}/proxy" includes="**"/>
+        <zip destfile="${dist.dir}/astec.zip">
+            <zipfileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
+            <zipfileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe"/>
+            <zipfileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
+            <zipfileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
         </zip>
-    </target> -->
+    </target>
 
     <!--
     ============================================================================
@@ -279,6 +280,6 @@
     -->
     <target name="build" depends="libraries, applications"/>
 
-    <target name="all" depends="configure, build, tests" description="build and package distribution"/>
+    <target name="all" depends="configure, build, tests, package" description="build and package distribution"/>
 
 </project>
