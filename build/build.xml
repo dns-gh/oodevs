@@ -1,37 +1,35 @@
 <?xml version="1.0"?>
 <project name="astec" default="all">
 
-    <import file="//install/masa/common/dev/common/poney/poney.xml" />
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
     ============================================================================
       libraries
     ============================================================================
     -->
-
-    <target name="libraries" description="build static library"
+    <target name="libraries" description="build all libraries"
             depends="library.MT_Tools_Scipio,library.ENT,library.ASN,library.simulation_terrain,library.simulation_kernel,library.simulation_missions,
-                     library.clients_kernel, library.clients_gui"/>
+                     library.clients_kernel,library.clients_gui"/>
 
     <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
         <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
     </target>
 
     <target name="library.ASN" description="build ASN static library">
-        <echo> ${include.dir}</echo>
         <build-lib name="ASN">
             <includepath path="${include.dir}/asn"/>
             <compilerarg value="/W3"/>
         </build-lib>
     </target>
-    
+
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT"/>
-    </target>    
-    
+    </target>
+
     <target name="library.simulation_terrain" description="build simulation_terrain static library" depends="library.MT_Tools_Scipio">
         <build-lib name="simulation_terrain"/>
-    </target>    
+    </target>
 
     <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.ASN,library.simulation_terrain">
         <build-lib name="simulation_kernel">
@@ -46,140 +44,97 @@
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
+
     <target name="library.clients_kernel" description="build clients_kernel static library" depends="">
         <build-lib name="clients_kernel"/>
     </target>
-    
-    <target name="library.clients_gui" description="build clients_gui static library" depends="library.ASN, library.clients_kernel">
-        <build-lib name="clients_gui" excludes="**/font/*">            
+
+    <target name="library.clients_gui" description="build clients_gui static library" depends="library.ASN,library.clients_kernel">
+        <build-lib name="clients_gui" excludes="**/font/*">
             <includepath path="${include.dir}/ASN"/> <!-- $$ DEVRAIT VIRER -->
         </build-lib>
     </target>
-    
-    <target name="library.gaming" description="build gaming static library" depends="library.ASN, library.clients_gui">
+
+    <target name="library.gaming" description="build gaming static library" depends="library.ASN,library.clients_gui">
         <build-lib name="gaming">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
-    <target name="library.preparation" description="build gaming static library" depends="library.ASN, library.clients_gui">
+
+    <target name="library.preparation" description="build gaming static library" depends="library.ASN,library.clients_gui">
         <build-lib name="preparation">
             <includepath path="${include.dir}/ASN"/> <!-- $$ DEVRAIT VIRER -->
         </build-lib>
     </target>
-   
+
     <!--
     ============================================================================
      applications
     ============================================================================
     -->
-
     <target name="applications" description="build Astec executables"
-            depends="applications.simulation, applications.clients"/>
-            
-    <target name="applications.simulation" description="build Astec Simulation executables" 
-            depends="application.simulation_app, application.simulation_tester, application.AGR, application.ScriptCompiler" />
-            
-    <target name="applications.clients" description="build Astec Clients executables" 
-            depends="application.gaming_app, application.preparation_app, application.adaptation_app" />
+            depends="applications.simulation,applications.clients"/>
+
+    <target name="applications.simulation" description="build Astec Simulation executables"
+            depends="application.simulation_app,application.simulation_tester,application.AGR,application.ScriptCompiler" />
+
+    <target name="applications.clients" description="build Astec Client executables"
+            depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
     <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions">
-        <build-app name="simulation_app"
-                   subsystem="console"
-                   libs="MT_Tools, MT_IO, MT_Logger, MT_Thread, MT_Time, MT_Archive, MT_XmlTools,
-                         NEK, DIN, DIN_ConnectionService, DIN_MessageService,
-                         DIA_Motivation, DIA_Representation, DIA_SDK_Manager, DIA_Tool_Archive, DIA_Tool_Debugger, DIA_Tool_DebugInfoGen, DIA_Tool_Scripts, DIA_ToolManager, DIA_Behavior, DIA_Kernel,
-                         tools, HLA, libFedTime, pathfind, geocoord, masalloc, paranoia
-                         MT_Tools_Scipio, ASN,
-                         simulation_terrain, simulation_kernel, simulation_missions,
-                         boost_thread-vc71-mt-1_32, libboost_serialization-vc71-mt-1_32, libboost_filesystem-vc71-mt-1_32, libboost_date_time-vc71-mt-1_32,
-                         asn1per, xerces-c_2">
-			      <syslibset libs="advapi32, user32, wsock32, winmm, dbghelp, psapi, iphlpapi"/>
+        <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
+                   libs="tools,HLA,libFedTime,masalloc,paranoia
+                         MT_Tools_Scipio,ASN,
+                         simulation_terrain,simulation_kernel,simulation_missions,
+                         asn1per,xerces-c_2">
+            <syslibset libs="dbghelp,psapi"/>
+            <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/ASN"/>
             <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
-    </target>   
-  
+    </target>
+
     <target name="application.simulation_tester" description="build Astec Simulation Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
-        <build-app name="simulation_tester"
-                   subsystem="console"
-                   libs="MT_Tools, MT_IO, MT_Logger, MT_Thread, MT_Time, MT_Archive, MT_XmlTools,
-                         NEK, DIN, DIN_ConnectionService, DIN_MessageService,
-                         MT_Tools_SCIPIO, ASN, geocoord,
-                         asn1per, xerces-c_2"
+        <build-app name="simulation_tester" subsystem="console" depends="mt,din,terrain"
+                   libs="MT_Tools_SCIPIO,ASN,asn1per,xerces-c_2"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${applications.dir}/simulation_tester"/>
             <includepath path="${include.dir}/ASN"/>
-            <syslibset libs="user32, wsock32, winmm"/>
         </build-app>
     </target>
-    
+
     <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT,library.MT_Tools_Scipio">
-        <build-app name="adaptation_app"
-                   subsystem="gui"
-                   libs="MT_Tools, MT_IO, MT_Logger, MT_Thread, MT_Archive, MT_XmlTools, MT_Qt,
-                         ENT,
-                         qtmain, qt-mt336, xerces-c_2"
-                   pch-excludes="qtundo.cpp">
-            <syslibset libs="advapi32, user32"/>
-        </build-app>
+        <build-app name="adaptation_app" depends="mt,qt" libs="ENT,xerces-c_2" pch-excludes="qtundo.cpp"/>
     </target>
-    
+
     <target name="application.gaming_app" description="build Astec Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app"
-                   subsystem="gui"
-                   excludes="**/**_Gen.*, **/splashscreen.cpp" 
-                   libs="MT_Tools, MT_IO, MT_Logger, MT_Thread, MT_Time, MT_Archive,
-                         NEK, DIN, DIN_ConnectionService, DIN_MessageService,
-                         tools, geocoord, graphics, pathfind, terrain,
-                         ASN, ENT, gaming, clients_gui, clients_kernel,
-                         xeumeuleu, asn1per, qtmain, qt-mt336, xerces-c_2,
-                         boost_thread-vc71-mt-1_32, libboost_program_options-vc71-mt-1_32, libboost_filesystem-vc71-mt-1_32">
-            <includepath path="${include.dir}/ASN"/>    
-            <syslibset libs="gdi32, user32, wsock32, winmm, opengl32, glu32, shell32, iphlpapi, psapi, dbghelp"/>
+        <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
+                   libs="tools,ASN,ENT,gaming,clients_gui,clients_kernel,asn1per">
+            <includepath path="${include.dir}/ASN"/>
+            <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
     </target>
-    
+
     <target name="application.preparation_app" description="build Astec Gaming executable" depends="library.preparation">
-        <build-app name="preparation_app"
-                   subsystem="gui"
-                   excludes="**/**_Gen.*, **/splashscreen.cpp" 
-                   libs="MT_Tools, MT_IO, MT_Logger, MT_Thread, MT_Time, MT_Archive,
-                         NEK, DIN, DIN_ConnectionService, DIN_MessageService,
-                         tools, geocoord, graphics, pathfind, terrain,
-                         ASN, ENT, preparation, clients_gui, clients_kernel,
-                         xeumeuleu, asn1per, qtmain, qt-mt336, xerces-c_2,
-                         boost_thread-vc71-mt-1_32, libboost_program_options-vc71-mt-1_32, libboost_filesystem-vc71-mt-1_32">
-            <includepath path="${include.dir}/ASN"/>    
-            <syslibset libs="gdi32, user32, wsock32, winmm, opengl32, glu32, shell32, iphlpapi, psapi, dbghelp"/>
+        <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
+                   libs="tools,ASN,ENT,preparation,clients_gui,clients_kernel,asn1per">
+            <includepath path="${include.dir}/ASN"/>
+            <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
     </target>
-                        
+
     <target name="application.AGR" description="build AGR executable">
-        <build-app name="AGR"
-                   subsystem="console"
-                   excludes="**/*_Skeleton.*"
-                   libs="MT_Tools, MT_IO, MT_Archive, MT_XmlTools,
-                         libboost_filesystem-vc71-mt-1_32,xerces-c_2">
+        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost" libs="xerces-c_2">
             <syslibset libs="user32"/>
         </build-app>
     </target>
 
     <target name="application.ScriptCompiler" description="build Astec ScriptCompiler executable" depends="library.MT_Tools_Scipio">
-        <build-app name="ScriptCompiler"
-                   subsystem="console"
-                   libs="MT_Tools, MT_IO, MT_Archive, MT_XmlTools, MT_Logger,
-                         DIA_Motivation, DIA_Representation, DIA_SDK_Manager, DIA_Tool_Archive, DIA_Tool_Debugger, DIA_Tool_DebugInfoGen, DIA_Tool_Scripts, DIA_ToolManager, DIA_Behavior, DIA_Kernel,
-                         MT_Tools_Scipio,
-                         xerces-c_2">
-            <syslibset libs="advapi32,user32"/>
-        </build-app>
+        <build-app name="ScriptCompiler" depends="mt,dia3" libs="MT_Tools_Scipio,xerces-c_2"/>
     </target>
-
 
     <!--
     ============================================================================
@@ -200,14 +155,14 @@
         <clean name="gaming"/>
         <clean name="gaming_app"/>
         <clean name="preparation"/>
-        <clean name="preparation_app"/>        
-        <clean name="adaptation_app"/>                
+        <clean name="preparation_app"/>
+        <clean name="adaptation_app"/>
         <clean name="AGR"/>
         <clean name="ScriptCompiler"/>
     </target>
 
     <target name="clean-reports">
-        <delete dir="${reports.dir}" includeEmptyDirs="true"/>
+        <delete dir="${reports.dir}"/>
     </target>
 
     <!--
@@ -215,8 +170,8 @@
       tests
     ============================================================================
     -->
-    <target name="tests" description="run all tests" depends="test-test-scripts, test-main-scripts" />
-    
+    <target name="test" description="run all tests" depends="test-test-scripts,test-main-scripts"/>
+
     <target name="test-main-scripts" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
@@ -225,7 +180,7 @@
             <arg value="-forceodbcomposition"/>
         </exec>
     </target>
-    
+
     <target name="test-test-scripts" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
@@ -243,10 +198,10 @@
     <target name="package" description="package the distribution" depends="applications">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/astec.zip">
-            <zipfileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
-            <zipfileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe"/>
-            <zipfileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
-            <zipfileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
+            <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
+            <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe"/>
+            <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
+            <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
         </zip>
     </target>
 
@@ -278,8 +233,8 @@
       main
     ============================================================================
     -->
-    <target name="build" depends="libraries, applications"/>
+    <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure, build, tests, package" description="build and package distribution"/>
+    <target name="all" depends="clean-reports,configure,build,test,package" description="build and package distribution"/>
 
 </project>
