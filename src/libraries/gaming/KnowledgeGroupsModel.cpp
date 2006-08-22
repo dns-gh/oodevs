@@ -11,6 +11,8 @@
 #include "KnowledgeGroupsModel.h"
 #include "TeamsModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupsModel constructor
 // Created: AGE 2006-02-15

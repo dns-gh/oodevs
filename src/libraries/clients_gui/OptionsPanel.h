@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-07-09 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/OptionsPanel.h $
-// $Author: Age $
-// $Modtime: 31/03/05 16:59 $
-// $Revision: 3 $
-// $Workfile: OptionsPanel.h $
-//
-// *****************************************************************************
 
 #ifndef __OptionsPanel_h_
 #define __OptionsPanel_h_
@@ -23,29 +14,36 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 class QCheckBox;
-class Controllers;
-class Options;
-class Settings;
+
+namespace kernel
+{
+    class Controllers;
+    class Options;
+}
+
+namespace gui
+{
+    class Settings;
 
 // =============================================================================
 // Created: APE 2004-07-09
 // =============================================================================
 class OptionsPanel : public QVBox
-                   , public Observer_ABC
-                   , public OptionsObserver_ABC
+                   , public kernel::Observer_ABC
+                   , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPanel( QWidget* pParent, Controllers& controllers );
+             OptionsPanel( QWidget* pParent, kernel::Controllers& controllers );
     virtual ~OptionsPanel();
     //@}
 
     //! @name Operations
     //@{
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
@@ -71,8 +69,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    Options&     options_;
+    kernel::Controllers& controllers_;
+    kernel::Options&     options_;
 
     QSpinBox* pFontSpinbox_;
     QCheckBox* pDrawObjectIcons_;
@@ -84,5 +82,7 @@ private:
     QCheckBox* pDisplayOnlySubscribedAgentsRC_ ;
     //@}
 };
+
+}
 
 #endif // __OptionsPanel_h_

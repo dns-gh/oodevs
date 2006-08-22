@@ -25,6 +25,9 @@
 #include "clients_gui/AgentMedicalPanel.h"
 #include "clients_gui/AgentSupplyPanel.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08

@@ -14,9 +14,13 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "ASN_Types.h"
 
-class CoordinateConverter_ABC;
-class GlTools_ABC;
-class ActionController;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class GlTools_ABC;
+    class ActionController;
+}
+
 class Publisher_ABC;
 
 // =============================================================================
@@ -25,15 +29,15 @@ class Publisher_ABC;
 */
 // Created: APE 2004-04-14
 // =============================================================================
-class TacticalLine_ABC : public Entity_ABC
+class TacticalLine_ABC : public kernel::Entity_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -46,7 +50,7 @@ public:
     void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
     void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
 
-    virtual void Draw( const GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
 
     void UpdateToSim();
 
@@ -91,7 +95,7 @@ protected:
         message.Send( publisher_, (unsigned long)this );
         nNetworkState_ = eNetworkStateRegistering;
     }
-    void DrawName( const GlTools_ABC& tools ) const;
+    void DrawName( const kernel::GlTools_ABC& tools ) const;
     template< typename Ack >
     void ValidateAcknowledge( const Ack& ack );
     //@}
@@ -106,7 +110,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     Publisher_ABC& publisher_;
 
     unsigned long  id_;

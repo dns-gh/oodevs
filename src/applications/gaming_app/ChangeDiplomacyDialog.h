@@ -16,24 +16,28 @@
 #include "gaming/ASN_Types.h"
 #include "clients_gui/ValuedComboBox.h"
 
-class Team_ABC;
-class Controllers;
+namespace kernel
+{
+    class Team_ABC;
+    class Controllers;
+}
+
 class Publisher_ABC;
 
 //=============================================================================
 // Created:  NLD 2002-01-03 
 //=============================================================================
 class ChangeDiplomacyDialog : public QDialog
-                            , public Observer_ABC
-                            , public ElementObserver_ABC< Team_ABC >
-                            , public ContextMenuObserver_ABC< Team_ABC >
+                            , public kernel::Observer_ABC
+                            , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructor/Destructor
     //@{
-             ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher );
+             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher );
     virtual ~ChangeDiplomacyDialog();
     //@}
 
@@ -47,9 +51,9 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team_ABC& );
-    virtual void NotifyDeleted( const Team_ABC& );
-    virtual void NotifyContextMenu( const Team_ABC&, ContextMenu& );
+    virtual void NotifyCreated( const kernel::Team_ABC& );
+    virtual void NotifyDeleted( const kernel::Team_ABC& );
+    virtual void NotifyContextMenu( const kernel::Team_ABC&, kernel::ContextMenu& );
     //@}
 
 private:
@@ -62,11 +66,11 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    ValuedComboBox< unsigned long >*      pArmy1ComboBox_;
-    ValuedComboBox< unsigned long >*      pArmy2ComboBox_;
-    ValuedComboBox<ASN1T_EnumDiplomatie>* pDiplomacyComboBox_;
+    gui::ValuedComboBox< unsigned long >*      pArmy1ComboBox_;
+    gui::ValuedComboBox< unsigned long >*      pArmy2ComboBox_;
+    gui::ValuedComboBox<ASN1T_EnumDiplomatie>* pDiplomacyComboBox_;
     //@}
 };
 

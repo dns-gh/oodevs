@@ -21,6 +21,9 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
 /** @param  pParent 

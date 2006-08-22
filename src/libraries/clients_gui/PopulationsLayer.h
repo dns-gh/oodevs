@@ -13,26 +13,29 @@
 #include "EntityLayer.h"
 #include "clients_kernel/Population_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  PopulationsLayer
     @brief  PopulationsLayer
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class PopulationsLayer : public EntityLayer< Population_ABC >
+class PopulationsLayer : public EntityLayer< kernel::Population_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             PopulationsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~PopulationsLayer();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const kernel::Population_ABC& entity, kernel::Displayer_ABC& displayer );
     //@}
 
 private:
@@ -42,5 +45,7 @@ private:
     PopulationsLayer& operator=( const PopulationsLayer& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __PopulationsLayer_h_

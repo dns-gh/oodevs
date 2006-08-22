@@ -19,6 +19,9 @@
 #include "ListDisplayer.h"
 #include "DisplayBuilder.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentMedicalPanel constructor
 // Created: AGE 2006-02-28

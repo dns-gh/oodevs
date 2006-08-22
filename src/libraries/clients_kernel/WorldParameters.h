@@ -10,6 +10,9 @@
 #ifndef __WorldParameters_h_
 #define __WorldParameters_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  WorldParameters
     @brief  WorldParameters  
@@ -50,5 +53,7 @@ public:
     std::string geoid_;
     //@}
 };
+
+}
 
 #endif // __WorldParameters_h_

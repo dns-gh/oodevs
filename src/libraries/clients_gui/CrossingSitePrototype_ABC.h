@@ -15,6 +15,9 @@
 class QSpinBox;
 class QCheckBox;
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  CrossingSitePrototype_ABC
     @brief  CrossingSitePrototype_ABC
@@ -54,5 +57,7 @@ protected:
     QCheckBox* needsConstruction_;
     //@}
 };
+
+}
 
 #endif // __CrossingSitePrototype_ABC_h_

@@ -14,6 +14,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Reports constructor
 // Created: AGE 2006-02-13

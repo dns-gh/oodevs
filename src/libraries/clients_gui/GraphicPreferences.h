@@ -14,8 +14,10 @@
 #include "graphics/GraphicSetup_ABC.h"
 
 namespace xml { class xistream; class xostream; };
-class QTabWidget;
-class TerrainPreference;
+
+namespace gui
+{
+    class TerrainPreference;
 
 // =============================================================================
 /** @class  GraphicPreferences
@@ -81,5 +83,7 @@ private:
     T_Displays displays_;
     //@}
 };
+
+}
 
 #endif // __GraphicPreferences_h_

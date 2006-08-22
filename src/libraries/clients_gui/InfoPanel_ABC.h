@@ -10,7 +10,9 @@
 #ifndef __InfoPanel_ABC_h_
 #define __InfoPanel_ABC_h_
 
-class PanelStack_ABC;
+namespace gui
+{
+    class PanelStack_ABC;
 
 // =============================================================================
 /** @class  InfoPanel_ABC
@@ -61,5 +63,7 @@ protected:
     QVBox* pBox_;
     //@}
 };
+
+}
 
 #endif // __InfoPanel_ABC_h_

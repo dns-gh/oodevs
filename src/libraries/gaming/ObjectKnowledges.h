@@ -15,10 +15,14 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"
 
+namespace kernel
+{
+    class Controller;
+    class Team_ABC;
+}
+
 class ObjectKnowledge;
-class Controller;
 class ObjectKnowledgeFactory;
-class Team_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledges
@@ -26,17 +30,17 @@ class Team_ABC;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledges : public Extension_ABC
-                       , public Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
-                       , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                       , public Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
-                       , public Resolver< ObjectKnowledge >
+class ObjectKnowledges : public kernel::Extension_ABC
+                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
+                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
+                       , public kernel::Resolver< ObjectKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledges( const Team_ABC& team, Controller& controller, ObjectKnowledgeFactory& factory );
+             ObjectKnowledges( const kernel::Team_ABC& team, kernel::Controller& controller, ObjectKnowledgeFactory& factory );
     virtual ~ObjectKnowledges();
     //@}
 
@@ -61,8 +65,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const Team_ABC& team_;
-    Controller& controller_;
+    const kernel::Team_ABC& team_;
+    kernel::Controller& controller_;
     ObjectKnowledgeFactory& factory_;
     //@}
 };

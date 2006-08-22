@@ -12,9 +12,15 @@
 
 #include <qdialog.h>
 
-class Controllers;
-class GraphicPreferences;
-class GraphicsPanel;
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class GraphicPreferences;
+    class GraphicsPanel;
 
 // =============================================================================
 /** @class  PreferencesDialog
@@ -28,7 +34,7 @@ class PreferencesDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesDialog( QWidget* parent, Controllers& controllers );
+             PreferencesDialog( QWidget* parent, kernel::Controllers& controllers );
     virtual ~PreferencesDialog();
     //@}
 
@@ -55,5 +61,7 @@ private:
     GraphicsPanel* pGraphicPrefPanel_;
     //@}
 };
+
+}
 
 #endif // __PreferencesDialog_h_

@@ -18,6 +18,8 @@
 #include "AgentsModel.h"
 #include "StaticModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Logistics constructor
 // Created: AGE 2006-03-01

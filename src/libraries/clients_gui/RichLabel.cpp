@@ -13,6 +13,8 @@
 #include <qsimplerichtext.h>
 #include <qprocess.h>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: RichLabel constructor
 // Created: AGE 2006-05-11

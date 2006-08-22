@@ -11,6 +11,8 @@
 #include "MT_SpinBox.h"
 #include "moc_MT_SpinBox.cpp"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MT_SpinBox constructor
 // Created: SBO 2005-11-07

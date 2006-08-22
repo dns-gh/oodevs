@@ -18,6 +18,7 @@
 #include "clients_kernel/Positions.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign constructor

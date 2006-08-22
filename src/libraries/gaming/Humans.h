@@ -25,7 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Humans();
-             Humans( E_TroopHealthState state );
+             Humans( kernel::E_TroopHealthState state );
     virtual ~Humans();
     //@}
 
@@ -39,7 +39,7 @@ private:
 public:
     //! @name Member data
     //@{
-    E_TroopHealthState state_;
+    kernel::E_TroopHealthState state_;
     unsigned officers_;
     unsigned subOfficers_;
     unsigned troopers_;

@@ -12,8 +12,11 @@
 
 #include "ASN_Types.h"
 
-class GlTools_ABC;
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class GlTools_ABC;
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 /** @class  MSEllipse
@@ -27,13 +30,13 @@ class MSEllipse
 public:
     //! @name Constructors/Destructor
     //@{
-             MSEllipse( const ASN1T_Localisation& localisation, const CoordinateConverter_ABC& converter );
+             MSEllipse( const ASN1T_Localisation& localisation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~MSEllipse();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

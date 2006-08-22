@@ -12,6 +12,8 @@
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: SubItemDisplayer constructor
 // Created: AGE 2006-02-28

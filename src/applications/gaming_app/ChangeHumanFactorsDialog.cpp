@@ -18,6 +18,9 @@
 
 #include "ENT/ENT_Tr.h"
 
+using namespace kernel;
+using namespace gui;
+
 namespace 
 {
     template< typename Enum, typename Combo, typename Converter >

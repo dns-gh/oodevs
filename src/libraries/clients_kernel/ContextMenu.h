@@ -17,6 +17,9 @@ class QPoint;
 class QString;
 class QKeySequence;
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ContextMenu
     @brief  Context menu wrapper
@@ -85,5 +88,7 @@ private:
     T_Categories insertedCategories_;
     //@}
 };
+
+}
 
 #endif // __ContextMenu_h_

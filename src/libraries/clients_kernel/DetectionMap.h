@@ -12,6 +12,9 @@
 
 #include "graphics/ElevationMap.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  DetectionMap
     @brief  DetectionMap
@@ -106,5 +109,7 @@ private:
     float cellsize_;
     //@}
 };
+
+}
 
 #endif // __DetectionMap_h_

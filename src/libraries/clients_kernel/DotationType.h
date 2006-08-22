@@ -12,6 +12,9 @@
 
 namespace xml { class xistream; };
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  DotationType
     @brief  DotationType
@@ -63,5 +66,7 @@ private:
     bool gaz_, ammunition_, dType_;
     //@}
 };
+
+}
 
 #endif // __DotationType_h_

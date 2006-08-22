@@ -16,11 +16,18 @@
 #include "View_ABC.h"
 #include "SetGlOptions.h"
 
-class Layer_ABC;
-class DetectionMap;
-class Controllers;
-class GlFont;
 class EventStrategy_ABC;
+
+namespace kernel
+{
+    class DetectionMap;
+    class Controllers;
+}
+
+namespace gui
+{
+    class Layer_ABC;
+    class GlFont;
 
 // =============================================================================
 /** @class  Gl3dWidget
@@ -28,13 +35,17 @@ class EventStrategy_ABC;
 */
 // Created: AGE 2006-03-28
 // =============================================================================
-class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3D, public GlToolsBase, public View_ABC
+class Gl3dWidget : private kernel::WorldParameters
+                 , private SetGlOptions
+                 , public Widget3D
+                 , public GlToolsBase
+                 , public View_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation, EventStrategy_ABC& strategy );
+             Gl3dWidget( QWidget* pParent, kernel::Controllers& controllers, const std::string& scipioXml, kernel::DetectionMap& elevation, EventStrategy_ABC& strategy );
     virtual ~Gl3dWidget();
     //@}
 
@@ -92,7 +103,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    DetectionMap& elevation_;
+    kernel::DetectionMap& elevation_;
     EventStrategy_ABC& strategy_;
     T_Layers layers_;
     float zRatio_;
@@ -100,5 +111,7 @@ private:
     float pixels_;
     //@}
 };
+
+}
 
 #endif // __Gl3dWidget_h_

@@ -15,6 +15,9 @@
 #include <stdexcept>
 #include <sstream>
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Resolver
     @brief  Resolver base class
@@ -126,5 +129,7 @@ protected:
     T_Elements elements_;
     //@}
 };
+
+}
 
 #endif // __Resolver_h_

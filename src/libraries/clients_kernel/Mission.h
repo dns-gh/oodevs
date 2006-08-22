@@ -11,7 +11,10 @@
 #define __Mission_h_
 
 #include "Resolver.h"
-class FragOrder;
+
+namespace kernel
+{
+    class FragOrder;
 
 // =============================================================================
 /** @class  Mission
@@ -44,5 +47,7 @@ private:
     bool automat_;
     //@}
 };
+
+}
 
 #endif // __Mission_h_

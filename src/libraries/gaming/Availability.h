@@ -13,8 +13,11 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class EquipmentType;
-class Displayer_ABC;
+namespace kernel
+{
+    class EquipmentType;
+    class Displayer_ABC;
+}
 
 // =============================================================================
 /** @class  Availability
@@ -30,7 +33,7 @@ public:
     //@{
              Availability();
              template< typename Message >
-             Availability( const Resolver_ABC< EquipmentType >& resolver, const Message& message )
+                 Availability( const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
                 : type_     ( & resolver.Get( message.type_equipement ) )
                 , total_    ( message.nbr_total )
                 , available_( message.nbr_disponibles ) 
@@ -42,13 +45,13 @@ public:
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 public:
     //! @name Member data
     //@{
-    const EquipmentType* type_;
+    const kernel::EquipmentType* type_;
     unsigned int total_;
     unsigned int available_;
     unsigned int atWork_;

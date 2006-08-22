@@ -11,6 +11,9 @@
 #include "SpinBoxDisplayer.h"
 #include "clients_kernel/Units.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: SpinBoxDisplayer constructor
 // Created: AGE 2006-02-23

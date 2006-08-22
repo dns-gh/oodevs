@@ -23,6 +23,9 @@
 #include "ParametersLayer.h"
 #include "clients_kernel/Location_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
@@ -208,7 +211,7 @@ void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& me
     QPopupMenu* limaMenu = new QPopupMenu( menu );
     for( int n = 0; n < eLimaFuncNbr; ++n )
     {
-        int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( OnCreateLima( int ) ) ); 
+        int nId = limaMenu->insertItem( gaming::tools::ToString( (E_FuncLimaType)n ), this, SLOT( OnCreateLima( int ) ) ); 
         limaMenu->setItemParameter( nId, n );
     }
     menu.InsertItem( "Parametre", tr( "Créer lima" ), limaMenu );

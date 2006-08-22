@@ -13,6 +13,8 @@
 #include "IDManager.h"
 #include <cassert>
 
+using namespace kernel;
+
 //-----------------------------------------------------------------------------
 // Name: IDManager constructor
 // Created: NLD 2003-02-28

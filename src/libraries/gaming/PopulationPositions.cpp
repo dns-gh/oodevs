@@ -11,6 +11,8 @@
 #include "PopulationPositions.h"
 #include "Population.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions constructor
 // Created: AGE 2006-03-23

@@ -14,7 +14,11 @@
 #include "clients_kernel/Resolver.h"
 
 class ObjectFactory_ABC;
-class Object_ABC;
+
+namespace kernel
+{
+    class Object_ABC;
+}
 
 // =============================================================================
 /** @class  ObjectsModel
@@ -22,7 +26,7 @@ class Object_ABC;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class ObjectsModel : public Resolver< Object_ABC >
+class ObjectsModel : public kernel::Resolver< kernel::Object_ABC >
 {
 
 public:
@@ -37,7 +41,7 @@ public:
     void Purge();
 
     void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
-    Object_ABC& GetObject( unsigned long id );
+    kernel::Object_ABC& GetObject( unsigned long id );
     void DeleteObject( unsigned long id );
     //@}
 

@@ -18,45 +18,48 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class Team_ABC;
-class ObjectType;
-class DotationType;
-class Displayer_ABC;
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class Controller;
+    class Team_ABC;
+    class ObjectType;
+    class DotationType;
+    class Displayer_ABC;
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object : public Object_ABC
-             , public Extension_ABC
-             , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-             , public Drawable_ABC
+class Object : public kernel::Object_ABC
+             , public kernel::Extension_ABC
+             , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
+             , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const ASN1T_MsgObjectCreation& asnMsg, Controller& controller, const CoordinateConverter_ABC& converter,
-                     const Resolver_ABC< Team_ABC >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver,
-                     const Resolver_ABC< DotationType >& dotationResolver );
+             Object( const ASN1T_MsgObjectCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+                     const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver, const kernel::Resolver_ABC< kernel::ObjectType >& typeResolver,
+                     const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Object();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const;
-    virtual void Display( Displayer_ABC& displayer ) const;
-    virtual void DisplayInTooltip( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors
     //@{
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
-    virtual const Team_ABC& GetTeam() const;
-    virtual ObjectType& GetType() const;
+    virtual const kernel::Team_ABC& GetTeam() const;
+    virtual kernel::ObjectType& GetType() const;
     //@}
     
 private:
@@ -75,12 +78,12 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller&   controller_;
-    const CoordinateConverter_ABC& converter_;
-    ObjectType&   type_;
+    kernel::Controller&   controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    kernel::ObjectType&   type_;
     unsigned long nId_;
     std::string   strName_;
-    Team_ABC&     team_;
+    kernel::Team_ABC&     team_;
 
     float rConstructionPercentage_;
     float rValorizationPercentage_;
@@ -93,8 +96,8 @@ public:
     //! @name Member data
     //@{
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;
-    DotationType* construction_;
-    DotationType* valorization_;
+    kernel::DotationType* construction_;
+    kernel::DotationType* valorization_;
     unsigned int nDotationConstruction_;
     unsigned int nDotationValorization_;
     //@}

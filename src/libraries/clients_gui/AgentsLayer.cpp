@@ -14,6 +14,9 @@
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-23

@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: NLD 2005-02-14

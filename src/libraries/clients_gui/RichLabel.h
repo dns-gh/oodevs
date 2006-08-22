@@ -12,6 +12,9 @@
 
 class QSimpleRichText;
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  RichLabel
     @brief  Rich label
@@ -70,5 +73,7 @@ private:
     QSimpleRichText* richText_;
     //@}
 };
+
+}
 
 #endif // __RichLabel_h_

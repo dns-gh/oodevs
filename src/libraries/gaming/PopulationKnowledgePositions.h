@@ -11,6 +11,7 @@
 #define __PopulationKnowledgePositions_h_
 
 #include "clients_kernel/Positions.h"
+
 class PopulationKnowledge;
 
 // =============================================================================
@@ -19,7 +20,7 @@ class PopulationKnowledge;
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class PopulationKnowledgePositions : public Positions
+class PopulationKnowledgePositions : public kernel::Positions
 {
 
 public:
@@ -47,7 +48,7 @@ private:
 
     //! @name Helpers
     //@{
-    const Positions& GetRealPosition() const;
+    const kernel::Positions& GetRealPosition() const;
     //@}
 
 private:

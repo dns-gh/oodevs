@@ -12,6 +12,9 @@
 
 namespace xml { class xistream; };
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ComponentType
     @brief  ComponentType
@@ -57,5 +60,7 @@ private:
     bool hasSupply_;
     //@}
 };
+
+}
 
 #endif // __ComponentType_h_

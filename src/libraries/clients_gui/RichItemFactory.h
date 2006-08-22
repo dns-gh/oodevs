@@ -12,6 +12,9 @@
 
 #include "ItemFactory_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  RichItemFactory
     @brief  RichItemFactory
@@ -78,5 +81,7 @@ private:
     T_Connections connections_;
     //@}
 };
+
+}
 
 #endif // __RichItemFactory_h_

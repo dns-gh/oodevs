@@ -11,6 +11,9 @@
 #include "EntityListParameter.h"
 #include "moc_EntityListParameter.cpp"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntityListParameterBase constructor
 // Created: AGE 2006-03-14

@@ -12,6 +12,8 @@
 #include "Surface.h"
 #include "VisionMap.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: SurfaceFactory constructor
 // Created: AGE 2006-04-04

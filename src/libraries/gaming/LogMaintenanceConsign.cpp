@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogMaintenanceConsign.cpp $
-// $Author: Age $
-// $Modtime: 6/04/05 10:54 $
-// $Revision: 2 $
-// $Workfile: LogMaintenanceConsign.cpp $
-//
-// *****************************************************************************
 
 #include "gaming_pch.h"
 #include "LogMaintenanceConsign.h"
@@ -26,6 +17,7 @@
 #include "clients_kernel/Positions.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign constructor

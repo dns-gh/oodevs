@@ -12,7 +12,10 @@
 
 #include "Types.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  Perception
@@ -26,15 +29,15 @@ class Perception
 public:
     //! @name Constructors/Destructor
     //@{
-             Perception( const Agent_ABC& detected, E_PerceptionResult level );
+             Perception( const kernel::Agent_ABC& detected, kernel::E_PerceptionResult level );
     virtual ~Perception();
     //@}
 
 public:
     //! @name Member data
     //@{
-    const Agent_ABC* detected_;
-    E_PerceptionResult level_;
+    const kernel::Agent_ABC* detected_;
+    kernel::E_PerceptionResult level_;
     //@}
 };
 

@@ -12,7 +12,10 @@
 
 #include "EntityParameter.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  ParamAgent
@@ -20,7 +23,7 @@ class Agent_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgent : public EntityParameter< Agent_ABC >
+class ParamAgent : public EntityParameter< kernel::Agent_ABC >
 {
 
 public:

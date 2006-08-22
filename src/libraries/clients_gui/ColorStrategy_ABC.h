@@ -10,13 +10,20 @@
 #ifndef __ColorStrategy_ABC_h_
 #define __ColorStrategy_ABC_h_
 
-class Agent_ABC;
-class Object_ABC;
-class Population_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class Object_ABC;
+    class Population_ABC;
+}
+
 class AgentKnowledge;
 class ObjectKnowledge;
 class PopulationKnowledge;
 class TacticalLine_ABC;
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  ColorStrategy_ABC
@@ -36,14 +43,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SelectColor( const Agent_ABC& agent ) = 0;
-    virtual void SelectColor( const Object_ABC& object ) = 0;
-    virtual void SelectColor( const Population_ABC& population ) = 0;
+    virtual void SelectColor( const kernel::Agent_ABC& agent ) = 0;
+    virtual void SelectColor( const kernel::Object_ABC& object ) = 0;
+    virtual void SelectColor( const kernel::Population_ABC& population ) = 0;
     virtual void SelectColor( const AgentKnowledge& k ) = 0;
     virtual void SelectColor( const ObjectKnowledge& k ) = 0;
     virtual void SelectColor( const PopulationKnowledge& k ) = 0;
     virtual void SelectColor( const TacticalLine_ABC& line ) = 0;
     //@}
 };
+
+}
 
 #endif // __ColorStrategy_ABC_h_

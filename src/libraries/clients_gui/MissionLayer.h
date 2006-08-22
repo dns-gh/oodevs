@@ -12,6 +12,9 @@
 
 #include "Layer_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  MiscLayer
     @brief  MiscLayer
@@ -51,5 +54,7 @@ private:
     Panel& panel_;
     //@}
 };
+
+}
 
 #endif // __MissionLayer_h_

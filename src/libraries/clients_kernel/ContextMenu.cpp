@@ -11,6 +11,8 @@
 #include "ContextMenu.h"
 #include <qpopupmenu.h>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ContextMenu constructor
 // Created: AGE 2006-08-04

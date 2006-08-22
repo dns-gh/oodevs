@@ -23,6 +23,8 @@
 #include "ObjectKnowledgePositions.h"
 #include "StaticModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeFactory constructor
 // Created: AGE 2006-02-14

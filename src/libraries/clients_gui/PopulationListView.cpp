@@ -20,6 +20,9 @@
 
 #include "moc_PopulationListView.cpp"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor
 // Created: HME 2005-10-03

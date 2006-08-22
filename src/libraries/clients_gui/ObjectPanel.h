@@ -15,16 +15,22 @@
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-class Object_ABC;
+namespace kernel
+{
+    class Object_ABC;
+    class Controllers;
+}
+
 class CampAttributes;
 class CrossingSiteAttributes;
 class LogisticRouteAttributes;
 class NBCAttributes;
 class RotaAttributes;
 
-class Controllers;
-class DisplayBuilder;
-class ItemFactory_ABC;
+namespace gui
+{
+    class DisplayBuilder;
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectPanel
@@ -33,27 +39,27 @@ class ItemFactory_ABC;
 // Created: APE 2004-06-11
 // =============================================================================
 class ObjectPanel : public InfoPanel_ABC
-                  , public Observer_ABC
-                  , public ElementObserver_ABC< Object_ABC >
-                  , public ElementObserver_ABC< CampAttributes >
-                  , public ElementObserver_ABC< CrossingSiteAttributes >
-                  , public ElementObserver_ABC< LogisticRouteAttributes >
-                  , public ElementObserver_ABC< NBCAttributes >
-                  , public ElementObserver_ABC< RotaAttributes >
-                  , public SelectionObserver< Object_ABC >
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< kernel::Object_ABC >
+                  , public kernel::ElementObserver_ABC< CampAttributes >
+                  , public kernel::ElementObserver_ABC< CrossingSiteAttributes >
+                  , public kernel::ElementObserver_ABC< LogisticRouteAttributes >
+                  , public kernel::ElementObserver_ABC< NBCAttributes >
+                  , public kernel::ElementObserver_ABC< RotaAttributes >
+                  , public kernel::SelectionObserver< kernel::Object_ABC >
 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectPanel();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Object_ABC* object );
+    virtual void NotifySelected( const kernel::Object_ABC* object );
     //@}
 
 private:
@@ -68,8 +74,8 @@ private:
     //@{
     void showEvent( QShowEvent* );
 
-    virtual void NotifyUpdated( const Object_ABC& );
-    virtual void NotifyDeleted( const Object_ABC& );
+    virtual void NotifyUpdated( const kernel::Object_ABC& );
+    virtual void NotifyDeleted( const kernel::Object_ABC& );
     virtual void NotifyUpdated( const CampAttributes& attributes );
     virtual void NotifyUpdated( const CrossingSiteAttributes& attributes );
     virtual void NotifyUpdated( const LogisticRouteAttributes& attributes );
@@ -79,19 +85,21 @@ private:
     template< typename Extension >
     bool ShouldUpdate( const Extension& extension );
     template< typename T >
-    void UpdateExtension( const Object_ABC& object );
+    void UpdateExtension( const kernel::Object_ABC& object );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     DisplayBuilder* display_;
-    SafePointer< Object_ABC > selected_;
+    kernel::SafePointer< kernel::Object_ABC > selected_;
 
 //    QPushButton* pApplyButton_;
 //    QPushButton* pCancelButton_;
     //@}
 };
+
+}
 
 #endif // __ObjectPanel_h_

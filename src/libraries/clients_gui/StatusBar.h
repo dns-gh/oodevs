@@ -13,9 +13,16 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
-class DetectionMap;
-class CoordinateConverter_ABC;
-class Controllers;
+
+namespace kernel
+{
+    class DetectionMap;
+    class CoordinateConverter_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  StatusBar
@@ -24,17 +31,17 @@ class Controllers;
 // Created: SBO 2006-04-14
 // =============================================================================
 class StatusBar : public QObject
-                , public Observer_ABC
-                , public ElementObserver_ABC< Simulation >
-                , public ElementObserver_ABC< Simulation::sStartTick >
-                , public ElementObserver_ABC< Simulation::sEndTick >
+                , public kernel::Observer_ABC
+                , public kernel::ElementObserver_ABC< Simulation >
+                , public kernel::ElementObserver_ABC< Simulation::sStartTick >
+                , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers );
+             StatusBar( QStatusBar* bar, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers );
     virtual ~StatusBar();
     //@}
 
@@ -68,8 +75,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const DetectionMap& detection_;
-    const CoordinateConverter_ABC& converter_;
+    const kernel::DetectionMap& detection_;
+    const kernel::CoordinateConverter_ABC& converter_;
     bool lastSimulationStatus_;
 
     QLabel* pPositionXYZ_;
@@ -80,5 +87,7 @@ private:
     QTimer* pLagTimer_;
     //@}
 };
+
+}
 
 #endif // __StatusBar_h_

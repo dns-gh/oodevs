@@ -15,6 +15,9 @@
 
 #include <qprocess.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter_ABC constructor
 // Created: AGE 2006-05-11

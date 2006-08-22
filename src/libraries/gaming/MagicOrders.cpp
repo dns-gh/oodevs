@@ -13,6 +13,8 @@
 #include "AutomatDecisions.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: MagicOrders constructor
 // Created: AGE 2006-04-28

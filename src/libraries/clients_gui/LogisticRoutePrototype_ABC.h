@@ -12,6 +12,10 @@
 
 #include "ObjectPrototypeAttributes_ABC.h"
 
+
+namespace gui
+{
+
 // =============================================================================
 /** @class  LogisticRoutePrototype_ABC
     @brief  Logistic route prototype definition
@@ -52,5 +56,7 @@ protected:
     QCheckBox* equipped_;
     //@}
 };
+
+}
 
 #endif // __LogisticRoutePrototype_ABC_h_

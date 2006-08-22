@@ -14,7 +14,13 @@
 #include "clients_kernel/Resolver.h"
 #include "ValuedComboBox.h"
 
-class NBCAgent;
+namespace kernel
+{
+    class NBCAgent;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  NBCPrototype_ABC
@@ -28,7 +34,7 @@ class NBCPrototype_ABC : public ObjectPrototypeAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >& resolver );
+             NBCPrototype_ABC( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver );
     virtual ~NBCPrototype_ABC();
     //@}
 
@@ -55,9 +61,11 @@ private:
 protected:
     //! @name Member data
     //@{
-    const Resolver< NBCAgent >& resolver_;
-    ValuedComboBox< const NBCAgent* >* nbcAgents_;
+    const kernel::Resolver< kernel::NBCAgent >& resolver_;
+    ValuedComboBox< const kernel::NBCAgent* >* nbcAgents_;
     //@}
 };
+
+}
 
 #endif // __NBCPrototype_ABC_h_

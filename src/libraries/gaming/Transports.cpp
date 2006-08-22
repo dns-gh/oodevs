@@ -13,6 +13,8 @@
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/Displayer_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Transports constructor
 // Created: AGE 2006-02-13

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogSupplyConsign.cpp $
-// $Author: Age $
-// $Modtime: 1/04/05 11:14 $
-// $Revision: 1 $
-// $Workfile: LogSupplyConsign.cpp $
-//
-// *****************************************************************************
 
 #include "gaming_pch.h"
 
@@ -28,6 +19,7 @@
 #include "clients_kernel/Positions.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign constructor

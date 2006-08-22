@@ -15,6 +15,9 @@
 #include "Types.h"
 #include "ENT/ENT_Tr.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Formatter
     @brief  Formatter
@@ -341,5 +344,6 @@ struct Formatter< std::vector< T > >
     }
 };
 
+}
 
 #endif // __Formatter_h_

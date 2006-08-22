@@ -12,6 +12,9 @@
 
 #include "Location_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Point
     @brief  Point
@@ -57,5 +60,7 @@ private:
     geometry::Point2f point_;
     //@}
 };
+
+}
 
 #endif // __Point_h_

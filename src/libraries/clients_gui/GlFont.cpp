@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "GlFont.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GlFont::GlFont
 // Created: SBO 2006-03-20

@@ -6,19 +6,12 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-09-07 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/RichListItem.cpp $
-// $Author: Ape $
-// $Modtime: 22/09/04 17:24 $
-// $Revision: 2 $
-// $Workfile: RichListItem.cpp $
-//
-// *****************************************************************************
 
 #include "clients_gui_pch.h"
 #include "RichListItem.h"
 #include <qpainter.h>
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: RichListItem constructor

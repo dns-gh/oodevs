@@ -24,21 +24,21 @@ class TacticalLine_ABC;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Limits : public Extension_ABC
-             , public Updatable_ABC< ASN1T_MsgPionOrder >
-             , public Updatable_ABC< ASN1T_MsgPionOrderAck >
+class Limits : public kernel::Extension_ABC
+             , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
+             , public kernel::Updatable_ABC< ASN1T_MsgPionOrderAck >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Limits( const Resolver_ABC< TacticalLine_ABC >& resolver );
+             Limits( const kernel::Resolver_ABC< TacticalLine_ABC >& resolver );
     virtual ~Limits();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< TacticalLine_ABC >& resolver_;
+    const kernel::Resolver_ABC< TacticalLine_ABC >& resolver_;
 
     bool acknowledged_;
     TacticalLine_ABC* left_;

@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <qstringlist.h>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Options constructor
 // Created: AGE 2006-02-13

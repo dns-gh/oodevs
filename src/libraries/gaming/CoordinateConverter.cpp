@@ -11,6 +11,8 @@
 #include "CoordinateConverter.h"
 #include "geocoord/Geoid.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter constructor
 // Created: AGE 2005-03-14

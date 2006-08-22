@@ -13,6 +13,8 @@
 #include "AgentKnowledgeFactory_ABC.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledges constructor
 // Created: AGE 2006-02-15

@@ -10,8 +10,14 @@
 #ifndef __EntitySearchItem_h_
 #define __EntitySearchItem_h_
 
-class Entity_ABC;
-class ActionController;
+namespace kernel
+{
+    class Entity_ABC;
+    class ActionController;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  EntitySearchItem
@@ -25,14 +31,14 @@ class EntitySearchItem
 public:
     //! @name Constructors/Destructor
     //@{
-             EntitySearchItem( ActionController& actions, const Entity_ABC& entity );
+             EntitySearchItem( kernel::ActionController& actions, const kernel::Entity_ABC& entity );
     virtual ~EntitySearchItem();
     //@}
 
     //! @name Operations
     //@{
     bool Matches( const QString& input ) const;
-    bool Matches( const Entity_ABC& entity ) const;
+    bool Matches( const kernel::Entity_ABC& entity ) const;
     void Activate();
     //@}
 
@@ -46,10 +52,12 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actions_;
-    const Entity_ABC& entity_;
+    kernel::ActionController& actions_;
+    const kernel::Entity_ABC& entity_;
     QString name_;
     //@}
 };
+
+}
 
 #endif // __EntitySearchItem_h_

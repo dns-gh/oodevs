@@ -10,6 +10,9 @@
 #include "clients_gui_pch.h"
 #include "ValuedListItem.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15

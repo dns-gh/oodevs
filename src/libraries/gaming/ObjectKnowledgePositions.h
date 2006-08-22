@@ -20,19 +20,19 @@
 // Created: AGE 2006-05-18
 // =============================================================================
 class ObjectKnowledgePositions : public LocationPositions
-                               , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                               , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePositions( const CoordinateConverter_ABC& converter );
+             ObjectKnowledgePositions( const kernel::CoordinateConverter_ABC& converter );
     virtual ~ObjectKnowledgePositions();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

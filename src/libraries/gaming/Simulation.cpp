@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "Network.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
 // Created: AGE 2006-02-10

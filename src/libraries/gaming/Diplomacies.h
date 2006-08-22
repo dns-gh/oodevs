@@ -15,8 +15,11 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Team_ABC;
-class Controller;
+namespace kernel
+{
+    class Team_ABC;
+    class Controller;
+}
 
 // =============================================================================
 /** @class  Diplomacies
@@ -24,15 +27,15 @@ class Controller;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class Diplomacies : public Extension_ABC
-                  , public Updatable_ABC< ASN1T_MsgChangeDiplomatieAck >
-                  , public Updatable_ABC< ASN1T_MsgChangeDiplomatie >
+class Diplomacies : public kernel::Extension_ABC
+                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomatieAck >
+                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomatie >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver );
+             Diplomacies( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Team_ABC >& resolver );
     virtual ~Diplomacies();
     //@}
 
@@ -63,8 +66,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Team_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
     //@}
 };

@@ -12,6 +12,9 @@
 
 #include "NoLinkDisplayer.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  GlTooltip
     @brief  GlTooltip
@@ -19,10 +22,10 @@
 // Created: AGE 2006-06-29
 // =============================================================================
 class GlTooltip : public NoLinkDisplayer
-                , public Caller< QColor >
-                , public Caller< E_EtatOperationnel >
-                , public Caller< E_EtatRapFor >
-                , public Caller< E_EtatCombatRencontre >
+                , public kernel::Caller< QColor >
+                , public kernel::Caller< E_EtatOperationnel >
+                , public kernel::Caller< E_EtatRapFor >
+                , public kernel::Caller< E_EtatCombatRencontre >
 {
 
 public:
@@ -79,5 +82,7 @@ private:
     QImage image_;
     //@}
 };
+
+}
 
 #endif // __GlTooltip_h_

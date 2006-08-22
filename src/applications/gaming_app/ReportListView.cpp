@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "ReportListView.h"
-#include "moc_ReportListView.cpp"
 
 #include "gaming/Report_ABC.h"
 #include "ReportFilterOptions.h"
@@ -17,6 +16,11 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ItemFactory_ABC.h"
+
+using namespace kernel;
+using namespace gui;
+
+#include "moc_ReportListView.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor

@@ -13,6 +13,8 @@
 #include "Equipment.h"
 #include "clients_kernel/DataDictionary.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor
 // Created: AGE 2006-02-13

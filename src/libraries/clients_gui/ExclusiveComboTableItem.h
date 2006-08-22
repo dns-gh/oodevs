@@ -12,6 +12,9 @@
 
 #include <qtable.h>
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ExclusiveComboTableItem
     @brief  ComboTableItem allowing each item to be selected once in table column
@@ -52,5 +55,7 @@ private:
     QStringList list_;
     //@}
 };
+
+}
 
 #endif // __ExclusiveComboTableItem_h_

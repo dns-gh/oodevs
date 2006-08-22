@@ -13,8 +13,12 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
-class Agent_ABC;
-class Controllers;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controllers;
+}
+
 class StaticModel;
 class Equipment;
 class Dotation;
@@ -25,21 +29,21 @@ struct ASN1T_MagicActionRecompletementPartiel;
 // Created:  SBO 2005-07-27 
 //=============================================================================
 class LogisticSupplyRecompletionDialog : public QDialog
-                                       , public Observer_ABC
-                                       , public ContextMenuObserver_ABC< Agent_ABC >
+                                       , public kernel::Observer_ABC
+                                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
     //! @name Modifiers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -100,10 +104,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const StaticModel& static_;
-    SafePointer< Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
 
     QTable*          equipmentsTable_;
     QStringList      equipmentsList_;

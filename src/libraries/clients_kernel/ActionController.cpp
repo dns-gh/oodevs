@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "ActionController.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ActionController constructor
 // Created: AGE 2006-02-16

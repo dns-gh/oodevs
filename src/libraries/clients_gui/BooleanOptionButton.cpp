@@ -12,11 +12,13 @@
 #include "moc_BooleanOptionButton.cpp"
 #include "clients_kernel/Options.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: BooleanOptionButton constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-BooleanOptionButton::BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, Options& options, const std::string& option)
+BooleanOptionButton::BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, kernel::Options& options, const std::string& option)
     : QToolButton( iconSet, "", "", 0, "", parent, "" )
     , options_( options )
     , option_( option )
@@ -52,7 +54,7 @@ void BooleanOptionButton::OnToggled( bool on )
 // Name: BooleanOptionButton::OptionChanged
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void BooleanOptionButton::OptionChanged( const std::string& name, const OptionVariant& value )
+void BooleanOptionButton::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     if( name == option_ && isOn() != value.To< bool >() )
         setOn( value.To< bool >() );

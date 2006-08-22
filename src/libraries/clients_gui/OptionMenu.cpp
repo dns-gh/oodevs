@@ -11,6 +11,8 @@
 #include "OptionMenu.h"
 #include "moc_OptionMenu.cpp"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: OptionMenuBase constructor
 // Created: SBO 2006-04-28

@@ -19,6 +19,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17

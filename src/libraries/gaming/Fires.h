@@ -16,7 +16,11 @@
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
+namespace kernel
+{
+    class Controller;
+}
+
 class Fire_ABC;
 class FireFactory;
 
@@ -26,25 +30,25 @@ class FireFactory;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class Fires : public Extension_ABC 
-            , public Updatable_ABC< ASN1T_MsgStartPionFire >
-            , public Updatable_ABC< ASN1T_MsgStopPionFire >
-            , public Updatable_ABC< ASN1T_MsgStartPopulationFire >
-            , public Updatable_ABC< ASN1T_MsgStopPopulationFire >
-            , public Resolver< Fire_ABC >
-            , public Drawable_ABC
+class Fires : public kernel::Extension_ABC 
+            , public kernel::Updatable_ABC< ASN1T_MsgStartPionFire >
+            , public kernel::Updatable_ABC< ASN1T_MsgStopPionFire >
+            , public kernel::Updatable_ABC< ASN1T_MsgStartPopulationFire >
+            , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
+            , public kernel::Resolver< Fire_ABC >
+            , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Fires( Controller& controller, FireFactory& factory );
+             Fires( kernel::Controller& controller, FireFactory& factory );
     virtual ~Fires();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -69,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
     FireFactory& factory_;
     //@}
 };

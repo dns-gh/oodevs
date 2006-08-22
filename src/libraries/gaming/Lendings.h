@@ -16,9 +16,12 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "Loan.h"
 
-class Agent_ABC;
-class Controller;
-class EquipmentType;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+    class EquipmentType;
+}
 
 // =============================================================================
 /** @class  Lendings
@@ -26,19 +29,15 @@ class EquipmentType;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Lendings : public Extension_ABC
-               , public Updatable_ABC< ASN1T_MsgUnitDotations >
+class Lendings : public kernel::Extension_ABC
+               , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Lendings( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< EquipmentType >& equipmentResolver );
+             Lendings( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     virtual ~Lendings();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -59,9 +58,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
-    const Resolver_ABC< EquipmentType >& equipmentResolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
     T_Lendings lendings_;
     //@}
 };

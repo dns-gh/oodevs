@@ -16,6 +16,8 @@
 #include "clients_kernel/DataDictionary.h"
 #include "statusicons.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
 // Created: AGE 2006-02-13

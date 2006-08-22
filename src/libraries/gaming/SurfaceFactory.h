@@ -13,10 +13,14 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "DIN_Types.h"
 
-class DetectionMap;
-class SensorType;
+namespace kernel
+{
+    class DetectionMap;
+    class SensorType;
+    class Agent_ABC;
+}
+
 class Surface;
-class Agent_ABC;
 class VisionMap;
 
 // =============================================================================
@@ -32,13 +36,13 @@ class SurfaceFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceFactory( const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver );
+             SurfaceFactory( const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver );
     virtual ~SurfaceFactory();
     //@}
 
     //! @name Operations
     //@{
-    Surface* CreateSurface( const Agent_ABC& agent, const VisionConesMessage& input );
+    Surface* CreateSurface( const kernel::Agent_ABC& agent, const VisionConesMessage& input );
     VisionMap* CreateVisionMap();
     //@}
 
@@ -52,8 +56,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const DetectionMap& map_;
-    const Resolver_ABC< SensorType, std::string >& resolver_;
+    const kernel::DetectionMap& map_;
+    const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver_;
     //@}
 };
 

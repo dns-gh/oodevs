@@ -13,9 +13,12 @@
 #include "View_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 
-class GlWidget;
-class Gl3dWidget;
-class Layer_ABC;
+
+namespace gui
+{
+    class GlWidget;
+    class Gl3dWidget;
+    class Layer_ABC;
 
 // =============================================================================
 /** @class  GlProxy
@@ -23,7 +26,8 @@ class Layer_ABC;
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class GlProxy : public View_ABC, public GlTools_ABC
+class GlProxy : public View_ABC
+              , public kernel::GlTools_ABC
 {
 
 public:
@@ -88,10 +92,12 @@ private:
     //! @name Member data
     //@{
     View_ABC*    view_;
-    GlTools_ABC* tools_;
+    kernel::GlTools_ABC* tools_;
     
     T_Layers layers_;
     //@}
 };
+
+}
 
 #endif // __GlProxy_h_

@@ -10,10 +10,14 @@
 #ifndef __AgentKnowledgeConverter_ABC_h_
 #define __AgentKnowledgeConverter_ABC_h_
 
-class KnowledgeGroup_ABC;
-class Agent_ABC;
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
+    class Agent_ABC;
+    class Population_ABC;
+}
+
 class AgentKnowledge;
-class Population_ABC;
 class PopulationKnowledge;
 
 // =============================================================================
@@ -34,10 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const KnowledgeGroup_ABC& owner ) = 0;
-    virtual const AgentKnowledge*      Find( const Agent_ABC& base,          const KnowledgeGroup_ABC& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const KnowledgeGroup_ABC& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const Population_ABC& base,          const KnowledgeGroup_ABC& owner ) = 0;
+    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
+    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
+    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
+    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
     //@}
 
 private:

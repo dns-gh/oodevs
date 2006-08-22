@@ -12,6 +12,9 @@
 
 #include <qpushbutton.h>
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ColorButton
     @brief  Color button
@@ -64,5 +67,7 @@ private:
     QColor current_;
     //@}
 };
+
+}
 
 #endif // __ColorButton_h_

@@ -10,6 +10,9 @@
 #ifndef __OptionalValue_h_
 #define __OptionalValue_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  OptionalValue
     @brief  Optional value
@@ -49,5 +52,7 @@ private:
     bool set_;
     //@}
 };
+
+}
 
 #endif // __OptionalValue_h_

@@ -10,6 +10,9 @@
 #include "clients_gui_pch.h"
 #include "CheckBoxDisplayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: CheckBoxDisplayer constructor
 // Created: AGE 2006-02-23

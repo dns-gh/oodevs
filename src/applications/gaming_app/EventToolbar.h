@@ -15,9 +15,13 @@
 
 #include <list>
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+    class Entity_ABC;
+}
+
 class Report_ABC;
-class Entity_ABC;
 
 // =============================================================================
 /** @class  EventToolbar
@@ -26,15 +30,15 @@ class Entity_ABC;
 // Created: SBO 2006-06-20
 // =============================================================================
 class EventToolbar : public QToolBar
-                   , public Observer_ABC
-                   , public ElementObserver_ABC< Report_ABC >
+                   , public kernel::Observer_ABC
+                   , public kernel::ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventToolbar( QMainWindow* pParent, Controllers& controllers );
+             EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
     virtual ~EventToolbar();
     //@}
 
@@ -55,7 +59,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::list< const Entity_ABC* > T_Agents;
+    typedef std::list< const kernel::Entity_ABC* > T_Agents;
     typedef T_Agents::const_iterator    CIT_Agents;
     //@}
 
@@ -67,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     T_Agents messageAgents_;
 
     QToolButton* gasButton_;

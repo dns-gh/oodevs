@@ -12,6 +12,8 @@
 #include "LocationVisitor_ABC.h"
 #include "GlTools_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Circle constructor
 // Created: AGE 2006-08-09

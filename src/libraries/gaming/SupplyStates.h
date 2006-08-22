@@ -17,11 +17,14 @@
 #include "Dotation.h"
 #include "clients_kernel/Resolver.h"
 
-class Controller;
-class EquipmentType;
-class DotationType;
-class Displayer_ABC;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class EquipmentType;
+    class DotationType;
+    class Displayer_ABC;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  SupplyStates
@@ -29,21 +32,21 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class SupplyStates : public Extension_ABC
-                   , public Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
-                   , public Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
-                   , public Resolver< Dotation >
+class SupplyStates : public kernel::Extension_ABC
+                   , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
+                   , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
+                   , public kernel::Resolver< Dotation >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver, DataDictionary& dico );
+             SupplyStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::DataDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
     virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     //@}
@@ -64,9 +67,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< EquipmentType >& resolver_;
-    const Resolver_ABC< DotationType >& dotationResolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
 
     bool             bChainEnabled_;
     T_Availabilities dispoTransporters_;

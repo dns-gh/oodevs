@@ -18,8 +18,14 @@
 #include "clients_kernel/SafePointer.h"
 #include "ValuedComboBox.h"
 
-class Agent_ABC;
-class Controllers;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  CampPrototype_ABC
@@ -28,16 +34,16 @@ class Controllers;
 // Created: SBO 2006-04-19
 // =============================================================================
 class CampPrototype_ABC : public ObjectPrototypeAttributes_ABC
-                        , public Observer_ABC
-                        , public ElementObserver_ABC< Agent_ABC >
-                        , public ContextMenuObserver_ABC< Agent_ABC >
+                        , public kernel::Observer_ABC
+                        , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructor/Destructor
     //@{
-             CampPrototype_ABC( QWidget* parent, Controllers& controllers );
+             CampPrototype_ABC( QWidget* parent, kernel::Controllers& controllers );
     virtual ~CampPrototype_ABC();
     //@}
 
@@ -64,18 +70,20 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Agent_ABC& agent );
-    virtual void NotifyDeleted( const Agent_ABC& agent );
-    virtual void NotifyContextMenu( const Agent_ABC&, ContextMenu& );
+    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
     //@}
 
 protected:
     //! @name Member Data
     //@{
-    Controllers& controllers_;
-    ValuedComboBox< const Agent_ABC* >* tc2s_;
-    SafePointer< Agent_ABC > selected_;
+    kernel::Controllers& controllers_;
+    ValuedComboBox< const kernel::Agent_ABC* >* tc2s_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     //@}
 };
+
+}
 
 #endif // __CampPrototype_ABC_h_

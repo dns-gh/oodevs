@@ -12,6 +12,9 @@
 
 #include "Layer_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  MapLayerProxy
     @brief  MapLayerProxy. To prevent ownership
@@ -52,5 +55,7 @@ private:
     Layer_ABC& layer_;
     //@}
 };
+
+}
 
 #endif // __MapLayerProxy_h_

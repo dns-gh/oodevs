@@ -14,8 +14,11 @@
 #include "Fire_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Agent_ABC;
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 /** @class  IndirectFire
@@ -29,13 +32,13 @@ class IndirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter );
+             IndirectFire( const ASN1T_MsgStartPionFire& message, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
     virtual ~IndirectFire();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

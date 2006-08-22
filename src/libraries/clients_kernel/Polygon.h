@@ -12,6 +12,9 @@
 
 #include "Location_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Polygon
     @brief  Polygon
@@ -56,5 +59,7 @@ private:
     T_PointVector points_;
     //@}
 };
+
+}
 
 #endif // __Polygon_h_

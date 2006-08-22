@@ -30,6 +30,9 @@
 #include "gaming/AgentKnowledgeConverter.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19

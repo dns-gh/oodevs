@@ -14,8 +14,15 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
-class CoordinateConverter_ABC;
-class RichLabel;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
+namespace gui
+{
+    class RichLabel;
+}
 
 // =============================================================================
 /** @class  ParamPoint
@@ -24,23 +31,23 @@ class RichLabel;
 // Created: APE 2004-03-18
 // =============================================================================
 class ParamPoint : public QHBox, public Param_ABC
-                 , public ContextMenuObserver_ABC< geometry::Point2f >
+                 , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter_ABC& converter );
+             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPoint();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();
-    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& );
+    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     //@}
 
 private slots:
@@ -60,10 +67,10 @@ private:
     //! @name Member data
     //@{
     ASN1T_Point&       asn_;
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
 
     std::string        menu_;
-    RichLabel*         pLabel_;
+    gui::RichLabel*         pLabel_;
     QLabel*            pPosLabel_;
 
     ASN1T_CoordUTM    asnPoint_;

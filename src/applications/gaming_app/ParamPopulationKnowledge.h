@@ -12,11 +12,15 @@
 
 #include "EntityParameter.h"
 
+namespace kernel
+{
+    class Population_ABC;
+    class Agent_ABC;
+    class Entity_ABC;
+}
+
 class PopulationKnowledge;
-class Population_ABC;
 class AgentKnowledgeConverter_ABC;
-class Agent_ABC;
-class Entity_ABC;
 
 // =============================================================================
 /** @class  ParamPopulationKnowledge
@@ -25,13 +29,13 @@ class Entity_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamPopulationKnowledge : public EntityParameter< PopulationKnowledge >
-                               , public ContextMenuObserver_ABC< Population_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent );
+             ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPopulationKnowledge();
     //@}
 
@@ -45,13 +49,13 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
     //! @name Member data
     //@{
     AgentKnowledgeConverter_ABC& converter_;
-    const Agent_ABC& agent_;
+    const kernel::Agent_ABC& agent_;
     //@}
 };
 

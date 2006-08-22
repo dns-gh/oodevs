@@ -14,9 +14,12 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 
-class Controller;
-class AgentType;
-class AutomatType;
+namespace kernel
+{
+    class Controller;
+    class AgentType;
+    class AutomatType;
+}
 
 // =============================================================================
 /** @class  Agent
@@ -24,43 +27,43 @@ class AutomatType;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public Agent_ABC
-            , public Extension_ABC
-            , public Aggregatable_ABC
-            , public Drawable_ABC
-            , public Updatable_ABC< ASN1T_MsgChangeAutomateAck >
-            , public Updatable_ABC< ASN1T_MsgChangeAutomate >
-            , public Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
+class Agent : public kernel::Agent_ABC
+            , public kernel::Extension_ABC
+            , public kernel::Aggregatable_ABC
+            , public kernel::Drawable_ABC
+            , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomateAck >
+            , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomate >
+            , public kernel::Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              Agent( const ASN1T_MsgAutomateCreation& message,
-                    Controller& controller, 
-                    const Resolver_ABC< AutomatType >& resolver,
-                    const Resolver_ABC< Agent_ABC >& agentResolver, 
-                    const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver );
+                    kernel::Controller& controller, 
+                    const kernel::Resolver_ABC< kernel::AutomatType >& resolver,
+                    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
+                    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& gtiaResolver );
              Agent( const ASN1T_MsgPionCreation& message,
-                    Controller& controller, 
-                    const Resolver_ABC< AgentType >& resolver,
-                    const Resolver_ABC< Agent_ABC >& agentResolver, 
-                    const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver );
+                    kernel::Controller& controller, 
+                    const kernel::Resolver_ABC< kernel::AgentType >& resolver,
+                    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
+                    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& gtiaResolver );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const;
-    virtual const Team_ABC& GetTeam() const;
-    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    virtual const Agent_ABC* GetSuperior() const;
+    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
+    virtual const kernel::Team_ABC& GetTeam() const;
+    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
+    virtual const kernel::Agent_ABC* GetSuperior() const;
 
     virtual std::string GetName() const;
     virtual unsigned long GetId() const;
 
-    virtual const AutomatType* GetAutomatType() const;
-    virtual const AgentType& GetType() const;
+    virtual const kernel::AutomatType* GetAutomatType() const;
+    virtual const kernel::AgentType& GetType() const;
     //@}
 
 private:
@@ -77,14 +80,14 @@ private:
     virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
 
     void ChangeKnowledgeGroup( unsigned long id );
-    void ChangeKnowledgeGroup( KnowledgeGroup_ABC& gtia );
+    void ChangeKnowledgeGroup( kernel::KnowledgeGroup_ABC& gtia );
     void ChangeSuperior( unsigned long id );
     virtual void Aggregate( const bool& );
 
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
-    void RemoveChild( Agent_ABC& child );
-    void AddChild( Agent_ABC& child );
+    void RemoveChild( kernel::Agent_ABC& child );
+    void AddChild( kernel::Agent_ABC& child );
 
     void CreateDictionary();
     //@}
@@ -92,21 +95,21 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& agentResolver_;
-    const Resolver_ABC< KnowledgeGroup_ABC >&  gtiaResolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
+    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >&  gtiaResolver_;
     unsigned long id_;
     std::string   name_;
 
     // Automat only
-    AutomatType*  automatType_;
-    AgentType*    type_;
+    kernel::AutomatType*  automatType_;
+    kernel::AgentType*    type_;
 
     // Agent only
     Agent*  superior_;
 
     // Automat only
-    KnowledgeGroup_ABC* gtia_;
+    kernel::KnowledgeGroup_ABC* gtia_;
 
     bool aggregated_;
     //@}

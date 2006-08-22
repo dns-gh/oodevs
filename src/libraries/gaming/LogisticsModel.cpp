@@ -14,6 +14,8 @@
 #include "LogSupplyConsign.h"
 #include "LogisticConsignFactory_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticsModel constructor
 // Created: AGE 2006-02-10

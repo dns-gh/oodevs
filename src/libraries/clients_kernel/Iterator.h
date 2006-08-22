@@ -12,6 +12,9 @@
 
 #include <boost/shared_ptr.hpp>
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Iterator_ABC
     @brief  Iterator definition
@@ -106,5 +109,7 @@ private:
     typename Container::const_iterator current_;
     typename Container::const_iterator end_;
 };
+
+}
 
 #endif // __Iterator_h_

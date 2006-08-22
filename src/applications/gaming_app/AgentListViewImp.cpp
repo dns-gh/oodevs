@@ -12,6 +12,9 @@
 #include "gaming/AutomatDecisions.h"
 #include "clients_kernel/Agent_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentListViewImp constructor
 // Created: SBO 2006-08-18

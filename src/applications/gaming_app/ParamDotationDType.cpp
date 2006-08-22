@@ -12,6 +12,8 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Iterator.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09

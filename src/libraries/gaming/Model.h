@@ -10,6 +10,12 @@
 #ifndef __Model_h_
 #define __Model_h_
 
+namespace kernel
+{
+    class Controllers;
+    class Workers;
+}
+
 class AgentsModel;
 class ObjectsModel;
 class TeamsModel;
@@ -18,7 +24,6 @@ class LogisticsModel;
 class LimitsModel;
 class AgentFactory_ABC;
 class ObjectFactory_ABC;
-class Controllers;
 class ObjectKnowledgeFactory;
 class AgentKnowledgeFactory;
 class TeamFactory_ABC;
@@ -28,7 +33,6 @@ class FireResultFactory;
 class FiresModel;
 class FireFactory;
 class WeatherModel;
-class Workers;
 class Publisher_ABC;
 class StaticModel;
 
@@ -44,7 +48,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher );
     virtual ~Model();
     //@}
 
@@ -56,7 +60,7 @@ public:
 public:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     const StaticModel& static_;
 
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC

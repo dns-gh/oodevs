@@ -23,11 +23,11 @@
 */
 // Created: AGE 2006-02-20
 // =============================================================================
-class PopulationPart_ABC : public Entity_ABC
-                         , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
-                         , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
-                         , public Drawable_ABC
-                         , public Positions
+class PopulationPart_ABC : public kernel::Entity_ABC
+                         , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
+                         , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
+                         , public kernel::Drawable_ABC
+                         , public kernel::Positions
 {
 
 public:
@@ -44,15 +44,15 @@ public:
     virtual unsigned int GetDeadHumans() const = 0;
     virtual unsigned int GetLivingHumans() const = 0;
     virtual unsigned int GetDensity() const = 0;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const = 0;
 
     virtual std::string  GetAttitude() const;
 
     virtual float GetHeight() const;
 
-    virtual void Select( ActionController& controller ) const = 0;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
-    virtual void Activate( ActionController& controller ) const = 0;
+    virtual void Select( kernel::ActionController& controller ) const = 0;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const = 0;
+    virtual void Activate( kernel::ActionController& controller ) const = 0;
     //@}
 
 protected:

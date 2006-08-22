@@ -15,10 +15,13 @@
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
 
-class ActionController;
-class GlTools_ABC;
 class QPoint;
-class Drawer;
+
+namespace kernel
+{
+    class ActionController;
+    class GlTools_ABC;
+    class Drawer;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -86,5 +89,7 @@ private:
     Drawer* drawer_;
     //@}
 };
+
+}
 
 #endif // __Entity_ABC_h_

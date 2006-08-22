@@ -15,26 +15,29 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Agent_ABC;
-class Controller;
-class Displayer_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+    class Displayer_ABC;
+}
 
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogMedicalConsign : public Drawable_ABC
+class LogMedicalConsign : public kernel::Drawable_ABC
 {
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
+             LogMedicalConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const ASN1T_MsgLogSanteTraitementHumainCreation& asn );
     virtual ~LogMedicalConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network events
@@ -52,12 +55,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
 
     uint    nID_;
-    Agent_ABC&  pion_;
-    Agent_ABC*  pPionLogHandling_;
+    kernel::Agent_ABC&  pion_;
+    kernel::Agent_ABC*  pPionLogHandling_;
     bool    bMentalDeceased_;
     bool    bContaminated_;
     bool    diagnosed_;

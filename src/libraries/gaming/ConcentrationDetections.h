@@ -15,8 +15,12 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Controller;
-class Population_ABC;
+namespace kernel
+{
+    class Controller;
+    class Population_ABC;
+}
+
 class PopulationConcentration;
 
 // =============================================================================
@@ -25,19 +29,15 @@ class PopulationConcentration;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ConcentrationDetections : public Extension_ABC
-                              , public Updatable_ABC< ConcentrationDetectionMessage >
+class ConcentrationDetections : public kernel::Extension_ABC
+                              , public kernel::Updatable_ABC< ConcentrationDetectionMessage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ConcentrationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver );
+             ConcentrationDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~ConcentrationDetections();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -60,8 +60,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Population_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Population_ABC >& resolver_;
 
     T_Concentrations perceivedConcentrations_;
     //@}

@@ -13,8 +13,14 @@
 #include "ObjectPrototypeAttributes_ABC.h"
 #include "clients_kernel/Resolver.h"
 
-class NBCAgent;
-class RichLabel;
+namespace kernel
+{
+    class NBCAgent;
+}
+
+namespace gui
+{
+    class RichLabel;
 
 // =============================================================================
 /** @class  RotaPrototype_ABC
@@ -28,7 +34,7 @@ class RotaPrototype_ABC : public ObjectPrototypeAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >& resolver );
+             RotaPrototype_ABC( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver );
     virtual ~RotaPrototype_ABC();
     //@}
 
@@ -60,11 +66,13 @@ protected:
 
     //! @name Member data
     //@{
-    const Resolver< NBCAgent >& resolver_;
+    const kernel::Resolver< kernel::NBCAgent >& resolver_;
     RichLabel* nbcAgentsLabel_;
     QSpinBox* danger_;
     QListView* nbcAgents_;
     //@}
 };
+
+}
 
 #endif // __RotaPrototype_ABC_h_

@@ -16,8 +16,10 @@
 #include <qgroupbox.h>
 #include <map>
 
-class LabelDisplayer;
-class ItemFactory_ABC;
+namespace gui
+{
+    class LabelDisplayer;
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  GroupDisplayer
@@ -25,7 +27,7 @@ class ItemFactory_ABC;
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class GroupDisplayer : public Displayer_ABC, public QGroupBox
+class GroupDisplayer : public kernel::Displayer_ABC, public QGroupBox
 {
 
 public:
@@ -52,8 +54,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, Displayer_ABC* > T_Items;
-    typedef T_Items::iterator                      IT_Items;
+    typedef std::map< std::string, kernel::Displayer_ABC* > T_Items;
+    typedef T_Items::iterator                              IT_Items;
     //@}
 
     //! @name Helpers
@@ -71,5 +73,7 @@ private:
     T_Items items_;
     //@}
 };
+
+}
 
 #endif // __GroupDisplayer_h_

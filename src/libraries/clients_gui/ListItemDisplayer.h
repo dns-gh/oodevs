@@ -11,7 +11,10 @@
 #define __ListItemDisplayer_h_
 
 #include "BaseDisplayer.h"
-class RichListItem;
+
+namespace gui
+{
+    class RichListItem;
 
 // =============================================================================
 /** @class  ListItemDisplayer
@@ -20,7 +23,7 @@ class RichListItem;
 // Created: AGE 2006-02-22
 // =============================================================================
 class ListItemDisplayer : public BaseDisplayer
-                        , public Caller< QColor >
+                        , public kernel::Caller< QColor >
 {
 
 public:
@@ -69,5 +72,7 @@ private:
     T_Columns columns_;
     //@}
 };
+
+}
 
 #endif // __ListItemDisplayer_h_

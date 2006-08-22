@@ -15,11 +15,18 @@
 #include "gaming/LogMedicalConsign.h"
 #include "clients_kernel/Agent_ABC.h"
 
+namespace kernel
+{
+    class Displayer_ABC;
+}
+
 class MedicalStates;
 class Availability;
-class Displayer_ABC;
-class ValuedListItem;
-class DisplayBuilder;
+
+namespace gui
+{
+    class ValuedListItem;
+    class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentMedicalPanel
@@ -28,12 +35,12 @@ class DisplayBuilder;
 // Created: AGE 2005-04-01
 // =============================================================================
 class AgentMedicalPanel : public LogisticPanel< AgentMedicalPanel, LogMedicalConsign >
-                        , public ElementObserver_ABC< MedicalStates >
+                        , public kernel::ElementObserver_ABC< MedicalStates >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMedicalPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentMedicalPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMedicalPanel();
     //@}
 
@@ -46,7 +53,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void NotifySelected( const Agent_ABC& agent );
+    void NotifySelected( const kernel::Agent_ABC& agent );
     void NotifyUpdated( const MedicalStates& consigns );
 
     virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list );
@@ -56,12 +63,14 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     DisplayBuilder* display_;
     ListDisplayer< AgentMedicalPanel >* dispoReleveAmbulances_;
     ListDisplayer< AgentMedicalPanel >* dispoDispoRamassageAmbulances_;
     ListDisplayer< AgentMedicalPanel >* dispoDispoDoctors_;
     //@}
 };
+
+}
 
 #endif // __AgentMedicalPanel_h_

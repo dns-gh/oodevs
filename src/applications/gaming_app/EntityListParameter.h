@@ -22,7 +22,8 @@
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class EntityListParameterBase : public QListView, public Param_ABC
+class EntityListParameterBase : public QListView
+                              , public Param_ABC
 {
     Q_OBJECT;
 public:
@@ -51,9 +52,9 @@ private slots:
 protected:
     //! @name Helpers
     //@{
-    void AddToMenu( ContextMenu& menu );
+    void AddToMenu( kernel::ContextMenu& menu );
     virtual bool Invalid();
-    virtual unsigned long GetId( ValuedListItem* item ) = 0;
+    virtual unsigned long GetId( gui::ValuedListItem* item ) = 0;
     //@}
 
 private:
@@ -75,8 +76,8 @@ private:
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityListParameter : public EntityListParameterBase
-                          , public ContextMenuObserver_ABC< ConcreteEntity >
-                          , public ElementObserver_ABC< ConcreteEntity >
+                          , public kernel::ContextMenuObserver_ABC< ConcreteEntity >
+                          , public kernel::ElementObserver_ABC< ConcreteEntity >
 {
 
 public:
@@ -96,11 +97,11 @@ private:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     virtual void MenuItemValidated();
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
-    virtual unsigned long GetId( ValuedListItem* item );
+    virtual unsigned long GetId( gui::ValuedListItem* item );
     //@}
 
 private:

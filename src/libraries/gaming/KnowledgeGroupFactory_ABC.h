@@ -10,8 +10,11 @@
 #ifndef __KnowledgeGroupFactory_ABC_h_
 #define __KnowledgeGroupFactory_ABC_h_
 
-class KnowledgeGroup_ABC;
-class Team_ABC;
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
+    class Team_ABC;
+}
 
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
@@ -31,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, const Team_ABC& team ) = 0;
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, const kernel::Team_ABC& team ) = 0;
     //@}
 };
 

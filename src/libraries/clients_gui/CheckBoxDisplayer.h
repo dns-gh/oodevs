@@ -12,14 +12,17 @@
 
 #include "clients_kernel/Displayer_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  CheckBoxDisplayer
     @brief  CheckBoxDisplayer
 */
 // Created: AGE 2006-02-23
 // =============================================================================
-class CheckBoxDisplayer : public Displayer_ABC
-                        , public Caller< bool >
+class CheckBoxDisplayer : public kernel::Displayer_ABC
+                        , public kernel::Caller< bool >
 {
 
 public:
@@ -56,5 +59,7 @@ private:
     QCheckBox* box_;
     //@}
 };
+
+}
 
 #endif // __CheckBoxDisplayer_h_

@@ -20,6 +20,9 @@
 #include "NBCPrototype.h"
 #include "RotaPrototype.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18

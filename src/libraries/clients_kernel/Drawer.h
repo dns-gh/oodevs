@@ -10,9 +10,11 @@
 #ifndef __Drawer_h_
 #define __Drawer_h_
 
-class Drawable_ABC;
-class Extension_ABC;
-class GlTools_ABC;
+namespace kernel
+{
+    class Drawable_ABC;
+    class Extension_ABC;
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  Drawer
@@ -70,5 +72,7 @@ private:
     T_Drawables extensions_; 
     //@}
 };
+
+}
 
 #endif // __Drawer_h_

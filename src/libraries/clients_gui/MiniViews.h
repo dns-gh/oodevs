@@ -13,13 +13,19 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-class Entity_ABC;
-class Agent_ABC;
-class Population_ABC;
-class Controllers;
-class SmartGridWidget;
-class GlWidget;
-class MiniView;
+namespace kernel
+{
+    class Entity_ABC;
+    class Agent_ABC;
+    class Population_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
+    class SmartGridWidget;
+    class GlWidget;
+    class MiniView;
 
 // =============================================================================
 /** @class  MiniViews
@@ -28,16 +34,16 @@ class MiniView;
 // Created: AGE 2006-06-23
 // =============================================================================
 class MiniViews : public QDockWindow
-                , public Observer_ABC
-                , public ContextMenuObserver_ABC< Agent_ABC >
-                , public ContextMenuObserver_ABC< Population_ABC >
+                , public kernel::Observer_ABC
+                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniViews( QMainWindow* parent, Controllers& controllers, GlWidget* const& widget );
+             MiniViews( QMainWindow* parent, kernel::Controllers& controllers, GlWidget* const& widget );
     virtual ~MiniViews();
     //@}
 
@@ -56,25 +62,27 @@ private:
 
     //! @name Helpers
     //@{
-    void BuildContextMenu( const Entity_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const Population_ABC& popup, ContextMenu& menu );
+    void BuildContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Population_ABC& popup, kernel::ContextMenu& menu );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const Entity_ABC*, MiniView* > T_MiniViews;
+    typedef std::map< const kernel::Entity_ABC*, MiniView* > T_MiniViews;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     GlWidget* const & widget_;
     SmartGridWidget* grid_;
-    SafePointer< Entity_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     T_MiniViews miniViews_;
     //@}
 };
+
+}
 
 #endif // __MiniViews_h_

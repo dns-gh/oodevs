@@ -13,6 +13,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GridLayer constructor
 // Created: AGE 2006-08-22

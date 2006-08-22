@@ -17,13 +17,17 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class SensorType;
+    class Agent_ABC;
+    class Workers;
+}
+
 class Surface;
-class CoordinateConverter_ABC;
-class SensorType;
-class Agent_ABC;
 class SurfaceFactory;
 class VisionMap;
-class Workers;
 
 // =============================================================================
 /** @class  VisionCones
@@ -31,22 +35,22 @@ class Workers;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class VisionCones : public Extension_ABC
-                  , public Updatable_ABC< VisionConesMessage >
-                  , public Updatable_ABC< ASN1T_MsgUnitAttributes >
-                  , public Drawable_ABC
+class VisionCones : public kernel::Extension_ABC
+                  , public kernel::Updatable_ABC< VisionConesMessage >
+                  , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                  , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers );
+             VisionCones( const kernel::Agent_ABC& agent, SurfaceFactory& factory, kernel::Workers& workers );
     virtual ~VisionCones();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -78,9 +82,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent_ABC& agent_;
+    const kernel::Agent_ABC& agent_;
     SurfaceFactory& factory_;
-    Workers& workers_;
+    kernel::Workers& workers_;
     VisionMap* map_;
     T_Surfaces surfaces_;
     double elongationFactor_;

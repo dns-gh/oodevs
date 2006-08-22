@@ -31,6 +31,8 @@
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 
+using namespace kernel;
+
 namespace 
 {
     struct CatchMeIfYouCan {};

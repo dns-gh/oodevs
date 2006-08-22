@@ -20,6 +20,9 @@
 #include "ValuedListItem.h"
 #include "ListDisplayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationPanel constructor
 // Created: HME 2005-10-03

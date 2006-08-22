@@ -12,6 +12,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 
+using namespace kernel;
+
 IDManager KnowledgeGroup::idManager_( 0 );
 
 // -----------------------------------------------------------------------------

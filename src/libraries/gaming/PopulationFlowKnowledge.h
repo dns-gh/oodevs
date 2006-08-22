@@ -17,11 +17,15 @@
 #include "clients_kernel/OptionalValue.h"
 #include "PopulationPartKnowledge_ABC.h"
 
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class Controller;
+    class Population_ABC;
+}
+
 class PopulationFlow;
 class PopulationKnowledge;
-class Controller;
-class Population_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -33,7 +37,7 @@ public:
     //@{
     struct FlowPart
     {
-        FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter_ABC& converter );
+        FlowPart( ASN1T_PortionFlux& asn, const kernel::CoordinateConverter_ABC& converter );
         T_PointVector flowPart_;
         float         rRelevance_;
     };
@@ -45,18 +49,14 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
+             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Display( Displayer_ABC& displayer ) const;
-    virtual void DisplayInList( Displayer_ABC& displayer ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Network
@@ -72,19 +72,19 @@ private:
     //@}
 
 private:
-    Controller& controller_;
-    const CoordinateConverter_ABC& converter_;
+    kernel::Controller& controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
 
-    const Population_ABC& popu_; 
+    const kernel::Population_ABC& popu_; 
     const uint nID_;
     const PopulationFlow* pFlow_;
 
-    OptionalValue< float >                 rDirection_;
-    OptionalValue< float >                 rSpeed_;
-    OptionalValue< uint  >                 nNbrAliveHumans_;
-    OptionalValue< uint  >                 nNbrDeadHumans_;
-    OptionalValue< E_PopulationAttitude >  eAttitude_;
-    OptionalValue< bool  >                 bIsPerceived_;
+    kernel::OptionalValue< float >                 rDirection_;
+    kernel::OptionalValue< float >                 rSpeed_;
+    kernel::OptionalValue< uint  >                 nNbrAliveHumans_;
+    kernel::OptionalValue< uint  >                 nNbrDeadHumans_;
+    kernel::OptionalValue< E_PopulationAttitude >  eAttitude_;
+    kernel::OptionalValue< bool  >                 bIsPerceived_;
     T_FlowParts                            flowParts_;
 
 };

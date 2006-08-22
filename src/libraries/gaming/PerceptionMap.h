@@ -16,8 +16,11 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "Perception.h"
 
-class Agent_ABC;
-class Controller;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+}
 
 // =============================================================================
 /** @class  PerceptionMap
@@ -25,13 +28,14 @@ class Controller;
 */
 // Created: AGE 2006-02-22
 // =============================================================================
-class PerceptionMap : public Extension_ABC, public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+class PerceptionMap : public kernel::Extension_ABC
+                    , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionMap( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver );
+             PerceptionMap( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
     virtual ~PerceptionMap();
     //@}
 
@@ -59,8 +63,8 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     T_Perceptions perceptions_;
     //@}
 };

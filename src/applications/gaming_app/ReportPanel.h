@@ -14,11 +14,19 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "gaming/AgentSelectionObserver.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
 class ReportListView;
 class FireResultListView;
 class ReportFilterOptions;
-class Controllers;
-class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ReportPanel
@@ -26,21 +34,21 @@ class ItemFactory_ABC;
 */
 // Created: AGE 2005-04-21
 // =============================================================================
-class ReportPanel : public InfoPanel_ABC
-                  , public Observer_ABC
+class ReportPanel : public gui::InfoPanel_ABC
+                  , public kernel::Observer_ABC
                   , public AgentSelectionObserver
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory);
+             ReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory);
     virtual ~ReportPanel();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void NotifySelected( const Entity_ABC* element );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}    
 
 private:
@@ -53,8 +61,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const Entity_ABC*     selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    kernel::Controllers& controllers_;
+    const kernel::Entity_ABC*     selected_; // $$$$ AGE 2006-04-20: watch deletions !
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;
     FireResultListView*  pFireResultListView_;

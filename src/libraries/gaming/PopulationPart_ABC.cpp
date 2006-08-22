@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "PopulationPart_ABC.h"
 
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPart_ABC constructor

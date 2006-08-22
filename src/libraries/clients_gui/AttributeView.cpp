@@ -16,6 +16,9 @@
 #include "AttributeViewCellEditor.h"
 #include "clients_kernel/Controllers.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AttributeView constructor
 // Created: AGE 2006-06-22

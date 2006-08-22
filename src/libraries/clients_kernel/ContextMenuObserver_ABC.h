@@ -13,6 +13,9 @@
 #include "Observer_ABC.h"
 #include "ContextMenu.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ContextMenuObserver_ABC
     @brief  ContextMenuObserver_ABC
@@ -35,5 +38,7 @@ public:
     virtual void NotifyContextMenu( const Element&, ContextMenu& ) = 0;
     //@}
 };
+
+}
 
 #endif // __ContextMenuObserver_ABC_h_

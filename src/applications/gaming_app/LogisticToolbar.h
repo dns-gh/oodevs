@@ -12,9 +12,16 @@
 
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class Controllers;
-class Agent_ABC;
-class AgentsLayer;
+namespace kernel
+{
+    class Controllers;
+    class Agent_ABC;
+}
+
+namespace gui
+{
+    class AgentsLayer;
+}
 
 // =============================================================================
 /** @class  LogisticToolbar
@@ -23,15 +30,15 @@ class AgentsLayer;
 // Created: AGE 2006-03-30
 // =============================================================================
 class LogisticToolbar : public QToolBar
-                      , public Observer_ABC
-                      , public ElementObserver_ABC< Agent_ABC >
+                      , public kernel::Observer_ABC
+                      , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticToolbar( QMainWindow* pParent, Controllers& controllers, AgentsLayer& agents ); // $$$$ AGE 2006-05-02: for aggregation...
+             LogisticToolbar( QMainWindow* pParent, kernel::Controllers& controllers, gui::AgentsLayer& agents ); // $$$$ AGE 2006-05-02: for aggregation...
     virtual ~LogisticToolbar();
     //@}
 
@@ -51,21 +58,21 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Agent_ABC& );
-    virtual void NotifyDeleted( const Agent_ABC& );
+    virtual void NotifyCreated( const kernel::Agent_ABC& );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent_ABC* > T_Agents;
+    typedef std::vector< const kernel::Agent_ABC* > T_Agents;
     typedef T_Agents::iterator         IT_Agents;
     typedef T_Agents::const_iterator  CIT_Agents;
     //@}
 
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    AgentsLayer& agents_;
+    kernel::Controllers& controllers_;
+    gui::AgentsLayer& agents_;
     T_Agents automats_;
     //@}
 };

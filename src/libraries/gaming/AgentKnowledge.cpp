@@ -20,6 +20,8 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+using namespace kernel;
+
 IDManager AgentKnowledge::idManager_( 158 );
 
 // -----------------------------------------------------------------------------

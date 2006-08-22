@@ -14,7 +14,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "ASN_Types.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  MagicOrders
@@ -22,14 +25,14 @@ class Agent_ABC;
 */
 // Created: AGE 2006-04-28
 // =============================================================================
-class MagicOrders : public Extension_ABC
-                  , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+class MagicOrders : public kernel::Extension_ABC
+                  , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MagicOrders( const Agent_ABC& agent );
+    explicit MagicOrders( const kernel::Agent_ABC& agent );
     virtual ~MagicOrders();
     //@}
 
@@ -55,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent_ABC& agent_;
+    const kernel::Agent_ABC& agent_;
     bool transportersReady_;
     //@}
 };

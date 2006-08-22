@@ -12,7 +12,9 @@
 #include "ColorButton.h"
 #include "SizeButton.h"
 #include "xeumeuleu/xml.h"
+
 using namespace xml;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPreference constructor

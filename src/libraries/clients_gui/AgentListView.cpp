@@ -23,6 +23,9 @@
 
 #include "moc_AgentListView.cpp"
 
+using namespace kernel;
+using namespace gui;
+
 const char* AgentListView::agentMimeType_ = "agent";
 
 // -----------------------------------------------------------------------------

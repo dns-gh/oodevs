@@ -12,6 +12,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "InternalLinks.h"
 
+using namespace kernel;
+
 //-----------------------------------------------------------------------------
 // Name: RC constructor
 // Created: NLD 2002-07-16

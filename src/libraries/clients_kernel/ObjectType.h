@@ -12,7 +12,9 @@
 
 #include "Drawable_ABC.h"
 
-class IDManager;
+namespace kernel
+{
+    class IDManager;
 
 // =============================================================================
 /** @class  ObjectType
@@ -58,5 +60,7 @@ public:
     const char** xpm_;
     //@}
 };
+
+}
 
 #endif // __ObjectType_h_

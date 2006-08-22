@@ -13,9 +13,16 @@
 #include "EntitySearchBox.h"
 #include "clients_kernel/Agent_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Publisher_ABC;
-class ItemFactory_ABC;
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentList
@@ -30,7 +37,7 @@ class AgentList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentList( Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory );
+             AgentList( kernel::Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory );
     virtual ~AgentList();
     //@}
 
@@ -41,6 +48,10 @@ private:
     AgentList& operator=( const AgentList& ); //!< Assignement operator
     //@}
 };
+
+}
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: AgentList constructor
@@ -62,5 +73,6 @@ AgentList< List >::~AgentList()
 {
     // NOTHING
 }
+
 
 #endif // __AgentList_h_

@@ -18,13 +18,13 @@
 */
 // Created: AGE 2006-04-14
 // =============================================================================
-class VisionLine : public DetectionMapIterator
+class VisionLine : public kernel::DetectionMapIterator
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionLine( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height );
+             VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height );
     virtual ~VisionLine();
     //@}
 

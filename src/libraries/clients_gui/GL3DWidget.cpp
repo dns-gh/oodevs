@@ -22,6 +22,8 @@
 #include "graphics/EventStrategy_ABC.h"
 
 using namespace geometry;
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget constructor

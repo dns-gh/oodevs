@@ -20,12 +20,13 @@
 
 using namespace DIN; using namespace NEK;
 using namespace tools::thread;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( Controllers& controllers, Simulation& simu )
+Network::Network( kernel::Controllers& controllers, Simulation& simu )
     : simu_( simu )
     , engine_( new DIN::DIN_Engine() )
     , manager_( new AgentServerMsgMgr( controllers, *engine_, simu, mutex_ ) )

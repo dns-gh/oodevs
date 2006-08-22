@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledgePositions.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePositions constructor
 // Created: AGE 2006-05-18

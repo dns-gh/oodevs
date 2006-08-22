@@ -11,6 +11,8 @@
 #include <string>
 #include <algorithm>
 
+using namespace kernel;
+
 template< typename BaseType >
 unsigned int InterfaceContainer< BaseType >::id_ = 0;
 

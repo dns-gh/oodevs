@@ -10,8 +10,11 @@
 #ifndef __Loan_h_
 #define __Loan_h_
 
-class EquipmentType;
-class Agent_ABC;
+namespace kernel
+{
+    class EquipmentType;
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  Loan
@@ -25,15 +28,15 @@ class Loan
 public:
     //! @name Constructors/Destructor
     //@{
-             Loan( const EquipmentType& type, const Agent_ABC& agent, unsigned int quantity );
+             Loan( const kernel::EquipmentType& type, const kernel::Agent_ABC& agent, unsigned int quantity );
     virtual ~Loan();
     //@}
 
 public:
     //! @name Member data
     //@{
-    const EquipmentType* type_;
-    const Agent_ABC* agent_;
+    const kernel::EquipmentType* type_;
+    const kernel::Agent_ABC* agent_;
     unsigned int quantity_;
     //@}
 };

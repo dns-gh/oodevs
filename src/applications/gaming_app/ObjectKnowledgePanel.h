@@ -10,14 +10,26 @@
 #ifndef __ObjectKnowledgePanel_h_
 #define __ObjectKnowledgePanel_h_
 
-//#include "clients_gui/Types.h"
 #include "clients_gui/InfoPanel_ABC.h"
 #include "gaming/TeamSelectionObserver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-template< typename T > class ListDisplayer;
-class Team_ABC;
+namespace kernel
+{
+    class Team_ABC;
+    class Controllers;
+    class Displayer_ABC;
+}
+
+namespace gui
+{
+    template< typename T > class ListDisplayer;
+    class DisplayBuilder;
+    class ValuedListItem;
+    class ItemFactory_ABC;
+}
+
 class ObjectKnowledges;
 class ObjectKnowledge;
 class CampAttributes;
@@ -25,12 +37,7 @@ class CrossingSiteAttributes;
 class LogisticRouteAttributes;
 class NBCAttributes;
 class RotaAttributes;
-class DisplayBuilder;
 class ObjectKnowledges;
-class Controllers;
-class Displayer_ABC;
-class ValuedListItem;
-class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledgePanel
@@ -38,29 +45,29 @@ class ItemFactory_ABC;
 */
 // Created: APE 2004-05-04
 // =============================================================================
-class ObjectKnowledgePanel : public InfoPanel_ABC
-                           , public Observer_ABC
-                           , public ElementObserver_ABC< ObjectKnowledges >
-                           , public ElementObserver_ABC< ObjectKnowledge >
-                           , public ElementObserver_ABC< CampAttributes >
-                           , public ElementObserver_ABC< CrossingSiteAttributes >
-                           , public ElementObserver_ABC< LogisticRouteAttributes >
-                           , public ElementObserver_ABC< NBCAttributes >
-                           , public ElementObserver_ABC< RotaAttributes >
+class ObjectKnowledgePanel : public gui::InfoPanel_ABC
+                           , public kernel::Observer_ABC
+                           , public kernel::ElementObserver_ABC< ObjectKnowledges >
+                           , public kernel::ElementObserver_ABC< ObjectKnowledge >
+                           , public kernel::ElementObserver_ABC< CampAttributes >
+                           , public kernel::ElementObserver_ABC< CrossingSiteAttributes >
+                           , public kernel::ElementObserver_ABC< LogisticRouteAttributes >
+                           , public kernel::ElementObserver_ABC< NBCAttributes >
+                           , public kernel::ElementObserver_ABC< RotaAttributes >
                            , public TeamSelectionObserver
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectKnowledgePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ObjectKnowledgePanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Agent_ABC* agent, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const ObjectKnowledge& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const kernel::Agent_ABC* agent, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private slots:
@@ -93,23 +100,23 @@ private:
     void DisplayExtension( const T& extension );
     template< typename T >
     void UpdateExtension( const ObjectKnowledge& k );
-    virtual void Select( const Team_ABC* );
+    virtual void Select( const kernel::Team_ABC* );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
 
-    SafePointer< Team_ABC > owner_;
-    SafePointer< ObjectKnowledges > selected_;
-    ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
+    kernel::SafePointer< kernel::Team_ABC > owner_;
+    kernel::SafePointer< ObjectKnowledges > selected_;
+    gui::ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
     QCheckBox* pOwnTeamCheckBox_;
-    SafePointer< ObjectKnowledge > subSelected_;
-    DisplayBuilder* display_;
+    kernel::SafePointer< ObjectKnowledge > subSelected_;
+    gui::DisplayBuilder* display_;
 
-    ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
+    gui::ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
     //@}
 };
 

@@ -13,6 +13,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttributes constructor
 // Created: AGE 2006-02-14

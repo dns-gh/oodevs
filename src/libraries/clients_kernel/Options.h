@@ -15,9 +15,11 @@
 #include <map>
 #include "OptionVariant.h"
 
-class Observer_ABC;
-class OptionsObserver_ABC;
-class Settings_ABC;
+namespace kernel
+{
+    class Observer_ABC;
+    class OptionsObserver_ABC;
+    class Settings_ABC;
 
 // =============================================================================
 /** @class  Options
@@ -76,5 +78,7 @@ private:
     T_Options   options_;
     //@}
 };
+
+}
 
 #endif // __Options_h_

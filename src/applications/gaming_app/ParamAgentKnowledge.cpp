@@ -13,6 +13,8 @@
 #include "gaming/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamAgentKnowledge constructor
 // Created: AGE 2006-03-14

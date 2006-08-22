@@ -14,11 +14,18 @@
 #include "Param_ABC.h"
 #include "ParamListView.h"
 
-class ParametersLayer;
-class CoordinateConverter_ABC;
-class Entity_ABC;
-class ValuedListItem;
-class ActionController;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class Entity_ABC;
+    class ActionController;    
+}
+
+namespace gui
+{
+    class ParametersLayer;
+    class ValuedListItem;
+}
 
 // =============================================================================
 /** @class  ParamPathList
@@ -33,7 +40,7 @@ class ParamPathList : public QVBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller );
+             ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::ActionController& controller );
     virtual ~ParamPathList();
     //@}
 
@@ -63,15 +70,15 @@ private:
 private:
     //! @name Member data
     //@{
-    ParametersLayer& layer_;
-    const CoordinateConverter_ABC& converter_;
-    ActionController& controller_;
-    const Entity_ABC& agent_;
+    gui::ParametersLayer& layer_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    kernel::ActionController& controller_;
+    const kernel::Entity_ABC& agent_;
     ASN1T_ListItineraire& asn_;
     ASN1T_Itineraire* paths_;
 
     ParamListView* listView_;
-    ValuedListItem* selected_;
+    gui::ValuedListItem* selected_;
     QPopupMenu* popup_;
     //@}
 };

@@ -14,10 +14,14 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
+namespace kernel
+{
+    class Controller;
+}
+
 class LogSupplyConsign;
 class LogMaintenanceConsign;
 class LogMedicalConsign;
-class Controller;
 
 // =============================================================================
 /** @class  LogisticConsigns
@@ -25,13 +29,14 @@ class Controller;
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class LogisticConsigns : public Extension_ABC, public Drawable_ABC
+class LogisticConsigns : public kernel::Extension_ABC
+                       , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsigns( Controller& controller );
+    explicit LogisticConsigns( kernel::Controller& controller );
     virtual ~LogisticConsigns();
     //@}
 
@@ -55,7 +60,7 @@ public:
     void HandleConsign   ( LogMedicalConsign& consign );
     void TerminateConsign( LogMedicalConsign& consign );
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -75,7 +80,7 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
 
     T_SupplyConsigns      requestedSupplies_;
     T_SupplyConsigns      handledSupplies_;

@@ -16,8 +16,11 @@
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Controller;
-class Displayer_ABC;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+}
 
 // =============================================================================
 /** @class  CrossingSiteAttributes
@@ -25,22 +28,22 @@ class Displayer_ABC;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class CrossingSiteAttributes : public Extension_ABC
-                             , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                             , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-                             , public Updatable_ABC< ASN1T_MsgObjectCreation >
+class CrossingSiteAttributes : public kernel::Extension_ABC
+                             , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                             , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
+                             , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossingSiteAttributes( Controller& controller );
+    explicit CrossingSiteAttributes( kernel::Controller& controller );
     virtual ~CrossingSiteAttributes();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -62,11 +65,11 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    OptionalValue< unsigned int > width_;
-    OptionalValue< unsigned int > depth_;
-    OptionalValue< unsigned int > speed_;
-    OptionalValue< bool         > needsConstruction_;
+    kernel::Controller& controller_;
+    kernel::OptionalValue< unsigned int > width_;
+    kernel::OptionalValue< unsigned int > depth_;
+    kernel::OptionalValue< unsigned int > speed_;
+    kernel::OptionalValue< bool         > needsConstruction_;
     //@}
 };
 

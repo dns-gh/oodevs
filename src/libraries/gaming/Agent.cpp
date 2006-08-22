@@ -17,6 +17,8 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "Attributes.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
 // Created: AGE 2006-02-14

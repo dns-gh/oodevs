@@ -18,6 +18,8 @@
 #include "clients_gui/resources.h"
 #include "gaming/statusicons.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor
 // Created: SBO 2006-06-20

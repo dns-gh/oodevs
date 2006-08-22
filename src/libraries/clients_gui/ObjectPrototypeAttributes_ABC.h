@@ -12,6 +12,9 @@
 
 #include <qgroupbox.h>
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ObjectPrototypeAttributes_ABC
     @brief  Object prototype attributes definition
@@ -34,5 +37,7 @@ public:
     virtual void Clean() = 0;
     //@}
 };
+
+}
 
 #endif // __ObjectPrototypeAttributes_ABC_h_

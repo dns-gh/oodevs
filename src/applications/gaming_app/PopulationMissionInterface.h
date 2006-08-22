@@ -12,11 +12,15 @@
 
 #include "MissionInterface_ABC.h"
 
-class Mission;
+namespace kernel
+{
+    class Mission;
+    class Population_ABC;
+    class ObjectTypes;
+}
+
 class ASN_MsgPionOrder;
 class ASN_MsgPopulationOrder;
-class Population_ABC;
-class ObjectTypes;
 class Publisher_ABC;
 
 // =============================================================================
@@ -27,7 +31,7 @@ class PopulationMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMissionInterface( QWidget* parent, Population_ABC& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             PopulationMissionInterface( QWidget* parent, kernel::Population_ABC& population, unsigned long nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~PopulationMissionInterface();
     //@}
    

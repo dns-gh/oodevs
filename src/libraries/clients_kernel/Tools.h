@@ -12,6 +12,9 @@
 
 #include "Types.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Tools
     @brief  Crappy translation tools  
@@ -26,5 +29,7 @@ namespace tools
     const char* ToString( E_WeatherType nWeatherType );
     const char* ToString( E_LightingType nLightingType );
 };
+
+}
 
 #endif // __Kernel_Tools_h_

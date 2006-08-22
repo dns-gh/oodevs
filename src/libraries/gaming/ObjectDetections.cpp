@@ -15,6 +15,8 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectDetections constructor
 // Created: AGE 2006-02-14

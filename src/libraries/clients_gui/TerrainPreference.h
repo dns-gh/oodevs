@@ -13,10 +13,13 @@
 #include "GraphicPreference_ABC.h"
 
 class TerrainData;
-class ColorButton;
-class SizeButton;
 
 namespace xml { class xistream; class xostream; };
+
+namespace gui
+{
+    class ColorButton;
+    class SizeButton;
 
 // =============================================================================
 /** @class  TerrainPreference
@@ -62,5 +65,7 @@ private:
     QColor color_;
     //@}
 };
+
+}
 
 #endif // __TerrainPreference_h_

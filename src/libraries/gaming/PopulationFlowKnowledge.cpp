@@ -19,6 +19,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 
+using namespace kernel;
+
 // =============================================================================
 // FlowPart
 // =============================================================================

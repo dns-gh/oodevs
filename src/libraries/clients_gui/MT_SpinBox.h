@@ -12,6 +12,8 @@
 
 #include <qspinbox.h>
 
+namespace gui
+{
 // =============================================================================
 // Created: SBO 2005-11-07
 // =============================================================================
@@ -46,5 +48,7 @@ protected:
     virtual bool eventFilter( QObject* pSender, QEvent* pEvent );
     //@}
 };
+
+}
 
 #endif // __MT_SpinBox_h_

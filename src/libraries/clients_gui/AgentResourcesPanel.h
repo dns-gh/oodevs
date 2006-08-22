@@ -16,9 +16,13 @@
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-template< typename T > class ListDisplayer;
-class Agent_ABC;
-class Controllers;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controllers;
+    class Displayer_ABC;
+}
+
 class Dotation;
 class Dotations;
 class Equipments;
@@ -26,11 +30,14 @@ class Equipment;
 class Loan;
 class Borrowings;
 class Lendings;
-class Displayer_ABC;
-class ValuedListItem;
 class Humans;
 class Troops;
-class ItemFactory_ABC;
+
+namespace gui
+{
+    template< typename T > class ListDisplayer;
+    class ValuedListItem;
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentResourcesPanel
@@ -39,18 +46,18 @@ class ItemFactory_ABC;
 // Created: APE 2004-03-10
 // =============================================================================
 class AgentResourcesPanel : public InfoPanel_ABC
-                          , public Observer_ABC
-                          , public ElementObserver_ABC< Dotations >
-                          , public ElementObserver_ABC< Equipments >
-                          , public ElementObserver_ABC< Lendings >
-                          , public ElementObserver_ABC< Borrowings >
-                          , public ElementObserver_ABC< Troops >
-                          , public SelectionObserver< Agent_ABC >
+                          , public kernel::Observer_ABC
+                          , public kernel::ElementObserver_ABC< Dotations >
+                          , public kernel::ElementObserver_ABC< Equipments >
+                          , public kernel::ElementObserver_ABC< Lendings >
+                          , public kernel::ElementObserver_ABC< Borrowings >
+                          , public kernel::ElementObserver_ABC< Troops >
+                          , public kernel::SelectionObserver< kernel::Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentResourcesPanel();
     //@}
 
@@ -78,12 +85,12 @@ private:
     virtual void NotifyUpdated( const Lendings& a );
     virtual void NotifyUpdated( const Borrowings& a );
     virtual void NotifyUpdated( const Troops& a );
-    virtual void NotifySelected( const Agent_ABC* agent );
+    virtual void NotifySelected( const kernel::Agent_ABC* agent );
 
     template< typename T >
     bool ShouldUpdate( const T& a );
     template< typename T >
-    void UpdateExtension( const Agent_ABC& agent );
+    void UpdateExtension( const kernel::Agent_ABC& agent );
     //@}
 
     //! @name Types
@@ -94,14 +101,16 @@ private:
 private:
     //! @name Member Data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     T_ListView* pEquipment_;
     T_ListView* pResources_;
     T_ListView* pTroops_;
     T_ListView* pLendings_;
     T_ListView* pBorrowings_;
-    SafePointer< Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     //@}
 };
+
+}
 
 #endif // __AgentResourcesPanel_h_

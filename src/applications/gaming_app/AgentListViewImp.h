@@ -12,27 +12,26 @@
 
 #include "clients_gui/AgentListView.h"
 
-
 // =============================================================================
 /** @class  AgentListViewImp
     @brief  AgentListViewImp
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class AgentListViewImp : public AgentListView
-                       , public ElementObserver_ABC< AutomatDecisions >
+class AgentListViewImp : public gui::AgentListView
+                       , public kernel::ElementObserver_ABC< AutomatDecisions >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListViewImp( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory );
+             AgentListViewImp( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory );
     virtual ~AgentListViewImp();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Display( const Agent_ABC& agent, ValuedListItem* item );
+    virtual void Display( const kernel::Agent_ABC& agent, gui::ValuedListItem* item );
     //@}
 
 private:

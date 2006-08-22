@@ -17,6 +17,9 @@
 #include "ContextMenu.h"
 #include "ContextMenuObserver_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ActionController
     @brief  Action controller
@@ -95,5 +98,7 @@ private:
     //@}
 
 };
+
+}
 
 #endif // __ActionController_h_

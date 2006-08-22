@@ -10,8 +10,10 @@
 #ifndef __TristateOption_h_
 #define __TristateOption_h_
 
-template< typename T > class ToolListButton;
-template< typename T > class OptionMenu;
+namespace kernel
+{
+    template< typename T > class ToolListButton;
+    template< typename T > class OptionMenu;
 
 // =============================================================================
 /** @class  TristateOption
@@ -49,5 +51,7 @@ private:
     char state_;
     //@}
 };
+
+}
 
 #endif // __TristateOption_h_

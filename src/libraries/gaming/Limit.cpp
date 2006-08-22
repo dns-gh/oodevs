@@ -14,6 +14,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 
+using namespace kernel;
+
 IDManager Limit::idManager_( 138 );
 
 //-----------------------------------------------------------------------------

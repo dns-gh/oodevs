@@ -11,6 +11,8 @@
 #include "PerceptionMap.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PerceptionMap constructor
 // Created: AGE 2006-02-22

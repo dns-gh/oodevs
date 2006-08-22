@@ -14,6 +14,9 @@
 #include <qmainwindow.h>
 #include <qdockwindow.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: Settings constructor
 // Created: APE 2004-06-01

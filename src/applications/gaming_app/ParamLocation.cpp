@@ -18,6 +18,9 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31

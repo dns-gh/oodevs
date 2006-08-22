@@ -16,6 +16,9 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ValuedListItem.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: RotaPrototype constructor
 // Created: SBO 2006-04-20

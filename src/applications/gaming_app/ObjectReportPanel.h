@@ -15,11 +15,19 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
+namespace kernel
+{
+    class Object_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
 class FireResultListView;
-class Object_ABC;
-class Controllers;
 class Explosions;
-class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectReportPanel
@@ -27,15 +35,15 @@ class ItemFactory_ABC;
 */
 // Created: SBO 2005-09-08
 // =============================================================================
-class ObjectReportPanel : public InfoPanel_ABC
-                        , public Observer_ABC
-                        , public ElementObserver_ABC< Explosions >
-                        , public SelectionObserver< Object_ABC >
+class ObjectReportPanel : public gui::InfoPanel_ABC
+                        , public kernel::Observer_ABC
+                        , public kernel::ElementObserver_ABC< Explosions >
+                        , public kernel::SelectionObserver< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ObjectReportPanel();
     //@}
 
@@ -49,15 +57,15 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Explosions& );
-    virtual void NotifyDeleted( const Object_ABC& );
-    virtual void NotifySelected( const Object_ABC* );
+    virtual void NotifyDeleted( const kernel::Object_ABC& );
+    virtual void NotifySelected( const kernel::Object_ABC* );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    SafePointer< Object_ABC > selected_;
+    kernel::Controllers& controllers_;
+    kernel::SafePointer< kernel::Object_ABC > selected_;
     FireResultListView* reports_;
     //@}
 };

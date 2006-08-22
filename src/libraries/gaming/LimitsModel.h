@@ -13,8 +13,12 @@
 #include "Types.h"
 #include "clients_kernel/Resolver.h"
 
-class Controllers;
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class Controllers;
+    class CoordinateConverter_ABC;
+}
+
 class Publisher_ABC;
 class TacticalLine_ABC;
 
@@ -28,13 +32,13 @@ namespace DIN {
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LimitsModel : public Resolver< TacticalLine_ABC >
+class LimitsModel : public kernel::Resolver< TacticalLine_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsModel( Controllers& controllers, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
     virtual ~LimitsModel();
     //@}
 
@@ -62,8 +66,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const CoordinateConverter_ABC& converter_;
+    kernel::Controllers& controllers_;
+    const kernel::CoordinateConverter_ABC& converter_;
     Publisher_ABC& publisher_;
     //@}
 };

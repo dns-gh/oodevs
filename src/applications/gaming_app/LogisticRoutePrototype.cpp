@@ -11,6 +11,9 @@
 #include "LogisticRoutePrototype.h"
 #include "gaming/ASN_Messages.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype constructor
 // Created: SBO 2006-04-20

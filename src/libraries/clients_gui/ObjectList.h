@@ -10,8 +10,14 @@
 #ifndef __ObjectList_h_
 #define __ObjectList_h_
 
-class Controllers;
-class ItemFactory_ABC;
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectList
@@ -25,7 +31,7 @@ class ObjectList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectList( Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectList( kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectList();
     //@}
 
@@ -36,5 +42,7 @@ private:
     ObjectList& operator=( const ObjectList& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __ObjectList_h_

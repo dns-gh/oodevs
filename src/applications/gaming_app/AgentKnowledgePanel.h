@@ -15,18 +15,26 @@
 #include "gaming/KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
 
-template< typename T > class ListDisplayer;
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+    class KnowledgeGroup_ABC;
+    class Displayer_ABC;
+    class Team_ABC;
+}
+
+namespace gui
+{
+    template< typename T > class ListDisplayer;
+    class DisplayBuilder;
+    class ValuedListItem;
+    class ItemFactory_ABC;
+}
+
 class AgentKnowledges;
 class AgentKnowledge;
-class DisplayBuilder;
-class KnowledgeGroup_ABC;
 class PerceptionMap;
 class Perception;
-class Displayer_ABC;
-class ValuedListItem;
-class Team_ABC;
-class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgePanel
@@ -34,25 +42,25 @@ class ItemFactory_ABC;
 */
 // Created: APE 2004-05-03
 // =============================================================================
-class AgentKnowledgePanel : public InfoPanel_ABC
-                          , public Observer_ABC
-                          , public ElementObserver_ABC< AgentKnowledges >
-                          , public ElementObserver_ABC< AgentKnowledge >
-                          , public ElementObserver_ABC< PerceptionMap >
+class AgentKnowledgePanel : public gui::InfoPanel_ABC
+                          , public kernel::Observer_ABC
+                          , public kernel::ElementObserver_ABC< AgentKnowledges >
+                          , public kernel::ElementObserver_ABC< AgentKnowledge >
+                          , public kernel::ElementObserver_ABC< PerceptionMap >
                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentKnowledgePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AgentKnowledgePanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const AgentKnowledge& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Perception& perception, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:
@@ -68,7 +76,7 @@ private:
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const AgentKnowledge& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
-    void Select( const KnowledgeGroup_ABC* group );
+    void Select( const kernel::KnowledgeGroup_ABC* group );
     void Display( const AgentKnowledge& k );
     void showEvent( QShowEvent* );
     //@}
@@ -87,13 +95,13 @@ private:
     //@{
     Controllers& controllers_;
 
-    ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
-    DisplayBuilder* display_;
-    ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
+    gui::ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
+    gui::DisplayBuilder* display_;
+    gui::ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
-    SafePointer< Team_ABC >        owner_;
-    SafePointer< AgentKnowledges > selected_;
-    SafePointer< AgentKnowledge >  subSelected_;
+    kernel::SafePointer< kernel::Team_ABC >        owner_;
+    kernel::SafePointer< AgentKnowledges > selected_;
+    kernel::SafePointer< AgentKnowledge >  subSelected_;
     QCheckBox* pOwnTeamCheckBox_;
     //@}
 };

@@ -15,7 +15,11 @@
 #include "Report_ABC.h"
 #include "DIN_Types.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
+
 class Simulation;
 
 // =============================================================================
@@ -26,7 +30,7 @@ class Trace : public Report_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Trace( const Entity_ABC& agent, const Simulation& simulation, const TraceMessage& input );
+             Trace( const kernel::Entity_ABC& agent, const Simulation& simulation, const TraceMessage& input );
     virtual ~Trace();
     //@}
 

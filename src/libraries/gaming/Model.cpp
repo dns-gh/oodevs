@@ -31,6 +31,8 @@
 #include "StaticModel.h"
 #include "CoordinateConverter.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Model constructor
 // Created: AGE 2006-02-15

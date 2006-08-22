@@ -25,29 +25,34 @@
 #include "clients_kernel/Drawable_ABC.h"
 
 class DotationRequest;
-class Agent_ABC;
-class Controller;
-class Displayer_ABC;
-class DotationType ;
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+    class Displayer_ABC;
+    class DotationType;
+}
 
 // $$$$ AGE 2006-04-21: factorisations entre types de consignes
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogSupplyConsign : public Resolver< DotationRequest >, public Drawable_ABC
+class LogSupplyConsign : public kernel::Resolver< DotationRequest >
+                       , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructor / Destructor
     //@{
-             LogSupplyConsign( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
+             LogSupplyConsign( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogRavitaillementTraitementCreation& asn );
     virtual ~LogSupplyConsign();
     //@}
 
     //! @name Accessors
     //@{
-    void Display( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network events
@@ -65,15 +70,15 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
-    const Resolver_ABC< DotationType >& dotationResolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
 
     uint   nID_;
-    Agent_ABC& pion_;
-    Agent_ABC* pAutomateLogHandling_;
-    Agent_ABC* pPionLogConvoying_;
-    Agent_ABC* pAutomateLogProvidingConvoyResources_;
+    kernel::Agent_ABC& pion_;
+    kernel::Agent_ABC* pAutomateLogHandling_;
+    kernel::Agent_ABC* pPionLogConvoying_;
+    kernel::Agent_ABC* pAutomateLogProvidingConvoyResources_;
     E_LogRavitaillementTraitementEtat nState_;
     //@}
 };

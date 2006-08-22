@@ -18,6 +18,9 @@
 
 #include <qgrid.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30

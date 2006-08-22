@@ -16,6 +16,9 @@
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/resources.h"
 
+using namespace kernel;
+using namespace gui;
+
 namespace
 {
     void Populate( OptionMenu< TristateOption >& menu )

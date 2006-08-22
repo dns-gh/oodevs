@@ -14,18 +14,27 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/Iterator.h"
 
+namespace kernel
+{
+    class Agent_ABC;
+    class Population_ABC;
+    class Controllers;
+    class CoordinateConverter_ABC;
+    class GlTools_ABC;
+    class Mission;
+}
+
+namespace gui
+{
+    class ParametersLayer;
+}
+
 class QPopupMenu;
+
 class Decisions;
 class AutomatDecisions;
-class Agent_ABC;
-class Population_ABC;
 class MissionInterface_ABC;
-class Mission;
-class Controllers;
-class ParametersLayer;
-class CoordinateConverter_ABC;
 class StaticModel;
-class GlTools_ABC;
 class AgentKnowledgeConverter_ABC;
 class Publisher_ABC;
 
@@ -33,9 +42,9 @@ class Publisher_ABC;
 // Created: APE 2004-03-19
 // =============================================================================
 class MissionPanel : public QDockWindow
-                   , public Observer_ABC
-                   , public ContextMenuObserver_ABC< Agent_ABC >
-                   , public ContextMenuObserver_ABC< Population_ABC >
+                   , public kernel::Observer_ABC
+                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
         
 {
     Q_OBJECT;
@@ -43,7 +52,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools );
+             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~MissionPanel();
     //@}
 
@@ -74,29 +83,29 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const Population_ABC& agent, ContextMenu& menu );
-    int AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot );
-    void AddAgentMissions( const Decisions& decisions, ContextMenu& menu ); 
-    void AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu ); 
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
+    int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    void AddAgentMissions( const Decisions& decisions, kernel::ContextMenu& menu ); 
+    void AddAutomatMissions( const AutomatDecisions& decisions, kernel::ContextMenu& menu ); 
     template< typename D >
-    int AddFragOrders( const D& decisions, ContextMenu& menu, const QString& name, const char* slot );
+    int AddFragOrders( const D& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
     //@}
 
 private:
     //! @name Member Data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     const StaticModel& static_;
     Publisher_ABC& publisher_;
-    ParametersLayer& layer_;
-    const CoordinateConverter_ABC& converter_;
-    const GlTools_ABC& tools_;
+    gui::ParametersLayer& layer_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::GlTools_ABC& tools_;
 
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
-    const Agent_ABC* selected_;
-    const Population_ABC* selectedPopulation_;
+    const kernel::Agent_ABC* selected_;
+    const kernel::Population_ABC* selectedPopulation_;
     //@}
 };
 

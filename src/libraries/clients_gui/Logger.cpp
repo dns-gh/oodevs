@@ -15,6 +15,8 @@
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: Logger constructor
 // Created: APE 2004-06-02

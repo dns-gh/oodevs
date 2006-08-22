@@ -10,6 +10,9 @@
 #ifndef __SetGlOptions_h_
 #define __SetGlOptions_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  SetGlOptions
     @brief  SetGlOptions
@@ -32,5 +35,7 @@ protected:
     QGLContext* context_;
     //@}
 };
+
+}
 
 #endif // __SetGlOptions_h_

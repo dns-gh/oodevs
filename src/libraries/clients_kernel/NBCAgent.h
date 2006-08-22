@@ -12,6 +12,9 @@
 
 namespace xml { class xistream; };
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  NBCAgent
     @brief  NBCAgent
@@ -41,5 +44,7 @@ private:
     std::string name_;
     //@}
 };
+
+}
 
 #endif // __NBCAgent_h_

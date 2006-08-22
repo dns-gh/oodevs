@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "PopulationKnowledgeFactory_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledges constructor
 // Created: AGE 2006-02-15

@@ -11,6 +11,8 @@
 #include "KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/Agent_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupSelectionObserver constructor
 // Created: AGE 2006-02-24

@@ -18,6 +18,8 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17

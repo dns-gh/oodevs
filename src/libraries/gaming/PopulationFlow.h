@@ -15,7 +15,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -25,7 +28,7 @@ class PopulationFlow : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const CoordinateConverter_ABC& converter );
+             PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PopulationFlow();
     //@}
 
@@ -37,16 +40,16 @@ public:
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     virtual geometry::Point2f GetPosition() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
 
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
     //! @name Accessors
@@ -70,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
 
     uint          nID_;
 	T_PointVector itineraire_; // $$$$ AGE 2006-03-23: extension

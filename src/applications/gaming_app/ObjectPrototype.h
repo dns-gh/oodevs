@@ -14,9 +14,13 @@
 #include "gaming/ASN_messages.h"
 #include "clients_gui/LocationSerializer.h"
 
+namespace kernel
+{
+    class ObjectType;
+}
+
 class StaticModel;
 class Publisher_ABC;
-class ObjectType;
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -24,13 +28,13 @@ class ObjectType;
 */
 // Created: SBO 2006-04-18
 // =============================================================================
-class ObjectPrototype : public ObjectPrototype_ABC
+class ObjectPrototype : public gui::ObjectPrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 
@@ -49,7 +53,7 @@ private:
     //! @name Helpers
     //@{
     ASN1T_MagicActionCreateObject& GetMessage();
-    const ObjectType& GetType() const;
+    const kernel::ObjectType& GetType() const;
     //@}
 
 private:
@@ -57,7 +61,7 @@ private:
     //@{
     ASN_MsgObjectMagicAction msg_;
     ASN1T_MagicActionCreateObject creation_;
-    LocationSerializer serializer_;
+    gui::LocationSerializer serializer_;
     //@}
 };
 

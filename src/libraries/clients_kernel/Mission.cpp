@@ -11,6 +11,8 @@
 #include "Mission.h"
 #include "FragOrder.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Mission constructor
 // Created: AGE 2006-03-14

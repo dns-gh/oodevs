@@ -10,8 +10,10 @@
 #ifndef __Location_ABC_h_
 #define __Location_ABC_h_
 
-class GlTools_ABC;
-class LocationVisitor_ABC;
+namespace kernel
+{
+    class GlTools_ABC;
+    class LocationVisitor_ABC;
 
 // =============================================================================
 /** @class  Location_ABC
@@ -44,5 +46,7 @@ public:
     virtual std::string GetName() const = 0;
     //@}
 };
+
+}
 
 #endif // __Location_ABC_h_

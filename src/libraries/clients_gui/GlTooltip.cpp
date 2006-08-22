@@ -11,6 +11,8 @@
 #include "GlTooltip.h"
 #include <qpainter.h>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GlTooltip constructor
 // Created: AGE 2006-06-29

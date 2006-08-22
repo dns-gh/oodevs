@@ -12,6 +12,7 @@
 #include "xeumeuleu/xml.h"
 #include <boost/algorithm/string.hpp>
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

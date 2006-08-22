@@ -12,6 +12,9 @@
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: NBCPrototype_ABC constructor
 // Created: SBO 2006-04-20

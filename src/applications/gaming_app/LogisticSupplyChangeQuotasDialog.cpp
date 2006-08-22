@@ -23,6 +23,9 @@
 #include "clients_kernel/Iterator.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03

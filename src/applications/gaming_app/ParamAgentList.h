@@ -13,7 +13,10 @@
 #include "gaming/ASN_Types.h"
 #include "EntityListParameter.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  ParamAgentList
@@ -21,7 +24,7 @@ class Agent_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgentList : public EntityListParameter< Agent_ABC >
+class ParamAgentList : public EntityListParameter< kernel::Agent_ABC >
 {
 
 public:

@@ -15,6 +15,8 @@
 #include "GlFont.h"
 
 using namespace geometry;
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: GlToolsBase constructor

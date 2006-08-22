@@ -22,6 +22,7 @@
 #include "clients_kernel/ActionController.h"
 
 using namespace geometry;
+using namespace kernel;
 
 unsigned long Population::nMaxId_ = 200;
 

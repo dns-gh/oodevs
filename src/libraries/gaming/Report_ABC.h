@@ -10,9 +10,13 @@
 #ifndef __Report_ABC_h_
 #define __Report_ABC_h_
 
-class Entity_ABC;
+namespace kernel
+{
+    class Entity_ABC;
+    class Displayer_ABC;
+}
+
 class Simulation;
-class Displayer_ABC;
 
 // =============================================================================
 /** @class  Report_ABC
@@ -37,21 +41,21 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Report_ABC( const Entity_ABC& agent, const Simulation& simulation );
+             Report_ABC( const kernel::Entity_ABC& agent, const Simulation& simulation );
     virtual ~Report_ABC();
     //@}
 
     //! @name Operations
     //@{
-    void DisplayInTooltip( Displayer_ABC& displayer ) const;
-    virtual void Display( Displayer_ABC& displayer ) const;
+    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //-------------------------------------------------------------------------
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    const Entity_ABC& GetAgent() const;
+    const kernel::Entity_ABC& GetAgent() const;
     
     E_Type      GetType () const;
     bool        IsRCType() const;
@@ -75,7 +79,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const Entity_ABC& agent_;
+    const kernel::Entity_ABC& agent_;
     std::string strTitle_; 
     int         nTime_;
     bool        bNew_;

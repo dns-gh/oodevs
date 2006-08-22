@@ -14,16 +14,18 @@
 
 namespace xml { class xistream; };
 
-class AgentType;
-class ComponentType;
-class DecisionalModel;
-class SensorType;
-class AutomatType;
-class PopulationType;
-class DotationType;
-class MissionFactory;
-class Mission;
-class SymbolFactory;
+namespace kernel
+{
+    class AgentType;
+    class ComponentType;
+    class DecisionalModel;
+    class SensorType;
+    class AutomatType;
+    class PopulationType;
+    class DotationType;
+    class MissionFactory;
+    class Mission;
+    class SymbolFactory;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -92,5 +94,7 @@ private:
     SymbolFactory* symbolFactory_;
     //@}
 };
+
+}
 
 #endif // __AgentTypes_h_

@@ -13,6 +13,8 @@
 #include "ObjectKnowledge.h"
 #include "ObjectKnowledgeFactory.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledges constructor
 // Created: AGE 2006-02-14

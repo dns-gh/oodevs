@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "OptionVariant.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: OptionVariant constructor
 // Created: AGE 2006-07-05

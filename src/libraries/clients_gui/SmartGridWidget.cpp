@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "SmartGridWidget.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: SmartGridWidget constructor
 // Created: AGE 2006-06-23

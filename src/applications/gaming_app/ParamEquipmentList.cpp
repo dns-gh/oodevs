@@ -13,6 +13,9 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27

@@ -10,8 +10,11 @@
 #ifndef __Settings_ABC_h_
 #define __Settings_ABC_h_
 
-class TristateOption;
-class QStringList;
+#include <qstringlist.h>
+
+namespace kernel
+{
+    class TristateOption;
 
 // =============================================================================
 /** @class  Settings_ABC
@@ -64,5 +67,7 @@ public:
     }
     //@}
 };
+
+}
 
 #endif // __Settings_ABC_h_

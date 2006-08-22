@@ -17,6 +17,8 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DataDictionary.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13

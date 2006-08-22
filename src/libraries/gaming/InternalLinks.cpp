@@ -16,6 +16,8 @@
 #include "ObjectKnowledge.h"
 #include "PopulationKnowledge.h"
 
+using namespace kernel;
+
 const QString InternalLinks::agent_( "agent" );
 const QString InternalLinks::object_( "object" );
 const QString InternalLinks::population_( "population" );

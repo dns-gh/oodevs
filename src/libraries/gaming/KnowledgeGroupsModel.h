@@ -12,7 +12,11 @@
 
 #include "clients_kernel/Resolver_ABC.h"
 
-class KnowledgeGroup_ABC;
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
+}
+
 class TeamsModel;
 
 // =============================================================================
@@ -21,7 +25,7 @@ class TeamsModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class KnowledgeGroupsModel : public Resolver_ABC< KnowledgeGroup_ABC >
+class KnowledgeGroupsModel : public kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >
 {
 
 public:
@@ -35,8 +39,8 @@ public:
     //@{
     void Purge();
 
-    virtual KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
-    virtual KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
+    virtual kernel::KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
+    virtual kernel::KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
     //@}
 
 private:
@@ -44,10 +48,6 @@ private:
     //@{
     KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
     KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

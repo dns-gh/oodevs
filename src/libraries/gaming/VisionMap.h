@@ -12,8 +12,11 @@
 
 #include "Types.h"
 
-class GlTools_ABC;
-class DetectionMap;
+namespace kernel
+{
+    class GlTools_ABC;
+    class DetectionMap;
+}
 
 // =============================================================================
 /** @class  VisionMap
@@ -27,17 +30,17 @@ class VisionMap
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit VisionMap( const DetectionMap& map );
+    explicit VisionMap( const kernel::DetectionMap& map );
     virtual ~VisionMap();
     //@}
 
     //! @name Operations
     //@{
-    void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void Clear();
     bool ShouldUpdate( const std::pair< unsigned, unsigned >& cell );
-    void Update( const std::pair< unsigned, unsigned >& cell, E_PerceptionResult perception );
+    void Update( const std::pair< unsigned, unsigned >& cell, kernel::E_PerceptionResult perception );
     //@}
 
 private:
@@ -55,14 +58,14 @@ private:
             return lhs.first < rhs.first || ( !( rhs.first < lhs.first) && (lhs.second < rhs.second ) );
         };
     };
-    typedef std::map< T_Cell, E_PerceptionResult, CellLess > T_VisionMap;
+    typedef std::map< T_Cell, kernel::E_PerceptionResult, CellLess > T_VisionMap;
     typedef T_VisionMap::const_iterator                     CIT_VisionMap; // $$$$ AGE 2006-04-21: mettre un allocateur
     //@}
 
 private:
     //! @name Member data
     //@{
-    const DetectionMap& map_;
+    const kernel::DetectionMap& map_;
     geometry::Rectangle2f boundingBox_;
     T_VisionMap vision_; // $$$$ AGE 2006-04-26: use a matrix
     //@}

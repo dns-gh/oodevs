@@ -17,6 +17,9 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MiniViews constructor
 // Created: AGE 2006-06-23

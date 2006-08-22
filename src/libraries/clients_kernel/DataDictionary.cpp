@@ -9,6 +9,9 @@
 
 #include "clients_kernel_pch.h"
 #include "DataDictionary.h"
+#include <qstringlist.h>
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: DataDictionary constructor

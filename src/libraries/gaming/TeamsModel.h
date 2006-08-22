@@ -13,14 +13,17 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Resolver.h"
 
-class Team_ABC;
-class TeamFactory_ABC;
-class KnowledgeGroup_ABC;
+namespace kernel
+{
+    class Team_ABC;
+    class KnowledgeGroup_ABC;
+}
 
 namespace DIN {
     class DIN_Input;
 };
 
+class TeamFactory_ABC;
 
 // =============================================================================
 /** @class  TeamsModel
@@ -28,13 +31,13 @@ namespace DIN {
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class TeamsModel : public Resolver< Team_ABC >
+class TeamsModel : public kernel::Resolver< kernel::Team_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamsModel( TeamFactory_ABC& factory );
+    explicit TeamsModel( TeamFactory_ABC& factory );
     virtual ~TeamsModel();
     //@}
 
@@ -43,10 +46,10 @@ public:
     void Purge();
 
     void CreateTeam( DIN::DIN_Input& );
-    Team_ABC& GetTeam( unsigned long id );
-    Team_ABC* FindTeam( const std::string& team );
+    kernel::Team_ABC& GetTeam( unsigned long id );
+    kernel::Team_ABC* FindTeam( const std::string& team );
 
-    KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& identifier ) const;
+    kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& identifier ) const;
     //@}
 
 private:

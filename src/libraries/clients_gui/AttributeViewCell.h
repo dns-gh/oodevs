@@ -12,8 +12,15 @@
 
 #include <qtable.h>
 
-class DataDictionary;
 class QListBox;
+
+namespace kernel
+{
+    class DataDictionary;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  AttributeViewCell
@@ -27,7 +34,7 @@ class AttributeViewCell : public QTableItem
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeViewCell( QTable* parent, const DataDictionary& dictionary );
+             AttributeViewCell( QTable* parent, const kernel::DataDictionary& dictionary );
     virtual ~AttributeViewCell();
     //@}
 
@@ -46,8 +53,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const DataDictionary& dictionary_;
+    const kernel::DataDictionary& dictionary_;
     //@}
 };
+
+}
 
 #endif // __AttributeViewCell_h_

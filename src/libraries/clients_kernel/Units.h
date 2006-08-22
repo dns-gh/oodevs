@@ -12,6 +12,9 @@
 
 #include <qstring.h>
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Unit
     @brief  Unit
@@ -65,6 +68,6 @@ UnitedValue< T > operator*( const T& value, const Unit& unit )
     return UnitedValue< T >( value, unit );
 };
 
-
+}
 
 #endif // __Units_h_

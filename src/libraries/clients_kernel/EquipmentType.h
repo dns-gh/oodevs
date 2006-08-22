@@ -12,6 +12,9 @@
 
 namespace xml { class xistream; };
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  EquipmentType
     @brief  EquipmentType
@@ -52,5 +55,7 @@ private:
     unsigned long id_;
     //@}
 };
+
+}
 
 #endif // __EquipmentType_h_

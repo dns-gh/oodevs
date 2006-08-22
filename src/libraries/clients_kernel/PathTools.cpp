@@ -18,8 +18,10 @@
 
 namespace bfs = boost::filesystem;
 
-namespace path_tools
+namespace kernel
 {
+    namespace path_tools
+    {
 
 // -----------------------------------------------------------------------------
 // Name: BuildChildPath
@@ -42,4 +44,5 @@ std::string BuildWorkingDirectoryPath( const std::string& file )
     return ( cwd.branch_path() / file ).native_file_string();
 }
 
+    }
 }

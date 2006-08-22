@@ -17,10 +17,14 @@
 #include "clients_kernel/Drawable_ABC.h"
 
 class Report_ABC;
-class Controller;
-class Entity_ABC;
 class Simulation;
-class Displayer_ABC;
+
+namespace kernel
+{
+    class Controller;
+    class Entity_ABC;
+    class Displayer_ABC;
+}
 
 // =============================================================================
 /** @class  Reports
@@ -28,23 +32,23 @@ class Displayer_ABC;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Reports : public Extension_ABC
-              , public Updatable_ABC< ASN1T_MsgCR >
-              , public Updatable_ABC< TraceMessage >
-              , public Drawable_ABC
+class Reports : public kernel::Extension_ABC
+              , public kernel::Updatable_ABC< ASN1T_MsgCR >
+              , public kernel::Updatable_ABC< TraceMessage >
+              , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation );
+             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const Simulation& simulation );
     virtual ~Reports();
     //@}
 
     //! @name Operations
     //@{
-    void DisplayInTooltip( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -70,8 +74,8 @@ private:
 public: // $$$$ AGE 2006-03-09: 
     //! @name Member data
     //@{
-    const Entity_ABC& agent_;
-    Controller& controller_;
+    const kernel::Entity_ABC& agent_;
+    kernel::Controller& controller_;
     const Simulation& simulation_;
     T_Reports reports_;
     //@}

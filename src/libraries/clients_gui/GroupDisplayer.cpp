@@ -14,6 +14,9 @@
 #include "CheckBoxDisplayer.h"
 #include <stdexcept>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GroupDisplayer constructor
 // Created: AGE 2006-02-09

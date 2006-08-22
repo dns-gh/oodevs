@@ -63,6 +63,8 @@
 #include "clients_kernel/DataDictionary.h"
 #include "StaticModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13

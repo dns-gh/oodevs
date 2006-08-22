@@ -11,7 +11,14 @@
 #define __BooleanOptionButton_h_
 
 #include "clients_kernel/OptionsObserver_ABC.h"
-class Options;
+
+namespace kernel
+{
+    class Options;
+};
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  BooleanOptionButton
@@ -19,13 +26,13 @@ class Options;
 */
 // Created: AGE 2006-03-30
 // =============================================================================
-class BooleanOptionButton : public QToolButton, public Observer_ABC, public OptionsObserver_ABC
+class BooleanOptionButton : public QToolButton, public kernel::Observer_ABC, public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, Options& options, const std::string& option );
+             BooleanOptionButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, kernel::Options& options, const std::string& option );
     virtual ~BooleanOptionButton();
     //@}
 
@@ -44,16 +51,18 @@ private slots:
 
     //! @name Helpers
     //@{
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Options& options_;
+    kernel::Options& options_;
     std::string option_;
     QString toolTip_;
     //@}
 };
+
+}
 
 #endif // __BooleanOptionButton_h_

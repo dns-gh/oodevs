@@ -10,7 +10,9 @@
 #ifndef __GraphicsPanel_h_
 #define __GraphicsPanel_h_
 
-class GraphicPreferences;
+namespace gui
+{
+    class GraphicPreferences;
 
 // =============================================================================
 /** @class  GraphicsPanel
@@ -53,5 +55,7 @@ private:
     QWidget* parent_;
     //@}
 };
+
+}
 
 #endif // __GraphicsPanel_h_

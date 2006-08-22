@@ -17,19 +17,26 @@
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"
 
-class Controllers;
-class Team_ABC;
-class ObjectType;
-class ObjectPrototypeAttributes_ABC;
-class CampPrototype_ABC;
-class CrossingSitePrototype_ABC;
-class LogisticRoutePrototype_ABC;
-class NBCPrototype_ABC;
-class RotaPrototype_ABC;
-class LocationCreator;
-class ParametersLayer;
-class RichLabel;
+namespace kernel
+{
+    class Controllers;
+    class Team_ABC;
+    class ObjectType;
+}
+
 class ModelLoaded;
+
+namespace gui
+{
+    class ObjectPrototypeAttributes_ABC;
+    class CampPrototype_ABC;
+    class CrossingSitePrototype_ABC;
+    class LogisticRoutePrototype_ABC;
+    class NBCPrototype_ABC;
+    class RotaPrototype_ABC;
+    class LocationCreator;
+    class ParametersLayer;
+    class RichLabel;
 
 // =============================================================================
 /** @class  ObjectPrototype_ABC
@@ -38,9 +45,9 @@ class ModelLoaded;
 // Created: SBO 2006-04-18
 // =============================================================================
 class ObjectPrototype_ABC : public QGroupBox
-                          , public Observer_ABC
-                          , public ElementObserver_ABC< Team_ABC >
-                          , public ElementObserver_ABC< ModelLoaded >
+                          , public kernel::Observer_ABC
+                          , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                          , public kernel::ElementObserver_ABC< ModelLoaded >
                           , public ShapeHandler_ABC
 {
     Q_OBJECT
@@ -48,7 +55,7 @@ class ObjectPrototype_ABC : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver< ObjectType >& resolver, ParametersLayer& layer );
+             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver< kernel::ObjectType >& resolver, ParametersLayer& layer );
     virtual ~ObjectPrototype_ABC();
     //@}
 
@@ -57,8 +64,8 @@ public:
     bool CheckValidity() const;
     void Clean();
 
-    void Draw( const GlTools_ABC& tools ) const;
-    virtual void Handle( Location_ABC& location );
+    void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual void Handle( kernel::Location_ABC& location );
     //@}
 
 private slots:
@@ -76,8 +83,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team_ABC& team );
-    virtual void NotifyDeleted( const Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyUpdated( const ModelLoaded& );
     virtual void showEvent( QShowEvent* );
     virtual void hideEvent( QHideEvent* );
@@ -87,15 +94,15 @@ private:
 protected:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const Resolver< ObjectType >& resolver_;
+    kernel::Controllers& controllers_;
+    const kernel::Resolver< kernel::ObjectType >& resolver_;
 
-    ValuedComboBox< const Team_ABC* >* teams_;
-    ValuedComboBox< const ObjectType* >* objectTypes_;
+    ValuedComboBox< const kernel::Team_ABC* >* teams_;
+    ValuedComboBox< const kernel::ObjectType* >* objectTypes_;
     QLineEdit* name_;
 
     LocationCreator* locationCreator_;
-    Location_ABC* location_;
+    kernel::Location_ABC* location_;
     QLabel* locationLabel_;
     RichLabel* position_;
 
@@ -107,5 +114,7 @@ protected:
     RotaPrototype_ABC* rotaAttributes_;
     //@}
 };
+
+}
 
 #endif // __ObjectPrototype_ABC_h_

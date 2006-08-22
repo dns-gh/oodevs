@@ -16,8 +16,11 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class Object_ABC;
+namespace kernel
+{
+    class Controller;
+    class Object_ABC;
+}
 
 // =============================================================================
 /** @class  ObjectDetections
@@ -25,20 +28,20 @@ class Object_ABC;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectDetections : public Extension_ABC
-                       , public Updatable_ABC< ObjectDetectionMessage >
+class ObjectDetections : public kernel::Extension_ABC
+                       , public kernel::Updatable_ABC< ObjectDetectionMessage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectDetections( Controller& controller, const Resolver_ABC< Object_ABC >& resolver );
+             ObjectDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Object_ABC >& resolver );
     virtual ~ObjectDetections();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -55,15 +58,15 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const Object_ABC* >   T_Objects;
+    typedef std::set< const kernel::Object_ABC* >   T_Objects;
     typedef T_Objects::const_iterator CIT_Objects;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Object_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Object_ABC >& resolver_;
 
     T_Objects perceivedObjects_;
     //@}

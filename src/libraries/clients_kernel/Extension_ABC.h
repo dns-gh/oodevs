@@ -10,6 +10,9 @@
 #ifndef __Extension_ABC_h_
 #define __Extension_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Extension_ABC
     @brief  Extension base class
@@ -26,5 +29,7 @@ public:
     virtual ~Extension_ABC() {};
     //@}
 };
+
+}
 
 #endif // __Extension_ABC_h_

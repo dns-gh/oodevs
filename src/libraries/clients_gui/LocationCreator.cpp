@@ -16,6 +16,9 @@
 #include "ShapeHandler_ABC.h"
 #include "clients_kernel/Point.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LocationCreator constructor
 // Created: AGE 2006-03-31

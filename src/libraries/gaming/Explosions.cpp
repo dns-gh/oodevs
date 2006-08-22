@@ -14,6 +14,8 @@
 #include "FireResultFactory.h"
 #include "PopulationFireResult.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Explosions constructor
 // Created: AGE 2006-03-10

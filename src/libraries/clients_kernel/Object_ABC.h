@@ -12,10 +12,12 @@
 
 #include "Entity_ABC.h"
 
-class Team_ABC;
-class ObjectType;
-class ActionController;
-class Displayer_ABC;
+namespace kernel
+{
+    class Team_ABC;
+    class ObjectType;
+    class ActionController;
+    class Displayer_ABC;
 
 // =============================================================================
 /** @class  Object_ABC
@@ -53,5 +55,7 @@ public:
     virtual void Activate( ActionController& controller ) const;
     //@}
 };
+
+}
 
 #endif // __Object_ABC_h_

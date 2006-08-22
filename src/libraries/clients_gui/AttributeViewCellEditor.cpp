@@ -13,6 +13,9 @@
 #include "clients_kernel/DataDictionary.h"
 #include <qtable.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AttributeViewCellEditor constructor
 // Created: AGE 2006-06-23

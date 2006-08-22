@@ -15,10 +15,12 @@
 
 namespace xml { class xistream; };
 
-class ComponentType;
-class AgentNature;
-class DecisionalModel;
-class SymbolFactory;
+namespace kernel
+{
+    class ComponentType;
+    class AgentNature;
+    class DecisionalModel;
+    class SymbolFactory;
 
 // =============================================================================
 /** @class  AgentType
@@ -77,5 +79,7 @@ private:
     std::string levelSymbol_;
     //@}
 };
+
+}
 
 #endif // __AgentType_h_

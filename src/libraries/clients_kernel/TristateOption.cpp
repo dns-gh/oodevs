@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "TristateOption.h"
 
+using namespace kernel;
+
 const TristateOption TristateOption::off_( "Off" );
 const TristateOption TristateOption::on_( "On" );
 const TristateOption TristateOption::auto_( "Auto" );

@@ -14,9 +14,12 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-class Controller;
-class Displayer_ABC;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  HumanFactors
@@ -24,20 +27,20 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class HumanFactors : public Extension_ABC
-                   , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+class HumanFactors : public kernel::Extension_ABC
+                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             HumanFactors( Controller& controller, DataDictionary& dictionary );
+             HumanFactors( kernel::Controller& controller, kernel::DataDictionary& dictionary );
     virtual ~HumanFactors();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors
@@ -62,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
     E_UnitExperience experience_;
     E_UnitFatigue    tiredness_;
     E_UnitMoral      morale_;

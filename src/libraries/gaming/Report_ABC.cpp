@@ -14,6 +14,8 @@
 #include "Simulation.h"
 #include "clients_kernel/Displayer_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Report_ABC constructor
 // Created: AGE 2006-03-09

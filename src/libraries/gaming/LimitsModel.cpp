@@ -15,6 +15,8 @@
 #include "clients_kernel/Controllers.h"
 #include "Publisher_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor
 // Created: AGE 2006-02-10

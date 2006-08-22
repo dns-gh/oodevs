@@ -22,13 +22,13 @@ struct ASN1T_AttrObjectCampRefugies;
 */
 // Created: SBO 2006-04-19
 // =============================================================================
-class CampPrototype : public CampPrototype_ABC
+class CampPrototype : public gui::CampPrototype_ABC
 {
 
 public:
     //! @name Constructor/Destructor
     //@{
-             CampPrototype( QWidget* parent, Controllers& controllers, ASN1T_MagicActionCreateObject& msg );
+             CampPrototype( QWidget* parent, kernel::Controllers& controllers, ASN1T_MagicActionCreateObject& msg );
     virtual ~CampPrototype();
     //@}
 

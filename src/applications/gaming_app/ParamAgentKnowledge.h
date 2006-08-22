@@ -12,9 +12,13 @@
 
 #include "EntityParameter.h"
 
+namespace kernel
+{
+    class Agent_ABC;
+    class Entity_ABC;
+}
+
 class AgentKnowledge;
-class Agent_ABC;
-class Entity_ABC;
 class AgentKnowledgeConverter_ABC;
 
 // =============================================================================
@@ -24,13 +28,13 @@ class AgentKnowledgeConverter_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamAgentKnowledge : public EntityParameter< AgentKnowledge >
-                          , public ContextMenuObserver_ABC< Agent_ABC >
+                          , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent );
+             ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamAgentKnowledge();
     //@}
 
@@ -44,13 +48,13 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
     //! @name Member data
     //@{
     AgentKnowledgeConverter_ABC& converter_;
-    const Agent_ABC& agent_;
+    const kernel::Agent_ABC& agent_;
     //@}
 };
 

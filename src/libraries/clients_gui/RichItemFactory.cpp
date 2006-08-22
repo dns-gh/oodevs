@@ -13,6 +13,8 @@
 #include "ValuedListItem.h"
 #include "RichLabel.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: RichItemFactory constructor
 // Created: AGE 2006-05-10

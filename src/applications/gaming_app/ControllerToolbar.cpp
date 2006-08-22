@@ -17,6 +17,8 @@
 
 #include <qprocess.h>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ControllerToolbar constructor
 /** @param  pParent 

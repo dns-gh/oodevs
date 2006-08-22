@@ -12,8 +12,12 @@
 
 #include "EntityParameter.h"
 
+namespace kernel
+{
+    class Object_ABC;
+}
+
 class ObjectKnowledge;
-class Object_ABC;
 
 // =============================================================================
 /** @class  ParamObjectKnowledge
@@ -22,7 +26,7 @@ class Object_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge >
-                           , public ContextMenuObserver_ABC< Object_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
 
 public:
@@ -42,7 +46,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     //@}
 };
 

@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Population_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ConcentrationDetections constructor
 // Created: AGE 2006-02-14
@@ -21,7 +23,7 @@ ConcentrationDetections::ConcentrationDetections( Controller& controller, const 
     : controller_( controller )
     , resolver_( resolver )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +32,7 @@ ConcentrationDetections::ConcentrationDetections( Controller& controller, const 
 // -----------------------------------------------------------------------------
 ConcentrationDetections::~ConcentrationDetections()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

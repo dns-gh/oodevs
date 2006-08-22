@@ -16,7 +16,11 @@
 
 #include <deque>
 
-class Controller;
+namespace kernel
+{
+    class Controller;
+}
+
 class FireResultFactory;
 class AgentFireResult;
 class PopulationFireResult;
@@ -28,16 +32,16 @@ class PopulationFireResult;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class Explosions : public Extension_ABC
-                 , public Updatable_ABC< ASN1T_MsgExplosion >
-                 , public Updatable_ABC< ASN1T_MsgStopPionFire >
-                 , public Updatable_ABC< ASN1T_MsgStopPopulationFire >
+class Explosions : public kernel::Extension_ABC
+                 , public kernel::Updatable_ABC< ASN1T_MsgExplosion >
+                 , public kernel::Updatable_ABC< ASN1T_MsgStopPionFire >
+                 , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Explosions( Controller& controller, FireResultFactory& factory );
+             Explosions( kernel::Controller& controller, FireResultFactory& factory );
     virtual ~Explosions();
     //@}
 
@@ -77,7 +81,7 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
     FireResultFactory& factory_;
 
     T_AgentFires       agentExplosions_;

@@ -12,6 +12,9 @@
 #include "moc_EntityParameter.cpp"
 #include "clients_gui/RichLabel.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntityParameterBase constructor
 // Created: AGE 2006-03-14

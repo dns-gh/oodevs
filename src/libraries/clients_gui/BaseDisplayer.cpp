@@ -24,6 +24,9 @@
 #include "clients_kernel/Mission.h"
 #include "gaming/InternalLinks.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer constructor
 // Created: AGE 2006-02-22

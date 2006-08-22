@@ -14,6 +14,9 @@
 
 class QString;
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Displayer_ABC
     @brief  Displayer_ABC
@@ -86,6 +89,8 @@ private:
     virtual void EndDisplay() = 0;
     //@}
 };
+
+}
 
 #include "Displayer_ABC.inl"
 

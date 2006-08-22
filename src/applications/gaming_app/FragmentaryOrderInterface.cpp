@@ -18,6 +18,9 @@
 
 #include "ENT/ENT_Tr.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: FragmentaryOrderInterface constructor
 // Created: APE 2004-05-12

@@ -12,6 +12,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04

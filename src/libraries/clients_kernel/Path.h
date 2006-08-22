@@ -11,7 +11,10 @@
 #define __Path_h_
 
 #include "Location_ABC.h"
-class Positions;
+
+namespace kernel
+{
+    class Positions;
 
 // =============================================================================
 /** @class  Path
@@ -58,5 +61,7 @@ private:
     T_PointVector points_;
     //@}
 };
+
+}
 
 #endif // __Path_h_

@@ -18,14 +18,20 @@
 #include "clients_kernel/SafePointer.h"
 #include "Layer_ABC.h"
 
-class Controllers;
-class GlTools_ABC;
-class ColorStrategy_ABC;
-class View_ABC;
-class Entity_ABC;
-class Team_ABC;
-class GlTooltip;
-class Displayer_ABC;
+namespace kernel
+{
+    class Controllers;
+    class GlTools_ABC;
+    class Entity_ABC;
+    class Team_ABC;
+    class Displayer_ABC;
+}
+
+namespace gui
+{
+    class ColorStrategy_ABC;
+    class View_ABC;
+    class GlTooltip;
 
 // =============================================================================
 /** @class  EntityLayerBase
@@ -34,13 +40,13 @@ class Displayer_ABC;
 // Created: AGE 2006-03-23
 // =============================================================================
 class EntityLayerBase : public Layer_ABC
-                      , public Observer_ABC
-                      , public OptionsObserver_ABC
+                      , public kernel::Observer_ABC
+                      , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{    
-             EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view );
+             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, View_ABC& view );
     virtual ~EntityLayerBase();
     //@}    
 
@@ -54,28 +60,28 @@ protected:
     //@{    
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
     //! @name Helpers
     //@{
-    virtual bool IsInSelection( const Entity_ABC& entity, const geometry::Point2f& point ) const;
-    virtual void Draw( const Entity_ABC& entity, const geometry::Rectangle2f& viewport );
+    virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
+    virtual void Draw( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& viewport );
 
-    virtual void AddEntity( const Entity_ABC& );
-    virtual bool RemoveEntity( const Entity_ABC& );
-    virtual void ActivateEntity( const Entity_ABC& );
-    virtual void SelectEntity( const Entity_ABC& );
+    virtual void AddEntity( const kernel::Entity_ABC& );
+    virtual bool RemoveEntity( const kernel::Entity_ABC& );
+    virtual void ActivateEntity( const kernel::Entity_ABC& );
+    virtual void SelectEntity( const kernel::Entity_ABC& );
 
-    virtual void SelectColor( const Entity_ABC& );
-    virtual void Select     ( const Entity_ABC&, bool );
-    virtual void ContextMenu( const Entity_ABC&, const QPoint& );
-    virtual bool ShouldDisplay( const Entity_ABC& );
-    virtual bool IsInTeam     ( const Entity_ABC&, const Team_ABC& team );
+    virtual void SelectColor( const kernel::Entity_ABC& );
+    virtual void Select     ( const kernel::Entity_ABC&, bool );
+    virtual void ContextMenu( const kernel::Entity_ABC&, const QPoint& );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
+    virtual bool IsInTeam     ( const kernel::Entity_ABC&, const kernel::Team_ABC& team );
 
     virtual bool ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( unsigned i, const geometry::Point2f& point );
-    virtual bool DisplayTooltip( const Entity_ABC&, Displayer_ABC& displayer );
+    virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
     //@}
     
 private:
@@ -88,15 +94,15 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< const Entity_ABC* >  T_Entities;
-    typedef T_Entities::iterator             IT_Entities;
+    typedef std::vector< const kernel::Entity_ABC* >  T_Entities;
+    typedef T_Entities::iterator                     IT_Entities;
     //@}
         
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const GlTools_ABC& tools_;
+    kernel::Controllers& controllers_;
+    const kernel::GlTools_ABC& tools_;
     View_ABC& view_;
     T_Entities entities_;
     unsigned tooltiped_;
@@ -104,7 +110,7 @@ private:
 
 protected: // $$$$ AGE 2006-05-17: 
     unsigned selected_;
-    SafePointer< Team_ABC > currentTeam_;
+    kernel::SafePointer< kernel::Team_ABC > currentTeam_;
     //@}
 };
 
@@ -117,15 +123,15 @@ protected: // $$$$ AGE 2006-05-17:
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityLayer : public EntityLayerBase
-                  , public SelectionObserver< ConcreteEntity >
-                  , public ElementObserver_ABC< ConcreteEntity >
-                  , public ActivationObserver_ABC< ConcreteEntity >
+                  , public kernel::SelectionObserver< ConcreteEntity >
+                  , public kernel::ElementObserver_ABC< ConcreteEntity >
+                  , public kernel::ActivationObserver_ABC< ConcreteEntity >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~EntityLayer();
     //@}
 
@@ -143,19 +149,21 @@ protected:
     virtual void NotifyDeleted( const ConcreteEntity& );
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelected( const ConcreteEntity* );
-    virtual void SelectColor( const Entity_ABC& );
-    virtual bool IsInTeam   ( const Entity_ABC&, const Team_ABC& team );
-    virtual bool DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer );
-    virtual void DisplayTooltip( const ConcreteEntity& entity, Displayer_ABC& displayer );
+    virtual void SelectColor( const kernel::Entity_ABC& );
+    virtual bool IsInTeam   ( const kernel::Entity_ABC&, const kernel::Team_ABC& team );
+    virtual bool DisplayTooltip( const kernel::Entity_ABC& entity, kernel::Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const ConcreteEntity& entity, kernel::Displayer_ABC& displayer );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     ColorStrategy_ABC& strategy_;
     //@}
 };
+
+}
 
 #include "EntityLayer.inl"
 

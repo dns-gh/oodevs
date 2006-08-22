@@ -14,7 +14,10 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/IDManager.h"
 
-class Controller;
+namespace kernel
+{
+    class Controller;
+}
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -22,30 +25,30 @@ class Controller;
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class KnowledgeGroup : public KnowledgeGroup_ABC
+class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, Controller& controller, const Team_ABC& team );
+             KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const kernel::Team_ABC& team );
     virtual ~KnowledgeGroup();
     //@}
 
     //! @name Accessors & Modifiers
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const;
-    virtual const Team_ABC& GetTeam() const;
+    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
+    virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
-    virtual void AddAutomat( unsigned long id, Agent_ABC& automat );
+    virtual void AddAutomat( unsigned long id, kernel::Agent_ABC& automat );
     virtual void RemoveAutomat( unsigned long id );
     //@}
 
     //! @name Operations
     //@{
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
 private:
@@ -58,8 +61,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Team_ABC& team_;
+    kernel::Controller& controller_;
+    const kernel::Team_ABC& team_;
     unsigned long      nID_;
     //@}
 

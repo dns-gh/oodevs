@@ -21,7 +21,7 @@ struct ASN1T_AttrObjectSiteFranchissement;
 */
 // Created: SBO 2006-04-19
 // =============================================================================
-class CrossingSitePrototype : public CrossingSitePrototype_ABC
+class CrossingSitePrototype : public gui::CrossingSitePrototype_ABC
 {
 
 public:

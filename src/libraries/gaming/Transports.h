@@ -15,10 +15,13 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Agent_ABC;
-class Controller;
-class Displayer_ABC;
-class DataDictionary;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+    class Displayer_ABC;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  Transports
@@ -26,20 +29,20 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Transports : public Extension_ABC
-                 , public Updatable_ABC< ASN1T_MsgUnitAttributes >
+class Transports : public kernel::Extension_ABC
+                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Transports( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico );
+             Transports( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::DataDictionary& dico );
     virtual ~Transports();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -51,7 +54,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const Agent_ABC* > T_Agents;
+    typedef std::vector< const kernel::Agent_ABC* > T_Agents;
     //@}
 
     //! @name Helpers
@@ -62,9 +65,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
-    const Agent_ABC* transporter_; 
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::Agent_ABC* transporter_; 
     T_Agents transported_;
     //@}
 };

@@ -12,6 +12,9 @@
 
 #include <qpushbutton.h>
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  SizeButton
     @brief  Size button
@@ -61,5 +64,7 @@ private:
     float previous_;
     //@}
 };
+
+}
 
 #endif // __SizeButton_h_

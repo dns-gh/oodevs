@@ -10,10 +10,13 @@
 #ifndef __PathTools_h_
 #define __PathTools_h_
 
-namespace path_tools
+namespace kernel
 {
-    std::string BuildChildPath( const std::string& parent, const std::string& child );
-    std::string BuildWorkingDirectoryPath( const std::string& file );
+    namespace path_tools
+    {
+        std::string BuildChildPath( const std::string& parent, const std::string& child );
+        std::string BuildWorkingDirectoryPath( const std::string& file );
+    }
 }
 
 #endif // __PathTools_h_

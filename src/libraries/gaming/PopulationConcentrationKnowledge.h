@@ -17,12 +17,16 @@
 #include "clients_kernel/OptionalValue.h"
 #include "PopulationPartKnowledge_ABC.h"
 
-class CoordinateConverter_ABC;
-class Population_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class Population_ABC;
+    class Controller;
+    class Displayer_ABC;
+}
+
 class PopulationConcentration;
 class PopulationKnowledge;
-class Controller;
-class Displayer_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -33,20 +37,15 @@ class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu,
+             PopulationConcentrationKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu,
                  const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Display( Displayer_ABC& displayer ) const;
-    virtual void DisplayInList( Displayer_ABC& displayer ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Network
@@ -64,16 +63,16 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Population_ABC& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Population_ABC& resolver_;
     const uint nID_;
     
     const PopulationConcentration*         pConcentration_;
     geometry::Point2f                      position_;
-    OptionalValue< uint >                  nNbrAliveHumans_;
-    OptionalValue< uint >                  nNbrDeadHumans_;
-    OptionalValue< E_PopulationAttitude >  eAttitude_;
-    OptionalValue< bool >                  bIsPerceived_;
+    kernel::OptionalValue< uint >                  nNbrAliveHumans_;
+    kernel::OptionalValue< uint >                  nNbrDeadHumans_;
+    kernel::OptionalValue< E_PopulationAttitude >  eAttitude_;
+    kernel::OptionalValue< bool >                  bIsPerceived_;
     float                                  rRelevance_;
     //@}
 };

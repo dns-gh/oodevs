@@ -15,7 +15,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 /** @class  Paths
@@ -23,22 +26,22 @@ class CoordinateConverter_ABC;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Paths : public Extension_ABC
-            , public Updatable_ABC< ASN1T_MsgUnitPathFind >
-            , public Updatable_ABC< ASN1T_MsgUnitAttributes >
-            , public Drawable_ABC
+class Paths : public kernel::Extension_ABC
+            , public kernel::Updatable_ABC< ASN1T_MsgUnitPathFind >
+            , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+            , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Paths( const CoordinateConverter_ABC& converter );
+    explicit Paths( const kernel::CoordinateConverter_ABC& converter );
     virtual ~Paths();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -58,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f plannedBox_;
     T_PointVector plannedPath_;
     geometry::Rectangle2f previousBox_;

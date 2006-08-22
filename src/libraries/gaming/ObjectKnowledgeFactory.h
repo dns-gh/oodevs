@@ -12,11 +12,15 @@
 
 #include "ASN_Types.h"
 
+namespace kernel
+{
+    class Controllers;
+    class Team_ABC;
+}
+
 class ObjectKnowledge;
-class Controllers;
 class Model;
 class StaticModel;
-class Team_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledgeFactory
@@ -31,13 +35,13 @@ class ObjectKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgeFactory( Controllers& controllers, Model& model, const StaticModel& staticModel );
+             ObjectKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~ObjectKnowledgeFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual ObjectKnowledge* Create( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
+    virtual ObjectKnowledge* Create( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
     //@}
 
 private:
@@ -50,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
     //@}

@@ -14,6 +14,9 @@
 
 #include "MT/MT_Tools/MT_IdentifierManager.h" // $$$$ AGE 2006-08-07: 
 
+namespace kernel
+{
+
 //=============================================================================
 // Created: NLD 2003-02-28
 //=============================================================================
@@ -37,5 +40,7 @@ private:
     unsigned             nMOSClassID_;
     unsigned             nStartInstanceID_;
 };
+
+}
 
 #endif // __IDManager_h_

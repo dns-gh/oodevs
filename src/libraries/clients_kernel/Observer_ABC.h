@@ -10,6 +10,9 @@
 #ifndef __Observer_ABC_h_
 #define __Observer_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Observer_ABC
     @brief  Observer base class
@@ -26,5 +29,7 @@ public:
     virtual ~Observer_ABC() {};
     //@}
 };
+
+}
 
 #endif // __Observer_ABC_h_

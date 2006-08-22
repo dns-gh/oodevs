@@ -15,13 +15,20 @@
 #include "gaming/LogSupplyConsign.h"
 #include "clients_kernel/Agent_ABC.h"
 
+namespace kernel
+{
+    class Displayer_ABC;
+}
+
 class SupplyStates;
 class Availability;
 class DotationRequest;
 class Dotation;
-class Displayer_ABC;
-class ValuedListItem;
-class DisplayBuilder;
+
+namespace gui
+{
+    class ValuedListItem;
+    class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentSupplyPanel
@@ -30,28 +37,28 @@ class DisplayBuilder;
 // Created: AGE 2005-04-01
 // =============================================================================
 class AgentSupplyPanel : public LogisticPanel< AgentSupplyPanel, LogSupplyConsign >
-                       , public ElementObserver_ABC< SupplyStates >
+                       , public kernel::ElementObserver_ABC< SupplyStates >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentSupplyPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentSupplyPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentSupplyPanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const LogSupplyConsign* consign,  Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Dotation& quota, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const DotationRequest& request, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const LogSupplyConsign* consign,  kernel::Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Availability& availability, kernel::Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Dotation& quota, kernel::Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const DotationRequest& request, kernel::Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const Agent_ABC& agent );
+    virtual void NotifySelected( const kernel::Agent_ABC& agent );
     virtual void NotifyUpdated( const SupplyStates& consigns );
 
     virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentSupplyPanel >* list );
@@ -61,7 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
     DisplayBuilder* display_;
     ListDisplayer< AgentSupplyPanel >* pStocks_;
@@ -69,5 +76,7 @@ private:
     ListDisplayer< AgentSupplyPanel >* pDispoTransporters_;
     //@}
 };
+
+}
 
 #endif // __AgentSupplyPanel_h_

@@ -11,6 +11,8 @@
 #include "InfoPanel_ABC.h"
 #include "PanelStack_ABC.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: InfoPanel_ABC constructor
 // Created: AGE 2006-02-17

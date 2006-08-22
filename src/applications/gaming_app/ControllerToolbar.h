@@ -14,8 +14,11 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-class Team_ABC;
-class Controllers;
+namespace kernel
+{
+    class Team_ABC;
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  ControllerToolbar
@@ -24,15 +27,15 @@ class Controllers;
 // Created: APE 2004-09-21
 // =============================================================================
 class ControllerToolbar : public QToolBar
-                        , public Observer_ABC
-                        , public ElementObserver_ABC< Team_ABC >
+                        , public kernel::Observer_ABC
+                        , public kernel::ElementObserver_ABC< kernel::Team_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ControllerToolbar( QMainWindow* pParent, Controllers& controllers );
+             ControllerToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
     virtual ~ControllerToolbar();
     //@}
 
@@ -47,8 +50,8 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Team_ABC& );
-    virtual void NotifyDeleted( const Team_ABC& );
+    virtual void NotifyCreated( const kernel::Team_ABC& );
+    virtual void NotifyDeleted( const kernel::Team_ABC& );
     //@}
 
 private:
@@ -61,8 +64,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    std::vector< const Team_ABC* > teams_;
+    kernel::Controllers& controllers_;
+    std::vector< const kernel::Team_ABC* > teams_;
     QComboBox* pTeamCombo_;
     //@}
 };

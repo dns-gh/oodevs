@@ -11,6 +11,8 @@
 #include "GlPlaceHolder.h"
 //#include "splashscreen.cpp"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GlPlaceHolder constructor
 // Created: AGE 2006-05-03

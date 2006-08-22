@@ -22,6 +22,9 @@
 #include "gaming/LogisticLinks.h"
 #include "gaming/Transports.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentStatePanel constructor
 // Created: AGE 2006-02-16

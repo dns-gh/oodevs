@@ -11,6 +11,8 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ActionController.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Param_ABC constructor
 // Created: AGE 2006-03-14

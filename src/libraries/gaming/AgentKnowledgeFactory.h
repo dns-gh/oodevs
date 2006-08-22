@@ -13,9 +13,13 @@
 #include "AgentKnowledgeFactory_ABC.h"
 #include "PopulationKnowledgeFactory_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+    class CoordinateConverter_ABC;
+}
+
 class Model;
-class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgeFactory
@@ -30,14 +34,14 @@ class AgentKnowledgeFactory : public AgentKnowledgeFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgeFactory( Controllers& controllers, Model& model, const CoordinateConverter_ABC& converter );
+             AgentKnowledgeFactory( kernel::Controllers& controllers, Model& model, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AgentKnowledgeFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual AgentKnowledge*      CreateAgentKnowledge     ( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message );
-    virtual PopulationKnowledge* CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message );
+    virtual AgentKnowledge*      CreateAgentKnowledge     ( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message );
+    virtual PopulationKnowledge* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message );
     //@}
 
 private:
@@ -50,9 +54,9 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 

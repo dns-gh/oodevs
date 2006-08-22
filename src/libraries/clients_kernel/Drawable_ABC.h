@@ -10,7 +10,9 @@
 #ifndef __Drawable_ABC_h_
 #define __Drawable_ABC_h_
 
-class GlTools_ABC;
+namespace kernel
+{
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  Drawable_ABC
@@ -33,5 +35,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const = 0;
     //@}
 };
+
+}
 
 #endif // __Drawable_ABC_h_

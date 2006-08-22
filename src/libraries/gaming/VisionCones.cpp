@@ -15,6 +15,8 @@
 #include "VisionMap.h"
 #include "clients_kernel/Workers.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: VisionCones constructor
 // Created: AGE 2006-02-14

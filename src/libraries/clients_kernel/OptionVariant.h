@@ -10,12 +10,15 @@
 #ifndef __OptionVariant_h_
 #define __OptionVariant_h_
 
-class Settings_ABC;
 
-namespace detail 
+namespace kernel
 {
-    class ValueHolder_ABC;
-}
+    class Settings_ABC;
+
+    namespace detail 
+    {
+        class ValueHolder_ABC;
+    }
 
 // =============================================================================
 /** @class  OptionVariant
@@ -54,7 +57,12 @@ private:
     //@}
 };
 
+}
+
 #include "Settings_ABC.h"
+
+namespace kernel
+{
 
 namespace detail
 {
@@ -127,6 +135,8 @@ OptionVariant::OptionVariant( Settings_ABC& settings, const std::string& name, c
     : holder_( new detail::ValueHolder< T >( defaultValue ) )
 {
     holder_->Load( settings, name );
+}
+
 }
 
 #endif // __OptionVariant_h_

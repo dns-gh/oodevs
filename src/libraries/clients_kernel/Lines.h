@@ -12,6 +12,9 @@
 
 #include "Location_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Lines
     @brief  Lines
@@ -56,5 +59,7 @@ protected:
     T_PointVector points_;
     //@}
 };
+
+}
 
 #endif // __Lines_h_

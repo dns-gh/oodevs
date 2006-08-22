@@ -14,6 +14,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10

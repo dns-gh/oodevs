@@ -14,10 +14,17 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class DetectionMap;
 class ElevationLayer;
-class Controller;
 class ModelLoaded;
+
+namespace kernel
+{
+    class DetectionMap;
+    class Controller;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  Elevation2dLayer
@@ -26,14 +33,14 @@ class ModelLoaded;
 // Created: AGE 2006-03-29
 // =============================================================================
 class Elevation2dLayer : public Layer2d_ABC
-                       , public Observer_ABC
-                       , public ElementObserver_ABC< ModelLoaded >
+                       , public kernel::Observer_ABC
+                       , public kernel::ElementObserver_ABC< ModelLoaded >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation2dLayer( Controller& controller, const DetectionMap& elevation );
+             Elevation2dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation );
     virtual ~Elevation2dLayer();
     //@}
 
@@ -53,11 +60,13 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const DetectionMap& elevation_;
+    kernel::Controller& controller_;
+    const kernel::DetectionMap& elevation_;
     ElevationLayer* layer_;
     bool modelLoaded_;
     //@}
 };
+
+}
 
 #endif // __Elevation2dLayer_h_

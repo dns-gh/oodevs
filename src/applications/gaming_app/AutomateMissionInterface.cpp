@@ -16,6 +16,8 @@
 
 #include "ENT/ENT_Tr.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06

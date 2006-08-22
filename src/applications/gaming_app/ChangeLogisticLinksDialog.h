@@ -15,8 +15,12 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 
-class Controllers;
-class Agent_ABC;
+namespace kernel
+{
+    class Controllers;
+    class Agent_ABC;
+}
+
 class Publisher_ABC;
 
 // =============================================================================
@@ -27,24 +31,24 @@ class Publisher_ABC;
 // Created: SBO 2006-06-30
 // =============================================================================
 class ChangeLogisticLinksDialog : public QDialog
-                                , public Observer_ABC
-                                , public ElementObserver_ABC< Agent_ABC >
-                                , public ContextMenuObserver_ABC< Agent_ABC >
+                                , public kernel::Observer_ABC
+                                , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+                                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher );
+             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher );
     virtual ~ChangeLogisticLinksDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const Agent_ABC& agent );
-    virtual void NotifyDeleted( const Agent_ABC& agent );
-    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
+    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -65,13 +69,13 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    ValuedComboBox< const Agent_ABC* >* tc2Combo_;
-    ValuedComboBox< const Agent_ABC* >* maintenanceCombo_;
-    ValuedComboBox< const Agent_ABC* >* medicalCombo_;
-    ValuedComboBox< const Agent_ABC* >* supplyCombo_;
-    SafePointer< Agent_ABC > selected_;
+    gui::ValuedComboBox< const kernel::Agent_ABC* >* tc2Combo_;
+    gui::ValuedComboBox< const kernel::Agent_ABC* >* maintenanceCombo_;
+    gui::ValuedComboBox< const kernel::Agent_ABC* >* medicalCombo_;
+    gui::ValuedComboBox< const kernel::Agent_ABC* >* supplyCombo_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     //@}
 };
 

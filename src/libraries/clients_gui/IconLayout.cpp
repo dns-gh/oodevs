@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "IconLayout.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: IconLayout constructor
 // Created: SBO 2006-08-18

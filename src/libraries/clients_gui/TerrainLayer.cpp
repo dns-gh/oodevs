@@ -21,6 +21,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 
 using namespace pathfind;
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TerrainLayer constructor

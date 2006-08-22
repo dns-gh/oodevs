@@ -12,6 +12,9 @@
 
 #include "Observer_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ElementObserver_ABC
     @brief  Extension observer definition
@@ -36,5 +39,7 @@ public:
     virtual void NotifyDeleted( const Element& ) {};
     //@}
 };
+
+}
 
 #endif // __ElementObserver_ABC_h_

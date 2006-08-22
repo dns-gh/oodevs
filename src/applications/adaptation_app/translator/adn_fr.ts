@@ -2765,6 +2765,14 @@
         <source>Pion LOG Renforcer</source>
         <translation>Pion LOG Renforcer</translation>
     </message>
+    <message>
+        <source>Pion ALAT AllerSeRecompleter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ALAT AllerSeRecompleter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>

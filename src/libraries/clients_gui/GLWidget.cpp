@@ -15,6 +15,8 @@
 #include "clients_gui/IconLayout.h"
 
 using namespace geometry;
+using namespace kernel;
+using namespace gui;
 
 namespace
 {

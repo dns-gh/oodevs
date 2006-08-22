@@ -12,6 +12,9 @@
 
 #include "BaseDisplayer.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  NoLinkDisplayer
     @brief  NoLinkDisplayer
@@ -37,10 +40,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Call( const Agent_ABC& value );
-    virtual void Call( const Population_ABC& value );
-    virtual void Call( const Object_ABC& value );
+    virtual void Call( const kernel::Agent_ABC& value );
+    virtual void Call( const kernel::Population_ABC& value );
+    virtual void Call( const kernel::Object_ABC& value );
     //@}
 };
+
+}
 
 #endif // __NoLinkDisplayer_h_

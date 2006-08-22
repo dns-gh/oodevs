@@ -11,6 +11,8 @@
 #include "Formatter.h"
 #include "Tools.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: FormatterNotImplemented::Error
 // Created: AGE 2006-02-21

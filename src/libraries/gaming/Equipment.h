@@ -11,7 +11,11 @@
 #define __Equipment_h_
 
 #include "ASN_Types.h"
-class EquipmentType;
+
+namespace kernel
+{
+    class EquipmentType;
+}
 
 // =============================================================================
 /** @class  Equipment
@@ -25,7 +29,7 @@ class Equipment
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipment( const EquipmentType& type );
+    explicit Equipment( const kernel::EquipmentType& type );
     virtual ~Equipment();
     //@}
 
@@ -46,7 +50,7 @@ private:
 public:
     //! @name Member data
     //@{
-    const EquipmentType& type_;
+    const kernel::EquipmentType& type_;
 
     unsigned available_;
     unsigned unavailable_;

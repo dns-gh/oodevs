@@ -45,6 +45,7 @@
 
 using namespace DIN;
 using namespace log_tools;
+using namespace kernel;
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr constructor

@@ -12,7 +12,11 @@
 
 #include "ObjectFactory_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Model;
 class StaticModel;
 
@@ -28,13 +32,13 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( Controllers& controllers, Model& model, const StaticModel& staticModel );
+             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~ObjectFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
+    virtual kernel::Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
     //@}
 
 private:
@@ -47,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
     //@}

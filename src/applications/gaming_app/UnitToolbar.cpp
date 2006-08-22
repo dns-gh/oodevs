@@ -14,6 +14,9 @@
 #include "clients_gui/ToolListButton.h"
 #include "clients_gui/resources.h"
 
+using namespace kernel;
+using namespace gui;
+
 namespace
 {
     void Populate( ToolListButton< TristateOption >& button )

@@ -14,7 +14,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Entity_ABC;
+namespace kernel
+{
+    class Entity_ABC;
+}
 
 // =============================================================================
 /** @class  Fire_ABC
@@ -22,15 +25,15 @@ class Entity_ABC;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class Fire_ABC : public Updatable_ABC< ASN1T_MsgStopPionFire >
-               , public Updatable_ABC< ASN1T_MsgStopPopulationFire >
-               , public Drawable_ABC
+class Fire_ABC : public kernel::Updatable_ABC< ASN1T_MsgStopPionFire >
+               , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
+               , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Fire_ABC( Entity_ABC& origin );
+    explicit Fire_ABC( kernel::Entity_ABC& origin );
     virtual ~Fire_ABC();
     //@}
 
@@ -38,7 +41,7 @@ public:
     //@{
     virtual void DoUpdate( const ASN1T_MsgStopPionFire& message );
     virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 
 private:
@@ -51,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Entity_ABC& origin_;
+    kernel::Entity_ABC& origin_;
     //@}
 };
 

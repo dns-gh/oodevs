@@ -10,6 +10,9 @@
 #ifndef __GlFont_h_
 #define __GlFont_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  GlFont
     @brief  Gl font
@@ -50,5 +53,7 @@ private:
     GLYPHMETRICSFLOAT	gmfPoly_[256];
     //@}
 };
+
+}
 
 #endif // __GlFont_h_

@@ -18,6 +18,8 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18

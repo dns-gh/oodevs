@@ -10,9 +10,15 @@
 #ifndef __EntitySearchBox_ABC_h_
 #define __EntitySearchBox_ABC_h_
 
-class EntitySearchItem;
-class Entity_ABC;
-class ActionController;
+namespace kernel
+{
+    class Entity_ABC;
+    class ActionController;
+}
+
+namespace gui
+{
+    class EntitySearchItem;
 
 // =============================================================================
 /** @class  EntitySearchBox_ABC
@@ -27,7 +33,7 @@ class EntitySearchBox_ABC : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             EntitySearchBox_ABC( QWidget* parent, ActionController& actions );
+             EntitySearchBox_ABC( QWidget* parent, kernel::ActionController& actions );
     virtual ~EntitySearchBox_ABC();
     //@}
 
@@ -48,8 +54,8 @@ protected:
 
     //! @name Helpers
     //@{
-    void AddItem( const Entity_ABC& entity );
-    void RemoveItem( const Entity_ABC& entity );
+    void AddItem( const kernel::Entity_ABC& entity );
+    void RemoveItem( const kernel::Entity_ABC& entity );
     
     void Find();
     bool Find( CIT_Items begin, CIT_Items end );
@@ -65,12 +71,13 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actions_;
+    kernel::ActionController& actions_;
     T_Items items_;
     QString currentSearch_;
     CIT_Items lastItem_;
     //@}
-
 };
+
+}
 
 #endif // __EntitySearchBox_ABC_h_

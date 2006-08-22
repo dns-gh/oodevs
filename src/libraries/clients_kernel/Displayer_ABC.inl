@@ -9,6 +9,8 @@
 
 #include "Formatter.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Displayer_ABC::Display
 // Created: AGE 2006-02-21

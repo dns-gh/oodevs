@@ -13,13 +13,15 @@
 #include "Resolver.h"
 #include "IDManager.h"
 
-class ObjectType;
-class DotationType;
-class EquipmentType;
-class NBCAgent;
-class BreakdownType;
-
 namespace xml { class xistream; };
+
+namespace kernel
+{
+    class ObjectType;
+    class DotationType;
+    class EquipmentType;
+    class NBCAgent;
+    class BreakdownType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -82,5 +84,7 @@ private:
     T_Managers  managers_;
     //@}
 };
+
+}
 
 #endif // __ObjectTypes_h_

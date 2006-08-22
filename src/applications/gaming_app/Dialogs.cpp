@@ -16,6 +16,8 @@
 #include "LogisticSupplyRecompletionDialog.h"
 #include "ChangeHumanFactorsDialog.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20

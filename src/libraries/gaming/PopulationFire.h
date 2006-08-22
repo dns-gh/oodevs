@@ -14,7 +14,10 @@
 #include "Fire_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Population_ABC;
+namespace kernel
+{
+    class Population_ABC;
+}
 
 // =============================================================================
 /** @class  PopulationFire
@@ -28,13 +31,13 @@ class PopulationFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFire( const ASN1T_MsgStartPopulationFire& message, const Resolver_ABC< Population_ABC >& resolver );
+             PopulationFire( const ASN1T_MsgStartPopulationFire& message, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~PopulationFire();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

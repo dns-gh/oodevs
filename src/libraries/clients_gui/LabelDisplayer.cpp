@@ -14,6 +14,9 @@
 #include "RichLabel.h"
 #include "ItemFactory_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LabelDisplayer constructor
 // Created: AGE 2006-02-09

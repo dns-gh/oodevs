@@ -11,6 +11,9 @@
 #include "EntitySearchItem.h"
 #include "clients_kernel/Entity_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntitySearchItem constructor
 // Created: AGE 2006-08-10

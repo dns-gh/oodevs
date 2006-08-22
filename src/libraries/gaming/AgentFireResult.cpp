@@ -11,6 +11,8 @@
 #include "AgentFireResult.h"
 #include "Equipment.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AgentFireResult constructor
 // Created: AGE 2006-03-10

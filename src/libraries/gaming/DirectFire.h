@@ -14,9 +14,12 @@
 #include "Fire_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Entity_ABC;
-class Population_ABC;
-class Agent_ABC;
+namespace kernel
+{
+    class Entity_ABC;
+    class Population_ABC;
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  DirectFire
@@ -31,21 +34,21 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFire( const ASN1T_MsgStartPionFire& message, 
-                 const Resolver_ABC< Agent_ABC >& agentResolver, 
-                 const Resolver_ABC< Population_ABC >& populationResolver );
+                 const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
+                 const kernel::Resolver_ABC< kernel::Population_ABC >& populationResolver );
     virtual ~DirectFire();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 public:
     //! @name Member data
     //@{
     unsigned int id_;
-    const Entity_ABC* target_;
+    const kernel::Entity_ABC* target_;
     //@}
 };
 

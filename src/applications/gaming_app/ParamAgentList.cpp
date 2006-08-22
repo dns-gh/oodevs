@@ -11,6 +11,8 @@
 #include "ParamAgentList.h"
 #include "clients_kernel/Agent_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamAgentList constructor
 // Created: AGE 2006-03-14

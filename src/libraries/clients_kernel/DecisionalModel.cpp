@@ -14,6 +14,7 @@
 #include "MissionFactory.h"
 #include "xeumeuleu/xml.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

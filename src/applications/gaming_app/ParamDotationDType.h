@@ -14,7 +14,10 @@
 #include "ParamComboBox.h"
 #include "clients_kernel/Resolver.h"
 
-class DotationType;
+namespace kernel
+{
+    class DotationType;
+}
 
 // =============================================================================
 /** @class  ParamDotationDType
@@ -28,7 +31,7 @@ class ParamDotationDType : public ParamComboBox< ASN1T_TypeDotationTrancheD >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asnListEquipment, const std::string& label, const Resolver< DotationType >& resolver );
+             ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asnListEquipment, const std::string& label, const kernel::Resolver< kernel::DotationType >& resolver );
     virtual ~ParamDotationDType();
     //@}
 };

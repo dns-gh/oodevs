@@ -16,13 +16,21 @@
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 
-class Agent_ABC;
-class KnowledgeGroup_ABC;
-class Team_ABC;
-class Controllers;
+namespace kernel
+{
+    class Agent_ABC;
+    class KnowledgeGroup_ABC;
+    class Team_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
+    class LocationCreator;
+    class ParametersLayer;
+}
+
 class StaticModel;
-class LocationCreator;
-class ParametersLayer;
 class Publisher_ABC;
 
 // =============================================================================
@@ -32,30 +40,30 @@ class Publisher_ABC;
 // Created: AGE 2006-04-28
 // =============================================================================
 class MagicOrdersInterface : public QObject
-                           , public Observer_ABC
-                           , public ContextMenuObserver_ABC< Team_ABC >
-                           , public ContextMenuObserver_ABC< KnowledgeGroup_ABC >
-                           , public ContextMenuObserver_ABC< Agent_ABC >
-                           , public OptionsObserver_ABC
-                           , public ShapeHandler_ABC
-                           , private LocationVisitor_ABC
+                           , public kernel::Observer_ABC
+                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                           , public kernel::OptionsObserver_ABC
+                           , public gui::ShapeHandler_ABC
+                           , private kernel::LocationVisitor_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, ParametersLayer& layer );
+             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer );
     virtual ~MagicOrdersInterface();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Team_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const KnowledgeGroup_ABC& agent, ContextMenu& menu );
-    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
-    virtual void Handle( Location_ABC& location );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void Handle( kernel::Location_ABC& location );
     //@}
 
 private slots:
@@ -77,11 +85,11 @@ private:
 
     //! @name Helpers
     //@{
-    void AddMagicMove( const Agent_ABC& agent, QPopupMenu* menu );
+    void AddMagicMove( const kernel::Agent_ABC& agent, QPopupMenu* menu );
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void ApplyOnHierarchy( const KnowledgeGroup_ABC& group, int id );
-    void ApplyOnHierarchy( const Team_ABC& team, int id );
+    void ApplyOnHierarchy( const kernel::KnowledgeGroup_ABC& group, int id );
+    void ApplyOnHierarchy( const kernel::Team_ABC& team, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
 
     virtual void VisitLines  ( const T_PointVector& ) {};
@@ -93,15 +101,15 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const StaticModel& static_;
     bool controller_;
-    SafePointer< Agent_ABC > selectedAgent_;
-    SafePointer< KnowledgeGroup_ABC > selectedGroup_;
-    SafePointer< Team_ABC > selectedTeam_;
+    kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
+    kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
+    kernel::SafePointer< kernel::Team_ABC > selectedTeam_;
     bool magicMove_;
-    LocationCreator* magicMoveLocation_;
+    gui::LocationCreator* magicMoveLocation_;
     //@}
 };
 

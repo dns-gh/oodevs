@@ -10,11 +10,17 @@
 #ifndef __MiniView_h_
 #define __MiniView_h_
 
-class Entity_ABC;
-class Positions;
-class GlWidget;
-class Controllers;
-class ActionController;
+namespace kernel
+{
+    class Entity_ABC;
+    class Positions;
+    class Controllers;
+    class ActionController;
+}
+
+namespace gui
+{
+    class GlWidget;
 
 // =============================================================================
 /** @class  MiniView
@@ -28,7 +34,7 @@ class MiniView : public QFrame
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent, GlWidget* widget );
+             MiniView( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC& agent, GlWidget* widget );
     virtual ~MiniView();
     //@}
 
@@ -57,13 +63,14 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& actions_;
-    const Entity_ABC& agent_;
-    const Positions& position_;
+    kernel::ActionController& actions_;
+    const kernel::Entity_ABC& agent_;
+    const kernel::Positions& position_;
     QPixmap pixmap_;
     GlWidget* widget_;
-
     //@}
 };
+
+}
 
 #endif // __MiniView_h_

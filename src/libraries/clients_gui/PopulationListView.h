@@ -14,10 +14,16 @@
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-class Controllers;
-class Population_ABC;
-class Team_ABC;
-class ItemFactory_ABC;
+namespace kernel
+{
+    class Controllers;
+    class Population_ABC;
+    class Team_ABC;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  PopulationListView
@@ -26,17 +32,17 @@ class ItemFactory_ABC;
 // Created: HME 2005-10-03
 // =============================================================================
 class PopulationListView : public QListView
-                         , public Observer_ABC
-                         , public ElementObserver_ABC< Population_ABC >
-                         , public SelectionObserver_Base< Population_ABC > // $$$$ AGE 2006-08-07: SelectionObserver_Base ????
-                         , public OptionsObserver_ABC
+                         , public kernel::Observer_ABC
+                         , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+                         , public kernel::SelectionObserver_Base< kernel::Population_ABC > // $$$$ AGE 2006-08-07: SelectionObserver_Base ????
+                         , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationListView();
     //@}
 
@@ -58,20 +64,22 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Population_ABC& popu );
-    virtual void NotifyDeleted( const Population_ABC& popu );
-    virtual void Select( const Population_ABC& popu );
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void NotifyCreated( const kernel::Population_ABC& popu );
+    virtual void NotifyDeleted( const kernel::Population_ABC& popu );
+    virtual void Select( const kernel::Population_ABC& popu );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
     QPopupMenu* pPopupMenu_;
-    const Team_ABC* currentTeam_;
+    const kernel::Team_ABC* currentTeam_;
     //@}
 };
+
+}
 
 #endif // __PopulationListView_h_

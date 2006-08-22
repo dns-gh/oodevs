@@ -13,6 +13,9 @@
 #include "EntitySearchBox.h"
 #include "clients_kernel/Object_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectList constructor
 // Created: AGE 2006-08-10

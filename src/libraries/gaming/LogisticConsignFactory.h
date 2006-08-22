@@ -12,7 +12,11 @@
 
 #include "LogisticConsignFactory_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Model;
 class StaticModel;
 
@@ -28,7 +32,7 @@ class LogisticConsignFactory : public LogisticConsignFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsignFactory( Controllers& controllers, Model& model, const StaticModel& staticModel );
+             LogisticConsignFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~LogisticConsignFactory();
     //@}
 
@@ -49,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
     //@}

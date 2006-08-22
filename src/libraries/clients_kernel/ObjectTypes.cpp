@@ -16,8 +16,9 @@
 #include "BreakdownType.h"
 #include "PathTools.h"
 #include "ENT/ENT_Tr.h"
-
 #include "xeumeuleu/xml.h"
+
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

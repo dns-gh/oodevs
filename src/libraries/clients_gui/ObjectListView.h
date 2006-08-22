@@ -14,10 +14,16 @@
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-class Object_ABC;
-class Controllers;
-class Team_ABC;
-class ItemFactory_ABC;
+namespace kernel
+{
+    class Object_ABC;
+    class Controllers;
+    class Team_ABC;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectListView
@@ -26,16 +32,16 @@ class ItemFactory_ABC;
 // Created: APE 2004-08-05
 // =============================================================================
 class ObjectListView : public QListView
-                     , public Observer_ABC
-                     , public ElementObserver_ABC< Object_ABC >
-                     , public SelectionObserver_Base< Object_ABC >
-                     , public OptionsObserver_ABC
+                     , public kernel::Observer_ABC
+                     , public kernel::ElementObserver_ABC< kernel::Object_ABC >
+                     , public kernel::SelectionObserver_Base< kernel::Object_ABC >
+                     , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~ObjectListView();
     //@}
 
@@ -60,20 +66,22 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Object_ABC& object );
-    virtual void NotifyDeleted( const Object_ABC& object );
-    virtual void Select( const Object_ABC& object );
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void NotifyCreated( const kernel::Object_ABC& object );
+    virtual void NotifyDeleted( const kernel::Object_ABC& object );
+    virtual void Select( const kernel::Object_ABC& object );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
     QPopupMenu* pPopupMenu_;
-    const Team_ABC* currentTeam_;
+    const kernel::Team_ABC* currentTeam_;
     //@}
 };
+
+}
 
 #endif // __ObjectListView_h_

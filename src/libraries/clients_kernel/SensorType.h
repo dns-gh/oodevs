@@ -5,13 +5,12 @@
 #ifndef __SensorType_h_
 #define __SensorType_h_
 
-//#include "Types.h"
-//#include "Perception_Def.h"
-
-class Agent_ABC;
-enum E_PerceptionResult;
-
 namespace xml { class xistream; };
+
+namespace kernel
+{
+    class Agent_ABC;
+    enum E_PerceptionResult;
 
 //*****************************************************************************
 // Created: JVT 02-08-30
@@ -93,5 +92,7 @@ private:
     float rPopulationFactor_;
 
 };
+
+}
 
 #endif // __SensorType_h_

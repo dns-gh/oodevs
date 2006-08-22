@@ -13,6 +13,9 @@
 #include "ListView.h"
 #include "ListItemDisplayer.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ListDisplayer
     @brief  ListDisplayer
@@ -117,5 +120,7 @@ private:
     ListItemDisplayer itemDisplayer_;
     //@}
 };
+
+}
 
 #endif // __ListDisplayer_h_

@@ -15,6 +15,8 @@
 #include "xeumeuleu/xml.h"
 using namespace xml;
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GraphicPreferences constructor
 // Created: SBO 2006-04-04

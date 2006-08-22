@@ -13,8 +13,10 @@
 #include "Entity_ABC.h"
 #include "Resolver.h"
 
-class Agent_ABC;
-class Team_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class Team_ABC;
 
 // =============================================================================
 /** @class  KnowledgeGroup_ABC
@@ -50,5 +52,7 @@ public:
     virtual std::string GetName() const = 0;
     //@}
 };
+
+}
 
 #endif // __KnowledgeGroup_ABC_h_

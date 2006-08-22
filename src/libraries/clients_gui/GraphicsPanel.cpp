@@ -12,6 +12,8 @@
 #include "moc_GraphicsPanel.cpp"
 #include "GraphicPreferences.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GraphicsPanel constructor
 // Created: SBO 2006-04-04

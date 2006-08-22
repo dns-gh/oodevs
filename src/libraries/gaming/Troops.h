@@ -15,7 +15,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "Humans.h"
 
-class Controller;
+namespace kernel
+{
+    class Controller;
+}
 
 // =============================================================================
 /** @class  Troops
@@ -23,14 +26,14 @@ class Controller;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Troops : public Extension_ABC
-             , public Updatable_ABC< ASN1T_MsgUnitDotations >
+class Troops : public kernel::Extension_ABC
+             , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Troops( Controller& controller );
+    explicit Troops( kernel::Controller& controller );
     virtual ~Troops();
     //@}
 
@@ -53,8 +56,8 @@ private:
 public: // $$$$ AGE 2006-04-28: 
     //! @name Member data
     //@{
-    Controller& controller_;
-    Humans humans_[eTroopHealthStateNbrStates];
+    kernel::Controller& controller_;
+    Humans humans_[kernel::eTroopHealthStateNbrStates];
     //@}
 };
 

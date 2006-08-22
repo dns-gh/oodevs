@@ -13,8 +13,11 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Iterator.h"
 
-class Population_ABC;
-class Mission;
+namespace kernel
+{
+    class Population_ABC;
+    class Mission;
+}
 
 // =============================================================================
 /** @class  PopulationDecisions
@@ -23,19 +26,19 @@ class Mission;
 */
 // Created: AGE 2006-04-10
 // =============================================================================
-class PopulationDecisions : public Extension_ABC
+class PopulationDecisions : public kernel::Extension_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationDecisions( const Population_ABC& popu );
+    explicit PopulationDecisions( const kernel::Population_ABC& popu );
     virtual ~PopulationDecisions();
     //@}
 
     //! @name Operations
     //@{
-    virtual Iterator< const Mission& > GetMissions() const;
+    virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
     //@}
 
 private:
@@ -48,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Population_ABC& popu_;
+    const kernel::Population_ABC& popu_;
     //@}
 };
 

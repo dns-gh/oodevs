@@ -13,9 +13,13 @@
 #include "gaming/ASN_Types.h"
 #include "EntityListParameter.h"
 
+namespace kernel
+{
+    class Agent_ABC;
+    class Entity_ABC;
+}
+
 class AgentKnowledge;
-class Agent_ABC;
-class Entity_ABC;
 class AgentKnowledgeConverter_ABC;
 
 // =============================================================================
@@ -26,13 +30,13 @@ class AgentKnowledgeConverter_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamAgentKnowledgeList : public EntityListParameter< AgentKnowledge >
-                              , public ContextMenuObserver_ABC< Agent_ABC > 
+                              , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC > 
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent );
+             ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const std::string& label, const std::string& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamAgentKnowledgeList();
     //@}
 
@@ -46,13 +50,13 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
     //! @name Member data
     //@{
     AgentKnowledgeConverter_ABC& converter_;
-    const Agent_ABC& agent_;
+    const kernel::Agent_ABC& agent_;
     //@}
 };
 

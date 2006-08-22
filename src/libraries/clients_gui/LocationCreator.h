@@ -12,10 +12,10 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
-class ParametersLayer;
-class GlTools_ABC;
-class ShapeHandler_ABC;
-class Location_ABC;
+namespace gui
+{
+    class ParametersLayer;
+    class ShapeHandler_ABC;
 
 // =============================================================================
 /** @class  LocationCreator
@@ -24,8 +24,8 @@ class Location_ABC;
 // Created: APE 2004-05-06
 // =============================================================================
 class LocationCreator : public QObject
-                      , public Observer_ABC
-                      , public ContextMenuObserver_ABC< geometry::Point2f >
+                      , public kernel::Observer_ABC
+                      , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
 
@@ -54,7 +54,7 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& );
+    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     //@}
 
 private:
@@ -75,5 +75,7 @@ private:
     geometry::Point2f popupPoint_;
     //@}
 };
+
+}
 
 #endif // __LocationCreator_h_

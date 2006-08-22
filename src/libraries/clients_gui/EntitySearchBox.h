@@ -15,6 +15,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  EntitySearchBox
     @brief  EntitySearchBox
@@ -23,13 +26,13 @@
 // =============================================================================
 template< typename Entity >
 class EntitySearchBox : public EntitySearchBox_ABC
-                      , public Observer_ABC
-                      , public ElementObserver_ABC< Entity >
+                      , public kernel::Observer_ABC
+                      , public kernel::ElementObserver_ABC< Entity >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EntitySearchBox( QWidget* pParent, Controllers& controllers );
+             EntitySearchBox( QWidget* pParent, kernel::Controllers& controllers );
     virtual ~EntitySearchBox();
     //@}
 
@@ -49,9 +52,14 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     //@}
 };
+
+}
+
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: EntitySearchBox constructor

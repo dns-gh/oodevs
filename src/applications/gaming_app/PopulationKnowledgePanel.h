@@ -15,44 +15,52 @@
 #include "gaming/KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
 
-class Controllers;
-class DisplayBuilder;
-template< typename T > class ListDisplayer;
+namespace kernel
+{
+    class Controllers;
+    class KnowledgeGroup_ABC;
+    class Agent_ABC;
+    class Displayer_ABC;
+    class Team_ABC;
+}
+
+namespace gui
+{
+    template< typename T > class ListDisplayer;
+    class DisplayBuilder;
+    class ValuedListItem;
+    class ItemFactory_ABC;
+}
+
 class PopulationKnowledges;
 class PopulationKnowledge;
 class PopulationFlowKnowledge;
 class PopulationConcentrationKnowledge;
-class KnowledgeGroup_ABC;
-class Agent_ABC;
-class Displayer_ABC;
 class PopulationPartKnowledge_ABC;
-class ValuedListItem;
-class Team_ABC;
-class ItemFactory_ABC;
 
 // =============================================================================
 // Created: SBO 2005-10-19
 // =============================================================================
-class PopulationKnowledgePanel : public InfoPanel_ABC
-                               , public Observer_ABC
+class PopulationKnowledgePanel : public gui::InfoPanel_ABC
+                               , public kernel::Observer_ABC
                                , public KnowledgeGroupSelectionObserver
-                               , public ElementObserver_ABC< PopulationKnowledges >
-                               , public ElementObserver_ABC< PopulationKnowledge >
-                               , public ElementObserver_ABC< PopulationFlowKnowledge >
-                               , public ElementObserver_ABC< PopulationConcentrationKnowledge >
+                               , public kernel::ElementObserver_ABC< PopulationKnowledges >
+                               , public kernel::ElementObserver_ABC< PopulationKnowledge >
+                               , public kernel::ElementObserver_ABC< PopulationFlowKnowledge >
+                               , public kernel::ElementObserver_ABC< PopulationConcentrationKnowledge >
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationKnowledgePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~PopulationKnowledgePanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const PopulationKnowledge& knowledge, Displayer_ABC& displayer, ValuedListItem* item );
-    void Display( const PopulationPartKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const PopulationKnowledge& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const PopulationPartKnowledge_ABC& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 private slots:
@@ -78,19 +86,19 @@ private:
     virtual void NotifyUpdated( const PopulationKnowledge& element );
     virtual void NotifyUpdated( const PopulationFlowKnowledge& element );
     virtual void NotifyUpdated( const PopulationConcentrationKnowledge& element );
-    virtual void Select( const KnowledgeGroup_ABC* element );
+    virtual void Select( const kernel::KnowledgeGroup_ABC* element );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    SafePointer< Team_ABC > owner_;
-    ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
-    DisplayBuilder* display_;
-    SafePointer< PopulationKnowledges >        selected_;
-    SafePointer< PopulationKnowledge >         subSelected_;
-    SafePointer< PopulationPartKnowledge_ABC > selectedPart_; // $$$$ AGE 2006-04-20: won't do
+    kernel::Controllers& controllers_;
+    kernel::SafePointer< kernel::Team_ABC > owner_;
+    gui::ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
+    gui::DisplayBuilder* display_;
+    kernel::SafePointer< PopulationKnowledges >        selected_;
+    kernel::SafePointer< PopulationKnowledge >         subSelected_;
+    kernel::SafePointer< PopulationPartKnowledge_ABC > selectedPart_; // $$$$ AGE 2006-04-20: won't do
 
     QCheckBox* pOwnTeamCheckBox_;
     //@}

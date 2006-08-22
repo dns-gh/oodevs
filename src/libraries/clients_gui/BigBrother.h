@@ -15,12 +15,19 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class Controllers;
-class Agent_ABC;
-class Population_ABC;
-class Entity_ABC;
+namespace kernel
+{
+    class Controllers;
+    class Agent_ABC;
+    class Population_ABC;
+    class Entity_ABC;
+}
+
 class QToolBox;
 class Report_ABC;
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  BigBrother
@@ -29,28 +36,28 @@ class Report_ABC;
 // Created: SBO 2006-06-21
 // =============================================================================
 class BigBrother : public QVBox
-                 , public Observer_ABC
-                 , public ContextMenuObserver_ABC< Agent_ABC >
-                 , public ContextMenuObserver_ABC< Population_ABC >
-                 , public ElementObserver_ABC< Agent_ABC >
-                 , public ElementObserver_ABC< Population_ABC >
-                 , public ElementObserver_ABC< Report_ABC >
+                 , public kernel::Observer_ABC
+                 , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                 , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+                 , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+                 , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+                 , public kernel::ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             BigBrother( QWidget* parent, Controllers& controllers );
+             BigBrother( QWidget* parent, kernel::Controllers& controllers );
     virtual ~BigBrother();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC&, ContextMenu& );
-    virtual void NotifyContextMenu( const Population_ABC&, ContextMenu& );
-    virtual void NotifyDeleted( const Agent_ABC& agent );
-    virtual void NotifyDeleted( const Population_ABC& agent );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Population_ABC&, kernel::ContextMenu& );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Population_ABC& agent );
     //@}
 
 private slots:
@@ -70,26 +77,28 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Entity_ABC*, int >   T_Agents;
-    typedef T_Agents::const_iterator          CIT_Agents;
+    typedef std::map< const kernel::Entity_ABC*, int >   T_Agents;
+    typedef T_Agents::const_iterator                   CIT_Agents;
     //@}
 
     //! @name Helpers
     //@{
-    QWidget* CreateView( const Entity_ABC& agent );
+    QWidget* CreateView( const kernel::Entity_ABC& agent );
     virtual void NotifyCreated( const Report_ABC& report );
-    void NotifyContextMenu( const Entity_ABC&, ContextMenu& menu );
-    void RemoveAgent( const Entity_ABC& agent );
+    void NotifyContextMenu( const kernel::Entity_ABC&, ContextMenu& menu );
+    void RemoveAgent( const kernel::Entity_ABC& agent );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     T_Agents spied_;
-    const Entity_ABC* selected_; // $$$$ AGE 2006-06-30: watch deletions
+    const kernel::Entity_ABC* selected_; // $$$$ AGE 2006-06-30: watch deletions
     QToolBox* toolBox_;
     //@}
 };
+
+}
 
 #endif // __BigBrother_h_

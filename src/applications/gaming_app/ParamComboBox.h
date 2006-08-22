@@ -47,9 +47,11 @@ private:
     //! @name Member data
     //@{
     T& asn_;
-    ValuedComboBox<T>* pComboBox_;
+    gui::ValuedComboBox<T>* pComboBox_;
     //@}
 };
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox constructor

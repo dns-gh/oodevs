@@ -13,8 +13,15 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 struct ASN1T_CoordUTM;
 struct ASN1T_Localisation;
-class CoordinateConverter_ABC;
-class Location_ABC;
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class Location_ABC;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  LocationSerializer
@@ -22,21 +29,21 @@ class Location_ABC;
 */
 // Created: AGE 2006-08-09
 // =============================================================================
-class LocationSerializer : public LocationVisitor_ABC
+class LocationSerializer : public kernel::LocationVisitor_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocationSerializer( const CoordinateConverter_ABC& converter );
-             LocationSerializer( const CoordinateConverter_ABC& converter, ASN1T_Localisation& localisation );
+    explicit LocationSerializer( const kernel::CoordinateConverter_ABC& converter );
+             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, ASN1T_Localisation& localisation );
     virtual ~LocationSerializer();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( const Location_ABC& location );
-    void Serialize( const Location_ABC& location, ASN1T_Localisation& localisation );
+    void Serialize( const kernel::Location_ABC& location );
+    void Serialize( const kernel::Location_ABC& location, ASN1T_Localisation& localisation );
     //@}
 
     //! @name Operations
@@ -62,11 +69,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     ASN1T_Localisation* localisation_;
     ASN1T_CoordUTM* pCoords_;
     bool ownsCoords_;
     //@}
 };
+
+}
 
 #endif // __LocationSerializer_h_

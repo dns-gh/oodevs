@@ -12,6 +12,9 @@
 
 #include "Extension_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Positions
     @brief  Positions
@@ -37,5 +40,7 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const = 0;
     //@}
 };
+
+}
 
 #endif // __Positions_h_

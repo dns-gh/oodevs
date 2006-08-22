@@ -19,14 +19,22 @@
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+    class GlTools_ABC;
+    class Location_ABC;
+}
+
 class Lima;
 class Limit;
-class TacticalLine_ABC;
-class GlTools_ABC;
-class ColorStrategy_ABC;
-class ParametersLayer;
 class LimitsModel;
+class TacticalLine_ABC;
+
+namespace gui
+{
+    class ColorStrategy_ABC;
+    class ParametersLayer;
 
 // =============================================================================
 /** @class  LimitsLayer
@@ -36,13 +44,13 @@ class LimitsModel;
 // =============================================================================
 class LimitsLayer : public QObject
                   , public Layer_ABC
-                  , public Observer_ABC
-                  , public ElementObserver_ABC< Lima >
-                  , public ElementObserver_ABC< Limit >
-                  , public ContextMenuObserver_ABC< geometry::Point2f >
-                  , public OptionsObserver_ABC
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< Lima >
+                  , public kernel::ElementObserver_ABC< Limit >
+                  , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                  , public kernel::OptionsObserver_ABC
                   , private ShapeHandler_ABC
-                  , private LocationVisitor_ABC
+                  , private kernel::LocationVisitor_ABC
                   
 {
     Q_OBJECT;
@@ -50,7 +58,7 @@ class LimitsLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model );
+             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model );
     virtual ~LimitsLayer();
     //@}
 
@@ -87,15 +95,15 @@ private:
     virtual bool HandleKeyPress        ( QKeyEvent* key );
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
 
-    virtual void NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu );
+    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu );
 
     virtual bool IsInSelection( const TacticalLine_ABC& line, const geometry::Point2f& point ) const;
     void Select( const TacticalLine_ABC& line );
     void ContextMenu( const TacticalLine_ABC& line, const QPoint& point );
 
-    virtual void Handle( Location_ABC& location );
+    virtual void Handle( kernel::Location_ABC& location );
 
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     virtual void VisitLines  ( const T_PointVector& points );
     virtual void VisitPolygon( const T_PointVector& ) {};
@@ -113,17 +121,19 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const GlTools_ABC& tools_;
+    kernel::Controllers& controllers_;
+    const kernel::GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
     ParametersLayer& parameters_;
     LimitsModel& model_;
 
-    TristateOption drawLines_;
+    kernel::TristateOption drawLines_;
     T_Lines lines_;
     unsigned selected_;
     int type_;
     //@}
 };
+
+}
 
 #endif // __LimitsLayer_h_

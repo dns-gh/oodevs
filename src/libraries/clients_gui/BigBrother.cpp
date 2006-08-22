@@ -22,6 +22,9 @@
 #include <qtoolbox.h>
 #include <qsizepolicy.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: BigBrother constructor
 // Created: SBO 2006-06-21

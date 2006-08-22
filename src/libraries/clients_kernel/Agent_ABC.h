@@ -17,10 +17,12 @@
 #include "Drawable_ABC.h"
 #include "Aggregatable_ABC.h"
 
-class KnowledgeGroup_ABC;
-class Team_ABC;
-class AgentType;
-class AutomatType;
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
+    class Team_ABC;
+    class AgentType;
+    class AutomatType;
 
 // =============================================================================
 /** @class  Agent_ABC
@@ -56,5 +58,7 @@ public:
     virtual void Activate( ActionController& controller ) const;
     //@}
 };
+
+}
 
 #endif // __Agent_ABC_h_

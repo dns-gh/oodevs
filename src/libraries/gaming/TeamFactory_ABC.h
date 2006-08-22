@@ -11,7 +11,11 @@
 #define __TeamFactory_ABC_h_
 
 namespace DIN { class DIN_Input; }
-class Team_ABC;
+
+namespace kernel
+{
+    class Team_ABC;
+}
 
 // =============================================================================
 /** @class  TeamFactory_ABC
@@ -31,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input ) = 0;
+    virtual kernel::Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input ) = 0;
     //@}
 };
 

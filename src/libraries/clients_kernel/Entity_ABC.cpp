@@ -12,6 +12,8 @@
 #include "Drawable_ABC.h"
 #include "Drawer.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC constructor
 // Created: AGE 2006-02-07

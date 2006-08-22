@@ -13,6 +13,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: HumanFactors constructor
 // Created: AGE 2006-02-13

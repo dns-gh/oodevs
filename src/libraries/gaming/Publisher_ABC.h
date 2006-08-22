@@ -12,7 +12,10 @@
 
 #include "ASN_Types.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  Publisher_ABC
@@ -34,7 +37,7 @@ public:
     //@{
     virtual void Send( ASN1T_MsgsMosSim& message ) = 0;
     virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 ) = 0;
-    virtual void SendMagicDestruction( const Agent_ABC& agent ) = 0; // $$$$ SBO 2006-07-06: 
+    virtual void SendMagicDestruction( const kernel::Agent_ABC& agent ) = 0; // $$$$ SBO 2006-07-06: 
     //@}
 };
 

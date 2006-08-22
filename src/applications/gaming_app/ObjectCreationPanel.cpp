@@ -14,6 +14,9 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/IDManager.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18

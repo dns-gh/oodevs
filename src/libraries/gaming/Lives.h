@@ -16,7 +16,10 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  Lives
@@ -24,22 +27,22 @@ class Agent_ABC;
 */
 // Created: AGE 2006-04-10
 // =============================================================================
-class Lives : public Extension_ABC
-           , public Updatable_ABC< ASN1T_MsgUnitAttributes >
-           , public Drawable_ABC
-           , public Aggregatable_ABC
+class Lives : public kernel::Extension_ABC
+           , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+           , public kernel::Drawable_ABC
+           , public kernel::Aggregatable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Lives( const Agent_ABC& agent );
+    explicit Lives( const kernel::Agent_ABC& agent );
     virtual ~Lives();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
@@ -59,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent_ABC& agent_;
+    const kernel::Agent_ABC& agent_;
     float life_;
     bool bEmbraye_;
     bool aggregated_;

@@ -10,8 +10,14 @@
 #ifndef __PopulationList_h_
 #define __PopulationList_h_
 
-class Controllers;
-class ItemFactory_ABC;
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  PopulationList
@@ -25,7 +31,7 @@ class PopulationList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationList( Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationList( kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~PopulationList();
     //@}
 
@@ -36,5 +42,7 @@ private:
     PopulationList& operator=( const PopulationList& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __PopulationList_h_

@@ -24,9 +24,9 @@ class LogisticConsignFactory_ABC;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LogisticsModel : public Resolver< LogMaintenanceConsign >
-                     , public Resolver< LogMedicalConsign >
-                     , public Resolver< LogSupplyConsign >
+class LogisticsModel : public kernel::Resolver< LogMaintenanceConsign >
+                     , public kernel::Resolver< LogMedicalConsign >
+                     , public kernel::Resolver< LogSupplyConsign >
 {
 
 public:

@@ -12,6 +12,9 @@
 #include "moc_EntitySearchBox_ABC.cpp"
 #include "EntitySearchItem.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntitySearchBox_ABC constructor
 // Created: AGE 2006-04-21

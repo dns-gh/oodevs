@@ -10,7 +10,10 @@
 #ifndef __UnitToolbar_h_
 #define __UnitToolbar_h_
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  UnitToolbar
@@ -23,15 +26,8 @@ class UnitToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitToolbar( QMainWindow* pParent, Controllers& controllers );
+             UnitToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
     virtual ~UnitToolbar();
-    //@}
-
-private:
-    //! @name Copy / Assignment
-    //@{
-    UnitToolbar( const UnitToolbar& );
-    UnitToolbar& operator=( const UnitToolbar& );
     //@}
 };
 

@@ -12,9 +12,16 @@
 
 #include "clients_gui/PanelStack_ABC.h"
 
-class Controllers;
-class ItemFactory_ABC;
-class InfoPanel_ABC;
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
+    class InfoPanel_ABC;
+}
 
 // =============================================================================
 /** @class  InfoPanels
@@ -23,14 +30,14 @@ class InfoPanel_ABC;
 // Created: SBO 2006-08-08
 // =============================================================================
 class InfoPanels : public QVBox
-                 , public PanelStack_ABC
+                 , public gui::PanelStack_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory );
+             InfoPanels( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoPanels();
     //@}
 
@@ -71,7 +78,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddPanel( InfoPanel_ABC* panel );
+    void AddPanel( gui::InfoPanel_ABC* panel );
     void UpdateCombo();
     void Select( QWidget* widget );
     void CheckButtons();

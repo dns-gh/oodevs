@@ -15,8 +15,12 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
-class Agent_ABC;
-class Controllers;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controllers;
+}
+
 class Publisher_ABC;
 
 // =============================================================================
@@ -26,20 +30,20 @@ class Publisher_ABC;
 // Created: AGE 2005-09-22
 // =============================================================================
 class ChangeHumanFactorsDialog : public QDialog
-                               , public Observer_ABC
-                               , public ContextMenuObserver_ABC< Agent_ABC >
+                               , public kernel::Observer_ABC
+                               , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher );
+             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual QSize sizeHint() const;
     //@}
 
@@ -65,12 +69,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    SafePointer< Agent_ABC > selected_;
-    ValuedComboBox< E_UnitFatigue >*     pTirednessCombo_;
-    ValuedComboBox< E_UnitMoral >*       pMoralCombo_;
-    ValuedComboBox< E_UnitExperience >*  pExperienceCombo_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    gui::ValuedComboBox< E_UnitFatigue >*     pTirednessCombo_;
+    gui::ValuedComboBox< E_UnitMoral >*       pMoralCombo_;
+    gui::ValuedComboBox< E_UnitExperience >*  pExperienceCombo_;
     QCheckBox*                                   pAllUnitsCheckBox_;
     //@}
 };

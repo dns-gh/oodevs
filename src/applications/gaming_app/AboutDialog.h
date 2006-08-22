@@ -10,7 +10,10 @@
 #ifndef __AboutDialog_h_
 #define __AboutDialog_h_
 
-class ItemFactory_ABC;
+namespace gui
+{
+    class ItemFactory_ABC;
+}
 
 // =============================================================================
 /** @class  AboutDialog
@@ -24,7 +27,7 @@ class AboutDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             AboutDialog( QWidget* parent, ItemFactory_ABC& factory );
+             AboutDialog( QWidget* parent, gui::ItemFactory_ABC& factory );
     virtual ~AboutDialog();
     //@}
 

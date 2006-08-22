@@ -11,6 +11,7 @@
 #include "DetectionMapIterator.h"
 #include "DetectionMap.h"
 
+using namespace kernel;
 using namespace geometry;
 
 // -----------------------------------------------------------------------------

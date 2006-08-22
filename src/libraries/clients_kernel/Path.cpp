@@ -13,6 +13,8 @@
 #include "Positions.h"
 #include "GlTools_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Path constructor
 // Created: AGE 2006-08-09

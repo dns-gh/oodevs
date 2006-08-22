@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "ObjectPrototypeAttributes_ABC.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototypeAttributes_ABC constructor
 // Created: AGE 2006-08-08

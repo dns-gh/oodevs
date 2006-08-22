@@ -15,6 +15,9 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  AgentsLayer
     @brief  AgentsLayer
@@ -22,22 +25,22 @@
 // Created: AGE 2006-03-23
 // =============================================================================
 class AgentsLayer : public QObject
-                  , public EntityLayer< Agent_ABC >
-                  , public ContextMenuObserver_ABC< Agent_ABC >
+                  , public EntityLayer< kernel::Agent_ABC >
+                  , public ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~AgentsLayer();
     //@}
 
     //! @name Operations
     //@{
-    void Aggregate   ( const Agent_ABC& agent );
-    void Disaggregate( const Agent_ABC& agent );
+    void Aggregate   ( const kernel::Agent_ABC& agent );
+    void Disaggregate( const kernel::Agent_ABC& agent );
     //@}
 
 private slots:
@@ -56,23 +59,25 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Agent_ABC&, ::ContextMenu& );
-    virtual void Select( const Entity_ABC&, bool );
-    virtual void DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
-    void Toggle( const Agent_ABC& automat, bool aggregate );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
+    virtual void Select( const kernel::Entity_ABC&, bool );
+    virtual void DisplayTooltip( const kernel::Agent_ABC& entity, kernel::Displayer_ABC& displayer );
+    void Toggle( const kernel::Agent_ABC& automat, bool aggregate );
     //@}
 
     //! @name Types
     //@{
-    typedef std::set< const Agent_ABC* > T_Agents;
+    typedef std::set< const kernel::Agent_ABC* > T_Agents;
     //@}
 
 private:
     //! @name Member data
     //@{
-    SafePointer< Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     T_Agents aggregated_;
     //@}
 };
+
+}
 
 #endif // __AgentsLayer_h_

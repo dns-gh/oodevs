@@ -21,13 +21,13 @@ struct ASN1T_MagicActionCreateObject;
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class RotaPrototype : public RotaPrototype_ABC
+class RotaPrototype : public gui::RotaPrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
+             RotaPrototype( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
     virtual ~RotaPrototype();
     //@}
 

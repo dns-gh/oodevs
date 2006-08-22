@@ -13,6 +13,8 @@
 #include "GlWidget.h"
 #include "MapLayerProxy.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: Layer_ABC constructor
 // Created: AGE 2006-03-29

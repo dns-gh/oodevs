@@ -15,6 +15,9 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29

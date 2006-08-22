@@ -12,6 +12,9 @@
 
 namespace xml{ class xistream; };
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  BreakdownType
     @brief  BreakdownType
@@ -48,5 +51,7 @@ private:
     std::string name_;
     //@}
 };
+
+}
 
 #endif // __BreakdownType_h_

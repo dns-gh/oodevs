@@ -11,8 +11,13 @@
 #define __PopulationKnowledgeFactory_ABC_h_
 
 #include "ASN_Types.h"
+
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
+}
+
 class PopulationKnowledge;
-class KnowledgeGroup_ABC;
 
 // =============================================================================
 /** @class  PopulationKnowledgeFactory_ABC
@@ -32,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual PopulationKnowledge* CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
+    virtual PopulationKnowledge* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
     //@}
 };
 

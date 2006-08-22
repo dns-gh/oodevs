@@ -17,6 +17,9 @@
 
 #include <qstatusbar.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14

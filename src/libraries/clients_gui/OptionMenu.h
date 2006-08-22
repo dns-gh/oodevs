@@ -14,6 +14,9 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  OptionMenuBase
     @brief  OptionMenuBase
@@ -65,12 +68,12 @@ public:
 // Created: SBO 2006-04-28
 // =============================================================================
 template< typename T >
-class OptionMenu : public OptionMenuBase, public Observer_ABC, public OptionsObserver_ABC
+class OptionMenu : public OptionMenuBase, public kernel::Observer_ABC, public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    OptionMenu( QWidget* parent, Options& options, const std::string& option )
+    OptionMenu( QWidget* parent, kernel::Options& options, const std::string& option )
         : OptionMenuBase( parent )
         , options_( options )
         , option_( option )
@@ -102,7 +105,7 @@ public:
         options_.Change( option_, value );
     };
 
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value )
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value )
     {
         if( name == option_ )
         {
@@ -128,10 +131,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Options& options_;
+    kernel::Options& options_;
     std::string option_;
     std::vector< T > values_;
     //@}
 };
+
+}
 
 #endif // __OptionMenu_h_

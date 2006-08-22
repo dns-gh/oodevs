@@ -23,6 +23,9 @@
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/ListDisplayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel constructor
 // Created: APE 2004-05-03

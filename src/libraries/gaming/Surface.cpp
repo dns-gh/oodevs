@@ -20,6 +20,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Surface constructor

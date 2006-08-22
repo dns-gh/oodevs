@@ -10,6 +10,9 @@
 #ifndef __GlPlaceHolder_h_
 #define __GlPlaceHolder_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  GlPlaceHolder
     @brief  GlPlaceHolder
@@ -26,5 +29,7 @@ public:
     virtual ~GlPlaceHolder();
     //@}
 };
+
+}
 
 #endif // __GlPlaceHolder_h_

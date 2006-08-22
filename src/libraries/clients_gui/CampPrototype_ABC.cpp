@@ -15,6 +15,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AutomatType.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: CampPrototype_ABC::CampPrototype_ABC
 // Created: SBO 2006-04-19

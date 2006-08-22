@@ -11,6 +11,8 @@
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: DisplayBuilder constructor
 // Created: AGE 2006-02-09

@@ -16,11 +16,14 @@
 #include "Availability.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Controller;
-class EquipmentType;
-class Agent_ABC;
-class Displayer_ABC;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class EquipmentType;
+    class Agent_ABC;
+    class Displayer_ABC;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  MedicalStates
@@ -28,19 +31,19 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class MedicalStates : public Extension_ABC
-                    , public Updatable_ABC< ASN1T_MsgLogSanteEtat >
+class MedicalStates : public kernel::Extension_ABC
+                    , public kernel::Updatable_ABC< ASN1T_MsgLogSanteEtat >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico );
+             MedicalStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::DataDictionary& dico );
     virtual ~MedicalStates();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
     //@}
 
@@ -54,16 +57,16 @@ private:
     //! @name Types
     //@{
     typedef std::vector< E_HumanWound > T_Priorities;
-    typedef std::vector< const Agent_ABC* > T_Agents;
+    typedef std::vector< const kernel::Agent_ABC* > T_Agents;
     typedef std::vector< Availability > T_Availabilities;
     //@}
 
 public:
     //! @name Member data
     //@{
-    Controller&      controller_;
-    const Resolver_ABC< EquipmentType >& resolver_;
-    const Resolver_ABC< Agent_ABC >&         agentResolver_;
+    kernel::Controller&      controller_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >&         agentResolver_;
 
     bool             bChainEnabled_;
     T_Availabilities dispoReleveAmbulances_;

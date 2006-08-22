@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "Humans.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Humans constructor
 // Created: AGE 2006-03-10

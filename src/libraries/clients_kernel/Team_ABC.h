@@ -13,7 +13,9 @@
 #include "Entity_ABC.h"
 #include "Resolver.h"
 
-class KnowledgeGroup_ABC;
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
 
 // =============================================================================
 /** @class  Team_ABC
@@ -50,5 +52,7 @@ public:
     bool operator==( const Team_ABC& ) const;
     //@}
 };
+
+}
 
 #endif // __Team_ABC_h_

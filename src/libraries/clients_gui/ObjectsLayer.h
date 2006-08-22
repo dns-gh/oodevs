@@ -13,6 +13,9 @@
 #include "EntityLayer.h"
 #include "clients_kernel/Object_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ObjectsLayer
     @brief  ObjectsLayer
@@ -25,14 +28,14 @@ class ObjectsLayer : public EntityLayer< Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~ObjectsLayer();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const Object_ABC& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const kernel::Object_ABC& entity, kernel::Displayer_ABC& displayer );
     //@}
 
 private:
@@ -42,5 +45,7 @@ private:
     ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __ObjectsLayer_h_

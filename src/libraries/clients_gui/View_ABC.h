@@ -12,6 +12,9 @@
 
 #include "geometry/Types.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  View_ABC
     @brief  View_ABC
@@ -33,5 +36,7 @@ public:
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
     //@}
 };
+
+}
 
 #endif // __View_ABC_h_

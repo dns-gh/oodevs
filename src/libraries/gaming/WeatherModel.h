@@ -13,8 +13,12 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Resolver.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
 class AmmoEffect;
-class Controllers;
 class Model;
 
 // =============================================================================
@@ -23,13 +27,13 @@ class Model;
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class WeatherModel : public Resolver< AmmoEffect >
+class WeatherModel : public kernel::Resolver< AmmoEffect >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherModel( Controllers& controllers, Model& model );
+             WeatherModel( kernel::Controllers& controllers, Model& model );
     virtual ~WeatherModel();
     //@}
 
@@ -51,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
     //@}
 };

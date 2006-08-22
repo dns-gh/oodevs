@@ -10,6 +10,9 @@
 #ifndef __LocationFunctor_ABC_h_
 #define __LocationFunctor_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  LocationVisitor_ABC
     @brief  Location visitor definition
@@ -34,5 +37,7 @@ public:
     virtual void VisitPoint  ( const geometry::Point2f& point ) = 0;
     //@}
 };
+
+}
 
 #endif // __LocationFunctor_ABC_h_

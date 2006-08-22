@@ -10,6 +10,9 @@
 #include "clients_gui_pch.h"
 #include "PopulationsLayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationsLayer constructor
 // Created: AGE 2006-03-23

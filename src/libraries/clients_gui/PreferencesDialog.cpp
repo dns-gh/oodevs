@@ -13,6 +13,9 @@
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog constructor
 // Created: SBO 2006-05-03

@@ -14,6 +14,8 @@
 #include <qpopupmenu.h>
 #include <qslider.h>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: SizeButton constructor
 // Created: SBO 2006-04-05

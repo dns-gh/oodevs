@@ -11,6 +11,8 @@
 #include "Availability.h"
 #include "clients_kernel/Displayer_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Availability constructor
 // Created: AGE 2006-02-28

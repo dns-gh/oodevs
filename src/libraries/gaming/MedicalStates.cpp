@@ -14,6 +14,8 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/DataDictionary.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14

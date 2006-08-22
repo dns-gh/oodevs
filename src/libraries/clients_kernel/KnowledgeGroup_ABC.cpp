@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "KnowledgeGroup_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup_ABC constructor
 // Created: SBO 2006-08-09

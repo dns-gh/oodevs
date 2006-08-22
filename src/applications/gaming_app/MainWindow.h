@@ -14,28 +14,33 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include <qmainwindow.h>
 
-class Options;
-class OptionsPanel;
+namespace kernel
+{
+    class Options;
+    class Controllers;
+}
 
-class Controllers;
+namespace gui
+{
+    class OptionsPanel;
+    class GlWidget;
+    class Gl3dWidget;
+    class StatusBar;
+    class ParametersLayer;
+    class AgentsLayer;
+    class GlPlaceHolder;
+    class BigBrother; // $$$$ AGE 2006-08-02: Duh !
+    class IconLayout;
+    class ColorStrategy;
+    class GlProxy;
+}
+
 class Model;
 class StaticModel;
-class GlProxy;
-class GlWidget;
-class Gl3dWidget;
-class StatusBar;
 class Simulation;
-class ParametersLayer;
-class AgentsLayer;
-class GlPlaceHolder;
-class BigBrother; // $$$$ AGE 2006-08-02: Duh !
 class Network;
-class IconLayout;
-class ColorStrategy;
 class MissionPanel;
 class ObjectCreationPanel;
-class ParametersLayer;
-class AgentsLayer;
 class GraphicSetup_ABC;
 class EventStrategy_ABC;
 
@@ -52,23 +57,23 @@ class EventStrategy_ABC;
 // Created: APE 2004-03-01
 // =============================================================================
 class MainWindow : public QMainWindow
-                 , public Observer_ABC
-                 , public OptionsObserver_ABC
-                 , public ElementObserver_ABC< Simulation >
+                 , public kernel::Observer_ABC
+                 , public kernel::OptionsObserver_ABC
+                 , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network );
     virtual ~MainWindow();
     //@}
 
     //! @name Operations
     //@{
     void Load( const std::string& scipioXml );
-    Options& GetOptions() const;
+    kernel::Options& GetOptions() const;
     //@}
 
 public slots:
@@ -88,7 +93,7 @@ private:
     void WriteOptions();
     void ReadOptions();
 
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void NotifyUpdated( const Simulation& simulation );
 
     void CompareConfigPath( const std::string& server, const std::string& serverPath );
@@ -96,7 +101,7 @@ private:
 
     void BuildIconLayout();
 
-    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup );
+    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::AgentsLayer& agents, GraphicSetup_ABC& setup );
     //@}
 
     //! @name Copy/Assignment
@@ -108,29 +113,29 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     StaticModel& staticModel_;
     Model& model_;
     Network& network_;
     std::string scipioXml_;
 
-    GlProxy*       glProxy_;
-    ColorStrategy* strategy_;
-    EventStrategy_ABC * eventStrategy_;
-    GlWidget*      widget2d_;
-    Gl3dWidget*    widget3d_;
-    GlPlaceHolder* glPlaceHolder_;
-    IconLayout* iconLayout_;
+    gui::GlProxy*       glProxy_;
+    gui::ColorStrategy* strategy_;
+    EventStrategy_ABC* eventStrategy_;
+    gui::GlWidget*      widget2d_;
+    gui::Gl3dWidget*    widget3d_;
+    gui::GlPlaceHolder* glPlaceHolder_;
+    gui::IconLayout* iconLayout_;
 
     bool b3d_;
 
     QTimer* displayTimer_;
 
-    OptionsPanel*    pOptionsPanel_;
-    StatusBar*       pStatus_;
-    ParametersLayer* parameters_;
-    AgentsLayer*     agents_;
-    BigBrother*      spy_;
+    gui::OptionsPanel*    pOptionsPanel_;
+    gui::StatusBar*       pStatus_;
+    gui::ParametersLayer* parameters_;
+    gui::AgentsLayer*     agents_;
+    gui::BigBrother*      spy_;
     //@}
 };
 

@@ -11,6 +11,9 @@
 #include "ListItemDisplayer.h"
 #include "RichListItem.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ListItemDisplayer constructor
 // Created: AGE 2006-02-22

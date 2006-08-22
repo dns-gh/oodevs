@@ -15,6 +15,8 @@
 #include "StaticModel.h"
 #include "CoordinateConverter.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: WeatherModel constructor
 // Created: AGE 2006-04-04

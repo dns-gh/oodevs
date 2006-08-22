@@ -14,7 +14,10 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "ASN_Types.h"
 
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 /** @class  LocationPositions
@@ -22,14 +25,14 @@ class CoordinateConverter_ABC;
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class LocationPositions : public Positions
-                        , public Drawable_ABC
+class LocationPositions : public kernel::Positions
+                        , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocationPositions( const CoordinateConverter_ABC& converter );
+    explicit LocationPositions( const kernel::CoordinateConverter_ABC& converter );
     virtual ~LocationPositions();
     //@}
 
@@ -41,7 +44,7 @@ public:
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -60,7 +63,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector points_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;

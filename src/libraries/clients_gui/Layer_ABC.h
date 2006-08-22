@@ -11,9 +11,13 @@
 #define __Layer_ABC_h_
 
 #include "graphics/MapLayer_ABC.h"
-class GlWidget;
-class Gl3dWidget;
+
 class ViewFrustum;
+
+namespace gui
+{
+    class GlWidget;
+    class Gl3dWidget;
 
 // =============================================================================
 /** @class  Layer_ABC
@@ -85,5 +89,7 @@ public:
     virtual void RegisterIn( GlWidget& ) {};
     //@}
 };
+
+}
 
 #endif // __Layer_ABC_h_

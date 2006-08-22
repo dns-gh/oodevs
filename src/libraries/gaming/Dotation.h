@@ -10,7 +10,10 @@
 #ifndef __Dotation_h_
 #define __Dotation_h_
 
-class DotationType;
+namespace kernel
+{
+    class DotationType;
+}
 
 // =============================================================================
 /** @class  Dotation
@@ -25,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Dotation();
-             Dotation( const DotationType& type, unsigned int quantity );
+             Dotation( const kernel::DotationType& type, unsigned int quantity );
     virtual ~Dotation();
     //@}
 
@@ -36,7 +39,7 @@ public:
 public:
     //! @name Member data
     //@{
-    const DotationType* type_;
+    const kernel::DotationType* type_;
     unsigned int quantity_;
     //@}
 };

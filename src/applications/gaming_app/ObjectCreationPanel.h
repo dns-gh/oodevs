@@ -12,11 +12,19 @@
 
 #include "clients_kernel/Resolver.h"
 
+namespace kernel
+{
+    class Controllers;
+    class GlTools_ABC;
+}
+
+namespace gui
+{
+    class ParametersLayer;
+}
+
 class ObjectPrototype;
-class Controllers;
 class StaticModel;
-class ParametersLayer;
-class GlTools_ABC;
 class Publisher_ABC;
 
 // =============================================================================
@@ -32,7 +40,7 @@ class ObjectCreationPanel : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, ParametersLayer& layer, const GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -58,7 +66,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    const GlTools_ABC& tools_;
+    const kernel::GlTools_ABC& tools_;
     ObjectPrototype* created_;
     //@}
 };

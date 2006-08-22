@@ -11,8 +11,11 @@
 #define __LabelDisplayer_h_
 
 #include "BaseDisplayer.h"
-class RichLabel;
-class ItemFactory_ABC;
+
+namespace gui
+{
+    class RichLabel;
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  LabelDisplayer
@@ -57,5 +60,7 @@ private:
     QString message_;
     //@}
 };
+
+}
 
 #endif // __LabelDisplayer_h_

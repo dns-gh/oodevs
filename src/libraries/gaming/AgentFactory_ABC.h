@@ -11,8 +11,12 @@
 #define __AgentFactory_ABC_h_
 
 #include "ASN_Types.h"
-class Agent_ABC;
-class Population_ABC;
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Population_ABC;
+}
 
 // =============================================================================
 /** @class  AgentFactory_ABC
@@ -32,9 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg ) = 0;
-    virtual Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg ) = 0;
-    virtual Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg ) = 0;
+    virtual kernel::Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg ) = 0;
+    virtual kernel::Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg ) = 0;
+    virtual kernel::Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg ) = 0;
     //@}
 
 private:

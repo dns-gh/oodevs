@@ -12,6 +12,9 @@
 
 #include <vector>
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Extendable
     @brief  Extendable stuff
@@ -84,6 +87,8 @@ private:
     T_Extensions extensions_;
     //@}
 };
+
+}
 
 #include "Extendable.inl"
 

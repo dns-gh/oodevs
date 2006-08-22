@@ -13,6 +13,8 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/DecisionalModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationDecisions constructor
 // Created: AGE 2006-04-10

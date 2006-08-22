@@ -12,7 +12,10 @@
 
 #include <string>
 #include "Observer_ABC.h"
-class OptionVariant;
+
+namespace kernel
+{
+    class OptionVariant;
 
 // =============================================================================
 /** @class  OptionsObserver_ABC
@@ -35,5 +38,7 @@ public:
     virtual void OptionChanged( const std::string& name, const OptionVariant& value ) = 0;
     //@}
 };
+
+}
 
 #endif // __OptionsObserver_ABC_h_

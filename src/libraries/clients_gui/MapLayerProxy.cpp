@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "MapLayerProxy.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MapLayerProxy constructor
 // Created: AGE 2006-03-29

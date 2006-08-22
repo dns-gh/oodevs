@@ -10,6 +10,9 @@
 #ifndef __GraphicPreference_ABC_h_
 #define __GraphicPreference_ABC_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  GraphicPreference_ABC
     @brief  Graphic preference base class
@@ -33,5 +36,7 @@ public:
     virtual void Revert() = 0;
     //@}
 };
+
+}
 
 #endif // __GraphicPreference_ABC_h_

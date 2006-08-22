@@ -10,6 +10,9 @@
 #ifndef __RichListItem_h_
 #define __RichListItem_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  RichListItem
     @brief  Rich ListItem
@@ -95,5 +98,7 @@ private:
     QColor fontColor_;
     //@}
 };
+
+}
 
 #endif // __RichListItem_h_

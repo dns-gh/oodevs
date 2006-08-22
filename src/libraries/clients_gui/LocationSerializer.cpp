@@ -13,6 +13,9 @@
 #include "gaming/ASN_Types.h"
 #include "clients_kernel/Location_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer constructor
 // Created: AGE 2006-08-09

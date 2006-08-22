@@ -12,8 +12,11 @@
 
 #include "Resolver_ABC.h"
 
-class DecisionalModel;
 namespace xml { class xistream; };
+
+namespace kernel
+{
+    class DecisionalModel;
 
 // =============================================================================
 /** @class  PopulationType
@@ -62,5 +65,7 @@ private:
     float density_;
     //@}
 };
+
+}
 
 #endif // __PopulationType_h_

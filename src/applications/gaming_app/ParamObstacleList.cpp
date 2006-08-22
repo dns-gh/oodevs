@@ -15,6 +15,9 @@
 #include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/ActionController.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacleList constructor
 // Created: SBO 2006-06-28

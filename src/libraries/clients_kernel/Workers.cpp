@@ -11,6 +11,8 @@
 #include "Workers.h"
 #include <windows.h>
 
+using namespace kernel;
+
 namespace
 {
     struct PrioritySetter

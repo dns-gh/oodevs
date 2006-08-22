@@ -12,6 +12,8 @@
 #include "PopulationKnowledge.h"
 #include "clients_kernel/Population_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions constructor
 // Created: AGE 2006-05-18

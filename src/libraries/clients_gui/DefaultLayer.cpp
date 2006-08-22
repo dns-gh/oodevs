@@ -12,6 +12,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: DefaultLayer constructor
 // Created: AGE 2006-03-23

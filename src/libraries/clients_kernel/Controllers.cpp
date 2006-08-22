@@ -13,6 +13,8 @@
 #include "Controller.h"
 #include "ActionController.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Controllers constructor
 // Created: AGE 2006-03-22

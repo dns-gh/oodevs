@@ -17,12 +17,15 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Agent_ABC;
-class Controller;
-class Displayer_ABC;
-class Team_ABC;
-class CoordinateConverter_ABC;
-class KnowledgeGroup_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+    class Displayer_ABC;
+    class Team_ABC;
+    class CoordinateConverter_ABC;
+    class KnowledgeGroup_ABC;
+}
 
 // =============================================================================
 /** @class  AgentKnowledge
@@ -30,39 +33,39 @@ class KnowledgeGroup_ABC;
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentKnowledge : public Entity_ABC
-                     , public Extension_ABC
-                     , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
-                     , public Drawable_ABC
+class AgentKnowledge : public kernel::Entity_ABC
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                     , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, 
-                             const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver );
+             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, kernel::Controller& controller, 
+                             const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
 
     //! @name operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
-    bool IsInTeam( const Team_ABC& team ) const;
-    bool KnowledgeIsInTeam( const Team_ABC& team ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    bool IsInTeam( const kernel::Team_ABC& team ) const;
+    bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
     //! @name Accessors
     //@{
     virtual unsigned long GetId       () const;
     virtual std::string   GetName     () const;
-    Agent_ABC&                GetRealAgent() const;
-    const Team_ABC*           GetKnowledgeTeam() const;
-    const KnowledgeGroup_ABC& GetKnowledgeGroup() const;
+    kernel::Agent_ABC&                GetRealAgent() const;
+    const kernel::Team_ABC*           GetKnowledgeTeam() const;
+    const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     //@}
 
 private:
@@ -72,15 +75,15 @@ private:
     //@}
 
 public:
-    Controller& controller_;
-    const CoordinateConverter_ABC& converter_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
-    const Resolver_ABC< Team_ABC >& teamResolver_;
-    const KnowledgeGroup_ABC& group_;
+    kernel::Controller& controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
+    const kernel::KnowledgeGroup_ABC& group_;
 
     unsigned long nID_;
-    Agent_ABC&      realAgent_;
-    const Team_ABC* team_;
+    kernel::Agent_ABC&      realAgent_;
+    const kernel::Team_ABC* team_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
     OptionalValue< std::string >                strPosition_;

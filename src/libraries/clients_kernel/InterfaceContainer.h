@@ -12,6 +12,9 @@
 
 #include <vector>
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  InterfaceContainer
     @brief  InterfaceContainer. Basically, just caches dynamic_casts
@@ -100,6 +103,8 @@ private:
     T_ImplementationMatrix implementations_;
     //@}
 };
+
+}
 
 #include "InterfaceContainer.inl"
 

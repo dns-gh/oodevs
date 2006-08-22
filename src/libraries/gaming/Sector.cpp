@@ -16,6 +16,7 @@
 const float Sector::pi_ = std::acos( -1.f );
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Sector constructor

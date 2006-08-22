@@ -13,6 +13,9 @@
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: Elevation2dLayer constructor
 // Created: AGE 2006-03-29

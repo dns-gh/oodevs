@@ -12,10 +12,14 @@
 
 #include "MissionInterface_ABC.h"
 
-class Mission;
+namespace kernel
+{
+    class Mission;
+    class Agent_ABC;
+    class ObjectTypes;
+}
+
 class ASN_MsgPionOrder;
-class Agent_ABC;
-class ObjectTypes;
 class Publisher_ABC;
 
 // =============================================================================
@@ -26,7 +30,7 @@ class UnitMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             UnitMissionInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~UnitMissionInterface();
     //@}
 
@@ -59,7 +63,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    Agent_ABC& agent_;
+    kernel::Agent_ABC& agent_;
     uint nMissionId_;
     ASN_MsgPionOrder* pASNMsgOrder_;
     //@}

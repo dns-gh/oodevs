@@ -13,8 +13,15 @@
 #include "Layer_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-class GlTools_ABC;
-class Controllers;
+
+namespace kernel
+{
+    class GlTools_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  GridLayer
@@ -22,15 +29,15 @@ class Controllers;
 */
 // Created: AGE 2006-08-22
 // =============================================================================
-class GridLayer : public Layer2d_ABC
-                , public Observer_ABC
-                , public OptionsObserver_ABC
+class GridLayer : public gui::Layer2d_ABC
+                , public kernel::Observer_ABC
+                , public kernel::OptionsObserver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GridLayer( Controllers& controllers, GlTools_ABC& tools );
+             GridLayer( kernel::Controllers& controllers, kernel::GlTools_ABC& tools );
     virtual ~GridLayer();
     //@}
 
@@ -50,18 +57,20 @@ private:
     //! @name Helpers
     //@{
     float Displace( float value );
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    GlTools_ABC& tools_;
+    kernel::Controllers& controllers_;
+    kernel::GlTools_ABC& tools_;
 
     geometry::Rectangle2f extent_;
     float gridSize_;
     //@}
 };
+
+}
 
 #endif // __GridLayer_h_

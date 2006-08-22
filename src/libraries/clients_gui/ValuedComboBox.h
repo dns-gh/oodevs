@@ -12,6 +12,9 @@
 
 #include <qcombobox.h>
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ValuedComboBox
     @brief  Valued ComboBox
@@ -79,7 +82,6 @@ private:
     bool          sorting_;
     //@}
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox constructor
@@ -309,6 +311,8 @@ template< typename T >
 void ValuedComboBox<T>::setSorting( bool sorting )
 {
     sorting_ = sorting;
+}
+
 }
 
 #endif // __ValuedComboBox_h_

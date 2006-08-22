@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "Displayer_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Displayer_ABC constructor
 // Created: AGE 2006-02-21

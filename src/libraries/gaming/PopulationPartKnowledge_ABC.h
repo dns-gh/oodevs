@@ -10,7 +10,10 @@
 #ifndef __PopulationPartKnowledge_ABC_h_
 #define __PopulationPartKnowledge_ABC_h_
 
-class Displayer_ABC;
+namespace kernel
+{
+    class Displayer_ABC;
+}
 
 // =============================================================================
 /** @class  PopulationPartKnowledge_ABC
@@ -30,8 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( Displayer_ABC& displayer ) const = 0;
-    virtual void DisplayInList( Displayer_ABC& displayer ) const = 0;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
+    virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const = 0;
     //@}
 };
 

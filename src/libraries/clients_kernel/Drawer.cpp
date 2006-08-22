@@ -12,6 +12,8 @@
 #include "Drawable_ABC.h"
 #include "Extension_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Drawer constructor
 // Created: AGE 2006-08-10

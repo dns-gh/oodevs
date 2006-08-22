@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "Dotation.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Dotation constructor
 // Created: AGE 2006-02-28

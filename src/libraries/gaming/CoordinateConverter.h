@@ -23,7 +23,7 @@
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // $$$$ AGE 2006-08-07: passer dans kernel
 // =============================================================================
-class CoordinateConverter : public CoordinateConverter_ABC
+class CoordinateConverter : public kernel::CoordinateConverter_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -59,7 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-    WorldParameters world_;
+    kernel::WorldParameters world_;
     geometry::Rectangle2f extent_;
     geometry::Vector2f    translation_;
 

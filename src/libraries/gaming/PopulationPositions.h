@@ -19,7 +19,7 @@ class Population;
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class PopulationPositions : public Positions
+class PopulationPositions : public kernel::Positions
 {
     
 public:

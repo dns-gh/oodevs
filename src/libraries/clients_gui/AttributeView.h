@@ -16,9 +16,15 @@
 
 #include <qtable.h>
 
-class Entity_ABC;
-class DataDictionary;
-class Controllers;
+namespace kernel
+{
+    class Entity_ABC;
+    class DataDictionary;
+    class Controllers;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  AttributeView
@@ -26,15 +32,17 @@ class Controllers;
 */
 // Created: AGE 2006-06-22
 // =============================================================================
-class AttributeView : public QTable, public NoLinkDisplayer, public Observer_ABC
-                    , public ElementObserver_ABC< Simulation::sEndTick >
+class AttributeView : public QTable
+                    , public NoLinkDisplayer
+                    , public kernel::Observer_ABC
+                    , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent );
+             AttributeView( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC& agent );
     virtual ~AttributeView();
     //@}
 
@@ -70,11 +78,13 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const DataDictionary& dictionary_;
+    kernel::Controllers& controllers_;
+    const kernel::DataDictionary& dictionary_;
     int currentRow_;
     QString message_;
     //@}
 };
+
+}
 
 #endif // __AttributeView_h_

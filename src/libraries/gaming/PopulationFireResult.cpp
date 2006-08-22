@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "PopulationFireResult.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFireResult constructor
 // Created: AGE 2006-03-10

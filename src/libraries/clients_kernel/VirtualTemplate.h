@@ -12,6 +12,9 @@
 
 #include "InterfaceContainer.h"
 
+namespace kernel
+{
+
 template< typename T >
 struct Caller
 {
@@ -63,5 +66,7 @@ private:
     DefaultCaller* forward_;
     //@}
 };
+
+}
 
 #endif // __VirtualTemplate_h_

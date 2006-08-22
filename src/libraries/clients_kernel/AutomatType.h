@@ -13,11 +13,13 @@
 #include "Resolver_ABC.h"
 #include "Drawable_ABC.h"
 
-class DecisionalModel;
-class AgentType;
-class SymbolFactory;
-
 namespace xml { class xistream; };
+
+namespace kernel
+{
+    class DecisionalModel;
+    class AgentType;
+    class SymbolFactory;
 
 // =============================================================================
 /** @class  AutomatType
@@ -69,5 +71,7 @@ private:
     std::string symbol_;
     //@}
 };
+
+}
 
 #endif // __AutomatType_h_

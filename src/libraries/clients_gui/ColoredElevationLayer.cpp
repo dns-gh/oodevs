@@ -12,7 +12,10 @@
 #include "xeumeuleu/xml.h"
 #include "clients_kernel/DetectionMap.h"
 #include "boost/static_assert.hpp"
+
 using namespace xml;
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ColoredElevationLayer constructor

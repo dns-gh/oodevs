@@ -11,6 +11,9 @@
 #include "CrossingSitePrototype_ABC.h"
 #include "clients_kernel/Units.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype_ABC constructor
 // Created: SBO 2006-04-19

@@ -16,6 +16,9 @@
 
 #include "ENT/ENT_Tr.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18

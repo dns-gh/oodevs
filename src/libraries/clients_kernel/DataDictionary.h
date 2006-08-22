@@ -13,7 +13,11 @@
 #include "Extension_ABC.h"
 #include "Value_ABC.h"
 #include <qstring.h>
-#include <qstringlist.h>
+
+class QStringList;
+
+namespace kernel
+{
 
 // =============================================================================
 /** @class  DataDictionary
@@ -66,5 +70,7 @@ private:
     T_Data      data_;
     //@}
 };
+
+}
 
 #endif // __DataDictionary_h_

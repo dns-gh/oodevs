@@ -13,6 +13,8 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AboutDialog constructor
 // Created: SBO 2006-05-04

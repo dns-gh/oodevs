@@ -10,6 +10,9 @@
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer constructor
 // Created: AGE 2006-03-23

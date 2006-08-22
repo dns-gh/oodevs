@@ -13,6 +13,8 @@
 #include "objecticons.h"
 #include "ENT/ENT_Tr.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectType constructor
 // Created: AGE 2006-02-16

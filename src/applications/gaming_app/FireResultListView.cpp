@@ -16,6 +16,9 @@
 #include "clients_gui/SubItemDisplayer.h"
 #include "clients_gui/ItemFactory_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: FireResultListView constructor
 // Created: AGE 2006-03-10

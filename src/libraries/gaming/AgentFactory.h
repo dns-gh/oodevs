@@ -12,12 +12,16 @@
 
 #include "AgentFactory_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+    class AgentTypes;
+    class Entity_ABC;
+    class Workers;
+}
+
 class Model;
-class AgentTypes;
-class Entity_ABC;
 class Simulation;
-class Workers;
 class Publisher_ABC;
 class StaticModel;
 
@@ -33,15 +37,15 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, kernel::Workers& workers );
     virtual ~AgentFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg );
-    virtual Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg );
-    virtual Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg );
+    virtual kernel::Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg );
+    virtual kernel::Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg );
+    virtual kernel::Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg );
     //@}
 
 private:
@@ -53,18 +57,18 @@ private:
 
     //! @name Helpers
     //@{
-    void AttachExtensions( Entity_ABC& agent );
+    void AttachExtensions( kernel::Entity_ABC& agent );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
     Publisher_ABC& publisher_;
     const Simulation& simulation_;
-    Workers& workers_;
+    kernel::Workers& workers_;
     //@}
 };
 

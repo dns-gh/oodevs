@@ -11,6 +11,9 @@
 #include "LogisticRoutePrototype_ABC.h"
 #include "clients_kernel/Units.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticRoutePrototype_ABC constructor
 // Created: SBO 2006-04-20

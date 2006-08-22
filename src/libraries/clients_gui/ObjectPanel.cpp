@@ -28,6 +28,9 @@
 
 #include <qgrid.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel constructor
 // Created: APE 2004-06-11

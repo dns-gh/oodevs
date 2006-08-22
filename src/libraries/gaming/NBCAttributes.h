@@ -16,9 +16,12 @@
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Controller;
-class Displayer_ABC;
-class NBCAgent;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+    class NBCAgent;
+}
 
 // =============================================================================
 /** @class  NBCAttributes
@@ -26,22 +29,22 @@ class NBCAgent;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class NBCAttributes : public Extension_ABC
-                    , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                    , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-                    , public Updatable_ABC< ASN1T_MsgObjectCreation >
+class NBCAttributes : public kernel::Extension_ABC
+                    , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                    , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
+                    , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCAttributes( Controller& controller, const Resolver_ABC< NBCAgent >& resolver );
+             NBCAttributes( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver );
     virtual ~NBCAttributes();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -63,9 +66,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< NBCAgent >& resolver_;
-    const NBCAgent* nbc_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
+    const kernel::NBCAgent* nbc_;
     //@}
 };
 

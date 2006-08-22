@@ -14,6 +14,8 @@
 #include "PopulationConcentration.h"
 #include "Attr_def.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationDetections constructor
 // Created: AGE 2006-02-27

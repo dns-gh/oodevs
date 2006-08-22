@@ -17,7 +17,11 @@
 class AgentServerMsgMgr;
 class Model;
 class Simulation;
-class Controllers; 
+
+namespace kernel
+{
+    class Controllers;
+}
 
 namespace DIN
 {
@@ -39,7 +43,7 @@ class Network : public tools::thread::Thread
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( Controllers& controllers, Simulation& simu );
+             Network( kernel::Controllers& controllers, Simulation& simu );
     virtual ~Network();
     //@}
 

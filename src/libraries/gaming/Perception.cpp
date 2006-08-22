@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "Perception.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Perception constructor
 // Created: AGE 2006-02-22
@@ -27,5 +29,5 @@ Perception::Perception( const Agent_ABC& detected, E_PerceptionResult level )
 // -----------------------------------------------------------------------------
 Perception::~Perception()
 {
-
+    // NOTHING
 }

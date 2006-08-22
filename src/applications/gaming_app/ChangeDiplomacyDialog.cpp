@@ -14,6 +14,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog constructor
 // Created: AGE 2006-04-20

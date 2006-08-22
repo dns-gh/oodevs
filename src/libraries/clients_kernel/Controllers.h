@@ -10,10 +10,12 @@
 #ifndef __Controllers_h_
 #define __Controllers_h_
 
-class Options;
-class Controller;
-class ActionController;
-class Observer_ABC;
+namespace kernel
+{
+    class Options;
+    class Controller;
+    class ActionController;
+    class Observer_ABC;
 
 // =============================================================================
 /** @class  Controllers
@@ -52,5 +54,7 @@ public:
     ActionController& actions_;
     //@}
 };
+
+}
 
 #endif // __Controllers_h_

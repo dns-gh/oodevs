@@ -12,6 +12,8 @@
 #include "GlTools_ABC.h"
 #include "LocationVisitor_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Lines constructor
 // Created: AGE 2006-08-09

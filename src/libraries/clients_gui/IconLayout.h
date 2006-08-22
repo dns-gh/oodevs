@@ -10,6 +10,9 @@
 #ifndef __IconLayout_h_
 #define __IconLayout_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  IconLayout
     @brief  IconLayout
@@ -50,5 +53,7 @@ private:
     T_IconLocations iconLocations_;
     //@}
 };
+
+}
 
 #endif // __IconLayout_h_

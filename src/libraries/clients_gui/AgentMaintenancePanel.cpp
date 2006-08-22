@@ -20,6 +20,9 @@
 #include "clients_kernel/Units.h"
 #include "SubItemDisplayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentMaintenancePanel constructor
 // Created: AGE 2006-02-28

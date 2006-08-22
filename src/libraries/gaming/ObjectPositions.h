@@ -20,14 +20,14 @@
 // Created: AGE 2006-03-22
 // =============================================================================
 class ObjectPositions : public LocationPositions
-                      , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-                      , public Updatable_ABC< ASN1T_MsgObjectCreation >
+                      , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
+                      , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObjectPositions( const CoordinateConverter_ABC& converter );
+    explicit ObjectPositions( const kernel::CoordinateConverter_ABC& converter );
     virtual ~ObjectPositions();
     //@}
 

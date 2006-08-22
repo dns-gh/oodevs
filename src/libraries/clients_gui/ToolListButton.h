@@ -16,6 +16,9 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "OptionMenu.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ToolListButtonBase
     @brief  ToolListButtonBase
@@ -80,13 +83,13 @@ private:
 // Created: AGE 2006-03-27
 // =============================================================================
 template< typename T >
-class ToolListButton : public ToolListButtonBase, public Observer_ABC, public OptionsObserver_ABC
+class ToolListButton : public ToolListButtonBase, public kernel::Observer_ABC, public kernel::OptionsObserver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ToolListButton( QToolBar* parent, Options& options, const std::string& option )
+    ToolListButton( QToolBar* parent, kernel::Options& options, const std::string& option )
         : ToolListButtonBase( parent )
         , options_( options )
         , option_( option )
@@ -97,7 +100,7 @@ public:
         options_.Register( *this );
     }
 
-    ToolListButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, Options& options, const std::string& option )
+    ToolListButton( const QIconSet& iconSet, const QString& toolTip, QToolBar* parent, kernel::Options& options, const std::string& option )
         : ToolListButtonBase( iconSet, toolTip, parent )
         , options_( options )
         , option_( option )
@@ -136,7 +139,7 @@ private:
         menu_->OnSelected( selected );
     }
 
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value )
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value )
     {
         if( option_ == name )
         {
@@ -150,11 +153,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Options& options_;
+    kernel::Options& options_;
     std::string option_;
     OptionMenu< T >* menu_;
     //@}
 };
 
+}
 
 #endif // __ToolListButton_h_

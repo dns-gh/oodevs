@@ -25,13 +25,17 @@
 
 #include "boost/thread/mutex.hpp"
 
+namespace kernel
+{
+    class Agent_ABC;
+    class Controllers;
+}
+
 class AgentServerController;
-class Agent_ABC;
 class MsgRecorder;
 class Model;
 class Simulation;
 class DIN_InputDeepCopy;
-class Controllers;
 
 namespace DIN
 {
@@ -41,8 +45,8 @@ namespace DIN
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class AgentServerMsgMgr : public Observer_ABC
-                        , public OptionsObserver_ABC
+class AgentServerMsgMgr : public kernel::Observer_ABC
+                        , public kernel::OptionsObserver_ABC
                         , public Publisher_ABC
 {
 
@@ -85,7 +89,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, boost::mutex& mutex ); 
+             AgentServerMsgMgr( kernel::Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, boost::mutex& mutex ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -101,12 +105,12 @@ public:
 
     virtual void Send( ASN1T_MsgsMosSim& message );
     virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 );
-    virtual void SendMagicDestruction( const Agent_ABC& agent );
+    virtual void SendMagicDestruction( const kernel::Agent_ABC& agent );
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
     void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, unsigned long nCtx );
-    void SendMsgUnitMagicActionDestroyComposante( const Agent_ABC& agent );
+    void SendMsgUnitMagicActionDestroyComposante( const kernel::Agent_ABC& agent );
 
     void SetModel( Model& model );
     //@}
@@ -290,7 +294,7 @@ private:
     typedef void ( AgentServerMsgMgr::* T_Callback ) ( DIN::DIN_Input& input );
     void Enqueue( DIN::DIN_Input& input, T_Callback function );
 
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     void ToggleVisionCones();
 
     Model& GetModel() const;
@@ -309,7 +313,7 @@ private:
     //@}
     
 private:
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model*       model_;
     Simulation& simulation_;
     boost::mutex& mutex_;

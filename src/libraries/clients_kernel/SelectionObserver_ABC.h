@@ -12,6 +12,9 @@
 
 #include "Observer_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  SelectionObserver_ABC
     @brief  SelectionObserver_ABC
@@ -88,7 +91,6 @@ private:
     const T* element_;
 };
 
-
-
+}
 
 #endif // __SelectionObserver_ABC_h_

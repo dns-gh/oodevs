@@ -17,10 +17,17 @@
 #include "View_ABC.h"
 #include "GlToolsBase.h"
 
-class Controllers;
-class MiniView;
-class IconLayout;
 class EventStrategy_ABC;
+
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{    
+    class MiniView;
+    class IconLayout;
 
 // =============================================================================
 /** @class  GlWidget
@@ -28,13 +35,17 @@ class EventStrategy_ABC;
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget, public GlToolsBase, public View_ABC
+class GlWidget : private kernel::WorldParameters
+               , private SetGlOptions
+               , public MapWidget
+               , public GlToolsBase
+               , public View_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy );
+             GlWidget( QWidget* pParent, kernel::Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy );
     virtual ~GlWidget();
     //@}
 
@@ -107,5 +118,7 @@ private:
     IconLayout& iconLayout_;
     //@}
 };
+
+}
 
 #endif // __GlWidget_h_

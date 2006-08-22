@@ -24,30 +24,33 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Agent_ABC;
-class Controller;
-class Displayer_ABC;
-class ComponentType;
-class BreakdownType;
+namespace kernel
+{
+    class Agent_ABC;
+    class Controller;
+    class Displayer_ABC;
+    class ComponentType;
+    class BreakdownType;
+}
 
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
-class LogMaintenanceConsign : public Drawable_ABC
+class LogMaintenanceConsign : public kernel::Drawable_ABC
 {
 public:
     //! @name Constructor / Destructor
     //@{
-             LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn,
-                                    const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< ComponentType >& componentResolver,
-                                    const Resolver_ABC< BreakdownType >& breakdownResolver );
+             LogMaintenanceConsign( kernel::Controller& controller, const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asn,
+                                    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Resolver_ABC< kernel::ComponentType >& componentResolver,
+                                    const kernel::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network events
@@ -63,13 +66,13 @@ private:
     //@}
 
 private:
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     uint    nID_;
-    Agent_ABC&  pion_;
-    Agent_ABC*  pPionLogHandling_;
-    const ComponentType* equipmentType_;
-    const BreakdownType* breakdownType_;
+    kernel::Agent_ABC&  pion_;
+    kernel::Agent_ABC*  pPionLogHandling_;
+    const kernel::ComponentType* equipmentType_;
+    const kernel::BreakdownType* breakdownType_;
     bool    diagnosed_;
     E_LogMaintenanceTraitementEtat nState_;
 };

@@ -10,13 +10,12 @@
 #ifndef __SymbolFactory_h_
 #define __SymbolFactory_h_
 
-namespace xml
-{
-    class xistream;
-}
+namespace xml { class xistream; }
 
-class AgentNature;
-class SymbolRule;
+namespace kernel
+{
+    class AgentNature;
+    class SymbolRule;
 
 // =============================================================================
 /** @class  SymbolFactory
@@ -70,5 +69,7 @@ private:
     std::string automatSymbol_;
     //@}
 };
+
+}
 
 #endif // __SymbolFactory_h_

@@ -13,13 +13,17 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class ActionController;
-class GlTools_ABC;
+namespace kernel
+{
+    class ActionController;
+    class GlTools_ABC;
+}
 
 // =============================================================================
 // Created: APE 2004-03-18
 // =============================================================================
-class Param_ABC : public Observer_ABC, public Drawable_ABC
+class Param_ABC : public kernel::Observer_ABC
+                , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -31,10 +35,10 @@ public:
     //! @name Operations
     //@{
     virtual void RemoveFromController();
-    virtual void RegisterIn( ActionController& controller );
+    virtual void RegisterIn( kernel::ActionController& controller );
     virtual void SetOptional( bool );
 
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit() = 0;
     //@}
@@ -53,7 +57,7 @@ private:
 
 private:
     bool bIsOptional_;
-    ActionController* controller_;
+    kernel::ActionController* controller_;
 };
 
 #endif // __Param_ABC_h_

@@ -10,6 +10,9 @@
 #ifndef __FragOrder_h_
 #define __FragOrder_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  FragOrder
     @brief  FragOrder
@@ -39,5 +42,7 @@ private:
     unsigned int id_;
     //@}
 };
+
+}
 
 #endif // __FragOrder_h_

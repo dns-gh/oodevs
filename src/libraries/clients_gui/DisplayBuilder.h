@@ -13,7 +13,9 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "GroupDisplayer.h"
 
-class ItemFactory_ABC;
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  DisplayBuilder
@@ -21,7 +23,7 @@ class ItemFactory_ABC;
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class DisplayBuilder : public Displayer_ABC
+class DisplayBuilder : public kernel::Displayer_ABC
 {
 
 public:
@@ -67,5 +69,7 @@ private:
     T_Groups groups_;
     //@}
 };
+
+}
 
 #endif // __Display_h_

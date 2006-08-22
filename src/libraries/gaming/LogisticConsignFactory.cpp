@@ -19,6 +19,8 @@
 #include "clients_kernel/AgentTypes.h"
 #include "StaticModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory constructor
 // Created: AGE 2006-02-28

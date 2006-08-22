@@ -16,8 +16,11 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 
-class CoordinateConverter_ABC;
-class Agent_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class Agent_ABC;
+}
 
 // =============================================================================
 /** @class  AgentPositions
@@ -25,16 +28,16 @@ class Agent_ABC;
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class AgentPositions : public Positions
-                     , public Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public Drawable_ABC
-                     , public Aggregatable_ABC
+class AgentPositions : public kernel::Positions
+                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                     , public kernel::Drawable_ABC
+                     , public kernel::Aggregatable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentPositions( const Agent_ABC& agent, const CoordinateConverter_ABC& converter );
+             AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AgentPositions();
     //@}
 
@@ -45,7 +48,7 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -64,8 +67,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const Agent_ABC& agent_;
-    const CoordinateConverter_ABC& converter_;
+    const kernel::Agent_ABC& agent_;
+    const kernel::CoordinateConverter_ABC& converter_;
     geometry::Point2f position_;
     float height_;
     bool aggregated_;

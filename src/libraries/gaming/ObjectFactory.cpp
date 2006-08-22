@@ -25,6 +25,8 @@
 #include "CoordinateConverter.h"
 #include "StaticModel.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectFactory constructor
 // Created: AGE 2006-02-13

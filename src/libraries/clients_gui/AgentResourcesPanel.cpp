@@ -26,6 +26,9 @@
 #include "gaming/Humans.h"
 #include "ListDisplayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel constructor
 // Created: AGE 2006-02-21

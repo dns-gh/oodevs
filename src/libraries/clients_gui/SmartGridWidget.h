@@ -10,6 +10,9 @@
 #ifndef __SmartGridWidget_h_
 #define __SmartGridWidget_h_
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  SmartGridWidget
     @brief  SmartGridWidget
@@ -53,5 +56,7 @@ private:
     unsigned int childCount_;
     //@}
 };
+
+}
 
 #endif // __SmartGridWidget_h_

@@ -14,7 +14,9 @@
 #include "ElementObserver_ABC.h"
 #include "Observer_ABC.h"
 
-class Agent_ABC;
+namespace kernel
+{
+    class Agent_ABC;
 
 // =============================================================================
 /** @class  Controller
@@ -60,5 +62,7 @@ private:
     Controller& operator=( const Controller& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __Controller_h_

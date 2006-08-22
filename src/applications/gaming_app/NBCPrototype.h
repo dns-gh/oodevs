@@ -22,13 +22,13 @@ struct ASN1T_MagicActionCreateObject;
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class NBCPrototype : public NBCPrototype_ABC
+class NBCPrototype : public gui::NBCPrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
+             NBCPrototype( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg );
     virtual ~NBCPrototype();
     //@}
 

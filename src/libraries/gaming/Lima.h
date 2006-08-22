@@ -14,7 +14,10 @@
 #include "clients_kernel/IDManager.h"
 #include "Types.h"
 
-class Controller;
+namespace kernel
+{
+    class Controller;
+}
 
 // =============================================================================
 /** @class  Lima
@@ -28,18 +31,18 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter );
-             Lima( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter );
-             Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const kernel::CoordinateConverter_ABC& converter );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Lima();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const GlTools_ABC& tools ) const;
-    virtual void Select( ActionController& actions ) const;
-    virtual void ContextMenu( ActionController& actions, const QPoint& point ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual void Select( kernel::ActionController& actions ) const;
+    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
 private:
@@ -62,7 +65,7 @@ public:
     static IDManager idManager_;
 
 private:
-    Controller& controller_;
+    kernel::Controller& controller_;
     E_FuncLimaType   nFuncType_;
     //@}
 };

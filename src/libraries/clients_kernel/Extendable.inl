@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include <string>
 
+using namespace kernel;
+
 template< typename BaseType >
 unsigned int Extendable< BaseType >::id_ = 0;
 

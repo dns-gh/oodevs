@@ -10,6 +10,42 @@
 #ifndef __ListItemRtti_h_
 #define __ListItemRtti_h_
 
+namespace kernel
+{
+    class Team_ABC;
+    class KnowledgeGroup_ABC;
+    class Agent_ABC;
+    class ObjectType;
+    class Object_ABC;
+    class Population_ABC;
+    class NBCAgent;
+}
+
+class Dotation;
+class Equipment;
+class AgentKnowledge;
+class PopulationKnowledge;
+class ObjectKnowledge;
+class PopulationPartKnowledge_ABC;
+class DotationRequest;
+class LogSupplyConsign;
+class LogMaintenanceConsign;
+class LogMedicalConsign;
+class Report_ABC;
+class PopulationFireResult;
+class PopulationPart_ABC;
+class AgentFireResult;
+class Lima;
+class PopulationConcentration;
+class PopulationFlow;
+class PopulationConcentrationKnowledge;
+class PopulationFlowKnowledge;
+class ParamObstacle;
+class ParamPath;
+
+namespace gui
+{
+
 // =============================================================================
 /** @class  ListItemRtti
     @brief  ListItemRtti
@@ -22,169 +58,141 @@ struct ListItemRtti
     // NOTHING
 };
 
-class Team_ABC;
 template< >
-struct ListItemRtti< const Team_ABC* > {
+struct ListItemRtti< const kernel::Team_ABC* > {
     enum { rtti = 1001 };
 };
 
-class KnowledgeGroup_ABC;
 template< >
-struct ListItemRtti< const KnowledgeGroup_ABC* > {
+struct ListItemRtti< const kernel::KnowledgeGroup_ABC* > {
     enum { rtti = 1002 };
 };
 
-class Agent_ABC;
 template< >
-struct ListItemRtti< const Agent_ABC* > {
+struct ListItemRtti< const kernel::Agent_ABC* > {
     enum { rtti = 1003 };
 };
 
-class ObjectType;
 template< >
-struct ListItemRtti< const ObjectType* > {
+struct ListItemRtti< const kernel::ObjectType* > {
     enum { rtti = 1004 };
 };
 
-class Object_ABC;
 template< >
-struct ListItemRtti< const Object_ABC* > {
+struct ListItemRtti< const kernel::Object_ABC* > {
     enum { rtti = 1005 };
 };
 
-class Population_ABC;
 template< >
-struct ListItemRtti< const Population_ABC* > {
+struct ListItemRtti< const kernel::Population_ABC* > {
     enum { rtti = 1006 };
 };
 
-class PopulationPart_ABC;
 template< >
 struct ListItemRtti< const PopulationPart_ABC* > {
     enum { rtti = 1007 };
 };
 
-class Dotation;
 template< >
 struct ListItemRtti< const Dotation* > {
     enum { rtti = 1008 };
 };
 
-class Equipment;
 template< >
 struct ListItemRtti< const Equipment* > {
     enum { rtti = 1009 };
 };
 
-class AgentKnowledge;
 template< >
 struct ListItemRtti< const AgentKnowledge* > {
     enum { rtti = 1010 };
 };
 
-class PopulationKnowledge;
 template< >
 struct ListItemRtti< const PopulationKnowledge* > {
     enum { rtti = 1011 };
 };
 
-class ObjectKnowledge;
 template< >
 struct ListItemRtti< const ObjectKnowledge* > {
     enum { rtti = 1012 };
 };
 
-class PopulationPartKnowledge_ABC;
 template< >
 struct ListItemRtti< const PopulationPartKnowledge_ABC* > {
     enum { rtti = 1013 };
 };
 
-class DotationRequest;
 template< >
 struct ListItemRtti< const DotationRequest* > {
     enum { rtti = 1014 };
 };
 
-class LogSupplyConsign;
 template< >
 struct ListItemRtti< const LogSupplyConsign* > {
     enum { rtti = 1015 };
 };
 
-class LogMaintenanceConsign;
 template< >
 struct ListItemRtti< const LogMaintenanceConsign* > {
     enum { rtti = 1016 };
 };
 
-class LogMedicalConsign;
 template< >
 struct ListItemRtti< const LogMedicalConsign* > {
     enum { rtti = 1017 };
 };
 
-class Report_ABC;
 template< >
 struct ListItemRtti< const Report_ABC* > {
     enum { rtti = 1018 };
 };
 
-class PopulationFireResult;
 template< >
 struct ListItemRtti< const PopulationFireResult* > {
     enum { rtti = 1019 };
 };
 
-class AgentFireResult;
 template< >
 struct ListItemRtti< const AgentFireResult* > {
     enum { rtti = 1020 };
 };
 
-class Lima;
 template< >
 struct ListItemRtti< const Lima* > {
     enum { rtti = 1021 };
 };
 
-class PopulationConcentration;
 template< >
 struct ListItemRtti< const PopulationConcentration* > {
     enum { rtti = 1022 };
 };
 
-class PopulationFlow;
 template< >
 struct ListItemRtti< const PopulationFlow* > {
     enum { rtti = 1023 };
 };
 
-class PopulationConcentrationKnowledge;
 template< >
 struct ListItemRtti< const PopulationConcentrationKnowledge* > {
     enum { rtti = 1024 };
 };
 
-class PopulationFlowKnowledge;
 template< >
 struct ListItemRtti< const PopulationFlowKnowledge* > {
     enum { rtti = 1025 };
 };
 
-class NBCAgent;
 template< >
-struct ListItemRtti< const NBCAgent* > {
+struct ListItemRtti< const kernel::NBCAgent* > {
     enum { rtti = 1026 };
 };
 
-class ParamObstacle;
 template< >
 struct ListItemRtti< ParamObstacle* > {
     enum { rtti = 1027 };
 };
 
-class ParamPath;
 template< >
 struct ListItemRtti< ParamPath* > {
     enum { rtti = 1028 };
@@ -194,5 +202,7 @@ struct ListItemRtti< ParamPath* > {
 //template< typename T >
 //struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 
 //{};
+
+}
 
 #endif // __ListItemRtti_h_

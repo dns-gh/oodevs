@@ -13,6 +13,9 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "gaming/ASN_Messages.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: CampPrototype::CampPrototype
 // Created: SBO 2006-04-19

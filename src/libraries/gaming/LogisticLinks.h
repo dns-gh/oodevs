@@ -16,11 +16,14 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class Agent_ABC;
-class Displayer_ABC;
-class AutomatType;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class Agent_ABC;
+    class Displayer_ABC;
+    class AutomatType;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  LogisticLinks
@@ -28,29 +31,29 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class LogisticLinks : public Extension_ABC
-                    , public Updatable_ABC< ASN1T_MsgChangeLiensLogistiquesAck >
-                    , public Updatable_ABC< ASN1T_MsgAutomateCreation >
-                    , public Drawable_ABC
+class LogisticLinks : public kernel::Extension_ABC
+                    , public kernel::Updatable_ABC< ASN1T_MsgChangeLiensLogistiquesAck >
+                    , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
+                    , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const AutomatType& type, DataDictionary& dictionary );
+             LogisticLinks( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::AutomatType& type, kernel::DataDictionary& dictionary );
     virtual ~LogisticLinks();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
 
-    Agent_ABC* GetTC2() const;
-    Agent_ABC* GetMaintenance() const;
-    Agent_ABC* GetMedical() const;
-    Agent_ABC* GetSupply() const;
+    kernel::Agent_ABC* GetTC2() const;
+    kernel::Agent_ABC* GetMaintenance() const;
+    kernel::Agent_ABC* GetMedical() const;
+    kernel::Agent_ABC* GetSupply() const;
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -67,21 +70,21 @@ private:
     template< typename T >
     void UpdateData( const T& message );
 
-    Agent_ABC* Resolve( Agent_ABC*& agent, unsigned long id ) const;
-    void DrawLink( const geometry::Point2f& from, Agent_ABC* to, const GlTools_ABC& tools, float curve, bool link, bool missing ) const;
+    kernel::Agent_ABC* Resolve( kernel::Agent_ABC*& agent, unsigned long id ) const;
+    void DrawLink( const geometry::Point2f& from, kernel::Agent_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
-    const AutomatType& type_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::AutomatType& type_;
 
-    unsigned long idTc2_;         mutable Agent_ABC* tc2_;
-    unsigned long idMaintenance_; mutable Agent_ABC* maintenanceSuperior_;
-    unsigned long idMedical_;     mutable Agent_ABC* medicalSuperior_;
-    unsigned long idSupply_;      mutable Agent_ABC* supplySuperior_;
+    unsigned long idTc2_;         mutable kernel::Agent_ABC* tc2_;
+    unsigned long idMaintenance_; mutable kernel::Agent_ABC* maintenanceSuperior_;
+    unsigned long idMedical_;     mutable kernel::Agent_ABC* medicalSuperior_;
+    unsigned long idSupply_;      mutable kernel::Agent_ABC* supplySuperior_;
     //@}
 };
 

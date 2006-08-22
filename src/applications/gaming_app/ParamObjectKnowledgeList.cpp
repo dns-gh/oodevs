@@ -12,6 +12,8 @@
 #include "clients_kernel/Object_ABC.h"
 #include "gaming/ObjectKnowledge.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14

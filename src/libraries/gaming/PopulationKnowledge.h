@@ -17,30 +17,33 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class CoordinateConverter_ABC;
-class Team_ABC;
-class Population_ABC;
-class TypePopulation;
-class Displayer_ABC;
+namespace kernel
+{
+    class Controller;
+    class CoordinateConverter_ABC;
+    class Team_ABC;
+    class Population_ABC;
+    class Displayer_ABC;
+    class KnowledgeGroup_ABC;
+}
+
 class PopulationPartKnowledge_ABC;
 class PopulationConcentrationKnowledge;
 class PopulationFlowKnowledge;
-class KnowledgeGroup_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public Entity_ABC
-                          , public Resolver< PopulationConcentrationKnowledge >
-                          , public Resolver< PopulationFlowKnowledge >
-                          , public Extension_ABC
-                          , public Drawable_ABC
+class PopulationKnowledge : public kernel::Entity_ABC
+                          , public kernel::Resolver< PopulationConcentrationKnowledge >
+                          , public kernel::Resolver< PopulationFlowKnowledge >
+                          , public kernel::Extension_ABC
+                          , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -49,20 +52,20 @@ public:
     virtual unsigned long GetId() const;
     virtual std::string GetName() const;
 
-    void Display( Displayer_ABC& displayer ) const;
-    void DisplayInList( Displayer_ABC& displayer ) const;
-    bool IsInTeam( const Team_ABC& team ) const;
-    bool KnowledgeIsInTeam( const Team_ABC& team ) const;
-    const Team_ABC* GetKnowledgeTeam() const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    bool IsInTeam( const kernel::Team_ABC& team ) const;
+    bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const;
+    const kernel::Team_ABC* GetKnowledgeTeam() const;
 
-    const KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    const Population_ABC& GetRealPopulation() const;
+    const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
+    const kernel::Population_ABC& GetRealPopulation() const;
 
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network
@@ -87,11 +90,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const KnowledgeGroup_ABC& group_;
-    Controller& controller_;
-    const CoordinateConverter_ABC& converter_;
+    const kernel::KnowledgeGroup_ABC& group_;
+    kernel::Controller& controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
 
-    const Population_ABC& popu_;
+    const kernel::Population_ABC& popu_;
     unsigned long nID_;
     unsigned int domination_;
     //@}

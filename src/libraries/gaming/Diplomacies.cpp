@@ -12,6 +12,8 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Diplomacies constructor
 // Created: AGE 2006-02-14

@@ -12,6 +12,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "TacticalLine_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Limits constructor
 // Created: AGE 2006-02-13

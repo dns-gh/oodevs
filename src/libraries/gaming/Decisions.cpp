@@ -17,6 +17,8 @@
 #include "clients_kernel/AgentType.h"
 #include "statusicons.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Decisions constructor
 // Created: AGE 2006-03-14

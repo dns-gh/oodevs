@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "Units.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Unit::Unit
 // Created: AGE 2006-02-21

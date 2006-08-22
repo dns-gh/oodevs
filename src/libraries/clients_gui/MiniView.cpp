@@ -15,6 +15,9 @@
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MiniView constructor
 // Created: AGE 2006-06-23

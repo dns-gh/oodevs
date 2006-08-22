@@ -14,6 +14,7 @@
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

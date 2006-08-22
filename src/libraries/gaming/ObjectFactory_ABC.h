@@ -12,7 +12,10 @@
 
 #include "ASN_Types.h"
 
-class Object_ABC;
+namespace kernel
+{
+    class Object_ABC;
+}
 
 // =============================================================================
 /** @class  ObjectFactory_ABC
@@ -32,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Object_ABC* Create( const ASN1T_MsgObjectCreation& asnMsg ) = 0;
+    virtual kernel::Object_ABC* Create( const ASN1T_MsgObjectCreation& asnMsg ) = 0;
     //@}
 
 private:
@@ -40,15 +43,6 @@ private:
     //@{
     ObjectFactory_ABC( const ObjectFactory_ABC& );            //!< Copy constructor
     ObjectFactory_ABC& operator=( const ObjectFactory_ABC& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

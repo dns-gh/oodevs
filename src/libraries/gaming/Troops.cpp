@@ -11,6 +11,8 @@
 #include "Troops.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Troops constructor
 // Created: AGE 2006-02-13

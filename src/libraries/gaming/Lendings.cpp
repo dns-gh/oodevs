@@ -12,6 +12,8 @@
 #include "clients_kernel/Controller.h"
 #include "Loan.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Lendings constructor
 // Created: AGE 2006-02-13

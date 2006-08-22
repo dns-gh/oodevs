@@ -12,9 +12,12 @@
 
 #include "clients_kernel/SelectionObserver_ABC.h"
 
-class Agent_ABC;
-class KnowledgeGroup_ABC;
-class Controllers;
+namespace kernel
+{
+    class Agent_ABC;
+    class KnowledgeGroup_ABC;
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  KnowledgeGroupSelectionObserver
@@ -22,10 +25,9 @@ class Controllers;
 */
 // Created: AGE 2006-02-24
 // =============================================================================
-class KnowledgeGroupSelectionObserver
-    : public SelectionObserver_ABC
-    , public SelectionObserver_Base< KnowledgeGroup_ABC >
-    , public SelectionObserver_Base< Agent_ABC >
+class KnowledgeGroupSelectionObserver : public kernel::SelectionObserver_ABC
+                                      , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
+                                      , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
 {
 
 public:
@@ -46,15 +48,15 @@ private:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const KnowledgeGroup_ABC& element );
-    virtual void Select( const Agent_ABC& element );
-    virtual void Select( const KnowledgeGroup_ABC* ) = 0;
+    virtual void Select( const kernel::KnowledgeGroup_ABC& element );
+    virtual void Select( const kernel::Agent_ABC& element );
+    virtual void Select( const kernel::KnowledgeGroup_ABC* ) = 0;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const KnowledgeGroup_ABC* selected_;
+    const kernel::KnowledgeGroup_ABC* selected_;
     //@}
 };
 

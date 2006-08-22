@@ -13,9 +13,12 @@
 #include "Resolver.h"
 
 namespace xml { class xistream; };
-class Mission;
-class MissionFactory;
-class FragOrder;
+
+namespace kernel
+{
+    class Mission;
+    class MissionFactory;
+    class FragOrder;
 
 // =============================================================================
 /** @class  DecisionalModel
@@ -64,5 +67,7 @@ private:
     std::string name_;
     //@}
 };
+
+}
 
 #endif // __DecisionalModel_h_

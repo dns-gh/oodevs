@@ -12,7 +12,9 @@
 
 #include "ElementObserver_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
 
 // =============================================================================
 /** @class  SafePointer
@@ -54,7 +56,10 @@ private:
     //@}
 };
 
+}
+
 #include "Controllers.h"
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: SafePointer constructor

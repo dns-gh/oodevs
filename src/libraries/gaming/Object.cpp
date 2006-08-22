@@ -22,6 +22,8 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02

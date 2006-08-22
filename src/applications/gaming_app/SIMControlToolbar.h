@@ -13,12 +13,20 @@
 #include "clients_gui/Types.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class MT_SpinBox;
+}
+
 class ConnectDialog;
 class DisconnectDialog;
 class QMainWindow;
-class MT_SpinBox;
 class Simulation;
-class Controllers;
 class Network;
 class Publisher_ABC;
 
@@ -26,15 +34,15 @@ class Publisher_ABC;
 // Created: FBD 03-01-14
 //*****************************************************************************
 class SIMControlToolbar : public QToolBar
-                        , public Observer_ABC
-                        , public ElementObserver_ABC< Simulation >
+                        , public kernel::Observer_ABC
+                        , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT
 
 public:
     //! @name Constructor/Destructor
     //@{
-             SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher );
+             SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Network& network, Publisher_ABC& publisher );
     virtual ~SIMControlToolbar();
     //@}
 
@@ -63,12 +71,12 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers&        controllers_;
+    kernel::Controllers&        controllers_;
     Publisher_ABC&      publisher_;
     QToolButton*        pConnectButton_;
     QToolButton*        pPlayButton_;
     QToolButton*        pSpeedButton_;
-    MT_SpinBox*         pSpeedSpinBox_; // $$$$ AGE 2006-03-24: MT_Caca
+    gui::MT_SpinBox*         pSpeedSpinBox_; // $$$$ AGE 2006-03-24: MT_Caca
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;

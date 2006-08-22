@@ -17,6 +17,9 @@
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Path.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23

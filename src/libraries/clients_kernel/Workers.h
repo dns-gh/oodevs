@@ -13,6 +13,9 @@
 #undef Yield
 #include "tools/thread/ThreadPool.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Workers
     @brief  Workers
@@ -51,5 +54,7 @@ private:
     tools::thread::ThreadPool pool_;
     //@}
 };
+
+}
 
 #endif // __Workers_h_

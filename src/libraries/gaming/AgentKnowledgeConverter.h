@@ -13,7 +13,10 @@
 #include "AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  AgentKnowledgeConverter
@@ -22,24 +25,24 @@ class Controllers;
 // Created: AGE 2006-05-18
 // =============================================================================
 class AgentKnowledgeConverter : public AgentKnowledgeConverter_ABC
-                              , public Observer_ABC
-                              , public ElementObserver_ABC< AgentKnowledge >
-                              , public ElementObserver_ABC< PopulationKnowledge >
+                              , public kernel::Observer_ABC
+                              , public kernel::ElementObserver_ABC< AgentKnowledge >
+                              , public kernel::ElementObserver_ABC< PopulationKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentKnowledgeConverter( Controllers& controllers );
+    explicit AgentKnowledgeConverter( kernel::Controllers& controllers );
     virtual ~AgentKnowledgeConverter();
     //@}
 
     //! @name Operations
     //@{
-    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const KnowledgeGroup_ABC& owner );
-    virtual const AgentKnowledge*      Find( const Agent_ABC& base,          const KnowledgeGroup_ABC& owner );
-    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const KnowledgeGroup_ABC& owner );
-    virtual const PopulationKnowledge* Find( const Population_ABC& base,          const KnowledgeGroup_ABC& owner );
+    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::KnowledgeGroup_ABC& owner );
+    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::KnowledgeGroup_ABC& owner );
+    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::KnowledgeGroup_ABC& owner );
+    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::KnowledgeGroup_ABC& owner );
     //@}
 
 private:
@@ -59,16 +62,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Agent_ABC*, const AgentKnowledge* >                 T_KnowledgeMap;
-    typedef std::map< const KnowledgeGroup_ABC* , T_KnowledgeMap >              T_Knowledges;
-    typedef std::map< const Population_ABC*, const PopulationKnowledge* >       T_PopulationKnowledgeMap;
-    typedef std::map< const KnowledgeGroup_ABC* , T_PopulationKnowledgeMap >    T_PopulationKnowledges;
+    typedef std::map< const kernel::Agent_ABC*, const AgentKnowledge* >                 T_KnowledgeMap;
+    typedef std::map< const kernel::KnowledgeGroup_ABC* , T_KnowledgeMap >              T_Knowledges;
+    typedef std::map< const kernel::Population_ABC*, const PopulationKnowledge* >       T_PopulationKnowledgeMap;
+    typedef std::map< const kernel::KnowledgeGroup_ABC* , T_PopulationKnowledgeMap >    T_PopulationKnowledges;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     T_Knowledges           agents_;
     T_PopulationKnowledges populations_;
     //@}

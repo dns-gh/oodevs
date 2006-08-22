@@ -16,6 +16,9 @@
 #include "gaming/Explosions.h"
 #include "gaming/Equipment.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel constructor
 // Created: AGE 2006-02-23

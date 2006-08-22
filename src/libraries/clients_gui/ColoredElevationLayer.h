@@ -12,7 +12,14 @@
 
 #include "graphics/ElevationLayer.h"
 namespace xml { class xistream; }
-class DetectionMap;
+
+namespace kernel
+{
+    class DetectionMap;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  ColoredElevationLayer
@@ -26,7 +33,7 @@ class ColoredElevationLayer : public ElevationLayer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ColoredElevationLayer( const DetectionMap& elevation );
+    explicit ColoredElevationLayer( const kernel::DetectionMap& elevation );
     virtual ~ColoredElevationLayer();
     //@}
 
@@ -61,5 +68,7 @@ private:
     T_Colors colors_;
     //@}
 };
+
+}
 
 #endif // __ColoredElevationLayer_h_

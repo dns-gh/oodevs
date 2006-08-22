@@ -13,6 +13,9 @@
 #include "clients_kernel/Iterator.h"
 #include "gaming/ASN_Messages.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: NBCPrototype constructor
 // Created: SBO 2006-04-20

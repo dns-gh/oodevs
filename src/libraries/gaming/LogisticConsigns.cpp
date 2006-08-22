@@ -15,6 +15,8 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticConsigns constructor
 // Created: AGE 2006-02-28

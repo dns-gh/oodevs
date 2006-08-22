@@ -10,8 +10,10 @@
 #ifndef __MissionFactory_h_
 #define __MissionFactory_h_
 
-class Mission;
-class FragOrder;
+namespace kernel
+{
+    class Mission;
+    class FragOrder;
 
 // =============================================================================
 /** @class  MissionFactory
@@ -51,5 +53,7 @@ private:
     //@}
 
 };
+
+}
 
 #endif // __MissionFactory_h_

@@ -15,6 +15,9 @@
 
 #include "ENT/ENT_Tr.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20

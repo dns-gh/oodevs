@@ -15,8 +15,12 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
+namespace kernel
+{
+    class Controller;
+}
+
 class KnowledgeGroupFactory_ABC;
-class Controller;
 
 // =============================================================================
 /** @class  Team
@@ -24,15 +28,15 @@ class Controller;
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Team : public Team_ABC
-           , public Extension_ABC
-           , public Updatable_ABC< KnowledgeGroupCreationMessage >
+class Team : public kernel::Team_ABC
+           , public kernel::Extension_ABC
+           , public kernel::Updatable_ABC< KnowledgeGroupCreationMessage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory );
+             Team( uint id, DIN::DIN_Input& input, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
     virtual ~Team();
     //@}
 
@@ -57,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
     KnowledgeGroupFactory_ABC& factory_;
     std::string name_;
     unsigned long id_;

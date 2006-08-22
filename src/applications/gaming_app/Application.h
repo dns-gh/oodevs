@@ -12,13 +12,17 @@
 
 #include <qapplication.h>
 
+namespace kernel
+{
+    class Controllers;
+    class Workers;
+}
+
 class Network;
 class MainWindow;
 class StaticModel;
 class Model;
 class Simulation;
-class Controllers;
-class Workers;
 
 // =============================================================================
 /** @class  Application
@@ -58,11 +62,11 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers* controllers_;
+    kernel::Controllers* controllers_;
     StaticModel* staticModel_;
     Model* model_;
     Simulation* simulation_;
-    Workers* workers_;
+    kernel::Workers* workers_;
     Network* network_;
     MainWindow* mainWindow_;
     QTimer* networkTimer_;

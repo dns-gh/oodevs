@@ -22,6 +22,9 @@
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/ListDisplayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24

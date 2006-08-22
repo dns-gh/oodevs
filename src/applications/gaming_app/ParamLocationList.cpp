@@ -16,6 +16,9 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_gui/LocationSerializer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03

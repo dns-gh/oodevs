@@ -12,6 +12,9 @@
 
 struct ASN1T_CoordUTM; // $$$$ AGE 2006-08-11: crap !
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  CoordinateConverter_ABC
     @brief  CoordinateConverter_ABC
@@ -36,5 +39,7 @@ public:
     virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const = 0;
     //@}
 };
+
+}
 
 #endif // __CoordinateConverter_ABC_h_

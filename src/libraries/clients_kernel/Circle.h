@@ -12,6 +12,9 @@
 
 #include "Location_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Circle
     @brief  Circle
@@ -58,5 +61,7 @@ private:
     float radius_;
     //@}
 };
+
+}
 
 #endif // __Circle_h_

@@ -11,6 +11,8 @@
 #include "AgentKnowledgePositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgePositions constructor
 // Created: AGE 2006-05-17

@@ -16,12 +16,19 @@
 class QDockWindow;
 class QMainWindow;
 class QWidget;
-class TristateOption;
+
+namespace kernel
+{
+    class TristateOption;
+}
+
+namespace gui
+{
 
 // =============================================================================
 // Created: APE 2004-06-01
 // =============================================================================
-class Settings : public QSettings, public Settings_ABC
+class Settings : public QSettings, public kernel::Settings_ABC
 {
 
 public:
@@ -39,12 +46,12 @@ public:
     virtual void Save( const std::string& name, int value );
     virtual void Save( const std::string& name, bool value );
     virtual void Save( const std::string& name, float value );
-    virtual void Save( const std::string& name, const TristateOption& value );
+    virtual void Save( const std::string& name, const kernel::TristateOption& value );
 
-    virtual int            Load( const std::string& name, int defaultValue );
-    virtual bool           Load( const std::string& name, bool defaultValue );
-    virtual float          Load( const std::string& name, float defaultValue );
-    virtual TristateOption Load( const std::string& name, const TristateOption& defaultValue );
+    virtual int Load( const std::string& name, int defaultValue );
+    virtual bool Load( const std::string& name, bool defaultValue );
+    virtual float Load( const std::string& name, float defaultValue );
+    virtual kernel::TristateOption Load( const std::string& name, const kernel::TristateOption& defaultValue );
 
     template< typename T >
     void Save( const std::string&, T ) {};
@@ -65,5 +72,7 @@ private:
     Settings& operator=( const Settings& );
     //@}
 };
+
+}
 
 #endif // __Settings_h_

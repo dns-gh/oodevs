@@ -11,6 +11,8 @@
 #include "Agent_ABC.h"
 #include "ActionController.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Agent_ABC constructor
 // Created: AGE 2006-02-13

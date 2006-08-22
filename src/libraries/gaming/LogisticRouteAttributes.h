@@ -16,8 +16,11 @@
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Controller;
-class Displayer_ABC;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+}
 
 // =============================================================================
 /** @class  LogisticRouteAttributes
@@ -25,22 +28,22 @@ class Displayer_ABC;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class LogisticRouteAttributes : public Extension_ABC
-                              , public Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                              , public Updatable_ABC< ASN1T_MsgObjectUpdate >
-                              , public Updatable_ABC< ASN1T_MsgObjectCreation >
+class LogisticRouteAttributes : public kernel::Extension_ABC
+                              , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                              , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
+                              , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticRouteAttributes( Controller& controller );
+             LogisticRouteAttributes( kernel::Controller& controller );
     virtual ~LogisticRouteAttributes();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
@@ -62,12 +65,12 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    OptionalValue< unsigned > nLogRouteFlow_;
-    OptionalValue< unsigned > nLogRouteWidth_;
-    OptionalValue< unsigned > nLogRouteLength_;
-    OptionalValue< unsigned > nLogRouteMaxWeight_;
-    OptionalValue< bool > bLogRouteEquipped_;
+    kernel::Controller& controller_;
+    kernel::OptionalValue< unsigned > nLogRouteFlow_;
+    kernel::OptionalValue< unsigned > nLogRouteWidth_;
+    kernel::OptionalValue< unsigned > nLogRouteLength_;
+    kernel::OptionalValue< unsigned > nLogRouteMaxWeight_;
+    kernel::OptionalValue< bool > bLogRouteEquipped_;
     //@}
 };
 

@@ -21,7 +21,7 @@ struct ASN1T_MagicActionCreateObject;
 */
 // Created: SBO 2006-04-20
 // =============================================================================
-class LogisticRoutePrototype : public LogisticRoutePrototype_ABC
+class LogisticRoutePrototype : public gui::LogisticRoutePrototype_ABC
 {
 
 public:

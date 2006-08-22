@@ -14,8 +14,13 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Resolver.h"
 #include "Casualties.h"
-class Agent_ABC;
-class EquipmentType;
+
+namespace kernel
+{
+    class Agent_ABC;
+    class EquipmentType;
+}
+
 class Equipment;
 
 // =============================================================================
@@ -24,15 +29,15 @@ class Equipment;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class AgentFireResult : public Resolver< Equipment >
+class AgentFireResult : public kernel::Resolver< Equipment >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              AgentFireResult( const ASN1T_FireDamagesPion& message, 
-                              const Resolver_ABC< Agent_ABC >& resolver,
-                              const Resolver_ABC< EquipmentType >& equipmentResolver );
+                              const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver,
+                              const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     virtual ~AgentFireResult();
     //@}
 
@@ -50,7 +55,7 @@ private:
 public:
     //! @name Member data
     //@{
-    const Agent_ABC& target_;
+    const kernel::Agent_ABC& target_;
     Casualties casualties_[ eNbrHumanWound ];
     //@}
 };

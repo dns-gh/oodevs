@@ -13,9 +13,13 @@
 #include "clients_gui/Layer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
+namespace kernel
+{
+    class Controllers;
+    class GlTools_ABC;
+}
+
 class AmmoEffect;
-class Controllers;
-class GlTools_ABC;
 
 // =============================================================================
 /** @class  MeteoLayer
@@ -23,15 +27,15 @@ class GlTools_ABC;
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class MeteoLayer : public Layer_ABC
-                 , public Observer_ABC
-                 , public ElementObserver_ABC< AmmoEffect >
+class MeteoLayer : public gui::Layer_ABC
+                 , public kernel::Observer_ABC
+                 , public kernel::ElementObserver_ABC< AmmoEffect >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoLayer( Controllers& controllers, const GlTools_ABC& tools );
+             MeteoLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
     virtual ~MeteoLayer();
     //@}
 
@@ -62,8 +66,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const GlTools_ABC& tools_;
+    kernel::Controllers& controllers_;
+    const kernel::GlTools_ABC& tools_;
     T_Effects effects_;
     //@}
 };

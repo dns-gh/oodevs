@@ -16,11 +16,14 @@
 #include "Availability.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-class Controller;
-class Displayer_ABC;
-class EquipmentType;
-class Agent_ABC;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+    class EquipmentType;
+    class Agent_ABC;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  MaintenanceStates
@@ -28,19 +31,19 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class MaintenanceStates : public Extension_ABC
-                        , public Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
+class MaintenanceStates : public kernel::Extension_ABC
+                        , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico );
+             MaintenanceStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::DataDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
     //@}
 
@@ -53,17 +56,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const EquipmentType* > T_Priorities;
+    typedef std::vector< const kernel::EquipmentType* > T_Priorities;
     typedef std::vector< Availability >         T_Availabilities;
-    typedef std::vector< const Agent_ABC* >         T_Agents;
+    typedef std::vector< const kernel::Agent_ABC* >         T_Agents;
     //@}
 
 public:
     //! @name Member data
     //@{
-    Controller&      controller_;
-    const Resolver_ABC< EquipmentType >& resolver_;
-    const Resolver_ABC< Agent_ABC >& agentResolver_;
+    kernel::Controller&      controller_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
 
     bool             bChainEnabled_;
     unsigned         nWorkRate_;

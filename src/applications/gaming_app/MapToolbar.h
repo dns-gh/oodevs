@@ -10,7 +10,10 @@
 #ifndef __MapToolbar_h_
 #define __MapToolbar_h_
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  MapToolbar
@@ -24,15 +27,8 @@ class MapToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             MapToolbar( QMainWindow* pParent, Controllers& controllers );
+             MapToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
     virtual ~MapToolbar();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MapToolbar( const MapToolbar& );
-    MapToolbar& operator=( const MapToolbar& );
     //@}
 };
 

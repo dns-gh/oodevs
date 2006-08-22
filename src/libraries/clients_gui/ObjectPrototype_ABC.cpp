@@ -33,6 +33,9 @@
 #include "NBCPrototype_ABC.h"
 #include "RotaPrototype_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18

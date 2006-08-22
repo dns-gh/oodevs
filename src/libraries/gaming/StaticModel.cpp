@@ -18,6 +18,8 @@
 #include "CoordinateConverter.h"
 #include "ModelLoaded.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01

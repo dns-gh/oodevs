@@ -23,6 +23,9 @@
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24

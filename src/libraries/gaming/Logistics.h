@@ -14,12 +14,16 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-class Entity_ABC;
+namespace kernel
+{
+    class Entity_ABC;
+    class Controller;
+    class DataDictionary;
+}
+
 class Model;
 class StaticModel;
-class Controller;
 class SupplyStates;
-class DataDictionary;
 
 // =============================================================================
 /** @class  Logistics
@@ -27,17 +31,17 @@ class DataDictionary;
 */
 // Created: AGE 2006-03-01
 // =============================================================================
-class Logistics : public Extension_ABC
-                , public Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
-                , public Updatable_ABC< ASN1T_MsgLogSanteEtat >
-                , public Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
-                , public Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
+class Logistics : public kernel::Extension_ABC
+                , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
+                , public kernel::Updatable_ABC< ASN1T_MsgLogSanteEtat >
+                , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
+                , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Logistics( Entity_ABC& holder, Controller& controller, Model& model, const StaticModel& staticModel, DataDictionary& dico );
+             Logistics( kernel::Entity_ABC& holder, kernel::Controller& controller, Model& model, const StaticModel& staticModel, kernel::DataDictionary& dico );
     virtual ~Logistics();
     //@}
 
@@ -60,11 +64,11 @@ private:
 private:
     //! @name Member data
     //@{
-    Entity_ABC& holder_;
-    Controller& controller_;
+    kernel::Entity_ABC& holder_;
+    kernel::Controller& controller_;
     Model& model_;
     const StaticModel& static_;
-    DataDictionary& dico_;
+    kernel::DataDictionary& dico_;
     //@}
 };
 

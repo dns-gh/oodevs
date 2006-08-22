@@ -11,6 +11,7 @@
 #include "BreakdownType.h"
 #include "xeumeuleu/xml.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

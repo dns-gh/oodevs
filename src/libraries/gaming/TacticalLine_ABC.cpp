@@ -13,6 +13,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14

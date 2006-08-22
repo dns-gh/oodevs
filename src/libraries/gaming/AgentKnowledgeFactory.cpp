@@ -19,6 +19,8 @@
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeFactory constructor
 // Created: AGE 2006-02-15

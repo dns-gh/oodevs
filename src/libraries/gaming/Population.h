@@ -20,45 +20,49 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
 
+namespace kernel
+{
+    class Team_ABC;
+    class Controller;
+    class PopulationType;
+    class CoordinateConverter_ABC;
+    class Displayer_ABC;
+}
+
 class PopulationPart_ABC;
 class PopulationConcentration;
 class PopulationFlow;
-class Team_ABC;
-class Controller;
-class PopulationType;
-class CoordinateConverter_ABC;
-class Displayer_ABC;
 
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class Population : public Population_ABC
-                 , public Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
-                 , public Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
-                 , public Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
-                 , public Updatable_ABC< ASN1T_MsgPopulationUpdate >       
-                 , public Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
-                 , public Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
-                 , public Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
-                 , public Drawable_ABC
-                 , public Positions
+class Population : public kernel::Population_ABC
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationUpdate >       
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
+                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
+                 , public kernel::Drawable_ABC
+                 , public kernel::Positions
 {
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const ASN1T_MsgPopulationCreation& asnMsg, Controller& controller, const CoordinateConverter_ABC& converter,
-                         const Resolver_ABC< Team_ABC >& teamResolver, const Resolver_ABC< PopulationType >& typeResolver );
+             Population( const ASN1T_MsgPopulationCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+                         const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver, const kernel::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
 
     //! @name Operations
     //@{
-    void DisplayInTooltip( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
 
-    virtual bool IsInTeam( const Team_ABC& team ) const;
+    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
     virtual geometry::Point2f GetPosition() const;
     virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
@@ -68,10 +72,10 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const Team_ABC& GetTeam() const;
+    virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual std::string   GetName() const;
-    const PopulationType& GetType() const;
+    const kernel::PopulationType& GetType() const;
     //@}
     
 private:
@@ -100,15 +104,15 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller&                controller_;
-    const CoordinateConverter_ABC& converter_;
+    kernel::Controller&                controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
 	unsigned long              nPopulationID_;
 	std::string                strName_;
-    const PopulationType&      type_;
-	Team_ABC&                  team_;
+    const kernel::PopulationType&      type_;
+	kernel::Team_ABC&                  team_;
 
     geometry::Point2f          center_;
-    OptionalValue< int >       nDomination_;
+    kernel::OptionalValue< int >       nDomination_;
     //@}
 
 private:

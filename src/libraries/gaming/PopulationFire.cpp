@@ -11,6 +11,8 @@
 #include "PopulationFire.h"
 #include "clients_kernel/Population_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFire constructor
 // Created: AGE 2006-03-10

@@ -12,6 +12,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Lives constructor
 // Created: AGE 2006-04-10

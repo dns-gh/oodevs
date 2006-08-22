@@ -15,7 +15,9 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/SafePointer.h"
 
-class ValueContainer_ABC;
+namespace gui
+{
+    class ValueContainer_ABC;
 
 // =============================================================================
 /** @class  ValuedListItem
@@ -53,9 +55,9 @@ public:
 
     int rtti() const;
 
-    void Select( ActionController& actions );
-    void ContextMenu( ActionController& actions, const QPoint& where );
-    void Activate( ActionController& actions );
+    void Select( kernel::ActionController& actions );
+    void ContextMenu( kernel::ActionController& actions, const QPoint& where );
+    void Activate( kernel::ActionController& actions );
     //@}
 
 private:
@@ -149,9 +151,9 @@ class ValueContainer_ABC
 {
 public:
     virtual int rtti() const = 0;
-    virtual void Select( ActionController& actions ) = 0;
-    virtual void ContextMenu( ActionController& actions, const QPoint& where ) = 0;
-    virtual void Activate( ActionController& actions ) = 0;
+    virtual void Select( kernel::ActionController& actions ) = 0;
+    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& where ) = 0;
+    virtual void Activate( kernel::ActionController& actions ) = 0;
 };
 
 // =============================================================================
@@ -174,13 +176,13 @@ public:
     void SetValue( const T& value ) {
         value_ = value;
     }
-    virtual void Select( ActionController& actions ) {
+    virtual void Select( kernel::ActionController& actions ) {
         actions.Select( *value_ );
     };
-    virtual void ContextMenu( ActionController& actions, const QPoint& where ) {
+    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& where ) {
         actions.ContextMenu( *value_, where );
     }
-    void Activate( ActionController& actions ) {
+    void Activate( kernel::ActionController& actions ) {
         actions.Activate( *value_ );
     }
 private:
@@ -233,6 +235,8 @@ void ValuedListItem::Set( const T& value, QString label1 /*= QString::null*/, QS
     SetValue( value );
     setText( 0, label1 );
     setText( 1, label2 );
+}
+
 }
 
 #endif // __ValuedListItem_h_

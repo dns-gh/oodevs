@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "Team_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Team_ABC constructor
 // Created: SBO 2006-08-08

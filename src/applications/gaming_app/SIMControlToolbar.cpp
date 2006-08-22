@@ -20,6 +20,9 @@
 #include "clients_gui/MT_SpinBox.h"
 #include "clients_gui/resources.h"
 
+using namespace kernel;
+using namespace gui;
+
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14

@@ -13,6 +13,9 @@
 class QWidget;
 class QString;
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  PanelStack_ABC
     @brief  Panel stack base class
@@ -35,5 +38,7 @@ public:
     virtual void Remove( QWidget* widget ) = 0;
     //@}
 };
+
+}
 
 #endif // __PanelStack_ABC_h_

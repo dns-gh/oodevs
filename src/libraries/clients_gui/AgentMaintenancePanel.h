@@ -15,11 +15,18 @@
 #include "gaming/LogMaintenanceConsign.h"
 #include "clients_kernel/Agent_ABC.h"
 
-class MaintenanceStates;
+namespace kernel
+{
+    class Displayer_ABC;
+}
+
 class Availability;
-class Displayer_ABC;
-class ValuedListItem;
-class DisplayBuilder;
+class MaintenanceStates;
+
+namespace gui
+{
+    class ValuedListItem;
+    class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentMaintenancePanel
@@ -28,12 +35,12 @@ class DisplayBuilder;
 // Created: AGE 2005-04-01
 // =============================================================================
 class AgentMaintenancePanel : public LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >
-                            , public ElementObserver_ABC< MaintenanceStates >
+                            , public kernel::ElementObserver_ABC< MaintenanceStates >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMaintenancePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory );
+             AgentMaintenancePanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentMaintenancePanel();
     //@}
 
@@ -46,7 +53,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const Agent_ABC& agent );
+    virtual void NotifySelected( const kernel::Agent_ABC& agent );
     virtual void NotifyUpdated( const MaintenanceStates& consigns );
 
     virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMaintenancePanel >* list );
@@ -57,11 +64,13 @@ private:
 
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     DisplayBuilder* display_;
     ListDisplayer< AgentMaintenancePanel >* dispoHaulers_;
     ListDisplayer< AgentMaintenancePanel >* dispoRepairers_;
     //@}
 };
+
+}
 
 #endif // __AgentMaintenancePanel_h_

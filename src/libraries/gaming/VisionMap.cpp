@@ -12,6 +12,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DetectionMap.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: VisionMap constructor
 // Created: AGE 2006-04-04

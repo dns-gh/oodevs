@@ -21,9 +21,9 @@
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class DebugPoints : public Extension_ABC
-                  , public Updatable_ABC< DebugPointsMessage >
-                  , public Drawable_ABC
+class DebugPoints : public kernel::Extension_ABC
+                  , public kernel::Updatable_ABC< DebugPointsMessage >
+                  , public kernel::Drawable_ABC
 {
 
 public:
@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

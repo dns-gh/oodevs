@@ -16,10 +16,14 @@
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class DotationType;
+namespace kernel
+{
+    class Controller;
+    class DotationType;
+    class DataDictionary;
+}
+
 class Dotation;
-class DataDictionary;
 
 // =============================================================================
 /** @class  Dotations
@@ -27,21 +31,21 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Dotations : public Extension_ABC
-                , public Updatable_ABC< ASN1T_MsgUnitDotations >
-                , public Resolver< Dotation >
+class Dotations : public kernel::Extension_ABC
+                , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
+                , public kernel::Resolver< Dotation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, DataDictionary& dictionary );
+             Dotations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType >& resolver, kernel::DataDictionary& dictionary );
     virtual ~Dotations();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -59,9 +63,9 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    DataDictionary& dictionary_;
-    const Resolver_ABC< DotationType >& resolver_;
+    kernel::Controller& controller_;
+    kernel::DataDictionary& dictionary_;
+    const kernel::Resolver_ABC< kernel::DotationType >& resolver_;
     bool bEmptyGasTank_;
     //@}
 };

@@ -16,8 +16,12 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class Population_ABC;
+namespace kernel
+{
+    class Controller;
+    class Population_ABC;
+}
+
 class PopulationPart_ABC;
 
 // =============================================================================
@@ -26,23 +30,23 @@ class PopulationPart_ABC;
 */
 // Created: AGE 2006-02-27
 // =============================================================================
-class PopulationDetections : public Extension_ABC
-                           , public Updatable_ABC< ConcentrationDetectionMessage >
-                           , public Updatable_ABC< FlowDetectionMessage >
-                           , public Updatable_ABC< PopulationCollisionMessage >
-                           , public Drawable_ABC
+class PopulationDetections : public kernel::Extension_ABC
+                           , public kernel::Updatable_ABC< ConcentrationDetectionMessage >
+                           , public kernel::Updatable_ABC< FlowDetectionMessage >
+                           , public kernel::Updatable_ABC< PopulationCollisionMessage >
+                           , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver );
+             PopulationDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~PopulationDetections();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -67,8 +71,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Population_ABC >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Population_ABC >& resolver_;
     T_Parts perceived_;
     T_PointVector shape_;
     //@}

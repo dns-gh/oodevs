@@ -92,6 +92,9 @@ namespace bfs = boost::filesystem;
 #include "xeumeuleu/xml.h"
 using namespace xml;
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -307,13 +310,13 @@ void MainWindow::Load( const std::string& scipioXml )
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
     widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
+    glProxy_->ChangeTo( widget2d_ );
+    glProxy_->RegisterTo( widget2d_ );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Purge();
     staticModel_.Load( scipioXml );
 
-    glProxy_->ChangeTo( widget2d_ );
-    glProxy_->RegisterTo( widget2d_ );
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
     

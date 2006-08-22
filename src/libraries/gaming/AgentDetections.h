@@ -17,9 +17,12 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "Attr_Def.h"
 
-class Controller;
-class Agent_ABC;
-class Team_ABC;
+namespace kernel
+{
+    class Controller;
+    class Agent_ABC;
+    class Team_ABC;
+}
 
 // =============================================================================
 /** @class  AgentDetections
@@ -27,21 +30,21 @@ class Team_ABC;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentDetections : public Extension_ABC
-                      , public Updatable_ABC< DetectionMessage >
-                      , public Drawable_ABC
+class AgentDetections : public kernel::Extension_ABC
+                      , public kernel::Updatable_ABC< DetectionMessage >
+                      , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team_ABC& team );
+             AgentDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Team_ABC& team );
     virtual ~AgentDetections();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -53,7 +56,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const Agent_ABC*, E_UnitVisType > T_AgentDetections;
+    typedef std::map< const kernel::Agent_ABC*, E_UnitVisType > T_AgentDetections;
     typedef T_AgentDetections::const_iterator     CIT_AgentDetections;
     //@}
 
@@ -65,9 +68,9 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< Agent_ABC >& resolver_;
-    const Team_ABC& team_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::Team_ABC& team_;
 
     T_AgentDetections detections_;
     //@}

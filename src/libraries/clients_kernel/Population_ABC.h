@@ -15,8 +15,11 @@
 
 class PopulationFlow;
 class PopulationConcentration;
-class Team_ABC;
-class PopulationType;
+
+namespace kernel
+{
+    class Team_ABC;
+    class PopulationType;
 
 // =============================================================================
 /** @class  Population_ABC
@@ -76,5 +79,7 @@ private:
     Population_ABC& operator=( const Population_ABC& ); //!< Assignement operator
     //@}
 };
+
+}
 
 #endif // __Population_ABC_h_

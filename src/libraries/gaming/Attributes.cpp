@@ -18,6 +18,7 @@
 #include "statusicons.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Attributes constructor

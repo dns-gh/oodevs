@@ -21,10 +21,17 @@
 #include "terrain/TesselatedShape.h"
 
 class GraphicShape;
-class Controllers;
-class GlTools_ABC;
 class GraphicSetup_ABC;
 class ModelLoaded;
+
+namespace kernel
+{
+    class Controllers;
+    class GlTools_ABC;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -34,15 +41,15 @@ class ModelLoaded;
 // =============================================================================
 class TerrainLayer : public Layer2d_ABC
                    , private GraphicManager_ABC
-                   , public Observer_ABC
-                   , public OptionsObserver_ABC
-                   , public ElementObserver_ABC< ModelLoaded >
+                   , public kernel::Observer_ABC
+                   , public kernel::OptionsObserver_ABC
+                   , public kernel::ElementObserver_ABC< ModelLoaded >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup );
+             TerrainLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, GraphicSetup_ABC& setup );
     virtual ~TerrainLayer();
     //@}
 
@@ -86,7 +93,7 @@ private:
     virtual void SetupBorderGraphics( const TerrainData& d ) const;
     virtual void SetupAreaGraphics  ( const TerrainData& d ) const;
 
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     template< typename Functor >
     void Apply( const T_ShapeContainer& container, const geometry::Rectangle2f& viewport, const Functor& functor ) const;
@@ -99,18 +106,20 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const GlTools_ABC& tools_;
+    kernel::Controllers& controllers_;
+    const kernel::GlTools_ABC& tools_;
     GraphicSetup_ABC& setup_;
 
     const std::string dataDirectory_;
     geometry::Rectangle2f world_;
     T_Shapes shapes_;
-    TristateOption smallNames_;
-    TristateOption bigNames_;
+    kernel::TristateOption smallNames_;
+    kernel::TristateOption bigNames_;
 
-    WorldParameters parameters_;
+    kernel::WorldParameters parameters_;
     //@}
 };
+
+}
 
 #endif // __TerrainLayer_h_

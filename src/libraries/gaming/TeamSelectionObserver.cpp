@@ -14,6 +14,8 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: TeamSelectionObserver constructor
 // Created: AGE 2006-02-24

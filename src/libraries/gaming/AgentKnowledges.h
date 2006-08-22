@@ -15,10 +15,14 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Resolver.h"
 
+namespace kernel
+{
+    class Controller;
+    class KnowledgeGroup_ABC;
+}
+
 class AgentKnowledge;
 class AgentKnowledgeFactory_ABC;
-class Controller;
-class KnowledgeGroup_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledges
@@ -26,17 +30,17 @@ class KnowledgeGroup_ABC;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class AgentKnowledges : public Extension_ABC
-                      , public Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
-                      , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
-                      , public Updatable_ABC< ASN1T_MsgUnitKnowledgeDestruction >
-                      , public Resolver< AgentKnowledge >
+class AgentKnowledges : public kernel::Extension_ABC
+                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
+                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeDestruction >
+                      , public kernel::Resolver< AgentKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledges( Controller& controller, const KnowledgeGroup_ABC& group, AgentKnowledgeFactory_ABC& factory );
+             AgentKnowledges( kernel::Controller& controller, const kernel::KnowledgeGroup_ABC& group, AgentKnowledgeFactory_ABC& factory );
     virtual ~AgentKnowledges();
     //@}
 
@@ -61,8 +65,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const KnowledgeGroup_ABC& group_;
+    kernel::Controller& controller_;
+    const kernel::KnowledgeGroup_ABC& group_;
     AgentKnowledgeFactory_ABC& factory_;
     //@}
 };

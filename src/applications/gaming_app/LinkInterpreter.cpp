@@ -18,6 +18,9 @@
 #include "gaming/AgentKnowledge.h"
 #include "gaming/PopulationKnowledge.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter constructor
 // Created: AGE 2006-08-11

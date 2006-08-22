@@ -13,9 +13,12 @@
 #include "ASN_Types.h"
 #include "MSEllipse.h"
 
-class GlTools_ABC;
-class CoordinateConverter_ABC;
-class Controller;
+namespace kernel
+{
+    class GlTools_ABC;
+    class CoordinateConverter_ABC;
+    class Controller;
+}
 
 // =============================================================================
 /** @class  AmmoEffect
@@ -29,13 +32,13 @@ class AmmoEffect
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter );
+             AmmoEffect( const ASN1T_MsgStartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AmmoEffect();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -48,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
     unsigned long id_;
     ASN1T_EnumFireEffectType type_;
     MSEllipse ellipse_;

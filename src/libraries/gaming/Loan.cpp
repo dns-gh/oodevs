@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "Loan.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Loan constructor
 // Created: AGE 2006-02-21

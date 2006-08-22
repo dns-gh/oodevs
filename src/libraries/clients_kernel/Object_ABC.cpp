@@ -11,6 +11,8 @@
 #include "Object_ABC.h"
 #include "ActionController.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Object_ABC constructor
 // Created: AGE 2006-08-11

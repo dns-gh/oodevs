@@ -11,19 +11,27 @@
 #define __BaseDisplayer_h_
 
 #include "clients_kernel/Displayer_ABC.h"
-class Agent_ABC;
-class Object_ABC;
-class Team_ABC;
-class DotationType;
-class EquipmentType;
-class Population_ABC;
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Object_ABC;
+    class Team_ABC;
+    class DotationType;
+    class EquipmentType;
+    class Population_ABC;
+    class NBCAgent;
+    class ComponentType;
+    class BreakdownType;
+    class ObjectType;
+    class Mission;
+    class CoordinateConverter_ABC;
+}
+
 class PopulationConcentration;
-class CoordinateConverter_ABC;
-class NBCAgent;
-class ComponentType;
-class BreakdownType;
-class ObjectType;
-class Mission;
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  BaseDisplayer
@@ -31,21 +39,21 @@ class Mission;
 */
 // Created: AGE 2006-02-09
 // =============================================================================
-class BaseDisplayer : public Displayer_ABC
-                  , public Caller< bool >
-                  , public Caller< Population_ABC>
-                  , public Caller< PopulationConcentration >
-                  , public Caller< Agent_ABC >
-                  , public Caller< Object_ABC >
-                  , public Caller< Team_ABC >
-                  , public Caller< DotationType >
-                  , public Caller< EquipmentType >
-                  , public Caller< NBCAgent >
-                  , public Caller< ComponentType >
-                  , public Caller< BreakdownType >
-                  , public Caller< ObjectType >
-                  , public Caller< QTime >
-                  , public Caller< Mission >
+class BaseDisplayer : public kernel::Displayer_ABC
+                  , public kernel::Caller< bool >
+                  , public kernel::Caller< kernel::Population_ABC>
+                  , public kernel::Caller< PopulationConcentration >
+                  , public kernel::Caller< kernel::Agent_ABC >
+                  , public kernel::Caller< kernel::Object_ABC >
+                  , public kernel::Caller< kernel::Team_ABC >
+                  , public kernel::Caller< kernel::DotationType >
+                  , public kernel::Caller< kernel::EquipmentType >
+                  , public kernel::Caller< kernel::NBCAgent >
+                  , public kernel::Caller< kernel::ComponentType >
+                  , public kernel::Caller< kernel::BreakdownType >
+                  , public kernel::Caller< kernel::ObjectType >
+                  , public kernel::Caller< QTime >
+                  , public kernel::Caller< kernel::Mission >
 {
 
 public:
@@ -65,20 +73,22 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const bool& value );
-    virtual void Call( const Agent_ABC& value );
-    virtual void Call( const Population_ABC& value );
+    virtual void Call( const kernel::Agent_ABC& value );
+    virtual void Call( const kernel::Population_ABC& value );
     virtual void Call( const PopulationConcentration& value );
-    virtual void Call( const Object_ABC& value );
-    virtual void Call( const Team_ABC& value );
-    virtual void Call( const DotationType& value );
-    virtual void Call( const EquipmentType& value );
-    virtual void Call( const NBCAgent& value );
-    virtual void Call( const ComponentType& value );
-    virtual void Call( const BreakdownType& value );
-    virtual void Call( const ObjectType& value );
+    virtual void Call( const kernel::Object_ABC& value );
+    virtual void Call( const kernel::Team_ABC& value );
+    virtual void Call( const kernel::DotationType& value );
+    virtual void Call( const kernel::EquipmentType& value );
+    virtual void Call( const kernel::NBCAgent& value );
+    virtual void Call( const kernel::ComponentType& value );
+    virtual void Call( const kernel::BreakdownType& value );
+    virtual void Call( const kernel::ObjectType& value );
     virtual void Call( const QTime& value );
-    virtual void Call( const Mission& value );
+    virtual void Call( const kernel::Mission& value );
     //@}
 };
+
+}
 
 #endif // __BaseDisplayer_h_

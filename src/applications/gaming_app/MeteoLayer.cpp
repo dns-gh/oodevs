@@ -13,6 +13,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MeteoLayer constructor
 // Created: AGE 2006-04-04

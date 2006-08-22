@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-17 $
-// $Archive: /MVW_v10/Build/SDK/ENT/src/ENT_Tr_ABC.h $
-// $Author: Age $
-// $Modtime: 9/05/05 14:58 $
-// $Revision: 3 $
-// $Workfile: ENT_Tr_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __ENT_Tr_ABC_h_
 #define __ENT_Tr_ABC_h_

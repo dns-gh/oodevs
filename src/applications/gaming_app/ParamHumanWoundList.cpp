@@ -14,6 +14,8 @@
 
 #include "ENT/ENT_Tr.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27

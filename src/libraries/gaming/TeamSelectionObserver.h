@@ -12,11 +12,14 @@
 
 #include "clients_kernel/SelectionObserver_ABC.h"
 
-class Agent_ABC;
-class KnowledgeGroup_ABC;
-class Team_ABC;
-class Object_ABC;
-class Population_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class KnowledgeGroup_ABC;
+    class Team_ABC;
+    class Object_ABC;
+    class Population_ABC;
+}
 
 // =============================================================================
 /** @class  TeamSelectionObserver
@@ -24,13 +27,12 @@ class Population_ABC;
 */
 // Created: AGE 2006-02-24
 // =============================================================================
-class TeamSelectionObserver
-    : public SelectionObserver_ABC
-    , public SelectionObserver_Base< Team_ABC >
-    , public SelectionObserver_Base< KnowledgeGroup_ABC >
-    , public SelectionObserver_Base< Agent_ABC >
-    , public SelectionObserver_Base< Object_ABC >
-    , public SelectionObserver_Base< Population_ABC>
+class TeamSelectionObserver : public kernel::SelectionObserver_ABC
+                            , public kernel::SelectionObserver_Base< kernel::Team_ABC >
+                            , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
+                            , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
+                            , public kernel::SelectionObserver_Base< kernel::Object_ABC >
+                            , public kernel::SelectionObserver_Base< kernel::Population_ABC>
 {
 
 public:
@@ -52,18 +54,18 @@ protected:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const Team_ABC& element );
-    virtual void Select( const KnowledgeGroup_ABC& element );
-    virtual void Select( const Agent_ABC& element );
-    virtual void Select( const Object_ABC& element );
-    virtual void Select( const Population_ABC& element );
-    virtual void Select( const Team_ABC* ) = 0;
+    virtual void Select( const kernel::Team_ABC& element );
+    virtual void Select( const kernel::KnowledgeGroup_ABC& element );
+    virtual void Select( const kernel::Agent_ABC& element );
+    virtual void Select( const kernel::Object_ABC& element );
+    virtual void Select( const kernel::Population_ABC& element );
+    virtual void Select( const kernel::Team_ABC* ) = 0;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Team_ABC* selected_;
+    const kernel::Team_ABC* selected_;
     //@}
 };
 

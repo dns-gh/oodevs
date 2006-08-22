@@ -12,6 +12,7 @@
 #include "xeumeuleu/xml.h"
 #include "PathTools.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

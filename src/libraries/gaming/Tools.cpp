@@ -12,6 +12,8 @@
 #include "gaming_pch.h"
 #include "Tools.h"
 
+using namespace gaming;
+
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2006-08-08

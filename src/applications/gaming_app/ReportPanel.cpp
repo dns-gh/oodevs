@@ -14,6 +14,9 @@
 #include "ReportFilterOptions.h"
 #include "clients_kernel/Controllers.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ReportPanel constructor
 // Created: AGE 2006-03-09

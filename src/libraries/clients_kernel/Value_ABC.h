@@ -12,6 +12,9 @@
 
 #include "Displayer_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Value_ABC
     @brief  Value_ABC
@@ -49,5 +52,7 @@ public:
 private:
     const T* data_;
 };
+
+}
 
 #endif // __Value_ABC_h_

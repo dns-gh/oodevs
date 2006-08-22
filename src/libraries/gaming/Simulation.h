@@ -12,7 +12,10 @@
 
 #include "ASN_Types.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  Simulation
@@ -30,7 +33,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Simulation( Controllers& controllers );
+    explicit Simulation( kernel::Controllers& controllers );
     virtual ~Simulation();
     //@}
 
@@ -63,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     unsigned int tickDuration_;
     unsigned int timeFactor_;
     int time_;

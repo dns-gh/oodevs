@@ -11,6 +11,8 @@
 #include "Population_ABC.h"
 #include "ActionController.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Population_ABC constructor
 // Created: AGE 2006-08-07

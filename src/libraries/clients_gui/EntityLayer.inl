@@ -15,6 +15,9 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "graphics/MapWidget.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayer constructor
 // Created: AGE 2006-03-23

@@ -10,7 +10,9 @@
 #ifndef __DetectionMapIterator_h_
 #define __DetectionMapIterator_h_
 
-class DetectionMap;
+namespace kernel
+{
+    class DetectionMap;
 
 // =============================================================================
 /** @class  DetectionMapIterator
@@ -71,5 +73,7 @@ private:
     bool horizontalLine_;
     //@}
 };
+
+}
 
 #endif // __DetectionMapIterator_h_

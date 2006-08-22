@@ -10,7 +10,10 @@
 #ifndef __DotationRequest_h_
 #define __DotationRequest_h_
 
-class DotationType;
+namespace kernel
+{
+    class DotationType;
+}
 
 // =============================================================================
 /** @class  DotationRequest
@@ -24,7 +27,7 @@ class DotationRequest
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationRequest( const DotationType& type, unsigned int requested, unsigned int granted, unsigned int convoyed );
+             DotationRequest( const kernel::DotationType& type, unsigned int requested, unsigned int granted, unsigned int convoyed );
     virtual ~DotationRequest();
     //@}
 
@@ -35,7 +38,7 @@ public:
 public:
     //! @name Member data
     //@{
-    const DotationType* type_;
+    const kernel::DotationType* type_;
     unsigned int requested_;
     unsigned int granted_;
     unsigned int convoyed_;

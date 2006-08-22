@@ -21,6 +21,9 @@
 #include "SubItemDisplayer.h"
 #include "ItemFactory_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentSupplyPanel constructor
 // Created: AGE 2005-04-01

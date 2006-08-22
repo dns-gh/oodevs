@@ -10,7 +10,13 @@
 #ifndef __ShapeHandler_ABC_h_
 #define __ShapeHandler_ABC_h_
 
-class Location_ABC;
+namespace kernel
+{
+    class Location_ABC;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  ShapeHandler_ABC
@@ -30,8 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Handle( Location_ABC& location ) = 0;
+    virtual void Handle( kernel::Location_ABC& location ) = 0;
     //@}
 };
+
+}
 
 #endif // __ShapeHandler_ABC_h_

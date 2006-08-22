@@ -15,6 +15,9 @@
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23

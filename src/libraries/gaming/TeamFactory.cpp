@@ -20,6 +20,8 @@
 #include "AgentKnowledgeFactory.h"
 #include "clients_kernel/Controllers.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15

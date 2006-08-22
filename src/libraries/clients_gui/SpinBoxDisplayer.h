@@ -12,7 +12,13 @@
 
 #include "clients_kernel/Displayer_ABC.h"
 
-class Unit;
+namespace kernel
+{
+    class Unit;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  SpinBoxDisplayer
@@ -20,11 +26,11 @@ class Unit;
 */
 // Created: AGE 2006-02-23
 // =============================================================================
-class SpinBoxDisplayer : public Displayer_ABC
-                       , public Caller< double >
-                       , public Caller< float >
-                       , public Caller< int >
-                       , public Caller< Unit >
+class SpinBoxDisplayer : public kernel::Displayer_ABC
+                       , public kernel::Caller< double >
+                       , public kernel::Caller< float >
+                       , public kernel::Caller< int >
+                       , public kernel::Caller< kernel::Unit >
 {
 
 public:
@@ -56,7 +62,7 @@ private:
     virtual void Call( const double& value );
     virtual void Call( const float& value );
     virtual void Call( const int& value );
-    virtual void Call( const Unit& value );
+    virtual void Call( const kernel::Unit& value );
     //@}
 
 private:
@@ -65,5 +71,7 @@ private:
     QSpinBox* edit_;
     //@}
 };
+
+}
 
 #endif // __SpinBoxDisplayer_h_

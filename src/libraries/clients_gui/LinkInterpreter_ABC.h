@@ -12,9 +12,15 @@
 
 #include "clients_kernel/Resolver_ABC.h"
 
-class Model;
-class ActionController;
-class Entity_ABC;
+
+namespace kernel
+{
+    class ActionController;
+    class Entity_ABC;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  LinkInterpreter_ABC
@@ -29,7 +35,7 @@ class LinkInterpreter_ABC : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkInterpreter_ABC( QObject* parent, ActionController& actions );
+             LinkInterpreter_ABC( QObject* parent, kernel::ActionController& actions );
     virtual ~LinkInterpreter_ABC();
     //@}
 
@@ -42,8 +48,8 @@ public slots:
 protected:
     //! @name Operations
     //@{
-    void AddEntity   ( const QString& category, const Entity_ABC& entity );
-    void RemoveEntity( const QString& category, const Entity_ABC& entity );
+    void AddEntity   ( const QString& category, const kernel::Entity_ABC& entity );
+    void RemoveEntity( const QString& category, const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -62,16 +68,18 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, const Entity_ABC* > T_Entities;
+    typedef std::map< unsigned int, const kernel::Entity_ABC* > T_Entities;
     typedef std::map< QString, T_Entities >             T_TypedEntities;
     //@}
 
 private:
     //! @name Member data
     //@{
-    ActionController& actions_;
+    kernel::ActionController& actions_;
     T_TypedEntities entites_;
     //@}
 };
+
+}
 
 #endif // __LinkInterpreter_ABC_h_

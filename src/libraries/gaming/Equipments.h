@@ -15,10 +15,14 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"
 
-class Controller;
+namespace kernel
+{
+    class Controller;
+    class EquipmentType;
+    class DataDictionary;
+}
+
 class Equipment;
-class EquipmentType;
-class DataDictionary;
 
 // =============================================================================
 /** @class  Equipments
@@ -26,15 +30,15 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Equipments : public Extension_ABC
-                 , public Updatable_ABC< ASN1T_MsgUnitDotations >
-                 , public Resolver< Equipment >
+class Equipments : public kernel::Extension_ABC
+                 , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
+                 , public kernel::Resolver< Equipment >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, DataDictionary& dico );
+             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::DataDictionary& dico );
     virtual ~Equipments();
     //@}
 
@@ -54,9 +58,9 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< EquipmentType >& resolver_;
-    DataDictionary& dico_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
+    kernel::DataDictionary& dico_;
     //@}
 };
 

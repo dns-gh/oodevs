@@ -10,8 +10,15 @@
 #ifndef __AttributeViewCellEditor_h_
 #define __AttributeViewCellEditor_h_
 
-class DataDictionary;
 class QTableItem;
+
+namespace kernel
+{
+    class DataDictionary;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  AttributeViewCellEditor
@@ -26,7 +33,7 @@ class AttributeViewCellEditor : public QLineEdit
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeViewCellEditor( QWidget* parent, const DataDictionary& dictionary, QTableItem* myItem );
+             AttributeViewCellEditor( QWidget* parent, const kernel::DataDictionary& dictionary, QTableItem* myItem );
     virtual ~AttributeViewCellEditor();
     //@}
 
@@ -52,11 +59,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const DataDictionary& dictionary_;
+    const kernel::DataDictionary& dictionary_;
     QTableItem* myItem_;
     QPopupMenu* menu_;
     QListBox* list_;
     //@}
 };
+
+}
 
 #endif // __AttributeViewCellEditor_h_

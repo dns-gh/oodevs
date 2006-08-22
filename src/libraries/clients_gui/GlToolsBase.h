@@ -11,7 +11,10 @@
 #define __GlToolsBase_h_
 
 #include "clients_kernel/GlTools_ABC.h"
-class GlFont;
+
+namespace gui
+{
+    class GlFont;
 
 // =============================================================================
 /** @class  GlToolsBase
@@ -19,13 +22,13 @@ class GlFont;
 */
 // Created: AGE 2006-04-07
 // =============================================================================
-class GlToolsBase : public GlTools_ABC
+class GlToolsBase : public kernel::GlTools_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GlToolsBase( Controllers& controllers );
+    explicit GlToolsBase( kernel::Controllers& controllers );
     virtual ~GlToolsBase();
     //@}
 
@@ -60,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     mutable bool selected_;
 
     T_Icons         icons_;
@@ -69,5 +72,7 @@ private:
     GlFont* app6OutlinedFont_;
     //@}
 };
+
+}
 
 #endif // __GlToolsBase_h_

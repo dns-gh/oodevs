@@ -13,7 +13,11 @@
 #include "ASN_Types.h"
 #include "PopulationPart_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-class CoordinateConverter_ABC;
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -24,7 +28,7 @@ class PopulationConcentration : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter_ABC& converter, float density );
+             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter, float density );
     virtual ~PopulationConcentration();
     //@}
 
@@ -38,16 +42,16 @@ public:
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     virtual geometry::Point2f GetPosition() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
 
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
 private:

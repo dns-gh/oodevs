@@ -12,6 +12,8 @@
 #include "ObjectFactory_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectsModel constructor
 // Created: AGE 2006-02-10

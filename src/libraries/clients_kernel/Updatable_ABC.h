@@ -10,6 +10,9 @@
 #ifndef __Updatable_ABC_h_
 #define __Updatable_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Updatable_ABC
     @brief  Updatable definition
@@ -32,5 +35,7 @@ public:
     virtual void DoUpdate( const T& updateMessage ) = 0; // $$$$ AGE 2006-02-15: DoUpdate c'est pas terrible
     //@}
 };
+
+}
 
 #endif // __Updatable_ABC_h_

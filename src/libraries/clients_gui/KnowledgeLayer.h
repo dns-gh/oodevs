@@ -12,6 +12,9 @@
 
 #include "EntityLayer.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  KnowledgeLayer
     @brief  Knowledge layer
@@ -74,6 +77,8 @@ bool KnowledgeLayer< KnowledgeType >::ShouldDisplay( const Entity_ABC& entity )
     return currentTeam_
         && k.IsInTeam( *currentTeam_ )
         && ! k.KnowledgeIsInTeam( *currentTeam_ );
+}
+
 }
 
 #endif // __KnowledgeLayer_h_

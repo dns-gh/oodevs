@@ -12,6 +12,9 @@
 #include "gaming/ASN_Messages.h"
 #include "clients_kernel/Units.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: CrossingSitePrototype constructor
 // Created: SBO 2006-04-19

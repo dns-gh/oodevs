@@ -16,6 +16,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AutomatType.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14

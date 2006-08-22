@@ -12,7 +12,11 @@
 
 #include "clients_gui/ListDisplayer.h"
 
-class SubItemDisplayer;
+namespace gui
+{
+    class SubItemDisplayer;
+}
+
 class PopulationFireResult;
 class AgentFireResult;
 class Equipment;
@@ -24,22 +28,22 @@ class Casualties;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class FireResultListView : public ListDisplayer< FireResultListView >
+class FireResultListView : public gui::ListDisplayer< FireResultListView >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FireResultListView( QWidget* parent, ItemFactory_ABC& factory );
+             FireResultListView( QWidget* parent, gui::ItemFactory_ABC& factory );
     virtual ~FireResultListView();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const PopulationFireResult* result, Displayer_ABC& displayer, ValuedListItem* item );
-    void Display( const AgentFireResult* result, Displayer_ABC& displayer, ValuedListItem* item );
-    void Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* item );
-    void Display( const Casualties& casualties, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const PopulationFireResult* result, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const AgentFireResult* result, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const Equipment& equipment, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const Casualties& casualties, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 private:
@@ -52,8 +56,8 @@ private:
 private:
     //! @name Member data
     //@{
-    ItemFactory_ABC& factory_;
-    SubItemDisplayer* agentDisplay_;
+    gui::ItemFactory_ABC& factory_;
+    gui::SubItemDisplayer* agentDisplay_;
     //@}
 };
 

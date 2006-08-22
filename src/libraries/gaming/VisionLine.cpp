@@ -12,6 +12,7 @@
 #include "clients_kernel/DetectionMap.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: VisionLine constructor

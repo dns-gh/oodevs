@@ -45,6 +45,9 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "OptionalParamFunctor_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20

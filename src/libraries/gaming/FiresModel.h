@@ -13,9 +13,12 @@
 #include "clients_kernel/Resolver.h"
 #include "ASN_Types.h"
 
-class Agent_ABC;
-class Entity_ABC;
-class Population_ABC;
+namespace kernel
+{
+    class Agent_ABC;
+    class Entity_ABC;
+    class Population_ABC;
+}
 
 // =============================================================================
 /** @class  FiresModel
@@ -23,13 +26,13 @@ class Population_ABC;
 */
 // Created: AGE 2006-03-13
 // =============================================================================
-class FiresModel : public Resolver< Entity_ABC >
+class FiresModel : public kernel::Resolver< kernel::Entity_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const Resolver_ABC< Agent_ABC >& agents, const Resolver_ABC< Population_ABC >& populations );
+             FiresModel( const kernel::Resolver_ABC< kernel::Agent_ABC >& agents, const kernel::Resolver_ABC< kernel::Population_ABC >& populations );
     virtual ~FiresModel();
     //@}
 
@@ -39,8 +42,8 @@ public:
 
     void AddFire        ( const ASN1T_MsgStartPionFire& message );
     void AddFire        ( const ASN1T_MsgStartPopulationFire& message );
-    Entity_ABC* FindFirer( const ASN1T_MsgStopPionFire& message );
-    Entity_ABC* FindFirer( const ASN1T_MsgStopPopulationFire& message );
+    kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopPionFire& message );
+    kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopPopulationFire& message );
     void RemoveFire     ( const ASN1T_MsgStopPionFire& message );
     void RemoveFire     ( const ASN1T_MsgStopPopulationFire& message );
     //@}
@@ -55,8 +58,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const Resolver_ABC< Agent_ABC >& agents_;
-    const Resolver_ABC< Population_ABC >& populations_;
+    const kernel::Resolver_ABC< kernel::Agent_ABC >& agents_;
+    const kernel::Resolver_ABC< kernel::Population_ABC >& populations_;
     //@}
 };
 

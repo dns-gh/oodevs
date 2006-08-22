@@ -15,6 +15,9 @@ namespace xml
     class xistream;
 }
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  AgentNature
     @brief  Agent_ABC nature
@@ -61,5 +64,7 @@ private:
     T_Natures natures_;
     //@}
 };
+
+}
 
 #endif // __AgentNature_h_

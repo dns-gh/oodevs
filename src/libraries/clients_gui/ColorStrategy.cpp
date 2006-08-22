@@ -23,6 +23,9 @@
 #include "gaming/PopulationKnowledge.h"
 #include "gaming/AgentKnowledge.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy constructor
 // Created: AGE 2006-03-17

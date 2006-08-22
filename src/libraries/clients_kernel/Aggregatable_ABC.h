@@ -10,6 +10,9 @@
 #ifndef __Aggregatable_ABC_h_
 #define __Aggregatable_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Aggregatable_ABC
     @brief  Aggregatable_ABC
@@ -31,5 +34,7 @@ public:
     virtual void Aggregate( const bool& ) = 0;
     //@}
 };
+
+}
 
 #endif // __Aggregatable_ABC_h_

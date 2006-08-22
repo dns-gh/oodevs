@@ -14,11 +14,19 @@
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 
+namespace kernel
+{
+    class ObjectType;
+    class ObjectTypes;
+    class CoordinateConverter_ABC;
+}
+
+namespace gui
+{
+    class ParametersLayer;
+}
+
 class ParamLocation;
-class ObjectTypes;
-class ObjectType;
-class ParametersLayer;
-class CoordinateConverter_ABC;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -32,14 +40,14 @@ class ParamObstacle : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter );
+             ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const std::string& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamObstacle();
     //@}
 
     //! @name Operations
     //@{
     virtual void RemoveFromController();
-    virtual void RegisterIn( ActionController& controller );
+    virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
     virtual void Commit();
     void CommitTo( ASN1T_MissionGenObject& destination );
@@ -58,7 +66,7 @@ private:
     ASN1T_MissionGenObject& asnObject_;
     ParamLocation* location_;
 
-    ValuedComboBox< const ObjectType* >* typeCombo_;
+    gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
     QComboBox* urgencyCombo_; // $$$$ SBO 2006-06-28: ValuedComboBox< EmergencyType > ?
     QComboBox* preliminaryCombo_;
     QComboBox* priorityCombo_;

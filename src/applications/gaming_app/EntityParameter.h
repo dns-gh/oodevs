@@ -15,7 +15,10 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class RichLabel;
+namespace gui
+{
+    class RichLabel;
+}
 
 // =============================================================================
 /** @class  EntityParameterBase
@@ -23,7 +26,8 @@ class RichLabel;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class EntityParameterBase : public QHBox, public Param_ABC
+class EntityParameterBase : public QHBox
+                          , public Param_ABC
 {
     Q_OBJECT;
 
@@ -45,7 +49,7 @@ protected:
     //@{
     bool Invalid();
     void SetId( ASN1T_OID id );
-    void AddToMenu( ContextMenu& menu );
+    void AddToMenu( kernel::ContextMenu& menu );
     void Display( const QString& what );
     //@}
 
@@ -54,7 +58,7 @@ private:
     //@{
     ASN1T_OID& id_;
     std::string menu_;
-    RichLabel* pLabel_;
+    gui::RichLabel* pLabel_;
     QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
     //@}
 };
@@ -67,8 +71,8 @@ private:
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityParameter : public EntityParameterBase
-                      , public ContextMenuObserver_ABC< ConcreteEntity >
-                      , public ElementObserver_ABC< ConcreteEntity >
+                      , public kernel::ContextMenuObserver_ABC< ConcreteEntity >
+                      , public kernel::ElementObserver_ABC< ConcreteEntity >
 {
 public:
     //! @name Constructors/Destructor
@@ -93,7 +97,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     virtual void MenuItemValidated();
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );

@@ -16,10 +16,17 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class DetectionMap;
 class ElevationTextureTree;
-class Controller;
 class ModelLoaded;
+
+namespace kernel
+{
+    class Controller;
+    class DetectionMap;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  Elevation3dLayer
@@ -29,14 +36,14 @@ class ModelLoaded;
 // =============================================================================
 class Elevation3dLayer : public Layer3d_ABC
                        , private ElevationColor_ABC
-                       , public Observer_ABC
-                       , public ElementObserver_ABC< ModelLoaded >
+                       , public kernel::Observer_ABC
+                       , public kernel::ElementObserver_ABC< ModelLoaded >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation3dLayer( Controller& controller, const DetectionMap& elevation );
+             Elevation3dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation );
     virtual ~Elevation3dLayer();
     //@}
 
@@ -62,13 +69,15 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const DetectionMap& elevation_;
+    kernel::Controller& controller_;
+    const kernel::DetectionMap& elevation_;
     ViewFrustum lastFrustum_;
     ElevationTextureTree* tree_;
     float zRatio_;
     bool modelLoaded_;
     //@}
 };
+
+}
 
 #endif // __Elevation3dLayer_h_

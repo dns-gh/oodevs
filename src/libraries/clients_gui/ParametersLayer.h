@@ -11,10 +11,17 @@
 #define __ParametersLayer_h_
 
 #include "Layer_ABC.h"
-class GlTools_ABC;
-class ShapeHandler_ABC;
-class Location_ABC;
-class Positions;
+
+namespace kernel
+{
+    class GlTools_ABC;
+    class Positions;
+    class Location_ABC;
+}
+
+namespace gui
+{
+    class ShapeHandler_ABC;
 
 // =============================================================================
 /** @class  ParametersLayer
@@ -28,7 +35,7 @@ class ParametersLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParametersLayer( const GlTools_ABC& tools );
+    explicit ParametersLayer( const kernel::GlTools_ABC& tools );
     virtual ~ParametersLayer();
     //@}
 
@@ -38,8 +45,8 @@ public:
     void StartLine   ( ShapeHandler_ABC& handler );
     void StartPolygon( ShapeHandler_ABC& handler );
     void StartCircle ( ShapeHandler_ABC& handler );
-    void StartPath   ( ShapeHandler_ABC& handler, const Positions& position );
-    void Start       ( ShapeHandler_ABC& handler, Location_ABC& location );
+    void StartPath   ( ShapeHandler_ABC& handler, const kernel::Positions& position );
+    void Start       ( ShapeHandler_ABC& handler, kernel::Location_ABC& location );
 
     void AddPoint( const geometry::Point2f& point );
 
@@ -67,11 +74,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
+    const kernel::GlTools_ABC& tools_;
     ShapeHandler_ABC* handler_;
-    Location_ABC* current_;
+    kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;
     //@}
 };
+
+}
 
 #endif // __ParametersLayer_h_

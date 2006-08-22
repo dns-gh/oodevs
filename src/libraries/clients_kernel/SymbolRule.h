@@ -10,13 +10,12 @@
 #ifndef __SymbolRule_h_
 #define __SymbolRule_h_
 
-namespace xml
-{
-    class xistream;
-}
+namespace xml { class xistream; }
 
-class SymbolCase;
-class SymbolRequest;
+namespace kernel
+{
+    class SymbolCase;
+    class SymbolRequest;
 
 // =============================================================================
 /** @class  SymbolRule
@@ -66,5 +65,7 @@ private:
     T_Cases     cases_;
     //@}
 };
+
+}
 
 #endif // __SymbolRule_h_

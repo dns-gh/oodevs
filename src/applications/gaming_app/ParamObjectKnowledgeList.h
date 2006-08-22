@@ -13,8 +13,12 @@
 #include "gaming/ASN_Types.h"
 #include "EntityListParameter.h"
 
+namespace kernel
+{
+    class Object_ABC;
+}
+
 class ObjectKnowledge;
-class Object_ABC;
 
 // =============================================================================
 /** @class  ParamObjectKnowledgeList
@@ -23,7 +27,7 @@ class Object_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamObjectKnowledgeList : public EntityListParameter< ObjectKnowledge >
-                               , public ContextMenuObserver_ABC< Object_ABC > 
+                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC > 
 {
 
 public:
@@ -43,7 +47,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     //@}
 };
 

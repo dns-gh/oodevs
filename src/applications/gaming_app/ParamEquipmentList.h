@@ -16,7 +16,10 @@
 
 #include <qtable.h>
 
-class EquipmentType;
+namespace kernel
+{
+    class EquipmentType;
+}
 
 // =============================================================================
 /** @class  ParamEquipmentList
@@ -32,7 +35,7 @@ class ParamEquipmentList : public QTable
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, const Resolver< EquipmentType >& resolver );
+             ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, const kernel::Resolver< kernel::EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 
@@ -50,7 +53,7 @@ private slots:
 private:
     //! @name Types
     //@{
-    typedef std::map< QString, const EquipmentType* > T_EquipmentTypes;
+    typedef std::map< QString, const kernel::EquipmentType* > T_EquipmentTypes;
     //@}
 
 private:

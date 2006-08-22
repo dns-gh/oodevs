@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "Tools.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2005-03-31

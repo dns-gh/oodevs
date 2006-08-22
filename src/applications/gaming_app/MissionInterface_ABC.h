@@ -14,15 +14,23 @@
 #include "ParamComboBox.h"
 #include "ParamRadioBtnGroup.h"
 
-class ActionController;
-class Entity_ABC;
-class Agent_ABC;
+namespace kernel
+{
+    class ActionController;
+    class Entity_ABC;
+    class Agent_ABC;
+    class CoordinateConverter_ABC;
+    class GlTools_ABC;
+    class ObjectTypes;
+}
+
+namespace gui
+{
+    class ParametersLayer;
+}
+
 class Param_ABC;
-class ParametersLayer;
-class CoordinateConverter_ABC;
-class GlTools_ABC;
 class AgentKnowledgeConverter_ABC;
-class ObjectTypes;
 class OptionalParamFunctor_ABC;
 
 // =============================================================================
@@ -37,16 +45,16 @@ class MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller, ParametersLayer& layer, 
-                                   const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter,
-                                   const ObjectTypes& objectTypes );
+             MissionInterface_ABC( QWidget* parent, kernel::Entity_ABC& agent, kernel::ActionController& controller, gui::ParametersLayer& layer, 
+                                   const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter,
+                                   const kernel::ObjectTypes& objectTypes );
     virtual ~MissionInterface_ABC();
     //@}
 
     //! @name Operations
     //@{
     bool CheckValidity();
-    void Draw( const GlTools_ABC& tools, const geometry::Rectangle2f& extent ) const;
+    void Draw( const kernel::GlTools_ABC& tools, const geometry::Rectangle2f& extent ) const;
     bool IsEmpty() const;
     //@}
 
@@ -141,12 +149,12 @@ protected:
 private:
     //! @name Member data
     //@{
-    ActionController& controller_;
-    Entity_ABC& agent_;
-    ParametersLayer& layer_;
-    const CoordinateConverter_ABC& converter_;
+    kernel::ActionController& controller_;
+    kernel::Entity_ABC& agent_;
+    gui::ParametersLayer& layer_;
+    const kernel::CoordinateConverter_ABC& converter_;
     AgentKnowledgeConverter_ABC& knowledgeConverter_;
-    const ObjectTypes& objectTypes_;
+    const kernel::ObjectTypes& objectTypes_;
 
     T_Parameters  parameters_;
     T_OptionalFunctors optionalFunctors_;

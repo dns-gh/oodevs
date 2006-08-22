@@ -16,10 +16,13 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-class Controller;
-class Displayer_ABC;
-class NBCAgent;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+    class NBCAgent;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  Contaminations
@@ -27,22 +30,22 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Contaminations : public Extension_ABC
-                     , public Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public Drawable_ABC
+class Contaminations : public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                     , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, DataDictionary& dico );
+             Contaminations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::DataDictionary& dico );
     virtual ~Contaminations();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -54,7 +57,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const NBCAgent* > T_NbcAgents;
+    typedef std::vector< const kernel::NBCAgent* > T_NbcAgents;
     //@}
 
     //! @name Helpers
@@ -65,8 +68,8 @@ private:
 public:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const Resolver_ABC< NBCAgent >& resolver_;
+    kernel::Controller& controller_;
+    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
     bool        bNbcProtectionSuitWorn_;
     T_NbcAgents contaminatingNbcAgents_;
     int         nContamination_;

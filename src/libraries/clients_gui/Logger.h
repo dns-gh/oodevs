@@ -13,7 +13,9 @@
 #include "Types.h"
 #include "MT/MT_logger/MT_Logger_ABC.h"
 
-class ItemFactory_ABC;
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  Logger
@@ -65,5 +67,7 @@ private:
     QPopupMenu popupMenu_;
     //@}
 };
+
+}
 
 #endif // __Logger_h_

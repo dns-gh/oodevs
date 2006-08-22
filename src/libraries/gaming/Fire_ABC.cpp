@@ -11,6 +11,8 @@
 #include "Fire_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Fire_ABC constructor
 // Created: AGE 2006-03-10

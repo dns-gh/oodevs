@@ -10,12 +10,16 @@
 #ifndef __StaticModel_h_
 #define __StaticModel_h_
 
-class AgentTypes;
-class ObjectTypes;
+namespace kernel
+{
+    class AgentTypes;
+    class ObjectTypes;
+    class DetectionMap;
+    class Controllers;
+}
+
 class CoordinateConverter;
-class DetectionMap;
 class SurfaceFactory;
-class Controllers;
 
 // =============================================================================
 /** @class  StaticModel
@@ -29,7 +33,7 @@ class StaticModel
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StaticModel( Controllers& controllers );
+    explicit StaticModel( kernel::Controllers& controllers );
     virtual ~StaticModel();
     //@}
 
@@ -42,12 +46,12 @@ public:
 public:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
 
     CoordinateConverter& coordinateConverter_;
-    DetectionMap&        detection_;
-    AgentTypes&          types_;
-    ObjectTypes&         objectTypes_;
+    kernel::DetectionMap&        detection_;
+    kernel::AgentTypes&          types_;
+    kernel::ObjectTypes&         objectTypes_;
     SurfaceFactory&      surfaceFactory_;
     //@}
 

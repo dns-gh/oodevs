@@ -12,6 +12,8 @@
 #include "AgentType.h"
 #include "AgentNature.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: SymbolRequest constructor
 // Created: SBO 2006-03-20

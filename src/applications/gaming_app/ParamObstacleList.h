@@ -13,12 +13,20 @@
 #include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
 
-class ActionController;
+namespace kernel
+{
+    class ActionController;
+    class ObjectTypes;
+    class CoordinateConverter_ABC;
+}
+
+namespace gui
+{
+    class ParametersLayer;
+    class ValuedListItem;
+}
+
 class ParamListView;
-class ObjectTypes;
-class ParametersLayer;
-class CoordinateConverter_ABC;
-class ValuedListItem;
 
 // =============================================================================
 /** @class  ParamObstacleList
@@ -33,7 +41,7 @@ class ParamObstacleList : public QVBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller );
+             ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const std::string& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamObstacleList();
     //@}
 
@@ -63,15 +71,15 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionController& controller_;
-    const ObjectTypes& objectTypes_;
-    ParametersLayer& layer_;
-    const CoordinateConverter_ABC& converter_;
+    kernel::ActionController& controller_;
+    const kernel::ObjectTypes& objectTypes_;
+    gui::ParametersLayer& layer_;
+    const kernel::CoordinateConverter_ABC& converter_;
     
     ASN1T_ListMissionGenObject& asn_;
     ASN1T_MissionGenObject* objects_;
     ParamListView* listView_;
-    ValuedListItem* selected_;
+    gui::ValuedListItem* selected_;
     QPopupMenu* popup_;
     //@}
 };

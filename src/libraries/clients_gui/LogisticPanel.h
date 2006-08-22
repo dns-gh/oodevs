@@ -18,9 +18,15 @@
 #include "ListDisplayer.h"
 #include "SubItemDisplayer.h"
 
-class ItemFactory_ABC;
-class Controllers;
-class Agent_ABC;
+namespace kernel
+{
+    class Controllers;
+    class Agent_ABC;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  LogisticPanel
@@ -30,10 +36,10 @@ class Agent_ABC;
 // =============================================================================
 template< typename ConcretePanel, typename Consign >
 class LogisticPanel : public InfoPanel_ABC
-                    , public Observer_ABC
-                    , public SelectionObserver< Agent_ABC >
-                    , public ElementObserver_ABC< LogisticConsigns >
-                    , public ElementObserver_ABC< Consign >
+                    , public kernel::Observer_ABC
+                    , public kernel::SelectionObserver< kernel::Agent_ABC >
+                    , public kernel::ElementObserver_ABC< LogisticConsigns >
+                    , public kernel::ElementObserver_ABC< Consign >
 {
 
 public:
@@ -63,8 +69,8 @@ protected:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );
-    virtual void NotifySelected( const Agent_ABC* agent );
-    virtual void NotifySelected( const Agent_ABC& agent ) = 0;
+    virtual void NotifySelected( const kernel::Agent_ABC* agent );
+    virtual void NotifySelected( const kernel::Agent_ABC& agent ) = 0;
     virtual void NotifyUpdated( const LogisticConsigns& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
 
@@ -82,12 +88,14 @@ protected:
 private:
     //! @name Member data
     //@{
-    SafePointer< Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     ListDisplayer< ConcretePanel >* pConsignListView_;
     ListDisplayer< ConcretePanel >* pConsignHandledListView_;
     SubItemDisplayer* logDisplay_;
     //@}
 };
+
+}
 
 #include "LogisticPanel.inl"
 

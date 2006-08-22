@@ -16,10 +16,13 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 
-class Controller;
-class Displayer_ABC;
-class CoordinateConverter_ABC;
-class DataDictionary;
+namespace kernel
+{
+    class Controller;
+    class Displayer_ABC;
+    class CoordinateConverter_ABC;
+    class DataDictionary;
+}
 
 // =============================================================================
 /** @class  Attributes
@@ -27,24 +30,24 @@ class DataDictionary;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Attributes : public Extension_ABC
-                 , public Updatable_ABC< ASN1T_MsgUnitAttributes >
-                 , public Drawable_ABC
-                 , public Aggregatable_ABC
+class Attributes : public kernel::Extension_ABC
+                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                 , public kernel::Drawable_ABC
+                 , public kernel::Aggregatable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Attributes( Controller& controller, const CoordinateConverter_ABC& converter, DataDictionary& dictionary );
+             Attributes( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, kernel::DataDictionary& dictionary );
     virtual ~Attributes();
     //@}
 
     //! @name Operations
     //@{
-    void Display( Displayer_ABC& displayer ) const;
-    void DisplayInTooltip( Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Display( kernel::Displayer_ABC& displayer ) const;
+    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     float ComputePostureFactor( const std::vector< float >& factors ) const; // $$$$ AGE 2006-04-19: move in Postures ?
     //@}
@@ -65,8 +68,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    const CoordinateConverter_ABC& converter_;
+    kernel::Controller& controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
 
     geometry::Point2f vPos_;
     unsigned int nSpeed_;

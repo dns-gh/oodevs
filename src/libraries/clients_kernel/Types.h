@@ -17,6 +17,9 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 #include "ENT/ENT_Enums_Gen.h"
 
+namespace kernel
+{
+
 enum SCP_ConnMagicCookie
 {
     eConnMagicMOSServerAgentServer = 1 // $$$$ AGE 2006-08-08: crap
@@ -75,5 +78,7 @@ enum E_LightingType
 
     eNbrLightingType
 };
+
+}
 
 #endif // __Types_h_

@@ -11,7 +11,14 @@
 #define __MetricsLayer_h_
 
 #include "Layer_ABC.h"
-class GlTools_ABC;
+
+namespace kernel
+{
+    class GlTools_ABC;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  MetricsLayer
@@ -25,7 +32,7 @@ class MetricsLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MetricsLayer( GlTools_ABC& tools );
+    explicit MetricsLayer( kernel::GlTools_ABC& tools );
     virtual ~MetricsLayer();
     //@}
 
@@ -46,11 +53,13 @@ private:
 private:
     //! @name Member data
     //@{
-    GlTools_ABC& tools_;
+    kernel::GlTools_ABC& tools_;
     bool ruling_;
     geometry::Point2f start_;
     geometry::Point2f end_;
     //@}
 };
+
+}
 
 #endif // __MetricsLayer_h_

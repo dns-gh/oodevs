@@ -11,7 +11,14 @@
 #define __DefaultLayer_h_
 
 #include "Layer_ABC.h"
-class Controllers;
+
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  DefaultLayer
@@ -25,7 +32,7 @@ class DefaultLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DefaultLayer( Controllers& controllers );
+    explicit DefaultLayer( kernel::Controllers& controllers );
     virtual ~DefaultLayer();
     //@}
 
@@ -49,9 +56,11 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     geometry::Point2f point_;
     //@}
 };
+
+}
 
 #endif // __DefaultLayer_h_

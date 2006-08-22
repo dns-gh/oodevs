@@ -13,6 +13,8 @@
 #include "clients_kernel/Team_ABC.h"
 #include "TeamFactory_ABC.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: TeamsModel constructor
 // Created: AGE 2006-02-10

@@ -11,8 +11,12 @@
 #define __SubItemDisplayer_h_
 
 #include "BaseDisplayer.h"
+
 class QListViewItem;
-class ItemFactory_ABC;
+
+namespace gui
+{
+    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  SubItemDisplayer
@@ -70,5 +74,7 @@ private:
     T_Children children_;
     //@}
 };
+
+}
 
 #endif // __SubItemDisplayer_h_

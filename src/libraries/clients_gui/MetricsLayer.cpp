@@ -12,6 +12,9 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include <iomanip>
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17

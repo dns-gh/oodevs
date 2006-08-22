@@ -13,7 +13,11 @@
 #include "TeamFactory_ABC.h"
 #include "KnowledgeGroupFactory_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Model;
 
 // =============================================================================
@@ -22,20 +26,21 @@ class Model;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class TeamFactory : public TeamFactory_ABC, public KnowledgeGroupFactory_ABC
+class TeamFactory : public TeamFactory_ABC
+                  , public KnowledgeGroupFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( Controllers& controllers, Model& model );
+             TeamFactory( kernel::Controllers& controllers, Model& model );
     virtual ~TeamFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input );
-    virtual KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, const Team_ABC& team );
+    virtual kernel::Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input );
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, const kernel::Team_ABC& team );
     //@}
 
 private:
@@ -48,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     Model& model_;
     //@}
 };

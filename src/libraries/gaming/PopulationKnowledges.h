@@ -15,10 +15,14 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Resolver.h"
 
+namespace kernel
+{
+    class Controller;
+    class KnowledgeGroup_ABC;
+}
+
 class PopulationKnowledge;
-class Controller;
 class PopulationKnowledgeFactory_ABC;
-class KnowledgeGroup_ABC;
 
 // =============================================================================
 /** @class  PopulationKnowledges
@@ -26,23 +30,23 @@ class KnowledgeGroup_ABC;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class PopulationKnowledges : public Extension_ABC
-                           , public Updatable_ABC< ASN1T_MsgPopulationKnowledgeCreation >
-                           , public Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
-                           , public Updatable_ABC< ASN1T_MsgPopulationKnowledgeDestruction >
-                           , public Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
-                           , public Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeUpdate >
-                           , public Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeDestruction >
-                           , public Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeCreation >
-                           , public Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
-                           , public Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
-                           , public Resolver< PopulationKnowledge >
+class PopulationKnowledges : public kernel::Extension_ABC
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeCreation >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeCreation >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
+                           , public kernel::Resolver< PopulationKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledges( Controller& controller, const KnowledgeGroup_ABC& owner, PopulationKnowledgeFactory_ABC& factory );
+             PopulationKnowledges( kernel::Controller& controller, const kernel::KnowledgeGroup_ABC& owner, PopulationKnowledgeFactory_ABC& factory );
     virtual ~PopulationKnowledges();
     //@}
 
@@ -77,9 +81,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const KnowledgeGroup_ABC& owner_;
+    const kernel::KnowledgeGroup_ABC& owner_;
     PopulationKnowledgeFactory_ABC& factory_;
-    Controller& controller_;
+    kernel::Controller& controller_;
     //@}
 };
 

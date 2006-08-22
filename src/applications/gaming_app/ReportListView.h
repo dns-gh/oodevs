@@ -15,7 +15,11 @@
 #include "gaming/AgentSelectionObserver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Report_ABC;
 class ReportFilterOptions;
 class Reports;
@@ -26,24 +30,24 @@ class Reports;
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class ReportListView : public ListDisplayer< ReportListView >
-                     , public Observer_ABC
+class ReportListView : public gui::ListDisplayer< ReportListView >
+                     , public kernel::Observer_ABC
                      , public AgentSelectionObserver
-                     , public ElementObserver_ABC< Reports > 
-                     , public ElementObserver_ABC< Report_ABC >
+                     , public kernel::ElementObserver_ABC< Reports > 
+                     , public kernel::ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter, ItemFactory_ABC& factory );
+             ReportListView( QWidget* pParent, kernel::Controllers& controllers, const ReportFilterOptions& filter, gui::ItemFactory_ABC& factory );
     virtual ~ReportListView();
     //@}
 
     //! @name Operations
     //@{
     virtual void showEvent( QShowEvent* );
-    void Display( const Report_ABC* report, Displayer_ABC& displayer, ValuedListItem* item );
+    void Display( const Report_ABC* report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 public slots:
@@ -55,7 +59,7 @@ public slots:
 private:
     //! @name Slots
     //@{
-    virtual void NotifySelected( const Entity_ABC* element );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
 
     virtual void NotifyUpdated( const Reports& reports );
     virtual void NotifyCreated( const Report_ABC& report );
@@ -72,10 +76,10 @@ private:
 
     //! @name Member data
     //@{
-    Controllers&               controllers_;
-    ItemFactory_ABC&           factory_;
+    kernel::Controllers&               controllers_;
+    gui::ItemFactory_ABC&           factory_;
     const ReportFilterOptions& filter_;
-    const Entity_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    const kernel::Entity_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
     //@}
 };
 

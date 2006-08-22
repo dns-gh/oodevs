@@ -12,6 +12,9 @@
 
 #include "Observer_ABC.h"
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ActivationObserver_ABC
     @brief  ActivationObserver_ABC
@@ -34,5 +37,7 @@ public:
     virtual void NotifyActivated( const T& element ) = 0;
     //@}
 };
+
+}
 
 #endif // __ActivationObserver_ABC_h_

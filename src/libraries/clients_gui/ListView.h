@@ -14,6 +14,9 @@
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  ListView
     @brief  ListView
@@ -99,5 +102,7 @@ private:
     ItemFactory_ABC& factory_;
     //@}
 };
+
+}
 
 #endif // __ListView_h_

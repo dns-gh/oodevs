@@ -12,6 +12,9 @@
 #include "clients_kernel/DataDictionary.h"
 #include "AttributeViewCellEditor.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AttributeViewCell constructor
 // Created: AGE 2006-06-22

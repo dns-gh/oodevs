@@ -14,6 +14,8 @@
 #include <qpainter.h>
 #include <qcolordialog.h>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ColorButton constructor
 // Created: SBO 2006-04-04

@@ -10,6 +10,9 @@
 #ifndef __Resolver_ABC_h_
 #define __Resolver_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Resolver_ABC
     @brief  Resolver definition
@@ -33,5 +36,7 @@ public:
     virtual T& Get ( const Identifier& id ) const = 0;
     //@}
 };
+
+}
 
 #endif // __Resolver_ABC_h_

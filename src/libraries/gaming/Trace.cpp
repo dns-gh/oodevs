@@ -14,6 +14,8 @@
 #include "gaming_pch.h"
 #include "Trace.h"
 
+using namespace kernel;
+
 //-----------------------------------------------------------------------------
 // Name: Trace constructor
 // Created: NLD 2002-07-16

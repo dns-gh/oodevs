@@ -11,7 +11,10 @@
 #define __GlTools_ABC_h_
 
 #include "GLToolColors.h"
-class Controllers;
+
+namespace kernel
+{
+    class Controllers;
 
 // =============================================================================
 /** @class  GlTools_ABC
@@ -68,5 +71,7 @@ private:
     //@}
 
 };
+
+}
 
 #endif // __GlTools_ABC_h_

@@ -10,6 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "FragOrder.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: FragOrder constructor
 // Created: AGE 2006-03-14

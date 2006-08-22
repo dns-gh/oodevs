@@ -11,6 +11,8 @@
 #include "Equipment.h"
 #include "clients_kernel/EquipmentType.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: Equipment constructor
 // Created: AGE 2006-02-21

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-07-09 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/OptionsPanel.cpp $
-// $Author: Age $
-// $Modtime: 31/03/05 17:00 $
-// $Revision: 4 $
-// $Workfile: OptionsPanel.cpp $
-//
-// *****************************************************************************
 
 #include "clients_gui_pch.h"
 #include "OptionsPanel.h"
@@ -23,6 +14,9 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "Settings.h"
+
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: OptionsPanel constructor

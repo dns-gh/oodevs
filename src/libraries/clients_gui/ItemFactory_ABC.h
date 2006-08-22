@@ -10,8 +10,10 @@
 #ifndef __ItemFactory_ABC_h_
 #define __ItemFactory_ABC_h_
 
-class ValuedListItem;
-class RichLabel;
+namespace gui
+{
+    class ValuedListItem;
+    class RichLabel;
 
 // =============================================================================
 /** @class  ItemFactory_ABC
@@ -41,5 +43,7 @@ public:
     virtual RichLabel*      CreateLabel( const QString& text, bool required, QWidget* parent = 0, const char* name = 0 ) = 0;
     //@}
 };
+
+}
 
 #endif // __ItemFactory_ABC_h_

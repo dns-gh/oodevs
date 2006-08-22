@@ -15,6 +15,8 @@
 #include "PopulationKnowledge.h"
 #include "clients_kernel/Controllers.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter constructor
 // Created: AGE 2006-05-18

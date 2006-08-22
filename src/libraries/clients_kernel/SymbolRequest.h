@@ -10,7 +10,9 @@
 #ifndef __SymbolRequest_h_
 #define __SymbolRequest_h_
 
-class AgentNature;
+namespace kernel
+{
+    class AgentNature;
 
 // =============================================================================
 /** @class  SymbolRequest
@@ -46,5 +48,7 @@ private:
     const AgentNature& nature_;
     //@}
 };
+
+}
 
 #endif // __SymbolRequest_h_

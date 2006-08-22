@@ -13,6 +13,9 @@
 #include "GlWidget.h"
 #include "Layer_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GlProxy constructor
 // Created: AGE 2006-03-29

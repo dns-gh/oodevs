@@ -14,7 +14,10 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-class CoordinateConverter_ABC;
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
 
 // =============================================================================
 /** @class  AgentKnowledgePositions
@@ -22,14 +25,14 @@ class CoordinateConverter_ABC;
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class AgentKnowledgePositions : public Positions
-                              , public Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+class AgentKnowledgePositions : public kernel::Positions
+                              , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentKnowledgePositions( const CoordinateConverter_ABC& converter );
+    explicit AgentKnowledgePositions( const kernel::CoordinateConverter_ABC& converter );
     virtual ~AgentKnowledgePositions();
     //@}
 
@@ -57,7 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const CoordinateConverter_ABC& converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     geometry::Point2f position_;
     //@}
 };

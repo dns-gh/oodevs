@@ -11,6 +11,8 @@
 #include "SetGlOptions.h"
 #include <qgl.h>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: SetGlOptions constructor
 // Created: AGE 2006-03-16
