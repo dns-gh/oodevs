@@ -33,7 +33,7 @@
 #include "MeteoLayer.h"
 #include "ObjectKnowledgesLayer.h"
 #include "StatusBar.h"
-#include "BigBrother.h"
+#include "Spy.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -140,15 +140,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListDockWnd_->setCaption( tr( "Unités" ) );
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
-    // BigBrother
-    QDockWindow* pBigBrotherWnd = new QDockWindow( this );
-    moveDockWindow( pBigBrotherWnd, Qt::DockLeft );
-    spy_ = new BigBrother( pBigBrotherWnd, controllers );
-    pBigBrotherWnd->setWidget( spy_ );
-    pBigBrotherWnd->setResizeEnabled( true );
-    pBigBrotherWnd->setCloseMode( QDockWindow::Always );
-    pBigBrotherWnd->setCaption( tr( "Espion" ) );
-    setDockEnabled( pBigBrotherWnd, Qt::DockTop, false );
+    // Spy
+    QDockWindow* pSpyWnd = new QDockWindow( this );
+    moveDockWindow( pSpyWnd, Qt::DockLeft );
+    spy_ = new Spy( pSpyWnd, controllers );
+    pSpyWnd->setWidget( spy_ );
+    pSpyWnd->setResizeEnabled( true );
+    pSpyWnd->setCloseMode( QDockWindow::Always );
+    pSpyWnd->setCaption( tr( "Espion" ) );
+    setDockEnabled( pSpyWnd, Qt::DockTop, false );
 
     MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ ); // $$$$ AGE 2006-08-21: widget2d en *& dégueu. Instancier l'un quand l'autre
     miniviews->hide();

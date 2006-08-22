@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __BigBrother_h_
-#define __BigBrother_h_
+#ifndef __Spy_h_
+#define __Spy_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
@@ -27,26 +27,26 @@ class QToolBox;
 class Report_ABC;
 
 // =============================================================================
-/** @class  BigBrother
-    @brief  BigBrother
+/** @class  Spy
+    @brief  Spy
 */
 // Created: SBO 2006-06-21
 // =============================================================================
-class BigBrother : public QVBox
-                 , public kernel::Observer_ABC
-                 , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                 , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
-                 , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                 , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-                 , public kernel::ElementObserver_ABC< Report_ABC >
+class Spy : public QVBox
+          , public kernel::Observer_ABC
+          , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+          , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+          , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+          , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+          , public kernel::ElementObserver_ABC< Report_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             BigBrother( QWidget* parent, kernel::Controllers& controllers );
-    virtual ~BigBrother();
+             Spy( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~Spy();
     //@}
 
     //! @name Operations
@@ -68,8 +68,8 @@ private slots:
 private:
     //! @name Copy/Assignement
     //@{
-    BigBrother( const BigBrother& );            //!< Copy constructor
-    BigBrother& operator=( const BigBrother& ); //!< Assignement operator
+    Spy( const Spy& );            //!< Copy constructor
+    Spy& operator=( const Spy& ); //!< Assignement operator
     //@}
 
     //! @name Types
@@ -96,4 +96,4 @@ private:
     //@}
 };
 
-#endif // __BigBrother_h_
+#endif // __Spy_h_

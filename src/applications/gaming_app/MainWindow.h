@@ -34,7 +34,7 @@ namespace gui
     class GlProxy;
 }
 
-class BigBrother; // $$$$ AGE 2006-08-02: Duh !
+class Spy; // $$$$ AGE 2006-08-02: Duh !
 class Model;
 class StaticModel;
 class Simulation;
@@ -135,7 +135,7 @@ private:
     gui::StatusBar*       pStatus_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer*     agents_;
-    BigBrother*      spy_;
+    Spy*      spy_;
     //@}
 };
 

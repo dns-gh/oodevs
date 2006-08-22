@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "BigBrother.h"
-#include "moc_BigBrother.cpp"
+#include "Spy.h"
+#include "moc_Spy.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -26,10 +26,10 @@ using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother constructor
+// Name: Spy constructor
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-BigBrother::BigBrother( QWidget* parent, Controllers& controllers )
+Spy::Spy( QWidget* parent, Controllers& controllers )
     : QVBox( parent, "Espion" )
     , controllers_( controllers )
     , selected_( 0 )
@@ -45,55 +45,55 @@ BigBrother::BigBrother( QWidget* parent, Controllers& controllers )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother destructor
+// Name: Spy destructor
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-BigBrother::~BigBrother()
+Spy::~Spy()
 {
     controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::NotifyContextMenu
+// Name: Spy::NotifyContextMenu
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void Spy::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     NotifyContextMenu( (Entity_ABC&)agent, menu );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::NotifyContextMenu
+// Name: Spy::NotifyContextMenu
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Population_ABC& popu, ContextMenu& menu )
+void Spy::NotifyContextMenu( const Population_ABC& popu, ContextMenu& menu )
 {
     NotifyContextMenu( (Entity_ABC&)popu, menu );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::NotifyDeleted
+// Name: Spy::NotifyDeleted
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyDeleted( const Agent_ABC& agent )
+void Spy::NotifyDeleted( const Agent_ABC& agent )
 {
     RemoveAgent( agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::NotifyDeleted
+// Name: Spy::NotifyDeleted
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyDeleted( const Population_ABC& agent )
+void Spy::NotifyDeleted( const Population_ABC& agent )
 {
     RemoveAgent( agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::RemoveAgent
+// Name: Spy::RemoveAgent
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::RemoveAgent( const Entity_ABC& agent )
+void Spy::RemoveAgent( const Entity_ABC& agent )
 {
     if( selected_ == &agent )
         selected_ = 0;
@@ -101,10 +101,10 @@ void BigBrother::RemoveAgent( const Entity_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::NotifyContextMenu
+// Name: Spy::NotifyContextMenu
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
+void Spy::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
 {
     CIT_Agents it = spied_.find( &agent );
     if( it == spied_.end() )
@@ -115,10 +115,10 @@ void BigBrother::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::Bookmark
+// Name: Spy::Bookmark
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void BigBrother::Bookmark()
+void Spy::Bookmark()
 {
     if( !selected_ )
         return;
@@ -132,10 +132,10 @@ void BigBrother::Bookmark()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::RemoveAll
+// Name: Spy::RemoveAll
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
-void BigBrother::RemoveAll()
+void Spy::RemoveAll()
 {
     while( toolBox_->currentIndex() != -1 )
     {
@@ -147,19 +147,19 @@ void BigBrother::RemoveAll()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::CreateView
+// Name: Spy::CreateView
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-QWidget* BigBrother::CreateView( const Entity_ABC& agent )
+QWidget* Spy::CreateView( const Entity_ABC& agent )
 {
     return new AttributeView( this, controllers_, agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::NotifyCreated
+// Name: Spy::NotifyCreated
 // Created: SBO 2006-06-26
 // -----------------------------------------------------------------------------
-void BigBrother::NotifyCreated( const Report_ABC& report )
+void Spy::NotifyCreated( const Report_ABC& report )
 {
     const Entity_ABC* agent = &report.GetAgent();
     CIT_Agents it = spied_.find( agent );
@@ -169,10 +169,10 @@ void BigBrother::NotifyCreated( const Report_ABC& report )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BigBrother::OnSelect
+// Name: Spy::OnSelect
 // Created: SBO 2006-06-26
 // -----------------------------------------------------------------------------
-void BigBrother::OnSelect( int index )
+void Spy::OnSelect( int index )
 {
     for( CIT_Agents it = spied_.begin(); it != spied_.end(); ++it )
         if( it->second == index )
