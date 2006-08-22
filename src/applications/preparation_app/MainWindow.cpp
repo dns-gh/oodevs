@@ -63,6 +63,9 @@ namespace bfs = boost::filesystem;
 #include "xeumeuleu/xml.h"
 using namespace xml;
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01

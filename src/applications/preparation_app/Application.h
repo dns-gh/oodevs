@@ -12,11 +12,15 @@
 
 #include <qapplication.h>
 
+namespace kernel
+{
+    class Controllers;
+    class Workers;
+}
+
 class MainWindow;
 class StaticModel;
 class Model;
-class Controllers;
-class Workers;
 
 // =============================================================================
 /** @class  Application
@@ -49,10 +53,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers* controllers_;
+    kernel::Controllers* controllers_;
     StaticModel* staticModel_;
     Model* model_;
-    Workers* workers_;
+    kernel::Workers* workers_;
     MainWindow* mainWindow_;
     //@}
 };

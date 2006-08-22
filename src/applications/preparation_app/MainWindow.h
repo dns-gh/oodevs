@@ -12,18 +12,25 @@
 
 #include <qmainwindow.h>
 
-class Options;
-class OptionsPanel;
+namespace kernel
+{
+    class Options;
+    class Controllers;
+}
 
-class Controllers;
+namespace gui
+{
+    class OptionsPanel;
+    class GlWidget;
+    class StatusBar;
+    class ParametersLayer;
+    class AgentsLayer;
+    class GlPlaceHolder;
+}
+
 class Model;
 class StaticModel;
 class GlLayers;
-class GlWidget;
-class StatusBar;
-class ParametersLayer;
-class AgentsLayer;
-class GlPlaceHolder;
 
 // =============================================================================
 /** @class  MainWindow
@@ -44,14 +51,14 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model );
     virtual ~MainWindow();
     //@}
 
     //! @name Operations
     //@{
     void Load( const std::string& scipioXml );
-    Options& GetOptions() const;
+    kernel::Options& GetOptions() const;
     //@}
 
 public slots:
@@ -83,21 +90,21 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     StaticModel& staticModel_;
     Model& model_;
     std::string scipioXml_;
 
     GlLayers* layers_;
 //    GlWidget*   widget2d_;
-    GlPlaceHolder* glPlaceHolder_;
+    gui::GlPlaceHolder* glPlaceHolder_;
 
     QTimer* displayTimer_;
 
-    OptionsPanel*    pOptionsPanel_;
-    StatusBar*       pStatus_;
-    ParametersLayer* parameters_;
-    AgentsLayer*     agents_;
+    gui::OptionsPanel*    pOptionsPanel_;
+    gui::StatusBar*       pStatus_;
+    gui::ParametersLayer* parameters_;
+    gui::AgentsLayer*     agents_;
     //@}
 };
 

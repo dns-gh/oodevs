@@ -26,6 +26,9 @@
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: GlLayers constructor
 // Created: AGE 2006-03-29

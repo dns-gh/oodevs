@@ -12,13 +12,21 @@
 
 #include "clients_gui/GlProxy.h"
 
-class Controllers;
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class ColorStrategy;
+    class ParametersLayer;
+    class AgentsLayer;
+}
+
 class Model;
 class StaticModel;
-class ColorStrategy;
-class ParametersLayer;
 class GraphicSetup_ABC;
-class AgentsLayer;
 
 // =============================================================================
 /** @class  GlLayers
@@ -26,13 +34,13 @@ class AgentsLayer;
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class GlLayers : public GlProxy
+class GlLayers : public gui::GlProxy
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GlLayers( Controllers& controllers, const StaticModel& staticModel, Model& model, GraphicSetup_ABC& setup );
+             GlLayers( kernel::Controllers& controllers, const StaticModel& staticModel, Model& model, GraphicSetup_ABC& setup );
     virtual ~GlLayers();
     //@}
 
@@ -44,7 +52,7 @@ public:
     //! @name Accessors
     //@{
     // $$$$ AGE 2006-03-31: 
-    ParametersLayer& GetParametersLayer() { return *parameters_; };
+    gui::ParametersLayer& GetParametersLayer() { return *parameters_; };
 //    AgentsLayer&     GetAgentLayer() { return *agents_; }; // $$$$ AGE 2006-05-18: used for aggregation.
     //@}
 
@@ -58,13 +66,13 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
     const StaticModel& static_;
     Model& model_;
     GraphicSetup_ABC& setup_;
 
 //    ColorStrategy* strategy_;
-    ParametersLayer* parameters_;
+    gui::ParametersLayer* parameters_;
 //    AgentsLayer* agents_;
     //@}
 };
