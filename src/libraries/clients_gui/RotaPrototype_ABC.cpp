@@ -12,7 +12,6 @@
 
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
-#include "gaming/ASN_Messages.h"
 #include "RichLabel.h"
 #include "ValuedListItem.h"
 

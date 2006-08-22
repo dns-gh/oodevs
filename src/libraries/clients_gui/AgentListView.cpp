@@ -9,19 +9,16 @@
 
 #include "clients_gui_pch.h"
 #include "AgentListView.h"
+#include "moc_AgentListView.cpp"
+
+#include "ValuedListItem.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
-#include "ValuedListItem.h"
-#include "clients_kernel/Controllers.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "gaming/ASN_Messages.h"
 #include "ItemFactory_ABC.h"
-
-#include "moc_AgentListView.cpp"
 
 using namespace kernel;
 using namespace gui;
@@ -32,10 +29,9 @@ const char* AgentListView::agentMimeType_ = "agent";
 // Name: AgentListView constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : ListView< AgentListView >( pParent, *this, factory )
     , controllers_( controllers )
-    , publisher_( publisher )
     , factory_( factory )
     , currentTeam_( 0 )
 {
@@ -348,37 +344,18 @@ bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC& item, const Agent_ABC& target )
+bool AgentListView::Drop( const Agent_ABC&, const Agent_ABC& )
 {
-    if( item.GetSuperior() == 0 || item.GetSuperior() == &target )
-        return false;
-
-    unsigned int superiorId = target.GetId();
-    if( target.GetSuperior() != 0 )
-        superiorId = target.GetSuperior()->GetId();
-
-    ASN_MsgChangeAutomate asnMsg;
-    asnMsg.GetAsnMsg().oid_pion = item.GetId();
-    asnMsg.GetAsnMsg().oid_automate = superiorId;
-    asnMsg.Send( publisher_ );
-    return true;
+    return false;
 }
     
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC& item, const KnowledgeGroup_ABC& target )
+bool AgentListView::Drop( const Agent_ABC&, const KnowledgeGroup_ABC& )
 {
-    if( item.GetSuperior() != 0 )
-        return false;
-        
-    ASN_MsgChangeGroupeConnaissance asnMsg;
-    asnMsg.GetAsnMsg().oid_automate = item.GetId();
-    asnMsg.GetAsnMsg().oid_camp  = target.GetTeam().GetId();
-    asnMsg.GetAsnMsg().oid_groupe_connaissance = target.GetId();
-    asnMsg.Send( publisher_ );
-    return true;
+    return false;
 }
     
 // -----------------------------------------------------------------------------

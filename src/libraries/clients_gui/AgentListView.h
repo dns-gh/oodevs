@@ -24,9 +24,6 @@ namespace kernel
     class Controllers;
 }
 
-class Publisher_ABC;
-class AutomatDecisions;
-
 namespace gui
 {
     class ValuedListItem;
@@ -61,7 +58,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory );
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
     virtual ~AgentListView();
 
     QSize sizeHint() const;
@@ -136,7 +133,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     ItemFactory_ABC& factory_;
     const kernel::Team_ABC* currentTeam_;
     //@}

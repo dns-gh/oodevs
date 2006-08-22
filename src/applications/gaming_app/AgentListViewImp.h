@@ -12,6 +12,9 @@
 
 #include "clients_gui/AgentListView.h"
 
+class Publisher_ABC;
+class AutomatDecisions;
+
 // =============================================================================
 /** @class  AgentListViewImp
     @brief  AgentListViewImp
@@ -38,6 +41,14 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Agent_ABC& target );
+    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::KnowledgeGroup_ABC& target );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Publisher_ABC& publisher_;
     //@}
 };
 
