@@ -38,10 +38,10 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy )
     : WorldParameters( scipioXml )
     , SetGlOptions()
-    , MapWidget( context_, pParent, width_, height_ )
+    , MapWidget( context_, pParent, strategy, width_, height_ )
     , GlToolsBase( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
@@ -50,10 +50,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
     , frame_( 0 )
     , iconLayout_( iconLayout )
 {
-    SetReverse( true );
-    SetExclusive( true );
-    SetLastFocusFirst( true );
-
     Register( *new SpyLayer( viewport_, frame_ ) );
 
     if( context() != context_ || ! context_->isValid() )

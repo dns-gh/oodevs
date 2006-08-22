@@ -37,9 +37,6 @@ public:
 
     virtual void RegisterIn( Gl3dWidget& widget );
     virtual void RegisterIn( GlWidget& widget );
-
-    virtual void SetDefaultIn( Gl3dWidget& widget );
-    virtual void SetDefaultIn( GlWidget& widget );
     //@}
 };
 
@@ -63,7 +60,6 @@ public:
     //@{
     virtual void Paint( const ViewFrustum& ) {};
     virtual void RegisterIn( Gl3dWidget& ) {};
-    virtual void SetDefaultIn( Gl3dWidget& ) {};
     //@}
 };
 
@@ -87,7 +83,6 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& ) {};
     virtual void RegisterIn( GlWidget& ) {};
-    virtual void SetDefaultIn( GlWidget& ) {};
     //@}
 };
 

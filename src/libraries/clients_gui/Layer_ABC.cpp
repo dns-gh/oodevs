@@ -59,21 +59,3 @@ void Layer_ABC::RegisterIn( GlWidget& widget )
 {
     widget.Register( *new MapLayerProxy( *this ) );
 }   
-
-// -----------------------------------------------------------------------------
-// Name: Layer_ABC::SetDefaultIn
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Layer_ABC::SetDefaultIn( Gl3dWidget& widget )
-{
-    widget.SetDefaultLayer( *new MapLayerProxy( *this ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer_ABC::SetDefaultIn
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Layer_ABC::SetDefaultIn( GlWidget& widget )
-{
-    widget.SetDefaultLayer( *new MapLayerProxy( *this ) );
-}

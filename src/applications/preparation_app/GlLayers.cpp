@@ -62,7 +62,7 @@ void GlLayers::RegisterBaseLayers()
     // $$$$ AGE 2006-05-17: Par exemple, filer une stratégie qui dispatcherait les bidules.
 //    Register( *new Elevation2dLayer( controllers_.controller_, static_.detection_ ) );
 //    Register( *new TerrainLayer( controllers_, *this, setup_ ) );
-    Register( *new MetricsLayer( controllers_, *this ) );
+//    Register( *new MetricsLayer( controllers_, *this ) );
 //    Register( *new LimitsLayer( controllers_, *this, *strategy_, *parameters_, model_.limits_ ) );
 //    Register( *new ObjectsLayer( controllers_, *this, *strategy_, *this ) );
 //    Register( *new PopulationsLayer( controllers_, *this, *strategy_, *this ) );
@@ -70,6 +70,6 @@ void GlLayers::RegisterBaseLayers()
 //    Register( *new MeteoLayer( controllers_, *this ) );
     Register( *parameters_ );
     
-    AddDefaultLayer( *new DefaultLayer( controllers_ ) );
+//    AddDefaultLayer( *new DefaultLayer( controllers_ ) );
 }
 

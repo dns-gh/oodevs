@@ -55,6 +55,10 @@ public:
         selecting_ = false;
     }
 
+    // $$$$ AGE 2006-08-21: Ajouter des contextMenu sur plusieurs elements ? 
+    // $$$$ AGE 2006-08-21: Genre a la fois un point et une entité ? 
+    // $$$$ AGE 2006-08-21: Voire meme plusieurs entités ? 
+    // $$$$ AGE 2006-08-21: Et se débarasser à moitié du defaultLayer ?
     template< typename T >
     void ContextMenu( const T& element,const QPoint& where )
     {

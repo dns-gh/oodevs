@@ -74,7 +74,7 @@ void CampPrototype_ABC::NotifyDeleted( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void CampPrototype_ABC::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
+    if( isVisible() && agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
     {
         selected_ = &agent;
         menu.InsertItem( "Parametre", tr( "TC2 du camp" ), this, SLOT( SetSelected() ) );

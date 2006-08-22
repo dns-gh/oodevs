@@ -20,7 +20,7 @@ class OptionsPanel;
 class Controllers;
 class Model;
 class StaticModel;
-class GlLayers;
+class GlProxy;
 class GlWidget;
 class Gl3dWidget;
 class StatusBar;
@@ -31,6 +31,13 @@ class GlPlaceHolder;
 class BigBrother; // $$$$ AGE 2006-08-02: Duh !
 class Network;
 class IconLayout;
+class ColorStrategy;
+class MissionPanel;
+class ObjectCreationPanel;
+class ParametersLayer;
+class AgentsLayer;
+class GraphicSetup_ABC;
+class EventStrategy_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -88,6 +95,8 @@ private:
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void BuildIconLayout();
+
+    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup );
     //@}
 
     //! @name Copy/Assignment
@@ -105,9 +114,11 @@ private:
     Network& network_;
     std::string scipioXml_;
 
-    GlLayers* layers_;
-    GlWidget*   widget2d_;
-    Gl3dWidget* widget3d_;
+    GlProxy*       glProxy_;
+    ColorStrategy* strategy_;
+    EventStrategy_ABC * eventStrategy_;
+    GlWidget*      widget2d_;
+    Gl3dWidget*    widget3d_;
     GlPlaceHolder* glPlaceHolder_;
     IconLayout* iconLayout_;
 

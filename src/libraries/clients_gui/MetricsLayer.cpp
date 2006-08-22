@@ -10,21 +10,17 @@
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/OptionVariant.h"
 #include <iomanip>
 
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-MetricsLayer::MetricsLayer( Controllers& controllers, GlTools_ABC& tools )
-    : controllers_( controllers )
-    , tools_   ( tools )
-    , gridSize_( 10000 )
-    , ruling_  ( false )
+MetricsLayer::MetricsLayer( GlTools_ABC& tools )
+    : ruling_( false )
+    , tools_ ( tools )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,88 +29,27 @@ MetricsLayer::MetricsLayer( Controllers& controllers, GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 MetricsLayer::~MetricsLayer()
 {
-    controllers_.Remove( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MetricsLayer::OptionChanged
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void MetricsLayer::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "GridSize" )
-        gridSize_ = value.To< float >() * 1000.f;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MetricsLayer::Displace
-// Created: AGE 2006-03-17
-// -----------------------------------------------------------------------------
-float MetricsLayer::Displace( float value )
-{
-    if( gridSize_ <= 0 )
-        return value;
-    int clipped = int( std::floor( value / gridSize_ ) );
-    return clipped * gridSize_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MetricsLayer::Initialize
-// Created: AGE 2006-03-20
-// -----------------------------------------------------------------------------
-void MetricsLayer::Initialize( const geometry::Rectangle2f& extent )
-{
-    extent_ = extent;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MetricsLayer::Paint
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void MetricsLayer::Paint( const geometry::Rectangle2f& v )
+void MetricsLayer::Paint( const geometry::Rectangle2f& )
 {
-    if( gridSize_ < 0 && ! ruling_ )
-        return;
-    geometry::Rectangle2f viewport = v.Intersect( extent_ );
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-    
-    if( gridSize_ >= 0 )
-    {
-        float gridSize = gridSize_;
-        if( gridSize < 2 * tools_.Pixels() )
-            gridSize = 2 * tools_.Pixels();
-        glColor4d( 1.0, 1.0, 1.0, 0.3 );
-        glLineWidth( 1.0 );
-        glBegin( GL_LINES );
-            for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize )
-            {
-                glVertex2f( x, viewport.Top()    );
-                glVertex2f( x, viewport.Bottom() );
-            }
-
-            for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridSize )
-            {
-                glVertex2f( viewport.Left(),  y );
-                glVertex2f( viewport.Right(), y );
-            }
-        glEnd();
-    }
-
     if( ruling_ )
     {
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 2 );
         glColor4d( COLOR_BLACK );
-        glBegin( GL_LINES );
-            glVertex2fv( (float*)& start_ );
-            glVertex2fv( (float*)& end_ );
-        glEnd();
+        tools_.DrawLine( start_, end_ );
         const geometry::Point2f middle( 0.5f*( start_.X() + end_.X() ), 0.5*(start_.Y() + end_.Y() ) );
         std::stringstream message;
         message << "  " << std::setw( 1 ) << start_.Distance( end_ ) << "m";
         tools_.Print( message.str(), middle );
+        glPopAttrib();
     }
-
-    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

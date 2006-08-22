@@ -41,8 +41,6 @@ public:
     void ChangeTo( GlWidget* newWidget );
 
     void Register       ( Layer_ABC& layer );
-    void AddDefaultLayer( Layer_ABC& layer );
-    void RemoveAll();
 
     virtual void CenterOn( const geometry::Point2f& point );
 
@@ -78,8 +76,6 @@ private:
     //@{
     void CheckView() const;
     void CheckTools() const;
-    template< typename Widget >
-    void ReallyRegisterTo( Widget* widget );
     //@}
 
     //! @name Types
@@ -95,7 +91,6 @@ private:
     GlTools_ABC* tools_;
     
     T_Layers layers_;
-    T_Layers defaults_;
     //@}
 };
 

@@ -62,8 +62,8 @@ bool ParamPoint::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamPoint::Draw( const geometry::Point2f& /*point*/, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
-    if( pPosLabel_->text() != "---" && extent.IsInside( popupPoint_ ) )
-        tools.DrawCross( popupPoint_, GL_CROSSSIZE );
+    if( pPosLabel_->text() != "---" && extent.IsInside( paramPoint_ ) )
+        tools.DrawCross( paramPoint_, GL_CROSSSIZE );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void ParamPoint::Commit()
     asn_.type                  = EnumTypeLocalisation::point;
     asn_.vecteur_point.n       = 1;
     asn_.vecteur_point.elem    = &asnPoint_;
-    const std::string coord = converter_.ConvertToMgrs( popupPoint_ );
+    const std::string coord = converter_.ConvertToMgrs( paramPoint_ );
     asnPoint_ = coord.c_str();
 }
 
@@ -96,5 +96,6 @@ void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, ContextMenu&
 // -----------------------------------------------------------------------------
 void ParamPoint::AcceptPopupMenuPoint()
 {
-    pPosLabel_->setText( converter_.ConvertToMgrs( popupPoint_ ).c_str() );
+    paramPoint_ = popupPoint_;
+    pPosLabel_->setText( converter_.ConvertToMgrs( paramPoint_ ).c_str() );
 }

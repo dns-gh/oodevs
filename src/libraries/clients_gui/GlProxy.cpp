@@ -32,8 +32,6 @@ GlProxy::~GlProxy()
 {
     for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         delete *it;
-    for( IT_Layers it = defaults_.begin(); it != defaults_.end(); ++it )
-        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -43,39 +41,6 @@ GlProxy::~GlProxy()
 void GlProxy::Register( Layer_ABC& layer )
 {
     layers_.push_back( & layer );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: GlProxy::SetDefaultLayer
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void GlProxy::AddDefaultLayer( Layer_ABC& layer )
-{
-    defaults_.push_back( & layer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::RemoveAll
-// Created: SBO 2006-05-24
-// -----------------------------------------------------------------------------
-void GlProxy::RemoveAll()
-{
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
-        delete *it;
-    layers_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::ReallyRegisterTo
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-template< typename Widget >
-void GlProxy::ReallyRegisterTo( Widget* widget )
-{
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->RegisterIn( *widget );
-    for( IT_Layers it = defaults_.begin(); it != defaults_.end(); ++it )
-        (*it)->SetDefaultIn( *widget );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +69,8 @@ void GlProxy::ChangeTo( GlWidget* newWidget )
 // -----------------------------------------------------------------------------
 void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 {
-    ReallyRegisterTo( newWidget );
+    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        (*it)->RegisterIn( *newWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +79,8 @@ void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 // -----------------------------------------------------------------------------
 void GlProxy::RegisterTo( GlWidget* newWidget )
 {
-    ReallyRegisterTo( newWidget );
+    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        (*it)->RegisterIn( *newWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +132,7 @@ bool GlProxy::ShouldDisplay( const std::string& name ) const
 //    CheckTools();
     return tools_->ShouldDisplay( name );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GlProxy::ShouldDisplay
 // Created: AGE 2006-03-30

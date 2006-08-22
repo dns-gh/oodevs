@@ -20,6 +20,7 @@ class Layer_ABC;
 class DetectionMap;
 class Controllers;
 class GlFont;
+class EventStrategy_ABC;
 
 // =============================================================================
 /** @class  Gl3dWidget
@@ -33,14 +34,13 @@ class Gl3dWidget : private WorldParameters, private SetGlOptions, public Widget3
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation );
+             Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation, EventStrategy_ABC& strategy );
     virtual ~Gl3dWidget();
     //@}
 
     //! @name Operations
     //@{
     void Register( Layer_ABC& layer );
-    void SetDefaultLayer( Layer_ABC& layer );
 
     virtual float Pixels() const;
     virtual unsigned short StipplePattern( int factor = 1 ) const;
@@ -86,7 +86,6 @@ protected:
     //! @name Types
     //@{
     typedef std::vector< Layer_ABC* >  T_Layers;
-    typedef T_Layers::iterator        IT_Layers;
     typedef T_Layers::const_iterator CIT_Layers;
     //@}
 
@@ -94,9 +93,8 @@ private:
     //! @name Member data
     //@{
     DetectionMap& elevation_;
+    EventStrategy_ABC& strategy_;
     T_Layers layers_;
-    IT_Layers last_;
-    Layer_ABC* default_;
     float zRatio_;
     unsigned int frame_;
     float pixels_;

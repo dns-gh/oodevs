@@ -19,6 +19,7 @@
 #include "graphics/Compass.h"
 #include "graphics/Visitor3d.h"
 #include "graphics/ViewFrustum.h"
+#include "graphics/EventStrategy_ABC.h"
 
 using namespace geometry;
 
@@ -26,14 +27,13 @@ using namespace geometry;
 // Name: Gl3dWidget constructor
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation )
+Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation, EventStrategy_ABC& strategy )
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , Widget3D( context_, pParent )
     , GlToolsBase( controllers )
     , elevation_( elevation )
-    , last_( layers_.begin() )
-    , default_( 0 )
+    , strategy_( strategy )
     , zRatio_( 5 )
     , frame_( 0 )
     , pixels_( 100.f )
@@ -49,7 +49,6 @@ Gl3dWidget::~Gl3dWidget()
 {
     for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         delete *it;
-    delete default_;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,16 +58,6 @@ Gl3dWidget::~Gl3dWidget()
 void Gl3dWidget::Register( Layer_ABC& layer )
 {
     layers_.push_back( & layer );
-    last_ = layers_.begin();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::SetDefaultLayer
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-void Gl3dWidget::SetDefaultLayer( Layer_ABC& layer )
-{
-    default_ = & layer;
 }
 
 // -----------------------------------------------------------------------------
@@ -396,18 +385,7 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
         if( event->key() == Qt::Key_PageDown )
             Translate( Vector3f( 0, 0, 1 ), -500.f * speedFactor );
     }
-
-    bool found = false;
-    IT_Layers last = last_;
-    for( ; last_ != layers_.end() && ! found; ++last_ )
-        if( found = (*last_)->HandleKeyPress( event ) )
-            --last_;
-    for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
-         if( found = (*last_)->HandleKeyPress( event ) )
-            --last_;
-    if( ! found )
-        default_->HandleKeyPress( event  );
-
+    strategy_.HandleKeyPress( event );
     Widget3D::keyPressEvent( event  );
 }
 
@@ -421,17 +399,7 @@ void Gl3dWidget::mouseMoveEvent( QMouseEvent* event )
     if( point3.Z() > -1000 )
     {
         const geometry::Point2f point( point3.X(), point3.Y() );
-
-        bool found = false;
-        IT_Layers last = last_;
-        for( ; last_ != layers_.end() && ! found; ++last_ )
-            if( found = (*last_)->HandleMouseMove( event, point ) )
-                --last_;
-        for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
-            if( found = (*last_)->HandleMouseMove( event, point ) )
-                --last_;
-        if( ! found )
-            default_->HandleMouseMove( event, point );
+        strategy_.HandleMouseMove( event, point );
     }
 
     Widget3D::mouseMoveEvent( event );
@@ -447,17 +415,7 @@ void Gl3dWidget::mouseDoubleClickEvent( QMouseEvent* event )
     if( point3.Z() > -1000 )
     {
         const geometry::Point2f point( point3.X(), point3.Y() );
-
-        bool found = false;
-        IT_Layers last = last_;
-        for( ; last_ != layers_.end() && ! found; ++last_ )
-            if( found = (*last_)->HandleMouseDoubleClick( event, point ) )
-                --last_;
-        for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
-            if( found = (*last_)->HandleMouseDoubleClick( event, point ) )
-                --last_;
-        if( ! found )
-            default_->HandleMouseDoubleClick( event, point );
+        strategy_.HandleMouseDoubleClick( event, point );
     }
 }
 
@@ -471,17 +429,7 @@ void Gl3dWidget::mouseReleaseEvent( QMouseEvent* event )
     if( point3.Z() > -1000 )
     {
         const geometry::Point2f point( point3.X(), point3.Y() );
-
-        bool found = false;
-        IT_Layers last = last_;
-        for( ; last_ != layers_.end() && ! found; ++last_ )
-            if( found = (*last_)->HandleMousePress( event, point ) )
-                --last_;
-        for( last_ = layers_.begin(); last_ != last && ! found; ++last_ )
-            if( found = (*last_)->HandleMousePress( event, point ) )
-                --last_;
-        if( ! found )
-            default_->HandleMousePress( event, point );
+        strategy_.HandleMousePress( event, point );
     }
 }
 

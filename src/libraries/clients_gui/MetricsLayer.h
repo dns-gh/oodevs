@@ -11,10 +11,7 @@
 #define __MetricsLayer_h_
 
 #include "Layer_ABC.h"
-#include "clients_kernel/Observer_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 class GlTools_ABC;
-class Controllers;
 
 // =============================================================================
 /** @class  MetricsLayer
@@ -22,21 +19,18 @@ class Controllers;
 */
 // Created: AGE 2006-03-17
 // =============================================================================
-class MetricsLayer : public Layer2d_ABC
-                   , public Observer_ABC
-                   , public OptionsObserver_ABC
+class MetricsLayer : public Layer_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MetricsLayer( Controllers& controllers, GlTools_ABC& tools );
+    explicit MetricsLayer( GlTools_ABC& tools );
     virtual ~MetricsLayer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
@@ -49,21 +43,10 @@ private:
     MetricsLayer& operator=( const MetricsLayer& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    float Displace( float value );
-    virtual void OptionChanged( const std::string& name, const OptionVariant& value );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
     GlTools_ABC& tools_;
-
-    geometry::Rectangle2f extent_;
-    float gridSize_;
-
     bool ruling_;
     geometry::Point2f start_;
     geometry::Point2f end_;

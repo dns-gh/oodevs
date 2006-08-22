@@ -20,6 +20,7 @@
 class Controllers;
 class MiniView;
 class IconLayout;
+class EventStrategy_ABC;
 
 // =============================================================================
 /** @class  GlWidget
@@ -33,7 +34,7 @@ class GlWidget : private WorldParameters, private SetGlOptions, public MapWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout );
+             GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy );
     virtual ~GlWidget();
     //@}
 

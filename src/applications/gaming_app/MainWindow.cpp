@@ -14,7 +14,6 @@
 #include "ControllerToolbar.h"
 #include "Dialogs.h"
 #include "EventToolbar.h"
-#include "GlLayers.h"
 #include "InfoPanels.h"
 #include "LogisticToolbar.h"
 #include "MagicOrdersInterface.h"
@@ -27,6 +26,12 @@
 #include "UnitToolbar.h"
 #include "LinkInterpreter.h"
 #include "AgentListViewImp.h"
+#include "AgentsLayerImp.h"
+#include "PopulationsLayerImp.h"
+#include "AgentKnowledgesLayer.h"
+#include "PopulationKnowledgesLayer.h"
+#include "MeteoLayer.h"
+#include "ObjectKnowledgesLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -64,6 +69,18 @@
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/IconLayout.h"
+#include "clients_gui/GlProxy.h"
+#include "clients_gui/ColorStrategy.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/Elevation2dLayer.h"
+#include "clients_gui/Elevation3dLayer.h"
+#include "clients_gui/TerrainLayer.h"
+#include "clients_gui/MetricsLayer.h"
+#include "clients_gui/GridLayer.h"
+#include "clients_gui/LimitsLayer.h"
+#include "clients_gui/ObjectsLayer.h"
+#include "clients_gui/CircularEventStrategy.h"
+#include "clients_gui/DefaultLayer.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -85,7 +102,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , staticModel_( staticModel )
     , model_      ( model )
     , network_    ( network )
-    , layers_     ( 0 )
+    , glProxy_    ( 0 )
     , widget2d_   ( 0 )
     , widget3d_   ( 0 )
     , iconLayout_ ( 0 )
@@ -99,7 +116,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
     new Dialogs( this, controllers, model_, staticModel, publisher ); // $$$$ SBO 2006-06-30: leak
 
-    layers_ = new GlLayers( controllers, staticModel_, model_, prefDialog->GetPreferences() );
+    glProxy_ = new GlProxy();
+    strategy_ = new ColorStrategy( controllers, *glProxy_ );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
@@ -129,7 +147,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pBigBrotherWnd->setCaption( tr( "Espion" ) );
     setDockEnabled( pBigBrotherWnd, Qt::DockTop, false );
 
-    MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ );
+    MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ ); // $$$$ AGE 2006-08-21: widget2d en *& dégueu. Instancier l'un quand l'autre
     miniviews->hide();
 
     // Info panel
@@ -142,12 +160,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setCaption( tr( "Informations" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
+    // A few layers
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
+    AgentsLayer*     agentsLayer = new AgentsLayerImp( controllers, *glProxy_, *strategy_, *glProxy_ );
+
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, layers_->GetParametersLayer(), *layers_ );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_ );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
-    layers_->Register( *new MiscLayer< MissionPanel >( *pMissionPanel_ ) ); // $$$$ AGE 2006-03-31:  // $$$$ AGE 2006-06-30: 
     pMissionPanel_->hide();
 
     // Logger
@@ -165,21 +186,19 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
     moveDockWindow( pObjectCreationWnd, Qt::DockRight );
     pObjectCreationWnd->hide();
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, staticModel_, layers_->GetParametersLayer(), *layers_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, staticModel_, *paramLayer, *glProxy_ );
     pObjectCreationWnd->setWidget( objectCreationPanel );
     pObjectCreationWnd->setResizeEnabled( true );
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
     pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
-    layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) ); // $$$$ AGE 2006-06-30: 
-
-    new MagicOrdersInterface( this, controllers_, publisher, staticModel_, layers_->GetParametersLayer() );
-
+    
+    new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer );
     new SIMControlToolbar( this, controllers, network, publisher );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
-    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
+    new LogisticToolbar( this, controllers, *agentsLayer );
     new EventToolbar( this, controllers );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
@@ -188,7 +207,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
 
-    layers_->RegisterBaseLayers();
+    // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
+    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
@@ -198,6 +218,62 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReadSettings();
     ReadOptions();
     pMissionPanel_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::CreateLayers
+// Created: AGE 2006-08-22
+// -----------------------------------------------------------------------------
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup )
+{
+    CircularEventStrategy* eventStrategy = new CircularEventStrategy();
+    eventStrategy_ = eventStrategy;
+    Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
+    Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
+    Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
+    Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
+    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_ );
+    Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& populations          = *new PopulationsLayerImp( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
+    Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
+    
+    // ordre de dessin
+    glProxy_->Register( defaultLayer );
+    glProxy_->Register( elevation2d );
+    glProxy_->Register( elevation3d );
+    glProxy_->Register( terrain );
+    glProxy_->Register( grid );
+    glProxy_->Register( meteo );
+    glProxy_->Register( limits );
+    glProxy_->Register( objectsLayer );
+    glProxy_->Register( populations );
+    glProxy_->Register( agents );
+    glProxy_->Register( objectKnowledges );
+    glProxy_->Register( populationKnowledges );
+    glProxy_->Register( agentKnowledges );
+    glProxy_->Register( missionsLayer );
+    glProxy_->Register( objectCreationLayer );
+    glProxy_->Register( parameters );
+    glProxy_->Register( metrics );
+
+    // ordre des evenements
+    eventStrategy->Register( parameters );
+    eventStrategy->Register( agents );
+    eventStrategy->Register( populations );
+    eventStrategy->Register( objectsLayer );
+    eventStrategy->Register( agentKnowledges );
+    eventStrategy->Register( populationKnowledges );
+    eventStrategy->Register( objectKnowledges );
+    eventStrategy->Register( limits );
+    eventStrategy->Register( metrics );
+    eventStrategy->SetDefault( defaultLayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,14 +306,14 @@ void MainWindow::Load( const std::string& scipioXml )
     scipioXml_ = scipioXml;
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
-    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
+    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Purge();
     staticModel_.Load( scipioXml );
 
-    layers_->ChangeTo( widget2d_ );
-    layers_->RegisterTo( widget2d_ );
+    glProxy_->ChangeTo( widget2d_ );
+    glProxy_->RegisterTo( widget2d_ );
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
     
@@ -271,7 +347,7 @@ MainWindow::~MainWindow()
 {
     controllers_.Remove( *this );
 //    delete pOptions_;
-    delete layers_;
+    delete glProxy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -364,16 +440,16 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, staticModel_.detection_ );
+                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, staticModel_.detection_, *eventStrategy_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
-                    layers_->RegisterTo( widget3d_ );
+                    glProxy_->RegisterTo( widget3d_ );
                 }
-                layers_->ChangeTo( widget3d_ );
+                glProxy_->ChangeTo( widget3d_ );
                 setCentralWidget( widget3d_ );
             }
             else
             {
-                layers_->ChangeTo( widget2d_ );
+                glProxy_->ChangeTo( widget2d_ );
                 setCentralWidget( widget2d_ );
             }
             centralWidget()->show();

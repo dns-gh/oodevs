@@ -68,6 +68,7 @@ private:
 
     ASN1T_CoordUTM    asnPoint_;
     geometry::Point2f popupPoint_;
+    geometry::Point2f paramPoint_;
     //@}
 };
 
