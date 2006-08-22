@@ -30,6 +30,7 @@ AgentMedicalPanel::AgentMedicalPanel( QWidget* parent, PanelStack_ABC& panel, Co
     : LogisticPanel< AgentMedicalPanel, LogMedicalConsign >( parent, panel, controllers, factory, tr( "Chaine santé" ) )
     , controllers_( controllers )
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     AddConsignColumn( "Blessure :" );
     AddConsignColumn( "Reac. mental :" );
     AddConsignColumn( "Contaminé NBC :" );

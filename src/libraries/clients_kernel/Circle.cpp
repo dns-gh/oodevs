@@ -104,5 +104,6 @@ void Circle::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 std::string Circle::GetName() const
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     return "cercle";
 }

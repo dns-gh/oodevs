@@ -67,6 +67,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    void showEvent( QShowEvent* );
     virtual void NotifyDeleted( const kernel::Agent_ABC& );
     virtual void NotifyUpdated( const Attributes& attributes );
     virtual void NotifyUpdated( const Contaminations& attributes );

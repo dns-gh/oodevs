@@ -96,6 +96,7 @@ struct Formatter< ValueNotSet >
 {
     void operator()( const ValueNotSet& , Displayer_ABC& displayer ) const
     {
+        // $$$$ AGE 2006-08-22: $$tr$$
         displayer.AddToDisplay( QString( " - " ) );
     }
 };
@@ -323,6 +324,7 @@ template< >
 struct Formatter< Separator >
 {
     void operator()( const Separator& , Displayer_ABC& displayer ) const {
+        // $$$$ AGE 2006-08-22: $$tr$$
         displayer.AddToDisplay( ", " );
     }
 };

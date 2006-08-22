@@ -23,6 +23,7 @@ namespace kernel
 // =============================================================================
 namespace tools
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     const char* ToString( E_UnitPosture nPosture );
     const char* ToString( E_TroopHealthState nState );
     const char* ToString( E_PerceptionResult nResult );

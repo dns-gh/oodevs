@@ -122,7 +122,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
             if( button == Qt::LeftButton )
                 Select( entity, event->state() & Qt::ShiftButton );
             else if( button == Qt::RightButton )
-                ContextMenu( entity, event->globalPos() );
+                ContextMenu( entity, point, event->globalPos() );
             return true;
         }
     }
@@ -140,11 +140,11 @@ void EntityLayerBase::Select( const Entity_ABC& entity, bool )
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ContextMenu
-// Created: AGE 2006-08-03
+// Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const QPoint& point )
+void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const geometry::Point2f&, const QPoint& where )
 {
-    entity.ContextMenu( controllers_.actions_, point );
+    entity.ContextMenu( controllers_.actions_, where );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,7 @@
 
 using namespace kernel;
 
+// $$$$ AGE 2006-08-22: $$tr$$
 const TristateOption TristateOption::off_( "Off" );
 const TristateOption TristateOption::on_( "On" );
 const TristateOption TristateOption::auto_( "Auto" );
@@ -44,6 +45,7 @@ TristateOption::~TristateOption()
 // -----------------------------------------------------------------------------
 TristateOption::operator const char*() const
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     return state_ == 'a' ? "Auto" : ( state_ == '1' ? "On" : "Off" );
 }
 

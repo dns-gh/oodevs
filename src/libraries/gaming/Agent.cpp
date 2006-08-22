@@ -237,12 +237,15 @@ const Agent_ABC* Agent::GetSuperior() const
 // -----------------------------------------------------------------------------
 void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( automatType_ && ! aggregated_ )
-        automatType_->Draw( where, viewport, tools );
-    if( type_ && ! aggregated_ )
-        type_->Draw( where, viewport, tools );
-    else if( type_ && aggregated_ )
-        type_->DrawAggregated( where, viewport, tools );
+    if( viewport.IsInside( where ) )
+    {
+        if( automatType_ && ! aggregated_ )
+            automatType_->Draw( where, viewport, tools );
+        if( type_ && ! aggregated_ )
+            type_->Draw( where, viewport, tools );
+        else if( type_ && aggregated_ )
+            type_->DrawAggregated( where, viewport, tools );
+    }
 }
 
 // -----------------------------------------------------------------------------

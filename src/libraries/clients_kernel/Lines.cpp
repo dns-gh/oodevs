@@ -94,5 +94,6 @@ void Lines::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 std::string Lines::GetName() const
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     return "ligne";
 }

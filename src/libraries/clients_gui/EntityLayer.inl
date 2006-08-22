@@ -103,6 +103,16 @@ bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Te
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayer::ContextMenu
+// Created: AGE 2006-08-22
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityLayer< ConcreteEntity >::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+{
+    controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( entity ), geoPoint, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayer::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------

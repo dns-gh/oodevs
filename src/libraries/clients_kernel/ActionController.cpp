@@ -41,7 +41,6 @@ ActionController::~ActionController()
 // -----------------------------------------------------------------------------
 void ActionController::Register( Observer_ABC& observer )
 {
-//    std::cout << typeid( observer ).name() << " at " << &observer << std::endl;
     InterfaceContainer< Observer_ABC >::Register( observer );
 }
 

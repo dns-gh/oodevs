@@ -50,6 +50,7 @@ MSEllipse::~MSEllipse()
 // -----------------------------------------------------------------------------
 void MSEllipse::Draw( const GlTools_ABC& tools ) const
 {
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( origin_.X(), origin_.Y(), 0 );
         glRotatef( angle_, 0, 0, 1 );

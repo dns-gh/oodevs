@@ -100,5 +100,6 @@ void Path::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 std::string Path::GetName() const
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     return "chemin"; // $$$$ AGE 2006-08-09: crap.
 }

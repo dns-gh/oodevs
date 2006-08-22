@@ -22,6 +22,7 @@ Unit::Unit( const QString& symbol )
     // NOTHING
 }
 
+// $$$$ AGE 2006-08-22: $$tr$$
 const Unit Units::meters( "m" );
 const Unit Units::degrees( "°" );
 const Unit Units::percentage( "%" );

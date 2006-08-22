@@ -35,7 +35,6 @@ public:
                  , displayer_( displayer )
              {
                 setSorting( -1 );
-                setResizeMode( QListView::LastColumn );
                 setAllColumnsShowFocus( true );
              };
     virtual ~ListDisplayer() {};
@@ -46,6 +45,7 @@ public:
     ListDisplayer& AddColumn( const char* column ) {
         addColumn( tr( column ) );
         itemDisplayer_.AddColumn( column );
+        setResizeMode( QListView::LastColumn );
         return *this;
     }
     template< typename Element >

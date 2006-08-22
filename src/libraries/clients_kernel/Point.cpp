@@ -95,5 +95,6 @@ void Point::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 std::string Point::GetName() const
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     return "point";
 }

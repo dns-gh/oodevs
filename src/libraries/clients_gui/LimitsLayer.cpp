@@ -206,6 +206,7 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
 // -----------------------------------------------------------------------------
 void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& menu )
 {
+    // $$$$ AGE 2006-08-22: Eventuellement, changer Parametre en une 5° categorie.
     menu.InsertItem( "Parametre", tr( "Créer limite" ), this, SLOT( OnCreateLimit() ) );
 
     QPopupMenu* limaMenu = new QPopupMenu( menu );

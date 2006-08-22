@@ -38,6 +38,7 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel
     , controllers_( controllers )
     , selected_( controllers )
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     pEquipment_ = new T_ListView( this, *this, factory );
     pEquipment_->AddColumn( "Equipement" )
                 .AddColumn( "Disponible" )

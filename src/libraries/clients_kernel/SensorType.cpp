@@ -8,9 +8,6 @@
 
 #include "Tools.h"
 #include "Agent_ABC.h"
-//#include "Experience.h"
-//#include "Tiredness.h"
-//#include "Attributes.h"
 
 #include "xeumeuleu/xml.h"
 

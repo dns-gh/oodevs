@@ -31,6 +31,7 @@ AgentMaintenancePanel::AgentMaintenancePanel( QWidget* parent, PanelStack_ABC& p
     : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( parent, panel, controllers, factory, tr( "Chaine maintenance" ) )
     , controllers_( controllers )
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     AddConsignColumn( "Type d'équipement :" );
     AddConsignColumn( "Type de panne :" );
     AddConsignColumn( "Etat :" );

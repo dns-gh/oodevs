@@ -97,6 +97,8 @@ void GlWidget::resizeGL( int w, int h )
 void GlWidget::paintGL()
 {
     RenderMiniViews();
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
 
     MapWidget::paintGL();
 
@@ -382,7 +384,8 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawRectangle( const Point2f& where, float h, float factor /*= 1.f*/ ) const
 {
-    const Vector2f fontSize = Base().GetSize( "a" );
+     // $$$$ AGE 2006-08-22: 
+    static const Vector2f fontSize = Base().GetSize( "a" );
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
     const float halfWidth   = fontSize.X() * factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = fontSize.Y() * factor * 600.f * 0.062f;

@@ -64,6 +64,7 @@ void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle )
     if( pPopupMenu_ )
     {
         pPopupMenu_->clear();
+        // $$$$ AGE 2006-08-22: $$tr$$
         if( point )
             pPopupMenu_->insertItem( "point", this, SLOT( StartPoint() ) );
         if( line )
@@ -84,6 +85,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     if( !pPopupMenu_ )
         return;
     popupPoint_ = point;
+    // $$$$ AGE 2006-08-22: $$tr$$
     menu.InsertItem( "Parametre", menu_.c_str(), pPopupMenu_ );
 }
 

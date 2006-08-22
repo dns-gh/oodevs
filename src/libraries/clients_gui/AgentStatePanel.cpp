@@ -97,6 +97,17 @@ AgentStatePanel::~AgentStatePanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentStatePanel::showEvent
+// Created: AGE 2006-08-22
+// -----------------------------------------------------------------------------
+void AgentStatePanel::showEvent( QShowEvent* )
+{
+    const Agent_ABC* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentStatePanel::UpdateExtension
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------

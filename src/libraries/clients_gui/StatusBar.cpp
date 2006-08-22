@@ -25,15 +25,15 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     : detection_( detection )
     , converter_( converter )
 {
-    pPositionXYZ_ = new QLabel( "---", parent );
+    pPositionXYZ_ = new QLabel( "---", parent );// $$$$ AGE 2006-08-22: $$tr$$
     pPositionXYZ_->setMinimumWidth( 195 );
     pPositionXYZ_->setAlignment( Qt::AlignCenter );
 
-    pPositionMgrs_ = new QLabel( "---", parent );
+    pPositionMgrs_ = new QLabel( "---", parent );// $$$$ AGE 2006-08-22: $$tr$$
 	pPositionMgrs_->setMinimumWidth( 105 );
     pPositionMgrs_->setAlignment( Qt::AlignCenter );
 
-    pPositionLatLong_ = new QLabel( "---", parent );
+    pPositionLatLong_ = new QLabel( "---", parent );// $$$$ AGE 2006-08-22: $$tr$$
 	pPositionLatLong_->setMinimumWidth( 125 );
     pPositionLatLong_->setAlignment( Qt::AlignCenter );
 
@@ -59,18 +59,20 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
 {
     if( !converter_.IsInBoundaries( position ) )
     {
-        pPositionXYZ_->setText( "---" );
-		pPositionMgrs_->setText( "---" );
-        pPositionLatLong_->setText( "---" );
+        pPositionXYZ_->setText( "---" );// $$$$ AGE 2006-08-22: $$tr$$
+		pPositionMgrs_->setText( "---" );// $$$$ AGE 2006-08-22: $$tr$$
+        pPositionLatLong_->setText( "---" );// $$$$ AGE 2006-08-22: $$tr$$
 	}
 	else
     {
+        // $$$$ AGE 2006-08-22: $$tr$$
         pPositionXYZ_->setText( QString( "x:%1 y:%2 h:%3" ).arg( position.X(), 2 )
                                                            .arg( position.Y(), 2 )
                                                            .arg( detection_.ElevationAt( position ) ) );
         pPositionMgrs_->setText( converter_.ConvertToMgrs( position ).c_str() );
 
         const geometry::Point2f latLong( converter_.ConvertToGeo( position ) );
+        // $$$$ AGE 2006-08-22: $$tr$$
 		pPositionLatLong_->setText( QString( "Lat:%1 Lon:%2" ).arg( latLong.X(), 0, 'g', 3 ).arg( latLong.Y(), 0, 'g', 3 ) );
     }
 }

@@ -97,5 +97,6 @@ void Polygon::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 std::string Polygon::GetName() const
 {
+    // $$$$ AGE 2006-08-22: $$tr$$
     return "polygone";
 }

@@ -66,7 +66,7 @@ bool ParamPoint::CheckValidity()
 void ParamPoint::Draw( const geometry::Point2f& /*point*/, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
 {
     if( pPosLabel_->text() != "---" && extent.IsInside( paramPoint_ ) )
-        tools.DrawCross( paramPoint_, GL_CROSSSIZE );
+        tools.DrawCross( paramPoint_ );
 }
 
 // -----------------------------------------------------------------------------
