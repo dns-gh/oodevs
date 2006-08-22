@@ -107,7 +107,9 @@
     </target>
 
     <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT,library.MT_Tools_Scipio">
-        <build-app name="adaptation_app" depends="mt,qt" libs="ENT,xerces-c_2" pch-excludes="qtundo.cpp"/>
+        <build-app name="adaptation_app" depends="mt,qt" libs="ENT,xerces-c_2" pch-excludes="qtundo.cpp">
+            <syslibset libs="advapi32, user32"/>
+        </build-app>
     </target>
 
     <target name="application.gaming_app" description="build Astec Gaming executable" depends="library.gaming">
