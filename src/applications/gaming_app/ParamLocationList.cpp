@@ -14,7 +14,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_gui/LocationSerializer.h"
+#include "LocationSerializer.h"
 
 using namespace kernel;
 using namespace gui;

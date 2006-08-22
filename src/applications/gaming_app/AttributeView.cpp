@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "AttributeView.h"
 #include "moc_AttributeView.cpp"
 #include "clients_kernel/DataDictionary.h"

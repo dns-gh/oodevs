@@ -10,7 +10,7 @@
 #ifndef __AttributeView_h_
 #define __AttributeView_h_
 
-#include "NoLinkDisplayer.h"
+#include "clients_gui/NoLinkDisplayer.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
@@ -23,9 +23,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-
 // =============================================================================
 /** @class  AttributeView
     @brief  AttributeView
@@ -33,7 +30,7 @@ namespace gui
 // Created: AGE 2006-06-22
 // =============================================================================
 class AttributeView : public QTable
-                    , public NoLinkDisplayer
+                    , public gui::NoLinkDisplayer
                     , public kernel::Observer_ABC
                     , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
@@ -84,7 +81,5 @@ private:
     QString message_;
     //@}
 };
-
-}
 
 #endif // __AttributeView_h_

@@ -17,9 +17,6 @@ namespace kernel
     class DataDictionary;
 }
 
-namespace gui
-{
-
 // =============================================================================
 /** @class  AttributeViewCellEditor
     @brief  AttributeViewCellEditor
@@ -65,7 +62,5 @@ private:
     QListBox* list_;
     //@}
 };
-
-}
 
 #endif // __AttributeViewCellEditor_h_

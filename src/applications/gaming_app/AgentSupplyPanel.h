@@ -13,22 +13,23 @@
 #include "LogisticPanel.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "gaming/LogSupplyConsign.h"
-#include "clients_kernel/Agent_ABC.h"
 
 namespace kernel
 {
+    class Agent_ABC;
     class Displayer_ABC;
+}
+
+namespace gui
+{
+    class ValuedListItem;
+    class DisplayBuilder;
 }
 
 class SupplyStates;
 class Availability;
 class DotationRequest;
 class Dotation;
-
-namespace gui
-{
-    class ValuedListItem;
-    class DisplayBuilder;
 
 // =============================================================================
 /** @class  AgentSupplyPanel
@@ -43,16 +44,16 @@ class AgentSupplyPanel : public LogisticPanel< AgentSupplyPanel, LogSupplyConsig
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentSupplyPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             AgentSupplyPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AgentSupplyPanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const LogSupplyConsign* consign,  kernel::Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Availability& availability, kernel::Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Dotation& quota, kernel::Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const DotationRequest& request, kernel::Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const LogSupplyConsign* consign,  kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Availability& availability, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Dotation& quota, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const DotationRequest& request, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:
@@ -61,22 +62,20 @@ private:
     virtual void NotifySelected( const kernel::Agent_ABC& agent );
     virtual void NotifyUpdated( const SupplyStates& consigns );
 
-    virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentSupplyPanel >* list );
-    virtual void DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< AgentSupplyPanel >* list );
+    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< AgentSupplyPanel >* list );
+    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< AgentSupplyPanel >* list );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ItemFactory_ABC& factory_;
-    DisplayBuilder* display_;
-    ListDisplayer< AgentSupplyPanel >* pStocks_;
-    ListDisplayer< AgentSupplyPanel >* pQuotas_;
-    ListDisplayer< AgentSupplyPanel >* pDispoTransporters_;
+    gui::ItemFactory_ABC& factory_;
+    gui::DisplayBuilder* display_;
+    gui::ListDisplayer< AgentSupplyPanel >* pStocks_;
+    gui::ListDisplayer< AgentSupplyPanel >* pQuotas_;
+    gui::ListDisplayer< AgentSupplyPanel >* pDispoTransporters_;
     //@}
 };
-
-}
 
 #endif // __AgentSupplyPanel_h_

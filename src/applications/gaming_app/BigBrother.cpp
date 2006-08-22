@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "BigBrother.h"
 #include "moc_BigBrother.cpp"
 #include "clients_kernel/Controllers.h"
@@ -15,7 +15,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "AttributeView.h"
-#include "GlWidget.h"
+#include "clients_gui/GlWidget.h"
 #include "clients_kernel/Positions.h"
 #include "gaming/Report_ABC.h"
 

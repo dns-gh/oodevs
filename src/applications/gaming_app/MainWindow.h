@@ -29,12 +29,12 @@ namespace gui
     class ParametersLayer;
     class AgentsLayer;
     class GlPlaceHolder;
-    class BigBrother; // $$$$ AGE 2006-08-02: Duh !
     class IconLayout;
     class ColorStrategy;
     class GlProxy;
 }
 
+class BigBrother; // $$$$ AGE 2006-08-02: Duh !
 class Model;
 class StaticModel;
 class Simulation;
@@ -135,7 +135,7 @@ private:
     gui::StatusBar*       pStatus_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer*     agents_;
-    gui::BigBrother*      spy_;
+    BigBrother*      spy_;
     //@}
 };
 

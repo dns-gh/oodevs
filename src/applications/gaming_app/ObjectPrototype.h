@@ -12,7 +12,7 @@
 
 #include "clients_gui/ObjectPrototype_ABC.h"
 #include "gaming/ASN_messages.h"
-#include "clients_gui/LocationSerializer.h"
+#include "LocationSerializer.h"
 
 namespace kernel
 {
@@ -61,7 +61,7 @@ private:
     //@{
     ASN_MsgObjectMagicAction msg_;
     ASN1T_MagicActionCreateObject creation_;
-    gui::LocationSerializer serializer_;
+    LocationSerializer serializer_;
     //@}
 };
 

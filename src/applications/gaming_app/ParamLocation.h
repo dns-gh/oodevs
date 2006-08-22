@@ -13,7 +13,7 @@
 #include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
-#include "clients_gui/LocationSerializer.h"
+#include "LocationSerializer.h"
 
 namespace kernel
 {
@@ -64,7 +64,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    gui::LocationSerializer serializer_;
+    LocationSerializer serializer_;
     gui::LocationCreator* creator_;
     gui::RichLabel* pLabel_;
     QLabel* pShapeLabel_;

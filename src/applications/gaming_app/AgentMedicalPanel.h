@@ -20,13 +20,14 @@ namespace kernel
     class Displayer_ABC;
 }
 
-class MedicalStates;
-class Availability;
-
 namespace gui
 {
     class ValuedListItem;
     class DisplayBuilder;
+}
+
+class MedicalStates;
+class Availability;
 
 // =============================================================================
 /** @class  AgentMedicalPanel
@@ -40,14 +41,14 @@ class AgentMedicalPanel : public LogisticPanel< AgentMedicalPanel, LogMedicalCon
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentMedicalPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             AgentMedicalPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AgentMedicalPanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const LogMedicalConsign* consign, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Availability& availability, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const LogMedicalConsign* consign, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Availability& availability, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:
@@ -56,21 +57,19 @@ private:
     void NotifySelected( const kernel::Agent_ABC& agent );
     void NotifyUpdated( const MedicalStates& consigns );
 
-    virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list );
-    virtual void DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< AgentMedicalPanel >* list );
+    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< AgentMedicalPanel >* list );
+    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< AgentMedicalPanel >* list );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    DisplayBuilder* display_;
-    ListDisplayer< AgentMedicalPanel >* dispoReleveAmbulances_;
-    ListDisplayer< AgentMedicalPanel >* dispoDispoRamassageAmbulances_;
-    ListDisplayer< AgentMedicalPanel >* dispoDispoDoctors_;
+    gui::DisplayBuilder* display_;
+    gui::ListDisplayer< AgentMedicalPanel >* dispoReleveAmbulances_;
+    gui::ListDisplayer< AgentMedicalPanel >* dispoDispoRamassageAmbulances_;
+    gui::ListDisplayer< AgentMedicalPanel >* dispoDispoDoctors_;
     //@}
 };
-
-}
 
 #endif // __AgentMedicalPanel_h_

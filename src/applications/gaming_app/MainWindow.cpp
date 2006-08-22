@@ -32,6 +32,8 @@
 #include "PopulationKnowledgesLayer.h"
 #include "MeteoLayer.h"
 #include "ObjectKnowledgesLayer.h"
+#include "StatusBar.h"
+#include "BigBrother.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -60,12 +62,10 @@
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
-#include "clients_gui/StatusBar.h"
 #include "clients_gui/PopulationList.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/GlPlaceHolder.h"
 #include "clients_gui/RichItemFactory.h"
-#include "clients_gui/BigBrother.h"
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/IconLayout.h"
@@ -213,7 +213,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
 
-    pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
+    pStatus_ = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
 
     displayTimer_ = new QTimer( this );

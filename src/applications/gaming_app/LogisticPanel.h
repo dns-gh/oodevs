@@ -10,13 +10,13 @@
 #ifndef __LogisticPanel_h_
 #define __LogisticPanel_h_
 
-#include "InfoPanel_ABC.h"
+#include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "gaming/LogisticConsigns.h"
 #include "clients_kernel/SafePointer.h"
-#include "ListDisplayer.h"
-#include "SubItemDisplayer.h"
+#include "clients_gui/ListDisplayer.h"
+#include "clients_gui/SubItemDisplayer.h"
 
 namespace kernel
 {
@@ -27,6 +27,7 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+}
 
 // =============================================================================
 /** @class  LogisticPanel
@@ -35,7 +36,7 @@ namespace gui
 // Created: AGE 2006-07-04
 // =============================================================================
 template< typename ConcretePanel, typename Consign >
-class LogisticPanel : public InfoPanel_ABC
+class LogisticPanel : public gui::InfoPanel_ABC
                     , public kernel::Observer_ABC
                     , public kernel::SelectionObserver< kernel::Agent_ABC >
                     , public kernel::ElementObserver_ABC< LogisticConsigns >
@@ -45,12 +46,8 @@ class LogisticPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName );
+             LogisticPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const QString& tabName );
     virtual ~LogisticPanel();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
@@ -79,23 +76,21 @@ protected:
 
     void AddConsignColumn( const char* column );
 
-    virtual void DisplayRequested( const LogisticConsigns& consigns, ListDisplayer< ConcretePanel >* list ) = 0;
-    virtual void DisplayHandled( const LogisticConsigns& consigns, ListDisplayer< ConcretePanel >* list ) = 0;
+    virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< ConcretePanel >* list ) = 0;
+    virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< ConcretePanel >* list ) = 0;
 
-    Displayer_ABC& GetDisplayer( ValuedListItem* item );
+    kernel::Displayer_ABC& GetDisplayer( gui::ValuedListItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Agent_ABC > selected_;
-    ListDisplayer< ConcretePanel >* pConsignListView_;
-    ListDisplayer< ConcretePanel >* pConsignHandledListView_;
-    SubItemDisplayer* logDisplay_;
+    gui::ListDisplayer< ConcretePanel >* pConsignListView_;
+    gui::ListDisplayer< ConcretePanel >* pConsignHandledListView_;
+    gui::SubItemDisplayer* logDisplay_;
     //@}
 };
-
-}
 
 #include "LogisticPanel.inl"
 

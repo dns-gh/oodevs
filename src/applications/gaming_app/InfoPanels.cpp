@@ -21,9 +21,9 @@
 #include "clients_gui/AgentResourcesPanel.h"
 #include "clients_gui/ObjectPanel.h"
 #include "clients_gui/PopulationPanel.h"
-#include "clients_gui/AgentMaintenancePanel.h"
-#include "clients_gui/AgentMedicalPanel.h"
-#include "clients_gui/AgentSupplyPanel.h"
+#include "AgentMaintenancePanel.h"
+#include "AgentMedicalPanel.h"
+#include "AgentSupplyPanel.h"
 
 using namespace kernel;
 using namespace gui;

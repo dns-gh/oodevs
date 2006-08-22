@@ -7,13 +7,12 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "AttributeViewCell.h"
 #include "clients_kernel/DataDictionary.h"
 #include "AttributeViewCellEditor.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: AttributeViewCell constructor

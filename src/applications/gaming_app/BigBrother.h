@@ -26,9 +26,6 @@ namespace kernel
 class QToolBox;
 class Report_ABC;
 
-namespace gui
-{
-
 // =============================================================================
 /** @class  BigBrother
     @brief  BigBrother
@@ -98,7 +95,5 @@ private:
     QToolBox* toolBox_;
     //@}
 };
-
-}
 
 #endif // __BigBrother_h_

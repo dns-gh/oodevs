@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "AgentMedicalPanel.h"
-#include "gaming/LogMedicalConsign.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "gaming/MedicalStates.h"
-#include "gaming/LogisticConsigns.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Units.h"
-#include "SubItemDisplayer.h"
-#include "ListDisplayer.h"
-#include "DisplayBuilder.h"
+#include "clients_gui/SubItemDisplayer.h"
+#include "clients_gui/ListDisplayer.h"
+#include "clients_gui/DisplayBuilder.h"
+#include "gaming/LogMedicalConsign.h"
+#include "gaming/MedicalStates.h"
+#include "gaming/LogisticConsigns.h"
 
 using namespace kernel;
 using namespace gui;

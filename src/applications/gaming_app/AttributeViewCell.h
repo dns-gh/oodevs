@@ -19,9 +19,6 @@ namespace kernel
     class DataDictionary;
 }
 
-namespace gui
-{
-
 // =============================================================================
 /** @class  AttributeViewCell
     @brief  AttributeViewCell
@@ -56,7 +53,5 @@ private:
     const kernel::DataDictionary& dictionary_;
     //@}
 };
-
-}
 
 #endif // __AttributeViewCell_h_

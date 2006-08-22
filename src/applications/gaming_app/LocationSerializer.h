@@ -11,6 +11,7 @@
 #define __LocationSerializer_h_
 
 #include "clients_kernel/LocationVisitor_ABC.h"
+
 struct ASN1T_CoordUTM;
 struct ASN1T_Localisation;
 
@@ -19,9 +20,6 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Location_ABC;
 }
-
-namespace gui
-{
 
 // =============================================================================
 /** @class  LocationSerializer
@@ -75,7 +73,5 @@ private:
     bool ownsCoords_;
     //@}
 };
-
-}
 
 #endif // __LocationSerializer_h_

@@ -7,14 +7,13 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "LocationSerializer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "gaming/ASN_Types.h"
 #include "clients_kernel/Location_ABC.h"
+#include "gaming/ASN_Types.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: LocationSerializer constructor

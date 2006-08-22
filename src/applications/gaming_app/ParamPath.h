@@ -14,7 +14,7 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
-#include "clients_gui/LocationSerializer.h"
+#include "LocationSerializer.h"
 
 namespace kernel
 {
@@ -78,7 +78,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     gui::ParametersLayer& layer_;
     const kernel::Positions& positions_;
-    gui::LocationSerializer serializer_;
+    LocationSerializer serializer_;
 
     std::string menu_;
     gui::RichLabel* pLabel_;

@@ -7,14 +7,13 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "AttributeViewCellEditor.h"
 #include "moc_AttributeViewCellEditor.cpp"
 #include "clients_kernel/DataDictionary.h"
 #include <qtable.h>
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: AttributeViewCellEditor constructor

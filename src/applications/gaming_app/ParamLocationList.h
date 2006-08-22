@@ -24,8 +24,9 @@ namespace gui
 {
     class LocationCreator;
     class ParametersLayer;
-    class LocationSerializer;
 }
+
+class LocationSerializer;
 
 // =============================================================================
 /** @class  ParamLocationList
@@ -69,7 +70,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< kernel::Location_ABC* >       T_Locations;
-    typedef std::vector< gui::LocationSerializer* > T_Serializers;
+    typedef std::vector< LocationSerializer* > T_Serializers;
     //@}
 
     //! @name Helpers
