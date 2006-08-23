@@ -50,13 +50,13 @@
     </target>
 
     <target name="library.clients_gui" description="build clients_gui static library" depends="library.ASN,library.clients_kernel">
-        <build-lib name="clients_gui" excludes="**/font/*">
+        <build-lib name="clients_gui" excludes="**/font/*,**/resources.cpp">
             <includepath path="${include.dir}/ASN"/> <!-- $$ DEVRAIT VIRER -->
         </build-lib>
     </target>
 
     <target name="library.gaming" description="build gaming static library" depends="library.ASN,library.clients_gui">
-        <build-lib name="gaming">
+        <build-lib name="gaming" excludes="**/statusicons.cpp">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
