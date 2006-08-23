@@ -47,7 +47,7 @@ void ConcentrationDetections::Update( const ConcentrationDetectionMessage& messa
 
     message >> nPopulationID >> nConcentrationID >> nVisType;
     Population_ABC& popu = resolver_.Get( nPopulationID );
-    const PopulationConcentration* pConcentration = & popu.GetConcentration( nConcentrationID );
+    const PopulationConcentration_ABC* pConcentration = & popu.GetConcentration( nConcentrationID );
 
     if( nVisType == eVisTypeInvisible )
         perceivedConcentrations_.erase( pConcentration );

@@ -19,9 +19,8 @@ namespace kernel
 {
     class Controller;
     class Population_ABC;
+    class PopulationConcentration_ABC;
 }
-
-class PopulationConcentration;
 
 // =============================================================================
 /** @class  ConcentrationDetections
@@ -49,7 +48,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const PopulationConcentration* > T_Concentrations;
+    typedef std::set< const kernel::PopulationConcentration_ABC* > T_Concentrations;
     //@}
 
     //! @name Helpers

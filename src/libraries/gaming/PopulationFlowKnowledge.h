@@ -22,9 +22,9 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Controller;
     class Population_ABC;
+    class PopulationFlow_ABC;
 }
 
-class PopulationFlow;
 class PopulationKnowledge;
 
 // =============================================================================
@@ -77,7 +77,7 @@ private:
 
     const kernel::Population_ABC& popu_; 
     const uint nID_;
-    const PopulationFlow* pFlow_;
+    const kernel::PopulationFlow_ABC* pFlow_;
 
     kernel::OptionalValue< float >                 rDirection_;
     kernel::OptionalValue< float >                 rSpeed_;

@@ -13,7 +13,7 @@
 #include "PopulationConcentrationKnowledge.h"
 
 #include "clients_kernel/Population_ABC.h"
-#include "PopulationConcentration.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
 #include "PopulationKnowledge.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"

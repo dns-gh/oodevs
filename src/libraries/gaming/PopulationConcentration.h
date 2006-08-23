@@ -11,8 +11,10 @@
 #define __PopulationConcentration_h_
 
 #include "ASN_Types.h"
-#include "PopulationPart_ABC.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Positions.h"
 
 namespace kernel
 {
@@ -22,7 +24,10 @@ namespace kernel
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class PopulationConcentration : public PopulationPart_ABC
+class PopulationConcentration : public PopulationConcentration_ABC
+                              , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
+                              , public kernel::Drawable_ABC
+                              , public kernel::Positions
 {
 
 public:
@@ -41,6 +46,8 @@ public:
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
+    virtual std::string  GetAttitude() const;
+    virtual float GetHeight() const;
 
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
@@ -78,6 +85,7 @@ private:
     int   nDeadHumans_;
     float radius_;
     float deadRadius_;
+    E_PopulationAttitude attitude_;
     //@}			
 };
 

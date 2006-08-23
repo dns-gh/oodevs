@@ -11,8 +11,8 @@
 #include "PopulationPanel.h"
 
 #include "clients_kernel/Population_ABC.h"
-#include "gaming/PopulationConcentration.h"
-#include "gaming/PopulationFlow.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
+#include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "DisplayBuilder.h"
 #include "GroupDisplayer.h"
@@ -93,8 +93,8 @@ void PopulationPanel::NotifySelected( const Population_ABC* popu )
 // -----------------------------------------------------------------------------
 void PopulationPanel::DisplayParts( const Population_ABC& population )
 {
-    ValuedListItem* item = pPartsListView_->DisplayList( population.Resolver< PopulationConcentration >::CreateIterator() );
-    item = pPartsListView_->DisplayList( population.Resolver< PopulationFlow >::CreateIterator(), pPartsListView_, item );
+    ValuedListItem* item = pPartsListView_->DisplayList( population.Resolver< PopulationConcentration_ABC >::CreateIterator() );
+    item = pPartsListView_->DisplayList( population.Resolver< PopulationFlow_ABC >::CreateIterator(), pPartsListView_, item );
     pPartsListView_->DeleteTail( item );
 }
 

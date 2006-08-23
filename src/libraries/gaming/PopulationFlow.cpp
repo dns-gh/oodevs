@@ -30,7 +30,7 @@ PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, c
     , nDeadHumans_( 0 )
     , rDensity_( 0 )
 {
-    // NOTHING
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +67,8 @@ unsigned long PopulationFlow::GetId() const
 // -----------------------------------------------------------------------------
 void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
+    if ( asnMsg.m.attitudePresent )
+		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
 	if( asnMsg.m.nb_humains_vivantsPresent )
 		nLivingHumans_ = asnMsg.nb_humains_vivants;
 	if ( asnMsg.m.nb_humains_mortsPresent )
@@ -104,8 +106,6 @@ void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
         else 
             rDensity_ = 0.;
 	}
-
-    PopulationPart_ABC::DoUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +133,24 @@ unsigned int PopulationFlow::GetLivingHumans() const
 unsigned int PopulationFlow::GetDeadHumans() const
 {
     return nDeadHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetAttitude
+// Created: SBO 2006-08-23
+// -----------------------------------------------------------------------------
+std::string PopulationFlow::GetAttitude() const
+{
+    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ ); // $$$$ AGE 2006-02-20: 
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetHeight
+// Created: SBO 2006-08-23
+// -----------------------------------------------------------------------------
+float PopulationFlow::GetHeight() const
+{
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------

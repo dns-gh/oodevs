@@ -20,9 +20,8 @@ namespace kernel
 {
     class Controller;
     class Population_ABC;
+    class PopulationPart_ABC;
 }
-
-class PopulationPart_ABC;
 
 // =============================================================================
 /** @class  PopulationDetections
@@ -65,7 +64,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< const PopulationPart_ABC* > T_Parts;
+    typedef std::set< const kernel::PopulationPart_ABC* > T_Parts;
     //@}
 
 private:

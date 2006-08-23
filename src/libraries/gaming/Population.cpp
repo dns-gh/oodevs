@@ -50,8 +50,8 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
 Population::~Population()
 {
     controller_.Delete( *(Population_ABC*)this );
-    Resolver< PopulationFlow >::DeleteAll();
-    Resolver< PopulationConcentration >::DeleteAll();
+    Resolver< PopulationFlow_ABC >::DeleteAll();
+    Resolver< PopulationConcentration_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,12 +62,12 @@ unsigned int Population::GetDeadHumans() const
 {
     unsigned int dead = 0;
     {
-        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             dead += it.NextElement().GetDeadHumans();
     }
     {
-        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             dead += it.NextElement().GetDeadHumans();
     }
@@ -82,12 +82,12 @@ unsigned int Population::GetLivingHumans() const
 {
     unsigned int living = 0;
     {
-        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             living += it.NextElement().GetLivingHumans();
     }
     {
-        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             living += it.NextElement().GetLivingHumans();
     }
@@ -100,7 +100,7 @@ unsigned int Population::GetLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-    Resolver< PopulationFlow >::Get( asnMsg.oid_flux ).Update( asnMsg );
+    static_cast< PopulationFlow& >( Resolver< PopulationFlow_ABC >::Get( asnMsg.oid_flux ) ).Update( asnMsg );
     ComputeCenter();
 }
 
@@ -110,7 +110,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-    Resolver< PopulationConcentration >::Get( asnMsg.oid_concentration ).Update( asnMsg );
+    static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid_concentration ) ).Update( asnMsg );
     controller_.Update( *(Population_ABC*)this );
 }
 
@@ -120,9 +120,9 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-    if( ! Resolver< PopulationFlow >::Find( asnMsg.oid_flux ) )
+    if( ! Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux ) )
     {
-        Resolver< PopulationFlow >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
+        Resolver< PopulationFlow_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
         ComputeCenter();
         controller_.Update( *(Population_ABC*)this );
     }
@@ -134,9 +134,9 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-    if( ! Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration ) )
+    if( ! Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid_concentration ) )
     {
-        Resolver< PopulationConcentration >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
+        Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
         ComputeCenter();
         controller_.Update( *(Population_ABC*)this );
     }
@@ -148,8 +148,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
-    delete Resolver< PopulationFlow >::Find( asnMsg.oid_flux );
-    Resolver< PopulationFlow >::Remove( asnMsg.oid_flux );
+    delete Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux );
+    Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid_flux );
     ComputeCenter();
     controller_.Update( *(Population_ABC*)this );
 }
@@ -160,8 +160,8 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
-    delete Resolver< PopulationConcentration >::Find( asnMsg.oid_concentration );
-    Resolver< PopulationConcentration >::Remove( asnMsg.oid_concentration );
+    delete Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid_concentration );
+    Resolver< PopulationConcentration_ABC >::Remove( asnMsg.oid_concentration );
     ComputeCenter();
     controller_.Update( *(Population_ABC*)this );
 }
@@ -210,12 +210,12 @@ const Team_ABC& Population::GetTeam() const
 void Population::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     {
-        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             it.NextElement().Draw( where, viewport, tools );
     }
     {
-        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
             it.NextElement().Draw( where, viewport, tools );
     }
@@ -232,19 +232,21 @@ void Population::ComputeCenter()
 
     // $$$$ AGE 2006-04-10: Crappy crap !
     {
-        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
-            const Point2f center = it.NextElement().GetPosition();
+            const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
+            const Point2f center = concreteEntity.GetPosition();
             center_.Set( center_.X() + center.X(), center_.Y() + center.Y() );
             ++nParts;
         }
     }
     {
-        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
         {
-            const Point2f center = it.NextElement().GetPosition();
+            const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );
+            const Point2f center = concreteEntity.GetPosition();
             center_.Set( center_.X() + center.X(), center_.Y() + center.Y() );
             ++nParts;
         }
@@ -278,16 +280,22 @@ float Population::GetHeight() const
 bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
 {
     {
-        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
-            if( it.NextElement().IsAt( pos, precision ) )
+        {
+            const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
+            if( concreteEntity.IsAt( pos, precision ) )
                 return true;
+        }
     }
     {
-        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
-            if( it.NextElement().IsAt( pos, precision ) )
+        {
+            const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );
+            if( concreteEntity.IsAt( pos, precision ) )
                 return true;
+        }
     }
     return false;
 }
@@ -299,29 +307,36 @@ bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/
 bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
     {
-        Iterator< const PopulationConcentration& > it = Resolver< PopulationConcentration >::CreateIterator();
+        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
         while( it.HasMoreElements() )
-            if( it.NextElement().IsIn( rectangle ) )
+        {
+            const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
+            if( concreteEntity.IsIn( rectangle ) )
                 return true;
+        }
     }
     {
-        Iterator< const PopulationFlow& > it = Resolver< PopulationFlow >::CreateIterator();
+        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
         while( it.HasMoreElements() )
-            if( it.NextElement().IsIn( rectangle ) )
+        {
+            const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );
+            if( concreteEntity.IsIn( rectangle ) )
                 return true;
+        }
     }
     return false;
 }
 
 namespace
 {
-    template< typename Entity >
+    template< typename Entity, typename ConcreteEntity >
     void IncorporateBoundingBox( const Resolver< Entity >& resolver, geometry::Rectangle2f& boundingBox )
     {
         Iterator< const Entity& > it = resolver.CreateIterator();
         while( it.HasMoreElements() )
         {
-            const geometry::Rectangle2f bbox = it.NextElement().GetBoundingBox();
+            const ConcreteEntity& concreteEntity = static_cast< const ConcreteEntity& >( it.NextElement() );
+            const geometry::Rectangle2f bbox = concreteEntity.GetBoundingBox();
             boundingBox.Incorporate( bbox.TopRight() );
             boundingBox.Incorporate( bbox.BottomLeft() );
         }
@@ -335,8 +350,8 @@ namespace
 geometry::Rectangle2f Population::GetBoundingBox() const
 {
     geometry::Rectangle2f boundingBox;
-    IncorporateBoundingBox< PopulationConcentration >( *this, boundingBox );
-    IncorporateBoundingBox< PopulationFlow >( *this, boundingBox );
+    IncorporateBoundingBox< PopulationConcentration_ABC, PopulationConcentration >( *this, boundingBox );
+    IncorporateBoundingBox< PopulationFlow_ABC, PopulationFlow >( *this, boundingBox );
     return boundingBox;
 }
 

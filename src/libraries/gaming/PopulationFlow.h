@@ -11,9 +11,11 @@
 #define __PopulationFlow_h_
 
 #include "ASN_Types.h"
-#include "PopulationPart_ABC.h"
+#include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Positions.h"
 
 namespace kernel
 {
@@ -21,9 +23,15 @@ namespace kernel
 }
 
 // =============================================================================
-// Created: HME 2005-09-29
+/** @class  PopulationFlow
+    @brief  PopulationFlow
+*/
+// Created: SBO 2006-08-23
 // =============================================================================
-class PopulationFlow : public PopulationPart_ABC
+class PopulationFlow : public kernel::PopulationFlow_ABC
+                     , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
+                     , public kernel::Drawable_ABC
+                     , public kernel::Positions
 {
 public:
     //! @name Constructors/Destructor
@@ -39,6 +47,8 @@ public:
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual unsigned int GetDensity() const;
+    virtual std::string  GetAttitude() const;
+    virtual float GetHeight() const;
 
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
@@ -50,12 +60,6 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-//	virtual const std::string&   GetName            () const;
-//    virtual const MT_Vector2D&   GetPos             () const;
     //@}
 
 private:
@@ -85,6 +89,7 @@ private:
     int           nLivingHumans_;
     int           nDeadHumans_;
     float         rDensity_;
+    E_PopulationAttitude attitude_;
     //@}
 };
 

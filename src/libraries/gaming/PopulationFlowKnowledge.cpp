@@ -13,7 +13,7 @@
 #include "PopulationFlowKnowledge.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "PopulationFlow.h"
+#include "clients_kernel/PopulationFlow_ABC.h"
 #include "PopulationKnowledge.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"

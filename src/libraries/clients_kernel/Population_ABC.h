@@ -13,13 +13,12 @@
 #include "Entity_ABC.h"
 #include "Resolver.h"
 
-class PopulationFlow;
-class PopulationConcentration;
-
 namespace kernel
 {
     class Team_ABC;
     class PopulationType;
+    class PopulationFlow_ABC;
+    class PopulationConcentration_ABC;
 
 // =============================================================================
 /** @class  Population_ABC
@@ -28,8 +27,8 @@ namespace kernel
 // Created: AGE 2006-08-07
 // =============================================================================
 class Population_ABC : public Entity_ABC
-                     , public Resolver< PopulationFlow >
-                     , public Resolver< PopulationConcentration >
+                     , public Resolver< PopulationFlow_ABC >
+                     , public Resolver< PopulationConcentration_ABC >
 {
 
 public:
@@ -51,17 +50,17 @@ public:
 
     //! @name Helpers
     //@{
-    const PopulationFlow* FindFlow( unsigned long id ) const {
-        return Resolver< PopulationFlow >::Find( id );
+    const PopulationFlow_ABC* FindFlow( unsigned long id ) const {
+        return Resolver< PopulationFlow_ABC >::Find( id );
     }
-    const PopulationFlow& GetFlow( unsigned long id ) const {
-        return Resolver< PopulationFlow >::Get( id );
+    const PopulationFlow_ABC& GetFlow( unsigned long id ) const {
+        return Resolver< PopulationFlow_ABC >::Get( id );
     }
-    const PopulationConcentration* FindConcentration( unsigned long id ) const {
-        return Resolver< PopulationConcentration >::Find( id );
+    const PopulationConcentration_ABC* FindConcentration( unsigned long id ) const {
+        return Resolver< PopulationConcentration_ABC >::Find( id );
     }
-    const PopulationConcentration& GetConcentration( unsigned long id ) const {
-        return Resolver< PopulationConcentration >::Get( id );
+    const PopulationConcentration_ABC& GetConcentration( unsigned long id ) const {
+        return Resolver< PopulationConcentration_ABC >::Get( id );
     }
     //@}
 

@@ -23,9 +23,9 @@ namespace kernel
     class Population_ABC;
     class Controller;
     class Displayer_ABC;
+    class PopulationConcentration_ABC;
 }
 
-class PopulationConcentration;
 class PopulationKnowledge;
 
 // =============================================================================
@@ -67,7 +67,7 @@ private:
     const kernel::Population_ABC& resolver_;
     const uint nID_;
     
-    const PopulationConcentration*         pConcentration_;
+    const kernel::PopulationConcentration_ABC*         pConcentration_;
     geometry::Point2f                      position_;
     kernel::OptionalValue< uint >                  nNbrAliveHumans_;
     kernel::OptionalValue< uint >                  nNbrDeadHumans_;

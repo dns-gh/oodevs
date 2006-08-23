@@ -18,6 +18,8 @@ namespace kernel
     class ObjectType;
     class Object_ABC;
     class Population_ABC;
+    class PopulationFlow_ABC;
+    class PopulationConcentration_ABC;
     class NBCAgent;
 }
 
@@ -33,7 +35,6 @@ class LogMaintenanceConsign;
 class LogMedicalConsign;
 class Report_ABC;
 class PopulationFireResult;
-class PopulationPart_ABC;
 class AgentFireResult;
 class Lima;
 class PopulationConcentration;
@@ -89,7 +90,7 @@ struct ListItemRtti< const kernel::Population_ABC* > {
 };
 
 template< >
-struct ListItemRtti< const PopulationPart_ABC* > {
+struct ListItemRtti< const kernel::PopulationFlow_ABC* > {
     enum { rtti = 1007 };
 };
 
@@ -196,6 +197,11 @@ struct ListItemRtti< ParamObstacle* > {
 template< >
 struct ListItemRtti< ParamPath* > {
     enum { rtti = 1028 };
+};
+
+template< >
+struct ListItemRtti< const kernel::PopulationConcentration_ABC* > {
+    enum { rtti = 1029 };
 };
 
 //template< typename T > class SafePointer;

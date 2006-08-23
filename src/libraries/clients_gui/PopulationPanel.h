@@ -21,10 +21,9 @@ namespace kernel
 {
     class Displayer_ABC;
     class Population_ABC;
+    class PopulationPart_ABC;
     class Controllers;
 }
-
-class PopulationPart_ABC;
 
 namespace gui
 {

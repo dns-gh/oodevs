@@ -27,7 +27,7 @@ PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConce
     , radius_( 0 )
     , deadRadius_( 0 )
 {
-    // NOTHING
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +64,8 @@ unsigned long PopulationConcentration::GetId() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
+    if ( asnMsg.m.attitudePresent )
+		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
     static const float oneOnpi = 1.f / std::acos( -1.f );
     if( asnMsg.m.nb_humains_vivantsPresent )
         nLivingHumans_ = asnMsg.nb_humains_vivants;
@@ -71,7 +73,6 @@ void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUp
     if( asnMsg.m.nb_humains_mortsPresent )
         nDeadHumans_ = asnMsg.nb_humains_morts;
 
-    PopulationPart_ABC::DoUpdate( asnMsg );
     if( density_ > 0 )
     {
         radius_     = std::sqrt( ( ( nLivingHumans_ + nDeadHumans_ ) / density_ ) * oneOnpi );
@@ -106,6 +107,24 @@ unsigned int PopulationConcentration::GetDeadHumans() const
 unsigned int PopulationConcentration::GetDensity() const
 {
     return density_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetAttitude
+// Created: SBO 2006-08-23
+// -----------------------------------------------------------------------------
+std::string PopulationConcentration::GetAttitude() const
+{
+    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ ); // $$$$ AGE 2006-02-20: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetHeight
+// Created: SBO 2006-08-23
+// -----------------------------------------------------------------------------
+float PopulationConcentration::GetHeight() const
+{
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------

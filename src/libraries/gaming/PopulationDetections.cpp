@@ -10,8 +10,8 @@
 #include "gaming_pch.h"
 #include "PopulationDetections.h"
 #include "clients_kernel/Population_ABC.h"
-#include "PopulationFlow.h"
-#include "PopulationConcentration.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
+#include "clients_kernel/PopulationFlow_ABC.h"
 #include "Attr_def.h"
 
 using namespace kernel;
