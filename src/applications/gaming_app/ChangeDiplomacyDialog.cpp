@@ -105,8 +105,8 @@ void ChangeDiplomacyDialog::Reject()
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 {
-    pArmy1ComboBox_->AddItem( team.GetName().c_str(), team.GetId() );
-    pArmy2ComboBox_->AddItem( team.GetName().c_str(), team.GetId() );
+    pArmy1ComboBox_->AddItem( team.GetName(), team.GetId() );
+    pArmy2ComboBox_->AddItem( team.GetName(), team.GetId() );
 }
 
 // -----------------------------------------------------------------------------

@@ -104,7 +104,7 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( tr( "Morceau" ), part.GetName().c_str() )
+    displayer.Display( tr( "Morceau" ), part.GetName() )
              .Display( tr( "Hommes vivants" ), part.GetLivingHumans() )
              .Display( tr( "Hommes morts" ), part.GetDeadHumans() )
              .Display( tr( "Attitude" ), part.GetAttitude() )

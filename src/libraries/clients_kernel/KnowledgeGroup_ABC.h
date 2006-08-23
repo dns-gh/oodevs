@@ -49,7 +49,7 @@ public:
     virtual bool IsInTeam( const Team_ABC& team ) const = 0;
     virtual const Team_ABC& GetTeam() const = 0;
     virtual unsigned long GetId() const = 0;
-    virtual std::string GetName() const = 0;
+    virtual QString GetName() const = 0;
     //@}
 };
 

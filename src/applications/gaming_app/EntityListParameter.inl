@@ -68,7 +68,7 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
     if( potential_ )
     {
         ValuedListItem* item = new ValuedListItem( this );
-        item->Set( potential_, potential_->GetName().c_str() );
+        item->SetNamed( *potential_ );
     }
 }
 

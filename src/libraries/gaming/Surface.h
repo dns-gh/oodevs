@@ -34,7 +34,7 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const VisionConesMessage& input, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver );
+             Surface( const kernel::Agent_ABC& agent, const VisionConesMessage& input, const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
     virtual ~Surface();
     //@}
 

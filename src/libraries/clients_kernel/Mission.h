@@ -28,21 +28,21 @@ class Mission : public Resolver< FragOrder >
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( const std::string& name, unsigned int id, bool automat );
+             Mission( const QString& name, unsigned int id, bool automat );
     virtual ~Mission();
     //@}
 
     //! @name Accessors
     //@{
     unsigned long GetId() const;
-    std::string GetName() const;
+    QString GetName() const;
     bool IsAutomat() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    QString name_;
     unsigned int id_;
     bool automat_;
     //@}

@@ -80,7 +80,7 @@ template< typename ConcreteEntity >
 void EntityParameter< ConcreteEntity >::MenuItemValidated()
 {
     selected_ = potential_;
-    Display( selected_ ? selected_->GetName().c_str() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
+    Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
 }
 
 // -----------------------------------------------------------------------------

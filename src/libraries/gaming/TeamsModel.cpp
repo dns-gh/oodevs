@@ -71,7 +71,7 @@ Team_ABC& TeamsModel::GetTeam( unsigned long id )
 // Name: TeamsModel::FindTeam
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Team_ABC* TeamsModel::FindTeam( const std::string& team )
+Team_ABC* TeamsModel::FindTeam( const QString& team )
 {
     for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
         if( it->second->GetName() == team )

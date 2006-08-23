@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: SurfaceFactory constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-SurfaceFactory::SurfaceFactory( const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
+SurfaceFactory::SurfaceFactory( const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
     : map_( map )
     , resolver_( resolver )
 {

@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, std::string >& resolver )
+Surface::Surface( const Agent_ABC& agent, const VisionConesMessage& input, const DetectionMap& map, const Resolver_ABC< SensorType, QString >& resolver )
     : agent_( agent )
     , map_( map )
     , elongation_( 1 )
@@ -39,7 +39,7 @@ Surface::Surface( const Agent_ABC& agent, const VisionConesMessage& input, const
     std::string strTypeName;
     input >> strTypeName;
 
-    pSensorType_ = & resolver.Get( strTypeName );
+    pSensorType_ = & resolver.Get( strTypeName.c_str() );
  
     unsigned long nNbrSectors;
     input >> nNbrSectors;

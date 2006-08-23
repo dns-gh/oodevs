@@ -40,7 +40,7 @@ Equipment::~Equipment()
 // Name: Equipment::GetName
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-std::string Equipment::GetName() const
+QString Equipment::GetName() const
 {
     return type_.GetName();
 }

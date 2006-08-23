@@ -155,7 +155,7 @@ unsigned long ObjectKnowledge::GetId() const
 // Name: ObjectKnowledge::GetName
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-std::string ObjectKnowledge::GetName() const
+QString ObjectKnowledge::GetName() const
 {
     // $$$$ AGE 2006-08-23: 
     return pRealObject_ ? pRealObject_->GetName() : "Unknown Object";

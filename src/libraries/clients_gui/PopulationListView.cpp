@@ -69,9 +69,9 @@ void PopulationListView::NotifyCreated( const Population_ABC& popu )
     if( ! teamItem )
     {
         teamItem = factory_.CreateItem( this );
-        teamItem->Set( &team, team.GetName().c_str() );
+        teamItem->SetNamed( team );
     }
-    factory_.CreateItem( teamItem )->Set( &popu, popu.GetName().c_str() );
+    factory_.CreateItem( teamItem )->SetNamed( popu );
 }
 
 // -----------------------------------------------------------------------------

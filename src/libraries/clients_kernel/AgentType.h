@@ -34,8 +34,8 @@ class AgentType : public Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver
-                                          , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+             AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& componentResolver
+                                          , const Resolver_ABC< DecisionalModel, QString >& modelResolver
                                           , const SymbolFactory& symbolFactory );
     virtual ~AgentType();
     //@}
@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    const std::string& GetName() const;
+    QString GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     void DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools );
@@ -63,13 +63,13 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver  );
+    void ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& resolver  );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    QString name_;
     unsigned long id_;
 
     DecisionalModel* model_;

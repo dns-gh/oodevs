@@ -28,13 +28,13 @@ class ObjectType : public Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectType( unsigned long id, const std::string& name, IDManager& manager );
+             ObjectType( unsigned long id, const QString& name, IDManager& manager );
     virtual ~ObjectType();
     //@}
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
+    QString GetName() const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
@@ -56,7 +56,7 @@ public:
     IDManager& manager_;
 
     unsigned long id_;
-    std::string name_;
+    QString name_;
     const char** xpm_;
     //@}
 };

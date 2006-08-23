@@ -52,6 +52,8 @@ public:
     void SetValue( const T& value );
     template< typename T >
     void Set( const T& value, QString label1 = QString::null, QString label2 = QString::null );
+    template< typename T >
+    void SetNamed( const T& value );
 
     int rtti() const;
 
@@ -235,6 +237,16 @@ void ValuedListItem::Set( const T& value, QString label1 /*= QString::null*/, QS
     SetValue( value );
     setText( 0, label1 );
     setText( 1, label2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::SetNamed
+// Created: AGE 2006-08-23
+// -----------------------------------------------------------------------------
+template< typename T >
+void ValuedListItem::SetNamed( const T& value )
+{
+    Set( &value, value.GetName() );
 }
 
 }

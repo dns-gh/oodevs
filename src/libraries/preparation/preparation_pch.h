@@ -10,6 +10,7 @@
 #ifndef __astec_preparation_pch_h_
 #define __astec_preparation_pch_h_
 
+#include <qstring.h>
 #include <string>
 #include <map>
 #include <vector>

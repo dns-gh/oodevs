@@ -21,16 +21,17 @@ using namespace xml;
 // Name: AgentType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& componentResolver, const Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
+AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& componentResolver, const Resolver_ABC< DecisionalModel, QString >& modelResolver, const SymbolFactory& symbolFactory )
     : nature_( 0 )
 {
-    std::string modelName;
+    std::string modelName, name;
     int id;
-    xis >> attribute( "nom", name_ )
+    xis >> attribute( "nom", name )
         >> content( "MosID", id )
         >> content(  "ModeleDecisionnel", modelName );
+    name_ = name.c_str();
     id_ = id;
-    model_ = & modelResolver.Get( modelName );
+    model_ = & modelResolver.Get( modelName.c_str() );
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> start( "Equipements" )
@@ -54,11 +55,11 @@ AgentType::~AgentType()
 // Name: AgentType::ReadEquipment
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, std::string >& resolver )
+void AgentType::ReadEquipment( xml::xistream& xis, const Resolver_ABC< ComponentType, QString >& resolver )
 {
     std::string name;
     xis >> attribute( "nom", name );
-    equipments_.push_back( & resolver.Get( name ) );
+    equipments_.push_back( & resolver.Get( name.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +75,7 @@ unsigned long AgentType::GetId() const
 // Name: AgentType::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-const std::string& AgentType::GetName() const
+QString AgentType::GetName() const
 {
     return name_;
 }

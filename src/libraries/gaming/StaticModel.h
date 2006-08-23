@@ -48,11 +48,11 @@ public:
     //@{
     kernel::Controllers& controllers_;
 
-    CoordinateConverter& coordinateConverter_;
-    kernel::DetectionMap&        detection_;
-    kernel::AgentTypes&          types_;
-    kernel::ObjectTypes&         objectTypes_;
-    SurfaceFactory&      surfaceFactory_;
+    CoordinateConverter&    coordinateConverter_;
+    kernel::DetectionMap&   detection_;
+    kernel::AgentTypes&     types_;
+    kernel::ObjectTypes&    objectTypes_;
+    SurfaceFactory&         surfaceFactory_;
     //@}
 
 private:

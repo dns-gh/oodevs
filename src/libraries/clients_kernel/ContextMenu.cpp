@@ -38,7 +38,7 @@ ContextMenu::~ContextMenu()
 // -----------------------------------------------------------------------------
 void ContextMenu::AddCategory( const std::string& text, int position /*= -1*/ )
 {
-    if( position < 0 || position >= categories_.size() )
+    if( position < 0 || position >= int( categories_.size() ) )
         categories_.push_back( text );
     else
         categories_.insert( categories_.begin() + position, text );
@@ -82,7 +82,7 @@ int ContextMenu::InsertCategory( const std::string& category )
     for( CIT_Categories itCategory = categories_.begin(); itCategory != categories_.end() && *itCategory != category; ++itCategory )
     {
         const std::string& category = *itCategory;
-        while( result < insertedCategories_.size() && insertedCategories_.at( result ) == category )
+        while( result < int( insertedCategories_.size() ) && insertedCategories_.at( result ) == category )
             ++result;
     }
     insertedCategories_.insert( insertedCategories_.begin() + result, category );

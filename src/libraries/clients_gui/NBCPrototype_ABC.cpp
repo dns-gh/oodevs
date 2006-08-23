@@ -48,7 +48,7 @@ void NBCPrototype_ABC::FillTypes()
     while( it.HasMoreElements() )
     {
         const NBCAgent& element = it.NextElement();
-        nbcAgents_->AddItem( element.GetName().c_str(), &element );
+        nbcAgents_->AddItem( element.GetName(), &element );
     }
 }
 

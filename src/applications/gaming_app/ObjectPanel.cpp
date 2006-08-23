@@ -68,7 +68,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
                 .AddLabel( tr( "TC2:" ) );
 
     display_->AddGroup( tr( "Nuage/Zone NBC" ) )
-                .AddLabel( tr( "Agent_ABC NBC:" ) );
+                .AddLabel( tr( "Agent NBC:" ) );
 
     display_->AddGroup( tr( "ROTA" ) )
                 .AddLabel( tr( "Danger:" ) )

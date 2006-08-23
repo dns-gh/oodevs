@@ -125,7 +125,7 @@ void Spy::Bookmark()
     CIT_Agents it = spied_.find( selected_ );
     if( it != spied_.end() )
         return;
-    int id = toolBox_->addItem( CreateView( *selected_ ), selected_->GetName().c_str() );
+    int id = toolBox_->addItem( CreateView( *selected_ ), selected_->GetName() );
     spied_[ selected_ ] = id;
     
     selected_ = 0;

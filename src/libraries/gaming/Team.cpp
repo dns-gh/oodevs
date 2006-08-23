@@ -22,11 +22,12 @@ using namespace kernel;
 Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory )
     : controller_( controller )
     , factory_( factory )
-    , name_()
     , id_( id )
 {
     RegisterSelf( *this );
-    input >> name_;
+    std::string name;
+    input >> name;
+    name_ = name.c_str();
     controller_.Create( *(Team_ABC*)this );
 }
 
@@ -69,7 +70,7 @@ unsigned long Team::GetId() const
 // Name: Team::GetName
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-std::string Team::GetName() const
+QString Team::GetName() const
 {
     return name_;
 }

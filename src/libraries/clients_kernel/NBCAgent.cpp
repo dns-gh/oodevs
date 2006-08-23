@@ -21,9 +21,11 @@ using namespace xml;
 NBCAgent::NBCAgent( xistream& input )
 {
     int id;
-    input >> attribute( "nom", name_ )
+    std::string name;
+    input >> attribute( "nom", name )
           >> content( "MosID", id );
     id_ = id;
+    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +50,7 @@ unsigned long NBCAgent::GetId() const
 // Name: NBCAgent::GetName
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-std::string NBCAgent::GetName() const
+QString NBCAgent::GetName() const
 {
     return name_;
 }

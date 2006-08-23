@@ -25,20 +25,20 @@ class FragOrder
 public:
     //! @name Constructors/Destructor
     //@{
-             FragOrder( const std::string& name, unsigned int id );
+             FragOrder( const QString& name, unsigned int id );
     virtual ~FragOrder();
     //@}
 
     //! @name Accessors
     //@{
     unsigned long GetId() const;
-    std::string GetName() const;
+    QString GetName() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    QString name_;
     unsigned int id_;
     //@}
 };

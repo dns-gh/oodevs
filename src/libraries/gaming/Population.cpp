@@ -190,7 +190,7 @@ unsigned long Population::GetId() const
 // Name: Population::GetName
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-std::string Population::GetName() const
+QString Population::GetName() const
 {
     return strName_;
 }

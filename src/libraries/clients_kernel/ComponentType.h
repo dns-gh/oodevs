@@ -34,7 +34,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    const std::string& GetName() const;
+    QString GetName() const;
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string   name_;
+    QString   name_;
     unsigned long id_;
 
     bool hasMaintenance_;

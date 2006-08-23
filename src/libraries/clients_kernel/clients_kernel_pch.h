@@ -12,6 +12,7 @@
 
 #pragma warning( push )
 #pragma warning( disable : 4290 4702 )
+#include <qstring.h>
 #include <string>
 #include <vector>
 #include <map>

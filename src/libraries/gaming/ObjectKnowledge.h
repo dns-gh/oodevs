@@ -55,7 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual unsigned long GetId() const;
-    virtual std::string GetName() const;
+    virtual QString GetName() const;
 
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;

@@ -35,7 +35,7 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject
     while( it.HasMoreElements() )
     {
         const ObjectType& type = it.NextElement();
-        typeCombo_->AddItem( type.GetName().c_str(), &type );
+        typeCombo_->AddItem( type.GetName(), &type );
     }
 
     new QLabel( tr( "Sous type:" ), this );

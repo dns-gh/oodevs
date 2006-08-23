@@ -113,7 +113,7 @@ void MiniView::drawContents( QPainter * p )
     QFont base = p->font();
     base.setPointSize( 9 );
     p->setFont( base );
-    p->drawText( contentsRect(), AlignHCenter | Qt::AlignBottom, agent_.GetName().c_str() );
+    p->drawText( contentsRect(), AlignHCenter | Qt::AlignBottom, agent_.GetName() );
 }
 
 // -----------------------------------------------------------------------------

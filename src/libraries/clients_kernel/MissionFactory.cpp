@@ -42,7 +42,7 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
     E_UnitMission mission = ENT_Tr::ConvertToUnitMission( name );
     if( mission == -1 )
         throw std::runtime_error( "unknown agent mission '" + name + "'" );
-    return AddFragOrders( new Mission( name, mission, false ) );
+    return AddFragOrders( new Mission( name.c_str(), mission, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
     E_AutomataMission mission = ENT_Tr::ConvertToAutomataMission( name );
     if( mission == -1 )
         throw std::runtime_error( "unknown automat mission '" + name + "'" );
-    return AddFragOrders( new Mission( name, mission, true ) );
+    return AddFragOrders( new Mission( name.c_str(), mission, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ Mission* MissionFactory::CreatePopulationMission( const std::string& name )
     E_PopulationMission mission = ENT_Tr::ConvertToPopulationMission( name );
     if( mission == -1 )
         throw std::runtime_error( "unknown population mission '" + name + "'" );
-    return new Mission( name, mission, false );
+    return new Mission( name.c_str(), mission, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
     E_FragOrder order = ENT_Tr::ConvertToFragOrder( name );
     if( order == -1 )
         throw std::runtime_error( "unknown frag order '" + name + "'" );
-    return new FragOrder( name, order );
+    return new FragOrder( name.c_str(), order );
 }
 
 // -----------------------------------------------------------------------------

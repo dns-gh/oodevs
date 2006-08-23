@@ -107,7 +107,7 @@ void ObjectPrototype_ABC::FillObjectTypes()
     while( it.HasMoreElements() )
     {
         const ObjectType& element = it.NextElement();
-        objectTypes_->AddItem( element.GetName().c_str(), &element );
+        objectTypes_->AddItem( element.GetName(), &element );
     }
 }
     
@@ -172,7 +172,7 @@ void ObjectPrototype_ABC::NotifyCreated( const Team_ABC& team )
 {
     if( teams_->GetItemIndex( &team ) != -1 )
         return;
-    teams_->AddItem( team.GetName().c_str(), &team );
+    teams_->AddItem( team.GetName(), &team );
 }
     
 // -----------------------------------------------------------------------------

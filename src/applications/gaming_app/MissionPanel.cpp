@@ -99,7 +99,7 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
     while( it.HasMoreElements() )
     {
         const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( mission.GetName().c_str(), this, slot );
+        int nId = missions.insertItem( mission.GetName(), this, slot );
         missions.setItemParameter( nId, mission.GetId() );
     }
     return menu.InsertItem( "Ordre", name, &missions  );
@@ -120,7 +120,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
         const FragOrder& fragOrder = fragIt.NextElement();
         if( fragOrders_.insert( fragOrder.GetId() ).second )
         {
-            int nId = orders.insertItem( fragOrder.GetName().c_str(), this, slot );
+            int nId = orders.insertItem( fragOrder.GetName(), this, slot );
             orders.setItemParameter( nId, fragOrder.GetId() );
         }
     }
@@ -133,7 +133,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
             const FragOrder& fragOrder = fragIt.NextElement();
             if( fragOrders_.insert( fragOrder.GetId() ).second )
             {
-                int nId = orders.insertItem( fragOrder.GetName().c_str(), this, slot );
+                int nId = orders.insertItem( fragOrder.GetName(), this, slot );
                 orders.setItemParameter( nId, fragOrder.GetId() );
             }
         }
@@ -232,7 +232,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& 
         while( it.HasMoreElements() )
         {
             const Mission& mission = it.NextElement();
-            int nId = missions.insertItem( mission.GetName().c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
+            int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
             missions.setItemParameter( nId, mission.GetId() );
         }
         menu.InsertItem( "Ordre", tr( "Missions Population" ), &missions  );

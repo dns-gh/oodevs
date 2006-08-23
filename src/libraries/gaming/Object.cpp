@@ -80,12 +80,9 @@ unsigned long Object::GetId() const
 // Name: Object::GetName
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-std::string Object::GetName() const
+QString Object::GetName() const
 {
-    // $$$$ AGE 2006-08-23: 
-    std::stringstream stream;
-    stream << strName_ << " [" << nId_ << ']';
-    return stream.str();
+    return QString( "%1 [%2]" ).arg( strName_ ).arg( nId_ );
 }
 
 // -----------------------------------------------------------------------------

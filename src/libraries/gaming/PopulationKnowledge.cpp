@@ -61,7 +61,7 @@ unsigned long PopulationKnowledge::GetId() const
 // Name: PopulationKnowledge::GetName
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-std::string PopulationKnowledge::GetName() const
+QString PopulationKnowledge::GetName() const
 {
     return popu_.GetName();
 }

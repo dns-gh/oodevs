@@ -27,6 +27,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const
 {
     idManager_.LockIdentifier( nID_ );
     controller_.Create( *(KnowledgeGroup_ABC*)this );
+    name_ = QString( "Gtia %1" ).arg( nID_ ); // $$$$ AGE 2006-08-23: 
 }
 
 // -----------------------------------------------------------------------------
@@ -72,12 +73,9 @@ unsigned long KnowledgeGroup::GetId() const
 // Name: KnowledgeGroup::GetName
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-std::string KnowledgeGroup::GetName() const
+QString KnowledgeGroup::GetName() const
 {
-    std::stringstream stream;
-    // $$$$ AGE 2006-08-23: 
-    stream << "Gtia " << nID_;
-    return stream.str();
+    return name_;
 }
 
 // -----------------------------------------------------------------------------

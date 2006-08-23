@@ -24,9 +24,11 @@ ComponentType::ComponentType( xml::xistream& xis )
     , hasSupply_( false )
 {
     int id;
-    xis >> attribute( "nom", name_ )
+    std::string name;
+    xis >> attribute( "nom", name )
             >> content( "MosID", id );
     id_ = id;
+    name_ = name.c_str();
 
     xis >> optional() 
         >> start( "FonctionsLogistiques" )
@@ -57,7 +59,7 @@ void ComponentType::ReadPresence( xml::xistream& , bool& flag ) const
 // Name: ComponentType::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-const std::string& ComponentType::GetName() const
+QString ComponentType::GetName() const
 {
     return name_;
 }

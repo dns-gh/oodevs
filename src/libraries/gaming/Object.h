@@ -57,7 +57,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned long GetId() const;
-    virtual std::string GetName() const;
+    virtual QString GetName() const;
     virtual const kernel::Team_ABC& GetTeam() const;
     virtual kernel::ObjectType& GetType() const;
     //@}
@@ -82,7 +82,7 @@ public:
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ObjectType&   type_;
     unsigned long nId_;
-    std::string   strName_;
+    QString   strName_;
     kernel::Team_ABC&     team_;
 
     float rConstructionPercentage_;

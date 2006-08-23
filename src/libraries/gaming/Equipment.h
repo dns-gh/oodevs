@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     void Update( const ASN1T_DotationEquipement& message );
-    std::string GetName() const;
+    QString GetName() const;
     unsigned Total() const;
     //@}
 

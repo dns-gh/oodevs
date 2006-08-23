@@ -127,13 +127,13 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Agent_ABC& agent )
     if( !type )
         return;
     if( type->IsTC2() )
-        tc2Combo_->AddItem( agent.GetName().c_str(), &agent );
+        tc2Combo_->AddItem( agent.GetName(), &agent );
     if( type->IsLogisticMaintenance() )
-        maintenanceCombo_->AddItem( agent.GetName().c_str(), &agent );
+        maintenanceCombo_->AddItem( agent.GetName(), &agent );
     if( type->IsLogisticMedical() )
-        medicalCombo_->AddItem( agent.GetName().c_str(), &agent );
+        medicalCombo_->AddItem( agent.GetName(), &agent );
     if( type->IsLogisticSupply() )
-        supplyCombo_->AddItem( agent.GetName().c_str(), &agent );
+        supplyCombo_->AddItem( agent.GetName(), &agent );
 }
 
 // -----------------------------------------------------------------------------

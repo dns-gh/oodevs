@@ -74,7 +74,7 @@ public:
     //@{
     virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
-    virtual std::string   GetName() const;
+    virtual QString   GetName() const;
     const kernel::PopulationType& GetType() const;
     //@}
     
@@ -107,7 +107,7 @@ private:
     kernel::Controller&                controller_;
     const kernel::CoordinateConverter_ABC& converter_;
 	unsigned long              nPopulationID_;
-	std::string                strName_;
+	QString                strName_;
     const kernel::PopulationType&      type_;
 	kernel::Team_ABC&                  team_;
 

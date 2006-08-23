@@ -19,13 +19,13 @@ namespace kernel
 class SensorType
 {
 public:
-             SensorType( const std::string& name, xml::xistream& xis );
+             SensorType( const QString& name, xml::xistream& xis );
     virtual ~SensorType();
 
     //! @name Accessors
     //@{
-    const std::string& GetName () const;
-    float              GetAngle() const;
+    QString GetName () const;
+    float   GetAngle() const;
     //@}
 
     //! @name Operations
@@ -68,7 +68,7 @@ private:
     //@}
 
 private:
-    std::string strName_;
+    QString strName_;
     float rAngle_;
     bool bScanningAllowed_;
 

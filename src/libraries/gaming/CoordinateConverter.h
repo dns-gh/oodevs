@@ -39,6 +39,7 @@ public:
 
     virtual std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
     virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2f ConvertToXY( const std::string& mgrs ) const;
     //@}
 
 private:
@@ -46,11 +47,6 @@ private:
     //@{
     CoordinateConverter( const CoordinateConverter& );
     CoordinateConverter& operator=( const CoordinateConverter& );
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual geometry::Point2f DoConvertToXY( const std::string& mgrs ) const;
     //@}
 
     //! @name Initialization

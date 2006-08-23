@@ -62,7 +62,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned long GetId       () const;
-    virtual std::string   GetName     () const;
+    virtual QString       GetName     () const;
     kernel::Agent_ABC&                GetRealAgent() const;
     const kernel::Team_ABC*           GetKnowledgeTeam() const;
     const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;

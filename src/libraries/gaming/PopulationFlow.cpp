@@ -46,10 +46,10 @@ PopulationFlow::~PopulationFlow()
 // Name: PopulationFlow::GetName
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-std::string PopulationFlow::GetName() const
+QString PopulationFlow::GetName() const
 {
     // $$$$ AGE 2006-08-23: 
-    static std::string flow( "Flow" );
+    static const QString flow( "Flow" );
     return flow;
 }
 

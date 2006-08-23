@@ -26,7 +26,7 @@ ParamDotationDType::ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTran
     {
         const DotationType& type = it.NextElement();
         if( type.IsDType() )
-            AddItem( type.GetCategory().c_str(), type.GetId() );
+            AddItem( type.GetCategory(), type.GetId() );
     }
 }
     

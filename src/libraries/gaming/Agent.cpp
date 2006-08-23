@@ -39,9 +39,7 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     , aggregated_( false )
 {
     RegisterSelf( *this );
-    std::stringstream ss;
-    ss << message.nom << " [" << id_ << "]";
-    name_ = ss.str();
+    name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     CreateDictionary();
 
@@ -68,10 +66,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     , aggregated_( false )
 {
     RegisterSelf( *this );
-
-    std::stringstream ss;
-    ss << message.nom << " [" << id_ << "]";
-    name_ = ss.str();
+    name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     CreateDictionary();
     ChangeSuperior( message.oid_automate );
@@ -95,7 +90,7 @@ Agent::~Agent()
 // Name: Agent::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-std::string Agent::GetName() const
+QString Agent::GetName() const
 {
     return name_;
 }

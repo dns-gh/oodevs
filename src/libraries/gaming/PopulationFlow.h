@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string  GetName() const;
+    virtual QString  GetName() const;
     virtual unsigned long GetId() const;
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;

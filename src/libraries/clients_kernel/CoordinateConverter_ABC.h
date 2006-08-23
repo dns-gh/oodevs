@@ -34,18 +34,19 @@ public:
     virtual bool IsInBoundaries            ( const geometry::Point2f& point ) const = 0;
     virtual std::string       ConvertToMgrs( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const = 0;
+    virtual geometry::Point2f ConvertToXY( const std::string& mgrs ) const = 0;
 
     template< typename T >
     geometry::Point2f ConvertToXY( const T& mgrs ) const
     {
-        return DoConvertToXY( std::string( (const char*)( mgrs.data ), 15 ) );
+        return ConvertToXY( std::string( (const char*)( mgrs.data ), 15 ) );
     }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual geometry::Point2f DoConvertToXY( const std::string& mgrs ) const = 0;
+    
     //@}
 };
 

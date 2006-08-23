@@ -34,7 +34,7 @@ ParamEquipmentList::ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePrior
     Iterator< const EquipmentType& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const QString name = it.NextElement().GetName().c_str();
+        const QString name = it.NextElement().GetName();
         equipmentList_.append( name );
         equipmentTypes_[ name ] = &it.NextElement();
     }

@@ -40,7 +40,7 @@ NoLinkDisplayer::~NoLinkDisplayer()
 // -----------------------------------------------------------------------------
 void NoLinkDisplayer::Call( const Agent_ABC& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void NoLinkDisplayer::Call( const Agent_ABC& value )
 // -----------------------------------------------------------------------------
 void NoLinkDisplayer::Call( const Population_ABC& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,5 +58,5 @@ void NoLinkDisplayer::Call( const Population_ABC& value )
 // -----------------------------------------------------------------------------
 void NoLinkDisplayer::Call( const Object_ABC& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }

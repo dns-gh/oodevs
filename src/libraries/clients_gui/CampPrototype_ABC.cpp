@@ -59,7 +59,7 @@ void CampPrototype_ABC::NotifyCreated( const Agent_ABC& agent )
     if( tc2s_->GetItemIndex( &agent ) != -1 )
         return;
     if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
-        tc2s_->AddItem( agent.GetName().c_str(), &agent );
+        tc2s_->AddItem( agent.GetName(), &agent );
 }
 
 // -----------------------------------------------------------------------------

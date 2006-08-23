@@ -141,7 +141,7 @@ Agent_ABC& AgentKnowledge::GetRealAgent() const
 // Name: AgentKnowledge::GetName
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-std::string AgentKnowledge::GetName() const
+QString AgentKnowledge::GetName() const
 {
     return realAgent_.GetName();
 }

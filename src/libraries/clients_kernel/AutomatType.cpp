@@ -19,8 +19,8 @@ using namespace xml;
 // Name: AutomatType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
+                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver
                                             , const SymbolFactory& symbolFactory )
 {
     int id;
@@ -32,12 +32,12 @@ AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std
         >> start( "Automate" )
             >> content( "ModeleDecisionnel", modelName );
     id_ = id;
-    model_ = & modelResolver.Get( modelName );
+    model_ = & modelResolver.Get( modelName.c_str() );
     std::string pcType;
     xis >> end()
         >> start( "PionPC" )
             >> attribute( "type", pcType );
-    pcType_ = & agentResolver.Get( pcType );
+    pcType_ = & agentResolver.Get( pcType.c_str() );
     symbol_ = symbolFactory.CreateAutomatSymbol();
 }
 

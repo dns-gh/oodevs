@@ -98,7 +98,7 @@ void ControllerToolbar::LaunchScipioDbg()
 void ControllerToolbar::NotifyCreated( const Team_ABC& team )
 {
     teams_.push_back( &team );
-    pTeamCombo_->insertItem( team.GetName().c_str(), teams_.size() - 1 );
+    pTeamCombo_->insertItem( team.GetName(), teams_.size() - 1 );
 }
 
 // -----------------------------------------------------------------------------

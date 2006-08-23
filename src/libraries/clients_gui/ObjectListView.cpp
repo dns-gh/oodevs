@@ -96,7 +96,7 @@ void ObjectListView::NotifyCreated( const Object_ABC& object )
     if( ! teamItem )
     {
         teamItem = factory_.CreateItem( this );
-        teamItem->Set( &team, team.GetName().c_str() );
+        teamItem->SetNamed( team );
     }
 
     const ObjectType& type = object.GetType();
@@ -104,10 +104,10 @@ void ObjectListView::NotifyCreated( const Object_ABC& object )
     if( ! typeItem )
     {
         typeItem = factory_.CreateItem( teamItem );
-        typeItem->Set( &type, type.GetName().c_str() );
+        typeItem->SetNamed( type );
     }
 
-    factory_.CreateItem( typeItem )->Set( &object, object.GetName().c_str() );
+    factory_.CreateItem( typeItem )->SetNamed( object );
 }
 
 namespace

@@ -99,7 +99,7 @@ void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
         IDManager*& pManager = managers_[ nId ];
         if( ! pManager )
             pManager = new IDManager( nId );
-        Resolver< ObjectType >::Register( nType, *new ObjectType( nType, strObjectName, *pManager ) );
+        Resolver< ObjectType >::Register( nType, *new ObjectType( nType, strObjectName.c_str(), *pManager ) );
     }
 }
 
@@ -133,7 +133,7 @@ void ObjectTypes::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadCategory( xml::xistream& xis, const std::string& name )
 {
-    DotationType* dotation = new DotationType( name, xis );
+    DotationType* dotation = new DotationType( name.c_str(), xis );
     Resolver< DotationType >::Register( dotation->GetId(), *dotation );
 }
 

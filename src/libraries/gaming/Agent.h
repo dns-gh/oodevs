@@ -59,7 +59,7 @@ public:
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     virtual const kernel::Agent_ABC* GetSuperior() const;
 
-    virtual std::string GetName() const;
+    virtual QString GetName() const;
     virtual unsigned long GetId() const;
 
     virtual const kernel::AutomatType* GetAutomatType() const;
@@ -99,7 +99,7 @@ private:
     const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
     const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >&  gtiaResolver_;
     unsigned long id_;
-    std::string   name_;
+    QString   name_;
 
     // Automat only
     kernel::AutomatType*  automatType_;

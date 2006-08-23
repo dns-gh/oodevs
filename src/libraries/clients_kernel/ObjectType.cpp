@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: ObjectType constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType::ObjectType( unsigned long id, const std::string& name, IDManager& manager )
+ObjectType::ObjectType( unsigned long id, const QString& name, IDManager& manager )
     : manager_( manager )
     , id_( id )
     , name_( name )
@@ -40,7 +40,7 @@ ObjectType::~ObjectType()
 // Name: ObjectType::GetName
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-const std::string& ObjectType::GetName() const
+QString ObjectType::GetName() const
 {
     return name_;
 }

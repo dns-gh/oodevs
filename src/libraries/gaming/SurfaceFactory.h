@@ -36,7 +36,7 @@ class SurfaceFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceFactory( const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver );
+             SurfaceFactory( const kernel::DetectionMap& map, const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver );
     virtual ~SurfaceFactory();
     //@}
 
@@ -57,7 +57,7 @@ private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& map_;
-    const kernel::Resolver_ABC< kernel::SensorType, std::string >& resolver_;
+    const kernel::Resolver_ABC< kernel::SensorType, QString >& resolver_;
     //@}
 };
 

@@ -60,7 +60,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned long GetId() const;
-    virtual std::string   GetName() const;
+    virtual QString       GetName() const;
 
     bool IsUpdatingToSim() const;
     bool IsCreatedByMos() const;

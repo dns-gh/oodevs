@@ -37,6 +37,9 @@ SOURCES         = MainWindow.cpp \
                   ParamObstacle.cpp \
                   ParamObstacleList.cpp \
                   ParamPathList.cpp \
+                  AgentResourcesPanel.cpp \
+                  AgentStatePanel.cpp \
+                  ObjectPanel.cpp \
                   EntityListParameter.cpp \
                   ObjectCreationPanel.cpp
 

@@ -69,7 +69,7 @@ void RotaPrototype_ABC::FillTypes()
     {
         const NBCAgent& element = it.NextElement();
         ValuedListItem* item = new ValuedListItem( nbcAgents_ );
-        item->Set( &element, element.GetName().c_str() );
+        item->SetNamed( element );
     }
 }
 

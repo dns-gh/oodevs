@@ -63,7 +63,7 @@ void BaseDisplayer::Call( const bool& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Agent_ABC& value )
 {
-    AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void BaseDisplayer::Call( const Agent_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const DotationType& value )
 {
-    AddToDisplay( QString( value.GetCategory().c_str() ) );
+    AddToDisplay( value.GetCategory() );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void BaseDisplayer::Call( const DotationType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Team_ABC& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void BaseDisplayer::Call( const Team_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const EquipmentType& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void BaseDisplayer::Call( const EquipmentType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Object_ABC& value )
 {
-    AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ void BaseDisplayer::Call( const Object_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Population_ABC& value )
 {
-    AddToDisplay( InternalLinks::CreateLink( value, value.GetName().c_str() ) );
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void BaseDisplayer::Call( const Population_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const PopulationConcentration_ABC& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void BaseDisplayer::Call( const PopulationConcentration_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const NBCAgent& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void BaseDisplayer::Call( const NBCAgent& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const ComponentType& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ void BaseDisplayer::Call( const ComponentType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const BreakdownType& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void BaseDisplayer::Call( const BreakdownType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const ObjectType& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,5 +172,5 @@ void BaseDisplayer::Call( const QTime& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Mission& value )
 {
-    AddToDisplay( QString( value.GetName().c_str() ) );
+    AddToDisplay( value.GetName() );
 }

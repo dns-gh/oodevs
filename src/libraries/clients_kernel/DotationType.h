@@ -27,7 +27,7 @@ class DotationType
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationType( const std::string& dotationName, xml::xistream& xis );
+             DotationType( const QString& dotationName, xml::xistream& xis );
     virtual ~DotationType();
     //@}
 
@@ -36,8 +36,8 @@ public:
     unsigned long GetId() const;
     unsigned long GetFamily() const;
 
-    std::string GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
-    std::string GetCategory() const;
+    QString GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
+    QString GetCategory() const;
 
     bool IsGas() const;
     bool IsAmmunition() const;
@@ -59,10 +59,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    QString name_;
     unsigned long id_;
     unsigned long nameId_; // $$$$ AGE 2006-04-28: name == category
-    std::string category_;
+    QString category_;
     bool gaz_, ammunition_, dType_;
     //@}
 };

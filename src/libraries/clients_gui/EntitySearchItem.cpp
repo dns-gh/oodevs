@@ -22,7 +22,7 @@ EntitySearchItem::EntitySearchItem( ActionController& actions, const Entity_ABC&
     : actions_( actions )
     , entity_( entity )
 {
-    name_ = ( entity_.GetName().c_str() + QString::number( entity_.GetId() ) ).lower();
+    name_ = ( entity_.GetName() + QString::number( entity_.GetId() ) ).lower();
 }
 
 // -----------------------------------------------------------------------------

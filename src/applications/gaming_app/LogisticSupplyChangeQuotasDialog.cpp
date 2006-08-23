@@ -112,7 +112,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
         const Agent_ABC& agent = it.NextElement();
         const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
         if( log && log->GetSupply() == selected_ )
-            targetCombo_->AddItem( agent.GetName().c_str(), &agent );
+            targetCombo_->AddItem( agent.GetName(), &agent );
     }
     OnSelectionChanged();
     show();
@@ -185,13 +185,13 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
-        const QString type = dotation.type_->GetCategory().c_str();
+        const QString type = dotation.type_->GetCategory();
         dotationTypes_.append( type );
         supplies_[ type ] = 0;
     }
 
     for( std::vector< Dotation >::const_iterator it = states->quotas_.begin(); it != states->quotas_.end(); ++it )
-        supplies_[ it->type_->GetCategory().c_str() ] = &*it;
+        supplies_[ it->type_->GetCategory() ] = &*it;
 
     table_->setNumRows( 0 );
     AddItem();
@@ -219,7 +219,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
         if( item.currentItem() && row == table_->numRows() - 1 )
         {
             const int current = item.currentItem();
-            if( table_->numRows() < dotationTypes_.size() - 1 )
+            if( table_->numRows() < int( dotationTypes_.size() ) - 1 )
                 AddItem();
             item.setCurrentItem( current );
         }

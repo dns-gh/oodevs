@@ -68,7 +68,7 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitDotations& message )
 // -----------------------------------------------------------------------------
 void Equipments::AddToDictionary( const Equipment& equipment )
 {
-    const QString baseName = tools::translate( "Composantes", "Composantes" ) + "/" + equipment.GetName().c_str() + "/";
+    const QString baseName = tools::translate( "Composantes", "Composantes" ) + "/" + equipment.GetName() + "/";
 
     dico_.Register( baseName + tools::translate( "Composantes", "Disponible" ), equipment.available_ );
     dico_.Register( baseName + tools::translate( "Composantes", "Indisponible" ), equipment.unavailable_ );

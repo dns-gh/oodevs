@@ -21,9 +21,11 @@ using namespace xml;
 BreakdownType::BreakdownType( xistream& xis )
 {
     int id;
-    xis >> attribute( "nom", name_ )
+    std::string name;
+    xis >> attribute( "nom", name )
         >> content( "MosID", id );
     id_ = id;
+    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +50,7 @@ unsigned long BreakdownType::GetId() const
 // Name: BreakdownType::GetName
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-std::string BreakdownType::GetName() const
+QString BreakdownType::GetName() const
 {
     return name_;
 }

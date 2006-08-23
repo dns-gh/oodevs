@@ -308,12 +308,11 @@ void ColorStrategy::CreateNewColor( const std::string& name  )
 // -----------------------------------------------------------------------------
 void ColorStrategy::NotifyCreated( const Team_ABC& team )
 {
-    std::string name = team.GetName();
-    std::transform( name.begin(), name.end(), name.begin(), tolower );
-    const std::string realName = synonyms_[ name ];
+    const QString name = team.GetName().lower();
+    const std::string realName = synonyms_[ name.ascii() ];
 
     if( available_.empty() )
-        CreateNewColor( name );
+        CreateNewColor( name.ascii() );
 
     T_Colors::iterator it = available_.find( realName );
     if( it == available_.end() )

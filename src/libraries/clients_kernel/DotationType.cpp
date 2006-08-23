@@ -19,17 +19,19 @@ using namespace xml;
 // Name: DotationType constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-DotationType::DotationType( const std::string& dotationName, xistream& xis )
+DotationType::DotationType( const QString& dotationName, xistream& xis )
     : name_( dotationName )
-    , nameId_( ENT_Tr::ConvertToFamilleDotation( name_ ) )
+    , nameId_( ENT_Tr::ConvertToFamilleDotation( name_.ascii() ) )
     , gaz_( name_ == "carburant" ) // $$$$ AGE 2006-04-10: 
     , ammunition_( name_ == "munition" )
     , dType_( false )
 {
     int id;
-    xis >> attribute( "nom", category_ )
+    std::string category;
+    xis >> attribute( "nom", category )
         >> list( "TrancheD", *this, &DotationType::ReadDType )
         >> content( "MosID", id );
+    category_ = category.c_str();
     id_ = id;
 }
     
@@ -64,7 +66,7 @@ unsigned long DotationType::GetId() const
 // Name: DotationType::GetName
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-std::string DotationType::GetName() const
+QString DotationType::GetName() const
 {
     return name_;
 }
@@ -73,7 +75,7 @@ std::string DotationType::GetName() const
 // Name: DotationType::GetCategory
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-std::string DotationType::GetCategory() const
+QString DotationType::GetCategory() const
 {
     return category_;
 }

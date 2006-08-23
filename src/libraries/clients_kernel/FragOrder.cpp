@@ -16,7 +16,7 @@ using namespace kernel;
 // Name: FragOrder constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( const std::string& name, unsigned int id )
+FragOrder::FragOrder( const QString& name, unsigned int id )
     : name_( name )
     , id_( id )
 {
@@ -45,7 +45,7 @@ unsigned long FragOrder::GetId() const
 // Name: FragOrder::GetName
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-std::string FragOrder::GetName() const
+QString FragOrder::GetName() const
 {
     return name_;
 }

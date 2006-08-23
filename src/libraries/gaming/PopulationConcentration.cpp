@@ -43,10 +43,10 @@ PopulationConcentration::~PopulationConcentration()
 // Name: PopulationConcentration::GetName
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
-std::string PopulationConcentration::GetName() const
+QString PopulationConcentration::GetName() const
 {
     // $$$$ AGE 2006-08-23: 
-    static std::string concentration( "Concentration" );
+    static QString concentration( "Concentration" );
     return concentration;
 }
 

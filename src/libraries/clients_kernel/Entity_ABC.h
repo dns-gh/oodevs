@@ -42,7 +42,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual std::string GetName() const = 0;
+    virtual QString GetName() const = 0;
     virtual unsigned long GetId() const = 0;
     //@}
 

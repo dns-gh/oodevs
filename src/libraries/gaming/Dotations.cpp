@@ -62,7 +62,7 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
         {
             Dotation& newDotation = *new Dotation( type, value.quantite_disponible );
             Register( value.ressource_id, newDotation );
-            dictionary_.Register( tools::translate( "Dotations", "Dotations" ) + "/" + type.GetCategory().c_str(), newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
+            dictionary_.Register( tools::translate( "Dotations", "Dotations" ) + "/" + type.GetCategory(), newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
         }
         if( type.IsGas() )
             bEmptyGasTank_ = ( value.quantite_disponible == 0 );

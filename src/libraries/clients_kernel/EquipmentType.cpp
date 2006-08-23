@@ -21,9 +21,11 @@ using namespace xml;
 EquipmentType::EquipmentType( xml::xistream& xis )
 {
     int id;
-    xis >> attribute( "nom", name_ )
+    std::string name;
+    xis >> attribute( "nom", name )
         >> content( "MosID", id );
     id_ = id;
+    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +41,7 @@ EquipmentType::~EquipmentType()
 // Name: EquipmentType::GetName
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-std::string EquipmentType::GetName() const
+QString EquipmentType::GetName() const
 {
     return name_;
 }

@@ -34,14 +34,14 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class AgentTypes : public Resolver< AgentType >
-                 , public Resolver< AgentType, std::string >
+                 , public Resolver< AgentType, QString >
                  , public Resolver< PopulationType >
-                 , public Resolver< PopulationType, std::string >
+                 , public Resolver< PopulationType, QString >
                  , public Resolver< AutomatType >
                  , public Resolver< ComponentType >
-                 , public Resolver< ComponentType, std::string >
-                 , public Resolver< SensorType, std::string >
-                 , public Resolver< DecisionalModel, std::string >
+                 , public Resolver< ComponentType, QString >
+                 , public Resolver< SensorType, QString >
+                 , public Resolver< DecisionalModel, QString >
 {
 
 public:

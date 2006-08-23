@@ -47,7 +47,7 @@ public:
 
     void CreateTeam( DIN::DIN_Input& );
     kernel::Team_ABC& GetTeam( unsigned long id );
-    kernel::Team_ABC* FindTeam( const std::string& team );
+    kernel::Team_ABC* FindTeam( const QString& team );
 
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& identifier ) const;
     //@}

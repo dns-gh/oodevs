@@ -33,8 +33,8 @@ class AutomatType : public Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, std::string >& modelResolver
+             AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
+                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver
                                             , const SymbolFactory& symbolFactory );
     virtual ~AutomatType();
     //@}

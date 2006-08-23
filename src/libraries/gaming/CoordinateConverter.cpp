@@ -56,14 +56,14 @@ std::string CoordinateConverter::ConvertToMgrs( const geometry::Point2f& pos ) c
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     mgrs_.SetCoordinates( planar_ );
-    return mgrs_.GetString();
+    return mgrs_.GetString().c_str();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CoordinateConverter::DoConvertToXY
+// Name: CoordinateConverter::ConvertToXY
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
-geometry::Point2f CoordinateConverter::DoConvertToXY( const std::string& mgrs ) const
+geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) const
 {
     mgrs_.SetString( mgrs );
     planar_.SetCoordinates( mgrs_ );

@@ -150,9 +150,9 @@ unsigned long TacticalLine_ABC::GetId() const
 // Name: TacticalLine_ABC::GetName
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-std::string TacticalLine_ABC::GetName() const
+QString TacticalLine_ABC::GetName() const
 {
-    return strName_.ascii();
+    return strName_;
 }
 
 // -----------------------------------------------------------------------------

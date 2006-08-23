@@ -5,9 +5,6 @@ SOURCES         = GraphicsPanel.cpp   \
                   OptionsPanel.cpp \
                   PreferencesDialog.cpp \
                   StatusBar.cpp \
-                  AgentResourcesPanel.cpp \
-                  AgentStatePanel.cpp \
-                  ObjectPanel.cpp \
                   PopulationPanel.cpp \
                   AgentListView.cpp \
                   ObjectListView.cpp \

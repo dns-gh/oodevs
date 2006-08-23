@@ -63,7 +63,7 @@ AgentListView::~AgentListView()
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyCreated( const Team_ABC& team )
 {
-    factory_.CreateItem( this )->Set( &team, team.GetName().c_str() );
+    factory_.CreateItem( this )->SetNamed( team );
     NotifyUpdated( team );
 }
 
@@ -76,7 +76,7 @@ void AgentListView::Update( const T& value )
 {
     ValuedListItem* item = FindItem( &value, firstChild() );
     if( ! item )
-        throw std::runtime_error( std::string( "Could not update item " ) + typeid( value ).name() + " '" + value.GetName() + "'" );
+        throw std::runtime_error( std::string( "Could not update item " ) + typeid( value ).name() + " '" + value.GetName().ascii() + "'" );
     Display( value, item );
 }
 
@@ -132,7 +132,7 @@ void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* i
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const Team_ABC& team, ValuedListItem* item )
 {
-    item->Set( &team, team.GetName().c_str() );
+    item->SetNamed( team );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     RecursiveDisplay< Team_ABC, KnowledgeGroup_ABC >( team, item );
@@ -144,7 +144,7 @@ void AgentListView::Display( const Team_ABC& team, ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const KnowledgeGroup_ABC& group, ValuedListItem* item )
 {
-    item->Set( &group, group.GetName().c_str());
+    item->SetNamed( group );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     RecursiveDisplay< KnowledgeGroup_ABC, Agent_ABC >( group, item );
@@ -156,7 +156,7 @@ void AgentListView::Display( const KnowledgeGroup_ABC& group, ValuedListItem* it
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const Agent_ABC& agent, ValuedListItem* item )
 {
-    item->Set( &agent, agent.GetName().c_str() );
+    item->SetNamed( agent );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     RecursiveDisplay< Agent_ABC, Agent_ABC >( agent, item );

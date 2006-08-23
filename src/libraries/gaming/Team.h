@@ -43,7 +43,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned long GetId() const;
-    virtual std::string GetName() const;
+    virtual QString GetName() const;
     //@}
 
 private:
@@ -63,7 +63,7 @@ private:
     //@{
     kernel::Controller& controller_;
     KnowledgeGroupFactory_ABC& factory_;
-    std::string name_;
+    QString name_;
     unsigned long id_;
     //@}
 };

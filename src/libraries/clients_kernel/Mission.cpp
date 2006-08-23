@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: Mission constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Mission::Mission( const std::string& name, unsigned int id, bool automat )
+Mission::Mission( const QString& name, unsigned int id, bool automat )
     : name_( name )
     , id_( id )
     , automat_( automat )
@@ -48,7 +48,7 @@ unsigned long Mission::GetId() const
 // Name: Mission::GetName
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-std::string Mission::GetName() const
+QString Mission::GetName() const
 {
     return name_;
 }
