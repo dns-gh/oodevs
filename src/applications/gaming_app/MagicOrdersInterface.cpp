@@ -16,7 +16,7 @@
 #include "gaming/MagicOrders.h"
 #include "clients_kernel/OptionVariant.h"
 #include "gaming/ASN_Messages.h"
-#include "gaming/CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"

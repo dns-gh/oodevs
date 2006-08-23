@@ -10,19 +10,21 @@
 #ifndef __CoordinateConverter_h_
 #define __CoordinateConverter_h_
 
-#include "clients_kernel/Types.h"
-#include "clients_kernel/WorldParameters.h"
+#include "Types.h"
+#include "CoordinateConverter_ABC.h"
+#include "WorldParameters.h"
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
 #include "geocoord/Geodetic.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
+
+namespace kernel
+{
 
 // =============================================================================
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-04-28: warning : not thread safe
-// $$$$ AGE 2006-08-07: passer dans kernel
 // =============================================================================
-class CoordinateConverter : public kernel::CoordinateConverter_ABC
+class CoordinateConverter : public CoordinateConverter_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -39,7 +41,7 @@ public:
 
     virtual std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
     virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2f ConvertToXY( const std::string& mgrs ) const;
+    virtual geometry::Point2f ConvertToXY  ( const std::string& mgrs ) const;
     //@}
 
 private:
@@ -58,7 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::WorldParameters world_;
+    WorldParameters world_;
     geometry::Rectangle2f extent_;
     geometry::Vector2f    translation_;
 
@@ -68,5 +70,7 @@ private:
     mutable geocoord::Geodetic                    geodetic_;
     //@}
 };
+
+}
 
 #endif // __CoordinateConverter_h_

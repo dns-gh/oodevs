@@ -26,7 +26,6 @@
 #include "AutomateMissionInterface.h"
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
-#include "gaming/CoordinateConverter.h"
 #include "gaming/AgentKnowledgeConverter.h"
 #include "clients_kernel/GlTools_ABC.h"
 

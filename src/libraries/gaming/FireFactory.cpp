@@ -15,7 +15,7 @@
 #include "StaticModel.h"
 #include "AgentsModel.h"
 #include "PopulationFire.h"
-#include "CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireFactory constructor

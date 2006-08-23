@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ObjectPrototype.h"
 #include "gaming/StaticModel.h"
-#include "gaming/CoordinateConverter.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"

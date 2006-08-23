@@ -26,10 +26,7 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "ModelLoaded.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Controller.h"
 #include "StaticModel.h"
-#include "CoordinateConverter.h"
 
 using namespace kernel;
 

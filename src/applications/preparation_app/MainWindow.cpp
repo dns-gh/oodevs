@@ -13,11 +13,10 @@
 
 //#include "ControllerToolbar.h"
 //#include "EventToolbar.h"
-#include "GlLayers.h"
 //#include "InfoPanels.h"
 //#include "LogisticToolbar.h"
 //#include "MapToolbar.h"
-//#include "Menu.h"
+#include "Menu.h"
 //#include "ObjectCreationPanel.h"
 //#include "UnitToolbar.h"
 //#include "LinkInterpreter.h"
@@ -31,17 +30,15 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/PathTools.h"
 
-//#include "gaming/CoordinateConverter.h"
-//#include "gaming/Experience.h"
 #include "preparation/Model.h"
 //#include "gaming/Population.h"
 #include "preparation/StaticModel.h"
-//#include "gaming/Tiredness.h"
 
 #include "clients_gui/AgentList.h"
-//#include "clients_gui/GlWidget.h"
+#include "clients_gui/GlWidget.h"
+#include "clients_gui/GlProxy.h"
 #include "clients_gui/GraphicPreferences.h"
-#include "clients_gui/Logger.h"
+//#include "clients_gui/Logger.h"
 #include "clients_gui/ObjectList.h"
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
@@ -52,6 +49,19 @@
 #include "clients_gui/GlPlaceHolder.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/ColorStrategy.h"
+#include "clients_gui/AgentsLayer.h"
+#include "clients_gui/PopulationsLayer.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/Elevation2dLayer.h"
+#include "clients_gui/TerrainLayer.h"
+#include "clients_gui/MetricsLayer.h"
+#include "clients_gui/GridLayer.h"
+//#include "clients_gui/LimitsLayer.h"
+#include "clients_gui/ObjectsLayer.h"
+#include "clients_gui/CircularEventStrategy.h"
+#include "clients_gui/DefaultLayer.h"
+#include "clients_gui/IconLayout.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -75,85 +85,124 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , controllers_( controllers )
     , staticModel_( staticModel )
     , model_      ( model )
-    , layers_     ( 0 )
-//    , widget2d_   ( 0 )
+    , glProxy_    ( 0 )
+    , widget2d_   ( 0 )
+    , iconLayout_ ( 0 )
 {
-//    setIcon( MAKE_PIXMAP( astec ) );
+    setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
 
-//    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
-//
-//    layers_ = new GlLayers( controllers, staticModel_, model_, prefDialog->GetPreferences() );
-//
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
+
+    glProxy_ = new GlProxy();
+    strategy_ = new ColorStrategy( controllers, *glProxy_ );
+
 //    RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
 //    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
 //    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 //
-//    // Agent list panel
-//    QDockWindow* pListDockWnd_ = new QDockWindow( this );
-//    moveDockWindow( pListDockWnd_, Qt::DockLeft );
-//    QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-//
+    // Agent list panel
+    QDockWindow* pListDockWnd_ = new QDockWindow( this );
+    moveDockWindow( pListDockWnd_, Qt::DockLeft );
+    QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
+
 //    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
 //    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
 //    pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
-//	pListDockWnd_->setWidget( pListsTabWidget );
-//    pListDockWnd_->setResizeEnabled( true );
-//    pListDockWnd_->setCloseMode( QDockWindow::Always );
-//    pListDockWnd_->setCaption( tr( "Unités" ) );
-//    setDockEnabled( pListDockWnd_, Qt::DockTop, false );
+	pListDockWnd_->setWidget( pListsTabWidget );
+    pListDockWnd_->setResizeEnabled( true );
+    pListDockWnd_->setCloseMode( QDockWindow::Always );
+    pListDockWnd_->setCaption( tr( "Unités" ) );
+    setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
-//    // Info panel
-//    QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
-//    moveDockWindow( pInfoDockWnd_, Qt::DockRight );
+    // Info panel
+    QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
+    moveDockWindow( pInfoDockWnd_, Qt::DockRight );
 //    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory );
 //    pInfoDockWnd_->setWidget( pInfoPanel_ );
-//    pInfoDockWnd_->setResizeEnabled( true );
-//    pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-//    pInfoDockWnd_->setCaption( tr( "Informations" ) );
-//    setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
-//
-//    // Logger
-//    QDockWindow* pLogDockWnd_ = new QDockWindow( this );
-//    moveDockWindow( pLogDockWnd_, Qt::DockBottom );
-//    Logger* pLogPanel_ = new Logger( pLogDockWnd_, *factory );
-//    pLogDockWnd_->setWidget( pLogPanel_ );
-//    pLogDockWnd_->setResizeEnabled( true );
-//    pLogDockWnd_->setCloseMode( QDockWindow::Always );
-//    pLogDockWnd_->setCaption( tr( "Log" ) );
-//    setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
-//    connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
+    pInfoDockWnd_->setResizeEnabled( true );
+    pInfoDockWnd_->setCloseMode( QDockWindow::Always );
+    pInfoDockWnd_->setCaption( tr( "Informations" ) );
+    setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
-//    // object creation window
-//    QDockWindow* pObjectCreationWnd = new QDockWindow( this );
-//    moveDockWindow( pObjectCreationWnd, Qt::DockRight );
-//    pObjectCreationWnd->hide();
+    // A few layers
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
+    AgentsLayer*     agentsLayer = new AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_ );
+
+    // object creation window
+    QDockWindow* pObjectCreationWnd = new QDockWindow( this );
+    moveDockWindow( pObjectCreationWnd, Qt::DockRight );
+    pObjectCreationWnd->hide();
 //    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, staticModel_, layers_->GetParametersLayer(), *layers_ );
 //    pObjectCreationWnd->setWidget( objectCreationPanel );
-//    pObjectCreationWnd->setResizeEnabled( true );
-//    pObjectCreationWnd->setCloseMode( QDockWindow::Always );
-//    pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
-//    setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
+    pObjectCreationWnd->setResizeEnabled( true );
+    pObjectCreationWnd->setCloseMode( QDockWindow::Always );
+    pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
+    setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
 //    layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) ); // $$$$ AGE 2006-06-30: 
 
 //    new MapToolbar( this, controllers );
 //    new UnitToolbar( this, controllers );
 //    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
 
-//    new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
+    new Menu( this, controllers, *prefDialog );
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
 
-//    layers_->RegisterBaseLayers();
+    // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
+    CreateLayers( *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
 
-//    pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
+    pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
 //    controllers_.Register( *this );
 
     displayTimer_ = new QTimer( this );
 
     ReadSettings();
     ReadOptions();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::CreateLayers
+// Created: AGE 2006-08-22
+// -----------------------------------------------------------------------------
+void MainWindow::CreateLayers( ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup )
+{
+    CircularEventStrategy* eventStrategy = new CircularEventStrategy();
+    eventStrategy_ = eventStrategy;
+    Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
+    Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
+//    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_ );
+    Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+//    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
+    Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
+    
+    // ordre de dessin
+    glProxy_->Register( defaultLayer );
+    glProxy_->Register( elevation2d );
+    glProxy_->Register( terrain );
+    glProxy_->Register( grid );
+//    glProxy_->Register( meteo );
+//    glProxy_->Register( limits );
+    glProxy_->Register( objectsLayer );
+    glProxy_->Register( populations );
+    glProxy_->Register( agents );
+//    glProxy_->Register( objectCreationLayer );
+    glProxy_->Register( parameters );
+    glProxy_->Register( metrics );
+
+    // ordre des evenements
+    eventStrategy->Register( parameters );
+    eventStrategy->Register( agents );
+    eventStrategy->Register( populations );
+    eventStrategy->Register( objectsLayer );
+//    eventStrategy->Register( limits );
+    eventStrategy->Register( metrics );
+    eventStrategy->SetDefault( defaultLayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,40 +231,21 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 void MainWindow::Load( const std::string& scipioXml )
 {
-    InitializeHumanFactors( scipioXml );
+    BuildIconLayout();
     scipioXml_ = scipioXml;
-//    delete widget2d_; widget2d_ = 0;
-//    widget2d_ = new GlWidget( this, controllers_, scipioXml );
-//    delete glPlaceHolder_; glPlaceHolder_ = 0;
-//    setCentralWidget( widget2d_ );
+    delete widget2d_; widget2d_ = 0;
+    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
+    glProxy_->ChangeTo( widget2d_ );
+    glProxy_->RegisterTo( widget2d_ );
+    delete glPlaceHolder_; glPlaceHolder_ = 0;
+    setCentralWidget( widget2d_ );
     model_.Purge();
     staticModel_.Load( scipioXml );
 
-//    layers_->ChangeTo( widget2d_ );
-//    layers_->RegisterTo( widget2d_ );
-//    
-//    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
     displayTimer_->start( 50 );
-//    widget2d_->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::InitializeHumanFactors
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-void MainWindow::InitializeHumanFactors( const std::string& conffile )
-{
-//    xifstream xis( conffile );
-//    xis >> start( "Scipio" )
-//            >> start( "Donnees" );
-//    std::string strHumanFactorsFile;
-//    xis >> content( "FacteursHumains", strHumanFactorsFile );
-//    const std::string factorsName = path_tools::BuildChildPath( conffile, strHumanFactorsFile );
-//    xifstream factors( factorsName );
-//
-//    Tiredness ::Initialize( factors );
-//    Experience::Initialize( factors );
+    widget2d_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +259,7 @@ void MainWindow::Close()
     setCentralWidget( glPlaceHolder_ );
     glPlaceHolder_->show();
 
-//    delete widget2d_; widget2d_ = 0;
+    delete widget2d_; widget2d_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +270,7 @@ MainWindow::~MainWindow()
 {
 //    controllers_.Remove( *this );
 //    delete pOptions_;
-    delete layers_;
+    delete glProxy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -314,4 +344,24 @@ void MainWindow::ReadOptions()
     settings.beginGroup( "/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::BuildIconLayout
+// Created: SBO 2006-08-18
+// -----------------------------------------------------------------------------
+void MainWindow::BuildIconLayout()
+{
+    if( iconLayout_ )
+        return;
+    iconLayout_ = new IconLayout();
+//    iconLayout_->AddIcon( xpm_cadenas        , -200, 270 );
+//    iconLayout_->AddIcon( xpm_radars_on      ,  200, 270 );
+//    iconLayout_->AddIcon( xpm_brouillage     ,  200, 50 );
+//    iconLayout_->AddIcon( xpm_talkie_interdit,  100, 50 );
+//    iconLayout_->AddIcon( xpm_gas            , -200, 170 );
+//    iconLayout_->AddIcon( xpm_ammo           , -200, 100 );
+//    iconLayout_->AddIcon( xpm_nbc            , -200, 25 );
+//    iconLayout_->AddIcon( xpm_construction   ,  200, 150 );
+//    iconLayout_->AddIcon( xpm_observe        ,  200, 150 );
 }

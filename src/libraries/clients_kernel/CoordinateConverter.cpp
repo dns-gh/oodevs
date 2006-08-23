@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
 #include "geocoord/Geoid.h"
 
@@ -56,11 +56,11 @@ std::string CoordinateConverter::ConvertToMgrs( const geometry::Point2f& pos ) c
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     mgrs_.SetCoordinates( planar_ );
-    return mgrs_.GetString().c_str();
+    return mgrs_.GetString();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ConvertToXY
+// Name: CoordinateConverter::DoConvertToXY
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
 geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) const

@@ -19,7 +19,7 @@
 #include "ObjectsModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "ObjectKnowledgePositions.h"
 #include "StaticModel.h"
 

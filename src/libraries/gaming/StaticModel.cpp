@@ -14,8 +14,8 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "SurfaceFactory.h"
-#include "CoordinateConverter.h"
 #include "ModelLoaded.h"
 
 using namespace kernel;
@@ -56,7 +56,7 @@ void StaticModel::Load( const std::string& scipioXml )
     Purge();
     types_.Load( scipioXml );
     objectTypes_.Load( scipioXml );
-    coordinateConverter_.Load( scipioXml );
+    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( scipioXml );
     detection_.Load( scipioXml );
     controllers_.controller_.Update( ModelLoaded( scipioXml ) );
 }

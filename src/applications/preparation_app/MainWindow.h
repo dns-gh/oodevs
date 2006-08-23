@@ -21,16 +21,20 @@ namespace kernel
 namespace gui
 {
     class OptionsPanel;
+    class GlProxy;
     class GlWidget;
     class StatusBar;
     class ParametersLayer;
     class AgentsLayer;
     class GlPlaceHolder;
+    class IconLayout;
+    class ColorStrategy;
 }
 
 class Model;
 class StaticModel;
-class GlLayers;
+class GraphicSetup_ABC;
+class EventStrategy_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -71,14 +75,14 @@ public slots:
 private:
     //! @name Helpers
     //@{
+    void BuildIconLayout();
+    void CreateLayers( gui::ParametersLayer& parameters, gui::AgentsLayer& agents, GraphicSetup_ABC& setup );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();
 
     void WriteOptions();
     void ReadOptions();
-
-    void InitializeHumanFactors( const std::string& scipioXml );
     //@}
 
     //! @name Copy/Assignment
@@ -95,9 +99,12 @@ private:
     Model& model_;
     std::string scipioXml_;
 
-    GlLayers* layers_;
-//    GlWidget*   widget2d_;
+    gui::GlProxy*       glProxy_;
+    gui::ColorStrategy* strategy_;
+    EventStrategy_ABC* eventStrategy_;
+    gui::GlWidget*   widget2d_;
     gui::GlPlaceHolder* glPlaceHolder_;
+    gui::IconLayout* iconLayout_;
 
     QTimer* displayTimer_;
 

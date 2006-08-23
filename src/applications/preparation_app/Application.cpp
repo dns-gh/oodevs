@@ -12,8 +12,8 @@
 
 #include "MainWindow.h"
 
-#include "gaming/StaticModel.h"
-//#include "gaming/Model.h"
+#include "preparation/StaticModel.h"
+#include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
 
@@ -85,8 +85,8 @@ void Application::Initialize( int argc, char** argv )
 
     controllers_ = new Controllers();
     workers_     = new Workers();
-//    staticModel_ = new StaticModel( *controllers_ );
-//    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr() );
+    staticModel_ = new StaticModel( *controllers_ );
+    model_       = new Model();
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_ );
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )

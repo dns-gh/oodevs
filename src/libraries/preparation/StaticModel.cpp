@@ -14,8 +14,8 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-//#include "CoordinateConverter.h"
-//#include "ModelLoaded.h"
+#include "clients_kernel/CoordinateConverter.h"
+#include "gaming/ModelLoaded.h"
 
 using namespace kernel;
 
@@ -25,7 +25,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 StaticModel::StaticModel( Controllers& controllers )
     : controllers_        ( controllers )
-//    , coordinateConverter_( *new CoordinateConverter() )
+    , coordinateConverter_( *new CoordinateConverter() )
     , detection_          ( *new DetectionMap() )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
@@ -42,7 +42,7 @@ StaticModel::~StaticModel()
     delete &objectTypes_;
     delete &types_;
     delete &detection_;
-//    delete &coordinateConverter_;
+    delete &coordinateConverter_;
 }
 
 // -----------------------------------------------------------------------------
@@ -54,9 +54,9 @@ void StaticModel::Load( const std::string& scipioXml )
     Purge();
     types_.Load( scipioXml );
     objectTypes_.Load( scipioXml );
-//    coordinateConverter_.Load( scipioXml );
+    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( scipioXml );
     detection_.Load( scipioXml );
-//    controllers_.controller_.Update( ModelLoaded( scipioXml ) );
+    controllers_.controller_.Update( ModelLoaded( scipioXml ) );
 }
 
 // -----------------------------------------------------------------------------

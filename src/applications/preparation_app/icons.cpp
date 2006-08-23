@@ -11,3 +11,4 @@
 #include "icons.h"
 
 #include "clients_kernel/objecticons.cpp"
+#include "clients_gui/resources.cpp"

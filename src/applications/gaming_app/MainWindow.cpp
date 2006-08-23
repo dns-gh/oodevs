@@ -45,7 +45,6 @@
 #include "clients_kernel/PathTools.h"
 
 #include "gaming/AgentServerMsgMgr.h"
-#include "gaming/CoordinateConverter.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/Population.h"

@@ -13,7 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "Model.h"
 #include "StaticModel.h"
-#include "CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 using namespace kernel;
 

@@ -22,7 +22,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "ObjectPositions.h"
-#include "CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "StaticModel.h"
 
 using namespace kernel;

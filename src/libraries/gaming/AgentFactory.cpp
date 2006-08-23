@@ -59,7 +59,7 @@
 #include "Lives.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
-#include "CoordinateConverter.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "StaticModel.h"
 

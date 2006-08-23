@@ -16,9 +16,9 @@ namespace kernel
     class ObjectTypes;
     class DetectionMap;
     class Controllers;
+    class CoordinateConverter_ABC;
 }
 
-class CoordinateConverter;
 class SurfaceFactory;
 
 // =============================================================================
@@ -46,13 +46,12 @@ public:
 public:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-
-    CoordinateConverter&    coordinateConverter_;
-    kernel::DetectionMap&   detection_;
-    kernel::AgentTypes&     types_;
-    kernel::ObjectTypes&    objectTypes_;
-    SurfaceFactory&         surfaceFactory_;
+    kernel::Controllers&             controllers_;
+    kernel::CoordinateConverter_ABC& coordinateConverter_;
+    kernel::DetectionMap&            detection_;
+    kernel::AgentTypes&              types_;
+    kernel::ObjectTypes&             objectTypes_;
+    SurfaceFactory&                  surfaceFactory_;
     //@}
 
 private:
