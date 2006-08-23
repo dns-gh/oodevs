@@ -15,7 +15,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "gaming/PopulationConcentration.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ComponentType.h"
@@ -112,7 +112,7 @@ void BaseDisplayer::Call( const Population_ABC& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const PopulationConcentration& value )
+void BaseDisplayer::Call( const PopulationConcentration_ABC& value )
 {
     AddToDisplay( QString( value.GetName().c_str() ) );
 }

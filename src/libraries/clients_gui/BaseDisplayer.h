@@ -26,9 +26,8 @@ namespace kernel
     class ObjectType;
     class Mission;
     class CoordinateConverter_ABC;
+    class PopulationConcentration_ABC;
 }
-
-class PopulationConcentration;
 
 namespace gui
 {
@@ -42,7 +41,7 @@ namespace gui
 class BaseDisplayer : public kernel::Displayer_ABC
                   , public kernel::Caller< bool >
                   , public kernel::Caller< kernel::Population_ABC>
-                  , public kernel::Caller< PopulationConcentration >
+                  , public kernel::Caller< kernel::PopulationConcentration_ABC >
                   , public kernel::Caller< kernel::Agent_ABC >
                   , public kernel::Caller< kernel::Object_ABC >
                   , public kernel::Caller< kernel::Team_ABC >
@@ -75,7 +74,7 @@ private:
     virtual void Call( const bool& value );
     virtual void Call( const kernel::Agent_ABC& value );
     virtual void Call( const kernel::Population_ABC& value );
-    virtual void Call( const PopulationConcentration& value );
+    virtual void Call( const kernel::PopulationConcentration_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );
     virtual void Call( const kernel::Team_ABC& value );
     virtual void Call( const kernel::DotationType& value );
