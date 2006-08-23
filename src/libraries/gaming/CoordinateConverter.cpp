@@ -58,15 +58,14 @@ std::string CoordinateConverter::ConvertToMgrs( const geometry::Point2f& pos ) c
     mgrs_.SetCoordinates( planar_ );
     return mgrs_.GetString();
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ConvertToXY
-// Created: SBO 2006-03-14
+// Name: CoordinateConverter::DoConvertToXY
+// Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
-geometry::Point2f CoordinateConverter::ConvertToXY( const ASN1T_CoordUTM& mgrs ) const
+geometry::Point2f CoordinateConverter::DoConvertToXY( const std::string& mgrs ) const
 {
-    const std::string coord( (const char*)( mgrs.data ), 15 );
-    mgrs_.SetString( coord );
+    mgrs_.SetString( mgrs );
     planar_.SetCoordinates( mgrs_ );
     geometry::Point2f pos( planar_.GetX(), planar_.GetY() );
     return pos + translation_;

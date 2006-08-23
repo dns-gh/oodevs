@@ -11,7 +11,6 @@
 #define __CoordinateConverter_h_
 
 #include "clients_kernel/Types.h"
-#include "ASN_Types.h"
 #include "clients_kernel/WorldParameters.h"
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/MGRS.h"
@@ -39,7 +38,6 @@ public:
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
 
     virtual std::string       ConvertToMgrs( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const;
     virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const;
     //@}
 
@@ -48,6 +46,11 @@ private:
     //@{
     CoordinateConverter( const CoordinateConverter& );
     CoordinateConverter& operator=( const CoordinateConverter& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual geometry::Point2f DoConvertToXY( const std::string& mgrs ) const;
     //@}
 
     //! @name Initialization

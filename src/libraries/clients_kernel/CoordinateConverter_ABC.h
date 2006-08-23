@@ -10,8 +10,6 @@
 #ifndef __CoordinateConverter_ABC_h_
 #define __CoordinateConverter_ABC_h_
 
-struct ASN1T_CoordUTM; // $$$$ AGE 2006-08-11: crap !
-
 namespace kernel
 {
 
@@ -35,8 +33,19 @@ public:
     //@{
     virtual bool IsInBoundaries            ( const geometry::Point2f& point ) const = 0;
     virtual std::string       ConvertToMgrs( const geometry::Point2f& pos ) const = 0;
-    virtual geometry::Point2f ConvertToXY  ( const ASN1T_CoordUTM& mgrs ) const = 0;
     virtual geometry::Point2f ConvertToGeo ( const geometry::Point2f& pos ) const = 0;
+
+    template< typename T >
+    geometry::Point2f ConvertToXY( const T& mgrs ) const
+    {
+        return DoConvertToXY( std::string( (const char*)( mgrs.data ), 15 ) );
+    }
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual geometry::Point2f DoConvertToXY( const std::string& mgrs ) const = 0;
     //@}
 };
 
