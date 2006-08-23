@@ -7,24 +7,24 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "AgentResourcesPanel.h"
 
 #include "clients_kernel/Agent_ABC.h"
-#include "Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_gui/ListDisplayer.h"
+#include "gaming/Tools.h"
 #include "gaming/Dotations.h"
 #include "gaming/Dotation.h"
-#include "clients_kernel/DotationType.h"
 #include "gaming/Equipments.h"
 #include "gaming/Troops.h"
 #include "gaming/Equipment.h"
-#include "clients_kernel/EquipmentType.h"
 #include "gaming/Loan.h"
 #include "gaming/Lendings.h"
 #include "gaming/Borrowings.h"
 #include "gaming/Humans.h"
-#include "ListDisplayer.h"
 
 using namespace kernel;
 using namespace gui;

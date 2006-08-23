@@ -10,15 +10,22 @@
 #ifndef __AgentStatePanel_h_
 #define __AgentStatePanel_h_
 
+#include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
-#include "InfoPanel_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
     class Agent_ABC;
     class Controllers;
+}
+
+namespace gui
+{
+    class ReportListView;
+    class DisplayBuilder;
+    class ItemFactory_ABC;
 }
 
 class Attributes;
@@ -28,16 +35,10 @@ class Reinforcements;
 class LogisticLinks;
 class Transports;
 
-namespace gui
-{
-    class ReportListView;
-    class DisplayBuilder;
-    class ItemFactory_ABC;
-
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentStatePanel : public InfoPanel_ABC
+class AgentStatePanel : public gui::InfoPanel_ABC
                       , public kernel::Observer_ABC
                       , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                       , public kernel::ElementObserver_ABC< Attributes >
@@ -51,7 +52,7 @@ class AgentStatePanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             AgentStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AgentStatePanel();
     //@}
 
@@ -88,11 +89,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    DisplayBuilder* display_;
+    gui::DisplayBuilder* display_;
     kernel::SafePointer< kernel::Agent_ABC > selected_;
     //@}
 };
-
-}
 
 #endif // __AgentStatePanel_h_

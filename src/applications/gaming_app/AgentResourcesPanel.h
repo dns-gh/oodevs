@@ -10,8 +10,8 @@
 #ifndef __AgentResourcesPanel_h_
 #define __AgentResourcesPanel_h_
 
-#include "Types.h"
-#include "InfoPanel_ABC.h"
+#include "clients_gui/Types.h"
+#include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -21,6 +21,13 @@ namespace kernel
     class Agent_ABC;
     class Controllers;
     class Displayer_ABC;
+}
+
+namespace gui
+{
+    template< typename T > class ListDisplayer;
+    class ValuedListItem;
+    class ItemFactory_ABC;
 }
 
 class Dotation;
@@ -33,19 +40,13 @@ class Lendings;
 class Humans;
 class Troops;
 
-namespace gui
-{
-    template< typename T > class ListDisplayer;
-    class ValuedListItem;
-    class ItemFactory_ABC;
-
 // =============================================================================
 /** @class  AgentResourcesPanel
     @brief  Agent_ABC resources panel
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentResourcesPanel : public InfoPanel_ABC
+class AgentResourcesPanel : public gui::InfoPanel_ABC
                           , public kernel::Observer_ABC
                           , public kernel::ElementObserver_ABC< Dotations >
                           , public kernel::ElementObserver_ABC< Equipments >
@@ -57,16 +58,16 @@ class AgentResourcesPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             AgentResourcesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AgentResourcesPanel();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Loan& loan, Displayer_ABC& displayer, ValuedListItem* );
-    void Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const Dotation& dotation, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Equipment& equipment, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Loan& loan, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const Humans& humans, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:
@@ -95,7 +96,7 @@ private:
 
     //! @name Types
     //@{
-    typedef ListDisplayer< AgentResourcesPanel > T_ListView;
+    typedef gui::ListDisplayer< AgentResourcesPanel > T_ListView;
     //@}
     
 private:
@@ -110,7 +111,5 @@ private:
     kernel::SafePointer< kernel::Agent_ABC > selected_;
     //@}
 };
-
-}
 
 #endif // __AgentResourcesPanel_h_

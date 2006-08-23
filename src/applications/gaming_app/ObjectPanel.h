@@ -10,7 +10,7 @@
 #ifndef __ObjectPanel_h_
 #define __ObjectPanel_h_
 
-#include "InfoPanel_ABC.h"
+#include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -21,16 +21,17 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class DisplayBuilder;
+    class ItemFactory_ABC;
+}
+
 class CampAttributes;
 class CrossingSiteAttributes;
 class LogisticRouteAttributes;
 class NBCAttributes;
 class RotaAttributes;
-
-namespace gui
-{
-    class DisplayBuilder;
-    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ObjectPanel
@@ -38,7 +39,7 @@ namespace gui
 */
 // Created: APE 2004-06-11
 // =============================================================================
-class ObjectPanel : public InfoPanel_ABC
+class ObjectPanel : public gui::InfoPanel_ABC
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Object_ABC >
                   , public kernel::ElementObserver_ABC< CampAttributes >
@@ -53,7 +54,7 @@ class ObjectPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ObjectPanel();
     //@}
 
@@ -92,14 +93,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    DisplayBuilder* display_;
+    gui::DisplayBuilder* display_;
     kernel::SafePointer< kernel::Object_ABC > selected_;
 
 //    QPushButton* pApplyButton_;
 //    QPushButton* pCancelButton_;
     //@}
 };
-
-}
 
 #endif // __ObjectPanel_h_

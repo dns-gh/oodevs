@@ -16,14 +16,13 @@
 #include "ObjectReportPanel.h"
 #include "PopulationKnowledgePanel.h"
 #include "ReportPanel.h"
-
-#include "clients_gui/AgentStatePanel.h"
-#include "clients_gui/AgentResourcesPanel.h"
-#include "clients_gui/ObjectPanel.h"
-#include "clients_gui/PopulationPanel.h"
+#include "AgentStatePanel.h"
+#include "AgentResourcesPanel.h"
+#include "ObjectPanel.h"
 #include "AgentMaintenancePanel.h"
 #include "AgentMedicalPanel.h"
 #include "AgentSupplyPanel.h"
+#include "clients_gui/PopulationPanel.h"
 
 using namespace kernel;
 using namespace gui;

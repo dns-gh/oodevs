@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "AgentStatePanel.h"
 #include "clients_kernel/Controller.h"
-#include "DisplayBuilder.h"
-#include "GroupDisplayer.h"
-#include "LabelDisplayer.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/GroupDisplayer.h"
+#include "clients_gui/LabelDisplayer.h"
 #include "gaming/Attributes.h"
 #include "gaming/Contaminations.h"
 #include "gaming/HumanFactors.h"

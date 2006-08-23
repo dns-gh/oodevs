@@ -7,24 +7,23 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "ObjectPanel.h"
 
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Units.h"
+#include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/GroupDisplayer.h"
+#include "clients_gui/LabelDisplayer.h"
 #include "gaming/CampAttributes.h"
 #include "gaming/CrossingSiteAttributes.h"
 #include "gaming/LogisticRouteAttributes.h"
 #include "gaming/NBCAttributes.h"
 #include "gaming/RotaAttributes.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/DotationType.h"
-
-#include "DisplayBuilder.h"
-#include "GroupDisplayer.h"
-#include "LabelDisplayer.h"
-#include "clients_kernel/Units.h"
 
 #include <qgrid.h>
 
