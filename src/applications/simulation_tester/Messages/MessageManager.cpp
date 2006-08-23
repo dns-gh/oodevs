@@ -234,16 +234,24 @@ void MessageManager::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg )
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    uint32 nId;
-    input >> nId;
-    if( !workspace_.GetEntityManager().FindKnowledgeGroup( nId ) )
+    uint32 nTeamId;
+    uint32 nGroupId;
+    input >> nTeamId >> nGroupId;
+    
+    Team* team = workspace_.GetEntityManager().FindTeam( nTeamId );
+    if( team )
     {
-        KnowledgeGroup& knowledgeGroup = *new KnowledgeGroup( workspace_.GetEntityManager(), nId, input );
-        workspace_.GetEntityManager().Register( knowledgeGroup );
-        //MT_LOG_INFO_MSG( "TEST -> MM - Knowledge Group created ID#" << nId );
+        if( !workspace_.GetEntityManager().FindKnowledgeGroup( nGroupId ) )
+        {
+            KnowledgeGroup& knowledgeGroup = *new KnowledgeGroup( workspace_.GetEntityManager(), *team, nGroupId );
+            workspace_.GetEntityManager().Register( knowledgeGroup );
+            //MT_LOG_INFO_MSG( "TEST -> MM - Knowledge Group created ID#" << nId );
+        }
+        else
+            MT_LOG_ERROR_MSG( "TEST -> MM - KnowledgeGroup with ID#" << nGroupId << " already created" );
     }
     else
-        MT_LOG_ERROR_MSG( "TEST -> MM - Knowledge Group with ID#" << nId << " already created" );
+        MT_LOG_ERROR_MSG( "TEST -> MM - Team with ID#" << nTeamId << " does not exists" );
 }
 
 // -----------------------------------------------------------------------------

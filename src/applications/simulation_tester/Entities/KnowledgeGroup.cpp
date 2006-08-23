@@ -29,16 +29,13 @@ using namespace TEST;
 // Name: KnowledgeGroup::KnowledgeGroup
 // Created: SBO 2005-05-12
 //-----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Input& input )
-    : nId_           ( nSimId )
+KnowledgeGroup::KnowledgeGroup( const EntityManager& entityManager, Team& team, T_EntityId id )
+    : nId_           ( id )
     , knownPawns_    ()
-    , pTeam_         ( 0 )
+    , team_          ( team )
     , entityManager_ ( entityManager )
 {
-    uint32 nTeamId;
-    input >> nTeamId;
-    pTeam_ = entityManager_.FindTeam( nTeamId );
-    assert( pTeam_ != 0 );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -127,7 +124,7 @@ T_IdVector& KnowledgeGroup::GetTestParam_Knowledges( uint nNbr ) const
     // return the list of known enemies
     T_IdVector& targets = *new T_IdVector();
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); nNbr > 0 && it != knownPawns_.end(); ++it )
-        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
+        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( team_ ) == eTristate_True )
         {
             targets.push_back( it->second->GetId() );
             --nNbr;
@@ -143,7 +140,7 @@ T_EntityId KnowledgeGroup::GetTestParam_Knowledge() const
 {
     // return the first enemy known
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )
-        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
+        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( team_ ) == eTristate_True )
             return it->second->GetId();
     return 0;
 }

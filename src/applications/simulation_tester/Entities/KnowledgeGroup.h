@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-05-12 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Entities/KnowledgeGroup.h $
-// $Author: Sbo $
-// $Modtime: 21/07/05 17:04 $
-// $Revision: 5 $
-// $Workfile: KnowledgeGroup.h $
-//
-// *****************************************************************************
 
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
@@ -45,7 +36,7 @@ class KnowledgeGroup
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Input& input );
+             KnowledgeGroup( const EntityManager& entityManager, Team& team, T_EntityId id );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -92,7 +83,7 @@ private:
     //! @name Member data
     //@{
     T_EntityId               nId_;
-    Team*                    pTeam_;
+    Team&                    team_;
     T_PawnKnowledgeMap       knownPawns_;
     T_PopulationKnowledgeMap knownPopulations_;
 
